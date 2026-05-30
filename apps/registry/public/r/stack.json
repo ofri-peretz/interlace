@@ -3,7 +3,7 @@
   "name": "stack",
   "type": "registry:ui",
   "title": "Stack",
-  "description": "@interlace/ui — stack primitive (shadcn-compatible).",
+  "description": "@interlace/ui — stack (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "class-variance-authority"

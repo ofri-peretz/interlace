@@ -3,7 +3,7 @@
   "name": "callout",
   "type": "registry:ui",
   "title": "Callout",
-  "description": "@interlace/ui — callout primitive (shadcn-compatible).",
+  "description": "@interlace/ui — callout (shadcn-compatible).",
   "dependencies": [
     "class-variance-authority",
     "lucide-react"

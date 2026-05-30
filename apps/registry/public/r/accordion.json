@@ -3,7 +3,7 @@
   "name": "accordion",
   "type": "registry:ui",
   "title": "Accordion",
-  "description": "@interlace/ui — accordion primitive (shadcn-compatible).",
+  "description": "@interlace/ui — accordion (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "lucide-react"

@@ -3,7 +3,7 @@
   "name": "alert",
   "type": "registry:ui",
   "title": "Alert",
-  "description": "@interlace/ui — alert primitive (shadcn-compatible).",
+  "description": "@interlace/ui — alert (shadcn-compatible).",
   "dependencies": [
     "class-variance-authority"
   ],

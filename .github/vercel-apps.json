@@ -1,0 +1,21 @@
+{
+  "_comment": "App → Vercel project map for CD. orgId + projectId are public identifiers (not secrets); the VERCEL_TOKEN is a repo secret. One-time setup: create each Vercel project, then fill these IDs (vercel project ls / .vercel/project.json) and run `gh -R ofri-peretz/interlace secret set VERCEL_TOKEN`.",
+  "orgId": "REPLACE_WITH_VERCEL_ORG_ID",
+  "apps": {
+    "landing": {
+      "projectId": "REPLACE_WITH_LANDING_PROJECT_ID",
+      "directory": "apps/landing",
+      "domain": "interlace.tools"
+    },
+    "registry": {
+      "projectId": "REPLACE_WITH_REGISTRY_PROJECT_ID",
+      "directory": "apps/registry",
+      "domain": "ds.interlace.tools"
+    },
+    "storybook": {
+      "projectId": "REPLACE_WITH_STORYBOOK_PROJECT_ID",
+      "directory": "apps/storybook",
+      "domain": "storybook.interlace.tools"
+    }
+  }
+}

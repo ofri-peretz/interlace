@@ -3,7 +3,7 @@
   "name": "checkbox",
   "type": "registry:ui",
   "title": "Checkbox",
-  "description": "@interlace/ui — checkbox primitive (shadcn-compatible).",
+  "description": "@interlace/ui — checkbox (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "lucide-react"

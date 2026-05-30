@@ -3,7 +3,7 @@
   "name": "section",
   "type": "registry:ui",
   "title": "Section",
-  "description": "@interlace/ui — section primitive (shadcn-compatible).",
+  "description": "@interlace/ui — section (shadcn-compatible).",
   "dependencies": [
     "class-variance-authority"
   ],

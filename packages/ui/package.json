@@ -316,6 +316,10 @@
       "types": "./dist/aceternity/*.d.ts",
       "default": "./dist/aceternity/*.js"
     },
+    "./patterns/*": {
+      "types": "./dist/patterns/*.d.ts",
+      "default": "./dist/patterns/*.js"
+    },
     "./styles/tokens.css": "./styles/tokens.css",
     "./styles/foundation.css": "./styles/foundation.css",
     "./styles/preflight.css": "./styles/preflight.css",

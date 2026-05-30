@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Deploy app to Vercel
+
+# Manual per-app deploy. Pick one app + target:
+#   gh -R ofri-peretz/interlace workflow run deploy.yml -f app=registry -f target=production
+#   gh -R ofri-peretz/interlace workflow run deploy.yml -f app=storybook -f target=preview
+#
+# One-time setup:
+#   1. Create the three Vercel projects (landing / registry / storybook).
+#   2. Fill .github/vercel-apps.json with orgId + per-app projectId.
+#   3. gh -R ofri-peretz/interlace secret set VERCEL_TOKEN   (https://vercel.com/account/tokens)
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        description: Which app to deploy
+        type: choice
+        required: true
+        options: [landing, registry, storybook]
+      target:
+        description: Deploy target
+        type: choice
+        required: true
+        default: preview
+        options: [preview, production]
+
+concurrency:
+  group: deploy-${{ inputs.app }}-${{ inputs.target }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy:
+    name: Deploy ${{ inputs.app }} → ${{ inputs.target }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Resolve Vercel project for "${{ inputs.app }}"
+        id: vercel
+        run: |
+          set -euo pipefail
+          MAP=.github/vercel-apps.json
+          ORG=$(jq -r '.orgId' "$MAP")
+          PID=$(jq -r --arg a "${{ inputs.app }}" '.apps[$a].projectId' "$MAP")
+          DIR=$(jq -r --arg a "${{ inputs.app }}" '.apps[$a].directory' "$MAP")
+          if [ -z "$PID" ] || [ "$PID" = "null" ] || [[ "$PID" == REPLACE_* ]]; then
+            echo "::error::vercel-apps.json projectId for '${{ inputs.app }}' not set"; exit 1
+          fi
+          echo "org=$ORG" >> "$GITHUB_OUTPUT"
+          echo "pid=$PID" >> "$GITHUB_OUTPUT"
+          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+      - name: Install deps
+        run: npm ci --no-audit --no-fund
+      - name: Vercel pull / build / deploy
+        working-directory: ${{ steps.vercel.outputs.dir }}
+        env:
+          VERCEL_ORG_ID: ${{ steps.vercel.outputs.org }}
+          VERCEL_PROJECT_ID: ${{ steps.vercel.outputs.pid }}
+        run: |
+          set -euo pipefail
+          PROD=""; [ "${{ inputs.target }}" = "production" ] && PROD="--prod"
+          npx vercel pull --yes --environment="${{ inputs.target }}" --token="$VERCEL_TOKEN"
+          npx vercel build $PROD --token="$VERCEL_TOKEN"
+          npx vercel deploy --prebuilt $PROD --token="$VERCEL_TOKEN"

@@ -43,307 +43,517 @@
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
-      "description": "@interlace/ui — accordion primitive (shadcn-compatible)."
+      "description": "@interlace/ui — accordion (shadcn-compatible)."
     },
     {
       "name": "alert-dialog",
       "type": "registry:ui",
       "title": "Alert Dialog",
-      "description": "@interlace/ui — alert-dialog primitive (shadcn-compatible)."
+      "description": "@interlace/ui — alert-dialog (shadcn-compatible)."
     },
     {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
-      "description": "@interlace/ui — alert primitive (shadcn-compatible)."
+      "description": "@interlace/ui — alert (shadcn-compatible)."
     },
     {
       "name": "aspect-ratio",
       "type": "registry:ui",
       "title": "Aspect Ratio",
-      "description": "@interlace/ui — aspect-ratio primitive (shadcn-compatible)."
+      "description": "@interlace/ui — aspect-ratio (shadcn-compatible)."
     },
     {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "@interlace/ui — avatar primitive (shadcn-compatible)."
+      "description": "@interlace/ui — avatar (shadcn-compatible)."
     },
     {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "@interlace/ui — badge primitive (shadcn-compatible)."
+      "description": "@interlace/ui — badge (shadcn-compatible)."
     },
     {
       "name": "box",
       "type": "registry:ui",
       "title": "Box",
-      "description": "@interlace/ui — box primitive (shadcn-compatible)."
+      "description": "@interlace/ui — box (shadcn-compatible)."
     },
     {
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",
-      "description": "@interlace/ui — breadcrumb primitive (shadcn-compatible)."
+      "description": "@interlace/ui — breadcrumb (shadcn-compatible)."
     },
     {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "@interlace/ui — button primitive (shadcn-compatible)."
+      "description": "@interlace/ui — button (shadcn-compatible)."
     },
     {
       "name": "callout",
       "type": "registry:ui",
       "title": "Callout",
-      "description": "@interlace/ui — callout primitive (shadcn-compatible)."
+      "description": "@interlace/ui — callout (shadcn-compatible)."
     },
     {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
-      "description": "@interlace/ui — card primitive (shadcn-compatible)."
+      "description": "@interlace/ui — card (shadcn-compatible)."
     },
     {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
-      "description": "@interlace/ui — checkbox primitive (shadcn-compatible)."
+      "description": "@interlace/ui — checkbox (shadcn-compatible)."
     },
     {
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
-      "description": "@interlace/ui — code-block primitive (shadcn-compatible)."
+      "description": "@interlace/ui — code-block (shadcn-compatible)."
     },
     {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
-      "description": "@interlace/ui — collapsible primitive (shadcn-compatible)."
+      "description": "@interlace/ui — collapsible (shadcn-compatible)."
     },
     {
       "name": "container",
       "type": "registry:ui",
       "title": "Container",
-      "description": "@interlace/ui — container primitive (shadcn-compatible)."
+      "description": "@interlace/ui — container (shadcn-compatible)."
     },
     {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
-      "description": "@interlace/ui — dialog primitive (shadcn-compatible)."
+      "description": "@interlace/ui — dialog (shadcn-compatible)."
     },
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown Menu",
-      "description": "@interlace/ui — dropdown-menu primitive (shadcn-compatible)."
+      "description": "@interlace/ui — dropdown-menu (shadcn-compatible)."
     },
     {
       "name": "focus-ring",
       "type": "registry:ui",
       "title": "Focus Ring",
-      "description": "@interlace/ui — focus-ring primitive (shadcn-compatible)."
+      "description": "@interlace/ui — focus-ring (shadcn-compatible)."
     },
     {
       "name": "form",
       "type": "registry:ui",
       "title": "Form",
-      "description": "@interlace/ui — form primitive (shadcn-compatible)."
+      "description": "@interlace/ui — form (shadcn-compatible)."
     },
     {
       "name": "grid",
       "type": "registry:ui",
       "title": "Grid",
-      "description": "@interlace/ui — grid primitive (shadcn-compatible)."
+      "description": "@interlace/ui — grid (shadcn-compatible)."
     },
     {
       "name": "hover-card",
       "type": "registry:ui",
       "title": "Hover Card",
-      "description": "@interlace/ui — hover-card primitive (shadcn-compatible)."
+      "description": "@interlace/ui — hover-card (shadcn-compatible)."
     },
     {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
-      "description": "@interlace/ui — input primitive (shadcn-compatible)."
+      "description": "@interlace/ui — input (shadcn-compatible)."
     },
     {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
-      "description": "@interlace/ui — label primitive (shadcn-compatible)."
+      "description": "@interlace/ui — label (shadcn-compatible)."
     },
     {
       "name": "meteors",
       "type": "registry:ui",
       "title": "Meteors",
-      "description": "@interlace/ui — meteors primitive (shadcn-compatible)."
+      "description": "@interlace/ui — meteors (shadcn-compatible)."
     },
     {
       "name": "number-field",
       "type": "registry:ui",
       "title": "Number Field",
-      "description": "@interlace/ui — number-field primitive (shadcn-compatible)."
+      "description": "@interlace/ui — number-field (shadcn-compatible)."
     },
     {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
-      "description": "@interlace/ui — pagination primitive (shadcn-compatible)."
+      "description": "@interlace/ui — pagination (shadcn-compatible)."
     },
     {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
-      "description": "@interlace/ui — popover primitive (shadcn-compatible)."
+      "description": "@interlace/ui — popover (shadcn-compatible)."
     },
     {
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress",
-      "description": "@interlace/ui — progress primitive (shadcn-compatible)."
+      "description": "@interlace/ui — progress (shadcn-compatible)."
     },
     {
       "name": "prose",
       "type": "registry:ui",
       "title": "Prose",
-      "description": "@interlace/ui — prose primitive (shadcn-compatible)."
+      "description": "@interlace/ui — prose (shadcn-compatible)."
     },
     {
       "name": "published-date",
       "type": "registry:ui",
       "title": "Published Date",
-      "description": "@interlace/ui — published-date primitive (shadcn-compatible)."
+      "description": "@interlace/ui — published-date (shadcn-compatible)."
     },
     {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
-      "description": "@interlace/ui — radio-group primitive (shadcn-compatible)."
+      "description": "@interlace/ui — radio-group (shadcn-compatible)."
     },
     {
       "name": "reading-time",
       "type": "registry:ui",
       "title": "Reading Time",
-      "description": "@interlace/ui — reading-time primitive (shadcn-compatible)."
+      "description": "@interlace/ui — reading-time (shadcn-compatible)."
     },
     {
       "name": "scroll-area",
       "type": "registry:ui",
       "title": "Scroll Area",
-      "description": "@interlace/ui — scroll-area primitive (shadcn-compatible)."
+      "description": "@interlace/ui — scroll-area (shadcn-compatible)."
     },
     {
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
-      "description": "@interlace/ui — section primitive (shadcn-compatible)."
+      "description": "@interlace/ui — section (shadcn-compatible)."
     },
     {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "@interlace/ui — select primitive (shadcn-compatible)."
+      "description": "@interlace/ui — select (shadcn-compatible)."
     },
     {
       "name": "separator",
       "type": "registry:ui",
       "title": "Separator",
-      "description": "@interlace/ui — separator primitive (shadcn-compatible)."
+      "description": "@interlace/ui — separator (shadcn-compatible)."
     },
     {
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
-      "description": "@interlace/ui — sheet primitive (shadcn-compatible)."
+      "description": "@interlace/ui — sheet (shadcn-compatible)."
     },
     {
       "name": "skeleton",
       "type": "registry:ui",
       "title": "Skeleton",
-      "description": "@interlace/ui — skeleton primitive (shadcn-compatible)."
+      "description": "@interlace/ui — skeleton (shadcn-compatible)."
     },
     {
       "name": "skip-link",
       "type": "registry:ui",
       "title": "Skip Link",
-      "description": "@interlace/ui — skip-link primitive (shadcn-compatible)."
+      "description": "@interlace/ui — skip-link (shadcn-compatible)."
     },
     {
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
-      "description": "@interlace/ui — slider primitive (shadcn-compatible)."
+      "description": "@interlace/ui — slider (shadcn-compatible)."
     },
     {
       "name": "stack",
       "type": "registry:ui",
       "title": "Stack",
-      "description": "@interlace/ui — stack primitive (shadcn-compatible)."
+      "description": "@interlace/ui — stack (shadcn-compatible)."
     },
     {
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
-      "description": "@interlace/ui — switch primitive (shadcn-compatible)."
+      "description": "@interlace/ui — switch (shadcn-compatible)."
     },
     {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "@interlace/ui — tabs primitive (shadcn-compatible)."
+      "description": "@interlace/ui — tabs (shadcn-compatible)."
     },
     {
       "name": "tag",
       "type": "registry:ui",
       "title": "Tag",
-      "description": "@interlace/ui — tag primitive (shadcn-compatible)."
+      "description": "@interlace/ui — tag (shadcn-compatible)."
     },
     {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
-      "description": "@interlace/ui — textarea primitive (shadcn-compatible)."
+      "description": "@interlace/ui — textarea (shadcn-compatible)."
     },
     {
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
-      "description": "@interlace/ui — toast primitive (shadcn-compatible)."
+      "description": "@interlace/ui — toast (shadcn-compatible)."
     },
     {
       "name": "toc",
       "type": "registry:ui",
       "title": "Toc",
-      "description": "@interlace/ui — toc primitive (shadcn-compatible)."
+      "description": "@interlace/ui — toc (shadcn-compatible)."
     },
     {
       "name": "toggle",
       "type": "registry:ui",
       "title": "Toggle",
-      "description": "@interlace/ui — toggle primitive (shadcn-compatible)."
+      "description": "@interlace/ui — toggle (shadcn-compatible)."
     },
     {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
-      "description": "@interlace/ui — tooltip primitive (shadcn-compatible)."
+      "description": "@interlace/ui — tooltip (shadcn-compatible)."
     },
     {
       "name": "typography",
       "type": "registry:ui",
       "title": "Typography",
-      "description": "@interlace/ui — typography primitive (shadcn-compatible)."
+      "description": "@interlace/ui — typography (shadcn-compatible)."
     },
     {
       "name": "visually-hidden",
       "type": "registry:ui",
       "title": "Visually Hidden",
-      "description": "@interlace/ui — visually-hidden primitive (shadcn-compatible)."
+      "description": "@interlace/ui — visually-hidden (shadcn-compatible)."
+    },
+    {
+      "name": "animated-gradient-text",
+      "type": "registry:ui",
+      "title": "Animated Gradient Text",
+      "description": "@interlace/ui — animated-gradient-text (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "animated-grid-pattern",
+      "type": "registry:ui",
+      "title": "Animated Grid Pattern",
+      "description": "@interlace/ui — animated-grid-pattern (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "animated-list",
+      "type": "registry:ui",
+      "title": "Animated List",
+      "description": "@interlace/ui — animated-list (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "border-beam",
+      "type": "registry:ui",
+      "title": "Border Beam",
+      "description": "@interlace/ui — border-beam (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "marquee",
+      "type": "registry:ui",
+      "title": "Marquee",
+      "description": "@interlace/ui — marquee (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "number-ticker",
+      "type": "registry:ui",
+      "title": "Number Ticker",
+      "description": "@interlace/ui — number-ticker (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "particles",
+      "type": "registry:ui",
+      "title": "Particles",
+      "description": "@interlace/ui — particles (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "shimmer-button",
+      "type": "registry:ui",
+      "title": "Shimmer Button",
+      "description": "@interlace/ui — shimmer-button (magicui) (shadcn-compatible)."
+    },
+    {
+      "name": "background-beams-with-collision",
+      "type": "registry:ui",
+      "title": "Background Beams With Collision",
+      "description": "@interlace/ui — background-beams-with-collision (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "background-gradient-animation",
+      "type": "registry:ui",
+      "title": "Background Gradient Animation",
+      "description": "@interlace/ui — background-gradient-animation (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "background-lines",
+      "type": "registry:ui",
+      "title": "Background Lines",
+      "description": "@interlace/ui — background-lines (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "cloud-particles",
+      "type": "registry:ui",
+      "title": "Cloud Particles",
+      "description": "@interlace/ui — cloud-particles (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "flip-words",
+      "type": "registry:ui",
+      "title": "Flip Words",
+      "description": "@interlace/ui — flip-words (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "focus-cards",
+      "type": "registry:ui",
+      "title": "Focus Cards",
+      "description": "@interlace/ui — focus-cards (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "spotlight",
+      "type": "registry:ui",
+      "title": "Spotlight",
+      "description": "@interlace/ui — spotlight (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "stars-background",
+      "type": "registry:ui",
+      "title": "Stars Background",
+      "description": "@interlace/ui — stars-background (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "sunny-background",
+      "type": "registry:ui",
+      "title": "Sunny Background",
+      "description": "@interlace/ui — sunny-background (aceternity) (shadcn-compatible)."
+    },
+    {
+      "name": "dot-pattern",
+      "type": "registry:ui",
+      "title": "Dot Pattern",
+      "description": "@interlace/ui — dot-pattern (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "grid-pattern",
+      "type": "registry:ui",
+      "title": "Grid Pattern",
+      "description": "@interlace/ui — grid-pattern (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "hero-cosmic",
+      "type": "registry:ui",
+      "title": "Hero Cosmic",
+      "description": "@interlace/ui — hero-cosmic (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "interactive-grid-pattern",
+      "type": "registry:ui",
+      "title": "Interactive Grid Pattern",
+      "description": "@interlace/ui — interactive-grid-pattern (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "article-card",
+      "type": "registry:ui",
+      "title": "Article Card",
+      "description": "@interlace/ui — article-card (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "author-byline",
+      "type": "registry:ui",
+      "title": "Author Byline",
+      "description": "@interlace/ui — author-byline (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "code-window",
+      "type": "registry:ui",
+      "title": "Code Window",
+      "description": "@interlace/ui — code-window (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "@interlace/ui — empty-state (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "figure",
+      "type": "registry:ui",
+      "title": "Figure",
+      "description": "@interlace/ui — figure (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "hero",
+      "type": "registry:ui",
+      "title": "Hero",
+      "description": "@interlace/ui — hero (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "newsletter-form",
+      "type": "registry:ui",
+      "title": "Newsletter Form",
+      "description": "@interlace/ui — newsletter-form (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "@interlace/ui — page-header (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "prev-next-post",
+      "type": "registry:ui",
+      "title": "Prev Next Post",
+      "description": "@interlace/ui — prev-next-post (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "related-posts",
+      "type": "registry:ui",
+      "title": "Related Posts",
+      "description": "@interlace/ui — related-posts (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "section-header",
+      "type": "registry:ui",
+      "title": "Section Header",
+      "description": "@interlace/ui — section-header (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "share-buttons",
+      "type": "registry:ui",
+      "title": "Share Buttons",
+      "description": "@interlace/ui — share-buttons (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "sign-in-form",
+      "type": "registry:ui",
+      "title": "Sign In Form",
+      "description": "@interlace/ui — sign-in-form (blocks) (shadcn-compatible)."
+    },
+    {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "Stat Card",
+      "description": "@interlace/ui — stat-card (blocks) (shadcn-compatible)."
     }
   ]
 }

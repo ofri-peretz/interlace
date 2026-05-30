@@ -43,6 +43,29 @@ const REPO_ROOT = path.resolve(REGISTRY_ROOT, '..', '..');
 const PRIMITIVES_DIR = path.join(REPO_ROOT, 'packages/ui/src/primitives');
 const LIB_DIR = path.join(REPO_ROOT, 'packages/ui/src/lib');
 const STYLES_DIR = path.join(REPO_ROOT, 'packages/ui/styles');
+
+/**
+ * Decorative-tier directories whose components ALSO ship as `registry:ui`
+ * items. Walked the same way as PRIMITIVES_DIR; each .tsx becomes one
+ * registry item that consumers install via
+ * `npx shadcn add @interlace/<name>`. The target path matches the source
+ * shape (consumer gets `components/ui/magicui/<name>.tsx` etc.) so the
+ * three tiers stay distinguishable in the consumer's tree.
+ *
+ * Why these are ours, not external: we own the source under
+ * `packages/ui/src/{magicui,aceternity,patterns}/`. The `components.json`
+ * registries map used to include `@magicui` / `@aceternity` aliases pointing
+ * at upstream registries — but every component we use was already vendored
+ * into our package. Pointing the registry map at our own surface promotes
+ * @interlace as the single canonical install surface (per the user's
+ * "promote usage + reusability of our components" directive).
+ */
+const DECORATIVE_DIRS = [
+  { name: 'magicui', dir: path.join(REPO_ROOT, 'packages/ui/src/magicui') },
+  { name: 'aceternity', dir: path.join(REPO_ROOT, 'packages/ui/src/aceternity') },
+  { name: 'patterns', dir: path.join(REPO_ROOT, 'packages/ui/src/patterns') },
+  { name: 'blocks', dir: path.join(REPO_ROOT, 'packages/ui/src/blocks') },
+];
 const OUT_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const STYLES_OUT_DIR = path.join(OUT_DIR, 'styles');
 const HOMEPAGE = 'https://ds.interlace.tools';
@@ -244,13 +267,17 @@ const readOptionalMeta = async (filePath) => {
   }
 };
 
-const buildItem = async (filePath, fileName) => {
+const buildItem = async (filePath, fileName, tier = null) => {
   const source = await readFile(filePath, 'utf8');
   const name = fileName.replace(/\.tsx$/, '');
   const meta = await readOptionalMeta(filePath);
   // Every primitive depends on the shared theme item so consumers get the
   // brand tokens + animation keyframes installed alongside the .tsx.
   const registryDependencies = [STYLE_ITEM, ...collectRegistryDependencies(source)];
+  // Decorative tiers (magicui / aceternity / patterns) nest under their
+  // subdir in the consumer tree to preserve provenance. Primitives stay flat.
+  const subdir = tier ? `${tier}/` : '';
+  const tierLabel = tier ? ` (${tier})` : '';
   const item = {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name,
@@ -258,13 +285,13 @@ const buildItem = async (filePath, fileName) => {
     title: name.replace(/(^|-)([a-z])/g, (_, dash, c) =>
       dash ? ' ' + c.toUpperCase() : c.toUpperCase(),
     ),
-    description: `@interlace/ui — ${name} primitive (shadcn-compatible).`,
+    description: `@interlace/ui — ${name}${tierLabel} (shadcn-compatible).`,
     dependencies: collectDependencies(source),
     registryDependencies,
     files: [
       {
-        path: `registry/interlace-ui/${name}.tsx`,
-        target: `components/ui/${name}.tsx`,
+        path: `registry/interlace-ui/${subdir}${name}.tsx`,
+        target: `components/ui/${subdir}${name}.tsx`,
         type: 'registry:ui',
         content: rewriteImportsForConsumer(source),
       },
@@ -441,12 +468,26 @@ const main = async () => {
       const built = buildStarterItem(entry);
       await compareItemAgainstDisk(built, errors);
     }
+    let decorativeCount = 0;
+    for (const { name: tier, dir } of DECORATIVE_DIRS) {
+      let dirFiles = [];
+      try {
+        dirFiles = (await readdir(dir)).filter((f) => f.endsWith('.tsx')).sort();
+      } catch {
+        continue; // tier dir not yet created — fine
+      }
+      decorativeCount += dirFiles.length;
+      for (const file of dirFiles) {
+        const built = await buildItem(path.join(dir, file), file, tier);
+        await compareItemAgainstDisk(built, errors);
+      }
+    }
     if (errors.length) {
       console.error('Registry drift detected:\n  ' + errors.join('\n  '));
       process.exit(1);
     }
     console.log(
-      `OK — ${files.length} primitive(s) + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) match on-disk.`,
+      `OK — ${files.length} primitive(s) + ${decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) match on-disk.`,
     );
     return;
   }
@@ -473,9 +514,25 @@ const main = async () => {
     await writeItem(await buildLibItem(entry), index);
   }
 
-  // Per-primitive items last (largest cohort, alphabetical).
+  // Per-primitive items (largest cohort, alphabetical).
   for (const file of files) {
     await writeItem(await buildItem(path.join(PRIMITIVES_DIR, file), file), index);
+  }
+
+  // Decorative tiers (magicui / aceternity / patterns) — own surface, vendored
+  // from upstream registries and promoted under the @interlace namespace.
+  let decorativeCount = 0;
+  for (const { name: tier, dir } of DECORATIVE_DIRS) {
+    let dirFiles = [];
+    try {
+      dirFiles = (await readdir(dir)).filter((f) => f.endsWith('.tsx')).sort();
+    } catch {
+      continue;
+    }
+    decorativeCount += dirFiles.length;
+    for (const file of dirFiles) {
+      await writeItem(await buildItem(path.join(dir, file), file, tier), index);
+    }
   }
 
   await writeFile(
@@ -485,7 +542,7 @@ const main = async () => {
   );
 
   console.log(
-    `Built ${files.length} primitive(s) + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) → ${OUT_DIR}`,
+    `Built ${files.length} primitive(s) + ${decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) → ${OUT_DIR}`,
   );
 };
 

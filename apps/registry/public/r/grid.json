@@ -3,7 +3,7 @@
   "name": "grid",
   "type": "registry:ui",
   "title": "Grid",
-  "description": "@interlace/ui — grid primitive (shadcn-compatible).",
+  "description": "@interlace/ui — grid (shadcn-compatible).",
   "dependencies": [
     "class-variance-authority"
   ],

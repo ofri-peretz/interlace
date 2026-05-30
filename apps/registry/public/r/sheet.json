@@ -3,7 +3,7 @@
   "name": "sheet",
   "type": "registry:ui",
   "title": "Sheet",
-  "description": "@interlace/ui — sheet primitive (shadcn-compatible).",
+  "description": "@interlace/ui — sheet (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "lucide-react"
