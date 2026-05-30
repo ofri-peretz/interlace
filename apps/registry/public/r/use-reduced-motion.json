@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-reduced-motion",
+  "type": "registry:lib",
+  "title": "useReducedMotion hook",
+  "description": "@interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/interlace-ui/lib/use-reduced-motion.ts",
+      "target": "hooks/use-reduced-motion.ts",
+      "type": "registry:lib",
+      "content": "'use client';\n\nimport { useEffect, useState } from 'react';\n\n/**\n * Returns `true` when the user has `prefers-reduced-motion: reduce` set.\n *\n * Industry-canon hook (MUI, Vercel, Linear, Stripe all ship equivalents).\n * Server-render-safe — defaults to `false` on the server, then updates on\n * mount once `window.matchMedia` is available.\n *\n * Use to gate motion-heavy components: animations should be disabled or\n * dramatically reduced when this returns `true`.\n *\n * @example\n * ```tsx\n * const reduceMotion = useReducedMotion();\n * <div className={reduceMotion ? 'static' : 'animate-bounce'} />\n * ```\n */\nexport function useReducedMotion(): boolean {\n  const [reduced, setReduced] = useState<boolean>(false);\n\n  useEffect(() => {\n    if (typeof window === 'undefined' || !window.matchMedia) return;\n    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');\n    setReduced(mql.matches);\n    const onChange = (event: MediaQueryListEvent) => setReduced(event.matches);\n    mql.addEventListener('change', onChange);\n    return () => mql.removeEventListener('change', onChange);\n  }, []);\n\n  return reduced;\n}\n"
+    }
+  ]
+}

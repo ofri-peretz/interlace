@@ -1,14 +1,34 @@
 #!/usr/bin/env node
 /**
- * Build a shadcn-compatible registry from `packages/ui/src/primitives/*.tsx`.
+ * Build a shadcn-compatible registry from @interlace/ui sources.
  *
  * Output: `apps/registry/public/r/<name>.json` per the shadcn registry-item
  * schema (https://ui.shadcn.com/schema/registry-item.json). Plus an
  * `index.json` listing every available item.
  *
+ * Item types emitted:
+ *
+ *   - `registry:ui`     — per primitive (`packages/ui/src/primitives/*.tsx`)
+ *                       — plus three "starter bundle" composite items
+ *                         (`a11y-starter`, `layout-starter`, `mdx-starter`).
+ *   - `registry:style`  — the `theme` bundle: ALL five DS stylesheets
+ *                         (tokens, foundation, preflight, theme,
+ *                         interlace-theme) so a consumer who runs
+ *                         `npx shadcn add @interlace/theme` gets the full
+ *                         DS baseline — including the WCAG 2.2 SC 2.4.13
+ *                         focus ring, the `[data-min-viewport]` container
+ *                         contract, and the type / spacing / radius scales.
+ *   - `registry:lib`    — utilities under `packages/ui/src/lib/*.ts` exposed
+ *                         to consumers: `cn` → `@/lib/utils.ts`,
+ *                         `use-reduced-motion` → `@/hooks/use-reduced-motion.ts`.
+ *
  * Consumer usage (when deployed):
  *
  *   npx shadcn add https://ds.interlace.tools/r/button.json
+ *   npx shadcn add @interlace/theme            # full CSS contract
+ *   npx shadcn add @interlace/a11y-starter     # SkipLink+VisuallyHidden+FocusRing+useReducedMotion
+ *   npx shadcn add @interlace/layout-starter   # Container+Section+Stack+Grid+Box+Typography
+ *   npx shadcn add @interlace/mdx-starter      # mdx-components.tsx defaults
  *
  * Run with `--check` to validate without writing (used by CI drift check).
  */
@@ -21,6 +41,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
 const REPO_ROOT = path.resolve(REGISTRY_ROOT, '..', '..');
 const PRIMITIVES_DIR = path.join(REPO_ROOT, 'packages/ui/src/primitives');
+const LIB_DIR = path.join(REPO_ROOT, 'packages/ui/src/lib');
 const STYLES_DIR = path.join(REPO_ROOT, 'packages/ui/styles');
 const OUT_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const STYLES_OUT_DIR = path.join(OUT_DIR, 'styles');
@@ -32,10 +53,128 @@ const CHECK_ONLY = process.argv.includes('--check');
 // they add any primitive after the first.
 const STYLE_ITEM = 'theme';
 
-// Stylesheet files copied verbatim from @interlace/ui/styles into the
-// registry's public dir so they live at stable URLs (CSS @imports + raw
-// fetch both work). Order matters: tokens → theme → interlace-theme.
-const STYLE_FILES = ['tokens.css', 'theme.css', 'interlace-theme.css'];
+/**
+ * Stylesheet files copied verbatim from @interlace/ui/styles into the
+ * registry's public dir so they live at stable URLs (CSS @imports + raw
+ * fetch both work). Bundled into the `theme` registry:style item in this
+ * order — the cascade matters:
+ *
+ *   1. tokens.css           — animation + motion tokens (keyframes etc.).
+ *   2. foundation.css       — type scale, spacing scale, radius scale,
+ *                             container widths, font tokens. The
+ *                             structural floor every primitive depends on.
+ *   3. preflight.css        — token-aware baseline beyond Tailwind preflight:
+ *                             focus ring (WCAG 2.2 SC 2.4.13), selection,
+ *                             scrollbar tint, smooth-scroll under
+ *                             prefers-reduced-motion, tabular-nums, the
+ *                             [data-min-viewport] container contract.
+ *   4. theme.css            — shadcn↔fumadocs token bridge + Shiki AAA boosts.
+ *   5. interlace-theme.css  — brand violet palette (light + dark, AAA).
+ *
+ * Before this commit, only 1/4/5 shipped — half of DESIGN_PRINCIPLES.md
+ * was unreachable to consumers. See plan
+ * `.claude/plans/majestic-humming-sloth.md` § A1.
+ */
+const STYLE_FILES = [
+  'tokens.css',
+  'foundation.css',
+  'preflight.css',
+  'theme.css',
+  'interlace-theme.css',
+];
+
+/**
+ * Library utilities exposed as `registry:lib` items so consumers can install
+ * them via `npx shadcn add @interlace/<name>`. Each entry maps a `.ts` file
+ * under `packages/ui/src/lib/` to a consumer-side path that matches the
+ * canonical shadcn directory layout:
+ *
+ *   - `cn`                 → `@/lib/utils.ts`         (matches shadcn's default `cn`)
+ *   - `use-reduced-motion` → `@/hooks/use-reduced-motion.ts`
+ *
+ * The shadcn CLI will write the file at `target`. Per-primitive registry
+ * items reference these via the consumer-facing import paths the
+ * `rewriteImportsForConsumer` step emits.
+ */
+const LIB_FILES = [
+  {
+    name: 'cn',
+    sourceFile: 'cn.ts',
+    target: 'lib/utils.ts',
+    title: 'cn — class-name merge utility',
+    description:
+      '@interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically.',
+  },
+  {
+    name: 'use-reduced-motion',
+    sourceFile: 'use-reduced-motion.ts',
+    target: 'hooks/use-reduced-motion.ts',
+    title: 'useReducedMotion hook',
+    description:
+      '@interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user\'s OS preference.',
+  },
+];
+
+/**
+ * Starter-pack registry:ui items. Each is a "meta-install" that pulls a
+ * curated set of registry items via its `registryDependencies` — the
+ * shadcn CLI walks the graph transitively. The `files` array carries a
+ * single README so the schema's `files` requirement is satisfied and the
+ * consumer ends up with documentation of what the bundle just installed.
+ *
+ * Pattern: package-per-tier (a11y, layout, mdx), not per-component — keeps
+ * bundle maintenance bounded.
+ */
+const STARTER_BUNDLES = [
+  {
+    name: 'a11y-starter',
+    title: 'A11y Starter',
+    description:
+      '@interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.',
+    target: 'components/ui/INTERLACE-A11Y-STARTER.md',
+    body: `# @interlace/a11y-starter\n\nInstalled:\n\n- \`SkipLink\` — focus-visible skip-to-main link.\n- \`VisuallyHidden\` — screen-reader-only span (component variant).\n- \`FocusRing\` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- \`useReducedMotion\` — gates every animation in the DS.\n- \`theme\` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n`,
+    registryDependencies: [
+      'skip-link',
+      'visually-hidden',
+      'focus-ring',
+      'use-reduced-motion',
+      STYLE_ITEM,
+    ],
+  },
+  {
+    name: 'layout-starter',
+    title: 'Layout Starter',
+    description:
+      '@interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.',
+    target: 'components/ui/INTERLACE-LAYOUT-STARTER.md',
+    body: `# @interlace/layout-starter\n\nInstalled:\n\n- \`Container\` — 4 width tiers (prose / content / wide / full).\n- \`Section\` — vertical-rhythm slabs.\n- \`Stack\` + \`Cluster\` — six-step gap scale.\n- \`Grid\` — responsive grid primitive.\n- \`Box\` — token-aware surface (background + padding + radius + border).\n- \`Typography\` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- \`theme\` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n`,
+    registryDependencies: [
+      'container',
+      'section',
+      'stack',
+      'grid',
+      'box',
+      'typography',
+      STYLE_ITEM,
+    ],
+  },
+  {
+    name: 'mdx-starter',
+    title: 'MDX Starter',
+    description:
+      '@interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.',
+    target: 'components/ui/INTERLACE-MDX-STARTER.md',
+    body: `# @interlace/mdx-starter\n\nInstalled:\n\n- \`Callout\` — info / warn / danger / success / note prose annotations.\n- \`Prose\` — typographic article-body wrapper.\n- \`CodeBlock\` — Shiki-rendered fenced code with copy button.\n- \`Tag\` + \`TagList\` — article tag badges.\n- \`Figure\` — image + caption + alt + AspectRatio.\n- \`theme\` — full DS CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n`,
+    registryDependencies: [
+      'callout',
+      'prose',
+      'code-block',
+      'tag',
+      'figure',
+      STYLE_ITEM,
+    ],
+  },
+];
 
 // ─── Heuristic dependency extraction ─────────────────────────────────────────
 
@@ -139,12 +278,63 @@ const buildItem = async (filePath, fileName) => {
   return item;
 };
 
+// ─── Library registry items (registry:lib) ───────────────────────────────────
+//
+// `cn` and `useReducedMotion` are utilities every interactive primitive
+// imports. Before this commit they were not shippable via shadcn (the
+// build script only walked primitives/) — consumers had to either rely
+// on shadcn's default `cn` or vendor the hook manually. Now they're
+// first-class registry items, target paths match shadcn defaults.
+
+const buildLibItem = async (entry) => {
+  const sourcePath = path.join(LIB_DIR, entry.sourceFile);
+  const source = await readFile(sourcePath, 'utf8');
+  return {
+    $schema: 'https://ui.shadcn.com/schema/registry-item.json',
+    name: entry.name,
+    type: 'registry:lib',
+    title: entry.title,
+    description: entry.description,
+    dependencies: collectDependencies(source),
+    registryDependencies: [],
+    files: [
+      {
+        path: `registry/interlace-ui/lib/${entry.sourceFile}`,
+        target: entry.target,
+        type: 'registry:lib',
+        content: source,
+      },
+    ],
+  };
+};
+
+// ─── Starter-pack registry items ─────────────────────────────────────────────
+
+const buildStarterItem = (entry) => ({
+  $schema: 'https://ui.shadcn.com/schema/registry-item.json',
+  name: entry.name,
+  type: 'registry:ui',
+  title: entry.title,
+  description: entry.description,
+  dependencies: [],
+  registryDependencies: entry.registryDependencies,
+  files: [
+    {
+      path: `registry/interlace-ui/starters/${entry.name}.md`,
+      target: entry.target,
+      type: 'registry:file',
+      content: entry.body,
+    },
+  ],
+});
+
 // ─── Theme / style registry item ─────────────────────────────────────────
 //
-// Publishes the three @interlace/ui stylesheets (tokens, theme,
-// interlace-theme) as a single shadcn `registry:style` item so consumers
-// get the brand palette + token bridge + animation tokens installed when
-// they `npx shadcn add` any primitive.
+// Publishes the five @interlace/ui stylesheets (tokens, foundation,
+// preflight, theme, interlace-theme) as a single shadcn `registry:style`
+// item so consumers get the full DS CSS baseline installed when they
+// `npx shadcn add` any primitive — focus ring, min-viewport contract,
+// type scale, spacing scale, radius scale, brand palette.
 //
 // The raw .css files are also copied to `public/r/styles/*.css` so
 // consumers can pull them directly without the shadcn CLI (e.g. as plain
@@ -169,7 +359,7 @@ const buildStyleItem = async () => {
     type: 'registry:style',
     title: 'Interlace Theme',
     description:
-      '@interlace/ui — brand tokens, shadcn-token bridge, and animation keyframes consumed by every primitive.',
+      '@interlace/ui — full DS CSS baseline: tokens, foundation (type/spacing/radius), preflight (focus ring + min-viewport contract), shadcn↔fumadocs bridge, and brand palette.',
     dependencies: ['tw-animate-css'],
     registryDependencies: [],
     files,
@@ -202,6 +392,32 @@ const checkRawStyleFiles = async () => {
 
 // ─── Main ────────────────────────────────────────────────────────────────────
 
+const compareItemAgainstDisk = async (built, errors) => {
+  const outPath = path.join(OUT_DIR, `${built.name}.json`);
+  try {
+    const current = JSON.parse(await readFile(outPath, 'utf8'));
+    if (JSON.stringify(current) !== JSON.stringify(built)) {
+      errors.push(`drift: ${built.name}`);
+    }
+  } catch {
+    errors.push(`missing: ${built.name}`);
+  }
+};
+
+const writeItem = async (item, index) => {
+  await writeFile(
+    path.join(OUT_DIR, `${item.name}.json`),
+    JSON.stringify(item, null, 2) + '\n',
+    'utf8',
+  );
+  index.items.push({
+    name: item.name,
+    type: item.type,
+    title: item.title,
+    description: item.description,
+  });
+};
+
 const main = async () => {
   await stat(PRIMITIVES_DIR);
   const files = (await readdir(PRIMITIVES_DIR))
@@ -209,37 +425,28 @@ const main = async () => {
     .sort();
 
   if (CHECK_ONLY) {
-    // Drift check: rebuild in-memory + diff against on-disk.
     const errors = [];
     const styleBuilt = await buildStyleItem();
-    const stylePath = path.join(OUT_DIR, `${styleBuilt.name}.json`);
-    try {
-      const current = JSON.parse(await readFile(stylePath, 'utf8'));
-      if (JSON.stringify(current) !== JSON.stringify(styleBuilt)) {
-        errors.push(`drift: ${styleBuilt.name}`);
-      }
-    } catch {
-      errors.push(`missing: ${styleBuilt.name}`);
-    }
+    await compareItemAgainstDisk(styleBuilt, errors);
     errors.push(...(await checkRawStyleFiles()));
     for (const file of files) {
       const built = await buildItem(path.join(PRIMITIVES_DIR, file), file);
-      const outPath = path.join(OUT_DIR, `${built.name}.json`);
-      try {
-        const current = JSON.parse(await readFile(outPath, 'utf8'));
-        if (JSON.stringify(current) !== JSON.stringify(built)) {
-          errors.push(`drift: ${built.name}`);
-        }
-      } catch {
-        errors.push(`missing: ${built.name}`);
-      }
+      await compareItemAgainstDisk(built, errors);
+    }
+    for (const entry of LIB_FILES) {
+      const built = await buildLibItem(entry);
+      await compareItemAgainstDisk(built, errors);
+    }
+    for (const entry of STARTER_BUNDLES) {
+      const built = buildStarterItem(entry);
+      await compareItemAgainstDisk(built, errors);
     }
     if (errors.length) {
       console.error('Registry drift detected:\n  ' + errors.join('\n  '));
       process.exit(1);
     }
     console.log(
-      `OK — ${files.length} primitive item(s) + 1 style item + ${STYLE_FILES.length} raw stylesheet(s) match on-disk.`,
+      `OK — ${files.length} primitive(s) + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) match on-disk.`,
     );
     return;
   }
@@ -253,33 +460,22 @@ const main = async () => {
   };
 
   // Theme/style item first so it appears at the top of `index.json`.
-  const styleBuilt = await buildStyleItem();
-  await writeFile(
-    path.join(OUT_DIR, `${styleBuilt.name}.json`),
-    JSON.stringify(styleBuilt, null, 2) + '\n',
-    'utf8',
-  );
-  index.items.push({
-    name: styleBuilt.name,
-    type: styleBuilt.type,
-    title: styleBuilt.title,
-    description: styleBuilt.description,
-  });
+  await writeItem(await buildStyleItem(), index);
   await writeRawStyleFiles();
 
+  // Starter bundles next — most-prominent install surface for new consumers.
+  for (const entry of STARTER_BUNDLES) {
+    await writeItem(buildStarterItem(entry), index);
+  }
+
+  // Lib utilities — needed for components to compile in the consumer tree.
+  for (const entry of LIB_FILES) {
+    await writeItem(await buildLibItem(entry), index);
+  }
+
+  // Per-primitive items last (largest cohort, alphabetical).
   for (const file of files) {
-    const built = await buildItem(path.join(PRIMITIVES_DIR, file), file);
-    await writeFile(
-      path.join(OUT_DIR, `${built.name}.json`),
-      JSON.stringify(built, null, 2) + '\n',
-      'utf8',
-    );
-    index.items.push({
-      name: built.name,
-      type: built.type,
-      title: built.title,
-      description: built.description,
-    });
+    await writeItem(await buildItem(path.join(PRIMITIVES_DIR, file), file), index);
   }
 
   await writeFile(
@@ -289,7 +485,7 @@ const main = async () => {
   );
 
   console.log(
-    `Built ${files.length} primitive item(s) + 1 style item + ${STYLE_FILES.length} raw stylesheet(s) → ${OUT_DIR}`,
+    `Built ${files.length} primitive(s) + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) → ${OUT_DIR}`,
   );
 };
 

@@ -40,6 +40,12 @@ export default async function HomePage() {
             </span>
           </Link>
           <nav className="flex items-center gap-5 text-sm">
+            <Link
+              href="/getting-started"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Getting started
+            </Link>
             <a
               href={STORYBOOK_URL}
               className="text-muted-foreground hover:text-foreground transition-colors"

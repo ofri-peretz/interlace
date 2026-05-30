@@ -1,0 +1,52 @@
+{
+  "name": "@interlace/foundation",
+  "version": "0.1.0",
+  "description": "Interlace design system — CSS baseline (tokens, foundation, preflight, theme, brand). The contract every Interlace surface honors, distributed as plain CSS for any framework.",
+  "keywords": [
+    "design-system",
+    "tokens",
+    "preflight",
+    "tailwind",
+    "css",
+    "interlace"
+  ],
+  "homepage": "https://interlace.tools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ofri-peretz/interlace.git",
+    "directory": "packages/foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/ofri-peretz/interlace/issues"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "default": "./styles/index.css"
+    },
+    "./tokens.css": "./styles/tokens.css",
+    "./foundation.css": "./styles/foundation.css",
+    "./preflight.css": "./styles/preflight.css",
+    "./theme.css": "./styles/theme.css",
+    "./interlace-theme.css": "./styles/interlace-theme.css",
+    "./index.css": "./styles/index.css"
+  },
+  "files": [
+    "styles/*.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "sync": "node scripts/sync-from-ui.mjs",
+    "sync:check": "node scripts/sync-from-ui.mjs --check",
+    "prepublishOnly": "node scripts/sync-from-ui.mjs --check",
+    "build": "node scripts/sync-from-ui.mjs",
+    "typecheck": "echo 'foundation is css-only — no typecheck'"
+  }
+}

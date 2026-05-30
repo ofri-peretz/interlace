@@ -1,0 +1,62 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+# Cancel any in-flight release run when a new commit lands. Two releases can't
+# safely race on the same npm package version.
+concurrency:
+  group: release-${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # creating the Version Packages PR + tags
+  pull-requests: write
+  id-token: write   # required for npm provenance attestations
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+
+jobs:
+  release:
+    name: changesets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # changesets needs history to compute the version diff
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      # Refresh the synced CSS in @interlace/foundation so the tarball matches
+      # whatever's in packages/ui/styles/ on this commit. The publish step
+      # also runs sync:check in prepublishOnly — this is a belt-and-braces.
+      - name: Sync foundation from @interlace/ui sources
+        run: npm run sync --workspace=@interlace/foundation
+
+      - name: Build
+        run: npm run build
+
+      - name: Changesets — version or publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: npm run publish-packages
+          version: npm run version-packages
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"

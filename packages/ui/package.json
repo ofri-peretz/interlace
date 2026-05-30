@@ -144,10 +144,6 @@
       "types": "./dist/primitives/progress.d.ts",
       "default": "./dist/primitives/progress.js"
     },
-    "./progress": {
-      "types": "./dist/primitives/progress.d.ts",
-      "default": "./dist/primitives/progress.js"
-    },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
       "default": "./dist/primitives/label.js"
@@ -188,6 +184,18 @@
       "types": "./dist/primitives/stack.d.ts",
       "default": "./dist/primitives/stack.js"
     },
+    "./skip-link": {
+      "types": "./dist/primitives/skip-link.d.ts",
+      "default": "./dist/primitives/skip-link.js"
+    },
+    "./visually-hidden": {
+      "types": "./dist/primitives/visually-hidden.d.ts",
+      "default": "./dist/primitives/visually-hidden.js"
+    },
+    "./focus-ring": {
+      "types": "./dist/primitives/focus-ring.d.ts",
+      "default": "./dist/primitives/focus-ring.js"
+    },
     "./meteors": {
       "types": "./dist/primitives/meteors.d.ts",
       "default": "./dist/primitives/meteors.js"
@@ -223,6 +231,58 @@
     "./blocks/hero": {
       "types": "./dist/blocks/hero.d.ts",
       "default": "./dist/blocks/hero.js"
+    },
+    "./blocks/figure": {
+      "types": "./dist/blocks/figure.d.ts",
+      "default": "./dist/blocks/figure.js"
+    },
+    "./blocks/author-byline": {
+      "types": "./dist/blocks/author-byline.d.ts",
+      "default": "./dist/blocks/author-byline.js"
+    },
+    "./blocks/prev-next-post": {
+      "types": "./dist/blocks/prev-next-post.d.ts",
+      "default": "./dist/blocks/prev-next-post.js"
+    },
+    "./blocks/newsletter-form": {
+      "types": "./dist/blocks/newsletter-form.d.ts",
+      "default": "./dist/blocks/newsletter-form.js"
+    },
+    "./blocks/share-buttons": {
+      "types": "./dist/blocks/share-buttons.d.ts",
+      "default": "./dist/blocks/share-buttons.js"
+    },
+    "./blocks/related-posts": {
+      "types": "./dist/blocks/related-posts.d.ts",
+      "default": "./dist/blocks/related-posts.js"
+    },
+    "./callout": {
+      "types": "./dist/primitives/callout.d.ts",
+      "default": "./dist/primitives/callout.js"
+    },
+    "./prose": {
+      "types": "./dist/primitives/prose.d.ts",
+      "default": "./dist/primitives/prose.js"
+    },
+    "./code-block": {
+      "types": "./dist/primitives/code-block.d.ts",
+      "default": "./dist/primitives/code-block.js"
+    },
+    "./tag": {
+      "types": "./dist/primitives/tag.d.ts",
+      "default": "./dist/primitives/tag.js"
+    },
+    "./toc": {
+      "types": "./dist/primitives/toc.d.ts",
+      "default": "./dist/primitives/toc.js"
+    },
+    "./reading-time": {
+      "types": "./dist/primitives/reading-time.d.ts",
+      "default": "./dist/primitives/reading-time.js"
+    },
+    "./published-date": {
+      "types": "./dist/primitives/published-date.d.ts",
+      "default": "./dist/primitives/published-date.js"
     },
     "./patterns/hero-cosmic": {
       "types": "./dist/patterns/hero-cosmic.d.ts",

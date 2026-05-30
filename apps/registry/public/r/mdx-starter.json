@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mdx-starter",
+  "type": "registry:ui",
+  "title": "MDX Starter",
+  "description": "@interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.",
+  "dependencies": [],
+  "registryDependencies": [
+    "callout",
+    "prose",
+    "code-block",
+    "tag",
+    "figure",
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/starters/mdx-starter.md",
+      "target": "components/ui/INTERLACE-MDX-STARTER.md",
+      "type": "registry:file",
+      "content": "# @interlace/mdx-starter\n\nInstalled:\n\n- `Callout` — info / warn / danger / success / note prose annotations.\n- `Prose` — typographic article-body wrapper.\n- `CodeBlock` — Shiki-rendered fenced code with copy button.\n- `Tag` + `TagList` — article tag badges.\n- `Figure` — image + caption + alt + AspectRatio.\n- `theme` — full DS CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n"
+    }
+  ]
+}

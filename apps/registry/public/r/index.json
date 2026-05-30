@@ -7,7 +7,37 @@
       "name": "theme",
       "type": "registry:style",
       "title": "Interlace Theme",
-      "description": "@interlace/ui — brand tokens, shadcn-token bridge, and animation keyframes consumed by every primitive."
+      "description": "@interlace/ui — full DS CSS baseline: tokens, foundation (type/spacing/radius), preflight (focus ring + min-viewport contract), shadcn↔fumadocs bridge, and brand palette."
+    },
+    {
+      "name": "a11y-starter",
+      "type": "registry:ui",
+      "title": "A11y Starter",
+      "description": "@interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one."
+    },
+    {
+      "name": "layout-starter",
+      "type": "registry:ui",
+      "title": "Layout Starter",
+      "description": "@interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied."
+    },
+    {
+      "name": "mdx-starter",
+      "type": "registry:ui",
+      "title": "MDX Starter",
+      "description": "@interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx."
+    },
+    {
+      "name": "cn",
+      "type": "registry:lib",
+      "title": "cn — class-name merge utility",
+      "description": "@interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically."
+    },
+    {
+      "name": "use-reduced-motion",
+      "type": "registry:lib",
+      "title": "useReducedMotion hook",
+      "description": "@interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference."
     },
     {
       "name": "accordion",
@@ -64,6 +94,12 @@
       "description": "@interlace/ui — button primitive (shadcn-compatible)."
     },
     {
+      "name": "callout",
+      "type": "registry:ui",
+      "title": "Callout",
+      "description": "@interlace/ui — callout primitive (shadcn-compatible)."
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
@@ -74,6 +110,12 @@
       "type": "registry:ui",
       "title": "Checkbox",
       "description": "@interlace/ui — checkbox primitive (shadcn-compatible)."
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "@interlace/ui — code-block primitive (shadcn-compatible)."
     },
     {
       "name": "collapsible",
@@ -98,6 +140,12 @@
       "type": "registry:ui",
       "title": "Dropdown Menu",
       "description": "@interlace/ui — dropdown-menu primitive (shadcn-compatible)."
+    },
+    {
+      "name": "focus-ring",
+      "type": "registry:ui",
+      "title": "Focus Ring",
+      "description": "@interlace/ui — focus-ring primitive (shadcn-compatible)."
     },
     {
       "name": "form",
@@ -160,10 +208,28 @@
       "description": "@interlace/ui — progress primitive (shadcn-compatible)."
     },
     {
+      "name": "prose",
+      "type": "registry:ui",
+      "title": "Prose",
+      "description": "@interlace/ui — prose primitive (shadcn-compatible)."
+    },
+    {
+      "name": "published-date",
+      "type": "registry:ui",
+      "title": "Published Date",
+      "description": "@interlace/ui — published-date primitive (shadcn-compatible)."
+    },
+    {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
       "description": "@interlace/ui — radio-group primitive (shadcn-compatible)."
+    },
+    {
+      "name": "reading-time",
+      "type": "registry:ui",
+      "title": "Reading Time",
+      "description": "@interlace/ui — reading-time primitive (shadcn-compatible)."
     },
     {
       "name": "scroll-area",
@@ -202,6 +268,12 @@
       "description": "@interlace/ui — skeleton primitive (shadcn-compatible)."
     },
     {
+      "name": "skip-link",
+      "type": "registry:ui",
+      "title": "Skip Link",
+      "description": "@interlace/ui — skip-link primitive (shadcn-compatible)."
+    },
+    {
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
@@ -226,6 +298,12 @@
       "description": "@interlace/ui — tabs primitive (shadcn-compatible)."
     },
     {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag",
+      "description": "@interlace/ui — tag primitive (shadcn-compatible)."
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
@@ -236,6 +314,12 @@
       "type": "registry:ui",
       "title": "Toast",
       "description": "@interlace/ui — toast primitive (shadcn-compatible)."
+    },
+    {
+      "name": "toc",
+      "type": "registry:ui",
+      "title": "Toc",
+      "description": "@interlace/ui — toc primitive (shadcn-compatible)."
     },
     {
       "name": "toggle",
@@ -254,6 +338,12 @@
       "type": "registry:ui",
       "title": "Typography",
       "description": "@interlace/ui — typography primitive (shadcn-compatible)."
+    },
+    {
+      "name": "visually-hidden",
+      "type": "registry:ui",
+      "title": "Visually Hidden",
+      "description": "@interlace/ui — visually-hidden primitive (shadcn-compatible)."
     }
   ]
 }
