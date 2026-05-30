@@ -32,13 +32,30 @@ html {
     sans-serif;
 }
 
-body {
+/* Paint the themed surface on `html`, `body`, AND `#storybook-root`.
+ *
+ * axe-core's contrast walker stops at the nearest ancestor with a defined
+ * background color when scoring text contrast. Storybook's own
+ * `.sb-show-main` doesn't paint, but `#storybook-root` is the element passed
+ * to `axe.run(...)` — if no ancestor up to and including `<html>` paints,
+ * axe defaults to `#ffffff`. That defaults dark-mode stories to ~1.16:1
+ * contrast (light-on-white) and every dark story fails.
+ *
+ * Painting all three ancestors (with `currentColor`-style cascade via the
+ * token vars) guarantees the dark `.dark { --background: #0a0a0f }` cascade
+ * always reaches axe's nearest-painted-ancestor check.
+ */
+html,
+body,
+#storybook-root {
   background: var(--background);
   color: var(--foreground);
 }
 
 .sb-show-main {
   padding: 1.5rem;
+  background: var(--background);
+  color: var(--foreground);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -114,22 +114,28 @@ jobs:
           retention-days: 7
           if-no-files-found: error
 
-  # ─── Gate 7: storybook a11y / axe (advisory, soft-launch) ─────────────
+  # ─── Gate 7: storybook a11y / axe (HARD GATE) ─────────────────────────
   # Renders every story headlessly and runs axe-core against it (wcag2aa,
   # wcag22aa, best-practice, ACT). Test-runner is already configured at
   # apps/storybook/test-runner.ts — this just fires it.
   #
-  # SOFT-LAUNCH: `continue-on-error: true` lets the job report findings
-  # without blocking the merge. First run surfaced ~37 real violations
-  # across 14 stories (color-contrast on muted text, missing aria-label
-  # on icon-only buttons in stories, Base UI ARIA props in
-  # Slider/Progress/NumberField). Fixing those is tracked separately;
-  # once green, drop `continue-on-error` to make this a hard gate.
+  # The first run surfaced 37 violations across 14 stories. All of them
+  # were fixed in this PR: muted-foreground / destructive token contrast
+  # bumps (interlace-theme.css), tabindex=0 on overflowing pre/table
+  # (Prose + CodeBlock primitives), aria-label on Progress / Slider /
+  # NumberField / Icons-grid stories, unique aria-label per nav landmark
+  # in Breadcrumb + PrevNextPost variants, role="toolbar" on ToggleGroup
+  # so aria-orientation is valid, html-class toggle in `withDark` so axe
+  # walks the painted dark surface, surface paint on
+  # html/body/#storybook-root in preview.css, and the
+  # backgrounds-addon-disabled fix so it doesn't inline a white body
+  # background that out-specifies the cascade.
+  #
+  # NO `continue-on-error` — a regression here fails the PR.
   storybook-a11y:
-    name: storybook (a11y · advisory)
+    name: storybook (a11y)
     needs: storybook-build
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

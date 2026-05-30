@@ -60,7 +60,13 @@ const PRIMITIVES = [
   { name: 'focus-ring', viewport: 320, tier: 'server' },
   // B — blog primitives (this PR)
   { name: 'callout', viewport: 320, tier: 'server' },
-  { name: 'prose', viewport: 320, tier: 'server' },
+  // Prose is client-tier because it uses useLayoutEffect to inject
+  // tabindex="0" on overflowing <pre>/<table> descendants — axe's
+  // `scrollable-region-focusable` requires those regions to be keyboard
+  // reachable, and the wrapper can't satisfy that contract without
+  // DOM access. The article surface itself still SSRs; only the
+  // a11y attribute fix-up runs on the client after hydration.
+  { name: 'prose', viewport: 320, tier: 'client' },
   { name: 'code-block', viewport: 320, tier: 'client' },
   { name: 'tag', viewport: 320, tier: 'server' },
   { name: 'toc', viewport: 480, tier: 'client' },

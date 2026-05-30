@@ -346,12 +346,16 @@ function IconDontDoSpecimen() {
             </Stack>
           </Box>
 
-          {/* Bad: icon-only, no label — visually struck through */}
+          {/* Bad: icon-only, no label — visual treatment (strike + reduced
+              opacity) applied ONLY to the demo button so the surrounding
+              labels keep full token contrast. Previously the opacity-70 was
+              on the outer wrapper, which dragged the destructive caption to
+              ~3.8:1 — below AA — even after the red-700 token bump. */}
           <Box
             border
             radius="md"
             padding="md"
-            className="bg-background line-through opacity-70"
+            className="bg-background"
             data-slot="dont"
           >
             <Stack gap="sm">
@@ -360,7 +364,14 @@ function IconDontDoSpecimen() {
               </Typography>
               <button
                 type="button"
-                className="border-border bg-background text-foreground inline-flex size-9 items-center justify-center rounded-sm border"
+                // INTENTIONAL bad-example demonstrating "icon-only button
+                // without context". For axe + screen readers we still need
+                // *some* accessible name, so the label calls out the
+                // anti-pattern explicitly — keeping the visual story honest
+                // (no visible label) while preventing axe from failing the
+                // entire story over the very pattern it's documenting.
+                aria-label="Anti-pattern demo — icon-only button without a meaningful label. Do not copy."
+                className="border-border bg-background text-foreground inline-flex size-9 items-center justify-center rounded-sm border line-through opacity-70"
               >
                 <Trash className="size-5" strokeWidth={1.5} />
               </button>

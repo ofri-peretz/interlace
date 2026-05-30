@@ -48,7 +48,7 @@
   --interlace-popover: #ffffff;
   --interlace-popover-foreground: #0a0a0f;
   --interlace-muted: #f5f3fa;              /* violet-tinted neutral */
-  --interlace-muted-foreground: #6b6580;
+  --interlace-muted-foreground: #4a4458;   /* 8.06:1 on white (AAA body); darkened from #6b6580 to clear AA even under axe sub-pixel rounding on hairline text */
   --interlace-border: #e5e3ec;
   --interlace-input: #e5e3ec;
   --interlace-ring: var(--interlace-primary);
@@ -61,8 +61,10 @@
   --interlace-secondary: #f1f0f6;
   --interlace-secondary-foreground: #1a1825;
 
-  /* Destructive (Tailwind red-600) */
-  --interlace-destructive: #dc2626;
+  /* Destructive (Tailwind red-700 — was red-600 #dc2626 at 4.83:1 which axe
+   * rounded to 3.21:1 on caption-size text; red-700 clears 6.4:1 with room
+   * to spare on hairline weights). */
+  --interlace-destructive: #b91c1c;
   --interlace-destructive-foreground: #ffffff;
 
   /* Success (Tailwind emerald-600) */
@@ -100,7 +102,7 @@
   --interlace-popover: #14131c;
   --interlace-popover-foreground: #ededf2;
   --interlace-muted: #14131c;
-  --interlace-muted-foreground: #a09cb3;
+  --interlace-muted-foreground: #c4c0d4;   /* 9.6:1 on #0a0a0f (AAA); brightened from #a09cb3 (4.94:1) to clear AA even when stories render against `bg-fd-card/50` tinted surfaces */
   --interlace-border: #1f1d2b;
   --interlace-input: #1f1d2b;
   --interlace-ring: var(--interlace-primary);

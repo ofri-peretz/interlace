@@ -46,7 +46,7 @@ export const Default: Story = {
           {args.value}%
         </span>
       </div>
-      <Progress {...args} />
+      <Progress {...args} aria-label="Upload progress" />
     </div>
   ),
 };
@@ -95,7 +95,13 @@ function SizeRow({
         {size}
       </div>
       {TONES.map((tone) => (
-        <Progress key={`${size}-${tone}`} size={size} tone={tone} value={value} />
+        <Progress
+          key={`${size}-${tone}`}
+          size={size}
+          tone={tone}
+          value={value}
+          aria-label={`Progress ${size} ${tone} at ${value}%`}
+        />
       ))}
     </>
   );
@@ -124,7 +130,12 @@ export const BelowMinViewport: Story = {
         </span>
         <span className="text-muted-foreground tabular-nums">66%</span>
       </div>
-      <Progress value={66} size="md" tone="default" />
+      <Progress
+        value={66}
+        size="md"
+        tone="default"
+        aria-label="Below-min-viewport demo progress"
+      />
     </div>
   ),
   decorators: [

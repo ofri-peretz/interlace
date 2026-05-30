@@ -44,19 +44,29 @@ export const Variants: Story = {
         <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           both
         </div>
-        <PrevNextPost prev={prev} next={next} />
+        <PrevNextPost
+          prev={prev}
+          next={next}
+          aria-label="Article navigation — both"
+        />
       </div>
       <div>
         <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           only next (first post in series)
         </div>
-        <PrevNextPost next={next} />
+        <PrevNextPost
+          next={next}
+          aria-label="Article navigation — only next"
+        />
       </div>
       <div>
         <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           only prev (last post in series)
         </div>
-        <PrevNextPost prev={prev} />
+        <PrevNextPost
+          prev={prev}
+          aria-label="Article navigation — only prev"
+        />
       </div>
       <div>
         <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
@@ -65,6 +75,7 @@ export const Variants: Story = {
         <PrevNextPost
           prev={{ ...prev, kicker: 'Chapter 2' }}
           next={{ ...next, kicker: 'Chapter 4' }}
+          aria-label="Article navigation — custom kickers"
         />
       </div>
     </div>

@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Toast,
-  ToastTitle,
-  ToastDescription,
   ToastProvider,
   ToastTrigger,
   MIN_VIEWPORT,
@@ -75,12 +73,25 @@ const TONES = [
  */
 export const Default: Story = {
   render: () => (
+    // Static screenshot story — uses plain heading/text inside Toast surfaces
+    // instead of `<ToastTitle>` / `<ToastDescription>` (which wrap Base UI
+    // parts that require a `ToastProvider` + active `toast` context).
+    // Base UI 1.5 throws error #66 if these parts render without that
+    // context, even inside a `ToastProvider` — they expect a toast OBJECT,
+    // not just a manager. The Imperative `Variants` story below shows the
+    // full provider + trigger wiring for the runtime path.
     <div className="flex w-[420px] flex-col gap-sm">
       {TONES.map(({ tone, Icon, title, description }) => (
         <Toast key={tone} tone={tone}>
           <Icon className="size-4" aria-hidden />
-          <ToastTitle>{title}</ToastTitle>
-          <ToastDescription>{description}</ToastDescription>
+          <div className="flex flex-col gap-xs">
+            <h2 className="font-body text-ui font-semibold text-card-foreground">
+              {title}
+            </h2>
+            <p className="font-body text-ui-sm text-muted-foreground">
+              {description}
+            </p>
+          </div>
         </Toast>
       ))}
     </div>
@@ -132,10 +143,14 @@ export const BelowMinViewport: Story = {
     <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
       <Toast tone="info">
         <Info className="size-4" aria-hidden />
-        <ToastTitle>{`< ${MIN_VIEWPORT}px — dev outline`}</ToastTitle>
-        <ToastDescription>
-          Toast still renders below the documented minimum viewport.
-        </ToastDescription>
+        <div className="flex flex-col gap-xs">
+          <h2 className="font-body text-ui font-semibold text-card-foreground">
+            {`< ${MIN_VIEWPORT}px — dev outline`}
+          </h2>
+          <p className="font-body text-ui-sm text-muted-foreground">
+            Toast still renders below the documented minimum viewport.
+          </p>
+        </div>
       </Toast>
     </div>
   ),

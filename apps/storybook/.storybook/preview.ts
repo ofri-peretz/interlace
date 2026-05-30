@@ -11,14 +11,14 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    backgrounds: {
-      default: 'light',
-      values: [
-        { name: 'light', value: '#ffffff' },
-        { name: 'dark', value: '#09090b' },
-        { name: 'card', value: '#fafafa' },
-      ],
-    },
+    // Backgrounds addon DISABLED: it injects an inline `body { background:
+     // … }` style that wins over the token-cascade-driven CSS, painting
+     // every story on the addon's default (light) regardless of the theme
+     // class on <html>. axe then scores dark-mode text on a white body and
+     // fails contrast at ~1.16:1. The theme switcher in this preview already
+     // drives surface color via `--background` / `--foreground`; the
+     // backgrounds picker is redundant for our use-case.
+    backgrounds: { disable: true },
     a11y: {
       // Strict tag stack — matches apps/docs/e2e/a11y.spec.ts and the
       // test-runner gate. Keep these in sync: any tag added here must also
@@ -75,6 +75,15 @@ const preview: Preview = {
         dark: 'dark',
       },
       defaultTheme: 'light',
+      // CRITICAL for a11y contrast scoring: by default the addon puts the
+      // theme class on a story-wrapper <div>, which means `body` resolves
+      // `var(--background)` from `:root` (light) instead of `.dark`. axe
+      // then scores dark-mode foreground (`#ededf2`) against the unchanged
+      // white body and every dark story fails with contrast ~1.1:1.
+      // Lifting the class to `<html>` makes `body { background-color:
+      // var(--background) }` see the `.dark`-scoped token, painting the
+      // iframe body near-black and giving axe the correct backdrop.
+      parentSelector: 'html',
     }),
   ],
   // No global `autodocs` tag. With autodocs on, every component's sidebar
