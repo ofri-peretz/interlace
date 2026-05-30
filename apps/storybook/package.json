@@ -13,6 +13,7 @@
     "test-storybook:ci": "concurrently -k -s first -n SB,TEST \"http-server storybook-static -p 6006 -s\" \"wait-on tcp:6006 && test-storybook --config-dir .storybook --url http://localhost:6006\""
   },
   "dependencies": {
+    "@base-ui/react": "^1.4.1",
     "@interlace/ui": "*",
     "fumadocs-twoslash": "^3.2.0",
     "fumadocs-ui": "^16.8.7",
