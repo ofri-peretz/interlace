@@ -66,3 +66,73 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run build
+
+  # ─── Gate 5: registry drift ────────────────────────────────────────────
+  # `apps/registry/scripts/build-registry.mjs --check` rebuilds every item
+  # in memory and diffs against the committed `public/r/*.json`. Catches the
+  # case where someone edits a primitive's source but forgets to re-run the
+  # registry generator before pushing.
+  registry-drift:
+    name: registry (drift)
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Check registry items match sources
+        run: node apps/registry/scripts/build-registry.mjs --check
+
+  # ─── Gate 6: storybook static build ────────────────────────────────────
+  # Catches story-side API drift (a story importing a name the primitive no
+  # longer exports). Caught this 3× during PR #1 — wiring it as a gate
+  # prevents the same surprise next time.
+  storybook-build:
+    name: storybook (build)
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      # The registry/landing apps build first via turbo's dep graph; storybook
+      # build is the leaf node that exercises every story file.
+      - run: npm run build-storybook --workspace=@interlace/storybook
+      - name: Upload static build
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/storybook/storybook-static
+          retention-days: 7
+          if-no-files-found: error
+
+  # ─── Gate 7: storybook a11y / axe ──────────────────────────────────────
+  # Renders every story headlessly and runs axe-core against it (wcag2aa,
+  # wcag22aa, best-practice, ACT). Fails on any violation. Test-runner is
+  # already configured at apps/storybook/test-runner.ts — this just fires it.
+  storybook-a11y:
+    name: storybook (a11y)
+    needs: storybook-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Install Playwright browsers (test-runner uses chromium)
+        run: npx playwright install --with-deps chromium
+      - name: Restore storybook static build
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/storybook/storybook-static
+      - name: Run axe against every story
+        run: npm run test-storybook:ci --workspace=@interlace/storybook
