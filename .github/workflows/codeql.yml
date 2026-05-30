@@ -1,0 +1,62 @@
+name: codeql
+
+# GitHub's free security analysis for public repos. Catches the SQL-injection /
+# XSS / prototype-pollution class of bugs before they ship — even when no
+# explicit unit test for them exists. Runs on every PR, every push to main,
+# and once a week on schedule (catches CVE additions to the rule database
+# even when the repo is quiet).
+#
+# Free + unlimited on public repos. Reports show up under Security → Code
+# scanning, with one alert per finding. Branch protection can require the
+# `Analyze (javascript-typescript)` check to be green before merge.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly Sunday 04:00 UTC — picks up new CVE rules without waiting for
+    # the next push. Late enough to not collide with backup windows.
+    - cron: '0 4 * * 0'
+
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # `security-and-quality` is broader than the default `security-extended`;
+          # adds maintainability + reliability queries (e.g. unused imports,
+          # complexity hotspots). On a small public DS repo the noise budget is
+          # cheap and the signal is good.
+          queries: security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:${{ matrix.language }}'
