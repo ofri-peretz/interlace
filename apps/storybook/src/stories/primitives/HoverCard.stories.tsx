@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   HoverCard,
   HoverCardTrigger,
-  HoverCardContent,
+  HoverCardPopup,
   MIN_VIEWPORT,
 } from '@interlace/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@interlace/ui/avatar';
@@ -76,9 +76,9 @@ export const Default: Story = {
   render: () => (
     <HoverCard open>
       <HoverCardTrigger render={<UsernameLink />} />
-      <HoverCardContent className="w-80">
+      <HoverCardPopup className="w-80">
         <BioCard />
-      </HoverCardContent>
+      </HoverCardPopup>
     </HoverCard>
   ),
 };
@@ -95,9 +95,9 @@ export const Variants: Story = {
         <div key={side} className="flex items-center justify-center">
           <HoverCard open>
             <HoverCardTrigger render={<UsernameLink />} />
-            <HoverCardContent side={side} className="w-80">
+            <HoverCardPopup side={side} className="w-80">
               <BioCard />
-            </HoverCardContent>
+            </HoverCardPopup>
           </HoverCard>
         </div>
       ))}
@@ -126,9 +126,9 @@ export const BelowMinViewport: Story = {
     <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
       <HoverCard open>
         <HoverCardTrigger render={<UsernameLink />} />
-        <HoverCardContent className="w-72">
+        <HoverCardPopup className="w-72">
           <BioCard />
-        </HoverCardContent>
+        </HoverCardPopup>
       </HoverCard>
     </div>
   ),
