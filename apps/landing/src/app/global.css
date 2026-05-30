@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+/* Brand tokens — single source of truth synced from `interlace/docs-baseline`.
+ * Imported AFTER fumadocs presets so natural cascade order wins (no `!important`
+ * needed). NEVER duplicate token values here — edit `interlace/docs-baseline/
+ * css/brand.css` and re-sync. The previous duplicate-with-!important pattern
+ * caused dark-mode contrast bugs when the source bumped a value the consumer
+ * didn't see. */
+@import "../../.interlace/css/brand.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Scan fumadocs packages from app-level node_modules (symlinked to workspace root) */
+@source "../../node_modules/fumadocs-ui";
+
+/* Scan baseline components/layouts copy-synced from `interlace/docs-baseline`.
+ * Lives at the app root (sibling of `src/`), outside Next's default content
+ * scan — without this, classes referenced only inside `.interlace/` (e.g.
+ * `text-purple-950` on the hero CTA) aren't compiled and the element falls
+ * back to inherited color, causing a contrast bug. */
+@source "../../.interlace";
+
+/* Shared animation keyframes + utility classes — single source of truth
+ * synced from `interlace/docs-baseline/css/animations.css`. Covers spotlight
+ * (Aceternity), shimmer-slide / spin-around (MagicUI shimmer-button),
+ * fade-in-up / slide-in-left / scale-in (entry animations), border-beam,
+ * marquee, and the background-gradient animation set. NEVER hand-roll
+ * keyframes here — add them to the baseline source instead so every
+ * consumer + the storybook gets them automatically. */
+@import "../../.interlace/css/animations.css";
+
+/* MDX table cells with long inline code (package names like
+ * `@interlace/eslint-plugin-vercel-ai-security`) break the table layout at
+ * mobile widths because `<code>` defaults to `word-break: normal`. Force
+ * break-on-any-char inside table cells only — body prose still wraps on
+ * spaces. Locked by `src/__tests__/mdx-table-code-wrap-lock.test.ts`. */
+.prose table code,
+[class*="prose"] table code,
+.fd-page article table code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

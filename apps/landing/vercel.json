@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "cd ../.. && npm run docs-baseline:sync && npm run build --workspace=@interlace/landing",
+  "installCommand": "cd ../.. && rm -f package-lock.json && npm install --include=optional",
+  "git": {
+    "deploymentEnabled": false
+  }
+}

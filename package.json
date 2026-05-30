@@ -1,0 +1,40 @@
+{
+  "name": "interlace",
+  "version": "1.0.0",
+  "description": "The Interlace community: design system (@interlace/ui), Storybook (storybook.interlace.tools), and the interlace.tools landing page.",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "npm@11.6.2",
+  "homepage": "https://interlace.tools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ofri-peretz/interlace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ofri-peretz/interlace/issues"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "prepare": "[ -d .git ] && lefthook install || true",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "ci:local": "lefthook run pre-push --all-files --force"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "lefthook": "^1.7.0",
+    "prettier": "^3.4.0",
+    "tsx": "^4.19.0",
+    "turbo": "^2.9.0",
+    "typescript": "^5.7.0"
+  }
+}

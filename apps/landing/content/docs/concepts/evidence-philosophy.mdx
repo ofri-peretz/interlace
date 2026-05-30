@@ -1,0 +1,35 @@
+---
+title: Evidence philosophy
+description: Why every Interlace product ships with measured comparisons instead of marketing claims.
+---
+
+Most plugin READMEs say things like "faster", "lighter", "more secure" without saying "than what" or "by how much." Interlace doesn't.
+
+## The contract
+
+Every comparative claim across every Interlace product must:
+
+1. Name what it's compared to (the alternative, with a specific version).
+2. Cite a versioned result file (a JSON benchmark, a measurement script).
+3. Be reproducible by anyone who clones the repo.
+
+If a claim cannot meet all three, it doesn't ship.
+
+## Where claims appear
+
+Each product's docs have two canonical pages:
+
+- A **landscape** page — the comparison table for that product, backed by versioned benchmark result files.
+- A **how-we-measure** page — the methodology: what each metric means, who's in the comparison set, why the rubric is fair.
+
+This apex site aggregates them in [the cross-product landscape](/docs/reference/landscape) and explains the shared rubric in [how we measure](/docs/concepts/how-we-measure).
+
+## Why this is hard but worth it
+
+It would be much easier to write "blazingly fast" without measuring. But:
+
+- Users have been burned too many times by README claims that don't survive their actual workload.
+- The discipline of having to measure forces real design decisions during development, not after.
+- A versioned benchmark ages well — a vague claim doesn't.
+
+The contract is the same one every Interlace product agrees to follow — see [how we measure](/docs/concepts/how-we-measure) for the four-axis rubric and what reproducibility means in practice.

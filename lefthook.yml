@@ -1,0 +1,27 @@
+# Git hooks for the Interlace community repo.
+#
+# Pre-commit: fast, file-scoped — typecheck + format on staged files only.
+# Commit-msg: enforce conventional-commits via commitlint.
+# Pre-push: full CI battery so the developer ships green without waiting on
+#   GitHub Actions feedback.
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no commitlint --edit {1}
+
+pre-commit:
+  parallel: true
+  commands:
+    commitlint:
+      run: 'true'
+
+pre-push:
+  parallel: true
+  commands:
+    typecheck:
+      run: npx --no turbo run typecheck --output-logs=errors-only
+    test:
+      run: npx --no turbo run test --output-logs=errors-only
+    build:
+      run: npx --no turbo run build --output-logs=errors-only

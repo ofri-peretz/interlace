@@ -1,0 +1,42 @@
+---
+title: How we measure
+description: The rubric behind every Interlace claim — what the metrics mean, who's in the comparison set, why the methodology is fair.
+---
+
+Each product has its own per-product methodology page (e.g. ESLint's [how-we-measure](https://eslint.interlace.tools/docs/concepts/how-we-measure)). This page explains the **shared rubric** that every product builds on.
+
+## The four-axis rubric
+
+Every Interlace benchmark reports against four axes, regardless of product domain:
+
+| Axis            | Question it answers                                                                                                                           |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Correctness** | Does the tool catch what it claims to catch? Run against a corpus with known-positive and known-negative inputs; report precision and recall. |
+| **Performance** | How long does it take on a representative workload? Wall-clock, CPU time, memory peak.                                                        |
+| **Footprint**   | What does the user have to install — runtime deps, bundle size, peer-dep surface?                                                             |
+| **Ergonomics**  | How much config is required to make it useful? Lines of YAML, lines of TS, error-message quality.                                             |
+
+Per-product pages add domain-specific axes (e.g. ESLint adds rule-coverage; Serverless adds deployment-time impact).
+
+## Comparison set selection
+
+The comparison set for any benchmark must be:
+
+- **Public and named** — every alternative is linked, with the exact version benchmarked.
+- **Representative** — if a category has a clear leader, it's in the set; we don't cherry-pick weak comparisons.
+- **Currently maintained** — abandoned packages are noted but not used as the headline comparison.
+
+## Reproducibility
+
+Every benchmark suite ships with:
+
+- A `README.md` that explains how to run it.
+- A `latest.json` result file in the repo, with a timestamp and the host machine specs.
+- Pinned dependency versions — the result is what you get when you run it on the same inputs against the same versions.
+
+## Where to look
+
+| Product                   | Suite location                                                                                     | Methodology                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `@interlace/eslint-*`     | [eslint/packages/benchmarks/](https://github.com/ofri-peretz/eslint/tree/main/packages/benchmarks) | [eslint.interlace.tools/docs/concepts/how-we-measure](https://eslint.interlace.tools/docs/concepts/how-we-measure)         |
+| `@interlace/serverless-*` | (in development)                                                                                   | [serverless.interlace.tools/docs/concepts/how-we-measure](https://serverless.interlace.tools/docs/concepts/how-we-measure) |

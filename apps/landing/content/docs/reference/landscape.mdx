@@ -1,0 +1,30 @@
+---
+title: Landscape
+description: Cross-product comparison — every Interlace tool against its alternatives, scored on the four-axis rubric.
+---
+
+This page aggregates the comparison tables from every Interlace product. For methodology, see [how we measure](/docs/concepts/how-we-measure).
+
+## ESLint plugin suite
+
+For the per-plugin landscape with full benchmarks, see [eslint.interlace.tools/docs/getting-started/concepts/ecosystem](https://eslint.interlace.tools/docs/getting-started/concepts/ecosystem).
+
+| Plugin                                        | Replaces / competes with                     | Headline metric                                          |
+| --------------------------------------------- | -------------------------------------------- | -------------------------------------------------------- |
+| `@interlace/eslint-plugin-jwt`                | hand-rolled rules                            | Catches all CWE-345 cases in the test corpus             |
+| `@interlace/eslint-plugin-mongodb-security`   | partial coverage in `eslint-plugin-security` | Detects $where injection patterns the alternative misses |
+| `@interlace/eslint-plugin-react-a11y`         | `eslint-plugin-jsx-a11y`                     | Comparable correctness, ~30% faster on large codebases   |
+| `@interlace/eslint-plugin-vercel-ai-security` | (no direct alternative)                      | First plugin to cover Vercel AI SDK threat model         |
+
+## Serverless plugin suite
+
+For per-plugin benchmarks, see [serverless.interlace.tools/docs/reference/landscape](https://serverless.interlace.tools/docs/reference/landscape).
+
+| Plugin                                      | Replaces                         | Headline metric                                                  |
+| ------------------------------------------- | -------------------------------- | ---------------------------------------------------------------- |
+| `@interlace/serverless-api-gateway-caching` | `serverless-api-gateway-caching` | Removes ghost billing — disables cache cluster on stack deletion |
+| `@interlace/serverless-devkit`              | hand-rolled config helpers       | Type-safe `defineConfig()` / `defineFunction()`                  |
+
+## What "headline metric" means
+
+One metric per row, chosen as the most important _user-facing_ difference. Every plugin's full result file (with all four axes scored) is linked from its product page.

@@ -1,0 +1,38 @@
+---
+title: Ecosystem map
+description: The products in the Interlace family today, where each one lives, and what each one solves.
+---
+
+Each Interlace product is a separate package suite with its own subdomain, its own release cadence, and its own evidence files. They share a brand and a docs experience so they feel like the same product line — but each one is independently installable and independently versioned.
+
+## The products today
+
+### `@interlace/eslint-*`
+
+A suite of ESLint plugins for security, accessibility, and modern framework correctness. Each plugin ships with a measured corpus and an explicit comparison set against the existing alternatives in its category.
+
+- **Read:** [eslint.interlace.tools](https://eslint.interlace.tools)
+- **Sample plugins:** `eslint-plugin-jwt`, `eslint-plugin-mongodb-security`, `eslint-plugin-react-a11y`, `eslint-plugin-vercel-ai-security`
+
+### `@interlace/serverless-*`
+
+TypeScript-native replacements for community Serverless Framework plugins. Cleanup on removal, CLI commands, no ghost billing — fixing the real problems that cost teams money and deploy time.
+
+- **Read:** [serverless.interlace.tools](https://serverless.interlace.tools)
+- **Sample plugins:** `serverless-api-gateway-caching`, `serverless-devkit`
+
+## How they relate
+
+Every product in the family agrees to the same **shared baseline**:
+
+- **Same docs experience** — same theme, same navigation, same components, same brand tokens.
+- **Same evidence contract** — every comparative claim cites a versioned, reproducible benchmark.
+- **Same primitives** — TypeScript-first config, zero ghost runtime dependencies, full IntelliSense everywhere.
+
+That's what "Interlace" guarantees as a label. When you install something with the `@interlace/` prefix, you're picking up these guarantees alongside whatever the specific package does.
+
+## Adding new products
+
+The line is intentionally small today. Future products will appear here when they ship, not before — every product on this page has a measured corpus, a real user, and shipped releases.
+
+If you have a use case Interlace doesn't cover yet, the best signal is to open an issue against an existing product asking for what's missing. The roadmap follows demand.
