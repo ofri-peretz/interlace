@@ -101,9 +101,11 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci --no-audit --no-fund
-      # The registry/landing apps build first via turbo's dep graph; storybook
-      # build is the leaf node that exercises every story file.
-      - run: npm run build-storybook --workspace=@interlace/storybook
+      # Use turbo so the dep graph fires `@interlace/ui#build` first —
+      # storybook stories import from compiled dist (per packages/ui
+      # `exports` map pointing at ./dist), so the package must be built
+      # before storybook resolves any `@interlace/ui/<x>` import.
+      - run: npx turbo run build-storybook --filter=@interlace/storybook
       - name: Upload static build
         uses: actions/upload-artifact@v4
         with:
