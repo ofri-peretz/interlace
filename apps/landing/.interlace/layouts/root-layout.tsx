@@ -48,7 +48,7 @@ export interface RootMetadataConfig {
   icons?: Metadata['icons'];
   /** Apple Web App config (status bar etc.) */
   appleWebApp?: Metadata['appleWebApp'];
-  /** Author info — defaults to Ofri Peretz / ofriperetz.dev */
+  /** Author info — defaults to the Interlace community / interlace.tools */
   author?: { name: string; url: string };
 }
 
@@ -70,8 +70,8 @@ export interface RootMetadataConfig {
  */
 export function createRootMetadata(config: RootMetadataConfig): Metadata {
   const author = config.author ?? {
-    name: 'Ofri Peretz',
-    url: 'https://ofriperetz.dev',
+    name: 'Interlace',
+    url: 'https://interlace.tools',
   };
 
   const og: Metadata['openGraph'] = {

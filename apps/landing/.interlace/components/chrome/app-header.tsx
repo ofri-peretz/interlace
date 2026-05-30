@@ -22,7 +22,7 @@ export function AppHeader() {
           href="/"
           className="text-sm font-semibold tracking-tight hover:text-foreground/80"
         >
-          ofri peretz
+          interlace
         </Link>
         <nav className="hidden items-center gap-6 sm:flex">
           {NAV_LINKS.map((link) => (

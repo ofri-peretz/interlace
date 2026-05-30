@@ -82,7 +82,7 @@
   /* Brand-accent tokens. The light-mode value clears WCAG AA (4.5:1)
    * against `#ffffff`. The legacy `#6366F1` was 4.09:1 — axe-flagged.
    * Darker indigo with same hue/chroma gets ~5.4:1. */
-  --color-brand-snappy: hsl(239, 70%, 58%);
+  --color-brand-accent: hsl(239, 70%, 58%);
 
   /* Decorative-primitive tokens — single source of truth for the literal
    * colors that used to be baked into individual `components/ui/` primitives.
@@ -154,7 +154,7 @@
   --color-fd-destructive-foreground: hsl(0, 0%, 100%);
 
   /* Brand-accent dark-mode lift. */
-  --color-brand-snappy: hsl(239, 80%, 75%);
+  --color-brand-accent: hsl(239, 80%, 75%);
 
   /* Decorative-primitive tokens — dark-mode tuning. Lift saturation so the
    * primitives stay visible against the near-black background. */

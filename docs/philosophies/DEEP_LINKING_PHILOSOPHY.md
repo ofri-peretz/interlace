@@ -8,7 +8,7 @@ inside the app. Anything less is broken deep linking.
 
 This document is the portable rulebook for routing in any SPA we ship — apps
 under `apps/`, the docs site itself, any future product front-end. It distills
-the same concepts that the `snappy-client-dashboard` deep-links specification
+the same concepts that any well-specified client-dashboard deep-link spec
 codifies in RFC-2119 form, scoped to what's universal across React /
 TanStack-Router / Next-Router consumers.
 
