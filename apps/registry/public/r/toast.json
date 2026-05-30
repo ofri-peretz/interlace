@@ -3,7 +3,7 @@
   "name": "toast",
   "type": "registry:ui",
   "title": "Toast",
-  "description": "@interlace/ui — toast primitive (shadcn-compatible).",
+  "description": "@interlace/ui — toast (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "class-variance-authority",

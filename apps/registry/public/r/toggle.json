@@ -3,7 +3,7 @@
   "name": "toggle",
   "type": "registry:ui",
   "title": "Toggle",
-  "description": "@interlace/ui — toggle primitive (shadcn-compatible).",
+  "description": "@interlace/ui — toggle (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "class-variance-authority"

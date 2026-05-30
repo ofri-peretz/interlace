@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "visually-hidden",
+  "type": "registry:ui",
+  "title": "Visually Hidden",
+  "description": "@interlace/ui — visually-hidden (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/visually-hidden.tsx",
+      "target": "components/ui/visually-hidden.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\n/**\n * @interlace/ui — VisuallyHidden\n *\n * A span (by default) that is **invisible to sighted users but exposed to\n * assistive tech**. Use it for labels, descriptions, and inline-context\n * strings that visual users don't need but screen-reader users do (e.g.\n * \"(opens in a new tab)\" suffix on an external link icon).\n *\n * Different from `display: none` and `visibility: hidden` — those remove\n * the node from the accessibility tree. This uses the canonical \"sr-only\"\n * positioning hack (1px × 1px clipped, off-screen) so the screen reader\n * still reaches the text.\n *\n * This is the component form of Tailwind's `sr-only` utility. Use the\n * component when you want a named, slot-aware element you can target in\n * stories / tests; use the utility when you're tweaking an existing\n * element's children inline.\n *\n * ## Anatomy\n *\n *   VisuallyHidden                    (span — data-min-viewport=320)\n *     └─ children                     (the screen-reader-only text)\n *\n * ## MIN_VIEWPORT — 320\n *\n * Screen-reader contract has no viewport constraint; we declare 320 because\n * the primitive may render inside narrow layouts and the contract should\n * still hold there.\n *\n * | Rule | Concept                          | Where in this file                                          |\n * | ---- | -------------------------------- | ----------------------------------------------------------- |\n * | R4   | Extends native el + as-prop      | `React.ComponentProps<'span'> & VisuallyHiddenProps`        |\n * | R6   | data-slot on root                | `data-slot=\"visually-hidden\"`                               |\n * | R7   | className merged + ...rest       | `cn('sr-only', className)` + `{...props}`                   |\n * | R10  | Composition seam                 | `as` prop lets consumers swap span → div / label / etc.     |\n * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |\n * | R18  | Tailwind only                    | Zero inline `style`; `sr-only` class only                   |\n * | R19  | Tokens only                      | No color tokens — invisible primitive                        |\n * | R25  | Server component                 | No hooks → no `'use client'`                                |\n * | R26  | A11y from native el              | sr-only contract = canonical 1px-clip positioning           |\n */\n\nexport const MIN_VIEWPORT = 320 as const;\n\ntype VisuallyHiddenProps = React.ComponentProps<'span'>;\n\n/**\n * Default `<span>` element. To label a form control with a visually-hidden\n * string, wrap your `<label htmlFor>` content with VisuallyHidden — the\n * outer span doesn't break label semantics; the inner text is still read.\n * For paragraph-level hidden content, wrap in a `<p className=\"sr-only\">`\n * directly (the utility is part of the DS preflight).\n */\nexport const VisuallyHidden = React.forwardRef<\n  HTMLSpanElement,\n  VisuallyHiddenProps\n>(({ className, children, ...props }, ref) => (\n  <span\n    ref={ref}\n    data-slot=\"visually-hidden\"\n    data-min-viewport={String(MIN_VIEWPORT)}\n    className={cn('sr-only', className)}\n    {...props}\n  >\n    {children}\n  </span>\n));\nVisuallyHidden.displayName = 'VisuallyHidden';\n"
+    }
+  ]
+}

@@ -12,11 +12,13 @@
 
 export type CategoryId =
   | 'foundation'
+  | 'a11y'
   | 'form'
   | 'overlay'
   | 'feedback'
   | 'navigation'
   | 'data'
+  | 'blog'
   | 'decorative'
   | 'other';
 
@@ -32,6 +34,12 @@ export const CATEGORIES: Category[] = [
     title: 'Foundation',
     description:
       'Layout, typography, and surface primitives — the structural floor every page composes on top of.',
+  },
+  {
+    id: 'a11y',
+    title: 'A11y',
+    description:
+      'The keyboard + screen-reader + focus contract. SkipLink for WCAG 2.4.1, VisuallyHidden + FocusRing for the rest. Install via @interlace/a11y-starter.',
   },
   {
     id: 'form',
@@ -62,6 +70,12 @@ export const CATEGORIES: Category[] = [
     title: 'Data display',
     description:
       'Aspect-ratio frames, avatars, separators, scroll areas — the chrome around content.',
+  },
+  {
+    id: 'blog',
+    title: 'Blog & long-form',
+    description:
+      'Article-body primitives — Callout, Prose, CodeBlock, Tag, TOC, ReadingTime. Install via @interlace/mdx-starter for a default mdx-components.tsx.',
   },
   {
     id: 'decorative',
@@ -125,6 +139,20 @@ const ASSIGNMENTS: Record<string, CategoryId> = {
   'scroll-area': 'data',
   collapsible: 'data',
   accordion: 'data',
+
+  // A11y
+  'skip-link': 'a11y',
+  'visually-hidden': 'a11y',
+  'focus-ring': 'a11y',
+
+  // Blog / long-form
+  callout: 'blog',
+  prose: 'blog',
+  'code-block': 'blog',
+  tag: 'blog',
+  toc: 'blog',
+  'reading-time': 'blog',
+  'published-date': 'blog',
 
   // Decorative
   meteors: 'decorative',

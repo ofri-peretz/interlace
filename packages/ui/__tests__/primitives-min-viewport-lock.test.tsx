@@ -54,6 +54,18 @@ const PRIMITIVES = [
   { name: 'slider', viewport: 320, tier: 'client' },
   { name: 'toggle', viewport: 320, tier: 'client' },
   { name: 'number-field', viewport: 320, tier: 'client' },
+  // A3 — a11y primitives (this PR)
+  { name: 'skip-link', viewport: 320, tier: 'server' },
+  { name: 'visually-hidden', viewport: 320, tier: 'server' },
+  { name: 'focus-ring', viewport: 320, tier: 'server' },
+  // B — blog primitives (this PR)
+  { name: 'callout', viewport: 320, tier: 'server' },
+  { name: 'prose', viewport: 320, tier: 'server' },
+  { name: 'code-block', viewport: 320, tier: 'client' },
+  { name: 'tag', viewport: 320, tier: 'server' },
+  { name: 'toc', viewport: 480, tier: 'client' },
+  { name: 'reading-time', viewport: 320, tier: 'server' },
+  { name: 'published-date', viewport: 320, tier: 'server' },
 ] as const;
 
 // Allowed viewport floors. Keep in lock-step with DESIGN_PRINCIPLES #14.

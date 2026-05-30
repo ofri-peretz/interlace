@@ -3,7 +3,7 @@
   "name": "radio-group",
   "type": "registry:ui",
   "title": "Radio Group",
-  "description": "@interlace/ui — radio-group primitive (shadcn-compatible).",
+  "description": "@interlace/ui — radio-group (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "lucide-react"

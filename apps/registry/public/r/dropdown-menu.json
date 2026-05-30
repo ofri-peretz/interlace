@@ -3,7 +3,7 @@
   "name": "dropdown-menu",
   "type": "registry:ui",
   "title": "Dropdown Menu",
-  "description": "@interlace/ui — dropdown-menu primitive (shadcn-compatible).",
+  "description": "@interlace/ui — dropdown-menu (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "lucide-react"

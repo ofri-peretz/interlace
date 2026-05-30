@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "border-beam",
+  "type": "registry:ui",
+  "title": "Border Beam",
+  "description": "@interlace/ui — border-beam (magicui) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/magicui/border-beam.tsx",
+      "target": "components/ui/magicui/border-beam.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface BorderBeamProps {\n  /**\n   * The size of the border beam.\n   */\n  size?: number\n  /**\n   * The duration of the border beam.\n   */\n  duration?: number\n  /**\n   * The delay of the border beam.\n   */\n  delay?: number\n  /**\n   * The color of the border beam from.\n   */\n  colorFrom?: string\n  /**\n   * The color of the border beam to.\n   */\n  colorTo?: string\n  /**\n   * The class name of the border beam.\n   */\n  className?: string\n  /**\n   * The style of the border beam.\n   */\n  style?: React.CSSProperties\n  /**\n   * Whether to reverse the animation direction.\n   */\n  reverse?: boolean\n  /**\n   * The initial offset position (0-100).\n   */\n  initialOffset?: number\n  /**\n   * The border width of the beam.\n   */\n  borderWidth?: number\n}\n\n/**\n * BorderBeam Component - Performance Optimized\n * \n * Converted from Framer Motion to pure CSS animation for better GPU acceleration.\n * Uses CSS offset-path animation which is hardware-accelerated.\n */\nexport const BorderBeam = ({\n  className,\n  size = 50,\n  delay = 0,\n  duration = 6,\n  colorFrom = \"#ffaa40\",\n  colorTo = \"#9c40ff\",\n  style,\n  reverse = false,\n  initialOffset = 0,\n  borderWidth = 1,\n}: BorderBeamProps) => {\n  return (\n    <div\n      className=\"pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]\"\n      style={\n        {\n          \"--border-beam-width\": `${borderWidth}px`,\n        } as React.CSSProperties\n      }\n    >\n      {/* Performance: Using CSS animation instead of Framer Motion */}\n      <div\n        className={cn(\n          \"absolute aspect-square animate-border-beam\",\n          \"bg-linear-to-l from-(--color-from) via-(--color-to) to-transparent\",\n          className\n        )}\n        style={\n          {\n            width: size,\n            offsetPath: `rect(0 auto auto 0 round ${size}px)`,\n            \"--color-from\": colorFrom,\n            \"--color-to\": colorTo,\n            \"--border-beam-duration\": `${duration}s`,\n            \"--border-beam-delay\": `${-delay}s`,\n            \"--border-beam-initial\": `${initialOffset}%`,\n            \"--border-beam-direction\": reverse ? \"reverse\" : \"normal\",\n            animationDelay: `${-delay}s`,\n            ...style,\n          } as React.CSSProperties\n        }\n      />\n    </div>\n  )\n}\n"
+    }
+  ]
+}

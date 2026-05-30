@@ -3,7 +3,7 @@
   "name": "dialog",
   "type": "registry:ui",
   "title": "Dialog",
-  "description": "@interlace/ui — dialog primitive (shadcn-compatible).",
+  "description": "@interlace/ui — dialog (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "lucide-react"

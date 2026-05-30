@@ -1,0 +1,23 @@
+/**
+ * @interlace/foundation — barrel entrypoint.
+ *
+ * One `@import "@interlace/foundation"` lands the full DS CSS contract:
+ *
+ *   1. tokens.css           — motion + animation keyframes.
+ *   2. foundation.css       — type / spacing / radius / container scales.
+ *   3. preflight.css        — focus ring (WCAG 2.2 SC 2.4.13), selection,
+ *                             scrollbar tint, [data-min-viewport] container.
+ *   4. theme.css             — shadcn↔fumadocs token bridge + Shiki boosts.
+ *   5. interlace-theme.css   — brand violet palette (light + dark, AAA).
+ *
+ * If you only want a slice, import the specific file:
+ *
+ *   @import "@interlace/foundation/preflight.css";
+ *
+ * Cascade order is load-bearing — do not reorder.
+ */
+@import "./tokens.css";
+@import "./foundation.css";
+@import "./preflight.css";
+@import "./theme.css";
+@import "./interlace-theme.css";

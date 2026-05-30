@@ -3,7 +3,7 @@
   "name": "pagination",
   "type": "registry:ui",
   "title": "Pagination",
-  "description": "@interlace/ui — pagination primitive (shadcn-compatible).",
+  "description": "@interlace/ui — pagination (shadcn-compatible).",
   "dependencies": [
     "class-variance-authority",
     "lucide-react"

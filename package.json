@@ -26,9 +26,13 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "lint": "turbo run lint",
-    "ci:local": "lefthook run pre-push --all-files --force"
+    "ci:local": "lefthook run pre-push --all-files --force",
+    "changeset": "changeset",
+    "version-packages": "changeset version && npm install --package-lock-only",
+    "publish-packages": "npm run build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "lefthook": "^1.7.0",

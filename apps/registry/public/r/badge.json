@@ -3,7 +3,7 @@
   "name": "badge",
   "type": "registry:ui",
   "title": "Badge",
-  "description": "@interlace/ui — badge primitive (shadcn-compatible).",
+  "description": "@interlace/ui — badge (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "class-variance-authority"

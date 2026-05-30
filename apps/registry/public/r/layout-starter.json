@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "layout-starter",
+  "type": "registry:ui",
+  "title": "Layout Starter",
+  "description": "@interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.",
+  "dependencies": [],
+  "registryDependencies": [
+    "container",
+    "section",
+    "stack",
+    "grid",
+    "box",
+    "typography",
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/starters/layout-starter.md",
+      "target": "components/ui/INTERLACE-LAYOUT-STARTER.md",
+      "type": "registry:file",
+      "content": "# @interlace/layout-starter\n\nInstalled:\n\n- `Container` — 4 width tiers (prose / content / wide / full).\n- `Section` — vertical-rhythm slabs.\n- `Stack` + `Cluster` — six-step gap scale.\n- `Grid` — responsive grid primitive.\n- `Box` — token-aware surface (background + padding + radius + border).\n- `Typography` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- `theme` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "name": "select",
   "type": "registry:ui",
   "title": "Select",
-  "description": "@interlace/ui — select primitive (shadcn-compatible).",
+  "description": "@interlace/ui — select (shadcn-compatible).",
   "dependencies": [
     "@base-ui/react",
     "lucide-react"
