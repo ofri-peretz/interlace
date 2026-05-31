@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "landing-template",
+  "type": "registry:ui",
+  "title": "Landing Template",
+  "description": "@interlace/ui — landing-template (templates) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/templates/landing-template.tsx",
+      "target": "components/ui/templates/landing-template.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — LandingTemplate\n *\n * Marketing landing page surface. Composes Topbar + Hero +\n * (optional) FeatureGrid + (optional) TestimonialGrid + (optional)\n * PricingTable + (optional) FAQ + CTASection + Footer — each in its own\n * SectionBoundary so the page streams section-by-section.\n *\n * Every section is optional via props; pass only what you need. The\n * Topbar + Footer are required (every landing page has them).\n *\n * ## MIN_VIEWPORT — 320\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { SectionBoundary } from '../primitives/section-boundary.js';\nimport { Topbar } from '../patterns/topbar.js';\nimport { Footer } from '../patterns/footer.js';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ninterface LandingTemplateProps extends React.ComponentProps<'div'> {\n  /** Topbar props. */\n  topbar: React.ComponentProps<typeof Topbar>;\n  /** Hero section (consumer-supplied — pass the configured Hero pattern). */\n  hero: React.ReactNode;\n  /** Optional features section. */\n  features?: React.ReactNode;\n  /** Optional testimonials section. */\n  testimonials?: React.ReactNode;\n  /** Optional pricing section. */\n  pricing?: React.ReactNode;\n  /** Optional FAQ section. */\n  faq?: React.ReactNode;\n  /** Optional CTA section before the footer. */\n  cta?: React.ReactNode;\n  /** Footer props. */\n  footer: React.ComponentProps<typeof Footer>;\n  /** Extra arbitrary sections — rendered between hero and features. */\n  children?: React.ReactNode;\n}\n\nfunction LandingTemplate({\n  topbar,\n  hero,\n  features,\n  testimonials,\n  pricing,\n  faq,\n  cta,\n  footer,\n  children,\n  className,\n  ...props\n}: LandingTemplateProps) {\n  return (\n    <div\n      data-slot=\"landing-template\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('bg-background text-foreground', className)}\n      {...props}\n    >\n      <Topbar {...topbar} />\n\n      <SectionBoundary name=\"landing-hero\" skeletonVariant=\"page-header\">\n        {hero}\n      </SectionBoundary>\n\n      {children}\n\n      {features ? (\n        <SectionBoundary\n          name=\"landing-features\"\n          skeletonVariant=\"article-card\"\n        >\n          {features}\n        </SectionBoundary>\n      ) : null}\n\n      {testimonials ? (\n        <SectionBoundary\n          name=\"landing-testimonials\"\n          skeletonVariant=\"article-card\"\n        >\n          {testimonials}\n        </SectionBoundary>\n      ) : null}\n\n      {pricing ? (\n        <SectionBoundary name=\"landing-pricing\" skeletonVariant=\"card\">\n          {pricing}\n        </SectionBoundary>\n      ) : null}\n\n      {faq ? (\n        <SectionBoundary name=\"landing-faq\" skeletonVariant=\"card\">\n          {faq}\n        </SectionBoundary>\n      ) : null}\n\n      {cta ? (\n        <SectionBoundary name=\"landing-cta\" skeletonVariant=\"card\">\n          {cta}\n        </SectionBoundary>\n      ) : null}\n\n      <Footer {...footer} />\n    </div>\n  );\n}\nLandingTemplate.displayName = 'LandingTemplate';\n\nexport { LandingTemplate };\nexport type { LandingTemplateProps };\n"
+    }
+  ]
+}

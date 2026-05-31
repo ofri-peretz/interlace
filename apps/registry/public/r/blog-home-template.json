@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blog-home-template",
+  "type": "registry:ui",
+  "title": "Blog Home Template",
+  "description": "@interlace/ui — blog-home-template (templates) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/templates/blog-home-template.tsx",
+      "target": "components/ui/templates/blog-home-template.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — BlogHomeTemplate\n *\n * Blog index surface. Topbar + hero (greeting / about) + ArticleListGrid\n * (featured + recent) + optional NewsletterForm + Footer. The shape every\n * personal / company blog reaches for.\n *\n * ## MIN_VIEWPORT — 320\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { SectionBoundary } from '../primitives/section-boundary.js';\nimport { Topbar } from '../patterns/topbar.js';\nimport { Footer } from '../patterns/footer.js';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ninterface BlogHomeTemplateProps extends React.ComponentProps<'div'> {\n  topbar: React.ComponentProps<typeof Topbar>;\n  /** Page header / hero. */\n  hero?: React.ReactNode;\n  /** Article list grid (typically <ArticleListGrid /> with featured + posts). */\n  articles: React.ReactNode;\n  /** Optional newsletter signup. */\n  newsletter?: React.ReactNode;\n  footer: React.ComponentProps<typeof Footer>;\n}\n\nfunction BlogHomeTemplate({\n  topbar,\n  hero,\n  articles,\n  newsletter,\n  footer,\n  className,\n  ...props\n}: BlogHomeTemplateProps) {\n  return (\n    <div\n      data-slot=\"blog-home-template\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('bg-background text-foreground', className)}\n      {...props}\n    >\n      <Topbar {...topbar} />\n\n      {hero ? (\n        <SectionBoundary name=\"blog-hero\" skeletonVariant=\"page-header\">\n          {hero}\n        </SectionBoundary>\n      ) : null}\n\n      <SectionBoundary name=\"blog-articles\" skeletonVariant=\"article-card\">\n        {articles}\n      </SectionBoundary>\n\n      {newsletter ? (\n        <SectionBoundary\n          name=\"blog-newsletter\"\n          skeletonVariant=\"newsletter-form\"\n        >\n          {newsletter}\n        </SectionBoundary>\n      ) : null}\n\n      <Footer {...footer} />\n    </div>\n  );\n}\nBlogHomeTemplate.displayName = 'BlogHomeTemplate';\n\nexport { BlogHomeTemplate };\nexport type { BlogHomeTemplateProps };\n"
+    }
+  ]
+}

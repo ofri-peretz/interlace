@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dashboard-template",
+  "type": "registry:ui",
+  "title": "Dashboard Template",
+  "description": "@interlace/ui — dashboard-template (templates) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/templates/dashboard-template.tsx",
+      "target": "components/ui/templates/dashboard-template.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — DashboardTemplate\n *\n * Application dashboard surface. Topbar at top, persistent left sidebar\n * (nav links), main content area (children). The standard\n * \"logged-in app\" layout: every SaaS dashboard reaches for this shape.\n *\n * ## MIN_VIEWPORT — 480\n *\n * Below 480, the sidebar collapses (consumer wires a Sheet+Drawer for\n * the hamburger menu). Above 480 it stays persistent.\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { SectionBoundary } from '../primitives/section-boundary.js';\nimport { Topbar } from '../patterns/topbar.js';\n\nexport const MIN_VIEWPORT = 480 as const;\n\ninterface DashboardTemplateProps extends React.ComponentProps<'div'> {\n  topbar: React.ComponentProps<typeof Topbar>;\n  /** Sidebar nav (typically a list of links). */\n  sidebar: React.ReactNode;\n  /** Page heading row (above the main content). */\n  header?: React.ReactNode;\n  /** Main content area. */\n  children: React.ReactNode;\n}\n\nfunction DashboardTemplate({\n  topbar,\n  sidebar,\n  header,\n  children,\n  className,\n  ...props\n}: DashboardTemplateProps) {\n  return (\n    <div\n      data-slot=\"dashboard-template\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn(\n        'bg-background text-foreground flex min-h-screen flex-col',\n        className,\n      )}\n      {...props}\n    >\n      <Topbar {...topbar} />\n\n      <div className=\"flex flex-1\">\n        <aside\n          className=\"border-border bg-card hidden w-60 shrink-0 border-r md:block\"\n          aria-label=\"Primary navigation\"\n        >\n          <SectionBoundary name=\"dashboard-sidebar\" skeletonVariant=\"card\">\n            {sidebar}\n          </SectionBoundary>\n        </aside>\n\n        <main className=\"flex-1 px-lg py-lg\">\n          {header ? (\n            <SectionBoundary\n              name=\"dashboard-header\"\n              skeletonVariant=\"page-header\"\n              className=\"mb-lg\"\n            >\n              {header}\n            </SectionBoundary>\n          ) : null}\n          <SectionBoundary name=\"dashboard-body\" skeletonVariant=\"card\">\n            {children}\n          </SectionBoundary>\n        </main>\n      </div>\n    </div>\n  );\n}\nDashboardTemplate.displayName = 'DashboardTemplate';\n\nexport { DashboardTemplate };\nexport type { DashboardTemplateProps };\n"
+    }
+  ]
+}

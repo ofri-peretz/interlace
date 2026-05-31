@@ -163,10 +163,61 @@ const HoverCardPopup = React.forwardRef<
 });
 HoverCardPopup.displayName = 'HoverCardPopup';
 
+/* ─────────────────────────────────────────────────────────────────
+ * HoverCardCompose — convenience composition.
+ *
+ * Wraps the canonical Root → Trigger → Portal → Positioner → Popup
+ * tree in a single component. Eliminates the recurring footgun where a
+ * consumer reaches for `<HoverCard><HoverCardTrigger/><HoverCardPopup/></HoverCard>`
+ * without the Portal+Positioner middle, which throws Base UI error #49
+ * because the popup has no anchor.
+ *
+ *   <HoverCardCompose
+ *     trigger={<UsernameLink />}
+ *     popup={<BioCard />}
+ *     side="bottom"
+ *   />
+ *
+ * For per-part customisation, fall back to the compositional API.
+ * ──────────────────────────────────────────────────────────────── */
+interface HoverCardComposeProps {
+  /** Trigger element (the anchor on the page). */
+  trigger: React.ReactNode;
+  /** Popup content. */
+  popup: React.ReactNode;
+  /** Force-open. Useful for screenshot stories. */
+  open?: boolean;
+  /** Floating-UI side. Defaults to Base UI's default ("bottom"). */
+  side?: React.ComponentProps<typeof BasePreviewCard.Positioner>['side'];
+  /** Optional className on the popup. */
+  className?: string;
+}
+
+function HoverCardCompose({
+  trigger,
+  popup,
+  open,
+  side,
+  className,
+}: HoverCardComposeProps) {
+  return (
+    <HoverCard open={open}>
+      <HoverCardTrigger render={trigger as React.ReactElement} />
+      <HoverCardPortal>
+        <HoverCardPositioner side={side}>
+          <HoverCardPopup className={className}>{popup}</HoverCardPopup>
+        </HoverCardPositioner>
+      </HoverCardPortal>
+    </HoverCard>
+  );
+}
+
 export {
   HoverCard,
   HoverCardTrigger,
   HoverCardPortal,
   HoverCardPositioner,
   HoverCardPopup,
+  HoverCardCompose,
 };
+export type { HoverCardComposeProps };

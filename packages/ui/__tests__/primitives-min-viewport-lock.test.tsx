@@ -80,6 +80,23 @@ const PRIMITIVES = [
   { name: 'section-boundary', viewport: 320, tier: 'client' },
 ] as const;
 
+/**
+ * Templates that own MIN_VIEWPORT. These live under
+ * `packages/ui/src/templates/` not `primitives/`. The test below splits
+ * its source-read between the two roots.
+ */
+const TEMPLATES = [
+  { name: 'article-template', viewport: 320, tier: 'server' },
+  { name: 'registry-item-template', viewport: 320, tier: 'server' },
+  { name: 'auth-template', viewport: 320, tier: 'server' },
+  { name: 'error-template', viewport: 320, tier: 'server' },
+  { name: 'landing-template', viewport: 320, tier: 'server' },
+  { name: 'docs-page-template', viewport: 320, tier: 'server' },
+  { name: 'dashboard-template', viewport: 480, tier: 'server' },
+  { name: 'blog-home-template', viewport: 320, tier: 'server' },
+  { name: 'settings-template', viewport: 480, tier: 'server' },
+] as const;
+
 // Allowed viewport floors. Keep in lock-step with DESIGN_PRINCIPLES #14.
 const ALLOWED_VIEWPORTS = [320, 480, 768] as const;
 
@@ -87,6 +104,15 @@ const readPrimitive = (name: string): string => {
   const absolute = resolve(
     __dirname,
     '../src/primitives',
+    `${name}.tsx`,
+  );
+  return readFileSync(absolute, 'utf-8');
+};
+
+const readTemplate = (name: string): string => {
+  const absolute = resolve(
+    __dirname,
+    '../src/templates',
     `${name}.tsx`,
   );
   return readFileSync(absolute, 'utf-8');
@@ -106,9 +132,15 @@ const hasUseClientDirective = (source: string): boolean => {
   return /^["']use client["'];?/.test(stripped);
 };
 
-for (const { name, viewport, tier } of PRIMITIVES) {
-  describe(`primitive: ${name}`, () => {
-    const source = readPrimitive(name);
+for (const { name, viewport, tier } of [
+  ...PRIMITIVES.map((p) => ({ ...p, kind: 'primitive' as const })),
+  ...TEMPLATES.map((t) => ({ ...t, kind: 'template' as const })),
+]) {
+  describe(`${(name as string).endsWith('-template') ? 'template' : 'primitive'}: ${name}`, () => {
+    const source =
+      (name as string).endsWith('-template')
+        ? readTemplate(name)
+        : readPrimitive(name);
 
     // -----------------------------------------------------------------------
     // 1. MIN_VIEWPORT export + allowed literal (DESIGN_PRINCIPLES #14)

@@ -192,14 +192,38 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(function Toast(
   // surface so screenshot stories stay deterministic. Base UI's Root
   // allows `style` to be a `(state) => CSSProperties` callback; a plain
   // `<div>` only accepts a static `CSSProperties`, so we narrow here.
+  //
+  // Provide the ToastStaticContext so descendant ToastTitle /
+  // ToastDescription fall back to plain <h2>/<p> rendering instead of
+  // throwing Base UI error #66 (which fires when Title/Description try
+  // to read the manager context that isn't there).
   const { style: rawStyle, ...divProps } =
     sharedProps as typeof sharedProps & {
       style?: React.CSSProperties | ((state: unknown) => React.CSSProperties | undefined);
     };
   const style = typeof rawStyle === 'function' ? undefined : rawStyle;
-  return <div ref={ref} {...divProps} style={style} />;
+  return (
+    <ToastStaticContext.Provider value={true}>
+      <div ref={ref} {...divProps} style={style} />
+    </ToastStaticContext.Provider>
+  );
 });
 Toast.displayName = 'Toast';
+
+// ─────────────────────────────────────────────────────────────────
+// Static-render context — set to `true` by the Toast root when it
+// degraded to a plain <div> (no `toast` prop). ToastTitle / Description
+// read this and fall back to plain <h2> / <p> rendering instead of
+// reaching for BaseToast.Title / Description which require the
+// dispatcher context (and throw Base UI error #66 without it).
+//
+// This makes static screenshot stories AND any consumer rendering
+// preset toasts work without ToastProvider — the title/description
+// still ship the same styling + data-slot, just without the manager-
+// driven ARIA wiring that's irrelevant when there's no live toast
+// object to associate with.
+// ─────────────────────────────────────────────────────────────────
+const ToastStaticContext = React.createContext(false);
 
 // ─────────────────────────────────────────────────────────────────
 // ToastTitle / ToastDescription — typography parts. Title carries the
@@ -210,14 +234,30 @@ type ToastTitleProps = React.ComponentProps<typeof BaseToast.Title>;
 
 const ToastTitle = React.forwardRef<HTMLHeadingElement, ToastTitleProps>(
   function ToastTitle({ className, ...props }, ref) {
+    const isStatic = React.useContext(ToastStaticContext);
+    const styles = cn(
+      'font-body text-ui font-semibold text-card-foreground',
+      className,
+    );
+    if (isStatic) {
+      // Plain <h2> when there's no active toast context. Same styling +
+      // data-slot; loses the manager-driven aria-labelledby linkage,
+      // but the root <Toast> already provides role="status" + aria-live
+      // so the title still announces correctly.
+      return (
+        <h2
+          ref={ref}
+          data-slot="toast-title"
+          className={styles}
+          {...(props as React.ComponentProps<'h2'>)}
+        />
+      );
+    }
     return (
       <BaseToast.Title
         ref={ref}
         data-slot="toast-title"
-        className={cn(
-          'font-body text-ui font-semibold text-card-foreground',
-          className,
-        )}
+        className={styles}
         {...props}
       />
     );
@@ -231,14 +271,26 @@ const ToastDescription = React.forwardRef<
   HTMLParagraphElement,
   ToastDescriptionProps
 >(function ToastDescription({ className, ...props }, ref) {
+  const isStatic = React.useContext(ToastStaticContext);
+  const styles = cn(
+    'font-body text-ui-sm text-muted-foreground',
+    className,
+  );
+  if (isStatic) {
+    return (
+      <p
+        ref={ref}
+        data-slot="toast-description"
+        className={styles}
+        {...(props as React.ComponentProps<'p'>)}
+      />
+    );
+  }
   return (
     <BaseToast.Description
       ref={ref}
       data-slot="toast-description"
-      className={cn(
-        'font-body text-ui-sm text-muted-foreground',
-        className,
-      )}
+      className={styles}
       {...props}
     />
   );

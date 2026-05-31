@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "docs-page-template",
+  "type": "registry:ui",
+  "title": "Docs Page Template",
+  "description": "@interlace/ui — docs-page-template (templates) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/templates/docs-page-template.tsx",
+      "target": "components/ui/templates/docs-page-template.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — DocsPageTemplate\n *\n * Documentation page surface. Topbar at top, optional sidebar nav on the\n * left (md+), main content in the centre with a `<Prose>` wrapper, and an\n * optional TOC rail on the right (xl+).\n *\n * Used by `ds.interlace.tools` (the registry app's docs pages) and by\n * `apps/docs` (the ESLint plugins docs). One template, two consumers.\n *\n * ## MIN_VIEWPORT — 320\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Container } from '../primitives/container.js';\nimport { Prose } from '../primitives/prose.js';\nimport { SectionBoundary } from '../primitives/section-boundary.js';\nimport { Topbar } from '../patterns/topbar.js';\nimport { Footer } from '../patterns/footer.js';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ninterface DocsPageTemplateProps extends React.ComponentProps<'div'> {\n  topbar: React.ComponentProps<typeof Topbar>;\n  /** Left sidebar (typically a nav tree). Hidden below md. */\n  sidebar?: React.ReactNode;\n  /** Right rail (typically a TOC). Hidden below xl. */\n  toc?: React.ReactNode;\n  /** Page body — wrapped in <Prose>. */\n  body: React.ReactNode;\n  /** Optional footer at the bottom. */\n  footer?: React.ComponentProps<typeof Footer>;\n}\n\nfunction DocsPageTemplate({\n  topbar,\n  sidebar,\n  toc,\n  body,\n  footer,\n  className,\n  ...props\n}: DocsPageTemplateProps) {\n  return (\n    <div\n      data-slot=\"docs-page-template\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn(\n        'bg-background text-foreground flex min-h-screen flex-col',\n        className,\n      )}\n      {...props}\n    >\n      <Topbar {...topbar} />\n\n      <div className=\"flex flex-1\">\n        {sidebar ? (\n          <aside\n            className=\"border-border bg-card hidden w-64 shrink-0 border-r md:block\"\n            aria-label=\"Section navigation\"\n          >\n            <SectionBoundary name=\"docs-sidebar\" skeletonVariant=\"card\">\n              {sidebar}\n            </SectionBoundary>\n          </aside>\n        ) : null}\n\n        <main className=\"flex-1 px-md py-xl\">\n          <SectionBoundary name=\"docs-body\" skeletonVariant=\"prose\">\n            <Container size=\"prose\">\n              <Prose>{body}</Prose>\n            </Container>\n          </SectionBoundary>\n        </main>\n\n        {toc ? (\n          <aside\n            className=\"hidden w-64 shrink-0 px-md py-xl xl:block\"\n            aria-label=\"Table of contents\"\n          >\n            <SectionBoundary name=\"docs-toc\" skeletonVariant=\"text\">\n              {toc}\n            </SectionBoundary>\n          </aside>\n        ) : null}\n      </div>\n\n      {footer ? <Footer {...footer} /> : null}\n    </div>\n  );\n}\nDocsPageTemplate.displayName = 'DocsPageTemplate';\n\nexport { DocsPageTemplate };\nexport type { DocsPageTemplateProps };\n"
+    }
+  ]
+}
