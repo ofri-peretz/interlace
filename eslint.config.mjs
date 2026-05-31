@@ -46,8 +46,16 @@ export default [
   },
 
   // ── 3. React best-practices (react-features recommended) ───────────────────
+  // We extend configs.recommended with one targeted off-switch.
+  // no-unknown-property generates false positives on custom-component props
+  // without type-awareness (and react-features 1.1.4 doesn't expose a
+  // native-element-only option). All other recommended rules stay active.
   {
     ...reactFeatures.configs.recommended,
     files: TSX_FILES,
+    rules: {
+      ...reactFeatures.configs.recommended.rules,
+      'react-features/no-unknown-property': 'off',
+    },
   },
 ];
