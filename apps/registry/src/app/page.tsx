@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
+import { SiteNav } from '@/components/site-nav';
 import { CATEGORIES, groupByCategory } from '@/lib/categories';
 import { loadEnrichedIndex, loadIndex } from '@/lib/registry';
 
@@ -11,8 +12,6 @@ const ALIAS_INSTALL = 'npx shadcn@latest add @interlace/button';
 
 const STYLE_INSTALL =
   'npx shadcn@latest add https://ds.interlace.tools/r/theme.json';
-
-const STORYBOOK_URL = 'https://storybook.interlace.tools';
 
 export default async function HomePage() {
   const index = await loadIndex();
@@ -26,41 +25,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* ─── Header ─────────────────────────────────────────────── */}
-      <header className="border-b border-border bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-10">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span
-              aria-hidden
-              className="inline-block size-6 rounded-md bg-linear-to-br from-violet-500 to-violet-700"
-            />
-            <span>Interlace UI</span>
-            <span className="text-muted-foreground text-sm font-normal">
-              · shadcn registry
-            </span>
-          </Link>
-          <nav className="flex items-center gap-5 text-sm">
-            <Link
-              href="/getting-started"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Getting started
-            </Link>
-            <a
-              href={STORYBOOK_URL}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Storybook ↗
-            </a>
-            <a
-              href="https://github.com/ofri-peretz/interlace"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              GitHub ↗
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteNav />
 
       {/* ─── Hero ────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden border-b border-border">
@@ -199,7 +164,7 @@ export default async function HomePage() {
               Grouped by intent — what you reach for, not by implementation
               lineage. Visual previews + interactive variants live on{' '}
               <a
-                href={STORYBOOK_URL}
+                href="https://storybook.interlace.tools"
                 className="text-foreground underline-offset-4 hover:underline"
               >
                 storybook.interlace.tools
@@ -291,7 +256,7 @@ export default async function HomePage() {
           </div>
           <div className="flex gap-5">
             <a
-              href={STORYBOOK_URL}
+              href="https://storybook.interlace.tools"
               className="hover:text-foreground transition-colors"
             >
               Storybook

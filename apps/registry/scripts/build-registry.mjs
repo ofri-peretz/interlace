@@ -555,6 +555,24 @@ const main = async () => {
     'utf8',
   );
 
+  // Auto-regenerate the semantics catalogue JSON read by
+  // apps/registry/src/app/semantics-catalog/page.tsx. Keeping it here
+  // means the catalogue and the registry items stay in lock-step on
+  // every `npm run prebuild` — no separate npm script to forget.
+  try {
+    const { spawnSync } = await import('node:child_process');
+    const result = spawnSync(
+      'node',
+      [path.join(REGISTRY_ROOT, 'scripts/build-semantics-catalog.mjs')],
+      { stdio: 'inherit' },
+    );
+    if (result.status !== 0) {
+      console.error('semantics-catalog regeneration failed; continuing');
+    }
+  } catch (err) {
+    console.error('semantics-catalog regeneration error (non-fatal):', err);
+  }
+
   console.log(
     `Built ${files.length} primitive(s) + ${decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) → ${OUT_DIR}`,
   );
