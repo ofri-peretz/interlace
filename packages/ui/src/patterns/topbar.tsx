@@ -36,7 +36,6 @@
  */
 
 import * as React from 'react';
-import Link from 'next/link';
 
 import { cn } from '../lib/cn.js';
 
@@ -50,8 +49,9 @@ interface TopbarLink {
 
 interface TopbarProps extends React.ComponentProps<'header'> {
   /**
-   * Logo / wordmark. Receives a `<Link href="/">…</Link>` typically.
-   * No `href` default — consumer decides where the logo points.
+   * Logo / wordmark. Receives a `<a href="/">…</a>` or a framework-
+   * specific Link (Next.js Link, React Router NavLink, etc.) — the DS
+   * is platform-agnostic so the consumer decides which.
    */
   logo: React.ReactNode;
   /** Primary nav link cluster. Hidden below md (768px). */
@@ -63,7 +63,29 @@ interface TopbarProps extends React.ComponentProps<'header'> {
    * `'content'` (1024px) for narrower docs surfaces.
    */
   containerSize?: 'wide' | 'content' | 'prose';
+  /**
+   * Render-prop slot for internal links. Defaults to a plain `<a>`. A
+   * Next.js consumer passes `({ href, className, children }) => <Link
+   * href={href} className={className}>{children}</Link>` to enable SPA
+   * navigation. External links (`link.external === true`) always use a
+   * plain `<a target="_blank">` regardless of this slot.
+   */
+  renderLink?: (props: {
+    href: string;
+    className: string;
+    children: React.ReactNode;
+  }) => React.ReactElement;
 }
+
+const defaultRenderLink: NonNullable<TopbarProps['renderLink']> = ({
+  href,
+  className,
+  children,
+}) => (
+  <a href={href} className={className}>
+    {children}
+  </a>
+);
 
 const CONTAINER_CLASSES = {
   wide: 'max-w-(--container-wide)',
@@ -76,6 +98,7 @@ function Topbar({
   links = [],
   actions,
   containerSize = 'wide',
+  renderLink = defaultRenderLink,
   className,
   ...props
 }: TopbarProps) {
@@ -113,13 +136,14 @@ function Topbar({
                   {link.label} ↗
                 </a>
               ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.label}
-                </Link>
+                <React.Fragment key={link.href}>
+                  {renderLink({
+                    href: link.href,
+                    className:
+                      'text-muted-foreground hover:text-foreground transition-colors',
+                    children: link.label,
+                  })}
+                </React.Fragment>
               ),
             )}
           </nav>

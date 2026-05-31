@@ -33,7 +33,6 @@
  */
 
 import * as React from 'react';
-import Link from 'next/link';
 
 import { cn } from '../lib/cn.js';
 
@@ -61,7 +60,28 @@ interface FooterProps extends React.ComponentProps<'footer'> {
   social?: React.ReactNode;
   /** Container size. Defaults to `wide`. */
   containerSize?: 'wide' | 'content' | 'prose';
+  /**
+   * Render-prop slot for internal links. Defaults to plain `<a>`. A
+   * Next.js consumer passes `({ href, className, children }) => <Link
+   * href={href} className={className}>{children}</Link>` for SPA
+   * navigation. External links always use plain `<a target="_blank">`.
+   */
+  renderLink?: (props: {
+    href: string;
+    className: string;
+    children: React.ReactNode;
+  }) => React.ReactElement;
 }
+
+const defaultRenderLink: NonNullable<FooterProps['renderLink']> = ({
+  href,
+  className,
+  children,
+}) => (
+  <a href={href} className={className}>
+    {children}
+  </a>
+);
 
 const CONTAINER_CLASSES = {
   wide: 'max-w-(--container-wide)',
@@ -75,6 +95,7 @@ function Footer({
   copyright,
   social,
   containerSize = 'wide',
+  renderLink = defaultRenderLink,
   className,
   ...props
 }: FooterProps) {
@@ -123,12 +144,12 @@ function Footer({
                           {link.label} ↗
                         </a>
                       ) : (
-                        <Link
-                          href={link.href}
-                          className="text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          {link.label}
-                        </Link>
+                        renderLink({
+                          href: link.href,
+                          className:
+                            'text-muted-foreground hover:text-foreground transition-colors',
+                          children: link.label,
+                        })
                       )}
                     </li>
                   ))}
