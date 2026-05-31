@@ -2,6 +2,7 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { Typography } from '../primitives/typography.js';
 
 /**
@@ -69,14 +70,16 @@ const deltaToneClass: Record<NonNullable<VariantProps<typeof statCardVariants>['
 
 type StatCardProps = React.ComponentProps<'article'> &
   VariantProps<typeof statCardVariants> & {
-    label: React.ReactNode;
-    value: React.ReactNode;
+    label?: React.ReactNode;
+    value?: React.ReactNode;
     /** Optional change/trend line — e.g. "+12.3% · 30d". Inherits the tone color. */
     delta?: React.ReactNode;
     /** Optional secondary line under the delta — e.g. "since launch". */
     footnote?: React.ReactNode;
     /** Optional lucide icon — pinned to the top-right of the card. */
     icon?: React.ReactNode;
+    /** When true, render a `<Skeleton variant="stat-card" />` placeholder. */
+    loading?: boolean;
   };
 
 export function StatCard({
@@ -87,8 +90,18 @@ export function StatCard({
   delta,
   footnote,
   icon,
+  loading,
   ...props
 }: StatCardProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="stat-card"
+        data-slot="stat-card"
+        className={className}
+      />
+    );
+  }
   return (
     <article
       data-slot="stat-card"

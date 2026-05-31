@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { Grid } from '../primitives/grid.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { Typography } from '../primitives/typography.js';
 import { ArticleCard } from './article-card.js';
 
@@ -90,8 +91,16 @@ export interface RelatedPost {
 type RelatedPostsProps = React.ComponentProps<'section'> & {
   /** Section heading. Default: `"Related posts"`. */
   title?: React.ReactNode;
-  /** Posts to render. One ArticleCard per entry, in order. */
-  posts: RelatedPost[];
+  /** Posts to render. One ArticleCard per entry, in order. Optional when `loading={true}`. */
+  posts?: RelatedPost[];
+  /**
+   * When true, render a grid of `<Skeleton variant="article-card" />`
+   * placeholders (count derived from `loadingCount`, default 3) so the
+   * page reserves the eventual grid footprint while data loads.
+   */
+  loading?: boolean;
+  /** How many skeleton cards to render when `loading={true}`. Default 3. */
+  loadingCount?: number;
 };
 
 /**
@@ -106,9 +115,32 @@ export function RelatedPosts({
   className,
   title = 'Related posts',
   posts,
+  loading,
+  loadingCount = 3,
   ...props
 }: RelatedPostsProps) {
-  if (posts.length === 0) return null;
+  if (loading) {
+    return (
+      <section
+        data-slot="related-posts"
+        data-min-viewport={String(MIN_VIEWPORT)}
+        aria-label={typeof title === 'string' ? title : undefined}
+        aria-busy="true"
+        className={cn('w-full', className)}
+        {...props}
+      >
+        <Typography variant="h3" as="h2" className="mb-md">
+          {title}
+        </Typography>
+        <Grid cols={3} gap="md">
+          {Array.from({ length: loadingCount }).map((_, i) => (
+            <Skeleton key={i} variant="article-card" label={null} />
+          ))}
+        </Grid>
+      </section>
+    );
+  }
+  if (!posts || posts.length === 0) return null;
 
   return (
     <section
@@ -118,7 +150,7 @@ export function RelatedPosts({
       className={cn('w-full', className)}
       {...props}
     >
-      <Typography as="h3" variant="h3" className="mb-md">
+      <Typography as="h2" variant="h3" className="mb-md">
         {title}
       </Typography>
       {/*

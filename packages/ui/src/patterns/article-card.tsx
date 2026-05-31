@@ -9,6 +9,7 @@ function formatViews(count: number): string {
 }
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import {
   Card,
   CardContent,
@@ -49,12 +50,12 @@ export interface ArticleCardMeta {
 export type ArticleCardVariant = 'stack' | 'overlay';
 
 export interface ArticleCardProps {
-  /** Card title (article headline). */
-  title: string;
+  /** Card title (article headline). Optional when `loading={true}`. */
+  title?: string;
   /** Optional short description / excerpt. */
   description?: string;
-  /** Destination URL. The whole card becomes a link to it. */
-  href: string;
+  /** Destination URL. The whole card becomes a link to it. Optional when `loading={true}`. */
+  href?: string;
   /** Cover image URL. If omitted, a gradient with the title is shown. */
   imageUrl?: string;
   /** Tags / topics — first 3 rendered as filled badges, the rest as a "+N" overflow chip. */
@@ -79,6 +80,12 @@ export interface ArticleCardProps {
   priority?: boolean;
   /** Class on the outer anchor wrapper. */
   className?: string;
+  /**
+   * When true, render a `<Skeleton variant="article-card" />` composite
+   * (image + title lines + meta row silhouette) instead of the card.
+   * Shape-matched so card grids don't shift on data arrival.
+   */
+  loading?: boolean;
 }
 
 function formatDate(value: ArticleCardProps['publishedAt']): string {
@@ -113,8 +120,18 @@ export function ArticleCard({
   external = true,
   variant = 'stack',
   priority = false,
+  loading,
   className,
 }: ArticleCardProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="article-card"
+        data-slot="article-card"
+        className={className}
+      />
+    );
+  }
   const visibleTags = tags?.slice(0, 3) ?? [];
   const overflowTags = tags && tags.length > 3 ? tags.length - 3 : 0;
   const isOverlay = variant === 'overlay';
@@ -144,7 +161,7 @@ export function ArticleCard({
       >
         {isOverlay ? (
           <OverlayBody
-            title={title}
+            title={title ?? ''}
             description={description}
             imageUrl={imageUrl}
             visibleTags={visibleTags}
@@ -157,7 +174,7 @@ export function ArticleCard({
           />
         ) : (
           <StackBody
-            title={title}
+            title={title ?? ''}
             description={description}
             imageUrl={imageUrl}
             visibleTags={visibleTags}

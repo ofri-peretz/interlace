@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { Stack } from '../primitives/stack.js';
 import { Typography } from '../primitives/typography.js';
 
@@ -42,7 +43,7 @@ import { Typography } from '../primitives/typography.js';
 export const MIN_VIEWPORT = 480 as const;
 
 type PageHeaderProps = React.ComponentProps<'header'> & {
-  title: React.ReactNode;
+  title?: React.ReactNode;
   description?: React.ReactNode;
   /** Optional <Breadcrumb> above the title. */
   breadcrumb?: React.ReactNode;
@@ -50,6 +51,8 @@ type PageHeaderProps = React.ComponentProps<'header'> & {
   actions?: React.ReactNode;
   /** Optional meta strip below the title — tags / status / dates. */
   meta?: React.ReactNode;
+  /** When true, render a `<Skeleton variant="page-header" />` placeholder. */
+  loading?: boolean;
 };
 
 export function PageHeader({
@@ -59,8 +62,19 @@ export function PageHeader({
   breadcrumb,
   actions,
   meta,
+  loading,
   ...props
 }: PageHeaderProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="page-header"
+        data-slot="page-header"
+        data-min-viewport={String(MIN_VIEWPORT)}
+        className={className}
+      />
+    );
+  }
   return (
     <header
       data-slot="page-header"

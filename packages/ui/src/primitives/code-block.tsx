@@ -50,6 +50,7 @@ import * as React from 'react';
 import { Check, Copy } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from './skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -60,12 +61,24 @@ type CodeBlockProps = Omit<React.ComponentProps<'figure'>, 'title' | 'children'>
   title?: React.ReactNode;
   /** Optional language tag — lowercases into `language-{lang}` on `<code>`. */
   language?: string;
-  /** The fenced code source — a string, JSX, or pre-highlighted markup. */
-  children: React.ReactNode;
+  /**
+   * The fenced code source — a string, JSX, or pre-highlighted markup.
+   * Optional when `loading={true}` (the skeleton has no content to render).
+   */
+  children?: React.ReactNode;
+  /**
+   * When true, render a `<Skeleton variant="code-block" />` (multi-line
+   * monospace silhouette) in place of the figure. Useful while a Shiki
+   * highlight or fetch resolves.
+   */
+  loading?: boolean;
 };
 
 const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
-  ({ className, title, language, children, ...props }, ref) => {
+  ({ className, title, language, children, loading, ...props }, ref) => {
+    // Hooks must run unconditionally per React rules — the loading
+    // early-return goes AFTER hook declarations so the call order is
+    // stable across renders when `loading` flips.
     const [copied, setCopied] = React.useState(false);
     const timerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -100,6 +113,20 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
     }, [children]);
 
     const codeRef = React.useRef<HTMLElement>(null);
+
+    // Loading early-return AFTER all hooks (useState, useEffect,
+    // useCallback, useRef) so hook order stays stable across renders.
+    if (loading) {
+      return (
+        <Skeleton
+          variant="code-block"
+          data-slot="code-block"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={className}
+        />
+      );
+    }
+
     const showHeader = Boolean(title) || Boolean(language) || true; // always show — copy button needs a home
     const langClass = language ? `language-${language}` : undefined;
 

@@ -22,9 +22,10 @@ export default meta;
 type Story = StoryObj<typeof ArticleTemplate>;
 
 const sampleByline = {
-  name: 'Ofri Peretz',
-  role: 'Author',
-  publishedAt: '2026-05-30T08:00:00.000Z',
+  authorName: 'Ofri Peretz',
+  authorAvatar: 'https://github.com/shadcn.png',
+  authorBio: 'Author · @ofri-peretz',
+  publishedDateIso: '2026-05-30T08:00:00.000Z',
   readingTimeMinutes: 6,
 };
 

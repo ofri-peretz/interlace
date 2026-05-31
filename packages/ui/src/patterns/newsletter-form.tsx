@@ -4,6 +4,7 @@ import { Button } from '../primitives/button.js';
 import { Checkbox } from '../primitives/checkbox.js';
 import { Field, FieldControl, FieldError, FieldLabel, Form } from '../primitives/form.js';
 import { Input } from '../primitives/input.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { Stack } from '../primitives/stack.js';
 import { Typography } from '../primitives/typography.js';
 
@@ -65,6 +66,12 @@ type NewsletterFormProps = React.ComponentProps<'form'> & {
   consentLabel?: React.ReactNode;
   /** Slot below the form — typically a privacy-policy link or unsubscribe note. */
   footer?: React.ReactNode;
+  /**
+   * When true, render a `<Skeleton variant="newsletter-form" />` placeholder
+   * (title + input + submit silhouette). Useful when the form's i18n
+   * strings stream in from a CMS.
+   */
+  loading?: boolean;
 };
 
 export function NewsletterForm({
@@ -74,8 +81,18 @@ export function NewsletterForm({
   submitLabel = 'Subscribe',
   consentLabel = 'I agree to receive occasional emails. Unsubscribe any time.',
   footer,
+  loading,
   ...props
 }: NewsletterFormProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="newsletter-form"
+        data-slot="newsletter-form"
+        className={className}
+      />
+    );
+  }
   return (
     <Stack
       gap="lg"

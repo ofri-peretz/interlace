@@ -3,6 +3,7 @@ import { Clock } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { Avatar, AvatarImage, AvatarFallback } from '../primitives/avatar.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { Typography } from '../primitives/typography.js';
 
 /**
@@ -76,16 +77,21 @@ function initialOf(name: string): string {
 }
 
 type AuthorBylineProps = React.ComponentProps<'div'> & {
-  /** Author display name — required. Renders as the primary byline label. */
-  authorName: string;
+  /** Author display name — required in the idle state. */
+  authorName?: string;
   /** `<img src>` for the avatar. Decorative — `alt` derives from `authorName`. */
-  authorAvatar: string;
+  authorAvatar?: string;
   /** Optional one-line bio (e.g. "Staff engineer at Interlace"). */
   authorBio?: string;
   /** ISO-8601 publication timestamp — drives both `<time dateTime>` and the visible short form. */
-  publishedDateIso: string;
+  publishedDateIso?: string;
   /** Estimated reading time in whole minutes. Omitting it hides the chip. */
   readingTimeMinutes?: number;
+  /**
+   * When true, render a `<Skeleton variant="author-byline" />` composite
+   * (avatar + name + date silhouette) instead of the populated byline.
+   */
+  loading?: boolean;
 };
 
 /**
@@ -98,8 +104,18 @@ export function AuthorByline({
   authorBio,
   publishedDateIso,
   readingTimeMinutes,
+  loading,
   ...props
 }: AuthorBylineProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="author-byline"
+        data-slot="author-byline"
+        className={className}
+      />
+    );
+  }
   return (
     <div
       data-slot="author-byline"
@@ -112,7 +128,7 @@ export function AuthorByline({
         className="size-12 shrink-0"
       >
         <AvatarImage src={authorAvatar} alt={authorName} />
-        <AvatarFallback>{initialOf(authorName)}</AvatarFallback>
+        <AvatarFallback>{initialOf(authorName ?? '')}</AvatarFallback>
       </Avatar>
 
       <div
@@ -145,7 +161,7 @@ export function AuthorByline({
             data-slot="author-byline-published-date"
             dateTime={publishedDateIso}
           >
-            {formatDate(publishedDateIso)}
+            {formatDate(publishedDateIso ?? '')}
           </time>
           {readingTimeMinutes !== undefined ? (
             <>

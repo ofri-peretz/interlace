@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Clock } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from './skeleton.js';
 
 /**
  * @interlace/ui — ReadingTime
@@ -50,34 +51,54 @@ export const MIN_VIEWPORT = 320 as const;
 type ReadingTimeProps = Omit<React.ComponentProps<'span'>, 'children'> & {
   /**
    * Estimated reading time in whole minutes. Rendered verbatim and emitted
-   * on `data-reading-time` for downstream consumers.
+   * on `data-reading-time` for downstream consumers. Optional when
+   * `loading={true}` (no value to render).
    */
-  minutes: number;
+  minutes?: number;
   /**
    * When true, prefixes the label with a small `lucide-react` Clock icon.
    * The icon is decorative (`aria-hidden`) — the text label carries the
    * semantic.
    */
   showIcon?: boolean;
+  /**
+   * When true, render a `<Skeleton variant="text" />` (short width)
+   * placeholder in place of the badge. Shape-matched to the typical
+   * "<N> min read" footprint so article-header metadata rows don't
+   * shift on data arrival.
+   */
+  loading?: boolean;
 };
 
 export const ReadingTime = React.forwardRef<HTMLSpanElement, ReadingTimeProps>(
-  ({ className, minutes, showIcon, ...props }, ref) => (
-    <span
-      ref={ref}
-      data-slot="reading-time"
-      data-min-viewport={String(MIN_VIEWPORT)}
-      data-reading-time={minutes}
-      className={cn(
-        'inline-flex items-center gap-1 text-muted-foreground text-sm',
-        className,
-      )}
-      {...props}
-    >
-      {showIcon ? <Clock aria-hidden className="size-3.5" /> : null}
-      {minutes} min read
-    </span>
-  ),
+  ({ className, minutes, showIcon, loading, ...props }, ref) => {
+    if (loading) {
+      return (
+        <Skeleton
+          variant="text"
+          data-slot="reading-time"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={cn('inline-block h-4 w-20', className)}
+        />
+      );
+    }
+    return (
+      <span
+        ref={ref}
+        data-slot="reading-time"
+        data-min-viewport={String(MIN_VIEWPORT)}
+        data-reading-time={minutes}
+        className={cn(
+          'inline-flex items-center gap-1 text-muted-foreground text-sm',
+          className,
+        )}
+        {...props}
+      >
+        {showIcon ? <Clock aria-hidden className="size-3.5" /> : null}
+        {minutes} min read
+      </span>
+    );
+  },
 );
 ReadingTime.displayName = 'ReadingTime';
 

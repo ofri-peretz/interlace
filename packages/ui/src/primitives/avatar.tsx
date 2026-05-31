@@ -6,11 +6,28 @@ import * as React from 'react';
 import { Avatar as BaseAvatar } from '@base-ui/react/avatar';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from './skeleton.js';
 
-function Avatar({
-  className,
-  ...props
-}: React.ComponentProps<typeof BaseAvatar.Root>) {
+type AvatarProps = React.ComponentProps<typeof BaseAvatar.Root> & {
+  /**
+   * When true, render a `<Skeleton variant="avatar" />` in place of the
+   * normal Avatar surface. Idiomatic state-contract entry — the loading
+   * silhouette is shape-matched (size-9 rounded-full) so the layout
+   * doesn't shift when the real image lands.
+   */
+  loading?: boolean;
+};
+
+function Avatar({ className, loading, ...props }: AvatarProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="avatar"
+        data-slot="avatar"
+        className={cn('size-8', className)}
+      />
+    );
+  }
   return (
     <BaseAvatar.Root
       data-slot="avatar"
