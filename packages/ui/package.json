@@ -136,6 +136,10 @@
       "types": "./dist/primitives/skeleton.d.ts",
       "default": "./dist/primitives/skeleton.js"
     },
+    "./data-state": {
+      "types": "./dist/primitives/data-state.d.ts",
+      "default": "./dist/primitives/data-state.js"
+    },
     "./progress": {
       "types": "./dist/primitives/progress.d.ts",
       "default": "./dist/primitives/progress.js"
