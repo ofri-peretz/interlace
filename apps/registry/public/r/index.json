@@ -566,6 +566,18 @@
       "type": "registry:ui",
       "title": "Stat Card",
       "description": "@interlace/ui — stat-card (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "article-template",
+      "type": "registry:ui",
+      "title": "Article Template",
+      "description": "@interlace/ui — article-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "registry-item-template",
+      "type": "registry:ui",
+      "title": "Registry Item Template",
+      "description": "@interlace/ui — registry-item-template (templates) (shadcn-compatible)."
     }
   ]
 }

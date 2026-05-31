@@ -64,6 +64,12 @@ const DECORATIVE_DIRS = [
   { name: 'magicui', dir: path.join(REPO_ROOT, 'packages/ui/src/magicui') },
   { name: 'aceternity', dir: path.join(REPO_ROOT, 'packages/ui/src/aceternity') },
   { name: 'patterns', dir: path.join(REPO_ROOT, 'packages/ui/src/patterns') },
+  // Phase 4 of the 5-layer architecture — templates are full-page
+  // surfaces that compose patterns + primitives inside SectionBoundaries.
+  // They ship as registry items so consumers can
+  // `npx shadcn add @interlace/article-template`. Tier label is
+  // `templates`; install target lands at `components/ui/templates/`.
+  { name: 'templates', dir: path.join(REPO_ROOT, 'packages/ui/src/templates') },
   // NOTE: `blocks` is INTENTIONALLY not scanned — Phase 1 of the
   // 5-layer architecture renamed `packages/ui/src/blocks/*.tsx` to
   // `packages/ui/src/patterns/*.tsx`. The old `blocks/` paths still

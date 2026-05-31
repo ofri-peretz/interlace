@@ -144,6 +144,10 @@
       "types": "./dist/primitives/section-boundary.d.ts",
       "default": "./dist/primitives/section-boundary.js"
     },
+    "./templates/*": {
+      "types": "./dist/templates/*.d.ts",
+      "default": "./dist/templates/*.js"
+    },
     "./progress": {
       "types": "./dist/primitives/progress.d.ts",
       "default": "./dist/primitives/progress.js"
