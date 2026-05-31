@@ -60,7 +60,7 @@ export function InteractiveGridPattern({
         const y = Math.floor(index / horizontal) * height
         return (
           <rect
-            key={index}
+            key={`${x}-${y}`}
             x={x}
             y={y}
             width={width}

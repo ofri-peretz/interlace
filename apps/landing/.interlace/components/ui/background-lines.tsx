@@ -11,7 +11,6 @@ import React, { useState, useEffect, useRef, useMemo, memo } from "react";
 
 // Fallback palette — used only during SSR or if `--background-lines-palette`
 // resolves empty. Token in `css/brand.css` is the canonical place to override.
-// eslint-disable-next-line no-raw-color-literal -- documented SSR fallback
 const FALLBACK_LINES_PALETTE = [
   "#46A5CA", "#8C2F2F", "#4FAE4D", "#D6590C", "#811010", "#247AFB",
   "#A534A0", "#A8A438", "#D6590C", "#46A29C", "#670F6D", "#D7C200",

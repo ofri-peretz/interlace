@@ -118,10 +118,10 @@ export function ServerlessConfigTabs({
   }
 
   return (
-    <Tabs groupId={groupId} items={present.map((key) => SLOT_LABELS[key])} persist>
-      {present.map((key) => (
-        <Tab key={key} value={SLOT_LABELS[key]}>
-          {slots.get(key)}
+    <Tabs groupId={groupId} items={present.map((slotKey) => SLOT_LABELS[slotKey])} persist>
+      {present.map((slotKey) => (
+        <Tab key={slotKey} value={SLOT_LABELS[slotKey]}>
+          {slots.get(slotKey)}
         </Tab>
       ))}
     </Tabs>

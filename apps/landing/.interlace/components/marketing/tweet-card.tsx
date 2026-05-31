@@ -192,7 +192,7 @@ const TweetBody = ({ tweet }: { tweet: EnrichedTweet }) => (
         case 'mention':
           return (
             <a
-              key={idx}
+              key={`${entity.type}-${idx}`}
               href={entity.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -204,7 +204,7 @@ const TweetBody = ({ tweet }: { tweet: EnrichedTweet }) => (
         case 'text':
           return (
             <span
-              key={idx}
+              key={`text-${idx}`}
               className="text-[15px] font-normal text-fd-foreground"
               dangerouslySetInnerHTML={{ __html: entity.text }}
             />
