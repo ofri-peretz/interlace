@@ -32,15 +32,17 @@ function TooltipTrigger(
 
 function TooltipContent({
   className,
+  side,
   sideOffset = 0,
   children,
   ...props
 }: React.ComponentProps<typeof BaseTooltip.Popup> & {
+  side?: 'top' | 'right' | 'bottom' | 'left' | 'inline-start' | 'inline-end';
   sideOffset?: number;
 }) {
   return (
     <BaseTooltip.Portal>
-      <BaseTooltip.Positioner sideOffset={sideOffset}>
+      <BaseTooltip.Positioner side={side} sideOffset={sideOffset}>
         <BaseTooltip.Popup
           data-slot="tooltip-content"
           className={cn(
@@ -57,4 +59,56 @@ function TooltipContent({
   );
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+/* ─────────────────────────────────────────────────────────────────
+ * TooltipCompose — convenience composition.
+ *
+ * Renders Root + Trigger + Content for the canonical "hover icon →
+ * tooltip with label" pattern. Wrap your app in TooltipProvider once at
+ * the top; then `<TooltipCompose>` per icon-only button keeps the rest
+ * of the tree clean.
+ *
+ *   <TooltipCompose
+ *     trigger={<IconButton><Search /></IconButton>}
+ *     label="Search (⌘K)"
+ *   />
+ * ──────────────────────────────────────────────────────────────── */
+interface TooltipComposeProps {
+  trigger: React.ReactNode;
+  /** Tooltip text — typically a short label or shortcut hint. */
+  label: React.ReactNode;
+  /** Floating-UI side. */
+  side?: React.ComponentProps<typeof TooltipContent>['side'];
+  /** Delay before showing (ms). Defaults to the TooltipProvider default. */
+  delay?: number;
+  className?: string;
+}
+
+function TooltipCompose({
+  trigger,
+  label,
+  side,
+  delay,
+  className,
+}: TooltipComposeProps) {
+  // Tooltip Root doesn't accept `delay` directly — it's owned by
+  // TooltipProvider higher up. We accept `delay` in this API for
+  // forward-compat but don't forward it here.
+  void delay;
+  return (
+    <Tooltip>
+      <TooltipTrigger render={trigger as React.ReactElement} />
+      <TooltipContent side={side} className={className}>
+        {label}
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+  TooltipCompose,
+};
+export type { TooltipComposeProps };

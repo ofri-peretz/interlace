@@ -132,6 +132,67 @@ function SheetDescription({
   );
 }
 
+/* ─────────────────────────────────────────────────────────────────
+ * SheetCompose — convenience composition.
+ *
+ * Renders the canonical Root → Trigger → Portal → Overlay → Content
+ * tree with a title + body + optional footer for the side-drawer
+ * pattern (nav drawers, filter panels, settings).
+ *
+ *   <SheetCompose
+ *     trigger={<Button variant="ghost">Filters</Button>}
+ *     side="right"
+ *     title="Filter results"
+ *     footer={<Button>Apply</Button>}
+ *   >
+ *     <FilterForm />
+ *   </SheetCompose>
+ * ──────────────────────────────────────────────────────────────── */
+interface SheetComposeProps {
+  trigger: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  className?: string;
+}
+
+function SheetCompose({
+  trigger,
+  open,
+  onOpenChange,
+  title,
+  description,
+  children,
+  footer,
+  side = 'right',
+  className,
+}: SheetComposeProps) {
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetTrigger render={trigger as React.ReactElement} />
+      <SheetPortal>
+        <SheetOverlay />
+        <SheetContent side={side} className={className}>
+          {(title || description) && (
+            <SheetHeader>
+              {title ? <SheetTitle>{title}</SheetTitle> : null}
+              {description ? (
+                <SheetDescription>{description}</SheetDescription>
+              ) : null}
+            </SheetHeader>
+          )}
+          {children}
+          {footer ? <SheetFooter>{footer}</SheetFooter> : null}
+        </SheetContent>
+      </SheetPortal>
+    </Sheet>
+  );
+}
+
 export {
   Sheet,
   SheetTrigger,
@@ -143,5 +204,6 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
+  SheetCompose,
 };
-export type { SheetContentProps };
+export type { SheetContentProps, SheetComposeProps };

@@ -24,17 +24,20 @@ function DropdownMenuTrigger(
 
 function DropdownMenuContent({
   className,
+  side,
   sideOffset = 4,
   align = 'start',
   children,
   ...props
 }: React.ComponentProps<typeof BaseMenu.Popup> & {
+  side?: 'top' | 'right' | 'bottom' | 'left' | 'inline-start' | 'inline-end';
   sideOffset?: number;
   align?: 'start' | 'center' | 'end';
 }) {
   return (
     <BaseMenu.Portal>
       <BaseMenu.Positioner
+        side={side}
         sideOffset={sideOffset}
         align={align}
         className="z-50"
@@ -250,6 +253,89 @@ function DropdownMenuSubContent({
   );
 }
 
+/* ─────────────────────────────────────────────────────────────────
+ * DropdownMenuCompose — convenience composition.
+ *
+ * Renders Root + Trigger + Content with a single-prop API for the
+ * common "click button → choose item from list" pattern. Items can be
+ * regular item / separator / label entries.
+ *
+ *   <DropdownMenuCompose
+ *     trigger={<Button>Actions ▾</Button>}
+ *     items={[
+ *       { label: 'Edit', onSelect: handleEdit, shortcut: '⌘E' },
+ *       { label: 'Duplicate', onSelect: handleDup, shortcut: '⌘D' },
+ *       { type: 'separator' },
+ *       { label: 'Delete', onSelect: handleDel, tone: 'destructive' },
+ *     ]}
+ *   />
+ * ──────────────────────────────────────────────────────────────── */
+type DropdownMenuComposeItem =
+  | {
+      type?: 'item';
+      label: React.ReactNode;
+      onSelect?: () => void;
+      shortcut?: React.ReactNode;
+      disabled?: boolean;
+      tone?: 'default' | 'destructive';
+    }
+  | { type: 'separator' }
+  | { type: 'label'; label: React.ReactNode };
+
+interface DropdownMenuComposeProps {
+  trigger: React.ReactNode;
+  items: DropdownMenuComposeItem[];
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  side?: React.ComponentProps<typeof DropdownMenuContent>['side'];
+  align?: React.ComponentProps<typeof DropdownMenuContent>['align'];
+  className?: string;
+}
+
+function DropdownMenuCompose({
+  trigger,
+  items,
+  open,
+  onOpenChange,
+  side,
+  align,
+  className,
+}: DropdownMenuComposeProps) {
+  return (
+    <DropdownMenu open={open} onOpenChange={onOpenChange}>
+      <DropdownMenuTrigger render={trigger as React.ReactElement} />
+      <DropdownMenuContent side={side} align={align} className={className}>
+        {items.map((item, i) => {
+          if (item.type === 'separator') {
+            return <DropdownMenuSeparator key={i} />;
+          }
+          if (item.type === 'label') {
+            return <DropdownMenuLabel key={i}>{item.label}</DropdownMenuLabel>;
+          }
+          return (
+            <DropdownMenuItem
+              key={i}
+              onClick={item.onSelect}
+              disabled={item.disabled}
+              data-tone={item.tone === 'destructive' ? 'destructive' : undefined}
+              className={
+                item.tone === 'destructive'
+                  ? 'text-destructive data-[highlighted]:text-destructive'
+                  : undefined
+              }
+            >
+              {item.label}
+              {item.shortcut ? (
+                <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
+              ) : null}
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 export {
   DropdownMenu,
   DropdownMenuPortal,
@@ -266,4 +352,6 @@ export {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  DropdownMenuCompose,
 };
+export type { DropdownMenuComposeProps, DropdownMenuComposeItem };

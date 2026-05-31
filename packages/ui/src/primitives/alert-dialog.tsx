@@ -141,6 +141,83 @@ function AlertDialogClose(
   return <BaseAlertDialog.Close data-slot="alert-dialog-close" {...props} />;
 }
 
+/* ─────────────────────────────────────────────────────────────────
+ * AlertDialogCompose — convenience composition.
+ *
+ * Renders Root → Trigger → Portal → Backdrop → Popup with title +
+ * description + confirm/cancel actions. Use this for the destructive-
+ * action confirmation pattern ("Delete project?" / "Sign out?").
+ *
+ *   <AlertDialogCompose
+ *     trigger={<Button variant="destructive">Delete</Button>}
+ *     title="Delete this project?"
+ *     description="This permanently removes the project and all its files."
+ *     confirmLabel="Delete"
+ *     onConfirm={handleDelete}
+ *   />
+ * ──────────────────────────────────────────────────────────────── */
+interface AlertDialogComposeProps {
+  trigger: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title: React.ReactNode;
+  description?: React.ReactNode;
+  /** Label on the confirm button. Defaults to "Confirm". */
+  confirmLabel?: React.ReactNode;
+  /** Label on the cancel button. Defaults to "Cancel". */
+  cancelLabel?: React.ReactNode;
+  /** Confirm-click handler. The dialog closes after this fires. */
+  onConfirm?: () => void;
+  /**
+   * Tone for the confirm button. Use `destructive` for delete /
+   * sign-out / reset actions; `primary` (default) for everything else.
+   */
+  confirmTone?: 'primary' | 'destructive';
+  className?: string;
+}
+
+function AlertDialogCompose({
+  trigger,
+  open,
+  onOpenChange,
+  title,
+  description,
+  confirmLabel = 'Confirm',
+  cancelLabel = 'Cancel',
+  onConfirm,
+  confirmTone = 'primary',
+  className,
+}: AlertDialogComposeProps) {
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogTrigger render={trigger as React.ReactElement} />
+      <AlertDialogPortal>
+        <AlertDialogBackdrop />
+        <AlertDialogPopup className={className}>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          {description ? (
+            <AlertDialogDescription>{description}</AlertDialogDescription>
+          ) : null}
+          <div className="mt-md flex justify-end gap-sm">
+            <AlertDialogClose>{cancelLabel}</AlertDialogClose>
+            <AlertDialogClose
+              onClick={onConfirm}
+              data-tone={confirmTone}
+              className={
+                confirmTone === 'destructive'
+                  ? 'bg-destructive text-destructive-foreground rounded-md px-md py-xs font-medium'
+                  : 'bg-primary text-primary-foreground rounded-md px-md py-xs font-medium'
+              }
+            >
+              {confirmLabel}
+            </AlertDialogClose>
+          </div>
+        </AlertDialogPopup>
+      </AlertDialogPortal>
+    </AlertDialog>
+  );
+}
+
 export {
   AlertDialog,
   AlertDialogTrigger,
@@ -150,4 +227,6 @@ export {
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogClose,
+  AlertDialogCompose,
 };
+export type { AlertDialogComposeProps };

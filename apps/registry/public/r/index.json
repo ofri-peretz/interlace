@@ -628,6 +628,12 @@
       "description": "@interlace/ui — auth-template (templates) (shadcn-compatible)."
     },
     {
+      "name": "author-template",
+      "type": "registry:ui",
+      "title": "Author Template",
+      "description": "@interlace/ui — author-template (templates) (shadcn-compatible)."
+    },
+    {
       "name": "blog-home-template",
       "type": "registry:ui",
       "title": "Blog Home Template",
@@ -668,6 +674,12 @@
       "type": "registry:ui",
       "title": "Settings Template",
       "description": "@interlace/ui — settings-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "tag-template",
+      "type": "registry:ui",
+      "title": "Tag Template",
+      "description": "@interlace/ui — tag-template (templates) (shadcn-compatible)."
     }
   ]
 }

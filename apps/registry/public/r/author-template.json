@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "author-template",
+  "type": "registry:ui",
+  "title": "Author Template",
+  "description": "@interlace/ui — author-template (templates) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/templates/author-template.tsx",
+      "target": "components/ui/templates/author-template.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — AuthorTemplate\n *\n * Author profile page — bio header + their articles grid. Used by\n * `/authors/[slug]` routes on a blog. The bio header is a multi-part\n * card (avatar + name + role + bio + social links); the grid uses\n * ArticleListGrid for the article list.\n *\n * ## MIN_VIEWPORT — 320\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Container } from '../primitives/container.js';\nimport { SectionBoundary } from '../primitives/section-boundary.js';\nimport { Stack } from '../primitives/stack.js';\nimport { Topbar } from '../patterns/topbar.js';\nimport { Footer } from '../patterns/footer.js';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ninterface AuthorTemplateProps extends React.ComponentProps<'div'> {\n  topbar: React.ComponentProps<typeof Topbar>;\n  /**\n   * Author bio header — consumer-supplied. Typically renders\n   * <AuthorByline /> + a paragraph + social links.\n   */\n  bio: React.ReactNode;\n  /** Article grid — typically <ArticleListGrid title=\"By Ofri\" posts={...} />. */\n  articles: React.ReactNode;\n  footer?: React.ComponentProps<typeof Footer>;\n}\n\nfunction AuthorTemplate({\n  topbar,\n  bio,\n  articles,\n  footer,\n  className,\n  ...props\n}: AuthorTemplateProps) {\n  return (\n    <div\n      data-slot=\"author-template\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('bg-background text-foreground', className)}\n      {...props}\n    >\n      <Topbar {...topbar} />\n\n      <main>\n        <Container size=\"prose\">\n          <Stack gap=\"xl\" className=\"py-xl\">\n            <SectionBoundary name=\"author-bio\" skeletonVariant=\"author-byline\">\n              {bio}\n            </SectionBoundary>\n\n            <SectionBoundary\n              name=\"author-articles\"\n              skeletonVariant=\"article-card\"\n            >\n              {articles}\n            </SectionBoundary>\n          </Stack>\n        </Container>\n      </main>\n\n      {footer ? <Footer {...footer} /> : null}\n    </div>\n  );\n}\nAuthorTemplate.displayName = 'AuthorTemplate';\n\nexport { AuthorTemplate };\nexport type { AuthorTemplateProps };\n"
+    }
+  ]
+}

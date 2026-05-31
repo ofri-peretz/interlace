@@ -95,6 +95,8 @@ const TEMPLATES = [
   { name: 'dashboard-template', viewport: 480, tier: 'server' },
   { name: 'blog-home-template', viewport: 320, tier: 'server' },
   { name: 'settings-template', viewport: 480, tier: 'server' },
+  { name: 'author-template', viewport: 320, tier: 'server' },
+  { name: 'tag-template', viewport: 320, tier: 'server' },
 ] as const;
 
 // Allowed viewport floors. Keep in lock-step with DESIGN_PRINCIPLES #14.
