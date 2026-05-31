@@ -1,0 +1,91 @@
+/*
+ * @interlace/ui — canonical CSS contract.
+ *
+ * THE single import a consumer app needs:
+ *
+ *   @import "tailwindcss";
+ *   @import "@interlace/ui/styles/index.css";
+ *
+ * That's the full DS baseline — type scale + spacing + radius + container
+ * widths + focus ring + min-viewport contract + fumadocs bridge + brand
+ * palette + every semantic token (--background / --foreground /
+ * --muted-foreground / --ring / ...) — wired into Tailwind v4 utilities.
+ *
+ * ─── Why a barrel + cascade layers ─────────────────────────────────
+ *
+ * Before this file existed, consumers had to know — and repeat in order —
+ * the five-file import chain (tokens → foundation → preflight → theme →
+ * interlace-theme). A typo or skipped file silently degraded half the
+ * contract (e.g. omitting preflight.css cost the WCAG 2.2 SC 2.4.13 focus
+ * ring). This barrel makes the contract a single line, and CSS Cascade
+ * Layers make the order self-documenting:
+ *
+ *   `@layer interlace.primitives, interlace.foundation, interlace.preflight,
+ *           interlace.bridge, interlace.brand, interlace.semantics;`
+ *
+ * Reading left to right = ascending priority (later layers win in the
+ * cascade). The whole stack stays under the `interlace.*` namespace so a
+ * consumer who wants to fork the brand declares `@layer interlace.brand`
+ * AFTER importing this file and their declarations deterministically
+ * override ours — regardless of declaration order or specificity. Without
+ * layers, brand override is source-order roulette.
+ *
+ * ─── What each layer owns ──────────────────────────────────────────
+ *
+ *   interlace.primitives — raw values: keyframes, motion timings, animation
+ *                          utility classes. No semantic meaning, just
+ *                          mechanical primitives. (tokens.css)
+ *
+ *   interlace.foundation — type scale, spacing scale, radius, container
+ *                          widths, font families. Brand-invariant
+ *                          STRUCTURE registered as Tailwind theme tokens.
+ *                          (foundation.css — @theme stays top-level for
+ *                          Tailwind to process)
+ *
+ *   interlace.preflight  — token-aware baseline beyond Tailwind's own
+ *                          preflight: body bg/fg/font, ::selection, focus
+ *                          ring (WCAG 2.2 SC 2.4.13), scrollbar tint,
+ *                          ::placeholder contrast, [data-min-viewport]
+ *                          container contract. (preflight.css)
+ *
+ *   interlace.bridge     — fumadocs ↔ shadcn token bridge:
+ *                          `:root { --background: var(--color-fd-background); }`.
+ *                          Apps using fumadocs inherit the color story.
+ *                          (theme.css)
+ *
+ *   interlace.brand      — concrete brand values: --interlace-primary,
+ *                          --interlace-background hex literals (light + dark).
+ *                          THE supported consumer override surface — fork
+ *                          this layer to re-brand. (interlace-theme.css)
+ *
+ *   interlace.semantics  — alias bindings: --background, --foreground,
+ *                          --muted-foreground, --ring, etc., mapped to the
+ *                          --interlace-* brand values. Plus Tailwind v4
+ *                          `@theme inline { --color-* }` registration so
+ *                          utility classes resolve. (interlace-theme.css)
+ *
+ * ─── What's deliberately NOT a layer ──────────────────────────────
+ *
+ *   `@theme { ... }` blocks (in foundation.css + interlace-theme.css) stay
+ *   at the top level outside any `@layer`. They're Tailwind v4 directives
+ *   that register design tokens globally and emit utility classes; wrapping
+ *   them in a custom layer breaks Tailwind's processing. The layer story
+ *   applies to the consuming rules (`:root { --background: ... }`), not the
+ *   token-registration directives.
+ *
+ * ─── Forbidden in this file ───────────────────────────────────────
+ *
+ *   - Inline declarations. Everything goes via @import of a layer file.
+ *   - Tailwind directives. (Belong in foundation.css / interlace-theme.css.)
+ *   - Consumer-app-specific overrides. (Belong in the consumer's
+ *     global.css after this @import.)
+ */
+
+@layer interlace.primitives, interlace.foundation, interlace.preflight,
+       interlace.bridge, interlace.brand, interlace.semantics;
+
+@import "./tokens.css";
+@import "./foundation.css";
+@import "./preflight.css";
+@import "./theme.css";
+@import "./interlace-theme.css";

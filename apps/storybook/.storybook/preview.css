@@ -3,11 +3,12 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 @import 'fumadocs-twoslash/twoslash.css';
-@import '@interlace/ui/styles/tokens.css';
-@import '@interlace/ui/styles/foundation.css';
-@import '@interlace/ui/styles/preflight.css';
-@import '@interlace/ui/styles/theme.css';
-@import '@interlace/ui/styles/interlace-theme.css';
+
+/* The canonical DS CSS contract — single import, layered cascade.
+ * Bundles tokens → foundation → preflight → bridge → brand → semantics
+ * with deterministic override via `@layer interlace.*`. See
+ * packages/ui/styles/index.css for the layer model. */
+@import '@interlace/ui/styles/index.css';
 
 /* From `apps/storybook/.storybook/preview.css`:
  *   ..       → apps/storybook/

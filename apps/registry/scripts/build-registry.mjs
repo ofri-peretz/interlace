@@ -64,7 +64,15 @@ const DECORATIVE_DIRS = [
   { name: 'magicui', dir: path.join(REPO_ROOT, 'packages/ui/src/magicui') },
   { name: 'aceternity', dir: path.join(REPO_ROOT, 'packages/ui/src/aceternity') },
   { name: 'patterns', dir: path.join(REPO_ROOT, 'packages/ui/src/patterns') },
-  { name: 'blocks', dir: path.join(REPO_ROOT, 'packages/ui/src/blocks') },
+  // NOTE: `blocks` is INTENTIONALLY not scanned — Phase 1 of the
+  // 5-layer architecture renamed `packages/ui/src/blocks/*.tsx` to
+  // `packages/ui/src/patterns/*.tsx`. The old `blocks/` paths still
+  // exist as one-line `export * from '../patterns/<name>.js'` aliases
+  // so `import from '@interlace/ui/blocks/<name>'` keeps working for
+  // one release cycle. Scanning blocks/ here would double-publish each
+  // pattern as both `r/<name>.json` (from patterns scan) and produce
+  // a malformed dep list (the alias has no real imports, so deps drop
+  // to []). Skip it.
 ];
 const OUT_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const STYLES_OUT_DIR = path.join(OUT_DIR, 'styles');

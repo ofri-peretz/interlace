@@ -3,7 +3,7 @@
   "name": "section-header",
   "type": "registry:ui",
   "title": "Section Header",
-  "description": "@interlace/ui — section-header (blocks) (shadcn-compatible).",
+  "description": "@interlace/ui — section-header (patterns) (shadcn-compatible).",
   "dependencies": [
     "class-variance-authority"
   ],
@@ -12,8 +12,8 @@
   ],
   "files": [
     {
-      "path": "registry/interlace-ui/blocks/section-header.tsx",
-      "target": "components/ui/blocks/section-header.tsx",
+      "path": "registry/interlace-ui/patterns/section-header.tsx",
+      "target": "components/ui/patterns/section-header.tsx",
       "type": "registry:ui",
       "content": "import * as React from 'react';\nimport { cva, type VariantProps } from 'class-variance-authority';\n\nimport { cn } from '@/lib/utils';\n\n/**\n * `<SectionHeader>` — the \"text-center mb-12 + h2 + tagline\" pattern from\n * LAYOUT_PHILOSOPHY.md §1, lifted into a single primitive.\n *\n * Owns:\n *   - Bottom margin (tied to spacing token, default `xl`).\n *   - Alignment (`center` default; `start` for content-heavy sections).\n *   - The h2/tagline typography rhythm.\n *   - The tagline's prose width (`max-w-prose` — never per-instance).\n *\n * Replaces the per-page duplication called out in HOMEPAGE_LAYOUT_AUDIT.md:\n * six near-identical \"text-center mb-12 / h2 / tagline\" blocks → one\n * import.\n */\n\nconst sectionHeaderVariants = cva('', {\n  variants: {\n    align: {\n      center: 'text-center [&_p]:mx-auto',\n      start: 'text-left',\n    },\n    spacing: {\n      md: 'mb-12',\n      lg: 'mb-16',\n    },\n  },\n  defaultVariants: {\n    align: 'center',\n    spacing: 'lg',\n  },\n});\n\ninterface SectionHeaderProps\n  extends Omit<React.ComponentProps<'div'>, 'title'>,\n    VariantProps<typeof sectionHeaderVariants> {\n  /** Small label above the title (e.g. a section number, chip, or eyebrow tag). */\n  eyebrow?: React.ReactNode;\n  /** The h2 heading. */\n  title: React.ReactNode;\n  /** Optional subhead paragraph. */\n  tagline?: React.ReactNode;\n  /** Heading level. Defaults to h2 (page-level h1 lives in the hero). */\n  as?: 'h1' | 'h2' | 'h3';\n}\n\nfunction SectionHeader({\n  className,\n  eyebrow,\n  title,\n  tagline,\n  align,\n  spacing,\n  as: Heading = 'h2',\n  ...props\n}: SectionHeaderProps) {\n  return (\n    <div\n      data-slot=\"section-header\"\n      data-align={align ?? undefined}\n      className={cn(sectionHeaderVariants({ align, spacing }), className)}\n      {...props}\n    >\n      {eyebrow ? (\n        <div className=\"mb-4 flex items-center justify-center\">{eyebrow}</div>\n      ) : null}\n      <Heading className=\"text-3xl md:text-4xl lg:text-5xl font-bold mb-4\">\n        {title}\n      </Heading>\n      {tagline ? (\n        <p className=\"text-fd-muted-foreground max-w-prose text-base md:text-lg\">\n          {tagline}\n        </p>\n      ) : null}\n    </div>\n  );\n}\n\nexport { SectionHeader, sectionHeaderVariants };\nexport type { SectionHeaderProps };\n"
     }

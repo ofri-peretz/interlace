@@ -38,7 +38,15 @@
 /* ─────────────────────────────────────────────────────────────────
  * 1. shadcn-token bridge — maps shadcn-bare tokens to fumadocs sources.
  *    Light + dark inherit from `--color-fd-*` which the app overrides.
+ *
+ *    Wrapped in `@layer interlace.bridge` so the cascade story is
+ *    deterministic: `interlace.brand` and `interlace.semantics` (later
+ *    layers, declared in index.css) override these bridge defaults
+ *    cleanly. Without the layer wrap, this unlayered `:root` block
+ *    would TRUMP the layered semantic bindings per CSS Cascade Layers
+ *    spec (unlayered > all custom layers).
  * ──────────────────────────────────────────────────────────────── */
+@layer interlace.bridge {
 :root {
   --background: var(--color-fd-background);
   --foreground: var(--color-fd-foreground);
@@ -109,10 +117,17 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 }
+} /* end @layer interlace.bridge */
 
 /* ─────────────────────────────────────────────────────────────────
  * 2. Shiki AAA boosts — github-light / github-dark themes.
  *    Boost muted comment + keyword colors past 7:1 contrast.
+ *
+ *    NOT in `@layer interlace.bridge` — these are component-style
+ *    overrides keyed off inline Shiki styles. They need higher cascade
+ *    weight than our bridge layer to actually win against the inline
+ *    `style="--shiki-light: #..."` values; leaving them unlayered is
+ *    intentional.
  * ──────────────────────────────────────────────────────────────── */
 .shiki span[style*="--shiki-light:#6E7781"],
 .shiki span[style*="--shiki-light:#6e7781"] {
