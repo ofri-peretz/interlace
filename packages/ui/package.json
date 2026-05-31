@@ -140,6 +140,10 @@
       "types": "./dist/primitives/data-state.d.ts",
       "default": "./dist/primitives/data-state.js"
     },
+    "./section-boundary": {
+      "types": "./dist/primitives/section-boundary.d.ts",
+      "default": "./dist/primitives/section-boundary.js"
+    },
     "./progress": {
       "types": "./dist/primitives/progress.d.ts",
       "default": "./dist/primitives/progress.js"

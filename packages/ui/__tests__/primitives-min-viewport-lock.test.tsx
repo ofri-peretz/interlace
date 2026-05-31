@@ -72,6 +72,12 @@ const PRIMITIVES = [
   { name: 'toc', viewport: 480, tier: 'client' },
   { name: 'reading-time', viewport: 320, tier: 'server' },
   { name: 'published-date', viewport: 320, tier: 'server' },
+  // Phase 3 — partial loading primitive. DataState is intentionally
+  // NOT in this list: it's a state-orchestration wrapper with no visual
+  // chrome of its own (just routes between loading / error / empty /
+  // idle children), so it has no min-viewport to declare. SectionBoundary
+  // DOES own a wrapping <section> element, so the contract applies.
+  { name: 'section-boundary', viewport: 320, tier: 'client' },
 ] as const;
 
 // Allowed viewport floors. Keep in lock-step with DESIGN_PRINCIPLES #14.

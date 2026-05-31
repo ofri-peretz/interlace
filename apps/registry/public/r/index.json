@@ -244,6 +244,12 @@
       "description": "@interlace/ui — scroll-area (shadcn-compatible)."
     },
     {
+      "name": "section-boundary",
+      "type": "registry:ui",
+      "title": "Section Boundary",
+      "description": "@interlace/ui — section-boundary (shadcn-compatible)."
+    },
+    {
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
