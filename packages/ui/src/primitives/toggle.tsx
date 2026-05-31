@@ -97,6 +97,13 @@ const ToggleGroup = React.forwardRef<
     ref={ref}
     data-slot="toggle-group"
     data-min-viewport={String(MIN_VIEWPORT)}
+    // Base UI renders the wrapper as `role="group" aria-orientation="…"`,
+    // but ARIA 1.2 says `group` does NOT allow `aria-orientation` (only
+    // toolbar / radiogroup / menu / tree / listbox / select / tablist /
+    // separator / slider / scrollbar do). Promote the role to `toolbar`
+    // so the orientation announcement is valid AND the surface still
+    // reads as a self-contained group of related controls.
+    role="toolbar"
     className={cn('inline-flex items-center', className)}
     {...props}
   />

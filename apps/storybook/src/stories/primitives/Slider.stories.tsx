@@ -26,12 +26,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <Slider defaultValue={[50]} max={100} step={1} className="w-64">
+    <Slider
+      defaultValue={[50]}
+      max={100}
+      step={1}
+      className="w-64"
+      aria-label="Single-thumb slider"
+    >
       <SliderControl>
         <SliderTrack>
           <SliderIndicator />
         </SliderTrack>
-        <SliderThumb />
+        <SliderThumb getAriaLabel={() => 'Single-thumb slider value'} />
       </SliderControl>
     </Slider>
   ),
@@ -42,13 +48,19 @@ export const Range: Story = {
     docs: { description: { story: 'Two-thumb range slider — pass `defaultValue` as a `[min, max]` tuple.' } },
   },
   render: () => (
-    <Slider defaultValue={[20, 70]} max={100} step={1} className="w-64">
+    <Slider
+      defaultValue={[20, 70]}
+      max={100}
+      step={1}
+      className="w-64"
+      aria-label="Range slider — min and max"
+    >
       <SliderControl>
         <SliderTrack>
           <SliderIndicator />
         </SliderTrack>
-        <SliderThumb />
-        <SliderThumb />
+        <SliderThumb getAriaLabel={(i) => (i === 0 ? 'Range minimum' : 'Range maximum')} />
+        <SliderThumb getAriaLabel={(i) => (i === 0 ? 'Range minimum' : 'Range maximum')} />
       </SliderControl>
     </Slider>
   ),
@@ -59,12 +71,18 @@ export const Stepped: Story = {
     docs: { description: { story: 'Stepped values — `step={10}` snaps to 0/10/20/.../100.' } },
   },
   render: () => (
-    <Slider defaultValue={[40]} max={100} step={10} className="w-64">
+    <Slider
+      defaultValue={[40]}
+      max={100}
+      step={10}
+      className="w-64"
+      aria-label="Stepped slider"
+    >
       <SliderControl>
         <SliderTrack>
           <SliderIndicator />
         </SliderTrack>
-        <SliderThumb />
+        <SliderThumb getAriaLabel={() => 'Stepped slider value'} />
       </SliderControl>
     </Slider>
   ),
@@ -72,12 +90,19 @@ export const Stepped: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <Slider defaultValue={[40]} max={100} step={1} disabled className="w-64">
+    <Slider
+      defaultValue={[40]}
+      max={100}
+      step={1}
+      disabled
+      className="w-64"
+      aria-label="Disabled slider"
+    >
       <SliderControl>
         <SliderTrack>
           <SliderIndicator />
         </SliderTrack>
-        <SliderThumb />
+        <SliderThumb getAriaLabel={() => 'Disabled slider value'} />
       </SliderControl>
     </Slider>
   ),

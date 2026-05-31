@@ -66,3 +66,89 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run build
+
+  # ─── Gate 5: registry drift ────────────────────────────────────────────
+  # `apps/registry/scripts/build-registry.mjs --check` rebuilds every item
+  # in memory and diffs against the committed `public/r/*.json`. Catches the
+  # case where someone edits a primitive's source but forgets to re-run the
+  # registry generator before pushing.
+  registry-drift:
+    name: registry (drift)
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Check registry items match sources
+        run: node apps/registry/scripts/build-registry.mjs --check
+
+  # ─── Gate 6: storybook static build ────────────────────────────────────
+  # Catches story-side API drift (a story importing a name the primitive no
+  # longer exports). Caught this 3× during PR #1 — wiring it as a gate
+  # prevents the same surprise next time.
+  storybook-build:
+    name: storybook (build)
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      # Use turbo so the dep graph fires `@interlace/ui#build` first —
+      # storybook stories import from compiled dist (per packages/ui
+      # `exports` map pointing at ./dist), so the package must be built
+      # before storybook resolves any `@interlace/ui/<x>` import.
+      - run: npx turbo run build-storybook --filter=@interlace/storybook
+      - name: Upload static build
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/storybook/storybook-static
+          retention-days: 7
+          if-no-files-found: error
+
+  # ─── Gate 7: storybook a11y / axe (HARD GATE) ─────────────────────────
+  # Renders every story headlessly and runs axe-core against it (wcag2aa,
+  # wcag22aa, best-practice, ACT). Test-runner is already configured at
+  # apps/storybook/test-runner.ts — this just fires it.
+  #
+  # The first run surfaced 37 violations across 14 stories. All of them
+  # were fixed in this PR: muted-foreground / destructive token contrast
+  # bumps (interlace-theme.css), tabindex=0 on overflowing pre/table
+  # (Prose + CodeBlock primitives), aria-label on Progress / Slider /
+  # NumberField / Icons-grid stories, unique aria-label per nav landmark
+  # in Breadcrumb + PrevNextPost variants, role="toolbar" on ToggleGroup
+  # so aria-orientation is valid, html-class toggle in `withDark` so axe
+  # walks the painted dark surface, surface paint on
+  # html/body/#storybook-root in preview.css, and the
+  # backgrounds-addon-disabled fix so it doesn't inline a white body
+  # background that out-specifies the cascade.
+  #
+  # NO `continue-on-error` — a regression here fails the PR.
+  storybook-a11y:
+    name: storybook (a11y)
+    needs: storybook-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Install Playwright browsers (test-runner uses chromium)
+        run: npx playwright install --with-deps chromium
+      - name: Restore storybook static build
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/storybook/storybook-static
+      - name: Run axe against every story
+        run: npm run test-storybook:ci --workspace=@interlace/storybook

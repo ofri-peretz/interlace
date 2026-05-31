@@ -128,10 +128,6 @@
       "types": "./dist/primitives/breadcrumb.d.ts",
       "default": "./dist/primitives/breadcrumb.js"
     },
-    "./breadcrumb": {
-      "types": "./dist/primitives/breadcrumb.d.ts",
-      "default": "./dist/primitives/breadcrumb.js"
-    },
     "./avatar": {
       "types": "./dist/primitives/avatar.d.ts",
       "default": "./dist/primitives/avatar.js"

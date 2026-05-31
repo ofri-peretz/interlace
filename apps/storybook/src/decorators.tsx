@@ -1,3 +1,4 @@
+import * as React from 'react';
 import type { Decorator } from '@storybook/react-vite';
 
 /**
@@ -33,8 +34,33 @@ export const withReducedMotion: Decorator = (Story) => (
   </>
 );
 
-export const withDark: Decorator = (Story) => (
-  <div className="dark bg-background text-foreground">
-    <Story />
-  </div>
-);
+/**
+ * Apply dark mode by toggling the `.dark` class on `<html>` for the
+ * lifetime of the story.
+ *
+ * Why an effect instead of a wrapping div: Storybook's `sb-main-centered`
+ * canvas sizes single-child decorators to their content. A wrapping
+ * `<div className="dark bg-background">` collapses around the story's
+ * visible glyphs, so axe-core's contrast walker (which uses
+ * `getBoundingClientRect` to pick the covering background ancestor)
+ * routinely walks PAST the wrapper to the un-painted white body and
+ * scores every dark-mode foreground at ~1:1 contrast.
+ *
+ * Toggling `.dark` on `<html>` lets the preflight `body { background-color:
+ * var(--background) }` rule paint the entire iframe dark, so the dark
+ * surface covers any pixel the story might render. Cleanup on unmount
+ * restores the previous class list (which the global toolbar theme
+ * switcher writes to as well — withThemeByClassName, parentSelector
+ * `'html'`).
+ */
+export const withDark: Decorator = (Story) => {
+  React.useLayoutEffect(() => {
+    const html = document.documentElement;
+    const had = html.classList.contains('dark');
+    html.classList.add('dark');
+    return () => {
+      if (!had) html.classList.remove('dark');
+    };
+  }, []);
+  return <Story />;
+};

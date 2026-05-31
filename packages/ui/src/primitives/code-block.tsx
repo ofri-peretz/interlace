@@ -162,9 +162,15 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
         ) : null}
         <pre
           data-slot="code-block-pre"
+          // tabIndex=0 keeps overflow scroll keyboard-reachable per axe
+          // `scrollable-region-focusable` (WCAG 2.1.1). On narrow viewports
+          // this lets keyboard users scroll the snippet sideways with arrow
+          // keys; the focus-visible ring is the standard DS contract.
+          tabIndex={0}
           className={cn(
             'overflow-x-auto p-md',
             'text-code font-mono text-foreground',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset',
           )}
         >
           <code

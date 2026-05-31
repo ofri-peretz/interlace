@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * @interlace/ui — Prose
  *
@@ -49,7 +51,7 @@
  * | R18  | Tailwind only                    | Zero inline `style`; cva + arbitrary-variant utilities      |
  * | R19  | Tokens only                      | `--text-*`, `--spacing-*`, `--container-prose`, semantic colors |
  * | R20  | AA contrast                      | `text-foreground` / `text-muted-foreground` clear AA in light + dark |
- * | R25  | Server component                 | no hooks → no `'use client'`                                |
+ * | R25  | Client component                 | useLayoutEffect injects `tabindex="0"` on overflowing `<pre>`/`<table>` for axe `scrollable-region-focusable` |
  * | R26  | A11y from native el              | semantic elements (`article`, `h*`, `a`, `table`) own the a11y tree |
  */
 
@@ -112,10 +114,14 @@ const PROSE_CASCADE = [
   '[&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:rounded-none',
 
   // Pre — block code surface with horizontal overflow on narrow viewports.
-  '[&_pre]:my-md [&_pre]:rounded-md [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-md [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code',
+  // Pairs with the focus-visible ring contract: when consumers add the
+  // recommended `tabIndex={0}` (see Prose JSDoc "Keyboard access" section),
+  // the ring activates on keyboard focus.
+  '[&_pre]:my-md [&_pre]:rounded-md [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-md [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-none [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
 
   // Tables — GFM zebra rows; block + overflow-x for narrow viewports (R14).
-  '[&_table]:my-md [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:text-ui',
+  // Same keyboard-focus contract as <pre>.
+  '[&_table]:my-md [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:text-ui [&_table:focus-visible]:outline-none [&_table:focus-visible]:ring-2 [&_table:focus-visible]:ring-ring [&_table:focus-visible]:ring-offset-2',
   '[&_thead]:bg-muted',
   '[&_th]:border [&_th]:border-border [&_th]:px-sm [&_th]:py-xs [&_th]:font-semibold [&_th]:text-left',
   '[&_td]:border [&_td]:border-border [&_td]:px-sm [&_td]:py-xs',
@@ -171,9 +177,37 @@ interface ProseProps
 const Prose = React.forwardRef<HTMLElement, ProseProps>(
   ({ className, variant, as, children, ...props }, ref) => {
     const Tag = (as ?? 'article') as React.ElementType;
+    const localRef = React.useRef<HTMLElement | null>(null);
+
+    /**
+     * axe `scrollable-region-focusable`: any element with `overflow:auto|scroll`
+     * that actually scrolls (scrollWidth/Height > clientWidth/Height) MUST be
+     * keyboard-reachable. The cleanest way to satisfy that without forcing
+     * every consumer to manually `tabIndex={0}` on every `<pre>` and `<table>`
+     * inside their MDX/HTML content is to inject it from the wrapper.
+     *
+     * useLayoutEffect runs after render but before paint, so the attribute is
+     * in place before the test-runner's axe scan inspects the DOM. We also
+     * re-run when children change (React reconciles a new key set) by keying
+     * on `children` identity via the dependency array.
+     */
+    React.useLayoutEffect(() => {
+      const root = localRef.current;
+      if (!root) return;
+      for (const el of root.querySelectorAll<HTMLElement>('pre, table')) {
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+      }
+    }, [children]);
+
+    const setRef = (node: HTMLElement | null) => {
+      localRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+    };
+
     return (
       <Tag
-        ref={ref}
+        ref={setRef}
         data-slot="prose"
         data-min-viewport={String(MIN_VIEWPORT)}
         data-variant={variant ?? undefined}

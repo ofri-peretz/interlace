@@ -29,7 +29,7 @@ export const Default: Story = {
     <NumberField defaultValue={5}>
       <NumberFieldGroup>
         <NumberFieldDecrement>−</NumberFieldDecrement>
-        <NumberFieldInput />
+        <NumberFieldInput aria-label="Quantity" />
         <NumberFieldIncrement>+</NumberFieldIncrement>
       </NumberFieldGroup>
     </NumberField>
@@ -44,7 +44,7 @@ export const Bounded: Story = {
     <NumberField defaultValue={50} min={0} max={100} step={5}>
       <NumberFieldGroup>
         <NumberFieldDecrement>−</NumberFieldDecrement>
-        <NumberFieldInput />
+        <NumberFieldInput aria-label="Quantity" />
         <NumberFieldIncrement>+</NumberFieldIncrement>
       </NumberFieldGroup>
     </NumberField>
@@ -56,7 +56,7 @@ export const Disabled: Story = {
     <NumberField defaultValue={5} disabled>
       <NumberFieldGroup>
         <NumberFieldDecrement>−</NumberFieldDecrement>
-        <NumberFieldInput />
+        <NumberFieldInput aria-label="Quantity" />
         <NumberFieldIncrement>+</NumberFieldIncrement>
       </NumberFieldGroup>
     </NumberField>
