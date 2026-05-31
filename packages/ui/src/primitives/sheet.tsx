@@ -193,8 +193,13 @@ function SheetCompose({
   );
 }
 
+// Dotted access — `<Sheet.Compose ...>`. See dialog.tsx for pattern.
+const SheetWithDot = Object.assign(Sheet, {
+  Compose: SheetCompose,
+}) as typeof Sheet & { Compose: typeof SheetCompose };
+
 export {
-  Sheet,
+  SheetWithDot as Sheet,
   SheetTrigger,
   SheetClose,
   SheetPortal,

@@ -104,8 +104,13 @@ function TooltipCompose({
   );
 }
 
+// Dotted access — `<Tooltip.Compose ...>`. See dialog.tsx for pattern.
+const TooltipWithDot = Object.assign(Tooltip, {
+  Compose: TooltipCompose,
+}) as typeof Tooltip & { Compose: typeof TooltipCompose };
+
 export {
-  Tooltip,
+  TooltipWithDot as Tooltip,
   TooltipTrigger,
   TooltipContent,
   TooltipProvider,

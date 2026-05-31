@@ -95,8 +95,13 @@ function PopoverCompose({
   );
 }
 
+// Dotted access — `<Popover.Compose ...>`. See dialog.tsx for pattern.
+const PopoverWithDot = Object.assign(Popover, {
+  Compose: PopoverCompose,
+}) as typeof Popover & { Compose: typeof PopoverCompose };
+
 export {
-  Popover,
+  PopoverWithDot as Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverAnchor,

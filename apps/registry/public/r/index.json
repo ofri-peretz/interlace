@@ -130,6 +130,12 @@
       "description": "@interlace/ui — container (shadcn-compatible)."
     },
     {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "@interlace/ui — context-menu (shadcn-compatible)."
+    },
+    {
       "name": "data-state",
       "type": "registry:ui",
       "title": "Data State",

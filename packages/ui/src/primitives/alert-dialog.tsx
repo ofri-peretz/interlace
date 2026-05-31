@@ -218,8 +218,14 @@ function AlertDialogCompose({
   );
 }
 
+// Dotted access — `<AlertDialog.Compose ...>` alongside the standalone
+// `AlertDialogCompose` export. See dialog.tsx for the pattern rationale.
+const AlertDialogWithDot = Object.assign(AlertDialog, {
+  Compose: AlertDialogCompose,
+}) as typeof AlertDialog & { Compose: typeof AlertDialogCompose };
+
 export {
-  AlertDialog,
+  AlertDialogWithDot as AlertDialog,
   AlertDialogTrigger,
   AlertDialogPortal,
   AlertDialogBackdrop,

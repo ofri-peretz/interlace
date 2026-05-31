@@ -31,6 +31,9 @@
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-a11y": "^2.1.5",
+    "eslint-plugin-react-features": "^1.1.4",
     "lefthook": "^1.7.0",
     "prettier": "^3.4.0",
     "tsx": "^4.19.0",

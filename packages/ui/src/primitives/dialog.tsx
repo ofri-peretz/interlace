@@ -232,8 +232,16 @@ function DialogCompose({
   );
 }
 
+// Attach Compose for dotted access (`<Dialog.Compose ...>`) alongside the
+// standalone `DialogCompose` export. Object.assign mutates the function
+// reference in place so internal usage of `Dialog` keeps working; the
+// type cast tells TypeScript that the dotted member exists.
+const DialogWithDot = Object.assign(Dialog, {
+  Compose: DialogCompose,
+}) as typeof Dialog & { Compose: typeof DialogCompose };
+
 export {
-  Dialog,
+  DialogWithDot as Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,

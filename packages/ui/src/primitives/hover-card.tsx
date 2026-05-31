@@ -212,8 +212,13 @@ function HoverCardCompose({
   );
 }
 
+// Dotted access — `<HoverCard.Compose ...>`. See dialog.tsx for pattern.
+const HoverCardWithDot = Object.assign(HoverCard, {
+  Compose: HoverCardCompose,
+}) as typeof HoverCard & { Compose: typeof HoverCardCompose };
+
 export {
-  HoverCard,
+  HoverCardWithDot as HoverCard,
   HoverCardTrigger,
   HoverCardPortal,
   HoverCardPositioner,

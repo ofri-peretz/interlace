@@ -336,8 +336,13 @@ function DropdownMenuCompose({
   );
 }
 
+// Dotted access — `<DropdownMenu.Compose ...>`. See dialog.tsx for pattern.
+const DropdownMenuWithDot = Object.assign(DropdownMenu, {
+  Compose: DropdownMenuCompose,
+}) as typeof DropdownMenu & { Compose: typeof DropdownMenuCompose };
+
 export {
-  DropdownMenu,
+  DropdownMenuWithDot as DropdownMenu,
   DropdownMenuPortal,
   DropdownMenuTrigger,
   DropdownMenuContent,

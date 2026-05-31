@@ -30,6 +30,11 @@
       "--interlace-warning-foreground": "#ffffff",
       "--interlace-info": "#1e40af",
       "--interlace-info-foreground": "#ffffff",
+      "--interlace-chart-1": "oklch(0.55 0.22 264)",
+      "--interlace-chart-2": "oklch(0.55 0.16 162)",
+      "--interlace-chart-3": "oklch(0.55 0.16 36)",
+      "--interlace-chart-4": "oklch(0.55 0.20 320)",
+      "--interlace-chart-5": "oklch(0.55 0.16 90)",
       "--interlace-radius-sm": "0.5rem",
       "--interlace-radius-md": "0.75rem",
       "--interlace-radius-lg": "1rem"
@@ -63,7 +68,12 @@
       "--interlace-warning": "#f59e0b",
       "--interlace-warning-foreground": "#1e1b2e",
       "--interlace-info": "#93c5fd",
-      "--interlace-info-foreground": "#0a0a0f"
+      "--interlace-info-foreground": "#0a0a0f",
+      "--interlace-chart-1": "oklch(0.78 0.16 264)",
+      "--interlace-chart-2": "oklch(0.78 0.14 162)",
+      "--interlace-chart-3": "oklch(0.78 0.14 36)",
+      "--interlace-chart-4": "oklch(0.78 0.16 320)",
+      "--interlace-chart-5": "oklch(0.78 0.14 90)"
     }
   },
   "semantics": {
@@ -93,6 +103,11 @@
       "--warning-foreground": "var(--interlace-warning-foreground)",
       "--info": "var(--interlace-info)",
       "--info-foreground": "var(--interlace-info-foreground)",
+      "--chart-1": "var(--interlace-chart-1)",
+      "--chart-2": "var(--interlace-chart-2)",
+      "--chart-3": "var(--interlace-chart-3)",
+      "--chart-4": "var(--interlace-chart-4)",
+      "--chart-5": "var(--interlace-chart-5)",
       "--color-fd-muted-foreground": "var(--interlace-muted-foreground)"
     },
     "dark": {
@@ -121,6 +136,11 @@
       "--warning-foreground": "var(--interlace-warning-foreground)",
       "--info": "var(--interlace-info)",
       "--info-foreground": "var(--interlace-info-foreground)",
+      "--chart-1": "var(--interlace-chart-1)",
+      "--chart-2": "var(--interlace-chart-2)",
+      "--chart-3": "var(--interlace-chart-3)",
+      "--chart-4": "var(--interlace-chart-4)",
+      "--chart-5": "var(--interlace-chart-5)",
       "--color-fd-muted-foreground": "var(--interlace-muted-foreground)"
     }
   }

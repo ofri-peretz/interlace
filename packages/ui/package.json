@@ -116,6 +116,10 @@
       "types": "./dist/primitives/dropdown-menu.d.ts",
       "default": "./dist/primitives/dropdown-menu.js"
     },
+    "./context-menu": {
+      "types": "./dist/primitives/context-menu.d.ts",
+      "default": "./dist/primitives/context-menu.js"
+    },
     "./popover": {
       "types": "./dist/primitives/popover.d.ts",
       "default": "./dist/primitives/popover.js"

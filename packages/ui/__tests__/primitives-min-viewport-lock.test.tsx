@@ -80,6 +80,8 @@ const PRIMITIVES = [
   { name: 'section-boundary', viewport: 320, tier: 'client' },
   // Phase: scorecard pages — visual grade pill.
   { name: 'grade-badge', viewport: 320, tier: 'server' },
+  // Right-click menu (paired with DropdownMenu's click-to-open variant).
+  { name: 'context-menu', viewport: 320, tier: 'client' },
 ] as const;
 
 /**

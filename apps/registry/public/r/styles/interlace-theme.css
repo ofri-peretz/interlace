@@ -112,6 +112,18 @@
     --interlace-info: #1e40af;
     --interlace-info-foreground: #ffffff;
 
+    /* Chart palette — five distinct hues for series colors, brand-owned
+     * so consumers can fork via `@layer interlace.brand`. Values match the
+     * existing oklch ladder in theme.css (≥4.5:1 on bg-card light); the
+     * promotion here makes the chart series an explicit brand surface
+     * with `@layer interlace.brand` override semantics like every other
+     * brand-coupled token. */
+    --interlace-chart-1: oklch(0.55 0.22 264);  /* indigo */
+    --interlace-chart-2: oklch(0.55 0.16 162);  /* teal */
+    --interlace-chart-3: oklch(0.55 0.16 36);   /* amber */
+    --interlace-chart-4: oklch(0.55 0.20 320);  /* magenta */
+    --interlace-chart-5: oklch(0.55 0.16 90);   /* olive */
+
     /* Radii (8/12/16 — three-step scale) */
     --interlace-radius-sm: 0.5rem;   /*  8px */
     --interlace-radius-md: 0.75rem;  /* 12px */
@@ -175,6 +187,15 @@
     /* Info (blue-300 — new semantic. text-info on near-black ≈ 8.7:1 (AAA). */
     --interlace-info: #93c5fd;
     --interlace-info-foreground: #0a0a0f;
+
+    /* Chart palette — lifted lightness so each series stays ≥4.5:1 on
+     * `bg-card` (near-black). Same five hues as light, repositioned for
+     * dark surfaces. */
+    --interlace-chart-1: oklch(0.78 0.16 264);
+    --interlace-chart-2: oklch(0.78 0.14 162);
+    --interlace-chart-3: oklch(0.78 0.14 36);
+    --interlace-chart-4: oklch(0.78 0.16 320);
+    --interlace-chart-5: oklch(0.78 0.14 90);
   }
 }
 
@@ -222,6 +243,16 @@
     --warning-foreground: var(--interlace-warning-foreground);
     --info: var(--interlace-info);
     --info-foreground: var(--interlace-info-foreground);
+
+    /* Chart palette — semantic aliases of the brand layer. Overrides
+     * the bridge layer (theme.css) values, so a consumer who wants
+     * different chart hues forks `@layer interlace.brand` to set
+     * `--interlace-chart-N` and the `--chart-N` token flows through. */
+    --chart-1: var(--interlace-chart-1);
+    --chart-2: var(--interlace-chart-2);
+    --chart-3: var(--interlace-chart-3);
+    --chart-4: var(--interlace-chart-4);
+    --chart-5: var(--interlace-chart-5);
 
     /* Override fumadocs-prefixed tokens for AA contrast.
      *
@@ -280,4 +311,14 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+
+  /* Chart palette utilities — generates bg-chart-1, text-chart-2,
+   * border-chart-3 etc. Already declared in theme.css (bridge layer);
+   * re-declared here at semantics-layer priority so brand overrides
+   * propagate. */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 }
