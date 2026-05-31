@@ -24,7 +24,7 @@ export const Default: Story = {
     <div className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950">
       <Meteors number={22} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-100">
-        <span className="text-xs uppercase tracking-widest opacity-60">
+        <span className="text-xs uppercase tracking-widest">
           Meteors — 22 over a 480px hero
         </span>
       </div>
@@ -37,7 +37,7 @@ export const LightSurface: Story = {
     <div className="relative h-[480px] w-full overflow-hidden rounded-xl bg-gradient-to-b from-sky-50 to-sky-200">
       <Meteors number={15} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-700">
-        <span className="text-xs uppercase tracking-widest opacity-60">
+        <span className="text-xs uppercase tracking-widest">
           Meteors over a daylit hero
         </span>
       </div>
@@ -50,7 +50,7 @@ export const Sparse: Story = {
     <div className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950">
       <Meteors number={6} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-100">
-        <span className="text-xs uppercase tracking-widest opacity-60">
+        <span className="text-xs uppercase tracking-widest">
           6 meteors — quiet sky
         </span>
       </div>

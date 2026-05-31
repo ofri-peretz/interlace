@@ -1,12 +1,12 @@
 {
   "brand": {
     "light": {
-      "--interlace-primary": "#6d28d9",
-      "--interlace-primary-hover": "#5b21b6",
-      "--interlace-primary-active": "#4c1d95",
+      "--interlace-primary": "#5b21b6",
+      "--interlace-primary-hover": "#4c1d95",
+      "--interlace-primary-active": "#2e1065",
       "--interlace-primary-foreground": "#ffffff",
       "--interlace-primary-subtle": "#ede9fe",
-      "--interlace-primary-subtle-foreground": "#4c1d95",
+      "--interlace-primary-subtle-foreground": "#2e1065",
       "--interlace-background": "#ffffff",
       "--interlace-foreground": "#0a0a0f",
       "--interlace-card": "#ffffff",
@@ -22,23 +22,25 @@
       "--interlace-accent-foreground": "#4c1d95",
       "--interlace-secondary": "#f1f0f6",
       "--interlace-secondary-foreground": "#1a1825",
-      "--interlace-destructive": "#b91c1c",
+      "--interlace-destructive": "#991b1b",
       "--interlace-destructive-foreground": "#ffffff",
-      "--interlace-success": "#059669",
+      "--interlace-success": "#065f46",
       "--interlace-success-foreground": "#ffffff",
-      "--interlace-warning": "#d97706",
+      "--interlace-warning": "#78350f",
       "--interlace-warning-foreground": "#ffffff",
+      "--interlace-info": "#1e40af",
+      "--interlace-info-foreground": "#ffffff",
       "--interlace-radius-sm": "0.5rem",
       "--interlace-radius-md": "0.75rem",
       "--interlace-radius-lg": "1rem"
     },
     "dark": {
-      "--interlace-primary": "#a78bfa",
-      "--interlace-primary-hover": "#c4b5fd",
-      "--interlace-primary-active": "#ddd6fe",
-      "--interlace-primary-foreground": "#1e1b2e",
+      "--interlace-primary": "#c4b5fd",
+      "--interlace-primary-hover": "#ddd6fe",
+      "--interlace-primary-active": "#ede9fe",
+      "--interlace-primary-foreground": "#0a0a0f",
       "--interlace-primary-subtle": "#2e1065",
-      "--interlace-primary-subtle-foreground": "#ddd6fe",
+      "--interlace-primary-subtle-foreground": "#ede9fe",
       "--interlace-background": "#0a0a0f",
       "--interlace-foreground": "#ededf2",
       "--interlace-card": "#14131c",
@@ -54,12 +56,14 @@
       "--interlace-accent-foreground": "#ddd6fe",
       "--interlace-secondary": "#1c1a26",
       "--interlace-secondary-foreground": "#ededf2",
-      "--interlace-destructive": "#ef4444",
+      "--interlace-destructive": "#fca5a5",
       "--interlace-destructive-foreground": "#0a0a0f",
-      "--interlace-success": "#10b981",
-      "--interlace-success-foreground": "#1e1b2e",
+      "--interlace-success": "#34d399",
+      "--interlace-success-foreground": "#052e16",
       "--interlace-warning": "#f59e0b",
-      "--interlace-warning-foreground": "#1e1b2e"
+      "--interlace-warning-foreground": "#1e1b2e",
+      "--interlace-info": "#93c5fd",
+      "--interlace-info-foreground": "#0a0a0f"
     }
   },
   "semantics": {
@@ -83,6 +87,12 @@
       "--ring": "var(--interlace-ring)",
       "--destructive": "var(--interlace-destructive)",
       "--destructive-foreground": "var(--interlace-destructive-foreground)",
+      "--success": "var(--interlace-success)",
+      "--success-foreground": "var(--interlace-success-foreground)",
+      "--warning": "var(--interlace-warning)",
+      "--warning-foreground": "var(--interlace-warning-foreground)",
+      "--info": "var(--interlace-info)",
+      "--info-foreground": "var(--interlace-info-foreground)",
       "--color-fd-muted-foreground": "var(--interlace-muted-foreground)"
     },
     "dark": {
@@ -105,6 +115,12 @@
       "--ring": "var(--interlace-ring)",
       "--destructive": "var(--interlace-destructive)",
       "--destructive-foreground": "var(--interlace-destructive-foreground)",
+      "--success": "var(--interlace-success)",
+      "--success-foreground": "var(--interlace-success-foreground)",
+      "--warning": "var(--interlace-warning)",
+      "--warning-foreground": "var(--interlace-warning-foreground)",
+      "--info": "var(--interlace-info)",
+      "--info-foreground": "var(--interlace-info-foreground)",
       "--color-fd-muted-foreground": "var(--interlace-muted-foreground)"
     }
   }

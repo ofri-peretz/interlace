@@ -26,10 +26,14 @@ const preview: Preview = {
       element: '#storybook-root',
       config: {
         rules: [
-          // AAA-only rules get pulled in by their `ACT` tag (see
-          // test-runner.ts AAA_RULES_DISABLED). Floor is WCAG 2.2 AA.
-          { id: 'color-contrast-enhanced', enabled: false },
-          // Per-story overrides go in `parameters.a11y.config.rules`.
+          // WCAG 2.2 AAA (color-contrast-enhanced) is now ENFORCED.
+          // Brand tokens have been bumped to clear ≥7:1 body / ≥4.5:1
+          // large in both light and dark modes (see interlace-theme.css
+          // for the colour ladder).
+          //
+          // Per-story carve-outs (rare; e.g. an intentional anti-pattern
+          // demo) go in `parameters.a11y.config.rules` on the story
+          // itself, with a JSDoc note explaining the rationale.
         ],
       },
       options: {

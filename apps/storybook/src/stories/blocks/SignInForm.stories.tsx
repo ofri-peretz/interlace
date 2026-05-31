@@ -32,14 +32,14 @@ export const WithActionsAndFooter: Story = {
   args: {
     subtitle: 'Welcome back.',
     actions: (
-      <a href="#" className="text-violet-600 hover:underline dark:text-violet-400">
+      <a href="#" className="text-primary underline underline-offset-4">
         Forgot password?
       </a>
     ),
     footer: (
       <>
         Don&apos;t have an account?{' '}
-        <a href="#" className="text-violet-600 hover:underline dark:text-violet-400">
+        <a href="#" className="text-primary underline underline-offset-4">
           Sign up
         </a>
       </>

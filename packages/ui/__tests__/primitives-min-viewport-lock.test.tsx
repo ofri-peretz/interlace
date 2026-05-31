@@ -78,6 +78,8 @@ const PRIMITIVES = [
   // idle children), so it has no min-viewport to declare. SectionBoundary
   // DOES own a wrapping <section> element, so the contract applies.
   { name: 'section-boundary', viewport: 320, tier: 'client' },
+  // Phase: scorecard pages — visual grade pill.
+  { name: 'grade-badge', viewport: 320, tier: 'server' },
 ] as const;
 
 /**
@@ -97,6 +99,8 @@ const TEMPLATES = [
   { name: 'settings-template', viewport: 480, tier: 'server' },
   { name: 'author-template', viewport: 320, tier: 'server' },
   { name: 'tag-template', viewport: 320, tier: 'server' },
+  { name: 'stats-template', viewport: 320, tier: 'server' },
+  { name: 'scorecard-template', viewport: 320, tier: 'server' },
 ] as const;
 
 // Allowed viewport floors. Keep in lock-step with DESIGN_PRINCIPLES #14.

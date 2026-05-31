@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scorecard-row",
+  "type": "registry:ui",
+  "title": "Scorecard Row",
+  "description": "@interlace/ui — scorecard-row (patterns) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/scorecard-row.tsx",
+      "target": "components/ui/patterns/scorecard-row.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — ScorecardRow\n *\n * A single dimension row in a scorecard: name + GradeBadge + numeric\n * score + optional details. Used by ScorecardTemplate to render each\n * scored category (Performance, Coverage, Adoption, ...).\n *\n * ## Anatomy\n *\n *   <article data-slot=\"scorecard-row\" data-min-viewport=\"320\">\n *     <header><h3>{name}</h3> <GradeBadge /> <span>{score}</span></header>\n *     {details && <div>{details}</div>}\n *   </article>\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { GradeBadge, type GradeValue } from '../primitives/grade-badge.js';\nimport { Skeleton } from '../primitives/skeleton.js';\nimport { Typography } from '../primitives/typography.js';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ninterface ScorecardRowProps extends Omit<React.ComponentProps<'article'>, 'title'> {\n  /** Dimension name (e.g. \"Performance\", \"Coverage\"). */\n  name: React.ReactNode;\n  /** WCAG-style letter grade. */\n  grade: GradeValue;\n  /** Numeric score (0-100). Rendered tabular for column alignment. */\n  score: number;\n  /** Optional sub-line (e.g. \"12 of 14 rules passing\"). */\n  caption?: React.ReactNode;\n  /** Optional detail content under the header (chart, table, callouts). */\n  details?: React.ReactNode;\n  loading?: boolean;\n}\n\nfunction ScorecardRow({\n  name,\n  grade,\n  score,\n  caption,\n  details,\n  loading,\n  className,\n  ...props\n}: ScorecardRowProps) {\n  if (loading) {\n    return (\n      <Skeleton\n        variant=\"card\"\n        data-slot=\"scorecard-row\"\n        data-min-viewport={String(MIN_VIEWPORT)}\n        className={className}\n      />\n    );\n  }\n  return (\n    <article\n      data-slot=\"scorecard-row\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      data-grade={grade}\n      className={cn(\n        'border-border bg-card text-card-foreground flex flex-col gap-md rounded-lg border p-md',\n        className,\n      )}\n      {...props}\n    >\n      <header className=\"flex items-center justify-between gap-sm\">\n        <div className=\"flex flex-col gap-xs\">\n          <Typography variant=\"h4\" as=\"h2\">\n            {name}\n          </Typography>\n          {caption ? (\n            <Typography variant=\"ui-sm\" tone=\"muted\">\n              {caption}\n            </Typography>\n          ) : null}\n        </div>\n        <div className=\"flex items-center gap-sm\">\n          <span className=\"font-body text-h3 font-bold tabular-nums leading-none\">\n            {score}\n          </span>\n          <GradeBadge grade={grade} size=\"lg\" />\n        </div>\n      </header>\n      {details ? <div>{details}</div> : null}\n    </article>\n  );\n}\nScorecardRow.displayName = 'ScorecardRow';\n\nexport { ScorecardRow };\nexport type { ScorecardRowProps };\n"
+    }
+  ]
+}

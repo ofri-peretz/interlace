@@ -27,11 +27,12 @@ const STRICT_TAGS = [
   'ACT',
 ];
 
-// AAA-level rules that the strict stack would otherwise pull in via their
-// `ACT` tag (axe's `runOnly: tags` enables every rule that matches any tag,
-// even ones disabled by default). Floor is WCAG 2.2 AA — AAA stays
-// aspirational and is audited separately via `npm run a11y:gradients`.
-const AAA_RULES_DISABLED: string[] = ['color-contrast-enhanced'];
+// AAA-level rules. As of the AAA-bump commit (interlace-theme.css token
+// ladder), `color-contrast-enhanced` is INTENTIONALLY enforced — brand
+// tokens clear ≥7:1 in both modes. Leave this empty unless a real
+// physics-of-light constraint requires carving out a rule globally;
+// per-story carve-outs go in `parameters.a11y.config.rules`.
+const AAA_RULES_DISABLED: string[] = [];
 
 const config: TestRunnerConfig = {
   async preVisit(page) {

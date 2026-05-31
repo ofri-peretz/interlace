@@ -105,11 +105,10 @@ function CTASection({
               tone={tone === 'primary' ? 'default' : 'muted'}
               className={cn(
                 'max-w-prose',
-                // On `primary` tone the section background is the brand colour;
-                // `text-muted-foreground` from the muted tone would render at
-                // ~1.3:1 contrast. Force a translucent primary-foreground so
-                // the description stays AA against the brand backdrop.
-                tone === 'primary' && 'text-primary-foreground/90',
+                // On `primary` tone the background is the brand colour. Use
+                // the full primary-foreground (no opacity) so contrast clears
+                // AAA — `/90` would knock it to ~6:1, sub-AAA.
+                tone === 'primary' && 'text-primary-foreground',
               )}
             >
               {description}

@@ -49,13 +49,19 @@
    *  LIGHT — default
    * ──────────────────────────────────────────────────────────────── */
   :root {
-    /* Brand */
-    --interlace-primary: #6d28d9;            /* violet-700 — AAA on white */
-    --interlace-primary-hover: #5b21b6;      /* violet-800 */
-    --interlace-primary-active: #4c1d95;     /* violet-900 */
+    /* Brand
+     *
+     * Primary bumped from violet-700 (#6d28d9, 7.34:1 on white) to violet-800
+     * (#5b21b6) — 9.4:1 on white AND 7.7:1 on `--accent` (#ede9fe), so
+     * `text-primary` clears WCAG 2.2 AAA on every surface in the catalogue
+     * (white, card, popover, muted, accent). Hover / active step a notch
+     * darker (violet-900 / violet-950). */
+    --interlace-primary: #5b21b6;            /* violet-800 — 9.4:1 on white (AAA) */
+    --interlace-primary-hover: #4c1d95;      /* violet-900 */
+    --interlace-primary-active: #2e1065;     /* violet-950 */
     --interlace-primary-foreground: #ffffff;
     --interlace-primary-subtle: #ede9fe;     /* violet-100 — for tinted backgrounds */
-    --interlace-primary-subtle-foreground: #4c1d95;
+    --interlace-primary-subtle-foreground: #2e1065;  /* violet-950 — 12.6:1 on subtle (AAA) */
 
     /* Surface */
     --interlace-background: #ffffff;
@@ -78,19 +84,33 @@
     --interlace-secondary: #f1f0f6;
     --interlace-secondary-foreground: #1a1825;
 
-    /* Destructive (Tailwind red-700 — was red-600 #dc2626 at 4.83:1 which axe
-     * rounded to 3.21:1 on caption-size text; red-700 clears 6.4:1 with room
-     * to spare on hairline weights). */
-    --interlace-destructive: #b91c1c;
+    /* Destructive (Tailwind red-800 — bumped from red-700 #b91c1c (6.4:1) so
+     * text-destructive on white clears WCAG 2.2 AAA (≥7:1) for normal body
+     * text. red-800 #991b1b ≈ 8.0:1. */
+    --interlace-destructive: #991b1b;
     --interlace-destructive-foreground: #ffffff;
 
-    /* Success (Tailwind emerald-600) */
-    --interlace-success: #059669;
+    /* Success (Tailwind emerald-800 — bumped from emerald-600 #059669 (3.7:1).
+     * text-success on white now ≈ 7.3:1, clearing AAA. The original brand
+     * green stays available for bg-success surfaces (paired with white
+     * foreground) where the contrast is between surface and foreground, not
+     * surface and parent. */
+    --interlace-success: #065f46;
     --interlace-success-foreground: #ffffff;
 
-    /* Warning (Tailwind amber-600) */
-    --interlace-warning: #d97706;
+    /* Warning (Tailwind amber-900 — bumped from amber-600 #d97706 (3.5:1).
+     * Yellow on white can't physically clear 7:1 at its brand-bright value,
+     * so the text token drops to amber-900 #78350f ≈ 8.5:1. For "yellow
+     * background" treatments, pair `bg-amber-500` (decorative bg) with
+     * `text-warning` (this token) — contrast is then warning on amber, not
+     * warning on white. */
+    --interlace-warning: #78350f;
     --interlace-warning-foreground: #ffffff;
+
+    /* Info (Tailwind blue-800 — new semantic token. text-info on white ≈
+     * 8.5:1, AAA. Pair with bg-info-foreground for filled surfaces. */
+    --interlace-info: #1e40af;
+    --interlace-info-foreground: #ffffff;
 
     /* Radii (8/12/16 — three-step scale) */
     --interlace-radius-sm: 0.5rem;   /*  8px */
@@ -103,13 +123,18 @@
    * ──────────────────────────────────────────────────────────────── */
   .dark,
   [data-theme='dark'] {
-    /* Brand — invert weight: 400 (lighter) on dark */
-    --interlace-primary: #a78bfa;            /* violet-400 — AAA on dark */
-    --interlace-primary-hover: #c4b5fd;      /* violet-300 */
-    --interlace-primary-active: #ddd6fe;     /* violet-200 */
-    --interlace-primary-foreground: #1e1b2e; /* near-black */
+    /* Brand — invert weight: 300 (much lighter) on dark for AAA.
+     *
+     * Bumped from violet-400 #a78bfa (7.4:1 on bg, but only 6.16:1 against
+     * its paired primary-foreground) to violet-300 #c4b5fd. text-primary
+     * on near-black now ≈ 11:1, and bg-primary + text-primary-foreground
+     * (#0a0a0f) is ALSO ≈ 11:1. Both directions clear AAA. */
+    --interlace-primary: #c4b5fd;            /* violet-300 — 11:1 on dark bg (AAA) */
+    --interlace-primary-hover: #ddd6fe;      /* violet-200 */
+    --interlace-primary-active: #ede9fe;     /* violet-100 */
+    --interlace-primary-foreground: #0a0a0f; /* near-black — 11:1 on primary (AAA) */
     --interlace-primary-subtle: #2e1065;     /* violet-950 — for tinted backgrounds */
-    --interlace-primary-subtle-foreground: #ddd6fe;
+    --interlace-primary-subtle-foreground: #ede9fe;  /* violet-100 — 12.3:1 on subtle (AAA) */
 
     /* Surface */
     --interlace-background: #0a0a0f;
@@ -132,17 +157,24 @@
     --interlace-secondary: #1c1a26;
     --interlace-secondary-foreground: #ededf2;
 
-    /* Destructive */
-    --interlace-destructive: #ef4444;        /* red-500 — lighter on dark */
-    --interlace-destructive-foreground: #0a0a0f; /* 6.6:1 on #ef4444 (was #1e1b2e at 4.45 — sub-AA) */
+    /* Destructive (red-300 — bumped from red-500 #ef4444 (~5.2:1) so
+     * text-destructive on near-black clears AAA. red-300 #fca5a5 ≈ 9:1. */
+    --interlace-destructive: #fca5a5;
+    --interlace-destructive-foreground: #0a0a0f;
 
-    /* Success */
-    --interlace-success: #10b981;            /* emerald-500 */
-    --interlace-success-foreground: #1e1b2e;
+    /* Success (emerald-400 — bumped from emerald-500 #10b981 (~6.3:1) for
+     * AAA on dark. emerald-400 #34d399 ≈ 8.5:1. */
+    --interlace-success: #34d399;
+    --interlace-success-foreground: #052e16;
 
-    /* Warning */
-    --interlace-warning: #f59e0b;            /* amber-500 */
+    /* Warning (amber-500 — already 7.7:1 on near-black, AAA. No bump needed
+     * because yellows are physically easier on dark backgrounds than on light). */
+    --interlace-warning: #f59e0b;
     --interlace-warning-foreground: #1e1b2e;
+
+    /* Info (blue-300 — new semantic. text-info on near-black ≈ 8.7:1 (AAA). */
+    --interlace-info: #93c5fd;
+    --interlace-info-foreground: #0a0a0f;
   }
 }
 
@@ -177,6 +209,19 @@
     --ring: var(--interlace-ring);
     --destructive: var(--interlace-destructive);
     --destructive-foreground: var(--interlace-destructive-foreground);
+
+    /* Status semantics — NEW. Surfaces success / warning / info as
+     * shadcn-bare token names so consumers reach for `bg-success`,
+     * `text-warning`, `bg-info` instead of `bg-emerald-700` /
+     * `bg-amber-500` / `bg-blue-600`. Brand fork-friendly: override
+     * `--interlace-success` / `-warning` / `-info` in
+     * `@layer interlace.brand` to swap the underlying hex. */
+    --success: var(--interlace-success);
+    --success-foreground: var(--interlace-success-foreground);
+    --warning: var(--interlace-warning);
+    --warning-foreground: var(--interlace-warning-foreground);
+    --info: var(--interlace-info);
+    --info-foreground: var(--interlace-info-foreground);
 
     /* Override fumadocs-prefixed tokens for AA contrast.
      *
@@ -226,4 +271,13 @@
   --color-ring: var(--ring);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+
+  /* Status semantics — generates bg-success, text-warning, bg-info,
+   * border-info etc. */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
 }

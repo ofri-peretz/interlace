@@ -136,6 +136,10 @@
       "types": "./dist/primitives/skeleton.d.ts",
       "default": "./dist/primitives/skeleton.js"
     },
+    "./grade-badge": {
+      "types": "./dist/primitives/grade-badge.d.ts",
+      "default": "./dist/primitives/grade-badge.js"
+    },
     "./data-state": {
       "types": "./dist/primitives/data-state.d.ts",
       "default": "./dist/primitives/data-state.js"
