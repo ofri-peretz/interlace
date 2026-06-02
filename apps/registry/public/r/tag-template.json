@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tag-template",
+  "type": "registry:ui",
+  "title": "Tag Template",
+  "description": "@interlace/ui — tag-template (templates) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/templates/tag-template.tsx",
+      "target": "components/ui/templates/tag-template.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — TagTemplate\n *\n * Tag-filtered article index. Used by `/tags/[slug]` routes on a blog\n * to show \"all articles tagged #typescript\" etc. Shows a header\n * (\"Tagged: #typescript\") then an ArticleListGrid of matching posts.\n *\n * ## MIN_VIEWPORT — 320\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Container } from '../primitives/container.js';\nimport { SectionBoundary } from '../primitives/section-boundary.js';\nimport { Stack } from '../primitives/stack.js';\nimport { Tag } from '../primitives/tag.js';\nimport { Typography } from '../primitives/typography.js';\nimport { Topbar } from '../patterns/topbar.js';\nimport { Footer } from '../patterns/footer.js';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ninterface TagTemplateProps extends Omit<React.ComponentProps<'div'>, 'title'> {\n  topbar: React.ComponentProps<typeof Topbar>;\n  /** Tag name (rendered in the h1). */\n  tagName: string;\n  /** Optional URL for the tag chip in the header. */\n  tagHref?: string;\n  /** Optional one-line lead under the title. */\n  lead?: React.ReactNode;\n  /** Article grid — typically <ArticleListGrid posts={...} />. */\n  articles: React.ReactNode;\n  /** Optional sibling-tag cluster for navigation. */\n  relatedTags?: React.ReactNode;\n  footer?: React.ComponentProps<typeof Footer>;\n}\n\nfunction TagTemplate({\n  topbar,\n  tagName,\n  tagHref,\n  lead,\n  articles,\n  relatedTags,\n  footer,\n  className,\n  ...props\n}: TagTemplateProps) {\n  return (\n    <div\n      data-slot=\"tag-template\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      data-tag={tagName}\n      className={cn('bg-background text-foreground', className)}\n      {...props}\n    >\n      <Topbar {...topbar} />\n\n      <main>\n        <Container size=\"content\">\n          <Stack gap=\"xl\" className=\"py-xl\">\n            <SectionBoundary name=\"tag-header\" skeletonVariant=\"page-header\">\n              <Stack gap=\"sm\">\n                <Typography variant=\"h1\" as=\"h1\" className=\"text-balance\">\n                  Tagged:{' '}\n                  <Tag href={tagHref ?? '#'} tone=\"primary\">\n                    #{tagName}\n                  </Tag>\n                </Typography>\n                {lead ? (\n                  <Typography variant=\"long\" tone=\"muted\" className=\"max-w-prose\">\n                    {lead}\n                  </Typography>\n                ) : null}\n              </Stack>\n            </SectionBoundary>\n\n            <SectionBoundary\n              name=\"tag-articles\"\n              skeletonVariant=\"article-card\"\n            >\n              {articles}\n            </SectionBoundary>\n\n            {relatedTags ? (\n              <SectionBoundary\n                name=\"tag-related\"\n                skeletonVariant=\"text\"\n              >\n                <Stack gap=\"sm\">\n                  <Typography variant=\"h3\" as=\"h2\">\n                    Related tags\n                  </Typography>\n                  {relatedTags}\n                </Stack>\n              </SectionBoundary>\n            ) : null}\n          </Stack>\n        </Container>\n      </main>\n\n      {footer ? <Footer {...footer} /> : null}\n    </div>\n  );\n}\nTagTemplate.displayName = 'TagTemplate';\n\nexport { TagTemplate };\nexport type { TagTemplateProps };\n"
+    }
+  ]
+}

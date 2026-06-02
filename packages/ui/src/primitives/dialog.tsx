@@ -159,8 +159,89 @@ function DialogDescription({
   );
 }
 
+/* ─────────────────────────────────────────────────────────────────
+ * DialogCompose — convenience composition.
+ *
+ * Wraps the canonical Root → Trigger → Portal → Overlay → Content tree
+ * in one component. Eliminates the per-page boilerplate that's identical
+ * across 90% of dialog call-sites.
+ *
+ *   <DialogCompose
+ *     trigger={<Button>Open</Button>}
+ *     title="Are you sure?"
+ *     description="This action cannot be undone."
+ *     footer={
+ *       <>
+ *         <DialogClose render={<Button variant="outline">Cancel</Button>} />
+ *         <Button onClick={handleConfirm}>Confirm</Button>
+ *       </>
+ *     }
+ *   >
+ *     Optional extra body content here.
+ *   </DialogCompose>
+ *
+ * For per-part customisation (custom Overlay opacity, different
+ * positioning), fall back to the compositional API.
+ * ──────────────────────────────────────────────────────────────── */
+interface DialogComposeProps {
+  /** Element that opens the dialog. Typically a Button. */
+  trigger: React.ReactNode;
+  /** Open state — controlled. Omit for uncontrolled. */
+  open?: boolean;
+  /** Change handler for `open`. */
+  onOpenChange?: (open: boolean) => void;
+  /** Dialog title — required for ARIA labelling. */
+  title: React.ReactNode;
+  /** Optional one-line description under the title. */
+  description?: React.ReactNode;
+  /** Optional content under the description. */
+  children?: React.ReactNode;
+  /** Optional footer row — typically Cancel + Confirm buttons. */
+  footer?: React.ReactNode;
+  /** Override the Content className (size, padding). */
+  className?: string;
+}
+
+function DialogCompose({
+  trigger,
+  open,
+  onOpenChange,
+  title,
+  description,
+  children,
+  footer,
+  className,
+}: DialogComposeProps) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogTrigger render={trigger as React.ReactElement} />
+      <DialogPortal>
+        <DialogOverlay />
+        <DialogContent className={className}>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            {description ? (
+              <DialogDescription>{description}</DialogDescription>
+            ) : null}
+          </DialogHeader>
+          {children}
+          {footer ? <DialogFooter>{footer}</DialogFooter> : null}
+        </DialogContent>
+      </DialogPortal>
+    </Dialog>
+  );
+}
+
+// Attach Compose for dotted access (`<Dialog.Compose ...>`) alongside the
+// standalone `DialogCompose` export. Object.assign mutates the function
+// reference in place so internal usage of `Dialog` keeps working; the
+// type cast tells TypeScript that the dotted member exists.
+const DialogWithDot = Object.assign(Dialog, {
+  Compose: DialogCompose,
+}) as typeof Dialog & { Compose: typeof DialogCompose };
+
 export {
-  Dialog,
+  DialogWithDot as Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
@@ -170,4 +251,6 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  DialogCompose,
 };
+export type { DialogComposeProps };

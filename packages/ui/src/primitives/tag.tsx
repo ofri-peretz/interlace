@@ -44,6 +44,7 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from './skeleton.js';
 
 /**
  * Minimum viable viewport (CSS px) for this primitive. Below it, the
@@ -83,15 +84,35 @@ const tagVariants = cva(
 );
 
 interface TagProps
-  extends React.ComponentProps<'a'>,
+  extends Omit<React.ComponentProps<'a'>, 'href'>,
     VariantProps<typeof tagVariants> {
-  /** Destination — required because Tag is always a link, never a button. */
-  href: string;
+  /**
+   * Destination — required in the idle state because Tag is always a
+   * link, never a button. Optional when `loading={true}` (the skeleton
+   * has no link to render).
+   */
+  href?: string;
+  /**
+   * When true, render a `<Skeleton variant="tag" />` (h-5 w-12 rounded
+   * pill) in place of the chip. Shape-matched so tag clusters stay
+   * aligned during data load.
+   */
+  loading?: boolean;
 }
 
 /** A single tag chip. Server component (no hooks). */
 const Tag = React.forwardRef<HTMLAnchorElement, TagProps>(
-  ({ className, tone, href, children, ...props }, ref) => {
+  ({ className, tone, href, loading, children, ...props }, ref) => {
+    if (loading) {
+      return (
+        <Skeleton
+          variant="tag"
+          data-slot="tag"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={className}
+        />
+      );
+    }
     return (
       <a
         ref={ref}

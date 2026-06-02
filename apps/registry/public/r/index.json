@@ -130,6 +130,18 @@
       "description": "@interlace/ui — container (shadcn-compatible)."
     },
     {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "@interlace/ui — context-menu (shadcn-compatible)."
+    },
+    {
+      "name": "data-state",
+      "type": "registry:ui",
+      "title": "Data State",
+      "description": "@interlace/ui — data-state (shadcn-compatible)."
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
@@ -152,6 +164,12 @@
       "type": "registry:ui",
       "title": "Form",
       "description": "@interlace/ui — form (shadcn-compatible)."
+    },
+    {
+      "name": "grade-badge",
+      "type": "registry:ui",
+      "title": "Grade Badge",
+      "description": "@interlace/ui — grade-badge (shadcn-compatible)."
     },
     {
       "name": "grid",
@@ -236,6 +254,12 @@
       "type": "registry:ui",
       "title": "Scroll Area",
       "description": "@interlace/ui — scroll-area (shadcn-compatible)."
+    },
+    {
+      "name": "section-boundary",
+      "type": "registry:ui",
+      "title": "Section Boundary",
+      "description": "@interlace/ui — section-boundary (shadcn-compatible)."
     },
     {
       "name": "section",
@@ -448,10 +472,70 @@
       "description": "@interlace/ui — sunny-background (aceternity) (shadcn-compatible)."
     },
     {
+      "name": "article-card",
+      "type": "registry:ui",
+      "title": "Article Card",
+      "description": "@interlace/ui — article-card (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "article-list-grid",
+      "type": "registry:ui",
+      "title": "Article List Grid",
+      "description": "@interlace/ui — article-list-grid (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "author-byline",
+      "type": "registry:ui",
+      "title": "Author Byline",
+      "description": "@interlace/ui — author-byline (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "code-window",
+      "type": "registry:ui",
+      "title": "Code Window",
+      "description": "@interlace/ui — code-window (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "cta-section",
+      "type": "registry:ui",
+      "title": "Cta Section",
+      "description": "@interlace/ui — cta-section (patterns) (shadcn-compatible)."
+    },
+    {
       "name": "dot-pattern",
       "type": "registry:ui",
       "title": "Dot Pattern",
       "description": "@interlace/ui — dot-pattern (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "@interlace/ui — empty-state (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "faq",
+      "type": "registry:ui",
+      "title": "Faq",
+      "description": "@interlace/ui — faq (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "feature-grid",
+      "type": "registry:ui",
+      "title": "Feature Grid",
+      "description": "@interlace/ui — feature-grid (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "figure",
+      "type": "registry:ui",
+      "title": "Figure",
+      "description": "@interlace/ui — figure (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "footer",
+      "type": "registry:ui",
+      "title": "Footer",
+      "description": "@interlace/ui — footer (patterns) (shadcn-compatible)."
     },
     {
       "name": "grid-pattern",
@@ -466,94 +550,172 @@
       "description": "@interlace/ui — hero-cosmic (patterns) (shadcn-compatible)."
     },
     {
+      "name": "hero",
+      "type": "registry:ui",
+      "title": "Hero",
+      "description": "@interlace/ui — hero (patterns) (shadcn-compatible)."
+    },
+    {
       "name": "interactive-grid-pattern",
       "type": "registry:ui",
       "title": "Interactive Grid Pattern",
       "description": "@interlace/ui — interactive-grid-pattern (patterns) (shadcn-compatible)."
     },
     {
-      "name": "article-card",
-      "type": "registry:ui",
-      "title": "Article Card",
-      "description": "@interlace/ui — article-card (blocks) (shadcn-compatible)."
-    },
-    {
-      "name": "author-byline",
-      "type": "registry:ui",
-      "title": "Author Byline",
-      "description": "@interlace/ui — author-byline (blocks) (shadcn-compatible)."
-    },
-    {
-      "name": "code-window",
-      "type": "registry:ui",
-      "title": "Code Window",
-      "description": "@interlace/ui — code-window (blocks) (shadcn-compatible)."
-    },
-    {
-      "name": "empty-state",
-      "type": "registry:ui",
-      "title": "Empty State",
-      "description": "@interlace/ui — empty-state (blocks) (shadcn-compatible)."
-    },
-    {
-      "name": "figure",
-      "type": "registry:ui",
-      "title": "Figure",
-      "description": "@interlace/ui — figure (blocks) (shadcn-compatible)."
-    },
-    {
-      "name": "hero",
-      "type": "registry:ui",
-      "title": "Hero",
-      "description": "@interlace/ui — hero (blocks) (shadcn-compatible)."
-    },
-    {
       "name": "newsletter-form",
       "type": "registry:ui",
       "title": "Newsletter Form",
-      "description": "@interlace/ui — newsletter-form (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — newsletter-form (patterns) (shadcn-compatible)."
     },
     {
       "name": "page-header",
       "type": "registry:ui",
       "title": "Page Header",
-      "description": "@interlace/ui — page-header (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — page-header (patterns) (shadcn-compatible)."
     },
     {
       "name": "prev-next-post",
       "type": "registry:ui",
       "title": "Prev Next Post",
-      "description": "@interlace/ui — prev-next-post (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — prev-next-post (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "pricing-table",
+      "type": "registry:ui",
+      "title": "Pricing Table",
+      "description": "@interlace/ui — pricing-table (patterns) (shadcn-compatible)."
     },
     {
       "name": "related-posts",
       "type": "registry:ui",
       "title": "Related Posts",
-      "description": "@interlace/ui — related-posts (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — related-posts (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "scorecard-row",
+      "type": "registry:ui",
+      "title": "Scorecard Row",
+      "description": "@interlace/ui — scorecard-row (patterns) (shadcn-compatible)."
     },
     {
       "name": "section-header",
       "type": "registry:ui",
       "title": "Section Header",
-      "description": "@interlace/ui — section-header (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — section-header (patterns) (shadcn-compatible)."
     },
     {
       "name": "share-buttons",
       "type": "registry:ui",
       "title": "Share Buttons",
-      "description": "@interlace/ui — share-buttons (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — share-buttons (patterns) (shadcn-compatible)."
     },
     {
       "name": "sign-in-form",
       "type": "registry:ui",
       "title": "Sign In Form",
-      "description": "@interlace/ui — sign-in-form (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — sign-in-form (patterns) (shadcn-compatible)."
     },
     {
       "name": "stat-card",
       "type": "registry:ui",
       "title": "Stat Card",
-      "description": "@interlace/ui — stat-card (blocks) (shadcn-compatible)."
+      "description": "@interlace/ui — stat-card (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "stat-group",
+      "type": "registry:ui",
+      "title": "Stat Group",
+      "description": "@interlace/ui — stat-group (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "testimonial",
+      "type": "registry:ui",
+      "title": "Testimonial",
+      "description": "@interlace/ui — testimonial (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "topbar",
+      "type": "registry:ui",
+      "title": "Topbar",
+      "description": "@interlace/ui — topbar (patterns) (shadcn-compatible)."
+    },
+    {
+      "name": "article-template",
+      "type": "registry:ui",
+      "title": "Article Template",
+      "description": "@interlace/ui — article-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "auth-template",
+      "type": "registry:ui",
+      "title": "Auth Template",
+      "description": "@interlace/ui — auth-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "author-template",
+      "type": "registry:ui",
+      "title": "Author Template",
+      "description": "@interlace/ui — author-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "blog-home-template",
+      "type": "registry:ui",
+      "title": "Blog Home Template",
+      "description": "@interlace/ui — blog-home-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "dashboard-template",
+      "type": "registry:ui",
+      "title": "Dashboard Template",
+      "description": "@interlace/ui — dashboard-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "docs-page-template",
+      "type": "registry:ui",
+      "title": "Docs Page Template",
+      "description": "@interlace/ui — docs-page-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "error-template",
+      "type": "registry:ui",
+      "title": "Error Template",
+      "description": "@interlace/ui — error-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "landing-template",
+      "type": "registry:ui",
+      "title": "Landing Template",
+      "description": "@interlace/ui — landing-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "registry-item-template",
+      "type": "registry:ui",
+      "title": "Registry Item Template",
+      "description": "@interlace/ui — registry-item-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "scorecard-template",
+      "type": "registry:ui",
+      "title": "Scorecard Template",
+      "description": "@interlace/ui — scorecard-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "settings-template",
+      "type": "registry:ui",
+      "title": "Settings Template",
+      "description": "@interlace/ui — settings-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "stats-template",
+      "type": "registry:ui",
+      "title": "Stats Template",
+      "description": "@interlace/ui — stats-template (templates) (shadcn-compatible)."
+    },
+    {
+      "name": "tag-template",
+      "type": "registry:ui",
+      "title": "Tag Template",
+      "description": "@interlace/ui — tag-template (templates) (shadcn-compatible)."
     }
   ]
 }

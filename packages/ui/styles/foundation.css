@@ -116,6 +116,29 @@
   --container-prose: 65ch; /* long-form text */
   --container-content: 64rem; /* 1024px — default landing section */
   --container-wide: 80rem; /* 1280px — card-grid-heavy section */
+
+  /* ── Breakpoints (BREAKPOINT_PHILOSOPHY — 4-tier system) ─────────────
+     Codified to override Tailwind v4's defaults (640/768/1024/1280/1536)
+     with a tighter 4-tier ladder aligned to our MIN_VIEWPORT floor.
+     `rem`-based so user-zoom + browser font-size scaling respect the
+     breakpoints (accessibility win — px-only breakpoints ignore zoom).
+
+       sm = 30rem  = 480 CSS px @ 16px root font → handheld floor
+       md = 48rem  = 768 CSS px @ 16px root font → tablet / large phone
+       lg = 64rem  = 1024 CSS px → laptop
+       xl = 80rem  = 1280 CSS px → desktop
+
+     Generates `sm:` / `md:` / `lg:` / `xl:` Tailwind variants. The
+     `2xl` tier is INTENTIONALLY omitted — `Container size="wide"`
+     (1280px) is the largest section width the DS supports, so a
+     `2xl:` variant has no DS-side meaning.
+
+     Aligned with the MIN_VIEWPORT contract: a primitive declaring
+     `MIN_VIEWPORT=480` is exactly the `sm:` floor; `768` is `md:`. */
+  --breakpoint-sm: 30rem;   /* 480px — handheld */
+  --breakpoint-md: 48rem;   /* 768px — tablet */
+  --breakpoint-lg: 64rem;   /* 1024px — laptop */
+  --breakpoint-xl: 80rem;   /* 1280px — desktop */
 }
 
 /* ── Reading-mode vs UI-mode component classes ──────────────────────

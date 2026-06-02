@@ -1,56 +1,29 @@
 /*
  * Registry app — Tailwind v4 + Interlace brand.
  *
- * Layered imports follow the same pattern as `apps/docs/src/app/global.css`:
- *   1. tailwindcss                      — Tailwind v4 core + utilities
- *   2. tw-animate-css                   — keyframe utilities (enter/exit/slide)
- *   3. @interlace/ui/tokens             — animation + motion tokens
- *   4. @interlace/ui/theme              — bridge: maps shadcn-bare tokens to framework layer
- *   5. @interlace/ui/interlace-theme    — canonical brand palette (light + dark)
+ * One import = the full DS contract. `@interlace/ui/styles/index.css` is the
+ * canonical barrel: tokens → foundation → preflight → bridge → brand →
+ * semantics, all wrapped in `@layer interlace.*` for deterministic override.
+ * See packages/ui/styles/index.css for the layer model.
+ *
+ * Apps that want a custom brand: import index.css then declare your
+ * `@layer interlace.brand { ... }` block after — your hex values win.
  */
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import '@interlace/ui/styles/tokens.css';
-@import '@interlace/ui/styles/foundation.css';
-@import '@interlace/ui/styles/preflight.css';
-@import '@interlace/ui/styles/theme.css';
-@import '@interlace/ui/styles/interlace-theme.css';
+@import '@interlace/ui/styles/index.css';
 
 @custom-variant dark (&:is(.dark *));
 
 /* Scan @interlace/ui for class usage in primitives we import here */
 @source "../../../../packages/ui/src";
 
-/* @theme inline — exposes the shadcn-bare CSS variables as Tailwind v4 theme
- * tokens so utilities like `bg-primary`, `text-foreground`, `border-border`
- * resolve to the brand colors set by `interlace-theme.css`.
- */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  /* radius (8/12/16) + font families (Inter/JetBrains) now come from the
-     shared @interlace/ui/styles/foundation.css — not redeclared here, so
-     docs/storybook/registry all resolve identically (was registry-only). */
-}
+/* The `@theme inline { --color-* }` registration that used to live here is
+ * now owned by `@interlace/ui/styles/interlace-theme.css` (re-exported by
+ * index.css) so every consumer — docs / storybook / registry — gets the
+ * same Tailwind v4 utility wiring. Re-declaring it here would shadow the
+ * DS-owned values and is no longer necessary. */
 
 /* Base resets */
 * {

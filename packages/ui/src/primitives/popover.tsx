@@ -23,17 +23,19 @@ function PopoverAnchor(
 
 function PopoverContent({
   className,
+  side,
   align = 'center',
   sideOffset = 4,
   children,
   ...props
 }: React.ComponentProps<typeof BasePopover.Popup> & {
+  side?: 'top' | 'right' | 'bottom' | 'left' | 'inline-start' | 'inline-end';
   align?: 'start' | 'center' | 'end';
   sideOffset?: number;
 }) {
   return (
     <BasePopover.Portal>
-      <BasePopover.Positioner sideOffset={sideOffset} align={align}>
+      <BasePopover.Positioner side={side} sideOffset={sideOffset} align={align}>
         <BasePopover.Popup
           data-slot="popover-content"
           className={cn(
@@ -49,4 +51,60 @@ function PopoverContent({
   );
 }
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };
+/* ─────────────────────────────────────────────────────────────────
+ * PopoverCompose — convenience composition.
+ *
+ * Wraps Root + Trigger + Content (which already bundles
+ * Portal + Positioner + Popup) in a single component for the common case.
+ *
+ *   <PopoverCompose
+ *     trigger={<Button variant="ghost">Filters</Button>}
+ *     content={<FilterPanel />}
+ *     side="bottom"
+ *     align="start"
+ *   />
+ * ──────────────────────────────────────────────────────────────── */
+interface PopoverComposeProps {
+  trigger: React.ReactNode;
+  content: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  /** Floating-UI side. */
+  side?: React.ComponentProps<typeof PopoverContent>['side'];
+  /** Floating-UI alignment along the side. */
+  align?: React.ComponentProps<typeof PopoverContent>['align'];
+  className?: string;
+}
+
+function PopoverCompose({
+  trigger,
+  content,
+  open,
+  onOpenChange,
+  side,
+  align,
+  className,
+}: PopoverComposeProps) {
+  return (
+    <Popover open={open} onOpenChange={onOpenChange}>
+      <PopoverTrigger render={trigger as React.ReactElement} />
+      <PopoverContent side={side} align={align} className={className}>
+        {content}
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+// Dotted access — `<Popover.Compose ...>`. See dialog.tsx for pattern.
+const PopoverWithDot = Object.assign(Popover, {
+  Compose: PopoverCompose,
+}) as typeof Popover & { Compose: typeof PopoverCompose };
+
+export {
+  PopoverWithDot as Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverAnchor,
+  PopoverCompose,
+};
+export type { PopoverComposeProps };

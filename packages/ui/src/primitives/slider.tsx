@@ -115,10 +115,66 @@ const SliderThumb = React.forwardRef<
 ));
 SliderThumb.displayName = 'SliderThumb';
 
+/* ─────────────────────────────────────────────────────────────────
+ * SimpleSlider — convenience composition.
+ *
+ * Renders Root → Control → Track → Indicator → Thumb(s) with a single
+ * `label` prop that auto-derives thumb aria-labels:
+ *   - single thumb:  `getAriaLabel = () => label`
+ *   - range (2):     `getAriaLabel = (i) => i === 0 ? `${label} minimum` : `${label} maximum``
+ *
+ * Use this when you don't need per-part className overrides. Drops to
+ * about 90% of slider call-sites; the compositional API stays for the
+ * remaining 10% that need per-part customisation.
+ * ──────────────────────────────────────────────────────────────── */
+interface SimpleSliderProps
+  extends Omit<React.ComponentProps<typeof BaseSlider.Root>, 'defaultValue'> {
+  /** Accessible label propagated to every thumb's aria-label. Required. */
+  label: string;
+  /**
+   * Initial value. Number for single-thumb, [min, max] tuple for range
+   * (renders 2 thumbs labelled `${label} minimum` / `${label} maximum`).
+   */
+  defaultValue?: number | [number, number];
+}
+
+function SimpleSlider({
+  label,
+  defaultValue = 0,
+  className,
+  ...props
+}: SimpleSliderProps) {
+  const isRange = Array.isArray(defaultValue);
+  const thumbs = isRange ? 2 : 1;
+  const getAriaLabel = (i: number) =>
+    isRange ? `${label} ${i === 0 ? 'minimum' : 'maximum'}` : label;
+  const rootValue = Array.isArray(defaultValue) ? defaultValue : [defaultValue];
+
+  return (
+    <Slider
+      defaultValue={rootValue}
+      aria-label={label}
+      className={className}
+      {...props}
+    >
+      <SliderControl>
+        <SliderTrack>
+          <SliderIndicator />
+        </SliderTrack>
+        {Array.from({ length: thumbs }).map((_, i) => (
+          <SliderThumb key={i} getAriaLabel={() => getAriaLabel(i)} />
+        ))}
+      </SliderControl>
+    </Slider>
+  );
+}
+
 export {
   Slider,
   SliderControl,
   SliderTrack,
   SliderIndicator,
   SliderThumb,
+  SimpleSlider,
 };
+export type { SimpleSliderProps };

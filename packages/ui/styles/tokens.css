@@ -125,7 +125,11 @@
   }
 }
 
-/* Border Beam — pure CSS animation, used by @interlace/ui/magicui/border-beam */
+/* Border Beam — pure CSS animation, used by @interlace/ui/magicui/border-beam.
+ * Wrapped in `@layer interlace.primitives` so the cascade is deterministic.
+ * `@keyframes` declarations can live outside a layer (they have a global
+ * scope per spec), but the consuming utility class .animate-border-beam goes
+ * in the layer for override-friendliness. */
 @keyframes border-beam {
   0% {
     offset-distance: var(--border-beam-initial, 0%);
@@ -135,6 +139,7 @@
   }
 }
 
+@layer interlace.primitives {
 .animate-border-beam {
   animation: border-beam var(--border-beam-duration, 6s) linear infinite;
   animation-direction: var(--border-beam-direction, normal);
@@ -168,3 +173,4 @@
     transition: none !important;
   }
 }
+} /* end @layer interlace.primitives */

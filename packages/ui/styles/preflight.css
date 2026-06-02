@@ -1,10 +1,14 @@
 /*
  * @interlace/ui — preflight: the token-aware baseline that goes beyond
- * Tailwind's own preflight. Sits in the chain AFTER foundation.css (so the
- * --color-*, --font-*, --ring tokens are defined) and BEFORE the brand /
- * fumadocs bridge layers (so brands can override).
+ * Tailwind's own preflight. Imported by `index.css` as part of the
+ * canonical CSS contract; all rules live inside `@layer interlace.preflight`
+ * so brand / consumer overrides land cleanly in higher-priority layers
+ * without specificity wars.
  *
  *   @import "tailwindcss";                              Tailwind's own preflight
+ *   @import "@interlace/ui/styles/index.css";           ← preferred (single import)
+ *
+ * Or, if a consumer must compose the layers manually:
  *   @import "@interlace/ui/styles/tokens.css";          motion
  *   @import "@interlace/ui/styles/foundation.css";      type + spacing + radius
  *   @import "@interlace/ui/styles/preflight.css";       ← THIS FILE (token-aware baseline)
@@ -37,6 +41,7 @@
  *    (alternate g). text-rendering: optimizeLegibility on body only (not
  *    monospace — that's mechanical, not prose).
  * ──────────────────────────────────────────────────────────────── */
+@layer interlace.preflight {
 body {
   font-family: var(--font-body);
   font-feature-settings:
@@ -257,3 +262,6 @@ body[data-interlace-dev] [data-min-viewport='768'] {
     outline-color: Highlight;
   }
 }
+
+} /* end @layer interlace.preflight */
+

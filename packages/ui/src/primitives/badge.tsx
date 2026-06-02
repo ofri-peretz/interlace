@@ -5,6 +5,7 @@ import { useRender } from '@base-ui/react/use-render';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from './skeleton.js';
 
 const badgeVariants = cva(
   'inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
@@ -31,14 +32,31 @@ const badgeVariants = cva(
 type BadgeProps = React.ComponentProps<'span'> &
   VariantProps<typeof badgeVariants> & {
     render?: useRender.RenderProp;
+    /**
+     * When true, render a `<Skeleton variant="badge" />` in place of the
+     * normal Badge surface. Shape-matched placeholder (h-5 w-16
+     * rounded-full) so the row layout doesn't shift on data arrival.
+     */
+    loading?: boolean;
   };
 
 function Badge({
   className,
   variant = 'default',
   render,
+  loading,
   ...props
 }: BadgeProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="badge"
+        data-slot="badge"
+        className={className}
+      />
+    );
+  }
+
   const element = useRender({
     render: render ?? <span />,
     props: {

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stat-group",
+  "type": "registry:ui",
+  "title": "Stat Group",
+  "description": "@interlace/ui — stat-group (patterns) (shadcn-compatible).",
+  "dependencies": [],
+  "registryDependencies": [
+    "theme",
+    "stat-card"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/stat-group.tsx",
+      "target": "components/ui/patterns/stat-group.tsx",
+      "type": "registry:ui",
+      "content": "/**\n * @interlace/ui — StatGroup\n *\n * Horizontal row (or grid) of StatCards. The pattern stat pages reach\n * for: 3-5 hero KPIs at the top of a page, each a labelled big number.\n * Server component.\n *\n * | Rule | Concept                          | Where in this file                                          |\n * | ---- | -------------------------------- | ----------------------------------------------------------- |\n * | R4   | Extends native el                | `React.ComponentProps<'section'>`                           |\n * | R6   | data-slot on root                | `data-slot=\"stat-group\"`                                    |\n * | R10  | Composition seam (stats)         | `stats: StatCardProps[]`                                    |\n * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |\n * | R25  | Server component                 | No hooks                                                    |\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Grid } from '../primitives/grid.js';\nimport { Skeleton } from '../primitives/skeleton.js';\nimport { StatCard } from '@/components/ui/stat-card';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ntype StatItem = React.ComponentProps<typeof StatCard>;\n\ninterface StatGroupProps extends React.ComponentProps<'section'> {\n  stats?: StatItem[];\n  cols?: 2 | 3 | 4;\n  loading?: boolean;\n}\n\nfunction StatGroup({\n  stats = [],\n  cols = 3,\n  loading,\n  className,\n  ...props\n}: StatGroupProps) {\n  return (\n    <section\n      data-slot=\"stat-group\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('w-full', className)}\n      {...props}\n    >\n      <Grid cols={cols} gap=\"md\">\n        {loading\n          ? Array.from({ length: cols }).map((_, i) => (\n              <Skeleton key={i} variant=\"stat-card\" label={null} />\n            ))\n          : stats.map((stat, i) => <StatCard key={i} {...stat} />)}\n      </Grid>\n    </section>\n  );\n}\nStatGroup.displayName = 'StatGroup';\n\nexport { StatGroup };\nexport type { StatGroupProps };\n"
+    }
+  ]
+}

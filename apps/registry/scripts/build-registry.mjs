@@ -64,7 +64,21 @@ const DECORATIVE_DIRS = [
   { name: 'magicui', dir: path.join(REPO_ROOT, 'packages/ui/src/magicui') },
   { name: 'aceternity', dir: path.join(REPO_ROOT, 'packages/ui/src/aceternity') },
   { name: 'patterns', dir: path.join(REPO_ROOT, 'packages/ui/src/patterns') },
-  { name: 'blocks', dir: path.join(REPO_ROOT, 'packages/ui/src/blocks') },
+  // Phase 4 of the 5-layer architecture — templates are full-page
+  // surfaces that compose patterns + primitives inside SectionBoundaries.
+  // They ship as registry items so consumers can
+  // `npx shadcn add @interlace/article-template`. Tier label is
+  // `templates`; install target lands at `components/ui/templates/`.
+  { name: 'templates', dir: path.join(REPO_ROOT, 'packages/ui/src/templates') },
+  // NOTE: `blocks` is INTENTIONALLY not scanned — Phase 1 of the
+  // 5-layer architecture renamed `packages/ui/src/blocks/*.tsx` to
+  // `packages/ui/src/patterns/*.tsx`. The old `blocks/` paths still
+  // exist as one-line `export * from '../patterns/<name>.js'` aliases
+  // so `import from '@interlace/ui/blocks/<name>'` keeps working for
+  // one release cycle. Scanning blocks/ here would double-publish each
+  // pattern as both `r/<name>.json` (from patterns scan) and produce
+  // a malformed dep list (the alias has no real imports, so deps drop
+  // to []). Skip it.
 ];
 const OUT_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const STYLES_OUT_DIR = path.join(OUT_DIR, 'styles');
@@ -540,6 +554,24 @@ const main = async () => {
     JSON.stringify(index, null, 2) + '\n',
     'utf8',
   );
+
+  // Auto-regenerate the semantics catalogue JSON read by
+  // apps/registry/src/app/semantics-catalog/page.tsx. Keeping it here
+  // means the catalogue and the registry items stay in lock-step on
+  // every `npm run prebuild` — no separate npm script to forget.
+  try {
+    const { spawnSync } = await import('node:child_process');
+    const result = spawnSync(
+      'node',
+      [path.join(REGISTRY_ROOT, 'scripts/build-semantics-catalog.mjs')],
+      { stdio: 'inherit' },
+    );
+    if (result.status !== 0) {
+      console.error('semantics-catalog regeneration failed; continuing');
+    }
+  } catch (err) {
+    console.error('semantics-catalog regeneration error (non-fatal):', err);
+  }
 
   console.log(
     `Built ${files.length} primitive(s) + ${decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) → ${OUT_DIR}`,

@@ -51,7 +51,7 @@ export const ExternalLinkSuffix: Story = {
         href="https://interlace.tools"
         target="_blank"
         rel="noreferrer"
-        className="inline-flex items-center gap-1 text-violet-600 hover:underline dark:text-violet-400"
+        className="inline-flex items-center gap-1 text-primary underline underline-offset-4"
       >
         Interlace
         <ExternalLink className="size-3.5" aria-hidden />

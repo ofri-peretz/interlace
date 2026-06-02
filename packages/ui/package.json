@@ -116,6 +116,10 @@
       "types": "./dist/primitives/dropdown-menu.d.ts",
       "default": "./dist/primitives/dropdown-menu.js"
     },
+    "./context-menu": {
+      "types": "./dist/primitives/context-menu.d.ts",
+      "default": "./dist/primitives/context-menu.js"
+    },
     "./popover": {
       "types": "./dist/primitives/popover.d.ts",
       "default": "./dist/primitives/popover.js"
@@ -135,6 +139,22 @@
     "./skeleton": {
       "types": "./dist/primitives/skeleton.d.ts",
       "default": "./dist/primitives/skeleton.js"
+    },
+    "./grade-badge": {
+      "types": "./dist/primitives/grade-badge.d.ts",
+      "default": "./dist/primitives/grade-badge.js"
+    },
+    "./data-state": {
+      "types": "./dist/primitives/data-state.d.ts",
+      "default": "./dist/primitives/data-state.js"
+    },
+    "./section-boundary": {
+      "types": "./dist/primitives/section-boundary.d.ts",
+      "default": "./dist/primitives/section-boundary.js"
+    },
+    "./templates/*": {
+      "types": "./dist/templates/*.d.ts",
+      "default": "./dist/templates/*.js"
     },
     "./progress": {
       "types": "./dist/primitives/progress.d.ts",
@@ -316,6 +336,7 @@
       "types": "./dist/patterns/*.d.ts",
       "default": "./dist/patterns/*.js"
     },
+    "./styles/index.css": "./styles/index.css",
     "./styles/tokens.css": "./styles/tokens.css",
     "./styles/foundation.css": "./styles/foundation.css",
     "./styles/preflight.css": "./styles/preflight.css",

@@ -1,10 +1,30 @@
 import * as React from 'react';
 
 import { Box } from './box.js';
+import { Skeleton } from './skeleton.js';
 import { cn } from '../lib/cn.js';
 
+type CardProps = React.ComponentProps<'div'> & {
+  /**
+   * When true, render a `<Skeleton variant="card" />` composite (title +
+   * body lines silhouette) instead of the normal Card surface. The
+   * skeleton shape-matches the card footprint so a card grid doesn't
+   * shift when real data arrives.
+   */
+  loading?: boolean;
+};
+
 /** Card composes Box for the surface/border/radius floor; layout utilities (flex, gap, py, shadow) stay local because they're card-specific, not surface-level. */
-function Card({ className, ...props }: React.ComponentProps<'div'>) {
+function Card({ className, loading, ...props }: CardProps) {
+  if (loading) {
+    return (
+      <Skeleton
+        variant="card"
+        data-slot="card"
+        className={className}
+      />
+    );
+  }
   return (
     <Box
       data-slot="card"

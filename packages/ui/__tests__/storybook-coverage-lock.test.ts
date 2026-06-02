@@ -26,7 +26,14 @@ const PRIMITIVES_DIR = join(REPO_ROOT, 'packages/ui/src/primitives');
 const STORIES_DIR = join(REPO_ROOT, 'apps/storybook/src/stories/primitives');
 
 // Helpers that are NOT renderable React components — exclude from coverage.
-const NON_COMPONENT_FILES = new Set(['button-variants.ts']);
+const NON_COMPONENT_FILES = new Set([
+  'button-variants.ts',
+  // Skeleton's variant catalogue — TypeScript-typed `const` tuple +
+  // class map consumed by skeleton.tsx. It's a data file, not a
+  // primitive; the Skeleton component itself (skeleton.tsx) is what
+  // ships the matching Skeleton.stories.tsx.
+  'skeleton-variants.ts',
+]);
 
 const kebabToPascal = (name: string) =>
   name

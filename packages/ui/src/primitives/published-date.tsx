@@ -46,6 +46,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from './skeleton.js';
 
 /**
  * Minimum viable viewport (CSS px) for this primitive. Below it, the
@@ -58,10 +59,19 @@ export const MIN_VIEWPORT = 320 as const;
 export type PublishedDateFormat = 'long' | 'short';
 
 type PublishedDateProps = Omit<React.ComponentProps<'time'>, 'dateTime' | 'children'> & {
-  /** ISO 8601 timestamp (e.g. `'2026-05-30'` or `'2026-05-30T14:00:00Z'`). Becomes the `dateTime` attribute verbatim. */
-  dateIso: string;
+  /**
+   * ISO 8601 timestamp (e.g. `'2026-05-30'` or `'2026-05-30T14:00:00Z'`).
+   * Becomes the `dateTime` attribute verbatim. Optional when
+   * `loading={true}` (the skeleton has no value to render).
+   */
+  dateIso?: string;
   /** Display format. Defaults to `'long'`. */
   format?: PublishedDateFormat;
+  /**
+   * When true, render a `<Skeleton variant="text" />` (short width)
+   * placeholder. Shape-matched to the typical "Month DD, YYYY" footprint.
+   */
+  loading?: boolean;
 };
 
 const LONG_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -84,7 +94,17 @@ function formatPublishedDate(iso: string, format: PublishedDateFormat): string {
 
 /** Article publish-date stamp. Server component (no hooks). */
 const PublishedDate = React.forwardRef<HTMLTimeElement, PublishedDateProps>(
-  ({ className, dateIso, format = 'long', ...props }, ref) => {
+  ({ className, dateIso, format = 'long', loading, ...props }, ref) => {
+    if (loading || !dateIso) {
+      return (
+        <Skeleton
+          variant="text"
+          data-slot="published-date"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={cn('inline-block h-4 w-24', className)}
+        />
+      );
+    }
     const label = formatPublishedDate(dateIso, format);
     return (
       <time
