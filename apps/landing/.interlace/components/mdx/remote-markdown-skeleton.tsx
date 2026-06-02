@@ -47,7 +47,7 @@ export function RemoteMarkdownSkeleton({
       <div className="space-y-2">
         {Array.from({ length: rows }).map((_, i) => (
           <Skeleton
-            key={i}
+            key={`skeleton-row-${i}`}
             className="h-4"
             style={{ width: `${75 + ((i * 13) % 25)}%` }}
           />

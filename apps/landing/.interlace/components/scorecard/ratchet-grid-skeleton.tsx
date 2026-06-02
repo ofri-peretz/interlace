@@ -43,7 +43,7 @@ export function RatchetGridSkeleton({
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: cardCount }).map((_, i) => (
-          <RatchetCardSkeleton key={i} />
+          <RatchetCardSkeleton key={`ratchet-skeleton-${i}`} />
         ))}
       </div>
     </section>

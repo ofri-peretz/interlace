@@ -60,6 +60,7 @@ function PaginationLink({
   ...props
 }: PaginationLinkProps) {
   return (
+    // eslint-disable-next-line react-a11y/anchor-has-content -- children supplied through ...props spread at call site
     <a
       aria-current={isActive ? 'page' : undefined}
       data-slot="pagination-link"

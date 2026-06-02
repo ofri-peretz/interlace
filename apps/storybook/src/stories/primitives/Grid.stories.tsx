@@ -34,7 +34,7 @@ export const Default: Story = {
   render: (args) => (
     <Grid {...args}>
       {Array.from({ length: 6 }).map((_, i) => (
-        <Cell key={i} label={`Cell ${i + 1}`} />
+        <Cell key={`cell-${i}`} label={`Cell ${i + 1}`} />
       ))}
     </Grid>
   ),
@@ -44,7 +44,7 @@ export const Responsive: Story = {
   render: () => (
     <Grid cols={1} mdCols={2} lgCols={4} gap="md">
       {Array.from({ length: 8 }).map((_, i) => (
-        <Cell key={i} label={`Cell ${i + 1}`} />
+        <Cell key={`responsive-cell-${i}`} label={`Cell ${i + 1}`} />
       ))}
     </Grid>
   ),
