@@ -1,0 +1,66 @@
+name: lint
+
+# Dual-linter dogfood gate for the Interlace ecosystem.
+#
+# Two INDEPENDENT jobs run in PARALLEL (no `needs` between them) — one drives
+# oxlint, the other ESLint — each scoped to the turbo-affected packages so a PR
+# that only touches `apps/landing` doesn't re-lint storybook/ui/registry.
+#
+#   • `npx turbo run lint:oxlint --affected`  → fast Rust pass (oxc + interlace
+#     JS-plugin shims in tools/oxlint-plugins/, config in .oxlintrc.json)
+#   • `npx turbo run lint:eslint --affected`  → full ESLint pass (root
+#     eslint.config.mjs à-la-carte interlace plugins; baseline non-blocking)
+#
+# `--affected` needs git history, so checkout uses fetch-depth: 0 and we pin the
+# diff range to the PR's base..head via TURBO_SCM_BASE/HEAD.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+  # Pin turbo --affected to the PR diff (empty on push → turbo falls back to the
+  # previous commit, which is the desired behaviour on main).
+  TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
+  TURBO_SCM_HEAD: ${{ github.event.pull_request.head.sha }}
+
+jobs:
+  # ── oxlint (parallel job #1) ───────────────────────────────────────────────
+  oxlint:
+    name: oxlint (affected)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # turbo --affected diffs against the base ref → need full history.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: oxlint (turbo --affected)
+        run: npx --no turbo run lint:oxlint --affected --output-logs=new-only
+
+  # ── eslint (parallel job #2 — NO `needs`, runs alongside oxlint) ────────────
+  eslint:
+    name: eslint (affected)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: eslint (turbo --affected)
+        run: npx --no turbo run lint:eslint --affected --output-logs=new-only

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "jsPlugins": [
+    {
+      "name": "interlace-secure-coding",
+      "specifier": "./tools/oxlint-plugins/interlace-secure-coding.cjs"
+    },
+    {
+      "name": "interlace-node-security",
+      "specifier": "./tools/oxlint-plugins/interlace-node-security.cjs"
+    },
+    {
+      "name": "interlace-import-next",
+      "specifier": "./tools/oxlint-plugins/interlace-import-next.cjs"
+    },
+    {
+      "name": "interlace-reliability",
+      "specifier": "./tools/oxlint-plugins/interlace-reliability.cjs"
+    },
+    {
+      "name": "interlace-operability",
+      "specifier": "./tools/oxlint-plugins/interlace-operability.cjs"
+    },
+    {
+      "name": "interlace-react-features",
+      "specifier": "./tools/oxlint-plugins/interlace-react-features.cjs"
+    }
+  ],
+  "rules": {
+    "interlace-secure-coding/no-hardcoded-credentials": "warn",
+    "interlace-secure-coding/no-redos-vulnerable-regex": "warn",
+    "interlace-secure-coding/no-xpath-injection": "warn",
+    "interlace-node-security/detect-child-process": "warn",
+    "interlace-node-security/no-unsafe-dynamic-require": "warn",
+    "interlace-node-security/no-math-random-crypto": "warn",
+    "interlace-import-next/no-duplicates": "warn",
+    "interlace-import-next/no-self-import": "warn",
+    "interlace-reliability/no-silent-errors": "warn",
+    "interlace-operability/no-console-log": "warn",
+    "interlace-operability/no-debug-code-in-production": "warn",
+    "interlace-react-features/jsx-key": "warn",
+    "interlace-react-features/no-danger-with-children": "warn"
+  },
+  "ignorePatterns": [
+    "node_modules",
+    "**/dist/**",
+    "**/.next/**",
+    "**/.turbo/**",
+    "**/storybook-static/**",
+    "**/coverage/**",
+    "**/.interlace/**",
+    "tools/oxlint-plugins"
+  ]
+}
