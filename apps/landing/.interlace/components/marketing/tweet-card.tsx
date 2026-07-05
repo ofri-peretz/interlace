@@ -76,6 +76,27 @@ const truncate = (str: string | null, length: number) => {
   return `${str.slice(0, length - 3)}...`;
 };
 
+// Twitter's syndication API HTML-encodes tweet text before returning it, so a
+// literal `&` in a tweet arrives as `&amp;`. `react-tweet` upstream renders
+// this text with `dangerouslySetInnerHTML` purely to undo that encoding
+// (https://github.com/vercel/react-tweet/issues/29) — but that also means any
+// unencoded `<script>`/`onerror=` etc. reaching this string (a malicious
+// tweet, or an upstream encoding miss) gets parsed as live markup (CWE-79).
+// Decode the handful of entities Twitter actually emits and render as a plain
+// text child instead: React escapes text children by construction, so the
+// same string can no longer be interpreted as HTML.
+const HTML_ENTITY_DECODE: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  '#39': "'",
+  '#039': "'",
+};
+const decodeTweetText = (str: string) =>
+  str.replace(/&(#?\w+);/g, (match, name) => HTML_ENTITY_DECODE[name] ?? match);
+
 const Skeleton = ({
   className,
   ...props
@@ -206,8 +227,9 @@ const TweetBody = ({ tweet }: { tweet: EnrichedTweet }) => (
             <span
               key={`text-${idx}`}
               className="text-[15px] font-normal text-fd-foreground"
-              dangerouslySetInnerHTML={{ __html: entity.text }}
-            />
+            >
+              {decodeTweetText(entity.text)}
+            </span>
           );
       }
     })}
