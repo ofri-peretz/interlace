@@ -94,6 +94,8 @@ const HTML_ENTITY_DECODE: Record<string, string> = {
   '#39': "'",
   '#039': "'",
 };
+// Only decodes entities Twitter's syndication API actually emits; hex numeric
+// refs (e.g. &#x26;) are not in scope and pass through unchanged.
 const decodeTweetText = (str: string) =>
   str.replace(/&(#?\w+);/g, (match, name) => HTML_ENTITY_DECODE[name] ?? match);
 
