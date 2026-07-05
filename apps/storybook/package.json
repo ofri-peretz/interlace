@@ -8,6 +8,9 @@
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "node scripts/clean-stale-cache.mjs",
     "build-storybook": "storybook build -o storybook-static",
+    "lint": "npm run lint:eslint && npm run lint:oxlint",
+    "lint:eslint": "eslint .",
+    "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
     "test": "vitest run",
     "test-storybook": "test-storybook --config-dir .storybook --url http://localhost:6006",
     "test-storybook:ci": "concurrently -k -s first -n SB,TEST \"http-server storybook-static -p 6006 -s\" \"wait-on tcp:6006 && test-storybook --config-dir .storybook --url http://localhost:6006\""

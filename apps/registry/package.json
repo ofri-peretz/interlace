@@ -9,7 +9,9 @@
     "build:check": "node scripts/build-registry.mjs --check",
     "dev": "next dev -p 4178",
     "start": "next start -p 4178",
-    "lint": "next lint"
+    "lint": "npm run lint:eslint && npm run lint:oxlint",
+    "lint:eslint": "eslint .",
+    "lint:oxlint": "oxlint -c ../../.oxlintrc.json ."
   },
   "dependencies": {
     "@interlace/ui": "*",

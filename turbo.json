@@ -24,7 +24,13 @@
       "outputs": []
     },
     "lint": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["lint:eslint", "lint:oxlint"],
+      "outputs": []
+    },
+    "lint:eslint": {
+      "outputs": []
+    },
+    "lint:oxlint": {
       "outputs": []
     },
     "test": {

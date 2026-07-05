@@ -350,6 +350,9 @@
   "scripts": {
     "build": "tsc -b tsconfig.lib.json && node scripts/preserve-use-client.mjs",
     "typecheck": "tsc --noEmit",
+    "lint": "npm run lint:eslint && npm run lint:oxlint",
+    "lint:eslint": "eslint .",
+    "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
     "test": "vitest run",
     "clean": "rm -rf dist tsconfig.lib.tsbuildinfo"
   },
