@@ -144,7 +144,7 @@ export function ArticleCard({
     <a
       href={href}
       target={external ? '_blank' : undefined}
-      rel="noopener noreferrer"
+      rel={external ? 'noopener noreferrer' : undefined}
       data-slot="article-card"
       data-variant={variant}
       data-testid={testId}
