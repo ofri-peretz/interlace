@@ -184,7 +184,7 @@ export function Meteors({
       {mounted &&
         meteors.map((m, idx) => (
           <span
-            key={idx}
+            key={`meteor-${m.position}-${idx}`}
             className="blog-meteor pointer-events-none absolute rounded-full"
             style={
               {

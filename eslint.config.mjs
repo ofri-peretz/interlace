@@ -7,8 +7,12 @@
  * Layers:
  *  1. Global ignores — dist, .next, turbo cache, oxlint shim tooling, etc.
  *  2. react-a11y recommended — WCAG 2.1 A/AA gates on all TSX (pre-existing).
- *  3. react-features recommended — React best-practice / perf / security on TSX
- *     (pre-existing; left as interlace already wires it).
+ *  3. react-features (hand-wired) — React best-practice / perf / security on
+ *     TSX. Published `recommended` is broken for flat config (categorized
+ *     rule names under a `@eslint/react-features` namespace), so rules are
+ *     listed explicitly with flat `react-features/*` names. no-unknown-property
+ *     is off — false positive on custom component props without type-aware
+ *     linting (815 hits across this codebase; see git history).
  *  4. À-la-carte security + quality presets (8 plugins with a working flat
  *     `configs.recommended` we spread as-is):
  *       security: browser-security, secure-coding, node-security
@@ -103,6 +107,10 @@ export default [
   // react-features ships a BROKEN published `recommended` (rule names like
   // `@eslint/react-features/react/jsx-key` that flat config can't resolve and
   // which crash the whole run), so it is hand-wired with explicit flat names.
+  // no-unknown-property is OFF (not warn): without type-awareness it can't
+  // distinguish custom React component props from unknown DOM attributes and
+  // produced 815 false positives across this codebase (icon, title, href,
+  // etc. on custom components). Re-enable once type-aware linting is wired.
   {
     files: TSX_FILES,
     plugins: { 'react-features': reactFeatures },
@@ -111,7 +119,7 @@ export default [
       'react-features/no-children-prop': 'warn',
       'react-features/no-danger': 'warn',
       'react-features/no-string-refs': 'error',
-      'react-features/no-unknown-property': 'warn',
+      'react-features/no-unknown-property': 'off',
       'react-features/hooks-exhaustive-deps': 'warn',
       'react-features/jsx-no-target-blank': 'error',
       'react-features/jsx-no-script-url': 'error',
