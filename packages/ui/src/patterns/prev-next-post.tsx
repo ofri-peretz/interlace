@@ -42,7 +42,7 @@ import { cn } from '../lib/cn.js';
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes only                   |
  * | R19  | Tokens only                      | border-border / rounded-lg / p-md / gap-md / text-muted-foreground |
- * | R20  | AA contrast                      | Hover ring uses `violet-500/60`; base uses semantic tokens  |
+ * | R20  | AA contrast                      | Hover ring uses `primary/60`; base uses semantic tokens  |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `<a href>` per card; `<nav aria-label>` landmark            |
  */
@@ -69,7 +69,7 @@ type PrevNextPostProps = Omit<React.ComponentProps<'nav'>, 'aria-label'> & {
 };
 
 const CARD_BASE =
-  'group flex flex-col gap-1 rounded-lg border border-border p-md no-underline transition-colors hover:border-violet-500/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
+  'group flex flex-col gap-1 rounded-lg border border-border p-md no-underline transition-colors hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
 
 export function PrevNextPost({
   className,

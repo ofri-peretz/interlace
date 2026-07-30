@@ -12,7 +12,7 @@ import type { ReactNode } from 'react';
  * Maps to Tailwind gradient classes.
  */
 const GRADIENT_COLORS: Record<string, string> = {
-  purple: 'from-purple-600 to-purple-500',
+  purple: 'from-primary to-chart-2',
   blue: 'from-blue-600 to-blue-500',
   emerald: 'from-emerald-600 to-emerald-500',
   red: 'from-red-600 to-red-500',

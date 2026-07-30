@@ -104,7 +104,7 @@ export function HeroCosmic({
       className={cn('relative', className)}
       style={{ contain: 'paint', clipPath: 'inset(0)' }}
     >
-      <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-purple-950 via-slate-950 to-black">
+      <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-primary/20 via-slate-950 to-black">
         <StarsBackground
           starDensity={e.starDensity}
           allStarsTwinkle
@@ -137,7 +137,7 @@ export function HeroCosmic({
           </h1>
 
           {tagline ? (
-            <p className="mx-auto mb-16 max-w-2xl text-lg leading-relaxed text-purple-100/90 drop-shadow md:text-xl">
+            <p className="mx-auto mb-16 max-w-2xl text-lg leading-relaxed text-foreground/90 drop-shadow md:text-xl">
               {tagline}
             </p>
           ) : null}

@@ -67,7 +67,7 @@ export default async function ComponentPage({ params }: PageProps) {
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <span
               aria-hidden
-              className="inline-block size-6 rounded-md bg-linear-to-br from-violet-500 to-violet-700"
+              className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-primary"
             />
             <span>Interlace UI</span>
           </Link>
@@ -130,10 +130,10 @@ export default async function ComponentPage({ params }: PageProps) {
         {/* ─── Storybook CTA ──────────────────────────────────────── */}
         <a
           href={storybook}
-          className="border-border hover:border-violet-500/60 hover:bg-card group bg-card/40 mt-8 flex items-center justify-between gap-4 rounded-lg border p-5 transition-all"
+          className="border-border hover:border-primary/60 hover:bg-card group bg-card/40 mt-8 flex items-center justify-between gap-4 rounded-lg border p-5 transition-all"
         >
           <div>
-            <div className="text-violet-600 dark:text-violet-400 text-xs font-semibold uppercase tracking-wider">
+            <div className="text-primary text-xs font-semibold uppercase tracking-wider">
               Visual examples + interactive variants
             </div>
             <div className="mt-1 font-semibold">
@@ -143,7 +143,7 @@ export default async function ComponentPage({ params }: PageProps) {
               All states, themes, a11y assertions — rendered live.
             </div>
           </div>
-          <span className="text-muted-foreground group-hover:text-violet-400 text-xl transition-colors">
+          <span className="text-muted-foreground group-hover:text-primary text-xl transition-colors">
             →
           </span>
         </a>
@@ -226,7 +226,7 @@ export default async function ComponentPage({ params }: PageProps) {
                         key={opt}
                         className={
                           opt === v.defaultValue
-                            ? 'bg-violet-500/10 border-violet-500/40 text-violet-600 dark:text-violet-300 rounded-md border px-2 py-0.5 font-mono text-xs'
+                            ? 'bg-primary/10 border-primary/40 text-primary rounded-md border px-2 py-0.5 font-mono text-xs'
                             : 'bg-background border-border text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs'
                         }
                       >
@@ -305,7 +305,7 @@ export default async function ComponentPage({ params }: PageProps) {
               outline so the regression is visible during local development.
             </p>
             <div className="border-border bg-card mt-4 rounded-lg border p-4">
-              <div className="text-xs font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+              <div className="text-xs font-semibold uppercase tracking-wider text-primary">
                 Opt-in to the dev-mode warning
               </div>
               <pre className="mt-2 overflow-x-auto font-mono text-xs">
@@ -377,7 +377,7 @@ export default async function ComponentPage({ params }: PageProps) {
                     <li key={d}>
                       <Link
                         href={`/c/${d}`}
-                        className="bg-background border-border hover:border-violet-500/60 rounded-md border px-2 py-0.5 font-mono text-xs"
+                        className="bg-background border-border hover:border-primary/60 rounded-md border px-2 py-0.5 font-mono text-xs"
                       >
                         @interlace/{d}
                       </Link>
@@ -411,7 +411,7 @@ export default async function ComponentPage({ params }: PageProps) {
           <div className="mt-4">
             <a
               href={`/r/${item.name}.json`}
-              className="border-border bg-card hover:border-violet-500/60 inline-flex items-center gap-2 rounded-md border px-3 py-2 font-mono text-sm transition-colors"
+              className="border-border bg-card hover:border-primary/60 inline-flex items-center gap-2 rounded-md border px-3 py-2 font-mono text-sm transition-colors"
             >
               /r/{item.name}.json
               <span aria-hidden>↗</span>

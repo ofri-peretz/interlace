@@ -31,7 +31,7 @@ export default async function OpengraphImage() {
           border: "1px solid rgba(255, 255, 255, 0.18)",
           borderRadius: "999px",
           background: "rgba(124, 58, 237, 0.18)",
-          color: "#c4b5fd",
+          color: "#fbb99a",
           fontSize: "24px",
           marginBottom: "32px",
         }}
@@ -49,7 +49,7 @@ export default async function OpengraphImage() {
       >
         TypeScript-native
         <br />
-        <span style={{ color: "#a78bfa" }}>developer tools.</span>
+        <span style={{ color: "#f4794a" }}>developer tools.</span>
       </div>
       <div
         style={{

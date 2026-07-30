@@ -17,7 +17,7 @@ import { withDark, withRtl } from '@/decorators';
  *
  *   1. **Scale bars** — one horizontal bar per token, width = the literal
  *      token value, labeled with token name + px. Bars use `bg-primary` so
- *      the violet pigment is the only color choice; widths come from
+ *      the brand pigment is the only color choice; widths come from
  *      `var(--spacing-*)` so a token change re-flows the whole specimen
  *      with zero source edits.
  *   2. **Stack gap demo** — six side-by-side stacks of identical children,
@@ -94,7 +94,7 @@ function ScaleBars() {
             <GridItem span={8} mdSpan={7}>
               {/*
                 Bar height is fixed (h-2 → 8px); width comes from the token.
-                bg-primary is the single pigment — violet draws the eye, and
+                bg-primary is the single pigment — the brand orange draws the eye, and
                 a token regression shows up as a width collapse, not a color
                 shift.
               */}

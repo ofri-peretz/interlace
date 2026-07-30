@@ -24,7 +24,7 @@ import { useReducedMotion } from "../lib/use-reduced-motion.js";
  *
  * @example
  * ```tsx
- * <div className="relative text-purple-300">
+ * <div className="relative text-primary">
  *   <Spotlight data-testid="hero-spotlight" className="-top-40 left-0" />
  *   <h1>Your headline</h1>
  * </div>

@@ -44,7 +44,7 @@ interface PricingTier {
   features?: React.ReactNode[];
   /** CTA button. */
   cta?: React.ReactNode;
-  /** Highlights the card with a violet ring. Use on the "Most popular" tier. */
+  /** Highlights the card with a brand-primary ring. Use on the "Most popular" tier. */
   featured?: boolean;
 }
 

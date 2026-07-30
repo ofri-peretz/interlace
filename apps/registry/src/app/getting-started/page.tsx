@@ -188,8 +188,8 @@ export default function GettingStartedPage() {
               spacing (8/16/24/40/64/96 px). Three-step radius (8/12/16 px).
             </Cell>
             <Cell title="Brand palette (AAA-cleared)">
-              violet-700 light (7.34:1 on white); violet-400 dark (7.42:1 on
-              near-black). Five chart-series hues.
+              Burnt orange: #8a3a10 light (7.80:1 on white); #fbb99a dark
+              (11.79:1 on near-black). Five chart-series hues.
             </Cell>
             <Cell title="Skip-to-main + sr-only contract">
               <code className="font-mono">SkipLink</code> for WCAG 2.4.1 Bypass
@@ -210,7 +210,7 @@ export default function GettingStartedPage() {
           <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
             <Link
               href="/"
-              className="border-border bg-card hover:border-violet-500/60 inline-flex items-center gap-2 rounded-md border px-4 py-2 font-medium transition-colors"
+              className="border-border bg-card hover:border-primary/60 inline-flex items-center gap-2 rounded-md border px-4 py-2 font-medium transition-colors"
             >
               ← Browse all components
             </Link>
@@ -267,7 +267,7 @@ function Step({
   return (
     <section className="mt-12">
       <div className="flex items-baseline gap-3">
-        <span className="text-violet-600 dark:text-violet-400 font-mono text-sm font-semibold">
+        <span className="text-primary font-mono text-sm font-semibold">
           STEP {n}
         </span>
         <h2 className="text-xl font-semibold">{title}</h2>

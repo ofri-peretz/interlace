@@ -60,7 +60,7 @@ export default function ThemeAuthoringPage() {
           title="Pick your brand palette"
         >
           <p className="text-muted-foreground">
-            The Interlace defaults are Tailwind violet. Pick your own
+            The Interlace defaults are burnt orange. Pick your own
             primary hue + neutral surface; the rest of the palette
             derives from those two. Verify each pair clears WCAG 2.2
             AA (≥4.5:1 body, ≥3:1 large) at{' '}
