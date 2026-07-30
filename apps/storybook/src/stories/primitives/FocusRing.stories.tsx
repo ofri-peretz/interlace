@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 const FocusableCard = ({ children }: { children: React.ReactNode }) => (
   <a
     href="#"
-    className="block rounded-md border border-border bg-card px-4 py-3 text-sm text-card-foreground hover:border-violet-500/60 hover:bg-card/80 focus:outline-none"
+    className="block rounded-md border border-border bg-card px-4 py-3 text-sm text-card-foreground hover:border-primary/60 hover:bg-card/80 focus:outline-none"
   >
     {children}
   </a>

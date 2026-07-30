@@ -5,7 +5,7 @@ import { BookOpen, Compass, Gauge } from "lucide-react";
 
 const pillarIcons: Record<string, React.ReactNode> = {
   concepts: (
-    <div className="flex size-5 shrink-0 items-center justify-center rounded bg-gradient-to-t from-purple-600 to-purple-500 text-white">
+    <div className="flex size-5 shrink-0 items-center justify-center rounded bg-gradient-to-t from-primary to-chart-2 text-white">
       <Compass className="size-3.5" />
     </div>
   ),

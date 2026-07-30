@@ -10,7 +10,7 @@
  *
  * Server component — no hooks, just a styled `<a>`. Native focus,
  * native activation, native keyboard handling. The hover affordance
- * (violet border) follows the brand-accent rule (only on interactive
+ * (brand-primary border) follows the brand-accent rule (only on interactive
  * surfaces; never on plain text).
  *
  * ## Anatomy
@@ -60,7 +60,7 @@ const tagVariants = cva(
     'px-2.5 py-0.5 text-xs',
     'transition-colors',
     // Brand-accent hover lift (only on the interactive surface).
-    'hover:border-violet-500/60',
+    'hover:border-primary/60',
     // Standard focus ring contract.
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
   ].join(' '),

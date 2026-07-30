@@ -31,15 +31,15 @@ export default async function HomePage() {
       <section className="relative overflow-hidden border-b border-border">
         <div
           aria-hidden
-          className="absolute inset-0 bg-linear-to-br from-violet-950/40 via-background to-background"
+          className="absolute inset-0 bg-linear-to-br from-primary/15 via-background to-background"
         />
         <div
           aria-hidden
-          className="absolute -top-32 -right-32 size-112 rounded-full bg-violet-600/20 blur-3xl"
+          className="absolute -top-32 -right-32 size-112 rounded-full bg-primary/20 blur-3xl"
         />
         <div
           aria-hidden
-          className="absolute -bottom-32 -left-32 size-112 rounded-full bg-violet-800/15 blur-3xl"
+          className="absolute -bottom-32 -left-32 size-112 rounded-full bg-primary/15 blur-3xl"
         />
 
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
@@ -50,7 +50,7 @@ export default async function HomePage() {
 
           <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
             Production-grade React primitives
-            <span className="bg-linear-to-r from-violet-400 to-violet-600 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-primary to-chart-2 bg-clip-text text-transparent">
               {' '}
               for shadcn
             </span>
@@ -81,7 +81,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
           <div>
-            <div className="text-violet-600 dark:text-violet-400 text-xs font-semibold uppercase tracking-wider">
+            <div className="text-primary text-xs font-semibold uppercase tracking-wider">
               CSS module export
             </div>
             <h2 className="mt-2 text-3xl font-bold tracking-tight">
@@ -117,7 +117,7 @@ export default async function HomePage() {
               />
               <StyleFileCard
                 name="interlace-theme.css"
-                description="Brand violet palette (light + dark), AAA contrast."
+                description="Brand burnt-orange palette (light + dark), AAA contrast."
               />
             </div>
             <p className="text-muted-foreground text-xs">
@@ -154,7 +154,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="flex items-end justify-between">
           <div>
-            <div className="text-violet-600 dark:text-violet-400 text-xs font-semibold uppercase tracking-wider">
+            <div className="text-primary text-xs font-semibold uppercase tracking-wider">
               Available primitives
             </div>
             <h2 className="mt-2 text-3xl font-bold tracking-tight">
@@ -183,7 +183,7 @@ export default async function HomePage() {
             <a
               key={c.id}
               href={`#${c.id}`}
-              className="border-border hover:border-violet-500/60 hover:bg-card rounded-full border bg-card/40 px-3 py-1 text-xs transition-colors"
+              className="border-border hover:border-primary/60 hover:bg-card rounded-full border bg-card/40 px-3 py-1 text-xs transition-colors"
             >
               {c.title}{' '}
               <span className="text-muted-foreground">
@@ -213,7 +213,7 @@ export default async function HomePage() {
                   <li key={item.name}>
                     <Link
                       href={`/c/${item.name}`}
-                      className="group border-border hover:border-violet-500/60 hover:bg-card flex h-full flex-col justify-between gap-3 rounded-lg border bg-card/40 p-4 transition-all"
+                      className="group border-border hover:border-primary/60 hover:bg-card flex h-full flex-col justify-between gap-3 rounded-lg border bg-card/40 p-4 transition-all"
                     >
                       <div>
                         <h4 className="font-semibold">{item.title}</h4>

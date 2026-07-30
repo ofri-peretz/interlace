@@ -39,7 +39,7 @@ export function SiteNav() {
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <span
             aria-hidden
-            className="inline-block size-6 rounded-md bg-linear-to-br from-violet-500 to-violet-700"
+            className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-chart-2"
           />
           <span>Interlace UI</span>
           <span className="text-muted-foreground text-sm font-normal">

@@ -102,7 +102,7 @@ export const HighlightOnly: Story = {
 };
 
 export const BrandPrimary: Story = {
-  name: 'Brand primary (violet gradient)',
+  name: 'Brand primary (orange gradient)',
   args: {
     children: 'Get Started',
     shimmerColor: '#c084fc',
