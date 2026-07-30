@@ -188,7 +188,7 @@ export default function GettingStartedPage() {
               spacing (8/16/24/40/64/96 px). Three-step radius (8/12/16 px).
             </Cell>
             <Cell title="Brand palette (AAA-cleared)">
-              Burnt orange: #8a3a10 light (7.80:1 on white); #fbb99a dark
+              Burnt orange: #7d350c light (8.80:1 on white); #fbb99a dark
               (11.79:1 on near-black). Five chart-series hues.
             </Cell>
             <Cell title="Skip-to-main + sr-only contract">

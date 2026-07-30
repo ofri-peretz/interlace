@@ -40,7 +40,7 @@
  *     primary/foreground pair below clears the floor for its mode.
  *
  * Source palette: the Interlace mark — burnt orange (see render-cover.sh).
- *   Light primary: #8a3a10 → 7.80:1 on white (AAA)
+ *   Light primary: #7d350c → 8.80:1 on white (AAA)
  *   Dark primary:  #fbb99a → 11.79:1 on near-black (AAA)
  *
  * Replaced the Tailwind-violet palette this system shipped with. Every pair
@@ -54,13 +54,15 @@
   :root {
     /* Brand
      *
-     * Burnt orange, from the mark. #8a3a10 measures 7.80:1 on white and
-     * 7.19:1 on `--accent` (#fef4ed) — the accent tint was lightened from
-     * #fdece1 specifically because primary sat at 6.78:1 on it, just under
-     * the AAA floor this system holds on EVERY catalogue surface (white,
-     * card, popover, muted, accent). Hover / active step a notch darker. */
-    --interlace-primary: #8a3a10;            /* 7.80:1 on white (AAA) */
-    --interlace-primary-hover: #73300d;      /* 9.73:1 on white */
+     * Burnt orange, from the mark. #7d350c measures 8.80:1 on white, 8.12:1
+     * on `--accent` (#fef4ed), and 7.46:1 on its OWN 10% tint — that last one
+     * is the binding constraint. `bg-primary/10` + `text-primary` is a stock
+     * shadcn badge pattern, and it composites to #f3ebe7 on white; a lighter
+     * orange (#8a3a10) landed at 6.63:1 there and axe failed the enhanced
+     * check. This value tracks violet-800's old profile (8.98 / 7.56) so the
+     * AAA floor holds on every catalogue surface AND on brand-tinted ones. */
+    --interlace-primary: #7d350c;            /* 8.80:1 on white (AAA) */
+    --interlace-primary-hover: #6b2b09;      /* 10.63:1 on white */
     --interlace-primary-active: #4d2009;     /* 13.76:1 on white */
     --interlace-primary-foreground: #ffffff;
     --interlace-primary-subtle: #fef4ed;     /* warm tint for backgrounds */
