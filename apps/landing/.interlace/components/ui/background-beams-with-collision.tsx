@@ -332,8 +332,7 @@ const Explosion = ({ ...props }: React.HTMLProps<HTMLDivElement>) => {
         className={cn(
           "absolute -inset-x-10 top-0 m-auto h-2 w-10 rounded-full blur-sm",
           // Brand glow
-          "bg-gradient-to-r from-transparent via-primary to-transparent",
-          "dark:via-cyan-400"
+          "bg-gradient-to-r from-transparent via-primary to-transparent"
         )}
       />
 
@@ -354,8 +353,7 @@ const Explosion = ({ ...props }: React.HTMLProps<HTMLDivElement>) => {
           className={cn(
             "absolute h-1 w-1 rounded-full",
             // Brand particles
-            "bg-gradient-to-b from-primary to-chart-2",
-            "dark:from-cyan-400 dark:to-chart-2"
+            "bg-gradient-to-b from-primary to-chart-2"
           )}
         />
       ))}
