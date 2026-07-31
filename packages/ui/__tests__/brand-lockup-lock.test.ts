@@ -33,7 +33,7 @@ describe('brand lockup lock', () => {
     expect(src).toContain('var(--brand-mark-bar-o)');
     expect(src).toContain('var(--brand-mark-bar-g)');
     expect(src).toMatch(/lowercase[^"']*"/);
-    expect(src).toContain('>\n        interlace\n      </span>');
+    expect(src).toMatch(/>\s*interlace\s*<\/span>/);
   });
 
   it('registry nav renders the shared BrandLogo', () => {
