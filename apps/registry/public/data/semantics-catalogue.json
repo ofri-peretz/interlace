@@ -37,7 +37,9 @@
       "--interlace-chart-5": "oklch(0.55 0.13 200)",
       "--interlace-radius-sm": "0.5rem",
       "--interlace-radius-md": "0.75rem",
-      "--interlace-radius-lg": "1rem"
+      "--interlace-radius-lg": "1rem",
+      "--interlace-brand-mark-bar-o": "#a84c17",
+      "--interlace-brand-mark-bar-g": "#0a6b47"
     },
     "dark": {
       "--interlace-primary": "#fbb99a",
@@ -73,7 +75,9 @@
       "--interlace-chart-2": "oklch(0.78 0.12 162)",
       "--interlace-chart-3": "oklch(0.78 0.16 264)",
       "--interlace-chart-4": "oklch(0.78 0.12 90)",
-      "--interlace-chart-5": "oklch(0.78 0.11 200)"
+      "--interlace-chart-5": "oklch(0.78 0.11 200)",
+      "--interlace-brand-mark-bar-o": "#f4794a",
+      "--interlace-brand-mark-bar-g": "#0d9460"
     }
   },
   "semantics": {
@@ -108,7 +112,9 @@
       "--chart-3": "var(--interlace-chart-3)",
       "--chart-4": "var(--interlace-chart-4)",
       "--chart-5": "var(--interlace-chart-5)",
-      "--color-fd-muted-foreground": "var(--interlace-muted-foreground)"
+      "--color-fd-muted-foreground": "var(--interlace-muted-foreground)",
+      "--brand-mark-bar-o": "var(--interlace-brand-mark-bar-o)",
+      "--brand-mark-bar-g": "var(--interlace-brand-mark-bar-g)"
     },
     "dark": {
       "--primary": "var(--interlace-primary)",
@@ -141,7 +147,9 @@
       "--chart-3": "var(--interlace-chart-3)",
       "--chart-4": "var(--interlace-chart-4)",
       "--chart-5": "var(--interlace-chart-5)",
-      "--color-fd-muted-foreground": "var(--interlace-muted-foreground)"
+      "--color-fd-muted-foreground": "var(--interlace-muted-foreground)",
+      "--brand-mark-bar-o": "var(--interlace-brand-mark-bar-o)",
+      "--brand-mark-bar-g": "var(--interlace-brand-mark-bar-g)"
     }
   }
 }

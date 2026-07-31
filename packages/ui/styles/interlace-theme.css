@@ -133,6 +133,13 @@
     --interlace-radius-sm: 0.5rem;   /*  8px */
     --interlace-radius-md: 0.75rem;  /* 12px */
     --interlace-radius-lg: 1rem;     /* 16px */
+
+    /* Brand mark — bar fills for the two-bar Interlace mark (nav lockups;
+     * see packages/ui/src/patterns/brand-logo.tsx). Decorative fills, not
+     * text, so they track the favicon pair rather than the AAA text ramp.
+     * Values match the eslint.interlace.tools nav mark. */
+    --interlace-brand-mark-bar-o: #a84c17;
+    --interlace-brand-mark-bar-g: #0a6b47;
   }
 
   /* ─────────────────────────────────────────────────────────────────
@@ -200,6 +207,10 @@
     --interlace-chart-3: oklch(0.78 0.16 264);  /* blue */
     --interlace-chart-4: oklch(0.78 0.12 90);   /* olive */
     --interlace-chart-5: oklch(0.78 0.11 200);  /* cyan */
+
+    /* Brand mark — brighter pair for dark chrome (favicon dark variant). */
+    --interlace-brand-mark-bar-o: #f4794a;
+    --interlace-brand-mark-bar-g: #0d9460;
   }
 }
 
@@ -270,6 +281,13 @@
      * consistency between shadcn-styled and fumadocs-styled surfaces.
      */
     --color-fd-muted-foreground: var(--interlace-muted-foreground);
+
+    /* Brand mark bar fills — the UNPREFIXED names are the cross-repo
+     * contract: brand-logo.tsx and the eslint docs site both read
+     * `var(--brand-mark-bar-*)`, so a consumer outside this monorepo can
+     * define just these two properties and render the same lockup. */
+    --brand-mark-bar-o: var(--interlace-brand-mark-bar-o);
+    --brand-mark-bar-g: var(--interlace-brand-mark-bar-g);
   }
 }
 
