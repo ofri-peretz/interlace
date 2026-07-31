@@ -11,16 +11,20 @@
 
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 import numbers from "../data/interlace-numbers.json";
 
-const PROJECT_ROOT = process.cwd();
+// Anchor to this file, not process.cwd() — keeps working no matter where
+// the runner is invoked from.
+const PROJECT_ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
 
 // Landing surfaces that make (or could make) plugin/rule count claims.
 const COVERED_SURFACES = [
   "src/app/(home)/page.tsx",
   "src/components/home/landing-hero.tsx",
   "src/app/layout.tsx",
+  "src/app/opengraph-image.tsx",
 ];
 
 // A digit immediately followed by a plugins/rules noun is a hand-typed count.
