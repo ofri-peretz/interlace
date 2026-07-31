@@ -57,7 +57,7 @@ export default function SemanticsCataloguePage() {
         <h1 className="mt-6 text-4xl font-bold tracking-tight text-balance">
           Semantics Catalogue
         </h1>
-        <p className="text-muted-foreground mt-3 max-w-2xl text-lg">
+        <p className="text-muted-foreground mt-3 max-w-prose text-lg">
           Every Interlace semantic token, its resolved value in light +
           dark, the brand primitive it points at. Auto-generated from{' '}
           <code className="font-mono text-sm">

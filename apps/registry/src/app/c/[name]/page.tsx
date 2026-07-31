@@ -112,7 +112,7 @@ export default async function ComponentPage({ params }: PageProps) {
         {/* ─── Title + description + badges ──────────────────────── */}
         <div className="mt-6">
           <h1 className="text-4xl font-bold tracking-tight">{item.title}</h1>
-          <p className="text-muted-foreground mt-3 max-w-2xl text-lg">
+          <p className="text-muted-foreground mt-3 max-w-prose text-lg">
             {item.description}
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-2">

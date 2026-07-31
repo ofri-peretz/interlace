@@ -30,7 +30,7 @@ export default function CSSContractPage() {
         <h1 className="mt-6 text-4xl font-bold tracking-tight text-balance">
           CSS Contract
         </h1>
-        <p className="text-muted-foreground mt-3 max-w-2xl text-lg">
+        <p className="text-muted-foreground mt-3 max-w-prose text-lg">
           The single canonical CSS import for the Interlace DS, the
           cascade-layer model behind it, and the override surface for
           forking the brand. If you only read one page in this docs,
@@ -73,7 +73,8 @@ export default function CSSContractPage() {
 @import "./interlace-theme.css";`}</code>
           </pre>
 
-          <table className="border-border mt-6 w-full border-collapse border">
+          <div className="mt-6 overflow-x-auto">
+          <table className="border-border w-full border-collapse border">
             <thead className="bg-muted">
               <tr>
                 <th className="border-border border p-sm text-left font-semibold">
@@ -103,6 +104,7 @@ export default function CSSContractPage() {
               ))}
             </tbody>
           </table>
+          </div>
 
           <p className="text-muted-foreground mt-4 text-sm">
             Left-to-right in the layer declaration = ascending cascade
