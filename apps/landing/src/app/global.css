@@ -10,19 +10,9 @@
  * didn't see. */
 @import "../../.interlace/css/brand.css";
 
-/* Brand mark bar fills — the two-bar Interlace mark in the top nav
- * (see layout.shared.tsx). App-owned for now, mirroring the eslint docs
- * site's global.css; promote into `interlace/docs-baseline/css/brand.css`
- * when the baseline next ships so all consumers sync it. Theme-paired
- * decorative fills (favicon pair), not text tokens. */
-:root {
-  --brand-mark-bar-o: #a84c17;
-  --brand-mark-bar-g: #0a6b47;
-}
-.dark {
-  --brand-mark-bar-o: #f4794a;
-  --brand-mark-bar-g: #0d9460;
-}
+/* The --brand-mark-bar-* fills for the nav's two-bar mark (see
+ * layout.shared.tsx) now come from the synced brand.css above — promoted
+ * into the baseline; no app-owned copy. */
 
 @custom-variant dark (&:is(.dark *));
 
