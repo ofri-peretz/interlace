@@ -129,7 +129,7 @@ export function HeroCosmic({
           maxDuration={e.meteorMaxDuration}
         />
 
-        <div className="relative z-10 container mx-auto max-w-5xl px-4 py-20 text-center">
+        <div className="relative z-10 container mx-auto max-w-content px-4 py-20 text-center">
           {eyebrow ? <div className="mb-8 inline-flex">{eyebrow}</div> : null}
 
           <h1 className="mb-6 text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
@@ -137,7 +137,7 @@ export function HeroCosmic({
           </h1>
 
           {tagline ? (
-            <p className="mx-auto mb-16 max-w-2xl text-lg leading-relaxed text-foreground/90 drop-shadow md:text-xl">
+            <p className="mx-auto mb-16 max-w-prose text-lg leading-relaxed text-foreground/90 drop-shadow md:text-xl">
               {tagline}
             </p>
           ) : null}

@@ -529,7 +529,7 @@ function OverlayBody({
         {description ? (
           <p
             data-testid="article-card-description"
-            className="line-clamp-2 text-sm md:text-base text-white/90 mb-4 max-w-3xl drop-shadow"
+            className="line-clamp-2 text-sm md:text-base text-white/90 mb-4 max-w-prose drop-shadow"
           >
             {description}
           </p>
