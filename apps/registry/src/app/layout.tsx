@@ -27,9 +27,30 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * System-following dark mode. The DS dark variant is class-based
+ * (`@custom-variant dark (&:is(.dark *))`), but this app shipped with
+ * nothing ever SETTING the class — dark-preference users got the light
+ * theme forever. No toggle UI (the registry is a docs surface, not an
+ * app): we follow `prefers-color-scheme`, live-updating on OS switch.
+ * Inline + blocking so the first paint is already correct (no flash);
+ * `suppressHydrationWarning` on <html> already covers the class mutation.
+ */
+const THEME_SCRIPT = `(function () {
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  var apply = function () {
+    document.documentElement.classList.toggle('dark', mq.matches);
+  };
+  apply();
+  mq.addEventListener('change', apply);
+})();`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <PostHogProvider>
           <PostHogPageviewTracker />
