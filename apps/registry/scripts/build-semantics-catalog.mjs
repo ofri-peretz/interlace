@@ -9,7 +9,7 @@
  *   {
  *     light: { "--background": "#ffffff", "--foreground": "#0a0a0f", ... },
  *     dark:  { "--background": "#0a0a0f", "--foreground": "#ededf2", ... },
- *     brand: { light: { "--interlace-primary": "#6d28d9", ... }, dark: {...} }
+ *     brand: { light: { "--interlace-primary": "#7d350c", ... }, dark: {...} }
  *   }
  *
  * Consumed by apps/registry/src/app/semantics-catalog/page.tsx which

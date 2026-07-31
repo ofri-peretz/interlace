@@ -106,7 +106,7 @@ const STYLE_ITEM = 'theme';
  *                             prefers-reduced-motion, tabular-nums, the
  *                             [data-min-viewport] container contract.
  *   4. theme.css            — shadcn↔fumadocs token bridge + Shiki AAA boosts.
- *   5. interlace-theme.css  — brand violet palette (light + dark, AAA).
+ *   5. interlace-theme.css  — brand burnt-orange palette (light + dark, AAA).
  *
  * Before this commit, only 1/4/5 shipped — half of DESIGN_PRINCIPLES.md
  * was unreachable to consumers. See plan

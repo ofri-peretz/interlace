@@ -17,7 +17,7 @@
 |---|---|---|
 | 1 | Calm, confident, technical voice | Informative over promotional. The product IS the proof. |
 | 2 | Reading-first typography | Inter, ≤75ch, hierarchy via size only. |
-| 3 | Violet brand, restrained palette | One accent, neutral surfaces, AA in light + dark. |
+| 3 | Burnt-orange brand, restrained palette | One accent, neutral surfaces, AA in light + dark. |
 | 4 | Token-only, no raw values | Every value comes from `--*`; raw hex banned in primitives. |
 | 5 | Generous whitespace, fixed rhythm | Six-step spacing, four container widths. |
 | 6 | Flat surfaces, borders > shadows | Hierarchy from spacing + borders, not shadow stacks. |
@@ -54,11 +54,12 @@ never expands — **one variable, size**, six levels max. Weight ladder
 in the `Typography` variant (`body`/`long` vs `ui`/`ui-sm`) and the
 `.prose-*`/`.ui-text-*` classes. Full contract: `TYPOGRAPHY_PHILOSOPHY.md`.
 
-## 3. Violet brand, restrained palette
+## 3. Burnt-orange brand, restrained palette
 
-**One accent.** Violet-700 on light (#6d28d9, AAA on white), violet-400 on
-dark (#a78bfa, AAA on near-black). Surfaces are neutral (violet-*tinted*
-neutrals — not loud purple) so the accent earns attention when it appears.
+**One accent.** Deep burnt orange on light (#7d350c, AAA on white), a light
+burnt-orange tint on dark (#fbb99a, AAA on near-black). Surfaces are neutral
+(warm-*tinted* neutrals — not loud orange) so the accent earns attention when
+it appears.
 Status colors (success, warning, destructive) are pigments, not narrative —
 reach for them when communicating state, not for decoration. Brand is *one
 high-signal element at a time* (the primary action, the focus ring, the

@@ -52,7 +52,7 @@ The full set. New tokens get added here, not invented per-component.
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
-| `fd-primary` | `#7c3aed` (purple-600) | `#a78bfa` (purple-400) | Primary action, brand accent, focus ring |
+| `fd-primary` | `#7d350c` (burnt orange) | `#fbb99a` (light burnt orange) | Primary action, brand accent, focus ring |
 | `fd-primary-foreground` | `#fafafa` | `#0a0a0a` | Text on primary |
 | `fd-accent` | `#f4f4f5` | `#262626` | Subtle accent, hover backgrounds |
 | `fd-accent-foreground` | `#0a0a0a` | `#fafafa` | Text on accent |
@@ -75,24 +75,24 @@ status colors.
 
 ## Brand accent rules
 
-Purple is our accent. That doesn't mean every surface is purple — it
-means purple is the signal that *this is the action* or *this is us*.
+Burnt orange is our accent. That doesn't mean every surface is orange — it
+means orange is the signal that *this is the action* or *this is us*.
 
-- **Primary CTAs** — purple background, white text. One per page.
-- **Active state in navigation** — purple text on default surface.
-- **Focus ring** — purple, 2px, 2px offset.
+- **Primary CTAs** — orange background, white text. One per page.
+- **Active state in navigation** — orange text on default surface.
+- **Focus ring** — orange, 2px, 2px offset.
 - **Brand chrome** — logo, badges, highlight strokes.
-- **Active filter chip** — purple background with white text.
+- **Active filter chip** — orange background with white text.
 
-Where purple is **forbidden**:
+Where orange is **forbidden**:
 
 - Body text (use `fd-foreground`)
 - Most borders (use `fd-border`)
 - Backgrounds of large surfaces (use `fd-background` or `fd-muted`)
-- Status indicators (use the status tokens, not purple)
+- Status indicators (use the status tokens, not orange)
 
-The test: if you covered the purple with masking tape, would the page
-still be readable? It must be, or the purple is doing the heavy lifting
+The test: if you covered the orange with masking tape, would the page
+still be readable? It must be, or the orange is doing the heavy lifting
 that contrast and structure should be doing.
 
 ---
@@ -117,14 +117,14 @@ Dark mode is a **separate designed surface**. Not "same site, dimmed."
   saturated. The surface around it is dark; saturated red would
   vibrate.
 - **Shadows become glows.** A `shadow-lg` on a card in light mode
-  becomes a soft `shadow-purple-500/10` glow on dark mode. Black
+  becomes a soft `shadow-primary/10` glow on dark mode. Black
   shadows on dark surfaces are invisible.
 - **Borders desaturate.** `fd-border` is more visible against dark
   surfaces; reduce opacity to compensate.
 - **Images get a subtle treatment** — slight `filter: brightness(0.95)`
   on photos prevents them from punching holes in the dark surface.
-- **Brand accent gets brighter.** Purple-600 in light becomes
-  purple-400 in dark. Same brand, calibrated for the surface.
+- **Brand accent gets brighter.** The deep burnt orange in light becomes
+  a light orange tint in dark. Same brand, calibrated for the surface.
 
 ### Toggle contract
 
@@ -183,7 +183,7 @@ channel. Concretely:
 ## Token aliases & arbitrary values
 
 Tailwind v4 `@theme` block exposes the tokens. **Do not** invent
-arbitrary `bg-[#7c3aed]` values — they fragment the palette. Allowed
+arbitrary `bg-[#7d350c]` values — they fragment the palette. Allowed
 only for:
 
 - Truly one-off decorative gradients (e.g. cosmic background beams)
@@ -246,7 +246,7 @@ Hard bans.
 - **`opacity` to dim disabled state.** Use a token specifically for
   disabled (`fd-muted-foreground` + reduced contrast). Opacity also
   dims focus rings.
-- **More than 7 hues on one page.** Brand purple, foundation grays,
+- **More than 7 hues on one page.** Brand orange, foundation grays,
   4 status colors. Anything else is decoration.
 - **Status colors used non-semantically.** Red border for "this is
   cool" is wrong. Red is destructive, not aesthetic.
@@ -274,7 +274,7 @@ Tailwind v4 `@theme` (single source of truth in
   --color-fd-border: #e5e5e5;
 
   /* Brand */
-  --color-fd-primary: #7c3aed;
+  --color-fd-primary: #7d350c;
   --color-fd-primary-foreground: #fafafa;
   --color-fd-accent: #f4f4f5;
   --color-fd-accent-foreground: #0a0a0a;
@@ -295,7 +295,7 @@ Tailwind v4 `@theme` (single source of truth in
     --color-fd-card: #0f0f0f;
     --color-fd-card-foreground: #fafafa;
     --color-fd-border: #262626;
-    --color-fd-primary: #a78bfa;
+    --color-fd-primary: #fbb99a;
     --color-fd-primary-foreground: #0a0a0a;
     --color-fd-accent: #262626;
     --color-fd-accent-foreground: #fafafa;
@@ -337,7 +337,7 @@ When designing or reviewing a colored surface, ask:
    against the budget?
 4. **Color-alone**: is the meaning duplicated in icon, label, or
    structure?
-5. **Brand restraint**: if you covered the brand purple, would the
+5. **Brand restraint**: if you covered the brand orange, would the
    page still be navigable?
 6. **Status discipline**: are status colors used only for status?
 

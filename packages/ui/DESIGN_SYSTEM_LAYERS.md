@@ -60,7 +60,7 @@ internals.
 **What lives here:** raw value tokens — keyframes, animation timings,
 font families, the type/spacing/radius scales registered as Tailwind
 theme tokens, and the concrete brand hex literals (`--interlace-primary:
-#6d28d9`, etc.).
+#7d350c`, etc.).
 
 **Files:**
 
