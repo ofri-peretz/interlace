@@ -81,9 +81,10 @@
   --color-card: var(--color-fd-card);
   --color-card-foreground: var(--color-fd-card-foreground);
 
-  /* Brand-accent tokens. Legacy name kept for consumer compatibility; the
-   * value is now the brand burnt orange (was indigo `#6366F1`, then
-   * hsl(239, 70%, 58%)). Clears WCAG AA against `#ffffff` with headroom. */
+  /* Brand-accent token, renamed from `--color-brand-accent` (no in-repo
+   * consumers of the old name remain). Value is now the brand burnt orange
+   * (was indigo `#6366F1`, then hsl(239, 70%, 58%)). Clears WCAG AA against
+   * `#ffffff` with headroom. */
   --color-brand-snappy: hsl(22, 82%, 32%);
 
   /* Decorative-primitive tokens — single source of truth for the literal
