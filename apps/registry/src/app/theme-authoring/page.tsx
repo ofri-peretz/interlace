@@ -60,9 +60,14 @@ export default function ThemeAuthoringPage() {
           title="Pick your brand palette"
         >
           <p className="text-muted-foreground">
-            The Interlace defaults are burnt orange. Pick your own
-            primary hue + neutral surface; the rest of the palette
-            derives from those two. Verify each pair clears WCAG 2.2
+            The Interlace defaults are burnt orange — and they
+            haven&apos;t always been. The DS shipped on Tailwind violet
+            and was repointed to the burnt-orange + green palette in
+            July 2026 entirely inside{' '}
+            <code className="font-mono">@layer interlace.brand</code>,
+            with zero component edits. Your fork takes the same path:
+            pick your own primary hue + neutral surface; the rest of
+            the palette derives from those two. Verify each pair clears WCAG 2.2
             AA (≥4.5:1 body, ≥3:1 large) at{' '}
             <a
               href="https://webaim.org/resources/contrastchecker/"
