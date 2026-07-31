@@ -19,8 +19,8 @@ import React, { useRef, useState, useEffect } from "react";
  * https://ui.aceternity.com/components/background-beams-with-collision
  *
  * Theme Support:
- * - Light mode: Purple/indigo beams on a light gradient background
- * - Dark mode: Brighter purple/cyan beams on a dark gradient background
+ * - Beams and glows read the brand tokens (`--color-primary`, `--color-chart-2`),
+ *   so light/dark resolve per theme — burnt orange into bottle green.
  *
  * @example
  * ```tsx
@@ -148,7 +148,7 @@ export const BackgroundBeamsWithCollision = ({
           !hideCollisionSurface && [
             // Light mode: Subtle neutral with soft shadow
             "bg-neutral-100",
-            // Dark mode: Darker surface with purple tint
+            // Dark mode: Darker translucent surface
             "dark:bg-neutral-900/50"
           ]
         )}

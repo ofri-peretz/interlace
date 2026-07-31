@@ -7,7 +7,7 @@
 "use client";
 
 /**
- * Meteors — Nuxt-faithful purple shower (with first-impression tuning).
+ * Meteors — Nuxt-faithful meteor shower (with first-impression tuning).
  *
  * Port of `agents/apps/blog-old/app/components/CosmicBackground.vue`'s
  * meteor block. The Nuxt source had three quirks that read poorly on a
@@ -23,8 +23,8 @@
  *      at full strength rather than fading in. It never read as
  *      "entering the scene."
  *
- * This file restores the byte-faithful Nuxt geometry (3 meteors, purple
- * `#e9d5ff` trail, 120px ribbon, 12–30s duration, rotate(215deg) +
+ * This file restores the byte-faithful Nuxt geometry (3 meteors, token-driven
+ * trail color, 120px ribbon, 12–30s duration, rotate(215deg) +
  * translateX(-500px) keyframe) but tunes the three initial-state quirks:
  *
  *   1. {@link buildMeteors} now uses NEGATIVE animation-delays seeded
@@ -72,8 +72,9 @@ const ANGLE_DEG = 215;
 const TRAVEL_PX = 500;
 const TRAIL_PX = 120;
 // Trail colors flow through tokens defined in `src/app/globals.css` —
-// `--meteor-trail` / `--meteor-trail-fade` / `--meteor-glow`. The source
-// hue is `#e9d5ff` (Nuxt blog-old) ≈ `oklch(0.89 0.07 308)`.
+// `--meteor-trail` / `--meteor-trail-fade` / `--meteor-glow`. The tokens
+// now resolve to the brand pale burnt orange (the legacy Nuxt blog-old
+// source hue was pale purple `#e9d5ff`).
 const TRAIL_COLOR = "var(--color-meteor-trail)";
 const TRAIL_FADE_COLOR = "var(--color-meteor-trail-fade)";
 const GLOW_COLOR = "var(--color-meteor-glow)";
@@ -184,7 +185,7 @@ export function Meteors({
       {mounted &&
         meteors.map((m, idx) => (
           <span
-            key={`meteor-${m.position}-${idx}`}
+            key={idx}
             className="blog-meteor pointer-events-none absolute rounded-full"
             style={
               {
