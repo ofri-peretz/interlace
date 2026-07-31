@@ -49,7 +49,8 @@ export default function GettingStartedPage() {
               <code className="font-mono">interlace-theme</code>. One command
               lands the type / spacing / radius scales, the WCAG 2.2 SC 2.4.13
               focus ring, the <code className="font-mono">[data-min-viewport]</code>{' '}
-              container contract, reduced-motion respect, and the brand palette.
+              container contract, reduced-motion respect, and the burnt-orange
+              brand palette.
             </>
           }
         >
@@ -189,7 +190,11 @@ export default function GettingStartedPage() {
             </Cell>
             <Cell title="Brand palette (AAA-cleared)">
               Burnt orange: #7d350c light (8.80:1 on white); #fbb99a dark
-              (11.79:1 on near-black). Five chart-series hues.
+              (11.79:1 on near-black). Repointed from Tailwind violet (July
+              2026) entirely via{' '}
+              <code className="font-mono">@layer interlace.brand</code>{' '}
+              — the same surface you&apos;d use to ship your own brand. Five
+              chart-series hues.
             </Cell>
             <Cell title="Skip-to-main + sr-only contract">
               <code className="font-mono">SkipLink</code> for WCAG 2.4.1 Bypass
@@ -205,7 +210,15 @@ export default function GettingStartedPage() {
           <p className="text-muted-foreground mt-3">
             From here, install primitives one at a time as you need them.
             Every primitive page lists its install command, anatomy, variants,
-            R-rule compliance, and source.
+            R-rule compliance, and source. Shipping your own brand? Override{' '}
+            <code className="font-mono">@layer interlace.brand</code> — see{' '}
+            <Link
+              href="/theme-authoring"
+              className="text-foreground underline-offset-4 hover:underline"
+            >
+              Theme Authoring
+            </Link>
+            .
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
             <Link

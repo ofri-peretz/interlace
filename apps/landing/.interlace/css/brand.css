@@ -81,12 +81,6 @@
   --color-card: var(--color-fd-card);
   --color-card-foreground: var(--color-fd-card-foreground);
 
-  /* Brand-accent token, renamed from `--color-brand-accent` (no in-repo
-   * consumers of the old name remain). Value is now the brand burnt orange
-   * (was indigo `#6366F1`, then hsl(239, 70%, 58%)). Clears WCAG AA against
-   * `#ffffff` with headroom. */
-  --color-brand-snappy: hsl(22, 82%, 32%);
-
   /* Decorative-primitive tokens — single source of truth for the literal
    * colors that used to be baked into individual `components/ui/` primitives.
    * Adding a new decorative primitive? Register its accent here so consumers
@@ -157,9 +151,6 @@
   --color-destructive-foreground: hsl(0, 0%, 100%);
   --color-fd-destructive: hsl(0, 65%, 42%);
   --color-fd-destructive-foreground: hsl(0, 0%, 100%);
-
-  /* Brand-accent dark-mode lift. */
-  --color-brand-snappy: hsl(19, 92%, 79%);
 
   /* Decorative-primitive tokens — dark-mode tuning. Lift saturation so the
    * primitives stay visible against the near-black background. */
