@@ -81,10 +81,9 @@
   --color-card: var(--color-fd-card);
   --color-card-foreground: var(--color-fd-card-foreground);
 
-  /* Brand-accent token, renamed from `--color-brand-accent` (no in-repo
-   * consumers of the old name remain). Value is now the brand burnt orange
-   * (was indigo `#6366F1`, then hsl(239, 70%, 58%)). Clears WCAG AA against
-   * `#ffffff` with headroom. */
+  /* Brand-accent tokens. Legacy name kept for consumer compatibility; the
+   * value is now the brand burnt orange (was indigo `#6366F1`, then
+   * hsl(239, 70%, 58%)). Clears WCAG AA against `#ffffff` with headroom. */
   --color-brand-snappy: hsl(22, 82%, 32%);
 
   /* Decorative-primitive tokens — single source of truth for the literal
@@ -168,6 +167,26 @@
   --color-meteor-glow: hsl(0, 0%, 100%, 0.1);
   --color-shadow-card: hsl(0, 0%, 100%, 0.04);
   --color-shadow-card-inset: hsl(0, 0%, 100%, 0.12);
+}
+
+/* =========================================
+   INTERLACE NAV LOCKUP — two-bar mark fills
+   =========================================
+ *
+ * Decorative fills for the canonical nav lockup: the two-bar Interlace mark
+ * next to the lowercase mono "interlace" wordmark. The inline SVG lives in
+ * `layouts/layout-options.tsx` (`InterlaceMark`); app-owned nav components
+ * (e.g. eslint's `layout.shared.tsx`) read the same tokens. Theme-paired
+ * AA-safe pairs keyed to `.dark` — light surfaces get the deep pair, dark
+ * surfaces the bright pair. Plain `:root` (not `@theme`): these are SVG
+ * `fill="var(--*)"` values, no Tailwind utility generation needed. */
+:root {
+  --brand-mark-bar-o: #a84c17;
+  --brand-mark-bar-g: #0a6b47;
+}
+.dark {
+  --brand-mark-bar-o: #f4794a;
+  --brand-mark-bar-g: #0d9460;
 }
 
 /* =========================================
