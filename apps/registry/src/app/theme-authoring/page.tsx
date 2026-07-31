@@ -20,7 +20,7 @@ export default function ThemeAuthoringPage() {
     <div className="bg-background text-foreground min-h-screen">
       <SiteNav />
 
-      <main className="mx-auto max-w-3xl px-6 py-16">
+      <main className="mx-auto max-w-prose px-6 py-16">
         <nav aria-label="Breadcrumb" className="text-muted-foreground text-sm">
           <Link href="/" className="hover:text-foreground transition-colors">
             ← All components

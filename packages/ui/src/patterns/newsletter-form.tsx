@@ -98,7 +98,7 @@ export function NewsletterForm({
       gap="lg"
       data-slot="newsletter-form"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className="w-full max-w-sm"
+      className="w-full max-w-96"
     >
       <div>
         <Typography as="h3" variant="h3">

@@ -48,7 +48,7 @@ export const Grid: Story = {
     docs: { description: { story: 'KPI row — typical dashboard composition.' } },
   },
   render: () => (
-    <div className="grid w-full max-w-4xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid w-full max-w-content grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
       <StatCard
         label="Reach"
         value="103,412"
@@ -81,7 +81,7 @@ export const Grid: Story = {
 
 export const Tones: Story = {
   render: () => (
-    <div className="grid w-full max-w-4xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid w-full max-w-content grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
       <StatCard label="Default" value="1,234" delta="+5% · 30d" tone="default" />
       <StatCard label="Success" value="98.3%" delta="+0.4pp" tone="success" />
       <StatCard label="Warning" value="412ms" delta="+18ms" tone="warning" />
