@@ -62,7 +62,7 @@ const tags = [
 
 function PageHeader() {
   return (
-    <header className="mx-auto max-w-3xl space-y-4 text-center">
+    <header className="mx-auto max-w-prose space-y-4 text-center">
       <div className="bg-primary/10 text-primary border-primary/20 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium">
         <BookOpen className="size-4" aria-hidden="true" />
         <span>{articleFixtures.length * 7} Articles Published</span>
@@ -86,7 +86,7 @@ function Toolbar() {
       className="bg-card border-border rounded-xl border p-4 shadow-sm"
     >
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative min-w-[200px] max-w-md flex-1">
+        <div className="relative min-w-[200px] max-w-112 flex-1">
           <Search
             className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2"
             aria-hidden="true"
@@ -168,7 +168,7 @@ function FeaturedCard() {
         {f.title}
       </h2>
       {f.description ? (
-        <p className="text-muted-foreground mt-3 max-w-3xl text-base leading-relaxed">
+        <p className="text-muted-foreground mt-3 max-w-prose text-base leading-relaxed">
           {f.description}
         </p>
       ) : null}
@@ -212,7 +212,7 @@ function PaginationDemo() {
 export const Default: Story = {
   render: () => (
     <main className="bg-background min-h-screen">
-      <div className="container mx-auto max-w-6xl space-y-8 px-4 py-8">
+      <div className="container mx-auto max-w-wide space-y-8 px-4 py-8">
         <PageHeader />
         <Toolbar />
         <FeaturedCard />
@@ -238,7 +238,7 @@ export const Dark: Story = {
   render: () => (
     <div className="dark">
       <main className="bg-background min-h-screen">
-        <div className="container mx-auto max-w-6xl space-y-8 px-4 py-8">
+        <div className="container mx-auto max-w-wide space-y-8 px-4 py-8">
           <PageHeader />
           <Toolbar />
           <FeaturedCard />
@@ -259,7 +259,7 @@ export const Dark: Story = {
 export const EmptyState: Story = {
   render: () => (
     <main className="bg-background min-h-screen">
-      <div className="container mx-auto max-w-6xl space-y-8 px-4 py-8">
+      <div className="container mx-auto max-w-wide space-y-8 px-4 py-8">
         <PageHeader />
         <Toolbar />
         <div

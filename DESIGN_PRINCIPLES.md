@@ -87,6 +87,14 @@ Spacing comes from a **six-step scale**: 8 / 16 / 24 / 40 / 64 / 96 px
 smallest viewport; breakpoints *add* breathing room, never take it away
 (`lg:hidden md:flex` is a smell). Full contract: `LAYOUT_PHILOSOPHY.md`.
 
+> **The named-scale trap:** because the six-step spacing scale registers
+> `--spacing-xs…2xl` in `@theme`, Tailwind v4 resolves `max-w-sm` /
+> `max-w-2xl` etc. against the SPACING namespace — you silently get 16px /
+> 96px containers, not 24rem / 42rem. This is not theoretical (96px hero
+> paragraphs, 40px dialogs shipped). Numeric widths (`max-w-96`) and
+> arbitrary token values (`max-w-(--container-prose)`) stay safe. Enforced
+> by `packages/ui/__tests__/container-scale-lock.test.ts`.
+
 ## 6. Flat surfaces, borders > shadows
 
 Visual hierarchy reads from **whitespace + borders + tone**, not from

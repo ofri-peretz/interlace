@@ -42,7 +42,7 @@ export default async function HomePage() {
           className="absolute -bottom-32 -left-32 size-112 rounded-full bg-primary/15 blur-3xl"
         />
 
-        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
+        <div className="relative mx-auto max-w-wide px-6 py-20 sm:py-28">
           <div className="text-muted-foreground inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs">
             <span className="size-1.5 rounded-full bg-emerald-500" />
             {primitives.length} primitives · 1 theme bundle · WCAG 2.2 AA floor
@@ -78,7 +78,7 @@ export default async function HomePage() {
       </section>
 
       {/* ─── Theme / CSS modules — the headline section ───────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section className="mx-auto max-w-wide px-6 py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
           <div className="min-w-0">
             <div className="text-primary text-xs font-semibold uppercase tracking-wider">
@@ -132,7 +132,7 @@ export default async function HomePage() {
 
       {/* ─── Three pillars ────────────────────────────────────────── */}
       <section className="border-y border-border bg-card/30">
-        <div className="mx-auto max-w-6xl px-6 py-16">
+        <div className="mx-auto max-w-wide px-6 py-16">
           <div className="grid gap-8 sm:grid-cols-3">
             <Pillar
               title="Portable floor"
@@ -151,7 +151,7 @@ export default async function HomePage() {
       </section>
 
       {/* ─── Categorized components ──────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section className="mx-auto max-w-wide px-6 py-20">
         <div className="flex items-end justify-between">
           <div>
             <div className="text-primary text-xs font-semibold uppercase tracking-wider">
@@ -244,7 +244,7 @@ export default async function HomePage() {
 
       {/* ─── Footer ─────────────────────────────────────────────── */}
       <footer className="border-t border-border">
-        <div className="text-muted-foreground mx-auto flex max-w-6xl flex-col gap-2 px-6 py-10 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="text-muted-foreground mx-auto flex max-w-wide flex-col gap-2 px-6 py-10 text-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
             Source of truth:{' '}
             <a

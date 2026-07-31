@@ -68,7 +68,7 @@ export function EmptyState({
       )}
       {...props}
     >
-      <Stack gap="md" align="center" className="max-w-md">
+      <Stack gap="md" align="center" className="max-w-112">
         {icon ? (
           <div className="text-muted-foreground" aria-hidden>
             {icon}

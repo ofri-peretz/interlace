@@ -65,7 +65,7 @@ export default async function ComponentPage({ params }: PageProps) {
   return (
     <div className="bg-background text-foreground min-h-screen">
       <header className="border-border bg-background/80 supports-backdrop-filter:bg-background/60 sticky top-0 z-10 border-b backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+        <div className="mx-auto flex h-14 max-w-content items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2">
             <BrandLogo />
           </Link>
@@ -86,7 +86,7 @@ export default async function ComponentPage({ params }: PageProps) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-12">
+      <main className="mx-auto max-w-content px-6 py-12">
         {/* ─── Breadcrumb ────────────────────────────────────────── */}
         <nav aria-label="Breadcrumb" className="text-muted-foreground text-sm">
           <Link href="/" className="hover:text-foreground transition-colors">

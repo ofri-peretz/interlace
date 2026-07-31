@@ -51,7 +51,7 @@ export const Default: Story = {
   args: { posts: samplePosts },
   decorators: [
     (Story) => (
-      <div className="bg-background mx-auto max-w-6xl p-lg">
+      <div className="bg-background mx-auto max-w-wide p-lg">
         <Story />
       </div>
     ),
@@ -67,7 +67,7 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="bg-background mx-auto flex max-w-6xl flex-col gap-2xl p-lg">
+    <div className="bg-background mx-auto flex max-w-wide flex-col gap-2xl p-lg">
       <RelatedPosts posts={samplePosts} />
 
       <RelatedPosts title="More from Interlace" posts={samplePosts} />
@@ -85,7 +85,7 @@ export const Dark: Story = {
   decorators: [
     withDark,
     (Story) => (
-      <div className="bg-background mx-auto max-w-6xl p-lg">
+      <div className="bg-background mx-auto max-w-wide p-lg">
         <Story />
       </div>
     ),
@@ -97,7 +97,7 @@ export const RTL: Story = {
   decorators: [
     withRtl,
     (Story) => (
-      <div className="bg-background mx-auto max-w-6xl p-lg">
+      <div className="bg-background mx-auto max-w-wide p-lg">
         <Story />
       </div>
     ),

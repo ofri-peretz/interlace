@@ -72,7 +72,7 @@ export const AsLabel: Story = {
     },
   },
   render: () => (
-    <div className="max-w-xs">
+    <div className="max-w-80">
       <VisuallyHidden as="label" htmlFor="search">
         Search the site
       </VisuallyHidden>

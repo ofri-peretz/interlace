@@ -72,7 +72,7 @@ export const CustomSurface: Story = {
     },
   },
   render: () => (
-    <ul className="max-w-sm divide-y divide-border rounded-md border border-border">
+    <ul className="max-w-96 divide-y divide-border rounded-md border border-border">
       {['Alpha', 'Bravo', 'Charlie'].map((label) => (
         <li key={label}>
           <FocusRing offset="none" as="div" className="rounded-none">

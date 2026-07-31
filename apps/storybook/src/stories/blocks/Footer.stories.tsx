@@ -29,7 +29,7 @@ const sampleBrand = (
       />
       <span>Interlace</span>
     </div>
-    <p className="text-muted-foreground mt-2 text-sm max-w-xs">
+    <p className="text-muted-foreground mt-2 text-sm max-w-80">
       Production-grade React primitives for the modern web.
     </p>
   </div>

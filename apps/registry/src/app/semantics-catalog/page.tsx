@@ -47,7 +47,7 @@ export default function SemanticsCataloguePage() {
     <div className="bg-background text-foreground min-h-screen">
       <SiteNav />
 
-      <main className="mx-auto max-w-6xl px-6 py-16">
+      <main className="mx-auto max-w-wide px-6 py-16">
         <nav aria-label="Breadcrumb" className="text-muted-foreground text-sm">
           <Link href="/" className="hover:text-foreground transition-colors">
             ← All components
