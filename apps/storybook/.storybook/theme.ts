@@ -26,7 +26,7 @@ const mutedFg = '#a09cb3';
 const theme = create({
   base: 'dark',
 
-  brandTitle: 'Interlace UI',
+  brandTitle: 'interlace',
   brandUrl: 'https://eslint.interlace.tools',
   brandImage: './interlace-mark.svg',
   brandTarget: '_self',

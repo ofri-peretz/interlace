@@ -490,6 +490,12 @@
       "description": "@interlace/ui — author-byline (patterns) (shadcn-compatible)."
     },
     {
+      "name": "brand-logo",
+      "type": "registry:ui",
+      "title": "Brand Logo",
+      "description": "@interlace/ui — brand-logo (patterns) (shadcn-compatible)."
+    },
+    {
       "name": "code-window",
       "type": "registry:ui",
       "title": "Code Window",

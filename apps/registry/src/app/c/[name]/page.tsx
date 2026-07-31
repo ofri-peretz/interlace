@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
+
 import { CategoryBadge } from '@/components/category-badge';
 import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
@@ -64,12 +66,8 @@ export default async function ComponentPage({ params }: PageProps) {
     <div className="bg-background text-foreground min-h-screen">
       <header className="border-border bg-background/80 supports-backdrop-filter:bg-background/60 sticky top-0 z-10 border-b backdrop-blur">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span
-              aria-hidden
-              className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-primary"
-            />
-            <span>Interlace UI</span>
+          <Link href="/" className="flex items-center gap-2">
+            <BrandLogo />
           </Link>
           <nav className="flex items-center gap-5 text-sm">
             <a

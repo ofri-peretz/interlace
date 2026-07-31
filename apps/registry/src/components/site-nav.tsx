@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
+
 /**
  * Shared header nav for every page on ds.interlace.tools.
  *
@@ -36,12 +38,8 @@ export function SiteNav() {
   return (
     <header className="border-b border-border bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-10">
       <div className="mx-auto flex min-h-14 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-6 py-2 sm:py-0">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <span
-            aria-hidden
-            className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-chart-2"
-          />
-          <span>Interlace UI</span>
+        <Link href="/" className="flex items-center gap-2">
+          <BrandLogo />
           <span className="text-muted-foreground hidden text-sm font-normal sm:inline">
             · shadcn registry
           </span>
