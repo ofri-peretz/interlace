@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck, Server, Gauge, Layers } from "lucide-react";
 import { LandingHero } from "@/components/home/landing-hero";
 import { ProductCard } from "@/components/home/product-card";
+import numbers from "@/data/interlace-numbers.json";
 
 export default function HomePage() {
   // Fumadocs `HomeLayout` already wraps children in `<main id="nd-home-layout">`,
@@ -61,7 +62,7 @@ export default function HomePage() {
             <ProductCard
               name="@interlace/eslint-*"
               badge="eslint.interlace.tools"
-              tagline="A suite of ~24 ESLint plugins for security, accessibility, and modern framework correctness — each with a measured corpus and explicit comparison set."
+              tagline={`A suite of ${numbers.plugins.total} ESLint plugins for security, accessibility, and modern framework correctness — each with a measured corpus and explicit comparison set.`}
               href="https://eslint.interlace.tools"
               icon={<ShieldCheck className="size-5" />}
               tags={["ESLint", "Security", "a11y", "TypeScript"]}
