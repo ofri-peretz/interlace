@@ -7,7 +7,10 @@ import {
   DocsRootLayout,
 } from "#interlace/layouts/root-layout";
 
-export const metadata = createRootMetadata({
+export const metadata = {
+  // ponytail: manifest isn't in RootMetadataConfig; spread here instead of widening the baseline
+  manifest: "/manifest.json",
+  ...createRootMetadata({
   title: "Interlace — TypeScript-native developer tools",
   titleTemplate: "%s | Interlace",
   description:
@@ -24,7 +27,8 @@ export const metadata = createRootMetadata({
   metadataBase: "https://interlace.tools",
   siteName: "Interlace",
   applicationName: "Interlace",
-});
+  }),
+};
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
