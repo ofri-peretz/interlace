@@ -88,7 +88,7 @@ export const SparkOnly: Story = {
     children: 'Animated, no glow',
     shimmer: true,
     highlight: false,
-    background: 'linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)',
+    background: 'linear-gradient(135deg, #f4794a 0%, #a84c17 100%)',
   },
 };
 
@@ -105,9 +105,9 @@ export const BrandPrimary: Story = {
   name: 'Brand primary (orange gradient)',
   args: {
     children: 'Get Started',
-    shimmerColor: '#c084fc',
+    shimmerColor: '#fbb99a',
     shimmerSize: '0.15em',
-    background: 'linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%)',
+    background: 'linear-gradient(135deg, #f4794a 0%, #a84c17 100%)',
   },
 };
 

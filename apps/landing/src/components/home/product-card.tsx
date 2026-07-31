@@ -100,8 +100,8 @@ export function ProductCard({
         <BorderBeam
           size={60}
           duration={10}
-          colorFrom="hsl(263 80% 60%)"
-          colorTo="hsl(280 80% 60%)"
+          colorFrom="var(--color-beam-from)"
+          colorTo="var(--color-beam-to)"
           borderWidth={1}
           delay={Math.random() * 5}
         />

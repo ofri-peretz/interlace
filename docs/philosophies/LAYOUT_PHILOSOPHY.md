@@ -346,8 +346,8 @@ Locks mobile padding at every breakpoint.
 **Wrong:**
 
 ```tsx
-<div className="bg-linear-to-br from-purple-500/20 ... p-12 md:p-16">
-  <div className="w-64 h-64 bg-linear-to-br from-purple-400/30 to-transparent rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+<div className="bg-linear-to-br from-primary/20 ... p-12 md:p-16">
+  <div className="w-64 h-64 bg-linear-to-br from-primary/30 to-transparent rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
   <div className="relative">{/* content */}</div>
 </div>
 ```
@@ -359,7 +359,7 @@ parent `relative` to coexist. Easy to break by editing the parent.
 
 ```tsx
 <div className="relative overflow-hidden">
-  <div aria-hidden className="absolute top-0 left-0 w-64 h-64 bg-linear-to-br from-purple-400/30 to-transparent rounded-full blur-3xl pointer-events-none" />
+  <div aria-hidden className="absolute top-0 left-0 w-64 h-64 bg-linear-to-br from-primary/30 to-transparent rounded-full blur-3xl pointer-events-none" />
   <div className="relative">{/* content */}</div>
 </div>
 ```
