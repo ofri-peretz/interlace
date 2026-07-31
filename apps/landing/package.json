@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e:a11y": "playwright test",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx",
+    "sync:numbers": "node scripts/sync-interlace-numbers.mjs"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.6",
