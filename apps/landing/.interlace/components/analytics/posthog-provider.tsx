@@ -65,6 +65,8 @@ function ensureInit(app: AppName): void {
   posthog.init(POSTHOG_KEY, {
     api_host: POSTHOG_HOST,
     person_profiles: "identified_only",
+    // Cookie-free: no ph_ cookie → no GDPR consent banner needed for EU.
+    persistence: "memory",
     // Manual `$pageview` capture via PageviewTracker below.
     capture_pageview: false,
     capture_pageleave: true,

@@ -13,7 +13,7 @@
      @import '@interlace/docs-baseline/css/toc.css';
    ========================================= */
 
-/* TOC indicator thumb — the moving purple bar */
+/* TOC indicator thumb — the moving brand-primary bar */
 .h-\(--fd-height\) {
   height: var(--fd-height);
 }
