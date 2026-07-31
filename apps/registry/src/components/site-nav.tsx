@@ -35,18 +35,18 @@ const LINKS: NavLink[] = [
 export function SiteNav() {
   return (
     <header className="border-b border-border bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-10">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex min-h-14 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-6 py-2 sm:py-0">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <span
             aria-hidden
             className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-chart-2"
           />
           <span>Interlace UI</span>
-          <span className="text-muted-foreground text-sm font-normal">
+          <span className="text-muted-foreground hidden text-sm font-normal sm:inline">
             · shadcn registry
           </span>
         </Link>
-        <nav className="flex items-center gap-5 text-sm">
+        <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm sm:gap-5">
           {LINKS.map((link) =>
             link.external ? (
               <a

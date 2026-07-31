@@ -57,7 +57,7 @@ export default async function HomePage() {
             .
           </h1>
 
-          <p className="text-muted-foreground mt-5 max-w-2xl text-lg sm:text-xl">
+          <p className="text-muted-foreground mt-5 max-w-prose text-lg sm:text-xl">
             Drop the <code className="font-mono text-foreground">@interlace/ui</code>{' '}
             primitives into any React project with one command. Brand tokens,
             theme bridge, animation keyframes, and a portable 26-rule
@@ -80,7 +80,7 @@ export default async function HomePage() {
       {/* ─── Theme / CSS modules — the headline section ───────────── */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
-          <div>
+          <div className="min-w-0">
             <div className="text-primary text-xs font-semibold uppercase tracking-wider">
               CSS module export
             </div>
@@ -104,7 +104,7 @@ export default async function HomePage() {
               </p>
             ) : null}
           </div>
-          <div className="space-y-3">
+          <div className="min-w-0 space-y-3">
             <CodeBlock label="Install the theme bundle" code={STYLE_INSTALL} />
             <div className="grid gap-3 sm:grid-cols-3">
               <StyleFileCard
@@ -122,7 +122,7 @@ export default async function HomePage() {
             </div>
             <p className="text-muted-foreground text-xs">
               Or fetch raw:{' '}
-              <code className="font-mono">
+              <code className="font-mono break-all">
                 /r/styles/&lt;tokens|theme|interlace-theme&gt;.css
               </code>
             </p>
@@ -205,7 +205,7 @@ export default async function HomePage() {
                   {items.length}
                 </span>
               </div>
-              <p className="text-muted-foreground mt-1 max-w-2xl text-sm">
+              <p className="text-muted-foreground mt-1 max-w-prose text-sm">
                 {category.description}
               </p>
               <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

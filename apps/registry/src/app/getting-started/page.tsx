@@ -28,7 +28,7 @@ export default function GettingStartedPage() {
         </nav>
 
         <h1 className="mt-6 text-4xl font-bold tracking-tight">Getting started</h1>
-        <p className="text-muted-foreground mt-3 max-w-2xl text-lg">
+        <p className="text-muted-foreground mt-3 max-w-prose text-lg">
           Three commands to a fully-themed app with the DS&apos;s a11y and
           responsive contracts active. Then keep installing primitives one at
           a time as you need them.

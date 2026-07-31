@@ -30,7 +30,7 @@ export default function ThemeAuthoringPage() {
         <h1 className="mt-6 text-4xl font-bold tracking-tight text-balance">
           Theme Authoring
         </h1>
-        <p className="text-muted-foreground mt-3 max-w-2xl text-lg">
+        <p className="text-muted-foreground mt-3 max-w-prose text-lg">
           Fork the Interlace brand without forking the DS. Five steps —
           install, override the brand layer, swap the palette, verify
           contrast, ship.
