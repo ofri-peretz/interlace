@@ -26,7 +26,7 @@ export function baseOptions(): BaseLayoutProps {
       },
       {
         text: "Evidence",
-        url: "/docs/reference/landscape",
+        url: "/docs/concepts/evidence-philosophy",
       },
     ],
   };

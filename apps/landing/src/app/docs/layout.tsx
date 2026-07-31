@@ -1,17 +1,12 @@
 import { source } from "#interlace/lib/source";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { baseOptions } from "@/lib/layout.shared";
-import { BookOpen, Compass, Gauge } from "lucide-react";
+import { BookOpen, Compass } from "lucide-react";
 
 const pillarIcons: Record<string, React.ReactNode> = {
   concepts: (
     <div className="flex size-5 shrink-0 items-center justify-center rounded bg-gradient-to-t from-primary to-chart-2 text-white">
       <Compass className="size-3.5" />
-    </div>
-  ),
-  reference: (
-    <div className="flex size-5 shrink-0 items-center justify-center rounded bg-gradient-to-t from-emerald-600 to-emerald-500 text-white">
-      <Gauge className="size-3.5" />
     </div>
   ),
   guides: (

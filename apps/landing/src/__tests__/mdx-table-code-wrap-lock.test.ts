@@ -2,11 +2,12 @@
  * MDX table inline-code wrap lock.
  *
  * Why: long inline-code spans inside MDX table cells (e.g.
- * `@interlace/eslint-plugin-vercel-ai-security` in landscape.mdx) inherit
- * `<code>`'s default `word-break: normal`, which doesn't break mid-token.
- * On mobile (390px) this pushes table cells wider than the viewport,
- * shrinks neighbour columns into vertical text, and corrupts the
- * page layout. Repro: load /docs/reference/landscape at iPhone 14 width.
+ * `@interlace/eslint-plugin-vercel-ai-security` in how-we-measure.mdx)
+ * inherit `<code>`'s default `word-break: normal`, which doesn't break
+ * mid-token. On mobile (390px) this pushes table cells wider than the
+ * viewport, shrinks neighbour columns into vertical text, and corrupts
+ * the page layout. Repro: load /docs/concepts/how-we-measure at iPhone 14
+ * width.
  *
  * Fix: `global.css` forces `overflow-wrap: anywhere` + `word-break:
  * break-word` on `<code>` *inside table cells only* (`.prose table code`
