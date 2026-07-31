@@ -2,7 +2,7 @@
  * MDX table inline-code wrap lock.
  *
  * Why: long inline-code spans inside MDX table cells (e.g.
- * `@interlace/eslint-plugin-vercel-ai-security` in how-we-measure.mdx)
+ * `@interlace/serverless-*` in how-we-measure.mdx's "Where to look" table)
  * inherit `<code>`'s default `word-break: normal`, which doesn't break
  * mid-token. On mobile (390px) this pushes table cells wider than the
  * viewport, shrinks neighbour columns into vertical text, and corrupts
