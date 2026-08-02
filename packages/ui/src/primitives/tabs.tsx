@@ -5,6 +5,14 @@ import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. The list is
+ * `w-fit` with `flex-1` triggers, so a two- or three-tab bar fits 320px.
+ * Consumers with long labels should wrap the list in a horizontally
+ * scrollable container rather than raise this floor.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function Tabs({
   className,
   ...props
@@ -12,6 +20,7 @@ function Tabs({
   return (
     <BaseTabs.Root
       data-slot="tabs"
+      data-min-viewport={String(MIN_VIEWPORT)}
       className={cn('flex flex-col gap-2', className)}
       {...props}
     />

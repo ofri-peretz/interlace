@@ -9,12 +9,19 @@ import {
 import { cn } from '../lib/cn.js';
 import { buttonVariants } from './button.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. Prev/Next collapse
+ * to icon-only below `sm` (`hidden sm:block` on the labels), so a 5-item bar
+ * fits 320px without wrapping.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
     <nav
-      role="navigation"
       aria-label="pagination"
       data-slot="pagination"
+      data-min-viewport={String(MIN_VIEWPORT)}
       className={cn('mx-auto flex w-full justify-center', className)}
       {...props}
     />
@@ -39,24 +46,38 @@ function PaginationItem(props: React.ComponentProps<'li'>) {
 }
 
 type PaginationLinkProps = {
+  /**
+   * Marks the link as the page the reader is on — renders `aria-current="page"`
+   * and the outline treatment.
+   *
+   * @default false
+   */
+  active?: boolean;
+  /**
+   * @deprecated Use `active`. The `is`-prefixed name violates the boolean
+   * naming contract (CONVENTIONS.md → Naming) and is kept only so existing
+   * shadcn-shaped call sites keep working. Removed in the next major.
+   */
   isActive?: boolean;
   size?: VariantProps<typeof buttonVariants>['size'];
 } & React.ComponentProps<'a'>;
 
 function PaginationLink({
   className,
+  active,
   isActive,
   size = 'icon',
   ...props
 }: PaginationLinkProps) {
+  const current = active ?? isActive ?? false;
   return (
     <a
-      aria-current={isActive ? 'page' : undefined}
+      aria-current={current ? 'page' : undefined}
       data-slot="pagination-link"
-      data-active={isActive}
+      data-active={current}
       className={cn(
         buttonVariants({
-          variant: isActive ? 'outline' : 'ghost',
+          variant: current ? 'outline' : 'ghost',
           size,
         }),
         className,
@@ -105,13 +126,15 @@ function PaginationEllipsis({
   ...props
 }: React.ComponentProps<'span'>) {
   return (
+    // `aria-hidden` sits on the ICON, not the wrapper: hiding the wrapper
+    // would also hide the sr-only text inside it, leaving the gap in the page
+    // sequence silent for screen-reader users.
     <span
-      aria-hidden
       data-slot="pagination-ellipsis"
       className={cn('flex size-9 items-center justify-center', className)}
       {...props}
     >
-      <MoreHorizontalIcon className="size-4" />
+      <MoreHorizontalIcon aria-hidden className="size-4" />
       <span className="sr-only">More pages</span>
     </span>
   );

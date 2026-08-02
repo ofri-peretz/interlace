@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
+import { Skeleton } from '@interlace/ui/skeleton';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -148,6 +150,67 @@ export const Variants: Story = {
       </section>
     </div>
   ),
+};
+
+/**
+ * Keyboard-only flow: every ancestor is a real link in the tab order and the
+ * current page is NOT one — it carries `aria-current="page"` instead, so
+ * screen-reader users aren't offered a link to where they already are.
+ */
+export const KeyboardFlow: Story = {
+  render: () => (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Secure Coding</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('The trail is a named navigation landmark', async () => {
+      expect(canvas.getByRole('navigation', { name: /breadcrumb/i })).toBeTruthy();
+    });
+
+    await step('Only the ancestors are navigable', async () => {
+      // The current page renders as `<span role="link" aria-disabled="true"
+      // aria-current="page">` (shadcn canon) — it is in the a11y tree as a
+      // link so the trail reads consistently, but it is NOT an anchor and
+      // NOT focusable, so it can't send you to the page you're already on.
+      const anchors = canvasElement.querySelectorAll('a');
+      expect(anchors).toHaveLength(2);
+
+      const current = canvas.getByText('Secure Coding');
+      expect(current.getAttribute('aria-current')).toBe('page');
+      expect(current.getAttribute('aria-disabled')).toBe('true');
+      expect(current.tagName.toLowerCase()).not.toBe('a');
+    });
+
+    await step('Tab walks the ancestors in document order', async () => {
+      const anchors = [...canvasElement.querySelectorAll('a')];
+      anchors[0].focus();
+      await userEvent.tab();
+      expect(document.activeElement).toBe(anchors[1]);
+    });
+  },
+};
+
+/**
+ * Async route trail — reserve the crumb row so the page header doesn't jump
+ * once the ancestor path resolves.
+ */
+export const Loading: Story = {
+  render: () => <Skeleton variant="breadcrumb" className="w-80" />,
 };
 
 export const Dark: Story = {

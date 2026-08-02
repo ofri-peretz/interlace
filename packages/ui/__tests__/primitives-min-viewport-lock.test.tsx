@@ -95,6 +95,23 @@ const PRIMITIVES = [
   { name: 'radio-group', viewport: 320, tier: 'client' },
   { name: 'select', viewport: 320, tier: 'client' },
   { name: 'switch', viewport: 320, tier: 'client' },
+  // ── Phase 1.2 — overlay & nav primitives ──────────────────────────────
+  // Overlays project the attribute onto their POPUP, not their Root: Base
+  // UI's `*.Root` for Dialog / Popover / Tooltip / Menu renders no DOM node,
+  // so the Root has nowhere to hang the contract. Nav primitives (Tabs,
+  // Accordion, Pagination, ScrollArea) own a real root element and use it.
+  { name: 'dialog', viewport: 320, tier: 'client' },
+  { name: 'sheet', viewport: 320, tier: 'client' },
+  { name: 'popover', viewport: 320, tier: 'client' },
+  // 320, not 768 like HoverCard: a tooltip is a short `w-fit` label that
+  // Base UI also opens on keyboard focus, so it survives a touch screen.
+  { name: 'tooltip', viewport: 320, tier: 'client' },
+  { name: 'dropdown-menu', viewport: 320, tier: 'client' },
+  { name: 'tabs', viewport: 320, tier: 'client' },
+  { name: 'accordion', viewport: 320, tier: 'client' },
+  // Pagination is a server primitive — plain anchors, no state.
+  { name: 'pagination', viewport: 320, tier: 'server' },
+  { name: 'scroll-area', viewport: 320, tier: 'client' },
 ] as const;
 
 /**

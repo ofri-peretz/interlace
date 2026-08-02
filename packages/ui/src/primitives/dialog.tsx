@@ -42,6 +42,14 @@ import { XIcon } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. The popup is
+ * `max-w-[calc(100%-2rem)]`, so it fits the 320px iPhone SE floor with the
+ * 16px gutter intact; the close button sits inside that box, never off-screen.
+ * Projected onto the popup (Base UI's `Dialog.Root` renders no DOM node).
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function Dialog(props: React.ComponentProps<typeof BaseDialog.Root>) {
   return <BaseDialog.Root data-slot="dialog" {...props} />;
 }
@@ -68,6 +76,9 @@ function DialogOverlay({
     <BaseDialog.Backdrop
       data-slot="dialog-overlay"
       className={cn(
+        // `bg-black/50` is intentional and NOT a token miss: a scrim must
+        // darken the page in BOTH themes. A theme-paired token would invert
+        // in dark mode and wash the surface out instead of dimming it.
         'data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 fixed inset-0 z-50 bg-black/50',
         className,
       )}
@@ -89,6 +100,7 @@ function DialogContent({
       <DialogOverlay />
       <BaseDialog.Popup
         data-slot="dialog-content"
+        data-min-viewport={String(MIN_VIEWPORT)}
         className={cn(
           'bg-background data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-(--container-prose)',
           className,
@@ -99,7 +111,7 @@ function DialogContent({
         {showCloseButton ? (
           <BaseDialog.Close
             data-slot="dialog-close"
-            className="ring-offset-background focus:ring-ring data-[open]:bg-accent data-[open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+            className="ring-offset-background focus-visible:ring-ring data-[open]:bg-accent data-[open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-[3px] focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
           >
             <XIcon />
             <span className="sr-only">Close</span>

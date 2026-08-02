@@ -87,9 +87,20 @@ export const OpenCloseFlow: Story = {
       expect(dlg.getAttribute('aria-describedby')).toBeTruthy();
     });
 
+    await step('Focus moves INTO the dialog (trap entered)', async () => {
+      const dlg = document.querySelector('[role="dialog"]') as HTMLElement;
+      await waitFor(() =>
+        expect(dlg.contains(document.activeElement)).toBe(true),
+      );
+    });
+
     await step('Escape closes dialog', async () => {
       await userEvent.keyboard('{Escape}');
       await waitFor(() => expect(document.querySelector('[role="dialog"]')).toBeFalsy());
+    });
+
+    await step('Focus is RESTORED to the trigger', async () => {
+      await waitFor(() => expect(document.activeElement).toBe(trigger));
     });
   },
 };

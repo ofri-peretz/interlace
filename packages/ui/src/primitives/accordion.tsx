@@ -6,10 +6,23 @@ import { ChevronDownIcon } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. A disclosure
+ * stack is full-width by construction: the trigger row is `flex-1` with the
+ * chevron `shrink-0`, so headings wrap instead of clipping at 320px.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function Accordion(
   props: React.ComponentProps<typeof BaseAccordion.Root>,
 ) {
-  return <BaseAccordion.Root data-slot="accordion" {...props} />;
+  return (
+    <BaseAccordion.Root
+      data-slot="accordion"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      {...props}
+    />
+  );
 }
 
 function AccordionItem({
