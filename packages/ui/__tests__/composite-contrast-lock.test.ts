@@ -184,8 +184,53 @@ function walkSync(dir: string, out: string[] = []): string[] {
  * (`bg-[color:var(--x)]`) and fumadocs-prefixed tokens fall out rather than
  * parsing as garbage.
  */
-const UTILITY_RE =
-  /(?:^|[\s'"`])((?:[a-z0-9-]+(?:\[[^\]]*\])?:)*)(bg|text)-([a-z][a-z0-9-]*)(?:\/(\d{1,3}))?(?=[\s'"`]|$)/g;
+/**
+ * Split a whitespace-delimited token into its parts, without a regex.
+ *
+ * Doing this in code rather than in one pattern is deliberate: expressing
+ * "any number of `prefix:` segments, each optionally carrying a `[…]`
+ * arbitrary value" as a regex needs a quantifier nested inside a quantifier,
+ * which is the exponential-backtracking shape (and our own
+ * `no-redos-vulnerable-regex` rule flags it, correctly in spirit). A
+ * `lastIndexOf` on the final colon does the same job in linear time and reads
+ * better besides.
+ */
+function parseToken(token: string): Utility | null {
+  const lastColon = token.lastIndexOf(':');
+  const prefixPart = lastColon === -1 ? '' : token.slice(0, lastColon);
+  const utility = token.slice(lastColon + 1);
+
+  const m = /^(bg|text)-([a-z][a-z0-9-]*)(?:\/(\d{1,3}))?$/.exec(utility);
+  if (!m) return null;
+
+  return {
+    // Split on colons that are NOT inside an arbitrary-value bracket, so
+    // `data-[state=open]:hover:` yields two prefixes, not three.
+    prefixes: splitVariants(prefixPart),
+    kind: m[1] as 'bg' | 'text',
+    token: m[2],
+    alpha: m[3] === undefined ? 1 : Number(m[3]) / 100,
+  };
+}
+
+/** Colon-split that ignores colons inside `[...]`. */
+function splitVariants(prefixPart: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let current = '';
+  for (const char of prefixPart) {
+    if (char === '[') depth++;
+    else if (char === ']') depth--;
+    if (char === ':' && depth === 0) {
+      if (current) out.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  if (current) out.push(current);
+  return out;
+}
 
 interface Utility {
   prefixes: string[];
@@ -206,18 +251,13 @@ interface Pair {
 }
 
 function parseUtilities(line: string): Utility[] {
-  const out: Utility[] = [];
-  let m: RegExpExecArray | null;
-  const re = new RegExp(UTILITY_RE.source, 'g');
-  while ((m = re.exec(line)) !== null) {
-    out.push({
-      prefixes: m[1] ? m[1].split(':').filter(Boolean) : [],
-      kind: m[2] as 'bg' | 'text',
-      token: m[3],
-      alpha: m[4] === undefined ? 1 : Number(m[4]) / 100,
-    });
-  }
-  return out;
+  // Class chains are authored as whitespace-separated tokens inside string
+  // literals, so splitting on the quote/whitespace set recovers them without
+  // needing to know which literal they came from.
+  return line
+    .split(/[\s'"`{}(),]+/)
+    .map(parseToken)
+    .filter((u): u is Utility => u !== null);
 }
 
 /** The non-`dark:` prefixes, which are what scope a utility to a state. */
@@ -323,6 +363,51 @@ function collectPairs(themeTokens: Set<string>): Pair[] {
 
 describe('composite AA contrast lock', () => {
   const theme = readThemeTokens();
+
+  // ── the scanner's own tests ──────────────────────────────────────────
+  // Everything below rests on the parser reading class chains correctly. A
+  // parser that quietly stopped matching would make every assertion pass
+  // vacuously — the failure mode a lock can't afford — so pin its behaviour
+  // on the token shapes this codebase actually authors.
+
+  it('parses variant prefixes, tokens, and alpha off a real class chain', () => {
+    const utils = parseUtilities(
+      `'bg-destructive text-destructive-foreground dark:bg-destructive/60 [a&]:hover:bg-destructive/90'`,
+    );
+
+    expect(utils).toEqual([
+      { prefixes: [], kind: 'bg', token: 'destructive', alpha: 1 },
+      { prefixes: [], kind: 'text', token: 'destructive-foreground', alpha: 1 },
+      { prefixes: ['dark'], kind: 'bg', token: 'destructive', alpha: 0.6 },
+      { prefixes: ['[a&]', 'hover'], kind: 'bg', token: 'destructive', alpha: 0.9 },
+    ]);
+  });
+
+  it('does not split colons nested inside an arbitrary value', () => {
+    const [util] = parseUtilities(`'data-[state=open]:hover:bg-accent/50'`);
+    expect(util.prefixes).toEqual(['data-[state=open]', 'hover']);
+    expect(util.alpha).toBe(0.5);
+  });
+
+  it('ignores arbitrary-value utilities it cannot resolve to a token', () => {
+    expect(parseUtilities(`'bg-[color:var(--interlace-success)] text-[10px]'`)).toEqual(
+      [],
+    );
+  });
+
+  it('picks the state-matched background over the unconditional one', () => {
+    // The checkbox case that produced this lock's first false positive: the
+    // checkmark's colour belongs to the surface `data-[checked]:` painted,
+    // not to the resting field underneath it.
+    const utils = parseUtilities(
+      `'dark:bg-input/30 data-[checked]:bg-primary data-[checked]:text-primary-foreground'`,
+    );
+    const text = utils.find((u) => u.kind === 'text')!;
+    const bgs = utils.filter((u) => u.kind === 'bg');
+
+    // `data-[checked]:bg-primary` is opaque, so there is no tint to measure.
+    expect(effectiveBackground(text, bgs, 'dark')).toBeNull();
+  });
 
   it('parses both brand-layer palettes out of interlace-theme.css', () => {
     // If the parse silently returned nothing, every assertion below would

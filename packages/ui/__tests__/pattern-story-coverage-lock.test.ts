@@ -54,7 +54,7 @@ const expectedStoryName = (file: string) =>
   PASCAL_OVERRIDES[file] ?? kebabToPascal(file);
 
 const listPatterns = () =>
-  readdirSync(PATTERNS_DIR).filter((f) => /\.tsx$/.test(f));
+  readdirSync(PATTERNS_DIR).filter((f) => f.endsWith('.tsx'));
 
 const listStories = () =>
   readdirSync(STORIES_DIR).filter((f) => f.endsWith('.stories.tsx'));
