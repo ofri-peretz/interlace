@@ -82,6 +82,30 @@ describe('extractVariants', () => {
     expect(names).toEqual(expect.arrayContaining(['variant', 'tone']));
   });
 
+  it('is not blinded by a comment between two options', () => {
+    // The primitives carry rationale comments inside their cva blocks (badge's
+    // `destructive` explains why it drops shadcn's dark tint). Options are
+    // anchored on the preceding comma, so a comment used to hide the option
+    // after it — badge silently lost `destructive`, `outline`, `ghost`, `link`.
+    const source = `const v = cva('', {
+      variants: {
+        variant: {
+          default: 'a',
+          // a rationale comment, the kind our primitives actually carry
+          destructive: 'b',
+          /* and a block one */
+          outline: 'c',
+        },
+      },
+      defaultVariants: { variant: 'default' },
+    });`;
+    expect(extractVariants(source)[0].options).toEqual([
+      'default',
+      'destructive',
+      'outline',
+    ]);
+  });
+
   it('returns nothing when there is no cva', () => {
     expect(extractVariants('export const x = 1;')).toEqual([]);
   });

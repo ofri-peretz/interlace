@@ -146,8 +146,16 @@ export function extractVariants(content: string): CvaVariant[] {
     if (group === null) continue;
     // Skip past this group so nested braces aren't read as another variant.
     keyRe.lastIndex = m.index + group.length;
+    // Options are anchored on the preceding comma, so a comment sitting
+    // between two of them hides the one after it. The primitives DO carry
+    // rationale comments inside cva blocks (see badge's `destructive`), so
+    // strip full-line `//` and any `/* */` before matching. Only line-leading
+    // `//` is stripped, to leave any `//` inside a class string alone.
+    const body = group
+      .replace(/^[ \t]*\/\/.*$/gm, '')
+      .replace(/\/\*[\s\S]*?\*\//g, '');
     const options = Array.from(
-      group.matchAll(/(?:^|,)\s*(?:['"]([\w-]+)['"]|(\w+))\s*:/g),
+      body.matchAll(/(?:^|,)\s*(?:['"]([\w-]+)['"]|(\w+))\s*:/g),
       (mm) => mm[1] ?? mm[2],
     );
     if (options.length > 0) variants.push({ name: m[1], options });
