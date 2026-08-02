@@ -7,9 +7,11 @@ Each Interlace product is a separate package suite with its own subdomain, its o
 
 ## The products today
 
-### `@interlace/eslint-*`
+### `eslint-plugin-*`
 
 A suite of ESLint plugins for security, accessibility, and modern framework correctness. Each plugin ships with a measured corpus and an explicit comparison set against the existing alternatives in its category.
+
+These are **unscoped** packages — ESLint resolves plugins by the `eslint-plugin-<name>` convention, so putting them behind the `@interlace/` prefix would break config resolution. The one scoped ESLint package is `@interlace/eslint-devkit`, the toolkit we author the plugins with.
 
 - **Read:** [eslint.interlace.tools](https://eslint.interlace.tools)
 - **Sample plugins:** `eslint-plugin-jwt`, `eslint-plugin-mongodb-security`, `eslint-plugin-react-a11y`, `eslint-plugin-vercel-ai-security`
@@ -19,7 +21,22 @@ A suite of ESLint plugins for security, accessibility, and modern framework corr
 TypeScript-native replacements for community Serverless Framework plugins. Cleanup on removal, CLI commands, no ghost billing — fixing the real problems that cost teams money and deploy time.
 
 - **Read:** [serverless.interlace.tools](https://serverless.interlace.tools)
-- **Sample plugins:** `serverless-api-gateway-caching`, `serverless-devkit`
+- **Sample plugins:** `@interlace/serverless-api-gateway-caching`, `@interlace/serverless-iam-roles-per-function`, `@interlace/serverless-devkit`
+
+### `@interlace/ui`
+
+The design system every Interlace site is built from — primitives, blocks, layout templates, and the token baseline (colour, type, spacing, radius, breakpoints) that keeps all of them looking like one product line.
+
+It ships as a [shadcn-compatible registry](https://ui.shadcn.com/docs/registry) rather than an npm dependency, so you copy components into your own repo and own them outright — no version lock, no runtime dep on us:
+
+```bash
+npx shadcn@latest add https://ds.interlace.tools/r/button.json
+```
+
+Every component carries the same floor: axe-clean, dark mode, RTL, and keyboard support, all verified in CI against every story.
+
+- **Browse + install:** [ds.interlace.tools](https://ds.interlace.tools)
+- **See every state:** [storybook.interlace.tools](https://storybook.interlace.tools)
 
 ## How they relate
 
@@ -29,7 +46,7 @@ Every product in the family agrees to the same **shared baseline**:
 - **Same evidence contract** — every comparative claim cites a versioned, reproducible benchmark.
 - **Same primitives** — TypeScript-first config, zero ghost runtime dependencies, full IntelliSense everywhere.
 
-That's what "Interlace" guarantees as a label. When you install something with the `@interlace/` prefix, you're picking up these guarantees alongside whatever the specific package does.
+That's what "Interlace" guarantees as a label. The npm name follows whatever the ecosystem expects — unscoped for ESLint plugins, `@interlace/` for everything else — but the guarantees are the same either way.
 
 ## Adding new products
 

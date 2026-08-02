@@ -46,7 +46,7 @@
 @import "../../.interlace/css/animations.css";
 
 /* MDX table cells with long inline code (package names like
- * `@interlace/eslint-plugin-vercel-ai-security`) break the table layout at
+ * `@interlace/serverless-iam-roles-per-function`) break the table layout at
  * mobile widths because `<code>` defaults to `word-break: normal`. Force
  * break-on-any-char inside table cells only — body prose still wraps on
  * spaces. Locked by `src/__tests__/mdx-table-code-wrap-lock.test.ts`. */
