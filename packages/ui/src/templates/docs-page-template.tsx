@@ -19,6 +19,8 @@ import { Prose } from '../primitives/prose.js';
 import { SectionBoundary } from '../primitives/section-boundary.js';
 import { Topbar } from '../patterns/topbar.js';
 import { Footer } from '../patterns/footer.js';
+import { Skeleton } from '../primitives/skeleton.js';
+import { Stack } from '../primitives/stack.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -92,6 +94,60 @@ function DocsPageTemplate({
   );
 }
 DocsPageTemplate.displayName = 'DocsPageTemplate';
+
+/**
+ * Page-level loading state — the full-page silhouette of
+ * `<DocsPageTemplate>`, not a single rect. Rendered by the consumer while
+ * the whole route's data is in flight (`loading.tsx` in Next.js), or as
+ * a `<SectionBoundary skeleton={…}>` override.
+ *
+ * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
+ * `role="status"` region for the page; inner skeletons pass
+ * `label={null}` so screen readers hear one announcement, not ten.
+ */
+function DocsPageTemplateSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="docs-page-template-skeleton"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      role="status"
+      aria-busy="true"
+      aria-label="Loading page…"
+      className={cn(
+        'bg-background text-foreground flex min-h-screen flex-col',
+        className,
+      )}
+      {...props}
+    >
+      <Skeleton
+        variant="rect"
+        className="h-14 w-full rounded-none"
+        label={null}
+      />
+      <div className="flex flex-1">
+        <div className="border-border hidden w-64 shrink-0 border-r p-md md:block">
+          <Skeleton variant="text" count={8} label={null} />
+        </div>
+        <div className="flex-1 px-md py-xl">
+          <Container size="prose">
+            <Stack gap="lg">
+              <Skeleton variant="page-header" label={null} />
+              <Skeleton variant="prose" count={10} label={null} />
+            </Stack>
+          </Container>
+        </div>
+        <div className="hidden w-64 shrink-0 px-md py-xl xl:block">
+          <Skeleton variant="text" count={5} label={null} />
+        </div>
+      </div>
+    </div>
+  );
+}
+DocsPageTemplateSkeleton.displayName = 'DocsPageTemplateSkeleton';
+DocsPageTemplate.Skeleton = DocsPageTemplateSkeleton;
 
 export { DocsPageTemplate };
 export type { DocsPageTemplateProps };

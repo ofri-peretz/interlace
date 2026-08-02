@@ -23,6 +23,7 @@ import { Topbar } from '../patterns/topbar.js';
 import { Footer } from '../patterns/footer.js';
 import { StatGroup } from '../patterns/stat-group.js';
 import { StatCard } from '../patterns/stat-card.js';
+import { Skeleton } from '../primitives/skeleton.js';
 
 type StatCardProps = React.ComponentProps<typeof StatCard>;
 
@@ -121,6 +122,48 @@ function StatsTemplate({
   );
 }
 StatsTemplate.displayName = 'StatsTemplate';
+
+/**
+ * Page-level loading state — the full-page silhouette of
+ * `<StatsTemplate>`, not a single rect. Rendered by the consumer while
+ * the whole route's data is in flight (`loading.tsx` in Next.js), or as
+ * a `<SectionBoundary skeleton={…}>` override.
+ *
+ * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
+ * `role="status"` region for the page; inner skeletons pass
+ * `label={null}` so screen readers hear one announcement, not ten.
+ */
+function StatsTemplateSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="stats-template-skeleton"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      role="status"
+      aria-busy="true"
+      aria-label="Loading stats…"
+      className={cn('bg-background text-foreground', className)}
+      {...props}
+    >
+      <Skeleton
+        variant="rect"
+        className="h-14 w-full rounded-none"
+        label={null}
+      />
+      <Container size="content">
+        <Stack gap="xl" className="py-xl">
+          <Skeleton variant="page-header" label={null} />
+          <Skeleton variant="stat-card" count={3} label={null} />
+          <Skeleton variant="card" label={null} />
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+StatsTemplateSkeleton.displayName = 'StatsTemplateSkeleton';
+StatsTemplate.Skeleton = StatsTemplateSkeleton;
 
 export { StatsTemplate };
 export type { StatsTemplateProps };

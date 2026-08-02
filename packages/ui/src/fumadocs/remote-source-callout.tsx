@@ -63,7 +63,7 @@ export function RemoteSourceCallout({
     <div
       data-slot="remote-source-callout"
       className={cn(
-        'border-fd-info/30 bg-fd-info/10 mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border p-3 text-sm',
+        'border-info/30 bg-info/10 mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border p-3 text-sm',
         className,
       )}
     >
@@ -77,7 +77,7 @@ export function RemoteSourceCallout({
           href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-fd-primary underline underline-offset-2"
+          className="hover:text-primary underline underline-offset-2"
         >
           {label}
         </a>

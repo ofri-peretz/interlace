@@ -20,9 +20,9 @@ import { useReducedMotion } from "../lib/use-reduced-motion.js";
  * 1. **Token-driven color.** Upstream defaults `color="#ffffff"` and converts
  *    hex → rgb at runtime. Raw hex literals fork the design system (R19), so
  *    this version paints in the element's resolved `currentColor`: the wrapper
- *    carries a Tailwind text token (default `text-fd-foreground`) and the
+ *    carries a Tailwind text token (default `text-foreground`) and the
  *    canvas reads `getComputedStyle(el).color` at mount. Consumers retint by
- *    passing `className="text-fd-primary"` — no color prop, no literal.
+ *    passing `className="text-primary"` — no color prop, no literal.
  * 2. **Reduced-motion contract.** Upstream animates unconditionally. This
  *    version reads `useReducedMotion()` and paints a single static frame
  *    instead of running `requestAnimationFrame`, honoring WCAG 2.3.3 / the
@@ -49,7 +49,7 @@ interface ParticlesProps extends React.ComponentPropsWithoutRef<"div"> {
   /**
    * Optional CSS class name. Set a Tailwind text token here to recolor the
    * particles (they paint in the resolved `currentColor`), e.g.
-   * `className="text-fd-primary"`.
+   * `className="text-primary"`.
    */
   className?: string;
   /**
@@ -149,7 +149,7 @@ function remapValue(
  * <div className="relative">
  *   <Particles
  *     data-testid="hero-particles"
- *     className="absolute inset-0 text-fd-primary"
+ *     className="absolute inset-0 text-primary"
  *     quantity={120}
  *   />
  * </div>
@@ -386,7 +386,7 @@ export const Particles = forwardRef<ParticlesHandle, ParticlesProps>(
         data-slot="particles"
         aria-hidden="true"
         className={cn(
-          "pointer-events-none text-fd-foreground",
+          "pointer-events-none text-foreground",
           className,
         )}
         {...props}
