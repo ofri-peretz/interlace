@@ -152,3 +152,58 @@ jobs:
           path: apps/storybook/storybook-static
       - name: Run axe against every story
         run: npm run test-storybook:ci --workspace=@interlace/storybook
+
+  # ─── Publish to Chromatic (main only, publish-only) ───────────────────
+  # Why this exists: the Storybook Showcase (storybook.js.org/showcase) is a
+  # CRAWLER over Chromatic-published Storybooks, not a submission form. There
+  # is no other ingestion path, so publishing here is the only way to be
+  # listed. storybook.interlace.tools (Vercel) stays the primary URL — this is
+  # a secondary publish target purely to feed the index.
+  #
+  # SCOPE: apps/storybook in THIS repo only. Do not wire Chromatic into the
+  # eslint repo's vendored storybook copy — that copy is being deleted
+  # (DESIGN-SYSTEM-PLAN.md phase 0.3).
+  #
+  # COST: $0, permanently. Chromatic bills *snapshots*, and snapshots are only
+  # taken by UI Tests / UI Review. Publish-only incurs none:
+  #   "If you use our free Publish Storybook service only (i.e. UI Test and UI
+  #    Review is disabled) you won't incur billed snapshots."
+  # => KEEP UI TESTS AND UI REVIEW DISABLED in the Chromatic project settings.
+  # Turning either on starts drawing against the free plan's 5,000/month and
+  # is a paid decision, not a config tweak.
+  #
+  # Runs on main pushes only: PR runs would add nothing to the index, and
+  # secrets aren't available to fork PRs anyway. Gated behind storybook-a11y
+  # so we never publish a Storybook that failed the accessibility gate — the
+  # a11y gate IS the pitch, so shipping past a red one would be false
+  # advertising.
+  storybook-chromatic:
+    name: storybook (chromatic publish)
+    needs: storybook-a11y
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Chromatic reads git history to associate builds with commits.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Restore storybook static build
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/storybook/storybook-static
+      # Skips cleanly until Ofri creates the project and adds the secret,
+      # so this job never reds the pipeline while unconfigured.
+      - name: Publish to Chromatic
+        if: env.CHROMATIC_PROJECT_TOKEN != ''
+        run: npm run chromatic --workspace=@interlace/storybook
+      - name: Note when unconfigured
+        if: env.CHROMATIC_PROJECT_TOKEN == ''
+        run: echo "::notice::CHROMATIC_PROJECT_TOKEN not set - skipping publish."

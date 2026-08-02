@@ -13,7 +13,8 @@
     "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
     "test": "vitest run",
     "test-storybook": "test-storybook --config-dir .storybook --url http://localhost:6006",
-    "test-storybook:ci": "concurrently -k -s first -n SB,TEST \"http-server storybook-static -p 6006 -s\" \"wait-on tcp:6006 && test-storybook --config-dir .storybook --url http://localhost:6006\""
+    "test-storybook:ci": "concurrently -k -s first -n SB,TEST \"http-server storybook-static -p 6006 -s\" \"wait-on tcp:6006 && test-storybook --config-dir .storybook --url http://localhost:6006\"",
+    "chromatic": "chromatic --storybook-build-dir storybook-static --exit-once-uploaded --exit-zero-on-changes"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -37,6 +38,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
     "axe-playwright": "^2.2.2",
+    "chromatic": "^18.1.0",
     "concurrently": "^9.1.2",
     "http-server": "^14.1.1",
     "playwright": "^1.49.0",
