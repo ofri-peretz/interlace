@@ -136,7 +136,7 @@ const ToastViewport = React.forwardRef<HTMLDivElement, ToastViewportProps>(
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
             'fixed inset-x-0 bottom-0 z-50 flex w-full flex-col gap-sm p-md',
-            'sm:inset-x-auto sm:right-0 sm:bottom-0 sm:max-w-[420px]',
+            'sm:inset-x-auto sm:right-0 sm:bottom-0 sm:max-w-float',
             'outline-none',
             className,
           )}

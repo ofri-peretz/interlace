@@ -117,6 +117,14 @@
   --container-content: 64rem; /* 1024px — default landing section */
   --container-wide: 80rem; /* 1280px — card-grid-heavy section */
 
+  /* Floating-surface width. NOT a `Container size` — these three above are
+     the page-layout ladder. This one sizes detached chrome (toast stack,
+     side-anchored panels) that must stay narrower than any section. Lives
+     here rather than as `max-w-[420px]` at the call site so the toast
+     stack and anything else that docks to a viewport edge agree on one
+     number (R19/R21). */
+  --container-float: 26.25rem; /* 420px — edge-docked toast / panel stack */
+
   /* ── Breakpoints (BREAKPOINT_PHILOSOPHY — 4-tier system) ─────────────
      Codified to override Tailwind v4's defaults (640/768/1024/1280/1536)
      with a tighter 4-tier ladder aligned to our MIN_VIEWPORT floor.

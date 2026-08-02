@@ -108,7 +108,11 @@ const PROSE_CASCADE = [
   // Blockquote — quiet left rule with muted body.
   '[&_blockquote]:my-md [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-md [&_blockquote]:text-muted-foreground [&_blockquote]:italic',
 
-  // Inline code — chip pill on muted surface.
+  // Inline code — chip pill on muted surface. The vertical padding is the
+  // one arbitrary value in this chain and stays arbitrary on purpose: an
+  // inline chip has to grow with the text it sits inside, so the value is
+  // `em`-relative. Every --spacing-* token is `rem`, which would freeze the
+  // chip's height while the surrounding line scales (R19 exception).
   '[&_code]:font-mono [&_code]:text-code [&_code]:bg-muted [&_code]:text-foreground [&_code]:rounded-sm [&_code]:px-xs [&_code]:py-[0.125em]',
   // Code inside pre — clear the chip styles so the block code renders cleanly.
   '[&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:rounded-none',
