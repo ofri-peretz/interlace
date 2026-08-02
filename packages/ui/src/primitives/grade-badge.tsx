@@ -21,7 +21,7 @@
  * | R7   | className merged + ...rest       | `cn(gradeBadgeVariants(...), className)` + `{...props}`     |
  * | R8   | No isXxx; closed grade enum      | `grade` is the 13-tier `'A+' | 'A' | 'A-' | ... | 'F'`        |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
- * | R19  | Tokens only                      | bg-success/warning/destructive + foreground tokens          |
+ * | R19  | Tokens only                      | bg-success/warning/caution/destructive + foreground tokens  |
  * | R20  | AA contrast                      | tone-foreground on tone-background clears AA in both modes  |
  * | R25  | Server component                 | No hooks                                                    |
  * | R26  | A11y                             | aria-label="Grade: A+" so SRs announce the score in words   |
@@ -63,11 +63,11 @@ const gradeBadgeVariants = cva(
         excellent: 'bg-success text-success-foreground',
         good:      'bg-primary text-primary-foreground',
         fair:      'bg-warning text-warning-foreground',
-        // `poor` uses a darker orange than `fair` (warning) but isn't yet
-        // catastrophic. Inline orange-900 because the DS doesn't ship an
-        // intermediate orange semantic; this is the one place we reach
-        // outside the token surface. Clears AAA at 8.5:1 on white.
-        poor:      'bg-orange-900 text-white',
+        // `poor` is the rung between warning and destructive. It rides the
+        // `caution` semantic token (interlace-theme.css) rather than a raw
+        // palette class — the DS now ships the intermediate orange the
+        // five-tone ladder needs. 9.0:1 light / 10.9:1 dark.
+        poor:      'bg-caution text-caution-foreground',
         fail:      'bg-destructive text-destructive-foreground',
       },
       size: {

@@ -6,6 +6,12 @@
  * `max-w-wide` (80rem) · full (no utility). Ad-hoc Tailwind containers
  * (`max-w-3xl`, `max-w-6xl`, …) are forbidden in DS + consumer code.
  *
+ * `max-w-float` (--container-float, 420px) is a FIFTH token but NOT part of
+ * that ladder: it sizes detached chrome that docks to a viewport edge (the
+ * toast stack), never a page section. Kept as a token rather than
+ * `max-w-[420px]` at the call site so every edge-docked surface agrees on
+ * one number — see foundation.css.
+ *
  * This is not just style policing — the named subset is BROKEN here:
  * `foundation.css` defines `--spacing-xs…2xl` in `@theme`, and Tailwind v4
  * resolves named sizing values against the spacing namespace before the

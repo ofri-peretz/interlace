@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Trophy } from 'lucide-react';
-import { SectionHeader } from '@interlace/ui/blocks/section-header';
+import { SectionHeader } from '@interlace/ui/patterns/section-header';
 
 const meta: Meta<typeof SectionHeader> = {
   title: 'Blocks/SectionHeader',

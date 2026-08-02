@@ -7,15 +7,16 @@
       "blocks-articlecard--manytags",
       "blocks-articlecard--dark",
       "blocks-articlecard--grid",
-      "blocks-articlecard--overlaypriority",
-      "blocks-articlecard--overlaylazy",
+      "blocks-articlecard--featuredpriority",
+      "blocks-articlecard--featuredlazy",
       "blocks-articlecard--stackpriority",
       "blocks-articlecard--stackcontract",
       "blocks-articlecard--stacktagoverflow",
       "blocks-articlecard--stackminimal",
-      "blocks-articlecard--overlaycontract",
-      "blocks-articlecard--overlaywithoutcover",
-      "blocks-articlecard--parity"
+      "blocks-articlecard--featuredcontract",
+      "blocks-articlecard--featuredwithoutcover",
+      "blocks-articlecard--parity",
+      "blocks-articlecard--deprecatedvariantstillworks"
     ],
     "preview": "blocks-articlecard--default",
     "previewDark": "blocks-articlecard--dark",
@@ -48,6 +49,18 @@
     "previewDark": "blocks-authorbyline--dark",
     "skeleton": null
   },
+  "brand-logo": {
+    "title": "Blocks/BrandLogo",
+    "storyIds": [
+      "blocks-brandlogo--default",
+      "blocks-brandlogo--markonly",
+      "blocks-brandlogo--sizes",
+      "blocks-brandlogo--innavcontext"
+    ],
+    "preview": "blocks-brandlogo--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "cta-section": {
     "title": "Blocks/CTASection",
     "storyIds": [
@@ -61,6 +74,30 @@
     "preview": "blocks-ctasection--default",
     "previewDark": "blocks-ctasection--dark",
     "skeleton": "blocks-ctasection--loading"
+  },
+  "code-window": {
+    "title": "Blocks/CodeWindow",
+    "storyIds": [
+      "blocks-codewindow--default",
+      "blocks-codewindow--withouttitle",
+      "blocks-codewindow--withactions",
+      "blocks-codewindow--narrowviewport"
+    ],
+    "preview": "blocks-codewindow--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "dot-pattern": {
+    "title": "Blocks/DotPattern",
+    "storyIds": [
+      "blocks-dotpattern--default",
+      "blocks-dotpattern--dense",
+      "blocks-dotpattern--glow",
+      "blocks-dotpattern--behindcontent"
+    ],
+    "preview": "blocks-dotpattern--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "empty-state": {
     "title": "Blocks/EmptyState",
@@ -123,6 +160,18 @@
     "previewDark": "blocks-footer--dark",
     "skeleton": null
   },
+  "grid-pattern": {
+    "title": "Blocks/GridPattern",
+    "storyIds": [
+      "blocks-gridpattern--default",
+      "blocks-gridpattern--dashed",
+      "blocks-gridpattern--highlightedsquares",
+      "blocks-gridpattern--animated"
+    ],
+    "preview": "blocks-gridpattern--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "hero": {
     "title": "Blocks/Hero",
     "storyIds": [
@@ -131,6 +180,30 @@
       "blocks-hero--twocolumn"
     ],
     "preview": "blocks-hero--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "hero-cosmic": {
+    "title": "Blocks/HeroCosmic",
+    "storyIds": [
+      "blocks-herocosmic--default",
+      "blocks-herocosmic--headlineonly",
+      "blocks-herocosmic--withfooter",
+      "blocks-herocosmic--quieteffects"
+    ],
+    "preview": "blocks-herocosmic--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "interactive-grid-pattern": {
+    "title": "Blocks/InteractiveGridPattern",
+    "storyIds": [
+      "blocks-interactivegridpattern--default",
+      "blocks-interactivegridpattern--uncontrolled",
+      "blocks-interactivegridpattern--controlled",
+      "blocks-interactivegridpattern--highercontrast"
+    ],
+    "preview": "blocks-interactivegridpattern--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -196,6 +269,19 @@
     "previewDark": "blocks-relatedposts--dark",
     "skeleton": null
   },
+  "scorecard-row": {
+    "title": "Blocks/ScorecardRow",
+    "storyIds": [
+      "blocks-scorecardrow--default",
+      "blocks-scorecardrow--grades",
+      "blocks-scorecardrow--withdetails",
+      "blocks-scorecardrow--loading",
+      "blocks-scorecardrow--stack"
+    ],
+    "preview": "blocks-scorecardrow--default",
+    "previewDark": null,
+    "skeleton": "blocks-scorecardrow--loading"
+  },
   "section-header": {
     "title": "Blocks/SectionHeader",
     "storyIds": [
@@ -244,6 +330,19 @@
     "preview": "blocks-statcard--default",
     "previewDark": null,
     "skeleton": null
+  },
+  "stat-group": {
+    "title": "Blocks/StatGroup",
+    "storyIds": [
+      "blocks-statgroup--default",
+      "blocks-statgroup--fourcolumns",
+      "blocks-statgroup--twocolumns",
+      "blocks-statgroup--loading",
+      "blocks-statgroup--darkmode"
+    ],
+    "preview": "blocks-statgroup--default",
+    "previewDark": null,
+    "skeleton": "blocks-statgroup--loading"
   },
   "testimonial": {
     "title": "Blocks/Testimonial",

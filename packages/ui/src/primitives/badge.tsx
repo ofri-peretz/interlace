@@ -15,8 +15,13 @@ const badgeVariants = cva(
         default: 'bg-primary text-primary-foreground [a&]:hover:bg-primary/90',
         secondary:
           'bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90',
+        // No `dark:bg-destructive/60` here, unlike stock shadcn. That tint
+        // assumes a saturated mid-red token it can safely mute; ours is a
+        // light red (#fca5a5) chosen to clear AAA against near-black, so
+        // knocking it to 60% pulls it TOWARD the page and drops the label
+        // to 4.27:1 — under AA. Caught by composite-contrast-lock.
         destructive:
-          'bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+          'bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
         outline:
           'border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
         ghost: '[a&]:hover:bg-accent [a&]:hover:text-accent-foreground',

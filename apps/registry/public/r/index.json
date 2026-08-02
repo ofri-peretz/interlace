@@ -1471,7 +1471,7 @@
       "meta": {
         "tier": "pattern",
         "client": true,
-        "minViewport": null,
+        "minViewport": 320,
         "loading": false
       }
     },
@@ -1552,7 +1552,7 @@
         "tier": "pattern",
         "client": false,
         "minViewport": 480,
-        "loading": false
+        "loading": true
       }
     },
     {

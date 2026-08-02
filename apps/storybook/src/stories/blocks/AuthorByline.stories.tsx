@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { AuthorByline } from '@interlace/ui/blocks/author-byline';
+import { AuthorByline } from '@interlace/ui/patterns/author-byline';
 import { withDark, withRtl } from '@/decorators';
 
 const meta = {

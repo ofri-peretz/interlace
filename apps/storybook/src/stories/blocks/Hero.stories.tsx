@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@interlace/ui/button';
-import { Hero } from '@interlace/ui/blocks/hero';
+import { Hero } from '@interlace/ui/patterns/hero';
 
 const meta: Meta<typeof Hero> = {
   title: 'Blocks/Hero',

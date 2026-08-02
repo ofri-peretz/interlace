@@ -11,8 +11,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        // No `dark:bg-destructive/60` here, unlike stock shadcn — see the
+        // matching note in badge.tsx. Our dark destructive token is a light
+        // red tuned for AAA on near-black; muting it to 60% drops the label
+        // to 4.27:1, under AA. Caught by composite-contrast-lock.
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
         outline:
           'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         secondary:

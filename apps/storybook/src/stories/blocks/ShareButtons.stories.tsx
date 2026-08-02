@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   MIN_VIEWPORT,
   ShareButtons,
-} from '@interlace/ui/blocks/share-buttons';
+} from '@interlace/ui/patterns/share-buttons';
 import { withDark, withRtl } from '@/decorators';
 
 const meta = {
