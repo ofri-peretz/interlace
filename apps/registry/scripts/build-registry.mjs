@@ -441,7 +441,7 @@ const rewriteImportsForConsumer = (source, subdir = '') =>
 // ─── Per-primitive registry item ─────────────────────────────────────────────
 
 const readOptionalMeta = async (filePath) => {
-  const metaPath = filePath.replace(/\.tsx$/, '.meta.json');
+  const metaPath = filePath.replace(/\.tsx?$/, '.meta.json');
   try {
     return JSON.parse(await readFile(metaPath, 'utf8'));
   } catch {
@@ -451,7 +451,11 @@ const readOptionalMeta = async (filePath) => {
 
 const buildItem = async (filePath, fileName, tier = null) => {
   const source = await readFile(filePath, 'utf8');
-  const name = fileName.replace(/\.tsx$/, '');
+  const name = fileName.replace(/\.tsx?$/, '');
+  // `.ts` covers the `*-variants.ts` cva companions that button.tsx and
+  // skeleton.tsx import; a .tsx-only scan left them unpublished, so both
+  // primitives shipped importing a file no registry item provided.
+  const ext = fileName.endsWith('.tsx') ? '.tsx' : '.ts';
   const meta = await readOptionalMeta(filePath);
   const sourceDir = path.dirname(filePath);
   const { deps, companions } = await splitRelativeImports(source, sourceDir);
@@ -462,7 +466,7 @@ const buildItem = async (filePath, fileName, tier = null) => {
   // subdir in the consumer tree to preserve provenance. Primitives stay flat.
   const subdir = TIER_SUBDIR[tier ?? 'primitives'] ?? '';
   const tierLabel = tier ? ` (${tier})` : '';
-  const target = `components/ui/${subdir}${name}.tsx`;
+  const target = `components/ui/${subdir}${name}${ext}`;
   // Templates are full-page surfaces, not single components — `registry:block`
   // is the spec's type for those. Every file carries an explicit `target`, so
   // the type only changes how the item is classified, never where it lands.
@@ -481,7 +485,7 @@ const buildItem = async (filePath, fileName, tier = null) => {
     registryDependencies,
     files: [
       {
-        path: `registry/interlace-ui/${subdir}${name}.tsx`,
+        path: `registry/interlace-ui/${subdir}${name}${ext}`,
         target,
         type: itemType,
         content: rewriteImportsForConsumer(source, subdir),
@@ -676,7 +680,7 @@ const indexEntry = (item) => ({
 const buildAll = async () => {
   await stat(PRIMITIVES_DIR);
   const primitiveFiles = (await readdir(PRIMITIVES_DIR))
-    .filter((f) => f.endsWith('.tsx'))
+    .filter((f) => f.endsWith('.tsx') || f.endsWith('.ts'))
     .sort();
 
   const items = [];
@@ -717,6 +721,52 @@ const buildAll = async () => {
   return { items, index, primitiveCount: primitiveFiles.length, decorativeCount };
 };
 
+/**
+ * Assert the installability contract on the built item set.
+ *
+ * Schema validity is not enough: every item can be well-formed and still
+ * uninstallable. The three ways that happens:
+ *
+ *   1. a BARE `registryDependencies` entry resolves against shadcn's registry,
+ *      not ours (404, or worse — silently installs THEIR component);
+ *   2. a relative import survives into `content`, pointing at a path that does
+ *      not exist in a consumer tree;
+ *   3. a dependency or `@/components/ui/*` import names an item we never ship.
+ *
+ * Runs on every build and in `--check` (CI), so none of the three can regress.
+ */
+const assertRegistryContract = (items) => {
+  const names = new Set(items.map((i) => i.name));
+  const errors = [];
+  for (const item of items) {
+    for (const dep of item.registryDependencies ?? []) {
+      if (!dep.startsWith('http')) {
+        errors.push(`${item.name}: bare registryDependency "${dep}" — must be a URL`);
+        continue;
+      }
+      const target = dep.split('/').pop().replace(/\.json$/, '');
+      if (!names.has(target)) {
+        errors.push(`${item.name}: registryDependency "${dep}" names no item`);
+      }
+    }
+    for (const file of item.files ?? []) {
+      for (const [, spec] of (file.content ?? '').matchAll(
+        /from\s+['"]([^'"]+)['"]/g,
+      )) {
+        if (spec.startsWith('.')) {
+          errors.push(`${item.name}: relative import "${spec}" in ${file.target}`);
+        } else if (
+          spec.startsWith('@/components/ui/') &&
+          !names.has(spec.split('/').pop())
+        ) {
+          errors.push(`${item.name}: import "${spec}" names no item`);
+        }
+      }
+    }
+  }
+  return errors;
+};
+
 const summary = (built) =>
   `${built.primitiveCount} primitive(s) + ${built.decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s)`;
 
@@ -727,6 +777,8 @@ const main = async () => {
     const errors = [];
     for (const item of built.items) await compareItemAgainstDisk(item, errors);
     await compareAgainstDisk('index.json', built.index, errors);
+    await compareAgainstDisk('registry.json', built.index, errors);
+    errors.push(...assertRegistryContract(built.items));
     errors.push(...(await checkRawStyleFiles()));
     // Every shipped item must carry an explicit intent category — an "Other"
     // bucket on a public registry is a browse dead-end. Local builds only warn
@@ -744,6 +796,15 @@ const main = async () => {
     return;
   }
 
+  const contractErrors = assertRegistryContract(built.items);
+  if (contractErrors.length) {
+    console.error(
+      'Registry contract violated — these items are not installable:\n  ' +
+        contractErrors.join('\n  '),
+    );
+    process.exit(1);
+  }
+
   await mkdir(OUT_DIR, { recursive: true });
   for (const item of built.items) {
     await writeFile(
@@ -753,11 +814,13 @@ const main = async () => {
     );
   }
   await writeRawStyleFiles();
-  await writeFile(
-    path.join(OUT_DIR, 'index.json'),
-    JSON.stringify(built.index, null, 2) + '\n',
-    'utf8',
-  );
+  const indexJson = JSON.stringify(built.index, null, 2) + '\n';
+  // `registry.json` is the filename the shadcn CLI resolves for `list`/`search`,
+  // and the shadcn registry directory requires it at the registry root: "a flat
+  // registry ... `/registry.json` and `/component-name.json` files are expected
+  // to be in the root". `index.json` stays as the alias src/lib/registry.ts reads.
+  await writeFile(path.join(OUT_DIR, 'registry.json'), indexJson, 'utf8');
+  await writeFile(path.join(OUT_DIR, 'index.json'), indexJson, 'utf8');
 
   // Auto-regenerate the semantics catalogue JSON read by
   // apps/registry/src/app/semantics-catalog/page.tsx. Keeping it here
