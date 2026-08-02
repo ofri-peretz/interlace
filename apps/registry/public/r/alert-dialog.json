@@ -26,7 +26,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/alert-dialog\n\nInstalled to `components/ui/alert-dialog.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/alert-dialog';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/alert-dialog\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -27,7 +27,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/radio-group\n\nInstalled to `components/ui/radio-group.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/radio-group';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/radio-group\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

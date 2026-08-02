@@ -22,7 +22,8 @@
   "meta": {
     "tier": "util",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
-  "docs": "## @interlace/use-reduced-motion\n\nInstalled to `hooks/use-reduced-motion.ts`.\n\n```tsx\nimport { /* … */ } from '@/hooks/use-reduced-motion';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/use-reduced-motion\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
+  "docs": "## @interlace/use-reduced-motion\n\nInstalled to `hooks/use-reduced-motion.ts`.\n\n```tsx\nimport { /* … */ } from '@/hooks/use-reduced-motion';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/use-reduced-motion"
 }

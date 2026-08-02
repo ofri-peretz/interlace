@@ -28,7 +28,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": true
   },
   "docs": "## @interlace/cta-section\n\nInstalled to `components/ui/patterns/cta-section.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/cta-section';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/cta-section\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

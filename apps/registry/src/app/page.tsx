@@ -2,8 +2,9 @@ import Link from 'next/link';
 
 import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
+import { RegistrySearch } from '@/components/registry-search';
 import { SiteNav } from '@/components/site-nav';
-import { CATEGORIES, groupByCategory } from '@/lib/categories';
+import { CATEGORIES, groupByCategory, TIER_CATEGORIES } from '@/lib/categories';
 import { loadIndex } from '@/lib/registry';
 
 const PRIMARY_INSTALL =
@@ -173,6 +174,16 @@ export default async function HomePage() {
               .
             </p>
           </div>
+        </div>
+
+        {/* Search across every item — ⌘K focuses it */}
+        <div className="mt-8">
+          <RegistrySearch
+            items={components}
+            tiers={TIER_CATEGORIES.filter((tier) =>
+              components.some((item) => item.meta?.tier === tier.id),
+            ).map((tier) => [tier.id, tier.title] as [string, string])}
+          />
         </div>
 
         {/* Category jump-links */}

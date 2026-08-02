@@ -24,7 +24,8 @@
   "meta": {
     "tier": "effect",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/number-ticker\n\nInstalled to `components/ui/magicui/number-ticker.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/magicui/number-ticker';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/number-ticker\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

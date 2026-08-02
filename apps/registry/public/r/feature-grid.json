@@ -29,7 +29,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": true
   },
   "docs": "## @interlace/feature-grid\n\nInstalled to `components/ui/patterns/feature-grid.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/feature-grid';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/feature-grid\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

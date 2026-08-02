@@ -26,7 +26,8 @@
   "meta": {
     "tier": "effect",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/background-beams-with-collision\n\nInstalled to `components/ui/aceternity/background-beams-with-collision.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/aceternity/background-beams-with-collision';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/background-beams-with-collision\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -29,7 +29,8 @@
   "meta": {
     "tier": "template",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/author-template\n\nInstalled to `components/ui/templates/author-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/author-template';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/author-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

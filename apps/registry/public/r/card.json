@@ -26,7 +26,8 @@
   "meta": {
     "tier": "primitive",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": true
   },
   "docs": "## @interlace/card\n\nInstalled to `components/ui/card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/card';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

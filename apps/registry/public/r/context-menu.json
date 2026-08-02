@@ -27,7 +27,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/context-menu\n\nInstalled to `components/ui/context-menu.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/context-menu';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/context-menu\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

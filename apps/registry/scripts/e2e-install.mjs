@@ -30,6 +30,8 @@ import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
+import { HOMEPAGE as PROD_ORIGIN } from '../registry.config.mjs';
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
 const PUBLIC_DIR = path.join(REGISTRY_ROOT, 'public');
@@ -55,16 +57,16 @@ const MIME = { '.json': 'application/json', '.css': 'text/css' };
  * registry with a different base URL: the bytes under test stay the committed
  * ones, only the host changes.
  */
-const PROD_ORIGIN = 'https://ds.interlace.tools';
-
 const serve = () =>
   new Promise((resolve) => {
     const server = createServer(async (req, res) => {
       const rel = decodeURIComponent(new URL(req.url, 'http://x').pathname);
       // ponytail: path.join + a startsWith guard is the whole traversal
-      // defence needed — this server only ever runs on localhost in CI.
+      // defence needed — this server only ever runs on localhost in CI. The
+      // trailing separator matters: without it a sibling `public-extra/`
+      // would pass the prefix test.
       const file = path.join(PUBLIC_DIR, rel);
-      if (!file.startsWith(PUBLIC_DIR)) {
+      if (!file.startsWith(PUBLIC_DIR + path.sep)) {
         res.writeHead(403).end();
         return;
       }
@@ -138,12 +140,17 @@ const main = async () => {
   const finish = async (exitCode) => {
     results.durationSeconds = Math.round((Date.now() - started) / 1000);
     results.ok = exitCode === 0;
-    await writeFile(RESULTS_FILE, JSON.stringify(results, null, 2) + '\n');
+    // A `--only` run is a partial: writing it would replace the committed
+    // record of the last FULL 120/120 pass with a two-item file.
+    const resultsPath = ONLY
+      ? RESULTS_FILE.replace(/\.json$/, '.partial.json')
+      : RESULTS_FILE;
+    await writeFile(resultsPath, JSON.stringify(results, null, 2) + '\n');
     server?.close();
     if (!KEEP) await rm(scratchRoot, { recursive: true, force: true });
     else console.log(`scratch app kept at ${app}`);
     console.log(
-      `${results.ok ? 'PASS' : 'FAIL'} — results written to ${RESULTS_FILE}`,
+      `${results.ok ? 'PASS' : 'FAIL'} — results written to ${resultsPath}`,
     );
     process.exit(exitCode);
   };

@@ -24,7 +24,8 @@
   "meta": {
     "tier": "primitive",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/aspect-ratio\n\nInstalled to `components/ui/aspect-ratio.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/aspect-ratio';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/aspect-ratio\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

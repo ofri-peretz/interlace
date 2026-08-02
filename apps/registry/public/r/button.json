@@ -33,7 +33,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/button\n\nInstalled to `components/ui/button.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/button';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/button\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -27,7 +27,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 480
+    "minViewport": 480,
+    "loading": true
   },
   "docs": "## @interlace/page-header\n\nInstalled to `components/ui/patterns/page-header.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/page-header';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/page-header\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

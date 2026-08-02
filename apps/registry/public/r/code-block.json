@@ -27,7 +27,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": true
   },
   "docs": "## @interlace/code-block\n\nInstalled to `components/ui/code-block.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/code-block';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/code-block\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -26,7 +26,8 @@
   "meta": {
     "tier": "effect",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/background-lines\n\nInstalled to `components/ui/aceternity/background-lines.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/aceternity/background-lines';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/background-lines\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

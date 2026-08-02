@@ -25,14 +25,14 @@ import path from 'node:path';
 
 import { Ajv } from 'ajv';
 
+import { HOMEPAGE } from '../registry.config.mjs';
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
 const OUT_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const SCHEMA_DIR = path.join(REGISTRY_ROOT, 'schema');
 
 const ITEM_SCHEMA_ID = 'https://ui.shadcn.com/schema/registry-item.json';
-/** Must match `HOMEPAGE` in build-registry.mjs. */
-const HOMEPAGE = 'https://ds.interlace.tools';
 
 const readJson = async (p) => JSON.parse(await readFile(p, 'utf8'));
 

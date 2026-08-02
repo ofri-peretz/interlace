@@ -30,7 +30,8 @@
   "meta": {
     "tier": "starter",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "# @interlace/layout-starter\n\nInstalled:\n\n- `Container` — 4 width tiers (prose / content / wide / full).\n- `Section` — vertical-rhythm slabs.\n- `Stack` + `Cluster` — six-step gap scale.\n- `Grid` — responsive grid primitive.\n- `Box` — token-aware surface (background + padding + radius + border).\n- `Typography` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- `theme` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
 }

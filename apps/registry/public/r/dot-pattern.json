@@ -26,7 +26,8 @@
   "meta": {
     "tier": "pattern",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/dot-pattern\n\nInstalled to `components/ui/patterns/dot-pattern.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/dot-pattern';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/dot-pattern\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

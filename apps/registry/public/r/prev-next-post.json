@@ -26,7 +26,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 480
+    "minViewport": 480,
+    "loading": false
   },
   "docs": "## @interlace/prev-next-post\n\nInstalled to `components/ui/patterns/prev-next-post.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/prev-next-post';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/prev-next-post\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

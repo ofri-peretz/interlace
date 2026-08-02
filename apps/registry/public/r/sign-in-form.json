@@ -29,7 +29,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/sign-in-form\n\nInstalled to `components/ui/patterns/sign-in-form.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/sign-in-form';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/sign-in-form\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

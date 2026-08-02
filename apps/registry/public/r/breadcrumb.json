@@ -26,7 +26,8 @@
   "meta": {
     "tier": "primitive",
     "client": false,
-    "minViewport": 480
+    "minViewport": 480,
+    "loading": false
   },
   "docs": "## @interlace/breadcrumb\n\nInstalled to `components/ui/breadcrumb.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/breadcrumb';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/breadcrumb\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

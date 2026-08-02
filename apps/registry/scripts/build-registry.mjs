@@ -37,6 +37,8 @@ import { readFile, readdir, writeFile, mkdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
+import { AUTHOR, HOMEPAGE, itemRef } from '../registry.config.mjs';
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
 const REPO_ROOT = path.resolve(REGISTRY_ROOT, '..', '..');
@@ -82,9 +84,7 @@ const DECORATIVE_DIRS = [
 ];
 const OUT_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const STYLES_OUT_DIR = path.join(OUT_DIR, 'styles');
-const HOMEPAGE = 'https://ds.interlace.tools';
 const CHECK_ONLY = process.argv.includes('--check');
-const AUTHOR = 'ofri-peretz <https://github.com/ofri-peretz>';
 
 /**
  * Categorisation is data, not code — `registry-categories.json` is the single
@@ -123,12 +123,16 @@ const MIN_VIEWPORT_RE = /export\s+const\s+MIN_VIEWPORT\s*=\s*(\d+)/;
 const USE_CLIENT_RE =
   /^\s*(?:\/\*[\s\S]*?\*\/\s*)*(?:\/\/[^\n]*\n\s*)*['"]use client['"]/m;
 
+/** `loading?: boolean` — the DS-wide skeleton-placeholder opt-in. */
+const LOADING_PROP_RE = /^\s*loading\?:\s*boolean/m;
+
 const metaFor = (source, tier) => {
   const mv = source.match(MIN_VIEWPORT_RE);
   return {
     tier: CATEGORY_DATA.tierOf[tier] ?? tier,
     client: USE_CLIENT_RE.test(source),
     minViewport: mv ? Number.parseInt(mv[1], 10) : null,
+    loading: LOADING_PROP_RE.test(source),
   };
 };
 
@@ -137,7 +141,7 @@ const metaFor = (source, tier) => {
  * what a consumer needs in the terminal at that moment: where the file landed,
  * how to import it, and where the full contract lives.
  */
-const docsFor = (name, target) =>
+const docsFor = (name, target, { requiresTheme = true } = {}) =>
   [
     `## @interlace/${name}`,
     '',
@@ -146,8 +150,15 @@ const docsFor = (name, target) =>
     `\`\`\`tsx\nimport { /* … */ } from '@/${target.replace(/\.tsx?$/, '')}';\n\`\`\``,
     '',
     `Props, a11y contract, live preview and source: ${HOMEPAGE}/c/${name}`,
-    '',
-    'Requires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).',
+    // Only true for items that actually declare `theme` as a dependency —
+    // the lib utilities don't, so telling their installer otherwise is a lie
+    // printed straight into their terminal.
+    ...(requiresTheme
+      ? [
+          '',
+          'Requires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).',
+        ]
+      : []),
   ].join('\n');
 
 // Name of the registry:style item that every primitive depends on.
@@ -156,7 +167,7 @@ const docsFor = (name, target) =>
 const STYLE_ITEM = 'theme';
 
 /**
- * Cross-registry references MUST be absolute URLs.
+ * Cross-registry references MUST be absolute URLs — `itemRef` above.
  *
  * Per the registry-item schema, a BARE name in `registryDependencies` means
  * "a shadcn/ui core component" — the CLI resolves it against ui.shadcn.com.
@@ -168,7 +179,6 @@ const STYLE_ITEM = 'theme';
  * namespace configured in components.json, so it can't be used here either —
  * a raw-URL installer would break. The absolute URL works in both flows.
  */
-const itemRef = (name) => `${HOMEPAGE}/r/${name}.json`;
 
 /**
  * Stylesheet files copied verbatim from @interlace/ui/styles into the
@@ -520,7 +530,7 @@ const buildLibItem = async (entry) => {
       },
     ],
     meta: metaFor(source, 'util'),
-    docs: docsFor(entry.name, entry.target),
+    docs: docsFor(entry.name, entry.target, { requiresTheme: false }),
   };
 };
 
@@ -544,7 +554,7 @@ const buildStarterItem = (entry) => ({
       content: entry.body,
     },
   ],
-  meta: { tier: 'starter', client: false, minViewport: null },
+  meta: { tier: 'starter', client: false, minViewport: null, loading: false },
   docs: entry.body,
 });
 
@@ -585,7 +595,7 @@ const buildStyleItem = async () => {
     dependencies: ['tw-animate-css'],
     registryDependencies: [],
     files,
-    meta: { tier: 'theme', client: false, minViewport: null },
+    meta: { tier: 'theme', client: false, minViewport: null, loading: false },
     docs: [
       '## @interlace/theme',
       '',
@@ -746,16 +756,21 @@ const main = async () => {
   // every `npm run prebuild` — no separate npm script to forget.
   try {
     const { spawnSync } = await import('node:child_process');
-    const result = spawnSync(
-      'node',
-      [path.join(REGISTRY_ROOT, 'scripts/build-semantics-catalog.mjs')],
-      { stdio: 'inherit' },
-    );
-    if (result.status !== 0) {
-      console.error('semantics-catalog regeneration failed; continuing');
+    for (const script of [
+      'scripts/build-semantics-catalog.mjs',
+      // Maps each item to its Storybook story ids, so component pages can
+      // embed a live render instead of linking away.
+      'scripts/build-story-map.mjs',
+    ]) {
+      const result = spawnSync('node', [path.join(REGISTRY_ROOT, script)], {
+        stdio: 'inherit',
+      });
+      if (result.status !== 0) {
+        console.error(`${script} regeneration failed; continuing`);
+      }
     }
   } catch (err) {
-    console.error('semantics-catalog regeneration error (non-fatal):', err);
+    console.error('companion-catalogue regeneration error (non-fatal):', err);
   }
 
   if (uncategorised.length) {

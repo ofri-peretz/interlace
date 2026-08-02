@@ -48,7 +48,8 @@
   "meta": {
     "tier": "theme",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/theme\n\nFive stylesheets landed in `styles/interlace/`, in cascade order: tokens.css → foundation.css → preflight.css → theme.css → interlace-theme.css.\n\nImport them from your global stylesheet in exactly that order.\n\nFull contract: https://ds.interlace.tools/css-contract"
 }

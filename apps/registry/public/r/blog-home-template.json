@@ -27,7 +27,8 @@
   "meta": {
     "tier": "template",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/blog-home-template\n\nInstalled to `components/ui/templates/blog-home-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/blog-home-template';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/blog-home-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -31,7 +31,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": true
   },
   "docs": "## @interlace/pricing-table\n\nInstalled to `components/ui/patterns/pricing-table.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/pricing-table';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/pricing-table\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

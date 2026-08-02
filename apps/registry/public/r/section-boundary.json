@@ -25,7 +25,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/section-boundary\n\nInstalled to `components/ui/section-boundary.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/section-boundary';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/section-boundary\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -24,7 +24,8 @@
   "meta": {
     "tier": "effect",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/shimmer-button\n\nInstalled to `components/ui/magicui/shimmer-button.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/magicui/shimmer-button';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/shimmer-button\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

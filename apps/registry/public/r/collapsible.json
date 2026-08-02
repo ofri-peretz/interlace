@@ -26,7 +26,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/collapsible\n\nInstalled to `components/ui/collapsible.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/collapsible';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/collapsible\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -27,7 +27,8 @@
   "meta": {
     "tier": "primitive",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/container\n\nInstalled to `components/ui/container.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/container';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/container\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

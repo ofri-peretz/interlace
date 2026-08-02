@@ -28,7 +28,8 @@
   "meta": {
     "tier": "primitive",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/pagination\n\nInstalled to `components/ui/pagination.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/pagination';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/pagination\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

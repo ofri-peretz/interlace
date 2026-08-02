@@ -25,6 +25,8 @@ export type RegistryItemMeta = {
   tier: string;
   client: boolean;
   minViewport: number | null;
+  /** Declares `loading?: boolean` — the DS-wide skeleton opt-in. */
+  loading: boolean;
 };
 
 export type RegistryItem = {
@@ -98,7 +100,10 @@ export const loadEnrichedItem = async (
 ): Promise<EnrichedItem | null> => {
   const item = await loadItem(name);
   if (!item) return null;
-  const content = item.files[0]?.content ?? '';
+  // Every file, not just the first: `button`'s cva lives in the companion
+  // `button-variants.ts` that ships alongside it, so reading only files[0]
+  // showed the button page no variants at all.
+  const content = item.files.map((f) => f.content).join('\n');
   return { ...item, metadata: extractMetadata(content) };
 };
 

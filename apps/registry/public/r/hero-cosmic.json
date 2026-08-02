@@ -25,7 +25,8 @@
   "meta": {
     "tier": "pattern",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/hero-cosmic\n\nInstalled to `components/ui/patterns/hero-cosmic.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/hero-cosmic';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/hero-cosmic\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -28,7 +28,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 480
+    "minViewport": 480,
+    "loading": true
   },
   "docs": "## @interlace/related-posts\n\nInstalled to `components/ui/patterns/related-posts.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/related-posts';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/related-posts\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

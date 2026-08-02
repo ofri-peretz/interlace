@@ -26,7 +26,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/section-header\n\nInstalled to `components/ui/patterns/section-header.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/section-header';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/section-header\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

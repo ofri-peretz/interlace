@@ -28,7 +28,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": true
   },
   "docs": "## @interlace/stat-card\n\nInstalled to `components/ui/patterns/stat-card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/stat-card';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/stat-card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -26,7 +26,8 @@
   "meta": {
     "tier": "primitive",
     "client": false,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/box\n\nInstalled to `components/ui/box.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/box';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/box\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

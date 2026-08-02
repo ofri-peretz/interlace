@@ -26,7 +26,8 @@
   "meta": {
     "tier": "primitive",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/switch\n\nInstalled to `components/ui/switch.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/switch';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/switch\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

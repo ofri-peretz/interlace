@@ -25,7 +25,8 @@
   "meta": {
     "tier": "pattern",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/figure\n\nInstalled to `components/ui/patterns/figure.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/figure';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/figure\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

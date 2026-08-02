@@ -28,7 +28,8 @@
   "meta": {
     "tier": "primitive",
     "client": false,
-    "minViewport": 320
+    "minViewport": 320,
+    "loading": false
   },
   "docs": "## @interlace/callout\n\nInstalled to `components/ui/callout.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/callout';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/callout\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

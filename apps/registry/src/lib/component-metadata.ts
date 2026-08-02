@@ -23,6 +23,36 @@ export type CvaVariant = {
   defaultValue?: string;
 };
 
+export type PropEntry = {
+  name: string;
+  type: string;
+  required: boolean;
+  description: string | null;
+};
+
+export type PropsTable = {
+  /** The `<Name>Props` type this came from. */
+  typeName: string;
+  /** The DOM element whose props are spread in, e.g. `span` — null if none. */
+  extendsElement: string | null;
+  /** True when the type composes `VariantProps<typeof …>` (see `variants`). */
+  hasVariantProps: boolean;
+  props: PropEntry[];
+};
+
+export type A11yNotes = {
+  /** Base UI primitive that owns focus/keyboard behaviour, if any. */
+  baseUi: string | null;
+  /** ARIA attributes written literally in the source. */
+  ariaAttributes: string[];
+  /** `role="…"` values written literally in the source. */
+  roles: string[];
+  /** True when the component gates animation on `useReducedMotion`. */
+  respectsReducedMotion: boolean;
+  /** True when the source references the shared focus-visible ring contract. */
+  hasFocusRing: boolean;
+};
+
 export type ComponentMetadata = {
   anatomy: string | null;
   rRules: RRuleEntry[];
@@ -30,6 +60,8 @@ export type ComponentMetadata = {
   exports: string[];
   baseUiImport: string | null;
   lucideIcons: string[];
+  propsTables: PropsTable[];
+  a11y: A11yNotes;
 };
 
 // NOTE: `minViewport` and `isClient` are NOT extracted here — they are
@@ -78,37 +110,56 @@ export function extractRRules(content: string): RRuleEntry[] {
   return rules;
 }
 
-export function extractVariants(content: string): CvaVariant[] {
-  // Match a cva(...) call and extract its `variants` object.
-  // We look for a `variants:` key inside any object literal.
-  const variantsBlock = content.match(/variants:\s*\{([\s\S]*?)\n\s*\}\s*,?\s*\n\s*(?:defaultVariants|compoundVariants|\})/);
-  if (!variantsBlock) return [];
-  const block = variantsBlock[1];
+/**
+ * Body of the `{ … }` that starts at or after `from`, without its braces.
+ * Returns null when there is no balanced block.
+ */
+function braceBody(content: string, from: number): string | null {
+  const open = content.indexOf('{', from);
+  if (open === -1) return null;
+  let depth = 0;
+  for (let i = open; i < content.length; i += 1) {
+    if (content[i] === '{') depth += 1;
+    else if (content[i] === '}') {
+      depth -= 1;
+      if (depth === 0) return content.slice(open + 1, i);
+    }
+  }
+  return null;
+}
 
-  // Find each top-level "key: { ... }" within the block.
+export function extractVariants(content: string): CvaVariant[] {
+  // Brace-match rather than pattern-match the closing `}`: the previous
+  // terminator regex swallowed the last variant group's closing brace, which
+  // made this return [] for EVERY primitive — i.e. no page showed variants.
+  const variantsAt = content.search(/\bvariants:\s*\{/);
+  if (variantsAt === -1) return [];
+  const block = braceBody(content, variantsAt);
+  if (!block) return [];
+
   const variants: CvaVariant[] = [];
-  // Find variant names at the top level (indented by 6+ spaces inside cva).
-  const keyRe = /^\s+(\w+):\s*\{([\s\S]*?)\n\s+\}/gm;
+  // Each top-level `name: { … }` inside `variants` is one prop.
+  const keyRe = /(\w+)\s*:\s*\{/g;
   let m: RegExpExecArray | null;
   while ((m = keyRe.exec(block)) !== null) {
-    const name = m[1];
-    if (name === 'variants' || name === 'defaultVariants' || name === 'compoundVariants') continue;
-    const optionsBlock = m[2];
+    const group = braceBody(block, m.index);
+    if (group === null) continue;
+    // Skip past this group so nested braces aren't read as another variant.
+    keyRe.lastIndex = m.index + group.length;
     const options = Array.from(
-      optionsBlock.matchAll(/['"]([\w-]+)['"]\s*:/g),
-      (mm) => mm[1],
+      group.matchAll(/(?:^|,)\s*(?:['"]([\w-]+)['"]|(\w+))\s*:/g),
+      (mm) => mm[1] ?? mm[2],
     );
-    if (options.length === 0) continue;
-    variants.push({ name, options });
+    if (options.length > 0) variants.push({ name: m[1], options });
   }
 
   // Pull default values from defaultVariants if present.
-  const defaultsBlock = content.match(/defaultVariants:\s*\{([\s\S]*?)\n\s*\}/);
+  const defaultsAt = content.search(/\bdefaultVariants:\s*\{/);
+  const defaultsBlock =
+    defaultsAt === -1 ? null : braceBody(content, defaultsAt);
   if (defaultsBlock) {
     const defaults: Record<string, string> = {};
-    const defRe = /(\w+):\s*['"]([\w-]+)['"]/g;
-    let dm: RegExpExecArray | null;
-    while ((dm = defRe.exec(defaultsBlock[1])) !== null) {
+    for (const dm of defaultsBlock.matchAll(/(\w+):\s*['"]([\w-]+)['"]/g)) {
       defaults[dm[1]] = dm[2];
     }
     for (const v of variants) {
@@ -153,9 +204,108 @@ export function extractLucideIcons(content: string): string[] {
     .sort();
 }
 
+/**
+ * Extract the props tables from `type <X>Props = …` / `interface <X>Props`.
+ *
+ * The primitives express their public API as an intersection:
+ *
+ *   type BadgeProps = React.ComponentProps<'span'> &
+ *     VariantProps<typeof badgeVariants> & {
+ *       /** doc comment *\/
+ *       loading?: boolean;
+ *     };
+ *
+ * so a useful table needs all three parts: the DOM element whose props pass
+ * through, whether cva variants are composed in (rendered separately from the
+ * `variants` block), and the component's OWN props with their doc comments.
+ * Only the own-props arm needs parsing; the other two are one flag each.
+ */
+const PROPS_DECL_RE = /\b(?:type|interface)\s+(\w*Props)\b/g;
+const ELEMENT_PROPS_RE = /React\.ComponentProps(?:WithoutRef)?<\s*'([\w-]+)'/;
+const VARIANT_PROPS_RE = /VariantProps<\s*typeof\s+\w+\s*>/;
+/** One member of an object-type body, with any preceding JSDoc block. */
+const MEMBER_RE =
+  /(?:\/\*\*([\s\S]*?)\*\/\s*)?^[ \t]*(\w+)(\??):\s*([^;\n]+);/gm;
+
+/**
+ * Slice the full declaration starting at `start`. Brace-counting rather than a
+ * terminator regex: a props type ends with `  };` at whatever indentation the
+ * file happens to use, and matching on that is how the first version of this
+ * silently returned nothing for every primitive.
+ */
+function sliceDeclaration(content: string, start: number): string {
+  let depth = 0;
+  let seenBrace = false;
+  for (let i = start; i < content.length; i += 1) {
+    const ch = content[i];
+    if (ch === '{') {
+      depth += 1;
+      seenBrace = true;
+    } else if (ch === '}') {
+      depth -= 1;
+    } else if (ch === ';' && depth === 0) {
+      return content.slice(start, i);
+    } else if (ch === '\n' && seenBrace && depth === 0) {
+      return content.slice(start, i);
+    }
+  }
+  return content.slice(start);
+}
+
+export function extractPropsTables(content: string): PropsTable[] {
+  const tables: PropsTable[] = [];
+  PROPS_DECL_RE.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = PROPS_DECL_RE.exec(content)) !== null) {
+    const body = sliceDeclaration(content, match.index);
+    const props: PropEntry[] = [];
+    MEMBER_RE.lastIndex = 0;
+    let member: RegExpExecArray | null;
+    while ((member = MEMBER_RE.exec(body)) !== null) {
+      const [, doc, name, optional, type] = member;
+      props.push({
+        name,
+        type: type.trim(),
+        required: optional !== '?',
+        description: doc ? stripJsdoc(doc).replace(/\s+/g, ' ') || null : null,
+      });
+    }
+    tables.push({
+      typeName: match[1],
+      extendsElement: body.match(ELEMENT_PROPS_RE)?.[1] ?? null,
+      hasVariantProps: VARIANT_PROPS_RE.test(body),
+      props,
+    });
+  }
+  // Drop re-export lines (`export type { BadgeProps }`) — they match the
+  // declaration regex but carry no API surface.
+  return tables.filter(
+    (t) => t.props.length > 0 || t.extendsElement || t.hasVariantProps,
+  );
+}
+
+const ARIA_ATTR_RE = /\b(aria-[a-z]+)\s*[=:]/g;
+const ROLE_RE = /\brole\s*[=:]\s*['"]([\w-]+)['"]/g;
+
+export function extractA11yNotes(content: string): A11yNotes {
+  const uniqueSorted = (matches: Iterable<RegExpMatchArray>, group: number) =>
+    [...new Set([...matches].map((m) => m[group]))].sort();
+  return {
+    baseUi: extractBaseUiImport(content),
+    ariaAttributes: uniqueSorted(content.matchAll(ARIA_ATTR_RE), 1),
+    roles: uniqueSorted(content.matchAll(ROLE_RE), 1),
+    respectsReducedMotion: /useReducedMotion|prefers-reduced-motion|motion-reduce:/.test(
+      content,
+    ),
+    hasFocusRing: /focus-visible:|FocusRing/.test(content),
+  };
+}
+
 export function extractMetadata(content: string): ComponentMetadata {
   return {
     anatomy: extractAnatomy(content),
+    propsTables: extractPropsTables(content),
+    a11y: extractA11yNotes(content),
     rRules: extractRRules(content),
     variants: extractVariants(content),
     exports: extractExports(content),

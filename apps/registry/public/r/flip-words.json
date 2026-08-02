@@ -26,7 +26,8 @@
   "meta": {
     "tier": "effect",
     "client": true,
-    "minViewport": null
+    "minViewport": null,
+    "loading": false
   },
   "docs": "## @interlace/flip-words\n\nInstalled to `components/ui/aceternity/flip-words.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/aceternity/flip-words';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/flip-words\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }
