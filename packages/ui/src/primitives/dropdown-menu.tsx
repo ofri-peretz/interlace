@@ -6,6 +6,14 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. The popup is
+ * `min-w-40` (160px) and capped by `max-h-(--available-height)`, so it fits
+ * and scrolls at the 320 floor; Base UI's positioner shifts it into view.
+ * Projected onto the popup — `Menu.Root` renders no DOM node.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function DropdownMenu(props: React.ComponentProps<typeof BaseMenu.Root>) {
   return <BaseMenu.Root data-slot="dropdown-menu" {...props} />;
 }
@@ -44,8 +52,11 @@ function DropdownMenuContent({
       >
         <BaseMenu.Popup
           data-slot="dropdown-menu-content"
+          data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'bg-popover text-popover-foreground border-border data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 max-h-(--available-height) min-w-40 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-lg ring-1 ring-black/5',
+            // `ring-border` (not `ring-black/5`): the raw black ring vanishes
+            // on the dark surface, leaving the popup edgeless.
+            'bg-popover text-popover-foreground border-border ring-border data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 max-h-(--available-height) min-w-40 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-lg ring-1',
             className,
           )}
           {...props}
@@ -96,7 +107,7 @@ function DropdownMenuCheckboxItem({
     <BaseMenu.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-highlighted:bg-accent data-highlighted:text-accent-foreground focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       checked={checked}
@@ -129,7 +140,7 @@ function DropdownMenuRadioItem({
     <BaseMenu.RadioItem
       data-slot="dropdown-menu-radio-item"
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-highlighted:bg-accent data-highlighted:text-accent-foreground focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -219,7 +230,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        'focus:bg-accent focus:text-accent-foreground data-[popup-open]:bg-accent data-[popup-open]:text-accent-foreground flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8',
+        'data-highlighted:bg-accent data-highlighted:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[popup-open]:bg-accent data-[popup-open]:text-accent-foreground flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8',
         className,
       )}
       {...props}

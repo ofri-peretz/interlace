@@ -7,6 +7,13 @@ import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. The root is
+ * size-agnostic (`relative`, sized by its parent) and the 10px scrollbar
+ * track is an overlay, so it costs no horizontal space at the 320 floor.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function ScrollArea({
   className,
   children,
@@ -15,6 +22,7 @@ function ScrollArea({
   return (
     <BaseScrollArea.Root
       data-slot="scroll-area"
+      data-min-viewport={String(MIN_VIEWPORT)}
       className={cn('relative', className)}
       {...props}
     >

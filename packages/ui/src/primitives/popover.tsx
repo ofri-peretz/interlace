@@ -5,6 +5,14 @@ import { Popover as BasePopover } from '@base-ui/react/popover';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. The popup is
+ * `w-72` (288px), which still clears the 320 floor with gutters; Base UI's
+ * positioner flips/shifts it into the viewport rather than letting it clip.
+ * Projected onto the popup — `Popover.Root` renders no DOM node.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function Popover(props: React.ComponentProps<typeof BasePopover.Root>) {
   return <BasePopover.Root data-slot="popover" {...props} />;
 }
@@ -38,6 +46,7 @@ function PopoverContent({
       <BasePopover.Positioner side={side} sideOffset={sideOffset} align={align}>
         <BasePopover.Popup
           data-slot="popover-content"
+          data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
             'bg-popover text-popover-foreground data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 w-72 origin-(--transform-origin) rounded-md border p-4 shadow-md outline-hidden',
             className,

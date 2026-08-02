@@ -15,16 +15,19 @@
  *
  *   ContextMenu                       (Root — Base UI manager)
  *     ├─ ContextMenuTrigger          (the right-clickable surface)
- *     └─ ContextMenuPortal
- *         └─ ContextMenuContent      (positioned popup; equivalent to
- *                                     DropdownMenu's Content — wraps
- *                                     Portal + Positioner + Popup)
- *             ├─ ContextMenuLabel
- *             ├─ ContextMenuGroup
- *             ├─ ContextMenuItem
- *             ├─ ContextMenuSeparator
- *             ├─ ContextMenuCheckboxItem
- *             └─ ContextMenuRadioGroup → ContextMenuRadioItem
+ *     └─ ContextMenuContent          (wraps Portal + Positioner + Popup
+ *                                     internally — do NOT nest it in
+ *                                     ContextMenuPortal, that portals twice)
+ *         ├─ ContextMenuGroup → ContextMenuLabel + ContextMenuItem
+ *         ├─ ContextMenuItem
+ *         ├─ ContextMenuSeparator
+ *         ├─ ContextMenuCheckboxItem
+ *         └─ ContextMenuRadioGroup → ContextMenuRadioItem
+ *
+ * `ContextMenuPortal` is exported only for the `container=` override (render
+ * the popup into a specific node instead of `document.body`); it is not part
+ * of the normal tree. `ContextMenuLabel` is `Menu.GroupLabel` and MUST sit
+ * inside a `ContextMenuGroup` — outside one it throws on open.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -41,7 +44,7 @@
  * | R19  | Tokens only                      | popover / accent / border / muted-foreground tokens         |
  * | R20  | AA contrast                      | Inherits semantic tokens which clear AAA                    |
  * | R25  | Client component                 | Base UI Menu hooks require client tier                      |
- * | R26  | A11y from headless primitive     | role="menu" + keyboard nav + focus management from Base UI  |
+ * | R26  | A11y from headless primitive     | role="menu" + keyboard nav + focus management from Base UI; ContextMenuTrigger adds the Shift+F10 / Menu-key opener Base UI omits |
  */
 
 import * as React from 'react';
@@ -52,19 +55,80 @@ import { cn } from '../lib/cn.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
+/**
+ * Base UI wraps the React event (`BaseUIEvent<…>`), so derive the trigger's
+ * keydown signature from the component's own props rather than hand-typing it.
+ */
+type TriggerKeyDown = NonNullable<
+  React.ComponentProps<typeof BaseContextMenu.Trigger>['onKeyDown']
+>;
+
 function ContextMenu(
   props: React.ComponentProps<typeof BaseContextMenu.Root>,
 ) {
   return <BaseContextMenu.Root {...props} />;
 }
 
-function ContextMenuTrigger(
-  props: React.ComponentProps<typeof BaseContextMenu.Trigger>,
-) {
+/**
+ * Right-click surface.
+ *
+ * ## Keyboard opening (our addition — Base UI does not ship it)
+ *
+ * `@base-ui/react/context-menu` opens on `contextmenu` (right-click /
+ * long-press) only. A menu with no keyboard path to open it is a WCAG 2.1.1
+ * (Keyboard) failure, and it is invisible to axe because the menu simply
+ * isn't in the DOM until a pointer event fires. So the trigger:
+ *
+ *   - joins the tab order (`tabIndex` defaults to `0`), and
+ *   - synthesises a `contextmenu` event on **Shift+F10** and on the
+ *     dedicated **Menu / ContextMenu** key — the two bindings the WAI-ARIA
+ *     APG names for this pattern.
+ *
+ * Pass `tabIndex={-1}` to opt a decorative trigger out of the tab order; the
+ * key handler then only fires if something else focuses it.
+ */
+function ContextMenuTrigger({
+  onKeyDown,
+  tabIndex = 0,
+  ...props
+}: React.ComponentProps<typeof BaseContextMenu.Trigger>) {
+  const handleKeyDown: TriggerKeyDown = (event) => {
+    onKeyDown?.(event);
+    if (event.defaultPrevented) return;
+
+    const isMenuKey = event.key === 'ContextMenu';
+    const isShiftF10 = event.key === 'F10' && event.shiftKey;
+    if (!isMenuKey && !isShiftF10) return;
+
+    event.preventDefault();
+    // Open at the element's own centre so the popup is anchored to the
+    // thing the user focused, not to wherever the pointer happens to rest.
+    // Browsers deliver `contextmenu` as a PointerEvent, and Base UI reads
+    // pointer fields off it — a plain MouseEvent throws inside the handler.
+    const target = event.currentTarget;
+    const box = target.getBoundingClientRect();
+    const init: PointerEventInit = {
+      bubbles: true,
+      cancelable: true,
+      button: 2,
+      buttons: 0,
+      pointerType: 'mouse',
+      clientX: box.left + box.width / 2,
+      clientY: box.top + box.height / 2,
+    };
+    target.dispatchEvent(
+      typeof PointerEvent === 'function'
+        ? new PointerEvent('contextmenu', init)
+        : new MouseEvent('contextmenu', init),
+    );
+  };
+
   return (
     <BaseContextMenu.Trigger
       data-slot="context-menu-trigger"
       data-min-viewport={String(MIN_VIEWPORT)}
+      tabIndex={tabIndex}
+      onKeyDown={handleKeyDown}
       {...props}
     />
   );
@@ -256,6 +320,10 @@ type ContextMenuComposeItem =
       tone?: 'default' | 'destructive';
     }
   | { type: 'separator' }
+  /**
+   * Opens a labelled group that runs until the next label or separator.
+   * A label with no items after it is dropped — see `renderComposeItems`.
+   */
   | { type: 'label'; label: React.ReactNode };
 
 interface ContextMenuComposeProps {
@@ -273,35 +341,90 @@ function ContextMenuCompose({
     <ContextMenu>
       <ContextMenuTrigger render={trigger as React.ReactElement} />
       <ContextMenuContent className={className}>
-        {items.map((item, i) => {
-          if (item.type === 'separator') {
-            return <ContextMenuSeparator key={i} />;
-          }
-          if (item.type === 'label') {
-            return <ContextMenuLabel key={i}>{item.label}</ContextMenuLabel>;
-          }
-          return (
-            <ContextMenuItem
-              key={i}
-              onClick={item.onSelect}
-              disabled={item.disabled}
-              data-tone={item.tone === 'destructive' ? 'destructive' : undefined}
-              className={
-                item.tone === 'destructive'
-                  ? 'text-destructive data-[highlighted]:text-destructive'
-                  : undefined
-              }
-            >
-              {item.label}
-              {item.shortcut ? (
-                <ContextMenuShortcut>{item.shortcut}</ContextMenuShortcut>
-              ) : null}
-            </ContextMenuItem>
-          );
-        })}
+        {renderComposeItems(items)}
       </ContextMenuContent>
     </ContextMenu>
   );
+}
+
+/**
+ * Renders the flat `items` array into the nested tree Base UI requires.
+ *
+ * A `label` item is `Menu.GroupLabel`, which THROWS unless it sits inside a
+ * `Menu.Group` ("Base UI error #31"). The crash is invisible until the menu
+ * actually opens — every closed-by-default story renders fine — so a flat
+ * `<ContextMenuLabel>` shipped happily and blew up on first right-click.
+ *
+ * A label therefore opens a group that runs until the next label or
+ * separator. That's also the correct semantics: the group is what the label
+ * labels, so assistive tech announces "Danger zone, group" instead of a
+ * floating string.
+ */
+function renderComposeItems(items: ContextMenuComposeItem[]) {
+  const out: React.ReactNode[] = [];
+  let group: React.ReactNode[] = [];
+  let groupLabel: React.ReactNode = null;
+  let groupKey = 0;
+
+  const flushGroup = () => {
+    // A group with no members is dropped, label and all. `Menu.Group` won't
+    // crash on empty children, but a `role="group"` whose `aria-labelledby`
+    // points at a heading with nothing beneath it announces a section that
+    // isn't there — worse than omitting it. Reachable via two consecutive
+    // labels, or a label immediately followed by a separator.
+    if (group.length === 0) {
+      groupLabel = null;
+      return;
+    }
+    out.push(
+      <ContextMenuGroup key={`group-${groupKey++}`}>
+        {groupLabel !== null ? (
+          <ContextMenuLabel>{groupLabel}</ContextMenuLabel>
+        ) : null}
+        {group}
+      </ContextMenuGroup>,
+    );
+    group = [];
+    groupLabel = null;
+  };
+
+  items.forEach((item, i) => {
+    if (item.type === 'separator') {
+      flushGroup();
+      out.push(<ContextMenuSeparator key={i} />);
+      return;
+    }
+    if (item.type === 'label') {
+      flushGroup();
+      groupLabel = item.label;
+      return;
+    }
+    const node = (
+      <ContextMenuItem
+        key={i}
+        onClick={item.onSelect}
+        disabled={item.disabled}
+        data-tone={item.tone === 'destructive' ? 'destructive' : undefined}
+        className={
+          item.tone === 'destructive'
+            ? 'text-destructive data-[highlighted]:text-destructive'
+            : undefined
+        }
+      >
+        {item.label}
+        {item.shortcut ? (
+          <ContextMenuShortcut>{item.shortcut}</ContextMenuShortcut>
+        ) : null}
+      </ContextMenuItem>
+    );
+    // Items before any label stay ungrouped — wrapping them in an unlabelled
+    // group would add a meaningless `role="group"` to the a11y tree.
+    if (groupLabel === null && group.length === 0) out.push(node);
+    else group.push(node);
+  });
+
+  flushGroup();
+  return out;
 }
 
 // Dotted access — `<ContextMenu.Compose ...>`. See dialog.tsx for pattern.

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { Toc, TocPopover, MIN_VIEWPORT, type TocItem } from '@interlace/ui/toc';
+import { Skeleton } from '@interlace/ui/skeleton';
 import { withDark, withRtl } from '@/decorators';
 
 const ITEMS: TocItem[] = [
@@ -101,6 +103,51 @@ export const Variants: Story = {
         </div>
         <Toc items={ITEMS.slice(0, 4)} label="In this article" />
       </section>
+    </div>
+  ),
+};
+
+/**
+ * Keyboard-only flow: the rail is a named landmark whose entries are real
+ * links, so Tab reaches every heading without a pointer.
+ */
+export const KeyboardFlow: Story = {
+  render: () => (
+    <div className="bg-background text-foreground p-md">
+      <Toc items={ITEMS.slice(0, 4)} />
+    </div>
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('The rail is a named navigation landmark', async () => {
+      expect(canvas.getByRole('navigation')).toBeTruthy();
+    });
+
+    await step('Every heading is a focusable link', async () => {
+      const links = canvas.getAllByRole('link');
+      expect(links).toHaveLength(4);
+      links[0].focus();
+      await userEvent.tab();
+      expect(document.activeElement).toBe(links[1]);
+    });
+
+    await step('Each link targets a real heading anchor', async () => {
+      for (const link of canvas.getAllByRole('link')) {
+        expect(link.getAttribute('href')?.startsWith('#')).toBe(true);
+      }
+    });
+  },
+};
+
+/**
+ * Async headings — reserve the indented rail so the sidebar doesn't reflow
+ * once the article's heading tree resolves.
+ */
+export const Loading: Story = {
+  render: () => (
+    <div className="bg-background p-md">
+      <Skeleton variant="toc" className="w-56" />
     </div>
   ),
 };

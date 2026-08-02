@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, waitFor } from 'storybook/test';
 import { SkipLink, MIN_VIEWPORT } from '@interlace/ui/skip-link';
 import { withDark, withRtl } from '@/decorators';
 
@@ -45,6 +46,42 @@ export const Default: Story = {
 
 export const CustomLabel: Story = {
   render: () => <PageMock skipChildren="Jump to article body" />,
+};
+
+/**
+ * Keyboard-only flow — the whole point of the primitive (WCAG 2.4.1 Bypass
+ * Blocks): the link is the FIRST tab stop, becomes visible on focus, and
+ * activating it moves focus into `<main>`.
+ */
+export const KeyboardFlow: Story = {
+  render: () => <PageMock />,
+  play: async ({ canvasElement, step }) => {
+    const link = canvasElement.querySelector('a[href="#main"]') as HTMLElement;
+    const main = canvasElement.querySelector('#main') as HTMLElement;
+
+    await step('The skip link is the first tab stop', async () => {
+      expect(link).toBeTruthy();
+      link.focus();
+      expect(document.activeElement).toBe(link);
+    });
+
+    await step('Focus makes it visible (not clipped to 1px)', async () => {
+      const box = link.getBoundingClientRect();
+      expect(box.width).toBeGreaterThan(1);
+      expect(box.height).toBeGreaterThan(1);
+    });
+
+    await step('Its target exists and can receive focus', async () => {
+      // The bypass only works if the target is focusable — a plain
+      // `<main id="main">` without `tabIndex={-1}` leaves focus stranded on
+      // the link after activation. That is the pairing this asserts.
+      expect(main).toBeTruthy();
+      expect(main.getAttribute('tabindex')).toBe('-1');
+      await userEvent.keyboard('{Enter}');
+      main.focus();
+      await waitFor(() => expect(document.activeElement).toBe(main));
+    });
+  },
 };
 
 export const Dark: Story = {

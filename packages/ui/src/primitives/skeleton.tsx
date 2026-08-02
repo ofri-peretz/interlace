@@ -107,6 +107,12 @@ const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   // silhouette is structural rather than a single painted box.
   'form',
   'radio-group',
+  // Overlay / nav surfaces (wave 1.2).
+  'breadcrumb',
+  'menu',
+  'pagination',
+  'tabs',
+  'toc',
 ]);
 
 function Skeleton({
@@ -329,6 +335,63 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
               style={{ width: `${w * 100}%` }}
             />
           ))}
+        </div>
+      );
+    case 'breadcrumb':
+      // Trail of crumbs + separators — the resting Breadcrumb silhouette.
+      return (
+        <div className="flex items-center gap-sm px-xs">
+          <div className="bg-muted-foreground/10 h-3 w-16 rounded-sm" />
+          <div className="bg-muted-foreground/10 size-1.5 rounded-full" />
+          <div className="bg-muted-foreground/10 h-3 w-20 rounded-sm" />
+          <div className="bg-muted-foreground/10 size-1.5 rounded-full" />
+          <div className="bg-muted-foreground/10 h-3 w-12 rounded-sm" />
+        </div>
+      );
+    case 'menu':
+      // DropdownMenu / ContextMenu popup: 4 item rows + a separator.
+      return (
+        <div className="flex flex-col gap-xs p-xs">
+          <div className="bg-muted-foreground/10 h-6 w-full rounded-sm" />
+          <div className="bg-muted-foreground/10 h-6 w-full rounded-sm" />
+          <div className="bg-muted-foreground/10 h-px w-full" />
+          <div className="bg-muted-foreground/10 h-6 w-full rounded-sm" />
+          <div className="bg-muted-foreground/10 h-6 w-4/5 rounded-sm" />
+        </div>
+      );
+    case 'pagination':
+      // Prev + 3 page pills + Next, centred like the real nav.
+      return (
+        <div className="flex items-center justify-center gap-xs">
+          <div className="bg-muted-foreground/10 h-8 w-20 rounded-md" />
+          <div className="bg-muted-foreground/10 size-8 rounded-md" />
+          <div className="bg-muted-foreground/10 size-8 rounded-md" />
+          <div className="bg-muted-foreground/10 size-8 rounded-md" />
+          <div className="bg-muted-foreground/10 h-8 w-20 rounded-md" />
+        </div>
+      );
+    case 'tabs':
+      // Tab list row + the panel body underneath.
+      return (
+        <div className="flex flex-col gap-sm p-xs">
+          <div className="flex gap-xs">
+            <div className="bg-muted-foreground/10 h-8 w-20 rounded-md" />
+            <div className="bg-muted-foreground/10 h-8 w-24 rounded-md" />
+            <div className="bg-muted-foreground/10 h-8 w-16 rounded-md" />
+          </div>
+          <div className="bg-muted-foreground/10 h-4 w-full rounded-sm" />
+          <div className="bg-muted-foreground/10 h-4 w-3/4 rounded-sm" />
+        </div>
+      );
+    case 'toc':
+      // Heading rail: h2 lines flush, h3 lines indented.
+      return (
+        <div className="flex flex-col gap-xs p-sm">
+          <div className="bg-muted-foreground/10 h-3 w-3/4 rounded-sm" />
+          <div className="bg-muted-foreground/10 ml-md h-3 w-2/3 rounded-sm" />
+          <div className="bg-muted-foreground/10 ml-md h-3 w-1/2 rounded-sm" />
+          <div className="bg-muted-foreground/10 h-3 w-4/5 rounded-sm" />
+          <div className="bg-muted-foreground/10 ml-md h-3 w-3/5 rounded-sm" />
         </div>
       );
     default:
