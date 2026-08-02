@@ -15,16 +15,19 @@
  *
  *   ContextMenu                       (Root — Base UI manager)
  *     ├─ ContextMenuTrigger          (the right-clickable surface)
- *     └─ ContextMenuPortal
- *         └─ ContextMenuContent      (positioned popup; equivalent to
- *                                     DropdownMenu's Content — wraps
- *                                     Portal + Positioner + Popup)
- *             ├─ ContextMenuLabel
- *             ├─ ContextMenuGroup
- *             ├─ ContextMenuItem
- *             ├─ ContextMenuSeparator
- *             ├─ ContextMenuCheckboxItem
- *             └─ ContextMenuRadioGroup → ContextMenuRadioItem
+ *     └─ ContextMenuContent          (wraps Portal + Positioner + Popup
+ *                                     internally — do NOT nest it in
+ *                                     ContextMenuPortal, that portals twice)
+ *         ├─ ContextMenuGroup → ContextMenuLabel + ContextMenuItem
+ *         ├─ ContextMenuItem
+ *         ├─ ContextMenuSeparator
+ *         ├─ ContextMenuCheckboxItem
+ *         └─ ContextMenuRadioGroup → ContextMenuRadioItem
+ *
+ * `ContextMenuPortal` is exported only for the `container=` override (render
+ * the popup into a specific node instead of `document.body`); it is not part
+ * of the normal tree. `ContextMenuLabel` is `Menu.GroupLabel` and MUST sit
+ * inside a `ContextMenuGroup` — outside one it throws on open.
  *
  * ## MIN_VIEWPORT — 320
  *
