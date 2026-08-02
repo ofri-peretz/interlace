@@ -80,6 +80,8 @@ import { AuthorByline } from '../patterns/author-byline.js';
 import { PrevNextPost } from '../patterns/prev-next-post.js';
 import { RelatedPosts } from '../patterns/related-posts.js';
 import { ShareButtons } from '../patterns/share-buttons.js';
+import { Skeleton } from '../primitives/skeleton.js';
+import { Stack } from '../primitives/stack.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -182,6 +184,43 @@ function ArticleTemplate({
   );
 }
 ArticleTemplate.displayName = 'ArticleTemplate';
+
+/**
+ * Page-level loading state — the full-page silhouette of
+ * `<ArticleTemplate>`, not a single rect. Rendered by the consumer while
+ * the whole route's data is in flight (`loading.tsx` in Next.js), or as
+ * a `<SectionBoundary skeleton={…}>` override.
+ *
+ * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
+ * `role="status"` region for the page; inner skeletons pass
+ * `label={null}` so screen readers hear one announcement, not ten.
+ */
+function ArticleTemplateSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="article-template-skeleton"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      role="status"
+      aria-busy="true"
+      aria-label="Loading article…"
+      className={cn('py-xl', className)}
+      {...props}
+    >
+      <Container size="prose">
+        <Stack gap="xl">
+          <Skeleton variant="page-header" label={null} />
+          <Skeleton variant="prose" count={8} label={null} />
+          <Skeleton variant="article-card" label={null} />
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+ArticleTemplateSkeleton.displayName = 'ArticleTemplateSkeleton';
+ArticleTemplate.Skeleton = ArticleTemplateSkeleton;
 
 export { ArticleTemplate };
 export type { ArticleTemplateProps };

@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Server, Gauge, Layers } from "lucide-react";
+import {
+  ArrowRight,
+  ShieldCheck,
+  Server,
+  Gauge,
+  Layers,
+  Palette,
+} from "lucide-react";
 import { LandingHero } from "@/components/home/landing-hero";
 import { ProductCard } from "@/components/home/product-card";
 import numbers from "@/data/interlace-numbers.json";
@@ -58,9 +65,14 @@ export default function HomePage() {
             experience.
           </p>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Names are the real npm identifiers. The ESLint plugins are
+                UNSCOPED (`eslint-plugin-*`) — ESLint's own resolution
+                convention — so prefixing them with the org scope would send
+                readers to packages that do not exist. Locked by
+                src/__tests__/package-naming-lock.test.ts. */}
             <ProductCard
-              name="@interlace/eslint-*"
+              name="eslint-plugin-*"
               badge="eslint.interlace.tools"
               tagline={`A suite of ${numbers.plugins.total} ESLint plugins for security, accessibility, and modern framework correctness — each with a measured corpus and explicit comparison set.`}
               href="https://eslint.interlace.tools"
@@ -75,6 +87,15 @@ export default function HomePage() {
               href="https://serverless.interlace.tools"
               icon={<Server className="size-5" />}
               tags={["Serverless", "AWS", "API Gateway", "TypeScript"]}
+              status="shipping"
+            />
+            <ProductCard
+              name="@interlace/ui"
+              badge="ds.interlace.tools"
+              tagline="The design system behind every Interlace site — primitives, blocks, and the token baseline, installable with the shadcn CLI. Every story runs axe, dark mode, and RTL in CI."
+              href="https://ds.interlace.tools"
+              icon={<Palette className="size-5" />}
+              tags={["React", "Tailwind", "shadcn", "a11y"]}
               status="shipping"
             />
           </div>

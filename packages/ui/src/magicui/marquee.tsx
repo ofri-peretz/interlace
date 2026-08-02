@@ -116,7 +116,7 @@ export function Marquee({
           onClick={() => setPaused((p) => !p)}
           aria-label={isAnimating ? pauseLabel : `Resume ${pauseLabel.toLowerCase().replace(/^pause /, "")}`}
           aria-pressed={!isAnimating}
-          className="absolute right-2 top-2 z-10 inline-flex size-9 items-center justify-center rounded-full border border-fd-border bg-fd-background/80 text-fd-foreground backdrop-blur-sm transition-colors hover:bg-fd-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fd-ring"
+          className="absolute right-2 top-2 z-10 inline-flex size-9 items-center justify-center rounded-full border border-border bg-background/80 text-foreground backdrop-blur-sm transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           {isAnimating ? (
             <Pause className="size-4" aria-hidden="true" />

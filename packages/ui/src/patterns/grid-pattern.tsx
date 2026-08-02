@@ -82,7 +82,7 @@ interface GridPatternProps extends ComponentPropsWithoutRef<"svg"> {
  *
  * Color is driven by `currentColor` and Tailwind opacity utilities rather than
  * baked-in literals — set the grid tone with a text-color class on `className`
- * (e.g. `className="text-fd-border/40"`). This keeps the component on design
+ * (e.g. `className="text-border/40"`). This keeps the component on design
  * tokens with zero raw color literals in source (R19).
  *
  * Motion respects `prefers-reduced-motion`: when `animated` is set but the user
@@ -90,7 +90,7 @@ interface GridPatternProps extends ComponentPropsWithoutRef<"svg"> {
  *
  * @example
  * ```tsx
- * <div className="relative h-64 overflow-hidden text-fd-border/30">
+ * <div className="relative h-64 overflow-hidden text-border/30">
  *   <GridPattern data-testid="hero-grid" />
  * </div>
  * ```

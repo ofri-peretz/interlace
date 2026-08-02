@@ -164,10 +164,10 @@ export function FocusCard({
       data-testid={testId}
       className={cn(
         // Token-backed surface; fixed aspect ratio reserves space (CLS=0).
-        "group/card relative isolate aspect-[4/3] size-full overflow-hidden rounded-xl bg-fd-muted",
-        "ring-1 ring-fd-border",
+        "group/card relative isolate aspect-[4/3] size-full overflow-hidden rounded-xl bg-muted",
+        "ring-1 ring-border",
         // Focus ring for keyboard users landing on a focusable child.
-        "focus-within:ring-2 focus-within:ring-fd-ring",
+        "focus-within:ring-2 focus-within:ring-ring",
         !reducedMotion &&
           "transition-[filter,transform,opacity] duration-300 ease-out",
         // Recede when a sibling is active (driven by the grid's group) or when

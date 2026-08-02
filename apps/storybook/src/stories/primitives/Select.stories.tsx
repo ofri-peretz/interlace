@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from '@interlace/ui/select';
 import { withReducedMotion, withRtl } from '@/decorators';
+import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof Select> = {
   title: 'Primitives/Select',
@@ -142,4 +143,13 @@ export const RTL: Story = {
 export const ReducedMotion: Story = {
   ...Default,
   decorators: [withReducedMotion],
+};
+
+/** Loading placeholder — reserves the 36px trigger height (CLS=0). */
+export const Loading: Story = {
+  render: () => (
+    <div className="w-[220px]">
+      <Skeleton variant="select" />
+    </div>
+  ),
 };

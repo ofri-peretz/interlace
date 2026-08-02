@@ -71,3 +71,12 @@ export const Reset: Story = {
 
 export const Dark: Story = { ...SignIn, decorators: [withDark] };
 export const RTL: Story = { ...SignIn, decorators: [withRtl] };
+
+/**
+ * PageSkeleton — the page-level loading state a consumer renders from
+ * `loading.tsx` while the whole route is in flight. Shapes mirror the
+ * real layout so the swap costs no layout shift (R23).
+ */
+export const PageSkeleton: Story = {
+  render: () => <AuthTemplate.Skeleton />,
+};

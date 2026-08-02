@@ -72,7 +72,7 @@ function SectionHeader({
         {title}
       </Heading>
       {tagline ? (
-        <p className="text-fd-muted-foreground max-w-prose text-base md:text-lg">
+        <p className="text-muted-foreground max-w-prose text-base md:text-lg">
           {tagline}
         </p>
       ) : null}

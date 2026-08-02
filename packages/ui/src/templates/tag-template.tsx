@@ -18,6 +18,7 @@ import { Tag } from '../primitives/tag.js';
 import { Typography } from '../primitives/typography.js';
 import { Topbar } from '../patterns/topbar.js';
 import { Footer } from '../patterns/footer.js';
+import { Skeleton } from '../primitives/skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -105,6 +106,48 @@ function TagTemplate({
   );
 }
 TagTemplate.displayName = 'TagTemplate';
+
+/**
+ * Page-level loading state — the full-page silhouette of
+ * `<TagTemplate>`, not a single rect. Rendered by the consumer while
+ * the whole route's data is in flight (`loading.tsx` in Next.js), or as
+ * a `<SectionBoundary skeleton={…}>` override.
+ *
+ * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
+ * `role="status"` region for the page; inner skeletons pass
+ * `label={null}` so screen readers hear one announcement, not ten.
+ */
+function TagTemplateSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="tag-template-skeleton"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      role="status"
+      aria-busy="true"
+      aria-label="Loading tagged posts…"
+      className={cn('bg-background text-foreground', className)}
+      {...props}
+    >
+      <Skeleton
+        variant="rect"
+        className="h-14 w-full rounded-none"
+        label={null}
+      />
+      <Container size="content">
+        <Stack gap="xl" className="py-xl">
+          <Skeleton variant="page-header" label={null} />
+          <Skeleton variant="article-card" count={3} label={null} />
+          <Skeleton variant="tag" count={2} label={null} />
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+TagTemplateSkeleton.displayName = 'TagTemplateSkeleton';
+TagTemplate.Skeleton = TagTemplateSkeleton;
 
 export { TagTemplate };
 export type { TagTemplateProps };

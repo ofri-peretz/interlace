@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from '@interlace/ui/checkbox';
 import { withDark, withRtl } from '@/decorators';
+import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof Checkbox> = {
   title: 'Primitives/Checkbox',
@@ -69,4 +70,27 @@ export const RTL: Story = {
     </label>
   ),
   decorators: [withRtl],
+};
+
+/**
+ * Indeterminate — the third state, exposed as `aria-checked="mixed"` by
+ * Base UI. Used for a parent checkbox whose children are partly selected.
+ */
+export const Indeterminate: Story = {
+  render: () => (
+    <label className="flex cursor-pointer items-center gap-2">
+      <Checkbox aria-label="Select all rules" indeterminate />
+      <span>Select all rules</span>
+    </label>
+  ),
+};
+
+/** Loading placeholder — the 16px box. */
+export const Loading: Story = {
+  render: () => (
+    <div className="flex items-center gap-2">
+      <Skeleton variant="checkbox" />
+      <Skeleton variant="label" />
+    </div>
+  ),
 };

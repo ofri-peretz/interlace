@@ -36,8 +36,8 @@ export function LandingHero() {
         </h1>
 
         <p className={`max-w-2xl text-lg md:text-xl ${text.subheadline}`}>
-          ESLint plugins. Serverless plugins. Every claim measured. Every
-          dependency justified.{" "}
+          ESLint plugins. Serverless plugins. A design system. Every claim
+          measured. Every dependency justified.{" "}
           <span className={text.subheadlineAccent}>
             Same baseline everywhere.
           </span>

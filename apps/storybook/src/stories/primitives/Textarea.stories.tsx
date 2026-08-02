@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Textarea, MIN_VIEWPORT } from '@interlace/ui/textarea';
 import { withDark, withRtl } from '@/decorators';
+import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta = {
   title: 'Primitives/Textarea',
@@ -117,4 +118,46 @@ export const BelowMinViewport: Story = {
       </div>
     ),
   ],
+};
+
+/** Disabled — pointer-events off, 50% opacity (SC 1.4.3 exempt). */
+export const Disabled: Story = {
+  render: () => (
+    <Textarea
+      aria-label="Disabled notes"
+      className="w-[320px]"
+      defaultValue="Read-only while the run is in flight."
+      disabled
+    />
+  ),
+};
+
+/**
+ * Invalid — `aria-invalid` flips the border to `--destructive`
+ * (8.31:1 light / 10.43:1 dark on the page, past the 3:1 SC 1.4.11 floor)
+ * and pairs with a described-by error message.
+ */
+export const Invalid: Story = {
+  render: () => (
+    <div className="flex w-[320px] flex-col gap-1">
+      <Textarea
+        aria-label="Rule rationale"
+        aria-invalid="true"
+        aria-describedby="rationale-err"
+        placeholder="Why should this rule ship?"
+      />
+      <span id="rationale-err" className="text-destructive text-xs">
+        A rationale is required.
+      </span>
+    </div>
+  ),
+};
+
+/** Loading placeholder — reserves the md size's min-height. */
+export const Loading: Story = {
+  render: () => (
+    <div className="w-[320px]">
+      <Skeleton variant="textarea" />
+    </div>
+  ),
 };

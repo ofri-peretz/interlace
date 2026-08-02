@@ -135,27 +135,27 @@ describe('Section: vertical rhythm (LAYOUT §3, §5)', () => {
 });
 
 describe('Section: tone + divider (LAYOUT §8)', () => {
-  it('tone="muted" applies bg-fd-card/30', () => {
+  it('tone="muted" applies bg-card/30', () => {
     expect(render(<Section tone="muted">x</Section>)).toContain(
-      'bg-fd-card/30',
+      'bg-card/30',
     );
   });
 
-  it('tone="inset" applies bg-fd-card/50 + backdrop-blur-sm', () => {
+  it('tone="inset" applies bg-card/50 + backdrop-blur-sm', () => {
     const html = render(<Section tone="inset">x</Section>);
-    expect(html).toContain('bg-fd-card/50');
+    expect(html).toContain('bg-card/50');
     expect(html).toContain('backdrop-blur-sm');
   });
 
   it('tone="default" applies NO background class (the only "neutral" tone)', () => {
     const html = render(<Section tone="default">x</Section>);
-    expect(html).not.toContain('bg-fd-card');
+    expect(html).not.toContain('bg-card');
   });
 
   it('divider="top" applies border-t only', () => {
     const html = render(<Section divider="top">x</Section>);
     expect(html).toContain('border-t');
-    expect(html).toContain('border-fd-border');
+    expect(html).toContain('border-border');
     expect(html).not.toContain('border-y');
     expect(html).not.toContain('border-b ');
   });
@@ -381,10 +381,10 @@ describe('Section + Container composition: the stats-bar contract', () => {
     expect(html).toContain('lg:py-20');
 
     // §8 tone + divider
-    expect(html).toContain('bg-fd-card/50');
+    expect(html).toContain('bg-card/50');
     expect(html).toContain('backdrop-blur-sm');
     expect(html).toContain('border-y');
-    expect(html).toContain('border-fd-border');
+    expect(html).toContain('border-border');
 
     // §7 inner Container exists
     expect(html).toContain('data-slot="container"');

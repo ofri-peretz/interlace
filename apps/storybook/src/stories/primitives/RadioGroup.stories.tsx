@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RadioGroup, RadioGroupItem } from '@interlace/ui/radio-group';
 import { withDark, withRtl } from '@/decorators';
+import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof RadioGroup> = {
   title: 'Primitives/RadioGroup',
@@ -98,4 +99,27 @@ export const RTL: Story = {
     </RadioGroup>
   ),
   decorators: [withRtl],
+};
+
+/** Disabled group — every item inherits the state from the root. */
+export const Disabled: Story = {
+  render: () => (
+    <RadioGroup defaultValue="recommended" disabled aria-label="Preset">
+      {['recommended', 'strict'].map((value) => (
+        <label key={value} className="flex cursor-not-allowed items-center gap-2">
+          <RadioGroupItem value={value} aria-label={value} />
+          <span className="capitalize">{value}</span>
+        </label>
+      ))}
+    </RadioGroup>
+  ),
+};
+
+/** Loading placeholder — three option rows at the group's own gap-2 pitch. */
+export const Loading: Story = {
+  render: () => (
+    <div className="w-[260px]">
+      <Skeleton variant="radio-group" />
+    </div>
+  ),
 };

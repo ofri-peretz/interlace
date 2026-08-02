@@ -127,7 +127,7 @@ const GLOW_DURATION_SPREAD_S = 3;
  * @example
  * ```tsx
  * <div className="relative">
- *   <DotPattern className="text-fd-muted-foreground/40" data-testid="hero-dots" />
+ *   <DotPattern className="text-muted-foreground/40" data-testid="hero-dots" />
  *   <Content />
  * </div>
  * ```

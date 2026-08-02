@@ -164,6 +164,52 @@ describe('Skeleton variant coverage lock', () => {
     }
   });
 
+  /**
+   * Phase 1.1 addition — the two assertions above catch typos and orphans,
+   * but neither catches the OPPOSITE failure: a primitive shipping with no
+   * placeholder at all. A form that renders raw gaps while its data loads
+   * is a CLS bug (R23) and the reason "skeleton variant exists" is one of
+   * the four pillars of the component floor.
+   *
+   * This list is the form family (DESIGN-SYSTEM-PLAN phase 1.1). Later
+   * waves append their own category rather than widening this one, so a
+   * failure names the wave that owns the gap.
+   */
+  const FORM_PRIMITIVES = [
+    'checkbox',
+    'form',
+    'input',
+    'label',
+    'number-field',
+    'radio-group',
+    'select',
+    'slider',
+    'switch',
+    'textarea',
+  ] as const;
+
+  it('every form primitive has a registered skeleton variant', () => {
+    const known = new Set<string>(SKELETON_VARIANTS);
+    const missing = FORM_PRIMITIVES.filter((p) => !known.has(p));
+    expect(
+      missing,
+      `Form primitive(s) with no skeleton variant: ${missing.join(', ')}.\n` +
+        `Add the name to SKELETON_VARIANTS + a shape to SKELETON_VARIANT_CLASSES ` +
+        `in skeleton-variants.ts (and a composite body in skeleton.tsx if the ` +
+        `resting shape is more than one box).`,
+    ).toEqual([]);
+  });
+
+  it('every form primitive skeleton paints a non-empty shape', () => {
+    // A registered variant whose class string is empty would satisfy the
+    // key-parity test above while still reserving zero height — the exact
+    // layout shift the variant exists to prevent.
+    const empty = FORM_PRIMITIVES.filter(
+      (p) => !SKELETON_VARIANT_CLASSES[p]?.trim(),
+    );
+    expect(empty, `Empty skeleton shape for: ${empty.join(', ')}`).toEqual([]);
+  });
+
   it('exposes the variant union with at least the four generic shapes', () => {
     // Sanity floor — guards against an accidental empty array.
     for (const baseline of ['rect', 'circle', 'text', 'paragraph']) {

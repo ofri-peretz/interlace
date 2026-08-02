@@ -561,11 +561,13 @@
       "primitives-checkbox--disabled",
       "primitives-checkbox--invalid",
       "primitives-checkbox--dark",
-      "primitives-checkbox--rtl"
+      "primitives-checkbox--rtl",
+      "primitives-checkbox--indeterminate",
+      "primitives-checkbox--loading"
     ],
     "preview": "primitives-checkbox--default",
     "previewDark": "primitives-checkbox--dark",
-    "skeleton": null
+    "skeleton": "primitives-checkbox--loading"
   },
   "code-block": {
     "title": "Primitives/CodeBlock",
@@ -680,11 +682,12 @@
       "primitives-form--variants",
       "primitives-form--dark",
       "primitives-form--rtl",
-      "primitives-form--belowminviewport"
+      "primitives-form--belowminviewport",
+      "primitives-form--loading"
     ],
     "preview": "primitives-form--default",
     "previewDark": "primitives-form--dark",
-    "skeleton": null
+    "skeleton": "primitives-form--loading"
   },
   "grade-badge": {
     "title": "Primitives/GradeBadge",
@@ -732,22 +735,26 @@
       "primitives-input--disabled",
       "primitives-input--invalid",
       "primitives-input--dark",
-      "primitives-input--rtl"
+      "primitives-input--rtl",
+      "primitives-input--focused",
+      "primitives-input--loading"
     ],
     "preview": "primitives-input--default",
     "previewDark": "primitives-input--dark",
-    "skeleton": null
+    "skeleton": "primitives-input--loading"
   },
   "label": {
     "title": "Primitives/Label",
     "storyIds": [
       "primitives-label--default",
       "primitives-label--dark",
-      "primitives-label--rtl"
+      "primitives-label--rtl",
+      "primitives-label--disabled",
+      "primitives-label--loading"
     ],
     "preview": "primitives-label--default",
     "previewDark": "primitives-label--dark",
-    "skeleton": null
+    "skeleton": "primitives-label--loading"
   },
   "meteors": {
     "title": "Primitives/Meteors",
@@ -768,11 +775,14 @@
     "storyIds": [
       "primitives-numberfield--default",
       "primitives-numberfield--bounded",
-      "primitives-numberfield--disabled"
+      "primitives-numberfield--disabled",
+      "primitives-numberfield--dark",
+      "primitives-numberfield--rtl",
+      "primitives-numberfield--loading"
     ],
     "preview": "primitives-numberfield--default",
-    "previewDark": null,
-    "skeleton": null
+    "previewDark": "primitives-numberfield--dark",
+    "skeleton": "primitives-numberfield--loading"
   },
   "pagination": {
     "title": "Primitives/Pagination",
@@ -842,11 +852,13 @@
       "primitives-radiogroup--default",
       "primitives-radiogroup--invalid",
       "primitives-radiogroup--dark",
-      "primitives-radiogroup--rtl"
+      "primitives-radiogroup--rtl",
+      "primitives-radiogroup--disabled",
+      "primitives-radiogroup--loading"
     ],
     "preview": "primitives-radiogroup--default",
     "previewDark": "primitives-radiogroup--dark",
-    "skeleton": null
+    "skeleton": "primitives-radiogroup--loading"
   },
   "reading-time": {
     "title": "Primitives/ReadingTime",
@@ -911,11 +923,12 @@
       "primitives-select--dark",
       "primitives-select--invalid",
       "primitives-select--rtl",
-      "primitives-select--reducedmotion"
+      "primitives-select--reducedmotion",
+      "primitives-select--loading"
     ],
     "preview": "primitives-select--default",
     "previewDark": "primitives-select--dark",
-    "skeleton": null
+    "skeleton": "primitives-select--loading"
   },
   "separator": {
     "title": "Primitives/Separator",
@@ -975,11 +988,14 @@
       "primitives-slider--default",
       "primitives-slider--range",
       "primitives-slider--stepped",
-      "primitives-slider--disabled"
+      "primitives-slider--disabled",
+      "primitives-slider--dark",
+      "primitives-slider--rtl",
+      "primitives-slider--loading"
     ],
     "preview": "primitives-slider--default",
-    "previewDark": null,
-    "skeleton": null
+    "previewDark": "primitives-slider--dark",
+    "skeleton": "primitives-slider--loading"
   },
   "stack": {
     "title": "Primitives/Stack",
@@ -1003,11 +1019,13 @@
       "primitives-switch--keyboardtoggle",
       "primitives-switch--invalid",
       "primitives-switch--dark",
-      "primitives-switch--rtl"
+      "primitives-switch--rtl",
+      "primitives-switch--disabled",
+      "primitives-switch--loading"
     ],
     "preview": "primitives-switch--default",
     "previewDark": "primitives-switch--dark",
-    "skeleton": null
+    "skeleton": "primitives-switch--loading"
   },
   "tabs": {
     "title": "Primitives/Tabs",
@@ -1041,11 +1059,14 @@
       "primitives-textarea--variants",
       "primitives-textarea--dark",
       "primitives-textarea--rtl",
-      "primitives-textarea--belowminviewport"
+      "primitives-textarea--belowminviewport",
+      "primitives-textarea--disabled",
+      "primitives-textarea--invalid",
+      "primitives-textarea--loading"
     ],
     "preview": "primitives-textarea--default",
     "previewDark": "primitives-textarea--dark",
-    "skeleton": null
+    "skeleton": "primitives-textarea--loading"
   },
   "toast": {
     "title": "Primitives/Toast",
@@ -1119,7 +1140,8 @@
       "templates-articletemplate--errorstate",
       "templates-articletemplate--empty",
       "templates-articletemplate--dark",
-      "templates-articletemplate--rtl"
+      "templates-articletemplate--rtl",
+      "templates-articletemplate--pageskeleton"
     ],
     "preview": "templates-articletemplate--default",
     "previewDark": "templates-articletemplate--dark",
@@ -1132,7 +1154,8 @@
       "templates-authtemplate--signup",
       "templates-authtemplate--reset",
       "templates-authtemplate--dark",
-      "templates-authtemplate--rtl"
+      "templates-authtemplate--rtl",
+      "templates-authtemplate--pageskeleton"
     ],
     "preview": "templates-authtemplate--signin",
     "previewDark": "templates-authtemplate--dark",
@@ -1143,7 +1166,8 @@
     "storyIds": [
       "templates-authortemplate--default",
       "templates-authortemplate--dark",
-      "templates-authortemplate--rtl"
+      "templates-authortemplate--rtl",
+      "templates-authortemplate--pageskeleton"
     ],
     "preview": "templates-authortemplate--default",
     "previewDark": "templates-authortemplate--dark",
@@ -1154,7 +1178,8 @@
     "storyIds": [
       "templates-bloghometemplate--default",
       "templates-bloghometemplate--dark",
-      "templates-bloghometemplate--rtl"
+      "templates-bloghometemplate--rtl",
+      "templates-bloghometemplate--pageskeleton"
     ],
     "preview": "templates-bloghometemplate--default",
     "previewDark": "templates-bloghometemplate--dark",
@@ -1165,7 +1190,8 @@
     "storyIds": [
       "templates-dashboardtemplate--default",
       "templates-dashboardtemplate--dark",
-      "templates-dashboardtemplate--rtl"
+      "templates-dashboardtemplate--rtl",
+      "templates-dashboardtemplate--pageskeleton"
     ],
     "preview": "templates-dashboardtemplate--default",
     "previewDark": "templates-dashboardtemplate--dark",
@@ -1177,7 +1203,8 @@
       "templates-docspagetemplate--default",
       "templates-docspagetemplate--nosidebar",
       "templates-docspagetemplate--dark",
-      "templates-docspagetemplate--rtl"
+      "templates-docspagetemplate--rtl",
+      "templates-docspagetemplate--pageskeleton"
     ],
     "preview": "templates-docspagetemplate--default",
     "previewDark": "templates-docspagetemplate--dark",
@@ -1190,7 +1217,8 @@
       "templates-errortemplate--servererror",
       "templates-errortemplate--maintenance",
       "templates-errortemplate--dark",
-      "templates-errortemplate--rtl"
+      "templates-errortemplate--rtl",
+      "templates-errortemplate--pageskeleton"
     ],
     "preview": "templates-errortemplate--notfound",
     "previewDark": "templates-errortemplate--dark",
@@ -1201,7 +1229,8 @@
     "storyIds": [
       "templates-landingtemplate--default",
       "templates-landingtemplate--dark",
-      "templates-landingtemplate--rtl"
+      "templates-landingtemplate--rtl",
+      "templates-landingtemplate--pageskeleton"
     ],
     "preview": "templates-landingtemplate--default",
     "previewDark": "templates-landingtemplate--dark",
@@ -1215,7 +1244,8 @@
       "templates-registryitemtemplate--errorstate",
       "templates-registryitemtemplate--minimal",
       "templates-registryitemtemplate--dark",
-      "templates-registryitemtemplate--rtl"
+      "templates-registryitemtemplate--rtl",
+      "templates-registryitemtemplate--pageskeleton"
     ],
     "preview": "templates-registryitemtemplate--default",
     "previewDark": "templates-registryitemtemplate--dark",
@@ -1226,7 +1256,8 @@
     "storyIds": [
       "templates-scorecardtemplate--default",
       "templates-scorecardtemplate--dark",
-      "templates-scorecardtemplate--rtl"
+      "templates-scorecardtemplate--rtl",
+      "templates-scorecardtemplate--pageskeleton"
     ],
     "preview": "templates-scorecardtemplate--default",
     "previewDark": "templates-scorecardtemplate--dark",
@@ -1237,7 +1268,8 @@
     "storyIds": [
       "templates-settingstemplate--profile",
       "templates-settingstemplate--dark",
-      "templates-settingstemplate--rtl"
+      "templates-settingstemplate--rtl",
+      "templates-settingstemplate--pageskeleton"
     ],
     "preview": "templates-settingstemplate--profile",
     "previewDark": "templates-settingstemplate--dark",
@@ -1248,7 +1280,8 @@
     "storyIds": [
       "templates-statstemplate--default",
       "templates-statstemplate--dark",
-      "templates-statstemplate--rtl"
+      "templates-statstemplate--rtl",
+      "templates-statstemplate--pageskeleton"
     ],
     "preview": "templates-statstemplate--default",
     "previewDark": "templates-statstemplate--dark",
@@ -1259,7 +1292,8 @@
     "storyIds": [
       "templates-tagtemplate--default",
       "templates-tagtemplate--dark",
-      "templates-tagtemplate--rtl"
+      "templates-tagtemplate--rtl",
+      "templates-tagtemplate--pageskeleton"
     ],
     "preview": "templates-tagtemplate--default",
     "previewDark": "templates-tagtemplate--dark",

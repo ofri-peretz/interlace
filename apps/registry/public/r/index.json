@@ -287,7 +287,7 @@
       "meta": {
         "tier": "primitive",
         "client": true,
-        "minViewport": null,
+        "minViewport": 320,
         "loading": false
       }
     },
@@ -495,7 +495,7 @@
       "meta": {
         "tier": "primitive",
         "client": false,
-        "minViewport": null,
+        "minViewport": 320,
         "loading": false
       }
     },
@@ -511,7 +511,7 @@
       "meta": {
         "tier": "primitive",
         "client": false,
-        "minViewport": null,
+        "minViewport": 320,
         "loading": false
       }
     },
@@ -639,7 +639,7 @@
       "meta": {
         "tier": "primitive",
         "client": true,
-        "minViewport": null,
+        "minViewport": 320,
         "loading": false
       }
     },
@@ -719,7 +719,7 @@
       "meta": {
         "tier": "primitive",
         "client": true,
-        "minViewport": null,
+        "minViewport": 320,
         "loading": false
       }
     },
@@ -831,7 +831,7 @@
       "meta": {
         "tier": "primitive",
         "client": true,
-        "minViewport": null,
+        "minViewport": 320,
         "loading": false
       }
     },

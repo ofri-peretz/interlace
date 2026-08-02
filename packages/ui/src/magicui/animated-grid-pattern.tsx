@@ -16,7 +16,7 @@
  * | R7   | className merged + ...rest + ref | `cn(...)`, `{...props}`, `ref` forwarded to the root `<svg>`                        |
  * | R8   | Booleans no `isXxx`              | No boolean props; numeric/string knobs only                                        |
  * | R18  | Tailwind only                    | No inline `style`; geometry is SVG attributes, color is a Tailwind class           |
- * | R19  | Tokens only — no raw color       | Color via `currentColor` (default class `text-fd-muted-foreground/20`); no hex     |
+ * | R19  | Tokens only — no raw color       | Color via `currentColor` (default class `text-muted-foreground/20`); no hex     |
  * | R23  | CLS=0                            | `absolute inset-0 pointer-events-none` decorative chrome — reserves no flow space  |
  * | R25  | Perf — `'use client'` justified  | Reads `ResizeObserver` + `useReducedMotion`; gated to interactive use only         |
  * | R26  | A11y                            | `aria-hidden` — purely decorative, never announced; zero axe suppressions          |
@@ -131,7 +131,7 @@ const MIN_CELLS = 1;
  *   <AnimatedGridPattern
  *     numSquares={30}
  *     maxOpacity={0.4}
- *     className="text-fd-primary/20 [mask-image:radial-gradient(400px_circle_at_center,white,transparent)]"
+ *     className="text-primary/20 [mask-image:radial-gradient(400px_circle_at_center,white,transparent)]"
  *   />
  * </div>
  * ```
@@ -253,7 +253,7 @@ const AnimatedGridPattern = forwardRef<SVGSVGElement, AnimatedGridPatternProps>(
         data-testid={testId}
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute inset-0 h-full w-full fill-current stroke-current text-fd-muted-foreground/20",
+          "pointer-events-none absolute inset-0 h-full w-full fill-current stroke-current text-muted-foreground/20",
           className,
         )}
         {...props}

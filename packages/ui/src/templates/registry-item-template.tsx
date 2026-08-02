@@ -56,6 +56,7 @@ import { SectionBoundary } from '../primitives/section-boundary.js';
 import { Container } from '../primitives/container.js';
 import { Typography } from '../primitives/typography.js';
 import { Stack } from '../primitives/stack.js';
+import { Skeleton } from '../primitives/skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -184,6 +185,44 @@ function RegistryItemTemplate({
   );
 }
 RegistryItemTemplate.displayName = 'RegistryItemTemplate';
+
+/**
+ * Page-level loading state — the full-page silhouette of
+ * `<RegistryItemTemplate>`, not a single rect. Rendered by the consumer while
+ * the whole route's data is in flight (`loading.tsx` in Next.js), or as
+ * a `<SectionBoundary skeleton={…}>` override.
+ *
+ * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
+ * `role="status"` region for the page; inner skeletons pass
+ * `label={null}` so screen readers hear one announcement, not ten.
+ */
+function RegistryItemTemplateSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="registry-item-template-skeleton"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      role="status"
+      aria-busy="true"
+      aria-label="Loading component…"
+      className={cn('py-xl', className)}
+      {...props}
+    >
+      <Container size="content">
+        <Stack gap="xl">
+          <Skeleton variant="page-header" label={null} />
+          <Skeleton variant="code-block" label={null} />
+          <Skeleton variant="card" count={2} label={null} />
+          <Skeleton variant="article-card" label={null} />
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+RegistryItemTemplateSkeleton.displayName = 'RegistryItemTemplateSkeleton';
+RegistryItemTemplate.Skeleton = RegistryItemTemplateSkeleton;
 
 export { RegistryItemTemplate };
 export type { RegistryItemTemplateProps };

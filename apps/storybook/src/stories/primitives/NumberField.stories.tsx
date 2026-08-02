@@ -6,6 +6,8 @@ import {
   NumberFieldIncrement,
   NumberFieldInput,
 } from '@interlace/ui/number-field';
+import { Skeleton } from '@interlace/ui/skeleton';
+import { withDark, withRtl } from '@/decorators';
 
 const meta: Meta<typeof NumberField> = {
   title: 'Primitives/NumberField',
@@ -61,4 +63,19 @@ export const Disabled: Story = {
       </NumberFieldGroup>
     </NumberField>
   ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  decorators: [withDark],
+};
+
+export const RTL: Story = {
+  ...Default,
+  decorators: [withRtl],
+};
+
+/** Loading placeholder — the 36px grouped control. */
+export const Loading: Story = {
+  render: () => <Skeleton variant="number-field" />,
 };
