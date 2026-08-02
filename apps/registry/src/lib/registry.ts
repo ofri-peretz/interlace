@@ -87,10 +87,16 @@ export const loadItem = async (name: string): Promise<RegistryItem | null> => {
   }
 };
 
+const INDEX_FILES = new Set(['index.json', 'registry.json']);
+
 export const listItemNames = async (): Promise<string[]> => {
   const entries = await readdir(PUBLIC_R);
   return entries
-    .filter((f) => f.endsWith('.json') && f !== 'index.json')
+    // Neither index payload is a registry item — `registry.json` is the name
+    // the shadcn CLI resolves (and the directory requires), `index.json` the
+    // alias this app reads. Neither has a `files` array, so letting either
+    // through crashes the /c/[name] prerender.
+    .filter((f) => f.endsWith('.json') && !INDEX_FILES.has(f))
     .map((f) => f.replace(/\.json$/, ''))
     .sort();
 };

@@ -4,7 +4,7 @@
     {
       "id": "foundation",
       "title": "Foundation",
-      "description": "Layout, typography, and surface primitives — the structural floor every page composes on top of."
+      "description": "Layout, typography, and surface primitives \u2014 the structural floor every page composes on top of."
     },
     {
       "id": "a11y",
@@ -19,32 +19,32 @@
     {
       "id": "overlay",
       "title": "Overlay",
-      "description": "Floating surfaces — dialogs, popovers, menus, tooltips. Base UI owns focus + dismissal; we own surface + motion."
+      "description": "Floating surfaces \u2014 dialogs, popovers, menus, tooltips. Base UI owns focus + dismissal; we own surface + motion."
     },
     {
       "id": "feedback",
       "title": "Feedback",
-      "description": "Communicate state — toast, alert, progress, skeleton, badge. Tone tokens (info / success / warning / danger) keep semantics consistent."
+      "description": "Communicate state \u2014 toast, alert, progress, skeleton, badge. Tone tokens (info / success / warning / danger) keep semantics consistent."
     },
     {
       "id": "navigation",
       "title": "Navigation",
-      "description": "Wayfinding — tabs, breadcrumb, pagination, headers, footers. Keyboard-equivalent everywhere (DESIGN_PRINCIPLES #10)."
+      "description": "Wayfinding \u2014 tabs, breadcrumb, pagination, headers, footers. Keyboard-equivalent everywhere (DESIGN_PRINCIPLES #10)."
     },
     {
       "id": "data",
       "title": "Data display",
-      "description": "Stats, scorecards, avatars, scroll areas — the chrome around numbers and content."
+      "description": "Stats, scorecards, avatars, scroll areas \u2014 the chrome around numbers and content."
     },
     {
       "id": "blog",
       "title": "Blog & long-form",
-      "description": "Article-body surfaces — Callout, Prose, CodeBlock, Tag, TOC, article cards and templates. Install via @interlace/mdx-starter."
+      "description": "Article-body surfaces \u2014 Callout, Prose, CodeBlock, Tag, TOC, article cards and templates. Install via @interlace/mdx-starter."
     },
     {
       "id": "marketing",
       "title": "Marketing",
-      "description": "Above-the-fold sections that sell — hero, pricing, FAQ, testimonial, feature grid, CTA."
+      "description": "Above-the-fold sections that sell \u2014 hero, pricing, FAQ, testimonial, feature grid, CTA."
     },
     {
       "id": "decorative",
@@ -54,24 +54,24 @@
     {
       "id": "other",
       "title": "Other",
-      "description": "Uncategorised — falls here so a newly added component surfaces immediately without a manual step."
+      "description": "Uncategorised \u2014 falls here so a newly added component surfaces immediately without a manual step."
     }
   ],
   "tierCategories": [
     {
       "id": "primitive",
       "title": "Primitives",
-      "description": "Layer 1 — single-purpose components with a closed prop API. Installed flat into components/ui/."
+      "description": "Layer 1 \u2014 single-purpose components with a closed prop API. Installed flat into components/ui/."
     },
     {
       "id": "pattern",
       "title": "Patterns",
-      "description": "Layer 3 — multi-primitive compositions with a page-level job (hero, footer, pricing table)."
+      "description": "Layer 3 \u2014 multi-primitive compositions with a page-level job (hero, footer, pricing table)."
     },
     {
       "id": "template",
       "title": "Templates",
-      "description": "Layer 4 — full-page surfaces that compose patterns inside SectionBoundaries. The fastest path to a new site."
+      "description": "Layer 4 \u2014 full-page surfaces that compose patterns inside SectionBoundaries. The fastest path to a new site."
     },
     {
       "id": "effect",
@@ -86,7 +86,7 @@
     {
       "id": "theme",
       "title": "Theme",
-      "description": "The five-stylesheet CSS baseline — tokens, foundation, preflight, bridge, brand palette."
+      "description": "The five-stylesheet CSS baseline \u2014 tokens, foundation, preflight, bridge, brand palette."
     },
     {
       "id": "starter",
@@ -111,111 +111,110 @@
     "starter": "foundation"
   },
   "assignments": {
+    "a11y-starter": "a11y",
     "accordion": "navigation",
     "alert": "feedback",
     "alert-dialog": "overlay",
+    "article-card": "blog",
+    "article-list-grid": "blog",
+    "article-template": "blog",
     "aspect-ratio": "foundation",
+    "auth-template": "form",
+    "author-byline": "blog",
+    "author-template": "blog",
     "avatar": "data",
     "badge": "feedback",
+    "blog-home-template": "blog",
     "box": "foundation",
+    "brand-logo": "foundation",
     "breadcrumb": "navigation",
     "button": "form",
+    "button-variants": "form",
     "callout": "blog",
     "card": "foundation",
     "checkbox": "form",
+    "cn": "foundation",
     "code-block": "blog",
+    "code-window": "blog",
     "collapsible": "navigation",
     "container": "foundation",
     "context-menu": "overlay",
+    "cta-section": "marketing",
+    "dashboard-template": "data",
     "data-state": "feedback",
     "dialog": "overlay",
+    "docs-page-template": "blog",
+    "dot-pattern": "decorative",
     "dropdown-menu": "overlay",
+    "empty-state": "feedback",
+    "error-template": "feedback",
+    "faq": "marketing",
+    "feature-grid": "marketing",
+    "figure": "blog",
     "focus-ring": "a11y",
+    "footer": "navigation",
     "form": "form",
     "grade-badge": "feedback",
     "grid": "foundation",
+    "grid-pattern": "decorative",
+    "hero": "marketing",
+    "hero-cosmic": "marketing",
     "hover-card": "overlay",
     "input": "form",
+    "interactive-grid-pattern": "decorative",
     "label": "foundation",
+    "landing-template": "marketing",
+    "layout-starter": "foundation",
+    "mdx-starter": "blog",
     "meteors": "decorative",
+    "newsletter-form": "marketing",
     "number-field": "form",
+    "page-header": "navigation",
     "pagination": "navigation",
     "popover": "overlay",
+    "prev-next-post": "blog",
+    "pricing-table": "marketing",
     "progress": "feedback",
     "prose": "blog",
     "published-date": "blog",
     "radio-group": "form",
     "reading-time": "blog",
+    "registry-item-template": "blog",
+    "related-posts": "blog",
+    "scorecard-row": "data",
+    "scorecard-template": "data",
     "scroll-area": "data",
     "section": "foundation",
     "section-boundary": "foundation",
+    "section-header": "navigation",
     "select": "form",
     "separator": "foundation",
+    "settings-template": "form",
+    "share-buttons": "blog",
     "sheet": "overlay",
+    "sign-in-form": "form",
     "skeleton": "feedback",
+    "skeleton-variants": "feedback",
     "skip-link": "a11y",
     "slider": "form",
     "stack": "foundation",
+    "stat-card": "data",
+    "stat-group": "data",
+    "stats-template": "data",
     "switch": "form",
     "tabs": "navigation",
     "tag": "blog",
+    "tag-template": "blog",
+    "testimonial": "marketing",
     "textarea": "form",
+    "theme": "foundation",
     "toast": "feedback",
     "toc": "blog",
     "toggle": "form",
     "tooltip": "overlay",
-    "typography": "foundation",
-    "visually-hidden": "a11y",
-
-    "article-card": "blog",
-    "article-list-grid": "blog",
-    "author-byline": "blog",
-    "brand-logo": "foundation",
-    "code-window": "blog",
-    "cta-section": "marketing",
-    "dot-pattern": "decorative",
-    "empty-state": "feedback",
-    "faq": "marketing",
-    "feature-grid": "marketing",
-    "figure": "blog",
-    "footer": "navigation",
-    "grid-pattern": "decorative",
-    "hero": "marketing",
-    "hero-cosmic": "marketing",
-    "interactive-grid-pattern": "decorative",
-    "newsletter-form": "marketing",
-    "page-header": "navigation",
-    "prev-next-post": "blog",
-    "pricing-table": "marketing",
-    "related-posts": "blog",
-    "scorecard-row": "data",
-    "section-header": "navigation",
-    "share-buttons": "blog",
-    "sign-in-form": "form",
-    "stat-card": "data",
-    "stat-group": "data",
-    "testimonial": "marketing",
     "topbar": "navigation",
-
-    "article-template": "blog",
-    "auth-template": "form",
-    "author-template": "blog",
-    "blog-home-template": "blog",
-    "dashboard-template": "data",
-    "docs-page-template": "blog",
-    "error-template": "feedback",
-    "landing-template": "marketing",
-    "registry-item-template": "blog",
-    "scorecard-template": "data",
-    "settings-template": "form",
-    "stats-template": "data",
-    "tag-template": "blog",
-
-    "cn": "foundation",
+    "typography": "foundation",
     "use-reduced-motion": "foundation",
-    "theme": "foundation",
-    "a11y-starter": "a11y",
-    "layout-starter": "foundation",
-    "mdx-starter": "blog"
+    "visually-hidden": "a11y"
   }
 }

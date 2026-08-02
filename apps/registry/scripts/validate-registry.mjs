@@ -20,6 +20,8 @@
  */
 
 import { readdir, readFile } from 'node:fs/promises';
+
+const INDEX_FILES = new Set(['index.json', 'registry.json']);
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -60,7 +62,12 @@ const main = async () => {
       .join('; ');
 
   const fileNames = (await readdir(OUT_DIR))
-    .filter((f) => f.endsWith('.json') && f !== 'index.json')
+    // Both index payloads validate against the REGISTRY schema, not the
+    // registry-ITEM schema — `registry.json` is the name the shadcn CLI
+    // resolves (and the directory requires at the root), `index.json` the
+    // alias the app reads. Checking them as items reports a dozen phantom
+    // failures ("missing title", "has no files", …).
+    .filter((f) => f.endsWith('.json') && !INDEX_FILES.has(f))
     .sort();
 
   const names = new Set(fileNames.map((f) => f.replace(/\.json$/, '')));
@@ -132,6 +139,19 @@ const main = async () => {
   }
   for (const name of indexed) {
     if (!names.has(name)) fail('r/index.json', `lists absent item "${name}"`);
+  }
+
+  // ─── registry.json ─────────────────────────────────────────────────────
+  // The filename the shadcn CLI resolves for `list`/`search`, and the one the
+  // registry directory requires at the root. Same payload as index.json — if
+  // the two ever drift, `shadcn list` and the site disagree about what ships.
+  const registryIndex = await readJson(path.join(OUT_DIR, 'registry.json'));
+  if (!validateRegistry(registryIndex)) {
+    fail('r/registry.json', ajvErrors(validateRegistry));
+  } else if (
+    JSON.stringify(registryIndex) !== JSON.stringify(index)
+  ) {
+    fail('r/registry.json', 'differs from index.json — they must be identical');
   }
 
   if (errors.length) {

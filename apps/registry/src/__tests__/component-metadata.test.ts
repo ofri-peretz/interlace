@@ -47,8 +47,12 @@ describe('extractPropsTables', () => {
   it('finds a props table for the large majority of shipped components', async () => {
     const index = JSON.parse(await readFile(join(R, 'index.json'), 'utf8'));
     const components = index.items.filter(
-      (i: { meta?: { tier: string } }) =>
-        i.meta?.tier === 'primitive' || i.meta?.tier === 'pattern',
+      (i: { name: string; meta?: { tier: string } }) =>
+        (i.meta?.tier === 'primitive' || i.meta?.tier === 'pattern') &&
+        // `*-variants` items are cva definitions, not components — they export
+        // a class-name builder and have no props interface by construction, so
+        // they belong in neither side of this ratio.
+        !i.name.endsWith('-variants'),
     );
     const withTable: string[] = [];
     for (const item of components) {
