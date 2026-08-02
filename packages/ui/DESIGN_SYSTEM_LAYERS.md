@@ -8,6 +8,8 @@ docs page, **start here**.
 
 Sibling docs that drill into specific layers:
 
+- `FUMADOCS_BRIDGE.md` (layer-2 seam — the ONLY coupling between the DS
+  and fumadocs; read before touching `theme.css` or `src/fumadocs/`)
 - `STYLES.md` (canonical CSS import order, this doc summarizes)
 - `TYPOGRAPHY_PHILOSOPHY.md` (foundation layer — type scale)
 - `LAYOUT_PHILOSOPHY.md` (foundation layer — spacing scale)
@@ -111,6 +113,15 @@ unchanged. The semantics layer then overrides the bridge for our brand
 bridge layer, the DS would only work outside fumadocs; without the
 semantics layer, the brand wouldn't override.
 
+**The bridge is the ONLY seam with fumadocs** — a first-class contract
+documented in `FUMADOCS_BRIDGE.md` and locked by
+`__tests__/fumadocs-bridge-lock.test.ts`. In short: DS components never
+import `fumadocs-ui` and never style with `*-fd-*` classes (they'd render
+unstyled outside a docs app); `src/fumadocs/` is the one adapter
+directory, allowed only the headless `fumadocs-core/*` entrypoints
+enumerated in that doc; fumadocs pages consume DS components through the
+bridge tokens. Read it before touching `theme.css` or `src/fumadocs/`.
+
 ---
 
 ## Layer 3 — Components (React primitives)
@@ -171,6 +182,13 @@ AuthTemplate (signin / signup / reset), ErrorTemplate (404 / 500).
 **Rule:** Every independently-loadable region MUST be wrapped in
 `<SectionBoundary name="…">` so the page streams section-by-section.
 A template that renders all-or-nothing is a regression — wrap it.
+
+**Rule:** Every template ships a page-level loading state as a
+`<XTemplate.Skeleton />` static — the full-page silhouette composed from
+`<Skeleton variant>` shapes, not a single rect. It's what a consumer's
+`loading.tsx` renders, and what keeps the first paint CLS-neutral (R23).
+One `role="status"` region per page; inner skeletons pass `label={null}`
+so screen readers hear one announcement, not ten.
 
 See `packages/ui/src/templates/README.md` for the per-template contract.
 
@@ -258,8 +276,9 @@ barrel.
 | Layer | Enforcement |
 |---|---|
 | 1 (Primitives) | `no-raw-color-literal` (ESLint) blocks raw hex outside `@interlace/ui/styles/interlace-theme.css`. |
-| 2 (Semantics) | (no automated check yet) — manual review during PR. |
+| 2 (Semantics) | `fumadocs-bridge-lock.test.ts` — bridge is the only seam: no `fumadocs-ui` import, no `*-fd-*` class, `theme.css` layered + complete, adapter allowlist. See `FUMADOCS_BRIDGE.md`. |
 | 3 (Components) | R1–R26 via `componentApi` ESLint preset (8 rules). |
 | 4 (Patterns) | Lives under `patterns/`; old `blocks/` aliases marked `@deprecated`. |
-| 5 (Templates) | `templates-section-boundary-lock.test.ts` (planned) asserts every template composes `<SectionBoundary>`. |
-| **State (Skeleton variant)** | `skeleton-variant-coverage-lock.test.ts` (planned) asserts every component name has a matching Skeleton variant. TypeScript catches at dev. |
+| 5 (Templates) | `templates-section-boundary-lock.test.ts` asserts every template composes `<SectionBoundary>` AND ships a `<X.Skeleton>` page-level loading state. |
+| **State (Skeleton variant)** | `skeleton-variant-coverage-lock.test.ts` asserts every `<Skeleton variant="…">` call site resolves to a registered variant. TypeScript catches at dev. |
+| **Viewport / tier** | `primitives-min-viewport-lock.test.tsx` pins `MIN_VIEWPORT` + the `'use client'` tier for every primitive AND all 13 templates. |

@@ -43,7 +43,7 @@ import { useReducedMotion } from "../lib/use-reduced-motion.js";
  * @example
  * ```tsx
  * <BackgroundGradientAnimation data-testid="hero-bg" className="h-[40rem]">
- *   <h1 className="text-fd-foreground">Your content</h1>
+ *   <h1 className="text-foreground">Your content</h1>
  * </BackgroundGradientAnimation>
  * ```
  */

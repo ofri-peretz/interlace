@@ -35,14 +35,14 @@ const sectionVariants = cva('relative', {
     },
     tone: {
       default: '',
-      muted: 'bg-fd-card/30',
-      inset: 'bg-fd-card/50 backdrop-blur-sm',
+      muted: 'bg-card/30',
+      inset: 'bg-card/50 backdrop-blur-sm',
     },
     divider: {
       none: '',
-      top: 'border-t border-fd-border',
-      bottom: 'border-b border-fd-border',
-      both: 'border-y border-fd-border',
+      top: 'border-t border-border',
+      bottom: 'border-b border-border',
+      both: 'border-y border-border',
     },
   },
   defaultVariants: {

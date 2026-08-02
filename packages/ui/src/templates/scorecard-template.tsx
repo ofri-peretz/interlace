@@ -23,6 +23,7 @@ import { Typography } from '../primitives/typography.js';
 import { Topbar } from '../patterns/topbar.js';
 import { Footer } from '../patterns/footer.js';
 import { ScorecardRow } from '../patterns/scorecard-row.js';
+import { Skeleton } from '../primitives/skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -142,6 +143,48 @@ function ScorecardTemplate({
   );
 }
 ScorecardTemplate.displayName = 'ScorecardTemplate';
+
+/**
+ * Page-level loading state — the full-page silhouette of
+ * `<ScorecardTemplate>`, not a single rect. Rendered by the consumer while
+ * the whole route's data is in flight (`loading.tsx` in Next.js), or as
+ * a `<SectionBoundary skeleton={…}>` override.
+ *
+ * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
+ * `role="status"` region for the page; inner skeletons pass
+ * `label={null}` so screen readers hear one announcement, not ten.
+ */
+function ScorecardTemplateSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="scorecard-template-skeleton"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      role="status"
+      aria-busy="true"
+      aria-label="Loading scorecard…"
+      className={cn('bg-background text-foreground', className)}
+      {...props}
+    >
+      <Skeleton
+        variant="rect"
+        className="h-14 w-full rounded-none"
+        label={null}
+      />
+      <Container size="content">
+        <Stack gap="xl" className="py-xl">
+          <Skeleton variant="page-header" label={null} />
+          <Skeleton variant="card" count={4} label={null} />
+          <Skeleton variant="text" label={null} />
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+ScorecardTemplateSkeleton.displayName = 'ScorecardTemplateSkeleton';
+ScorecardTemplate.Skeleton = ScorecardTemplateSkeleton;
 
 export { ScorecardTemplate };
 export type { ScorecardTemplateProps, ScorecardDimension };

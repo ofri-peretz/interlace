@@ -12,14 +12,22 @@ A template:
    page, it's a primitive or a pattern, not a template.
 2. **Composes patterns + primitives only** — no direct DOM, no inline
    styles, no raw token literals (R18 / R19 inherit from the primitive
-   contract).
+   contract). Every composed piece must itself pass the floor; a template
+   can't launder a non-conforming component into a page. Host-specific
+   tokens (`bg-fd-card`) are banned here as everywhere — see
+   `../../FUMADOCS_BRIDGE.md`.
 3. **Streams section-by-section** — every independently-loadable region
    is wrapped in `<SectionBoundary name="…">` so the header can paint
    while the body is still fetching, and each section gets its own
    skeleton + error fallback.
-4. **Ships its own skeleton variant** — `<XTemplate.Skeleton />` (or a
-   default state via the unified `<Skeleton variant="x-template" />`)
-   renders the full-page loading layout, not a single rect.
+4. **Ships its own page-level skeleton** — `<XTemplate.Skeleton />`
+   renders the full-page loading layout, not a single rect. Compose it
+   from `<Skeleton variant>` shapes that mirror the real sections so the
+   swap is CLS-neutral (R23), give the root one
+   `role="status" aria-busy="true" aria-label="Loading…"`, and pass
+   `label={null}` to the inner skeletons so screen readers hear one
+   announcement instead of ten. This is what a consumer's `loading.tsx`
+   renders. Locked by `templates-section-boundary-lock.test.ts`.
 5. **Carries `MIN_VIEWPORT`** and a `data-min-viewport` attribute on the
    root, like every primitive.
 6. **Has a Storybook story** under `apps/storybook/src/stories/templates/`

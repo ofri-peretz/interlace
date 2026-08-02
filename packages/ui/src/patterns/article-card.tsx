@@ -376,7 +376,7 @@ function StackBody({
                     height={24}
                     loading="lazy"
                     decoding="async"
-                    className="border-fd-border h-6 w-6 shrink-0 rounded-full border"
+                    className="border-border h-6 w-6 shrink-0 rounded-full border"
                   />
                 ) : null}
                 <span className="text-foreground truncate text-sm font-medium">
@@ -442,7 +442,7 @@ function StackBody({
       </CardContent>
 
       {meta ? (
-        <CardFooter className="text-muted-foreground mt-2 gap-4 border-t border-fd-border pt-3">
+        <CardFooter className="text-muted-foreground mt-2 gap-4 border-t border-border pt-3">
           <MetaChips meta={meta} tone="muted" />
           <span className="ml-auto opacity-0 transition-opacity group-hover:opacity-100">
             <ExternalLink className="text-primary h-4 w-4" aria-hidden />

@@ -29,6 +29,7 @@ import { Container } from '../primitives/container.js';
 import { SectionBoundary } from '../primitives/section-boundary.js';
 import { Stack } from '../primitives/stack.js';
 import { Typography } from '../primitives/typography.js';
+import { Skeleton } from '../primitives/skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -119,6 +120,46 @@ function AuthTemplate({
   );
 }
 AuthTemplate.displayName = 'AuthTemplate';
+
+/**
+ * Page-level loading state — the full-page silhouette of
+ * `<AuthTemplate>`, not a single rect. Rendered by the consumer while
+ * the whole route's data is in flight (`loading.tsx` in Next.js), or as
+ * a `<SectionBoundary skeleton={…}>` override.
+ *
+ * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
+ * `role="status"` region for the page; inner skeletons pass
+ * `label={null}` so screen readers hear one announcement, not ten.
+ */
+function AuthTemplateSkeleton({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="auth-template-skeleton"
+      data-min-viewport={String(MIN_VIEWPORT)}
+      role="status"
+      aria-busy="true"
+      aria-label="Loading…"
+      className={cn(
+        'bg-background flex min-h-screen items-center justify-center py-xl',
+        className,
+      )}
+      {...props}
+    >
+      <Container size="prose">
+        <Stack gap="lg">
+          <Skeleton variant="page-header" label={null} />
+          <Skeleton variant="newsletter-form" label={null} />
+          <Skeleton variant="text" label={null} />
+        </Stack>
+      </Container>
+    </div>
+  );
+}
+AuthTemplateSkeleton.displayName = 'AuthTemplateSkeleton';
+AuthTemplate.Skeleton = AuthTemplateSkeleton;
 
 export { AuthTemplate };
 export type { AuthTemplateProps, AuthVariant };
