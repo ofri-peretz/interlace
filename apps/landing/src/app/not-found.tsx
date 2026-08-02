@@ -7,9 +7,10 @@ import { BrandMark } from '@/components/brand-mark';
 export const metadata: Metadata = {
   title: 'Page not found',
   description: 'This page does not exist on interlace.tools.',
-  // A 404 has no content worth ranking, and indexing it competes with the real
-  // pages for the same queries.
-  robots: { index: false, follow: false },
+  // noindex: a 404 has no content worth ranking, and indexing it competes with
+  // the real pages. follow stays TRUE so crawlers still traverse the recovery
+  // links below — noindex,nofollow would strand them on a dead end.
+  robots: { index: false, follow: true },
 };
 
 export default function NotFound() {
