@@ -15,7 +15,10 @@ Interlace is a family of TypeScript-native developer tools. Every plugin we ship
 
 | Product                   | Where to read                | Subdomain                                                        |
 | ------------------------- | ---------------------------- | ---------------------------------------------------------------- |
-| `@interlace/eslint-*`     | ESLint plugin suite          | [eslint.interlace.tools](https://eslint.interlace.tools)         |
+| `eslint-plugin-*`         | ESLint plugin suite          | [eslint.interlace.tools](https://eslint.interlace.tools)         |
 | `@interlace/serverless-*` | Serverless Framework plugins | [serverless.interlace.tools](https://serverless.interlace.tools) |
+| `@interlace/ui`           | Design system + registry     | [ds.interlace.tools](https://ds.interlace.tools)                 |
+
+The ESLint plugins are **unscoped** — you install `eslint-plugin-jwt`, with no `@interlace/` prefix — because ESLint resolves plugins by that name convention. The only scoped ESLint package is `@interlace/eslint-devkit`, the authoring toolkit.
 
 More on the way.
