@@ -55,6 +55,14 @@ import { cn } from '../lib/cn.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
+/**
+ * Base UI wraps the React event (`BaseUIEvent<…>`), so derive the trigger's
+ * keydown signature from the component's own props rather than hand-typing it.
+ */
+type TriggerKeyDown = NonNullable<
+  React.ComponentProps<typeof BaseContextMenu.Trigger>['onKeyDown']
+>;
+
 function ContextMenu(
   props: React.ComponentProps<typeof BaseContextMenu.Root>,
 ) {
@@ -84,11 +92,6 @@ function ContextMenuTrigger({
   tabIndex = 0,
   ...props
 }: React.ComponentProps<typeof BaseContextMenu.Trigger>) {
-  // Base UI wraps the React event (`BaseUIEvent<…>`), so derive the handler
-  // signature from the component's own props rather than hand-typing it.
-  type TriggerKeyDown = NonNullable<
-    React.ComponentProps<typeof BaseContextMenu.Trigger>['onKeyDown']
-  >;
   const handleKeyDown: TriggerKeyDown = (event) => {
     onKeyDown?.(event);
     if (event.defaultPrevented) return;
@@ -317,6 +320,10 @@ type ContextMenuComposeItem =
       tone?: 'default' | 'destructive';
     }
   | { type: 'separator' }
+  /**
+   * Opens a labelled group that runs until the next label or separator.
+   * A label with no items after it is dropped — see `renderComposeItems`.
+   */
   | { type: 'label'; label: React.ReactNode };
 
 interface ContextMenuComposeProps {
@@ -360,7 +367,15 @@ function renderComposeItems(items: ContextMenuComposeItem[]) {
   let groupKey = 0;
 
   const flushGroup = () => {
-    if (groupLabel === null && group.length === 0) return;
+    // A group with no members is dropped, label and all. `Menu.Group` won't
+    // crash on empty children, but a `role="group"` whose `aria-labelledby`
+    // points at a heading with nothing beneath it announces a section that
+    // isn't there — worse than omitting it. Reachable via two consecutive
+    // labels, or a label immediately followed by a separator.
+    if (group.length === 0) {
+      groupLabel = null;
+      return;
+    }
     out.push(
       <ContextMenuGroup key={`group-${groupKey++}`}>
         {groupLabel !== null ? (
