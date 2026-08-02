@@ -210,6 +210,60 @@ describe('Skeleton variant coverage lock', () => {
     expect(empty, `Empty skeleton shape for: ${empty.join(', ')}`).toEqual([]);
   });
 
+  it('every CompositeBody case is routed there by COMPOSITE_VARIANTS', () => {
+    // Two lists in skeleton.tsx have to agree, and TypeScript checks neither
+    // against the other:
+    //
+    //   COMPOSITE_VARIANTS — the Set that decides whether a variant renders
+    //                        via CompositeSkeleton at all
+    //   CompositeBody      — the switch that draws the inner shape
+    //
+    // A variant with a `case` but no Set entry type-checks, renders, and
+    // paints NOTHING: it falls through to the simple `<div>` path and the
+    // inner shape is unreachable. That shipped once (`prev-next-post`, caught
+    // in review on the PR that added it), which is why it is locked now.
+    const source = readFileSync(
+      resolve(__dirname, '../src/primitives/skeleton.tsx'),
+      'utf-8',
+    );
+
+    const setBlock = /const COMPOSITE_VARIANTS = new Set<SkeletonVariant>\(\[([\s\S]*?)\]\)/.exec(
+      source,
+    );
+    expect(
+      setBlock,
+      'Could not find the COMPOSITE_VARIANTS declaration in skeleton.tsx — ' +
+        'this lock parses it structurally; update the pattern alongside the code.',
+    ).not.toBeNull();
+
+    const routed = new Set(
+      [...setBlock![1].matchAll(/'([a-z][a-z0-9-]*)'/g)].map((m) => m[1]),
+    );
+
+    const bodyBlock = /function CompositeBody\([\s\S]*?\n}/.exec(source);
+    expect(bodyBlock, 'Could not find CompositeBody in skeleton.tsx').not.toBeNull();
+
+    const drawn = new Set(
+      [...bodyBlock![0].matchAll(/case '([a-z][a-z0-9-]*)':/g)].map((m) => m[1]),
+    );
+
+    const unreachable = [...drawn].filter((v) => !routed.has(v));
+    expect(
+      unreachable,
+      `CompositeBody draws these variants, but COMPOSITE_VARIANTS never routes ` +
+        `them there — they render as an empty box:\n` +
+        unreachable.map((v) => `  - ${v}`).join('\n'),
+    ).toEqual([]);
+
+    const shapeless = [...routed].filter((v) => !drawn.has(v));
+    expect(
+      shapeless,
+      `COMPOSITE_VARIANTS routes these to CompositeSkeleton, but CompositeBody ` +
+        `has no case for them — they render the outer box with no inner shape:\n` +
+        shapeless.map((v) => `  - ${v}`).join('\n'),
+    ).toEqual([]);
+  });
+
   it('exposes the variant union with at least the four generic shapes', () => {
     // Sanity floor — guards against an accidental empty array.
     for (const baseline of ['rect', 'circle', 'text', 'paragraph']) {

@@ -84,11 +84,22 @@ interface SkeletonProps
   label?: string | null;
 }
 
+/**
+ * Variants that render an inner shape via `CompositeBody` rather than a bare
+ * tinted box.
+ *
+ * This Set must stay in step with the `case` labels in `CompositeBody` —
+ * membership here is what routes a variant there at all. A variant with a
+ * `case` but no entry silently falls through to the simple `<div>` path and
+ * paints nothing; `skeleton-variant-coverage-lock` asserts the two agree so
+ * that can't happen twice.
+ */
 const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   'article-card',
   'author-byline',
   'newsletter-form',
   'page-header',
+  'prev-next-post',
   'stat-card',
   'card',
   'code-block',
