@@ -35,6 +35,22 @@ export const SKELETON_VARIANTS = [
   'prose',
   'tag',
 
+  // ── Form family (Phase 1.1) ──────────────────────────────────────────
+  // One variant per form primitive so a loading form reserves the exact
+  // resting silhouette of the control it replaces — CLS=0 (R23). The
+  // coverage assertion in `skeleton-variant-coverage-lock.test.ts` pins
+  // this list to the primitives directory, so a new form control cannot
+  // ship without its placeholder.
+  'checkbox',
+  'form',
+  'label',
+  'number-field',
+  'radio-group',
+  'select',
+  'slider',
+  'switch',
+  'textarea',
+
   // ── Pattern-shaped (matches a pattern's full layout) ─────────────────
   'article-card',
   'author-byline',
@@ -75,6 +91,23 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   input: 'h-9 w-full rounded-md',
   prose: 'h-4 w-full rounded-sm',
   tag: 'h-5 w-12 rounded-full',
+
+  // Form family — silhouettes match the resting control geometry exactly.
+  //   checkbox / radio dot   size-4   (16px, per checkbox.tsx / radio-group.tsx)
+  //   switch track           h-5 w-8  (the 1.15rem track rounds to h-5 here)
+  //   select trigger / input h-9      (36px control height)
+  //   slider rail            h-2      (per slider.tsx SliderTrack)
+  //   textarea md            min-h-2xl (per textarea.tsx size=md)
+  checkbox: 'size-4 rounded-sm',
+  label: 'h-4 w-24 rounded-sm',
+  'number-field': 'h-9 w-32 rounded-md',
+  select: 'h-9 w-full rounded-md',
+  slider: 'h-2 w-full rounded-full',
+  switch: 'h-5 w-8 rounded-full',
+  textarea: 'min-h-2xl w-full rounded-md',
+  // Composite (inner JSX in skeleton.tsx): a field group / option list.
+  form: 'w-full rounded-md',
+  'radio-group': 'w-full rounded-md',
 
   // Pattern-shaped (outer; composite inner rendered in skeleton.tsx)
   'article-card': 'h-72 w-full rounded-xl',

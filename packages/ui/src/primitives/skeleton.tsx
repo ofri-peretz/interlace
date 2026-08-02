@@ -92,6 +92,10 @@ const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   'stat-card',
   'card',
   'code-block',
+  // Form family — both are containers of repeating rows, so their
+  // silhouette is structural rather than a single painted box.
+  'form',
+  'radio-group',
 ]);
 
 function Skeleton({
@@ -253,6 +257,34 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
           <div className="bg-muted-foreground/10 h-5 w-1/3 rounded-sm" />
           <div className="bg-muted-foreground/10 h-4 w-full rounded-sm" />
           <div className="bg-muted-foreground/10 h-4 w-2/3 rounded-sm" />
+        </div>
+      );
+    case 'form':
+      // Three label+control rows and a submit button — the resting shape
+      // of <Form><Field>…</Field></Form> so the page doesn't jump when
+      // the real fields hydrate.
+      return (
+        <div className="flex flex-col gap-md">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="flex flex-col gap-xs">
+              <div className="bg-muted-foreground/10 h-4 w-24 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-9 w-full rounded-md" />
+            </div>
+          ))}
+          <div className="bg-muted-foreground/10 h-9 w-24 rounded-md" />
+        </div>
+      );
+    case 'radio-group':
+      // Three option rows at the primitive's own `gap-2` pitch: a 16px
+      // dot plus its label.
+      return (
+        <div className="flex flex-col gap-2">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="flex items-center gap-2">
+              <div className="bg-muted-foreground/10 size-4 rounded-full" />
+              <div className="bg-muted-foreground/10 h-4 w-32 rounded-sm" />
+            </div>
+          ))}
         </div>
       );
     case 'code-block':

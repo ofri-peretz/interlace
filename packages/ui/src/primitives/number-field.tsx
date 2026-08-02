@@ -19,9 +19,24 @@
  *
  * ## MIN_VIEWPORT — 320
  *
- * Same target-size floor as Slider/Toggle — the increment/decrement buttons
- * sit at the 32-px size minimum. Native keyboard (Up/Down arrows) inherited
- * from Base UI.
+ * ## Target size (SC 2.5.8, AA)
+ *
+ * The increment / decrement buttons are `w-9` (36px) against the input's
+ * `h-9` (36px) — 36×36, comfortably past the 24×24 floor with no
+ * pseudo-element hit area needed. Native keyboard (Up/Down arrows)
+ * inherited from Base UI.
+ *
+ * ## Contrast (verified by token math)
+ *
+ * | Composite                                       | Light   | Dark    | Floor           |
+ * | ----------------------------------------------- | ------- | ------- | --------------- |
+ * | group `border-input` on `--background`          | 3.62:1  | 3.35:1  | 3:1 (SC 1.4.11) |
+ * | value text `--foreground` on `bg-background`    | 19.65:1 | 16.97:1 | 4.5:1 (SC 1.4.3)|
+ * | `focus-within:ring-ring` on `--background`      | 8.80:1  | 11.79:1 | 3:1 (SC 2.4.13) |
+ *
+ * The ring here is full-opacity (not the `/60` alpha the flat-surface
+ * controls use), so it clears the focus floor with room to spare.
+ * `disabled:opacity-50` is exempt (inactive component).
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |

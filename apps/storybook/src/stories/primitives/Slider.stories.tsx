@@ -6,6 +6,8 @@ import {
   SliderThumb,
   SliderTrack,
 } from '@interlace/ui/slider';
+import { Skeleton } from '@interlace/ui/skeleton';
+import { withDark, withRtl } from '@/decorators';
 
 const meta: Meta<typeof Slider> = {
   title: 'Primitives/Slider',
@@ -105,5 +107,24 @@ export const Disabled: Story = {
         <SliderThumb getAriaLabel={() => 'Disabled slider value'} />
       </SliderControl>
     </Slider>
+  ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  decorators: [withDark],
+};
+
+export const RTL: Story = {
+  ...Default,
+  decorators: [withRtl],
+};
+
+/** Loading placeholder — the 8px rail. */
+export const Loading: Story = {
+  render: () => (
+    <div className="w-[260px]">
+      <Skeleton variant="slider" />
+    </div>
   ),
 };
