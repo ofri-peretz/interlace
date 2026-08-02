@@ -92,5 +92,5 @@ export const RTL: Story = { ...Default, decorators: [withRtl] };
  * real layout so the swap costs no layout shift (R23).
  */
 export const PageSkeleton: Story = {
-  render: () => <DocsPageTemplate.Skeleton />,
+  render: () => <DocsPageTemplate.Skeleton sidebar toc />,
 };

@@ -55,8 +55,14 @@ const SECTION_BOUNDARY_IMPORT_RE =
 
 const SECTION_BOUNDARY_USAGE_RE = /<SectionBoundary[\s>]/;
 
-/** `<Component>.Skeleton = <Component>Skeleton;` — the page-level loading state. */
-const PAGE_SKELETON_RE = /^(\w+)\.Skeleton\s*=\s*\w+;/m;
+/**
+ * `<Component>.Skeleton = <Component>Skeleton;` — the page-level loading
+ * state. Global: a file may assign `.Skeleton` on more than one component
+ * (a local helper plus the template), and the one that matters is the
+ * template's — matching only the first would let a helper's assignment
+ * satisfy the lock while the template itself ships no page skeleton.
+ */
+const PAGE_SKELETON_RE = /^(\w+)\.Skeleton\s*=\s*\w+;/gm;
 
 describe('Templates ⇄ SectionBoundary lock', () => {
   const templates = listTemplateFiles();
@@ -92,23 +98,27 @@ describe('Templates ⇄ SectionBoundary lock', () => {
     const failures: string[] = [];
     for (const file of templates) {
       const source = readFileSync(file, 'utf-8');
-      const match = source.match(PAGE_SKELETON_RE);
-      if (!match) {
+      const owners = [...source.matchAll(PAGE_SKELETON_RE)].map(([, o]) => o);
+      const relative = file.replace(resolve(__dirname, '../..') + '/', '');
+
+      if (owners.length === 0) {
         failures.push(
-          `${file.replace(resolve(__dirname, '../..') + '/', '')}: no ` +
-            `\`<Component>.Skeleton = …\` assignment. Add a page-level ` +
-            `skeleton (templates/README.md contract #4) — the full-page ` +
-            `silhouette, not a single rect.`,
+          `${relative}: no \`<Component>.Skeleton = …\` assignment. Add a ` +
+            `page-level skeleton (templates/README.md contract #4) — the ` +
+            `full-page silhouette, not a single rect.`,
         );
         continue;
       }
-      // The skeleton must hang off the template itself, not some helper.
-      const [, owner] = match;
-      if (!new RegExp(`^export\\s*{\\s*${owner}\\b`, 'm').test(source)) {
+
+      // The skeleton must hang off the EXPORTED template, not just some
+      // local helper that also happens to carry a `.Skeleton`.
+      const onExport = owners.some((owner) =>
+        new RegExp(`^export\\s*{\\s*${owner}\\b`, 'm').test(source),
+      );
+      if (!onExport) {
         failures.push(
-          `${file.replace(resolve(__dirname, '../..') + '/', '')}: ` +
-            `\`${owner}.Skeleton\` is assigned but \`${owner}\` is not the ` +
-            `exported template.`,
+          `${relative}: \`.Skeleton\` is assigned on ${owners.join(', ')}, ` +
+            `none of which is the exported template.`,
         );
       }
     }

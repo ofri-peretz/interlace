@@ -74,6 +74,16 @@ function walk(dir: string, out: string[] = []): string[] {
 
 const rel = (file: string) => relative(PKG_ROOT, file);
 
+/**
+ * Strip comments before scanning. A JSDoc that names the banned shape
+ * ("migrated from `bg-fd-card` to `bg-card`") is documentation, not a
+ * violation — and every rule below is about what the code DOES.
+ * Doc-comments explaining the bridge are exactly what we want authors to
+ * write, so they must not fail the lock.
+ */
+const stripComments = (source: string): string =>
+  source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+
 const sourceFiles = walk(SRC_DIR);
 
 describe('fumadocs coexistence — bridge is the only seam', () => {
@@ -84,7 +94,7 @@ describe('fumadocs coexistence — bridge is the only seam', () => {
   it('no file under packages/ui/src imports fumadocs-ui', () => {
     const failures: string[] = [];
     for (const file of sourceFiles) {
-      const source = readFileSync(file, 'utf-8');
+      const source = stripComments(readFileSync(file, 'utf-8'));
       for (const [, specifier] of source.matchAll(MODULE_SPECIFIER_RE)) {
         if (/^fumadocs-ui(\/|$)/.test(specifier)) {
           failures.push(`${rel(file)} imports '${specifier}'`);
@@ -104,7 +114,7 @@ describe('fumadocs coexistence — bridge is the only seam', () => {
     const failures: string[] = [];
     for (const file of sourceFiles) {
       const inAdapter = file.startsWith(ADAPTER_DIR + '/');
-      const source = readFileSync(file, 'utf-8');
+      const source = stripComments(readFileSync(file, 'utf-8'));
       for (const [, specifier] of source.matchAll(MODULE_SPECIFIER_RE)) {
         if (!/^fumadocs/.test(specifier)) continue;
         if (!inAdapter) {
@@ -128,7 +138,7 @@ describe('fumadocs coexistence — bridge is the only seam', () => {
   it('no component styles itself with `*-fd-*` utility classes', () => {
     const failures: string[] = [];
     for (const file of sourceFiles) {
-      const source = readFileSync(file, 'utf-8');
+      const source = stripComments(readFileSync(file, 'utf-8'));
       const hits = [...new Set(source.match(FD_UTILITY_CLASS_RE) ?? [])];
       if (hits.length) {
         failures.push(`${rel(file)}: ${hits.join(', ')}`);

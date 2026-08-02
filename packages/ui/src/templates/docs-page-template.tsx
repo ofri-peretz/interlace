@@ -104,11 +104,24 @@ DocsPageTemplate.displayName = 'DocsPageTemplate';
  * Shapes mirror the real layout so the swap is CLS-neutral (R23). One
  * `role="status"` region for the page; inner skeletons pass
  * `label={null}` so screen readers hear one announcement, not ten.
+ *
+ * The flanking columns are opt-in (`sidebar` / `toc`), mirroring the
+ * template's own optional props — a body-only docs page that painted a
+ * 3-column skeleton would shift its content on hydration, which is the
+ * exact bug the skeleton exists to prevent. A full docs route renders
+ * `<DocsPageTemplate.Skeleton sidebar toc />`.
  */
 function DocsPageTemplateSkeleton({
+  sidebar = false,
+  toc = false,
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<'div'> & {
+  /** Reserve the left nav column (md+). Match the page's own `sidebar` prop. */
+  sidebar?: boolean;
+  /** Reserve the right TOC rail (xl+). Match the page's own `toc` prop. */
+  toc?: boolean;
+}) {
   return (
     <div
       data-slot="docs-page-template-skeleton"
@@ -128,9 +141,11 @@ function DocsPageTemplateSkeleton({
         label={null}
       />
       <div className="flex flex-1">
-        <div className="border-border hidden w-64 shrink-0 border-r p-md md:block">
-          <Skeleton variant="text" count={8} label={null} />
-        </div>
+        {sidebar ? (
+          <div className="border-border hidden w-64 shrink-0 border-r p-md md:block">
+            <Skeleton variant="text" count={8} label={null} />
+          </div>
+        ) : null}
         <div className="flex-1 px-md py-xl">
           <Container size="prose">
             <Stack gap="lg">
@@ -139,9 +154,11 @@ function DocsPageTemplateSkeleton({
             </Stack>
           </Container>
         </div>
-        <div className="hidden w-64 shrink-0 px-md py-xl xl:block">
-          <Skeleton variant="text" count={5} label={null} />
-        </div>
+        {toc ? (
+          <div className="hidden w-64 shrink-0 px-md py-xl xl:block">
+            <Skeleton variant="text" count={5} label={null} />
+          </div>
+        ) : null}
       </div>
     </div>
   );
