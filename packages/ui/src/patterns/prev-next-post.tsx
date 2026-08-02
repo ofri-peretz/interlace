@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 
 /**
  * @interlace/ui — PrevNextPost
@@ -64,8 +65,20 @@ type PrevNextPostProps = Omit<React.ComponentProps<'nav'>, 'aria-label'> & {
   prev?: PrevNextPostLink;
   /** Next post — right card. Omit for the last post in a series. */
   next?: PrevNextPostLink;
-  /** Override the nav landmark label. Defaults to "Article navigation". */
+  /** Override the nav landmark label. @default "Article navigation" */
   'aria-label'?: string;
+  /**
+   * When true, paint a `<Skeleton variant="prev-next-post" />` pair instead
+   * of the links. The sibling titles usually arrive from the same async
+   * query as the article body, so without this the page footer jumps at the
+   * exact moment a reader reaches it. @default false
+   */
+  loading?: boolean;
+  /**
+   * Stable selector hook for E2E tests. Each side derives its own id
+   * (`{value}-prev`, `{value}-next`). Required — no default (R5).
+   */
+  'data-testid': string;
 };
 
 const CARD_BASE =
@@ -75,12 +88,31 @@ export function PrevNextPost({
   className,
   prev,
   next,
+  loading,
   'aria-label': ariaLabel = 'Article navigation',
+  'data-testid': testId,
   ...props
 }: PrevNextPostProps) {
+  if (loading) {
+    return (
+      <nav
+        data-slot="prev-next-post"
+        data-testid={testId}
+        data-min-viewport={String(MIN_VIEWPORT)}
+        aria-label={ariaLabel}
+        aria-busy="true"
+        className={cn('w-full', className)}
+        {...props}
+      >
+        <Skeleton variant="prev-next-post" />
+      </nav>
+    );
+  }
+
   return (
     <nav
       data-slot="prev-next-post"
+      data-testid={testId}
       data-min-viewport={String(MIN_VIEWPORT)}
       aria-label={ariaLabel}
       className={cn('grid grid-cols-1 gap-md md:grid-cols-2', className)}
@@ -90,6 +122,7 @@ export function PrevNextPost({
         <a
           href={prev.href}
           data-slot="prev-next-prev"
+          data-testid={`${testId}-prev`}
           className={cn(CARD_BASE, 'items-start text-left')}
         >
           <span className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -109,6 +142,7 @@ export function PrevNextPost({
         <a
           href={next.href}
           data-slot="prev-next-next"
+          data-testid={`${testId}-next`}
           className={cn(CARD_BASE, 'items-end text-right md:col-start-2')}
         >
           <span className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">

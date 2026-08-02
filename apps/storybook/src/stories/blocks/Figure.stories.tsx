@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Figure } from '@interlace/ui/blocks/figure';
+import { Figure } from '@interlace/ui/patterns/figure';
 import { withDark, withRtl } from '@/decorators';
 
 const meta = {

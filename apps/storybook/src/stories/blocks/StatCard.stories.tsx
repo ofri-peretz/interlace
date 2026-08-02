@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Activity, Download, Shield, TrendingUp } from 'lucide-react';
-import { StatCard } from '@interlace/ui/blocks/stat-card';
+import { StatCard } from '@interlace/ui/patterns/stat-card';
 
 const meta: Meta<typeof StatCard> = {
   title: 'Blocks/StatCard',

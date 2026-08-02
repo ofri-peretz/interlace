@@ -15,8 +15,8 @@ import { ArticleCard } from './article-card.js';
  * `lg` up — the same 1/2/3 cadence the homepage feed uses, so a reader who
  * scrolls between an article tail and the index sees the same rhythm.
  *
- * The block is intentionally a pure composition over ArticleCard's `stack`
- * variant: every metric this block could surface (date, kicker, summary)
+ * The block is intentionally a pure composition over `ArticleCard` (the
+ * stacked grid tile): every metric this block could surface (date, kicker, summary)
  * already lives on ArticleCard's props, so this file owns ONLY the heading,
  * the grid, and the field mapping from the editorial-friendly post shape
  * (`href` / `title` / `summary` / `publishedDateIso` / `kicker?`) to the
@@ -29,7 +29,7 @@ import { ArticleCard } from './article-card.js';
  *   RelatedPosts                       (section — data-min-viewport=480)
  *     ├─ Typography h3                 (title — "Related posts" by default)
  *     └─ Grid cols=1 md:2 lg:3 gap=md  (one ArticleCard per post)
- *           └─ ArticleCard variant="stack"
+ *           └─ ArticleCard
  *
  * ## MIN_VIEWPORT — 480
  *
@@ -101,6 +101,11 @@ type RelatedPostsProps = React.ComponentProps<'section'> & {
   loading?: boolean;
   /** How many skeleton cards to render when `loading={true}`. Default 3. */
   loadingCount?: number;
+  /**
+   * Stable selector hook for E2E tests. Each card derives its own id
+   * (`{value}-card-0`, `{value}-card-1`, …). Required — no default (R5).
+   */
+  'data-testid': string;
 };
 
 /**
@@ -117,12 +122,14 @@ export function RelatedPosts({
   posts,
   loading,
   loadingCount = 3,
+  'data-testid': testId,
   ...props
 }: RelatedPostsProps) {
   if (loading) {
     return (
       <section
         data-slot="related-posts"
+        data-testid={testId}
         data-min-viewport={String(MIN_VIEWPORT)}
         aria-label={typeof title === 'string' ? title : undefined}
         aria-busy="true"
@@ -145,6 +152,7 @@ export function RelatedPosts({
   return (
     <section
       data-slot="related-posts"
+      data-testid={testId}
       data-min-viewport={String(MIN_VIEWPORT)}
       aria-label={typeof title === 'string' ? title : undefined}
       className={cn('w-full', className)}
@@ -164,7 +172,7 @@ export function RelatedPosts({
         gap="md"
         className="md:grid-cols-2 lg:grid-cols-3"
       >
-        {posts.map((post) => (
+        {posts.map((post, i) => (
           <ArticleCard
             key={post.href}
             href={post.href}
@@ -172,7 +180,7 @@ export function RelatedPosts({
             description={post.summary}
             publishedAt={post.publishedDateIso}
             sourceLabel={post.kicker}
-            variant="stack"
+            data-testid={`${testId}-card-${i}`}
           />
         ))}
       </Grid>

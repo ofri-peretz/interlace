@@ -84,11 +84,22 @@ interface SkeletonProps
   label?: string | null;
 }
 
+/**
+ * Variants that render an inner shape via `CompositeBody` rather than a bare
+ * tinted box.
+ *
+ * This Set must stay in step with the `case` labels in `CompositeBody` —
+ * membership here is what routes a variant there at all. A variant with a
+ * `case` but no entry silently falls through to the simple `<div>` path and
+ * paints nothing; `skeleton-variant-coverage-lock` asserts the two agree so
+ * that can't happen twice.
+ */
 const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   'article-card',
   'author-byline',
   'newsletter-form',
   'page-header',
+  'prev-next-post',
   'stat-card',
   'card',
   'code-block',
@@ -242,6 +253,26 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
         <div className="flex flex-col gap-xs p-md">
           <div className="bg-muted-foreground/10 h-6 w-1/2 rounded-sm" />
           <div className="bg-muted-foreground/10 h-4 w-3/4 rounded-sm" />
+        </div>
+      );
+    case 'prev-next-post':
+      // Two bordered link cards, each a kicker line over a title line —
+      // and the same `grid-cols-1 md:grid-cols-2` cadence the real block
+      // uses, so the article footer doesn't reflow when the pair arrives.
+      return (
+        <div className="grid grid-cols-1 gap-md md:grid-cols-2">
+          {['items-start', 'items-end'].map((align) => (
+            <div
+              key={align}
+              className={cn(
+                'flex flex-col gap-1 rounded-lg border border-border p-md',
+                align,
+              )}
+            >
+              <div className="bg-muted-foreground/10 h-3 w-20 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-5 w-3/4 rounded-sm" />
+            </div>
+          ))}
         </div>
       );
     case 'stat-card':

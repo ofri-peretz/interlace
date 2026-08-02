@@ -126,6 +126,57 @@
     --interlace-info: #1e40af;
     --interlace-info-foreground: #ffffff;
 
+    /* Caution — the rung BETWEEN warning and destructive. Scorecard ladders
+     * need five distinguishable tones (excellent / good / fair / poor /
+     * fail); without this token `poor` had no home and GradeBadge reached
+     * outside the palette for a raw `bg-orange-900`. Tailwind orange-900
+     * #7c2d12 ≈ 9.0:1 on white and stays hue-distinct from `--warning`
+     * (amber-900 #78350f) at a glance while sharing the warm family. */
+    --interlace-caution: #7c2d12;
+    --interlace-caution-foreground: #ffffff;
+
+    /* Scrim — the dark wash laid over an arbitrary image so text on top
+     * stays legible (featured article covers, media overlays). Like the
+     * hero surface these do NOT invert: the scrim's whole job is to be
+     * darker than whatever photo sits under it, in either colour scheme.
+     * Always used with a Tailwind alpha modifier (`bg-scrim/70`) — the
+     * solid values are the ramp's endpoints, not what ships on screen.
+     * #ffffff on #000000/70 over a mid-tone cover measures ≥ 7:1. */
+    --interlace-scrim: #000000;
+    --interlace-scrim-foreground: #ffffff;
+
+    /* Cosmic hero effects — the three colours the starfield preset paints
+     * onto <canvas> / SVG gradients (shooting-star head, its trail, meteor
+     * streak). They live in the brand layer because the hero is the most
+     * brand-visible surface we ship, and because canvas ignores the
+     * cascade: HeroCosmic resolves these at runtime rather than letting a
+     * vendored default paint the pre-brand violet palette (R19).
+     *
+     * The hero always renders on a deep near-black gradient in BOTH modes
+     * (it is its own surface, not a themed one), so these do not invert. */
+    --interlace-hero-star: #fbb99a;   /* brand orange tint — star head */
+    --interlace-hero-trail: #0d9460;  /* brand green — trail gradient */
+    --interlace-hero-meteor: #fdd6c2; /* palest orange — meteor streak */
+
+    /* Cosmic hero surface. The hero is its OWN surface, not a themed one:
+     * a starfield only reads as a starfield on near-black, so these do not
+     * invert with the colour scheme. That is exactly why they need their
+     * own tokens — reaching for `--background` / `--foreground` here would
+     * paint black text on a black hero in light mode (the bug this pair
+     * replaces). #f0ede9 on #0d0b09 measures 16.4:1 (AAA). */
+    --interlace-hero-surface: #0d0b09;      /* gradient midpoint */
+    --interlace-hero-surface-deep: #000000; /* gradient floor */
+    --interlace-hero-foreground: #f0ede9;   /* 16.4:1 on the surface (AAA) */
+
+    /* Window controls — the three macOS traffic-light dots used by the
+     * CodeWindow chrome. Purely decorative (the dot row is `aria-hidden`),
+     * but they live here so a consumer forking the brand can restyle the
+     * chrome without patching component source. Values are the macOS
+     * system colours the affordance is quoting. */
+    --interlace-window-control-close: #ff5f57;
+    --interlace-window-control-minimize: #febc2e;
+    --interlace-window-control-zoom: #28c840;
+
     /* Chart palette — five distinct hues for series colors, brand-owned
      * so consumers can fork via `@layer interlace.brand`. Values match the
      * existing oklch ladder in theme.css (≥4.5:1 on bg-card light); the
@@ -210,6 +261,20 @@
     --interlace-info: #93c5fd;
     --interlace-info-foreground: #0a0a0a;
 
+    /* Caution (orange-300 — the dark-mode twin of the light orange-900 rung.
+     * #fdba74 ≈ 10.9:1 on near-black; against its own `--caution-foreground`
+     * (#0a0a0a) the filled chip reads the same 10.9:1, so the pair holds in
+     * both directions like every other status token here. */
+    --interlace-caution: #fdba74;
+    --interlace-caution-foreground: #0a0a0a;
+
+    /* Window controls — macOS ships the same traffic-light hues in dark
+     * mode, so these do not invert. Declared here anyway so the dark block
+     * is a complete override surface for a forking consumer. */
+    --interlace-window-control-close: #ff5f57;
+    --interlace-window-control-minimize: #febc2e;
+    --interlace-window-control-zoom: #28c840;
+
     /* Chart palette — lifted lightness so each series stays ≥4.5:1 on
      * `bg-card` (near-black). Same five hues as light, repositioned for
      * dark surfaces. */
@@ -269,6 +334,23 @@
     --warning-foreground: var(--interlace-warning-foreground);
     --info: var(--interlace-info);
     --info-foreground: var(--interlace-info-foreground);
+    --caution: var(--interlace-caution);
+    --caution-foreground: var(--interlace-caution-foreground);
+
+    --scrim: var(--interlace-scrim);
+    --scrim-foreground: var(--interlace-scrim-foreground);
+    --hero-star: var(--interlace-hero-star);
+    --hero-trail: var(--interlace-hero-trail);
+    --hero-meteor: var(--interlace-hero-meteor);
+    --hero-surface: var(--interlace-hero-surface);
+    --hero-surface-deep: var(--interlace-hero-surface-deep);
+    --hero-foreground: var(--interlace-hero-foreground);
+
+    /* Window-control dots — unprefixed names so the CodeWindow chrome can be
+     * lifted into a consumer that defines only these three properties. */
+    --window-control-close: var(--interlace-window-control-close);
+    --window-control-minimize: var(--interlace-window-control-minimize);
+    --window-control-zoom: var(--interlace-window-control-zoom);
 
     /* Chart palette — semantic aliases of the brand layer. Overrides
      * the bridge layer (theme.css) values, so a consumer who wants
@@ -344,6 +426,28 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+  --color-caution: var(--caution);
+  --color-caution-foreground: var(--caution-foreground);
+
+  /* Scrim — generates bg-scrim/70, text-scrim-foreground,
+   * border-scrim-foreground/30 so image-overlay surfaces stop reaching for
+   * `bg-black/70` + `text-white` palette escapes. */
+  --color-scrim: var(--scrim);
+  --color-scrim-foreground: var(--scrim-foreground);
+
+  /* Cosmic-hero surface — generates bg-hero-surface / text-hero-foreground
+   * so HeroCosmic paints its always-dark surface from tokens instead of
+   * `via-slate-950 to-black` palette escapes. */
+  --color-hero-surface: var(--hero-surface);
+  --color-hero-surface-deep: var(--hero-surface-deep);
+  --color-hero-foreground: var(--hero-foreground);
+
+  /* Window-control dots — generates bg-window-control-close etc. so the
+   * CodeWindow chrome stays inside the Tailwind utility surface (R18/R19)
+   * instead of reaching for `bg-[#ff5f57]`. */
+  --color-window-control-close: var(--window-control-close);
+  --color-window-control-minimize: var(--window-control-minimize);
+  --color-window-control-zoom: var(--window-control-zoom);
 
   /* Chart palette utilities — generates bg-chart-1, text-chart-2,
    * border-chart-3 etc. Already declared in theme.css (bridge layer);

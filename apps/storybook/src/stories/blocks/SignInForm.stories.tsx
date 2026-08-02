@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { SignInForm } from '@interlace/ui/blocks/sign-in-form';
+import { SignInForm } from '@interlace/ui/patterns/sign-in-form';
 
 const meta: Meta<typeof SignInForm> = {
   title: 'Blocks/SignInForm',

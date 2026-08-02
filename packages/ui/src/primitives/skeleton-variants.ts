@@ -56,6 +56,7 @@ export const SKELETON_VARIANTS = [
   'author-byline',
   'newsletter-form',
   'page-header',
+  'prev-next-post',
   'stat-card',
 
   // ── Template-shaped (matches a template's full-page layout) ──────────
@@ -114,5 +115,9 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   'author-byline': 'h-12 w-full rounded-md',
   'newsletter-form': 'h-32 w-full rounded-md',
   'page-header': 'h-20 w-full rounded-md',
+  // Transparent + unrounded on purpose: this variant paints TWO cards side
+  // by side, so the shape lives entirely in the composite body. A filled
+  // root would draw a third block behind them.
+  'prev-next-post': 'h-24 w-full bg-transparent',
   'stat-card': 'h-24 w-full rounded-lg',
 };

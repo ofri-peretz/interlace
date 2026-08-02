@@ -26,9 +26,9 @@ import { useReducedMotion } from "../lib/use-reduced-motion.js";
 //   • Hover state is controllable (`hoveredSquare` + `onHoveredSquareChange` +
 //     `defaultHoveredSquare`) so a parent can drive / observe the active cell
 //     (R14), instead of being trapped in internal `useState`.
-//   • Pointer affordances are pluggable per cell via `squareProps`, and a
-//     `<title>` plus `role="presentation"` keep the decorative grid out of the
-//     a11y tree without an axe suppression (R20 / R26).
+//   • Pointer affordances are pluggable per cell via `squareProps`, and
+//     `aria-hidden` keeps the decorative grid out of the a11y tree without an
+//     axe suppression (R20 / R26).
 // -----------------------------------------------------------------------------
 
 /**
@@ -110,8 +110,11 @@ export interface InteractiveGridPatternProps
    */
   squaresClassName?: string;
   /**
-   * Accessible name announced for the decorative grid. The grid is
-   * presentational, so this only surfaces as the SVG `<title>` for tooling.
+   * Title written into the SVG's `<title>` element.
+   *
+   * NOT an accessible name: the grid is `aria-hidden`, so nothing here
+   * reaches assistive tech. It exists for tooling that reads the SVG on its
+   * own — a design handoff, or the file opened directly in a browser.
    * @default "Decorative interactive grid"
    */
   label?: string;
@@ -187,8 +190,16 @@ export const InteractiveGridPattern = forwardRef<
       ref={ref}
       data-slot="interactive-grid-pattern"
       data-testid={dataTestid}
-      role="presentation"
-      aria-labelledby={titleId}
+      // Decorative, so it leaves the a11y tree entirely — matching the
+      // DotPattern / GridPattern siblings.
+      //
+      // This used to be `role="presentation"` + `aria-labelledby`, which axe
+      // flags as `presentation-role-conflict`: a global ARIA attribute on a
+      // presentational element cancels the role, and the grid gets re-exposed
+      // as a labelled image. The `<title>` below stays for tooling that reads
+      // the SVG on its own (design handoff, an SVG opened directly), but it is
+      // no longer wired into the a11y tree.
+      aria-hidden="true"
       width={squareWidth * columns}
       height={squareHeight * rows}
       // Dynamic, computed CSS-variable overrides — the one R18-sanctioned use

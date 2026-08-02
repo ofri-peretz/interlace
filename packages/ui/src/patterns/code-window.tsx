@@ -16,9 +16,11 @@ import { cn } from '../lib/cn.js';
  *   - The body — anything you nest inside `<CodeWindow>` after the title bar.
  *
  * The styling is intentionally light: a subtle border, modest shadow,
- * and rounded corners. The dots use the same colors macOS ships in its
- * window controls (`#FF5F57` / `#FEBC2E` / `#28C840`) so the chrome reads
- * as "code window" at a glance.
+ * and rounded corners. The dots quote the colors macOS ships in its window
+ * controls so the chrome reads as "code window" at a glance — but they run
+ * through the `--window-control-*` brand tokens (interlace-theme.css)
+ * rather than raw hex, so a consumer forking the brand restyles the chrome
+ * from CSS instead of patching this file (R19).
  *
  * Modeled on MagicUI's `Terminal` chrome (the dots + bar layout convention)
  * but reduced to the visual primitive — no animation, no terminal-specific
@@ -89,9 +91,9 @@ function CodeWindowTitleBar({
         data-slot="code-window-traffic-lights"
         className="flex items-center gap-1.5"
       >
-        <span className="size-3 rounded-full bg-[#FF5F57]" />
-        <span className="size-3 rounded-full bg-[#FEBC2E]" />
-        <span className="size-3 rounded-full bg-[#28C840]" />
+        <span className="size-3 rounded-full bg-window-control-close" />
+        <span className="size-3 rounded-full bg-window-control-minimize" />
+        <span className="size-3 rounded-full bg-window-control-zoom" />
       </span>
       {title && (
         <span className="flex-1 truncate text-center font-mono text-xs text-muted-foreground">
