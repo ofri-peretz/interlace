@@ -244,6 +244,26 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
           <div className="bg-muted-foreground/10 h-4 w-3/4 rounded-sm" />
         </div>
       );
+    case 'prev-next-post':
+      // Two bordered link cards, each a kicker line over a title line —
+      // and the same `grid-cols-1 md:grid-cols-2` cadence the real block
+      // uses, so the article footer doesn't reflow when the pair arrives.
+      return (
+        <div className="grid grid-cols-1 gap-md md:grid-cols-2">
+          {['items-start', 'items-end'].map((align) => (
+            <div
+              key={align}
+              className={cn(
+                'flex flex-col gap-1 rounded-lg border border-border p-md',
+                align,
+              )}
+            >
+              <div className="bg-muted-foreground/10 h-3 w-20 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-5 w-3/4 rounded-sm" />
+            </div>
+          ))}
+        </div>
+      );
     case 'stat-card':
       return (
         <div className="flex flex-col gap-xs p-md">

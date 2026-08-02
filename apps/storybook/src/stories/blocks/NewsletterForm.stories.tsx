@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   NewsletterForm,
   MIN_VIEWPORT,
-} from '@interlace/ui/blocks/newsletter-form';
+} from '@interlace/ui/patterns/newsletter-form';
 import { withDark, withRtl } from '@/decorators';
 
 const meta = {

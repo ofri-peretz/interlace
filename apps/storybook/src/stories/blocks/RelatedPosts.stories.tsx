@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { RelatedPosts, type RelatedPost } from '@interlace/ui/blocks/related-posts';
+import { RelatedPosts, type RelatedPost } from '@interlace/ui/patterns/related-posts';
 import { withDark, withRtl } from '@/decorators';
 
 const meta = {

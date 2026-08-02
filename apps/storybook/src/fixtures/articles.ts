@@ -1,4 +1,4 @@
-import type { ArticleCardProps } from '@interlace/ui/blocks/article-card';
+import type { ArticleCardProps } from '@interlace/ui/patterns/article-card';
 
 export const articleFixtures: ArticleCardProps[] = [
   {
@@ -16,6 +16,7 @@ export const articleFixtures: ArticleCardProps[] = [
     publishedAt: '2026-04-22',
     meta: { reactions: 124, comments: 18, readingTimeMinutes: 9 },
     sourceLabel: 'Dev.to',
+    'data-testid': 'article-prototype-pollution',
   },
   {
     title: 'A type-aware ESLint rule that beats Sonar at SQL injection',
@@ -27,6 +28,7 @@ export const articleFixtures: ArticleCardProps[] = [
     publishedAt: '2026-03-14',
     meta: { reactions: 87, comments: 11, readingTimeMinutes: 14 },
     sourceLabel: 'Dev.to',
+    'data-testid': 'article-type-aware-sql',
   },
   {
     title: 'Why we ship a 440-rule ESLint ecosystem instead of one mega-plugin',
@@ -40,5 +42,6 @@ export const articleFixtures: ArticleCardProps[] = [
     publishedAt: '2026-02-01',
     meta: { reactions: 203, comments: 41, readingTimeMinutes: 7 },
     sourceLabel: 'Dev.to',
+    'data-testid': 'article-plugin-granularity',
   },
 ];

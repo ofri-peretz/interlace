@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Plus } from 'lucide-react';
 import { Button } from '@interlace/ui/button';
-import { PageHeader } from '@interlace/ui/blocks/page-header';
+import { PageHeader } from '@interlace/ui/patterns/page-header';
 
 const meta: Meta<typeof PageHeader> = {
   title: 'Blocks/PageHeader',

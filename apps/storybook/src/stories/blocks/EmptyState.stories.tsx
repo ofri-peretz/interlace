@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FileSearch, Inbox } from 'lucide-react';
 import { Button } from '@interlace/ui/button';
-import { EmptyState } from '@interlace/ui/blocks/empty-state';
+import { EmptyState } from '@interlace/ui/patterns/empty-state';
 
 const meta: Meta<typeof EmptyState> = {
   title: 'Blocks/EmptyState',

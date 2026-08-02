@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ArticleCard } from '@interlace/ui/blocks/article-card';
+import { ArticleCard } from '@interlace/ui/patterns/article-card';
 import { Badge } from '@interlace/ui/badge';
 import { Button } from '@interlace/ui/button';
 import {
