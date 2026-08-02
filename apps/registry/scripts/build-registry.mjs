@@ -37,6 +37,8 @@ import { readFile, readdir, writeFile, mkdir, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
+import { AUTHOR, HOMEPAGE, itemRef } from '../registry.config.mjs';
+
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
 const REPO_ROOT = path.resolve(REGISTRY_ROOT, '..', '..');
@@ -82,13 +84,101 @@ const DECORATIVE_DIRS = [
 ];
 const OUT_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const STYLES_OUT_DIR = path.join(OUT_DIR, 'styles');
-const HOMEPAGE = 'https://ds.interlace.tools';
 const CHECK_ONLY = process.argv.includes('--check');
+
+/**
+ * Categorisation is data, not code — `registry-categories.json` is the single
+ * source of truth shared by this generator (which stamps `categories` onto
+ * every item, per the shadcn registry-item schema) and by the site's
+ * `src/lib/categories.ts` (which only reads the titles/descriptions).
+ */
+const CATEGORY_DATA = JSON.parse(
+  await readFile(path.join(REGISTRY_ROOT, 'registry-categories.json'), 'utf8'),
+);
+/** Names that fell through to the `other` bucket — CI (`--check`) fails on these. */
+const uncategorised = [];
+
+/**
+ * shadcn `categories` is an array, so each item carries BOTH axes:
+ *   - intent  ("what am I trying to do") — form / overlay / marketing / …
+ *   - tier    ("which layer of the DS")  — primitive / pattern / template / …
+ * The registry directory filters on the first; the site's nav uses both.
+ */
+const categoriesFor = (name, tier) => {
+  const tierId = CATEGORY_DATA.tierOf[tier] ?? tier;
+  const intent =
+    CATEGORY_DATA.assignments[name] ??
+    CATEGORY_DATA.tierDefaultCategory[tierId] ??
+    'other';
+  // Only a resolved `other` is a failure — a tier default (effects →
+  // decorative) is a real category, not a dead-end.
+  if (intent === 'other') uncategorised.push(name);
+  return intent === tierId ? [intent] : [intent, tierId];
+};
+
+// `meta` is free-form per the schema. We publish the two contract facts a
+// consumer can't get from the source without parsing it: the RSC boundary and
+// the declared minimum viewport (DESIGN_PRINCIPLES #14).
+const MIN_VIEWPORT_RE = /export\s+const\s+MIN_VIEWPORT\s*=\s*(\d+)/;
+const USE_CLIENT_RE =
+  /^\s*(?:\/\*[\s\S]*?\*\/\s*)*(?:\/\/[^\n]*\n\s*)*['"]use client['"]/m;
+
+/** `loading?: boolean` — the DS-wide skeleton-placeholder opt-in. */
+const LOADING_PROP_RE = /^\s*loading\?:\s*boolean/m;
+
+const metaFor = (source, tier) => {
+  const mv = source.match(MIN_VIEWPORT_RE);
+  return {
+    tier: CATEGORY_DATA.tierOf[tier] ?? tier,
+    client: USE_CLIENT_RE.test(source),
+    minViewport: mv ? Number.parseInt(mv[1], 10) : null,
+    loading: LOADING_PROP_RE.test(source),
+  };
+};
+
+/**
+ * `docs` is printed by the shadcn CLI after a successful install. Keep it to
+ * what a consumer needs in the terminal at that moment: where the file landed,
+ * how to import it, and where the full contract lives.
+ */
+const docsFor = (name, target, { requiresTheme = true } = {}) =>
+  [
+    `## @interlace/${name}`,
+    '',
+    `Installed to \`${target}\`.`,
+    '',
+    `\`\`\`tsx\nimport { /* … */ } from '@/${target.replace(/\.tsx?$/, '')}';\n\`\`\``,
+    '',
+    `Props, a11y contract, live preview and source: ${HOMEPAGE}/c/${name}`,
+    // Only true for items that actually declare `theme` as a dependency —
+    // the lib utilities don't, so telling their installer otherwise is a lie
+    // printed straight into their terminal.
+    ...(requiresTheme
+      ? [
+          '',
+          'Requires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).',
+        ]
+      : []),
+  ].join('\n');
 
 // Name of the registry:style item that every primitive depends on.
 // Consumers install it once; `shadcn add` pulls it as a transitive dep when
 // they add any primitive after the first.
 const STYLE_ITEM = 'theme';
+
+/**
+ * Cross-registry references MUST be absolute URLs — `itemRef` above.
+ *
+ * Per the registry-item schema, a BARE name in `registryDependencies` means
+ * "a shadcn/ui core component" — the CLI resolves it against ui.shadcn.com.
+ * Emitting `["theme", "skeleton"]` therefore made every install die with
+ * `The item at https://ui.shadcn.com/r/styles/<style>/theme.json was not
+ * found`. Caught by `scripts/e2e-install.mjs`; see the results file.
+ *
+ * The `@interlace/<name>` alias form only resolves for consumers who have the
+ * namespace configured in components.json, so it can't be used here either —
+ * a raw-URL installer would break. The absolute URL works in both flows.
+ */
 
 /**
  * Stylesheet files copied verbatim from @interlace/ui/styles into the
@@ -217,6 +307,22 @@ const STARTER_BUNDLES = [
 
 const NPM_IMPORT_RE = /from\s+['"]([^.@/][^'"]*|@[^/]+\/[^'"]+)['"]/g;
 const RELATIVE_IMPORT_RE = /from\s+['"](\.\/[^'"]+)['"]/g;
+/** `../primitives/skeleton.js`, `../patterns/figure.js`, … */
+const CROSS_TIER_IMPORT_RE = /from\s+['"]\.\.\/([\w-]+)\/([\w-]+)\.js['"]/g;
+
+/**
+ * Source directories under `packages/ui/src/` whose `.tsx` files are registry
+ * items, mapped to the subdirectory they land in inside the consumer's
+ * `components/ui/`. Primitives are flat; every other tier keeps its folder so
+ * provenance survives the install.
+ */
+const TIER_SUBDIR = {
+  primitives: '',
+  patterns: 'patterns/',
+  templates: 'templates/',
+  magicui: 'magicui/',
+  aceternity: 'aceternity/',
+};
 
 const collectDependencies = (source) => {
   const deps = new Set();
@@ -230,15 +336,55 @@ const collectDependencies = (source) => {
   return [...deps].sort();
 };
 
-const collectRegistryDependencies = (source) => {
+/**
+ * Split a source file's sibling imports (`./x.js`) into the two things they
+ * can be:
+ *
+ *   - `deps`       — a sibling `.tsx`, i.e. another registry item. Becomes a
+ *                    `registryDependency` so the CLI installs it too.
+ *   - `companions` — a sibling `.ts` (e.g. `button-variants.ts`,
+ *                    `skeleton-variants.ts`). NOT a registry item — it has to
+ *                    ship inside this item's `files[]`, or the rewritten
+ *                    `@/components/ui/<x>` import dangles in the consumer's
+ *                    tree and the install won't compile.
+ *
+ * Resolved from disk rather than a hardcoded name list, so a new
+ * `*-variants.ts` can never silently break an install again.
+ */
+const splitRelativeImports = async (source, sourceDir) => {
   const deps = new Set();
+  const companions = new Set();
   for (const m of source.matchAll(RELATIVE_IMPORT_RE)) {
     const rel = m[1].replace(/^\.\//, '').replace(/\.js$|\.tsx?$/, '');
     if (rel.includes('/')) continue; // skip nested helpers
-    if (rel === 'button-variants' || rel === 'cn') continue; // packaged with primitive
-    deps.add(rel);
+    if (await exists(path.join(sourceDir, `${rel}.tsx`))) {
+      deps.add(rel);
+    } else if (await exists(path.join(sourceDir, `${rel}.ts`))) {
+      companions.add(rel);
+    }
   }
-  return [...deps].sort();
+  // Cross-tier imports (`../primitives/skeleton.js` from a pattern) are
+  // registry dependencies too. Missing them meant installing a single pattern
+  // left a dangling import in the consumer's tree — `next build` in
+  // scripts/e2e-install.mjs is what surfaced it.
+  for (const m of source.matchAll(CROSS_TIER_IMPORT_RE)) {
+    const [, tierDir, dep] = m;
+    if (!(tierDir in TIER_SUBDIR)) continue; // ../lib/* is handled separately
+    deps.add(dep);
+  }
+  return {
+    deps: [...deps].sort(),
+    companions: [...companions].sort(),
+  };
+};
+
+const exists = async (p) => {
+  try {
+    await stat(p);
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 // ─── Consumer-side import rewriting ──────────────────────────────────────────
@@ -256,18 +402,40 @@ const collectRegistryDependencies = (source) => {
  * Mapping:
  *   `../lib/cn.js`                    → `@/lib/utils`
  *   `../lib/use-reduced-motion.js`    → `@/hooks/use-reduced-motion`
- *   `./<sibling>.js`                  → `@/components/ui/<sibling>`
+ *   `./<sibling>.js`                  → `@/components/ui/<subdir><sibling>`
+ *   `../primitives/<x>.js`            → `@/components/ui/<x>`
+ *   `../<tier>/<x>.js`                → `@/components/ui/<tier>/<x>`
+ *
+ * The cross-tier arm is what lets a pattern compose a primitive: without it
+ * `import { Skeleton } from '../primitives/skeleton.js'` shipped verbatim and
+ * failed to resolve in every consumer tree.
  */
-const rewriteImportsForConsumer = (source) =>
+const rewriteImportsForConsumer = (source, subdir = '') =>
   source
-    .replace(/from\s+(['"])\.\.\/lib\/cn\.js\1/g, 'from $1@/lib/utils$1')
+    // Driven by LIB_FILES, not by a `cn` arm plus a `use-*` pattern: a new
+    // utility added to LIB_FILES is rewritten automatically. Anything under
+    // `../lib/` that ISN'T a declared lib item survives unrewritten — and
+    // `assertNoRelativeImports` below turns that into a build failure rather
+    // than a broken consumer tree.
     .replace(
-      /from\s+(['"])\.\.\/lib\/(use-[\w-]+)\.js\1/g,
-      'from $1@/hooks/$2$1',
+      /from\s+(['"])\.\.\/lib\/([\w-]+)\.js\1/g,
+      (match, q, name) => {
+        const entry = LIB_FILES.find((f) => f.name === name);
+        return entry
+          ? `from ${q}@/${entry.target.replace(/\.tsx?$/, '')}${q}`
+          : match;
+      },
+    )
+    .replace(
+      /from\s+(['"])\.\.\/([\w-]+)\/([\w-]+)\.js\1/g,
+      (match, q, tierDir, name) =>
+        tierDir in TIER_SUBDIR
+          ? `from ${q}@/components/ui/${TIER_SUBDIR[tierDir]}${name}${q}`
+          : match,
     )
     .replace(
       /from\s+(['"])\.\/([\w-]+)\.js\1/g,
-      'from $1@/components/ui/$2$1',
+      `from $1@/components/ui/${subdir}$2$1`,
     );
 
 // ─── Per-primitive registry item ─────────────────────────────────────────────
@@ -285,31 +453,53 @@ const buildItem = async (filePath, fileName, tier = null) => {
   const source = await readFile(filePath, 'utf8');
   const name = fileName.replace(/\.tsx$/, '');
   const meta = await readOptionalMeta(filePath);
+  const sourceDir = path.dirname(filePath);
+  const { deps, companions } = await splitRelativeImports(source, sourceDir);
   // Every primitive depends on the shared theme item so consumers get the
   // brand tokens + animation keyframes installed alongside the .tsx.
-  const registryDependencies = [STYLE_ITEM, ...collectRegistryDependencies(source)];
+  const registryDependencies = [STYLE_ITEM, ...deps].map(itemRef);
   // Decorative tiers (magicui / aceternity / patterns) nest under their
   // subdir in the consumer tree to preserve provenance. Primitives stay flat.
-  const subdir = tier ? `${tier}/` : '';
+  const subdir = TIER_SUBDIR[tier ?? 'primitives'] ?? '';
   const tierLabel = tier ? ` (${tier})` : '';
+  const target = `components/ui/${subdir}${name}.tsx`;
+  // Templates are full-page surfaces, not single components — `registry:block`
+  // is the spec's type for those. Every file carries an explicit `target`, so
+  // the type only changes how the item is classified, never where it lands.
+  const itemType = tier === 'templates' ? 'registry:block' : 'registry:ui';
   const item = {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name,
-    type: 'registry:ui',
+    type: itemType,
     title: name.replace(/(^|-)([a-z])/g, (_, dash, c) =>
       dash ? ' ' + c.toUpperCase() : c.toUpperCase(),
     ),
     description: `@interlace/ui — ${name}${tierLabel} (shadcn-compatible).`,
+    author: AUTHOR,
+    categories: categoriesFor(name, tier ?? 'primitives'),
     dependencies: collectDependencies(source),
     registryDependencies,
     files: [
       {
         path: `registry/interlace-ui/${subdir}${name}.tsx`,
-        target: `components/ui/${subdir}${name}.tsx`,
-        type: 'registry:ui',
-        content: rewriteImportsForConsumer(source),
+        target,
+        type: itemType,
+        content: rewriteImportsForConsumer(source, subdir),
       },
+      ...(await Promise.all(
+        companions.map(async (companion) => ({
+          path: `registry/interlace-ui/${subdir}${companion}.ts`,
+          target: `components/ui/${subdir}${companion}.ts`,
+          type: itemType,
+          content: rewriteImportsForConsumer(
+            await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8'),
+            subdir,
+          ),
+        })),
+      )),
     ],
+    meta: metaFor(source, tier ?? 'primitives'),
+    docs: docsFor(name, target),
   };
   // Optional sibling `<name>.meta.json` adds shadcn-schema fields the source
   // file can't express on its own — cssVars (theme tokens), css (keyframes /
@@ -336,6 +526,8 @@ const buildLibItem = async (entry) => {
     type: 'registry:lib',
     title: entry.title,
     description: entry.description,
+    author: AUTHOR,
+    categories: categoriesFor(entry.name, 'util'),
     dependencies: collectDependencies(source),
     registryDependencies: [],
     files: [
@@ -346,6 +538,8 @@ const buildLibItem = async (entry) => {
         content: source,
       },
     ],
+    meta: metaFor(source, 'util'),
+    docs: docsFor(entry.name, entry.target, { requiresTheme: false }),
   };
 };
 
@@ -357,8 +551,10 @@ const buildStarterItem = (entry) => ({
   type: 'registry:ui',
   title: entry.title,
   description: entry.description,
+  author: AUTHOR,
+  categories: categoriesFor(entry.name, 'starter'),
   dependencies: [],
-  registryDependencies: entry.registryDependencies,
+  registryDependencies: entry.registryDependencies.map(itemRef),
   files: [
     {
       path: `registry/interlace-ui/starters/${entry.name}.md`,
@@ -367,6 +563,8 @@ const buildStarterItem = (entry) => ({
       content: entry.body,
     },
   ],
+  meta: { tier: 'starter', client: false, minViewport: null, loading: false },
+  docs: entry.body,
 });
 
 // ─── Theme / style registry item ─────────────────────────────────────────
@@ -401,9 +599,21 @@ const buildStyleItem = async () => {
     title: 'Interlace Theme',
     description:
       '@interlace/ui — full DS CSS baseline: tokens, foundation (type/spacing/radius), preflight (focus ring + min-viewport contract), shadcn↔fumadocs bridge, and brand palette.',
+    author: AUTHOR,
+    categories: categoriesFor(STYLE_ITEM, 'theme'),
     dependencies: ['tw-animate-css'],
     registryDependencies: [],
     files,
+    meta: { tier: 'theme', client: false, minViewport: null, loading: false },
+    docs: [
+      '## @interlace/theme',
+      '',
+      `Five stylesheets landed in \`styles/interlace/\`, in cascade order: ${STYLE_FILES.join(' → ')}.`,
+      '',
+      'Import them from your global stylesheet in exactly that order.',
+      '',
+      `Full contract: ${HOMEPAGE}/css-contract`,
+    ].join('\n'),
   };
 };
 
@@ -433,125 +643,119 @@ const checkRawStyleFiles = async () => {
 
 // ─── Main ────────────────────────────────────────────────────────────────────
 
-const compareItemAgainstDisk = async (built, errors) => {
-  const outPath = path.join(OUT_DIR, `${built.name}.json`);
+const compareAgainstDisk = async (fileName, built, errors) => {
   try {
-    const current = JSON.parse(await readFile(outPath, 'utf8'));
+    const current = JSON.parse(
+      await readFile(path.join(OUT_DIR, fileName), 'utf8'),
+    );
     if (JSON.stringify(current) !== JSON.stringify(built)) {
-      errors.push(`drift: ${built.name}`);
+      errors.push(`drift: ${fileName}`);
     }
   } catch {
-    errors.push(`missing: ${built.name}`);
+    errors.push(`missing: ${fileName}`);
   }
 };
 
-const writeItem = async (item, index) => {
-  await writeFile(
-    path.join(OUT_DIR, `${item.name}.json`),
-    JSON.stringify(item, null, 2) + '\n',
-    'utf8',
-  );
-  index.items.push({
-    name: item.name,
-    type: item.type,
-    title: item.title,
-    description: item.description,
-  });
-};
+const compareItemAgainstDisk = (built, errors) =>
+  compareAgainstDisk(`${built.name}.json`, built, errors);
 
-const main = async () => {
+const indexEntry = (item) => ({
+  name: item.name,
+  type: item.type,
+  title: item.title,
+  description: item.description,
+  categories: item.categories,
+  meta: item.meta,
+});
+
+/**
+ * Build every registry item in memory. Both `--check` and the real write go
+ * through this, so the drift gate can never diverge from what gets written —
+ * and `index.json` is covered by the same comparison as the items.
+ */
+const buildAll = async () => {
   await stat(PRIMITIVES_DIR);
-  const files = (await readdir(PRIMITIVES_DIR))
+  const primitiveFiles = (await readdir(PRIMITIVES_DIR))
     .filter((f) => f.endsWith('.tsx'))
     .sort();
 
-  if (CHECK_ONLY) {
-    const errors = [];
-    const styleBuilt = await buildStyleItem();
-    await compareItemAgainstDisk(styleBuilt, errors);
-    errors.push(...(await checkRawStyleFiles()));
-    for (const file of files) {
-      const built = await buildItem(path.join(PRIMITIVES_DIR, file), file);
-      await compareItemAgainstDisk(built, errors);
-    }
-    for (const entry of LIB_FILES) {
-      const built = await buildLibItem(entry);
-      await compareItemAgainstDisk(built, errors);
-    }
-    for (const entry of STARTER_BUNDLES) {
-      const built = buildStarterItem(entry);
-      await compareItemAgainstDisk(built, errors);
-    }
-    let decorativeCount = 0;
-    for (const { name: tier, dir } of DECORATIVE_DIRS) {
-      let dirFiles = [];
-      try {
-        dirFiles = (await readdir(dir)).filter((f) => f.endsWith('.tsx')).sort();
-      } catch {
-        continue; // tier dir not yet created — fine
-      }
-      decorativeCount += dirFiles.length;
-      for (const file of dirFiles) {
-        const built = await buildItem(path.join(dir, file), file, tier);
-        await compareItemAgainstDisk(built, errors);
-      }
-    }
-    if (errors.length) {
-      console.error('Registry drift detected:\n  ' + errors.join('\n  '));
-      process.exit(1);
-    }
-    console.log(
-      `OK — ${files.length} primitive(s) + ${decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) match on-disk.`,
-    );
-    return;
-  }
-
-  await mkdir(OUT_DIR, { recursive: true });
-  const index = {
-    $schema: 'https://ui.shadcn.com/schema/registry.json',
-    name: 'interlace-ui',
-    homepage: HOMEPAGE,
-    items: [],
-  };
-
+  const items = [];
   // Theme/style item first so it appears at the top of `index.json`.
-  await writeItem(await buildStyleItem(), index);
-  await writeRawStyleFiles();
-
+  items.push(await buildStyleItem());
   // Starter bundles next — most-prominent install surface for new consumers.
-  for (const entry of STARTER_BUNDLES) {
-    await writeItem(buildStarterItem(entry), index);
-  }
-
+  for (const entry of STARTER_BUNDLES) items.push(buildStarterItem(entry));
   // Lib utilities — needed for components to compile in the consumer tree.
-  for (const entry of LIB_FILES) {
-    await writeItem(await buildLibItem(entry), index);
-  }
-
+  for (const entry of LIB_FILES) items.push(await buildLibItem(entry));
   // Per-primitive items (largest cohort, alphabetical).
-  for (const file of files) {
-    await writeItem(await buildItem(path.join(PRIMITIVES_DIR, file), file), index);
+  for (const file of primitiveFiles) {
+    items.push(await buildItem(path.join(PRIMITIVES_DIR, file), file));
   }
 
-  // Decorative tiers (magicui / aceternity / patterns) — own surface, vendored
-  // from upstream registries and promoted under the @interlace namespace.
+  // Decorative tiers (magicui / aceternity / patterns / templates) — our own
+  // surface, promoted under the @interlace namespace.
   let decorativeCount = 0;
   for (const { name: tier, dir } of DECORATIVE_DIRS) {
     let dirFiles = [];
     try {
       dirFiles = (await readdir(dir)).filter((f) => f.endsWith('.tsx')).sort();
     } catch {
-      continue;
+      continue; // tier dir not yet created — fine
     }
     decorativeCount += dirFiles.length;
     for (const file of dirFiles) {
-      await writeItem(await buildItem(path.join(dir, file), file, tier), index);
+      items.push(await buildItem(path.join(dir, file), file, tier));
     }
   }
 
+  const index = {
+    $schema: 'https://ui.shadcn.com/schema/registry.json',
+    name: 'interlace-ui',
+    homepage: HOMEPAGE,
+    items: items.map(indexEntry),
+  };
+
+  return { items, index, primitiveCount: primitiveFiles.length, decorativeCount };
+};
+
+const summary = (built) =>
+  `${built.primitiveCount} primitive(s) + ${built.decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s)`;
+
+const main = async () => {
+  const built = await buildAll();
+
+  if (CHECK_ONLY) {
+    const errors = [];
+    for (const item of built.items) await compareItemAgainstDisk(item, errors);
+    await compareAgainstDisk('index.json', built.index, errors);
+    errors.push(...(await checkRawStyleFiles()));
+    // Every shipped item must carry an explicit intent category — an "Other"
+    // bucket on a public registry is a browse dead-end. Local builds only warn
+    // (so adding a component never blocks); CI fails.
+    if (uncategorised.length) {
+      errors.push(
+        `uncategorised in registry-categories.json: ${[...new Set(uncategorised)].sort().join(', ')}`,
+      );
+    }
+    if (errors.length) {
+      console.error('Registry drift detected:\n  ' + errors.join('\n  '));
+      process.exit(1);
+    }
+    console.log(`OK — ${summary(built)} match on-disk.`);
+    return;
+  }
+
+  await mkdir(OUT_DIR, { recursive: true });
+  for (const item of built.items) {
+    await writeFile(
+      path.join(OUT_DIR, `${item.name}.json`),
+      JSON.stringify(item, null, 2) + '\n',
+      'utf8',
+    );
+  }
+  await writeRawStyleFiles();
   await writeFile(
     path.join(OUT_DIR, 'index.json'),
-    JSON.stringify(index, null, 2) + '\n',
+    JSON.stringify(built.index, null, 2) + '\n',
     'utf8',
   );
 
@@ -561,21 +765,32 @@ const main = async () => {
   // every `npm run prebuild` — no separate npm script to forget.
   try {
     const { spawnSync } = await import('node:child_process');
-    const result = spawnSync(
-      'node',
-      [path.join(REGISTRY_ROOT, 'scripts/build-semantics-catalog.mjs')],
-      { stdio: 'inherit' },
-    );
-    if (result.status !== 0) {
-      console.error('semantics-catalog regeneration failed; continuing');
+    for (const script of [
+      'scripts/build-semantics-catalog.mjs',
+      // Maps each item to its Storybook story ids, so component pages can
+      // embed a live render instead of linking away.
+      'scripts/build-story-map.mjs',
+    ]) {
+      const result = spawnSync('node', [path.join(REGISTRY_ROOT, script)], {
+        stdio: 'inherit',
+      });
+      if (result.status !== 0) {
+        console.error(`${script} regeneration failed; continuing`);
+      }
     }
   } catch (err) {
-    console.error('semantics-catalog regeneration error (non-fatal):', err);
+    console.error('companion-catalogue regeneration error (non-fatal):', err);
   }
 
-  console.log(
-    `Built ${files.length} primitive(s) + ${decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s) → ${OUT_DIR}`,
-  );
+  if (uncategorised.length) {
+    console.warn(
+      `WARNING — ${new Set(uncategorised).size} item(s) have no entry in registry-categories.json and fell into "other": ` +
+        [...new Set(uncategorised)].sort().join(', ') +
+        '\n  CI (`--check`) fails on this. Add them to `assignments`.',
+    );
+  }
+
+  console.log(`Built ${summary(built)} → ${OUT_DIR}`);
 };
 
 main().catch((err) => {

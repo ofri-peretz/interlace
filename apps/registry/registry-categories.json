@@ -1,0 +1,221 @@
+{
+  "$comment": "SINGLE SOURCE OF TRUTH for registry categorisation. Read by scripts/build-registry.mjs (which stamps `categories` onto every emitted registry item, per the shadcn registry-item schema) and by src/lib/categories.ts (which only supplies the human-readable titles/descriptions used by the site). Never categorise a component anywhere else.",
+  "categories": [
+    {
+      "id": "foundation",
+      "title": "Foundation",
+      "description": "Layout, typography, and surface primitives — the structural floor every page composes on top of."
+    },
+    {
+      "id": "a11y",
+      "title": "A11y",
+      "description": "The keyboard + screen-reader + focus contract. SkipLink for WCAG 2.4.1, VisuallyHidden + FocusRing for the rest. Install via @interlace/a11y-starter."
+    },
+    {
+      "id": "form",
+      "title": "Form & input",
+      "description": "Text input, choice controls, and form composition. All inherit the WCAG 2.2 SC 2.4.13 focus ring from preflight."
+    },
+    {
+      "id": "overlay",
+      "title": "Overlay",
+      "description": "Floating surfaces — dialogs, popovers, menus, tooltips. Base UI owns focus + dismissal; we own surface + motion."
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback",
+      "description": "Communicate state — toast, alert, progress, skeleton, badge. Tone tokens (info / success / warning / danger) keep semantics consistent."
+    },
+    {
+      "id": "navigation",
+      "title": "Navigation",
+      "description": "Wayfinding — tabs, breadcrumb, pagination, headers, footers. Keyboard-equivalent everywhere (DESIGN_PRINCIPLES #10)."
+    },
+    {
+      "id": "data",
+      "title": "Data display",
+      "description": "Stats, scorecards, avatars, scroll areas — the chrome around numbers and content."
+    },
+    {
+      "id": "blog",
+      "title": "Blog & long-form",
+      "description": "Article-body surfaces — Callout, Prose, CodeBlock, Tag, TOC, article cards and templates. Install via @interlace/mdx-starter."
+    },
+    {
+      "id": "marketing",
+      "title": "Marketing",
+      "description": "Above-the-fold sections that sell — hero, pricing, FAQ, testimonial, feature grid, CTA."
+    },
+    {
+      "id": "decorative",
+      "title": "Decorative",
+      "description": "Motion-aware visual flair. Always reduced-motion-respecting."
+    },
+    {
+      "id": "other",
+      "title": "Other",
+      "description": "Uncategorised — falls here so a newly added component surfaces immediately without a manual step."
+    }
+  ],
+  "tierCategories": [
+    {
+      "id": "primitive",
+      "title": "Primitives",
+      "description": "Layer 1 — single-purpose components with a closed prop API. Installed flat into components/ui/."
+    },
+    {
+      "id": "pattern",
+      "title": "Patterns",
+      "description": "Layer 3 — multi-primitive compositions with a page-level job (hero, footer, pricing table)."
+    },
+    {
+      "id": "template",
+      "title": "Templates",
+      "description": "Layer 4 — full-page surfaces that compose patterns inside SectionBoundaries. The fastest path to a new site."
+    },
+    {
+      "id": "effect",
+      "title": "Effects",
+      "description": "Vendored magicui / aceternity motion components, promoted under the @interlace namespace."
+    },
+    {
+      "id": "util",
+      "title": "Utilities",
+      "description": "The cn() class merger and the useReducedMotion hook every interactive component depends on."
+    },
+    {
+      "id": "theme",
+      "title": "Theme",
+      "description": "The five-stylesheet CSS baseline — tokens, foundation, preflight, bridge, brand palette."
+    },
+    {
+      "id": "starter",
+      "title": "Starters",
+      "description": "Meta-installs that pull a curated set of items in one command."
+    }
+  ],
+  "tierOf": {
+    "primitives": "primitive",
+    "patterns": "pattern",
+    "templates": "template",
+    "magicui": "effect",
+    "aceternity": "effect"
+  },
+  "tierDefaultCategory": {
+    "primitive": "other",
+    "pattern": "other",
+    "template": "other",
+    "effect": "decorative",
+    "util": "foundation",
+    "theme": "foundation",
+    "starter": "foundation"
+  },
+  "assignments": {
+    "accordion": "navigation",
+    "alert": "feedback",
+    "alert-dialog": "overlay",
+    "aspect-ratio": "foundation",
+    "avatar": "data",
+    "badge": "feedback",
+    "box": "foundation",
+    "breadcrumb": "navigation",
+    "button": "form",
+    "callout": "blog",
+    "card": "foundation",
+    "checkbox": "form",
+    "code-block": "blog",
+    "collapsible": "navigation",
+    "container": "foundation",
+    "context-menu": "overlay",
+    "data-state": "feedback",
+    "dialog": "overlay",
+    "dropdown-menu": "overlay",
+    "focus-ring": "a11y",
+    "form": "form",
+    "grade-badge": "feedback",
+    "grid": "foundation",
+    "hover-card": "overlay",
+    "input": "form",
+    "label": "foundation",
+    "meteors": "decorative",
+    "number-field": "form",
+    "pagination": "navigation",
+    "popover": "overlay",
+    "progress": "feedback",
+    "prose": "blog",
+    "published-date": "blog",
+    "radio-group": "form",
+    "reading-time": "blog",
+    "scroll-area": "data",
+    "section": "foundation",
+    "section-boundary": "foundation",
+    "select": "form",
+    "separator": "foundation",
+    "sheet": "overlay",
+    "skeleton": "feedback",
+    "skip-link": "a11y",
+    "slider": "form",
+    "stack": "foundation",
+    "switch": "form",
+    "tabs": "navigation",
+    "tag": "blog",
+    "textarea": "form",
+    "toast": "feedback",
+    "toc": "blog",
+    "toggle": "form",
+    "tooltip": "overlay",
+    "typography": "foundation",
+    "visually-hidden": "a11y",
+
+    "article-card": "blog",
+    "article-list-grid": "blog",
+    "author-byline": "blog",
+    "brand-logo": "foundation",
+    "code-window": "blog",
+    "cta-section": "marketing",
+    "dot-pattern": "decorative",
+    "empty-state": "feedback",
+    "faq": "marketing",
+    "feature-grid": "marketing",
+    "figure": "blog",
+    "footer": "navigation",
+    "grid-pattern": "decorative",
+    "hero": "marketing",
+    "hero-cosmic": "marketing",
+    "interactive-grid-pattern": "decorative",
+    "newsletter-form": "marketing",
+    "page-header": "navigation",
+    "prev-next-post": "blog",
+    "pricing-table": "marketing",
+    "related-posts": "blog",
+    "scorecard-row": "data",
+    "section-header": "navigation",
+    "share-buttons": "blog",
+    "sign-in-form": "form",
+    "stat-card": "data",
+    "stat-group": "data",
+    "testimonial": "marketing",
+    "topbar": "navigation",
+
+    "article-template": "blog",
+    "auth-template": "form",
+    "author-template": "blog",
+    "blog-home-template": "blog",
+    "dashboard-template": "data",
+    "docs-page-template": "blog",
+    "error-template": "feedback",
+    "landing-template": "marketing",
+    "registry-item-template": "blog",
+    "scorecard-template": "data",
+    "settings-template": "form",
+    "stats-template": "data",
+    "tag-template": "blog",
+
+    "cn": "foundation",
+    "use-reduced-motion": "foundation",
+    "theme": "foundation",
+    "a11y-starter": "a11y",
+    "layout-starter": "foundation",
+    "mdx-starter": "blog"
+  }
+}

@@ -4,11 +4,16 @@
   "type": "registry:ui",
   "title": "Switch",
   "description": "@interlace/ui — switch (shadcn-compatible).",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "form",
+    "primitive"
+  ],
   "dependencies": [
     "@base-ui/react"
   ],
   "registryDependencies": [
-    "theme"
+    "https://ds.interlace.tools/r/theme.json"
   ],
   "files": [
     {
@@ -17,5 +22,12 @@
       "type": "registry:ui",
       "content": "'use client';\n\n/**\n * @interlace/ui — Switch\n *\n * Binary on/off control with immediate effect (no submit step) — the\n * distinction from Checkbox, which collects a value for a form. Built on\n * @base-ui/react/switch: Base UI owns `role=\"switch\"`, `aria-checked`,\n * Space/Enter activation and the controlled/uncontrolled pair\n * (`checked` + `onCheckedChange` / `defaultChecked`).\n * Mirrors: https://base-ui.com/react/components/switch\n *\n * ## Anatomy\n *\n *   Switch (Root)                 (button[role=switch] — data-min-viewport=320)\n *     └─ SwitchThumb              (the sliding knob)\n *\n * ## MIN_VIEWPORT — 320\n *\n * ## Target size (SC 2.5.8, AA)\n *\n * The painted track is 32×18.4 CSS px — under the 24px vertical floor. A\n * transparent `before:` pseudo-element extends the hit area to the full\n * 32×24 without changing a pixel of the visual. Not a spacing-exception\n * gamble: the target itself measures ≥24px.\n *\n * ## Contrast (verified by token math)\n *\n * | Composite                                       | Light  | Dark   | Floor           |\n * | ----------------------------------------------- | ------ | ------ | --------------- |\n * | unchecked track `bg-input` on `--background`    | 3.62:1 | 3.35:1 | 3:1 (SC 1.4.11) |\n * | checked track `bg-primary` on `--background`    | 8.80:1 | 11.79:1| 3:1 (SC 1.4.11) |\n * | thumb on unchecked track                        | 3.62:1 | 5.06:1 | 3:1 (SC 1.4.11) |\n * | thumb on checked track                          | 8.80:1 | 11.79:1| 3:1 (SC 1.4.11) |\n * | `focus-visible:ring-ring/60` on `--background`  | 3.23:1 | 4.73:1 | 3:1 (SC 2.4.13) |\n *\n * The dark unchecked track previously carried `bg-input/80`, which\n * composited to 1.17:1 — the off state was invisible on dark. Dropped:\n * the full-strength token is the one that was measured.\n *\n * ## API parity\n *\n * `h-[1.15rem]` is an arbitrary value with no matching spacing token. Kept\n * deliberately for pixel parity with the shadcn canon (a 20px track leaves\n * visible slack around the 16px thumb); the DS spacing scale has no\n * 18.4px step to reach for.\n *\n * | Rule | Concept                          | Where in this file                                          |\n * | ---- | -------------------------------- | ----------------------------------------------------------- |\n * | R4   | Extends Base UI part props       | `React.ComponentProps<typeof BaseSwitch.Root>`              |\n * | R6   | data-slot per part               | `switch` / `switch-thumb`                                   |\n * | R7   | className merged + ...rest + ref | `cn(BASE, className)` + `{...props}` + forwarded ref        |\n * | R12  | Reuse over wrap                  | Base UI owns state, keyboard and ARIA                       |\n * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |\n * | R18  | Tailwind only                    | zero inline `style`                                         |\n * | R19  | Tokens only                      | `bg-input` / `bg-primary` / `ring-ring` (1 documented dev.) |\n * | R20  | AA contrast                      | table above — every composite measured                      |\n * | R25  | Client component                 | required — Base UI Switch ships client hooks                |\n * | R26  | A11y from upstream               | `role=\"switch\"` + `aria-checked` + Space/Enter              |\n */\n\nimport * as React from 'react';\nimport { Switch as BaseSwitch } from '@base-ui/react/switch';\n\nimport { cn } from '@/lib/utils';\n\n/** Smallest viable viewport (CSS px) for this primitive. */\nexport const MIN_VIEWPORT = 320 as const;\n\nconst Switch = React.forwardRef<\n  React.ElementRef<typeof BaseSwitch.Root>,\n  React.ComponentProps<typeof BaseSwitch.Root>\n>(function Switch({ className, ...props }, ref) {\n  return (\n    <BaseSwitch.Root\n      ref={ref}\n      data-slot=\"switch\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn(\n        'peer data-[checked]:bg-primary data-[unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/60 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',\n        // SC 2.5.8 — transparent 32×24 hit area centred on the 18.4px track.\n        \"relative before:absolute before:top-1/2 before:left-0 before:h-6 before:w-full before:-translate-y-1/2 before:content-['']\",\n        className,\n      )}\n      {...props}\n    >\n      <BaseSwitch.Thumb\n        data-slot=\"switch-thumb\"\n        className={cn(\n          'bg-background dark:data-[checked]:bg-primary-foreground dark:data-[unchecked]:bg-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[checked]:translate-x-[calc(100%-2px)] data-[unchecked]:translate-x-0',\n        )}\n      />\n    </BaseSwitch.Root>\n  );\n});\n\nexport { Switch };\n"
     }
-  ]
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": true,
+    "minViewport": 320,
+    "loading": false
+  },
+  "docs": "## @interlace/switch\n\nInstalled to `components/ui/switch.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/switch';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/switch\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

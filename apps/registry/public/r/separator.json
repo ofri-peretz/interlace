@@ -4,11 +4,16 @@
   "type": "registry:ui",
   "title": "Separator",
   "description": "@interlace/ui — separator (shadcn-compatible).",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "foundation",
+    "primitive"
+  ],
   "dependencies": [
     "@base-ui/react"
   ],
   "registryDependencies": [
-    "theme"
+    "https://ds.interlace.tools/r/theme.json"
   ],
   "files": [
     {
@@ -17,5 +22,12 @@
       "type": "registry:ui",
       "content": "import * as React from 'react';\nimport { Separator as BaseSeparator } from '@base-ui/react/separator';\n\nimport { cn } from '@/lib/utils';\n\ntype SeparatorProps = React.ComponentProps<typeof BaseSeparator> & {\n  orientation?: 'horizontal' | 'vertical';\n};\n\nfunction Separator({\n  className,\n  orientation = 'horizontal',\n  ...props\n}: SeparatorProps) {\n  return (\n    <BaseSeparator\n      data-slot=\"separator\"\n      orientation={orientation}\n      className={cn(\n        'bg-border shrink-0',\n        orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Separator };\nexport type { SeparatorProps };\n"
     }
-  ]
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": false,
+    "minViewport": null,
+    "loading": false
+  },
+  "docs": "## @interlace/separator\n\nInstalled to `components/ui/separator.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/separator';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/separator\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

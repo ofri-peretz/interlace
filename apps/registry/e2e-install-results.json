@@ -1,0 +1,517 @@
+{
+  "generatedAt": "2026-08-02T07:09:32.764Z",
+  "registryUrl": "(local public/)",
+  "itemCount": 120,
+  "steps": {
+    "createNextApp": {
+      "ok": true,
+      "log": "Creating a new Next.js app in \u001b[32m/private/var/folders/sx/x7lz_ynn1rl343rtf7wq7vmc0000gp/T/interlace-e2e-zRqMBF/app\u001b[39m.\n\n\u001b[1mUsing npm.\u001b[22m\n\nInitializing project with template: app-tw \n\n\nInstalling dependencies:\n- \u001b[36mnext\u001b[39m\n- \u001b[36mreact\u001b[39m\n- \u001b[36mreact-dom\u001b[39m\n\nInstalling devDependencies:\n- \u001b[36m@tailwindcss/postcss\u001b[39m\n- \u001b[36m@types/node\u001b[39m\n- \u001b[36m@types/react\u001b[39m\n- \u001b[36m@types/react-dom\u001b[39m\n- \u001b[36mtailwindcss\u001b[39m\n- \u001b[36mtypescript\u001b[39m\n\n\nadded 47 packages, and audited 48 packages in 14s\n\n11 packages are looking for funding\n  run `npm fund` for details\n\n3 high severity vulnerabilities\n\nTo address all issues (including breaking changes), run:\n  npm audit fix --force\n\nRun `npm audit` for details.\nnpm warn allow-scripts 1 package has install scripts not yet covered by allowScripts:\nnpm warn allow-scripts   sharp@0.34.5 (install: node install/check.js || npm run build)\nnpm warn allow-scripts\nnpm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.\n\nGenerating route types...\n✓ Types generated successfully\n\nInitialized a git repository.\n\n\u001b[32mSuccess!\u001b[39m Created app at /private/var/folders/sx/x7lz_ynn1rl343rtf7wq7vmc0000gp/T/interlace-e2e-zRqMBF/app\n\n"
+    },
+    "shadcnInit": {
+      "ok": true,
+      "log": "- Preflight checks.\n\u001b[32m✔\u001b[39m Preflight checks.\n- Verifying framework.\n\u001b[32m✔\u001b[39m Verifying framework. Found \u001b[36mNext.js\u001b[39m.\n- Validating Tailwind CSS. Found \u001b[36mv4\u001b[39m.\n\u001b[32m✔\u001b[39m Validating Tailwind CSS. Found \u001b[36mv4\u001b[39m.\n- Validating import alias.\n\u001b[32m✔\u001b[39m Validating import alias.\n- Writing components.json.\n\u001b[32m✔\u001b[39m Writing components.json.\n- Checking registry.\n\u001b[32m✔\u001b[39m Checking registry.\n- Installing dependencies.\n- Installing dependencies.\n\u001b[32m✔\u001b[39m Installing dependencies.\n- Updating fonts.\n\u001b[32m✔\u001b[39m Updating fonts.\n- Updating files.\n\u001b[32m✔\u001b[39m Created 2 files:\n  - components/ui/button.tsx\n  - lib/utils.ts\n- Updating \u001b[36mapp/globals.css\u001b[39m\n\u001b[32m✔\u001b[39m Updating \u001b[36mapp/globals.css\u001b[39m\n\nProject initialization completed.\nYou may now add components.\n\n"
+    },
+    "add": {
+      "ok": true,
+      "log": "…11y contract, live preview and source: http://127.0.0.1:54612/c/section\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/section\n\nInstalled to `components/ui/section.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/section';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/section\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/avatar\n\nInstalled to `components/ui/avatar.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/avatar';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/avatar\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/badge\n\nInstalled to `components/ui/badge.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/badge';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/badge\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/card\n\nInstalled to `components/ui/card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/card';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/code-block\n\nInstalled to `components/ui/code-block.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/code-block';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/code-block\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/data-state\n\nInstalled to `components/ui/data-state.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/data-state';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/data-state\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/published-date\n\nInstalled to `components/ui/published-date.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/published-date';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/published-date\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/reading-time\n\nInstalled to `components/ui/reading-time.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/reading-time';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/reading-time\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/section-boundary\n\nInstalled to `components/ui/section-boundary.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/section-boundary';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/section-boundary\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/tag\n\nInstalled to `components/ui/tag.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/tag';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/tag\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/code-block\n\nInstalled to `components/ui/code-block.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/code-block';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/code-block\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/avatar\n\nInstalled to `components/ui/avatar.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/avatar';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/avatar\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/badge\n\nInstalled to `components/ui/badge.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/badge';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/badge\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/card\n\nInstalled to `components/ui/card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/card';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/section-boundary\n\nInstalled to `components/ui/section-boundary.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/section-boundary';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/section-boundary\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/tag\n\nInstalled to `components/ui/tag.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/tag';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/tag\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/share-buttons\n\nInstalled to `components/ui/patterns/share-buttons.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/share-buttons';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/share-buttons\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/share-buttons\n\nInstalled to `components/ui/patterns/share-buttons.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/share-buttons';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/share-buttons\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/callout\n\nInstalled to `components/ui/callout.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/callout';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/callout\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/cta-section\n\nInstalled to `components/ui/patterns/cta-section.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/cta-section';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/cta-section\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/empty-state\n\nInstalled to `components/ui/patterns/empty-state.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/empty-state';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/empty-state\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/faq\n\nInstalled to `components/ui/patterns/faq.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/faq';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/faq\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/feature-grid\n\nInstalled to `components/ui/patterns/feature-grid.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/feature-grid';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/feature-grid\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/hero\n\nInstalled to `components/ui/patterns/hero.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/hero';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/hero\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/newsletter-form\n\nInstalled to `components/ui/patterns/newsletter-form.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/newsletter-form';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/newsletter-form\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/page-header\n\nInstalled to `components/ui/patterns/page-header.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/page-header';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/page-header\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/pricing-table\n\nInstalled to `components/ui/patterns/pricing-table.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/pricing-table';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/pricing-table\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/scorecard-row\n\nInstalled to `components/ui/patterns/scorecard-row.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/scorecard-row';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/scorecard-row\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/sign-in-form\n\nInstalled to `components/ui/patterns/sign-in-form.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/sign-in-form';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/sign-in-form\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/stat-card\n\nInstalled to `components/ui/patterns/stat-card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/stat-card';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/stat-card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/callout\n\nInstalled to `components/ui/callout.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/callout';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/callout\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/scorecard-row\n\nInstalled to `components/ui/patterns/scorecard-row.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/scorecard-row';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/scorecard-row\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/stat-card\n\nInstalled to `components/ui/patterns/stat-card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/stat-card';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/stat-card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n# @interlace/layout-starter\n\nInstalled:\n\n- `Container` — 4 width tiers (prose / content / wide / full).\n- `Section` — vertical-rhythm slabs.\n- `Stack` + `Cluster` — six-step gap scale.\n- `Grid` — responsive grid primitive.\n- `Box` — token-aware surface (background + padding + radius + border).\n- `Typography` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- `theme` — full DS CSS baseline.\n\nDocs: http://127.0.0.1:54612/getting-started\n\n## @interlace/author-byline\n\nInstalled to `components/ui/patterns/author-byline.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/author-byline';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/author-byline\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/testimonial\n\nInstalled to `components/ui/patterns/testimonial.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/testimonial';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/testimonial\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/author-byline\n\nInstalled to `components/ui/patterns/author-byline.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/author-byline';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/author-byline\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/article-card\n\nInstalled to `components/ui/patterns/article-card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/article-card';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/article-card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/article-card\n\nInstalled to `components/ui/patterns/article-card.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/article-card';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/article-card\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/auth-template\n\nInstalled to `components/ui/templates/auth-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/auth-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/auth-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/author-template\n\nInstalled to `components/ui/templates/author-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/author-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/author-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/blog-home-template\n\nInstalled to `components/ui/templates/blog-home-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/blog-home-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/blog-home-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/dashboard-template\n\nInstalled to `components/ui/templates/dashboard-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/dashboard-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/dashboard-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/docs-page-template\n\nInstalled to `components/ui/templates/docs-page-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/docs-page-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/docs-page-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/error-template\n\nInstalled to `components/ui/templates/error-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/error-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/error-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/landing-template\n\nInstalled to `components/ui/templates/landing-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/landing-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/landing-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/registry-item-template\n\nInstalled to `components/ui/templates/registry-item-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/registry-item-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/registry-item-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/settings-template\n\nInstalled to `components/ui/templates/settings-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/settings-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/settings-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/tag-template\n\nInstalled to `components/ui/templates/tag-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/tag-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/tag-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n# @interlace/mdx-starter\n\nInstalled:\n\n- `Callout` — info / warn / danger / success / note prose annotations.\n- `Prose` — typographic article-body wrapper.\n- `CodeBlock` — Shiki-rendered fenced code with copy button.\n- `Tag` + `TagList` — article tag badges.\n- `Figure` — image + caption + alt + AspectRatio.\n- `theme` — full DS CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See http://127.0.0.1:54612/getting-started\n\n## @interlace/scorecard-template\n\nInstalled to `components/ui/templates/scorecard-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/scorecard-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/scorecard-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/stat-group\n\nInstalled to `components/ui/patterns/stat-group.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/stat-group';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/stat-group\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/stat-group\n\nInstalled to `components/ui/patterns/stat-group.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/stat-group';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/stat-group\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/article-list-grid\n\nInstalled to `components/ui/patterns/article-list-grid.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/article-list-grid';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/article-list-grid\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/related-posts\n\nInstalled to `components/ui/patterns/related-posts.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/related-posts';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/related-posts\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/related-posts\n\nInstalled to `components/ui/patterns/related-posts.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/related-posts';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/related-posts\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/stats-template\n\nInstalled to `components/ui/templates/stats-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/stats-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/stats-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n## @interlace/article-template\n\nInstalled to `components/ui/templates/article-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/article-template';\n```\n\nProps, a11y contract, live preview and source: http://127.0.0.1:54612/c/article-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).\n\u001b[39m\n"
+    },
+    "cssWired": {
+      "ok": true,
+      "sheets": [
+        "tokens.css",
+        "foundation.css",
+        "preflight.css",
+        "theme.css",
+        "interlace-theme.css"
+      ]
+    },
+    "build": {
+      "ok": true,
+      "log": "\n> app@0.1.0 build\n> next build\n\n\u001b[33m\u001b[1m⚠\u001b[22m\u001b[39m No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\n\u001b[1m\u001b[38;2;173;127;168m▲ Next.js 16.2.12\u001b[39m\u001b[22m (Turbopack)\n\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Creating an optimized production build ...\n\u001b[32m\u001b[1m✓\u001b[22m\u001b[39m Compiled successfully in 2.3s\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Running TypeScript ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Finished TypeScript in 2.5s ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Collecting page data using 5 workers ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 5 workers (0/4) ...\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 5 workers (1/4) \r\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 5 workers (2/4) \r\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Generating static pages using 5 workers (3/4) \r\n\u001b[32m\u001b[1m✓\u001b[22m\u001b[39m Generating static pages using 5 workers (4/4) in 167ms\n\u001b[37m\u001b[1m \u001b[22m\u001b[39m Finalizing page optimization ...\n\n\u001b[4mRoute (app)\u001b[24m\n┌ ○ /\n└ ○ /_not-found\n\n\n○  (Static)  prerendered as static content\n\n"
+    }
+  },
+  "items": {
+    "theme": {
+      "installed": true,
+      "files": 5
+    },
+    "a11y-starter": {
+      "installed": true,
+      "files": 1
+    },
+    "layout-starter": {
+      "installed": true,
+      "files": 1
+    },
+    "mdx-starter": {
+      "installed": true,
+      "files": 1
+    },
+    "cn": {
+      "installed": true,
+      "files": 1
+    },
+    "use-reduced-motion": {
+      "installed": true,
+      "files": 1
+    },
+    "accordion": {
+      "installed": true,
+      "files": 1
+    },
+    "alert-dialog": {
+      "installed": true,
+      "files": 1
+    },
+    "alert": {
+      "installed": true,
+      "files": 1
+    },
+    "aspect-ratio": {
+      "installed": true,
+      "files": 1
+    },
+    "avatar": {
+      "installed": true,
+      "files": 1
+    },
+    "badge": {
+      "installed": true,
+      "files": 1
+    },
+    "box": {
+      "installed": true,
+      "files": 1
+    },
+    "breadcrumb": {
+      "installed": true,
+      "files": 1
+    },
+    "button": {
+      "installed": true,
+      "files": 2
+    },
+    "callout": {
+      "installed": true,
+      "files": 1
+    },
+    "card": {
+      "installed": true,
+      "files": 1
+    },
+    "checkbox": {
+      "installed": true,
+      "files": 1
+    },
+    "code-block": {
+      "installed": true,
+      "files": 1
+    },
+    "collapsible": {
+      "installed": true,
+      "files": 1
+    },
+    "container": {
+      "installed": true,
+      "files": 1
+    },
+    "context-menu": {
+      "installed": true,
+      "files": 1
+    },
+    "data-state": {
+      "installed": true,
+      "files": 1
+    },
+    "dialog": {
+      "installed": true,
+      "files": 1
+    },
+    "dropdown-menu": {
+      "installed": true,
+      "files": 1
+    },
+    "focus-ring": {
+      "installed": true,
+      "files": 1
+    },
+    "form": {
+      "installed": true,
+      "files": 1
+    },
+    "grade-badge": {
+      "installed": true,
+      "files": 1
+    },
+    "grid": {
+      "installed": true,
+      "files": 1
+    },
+    "hover-card": {
+      "installed": true,
+      "files": 1
+    },
+    "input": {
+      "installed": true,
+      "files": 1
+    },
+    "label": {
+      "installed": true,
+      "files": 1
+    },
+    "meteors": {
+      "installed": true,
+      "files": 1
+    },
+    "number-field": {
+      "installed": true,
+      "files": 1
+    },
+    "pagination": {
+      "installed": true,
+      "files": 1
+    },
+    "popover": {
+      "installed": true,
+      "files": 1
+    },
+    "progress": {
+      "installed": true,
+      "files": 1
+    },
+    "prose": {
+      "installed": true,
+      "files": 1
+    },
+    "published-date": {
+      "installed": true,
+      "files": 1
+    },
+    "radio-group": {
+      "installed": true,
+      "files": 1
+    },
+    "reading-time": {
+      "installed": true,
+      "files": 1
+    },
+    "scroll-area": {
+      "installed": true,
+      "files": 1
+    },
+    "section-boundary": {
+      "installed": true,
+      "files": 1
+    },
+    "section": {
+      "installed": true,
+      "files": 1
+    },
+    "select": {
+      "installed": true,
+      "files": 1
+    },
+    "separator": {
+      "installed": true,
+      "files": 1
+    },
+    "sheet": {
+      "installed": true,
+      "files": 1
+    },
+    "skeleton": {
+      "installed": true,
+      "files": 2
+    },
+    "skip-link": {
+      "installed": true,
+      "files": 1
+    },
+    "slider": {
+      "installed": true,
+      "files": 1
+    },
+    "stack": {
+      "installed": true,
+      "files": 1
+    },
+    "switch": {
+      "installed": true,
+      "files": 1
+    },
+    "tabs": {
+      "installed": true,
+      "files": 1
+    },
+    "tag": {
+      "installed": true,
+      "files": 1
+    },
+    "textarea": {
+      "installed": true,
+      "files": 1
+    },
+    "toast": {
+      "installed": true,
+      "files": 1
+    },
+    "toc": {
+      "installed": true,
+      "files": 1
+    },
+    "toggle": {
+      "installed": true,
+      "files": 1
+    },
+    "tooltip": {
+      "installed": true,
+      "files": 1
+    },
+    "typography": {
+      "installed": true,
+      "files": 1
+    },
+    "visually-hidden": {
+      "installed": true,
+      "files": 1
+    },
+    "animated-gradient-text": {
+      "installed": true,
+      "files": 1
+    },
+    "animated-grid-pattern": {
+      "installed": true,
+      "files": 1
+    },
+    "animated-list": {
+      "installed": true,
+      "files": 1
+    },
+    "border-beam": {
+      "installed": true,
+      "files": 1
+    },
+    "marquee": {
+      "installed": true,
+      "files": 1
+    },
+    "number-ticker": {
+      "installed": true,
+      "files": 1
+    },
+    "particles": {
+      "installed": true,
+      "files": 1
+    },
+    "shimmer-button": {
+      "installed": true,
+      "files": 1
+    },
+    "background-beams-with-collision": {
+      "installed": true,
+      "files": 1
+    },
+    "background-gradient-animation": {
+      "installed": true,
+      "files": 1
+    },
+    "background-lines": {
+      "installed": true,
+      "files": 1
+    },
+    "cloud-particles": {
+      "installed": true,
+      "files": 1
+    },
+    "flip-words": {
+      "installed": true,
+      "files": 1
+    },
+    "focus-cards": {
+      "installed": true,
+      "files": 1
+    },
+    "spotlight": {
+      "installed": true,
+      "files": 1
+    },
+    "stars-background": {
+      "installed": true,
+      "files": 1
+    },
+    "sunny-background": {
+      "installed": true,
+      "files": 1
+    },
+    "article-card": {
+      "installed": true,
+      "files": 1
+    },
+    "article-list-grid": {
+      "installed": true,
+      "files": 1
+    },
+    "author-byline": {
+      "installed": true,
+      "files": 1
+    },
+    "brand-logo": {
+      "installed": true,
+      "files": 1
+    },
+    "code-window": {
+      "installed": true,
+      "files": 1
+    },
+    "cta-section": {
+      "installed": true,
+      "files": 1
+    },
+    "dot-pattern": {
+      "installed": true,
+      "files": 1
+    },
+    "empty-state": {
+      "installed": true,
+      "files": 1
+    },
+    "faq": {
+      "installed": true,
+      "files": 1
+    },
+    "feature-grid": {
+      "installed": true,
+      "files": 1
+    },
+    "figure": {
+      "installed": true,
+      "files": 1
+    },
+    "footer": {
+      "installed": true,
+      "files": 1
+    },
+    "grid-pattern": {
+      "installed": true,
+      "files": 1
+    },
+    "hero-cosmic": {
+      "installed": true,
+      "files": 1
+    },
+    "hero": {
+      "installed": true,
+      "files": 1
+    },
+    "interactive-grid-pattern": {
+      "installed": true,
+      "files": 1
+    },
+    "newsletter-form": {
+      "installed": true,
+      "files": 1
+    },
+    "page-header": {
+      "installed": true,
+      "files": 1
+    },
+    "prev-next-post": {
+      "installed": true,
+      "files": 1
+    },
+    "pricing-table": {
+      "installed": true,
+      "files": 1
+    },
+    "related-posts": {
+      "installed": true,
+      "files": 1
+    },
+    "scorecard-row": {
+      "installed": true,
+      "files": 1
+    },
+    "section-header": {
+      "installed": true,
+      "files": 1
+    },
+    "share-buttons": {
+      "installed": true,
+      "files": 1
+    },
+    "sign-in-form": {
+      "installed": true,
+      "files": 1
+    },
+    "stat-card": {
+      "installed": true,
+      "files": 1
+    },
+    "stat-group": {
+      "installed": true,
+      "files": 1
+    },
+    "testimonial": {
+      "installed": true,
+      "files": 1
+    },
+    "topbar": {
+      "installed": true,
+      "files": 1
+    },
+    "article-template": {
+      "installed": true,
+      "files": 1
+    },
+    "auth-template": {
+      "installed": true,
+      "files": 1
+    },
+    "author-template": {
+      "installed": true,
+      "files": 1
+    },
+    "blog-home-template": {
+      "installed": true,
+      "files": 1
+    },
+    "dashboard-template": {
+      "installed": true,
+      "files": 1
+    },
+    "docs-page-template": {
+      "installed": true,
+      "files": 1
+    },
+    "error-template": {
+      "installed": true,
+      "files": 1
+    },
+    "landing-template": {
+      "installed": true,
+      "files": 1
+    },
+    "registry-item-template": {
+      "installed": true,
+      "files": 1
+    },
+    "scorecard-template": {
+      "installed": true,
+      "files": 1
+    },
+    "settings-template": {
+      "installed": true,
+      "files": 1
+    },
+    "stats-template": {
+      "installed": true,
+      "files": 1
+    },
+    "tag-template": {
+      "installed": true,
+      "files": 1
+    }
+  },
+  "durationSeconds": 51,
+  "ok": true
+}

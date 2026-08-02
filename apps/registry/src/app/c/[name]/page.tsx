@@ -8,8 +8,10 @@ import { CategoryBadge } from '@/components/category-badge';
 import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
 import { SourceViewer } from '@/components/source-viewer';
-import { categoryFor, CATEGORIES } from '@/lib/categories';
-import { listItemNames, loadEnrichedItem } from '@/lib/registry';
+import { StoryPreview } from '@/components/story-preview';
+import { categoryById, intentCategoryOf } from '@/lib/categories';
+import { listItemNames, loadEnrichedItem, refToName } from '@/lib/registry';
+import { exampleStories, storiesFor } from '@/lib/stories';
 
 interface PageProps {
   params: Promise<{ name: string }>;
@@ -59,8 +61,11 @@ export default async function ComponentPage({ params }: PageProps) {
   const storybook = storybookPath(item.name, item.type);
   const file = item.files[0];
   const meta = item.metadata;
-  const categoryId = categoryFor(item.name);
-  const category = CATEGORIES.find((c) => c.id === categoryId);
+  const contract = item.meta;
+  const categoryId = intentCategoryOf(item);
+  const category = categoryById(categoryId);
+  const stories = storiesFor(item.name);
+  const examples = stories ? exampleStories(stories) : [];
 
   return (
     <div className="bg-background text-foreground min-h-screen">
@@ -115,9 +120,9 @@ export default async function ComponentPage({ params }: PageProps) {
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <CategoryBadge categoryId={categoryId} />
-            <ClientServerBadge isClient={meta.isClient} />
-            {meta.minViewport !== null ? (
-              <MinViewportBadge value={meta.minViewport} />
+            <ClientServerBadge isClient={contract?.client ?? false} />
+            {contract?.minViewport != null ? (
+              <MinViewportBadge value={contract.minViewport} />
             ) : null}
             <span className="border-border text-muted-foreground rounded-full border px-3 py-1 font-mono text-xs">
               {item.type.replace('registry:', '')}
@@ -125,26 +130,44 @@ export default async function ComponentPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* ─── Storybook CTA ──────────────────────────────────────── */}
-        <a
-          href={storybook}
-          className="border-border hover:border-primary/60 hover:bg-card group bg-card/40 mt-8 flex items-center justify-between gap-4 rounded-lg border p-5 transition-all"
-        >
-          <div>
-            <div className="text-primary text-xs font-semibold uppercase tracking-wider">
-              Visual examples + interactive variants
+        {/* ─── Live preview ───────────────────────────────────────── */}
+        {stories?.preview ? (
+          <section className="mt-8">
+            <h2 className="sr-only">Preview</h2>
+            <StoryPreview
+              storyId={stories.preview}
+              darkStoryId={stories.previewDark}
+              label={`${item.title} — live render`}
+              height={280}
+            />
+            <p className="text-muted-foreground mt-2 text-xs">
+              Rendered from the story the{' '}
+              <code className="text-foreground font-mono">storybook (a11y)</code>{' '}
+              CI gate runs axe against — the preview can&apos;t show something
+              that hasn&apos;t been verified.
+            </p>
+          </section>
+        ) : (
+          <a
+            href={storybook}
+            className="border-border hover:border-primary/60 hover:bg-card group bg-card/40 mt-8 flex items-center justify-between gap-4 rounded-lg border p-5 transition-all"
+          >
+            <div>
+              <div className="text-primary text-xs font-semibold uppercase tracking-wider">
+                Visual examples + interactive variants
+              </div>
+              <div className="mt-1 font-semibold">
+                View {item.title} on Storybook
+              </div>
+              <div className="text-muted-foreground mt-1 text-sm">
+                No embeddable story for this item yet.
+              </div>
             </div>
-            <div className="mt-1 font-semibold">
-              View {item.title} on Storybook
-            </div>
-            <div className="text-muted-foreground mt-1 text-sm">
-              All states, themes, a11y assertions — rendered live.
-            </div>
-          </div>
-          <span className="text-muted-foreground group-hover:text-primary text-xl transition-colors">
-            →
-          </span>
-        </a>
+            <span className="text-muted-foreground group-hover:text-primary text-xl transition-colors">
+              →
+            </span>
+          </a>
+        )}
 
         {/* ─── Install ───────────────────────────────────────────── */}
         <section className="mt-12">
@@ -179,7 +202,7 @@ export default async function ComponentPage({ params }: PageProps) {
             <div className="mt-4">
               <CodeBlock
                 label="Public API"
-                code={`import { ${meta.exports.join(', ')} } from '@interlace/${item.name}';`}
+                code={`import { ${meta.exports.join(', ')} } from '@/${file.target.replace(/\.tsx?$/, '')}';`}
               />
             </div>
           </section>
@@ -243,6 +266,212 @@ export default async function ComponentPage({ params }: PageProps) {
           </section>
         ) : null}
 
+        {/* ─── Props / API reference ────────────────────────────── */}
+        {meta.propsTables.length > 0 ? (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold">API reference</h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              Parsed from the type declarations in the source — the same file
+              the install writes into your tree, so this table can&apos;t drift
+              from the component you get.
+            </p>
+            {meta.propsTables.map((table) => (
+              <div key={table.typeName} className="mt-6">
+                <h3 className="font-mono text-sm font-semibold">
+                  {table.typeName}
+                </h3>
+                <p className="text-muted-foreground mt-1 text-xs">
+                  {table.extendsElement ? (
+                    <>
+                      Also accepts every{' '}
+                      <code className="text-foreground font-mono">
+                        &lt;{table.extendsElement}&gt;
+                      </code>{' '}
+                      attribute.{' '}
+                    </>
+                  ) : null}
+                  {table.hasVariantProps
+                    ? 'Plus the variant props listed above.'
+                    : null}
+                </p>
+                {table.props.length > 0 ? (
+                  <div className="border-border bg-card mt-3 overflow-x-auto rounded-lg border">
+                    <table className="w-full text-sm">
+                      <thead className="bg-background/60 text-muted-foreground text-xs uppercase tracking-wider">
+                        <tr>
+                          <th className="border-border border-b px-4 py-2 text-left font-semibold">
+                            Prop
+                          </th>
+                          <th className="border-border border-b px-4 py-2 text-left font-semibold">
+                            Type
+                          </th>
+                          <th className="border-border border-b px-4 py-2 text-left font-semibold">
+                            Description
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {table.props.map((prop) => (
+                          <tr
+                            key={prop.name}
+                            className="border-border border-b last:border-b-0 align-top"
+                          >
+                            <td className="px-4 py-2 font-mono text-xs font-semibold whitespace-nowrap">
+                              {prop.name}
+                              {prop.required ? (
+                                <span
+                                  className="text-primary ml-1"
+                                  title="required"
+                                >
+                                  *
+                                </span>
+                              ) : null}
+                            </td>
+                            <td className="text-muted-foreground px-4 py-2 font-mono text-xs">
+                              {prop.type}
+                            </td>
+                            <td className="px-4 py-2 text-sm">
+                              {prop.description ?? (
+                                <span className="text-muted-foreground">—</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </section>
+        ) : null}
+
+        {/* ─── Skeleton demo ────────────────────────────────────── */}
+        {contract?.loading && stories?.preview ? (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold">Skeleton</h2>
+            <p className="text-muted-foreground mt-2 max-w-prose text-sm">
+              Pass{' '}
+              <code className="text-foreground font-mono">loading</code> and the
+              component renders a shape-matched{' '}
+              <code className="text-foreground font-mono">
+                &lt;Skeleton /&gt;
+              </code>{' '}
+              in its own place — same box, so nothing reflows when the data
+              lands. Below is the same story with{' '}
+              <code className="text-foreground font-mono">loading={'{true}'}</code>.
+            </p>
+            <div className="mt-4">
+              <StoryPreview
+                storyId={stories.skeleton ?? stories.preview}
+                label={`${item.title} — loading state`}
+                args={stories.skeleton ? undefined : 'loading:!true'}
+                height={200}
+              />
+            </div>
+            <div className="mt-3">
+              <CodeBlock
+                label="Usage"
+                code={`<${meta.exports[0] ?? item.title} loading={isPending} />`}
+              />
+            </div>
+          </section>
+        ) : null}
+
+        {/* ─── Accessibility ────────────────────────────────────── */}
+        <section className="mt-12">
+          <h2 className="text-xl font-semibold">Accessibility</h2>
+          <p className="text-muted-foreground mt-2 max-w-prose text-sm">
+            Every story for this component is rendered headlessly and checked
+            with axe-core (wcag2aa, wcag22aa, best-practice, ACT) on every PR.
+            That gate has no{' '}
+            <code className="text-foreground font-mono">continue-on-error</code>
+            , so what ships has zero known violations.
+          </p>
+          <dl className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
+            <MetaCell label="Focus + keyboard behaviour">
+              {meta.a11y.baseUi ? (
+                <span className="text-sm">
+                  Owned by{' '}
+                  <a
+                    href={`https://base-ui.com/react/components/${meta.a11y.baseUi}`}
+                    className="text-foreground font-mono underline-offset-4 hover:underline"
+                  >
+                    @base-ui/react/{meta.a11y.baseUi}
+                  </a>{' '}
+                  — focus trapping, dismissal and typeahead come from the
+                  headless primitive, not from us.
+                </span>
+              ) : (
+                <span className="text-muted-foreground text-sm">
+                  Native element semantics — no interaction layer to get wrong.
+                </span>
+              )}
+            </MetaCell>
+            <MetaCell label="Focus ring (WCAG 2.2 SC 2.4.13)">
+              <span className="text-sm">
+                {meta.a11y.hasFocusRing
+                  ? 'Inherited from the preflight focus contract shipped in @interlace/theme.'
+                  : 'Not focusable — no focus indicator required.'}
+              </span>
+            </MetaCell>
+            <MetaCell label="Reduced motion">
+              <span className="text-sm">
+                {meta.a11y.respectsReducedMotion
+                  ? 'Animation is gated on prefers-reduced-motion.'
+                  : 'No animation to gate.'}
+              </span>
+            </MetaCell>
+            <MetaCell label="ARIA in the source">
+              {meta.a11y.ariaAttributes.length > 0 ||
+              meta.a11y.roles.length > 0 ? (
+                <ul className="flex flex-wrap gap-1.5">
+                  {meta.a11y.roles.map((role) => (
+                    <li key={role}>
+                      <code className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs">
+                        role=&quot;{role}&quot;
+                      </code>
+                    </li>
+                  ))}
+                  {meta.a11y.ariaAttributes.map((attr) => (
+                    <li key={attr}>
+                      <code className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs">
+                        {attr}
+                      </code>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <span className="text-muted-foreground text-sm">
+                  None — semantics come from the element or the Base UI
+                  primitive rather than hand-written ARIA.
+                </span>
+              )}
+            </MetaCell>
+          </dl>
+        </section>
+
+        {/* ─── More examples ────────────────────────────────────── */}
+        {examples.length > 0 ? (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold">Examples</h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              {examples.length} more state{examples.length === 1 ? '' : 's'} from
+              the same story file.
+            </p>
+            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              {examples.map((id) => (
+                <StoryPreview
+                  key={id}
+                  storyId={id}
+                  label={id.split('--')[1].replace(/-/g, ' ')}
+                  height={240}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         {/* ─── Rule compliance ──────────────────────────────────── */}
         {meta.rRules.length > 0 ? (
           <section className="mt-12">
@@ -290,13 +519,13 @@ export default async function ComponentPage({ params }: PageProps) {
         ) : null}
 
         {/* ─── Min-viewport contract ────────────────────────────── */}
-        {meta.minViewport !== null ? (
+        {contract?.minViewport != null ? (
           <section className="mt-12">
             <h2 className="text-xl font-semibold">Minimum viewport</h2>
             <p className="text-muted-foreground mt-2 text-sm">
               This primitive declares{' '}
               <code className="text-foreground font-mono">
-                MIN_VIEWPORT = {meta.minViewport}
+                MIN_VIEWPORT = {contract.minViewport}
               </code>{' '}
               CSS px (DESIGN_PRINCIPLES #14). When mounted in a container
               narrower than this, the preflight contract draws a dev-mode
@@ -371,16 +600,28 @@ export default async function ComponentPage({ params }: PageProps) {
               {item.registryDependencies &&
               item.registryDependencies.length > 0 ? (
                 <ul className="flex flex-wrap gap-1.5">
-                  {item.registryDependencies.map((d) => (
-                    <li key={d}>
-                      <Link
-                        href={`/c/${d}`}
-                        className="bg-background border-border hover:border-primary/60 rounded-md border px-2 py-0.5 font-mono text-xs"
-                      >
-                        @interlace/{d}
-                      </Link>
-                    </li>
-                  ))}
+                  {item.registryDependencies.map((ref) => {
+                    const dep = refToName(ref);
+                    return (
+                      <li key={ref}>
+                        {dep ? (
+                          <Link
+                            href={`/c/${dep}`}
+                            className="bg-background border-border hover:border-primary/60 rounded-md border px-2 py-0.5 font-mono text-xs"
+                          >
+                            @interlace/{dep}
+                          </Link>
+                        ) : (
+                          <a
+                            href={ref}
+                            className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs"
+                          >
+                            {ref}
+                          </a>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               ) : (
                 <span className="text-muted-foreground text-sm">none</span>

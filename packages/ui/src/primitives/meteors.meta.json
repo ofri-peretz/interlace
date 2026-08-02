@@ -1,5 +1,9 @@
 {
+  "$comment": "Animation tokens belong in cssVars.theme, NOT in css['@theme inline'] — the shadcn CLI's update-css step fails to parse the latter (`Unknown word meteor`), which aborted the whole install. Caught by apps/registry/scripts/e2e-install.mjs; same convention magicui's own registry uses.",
   "cssVars": {
+    "theme": {
+      "animate-meteor": "meteor 5s linear infinite"
+    },
     "light": {
       "meteor-glow": "oklch(1 0 0 / 0.06)"
     },
@@ -8,9 +12,6 @@
     }
   },
   "css": {
-    "@theme inline": {
-      "--animate-meteor": "meteor 5s linear infinite"
-    },
     "@keyframes meteor": {
       "0%": {
         "transform": "rotate(215deg) translateX(0)",

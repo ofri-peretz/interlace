@@ -1,0 +1,1432 @@
+{
+  "article-card": {
+    "title": "Blocks/ArticleCard",
+    "storyIds": [
+      "blocks-articlecard--default",
+      "blocks-articlecard--withoutimage",
+      "blocks-articlecard--manytags",
+      "blocks-articlecard--dark",
+      "blocks-articlecard--grid",
+      "blocks-articlecard--featuredpriority",
+      "blocks-articlecard--featuredlazy",
+      "blocks-articlecard--stackpriority",
+      "blocks-articlecard--stackcontract",
+      "blocks-articlecard--stacktagoverflow",
+      "blocks-articlecard--stackminimal",
+      "blocks-articlecard--featuredcontract",
+      "blocks-articlecard--featuredwithoutcover",
+      "blocks-articlecard--parity",
+      "blocks-articlecard--deprecatedvariantstillworks"
+    ],
+    "preview": "blocks-articlecard--default",
+    "previewDark": "blocks-articlecard--dark",
+    "skeleton": null
+  },
+  "article-list-grid": {
+    "title": "Blocks/ArticleListGrid",
+    "storyIds": [
+      "blocks-articlelistgrid--default",
+      "blocks-articlelistgrid--nofeatured",
+      "blocks-articlelistgrid--loading",
+      "blocks-articlelistgrid--empty",
+      "blocks-articlelistgrid--dark",
+      "blocks-articlelistgrid--rtl"
+    ],
+    "preview": "blocks-articlelistgrid--default",
+    "previewDark": "blocks-articlelistgrid--dark",
+    "skeleton": "blocks-articlelistgrid--loading"
+  },
+  "author-byline": {
+    "title": "Blocks/AuthorByline",
+    "storyIds": [
+      "blocks-authorbyline--default",
+      "blocks-authorbyline--variants",
+      "blocks-authorbyline--dark",
+      "blocks-authorbyline--rtl",
+      "blocks-authorbyline--belowminviewport"
+    ],
+    "preview": "blocks-authorbyline--default",
+    "previewDark": "blocks-authorbyline--dark",
+    "skeleton": null
+  },
+  "brand-logo": {
+    "title": "Blocks/BrandLogo",
+    "storyIds": [
+      "blocks-brandlogo--default",
+      "blocks-brandlogo--markonly",
+      "blocks-brandlogo--sizes",
+      "blocks-brandlogo--innavcontext"
+    ],
+    "preview": "blocks-brandlogo--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "cta-section": {
+    "title": "Blocks/CTASection",
+    "storyIds": [
+      "blocks-ctasection--default",
+      "blocks-ctasection--primary",
+      "blocks-ctasection--neutral",
+      "blocks-ctasection--loading",
+      "blocks-ctasection--dark",
+      "blocks-ctasection--rtl"
+    ],
+    "preview": "blocks-ctasection--default",
+    "previewDark": "blocks-ctasection--dark",
+    "skeleton": "blocks-ctasection--loading"
+  },
+  "code-window": {
+    "title": "Blocks/CodeWindow",
+    "storyIds": [
+      "blocks-codewindow--default",
+      "blocks-codewindow--withouttitle",
+      "blocks-codewindow--withactions",
+      "blocks-codewindow--narrowviewport"
+    ],
+    "preview": "blocks-codewindow--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "dot-pattern": {
+    "title": "Blocks/DotPattern",
+    "storyIds": [
+      "blocks-dotpattern--default",
+      "blocks-dotpattern--dense",
+      "blocks-dotpattern--glow",
+      "blocks-dotpattern--behindcontent"
+    ],
+    "preview": "blocks-dotpattern--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "empty-state": {
+    "title": "Blocks/EmptyState",
+    "storyIds": [
+      "blocks-emptystate--default",
+      "blocks-emptystate--withicon",
+      "blocks-emptystate--withiconandaction"
+    ],
+    "preview": "blocks-emptystate--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "faq": {
+    "title": "Blocks/FAQ",
+    "storyIds": [
+      "blocks-faq--default",
+      "blocks-faq--multiple",
+      "blocks-faq--loading",
+      "blocks-faq--dark",
+      "blocks-faq--rtl"
+    ],
+    "preview": "blocks-faq--default",
+    "previewDark": "blocks-faq--dark",
+    "skeleton": "blocks-faq--loading"
+  },
+  "feature-grid": {
+    "title": "Blocks/FeatureGrid",
+    "storyIds": [
+      "blocks-featuregrid--default",
+      "blocks-featuregrid--twocolumns",
+      "blocks-featuregrid--loading",
+      "blocks-featuregrid--dark",
+      "blocks-featuregrid--rtl"
+    ],
+    "preview": "blocks-featuregrid--default",
+    "previewDark": "blocks-featuregrid--dark",
+    "skeleton": "blocks-featuregrid--loading"
+  },
+  "figure": {
+    "title": "Blocks/Figure",
+    "storyIds": [
+      "blocks-figure--default",
+      "blocks-figure--variants",
+      "blocks-figure--dark",
+      "blocks-figure--rtl",
+      "blocks-figure--belowminviewport"
+    ],
+    "preview": "blocks-figure--default",
+    "previewDark": "blocks-figure--dark",
+    "skeleton": null
+  },
+  "footer": {
+    "title": "Blocks/Footer",
+    "storyIds": [
+      "blocks-footer--default",
+      "blocks-footer--dark",
+      "blocks-footer--rtl"
+    ],
+    "preview": "blocks-footer--default",
+    "previewDark": "blocks-footer--dark",
+    "skeleton": null
+  },
+  "grid-pattern": {
+    "title": "Blocks/GridPattern",
+    "storyIds": [
+      "blocks-gridpattern--default",
+      "blocks-gridpattern--dashed",
+      "blocks-gridpattern--highlightedsquares",
+      "blocks-gridpattern--animated"
+    ],
+    "preview": "blocks-gridpattern--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "hero": {
+    "title": "Blocks/Hero",
+    "storyIds": [
+      "blocks-hero--default",
+      "blocks-hero--witheyebrow",
+      "blocks-hero--twocolumn"
+    ],
+    "preview": "blocks-hero--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "hero-cosmic": {
+    "title": "Blocks/HeroCosmic",
+    "storyIds": [
+      "blocks-herocosmic--default",
+      "blocks-herocosmic--headlineonly",
+      "blocks-herocosmic--withfooter",
+      "blocks-herocosmic--quieteffects"
+    ],
+    "preview": "blocks-herocosmic--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "interactive-grid-pattern": {
+    "title": "Blocks/InteractiveGridPattern",
+    "storyIds": [
+      "blocks-interactivegridpattern--default",
+      "blocks-interactivegridpattern--uncontrolled",
+      "blocks-interactivegridpattern--controlled",
+      "blocks-interactivegridpattern--highercontrast"
+    ],
+    "preview": "blocks-interactivegridpattern--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "newsletter-form": {
+    "title": "Blocks/NewsletterForm",
+    "storyIds": [
+      "blocks-newsletterform--default",
+      "blocks-newsletterform--variants",
+      "blocks-newsletterform--dark",
+      "blocks-newsletterform--rtl",
+      "blocks-newsletterform--belowminviewport"
+    ],
+    "preview": "blocks-newsletterform--default",
+    "previewDark": "blocks-newsletterform--dark",
+    "skeleton": null
+  },
+  "page-header": {
+    "title": "Blocks/PageHeader",
+    "storyIds": [
+      "blocks-pageheader--default",
+      "blocks-pageheader--withactions",
+      "blocks-pageheader--withbreadcrumbandmeta"
+    ],
+    "preview": "blocks-pageheader--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "prev-next-post": {
+    "title": "Blocks/PrevNextPost",
+    "storyIds": [
+      "blocks-prevnextpost--default",
+      "blocks-prevnextpost--variants",
+      "blocks-prevnextpost--dark",
+      "blocks-prevnextpost--rtl",
+      "blocks-prevnextpost--belowminviewport"
+    ],
+    "preview": "blocks-prevnextpost--default",
+    "previewDark": "blocks-prevnextpost--dark",
+    "skeleton": null
+  },
+  "pricing-table": {
+    "title": "Blocks/PricingTable",
+    "storyIds": [
+      "blocks-pricingtable--default",
+      "blocks-pricingtable--loading",
+      "blocks-pricingtable--dark",
+      "blocks-pricingtable--rtl"
+    ],
+    "preview": "blocks-pricingtable--default",
+    "previewDark": "blocks-pricingtable--dark",
+    "skeleton": "blocks-pricingtable--loading"
+  },
+  "related-posts": {
+    "title": "Blocks/RelatedPosts",
+    "storyIds": [
+      "blocks-relatedposts--default",
+      "blocks-relatedposts--variants",
+      "blocks-relatedposts--dark",
+      "blocks-relatedposts--rtl",
+      "blocks-relatedposts--belowminviewport"
+    ],
+    "preview": "blocks-relatedposts--default",
+    "previewDark": "blocks-relatedposts--dark",
+    "skeleton": null
+  },
+  "scorecard-row": {
+    "title": "Blocks/ScorecardRow",
+    "storyIds": [
+      "blocks-scorecardrow--default",
+      "blocks-scorecardrow--grades",
+      "blocks-scorecardrow--withdetails",
+      "blocks-scorecardrow--loading",
+      "blocks-scorecardrow--stack"
+    ],
+    "preview": "blocks-scorecardrow--default",
+    "previewDark": null,
+    "skeleton": "blocks-scorecardrow--loading"
+  },
+  "section-header": {
+    "title": "Blocks/SectionHeader",
+    "storyIds": [
+      "blocks-sectionheader--default",
+      "blocks-sectionheader--witheyebrow",
+      "blocks-sectionheader--titleonly",
+      "blocks-sectionheader--leftaligned",
+      "blocks-sectionheader--allvariants"
+    ],
+    "preview": "blocks-sectionheader--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "share-buttons": {
+    "title": "Blocks/ShareButtons",
+    "storyIds": [
+      "blocks-sharebuttons--default",
+      "blocks-sharebuttons--variants",
+      "blocks-sharebuttons--dark",
+      "blocks-sharebuttons--rtl",
+      "blocks-sharebuttons--belowminviewport"
+    ],
+    "preview": "blocks-sharebuttons--default",
+    "previewDark": "blocks-sharebuttons--dark",
+    "skeleton": null
+  },
+  "sign-in-form": {
+    "title": "Blocks/SignInForm",
+    "storyIds": [
+      "blocks-signinform--default",
+      "blocks-signinform--withsubtitle",
+      "blocks-signinform--withactionsandfooter"
+    ],
+    "preview": "blocks-signinform--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "stat-card": {
+    "title": "Blocks/StatCard",
+    "storyIds": [
+      "blocks-statcard--default",
+      "blocks-statcard--withicon",
+      "blocks-statcard--grid",
+      "blocks-statcard--tones"
+    ],
+    "preview": "blocks-statcard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "stat-group": {
+    "title": "Blocks/StatGroup",
+    "storyIds": [
+      "blocks-statgroup--default",
+      "blocks-statgroup--fourcolumns",
+      "blocks-statgroup--twocolumns",
+      "blocks-statgroup--loading",
+      "blocks-statgroup--darkmode"
+    ],
+    "preview": "blocks-statgroup--default",
+    "previewDark": null,
+    "skeleton": "blocks-statgroup--loading"
+  },
+  "testimonial": {
+    "title": "Blocks/Testimonial",
+    "storyIds": [
+      "blocks-testimonial--default",
+      "blocks-testimonial--grid",
+      "blocks-testimonial--loading",
+      "blocks-testimonial--dark",
+      "blocks-testimonial--rtl"
+    ],
+    "preview": "blocks-testimonial--default",
+    "previewDark": "blocks-testimonial--dark",
+    "skeleton": "blocks-testimonial--loading"
+  },
+  "topbar": {
+    "title": "Blocks/Topbar",
+    "storyIds": [
+      "blocks-topbar--default",
+      "blocks-topbar--noactions",
+      "blocks-topbar--dark",
+      "blocks-topbar--rtl"
+    ],
+    "preview": "blocks-topbar--default",
+    "previewDark": "blocks-topbar--dark",
+    "skeleton": null
+  },
+  "colors": {
+    "title": "Foundations/Colors",
+    "storyIds": [
+      "foundations-colors--default",
+      "foundations-colors--light",
+      "foundations-colors--dark",
+      "foundations-colors--variants",
+      "foundations-colors--rtl",
+      "foundations-colors--belowminviewport"
+    ],
+    "preview": "foundations-colors--default",
+    "previewDark": "foundations-colors--dark",
+    "skeleton": null
+  },
+  "icons": {
+    "title": "Foundations/Icons",
+    "storyIds": [
+      "foundations-icons--default",
+      "foundations-icons--dark",
+      "foundations-icons--rtl",
+      "foundations-icons--grid36",
+      "foundations-icons--sizes",
+      "foundations-icons--dontdo"
+    ],
+    "preview": "foundations-icons--default",
+    "previewDark": "foundations-icons--dark",
+    "skeleton": null
+  },
+  "motion": {
+    "title": "Smooth scroll on document navigation",
+    "storyIds": [
+      "smooth-scroll-on-document-navigation--default",
+      "smooth-scroll-on-document-navigation--variants",
+      "smooth-scroll-on-document-navigation--dark",
+      "smooth-scroll-on-document-navigation--reducedmotion",
+      "smooth-scroll-on-document-navigation--rtl",
+      "smooth-scroll-on-document-navigation--belowminviewport"
+    ],
+    "preview": "smooth-scroll-on-document-navigation--default",
+    "previewDark": "smooth-scroll-on-document-navigation--dark",
+    "skeleton": null
+  },
+  "radius": {
+    "title": "Foundations/Radius",
+    "storyIds": [
+      "foundations-radius--default",
+      "foundations-radius--variants",
+      "foundations-radius--light",
+      "foundations-radius--dark",
+      "foundations-radius--rtl",
+      "foundations-radius--belowminviewport"
+    ],
+    "preview": "foundations-radius--default",
+    "previewDark": "foundations-radius--dark",
+    "skeleton": null
+  },
+  "spacing": {
+    "title": "Foundations/Spacing",
+    "storyIds": [
+      "foundations-spacing--default",
+      "foundations-spacing--variants",
+      "foundations-spacing--dark",
+      "foundations-spacing--rtl",
+      "foundations-spacing--belowminviewport"
+    ],
+    "preview": "foundations-spacing--default",
+    "previewDark": "foundations-spacing--dark",
+    "skeleton": null
+  },
+  "typography": {
+    "title": "Primitives/Typography",
+    "storyIds": [
+      "primitives-typography--default",
+      "primitives-typography--headings",
+      "primitives-typography--body",
+      "primitives-typography--tones",
+      "primitives-typography--dark",
+      "primitives-typography--rtl"
+    ],
+    "preview": "primitives-typography--default",
+    "previewDark": "primitives-typography--dark",
+    "skeleton": null
+  },
+  "edit-on-git-hub": {
+    "title": "Fumadocs/EditOnGitHub",
+    "storyIds": [
+      "fumadocs-editongithub--default",
+      "fumadocs-editongithub--customlabel"
+    ],
+    "preview": "fumadocs-editongithub--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "remote-markdown-skeleton": {
+    "title": "Fumadocs/RemoteMarkdownSkeleton",
+    "storyIds": [
+      "fumadocs-remotemarkdownskeleton--default",
+      "fumadocs-remotemarkdownskeleton--minimal"
+    ],
+    "preview": "fumadocs-remotemarkdownskeleton--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "remote-source-callout": {
+    "title": "Fumadocs/RemoteSourceCallout",
+    "storyIds": [
+      "fumadocs-remotesourcecallout--rulevariant",
+      "fumadocs-remotesourcecallout--readmevariant",
+      "fumadocs-remotesourcecallout--changelogvariant"
+    ],
+    "preview": "fumadocs-remotesourcecallout--rulevariant",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "shimmer-button": {
+    "title": "MagicUI/ShimmerButton",
+    "storyIds": [
+      "magicui-shimmerbutton--default",
+      "magicui-shimmerbutton--staticpill",
+      "magicui-shimmerbutton--sparkonly",
+      "magicui-shimmerbutton--highlightonly",
+      "magicui-shimmerbutton--brandprimary",
+      "magicui-shimmerbutton--gallery",
+      "magicui-shimmerbutton--clickinteraction",
+      "magicui-shimmerbutton--keyboardactivation",
+      "magicui-shimmerbutton--shimmerpropgatesspark",
+      "magicui-shimmerbutton--highlightpropgatesglow",
+      "magicui-shimmerbutton--staticpillhasnoeffects",
+      "magicui-shimmerbutton--disabledisnotclickable"
+    ],
+    "preview": "magicui-shimmerbutton--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "articles-page": {
+    "title": "Pages/ArticlesPage",
+    "storyIds": [
+      "pages-articlespage--default",
+      "pages-articlespage--dark",
+      "pages-articlespage--emptystate"
+    ],
+    "preview": "pages-articlespage--default",
+    "previewDark": "pages-articlespage--dark",
+    "skeleton": null
+  },
+  "accordion": {
+    "title": "Primitives/Accordion",
+    "storyIds": [
+      "primitives-accordion--default",
+      "primitives-accordion--keyboardflow",
+      "primitives-accordion--dark",
+      "primitives-accordion--rtl",
+      "primitives-accordion--reducedmotion"
+    ],
+    "preview": "primitives-accordion--default",
+    "previewDark": "primitives-accordion--dark",
+    "skeleton": null
+  },
+  "alert": {
+    "title": "Primitives/Alert",
+    "storyIds": [
+      "primitives-alert--default",
+      "primitives-alert--destructive",
+      "primitives-alert--dark",
+      "primitives-alert--rtl"
+    ],
+    "preview": "primitives-alert--default",
+    "previewDark": "primitives-alert--dark",
+    "skeleton": null
+  },
+  "alert-dialog": {
+    "title": "Primitives/AlertDialog",
+    "storyIds": [
+      "primitives-alertdialog--default",
+      "primitives-alertdialog--variants",
+      "primitives-alertdialog--keyboardflow",
+      "primitives-alertdialog--dark",
+      "primitives-alertdialog--rtl",
+      "primitives-alertdialog--belowminviewport"
+    ],
+    "preview": "primitives-alertdialog--default",
+    "previewDark": "primitives-alertdialog--dark",
+    "skeleton": null
+  },
+  "aspect-ratio": {
+    "title": "Primitives/AspectRatio",
+    "storyIds": [
+      "primitives-aspectratio--default",
+      "primitives-aspectratio--variants",
+      "primitives-aspectratio--withimage",
+      "primitives-aspectratio--dark",
+      "primitives-aspectratio--rtl",
+      "primitives-aspectratio--belowminviewport"
+    ],
+    "preview": "primitives-aspectratio--default",
+    "previewDark": "primitives-aspectratio--dark",
+    "skeleton": null
+  },
+  "avatar": {
+    "title": "Primitives/Avatar",
+    "storyIds": [
+      "primitives-avatar--default",
+      "primitives-avatar--fallbackonly",
+      "primitives-avatar--dark",
+      "primitives-avatar--rtl"
+    ],
+    "preview": "primitives-avatar--default",
+    "previewDark": "primitives-avatar--dark",
+    "skeleton": null
+  },
+  "badge": {
+    "title": "Primitives/Badge",
+    "storyIds": [
+      "primitives-badge--default",
+      "primitives-badge--variants",
+      "primitives-badge--dark",
+      "primitives-badge--rtl"
+    ],
+    "preview": "primitives-badge--default",
+    "previewDark": "primitives-badge--dark",
+    "skeleton": null
+  },
+  "box": {
+    "title": "Primitives/Box",
+    "storyIds": [
+      "primitives-box--default",
+      "primitives-box--surfaces",
+      "primitives-box--dark",
+      "primitives-box--rtl"
+    ],
+    "preview": "primitives-box--default",
+    "previewDark": "primitives-box--dark",
+    "skeleton": null
+  },
+  "breadcrumb": {
+    "title": "Primitives/Breadcrumb",
+    "storyIds": [
+      "primitives-breadcrumb--default",
+      "primitives-breadcrumb--variants",
+      "primitives-breadcrumb--keyboardflow",
+      "primitives-breadcrumb--loading",
+      "primitives-breadcrumb--dark",
+      "primitives-breadcrumb--rtl",
+      "primitives-breadcrumb--belowminviewport"
+    ],
+    "preview": "primitives-breadcrumb--default",
+    "previewDark": "primitives-breadcrumb--dark",
+    "skeleton": "primitives-breadcrumb--loading"
+  },
+  "button": {
+    "title": "Primitives/Button",
+    "storyIds": [
+      "primitives-button--default",
+      "primitives-button--variants",
+      "primitives-button--sizes",
+      "primitives-button--disabled",
+      "primitives-button--dark",
+      "primitives-button--loading",
+      "primitives-button--rtl"
+    ],
+    "preview": "primitives-button--default",
+    "previewDark": "primitives-button--dark",
+    "skeleton": "primitives-button--loading"
+  },
+  "callout": {
+    "title": "Primitives/Callout",
+    "storyIds": [
+      "primitives-callout--default",
+      "primitives-callout--variants",
+      "primitives-callout--dark",
+      "primitives-callout--rtl",
+      "primitives-callout--belowminviewport"
+    ],
+    "preview": "primitives-callout--default",
+    "previewDark": "primitives-callout--dark",
+    "skeleton": null
+  },
+  "card": {
+    "title": "Primitives/Card",
+    "storyIds": [
+      "primitives-card--default",
+      "primitives-card--dark",
+      "primitives-card--rtl"
+    ],
+    "preview": "primitives-card--default",
+    "previewDark": "primitives-card--dark",
+    "skeleton": null
+  },
+  "checkbox": {
+    "title": "Primitives/Checkbox",
+    "storyIds": [
+      "primitives-checkbox--default",
+      "primitives-checkbox--disabled",
+      "primitives-checkbox--invalid",
+      "primitives-checkbox--dark",
+      "primitives-checkbox--rtl",
+      "primitives-checkbox--indeterminate",
+      "primitives-checkbox--loading"
+    ],
+    "preview": "primitives-checkbox--default",
+    "previewDark": "primitives-checkbox--dark",
+    "skeleton": "primitives-checkbox--loading"
+  },
+  "code-block": {
+    "title": "Primitives/CodeBlock",
+    "storyIds": [
+      "primitives-codeblock--default",
+      "primitives-codeblock--variants",
+      "primitives-codeblock--dark",
+      "primitives-codeblock--rtl",
+      "primitives-codeblock--belowminviewport"
+    ],
+    "preview": "primitives-codeblock--default",
+    "previewDark": "primitives-codeblock--dark",
+    "skeleton": null
+  },
+  "collapsible": {
+    "title": "Primitives/Collapsible",
+    "storyIds": [
+      "primitives-collapsible--default",
+      "primitives-collapsible--variants",
+      "primitives-collapsible--keyboardflow",
+      "primitives-collapsible--dark",
+      "primitives-collapsible--rtl",
+      "primitives-collapsible--belowminviewport"
+    ],
+    "preview": "primitives-collapsible--default",
+    "previewDark": "primitives-collapsible--dark",
+    "skeleton": null
+  },
+  "container": {
+    "title": "Primitives/Container",
+    "storyIds": [
+      "primitives-container--prose",
+      "primitives-container--content",
+      "primitives-container--wide",
+      "primitives-container--full",
+      "primitives-container--allsizes",
+      "primitives-container--dark",
+      "primitives-container--rtl"
+    ],
+    "preview": "primitives-container--prose",
+    "previewDark": "primitives-container--dark",
+    "skeleton": null
+  },
+  "context-menu": {
+    "title": "Primitives/ContextMenu",
+    "storyIds": [
+      "primitives-contextmenu--default",
+      "primitives-contextmenu--keyboardflow",
+      "primitives-contextmenu--loading",
+      "primitives-contextmenu--dark",
+      "primitives-contextmenu--rtl"
+    ],
+    "preview": "primitives-contextmenu--default",
+    "previewDark": "primitives-contextmenu--dark",
+    "skeleton": "primitives-contextmenu--loading"
+  },
+  "data-state": {
+    "title": "Primitives/DataState",
+    "storyIds": [
+      "primitives-datastate--idle",
+      "primitives-datastate--loading",
+      "primitives-datastate--empty",
+      "primitives-datastate--errorstate",
+      "primitives-datastate--customstates",
+      "primitives-datastate--dark",
+      "primitives-datastate--rtl"
+    ],
+    "preview": "primitives-datastate--idle",
+    "previewDark": "primitives-datastate--dark",
+    "skeleton": "primitives-datastate--loading"
+  },
+  "dialog": {
+    "title": "Primitives/Dialog",
+    "storyIds": [
+      "primitives-dialog--default",
+      "primitives-dialog--opencloseflow",
+      "primitives-dialog--dark",
+      "primitives-dialog--rtl",
+      "primitives-dialog--reducedmotion"
+    ],
+    "preview": "primitives-dialog--default",
+    "previewDark": "primitives-dialog--dark",
+    "skeleton": null
+  },
+  "dropdown-menu": {
+    "title": "Primitives/DropdownMenu",
+    "storyIds": [
+      "primitives-dropdownmenu--default",
+      "primitives-dropdownmenu--keyboardflow",
+      "primitives-dropdownmenu--loading",
+      "primitives-dropdownmenu--dark",
+      "primitives-dropdownmenu--rtl",
+      "primitives-dropdownmenu--reducedmotion"
+    ],
+    "preview": "primitives-dropdownmenu--default",
+    "previewDark": "primitives-dropdownmenu--dark",
+    "skeleton": "primitives-dropdownmenu--loading"
+  },
+  "focus-ring": {
+    "title": "Primitives/FocusRing",
+    "storyIds": [
+      "primitives-focusring--default",
+      "primitives-focusring--offsets",
+      "primitives-focusring--customsurface",
+      "primitives-focusring--dark",
+      "primitives-focusring--rtl",
+      "primitives-focusring--belowminviewport"
+    ],
+    "preview": "primitives-focusring--default",
+    "previewDark": "primitives-focusring--dark",
+    "skeleton": null
+  },
+  "form": {
+    "title": "Primitives/Form",
+    "storyIds": [
+      "primitives-form--default",
+      "primitives-form--variants",
+      "primitives-form--dark",
+      "primitives-form--rtl",
+      "primitives-form--belowminviewport",
+      "primitives-form--loading"
+    ],
+    "preview": "primitives-form--default",
+    "previewDark": "primitives-form--dark",
+    "skeleton": "primitives-form--loading"
+  },
+  "grade-badge": {
+    "title": "Primitives/GradeBadge",
+    "storyIds": [
+      "primitives-gradebadge--default",
+      "primitives-gradebadge--ladder",
+      "primitives-gradebadge--sizes",
+      "primitives-gradebadge--dark",
+      "primitives-gradebadge--rtl"
+    ],
+    "preview": "primitives-gradebadge--default",
+    "previewDark": "primitives-gradebadge--dark",
+    "skeleton": null
+  },
+  "grid": {
+    "title": "Primitives/Grid",
+    "storyIds": [
+      "primitives-grid--default",
+      "primitives-grid--responsive",
+      "primitives-grid--withspan",
+      "primitives-grid--dark",
+      "primitives-grid--rtl"
+    ],
+    "preview": "primitives-grid--default",
+    "previewDark": "primitives-grid--dark",
+    "skeleton": null
+  },
+  "hover-card": {
+    "title": "Primitives/HoverCard",
+    "storyIds": [
+      "primitives-hovercard--default",
+      "primitives-hovercard--variants",
+      "primitives-hovercard--keyboardflow",
+      "primitives-hovercard--dark",
+      "primitives-hovercard--rtl",
+      "primitives-hovercard--belowminviewport"
+    ],
+    "preview": "primitives-hovercard--default",
+    "previewDark": "primitives-hovercard--dark",
+    "skeleton": null
+  },
+  "input": {
+    "title": "Primitives/Input",
+    "storyIds": [
+      "primitives-input--default",
+      "primitives-input--disabled",
+      "primitives-input--invalid",
+      "primitives-input--dark",
+      "primitives-input--rtl",
+      "primitives-input--focused",
+      "primitives-input--loading"
+    ],
+    "preview": "primitives-input--default",
+    "previewDark": "primitives-input--dark",
+    "skeleton": "primitives-input--loading"
+  },
+  "label": {
+    "title": "Primitives/Label",
+    "storyIds": [
+      "primitives-label--default",
+      "primitives-label--dark",
+      "primitives-label--rtl",
+      "primitives-label--disabled",
+      "primitives-label--loading"
+    ],
+    "preview": "primitives-label--default",
+    "previewDark": "primitives-label--dark",
+    "skeleton": "primitives-label--loading"
+  },
+  "meteors": {
+    "title": "Primitives/Meteors",
+    "storyIds": [
+      "primitives-meteors--default",
+      "primitives-meteors--lightsurface",
+      "primitives-meteors--sparse",
+      "primitives-meteors--dark",
+      "primitives-meteors--rtl",
+      "primitives-meteors--reducedmotion"
+    ],
+    "preview": "primitives-meteors--default",
+    "previewDark": "primitives-meteors--dark",
+    "skeleton": null
+  },
+  "number-field": {
+    "title": "Primitives/NumberField",
+    "storyIds": [
+      "primitives-numberfield--default",
+      "primitives-numberfield--bounded",
+      "primitives-numberfield--disabled",
+      "primitives-numberfield--dark",
+      "primitives-numberfield--rtl",
+      "primitives-numberfield--loading"
+    ],
+    "preview": "primitives-numberfield--default",
+    "previewDark": "primitives-numberfield--dark",
+    "skeleton": "primitives-numberfield--loading"
+  },
+  "pagination": {
+    "title": "Primitives/Pagination",
+    "storyIds": [
+      "primitives-pagination--default",
+      "primitives-pagination--keyboardflow",
+      "primitives-pagination--loading",
+      "primitives-pagination--dark",
+      "primitives-pagination--rtl"
+    ],
+    "preview": "primitives-pagination--default",
+    "previewDark": "primitives-pagination--dark",
+    "skeleton": "primitives-pagination--loading"
+  },
+  "popover": {
+    "title": "Primitives/Popover",
+    "storyIds": [
+      "primitives-popover--default",
+      "primitives-popover--keyboardflow",
+      "primitives-popover--dark",
+      "primitives-popover--rtl",
+      "primitives-popover--reducedmotion"
+    ],
+    "preview": "primitives-popover--default",
+    "previewDark": "primitives-popover--dark",
+    "skeleton": null
+  },
+  "progress": {
+    "title": "Primitives/Progress",
+    "storyIds": [
+      "primitives-progress--default",
+      "primitives-progress--variants",
+      "primitives-progress--dark",
+      "primitives-progress--rtl",
+      "primitives-progress--belowminviewport"
+    ],
+    "preview": "primitives-progress--default",
+    "previewDark": "primitives-progress--dark",
+    "skeleton": null
+  },
+  "prose": {
+    "title": "Primitives/Prose",
+    "storyIds": [
+      "primitives-prose--default",
+      "primitives-prose--variants",
+      "primitives-prose--dark",
+      "primitives-prose--rtl",
+      "primitives-prose--belowminviewport"
+    ],
+    "preview": "primitives-prose--default",
+    "previewDark": "primitives-prose--dark",
+    "skeleton": null
+  },
+  "published-date": {
+    "title": "Primitives/PublishedDate",
+    "storyIds": [
+      "primitives-publisheddate--default",
+      "primitives-publisheddate--variants",
+      "primitives-publisheddate--dark",
+      "primitives-publisheddate--rtl",
+      "primitives-publisheddate--belowminviewport"
+    ],
+    "preview": "primitives-publisheddate--default",
+    "previewDark": "primitives-publisheddate--dark",
+    "skeleton": null
+  },
+  "radio-group": {
+    "title": "Primitives/RadioGroup",
+    "storyIds": [
+      "primitives-radiogroup--default",
+      "primitives-radiogroup--invalid",
+      "primitives-radiogroup--dark",
+      "primitives-radiogroup--rtl",
+      "primitives-radiogroup--disabled",
+      "primitives-radiogroup--loading"
+    ],
+    "preview": "primitives-radiogroup--default",
+    "previewDark": "primitives-radiogroup--dark",
+    "skeleton": "primitives-radiogroup--loading"
+  },
+  "reading-time": {
+    "title": "Primitives/ReadingTime",
+    "storyIds": [
+      "primitives-readingtime--default",
+      "primitives-readingtime--variants",
+      "primitives-readingtime--dark",
+      "primitives-readingtime--rtl",
+      "primitives-readingtime--belowminviewport"
+    ],
+    "preview": "primitives-readingtime--default",
+    "previewDark": "primitives-readingtime--dark",
+    "skeleton": null
+  },
+  "scroll-area": {
+    "title": "Primitives/ScrollArea",
+    "storyIds": [
+      "primitives-scrollarea--default",
+      "primitives-scrollarea--keyboardflow",
+      "primitives-scrollarea--dark",
+      "primitives-scrollarea--rtl"
+    ],
+    "preview": "primitives-scrollarea--default",
+    "previewDark": "primitives-scrollarea--dark",
+    "skeleton": null
+  },
+  "section": {
+    "title": "Primitives/Section",
+    "storyIds": [
+      "primitives-section--default",
+      "primitives-section--mutedwithdivider",
+      "primitives-section--insetstrip",
+      "primitives-section--spacingscale",
+      "primitives-section--tonevariants",
+      "primitives-section--dark",
+      "primitives-section--rtl"
+    ],
+    "preview": "primitives-section--default",
+    "previewDark": "primitives-section--dark",
+    "skeleton": null
+  },
+  "section-boundary": {
+    "title": "Primitives/SectionBoundary",
+    "storyIds": [
+      "primitives-sectionboundary--idle",
+      "primitives-sectionboundary--loading",
+      "primitives-sectionboundary--errorstate",
+      "primitives-sectionboundary--customfallbacks",
+      "primitives-sectionboundary--threeindependentsections",
+      "primitives-sectionboundary--dark",
+      "primitives-sectionboundary--rtl"
+    ],
+    "preview": "primitives-sectionboundary--idle",
+    "previewDark": "primitives-sectionboundary--dark",
+    "skeleton": "primitives-sectionboundary--loading"
+  },
+  "select": {
+    "title": "Primitives/Select",
+    "storyIds": [
+      "primitives-select--default",
+      "primitives-select--grouped",
+      "primitives-select--disabled",
+      "primitives-select--dark",
+      "primitives-select--invalid",
+      "primitives-select--rtl",
+      "primitives-select--reducedmotion",
+      "primitives-select--loading"
+    ],
+    "preview": "primitives-select--default",
+    "previewDark": "primitives-select--dark",
+    "skeleton": "primitives-select--loading"
+  },
+  "separator": {
+    "title": "Primitives/Separator",
+    "storyIds": [
+      "primitives-separator--horizontal",
+      "primitives-separator--vertical",
+      "primitives-separator--dark",
+      "primitives-separator--rtl"
+    ],
+    "preview": "primitives-separator--horizontal",
+    "previewDark": "primitives-separator--dark",
+    "skeleton": null
+  },
+  "sheet": {
+    "title": "Primitives/Sheet",
+    "storyIds": [
+      "primitives-sheet--default",
+      "primitives-sheet--keyboardflow",
+      "primitives-sheet--dark",
+      "primitives-sheet--rtl",
+      "primitives-sheet--reducedmotion"
+    ],
+    "preview": "primitives-sheet--default",
+    "previewDark": "primitives-sheet--dark",
+    "skeleton": null
+  },
+  "skeleton": {
+    "title": "Primitives/Skeleton",
+    "storyIds": [
+      "primitives-skeleton--default",
+      "primitives-skeleton--catalogue",
+      "primitives-skeleton--count",
+      "primitives-skeleton--articlecardskeleton",
+      "primitives-skeleton--dark",
+      "primitives-skeleton--rtl",
+      "primitives-skeleton--reducedmotion"
+    ],
+    "preview": "primitives-skeleton--default",
+    "previewDark": "primitives-skeleton--dark",
+    "skeleton": null
+  },
+  "skip-link": {
+    "title": "Primitives/SkipLink",
+    "storyIds": [
+      "primitives-skiplink--default",
+      "primitives-skiplink--customlabel",
+      "primitives-skiplink--keyboardflow",
+      "primitives-skiplink--dark",
+      "primitives-skiplink--rtl",
+      "primitives-skiplink--belowminviewport"
+    ],
+    "preview": "primitives-skiplink--default",
+    "previewDark": "primitives-skiplink--dark",
+    "skeleton": null
+  },
+  "slider": {
+    "title": "Primitives/Slider",
+    "storyIds": [
+      "primitives-slider--default",
+      "primitives-slider--range",
+      "primitives-slider--stepped",
+      "primitives-slider--disabled",
+      "primitives-slider--dark",
+      "primitives-slider--rtl",
+      "primitives-slider--loading"
+    ],
+    "preview": "primitives-slider--default",
+    "previewDark": "primitives-slider--dark",
+    "skeleton": "primitives-slider--loading"
+  },
+  "stack": {
+    "title": "Primitives/Stack",
+    "storyIds": [
+      "primitives-stack--vertical",
+      "primitives-stack--horizontal",
+      "primitives-stack--gapscale",
+      "primitives-stack--clusterchips",
+      "primitives-stack--dark",
+      "primitives-stack--rtl"
+    ],
+    "preview": "primitives-stack--vertical",
+    "previewDark": "primitives-stack--dark",
+    "skeleton": null
+  },
+  "switch": {
+    "title": "Primitives/Switch",
+    "storyIds": [
+      "primitives-switch--default",
+      "primitives-switch--checked",
+      "primitives-switch--keyboardtoggle",
+      "primitives-switch--invalid",
+      "primitives-switch--dark",
+      "primitives-switch--rtl",
+      "primitives-switch--disabled",
+      "primitives-switch--loading"
+    ],
+    "preview": "primitives-switch--default",
+    "previewDark": "primitives-switch--dark",
+    "skeleton": "primitives-switch--loading"
+  },
+  "tabs": {
+    "title": "Primitives/Tabs",
+    "storyIds": [
+      "primitives-tabs--default",
+      "primitives-tabs--keyboardflow",
+      "primitives-tabs--loading",
+      "primitives-tabs--dark",
+      "primitives-tabs--rtl"
+    ],
+    "preview": "primitives-tabs--default",
+    "previewDark": "primitives-tabs--dark",
+    "skeleton": "primitives-tabs--loading"
+  },
+  "tag": {
+    "title": "Primitives/Tag",
+    "storyIds": [
+      "primitives-tag--default",
+      "primitives-tag--variants",
+      "primitives-tag--list",
+      "primitives-tag--dark",
+      "primitives-tag--rtl",
+      "primitives-tag--belowminviewport"
+    ],
+    "preview": "primitives-tag--default",
+    "previewDark": "primitives-tag--dark",
+    "skeleton": null
+  },
+  "textarea": {
+    "title": "Primitives/Textarea",
+    "storyIds": [
+      "primitives-textarea--default",
+      "primitives-textarea--variants",
+      "primitives-textarea--dark",
+      "primitives-textarea--rtl",
+      "primitives-textarea--belowminviewport",
+      "primitives-textarea--disabled",
+      "primitives-textarea--invalid",
+      "primitives-textarea--loading"
+    ],
+    "preview": "primitives-textarea--default",
+    "previewDark": "primitives-textarea--dark",
+    "skeleton": "primitives-textarea--loading"
+  },
+  "toast": {
+    "title": "Primitives/Toast",
+    "storyIds": [
+      "primitives-toast--default",
+      "primitives-toast--variants",
+      "primitives-toast--dark",
+      "primitives-toast--rtl",
+      "primitives-toast--belowminviewport"
+    ],
+    "preview": "primitives-toast--default",
+    "previewDark": "primitives-toast--dark",
+    "skeleton": null
+  },
+  "toc": {
+    "title": "Primitives/Toc",
+    "storyIds": [
+      "primitives-toc--default",
+      "primitives-toc--variants",
+      "primitives-toc--keyboardflow",
+      "primitives-toc--loading",
+      "primitives-toc--dark",
+      "primitives-toc--rtl",
+      "primitives-toc--belowminviewport"
+    ],
+    "preview": "primitives-toc--default",
+    "previewDark": "primitives-toc--dark",
+    "skeleton": "primitives-toc--loading"
+  },
+  "toggle": {
+    "title": "Primitives/Toggle",
+    "storyIds": [
+      "primitives-toggle--default",
+      "primitives-toggle--outline",
+      "primitives-toggle--sizes",
+      "primitives-toggle--group"
+    ],
+    "preview": "primitives-toggle--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "tooltip": {
+    "title": "Primitives/Tooltip",
+    "storyIds": [
+      "primitives-tooltip--default",
+      "primitives-tooltip--keyboardflow",
+      "primitives-tooltip--dark",
+      "primitives-tooltip--rtl",
+      "primitives-tooltip--reducedmotion"
+    ],
+    "preview": "primitives-tooltip--default",
+    "previewDark": "primitives-tooltip--dark",
+    "skeleton": null
+  },
+  "visually-hidden": {
+    "title": "Primitives/VisuallyHidden",
+    "storyIds": [
+      "primitives-visuallyhidden--default",
+      "primitives-visuallyhidden--externallinksuffix",
+      "primitives-visuallyhidden--aslabel",
+      "primitives-visuallyhidden--dark",
+      "primitives-visuallyhidden--rtl",
+      "primitives-visuallyhidden--belowminviewport"
+    ],
+    "preview": "primitives-visuallyhidden--default",
+    "previewDark": "primitives-visuallyhidden--dark",
+    "skeleton": null
+  },
+  "article-template": {
+    "title": "Templates/ArticleTemplate",
+    "storyIds": [
+      "templates-articletemplate--default",
+      "templates-articletemplate--loading",
+      "templates-articletemplate--errorstate",
+      "templates-articletemplate--empty",
+      "templates-articletemplate--dark",
+      "templates-articletemplate--rtl",
+      "templates-articletemplate--pageskeleton"
+    ],
+    "preview": "templates-articletemplate--default",
+    "previewDark": "templates-articletemplate--dark",
+    "skeleton": "templates-articletemplate--loading"
+  },
+  "auth-template": {
+    "title": "Templates/AuthTemplate",
+    "storyIds": [
+      "templates-authtemplate--signin",
+      "templates-authtemplate--signup",
+      "templates-authtemplate--reset",
+      "templates-authtemplate--dark",
+      "templates-authtemplate--rtl",
+      "templates-authtemplate--pageskeleton"
+    ],
+    "preview": "templates-authtemplate--signin",
+    "previewDark": "templates-authtemplate--dark",
+    "skeleton": null
+  },
+  "author-template": {
+    "title": "Templates/AuthorTemplate",
+    "storyIds": [
+      "templates-authortemplate--default",
+      "templates-authortemplate--dark",
+      "templates-authortemplate--rtl",
+      "templates-authortemplate--pageskeleton"
+    ],
+    "preview": "templates-authortemplate--default",
+    "previewDark": "templates-authortemplate--dark",
+    "skeleton": null
+  },
+  "blog-home-template": {
+    "title": "Templates/BlogHomeTemplate",
+    "storyIds": [
+      "templates-bloghometemplate--default",
+      "templates-bloghometemplate--dark",
+      "templates-bloghometemplate--rtl",
+      "templates-bloghometemplate--pageskeleton"
+    ],
+    "preview": "templates-bloghometemplate--default",
+    "previewDark": "templates-bloghometemplate--dark",
+    "skeleton": null
+  },
+  "dashboard-template": {
+    "title": "Templates/DashboardTemplate",
+    "storyIds": [
+      "templates-dashboardtemplate--default",
+      "templates-dashboardtemplate--dark",
+      "templates-dashboardtemplate--rtl",
+      "templates-dashboardtemplate--pageskeleton"
+    ],
+    "preview": "templates-dashboardtemplate--default",
+    "previewDark": "templates-dashboardtemplate--dark",
+    "skeleton": null
+  },
+  "docs-page-template": {
+    "title": "Templates/DocsPageTemplate",
+    "storyIds": [
+      "templates-docspagetemplate--default",
+      "templates-docspagetemplate--nosidebar",
+      "templates-docspagetemplate--dark",
+      "templates-docspagetemplate--rtl",
+      "templates-docspagetemplate--pageskeleton"
+    ],
+    "preview": "templates-docspagetemplate--default",
+    "previewDark": "templates-docspagetemplate--dark",
+    "skeleton": null
+  },
+  "error-template": {
+    "title": "Templates/ErrorTemplate",
+    "storyIds": [
+      "templates-errortemplate--notfound",
+      "templates-errortemplate--servererror",
+      "templates-errortemplate--maintenance",
+      "templates-errortemplate--dark",
+      "templates-errortemplate--rtl",
+      "templates-errortemplate--pageskeleton"
+    ],
+    "preview": "templates-errortemplate--notfound",
+    "previewDark": "templates-errortemplate--dark",
+    "skeleton": null
+  },
+  "landing-template": {
+    "title": "Templates/LandingTemplate",
+    "storyIds": [
+      "templates-landingtemplate--default",
+      "templates-landingtemplate--dark",
+      "templates-landingtemplate--rtl",
+      "templates-landingtemplate--pageskeleton"
+    ],
+    "preview": "templates-landingtemplate--default",
+    "previewDark": "templates-landingtemplate--dark",
+    "skeleton": null
+  },
+  "registry-item-template": {
+    "title": "Templates/RegistryItemTemplate",
+    "storyIds": [
+      "templates-registryitemtemplate--default",
+      "templates-registryitemtemplate--loading",
+      "templates-registryitemtemplate--errorstate",
+      "templates-registryitemtemplate--minimal",
+      "templates-registryitemtemplate--dark",
+      "templates-registryitemtemplate--rtl",
+      "templates-registryitemtemplate--pageskeleton"
+    ],
+    "preview": "templates-registryitemtemplate--default",
+    "previewDark": "templates-registryitemtemplate--dark",
+    "skeleton": "templates-registryitemtemplate--loading"
+  },
+  "scorecard-template": {
+    "title": "Templates/ScorecardTemplate",
+    "storyIds": [
+      "templates-scorecardtemplate--default",
+      "templates-scorecardtemplate--dark",
+      "templates-scorecardtemplate--rtl",
+      "templates-scorecardtemplate--pageskeleton"
+    ],
+    "preview": "templates-scorecardtemplate--default",
+    "previewDark": "templates-scorecardtemplate--dark",
+    "skeleton": null
+  },
+  "settings-template": {
+    "title": "Templates/SettingsTemplate",
+    "storyIds": [
+      "templates-settingstemplate--profile",
+      "templates-settingstemplate--dark",
+      "templates-settingstemplate--rtl",
+      "templates-settingstemplate--pageskeleton"
+    ],
+    "preview": "templates-settingstemplate--profile",
+    "previewDark": "templates-settingstemplate--dark",
+    "skeleton": null
+  },
+  "stats-template": {
+    "title": "Templates/StatsTemplate",
+    "storyIds": [
+      "templates-statstemplate--default",
+      "templates-statstemplate--dark",
+      "templates-statstemplate--rtl",
+      "templates-statstemplate--pageskeleton"
+    ],
+    "preview": "templates-statstemplate--default",
+    "previewDark": "templates-statstemplate--dark",
+    "skeleton": null
+  },
+  "tag-template": {
+    "title": "Templates/TagTemplate",
+    "storyIds": [
+      "templates-tagtemplate--default",
+      "templates-tagtemplate--dark",
+      "templates-tagtemplate--rtl",
+      "templates-tagtemplate--pageskeleton"
+    ],
+    "preview": "templates-tagtemplate--default",
+    "previewDark": "templates-tagtemplate--dark",
+    "skeleton": null
+  },
+  "color-contrast": {
+    "title": "Tokens/Color Contrast",
+    "storyIds": [
+      "tokens-color-contrast--light",
+      "tokens-color-contrast--dark"
+    ],
+    "preview": "tokens-color-contrast--light",
+    "previewDark": "tokens-color-contrast--dark",
+    "skeleton": null
+  }
+}

@@ -7,721 +7,1921 @@
       "name": "theme",
       "type": "registry:style",
       "title": "Interlace Theme",
-      "description": "@interlace/ui — full DS CSS baseline: tokens, foundation (type/spacing/radius), preflight (focus ring + min-viewport contract), shadcn↔fumadocs bridge, and brand palette."
+      "description": "@interlace/ui — full DS CSS baseline: tokens, foundation (type/spacing/radius), preflight (focus ring + min-viewport contract), shadcn↔fumadocs bridge, and brand palette.",
+      "categories": [
+        "foundation",
+        "theme"
+      ],
+      "meta": {
+        "tier": "theme",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "a11y-starter",
       "type": "registry:ui",
       "title": "A11y Starter",
-      "description": "@interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one."
+      "description": "@interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.",
+      "categories": [
+        "a11y",
+        "starter"
+      ],
+      "meta": {
+        "tier": "starter",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "layout-starter",
       "type": "registry:ui",
       "title": "Layout Starter",
-      "description": "@interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied."
+      "description": "@interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.",
+      "categories": [
+        "foundation",
+        "starter"
+      ],
+      "meta": {
+        "tier": "starter",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "mdx-starter",
       "type": "registry:ui",
       "title": "MDX Starter",
-      "description": "@interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx."
+      "description": "@interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.",
+      "categories": [
+        "blog",
+        "starter"
+      ],
+      "meta": {
+        "tier": "starter",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "cn",
       "type": "registry:lib",
       "title": "cn — class-name merge utility",
-      "description": "@interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically."
+      "description": "@interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "use-reduced-motion",
       "type": "registry:lib",
       "title": "useReducedMotion hook",
-      "description": "@interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference."
+      "description": "@interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
-      "description": "@interlace/ui — accordion (shadcn-compatible)."
+      "description": "@interlace/ui — accordion (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "alert-dialog",
       "type": "registry:ui",
       "title": "Alert Dialog",
-      "description": "@interlace/ui — alert-dialog (shadcn-compatible)."
+      "description": "@interlace/ui — alert-dialog (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
-      "description": "@interlace/ui — alert (shadcn-compatible)."
+      "description": "@interlace/ui — alert (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "aspect-ratio",
       "type": "registry:ui",
       "title": "Aspect Ratio",
-      "description": "@interlace/ui — aspect-ratio (shadcn-compatible)."
+      "description": "@interlace/ui — aspect-ratio (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "@interlace/ui — avatar (shadcn-compatible)."
+      "description": "@interlace/ui — avatar (shadcn-compatible).",
+      "categories": [
+        "data",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": true
+      }
     },
     {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "@interlace/ui — badge (shadcn-compatible)."
+      "description": "@interlace/ui — badge (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": true
+      }
     },
     {
       "name": "box",
       "type": "registry:ui",
       "title": "Box",
-      "description": "@interlace/ui — box (shadcn-compatible)."
+      "description": "@interlace/ui — box (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",
-      "description": "@interlace/ui — breadcrumb (shadcn-compatible)."
+      "description": "@interlace/ui — breadcrumb (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 480,
+        "loading": false
+      }
     },
     {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "@interlace/ui — button (shadcn-compatible)."
+      "description": "@interlace/ui — button (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "callout",
       "type": "registry:ui",
       "title": "Callout",
-      "description": "@interlace/ui — callout (shadcn-compatible)."
+      "description": "@interlace/ui — callout (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
-      "description": "@interlace/ui — card (shadcn-compatible)."
+      "description": "@interlace/ui — card (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": true
+      }
     },
     {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
-      "description": "@interlace/ui — checkbox (shadcn-compatible)."
+      "description": "@interlace/ui — checkbox (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
-      "description": "@interlace/ui — code-block (shadcn-compatible)."
+      "description": "@interlace/ui — code-block (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
-      "description": "@interlace/ui — collapsible (shadcn-compatible)."
+      "description": "@interlace/ui — collapsible (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "container",
       "type": "registry:ui",
       "title": "Container",
-      "description": "@interlace/ui — container (shadcn-compatible)."
+      "description": "@interlace/ui — container (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "context-menu",
       "type": "registry:ui",
       "title": "Context Menu",
-      "description": "@interlace/ui — context-menu (shadcn-compatible)."
+      "description": "@interlace/ui — context-menu (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "data-state",
       "type": "registry:ui",
       "title": "Data State",
-      "description": "@interlace/ui — data-state (shadcn-compatible)."
+      "description": "@interlace/ui — data-state (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": true
+      }
     },
     {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
-      "description": "@interlace/ui — dialog (shadcn-compatible)."
+      "description": "@interlace/ui — dialog (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown Menu",
-      "description": "@interlace/ui — dropdown-menu (shadcn-compatible)."
+      "description": "@interlace/ui — dropdown-menu (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "focus-ring",
       "type": "registry:ui",
       "title": "Focus Ring",
-      "description": "@interlace/ui — focus-ring (shadcn-compatible)."
+      "description": "@interlace/ui — focus-ring (shadcn-compatible).",
+      "categories": [
+        "a11y",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "form",
       "type": "registry:ui",
       "title": "Form",
-      "description": "@interlace/ui — form (shadcn-compatible)."
+      "description": "@interlace/ui — form (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "grade-badge",
       "type": "registry:ui",
       "title": "Grade Badge",
-      "description": "@interlace/ui — grade-badge (shadcn-compatible)."
+      "description": "@interlace/ui — grade-badge (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "grid",
       "type": "registry:ui",
       "title": "Grid",
-      "description": "@interlace/ui — grid (shadcn-compatible)."
+      "description": "@interlace/ui — grid (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "hover-card",
       "type": "registry:ui",
       "title": "Hover Card",
-      "description": "@interlace/ui — hover-card (shadcn-compatible)."
+      "description": "@interlace/ui — hover-card (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 768,
+        "loading": false
+      }
     },
     {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
-      "description": "@interlace/ui — input (shadcn-compatible)."
+      "description": "@interlace/ui — input (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
-      "description": "@interlace/ui — label (shadcn-compatible)."
+      "description": "@interlace/ui — label (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "meteors",
       "type": "registry:ui",
       "title": "Meteors",
-      "description": "@interlace/ui — meteors (shadcn-compatible)."
+      "description": "@interlace/ui — meteors (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "number-field",
       "type": "registry:ui",
       "title": "Number Field",
-      "description": "@interlace/ui — number-field (shadcn-compatible)."
+      "description": "@interlace/ui — number-field (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
-      "description": "@interlace/ui — pagination (shadcn-compatible)."
+      "description": "@interlace/ui — pagination (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
-      "description": "@interlace/ui — popover (shadcn-compatible)."
+      "description": "@interlace/ui — popover (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress",
-      "description": "@interlace/ui — progress (shadcn-compatible)."
+      "description": "@interlace/ui — progress (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "prose",
       "type": "registry:ui",
       "title": "Prose",
-      "description": "@interlace/ui — prose (shadcn-compatible)."
+      "description": "@interlace/ui — prose (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "published-date",
       "type": "registry:ui",
       "title": "Published Date",
-      "description": "@interlace/ui — published-date (shadcn-compatible)."
+      "description": "@interlace/ui — published-date (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
-      "description": "@interlace/ui — radio-group (shadcn-compatible)."
+      "description": "@interlace/ui — radio-group (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "reading-time",
       "type": "registry:ui",
       "title": "Reading Time",
-      "description": "@interlace/ui — reading-time (shadcn-compatible)."
+      "description": "@interlace/ui — reading-time (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "scroll-area",
       "type": "registry:ui",
       "title": "Scroll Area",
-      "description": "@interlace/ui — scroll-area (shadcn-compatible)."
+      "description": "@interlace/ui — scroll-area (shadcn-compatible).",
+      "categories": [
+        "data",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "section-boundary",
       "type": "registry:ui",
       "title": "Section Boundary",
-      "description": "@interlace/ui — section-boundary (shadcn-compatible)."
+      "description": "@interlace/ui — section-boundary (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
-      "description": "@interlace/ui — section (shadcn-compatible)."
+      "description": "@interlace/ui — section (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "@interlace/ui — select (shadcn-compatible)."
+      "description": "@interlace/ui — select (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "separator",
       "type": "registry:ui",
       "title": "Separator",
-      "description": "@interlace/ui — separator (shadcn-compatible)."
+      "description": "@interlace/ui — separator (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
-      "description": "@interlace/ui — sheet (shadcn-compatible)."
+      "description": "@interlace/ui — sheet (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "skeleton",
       "type": "registry:ui",
       "title": "Skeleton",
-      "description": "@interlace/ui — skeleton (shadcn-compatible)."
+      "description": "@interlace/ui — skeleton (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "skip-link",
       "type": "registry:ui",
       "title": "Skip Link",
-      "description": "@interlace/ui — skip-link (shadcn-compatible)."
+      "description": "@interlace/ui — skip-link (shadcn-compatible).",
+      "categories": [
+        "a11y",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
-      "description": "@interlace/ui — slider (shadcn-compatible)."
+      "description": "@interlace/ui — slider (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "stack",
       "type": "registry:ui",
       "title": "Stack",
-      "description": "@interlace/ui — stack (shadcn-compatible)."
+      "description": "@interlace/ui — stack (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
-      "description": "@interlace/ui — switch (shadcn-compatible)."
+      "description": "@interlace/ui — switch (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "@interlace/ui — tabs (shadcn-compatible)."
+      "description": "@interlace/ui — tabs (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "tag",
       "type": "registry:ui",
       "title": "Tag",
-      "description": "@interlace/ui — tag (shadcn-compatible)."
+      "description": "@interlace/ui — tag (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
-      "description": "@interlace/ui — textarea (shadcn-compatible)."
+      "description": "@interlace/ui — textarea (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
-      "description": "@interlace/ui — toast (shadcn-compatible)."
+      "description": "@interlace/ui — toast (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "toc",
       "type": "registry:ui",
       "title": "Toc",
-      "description": "@interlace/ui — toc (shadcn-compatible)."
+      "description": "@interlace/ui — toc (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 480,
+        "loading": false
+      }
     },
     {
       "name": "toggle",
       "type": "registry:ui",
       "title": "Toggle",
-      "description": "@interlace/ui — toggle (shadcn-compatible)."
+      "description": "@interlace/ui — toggle (shadcn-compatible).",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
-      "description": "@interlace/ui — tooltip (shadcn-compatible)."
+      "description": "@interlace/ui — tooltip (shadcn-compatible).",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "typography",
       "type": "registry:ui",
       "title": "Typography",
-      "description": "@interlace/ui — typography (shadcn-compatible)."
+      "description": "@interlace/ui — typography (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "visually-hidden",
       "type": "registry:ui",
       "title": "Visually Hidden",
-      "description": "@interlace/ui — visually-hidden (shadcn-compatible)."
+      "description": "@interlace/ui — visually-hidden (shadcn-compatible).",
+      "categories": [
+        "a11y",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "animated-gradient-text",
       "type": "registry:ui",
       "title": "Animated Gradient Text",
-      "description": "@interlace/ui — animated-gradient-text (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — animated-gradient-text (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "animated-grid-pattern",
       "type": "registry:ui",
       "title": "Animated Grid Pattern",
-      "description": "@interlace/ui — animated-grid-pattern (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — animated-grid-pattern (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "animated-list",
       "type": "registry:ui",
       "title": "Animated List",
-      "description": "@interlace/ui — animated-list (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — animated-list (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "border-beam",
       "type": "registry:ui",
       "title": "Border Beam",
-      "description": "@interlace/ui — border-beam (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — border-beam (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "marquee",
       "type": "registry:ui",
       "title": "Marquee",
-      "description": "@interlace/ui — marquee (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — marquee (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "number-ticker",
       "type": "registry:ui",
       "title": "Number Ticker",
-      "description": "@interlace/ui — number-ticker (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — number-ticker (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "particles",
       "type": "registry:ui",
       "title": "Particles",
-      "description": "@interlace/ui — particles (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — particles (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "shimmer-button",
       "type": "registry:ui",
       "title": "Shimmer Button",
-      "description": "@interlace/ui — shimmer-button (magicui) (shadcn-compatible)."
+      "description": "@interlace/ui — shimmer-button (magicui) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "background-beams-with-collision",
       "type": "registry:ui",
       "title": "Background Beams With Collision",
-      "description": "@interlace/ui — background-beams-with-collision (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — background-beams-with-collision (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "background-gradient-animation",
       "type": "registry:ui",
       "title": "Background Gradient Animation",
-      "description": "@interlace/ui — background-gradient-animation (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — background-gradient-animation (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "background-lines",
       "type": "registry:ui",
       "title": "Background Lines",
-      "description": "@interlace/ui — background-lines (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — background-lines (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "cloud-particles",
       "type": "registry:ui",
       "title": "Cloud Particles",
-      "description": "@interlace/ui — cloud-particles (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — cloud-particles (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "flip-words",
       "type": "registry:ui",
       "title": "Flip Words",
-      "description": "@interlace/ui — flip-words (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — flip-words (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "focus-cards",
       "type": "registry:ui",
       "title": "Focus Cards",
-      "description": "@interlace/ui — focus-cards (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — focus-cards (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "spotlight",
       "type": "registry:ui",
       "title": "Spotlight",
-      "description": "@interlace/ui — spotlight (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — spotlight (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "stars-background",
       "type": "registry:ui",
       "title": "Stars Background",
-      "description": "@interlace/ui — stars-background (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — stars-background (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "sunny-background",
       "type": "registry:ui",
       "title": "Sunny Background",
-      "description": "@interlace/ui — sunny-background (aceternity) (shadcn-compatible)."
+      "description": "@interlace/ui — sunny-background (aceternity) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "article-card",
       "type": "registry:ui",
       "title": "Article Card",
-      "description": "@interlace/ui — article-card (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — article-card (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": true
+      }
     },
     {
       "name": "article-list-grid",
       "type": "registry:ui",
       "title": "Article List Grid",
-      "description": "@interlace/ui — article-list-grid (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — article-list-grid (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "author-byline",
       "type": "registry:ui",
       "title": "Author Byline",
-      "description": "@interlace/ui — author-byline (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — author-byline (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "brand-logo",
       "type": "registry:ui",
       "title": "Brand Logo",
-      "description": "@interlace/ui — brand-logo (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — brand-logo (patterns) (shadcn-compatible).",
+      "categories": [
+        "foundation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "code-window",
       "type": "registry:ui",
       "title": "Code Window",
-      "description": "@interlace/ui — code-window (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — code-window (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "cta-section",
       "type": "registry:ui",
       "title": "Cta Section",
-      "description": "@interlace/ui — cta-section (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — cta-section (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "dot-pattern",
       "type": "registry:ui",
       "title": "Dot Pattern",
-      "description": "@interlace/ui — dot-pattern (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — dot-pattern (patterns) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "empty-state",
       "type": "registry:ui",
       "title": "Empty State",
-      "description": "@interlace/ui — empty-state (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — empty-state (patterns) (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "faq",
       "type": "registry:ui",
       "title": "Faq",
-      "description": "@interlace/ui — faq (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — faq (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "feature-grid",
       "type": "registry:ui",
       "title": "Feature Grid",
-      "description": "@interlace/ui — feature-grid (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — feature-grid (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "figure",
       "type": "registry:ui",
       "title": "Figure",
-      "description": "@interlace/ui — figure (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — figure (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "footer",
       "type": "registry:ui",
       "title": "Footer",
-      "description": "@interlace/ui — footer (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — footer (patterns) (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "grid-pattern",
       "type": "registry:ui",
       "title": "Grid Pattern",
-      "description": "@interlace/ui — grid-pattern (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — grid-pattern (patterns) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "hero-cosmic",
       "type": "registry:ui",
       "title": "Hero Cosmic",
-      "description": "@interlace/ui — hero-cosmic (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — hero-cosmic (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "hero",
       "type": "registry:ui",
       "title": "Hero",
-      "description": "@interlace/ui — hero (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — hero (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "interactive-grid-pattern",
       "type": "registry:ui",
       "title": "Interactive Grid Pattern",
-      "description": "@interlace/ui — interactive-grid-pattern (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — interactive-grid-pattern (patterns) (shadcn-compatible).",
+      "categories": [
+        "decorative",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "newsletter-form",
       "type": "registry:ui",
       "title": "Newsletter Form",
-      "description": "@interlace/ui — newsletter-form (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — newsletter-form (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "page-header",
       "type": "registry:ui",
       "title": "Page Header",
-      "description": "@interlace/ui — page-header (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — page-header (patterns) (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 480,
+        "loading": true
+      }
     },
     {
       "name": "prev-next-post",
       "type": "registry:ui",
       "title": "Prev Next Post",
-      "description": "@interlace/ui — prev-next-post (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — prev-next-post (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 480,
+        "loading": true
+      }
     },
     {
       "name": "pricing-table",
       "type": "registry:ui",
       "title": "Pricing Table",
-      "description": "@interlace/ui — pricing-table (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — pricing-table (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "related-posts",
       "type": "registry:ui",
       "title": "Related Posts",
-      "description": "@interlace/ui — related-posts (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — related-posts (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 480,
+        "loading": true
+      }
     },
     {
       "name": "scorecard-row",
       "type": "registry:ui",
       "title": "Scorecard Row",
-      "description": "@interlace/ui — scorecard-row (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — scorecard-row (patterns) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "section-header",
       "type": "registry:ui",
       "title": "Section Header",
-      "description": "@interlace/ui — section-header (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — section-header (patterns) (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": null,
+        "loading": false
+      }
     },
     {
       "name": "share-buttons",
       "type": "registry:ui",
       "title": "Share Buttons",
-      "description": "@interlace/ui — share-buttons (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — share-buttons (patterns) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "sign-in-form",
       "type": "registry:ui",
       "title": "Sign In Form",
-      "description": "@interlace/ui — sign-in-form (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — sign-in-form (patterns) (shadcn-compatible).",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "stat-card",
       "type": "registry:ui",
       "title": "Stat Card",
-      "description": "@interlace/ui — stat-card (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — stat-card (patterns) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "stat-group",
       "type": "registry:ui",
       "title": "Stat Group",
-      "description": "@interlace/ui — stat-group (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — stat-group (patterns) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "testimonial",
       "type": "registry:ui",
       "title": "Testimonial",
-      "description": "@interlace/ui — testimonial (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — testimonial (patterns) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": true
+      }
     },
     {
       "name": "topbar",
       "type": "registry:ui",
       "title": "Topbar",
-      "description": "@interlace/ui — topbar (patterns) (shadcn-compatible)."
+      "description": "@interlace/ui — topbar (patterns) (shadcn-compatible).",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "article-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Article Template",
-      "description": "@interlace/ui — article-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — article-template (templates) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "auth-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Auth Template",
-      "description": "@interlace/ui — auth-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — auth-template (templates) (shadcn-compatible).",
+      "categories": [
+        "form",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "author-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Author Template",
-      "description": "@interlace/ui — author-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — author-template (templates) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "blog-home-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Blog Home Template",
-      "description": "@interlace/ui — blog-home-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — blog-home-template (templates) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "dashboard-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Dashboard Template",
-      "description": "@interlace/ui — dashboard-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — dashboard-template (templates) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 480,
+        "loading": false
+      }
     },
     {
       "name": "docs-page-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Docs Page Template",
-      "description": "@interlace/ui — docs-page-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — docs-page-template (templates) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "error-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Error Template",
-      "description": "@interlace/ui — error-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — error-template (templates) (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "landing-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Landing Template",
-      "description": "@interlace/ui — landing-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — landing-template (templates) (shadcn-compatible).",
+      "categories": [
+        "marketing",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "registry-item-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Registry Item Template",
-      "description": "@interlace/ui — registry-item-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — registry-item-template (templates) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "scorecard-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Scorecard Template",
-      "description": "@interlace/ui — scorecard-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — scorecard-template (templates) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "settings-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Settings Template",
-      "description": "@interlace/ui — settings-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — settings-template (templates) (shadcn-compatible).",
+      "categories": [
+        "form",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 480,
+        "loading": false
+      }
     },
     {
       "name": "stats-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Stats Template",
-      "description": "@interlace/ui — stats-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — stats-template (templates) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     },
     {
       "name": "tag-template",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Tag Template",
-      "description": "@interlace/ui — tag-template (templates) (shadcn-compatible)."
+      "description": "@interlace/ui — tag-template (templates) (shadcn-compatible).",
+      "categories": [
+        "blog",
+        "template"
+      ],
+      "meta": {
+        "tier": "template",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
     }
   ]
 }
