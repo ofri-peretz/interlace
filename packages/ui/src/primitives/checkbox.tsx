@@ -30,6 +30,7 @@
  * | -------------------------------------------------- | ------ | ------- | --------------- |
  * | unchecked `border-input` on `--background`         | 3.62:1 | 3.35:1  | 3:1 (SC 1.4.11) |
  * | checked `bg-primary` on `--background`             | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
+ * | indeterminate `bg-primary` on `--background`       | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | glyph `text-primary-foreground` on `bg-primary`    | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | `aria-invalid:border-destructive` on `--background`| 8.31:1 | 10.43:1  | 3:1 (SC 1.4.11) |
  * | `focus-visible:ring-ring/60` on `--background`     | 3.23:1 | 4.73:1  | 3:1 (SC 2.4.13) |
@@ -77,6 +78,12 @@ const Checkbox = React.forwardRef<
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
         'peer border-input dark:bg-input/30 data-[checked]:bg-primary data-[checked]:text-primary-foreground dark:data-[checked]:bg-primary data-[checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/60 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
+        // Indeterminate needs its own fill: Base UI emits ONLY
+        // `data-indeterminate` in that state — neither `data-checked` nor
+        // `data-unchecked` (see useStateAttributesMapping upstream). Without
+        // these the MinusIcon renders on an unfilled box, visually identical
+        // to unchecked. Same tokens as checked → same 8.80:1 / 11.79:1.
+        'data-[indeterminate]:bg-primary data-[indeterminate]:text-primary-foreground dark:data-[indeterminate]:bg-primary data-[indeterminate]:border-primary',
         // SC 2.5.8 — transparent 24×24 hit area around the 16px box.
         "relative before:absolute before:-inset-1 before:content-['']",
         className,

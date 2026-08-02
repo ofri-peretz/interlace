@@ -84,7 +84,14 @@ function SelectValue({
 }: React.ComponentProps<typeof BaseSelect.Value> & {
   placeholder?: React.ReactNode;
 }) {
-  const Component = BaseSelect.Value as any;
+  // Base UI's `Select.Value` types `placeholder` narrower than the ReactNode
+  // we want to accept. Narrow cast rather than `as any` so a future upstream
+  // signature change still fails the build here.
+  const Component = BaseSelect.Value as React.ComponentType<
+    React.ComponentProps<typeof BaseSelect.Value> & {
+      placeholder?: React.ReactNode;
+    }
+  >;
   return <Component placeholder={placeholder} {...props} />;
 }
 const SelectPortal = BaseSelect.Portal;
