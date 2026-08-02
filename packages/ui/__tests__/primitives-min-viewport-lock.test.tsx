@@ -82,6 +82,19 @@ const PRIMITIVES = [
   { name: 'grade-badge', viewport: 320, tier: 'server' },
   // Right-click menu (paired with DropdownMenu's click-to-open variant).
   { name: 'context-menu', viewport: 320, tier: 'client' },
+  // Phase 1.1 — form & input primitives brought to the component floor.
+  // All five interactive ones are client-tier because Base UI ships client
+  // hooks for their state machines; Input and Label are pure native
+  // elements and stay server-tier so an RSC form never pulls a bundle.
+  //
+  // 320 across the board: a sign-in / contact / search form is the LAST
+  // surface allowed to degrade on a narrow screen (iPhone SE class).
+  { name: 'input', viewport: 320, tier: 'server' },
+  { name: 'label', viewport: 320, tier: 'server' },
+  { name: 'checkbox', viewport: 320, tier: 'client' },
+  { name: 'radio-group', viewport: 320, tier: 'client' },
+  { name: 'select', viewport: 320, tier: 'client' },
+  { name: 'switch', viewport: 320, tier: 'client' },
 ] as const;
 
 /**

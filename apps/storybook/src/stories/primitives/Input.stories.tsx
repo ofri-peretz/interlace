@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { Input } from '@interlace/ui/input';
 import { Label } from '@interlace/ui/label';
 import { withDark, withRtl } from '@/decorators';
+import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof Input> = {
   title: 'Primitives/Input',
@@ -67,4 +69,35 @@ export const RTL: Story = {
     </div>
   ),
   decorators: [withRtl],
+};
+
+/**
+ * Focus ring. SC 2.4.13 wants ≥3:1 against adjacent colours; the DS ring
+ * is `ring-ring/60` (3.23:1 light / 4.73:1 dark) — /50 measured 2.57:1
+ * on white and did NOT clear the floor. The play function drives real
+ * keyboard focus so the ring is painted in the CI screenshot + axe run.
+ */
+export const Focused: Story = {
+  render: () => (
+    <Input
+      aria-label="Focus ring demo"
+      placeholder="Tab to me"
+      className="w-[260px]"
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole('textbox');
+    await userEvent.tab();
+    await expect(input).toHaveFocus();
+  },
+};
+
+/** Loading placeholder — reserves the exact 36px control height (CLS=0). */
+export const Loading: Story = {
+  render: () => (
+    <div className="w-[260px]">
+      <Skeleton variant="input" />
+    </div>
+  ),
 };

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { Switch } from '@interlace/ui/switch';
 import { withDark, withRtl } from '@/decorators';
+import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof Switch> = {
   title: 'Primitives/Switch',
@@ -99,4 +100,25 @@ export const RTL: Story = {
     </label>
   ),
   decorators: [withRtl],
+};
+
+/** Disabled — pointer-events off, 50% opacity (SC 1.4.11 exempt). */
+export const Disabled: Story = {
+  render: () => (
+    <div className="flex flex-col gap-3">
+      <label className="flex cursor-not-allowed items-center gap-2">
+        <Switch aria-label="Off and disabled" disabled />
+        <span>Off, disabled</span>
+      </label>
+      <label className="flex cursor-not-allowed items-center gap-2">
+        <Switch aria-label="On and disabled" defaultChecked disabled />
+        <span>On, disabled</span>
+      </label>
+    </div>
+  ),
+};
+
+/** Loading placeholder — matches the 32×20 track silhouette. */
+export const Loading: Story = {
+  render: () => <Skeleton variant="switch" />,
 };

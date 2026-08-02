@@ -19,9 +19,35 @@
  *
  * ## MIN_VIEWPORT — 320
  *
- * Sliders must hit the WCAG 2.5.5 target-size floor (24×24 CSS px minimum
- * touch target). The 16px thumb expands to a 24-px hit area via padding on
- * the smallest size, so the primitive works on every phone.
+ * ## Target size (SC 2.5.8, AA)
+ *
+ * The painted knob is 20×20 CSS px; a transparent `before:` pseudo-element
+ * extends the hit area to 24×24 without changing the visual, so the
+ * primitive is usable by touch on every phone.
+ *
+ * ## Contrast (verified by token math)
+ *
+ * | Composite                                     | Light  | Dark    | Floor           |
+ * | --------------------------------------------- | ------ | ------- | --------------- |
+ * | rail `bg-input` on `--background`             | 3.62:1 | 3.35:1  | 3:1 (SC 1.4.11) |
+ * | knob `border-primary` on `--background`       | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
+ * | fill `bg-primary` on the rail                 | 2.43:1 | 3.52:1  | see below       |
+ * | `focus-visible:ring-ring` on `--background`   | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
+ *
+ * The rail used to be `bg-muted` — 1.07:1 on `--background`, an invisible
+ * track. `--input` fixes that, but note the fill/rail row: in LIGHT mode
+ * those two cannot both clear 3:1. The rail needs L ≥ 0.308 to sit 3:1
+ * from `--primary` (L 0.069), and any rail that dark measures ≤2.93:1
+ * against a white page. The two constraints are mutually exclusive for
+ * this brand orange — no rail value satisfies both.
+ *
+ * Resolved the way WCAG's own Understanding note for sliders does: the
+ * KNOB is the state indicator that carries SC 1.4.11 (8.80:1 / 11.79:1
+ * against the page in both modes), and the fill is supplementary
+ * reinforcement. Do not "fix" the fill/rail row by lightening the rail —
+ * that reintroduces the invisible-track failure, which is the worse one.
+ *
+ * `disabled:opacity-50` is exempt (inactive component).
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -78,7 +104,11 @@ const SliderTrack = React.forwardRef<
   <BaseSlider.Track
     ref={ref}
     data-slot="slider-track"
-    className={cn('bg-muted relative h-2 w-full grow overflow-hidden rounded-full', className)}
+    // bg-input, not bg-muted: the unfilled rail is what identifies the
+    // slider's extent, so SC 1.4.11 applies. `--muted` measured 1.07:1 on
+    // `--background` — the rail was invisible. `--input` is the DS's
+    // 3:1-cleared control-boundary token (3.62 light / 3.35 dark).
+    className={cn('bg-input relative h-2 w-full grow overflow-hidden rounded-full', className)}
     {...props}
   />
 ));
@@ -106,8 +136,12 @@ const SliderThumb = React.forwardRef<
     data-slot="slider-thumb"
     className={cn(
       'border-primary bg-background block size-5 rounded-full border-2 shadow-sm transition-colors',
+      // Full-opacity ring (8.80:1 light / 11.79:1 dark on --background) —
+      // already well past the 3:1 focus floor, so no /60 alpha needed here.
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50',
+      // SC 2.5.8 — transparent 24×24 hit area around the 20px knob.
+      "relative before:absolute before:-inset-[2px] before:content-['']",
       className,
     )}
     {...props}

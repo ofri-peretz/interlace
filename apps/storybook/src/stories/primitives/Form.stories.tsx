@@ -11,6 +11,7 @@ import {
 import { Input } from '@interlace/ui/input';
 import { Button } from '@interlace/ui/button';
 import { withDark, withRtl } from '@/decorators';
+import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta = {
   title: 'Primitives/Form',
@@ -172,4 +173,16 @@ export const BelowMinViewport: Story = {
       </div>
     ),
   ],
+};
+
+/**
+ * Loading placeholder — three label+control rows and a submit button, so
+ * the form's height is reserved before the real fields hydrate (CLS=0).
+ */
+export const Loading: Story = {
+  render: () => (
+    <div className="w-[320px]">
+      <Skeleton variant="form" />
+    </div>
+  ),
 };

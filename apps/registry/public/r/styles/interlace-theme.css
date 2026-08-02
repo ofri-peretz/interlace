@@ -77,8 +77,17 @@
     --interlace-popover-foreground: #0d0b09;
     --interlace-muted: #faf7f4;              /* warm-tinted neutral */
     --interlace-muted-foreground: #4d453c;   /* 8.06:1 on white (AAA body); darkened from #6b6580 to clear AA even under axe sub-pixel rounding on hairline text */
-    --interlace-border: #eae7e2;
-    --interlace-input: #eae7e2;
+    --interlace-border: #eae7e2;    /* 1.23:1 on white — decorative separators only, exempt from 1.4.11 */
+    /* `--input` is the BOUNDARY of a form control (input / textarea / select
+     * trigger / checkbox / radio / switch track), so WCAG 2.2 SC 1.4.11
+     * (Non-text Contrast, AA) demands ≥3:1 against the adjacent surface —
+     * the border is the only thing identifying the control.
+     *
+     * It used to alias `--border` (#eae7e2 → 1.23:1 on white): every
+     * unfocused field in the DS was effectively invisible to a low-vision
+     * user. Forked to a warm mid-grey that clears the floor while keeping
+     * the brand's warm cast. Decorative `--border` deliberately stays soft. */
+    --interlace-input: #8f857a;              /* 3.62:1 on white (SC 1.4.11 AA) */
     --interlace-ring: var(--interlace-primary);
 
     /* Accent */
@@ -168,8 +177,10 @@
     --interlace-popover-foreground: #f0ede9;
     --interlace-muted: #171412;
     --interlace-muted-foreground: #c9c3bb;   /* 9.6:1 on #0a0a0a (AAA); brightened from #a09cb3 (4.94:1) to clear AA even when stories render against `bg-fd-card/50` tinted surfaces */
-    --interlace-border: #252019;
-    --interlace-input: #252019;
+    --interlace-border: #252019;    /* 1.22:1 on near-black — decorative separators only */
+    /* Dark counterpart of the SC 1.4.11 fork above. #252019 measured
+     * 1.22:1 on `--background` — same invisible-control failure as light. */
+    --interlace-input: #6b635a;              /* 3.35:1 on #0a0a0a (SC 1.4.11 AA) */
     --interlace-ring: var(--interlace-primary);
 
     /* Accent */

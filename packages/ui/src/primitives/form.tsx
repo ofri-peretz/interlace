@@ -52,7 +52,20 @@
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const        |
  * | R18  | Tailwind only                    | Zero inline `style`; classes only                                  |
  * | R19  | Tokens only                      | `text-ui` / `text-ui-sm` / `text-muted-foreground` / `text-destructive` |
- * | R20  | AA contrast                      | description / error tokens are AA-cleared in foundation             |
+ * | R20  | AA contrast                      | measured composites — see the table below                          |
+ *
+ * ## Contrast (verified by token math)
+ *
+ * | Composite                                            | Light   | Dark    | Floor            |
+ * | ---------------------------------------------------- | ------- | ------- | ---------------- |
+ * | `FieldLabel` `--foreground` on `--background`        | 19.65:1 | 16.97:1 | 4.5:1 (SC 1.4.3) |
+ * | `FieldDescription` `text-muted-foreground` on bg     |  9.41:1 | 11.32:1 | 4.5:1 (SC 1.4.3) |
+ * | `FieldError` `text-destructive` on `--background`    |  8.31:1 | 10.43:1 | 4.5:1 (SC 1.4.3) |
+ *
+ * The controls a Field wraps (Input / Textarea / Select / Checkbox / …)
+ * each carry their own measured table; this root only owns the three text
+ * ramps above.
+ *
  * | R25  | Server component                 | No hooks, no `'use client'`; Base UI `Field.*` is the client part  |
  * | R26  | A11y from native el + headless   | Native `<form>` + Base UI `Field.*` ARIA wiring                    |
  */
