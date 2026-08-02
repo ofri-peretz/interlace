@@ -9,6 +9,14 @@ import { XIcon } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. Left/right sheets
+ * are `w-3/4` (240px at the 320 floor) and top/bottom are `h-auto`, so nothing
+ * clips at the iPhone SE width. Projected onto the popup — Base UI's
+ * `Dialog.Root` renders no DOM node of its own.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function Sheet(props: React.ComponentProps<typeof BaseDialog.Root>) {
   return <BaseDialog.Root data-slot="sheet" {...props} />;
 }
@@ -35,6 +43,8 @@ function SheetOverlay({
     <BaseDialog.Backdrop
       data-slot="sheet-overlay"
       className={cn(
+        // See dialog.tsx — `bg-black/50` is the deliberate scrim colour; a
+        // theme-paired token would invert in dark mode.
         'data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 fixed inset-0 z-50 bg-black/50',
         className,
       )}
@@ -59,6 +69,7 @@ function SheetContent({
       <BaseDialog.Popup
         data-slot="sheet-content"
         data-side={side}
+        data-min-viewport={String(MIN_VIEWPORT)}
         className={cn(
           'bg-background data-[open]:animate-in data-[closed]:animate-out fixed z-50 flex flex-col gap-4 shadow-lg transition ease-in-out data-[closed]:duration-300 data-[open]:duration-500',
           side === 'right' &&
@@ -76,7 +87,7 @@ function SheetContent({
         {children}
         <BaseDialog.Close
           data-slot="sheet-close-x"
-          className="ring-offset-background focus:ring-ring data-[open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none"
+          className="ring-offset-background focus-visible:ring-ring data-[open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-[3px] focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none"
         >
           <XIcon className="size-4" />
           <span className="sr-only">Close</span>

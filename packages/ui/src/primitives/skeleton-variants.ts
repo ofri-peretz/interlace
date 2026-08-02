@@ -28,12 +28,17 @@ export const SKELETON_VARIANTS = [
   // ── Primitive-shaped (matches a primitive's resting silhouette) ──────
   'avatar',
   'badge',
+  'breadcrumb',
   'button',
   'card',
   'code-block',
   'input',
+  'menu',
+  'pagination',
   'prose',
+  'tabs',
   'tag',
+  'toc',
 
   // ── Form family (Phase 1.1) ──────────────────────────────────────────
   // One variant per form primitive so a loading form reserves the exact
@@ -86,12 +91,20 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // Primitive-shaped
   avatar: 'size-9 rounded-full',
   badge: 'h-5 w-16 rounded-full',
+  breadcrumb: 'h-5 w-full rounded-sm',
   button: 'h-9 w-24 rounded-md',
   card: 'h-32 w-full rounded-lg',
   'code-block': 'h-40 w-full rounded-md',
   input: 'h-9 w-full rounded-md',
+  // Overlay/nav surfaces (wave 1.2). `menu` matches the DropdownMenu /
+  // ContextMenu popup silhouette; `pagination` the nav row; `tabs` the
+  // list + panel; `toc` the indented heading rail.
+  menu: 'h-40 w-56 rounded-md border',
+  pagination: 'h-9 w-full rounded-md',
   prose: 'h-4 w-full rounded-sm',
+  tabs: 'h-32 w-full rounded-lg',
   tag: 'h-5 w-12 rounded-full',
+  toc: 'h-40 w-full rounded-md',
 
   // Form family — silhouettes match the resting control geometry exactly.
   //   checkbox / radio dot   size-4   (16px, per checkbox.tsx / radio-group.tsx)

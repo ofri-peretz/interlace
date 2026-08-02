@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within, waitFor } from 'storybook/test';
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -97,6 +98,54 @@ export const Variants: Story = {
       </section>
     </div>
   ),
+};
+
+/**
+ * Keyboard-only flow: Enter and Space both toggle the disclosure and
+ * `aria-expanded` / `aria-controls` keep assistive tech in sync.
+ */
+export const KeyboardFlow: Story = {
+  render: () => (
+    <Collapsible className="w-[420px] rounded-md border">
+      <CollapsibleTrigger className="text-ui-sm flex w-full items-center justify-between px-md py-sm text-left font-medium">
+        Show advanced settings
+      </CollapsibleTrigger>
+      <CollapsiblePanel>
+        <PanelBody />
+      </CollapsiblePanel>
+    </Collapsible>
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole('button', { name: /advanced settings/i });
+
+    await step('Starts collapsed and announces it', async () => {
+      expect(trigger.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    await step('Enter expands', async () => {
+      trigger.focus();
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() =>
+        expect(trigger.getAttribute('aria-expanded')).toBe('true'),
+      );
+    });
+
+    await step('The open panel is wired to its trigger', async () => {
+      // `aria-controls` only exists while the panel is mounted — Base UI
+      // unmounts it when closed, so this is the state where it must hold.
+      const id = trigger.getAttribute('aria-controls');
+      expect(id).toBeTruthy();
+      expect(document.getElementById(id as string)).toBeTruthy();
+    });
+
+    await step('Space collapses', async () => {
+      await userEvent.keyboard(' ');
+      await waitFor(() =>
+        expect(trigger.getAttribute('aria-expanded')).toBe('false'),
+      );
+    });
+  },
 };
 
 export const Dark: Story = {

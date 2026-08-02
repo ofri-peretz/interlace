@@ -518,6 +518,7 @@
     "title": "Primitives/Accordion",
     "storyIds": [
       "primitives-accordion--default",
+      "primitives-accordion--keyboardflow",
       "primitives-accordion--dark",
       "primitives-accordion--rtl",
       "primitives-accordion--reducedmotion"
@@ -543,6 +544,7 @@
     "storyIds": [
       "primitives-alertdialog--default",
       "primitives-alertdialog--variants",
+      "primitives-alertdialog--keyboardflow",
       "primitives-alertdialog--dark",
       "primitives-alertdialog--rtl",
       "primitives-alertdialog--belowminviewport"
@@ -606,13 +608,15 @@
     "storyIds": [
       "primitives-breadcrumb--default",
       "primitives-breadcrumb--variants",
+      "primitives-breadcrumb--keyboardflow",
+      "primitives-breadcrumb--loading",
       "primitives-breadcrumb--dark",
       "primitives-breadcrumb--rtl",
       "primitives-breadcrumb--belowminviewport"
     ],
     "preview": "primitives-breadcrumb--default",
     "previewDark": "primitives-breadcrumb--dark",
-    "skeleton": null
+    "skeleton": "primitives-breadcrumb--loading"
   },
   "button": {
     "title": "Primitives/Button",
@@ -686,6 +690,7 @@
     "storyIds": [
       "primitives-collapsible--default",
       "primitives-collapsible--variants",
+      "primitives-collapsible--keyboardflow",
       "primitives-collapsible--dark",
       "primitives-collapsible--rtl",
       "primitives-collapsible--belowminviewport"
@@ -713,12 +718,14 @@
     "title": "Primitives/ContextMenu",
     "storyIds": [
       "primitives-contextmenu--default",
+      "primitives-contextmenu--keyboardflow",
+      "primitives-contextmenu--loading",
       "primitives-contextmenu--dark",
       "primitives-contextmenu--rtl"
     ],
     "preview": "primitives-contextmenu--default",
     "previewDark": "primitives-contextmenu--dark",
-    "skeleton": null
+    "skeleton": "primitives-contextmenu--loading"
   },
   "data-state": {
     "title": "Primitives/DataState",
@@ -752,13 +759,15 @@
     "title": "Primitives/DropdownMenu",
     "storyIds": [
       "primitives-dropdownmenu--default",
+      "primitives-dropdownmenu--keyboardflow",
+      "primitives-dropdownmenu--loading",
       "primitives-dropdownmenu--dark",
       "primitives-dropdownmenu--rtl",
       "primitives-dropdownmenu--reducedmotion"
     ],
     "preview": "primitives-dropdownmenu--default",
     "previewDark": "primitives-dropdownmenu--dark",
-    "skeleton": null
+    "skeleton": "primitives-dropdownmenu--loading"
   },
   "focus-ring": {
     "title": "Primitives/FocusRing",
@@ -819,6 +828,7 @@
     "storyIds": [
       "primitives-hovercard--default",
       "primitives-hovercard--variants",
+      "primitives-hovercard--keyboardflow",
       "primitives-hovercard--dark",
       "primitives-hovercard--rtl",
       "primitives-hovercard--belowminviewport"
@@ -887,17 +897,20 @@
     "title": "Primitives/Pagination",
     "storyIds": [
       "primitives-pagination--default",
+      "primitives-pagination--keyboardflow",
+      "primitives-pagination--loading",
       "primitives-pagination--dark",
       "primitives-pagination--rtl"
     ],
     "preview": "primitives-pagination--default",
     "previewDark": "primitives-pagination--dark",
-    "skeleton": null
+    "skeleton": "primitives-pagination--loading"
   },
   "popover": {
     "title": "Primitives/Popover",
     "storyIds": [
       "primitives-popover--default",
+      "primitives-popover--keyboardflow",
       "primitives-popover--dark",
       "primitives-popover--rtl",
       "primitives-popover--reducedmotion"
@@ -976,6 +989,7 @@
     "title": "Primitives/ScrollArea",
     "storyIds": [
       "primitives-scrollarea--default",
+      "primitives-scrollarea--keyboardflow",
       "primitives-scrollarea--dark",
       "primitives-scrollarea--rtl"
     ],
@@ -1045,6 +1059,7 @@
     "title": "Primitives/Sheet",
     "storyIds": [
       "primitives-sheet--default",
+      "primitives-sheet--keyboardflow",
       "primitives-sheet--dark",
       "primitives-sheet--rtl",
       "primitives-sheet--reducedmotion"
@@ -1073,6 +1088,7 @@
     "storyIds": [
       "primitives-skiplink--default",
       "primitives-skiplink--customlabel",
+      "primitives-skiplink--keyboardflow",
       "primitives-skiplink--dark",
       "primitives-skiplink--rtl",
       "primitives-skiplink--belowminviewport"
@@ -1130,12 +1146,14 @@
     "title": "Primitives/Tabs",
     "storyIds": [
       "primitives-tabs--default",
+      "primitives-tabs--keyboardflow",
+      "primitives-tabs--loading",
       "primitives-tabs--dark",
       "primitives-tabs--rtl"
     ],
     "preview": "primitives-tabs--default",
     "previewDark": "primitives-tabs--dark",
-    "skeleton": null
+    "skeleton": "primitives-tabs--loading"
   },
   "tag": {
     "title": "Primitives/Tag",
@@ -1185,13 +1203,15 @@
     "storyIds": [
       "primitives-toc--default",
       "primitives-toc--variants",
+      "primitives-toc--keyboardflow",
+      "primitives-toc--loading",
       "primitives-toc--dark",
       "primitives-toc--rtl",
       "primitives-toc--belowminviewport"
     ],
     "preview": "primitives-toc--default",
     "previewDark": "primitives-toc--dark",
-    "skeleton": null
+    "skeleton": "primitives-toc--loading"
   },
   "toggle": {
     "title": "Primitives/Toggle",
@@ -1209,6 +1229,7 @@
     "title": "Primitives/Tooltip",
     "storyIds": [
       "primitives-tooltip--default",
+      "primitives-tooltip--keyboardflow",
       "primitives-tooltip--dark",
       "primitives-tooltip--rtl",
       "primitives-tooltip--reducedmotion"

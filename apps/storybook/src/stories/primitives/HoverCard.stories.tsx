@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within, waitFor } from 'storybook/test';
 import {
   HoverCard,
   HoverCardTrigger,
@@ -50,10 +51,16 @@ const BioCard = () => (
   </div>
 );
 
-const UsernameLink = () => (
+// MUST spread `...props`. Base UI's `render` prop merges the trigger's
+// handlers, ARIA wiring, and `data-slot` onto whatever element you hand it —
+// a component that ignores its props silently drops all of them, leaving an
+// inert trigger. The `open`-forced stories still LOOK right, which is exactly
+// why the KeyboardFlow story below is the thing that catches it.
+const UsernameLink = (props: React.ComponentProps<'a'>) => (
   <a
     href="#ofriperetz"
     className="text-primary underline-offset-4 hover:underline"
+    {...props}
   >
     @ofriperetz
   </a>
@@ -113,6 +120,43 @@ export const Variants: Story = {
       ))}
     </div>
   ),
+};
+
+/**
+ * Keyboard-only flow: a hover card that ONLY opens on pointer hover is
+ * unreachable without a mouse. Focusing the trigger must reveal it, and
+ * Escape must dismiss it (WCAG 2.2 §1.4.13).
+ */
+export const KeyboardFlow: Story = {
+  render: () => (
+    <HoverCard>
+      <HoverCardTrigger render={<UsernameLink />} />
+      <HoverCardPortal>
+        <HoverCardPositioner>
+          <HoverCardPopup className="w-80">
+            <BioCard />
+          </HoverCardPopup>
+        </HoverCardPositioner>
+      </HoverCardPortal>
+    </HoverCard>
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole('link', { name: /ofriperetz/i });
+    const popup = () =>
+      document.querySelector('[data-slot="hover-card-popup"]');
+
+    await step('Focus alone reveals the card', async () => {
+      trigger.focus();
+      await waitFor(() => expect(popup()).toBeTruthy());
+    });
+
+    await step('Escape dismisses it and focus stays on the trigger', async () => {
+      await userEvent.keyboard('{Escape}');
+      await waitFor(() => expect(popup()).toBeFalsy());
+      expect(document.activeElement).toBe(trigger);
+    });
+  },
 };
 
 export const Dark: Story = {

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within, waitFor } from 'storybook/test';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -107,6 +108,63 @@ export const Variants: Story = {
       </AlertDialog>
     </div>
   ),
+};
+
+/**
+ * Keyboard-only flow: the surface announces itself as `alertdialog`, traps
+ * focus, and Escape routes to Cancel (the safe exit) rather than confirming
+ * the destructive action.
+ */
+export const KeyboardFlow: Story = {
+  render: () => (
+    <AlertDialog>
+      <AlertDialogTrigger render={<Button variant="outline">Delete rule</Button>} />
+      <AlertDialogPortal>
+        <AlertDialogBackdrop />
+        <AlertDialogPopup>
+          <div className="space-y-2">
+            <AlertDialogTitle>Delete this rule?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </div>
+          <div className="mt-6 flex justify-end gap-2">
+            <AlertDialogClose render={<Button variant="outline">Cancel</Button>} />
+            <Button variant="destructive">Confirm Delete</Button>
+          </div>
+        </AlertDialogPopup>
+      </AlertDialogPortal>
+    </AlertDialog>
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole('button', { name: /delete rule/i });
+
+    await step('Enter on the trigger opens the alert dialog', async () => {
+      trigger.focus();
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() =>
+        expect(document.querySelector('[role="alertdialog"]')).toBeTruthy(),
+      );
+    });
+
+    await step('It is labelled + described and traps focus', async () => {
+      const dlg = document.querySelector('[role="alertdialog"]') as HTMLElement;
+      expect(dlg.getAttribute('aria-labelledby')).toBeTruthy();
+      expect(dlg.getAttribute('aria-describedby')).toBeTruthy();
+      await waitFor(() =>
+        expect(dlg.contains(document.activeElement)).toBe(true),
+      );
+    });
+
+    await step('Escape cancels — nothing is confirmed', async () => {
+      await userEvent.keyboard('{Escape}');
+      await waitFor(() =>
+        expect(document.querySelector('[role="alertdialog"]')).toBeFalsy(),
+      );
+      await waitFor(() => expect(document.activeElement).toBe(trigger));
+    });
+  },
 };
 
 export const Dark: Story = {

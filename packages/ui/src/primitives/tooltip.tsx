@@ -5,6 +5,14 @@ import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 
 import { cn } from '../lib/cn.js';
 
+/**
+ * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. Unlike HoverCard
+ * (768 — hover-only rich content), a tooltip is a short `w-fit` label that
+ * Base UI also opens on keyboard focus, so it stays usable on a 320px touch
+ * screen. Projected onto the popup — `Tooltip.Root` renders no DOM node.
+ */
+export const MIN_VIEWPORT = 320 as const;
+
 function TooltipProvider({
   delay = 0,
   ...props
@@ -45,6 +53,7 @@ function TooltipContent({
       <BaseTooltip.Positioner side={side} sideOffset={sideOffset}>
         <BaseTooltip.Popup
           data-slot="tooltip-content"
+          data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
             'bg-primary text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[closed]:animate-out data-[closed]:fade-out-0 data-[closed]:zoom-out-95 z-50 w-fit origin-(--transform-origin) rounded-md px-3 py-1.5 text-xs text-balance',
             className,
