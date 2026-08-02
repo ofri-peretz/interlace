@@ -10,7 +10,9 @@
  *
  * This lock pins the wiring, not the pixels:
  *  - the registry nav consumes BrandLogo (no hand-copied SVG drift),
- *  - the landing nav carries the locked geometry + token fills,
+ *  - the landing nav consumes its local BrandMark, which carries the locked
+ *    geometry + token fills (landing uses the synced `.interlace/` baseline,
+ *    not @interlace/ui, so it cannot import BrandLogo),
  *  - both token layers define the bar fills in light AND dark,
  *  - the Storybook manager lockup keeps the wordmark.
  *
@@ -42,11 +44,23 @@ describe('brand lockup lock', () => {
     expect(nav).toContain('<BrandLogo');
   });
 
-  it('landing nav carries the locked mark + wordmark', () => {
+  it('landing nav renders its BrandMark + wordmark', () => {
     const layout = read('apps/landing/src/lib/layout.shared.tsx');
-    expect(layout).toContain('rotate(-30 50 50)');
-    expect(layout).toContain('var(--brand-mark-bar-o)');
+    // Quote-agnostic: landing formats with double quotes, packages/ui single.
+    expect(layout).toMatch(/from ['"]@\/components\/brand-mark['"]/);
+    expect(layout).toContain('<BrandMark');
     expect(layout).toContain('interlace');
+  });
+
+  it('landing BrandMark keeps the locked geometry + token fills', () => {
+    // Landing can't consume @interlace/ui (it uses the synced `.interlace/`
+    // baseline), so its mark is a local component rather than a hand-copied
+    // SVG in the nav. Same contract as the registry case above: the nav wires
+    // to a component, and the geometry is pinned in exactly one place.
+    const mark = read('apps/landing/src/components/brand-mark.tsx');
+    expect(mark).toContain('rotate(-30 50 50)');
+    expect(mark).toContain('var(--brand-mark-bar-o)');
+    expect(mark).toContain('var(--brand-mark-bar-g)');
   });
 
   it('both token layers define the bar fills in light and dark', () => {
