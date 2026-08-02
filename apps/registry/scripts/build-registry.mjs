@@ -412,10 +412,19 @@ const exists = async (p) => {
  */
 const rewriteImportsForConsumer = (source, subdir = '') =>
   source
-    .replace(/from\s+(['"])\.\.\/lib\/cn\.js\1/g, 'from $1@/lib/utils$1')
+    // Driven by LIB_FILES, not by a `cn` arm plus a `use-*` pattern: a new
+    // utility added to LIB_FILES is rewritten automatically. Anything under
+    // `../lib/` that ISN'T a declared lib item survives unrewritten — and
+    // `assertNoRelativeImports` below turns that into a build failure rather
+    // than a broken consumer tree.
     .replace(
-      /from\s+(['"])\.\.\/lib\/(use-[\w-]+)\.js\1/g,
-      'from $1@/hooks/$2$1',
+      /from\s+(['"])\.\.\/lib\/([\w-]+)\.js\1/g,
+      (match, q, name) => {
+        const entry = LIB_FILES.find((f) => f.name === name);
+        return entry
+          ? `from ${q}@/${entry.target.replace(/\.tsx?$/, '')}${q}`
+          : match;
+      },
     )
     .replace(
       /from\s+(['"])\.\.\/([\w-]+)\/([\w-]+)\.js\1/g,

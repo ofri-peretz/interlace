@@ -88,6 +88,17 @@ const main = async () => {
     for (const file of item.files ?? []) {
       if (!file.content) fail(where, `file ${file.path} has empty content`);
       if (!file.target) fail(where, `file ${file.path} has no target`);
+      // The single check that kills the whole class of "import survived the
+      // rewrite" bugs. Package sources use relative specifiers that resolve
+      // inside @interlace/ui; none of them resolve in a consumer's tree, so
+      // ANY relative import left in shipped content is a broken install —
+      // whether it's a cross-tier path, a `../lib/` utility the rewriter
+      // doesn't know about, or something added later.
+      for (const [, spec] of file.content.matchAll(
+        /from\s+['"](\.\.?\/[^'"]+)['"]/g,
+      )) {
+        fail(where, `unrewritten relative import "${spec}" in ${file.target}`);
+      }
     }
 
     // A dangling registry dependency is a broken install, not a lint nit.
