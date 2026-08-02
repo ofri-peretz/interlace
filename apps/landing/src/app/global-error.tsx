@@ -81,7 +81,6 @@ export default function GlobalError({
                 root layout itself failed, so client-side navigation is exactly the
                 thing that cannot be trusted. A full document load is the reliable
                 escape hatch. */}
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/"
               className="inline-flex h-9 items-center justify-center rounded-md border border-fd-border px-4 text-sm font-medium"
