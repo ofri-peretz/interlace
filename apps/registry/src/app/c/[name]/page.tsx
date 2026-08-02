@@ -8,8 +8,8 @@ import { CategoryBadge } from '@/components/category-badge';
 import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
 import { SourceViewer } from '@/components/source-viewer';
-import { categoryFor, CATEGORIES } from '@/lib/categories';
-import { listItemNames, loadEnrichedItem } from '@/lib/registry';
+import { categoryById, intentCategoryOf } from '@/lib/categories';
+import { listItemNames, loadEnrichedItem, refToName } from '@/lib/registry';
 
 interface PageProps {
   params: Promise<{ name: string }>;
@@ -59,8 +59,9 @@ export default async function ComponentPage({ params }: PageProps) {
   const storybook = storybookPath(item.name, item.type);
   const file = item.files[0];
   const meta = item.metadata;
-  const categoryId = categoryFor(item.name);
-  const category = CATEGORIES.find((c) => c.id === categoryId);
+  const contract = item.meta;
+  const categoryId = intentCategoryOf(item);
+  const category = categoryById(categoryId);
 
   return (
     <div className="bg-background text-foreground min-h-screen">
@@ -115,9 +116,9 @@ export default async function ComponentPage({ params }: PageProps) {
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <CategoryBadge categoryId={categoryId} />
-            <ClientServerBadge isClient={meta.isClient} />
-            {meta.minViewport !== null ? (
-              <MinViewportBadge value={meta.minViewport} />
+            <ClientServerBadge isClient={contract?.client ?? false} />
+            {contract?.minViewport != null ? (
+              <MinViewportBadge value={contract.minViewport} />
             ) : null}
             <span className="border-border text-muted-foreground rounded-full border px-3 py-1 font-mono text-xs">
               {item.type.replace('registry:', '')}
@@ -179,7 +180,7 @@ export default async function ComponentPage({ params }: PageProps) {
             <div className="mt-4">
               <CodeBlock
                 label="Public API"
-                code={`import { ${meta.exports.join(', ')} } from '@interlace/${item.name}';`}
+                code={`import { ${meta.exports.join(', ')} } from '@/${file.target.replace(/\.tsx?$/, '')}';`}
               />
             </div>
           </section>
@@ -290,13 +291,13 @@ export default async function ComponentPage({ params }: PageProps) {
         ) : null}
 
         {/* ─── Min-viewport contract ────────────────────────────── */}
-        {meta.minViewport !== null ? (
+        {contract?.minViewport != null ? (
           <section className="mt-12">
             <h2 className="text-xl font-semibold">Minimum viewport</h2>
             <p className="text-muted-foreground mt-2 text-sm">
               This primitive declares{' '}
               <code className="text-foreground font-mono">
-                MIN_VIEWPORT = {meta.minViewport}
+                MIN_VIEWPORT = {contract.minViewport}
               </code>{' '}
               CSS px (DESIGN_PRINCIPLES #14). When mounted in a container
               narrower than this, the preflight contract draws a dev-mode
@@ -371,16 +372,28 @@ export default async function ComponentPage({ params }: PageProps) {
               {item.registryDependencies &&
               item.registryDependencies.length > 0 ? (
                 <ul className="flex flex-wrap gap-1.5">
-                  {item.registryDependencies.map((d) => (
-                    <li key={d}>
-                      <Link
-                        href={`/c/${d}`}
-                        className="bg-background border-border hover:border-primary/60 rounded-md border px-2 py-0.5 font-mono text-xs"
-                      >
-                        @interlace/{d}
-                      </Link>
-                    </li>
-                  ))}
+                  {item.registryDependencies.map((ref) => {
+                    const dep = refToName(ref);
+                    return (
+                      <li key={ref}>
+                        {dep ? (
+                          <Link
+                            href={`/c/${dep}`}
+                            className="bg-background border-border hover:border-primary/60 rounded-md border px-2 py-0.5 font-mono text-xs"
+                          >
+                            @interlace/{dep}
+                          </Link>
+                        ) : (
+                          <a
+                            href={ref}
+                            className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs"
+                          >
+                            {ref}
+                          </a>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               ) : (
                 <span className="text-muted-foreground text-sm">none</span>

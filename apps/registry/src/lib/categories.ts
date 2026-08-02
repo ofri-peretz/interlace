@@ -1,178 +1,60 @@
 /**
- * Component categorization for the registry index.
+ * Category definitions for the registry index.
  *
- * Each category groups primitives by *what consumers are trying to do* —
- * "I need a form field", "I need an overlay" — not by implementation lineage.
- * Mirrors LAYOUT_PHILOSOPHY / COLOR_PHILOSOPHY domain split.
+ * The ASSIGNMENT of a component to a category is NOT here — it lives in
+ * `registry-categories.json`, which `scripts/build-registry.mjs` reads to
+ * stamp a `categories` array onto every emitted registry item. This module
+ * only supplies the human-readable titles/descriptions and reads the same
+ * file, so the site and the published JSON can never disagree.
  *
- * Any primitive whose name isn't listed falls into the `other` bucket
- * so a newly-added primitive surfaces immediately on the index without
- * a manual categorize step.
+ * Two axes, both present in an item's `categories` array:
+ *   - intent ("what am I trying to do") — form / overlay / marketing / …
+ *   - tier   ("which layer of the DS")  — primitive / pattern / template / …
  */
 
-export type CategoryId =
-  | 'foundation'
-  | 'a11y'
-  | 'form'
-  | 'overlay'
-  | 'feedback'
-  | 'navigation'
-  | 'data'
-  | 'blog'
-  | 'decorative'
-  | 'other';
+import data from '../../registry-categories.json';
 
 export type Category = {
-  id: CategoryId;
+  id: string;
   title: string;
   description: string;
 };
 
-export const CATEGORIES: Category[] = [
-  {
-    id: 'foundation',
-    title: 'Foundation',
-    description:
-      'Layout, typography, and surface primitives — the structural floor every page composes on top of.',
-  },
-  {
-    id: 'a11y',
-    title: 'A11y',
-    description:
-      'The keyboard + screen-reader + focus contract. SkipLink for WCAG 2.4.1, VisuallyHidden + FocusRing for the rest. Install via @interlace/a11y-starter.',
-  },
-  {
-    id: 'form',
-    title: 'Form & input',
-    description:
-      'Text input, choice controls, and form composition primitives. All inherit the WCAG 2.2 SC 2.4.13 focus ring from preflight.',
-  },
-  {
-    id: 'overlay',
-    title: 'Overlay',
-    description:
-      'Floating surfaces — dialogs, popovers, menus, tooltips. Base UI owns focus + dismissal; we own surface + motion.',
-  },
-  {
-    id: 'feedback',
-    title: 'Feedback',
-    description:
-      'Communicate state — toast, alert, progress, skeleton, badge. Tone tokens (info / success / warning / danger) keep semantics consistent.',
-  },
-  {
-    id: 'navigation',
-    title: 'Navigation',
-    description:
-      'Wayfinding — tabs, breadcrumb, pagination. Keyboard-equivalent everywhere (DESIGN_PRINCIPLES #10).',
-  },
-  {
-    id: 'data',
-    title: 'Data display',
-    description:
-      'Aspect-ratio frames, avatars, separators, scroll areas — the chrome around content.',
-  },
-  {
-    id: 'blog',
-    title: 'Blog & long-form',
-    description:
-      'Article-body primitives — Callout, Prose, CodeBlock, Tag, TOC, ReadingTime. Install via @interlace/mdx-starter for a default mdx-components.tsx.',
-  },
-  {
-    id: 'decorative',
-    title: 'Decorative',
-    description:
-      'Motion-aware visual flair. Always reduced-motion-respecting.',
-  },
-  {
-    id: 'other',
-    title: 'Other',
-    description: 'Uncategorized — falls here so newly added primitives surface immediately.',
-  },
-];
+/** Intent categories, in display order. */
+export const CATEGORIES: Category[] = data.categories;
 
-const ASSIGNMENTS: Record<string, CategoryId> = {
-  // Foundation
-  typography: 'foundation',
-  box: 'foundation',
-  grid: 'foundation',
-  stack: 'foundation',
-  container: 'foundation',
-  section: 'foundation',
-  card: 'foundation',
-  label: 'foundation',
+/** Tier categories (the 5-layer DS architecture), in display order. */
+export const TIER_CATEGORIES: Category[] = data.tierCategories;
 
-  // Form & input
-  input: 'form',
-  textarea: 'form',
-  form: 'form',
-  checkbox: 'form',
-  'radio-group': 'form',
-  switch: 'form',
-  select: 'form',
-  button: 'form',
+const ALL = [...CATEGORIES, ...TIER_CATEGORIES];
+const BY_ID = new Map(ALL.map((c) => [c.id, c]));
 
-  // Overlay
-  dialog: 'overlay',
-  'alert-dialog': 'overlay',
-  sheet: 'overlay',
-  popover: 'overlay',
-  tooltip: 'overlay',
-  'hover-card': 'overlay',
-  'dropdown-menu': 'overlay',
+export const categoryById = (id: string): Category | undefined => BY_ID.get(id);
 
-  // Feedback
-  toast: 'feedback',
-  progress: 'feedback',
-  skeleton: 'feedback',
-  alert: 'feedback',
-  badge: 'feedback',
+const TIER_IDS = new Set(TIER_CATEGORIES.map((c) => c.id));
 
-  // Navigation
-  tabs: 'navigation',
-  breadcrumb: 'navigation',
-  pagination: 'navigation',
-
-  // Data display
-  'aspect-ratio': 'data',
-  avatar: 'data',
-  separator: 'data',
-  'scroll-area': 'data',
-  collapsible: 'data',
-  accordion: 'data',
-
-  // A11y
-  'skip-link': 'a11y',
-  'visually-hidden': 'a11y',
-  'focus-ring': 'a11y',
-
-  // Blog / long-form
-  callout: 'blog',
-  prose: 'blog',
-  'code-block': 'blog',
-  tag: 'blog',
-  toc: 'blog',
-  'reading-time': 'blog',
-  'published-date': 'blog',
-
-  // Decorative
-  meteors: 'decorative',
-};
-
-export function categoryFor(name: string): CategoryId {
-  return ASSIGNMENTS[name] ?? 'other';
+/** The intent category of an item, from its published `categories` array. */
+export function intentCategoryOf(item: { categories?: string[] }): string {
+  return item.categories?.find((c) => !TIER_IDS.has(c)) ?? 'other';
 }
 
-export function groupByCategory<T extends { name: string }>(
+/** The DS-layer category of an item, from its published `categories` array. */
+export function tierCategoryOf(item: { categories?: string[] }): string | null {
+  return item.categories?.find((c) => TIER_IDS.has(c)) ?? null;
+}
+
+export function groupByCategory<T extends { name: string; categories?: string[] }>(
   items: T[],
-): Map<CategoryId, T[]> {
-  const groups = new Map<CategoryId, T[]>();
-  for (const c of CATEGORIES) groups.set(c.id, []);
-  for (const item of items) {
-    const id = categoryFor(item.name);
-    const bucket = groups.get(id);
-    if (bucket) bucket.push(item);
+  axis: 'intent' | 'tier' = 'intent',
+): Map<string, T[]> {
+  const groups = new Map<string, T[]>();
+  for (const c of axis === 'intent' ? CATEGORIES : TIER_CATEGORIES) {
+    groups.set(c.id, []);
   }
-  // Sort each bucket by name.
+  for (const item of items) {
+    const id = axis === 'intent' ? intentCategoryOf(item) : tierCategoryOf(item);
+    if (id) groups.get(id)?.push(item);
+  }
   for (const bucket of groups.values()) {
     bucket.sort((a, b) => a.name.localeCompare(b.name));
   }

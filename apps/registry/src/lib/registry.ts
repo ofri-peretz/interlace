@@ -20,12 +20,24 @@ export type RegistryFile = {
   content: string;
 };
 
+/** Published per-item contract facts — see `metaFor` in build-registry.mjs. */
+export type RegistryItemMeta = {
+  tier: string;
+  client: boolean;
+  minViewport: number | null;
+};
+
 export type RegistryItem = {
   name: string;
   type: string;
   title: string;
   description: string;
+  author?: string;
+  categories?: string[];
+  meta?: RegistryItemMeta;
+  docs?: string;
   dependencies?: string[];
+  /** Absolute URLs into this registry — resolve with `refToName`. */
   registryDependencies?: string[];
   files: RegistryFile[];
 };
@@ -34,10 +46,27 @@ export type EnrichedItem = RegistryItem & {
   metadata: ComponentMetadata;
 };
 
+export type IndexEntry = Pick<
+  RegistryItem,
+  'name' | 'type' | 'title' | 'description' | 'categories' | 'meta'
+>;
+
 export type RegistryIndex = {
   name: string;
   homepage: string;
-  items: Array<Pick<RegistryItem, 'name' | 'type' | 'title' | 'description'>>;
+  items: IndexEntry[];
+};
+
+const HOMEPAGE = 'https://ds.interlace.tools';
+
+/**
+ * `registryDependencies` are absolute URLs (a bare name would send the shadcn
+ * CLI to ui.shadcn.com). Map one back to a local item name for linking;
+ * returns null for a reference into someone else's registry.
+ */
+export const refToName = (ref: string): string | null => {
+  const m = ref.match(/\/r\/([^/]+)\.json$/);
+  return m && ref.startsWith(HOMEPAGE) ? m[1] : null;
 };
 
 const PUBLIC_R = join(process.cwd(), 'public', 'r');
@@ -73,21 +102,3 @@ export const loadEnrichedItem = async (
   return { ...item, metadata: extractMetadata(content) };
 };
 
-export const loadEnrichedIndex = async (): Promise<
-  Array<RegistryIndex['items'][number] & { metadata: ComponentMetadata | null }>
-> => {
-  const index = await loadIndex();
-  const entries = await Promise.all(
-    index.items.map(async (item) => {
-      // Style items don't carry primitive source; skip the metadata extract.
-      if (item.type !== 'registry:ui') {
-        return { ...item, metadata: null };
-      }
-      const full = await loadItem(item.name);
-      if (!full) return { ...item, metadata: null };
-      const content = full.files[0]?.content ?? '';
-      return { ...item, metadata: extractMetadata(content) };
-    }),
-  );
-  return entries;
-};

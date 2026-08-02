@@ -44,7 +44,41 @@ Each `public/r/<name>.json` follows the [shadcn registry-item schema](https://ui
 }
 ```
 
-`dependencies` (npm packages) and `registryDependencies` (other primitives in this registry) are auto-extracted from `import` statements in the source `.tsx` file.
+`dependencies` (npm packages) and `registryDependencies` (other items in this
+registry) are auto-extracted from `import` statements in the source `.tsx` file.
+
+### Two rules the generator enforces that are easy to get wrong
+
+1. **`registryDependencies` must be absolute URLs.** A bare name means "a
+   shadcn/ui core component" to the CLI, so `"theme"` sends it to
+   `ui.shadcn.com/r/…/theme.json` and the install dies. Ours emit
+   `https://ds.interlace.tools/r/theme.json`.
+2. **Every import must resolve in the consumer's tree.** Sibling `.ts`
+   companions (`button-variants.ts`) ship inside the item's `files[]`;
+   cross-tier imports (`../primitives/skeleton.js` from a pattern) are
+   rewritten to `@/components/ui/skeleton` *and* declared as dependencies.
+
+Both rules exist because `scripts/e2e-install.mjs` caught them being violated.
+
+## Categorisation
+
+`registry-categories.json` is the single source of truth. The generator stamps
+a `categories` array onto every item (intent + DS tier), and
+`src/lib/categories.ts` reads the same file for the titles/descriptions the
+site renders. Never categorise a component anywhere else — `--check` fails on
+any item that resolves to `other`.
+
+## Verification
+
+| Command | What it proves |
+| --- | --- |
+| `npm run build:check --workspace=registry` | on-disk JSON matches the sources, and every item validates against the official shadcn schemas |
+| `npm run registry:validate --workspace=registry` | schema conformance + no dangling `registryDependencies` + index covers every item |
+| `npm run registry:e2e --workspace=registry` | **every item actually installs**: scaffolds a real Next.js app, `shadcn add`s all of them through the `@interlace` namespace, wires the CSS baseline, and `next build`s the result |
+| `npm run schema:refresh --workspace=registry` | re-downloads the upstream schemas into `schema/` — commit the diff so a spec change is reviewable |
+
+`e2e-install-results.json` holds the last verified run and is committed. The
+E2E job runs in CI on every PR (`registry (e2e install)`).
 
 ## Adding a new primitive
 
@@ -87,9 +121,19 @@ Hookup:
 
 ## What gets included
 
-By design, only `packages/ui/src/primitives/*.tsx` ships through the registry. **`blocks/`, `patterns/`, `aceternity/`, `magicui/`, `fumadocs/`, and `mdx/` are excluded** — those are domain-coupled or framework-coupled, and they fail the "would this travel?" test from `UX_PHILOSOPHY.md` §10.
+Five source tiers ship, each landing in its own subdirectory of the consumer's
+`components/ui/` so provenance survives the install:
 
-If a primitive should be expanded into a block-shaped variant, that's a follow-up: keep the primitive in the registry, ship the block as opt-in via a separate channel.
+| Source | Consumer target | Item type |
+| --- | --- | --- |
+| `packages/ui/src/primitives/*.tsx` | `components/ui/<name>.tsx` | `registry:ui` |
+| `packages/ui/src/patterns/*.tsx` | `components/ui/patterns/<name>.tsx` | `registry:ui` |
+| `packages/ui/src/templates/*.tsx` | `components/ui/templates/<name>.tsx` | `registry:block` |
+| `packages/ui/src/magicui/*.tsx` | `components/ui/magicui/<name>.tsx` | `registry:ui` |
+| `packages/ui/src/aceternity/*.tsx` | `components/ui/aceternity/<name>.tsx` | `registry:ui` |
+
+`packages/ui/src/blocks/` is intentionally NOT scanned — those paths are
+one-line re-export aliases for `patterns/` kept for one release cycle.
 
 ## See also
 

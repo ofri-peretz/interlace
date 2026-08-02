@@ -24,8 +24,6 @@ export type CvaVariant = {
 };
 
 export type ComponentMetadata = {
-  minViewport: number | null;
-  isClient: boolean;
   anatomy: string | null;
   rRules: RRuleEntry[];
   variants: CvaVariant[];
@@ -34,8 +32,9 @@ export type ComponentMetadata = {
   lucideIcons: string[];
 };
 
-const MIN_VIEWPORT_RE = /export\s+const\s+MIN_VIEWPORT\s*=\s*(\d+)/;
-const USE_CLIENT_RE = /^\s*(?:\/\*[\s\S]*?\*\/\s*)*(?:\/\/[^\n]*\n\s*)*['"]use client['"]/m;
+// NOTE: `minViewport` and `isClient` are NOT extracted here — they are
+// published on each registry item's `meta` by build-registry.mjs, so the site
+// reads them off the JSON rather than re-deriving them from source.
 const ANATOMY_RE = /##\s*Anatomy\b([\s\S]*?)(?=\n\s*##\s|\n\s*\*\/|$)/;
 const R_RULE_ROW_RE = /\*?\s*\|\s*(R\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/g;
 const EXPORT_RE = /\bexport\s+(?:const|function|class|type)\s+(\w+)/g;
@@ -50,15 +49,6 @@ const stripJsdoc = (s: string): string =>
   s
     .replace(/^\s*\*\s?/gm, '')
     .replace(/^\s+|\s+$/g, '');
-
-export function extractMinViewport(content: string): number | null {
-  const m = content.match(MIN_VIEWPORT_RE);
-  return m ? Number.parseInt(m[1], 10) : null;
-}
-
-export function extractIsClient(content: string): boolean {
-  return USE_CLIENT_RE.test(content);
-}
 
 export function extractAnatomy(content: string): string | null {
   const m = content.match(ANATOMY_RE);
@@ -165,8 +155,6 @@ export function extractLucideIcons(content: string): string[] {
 
 export function extractMetadata(content: string): ComponentMetadata {
   return {
-    minViewport: extractMinViewport(content),
-    isClient: extractIsClient(content),
     anatomy: extractAnatomy(content),
     rRules: extractRRules(content),
     variants: extractVariants(content),

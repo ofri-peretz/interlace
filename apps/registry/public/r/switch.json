@@ -4,11 +4,16 @@
   "type": "registry:ui",
   "title": "Switch",
   "description": "@interlace/ui — switch (shadcn-compatible).",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "form",
+    "primitive"
+  ],
   "dependencies": [
     "@base-ui/react"
   ],
   "registryDependencies": [
-    "theme"
+    "https://ds.interlace.tools/r/theme.json"
   ],
   "files": [
     {
@@ -17,5 +22,11 @@
       "type": "registry:ui",
       "content": "// Mirrors the shadcn Switch canon, built on Base UI.\n// Upstream: https://base-ui.com/react/components/switch\n'use client';\n\nimport * as React from 'react';\nimport { Switch as BaseSwitch } from '@base-ui/react/switch';\n\nimport { cn } from '@/lib/utils';\n\nfunction Switch({\n  className,\n  ...props\n}: React.ComponentProps<typeof BaseSwitch.Root>) {\n  return (\n    <BaseSwitch.Root\n      data-slot=\"switch\"\n      className={cn(\n        'peer data-[checked]:bg-primary data-[unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',\n        className,\n      )}\n      {...props}\n    >\n      <BaseSwitch.Thumb\n        data-slot=\"switch-thumb\"\n        className={cn(\n          'bg-background dark:data-[checked]:bg-primary-foreground dark:data-[unchecked]:bg-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[checked]:translate-x-[calc(100%-2px)] data-[unchecked]:translate-x-0',\n        )}\n      />\n    </BaseSwitch.Root>\n  );\n}\n\nexport { Switch };\n"
     }
-  ]
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": true,
+    "minViewport": null
+  },
+  "docs": "## @interlace/switch\n\nInstalled to `components/ui/switch.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/switch';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/switch\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

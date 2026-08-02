@@ -4,7 +4,7 @@ import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
 import { SiteNav } from '@/components/site-nav';
 import { CATEGORIES, groupByCategory } from '@/lib/categories';
-import { loadEnrichedIndex, loadIndex } from '@/lib/registry';
+import { loadIndex } from '@/lib/registry';
 
 const PRIMARY_INSTALL =
   'npx shadcn@latest add https://ds.interlace.tools/r/button.json';
@@ -15,10 +15,11 @@ const STYLE_INSTALL =
 
 export default async function HomePage() {
   const index = await loadIndex();
-  const enriched = await loadEnrichedIndex();
   const styleItem = index.items.find((i) => i.name === 'theme');
-  const primitives = enriched.filter((i) => i.type === 'registry:ui');
-  const grouped = groupByCategory(primitives);
+  // Every installable item, not just the primitives — patterns, templates and
+  // the vendored effects are 60% of the registry and used to be unbrowsable.
+  const components = index.items.filter((i) => i.type !== 'registry:style');
+  const grouped = groupByCategory(components);
   const nonEmptyCategories = CATEGORIES.filter(
     (c) => (grouped.get(c.id) ?? []).length > 0,
   );
@@ -45,7 +46,7 @@ export default async function HomePage() {
         <div className="relative mx-auto max-w-wide px-6 py-20 sm:py-28">
           <div className="text-muted-foreground inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs">
             <span className="size-1.5 rounded-full bg-emerald-500" />
-            {primitives.length} primitives · 1 theme bundle · WCAG 2.2 AA floor
+            {components.length} components · 1 theme bundle · WCAG 2.2 AA floor
           </div>
 
           <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
@@ -155,10 +156,10 @@ export default async function HomePage() {
         <div className="flex items-end justify-between">
           <div>
             <div className="text-primary text-xs font-semibold uppercase tracking-wider">
-              Available primitives
+              Everything in the registry
             </div>
             <h2 className="mt-2 text-3xl font-bold tracking-tight">
-              {primitives.length} components, {nonEmptyCategories.length} categories
+              {components.length} items, {nonEmptyCategories.length} categories
             </h2>
             <p className="text-muted-foreground mt-2">
               Grouped by intent — what you reach for, not by implementation
@@ -221,15 +222,11 @@ export default async function HomePage() {
                           @interlace/{item.name}
                         </p>
                       </div>
-                      {item.metadata ? (
+                      {item.meta ? (
                         <div className="flex flex-wrap gap-1.5">
-                          <ClientServerBadge
-                            isClient={item.metadata.isClient}
-                          />
-                          {item.metadata.minViewport !== null ? (
-                            <MinViewportBadge
-                              value={item.metadata.minViewport}
-                            />
+                          <ClientServerBadge isClient={item.meta.client} />
+                          {item.meta.minViewport !== null ? (
+                            <MinViewportBadge value={item.meta.minViewport} />
                           ) : null}
                         </div>
                       ) : null}

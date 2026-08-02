@@ -4,9 +4,14 @@
   "type": "registry:ui",
   "title": "Label",
   "description": "@interlace/ui — label (shadcn-compatible).",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "foundation",
+    "primitive"
+  ],
   "dependencies": [],
   "registryDependencies": [
-    "theme"
+    "https://ds.interlace.tools/r/theme.json"
   ],
   "files": [
     {
@@ -15,5 +20,11 @@
       "type": "registry:ui",
       "content": "// Form-control label. No headless dep — Base UI's `Field.Label` is the\n// MDX/forms-aware variant; this is the lower-level shadcn-canon label.\n// Mirrors: https://ui.shadcn.com/docs/components/label\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\nfunction Label({ className, ...props }: React.ComponentProps<'label'>) {\n  return (\n    <label\n      data-slot=\"label\"\n      className={cn(\n        'flex select-none items-center gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50',\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Label };\n"
     }
-  ]
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": false,
+    "minViewport": null
+  },
+  "docs": "## @interlace/label\n\nInstalled to `components/ui/label.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/label';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/label\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

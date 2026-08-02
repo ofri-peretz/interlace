@@ -85,6 +85,40 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: Check registry items match sources
         run: node apps/registry/scripts/build-registry.mjs --check
+      - name: Validate items against the official shadcn schemas
+        run: node apps/registry/scripts/validate-registry.mjs
+
+  # ─── Gate 5b: registry installs for real ───────────────────────────────
+  # Schema-valid JSON is not the same as an installable registry. This
+  # scaffolds a real Next.js app, registers ds.interlace.tools as the
+  # `@interlace` namespace, runs `shadcn add` for EVERY item, wires the CSS
+  # baseline in, and `next build`s the result — which type-checks all
+  # installed sources in a tree with none of our workspace aliases.
+  #
+  # It caught a total outage on first run: items referenced each other by
+  # bare name, so the CLI resolved `theme` against ui.shadcn.com and every
+  # single install died. Nothing else in the pipeline could have seen that.
+  registry-e2e-install:
+    name: registry (e2e install)
+    needs: install
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Install every registry item into a scratch Next.js app
+        run: npm run registry:e2e --workspace=registry
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: registry-e2e-install-results
+          path: apps/registry/e2e-install-results.json
+          if-no-files-found: warn
 
   # ─── Gate 6: storybook static build ────────────────────────────────────
   # Catches story-side API drift (a story importing a name the primitive no

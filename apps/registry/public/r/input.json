@@ -4,9 +4,14 @@
   "type": "registry:ui",
   "title": "Input",
   "description": "@interlace/ui — input (shadcn-compatible).",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "form",
+    "primitive"
+  ],
   "dependencies": [],
   "registryDependencies": [
-    "theme"
+    "https://ds.interlace.tools/r/theme.json"
   ],
   "files": [
     {
@@ -15,5 +20,11 @@
       "type": "registry:ui",
       "content": "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\nfunction Input({ className, type, ...props }: React.ComponentProps<'input'>) {\n  return (\n    <input\n      type={type}\n      data-slot=\"input\"\n      className={cn(\n        \"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm\",\n        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',\n        'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Input };\n"
     }
-  ]
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": false,
+    "minViewport": null
+  },
+  "docs": "## @interlace/input\n\nInstalled to `components/ui/input.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/input';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/input\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

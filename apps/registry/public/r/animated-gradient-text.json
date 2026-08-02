@@ -4,9 +4,14 @@
   "type": "registry:ui",
   "title": "Animated Gradient Text",
   "description": "@interlace/ui — animated-gradient-text (magicui) (shadcn-compatible).",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
   "dependencies": [],
   "registryDependencies": [
-    "theme"
+    "https://ds.interlace.tools/r/theme.json"
   ],
   "files": [
     {
@@ -15,5 +20,11 @@
       "type": "registry:ui",
       "content": "import { ComponentPropsWithoutRef } from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport interface AnimatedGradientTextProps extends ComponentPropsWithoutRef<\"div\"> {\n  speed?: number\n  colorFrom?: string\n  colorTo?: string\n}\n\nexport function AnimatedGradientText({\n  children,\n  className,\n  speed = 1,\n  colorFrom = \"#ffaa40\",\n  colorTo = \"#9c40ff\",\n  ...props\n}: AnimatedGradientTextProps) {\n  return (\n    <span\n      style={\n        {\n          \"--bg-size\": `${speed * 300}%`,\n          \"--color-from\": colorFrom,\n          \"--color-to\": colorTo,\n        } as React.CSSProperties\n      }\n      className={cn(\n        `animate-gradient inline bg-gradient-to-r from-[var(--color-from)] via-[var(--color-to)] to-[var(--color-from)] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`,\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </span>\n  )\n}\n"
     }
-  ]
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": false,
+    "minViewport": null
+  },
+  "docs": "## @interlace/animated-gradient-text\n\nInstalled to `components/ui/magicui/animated-gradient-text.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/magicui/animated-gradient-text';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/animated-gradient-text\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }
