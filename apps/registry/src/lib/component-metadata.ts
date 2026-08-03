@@ -71,16 +71,15 @@ const ANATOMY_RE = /##\s*Anatomy\b([\s\S]*?)(?=\n\s*##\s|\n\s*\*\/|$)/;
 const R_RULE_ROW_RE = /\*?\s*\|\s*(R\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/g;
 const EXPORT_RE = /\bexport\s+(?:const|function|class|type)\s+(\w+)/g;
 const BASE_UI_IMPORT_RE = /from\s+['"]@base-ui\/react\/([\w-]+)['"]/;
-const LUCIDE_IMPORT_BLOCK_RE = /import\s+\{([^}]+)\}\s+from\s+['"]lucide-react['"]/;
+const LUCIDE_IMPORT_BLOCK_RE =
+  /import\s+\{([^}]+)\}\s+from\s+['"]lucide-react['"]/;
 
 /**
  * Strip JSDoc comment formatting (* prefixes, leading/trailing whitespace,
  * embedded markdown table separators) so anatomy / table content is readable.
  */
 const stripJsdoc = (s: string): string =>
-  s
-    .replace(/^\s*\*\s?/gm, '')
-    .replace(/^\s+|\s+$/g, '');
+  s.replace(/^\s*\*\s?/gm, "").replace(/^\s+|\s+$/g, "");
 
 export function extractAnatomy(content: string): string | null {
   const m = content.match(ANATOMY_RE);
@@ -115,12 +114,12 @@ export function extractRRules(content: string): RRuleEntry[] {
  * Returns null when there is no balanced block.
  */
 function braceBody(content: string, from: number): string | null {
-  const open = content.indexOf('{', from);
+  const open = content.indexOf("{", from);
   if (open === -1) return null;
   let depth = 0;
   for (let i = open; i < content.length; i += 1) {
-    if (content[i] === '{') depth += 1;
-    else if (content[i] === '}') {
+    if (content[i] === "{") depth += 1;
+    else if (content[i] === "}") {
       depth -= 1;
       if (depth === 0) return content.slice(open + 1, i);
     }
@@ -152,8 +151,8 @@ export function extractVariants(content: string): CvaVariant[] {
     // strip full-line `//` and any `/* */` before matching. Only line-leading
     // `//` is stripped, to leave any `//` inside a class string alone.
     const body = group
-      .replace(/^[ \t]*\/\/.*$/gm, '')
-      .replace(/\/\*[\s\S]*?\*\//g, '');
+      .replace(/^[ \t]*\/\/.*$/gm, "")
+      .replace(/\/\*[\s\S]*?\*\//g, "");
     const options = Array.from(
       body.matchAll(/(?:^|,)\s*(?:['"]([\w-]+)['"]|(\w+))\s*:/g),
       (mm) => mm[1] ?? mm[2],
@@ -183,14 +182,18 @@ export function extractExports(content: string): string[] {
   EXPORT_RE.lastIndex = 0;
   let m: RegExpExecArray | null;
   while ((m = EXPORT_RE.exec(content)) !== null) {
-    if (m[1] === 'default') continue;
+    if (m[1] === "default") continue;
     names.add(m[1]);
   }
   // Also handle `export { Foo, Bar }` re-export blocks.
   const reExports = content.matchAll(/\bexport\s*\{([^}]+)\}/g);
   for (const r of reExports) {
-    for (const part of r[1].split(',')) {
-      const name = part.trim().split(/\s+as\s+/)[1]?.trim() ?? part.trim();
+    for (const part of r[1].split(",")) {
+      const name =
+        part
+          .trim()
+          .split(/\s+as\s+/)[1]
+          ?.trim() ?? part.trim();
       if (name && /^\w+$/.test(name)) names.add(name);
     }
   }
@@ -206,7 +209,7 @@ export function extractLucideIcons(content: string): string[] {
   const m = content.match(LUCIDE_IMPORT_BLOCK_RE);
   if (!m) return [];
   return m[1]
-    .split(',')
+    .split(",")
     .map((p) => p.trim())
     .filter((p) => /^\w+$/.test(p))
     .sort();
@@ -246,14 +249,14 @@ function sliceDeclaration(content: string, start: number): string {
   let seenBrace = false;
   for (let i = start; i < content.length; i += 1) {
     const ch = content[i];
-    if (ch === '{') {
+    if (ch === "{") {
       depth += 1;
       seenBrace = true;
-    } else if (ch === '}') {
+    } else if (ch === "}") {
       depth -= 1;
-    } else if (ch === ';' && depth === 0) {
+    } else if (ch === ";" && depth === 0) {
       return content.slice(start, i);
-    } else if (ch === '\n' && seenBrace && depth === 0) {
+    } else if (ch === "\n" && seenBrace && depth === 0) {
       return content.slice(start, i);
     }
   }
@@ -274,8 +277,8 @@ export function extractPropsTables(content: string): PropsTable[] {
       props.push({
         name,
         type: type.trim(),
-        required: optional !== '?',
-        description: doc ? stripJsdoc(doc).replace(/\s+/g, ' ') || null : null,
+        required: optional !== "?",
+        description: doc ? stripJsdoc(doc).replace(/\s+/g, " ") || null : null,
       });
     }
     tables.push({
@@ -302,9 +305,8 @@ export function extractA11yNotes(content: string): A11yNotes {
     baseUi: extractBaseUiImport(content),
     ariaAttributes: uniqueSorted(content.matchAll(ARIA_ATTR_RE), 1),
     roles: uniqueSorted(content.matchAll(ROLE_RE), 1),
-    respectsReducedMotion: /useReducedMotion|prefers-reduced-motion|motion-reduce:/.test(
-      content,
-    ),
+    respectsReducedMotion:
+      /useReducedMotion|prefers-reduced-motion|motion-reduce:/.test(content),
     hasFocusRing: /focus-visible:|FocusRing/.test(content),
   };
 }

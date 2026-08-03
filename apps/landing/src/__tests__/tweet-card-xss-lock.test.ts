@@ -44,7 +44,9 @@ describe("TweetCard XSS lock", () => {
   it("renders a <script> tag in tweet text as inert text, not live markup", () => {
     const html = renderToStaticMarkup(
       // @ts-expect-error — mocked `enrichTweet` accepts the already-enriched shape.
-      MagicTweet({ tweet: enrichedTweetWithText("hello <script>alert(1)</script>") }),
+      MagicTweet({
+        tweet: enrichedTweetWithText("hello <script>alert(1)</script>"),
+      }),
     );
 
     expect(html).not.toContain("<script>");
@@ -54,7 +56,9 @@ describe("TweetCard XSS lock", () => {
   it("renders an on*-attribute injection as inert text, not a live attribute", () => {
     const html = renderToStaticMarkup(
       // @ts-expect-error — mocked `enrichTweet` accepts the already-enriched shape.
-      MagicTweet({ tweet: enrichedTweetWithText('<img src=x onerror="alert(1)">') }),
+      MagicTweet({
+        tweet: enrichedTweetWithText('<img src=x onerror="alert(1)">'),
+      }),
     );
 
     expect(html).not.toMatch(/<img[^>]*onerror/i);

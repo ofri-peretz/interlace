@@ -1,10 +1,7 @@
-import { readdir, readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
 
-import {
-  type ComponentMetadata,
-  extractMetadata,
-} from './component-metadata';
+import { type ComponentMetadata, extractMetadata } from "./component-metadata";
 
 /**
  * Server-side helper to load registry-item JSON during page rendering.
@@ -50,7 +47,7 @@ export type EnrichedItem = RegistryItem & {
 
 export type IndexEntry = Pick<
   RegistryItem,
-  'name' | 'type' | 'title' | 'description' | 'categories' | 'meta'
+  "name" | "type" | "title" | "description" | "categories" | "meta"
 >;
 
 export type RegistryIndex = {
@@ -59,7 +56,7 @@ export type RegistryIndex = {
   items: IndexEntry[];
 };
 
-const HOMEPAGE = 'https://ds.interlace.tools';
+const HOMEPAGE = "https://ds.interlace.tools";
 
 /**
  * `registryDependencies` are absolute URLs (a bare name would send the shadcn
@@ -71,34 +68,36 @@ export const refToName = (ref: string): string | null => {
   return m && ref.startsWith(HOMEPAGE) ? m[1] : null;
 };
 
-const PUBLIC_R = join(process.cwd(), 'public', 'r');
+const PUBLIC_R = join(process.cwd(), "public", "r");
 
 export const loadIndex = async (): Promise<RegistryIndex> => {
-  const raw = await readFile(join(PUBLIC_R, 'index.json'), 'utf8');
+  const raw = await readFile(join(PUBLIC_R, "index.json"), "utf8");
   return JSON.parse(raw) as RegistryIndex;
 };
 
 export const loadItem = async (name: string): Promise<RegistryItem | null> => {
   try {
-    const raw = await readFile(join(PUBLIC_R, `${name}.json`), 'utf8');
+    const raw = await readFile(join(PUBLIC_R, `${name}.json`), "utf8");
     return JSON.parse(raw) as RegistryItem;
   } catch {
     return null;
   }
 };
 
-const INDEX_FILES = new Set(['index.json', 'registry.json']);
+const INDEX_FILES = new Set(["index.json", "registry.json"]);
 
 export const listItemNames = async (): Promise<string[]> => {
   const entries = await readdir(PUBLIC_R);
-  return entries
-    // Neither index payload is a registry item — `registry.json` is the name
-    // the shadcn CLI resolves (and the directory requires), `index.json` the
-    // alias this app reads. Neither has a `files` array, so letting either
-    // through crashes the /c/[name] prerender.
-    .filter((f) => f.endsWith('.json') && !INDEX_FILES.has(f))
-    .map((f) => f.replace(/\.json$/, ''))
-    .sort();
+  return (
+    entries
+      // Neither index payload is a registry item — `registry.json` is the name
+      // the shadcn CLI resolves (and the directory requires), `index.json` the
+      // alias this app reads. Neither has a `files` array, so letting either
+      // through crashes the /c/[name] prerender.
+      .filter((f) => f.endsWith(".json") && !INDEX_FILES.has(f))
+      .map((f) => f.replace(/\.json$/, ""))
+      .sort()
+  );
 };
 
 export const loadEnrichedItem = async (
@@ -109,7 +108,6 @@ export const loadEnrichedItem = async (
   // Every file, not just the first: `button`'s cva lives in the companion
   // `button-variants.ts` that ships alongside it, so reading only files[0]
   // showed the button page no variants at all.
-  const content = item.files.map((f) => f.content).join('\n');
+  const content = item.files.map((f) => f.content).join("\n");
   return { ...item, metadata: extractMetadata(content) };
 };
-

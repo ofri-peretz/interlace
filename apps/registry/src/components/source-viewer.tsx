@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 /**
  * Collapsible source viewer for a primitive's full TSX content.
@@ -22,7 +22,7 @@ export function SourceViewer({ source, githubUrl }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const lines = source.split('\n');
+  const lines = source.split("\n");
   const visible = expanded ? lines : lines.slice(0, PREVIEW_LINES);
   const total = lines.length;
 
@@ -48,7 +48,7 @@ export function SourceViewer({ source, githubUrl }: Props) {
             onClick={onCopy}
             className="text-muted-foreground hover:text-foreground font-mono text-xs transition-colors"
           >
-            {copied ? '✓ copied' : 'copy'}
+            {copied ? "✓ copied" : "copy"}
           </button>
           <a
             href={githubUrl}
@@ -62,10 +62,10 @@ export function SourceViewer({ source, githubUrl }: Props) {
       </div>
       <pre className="overflow-x-auto px-4 py-3">
         <code className="font-mono text-xs leading-relaxed">
-          {visible.join('\n')}
+          {visible.join("\n")}
           {!expanded && total > PREVIEW_LINES ? (
             <span className="text-muted-foreground">
-              {'\n\n…' + (total - PREVIEW_LINES) + ' more lines…'}
+              {"\n\n…" + (total - PREVIEW_LINES) + " more lines…"}
             </span>
           ) : null}
         </code>
@@ -77,7 +77,7 @@ export function SourceViewer({ source, githubUrl }: Props) {
             onClick={() => setExpanded(!expanded)}
             className="text-muted-foreground hover:text-foreground font-mono text-xs transition-colors"
           >
-            {expanded ? '← collapse' : `Show full source (${total} lines) →`}
+            {expanded ? "← collapse" : `Show full source (${total} lines) →`}
           </button>
         </div>
       ) : null}

@@ -1,14 +1,14 @@
-import { readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 
 import {
   extractA11yNotes,
   extractPropsTables,
   extractVariants,
-} from '@/lib/component-metadata';
+} from "@/lib/component-metadata";
 
 /**
  * The props table and the a11y notes are the two things on a component page a
@@ -19,40 +19,40 @@ import {
 
 // Anchored on this file, not cwd — so the suite passes whether it's run from
 // the workspace (`npm test`) or the repo root (`vitest --root apps/registry`).
-const R = join(dirname(fileURLToPath(import.meta.url)), '../../public/r');
+const R = join(dirname(fileURLToPath(import.meta.url)), "../../public/r");
 
 /** Mirrors `loadEnrichedItem`: metadata reads EVERY file the item ships. */
 const sourceOf = async (name: string) => {
-  const item = JSON.parse(await readFile(join(R, `${name}.json`), 'utf8'));
+  const item = JSON.parse(await readFile(join(R, `${name}.json`), "utf8"));
   return (item.files as Array<{ content: string }>)
     .map((f) => f.content)
-    .join('\n');
+    .join("\n");
 };
 
-describe('extractPropsTables', () => {
-  it('reads own props, the DOM element, and the cva composition', async () => {
-    const tables = extractPropsTables(await sourceOf('badge'));
-    const badge = tables.find((t) => t.typeName === 'BadgeProps');
+describe("extractPropsTables", () => {
+  it("reads own props, the DOM element, and the cva composition", async () => {
+    const tables = extractPropsTables(await sourceOf("badge"));
+    const badge = tables.find((t) => t.typeName === "BadgeProps");
 
     expect(badge).toBeDefined();
-    expect(badge!.extendsElement).toBe('span');
+    expect(badge!.extendsElement).toBe("span");
     expect(badge!.hasVariantProps).toBe(true);
 
-    const loading = badge!.props.find((p) => p.name === 'loading');
-    expect(loading).toMatchObject({ type: 'boolean', required: false });
+    const loading = badge!.props.find((p) => p.name === "loading");
+    expect(loading).toMatchObject({ type: "boolean", required: false });
     // The doc comment is the whole point — a table of bare names is noise.
     expect(loading!.description).toMatch(/Skeleton/i);
   });
 
-  it('finds a props table for the large majority of shipped components', async () => {
-    const index = JSON.parse(await readFile(join(R, 'index.json'), 'utf8'));
+  it("finds a props table for the large majority of shipped components", async () => {
+    const index = JSON.parse(await readFile(join(R, "index.json"), "utf8"));
     const components = index.items.filter(
       (i: { name: string; meta?: { tier: string } }) =>
-        (i.meta?.tier === 'primitive' || i.meta?.tier === 'pattern') &&
+        (i.meta?.tier === "primitive" || i.meta?.tier === "pattern") &&
         // `*-variants` items are cva definitions, not components — they export
         // a class-name builder and have no props interface by construction, so
         // they belong in neither side of this ratio.
-        !i.name.endsWith('-variants'),
+        !i.name.endsWith("-variants"),
     );
     const withTable: string[] = [];
     for (const item of components) {
@@ -64,29 +64,29 @@ describe('extractPropsTables', () => {
   });
 });
 
-describe('extractVariants', () => {
-  it('reads every option and the default', async () => {
-    const variants = extractVariants(await sourceOf('badge'));
-    const variant = variants.find((v) => v.name === 'variant');
-    expect(variant?.options).toContain('destructive');
-    expect(variant?.defaultValue).toBe('default');
+describe("extractVariants", () => {
+  it("reads every option and the default", async () => {
+    const variants = extractVariants(await sourceOf("badge"));
+    const variant = variants.find((v) => v.name === "variant");
+    expect(variant?.options).toContain("destructive");
+    expect(variant?.defaultValue).toBe("default");
   });
 
-  it('reads a cva that lives in a companion file', async () => {
+  it("reads a cva that lives in a companion file", async () => {
     // `button.tsx` imports its cva from `button-variants.ts`; both ship in the
     // item, and reading only the first file showed the page zero variants.
-    const variants = extractVariants(await sourceOf('button'));
+    const variants = extractVariants(await sourceOf("button"));
     expect(variants.length).toBeGreaterThan(0);
   });
 
-  it('handles several variant groups in one cva', async () => {
-    const names = extractVariants(await sourceOf('typography')).map(
+  it("handles several variant groups in one cva", async () => {
+    const names = extractVariants(await sourceOf("typography")).map(
       (v) => v.name,
     );
-    expect(names).toEqual(expect.arrayContaining(['variant', 'tone']));
+    expect(names).toEqual(expect.arrayContaining(["variant", "tone"]));
   });
 
-  it('is not blinded by a comment between two options', () => {
+  it("is not blinded by a comment between two options", () => {
     // The primitives carry rationale comments inside their cva blocks (badge's
     // `destructive` explains why it drops shadcn's dark tint). Options are
     // anchored on the preceding comma, so a comment used to hide the option
@@ -104,29 +104,29 @@ describe('extractVariants', () => {
       defaultVariants: { variant: 'default' },
     });`;
     expect(extractVariants(source)[0].options).toEqual([
-      'default',
-      'destructive',
-      'outline',
+      "default",
+      "destructive",
+      "outline",
     ]);
   });
 
-  it('returns nothing when there is no cva', () => {
-    expect(extractVariants('export const x = 1;')).toEqual([]);
+  it("returns nothing when there is no cva", () => {
+    expect(extractVariants("export const x = 1;")).toEqual([]);
   });
 });
 
-describe('extractA11yNotes', () => {
-  it('reports the focus-ring contract and reduced-motion gating', async () => {
-    const notes = extractA11yNotes(await sourceOf('badge'));
+describe("extractA11yNotes", () => {
+  it("reports the focus-ring contract and reduced-motion gating", async () => {
+    const notes = extractA11yNotes(await sourceOf("badge"));
     expect(notes.hasFocusRing).toBe(true);
   });
 
-  it('names the Base UI primitive that owns focus + dismissal', async () => {
-    const notes = extractA11yNotes(await sourceOf('dialog'));
+  it("names the Base UI primitive that owns focus + dismissal", async () => {
+    const notes = extractA11yNotes(await sourceOf("dialog"));
     expect(notes.baseUi).toBeTruthy();
   });
 
-  it('does not invent aria attributes or roles', async () => {
+  it("does not invent aria attributes or roles", async () => {
     const source = "const x = <span className='p-2' />;";
     const notes = extractA11yNotes(source);
     expect(notes.ariaAttributes).toEqual([]);

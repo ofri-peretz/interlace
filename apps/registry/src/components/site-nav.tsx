@@ -1,6 +1,6 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
+import { BrandLogo } from "@interlace/ui/patterns/brand-logo";
 
 /**
  * Shared header nav for every page on ds.interlace.tools.
@@ -15,8 +15,8 @@ import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
  * auto-pickup keeps `/<slug>` in the XML output without further
  * coordination.
  */
-const STORYBOOK_URL = 'https://storybook.interlace.tools';
-const REPO_URL = 'https://github.com/ofri-peretz/interlace';
+const STORYBOOK_URL = "https://storybook.interlace.tools";
+const REPO_URL = "https://github.com/ofri-peretz/interlace";
 
 interface NavLink {
   href: string;
@@ -26,12 +26,12 @@ interface NavLink {
 }
 
 const LINKS: NavLink[] = [
-  { href: '/getting-started', label: 'Getting started' },
-  { href: '/css-contract', label: 'CSS contract' },
-  { href: '/theme-authoring', label: 'Theme authoring' },
-  { href: '/semantics-catalog', label: 'Semantics' },
-  { href: STORYBOOK_URL, label: 'Storybook', external: true },
-  { href: REPO_URL, label: 'GitHub', external: true },
+  { href: "/getting-started", label: "Getting started" },
+  { href: "/css-contract", label: "CSS contract" },
+  { href: "/theme-authoring", label: "Theme authoring" },
+  { href: "/semantics-catalog", label: "Semantics" },
+  { href: STORYBOOK_URL, label: "Storybook", external: true },
+  { href: REPO_URL, label: "GitHub", external: true },
 ];
 
 export function SiteNav() {

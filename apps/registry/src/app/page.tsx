@@ -1,25 +1,25 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { ClientServerBadge } from '@/components/client-server-badge';
-import { MinViewportBadge } from '@/components/min-viewport-badge';
-import { RegistrySearch } from '@/components/registry-search';
-import { SiteNav } from '@/components/site-nav';
-import { CATEGORIES, groupByCategory, TIER_CATEGORIES } from '@/lib/categories';
-import { loadIndex } from '@/lib/registry';
+import { ClientServerBadge } from "@/components/client-server-badge";
+import { MinViewportBadge } from "@/components/min-viewport-badge";
+import { RegistrySearch } from "@/components/registry-search";
+import { SiteNav } from "@/components/site-nav";
+import { CATEGORIES, groupByCategory, TIER_CATEGORIES } from "@/lib/categories";
+import { loadIndex } from "@/lib/registry";
 
 const PRIMARY_INSTALL =
-  'npx shadcn@latest add https://ds.interlace.tools/r/button.json';
-const ALIAS_INSTALL = 'npx shadcn@latest add @interlace/button';
+  "npx shadcn@latest add https://ds.interlace.tools/r/button.json";
+const ALIAS_INSTALL = "npx shadcn@latest add @interlace/button";
 
 const STYLE_INSTALL =
-  'npx shadcn@latest add https://ds.interlace.tools/r/theme.json';
+  "npx shadcn@latest add https://ds.interlace.tools/r/theme.json";
 
 export default async function HomePage() {
   const index = await loadIndex();
-  const styleItem = index.items.find((i) => i.name === 'theme');
+  const styleItem = index.items.find((i) => i.name === "theme");
   // Every installable item, not just the primitives — patterns, templates and
   // the vendored effects are 60% of the registry and used to be unbrowsable.
-  const components = index.items.filter((i) => i.type !== 'registry:style');
+  const components = index.items.filter((i) => i.type !== "registry:style");
   const grouped = groupByCategory(components);
   const nonEmptyCategories = CATEGORIES.filter(
     (c) => (grouped.get(c.id) ?? []).length > 0,
@@ -53,14 +53,15 @@ export default async function HomePage() {
           <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
             Production-grade React primitives
             <span className="bg-linear-to-r from-primary to-chart-2 bg-clip-text text-transparent">
-              {' '}
+              {" "}
               for shadcn
             </span>
             .
           </h1>
 
           <p className="text-muted-foreground mt-5 max-w-prose text-lg sm:text-xl">
-            Drop the <code className="font-mono text-foreground">@interlace/ui</code>{' '}
+            Drop the{" "}
+            <code className="font-mono text-foreground">@interlace/ui</code>{" "}
             primitives into any React project with one command. Brand tokens,
             theme bridge, animation keyframes, and a portable 26-rule
             component-modeling floor — installed alongside.
@@ -71,9 +72,9 @@ export default async function HomePage() {
           </div>
 
           <p className="text-muted-foreground mt-4 text-sm">
-            Or, after configuring this registry as{' '}
-            <code className="font-mono">@interlace</code> in your{' '}
-            <code className="font-mono">components.json</code>:{' '}
+            Or, after configuring this registry as{" "}
+            <code className="font-mono">@interlace</code> in your{" "}
+            <code className="font-mono">components.json</code>:{" "}
             <code className="font-mono text-foreground">{ALIAS_INSTALL}</code>
           </p>
         </div>
@@ -90,16 +91,16 @@ export default async function HomePage() {
               Theme + tokens, installed alongside.
             </h2>
             <p className="text-muted-foreground mt-4">
-              Every primitive ships with{' '}
+              Every primitive ships with{" "}
               <code className="text-foreground font-mono">theme</code> as a
               registry dependency. The shadcn CLI bundles the three Interlace
               stylesheets into your project — brand palette, shadcn-bare token
-              bridge, animation keyframes — so primitives render the moment
-              you import them.
+              bridge, animation keyframes — so primitives render the moment you
+              import them.
             </p>
             {styleItem ? (
               <p className="text-muted-foreground mt-3 text-sm">
-                Install separately:{' '}
+                Install separately:{" "}
                 <code className="text-foreground font-mono">
                   npx shadcn@latest add @interlace/theme
                 </code>
@@ -123,7 +124,7 @@ export default async function HomePage() {
               />
             </div>
             <p className="text-muted-foreground text-xs">
-              Or fetch raw:{' '}
+              Or fetch raw:{" "}
               <code className="font-mono break-all">
                 /r/styles/&lt;tokens|theme|interlace-theme&gt;.css
               </code>
@@ -164,7 +165,7 @@ export default async function HomePage() {
             </h2>
             <p className="text-muted-foreground mt-2">
               Grouped by intent — what you reach for, not by implementation
-              lineage. Visual previews + interactive variants live on{' '}
+              lineage. Visual previews + interactive variants live on{" "}
               <a
                 href="https://storybook.interlace.tools"
                 className="text-foreground underline-offset-4 hover:underline"
@@ -197,7 +198,7 @@ export default async function HomePage() {
               href={`#${c.id}`}
               className="border-border hover:border-primary/60 hover:bg-card rounded-full border bg-card/40 px-3 py-1 text-xs transition-colors"
             >
-              {c.title}{' '}
+              {c.title}{" "}
               <span className="text-muted-foreground">
                 · {(grouped.get(c.id) ?? []).length}
               </span>
@@ -208,7 +209,11 @@ export default async function HomePage() {
         {nonEmptyCategories.map((category) => {
           const items = grouped.get(category.id) ?? [];
           return (
-            <div key={category.id} id={category.id} className="mt-12 scroll-mt-20">
+            <div
+              key={category.id}
+              id={category.id}
+              className="mt-12 scroll-mt-20"
+            >
               <div className="flex items-baseline gap-3">
                 <h3 className="text-xl font-semibold tracking-tight">
                   {category.title}
@@ -254,7 +259,7 @@ export default async function HomePage() {
       <footer className="border-t border-border">
         <div className="text-muted-foreground mx-auto flex max-w-wide flex-col gap-2 px-6 py-10 text-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
-            Source of truth:{' '}
+            Source of truth:{" "}
             <a
               href="https://github.com/ofri-peretz/interlace/tree/main/packages/ui/src/primitives"
               className="text-foreground underline-offset-4 hover:underline"

@@ -1,8 +1,8 @@
-import type { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
 
-import { listItemNames, loadIndex } from '@/lib/registry';
+import { listItemNames, loadIndex } from "@/lib/registry";
 
-const BASE = 'https://ds.interlace.tools';
+const BASE = "https://ds.interlace.tools";
 
 /**
  * Sitemap for ds.interlace.tools.
@@ -18,37 +18,37 @@ const BASE = 'https://ds.interlace.tools';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [names, _index] = await Promise.all([listItemNames(), loadIndex()]);
 
-  const lastModified = new Date('2026-05-30');
+  const lastModified = new Date("2026-05-30");
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: `${BASE}/`,
       lastModified,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
       url: `${BASE}/getting-started`,
       lastModified,
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${BASE}/css-contract`,
       lastModified,
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${BASE}/theme-authoring`,
       lastModified,
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${BASE}/semantics-catalog`,
       lastModified,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.8,
     },
   ];
@@ -56,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const componentRoutes: MetadataRoute.Sitemap = names.map((name) => ({
     url: `${BASE}/c/${name}`,
     lastModified,
-    changeFrequency: 'weekly' as const,
+    changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 

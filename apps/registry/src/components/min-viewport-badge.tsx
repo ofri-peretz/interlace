@@ -6,9 +6,21 @@
 type Props = { value: number };
 
 const TONE: Record<number, { bg: string; ring: string; tag: string }> = {
-  320: { bg: 'bg-emerald-500/10', ring: 'border-emerald-500/40', tag: 'text-emerald-600 dark:text-emerald-300' },
-  480: { bg: 'bg-amber-500/10', ring: 'border-amber-500/40', tag: 'text-amber-600 dark:text-amber-300' },
-  768: { bg: 'bg-rose-500/10', ring: 'border-rose-500/40', tag: 'text-rose-600 dark:text-rose-300' },
+  320: {
+    bg: "bg-emerald-500/10",
+    ring: "border-emerald-500/40",
+    tag: "text-emerald-600 dark:text-emerald-300",
+  },
+  480: {
+    bg: "bg-amber-500/10",
+    ring: "border-amber-500/40",
+    tag: "text-amber-600 dark:text-amber-300",
+  },
+  768: {
+    bg: "bg-rose-500/10",
+    ring: "border-rose-500/40",
+    tag: "text-rose-600 dark:text-rose-300",
+  },
 };
 
 export function MinViewportBadge({ value }: Props) {

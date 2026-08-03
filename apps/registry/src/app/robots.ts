@@ -1,6 +1,6 @@
-import type { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
 
-const BASE = 'https://ds.interlace.tools';
+const BASE = "https://ds.interlace.tools";
 
 /**
  * robots.txt for ds.interlace.tools.
@@ -13,9 +13,9 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: '*',
-        allow: '/',
-        disallow: ['/api/', '/_next/'],
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/_next/"],
       },
     ],
     sitemap: `${BASE}/sitemap.xml`,

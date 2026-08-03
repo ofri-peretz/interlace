@@ -12,7 +12,7 @@
  *   - tier   ("which layer of the DS")  — primitive / pattern / template / …
  */
 
-import data from '../../registry-categories.json';
+import data from "../../registry-categories.json";
 
 export type Category = {
   id: string;
@@ -35,7 +35,7 @@ const TIER_IDS = new Set(TIER_CATEGORIES.map((c) => c.id));
 
 /** The intent category of an item, from its published `categories` array. */
 export function intentCategoryOf(item: { categories?: string[] }): string {
-  return item.categories?.find((c) => !TIER_IDS.has(c)) ?? 'other';
+  return item.categories?.find((c) => !TIER_IDS.has(c)) ?? "other";
 }
 
 /** The DS-layer category of an item, from its published `categories` array. */
@@ -43,16 +43,16 @@ export function tierCategoryOf(item: { categories?: string[] }): string | null {
   return item.categories?.find((c) => TIER_IDS.has(c)) ?? null;
 }
 
-export function groupByCategory<T extends { name: string; categories?: string[] }>(
-  items: T[],
-  axis: 'intent' | 'tier' = 'intent',
-): Map<string, T[]> {
+export function groupByCategory<
+  T extends { name: string; categories?: string[] },
+>(items: T[], axis: "intent" | "tier" = "intent"): Map<string, T[]> {
   const groups = new Map<string, T[]>();
-  for (const c of axis === 'intent' ? CATEGORIES : TIER_CATEGORIES) {
+  for (const c of axis === "intent" ? CATEGORIES : TIER_CATEGORIES) {
     groups.set(c.id, []);
   }
   for (const item of items) {
-    const id = axis === 'intent' ? intentCategoryOf(item) : tierCategoryOf(item);
+    const id =
+      axis === "intent" ? intentCategoryOf(item) : tierCategoryOf(item);
     if (id) groups.get(id)?.push(item);
   }
   for (const bucket of groups.values()) {
