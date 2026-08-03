@@ -35,12 +35,26 @@ const SHADOWED_MAX_W = [
   "max-w-2xl",
 ];
 
-/** Renders of the raw error object that would leak server internals. */
-const LEAKY_RENDERS = [
-  "{error.message}",
-  "{error.stack}",
-  "{String(error)}",
-  "{`${error}`}",
+/**
+ * Renders of the raw error object that would leak server internals.
+ *
+ * Patterns, not literal strings: an exact-string list only catches the exact
+ * spelling it was written for, and `{error?.message}`, `{error["message"]}`
+ * and `{error.toString()}` are the same leak in different clothes.
+ *
+ * The `console.error(..., error)` call in the logging effect is deliberately
+ * NOT matched — that goes to the browser console, not into the rendered page.
+ */
+const LEAKY_RENDER_PATTERNS: Array<[string, RegExp]> = [
+  ["{error.message} / {error?.message}", /\{[^}]*\berror\s*\??\.\s*message\b/],
+  ["{error.stack} / {error?.stack}", /\{[^}]*\berror\s*\??\.\s*stack\b/],
+  [
+    '{error["message"]} / {error["stack"]}',
+    /\{[^}]*\berror\s*\[\s*['"](?:message|stack)['"]\s*\]/,
+  ],
+  ["{error.toString()}", /\{[^}]*\berror\s*\??\.\s*toString\s*\(/],
+  ["{String(error)}", /\{[^}]*\bString\s*\(\s*error\b/],
+  ["{`${error}`}", /\{\s*`[^`]*\$\{\s*error\s*\}/],
 ];
 
 describe("error page lock", () => {
@@ -57,10 +71,10 @@ describe("error page lock", () => {
     ["global-error.tsx", () => globalErrorSource],
   ])("%s never renders the raw error message or stack", (_name, get) => {
     const source = get();
-    for (const leak of LEAKY_RENDERS) {
+    for (const [label, pattern] of LEAKY_RENDER_PATTERNS) {
       expect(
-        source.includes(leak),
-        `${leak} leaks server internals onto a public page — render error.digest instead`,
+        pattern.test(source),
+        `${label} leaks server internals onto a public page — render error.digest instead`,
       ).toBe(false);
     }
     // The digest is the sanctioned, opaque handle.

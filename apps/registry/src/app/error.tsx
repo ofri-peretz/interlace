@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 
 // This app consumes the design system directly (no `.interlace` baseline).
@@ -24,6 +25,13 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  // Surface the failure to client-side monitoring. Without this the error
+  // exists only in the server log and is invisible to anything running in
+  // the browser. Mirrors the scorecard boundary's convention.
+  useEffect(() => {
+    console.error("[error-boundary] render failed:", error);
+  }, [error]);
+
   return (
     <main
       id="main"
