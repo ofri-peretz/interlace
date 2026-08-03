@@ -10,9 +10,9 @@
  * `@layer interlace.brand { ... }` block after — your hex values win.
  */
 
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "@interlace/ui/styles/index.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@interlace/ui/styles/index.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -38,7 +38,7 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-feature-settings: "cv11", "ss01";
+  font-feature-settings: 'cv11', 'ss01';
   min-height: 100vh;
 }
 

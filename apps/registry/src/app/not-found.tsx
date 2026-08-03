@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
 // This app has no `.interlace` baseline — it consumes the design system directly,
 // where BrandMark is the same two-bar mark on the same --brand-mark-bar-* tokens.
-import { BrandMark } from "@interlace/ui/patterns/brand-logo";
-import { buttonVariants } from "@interlace/ui/button-variants";
+import { BrandMark } from '@interlace/ui/patterns/brand-logo';
+import { buttonVariants } from '@interlace/ui/button-variants';
 
 export const metadata: Metadata = {
-  title: "Page not found",
-  description: "This page does not exist on ds.interlace.tools.",
+  title: 'Page not found',
+  description: 'This page does not exist on ds.interlace.tools.',
   // noindex: a 404 has no content worth ranking, and indexing it competes with
   // the real pages. follow stays TRUE so crawlers still traverse the recovery
   // links below — noindex,nofollow would strand them on a dead end.
@@ -38,12 +38,12 @@ export default function NotFound() {
       </p>
 
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Link href="/" className={buttonVariants({ variant: "default" })}>
+        <Link href="/" className={buttonVariants({ variant: 'default' })}>
           Go home
         </Link>
         <Link
           href="/getting-started"
-          className={buttonVariants({ variant: "outline" })}
+          className={buttonVariants({ variant: 'outline' })}
         >
           Getting started
         </Link>

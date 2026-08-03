@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import { buttonVariants } from "#interlace/components/ui/button-variants";
-import { BrandMark } from "@/components/brand-mark";
+import { buttonVariants } from '#interlace/components/ui/button-variants';
+import { BrandMark } from '@/components/brand-mark';
 
 export const metadata: Metadata = {
-  title: "Page not found",
-  description: "This page does not exist on interlace.tools.",
+  title: 'Page not found',
+  description: 'This page does not exist on interlace.tools.',
   // noindex: a 404 has no content worth ranking, and indexing it competes with
   // the real pages. follow stays TRUE so crawlers still traverse the recovery
   // links below — noindex,nofollow would strand them on a dead end.
@@ -37,10 +37,10 @@ export default function NotFound() {
       </p>
 
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Link href="/" className={buttonVariants({ variant: "default" })}>
+        <Link href="/" className={buttonVariants({ variant: 'default' })}>
           Go home
         </Link>
-        <Link href="/docs" className={buttonVariants({ variant: "outline" })}>
+        <Link href="/docs" className={buttonVariants({ variant: 'outline' })}>
           Browse docs
         </Link>
       </div>

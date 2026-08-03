@@ -2,30 +2,30 @@
  * UTM helpers for apps/registry. Mirror of apps/docs/src/lib/utm.ts.
  * Duplicated per UTM_PHILOSOPHY.md.
  */
-import { posthog } from "./posthog-init";
+import { posthog } from './posthog-init';
 
 export type UtmSource =
-  | "ofriperetz_dev"
-  | "interlace"
-  | "eslint_docs"
-  | "serverless_docs"
-  | "ds"
-  | "storybook"
-  | "dev_to"
-  | "github"
-  | "npm"
-  | "x"
-  | "linkedin"
-  | "email";
+  | 'ofriperetz_dev'
+  | 'interlace'
+  | 'eslint_docs'
+  | 'serverless_docs'
+  | 'ds'
+  | 'storybook'
+  | 'dev_to'
+  | 'github'
+  | 'npm'
+  | 'x'
+  | 'linkedin'
+  | 'email';
 
 export type UtmMedium =
-  | "blog"
-  | "docs"
-  | "landing"
-  | "social"
-  | "email"
-  | "referral"
-  | "cli";
+  | 'blog'
+  | 'docs'
+  | 'landing'
+  | 'social'
+  | 'email'
+  | 'referral'
+  | 'cli';
 
 export interface UtmOptions {
   source: UtmSource;
@@ -35,7 +35,7 @@ export interface UtmOptions {
   term?: string;
 }
 
-const CROSS_ETLD_HOSTS = new Set(["ofriperetz.dev"]);
+const CROSS_ETLD_HOSTS = new Set(['ofriperetz.dev']);
 
 function isCrossEtldOutbound(host: string): boolean {
   return CROSS_ETLD_HOSTS.has(host);
@@ -44,18 +44,18 @@ function isCrossEtldOutbound(host: string): boolean {
 export function buildUtmHref(href: string, opts: UtmOptions): string {
   try {
     const url = new URL(href);
-    url.searchParams.set("utm_source", opts.source);
-    url.searchParams.set("utm_medium", opts.medium);
-    if (opts.campaign) url.searchParams.set("utm_campaign", opts.campaign);
-    if (opts.content) url.searchParams.set("utm_content", opts.content);
-    if (opts.term) url.searchParams.set("utm_term", opts.term);
+    url.searchParams.set('utm_source', opts.source);
+    url.searchParams.set('utm_medium', opts.medium);
+    if (opts.campaign) url.searchParams.set('utm_campaign', opts.campaign);
+    if (opts.content) url.searchParams.set('utm_content', opts.content);
+    if (opts.term) url.searchParams.set('utm_term', opts.term);
     if (
-      typeof window !== "undefined" &&
+      typeof window !== 'undefined' &&
       isCrossEtldOutbound(url.hostname.toLowerCase())
     ) {
       try {
         const id = posthog.get_distinct_id?.();
-        if (id) url.searchParams.set("ph_distinct_id", id);
+        if (id) url.searchParams.set('ph_distinct_id', id);
       } catch {
         // pre-init — skip
       }
@@ -77,7 +77,7 @@ export interface LandingUtm {
 }
 
 export function consumeLandingUtm(): LandingUtm {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return {
       source: null,
       medium: null,
@@ -91,12 +91,12 @@ export function consumeLandingUtm(): LandingUtm {
   try {
     const u = new URL(window.location.href);
     const result: LandingUtm = {
-      source: u.searchParams.get("utm_source"),
-      medium: u.searchParams.get("utm_medium"),
-      campaign: u.searchParams.get("utm_campaign"),
-      content: u.searchParams.get("utm_content"),
-      term: u.searchParams.get("utm_term"),
-      phDistinctId: u.searchParams.get("ph_distinct_id"),
+      source: u.searchParams.get('utm_source'),
+      medium: u.searchParams.get('utm_medium'),
+      campaign: u.searchParams.get('utm_campaign'),
+      content: u.searchParams.get('utm_content'),
+      term: u.searchParams.get('utm_term'),
+      phDistinctId: u.searchParams.get('ph_distinct_id'),
       referrer: document.referrer || null,
     };
     const anyStripped =
@@ -108,17 +108,17 @@ export function consumeLandingUtm(): LandingUtm {
       result.phDistinctId;
     if (!anyStripped) return result;
     for (const k of [
-      "utm_source",
-      "utm_medium",
-      "utm_campaign",
-      "utm_content",
-      "utm_term",
-      "ph_distinct_id",
+      'utm_source',
+      'utm_medium',
+      'utm_campaign',
+      'utm_content',
+      'utm_term',
+      'ph_distinct_id',
     ]) {
       u.searchParams.delete(k);
     }
-    const clean = u.pathname + (u.search || "") + (u.hash || "");
-    window.history.replaceState(window.history.state, "", clean);
+    const clean = u.pathname + (u.search || '') + (u.hash || '');
+    window.history.replaceState(window.history.state, '', clean);
     return result;
   } catch {
     return {

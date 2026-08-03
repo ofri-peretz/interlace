@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import { SiteNav } from "@/components/site-nav";
+import { SiteNav } from '@/components/site-nav';
 
 export const metadata: Metadata = {
-  title: "Theme Authoring",
+  title: 'Theme Authoring',
   description:
-    "How to fork the Interlace brand layer — palette swap, dark mode, contrast verification. Five steps, no DS forks needed.",
+    'How to fork the Interlace brand layer — palette swap, dark mode, contrast verification. Five steps, no DS forks needed.',
   openGraph: {
-    title: "Theme Authoring — Interlace DS",
+    title: 'Theme Authoring — Interlace DS',
     description:
-      "Fork the brand by overriding @layer interlace.brand. Five steps, deterministic cascade, no DS forks.",
-    url: "https://ds.interlace.tools/theme-authoring",
+      'Fork the brand by overriding @layer interlace.brand. Five steps, deterministic cascade, no DS forks.',
+    url: 'https://ds.interlace.tools/theme-authoring',
   },
 };
 
@@ -31,8 +31,9 @@ export default function ThemeAuthoringPage() {
           Theme Authoring
         </h1>
         <p className="text-muted-foreground mt-3 max-w-prose text-lg">
-          Fork the Interlace brand without forking the DS. Five steps — install,
-          override the brand layer, swap the palette, verify contrast, ship.
+          Fork the Interlace brand without forking the DS. Five steps —
+          install, override the brand layer, swap the palette, verify
+          contrast, ship.
         </p>
 
         <Step n={1} title="Install the DS baseline">
@@ -43,7 +44,7 @@ export default function ThemeAuthoringPage() {
             {`@import "tailwindcss";\n@import "@interlace/ui/styles/index.css";`}
           </Snippet>
           <p className="text-muted-foreground mt-3 text-sm">
-            Full details:{" "}
+            Full details:{' '}
             <Link
               href="/css-contract"
               className="text-primary underline-offset-4 hover:underline"
@@ -54,16 +55,20 @@ export default function ThemeAuthoringPage() {
           </p>
         </Step>
 
-        <Step n={2} title="Pick your brand palette">
+        <Step
+          n={2}
+          title="Pick your brand palette"
+        >
           <p className="text-muted-foreground">
-            The Interlace defaults are burnt orange — and they haven&apos;t
-            always been. The DS shipped on Tailwind violet and was repointed to
-            the burnt-orange + green palette in July 2026 entirely inside{" "}
-            <code className="font-mono">@layer interlace.brand</code>, with zero
-            component edits. Your fork takes the same path: pick your own
-            primary hue + neutral surface; the rest of the palette derives from
-            those two. Verify each pair clears WCAG 2.2 AA (≥4.5:1 body, ≥3:1
-            large) at{" "}
+            The Interlace defaults are burnt orange — and they
+            haven&apos;t always been. The DS shipped on Tailwind violet
+            and was repointed to the burnt-orange + green palette in
+            July 2026 entirely inside{' '}
+            <code className="font-mono">@layer interlace.brand</code>,
+            with zero component edits. Your fork takes the same path:
+            pick your own primary hue + neutral surface; the rest of
+            the palette derives from those two. Verify each pair clears WCAG 2.2
+            AA (≥4.5:1 body, ≥3:1 large) at{' '}
             <a
               href="https://webaim.org/resources/contrastchecker/"
               target="_blank"
@@ -114,20 +119,20 @@ export default function ThemeAuthoringPage() {
 
         <Step n={4} title="Verify contrast across the catalogue">
           <p className="text-muted-foreground">
-            Visit{" "}
+            Visit{' '}
             <Link
               href="/semantics-catalog"
               className="text-primary underline-offset-4 hover:underline"
             >
               the semantics catalogue
-            </Link>{" "}
-            to see every resolved semantic token + its current contrast score in
-            light + dark. Anything below 4.5:1 on body text or 3:1 on UI
-            controls needs a tweak.
+            </Link>{' '}
+            to see every resolved semantic token + its current contrast
+            score in light + dark. Anything below 4.5:1 on body text or
+            3:1 on UI controls needs a tweak.
           </p>
           <p className="text-muted-foreground mt-2 text-sm">
-            For the live storefront we also publish the storybook a11y CI as a
-            hard gate — see{" "}
+            For the live storefront we also publish the storybook a11y
+            CI as a hard gate — see{' '}
             <a
               href="https://storybook.interlace.tools"
               target="_blank"
@@ -135,7 +140,7 @@ export default function ThemeAuthoringPage() {
               className="text-primary underline-offset-4 hover:underline"
             >
               storybook.interlace.tools ↗
-            </a>{" "}
+            </a>{' '}
             for the canonical pairs in action.
           </p>
         </Step>
@@ -143,11 +148,13 @@ export default function ThemeAuthoringPage() {
         <Step n={5} title="Ship">
           <p className="text-muted-foreground">
             That&apos;s it. Every primitive, pattern, and template that
-            references <code className="font-mono">--background</code>,{" "}
-            <code className="font-mono">--foreground</code>,{" "}
-            <code className="font-mono">--primary</code>, etc. automatically
-            picks up your brand — no per-component overrides, no DS fork, no
-            upgrade pain when the DS ships a new primitive.
+            references{' '}
+            <code className="font-mono">--background</code>,{' '}
+            <code className="font-mono">--foreground</code>,{' '}
+            <code className="font-mono">--primary</code>, etc.
+            automatically picks up your brand — no per-component
+            overrides, no DS fork, no upgrade pain when the DS ships a
+            new primitive.
           </p>
         </Step>
 
@@ -157,20 +164,20 @@ export default function ThemeAuthoringPage() {
           </h2>
           <ul className="text-muted-foreground mt-3 ml-md list-disc space-y-2 text-sm">
             <li>
-              <code className="font-mono">@layer interlace.preflight</code> —
-              the focus-ring + min-viewport baseline. Overriding it costs WCAG
-              2.2 SC 2.4.13.
+              <code className="font-mono">@layer interlace.preflight</code>{' '}
+              — the focus-ring + min-viewport baseline. Overriding it
+              costs WCAG 2.2 SC 2.4.13.
             </li>
             <li>
-              <code className="font-mono">@layer interlace.bridge</code> —
-              fumadocs ↔ shadcn translation. Overriding it breaks
+              <code className="font-mono">@layer interlace.bridge</code>{' '}
+              — fumadocs ↔ shadcn translation. Overriding it breaks
               cross-framework primitive resolution.
             </li>
             <li>
-              <code className="font-mono">@layer interlace.foundation</code> —
-              type scale + spacing scale + radius + container widths. These are
-              structural; if you really need a different spacing scale
-              you&apos;re forking the DS, not theming it.
+              <code className="font-mono">@layer interlace.foundation</code>{' '}
+              — type scale + spacing scale + radius + container widths.
+              These are structural; if you really need a different
+              spacing scale you&apos;re forking the DS, not theming it.
             </li>
           </ul>
         </section>

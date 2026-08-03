@@ -1,19 +1,19 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
-import { SiteNav } from "@/components/site-nav";
+import { SiteNav } from '@/components/site-nav';
 
 export const metadata: Metadata = {
-  title: "Semantics Catalogue",
+  title: 'Semantics Catalogue',
   description:
-    "Every Interlace semantic token — its value in light + dark, the brand primitive it resolves to, and its purpose. Auto-generated from packages/ui/styles/interlace-theme.css at build time.",
+    'Every Interlace semantic token — its value in light + dark, the brand primitive it resolves to, and its purpose. Auto-generated from packages/ui/styles/interlace-theme.css at build time.',
   openGraph: {
-    title: "Semantics Catalogue — Interlace DS",
+    title: 'Semantics Catalogue — Interlace DS',
     description:
-      "Browse every semantic token (--background, --foreground, --muted-foreground, …) and its resolved value in light + dark.",
-    url: "https://ds.interlace.tools/semantics-catalog",
+      'Browse every semantic token (--background, --foreground, --muted-foreground, …) and its resolved value in light + dark.',
+    url: 'https://ds.interlace.tools/semantics-catalog',
   },
 };
 
@@ -27,9 +27,12 @@ function loadCatalogue(): Catalogue {
   // `apps/registry/scripts/build-semantics-catalog.mjs` (wired into the
   // registry prebuild step). Fall back to an empty shape so the page
   // renders cleanly in dev even before the script has run.
-  const path = resolve(process.cwd(), "public/data/semantics-catalogue.json");
+  const path = resolve(
+    process.cwd(),
+    'public/data/semantics-catalogue.json',
+  );
   try {
-    return JSON.parse(readFileSync(path, "utf-8"));
+    return JSON.parse(readFileSync(path, 'utf-8'));
   } catch {
     return {
       brand: { light: {}, dark: {} },
@@ -55,12 +58,13 @@ export default function SemanticsCataloguePage() {
           Semantics Catalogue
         </h1>
         <p className="text-muted-foreground mt-3 max-w-prose text-lg">
-          Every Interlace semantic token, its resolved value in light + dark,
-          the brand primitive it points at. Auto-generated from{" "}
+          Every Interlace semantic token, its resolved value in light +
+          dark, the brand primitive it points at. Auto-generated from{' '}
           <code className="font-mono text-sm">
             packages/ui/styles/interlace-theme.css
-          </code>{" "}
-          at build time — when the source CSS changes, this table changes too.
+          </code>{' '}
+          at build time — when the source CSS changes, this table
+          changes too.
         </p>
 
         <section className="mt-12">
@@ -69,7 +73,7 @@ export default function SemanticsCataloguePage() {
           </h2>
           <p className="text-muted-foreground mt-2">
             These are the names you consume from React (
-            <code className="font-mono text-sm">bg-background</code>,{" "}
+            <code className="font-mono text-sm">bg-background</code>,{' '}
             <code className="font-mono text-sm">text-muted-foreground</code>
             ). They resolve to the brand primitives below.
           </p>
@@ -88,8 +92,8 @@ export default function SemanticsCataloguePage() {
             These are the concrete hex values. Override these in
             <code className="font-mono text-sm">
               @layer interlace.brand
-            </code>{" "}
-            (see{" "}
+            </code>{' '}
+            (see{' '}
             <Link
               href="/theme-authoring"
               className="text-primary underline-offset-4 hover:underline"
@@ -116,7 +120,7 @@ function TokenTable({
 }: {
   light: Record<string, string>;
   dark: Record<string, string>;
-  kind: "semantic" | "brand";
+  kind: 'semantic' | 'brand';
 }) {
   const keys = Array.from(
     new Set([...Object.keys(light), ...Object.keys(dark)]),
@@ -125,10 +129,10 @@ function TokenTable({
   if (keys.length === 0) {
     return (
       <p className="text-muted-foreground mt-4 text-sm">
-        Catalogue is empty. Run{" "}
+        Catalogue is empty. Run{' '}
         <code className="font-mono">
           node apps/registry/scripts/build-semantics-catalog.mjs
-        </code>{" "}
+        </code>{' '}
         to regenerate.
       </p>
     );
@@ -165,13 +169,13 @@ function ValueCell({
   kind,
 }: {
   value: string | undefined;
-  kind: "semantic" | "brand";
+  kind: 'semantic' | 'brand';
 }) {
   if (!value) {
     return <td className="p-sm font-mono text-muted-foreground">—</td>;
   }
   const isHex = /^#[0-9a-fA-F]{3,8}$/.test(value);
-  const isVar = value.startsWith("var(");
+  const isVar = value.startsWith('var(');
   return (
     <td className="p-sm font-mono">
       <span className="inline-flex items-center gap-xs">
@@ -183,12 +187,18 @@ function ValueCell({
           />
         ) : null}
         <span
-          className={isVar ? "text-muted-foreground italic" : "text-foreground"}
+          className={
+            isVar
+              ? 'text-muted-foreground italic'
+              : 'text-foreground'
+          }
         >
           {value}
         </span>
-        {kind === "semantic" && isVar ? (
-          <span className="text-muted-foreground text-xs">(alias)</span>
+        {kind === 'semantic' && isVar ? (
+          <span className="text-muted-foreground text-xs">
+            (alias)
+          </span>
         ) : null}
       </span>
     </td>

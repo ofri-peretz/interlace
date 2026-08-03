@@ -1,18 +1,18 @@
 /**
  * Visitor-profile inference for apps/registry. Mirror of apps/docs.
  */
-import type { LandingUtm } from "./utm";
-import { posthog } from "./posthog-init";
+import type { LandingUtm } from './utm';
+import { posthog } from './posthog-init';
 
 export type VisitorProfile =
-  | "developer"
-  | "engineering_leader"
-  | "recruiter"
-  | "investor"
-  | "founder"
-  | "student"
-  | "curious"
-  | "unknown";
+  | 'developer'
+  | 'engineering_leader'
+  | 'recruiter'
+  | 'investor'
+  | 'founder'
+  | 'student'
+  | 'curious'
+  | 'unknown';
 
 interface InferenceInput {
   utm: LandingUtm;
@@ -39,40 +39,40 @@ export function inferVisitorProfile({
   landingPath,
 }: InferenceInput): VisitorProfile {
   switch (utm.source) {
-    case "dev_to":
-    case "github":
-    case "npm":
-      return "developer";
-    case "linkedin":
-      return "developer";
+    case 'dev_to':
+    case 'github':
+    case 'npm':
+      return 'developer';
+    case 'linkedin':
+      return 'developer';
   }
 
   const host = referrerHost(utm.referrer);
   if (host) {
-    if (DEVELOPER_REFERRER_RE.test(host)) return "developer";
-    if (INVESTOR_REFERRER_RE.test(host)) return "investor";
-    if (CURIOUS_REFERRER_RE.test(host)) return "curious";
-    if (/(^|\.)linkedin\.com$/i.test(host)) return "developer";
+    if (DEVELOPER_REFERRER_RE.test(host)) return 'developer';
+    if (INVESTOR_REFERRER_RE.test(host)) return 'investor';
+    if (CURIOUS_REFERRER_RE.test(host)) return 'curious';
+    if (/(^|\.)linkedin\.com$/i.test(host)) return 'developer';
   }
 
   // Registry is overwhelmingly a developer surface; landing-path heuristics
   // would just confirm. Default to `developer` for any non-empty referrer
   // host that didn't match above, `unknown` otherwise.
-  if (host) return "developer";
+  if (host) return 'developer';
   void landingPath;
-  return "unknown";
+  return 'unknown';
 }
 
 export function setVisitorProfileOnFirstPageview(
   input: InferenceInput,
 ): VisitorProfile {
   const profile = inferVisitorProfile(input);
-  if (typeof window === "undefined") return profile;
+  if (typeof window === 'undefined') return profile;
   try {
     const refHost = referrerHost(input.utm.referrer);
     posthog.people?.set_once?.({
       first_visitor_profile: profile,
-      first_referrer_domain: refHost ?? "direct",
+      first_referrer_domain: refHost ?? 'direct',
       first_landing_path: input.landingPath,
       first_utm_source: input.utm.source ?? null,
       first_utm_medium: input.utm.medium ?? null,
@@ -80,7 +80,7 @@ export function setVisitorProfileOnFirstPageview(
     });
     posthog.people?.set?.({
       last_visitor_profile: profile,
-      last_seen_app: "ds",
+      last_seen_app: 'ds',
     });
   } catch {
     // swallow

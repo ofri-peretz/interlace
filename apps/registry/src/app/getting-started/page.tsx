@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import { SiteNav } from "@/components/site-nav";
+import { SiteNav } from '@/components/site-nav';
 
 export const metadata: Metadata = {
-  title: "Getting started",
+  title: 'Getting started',
   description:
-    "Wire @interlace/ui into your app in three commands — full DS baseline + a11y starter + layout starter. Plus the data-interlace-dev opt-in for the min-viewport contract.",
+    'Wire @interlace/ui into your app in three commands — full DS baseline + a11y starter + layout starter. Plus the data-interlace-dev opt-in for the min-viewport contract.',
   openGraph: {
-    title: "Getting started — Interlace DS",
+    title: 'Getting started — Interlace DS',
     description:
-      "Three commands to the full DS floor: WCAG 2.2 SC 2.4.13 focus ring, [data-min-viewport] contract, reduced-motion respect, and the type/spacing/radius scales.",
-    url: "https://ds.interlace.tools/getting-started",
+      'Three commands to the full DS floor: WCAG 2.2 SC 2.4.13 focus ring, [data-min-viewport] contract, reduced-motion respect, and the type/spacing/radius scales.',
+    url: 'https://ds.interlace.tools/getting-started',
   },
 };
 
@@ -27,13 +27,11 @@ export default function GettingStartedPage() {
           </Link>
         </nav>
 
-        <h1 className="mt-6 text-4xl font-bold tracking-tight">
-          Getting started
-        </h1>
+        <h1 className="mt-6 text-4xl font-bold tracking-tight">Getting started</h1>
         <p className="text-muted-foreground mt-3 max-w-prose text-lg">
           Three commands to a fully-themed app with the DS&apos;s a11y and
-          responsive contracts active. Then keep installing primitives one at a
-          time as you need them.
+          responsive contracts active. Then keep installing primitives one at
+          a time as you need them.
         </p>
 
         {/* ─── Step 1: theme ─────────────────────────────────────────── */}
@@ -42,21 +40,17 @@ export default function GettingStartedPage() {
           title="Install the full CSS baseline"
           description={
             <>
-              The{" "}
-              <code className="font-mono text-foreground">
-                @interlace/theme
-              </code>{" "}
-              bundle ships five stylesheets in the right cascade order:{" "}
-              <code className="font-mono">tokens</code> →{" "}
-              <code className="font-mono">foundation</code> →{" "}
-              <code className="font-mono">preflight</code> →{" "}
-              <code className="font-mono">theme</code> →{" "}
+              The <code className="font-mono text-foreground">@interlace/theme</code>{' '}
+              bundle ships five stylesheets in the right cascade order:{' '}
+              <code className="font-mono">tokens</code> →{' '}
+              <code className="font-mono">foundation</code> →{' '}
+              <code className="font-mono">preflight</code> →{' '}
+              <code className="font-mono">theme</code> →{' '}
               <code className="font-mono">interlace-theme</code>. One command
               lands the type / spacing / radius scales, the WCAG 2.2 SC 2.4.13
-              focus ring, the{" "}
-              <code className="font-mono">[data-min-viewport]</code> container
-              contract, reduced-motion respect, and the burnt-orange brand
-              palette.
+              focus ring, the <code className="font-mono">[data-min-viewport]</code>{' '}
+              container contract, reduced-motion respect, and the burnt-orange
+              brand palette.
             </>
           }
         >
@@ -72,14 +66,14 @@ export default function GettingStartedPage() {
           title="Install the layout starter"
           description={
             <>
-              Six primitives that compose every page —{" "}
-              <code className="font-mono">Container</code>,{" "}
-              <code className="font-mono">Section</code>,{" "}
-              <code className="font-mono">Stack</code>,{" "}
-              <code className="font-mono">Grid</code>,{" "}
-              <code className="font-mono">Box</code>,{" "}
-              <code className="font-mono">Typography</code>. The
-              LAYOUT_PHILOSOPHY contract is satisfied in one install.
+              Six primitives that compose every page —{' '}
+              <code className="font-mono">Container</code>,{' '}
+              <code className="font-mono">Section</code>,{' '}
+              <code className="font-mono">Stack</code>,{' '}
+              <code className="font-mono">Grid</code>,{' '}
+              <code className="font-mono">Box</code>,{' '}
+              <code className="font-mono">Typography</code>. The LAYOUT_PHILOSOPHY
+              contract is satisfied in one install.
             </>
           }
         >
@@ -95,9 +89,9 @@ export default function GettingStartedPage() {
           title="Install the a11y starter"
           description={
             <>
-              <code className="font-mono">SkipLink</code> +{" "}
-              <code className="font-mono">VisuallyHidden</code> +{" "}
-              <code className="font-mono">FocusRing</code> +{" "}
+              <code className="font-mono">SkipLink</code> +{' '}
+              <code className="font-mono">VisuallyHidden</code> +{' '}
+              <code className="font-mono">FocusRing</code> +{' '}
               <code className="font-mono">useReducedMotion</code>. Drops the
               three primitives every consumer needs on day one plus the hook
               every animated primitive uses to honor the OS preference.
@@ -116,15 +110,13 @@ export default function GettingStartedPage() {
             Opt into the min-viewport dev outline
           </h2>
           <p className="text-muted-foreground mt-3">
-            Every Interlace primitive declares its smallest viable viewport via{" "}
+            Every Interlace primitive declares its smallest viable viewport via{' '}
             <code className="font-mono text-foreground">
               data-min-viewport=&quot;320|480|768&quot;
             </code>
-            . In development, add the{" "}
-            <code className="font-mono text-foreground">
-              data-interlace-dev
-            </code>{" "}
-            flag to your <code className="font-mono">{"<body>"}</code> and the
+            . In development, add the{' '}
+            <code className="font-mono text-foreground">data-interlace-dev</code>{' '}
+            flag to your <code className="font-mono">{'<body>'}</code> and the
             preflight contract will draw a dashed outline around any primitive
             rendered in a container narrower than its declared minimum. Strip
             the attribute in production.
@@ -160,7 +152,7 @@ export default function GettingStartedPage() {
           <p className="text-muted-foreground mt-4 text-sm">
             The package follows semver against the CSS contract — patch updates
             preserve contrast + cascade behavior; majors are reserved for token
-            renames or cascade reorderings. See{" "}
+            renames or cascade reorderings. See{' '}
             <a
               href="https://github.com/ofri-peretz/interlace/tree/main/packages/foundation#versioning"
               className="text-foreground underline-offset-4 hover:underline"
@@ -182,15 +174,14 @@ export default function GettingStartedPage() {
               surface — on every interactive element, in both light and dark.
             </Cell>
             <Cell title="Min-viewport contract">
-              Every primitive carries{" "}
-              <code className="font-mono">data-min-viewport</code>; the dev-mode
-              outline warns when one renders below its declared floor.
-              Production strips the warning.
+              Every primitive carries <code className="font-mono">data-min-viewport</code>;
+              the dev-mode outline warns when one renders below its declared
+              floor. Production strips the warning.
             </Cell>
             <Cell title="Reduced-motion respect">
-              <code className="font-mono">prefers-reduced-motion: reduce</code>{" "}
-              clamps every animation to 0.01ms globally; client primitives also
-              gate on the <code className="font-mono">useReducedMotion</code>{" "}
+              <code className="font-mono">prefers-reduced-motion: reduce</code>{' '}
+              clamps every animation to 0.01ms globally; client primitives
+              also gate on the <code className="font-mono">useReducedMotion</code>{' '}
               hook.
             </Cell>
             <Cell title="Type / spacing / radius scales">
@@ -200,9 +191,9 @@ export default function GettingStartedPage() {
             <Cell title="Brand palette (AAA-cleared)">
               Burnt orange: #7d350c light (8.80:1 on white); #fbb99a dark
               (11.79:1 on near-black). Repointed from Tailwind violet (July
-              2026) entirely via{" "}
-              <code className="font-mono">@layer interlace.brand</code> — the
-              same surface you&apos;d use to ship your own brand. Five
+              2026) entirely via{' '}
+              <code className="font-mono">@layer interlace.brand</code>{' '}
+              — the same surface you&apos;d use to ship your own brand. Five
               chart-series hues.
             </Cell>
             <Cell title="Skip-to-main + sr-only contract">
@@ -217,10 +208,10 @@ export default function GettingStartedPage() {
         <section className="mt-16">
           <h2 className="text-xl font-semibold">Next</h2>
           <p className="text-muted-foreground mt-3">
-            From here, install primitives one at a time as you need them. Every
-            primitive page lists its install command, anatomy, variants, R-rule
-            compliance, and source. Shipping your own brand? Override{" "}
-            <code className="font-mono">@layer interlace.brand</code> — see{" "}
+            From here, install primitives one at a time as you need them.
+            Every primitive page lists its install command, anatomy, variants,
+            R-rule compliance, and source. Shipping your own brand? Override{' '}
+            <code className="font-mono">@layer interlace.brand</code> — see{' '}
             <Link
               href="/theme-authoring"
               className="text-foreground underline-offset-4 hover:underline"
@@ -253,14 +244,14 @@ export default function GettingStartedPage() {
 
         <footer className="border-border mt-16 border-t pt-8 text-sm">
           <p className="text-muted-foreground">
-            Source of truth for every contract above:{" "}
+            Source of truth for every contract above:{' '}
             <a
               href="https://github.com/ofri-peretz/interlace/blob/main/DESIGN_PRINCIPLES.md"
               className="text-foreground underline-offset-4 hover:underline"
             >
               DESIGN_PRINCIPLES.md
-            </a>{" "}
-            + the per-domain{" "}
+            </a>{' '}
+            + the per-domain{' '}
             <a
               href="https://github.com/ofri-peretz/interlace/tree/main/docs/philosophies"
               className="text-foreground underline-offset-4 hover:underline"

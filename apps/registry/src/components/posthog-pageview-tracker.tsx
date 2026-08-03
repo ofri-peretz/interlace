@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 /**
  * `$pageview` capture on App Router route change for apps/registry.
  * Mirror of apps/docs.
  */
-import { useEffect, useRef, Suspense } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { posthog } from "@/lib/posthog-init";
-import { consumeLandingUtm, isPlausibleDistinctId } from "@/lib/utm";
-import { setVisitorProfileOnFirstPageview } from "@/lib/visitor-profile";
-import { pageview } from "@/lib/analytics";
+import { useEffect, useRef, Suspense } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { posthog } from '@/lib/posthog-init';
+import { consumeLandingUtm, isPlausibleDistinctId } from '@/lib/utm';
+import { setVisitorProfileOnFirstPageview } from '@/lib/visitor-profile';
+import { pageview } from '@/lib/analytics';
 
 function PageviewTrackerInner() {
   const pathname = usePathname();
@@ -35,10 +35,10 @@ function PageviewTrackerInner() {
       }
     }
     let url = pathname;
-    const search = searchParams?.toString() ?? "";
+    const search = searchParams?.toString() ?? '';
     if (search) url += `?${search}`;
     const absolute =
-      typeof window !== "undefined" ? window.location.origin + url : url;
+      typeof window !== 'undefined' ? window.location.origin + url : url;
     pageview(absolute);
   }, [pathname, searchParams]);
 

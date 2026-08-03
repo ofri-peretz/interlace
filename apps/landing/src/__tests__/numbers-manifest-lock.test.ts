@@ -35,9 +35,7 @@ describe("interlace-numbers.json manifest", () => {
   it("has schemaVersion 1 and internally consistent pillars", () => {
     expect(numbers.schemaVersion).toBe(1);
     expect(
-      numbers.plugins.security +
-        numbers.plugins.quality +
-        numbers.plugins.react,
+      numbers.plugins.security + numbers.plugins.quality + numbers.plugins.react,
     ).toBe(numbers.plugins.total);
     expect(
       numbers.rules.security + numbers.rules.quality + numbers.rules.react,

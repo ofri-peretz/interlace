@@ -1,26 +1,26 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
-import { BrandLogo } from "@interlace/ui/patterns/brand-logo";
+import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
 
-import { CategoryBadge } from "@/components/category-badge";
-import { ClientServerBadge } from "@/components/client-server-badge";
-import { MinViewportBadge } from "@/components/min-viewport-badge";
-import { SourceViewer } from "@/components/source-viewer";
-import { StoryPreview } from "@/components/story-preview";
-import { categoryById, intentCategoryOf } from "@/lib/categories";
-import { listItemNames, loadEnrichedItem, refToName } from "@/lib/registry";
-import { exampleStories, storiesFor } from "@/lib/stories";
+import { CategoryBadge } from '@/components/category-badge';
+import { ClientServerBadge } from '@/components/client-server-badge';
+import { MinViewportBadge } from '@/components/min-viewport-badge';
+import { SourceViewer } from '@/components/source-viewer';
+import { StoryPreview } from '@/components/story-preview';
+import { categoryById, intentCategoryOf } from '@/lib/categories';
+import { listItemNames, loadEnrichedItem, refToName } from '@/lib/registry';
+import { exampleStories, storiesFor } from '@/lib/stories';
 
 interface PageProps {
   params: Promise<{ name: string }>;
 }
 
-const STORYBOOK_URL = "https://storybook.interlace.tools";
+const STORYBOOK_URL = 'https://storybook.interlace.tools';
 
 const storybookPath = (name: string, type: string): string => {
-  if (type === "registry:style") {
+  if (type === 'registry:style') {
     return `${STORYBOOK_URL}/?path=/docs/tokens-color-contrast--docs`;
   }
   return `${STORYBOOK_URL}/?path=/docs/primitives-${name.toLowerCase()}--docs`;
@@ -41,7 +41,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { name } = await params;
   const item = await loadEnrichedItem(name);
-  if (!item) return { title: "Not found" };
+  if (!item) return { title: 'Not found' };
   return {
     title: item.title,
     description: item.description,
@@ -125,7 +125,7 @@ export default async function ComponentPage({ params }: PageProps) {
               <MinViewportBadge value={contract.minViewport} />
             ) : null}
             <span className="border-border text-muted-foreground rounded-full border px-3 py-1 font-mono text-xs">
-              {item.type.replace("registry:", "")}
+              {item.type.replace('registry:', '')}
             </span>
           </div>
         </div>
@@ -141,10 +141,8 @@ export default async function ComponentPage({ params }: PageProps) {
               height={280}
             />
             <p className="text-muted-foreground mt-2 text-xs">
-              Rendered from the story the{" "}
-              <code className="text-foreground font-mono">
-                storybook (a11y)
-              </code>{" "}
+              Rendered from the story the{' '}
+              <code className="text-foreground font-mono">storybook (a11y)</code>{' '}
               CI gate runs axe against — the preview can&apos;t show something
               that hasn&apos;t been verified.
             </p>
@@ -176,10 +174,9 @@ export default async function ComponentPage({ params }: PageProps) {
           <h2 className="text-xl font-semibold">Install</h2>
           <p className="text-muted-foreground mt-2 text-sm">
             Two equivalent paths — the URL works in any shadcn-CLI setup; the
-            alias works once you&apos;ve registered{" "}
+            alias works once you&apos;ve registered{' '}
             <code className="text-foreground font-mono">@interlace</code> in
-            your{" "}
-            <code className="text-foreground font-mono">components.json</code>.
+            your <code className="text-foreground font-mono">components.json</code>.
           </p>
           <div className="mt-4 space-y-3">
             <CodeBlock
@@ -199,13 +196,13 @@ export default async function ComponentPage({ params }: PageProps) {
             <h2 className="text-xl font-semibold">Import</h2>
             <p className="text-muted-foreground mt-2 text-sm">
               {meta.exports.length === 1
-                ? "Single named export."
+                ? 'Single named export.'
                 : `${meta.exports.length} named exports — pull the parts you need.`}
             </p>
             <div className="mt-4">
               <CodeBlock
                 label="Public API"
-                code={`import { ${meta.exports.join(", ")} } from '@/${file.target.replace(/\.tsx?$/, "")}';`}
+                code={`import { ${meta.exports.join(', ')} } from '@/${file.target.replace(/\.tsx?$/, '')}';`}
               />
             </div>
           </section>
@@ -230,33 +227,28 @@ export default async function ComponentPage({ params }: PageProps) {
           <section className="mt-12">
             <h2 className="text-xl font-semibold">Variants</h2>
             <p className="text-muted-foreground mt-2 text-sm">
-              Closed prop unions enforced by{" "}
-              <code className="text-foreground font-mono">
-                class-variance-authority
-              </code>
-              . See{" "}
+              Closed prop unions enforced by <code className="text-foreground font-mono">class-variance-authority</code>.
+              See {' '}
               <a
                 href={storybook}
                 className="text-foreground underline-offset-4 hover:underline"
               >
                 Storybook&apos;s Variants story
-              </a>{" "}
-              for the rendered matrix.
+              </a>
+              {' '} for the rendered matrix.
             </p>
             <ul className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
               {meta.variants.map((v) => (
                 <li key={v.name} className="bg-card p-4">
-                  <div className="font-mono text-sm font-semibold">
-                    {v.name}
-                  </div>
+                  <div className="font-mono text-sm font-semibold">{v.name}</div>
                   <ul className="mt-2 flex flex-wrap gap-1.5">
                     {v.options.map((opt) => (
                       <li
                         key={opt}
                         className={
                           opt === v.defaultValue
-                            ? "bg-primary/10 border-primary/40 text-primary rounded-md border px-2 py-0.5 font-mono text-xs"
-                            : "bg-background border-border text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs"
+                            ? 'bg-primary/10 border-primary/40 text-primary rounded-md border px-2 py-0.5 font-mono text-xs'
+                            : 'bg-background border-border text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs'
                         }
                       >
                         {opt}
@@ -291,15 +283,15 @@ export default async function ComponentPage({ params }: PageProps) {
                 <p className="text-muted-foreground mt-1 text-xs">
                   {table.extendsElement ? (
                     <>
-                      Also accepts every{" "}
+                      Also accepts every{' '}
                       <code className="text-foreground font-mono">
                         &lt;{table.extendsElement}&gt;
-                      </code>{" "}
-                      attribute.{" "}
+                      </code>{' '}
+                      attribute.{' '}
                     </>
                   ) : null}
                   {table.hasVariantProps
-                    ? "Plus the variant props listed above."
+                    ? 'Plus the variant props listed above.'
                     : null}
                 </p>
                 {table.props.length > 0 ? (
@@ -359,23 +351,21 @@ export default async function ComponentPage({ params }: PageProps) {
           <section className="mt-12">
             <h2 className="text-xl font-semibold">Skeleton</h2>
             <p className="text-muted-foreground mt-2 max-w-prose text-sm">
-              Pass <code className="text-foreground font-mono">loading</code>{" "}
-              and the component renders a shape-matched{" "}
+              Pass{' '}
+              <code className="text-foreground font-mono">loading</code> and the
+              component renders a shape-matched{' '}
               <code className="text-foreground font-mono">
                 &lt;Skeleton /&gt;
-              </code>{" "}
+              </code>{' '}
               in its own place — same box, so nothing reflows when the data
-              lands. Below is the same story with{" "}
-              <code className="text-foreground font-mono">
-                loading={"{true}"}
-              </code>
-              .
+              lands. Below is the same story with{' '}
+              <code className="text-foreground font-mono">loading={'{true}'}</code>.
             </p>
             <div className="mt-4">
               <StoryPreview
                 storyId={stories.skeleton ?? stories.preview}
                 label={`${item.title} — loading state`}
-                args={stories.skeleton ? undefined : "loading:!true"}
+                args={stories.skeleton ? undefined : 'loading:!true'}
                 height={200}
               />
             </div>
@@ -394,7 +384,7 @@ export default async function ComponentPage({ params }: PageProps) {
           <p className="text-muted-foreground mt-2 max-w-prose text-sm">
             Every story for this component is rendered headlessly and checked
             with axe-core (wcag2aa, wcag22aa, best-practice, ACT) on every PR.
-            That gate has no{" "}
+            That gate has no{' '}
             <code className="text-foreground font-mono">continue-on-error</code>
             , so what ships has zero known violations.
           </p>
@@ -402,13 +392,13 @@ export default async function ComponentPage({ params }: PageProps) {
             <MetaCell label="Focus + keyboard behaviour">
               {meta.a11y.baseUi ? (
                 <span className="text-sm">
-                  Owned by{" "}
+                  Owned by{' '}
                   <a
                     href={`https://base-ui.com/react/components/${meta.a11y.baseUi}`}
                     className="text-foreground font-mono underline-offset-4 hover:underline"
                   >
                     @base-ui/react/{meta.a11y.baseUi}
-                  </a>{" "}
+                  </a>{' '}
                   — focus trapping, dismissal and typeahead come from the
                   headless primitive, not from us.
                 </span>
@@ -421,15 +411,15 @@ export default async function ComponentPage({ params }: PageProps) {
             <MetaCell label="Focus ring (WCAG 2.2 SC 2.4.13)">
               <span className="text-sm">
                 {meta.a11y.hasFocusRing
-                  ? "Inherited from the preflight focus contract shipped in @interlace/theme."
-                  : "Not focusable — no focus indicator required."}
+                  ? 'Inherited from the preflight focus contract shipped in @interlace/theme.'
+                  : 'Not focusable — no focus indicator required.'}
               </span>
             </MetaCell>
             <MetaCell label="Reduced motion">
               <span className="text-sm">
                 {meta.a11y.respectsReducedMotion
-                  ? "Animation is gated on prefers-reduced-motion."
-                  : "No animation to gate."}
+                  ? 'Animation is gated on prefers-reduced-motion.'
+                  : 'No animation to gate.'}
               </span>
             </MetaCell>
             <MetaCell label="ARIA in the source">
@@ -466,15 +456,15 @@ export default async function ComponentPage({ params }: PageProps) {
           <section className="mt-12">
             <h2 className="text-xl font-semibold">Examples</h2>
             <p className="text-muted-foreground mt-2 text-sm">
-              {examples.length} more state{examples.length === 1 ? "" : "s"}{" "}
-              from the same story file.
+              {examples.length} more state{examples.length === 1 ? '' : 's'} from
+              the same story file.
             </p>
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
               {examples.map((id) => (
                 <StoryPreview
                   key={id}
                   storyId={id}
-                  label={id.split("--")[1].replace(/-/g, " ")}
+                  label={id.split('--')[1].replace(/-/g, ' ')}
                   height={240}
                 />
               ))}
@@ -488,10 +478,12 @@ export default async function ComponentPage({ params }: PageProps) {
             <h2 className="text-xl font-semibold">R-rule compliance</h2>
             <p className="text-muted-foreground mt-2 text-sm">
               Every primitive in @interlace/ui models to the portable 26-rule
-              floor enforced by the{" "}
-              <code className="text-foreground font-mono">componentApi</code>{" "}
-              ESLint preset. The cells below pin exactly where each rule applies
-              in this file.
+              floor enforced by the{' '}
+              <code className="text-foreground font-mono">
+                componentApi
+              </code>{' '}
+              ESLint preset. The cells below pin exactly where each rule
+              applies in this file.
             </p>
             <div className="border-border bg-card mt-4 overflow-x-auto rounded-lg border">
               <table className="w-full text-sm">
@@ -510,10 +502,7 @@ export default async function ComponentPage({ params }: PageProps) {
                 </thead>
                 <tbody>
                   {meta.rRules.map((r) => (
-                    <tr
-                      key={r.rule}
-                      className="border-border border-b last:border-b-0"
-                    >
+                    <tr key={r.rule} className="border-border border-b last:border-b-0">
                       <td className="px-4 py-2 font-mono text-xs font-semibold">
                         {r.rule}
                       </td>
@@ -534,10 +523,10 @@ export default async function ComponentPage({ params }: PageProps) {
           <section className="mt-12">
             <h2 className="text-xl font-semibold">Minimum viewport</h2>
             <p className="text-muted-foreground mt-2 text-sm">
-              This primitive declares{" "}
+              This primitive declares{' '}
               <code className="text-foreground font-mono">
                 MIN_VIEWPORT = {contract.minViewport}
-              </code>{" "}
+              </code>{' '}
               CSS px (DESIGN_PRINCIPLES #14). When mounted in a container
               narrower than this, the preflight contract draws a dev-mode
               outline so the regression is visible during local development.
@@ -547,15 +536,13 @@ export default async function ComponentPage({ params }: PageProps) {
                 Opt-in to the dev-mode warning
               </div>
               <pre className="mt-2 overflow-x-auto font-mono text-xs">
-                {"<body data-interlace-dev>...</body>"}
+                {'<body data-interlace-dev>...</body>'}
               </pre>
               <p className="text-muted-foreground mt-3 text-xs">
-                Add the{" "}
-                <code className="text-foreground">data-interlace-dev</code>{" "}
+                Add the <code className="text-foreground">data-interlace-dev</code>{' '}
                 attribute to the body in <em>development</em> builds only —
                 preflight then outlines any primitive whose container is below
-                its declared{" "}
-                <code className="text-foreground">data-min-viewport</code>.
+                its declared <code className="text-foreground">data-min-viewport</code>.
               </p>
             </div>
           </section>
@@ -647,14 +634,11 @@ export default async function ComponentPage({ params }: PageProps) {
         <section className="mt-12">
           <h2 className="text-xl font-semibold">Source</h2>
           <p className="text-muted-foreground mt-2 text-sm">
-            The full implementation —{" "}
-            <code className="text-foreground font-mono">{file.target}</code>{" "}
+            The full implementation —{' '}
+            <code className="text-foreground font-mono">{file.target}</code>{' '}
             once installed.
           </p>
-          <SourceViewer
-            source={file.content}
-            githubUrl={githubSourceUrl(item.name)}
-          />
+          <SourceViewer source={file.content} githubUrl={githubSourceUrl(item.name)} />
         </section>
 
         {/* ─── JSON endpoint ─────────────────────────────────────── */}
@@ -676,7 +660,7 @@ export default async function ComponentPage({ params }: PageProps) {
 
         <footer className="border-border mt-16 border-t pt-8 text-sm">
           <p className="text-muted-foreground">
-            Source of truth:{" "}
+            Source of truth:{' '}
             <a
               href={githubSourceUrl(item.name)}
               className="text-foreground underline-offset-4 hover:underline"

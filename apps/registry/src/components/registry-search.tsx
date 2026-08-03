@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import Link from 'next/link';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { CategoryBadge } from "@/components/category-badge";
+import { CategoryBadge } from '@/components/category-badge';
 
 /**
  * Search + filter across EVERY registry item.
@@ -35,7 +35,7 @@ const matches = (item: SearchItem, q: string) =>
   (item.categories ?? []).some((c) => c.includes(q));
 
 export function RegistrySearch({ items, tiers }: Props) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [tier, setTier] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -43,23 +43,24 @@ export function RegistrySearch({ items, tiers }: Props) {
     const onKeyDown = (event: KeyboardEvent) => {
       const typingElsewhere =
         event.target instanceof HTMLElement &&
-        ["INPUT", "TEXTAREA"].includes(event.target.tagName);
+        ['INPUT', 'TEXTAREA'].includes(event.target.tagName);
       const isShortcut =
-        (event.key === "k" && (event.metaKey || event.ctrlKey)) ||
-        (event.key === "/" && !typingElsewhere);
+        (event.key === 'k' && (event.metaKey || event.ctrlKey)) ||
+        (event.key === '/' && !typingElsewhere);
       if (!isShortcut) return;
       event.preventDefault();
       inputRef.current?.focus();
       inputRef.current?.select();
     };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items.filter(
-      (item) => (!tier || item.meta?.tier === tier) && (!q || matches(item, q)),
+      (item) =>
+        (!tier || item.meta?.tier === tier) && (!q || matches(item, q)),
     );
   }, [items, query, tier]);
 
@@ -88,11 +89,7 @@ export function RegistrySearch({ items, tiers }: Props) {
             ⌘K
           </kbd>
         </div>
-        <div
-          className="flex flex-wrap gap-2"
-          role="group"
-          aria-label="Filter by layer"
-        >
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by layer">
           {tiers.map(([id, label]) => (
             <button
               key={id}
@@ -101,8 +98,8 @@ export function RegistrySearch({ items, tiers }: Props) {
               onClick={() => setTier(tier === id ? null : id)}
               className={
                 tier === id
-                  ? "border-primary/60 bg-primary/10 text-primary rounded-full border px-3 py-1 text-xs transition-colors"
-                  : "border-border bg-card/40 text-muted-foreground hover:text-foreground rounded-full border px-3 py-1 text-xs transition-colors"
+                  ? 'border-primary/60 bg-primary/10 text-primary rounded-full border px-3 py-1 text-xs transition-colors'
+                  : 'border-border bg-card/40 text-muted-foreground hover:text-foreground rounded-full border px-3 py-1 text-xs transition-colors'
               }
             >
               {label}
@@ -116,7 +113,7 @@ export function RegistrySearch({ items, tiers }: Props) {
       {filtering ? (
         <div className="mt-6">
           <p aria-live="polite" className="text-muted-foreground text-sm">
-            {results.length} match{results.length === 1 ? "" : "es"}
+            {results.length} match{results.length === 1 ? '' : 'es'}
           </p>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {results.map((item) => (
@@ -142,8 +139,9 @@ export function RegistrySearch({ items, tiers }: Props) {
           </ul>
           {results.length === 0 ? (
             <p className="text-muted-foreground border-border mt-4 rounded-lg border border-dashed p-8 text-center text-sm">
-              Nothing matches “{query}”{tier ? " in that layer" : ""}. Try a
-              category name — every item is tagged with one.
+              Nothing matches “{query}”
+              {tier ? ' in that layer' : ''}. Try a category name — every item
+              is tagged with one.
             </p>
           ) : null}
         </div>

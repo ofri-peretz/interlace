@@ -5,7 +5,7 @@
  * yet — extend `TrackedEventMap` when registry surfaces grow business
  * events.
  */
-import { posthog } from "./posthog-init";
+import { posthog } from './posthog-init';
 
 // Empty for now — registry has no business events. Add typed entries here
 // when surfaces grow, then call sites are forced to match via the union.
@@ -18,12 +18,13 @@ export interface TrackedEventMap {}
 export type TrackedEventName = keyof TrackedEventMap & string;
 
 function isTrackingAllowed(): boolean {
-  if (typeof window === "undefined") return false;
-  if (typeof navigator === "undefined") return false;
+  if (typeof window === 'undefined') return false;
+  if (typeof navigator === 'undefined') return false;
   const dnt = navigator.doNotTrack;
-  if (dnt === "1" || dnt === "yes") return false;
-  const gpc = (navigator as Navigator & { globalPrivacyControl?: boolean })
-    .globalPrivacyControl;
+  if (dnt === '1' || dnt === 'yes') return false;
+  const gpc = (
+    navigator as Navigator & { globalPrivacyControl?: boolean }
+  ).globalPrivacyControl;
   if (gpc === true) return false;
   return true;
 }
@@ -43,7 +44,7 @@ export function track<E extends TrackedEventName>(
   if (!isTrackingAllowed()) return;
   safe(() => {
     posthog.capture?.(event, payload as Record<string, unknown>);
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.debug(`[analytics] track ${event}`, payload);
     }
@@ -68,7 +69,7 @@ export function pageview(
   if (!isTrackingAllowed()) return;
   safe(() => {
     const $current_url =
-      url ?? (typeof window !== "undefined" ? window.location.href : "");
-    posthog.capture?.("$pageview", { $current_url, ...properties });
+      url ?? (typeof window !== 'undefined' ? window.location.href : '');
+    posthog.capture?.('$pageview', { $current_url, ...properties });
   });
 }

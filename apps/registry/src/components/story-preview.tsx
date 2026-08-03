@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-const STORYBOOK_URL = "https://storybook.interlace.tools";
+const STORYBOOK_URL = 'https://storybook.interlace.tools';
 
 /**
  * A LIVE render of the component, embedded from the deployed Storybook.
@@ -25,8 +25,8 @@ const STORYBOOK_URL = "https://storybook.interlace.tools";
  */
 
 export function storyUrl(storyId: string, args?: string): string {
-  const query = new URLSearchParams({ id: storyId, viewMode: "story" });
-  if (args) query.set("args", args);
+  const query = new URLSearchParams({ id: storyId, viewMode: 'story' });
+  if (args) query.set('args', args);
   return `${STORYBOOK_URL}/iframe.html?${query.toString()}`;
 }
 
@@ -47,17 +47,17 @@ export function StoryPreview({
   args,
   height = 320,
 }: Props) {
-  const [theme, setTheme] = useState<"light" | "dark" | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark' | null>(null);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const sync = () => setTheme(media.matches ? "dark" : "light");
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const sync = () => setTheme(media.matches ? 'dark' : 'light');
     sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
   }, []);
 
-  const shown = theme === "dark" && darkStoryId ? darkStoryId : storyId;
+  const shown = theme === 'dark' && darkStoryId ? darkStoryId : storyId;
 
   return (
     <figure className="border-border bg-card/40 overflow-hidden rounded-lg border">
