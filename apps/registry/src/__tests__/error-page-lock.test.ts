@@ -118,9 +118,11 @@ describe("error page lock", () => {
     // rendering — a broken-looking page on exactly the devices least able to
     // recover from one.
     expect(globalErrorSource).toContain("<head");
-    expect(globalErrorSource).toMatch(
-      /name="viewport"[^>]*content="[^"]*width=device-width/,
-    );
+    // Two independent checks, not one regex: requiring `name` to precede
+    // `content` in the same tag would go quietly false-negative the first
+    // time a formatter reorders the props.
+    expect(globalErrorSource).toContain('name="viewport"');
+    expect(globalErrorSource).toContain("width=device-width");
   });
 
   it("global-error.tsx keeps the skip-link target", () => {
