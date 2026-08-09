@@ -68,7 +68,15 @@ const HOMEPAGE = 'https://ds.interlace.tools';
  */
 export const refToName = (ref: string): string | null => {
   const m = ref.match(/\/r\/([^/]+)\.json$/);
-  return m && ref.startsWith(HOMEPAGE) ? m[1] : null;
+  // Compare the parsed origin, not a string prefix: `startsWith(HOMEPAGE)`
+  // also accepts `https://ds.interlace.tools.example.com/r/x.json`.
+  let sameOrigin = false;
+  try {
+    sameOrigin = new URL(ref).origin === new URL(HOMEPAGE).origin;
+  } catch {
+    sameOrigin = false;
+  }
+  return m && sameOrigin ? m[1] : null;
 };
 
 const PUBLIC_R = join(process.cwd(), 'public', 'r');
