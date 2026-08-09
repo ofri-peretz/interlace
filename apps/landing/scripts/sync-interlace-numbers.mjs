@@ -37,9 +37,39 @@ for (const group of ["plugins", "rules"]) {
     process.exit(1);
   }
 }
+// Rebuild the manifest field-by-field from the values just validated rather
+// than writing the parsed response through. The checks above prove the shape
+// is sound but leave `data` an arbitrary upstream object — anything extra it
+// carried would land in a committed file (and CodeQL js/http-to-file-access
+// rightly flags the fetch → write path). An explicit projection writes only
+// the eleven fields consumers actually read.
+const PILLARS = ["security", "quality", "react"];
+const pick = (group) =>
+  Object.fromEntries([
+    ["total", data[group].total],
+    ...PILLARS.map((k) => [k, data[group][k]]),
+  ]);
+
+for (const key of ["source", "generatedAt"]) {
+  if (typeof data[key] !== "string") {
+    console.error(`Manifest is missing a string \`${key}\``);
+    process.exit(1);
+  }
+}
+
+// Key order mirrors the upstream manifest so the committed file stays diff-
+// stable when only the numbers change.
+const manifest = {
+  schemaVersion: 1,
+  source: data.source,
+  plugins: pick("plugins"),
+  rules: pick("rules"),
+  generatedAt: data.generatedAt,
+};
+
 writeFileSync(
   new URL("../src/data/interlace-numbers.json", import.meta.url),
-  `${JSON.stringify(data, null, 2)}\n`,
+  `${JSON.stringify(manifest, null, 2)}\n`,
 );
 console.log(
   `Synced: ${data.plugins.total} plugins / ${data.rules.total} rules (generated ${data.generatedAt})`,
