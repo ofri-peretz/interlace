@@ -34,7 +34,7 @@
  */
 
 import { readFile, readdir, writeFile, mkdir, stat } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 import { AUTHOR, HOMEPAGE, itemRef } from '../registry.config.mjs';
@@ -126,7 +126,7 @@ const MIN_VIEWPORT_RE = /export\s+const\s+MIN_VIEWPORT\s*=\s*(\d+)/;
  * backtracks exponentially on `*//*` repetitions (CodeQL js/redos), so strip
  * leading comments/whitespace with a single linear pass instead.
  */
-const hasUseClient = (source) => {
+export const hasUseClient = (source) => {
   let i = 0;
   while (i < source.length) {
     const ch = source[i];
@@ -880,7 +880,11 @@ const main = async () => {
   console.log(`Built ${summary(built)} → ${OUT_DIR}`);
 };
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Only build when run as a script — importing this module (e.g. to unit-test
+// `hasUseClient`) must not kick off a full registry build.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
