@@ -24,31 +24,21 @@ if (data.schemaVersion !== 1) {
 }
 // Refuse to write a malformed or internally inconsistent manifest — a bad
 // upstream generate should fail here, not at the next CI run.
-for (const group of ["plugins", "rules"]) {
+const PILLARS = ["security", "quality", "react"];
+const GROUPS = ["plugins", "rules"];
+
+for (const group of GROUPS) {
   const g = data[group];
-  const pillars = ["security", "quality", "react"];
   const ok =
     g &&
     Number.isInteger(g.total) &&
-    pillars.every((k) => Number.isInteger(g[k])) &&
-    pillars.reduce((sum, k) => sum + g[k], 0) === g.total;
+    PILLARS.every((k) => Number.isInteger(g[k])) &&
+    PILLARS.reduce((sum, k) => sum + g[k], 0) === g.total;
   if (!ok) {
     console.error(`Manifest "${group}" block is missing or inconsistent`);
     process.exit(1);
   }
 }
-// Rebuild the manifest field-by-field from the values just validated rather
-// than writing the parsed response through. The checks above prove the shape
-// is sound but leave `data` an arbitrary upstream object — anything extra it
-// carried would land in a committed file (and CodeQL js/http-to-file-access
-// rightly flags the fetch → write path). An explicit projection writes only
-// the eleven fields consumers actually read.
-const PILLARS = ["security", "quality", "react"];
-const pick = (group) =>
-  Object.fromEntries([
-    ["total", data[group].total],
-    ...PILLARS.map((k) => [k, data[group][k]]),
-  ]);
 
 for (const key of ["source", "generatedAt"]) {
   if (typeof data[key] !== "string") {
@@ -57,14 +47,39 @@ for (const key of ["source", "generatedAt"]) {
   }
 }
 
+/**
+ * Re-derive every written value instead of passing the fetched object (or its
+ * strings) through. `Number()` on an already-`Number.isInteger` value is a
+ * no-op numerically but re-creates the primitive, and `sanitise` rebuilds each
+ * string character-by-character, dropping the control characters that could
+ * corrupt the committed JSON. Printable Unicode is preserved — `source`
+ * legitimately contains an em-dash. Nothing reaches the file that the checks
+ * above didn't validate (CodeQL js/http-to-file-access).
+ */
+const isControl = (ch) => {
+  const cp = ch.codePointAt(0);
+  return cp < 0x20 || (cp >= 0x7f && cp <= 0x9f);
+};
+
+const sanitise = (value, max = 200) =>
+  Array.from(String(value))
+    .filter((ch) => !isControl(ch))
+    .slice(0, max)
+    .join("");
+
+const pick = (group) =>
+  Object.fromEntries(
+    ["total", ...PILLARS].map((k) => [k, Number(data[group][k])]),
+  );
+
 // Key order mirrors the upstream manifest so the committed file stays diff-
 // stable when only the numbers change.
 const manifest = {
   schemaVersion: 1,
-  source: data.source,
+  source: sanitise(data.source),
   plugins: pick("plugins"),
   rules: pick("rules"),
-  generatedAt: data.generatedAt,
+  generatedAt: sanitise(data.generatedAt, 40),
 };
 
 writeFileSync(
