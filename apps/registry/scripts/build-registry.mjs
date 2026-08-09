@@ -34,7 +34,7 @@
  */
 
 import { readFile, readdir, writeFile, mkdir, stat } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 import { AUTHOR, HOMEPAGE, itemRef } from '../registry.config.mjs';
@@ -120,8 +120,32 @@ const categoriesFor = (name, tier) => {
 // consumer can't get from the source without parsing it: the RSC boundary and
 // the declared minimum viewport (DESIGN_PRINCIPLES #14).
 const MIN_VIEWPORT_RE = /export\s+const\s+MIN_VIEWPORT\s*=\s*(\d+)/;
-const USE_CLIENT_RE =
-  /^\s*(?:\/\*[\s\S]*?\*\/\s*)*(?:\/\/[^\n]*\n\s*)*['"]use client['"]/m;
+/**
+ * `'use client'` must be the first statement in the file, but may be preceded
+ * by comments. A regex over the comment prefix nests quantifiers and
+ * backtracks exponentially on `*//*` repetitions (CodeQL js/redos), so strip
+ * leading comments/whitespace with a single linear pass instead.
+ */
+export const hasUseClient = (source) => {
+  let i = 0;
+  while (i < source.length) {
+    const ch = source[i];
+    if (ch === ' ' || ch === '\t' || ch === '\r' || ch === '\n') {
+      i += 1;
+    } else if (source.startsWith('/*', i)) {
+      const end = source.indexOf('*/', i + 2);
+      if (end === -1) return false; // unterminated comment — no directive
+      i = end + 2;
+    } else if (source.startsWith('//', i)) {
+      const end = source.indexOf('\n', i + 2);
+      if (end === -1) return false;
+      i = end + 1;
+    } else {
+      break;
+    }
+  }
+  return /^['"]use client['"]/.test(source.slice(i));
+};
 
 /** `loading?: boolean` — the DS-wide skeleton-placeholder opt-in. */
 const LOADING_PROP_RE = /^\s*loading\?:\s*boolean/m;
@@ -130,7 +154,7 @@ const metaFor = (source, tier) => {
   const mv = source.match(MIN_VIEWPORT_RE);
   return {
     tier: CATEGORY_DATA.tierOf[tier] ?? tier,
-    client: USE_CLIENT_RE.test(source),
+    client: hasUseClient(source),
     minViewport: mv ? Number.parseInt(mv[1], 10) : null,
     loading: LOADING_PROP_RE.test(source),
   };
@@ -856,7 +880,11 @@ const main = async () => {
   console.log(`Built ${summary(built)} → ${OUT_DIR}`);
 };
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Only build when run as a script — importing this module (e.g. to unit-test
+// `hasUseClient`) must not kick off a full registry build.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
