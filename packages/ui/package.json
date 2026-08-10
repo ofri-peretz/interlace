@@ -300,6 +300,38 @@
       "types": "./dist/primitives/published-date.d.ts",
       "default": "./dist/primitives/published-date.js"
     },
+    "./charts/scale": {
+      "types": "./dist/charts/scale.d.ts",
+      "default": "./dist/charts/scale.js"
+    },
+    "./charts/graph": {
+      "types": "./dist/charts/graph.d.ts",
+      "default": "./dist/charts/graph.js"
+    },
+    "./charts/sparkline": {
+      "types": "./dist/charts/sparkline.d.ts",
+      "default": "./dist/charts/sparkline.js"
+    },
+    "./charts/delta": {
+      "types": "./dist/charts/delta.d.ts",
+      "default": "./dist/charts/delta.js"
+    },
+    "./charts/series-table": {
+      "types": "./dist/charts/series-table.d.ts",
+      "default": "./dist/charts/series-table.js"
+    },
+    "./charts/time-series": {
+      "types": "./dist/charts/time-series.d.ts",
+      "default": "./dist/charts/time-series.js"
+    },
+    "./charts/metric-table": {
+      "types": "./dist/charts/metric-table.d.ts",
+      "default": "./dist/charts/metric-table.js"
+    },
+    "./charts/network-graph": {
+      "types": "./dist/charts/network-graph.d.ts",
+      "default": "./dist/charts/network-graph.js"
+    },
     "./patterns/hero-cosmic": {
       "types": "./dist/patterns/hero-cosmic.d.ts",
       "default": "./dist/patterns/hero-cosmic.js"
@@ -379,13 +411,17 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.3",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^25.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^6.0.3",
-    "vitest": "^2.1.0"
+    "vitest": "^4.1.10"
   }
 }
