@@ -76,6 +76,33 @@ function isTrackingAllowed(): boolean {
   return true;
 }
 
+/**
+ * Browser noise that is not an application error.
+ *
+ * "ResizeObserver loop completed with undelivered notifications" is emitted by
+ * the browser itself when an observer callback dirties layout in the same
+ * frame. It is unactionable, and it arrives in bursts — a single Safari
+ * session produced 27 of them here, which is enough to outrank every real bug
+ * in the error inbox.
+ *
+ * "Script error." is the opaque cross-origin placeholder: no stack, no file,
+ * no message. There is nothing to fix and no way to tell two of them apart.
+ *
+ * Dropped at source rather than triaged forever, so the inbox keeps meaning
+ * "something is broken".
+ */
+const NOISY_EXCEPTIONS: RegExp[] = [
+  /^ResizeObserver loop/i,
+  /^Script error\.?$/i,
+];
+
+function isNoisyException(properties?: Record<string, unknown>): boolean {
+  const list = properties?.['$exception_list'];
+  if (!Array.isArray(list) || list.length === 0) return false;
+  const value = (list[0] as { value?: unknown } | undefined)?.value;
+  return typeof value === 'string' && NOISY_EXCEPTIONS.some((re) => re.test(value));
+}
+
 let initialised = false;
 
 export function initPostHog(): void {
@@ -85,7 +112,7 @@ export function initPostHog(): void {
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY?.trim();
   if (!key) {
     if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
+
       console.debug(
         '[posthog] NEXT_PUBLIC_POSTHOG_KEY is empty — analytics disabled',
       );
@@ -114,6 +141,11 @@ export function initPostHog(): void {
         }),
     before_send: (event) => {
       if (!event) return event;
+      if (
+        event.event === '$exception' &&
+        isNoisyException(event.properties as Record<string, unknown> | undefined)
+      )
+        return null;
       try {
         const props = event.properties as Record<string, unknown> | undefined;
         if (props && typeof props['$current_url'] === 'string') {
@@ -148,7 +180,7 @@ export function initPostHog(): void {
     initialised = true;
   } catch (err) {
     if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
+
       console.warn('[posthog] init failed', err);
     }
   }

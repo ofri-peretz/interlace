@@ -1,6 +1,7 @@
-import { createMDX } from "fumadocs-mdx/next";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+import { createMDX } from "fumadocs-mdx/next";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const monorepoRoot = path.resolve(__dirname, "../..");
@@ -13,6 +14,26 @@ const config = {
   output: "standalone",
   poweredByHeader: false,
   compress: true,
+
+  // Same-origin PostHog ingest (ANALYTICS_PHILOSOPHY §9). Ad blockers match on
+  // the `*.i.posthog.com` hostname, not on payload shape, so proxying through
+  // our own origin is what recovers the ~30-40% of visitors they were dropping.
+  // `skipTrailingSlashRedirect` is required: Next would otherwise 308
+  // `/ingest/e/` -> `/ingest/e`, and posthog-js does not follow the redirect.
+  skipTrailingSlashRedirect: true,
+  rewrites: async () => [
+    // Static assets (the recorder/surveys bundles) come from a different
+    // upstream host than the event API — order matters, this must precede the
+    // catch-all below or `:path*` swallows it.
+    {
+      source: "/ingest/static/:path*",
+      destination: "https://us-assets.i.posthog.com/static/:path*",
+    },
+    {
+      source: "/ingest/:path*",
+      destination: "https://us.i.posthog.com/:path*",
+    },
+  ],
 
   outputFileTracingRoot: monorepoRoot,
   transpilePackages: ["motion", "motion/react"],
