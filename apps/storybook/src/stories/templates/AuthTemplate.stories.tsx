@@ -51,15 +51,20 @@ const sampleForm = (
   <form className="flex flex-col gap-md">
     <Field>
       <FieldLabel>Email</FieldLabel>
-      <FieldControl>
-        <Input type="email" placeholder="you@interlace.tools" />
-      </FieldControl>
+      {/* `render=`, not children: FieldControl clones the element it is
+          given. Passing `<Input>` as a child makes Base UI render an
+          `<input>` WITH children, which React rejects — that threw inside
+          SectionBoundary and painted the whole auth section as the error
+          fallback. */}
+      <FieldControl
+        render={<Input type="email" autoComplete="email" placeholder="you@interlace.tools" />}
+      />
     </Field>
     <Field>
       <FieldLabel>Password</FieldLabel>
-      <FieldControl>
-        <Input type="password" placeholder="••••••••" />
-      </FieldControl>
+      <FieldControl
+        render={<Input type="password" autoComplete="current-password" placeholder="••••••••" />}
+      />
     </Field>
     <Button type="submit" className="mt-sm">
       Sign in

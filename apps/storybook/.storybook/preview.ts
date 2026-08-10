@@ -23,7 +23,12 @@ const preview: Preview = {
       // Strict tag stack — matches apps/docs/e2e/a11y.spec.ts and the
       // test-runner gate. Keep these in sync: any tag added here must also
       // be added to apps/storybook/.storybook/test-runner.ts STRICT_TAGS.
-      element: '#storybook-root',
+      // `context`, not `element`. addon-a11y 10 renamed this; the old key is
+      // not ignored — it leaves the addon stuck on "Preparing accessibility
+      // scan…" forever, so NO story was being axe-scanned in the dev UI while
+      // the system advertised a strict WCAG 2.2 AA + ACT gate. A gate that
+      // silently never runs is worse than no gate: it is a claim.
+      context: '#storybook-root',
       config: {
         rules: [
           // WCAG 2.2 AAA (color-contrast-enhanced) is now ENFORCED.
@@ -51,7 +56,6 @@ const preview: Preview = {
         },
       },
       test: 'error',
-      manual: false,
     },
     /**
      * `padded`, NOT `centered`. This is a responsiveness contract, not a
@@ -94,16 +98,34 @@ const preview: Preview = {
             'Versioning',
           ],
           'Philosophy',
+          // `Foundations`, `Charts` and `Templates` were all UNLISTED, so they
+          // sorted to the bottom in arbitrary order and a reader reached
+          // MagicUI ornaments before the type scale. Vocabulary (foundations,
+          // tokens) precedes the components that spend it; our own layers
+          // precede third-party decoration.
+          'Foundations',
           'Tokens',
           ['Color Contrast'],
           'Primitives',
           'Blocks',
+          'Charts',
+          'Templates',
           'Pages',
           'Fumadocs',
           'MagicUI',
         ],
       },
     },
+  },
+  /**
+   * `manual` moved from `parameters.a11y` to GLOBALS in Storybook 10. Left in
+   * parameters it is silently ignored, and the panel sits on "Preparing
+   * accessibility scan…" forever — so no story was axe-scanned in the dev UI
+   * while the system advertised a strict WCAG 2.2 AA + ACT gate. A gate that
+   * never runs is not a weaker gate; it is a false claim.
+   */
+  initialGlobals: {
+    a11y: { manual: false },
   },
   decorators: [
     withThemeByClassName({

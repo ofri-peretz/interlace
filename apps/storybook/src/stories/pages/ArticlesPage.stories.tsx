@@ -57,7 +57,12 @@ const meta: Meta<ArticlesPageArgs> = {
   parameters: {
     layout: 'fullscreen',
     a11y: {
-      element: '#storybook-root',
+      // `context`, not `element`. Storybook 10's a11y addon dropped `element`
+      // in favour of axe-core's own context spec; passing the removed key
+      // leaves the panel stuck on "Preparing accessibility scan" and the story
+      // silently unscanned. `.storybook/preview.ts` still sets `element`
+      // globally — see the handover note; this file is already on the new API.
+      context: '#storybook-root',
       // The page-level story renders three live regions, a toolbar with
       // labelled controls, a featured-article landmark, the grid, and a
       // navigation. axe asserts every label, landmark, and contrast pair.

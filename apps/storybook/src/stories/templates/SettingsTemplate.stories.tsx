@@ -57,15 +57,12 @@ export const Profile: Story = {
       <form className="border-border bg-card rounded-lg border p-md flex flex-col gap-md">
         <Field>
           <FieldLabel>Display name</FieldLabel>
-          <FieldControl>
-            <Input placeholder="Ada Lovelace" />
-          </FieldControl>
+          {/* `render=`, not children — see AuthTemplate.stories.tsx. */}
+          <FieldControl render={<Input placeholder="Ada Lovelace" />} />
         </Field>
         <Field>
           <FieldLabel>Bio</FieldLabel>
-          <FieldControl>
-            <Input placeholder="Engineer @ Interlace" />
-          </FieldControl>
+          <FieldControl render={<Input placeholder="Engineer @ Interlace" />} />
         </Field>
         <div className="flex gap-sm">
           <Button>Save</Button>
