@@ -95,10 +95,23 @@ const NON_DEFAULT_THEMES = THEMES.filter((t) => t.name !== DEFAULT_THEME).map(
  *      canvas the browser paints BEFORE any CSS also match. Without it the
  *      page is dark and the scrollbar is white.
  */
-export const THEME_SCRIPT = `(function(){try{var d=document.documentElement,l=window.localStorage;var t=l.getItem(${JSON.stringify(
+/**
+ * JSON for embedding inside a `<script>` element.
+ *
+ * `JSON.stringify` alone is not enough (CodeQL js/bad-code-sanitization): a
+ * value containing `</script>` closes the tag from inside a string literal,
+ * and `<!--` opens an HTML comment that swallows the rest of the script.
+ * Escaping `<` as `\u003c` is inert in JS and closes both. Every value here is
+ * a build-time constant today — this keeps that safe if one ever becomes a
+ * prop, which is precisely when nobody would think to re-check it.
+ */
+const jsonForScript = (value: unknown): string =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
+
+export const THEME_SCRIPT = `(function(){try{var d=document.documentElement,l=window.localStorage;var t=l.getItem(${jsonForScript(
   THEME_STORAGE_KEY,
-)});if(${JSON.stringify(
+)});if(${jsonForScript(
   NON_DEFAULT_THEMES,
-)}.indexOf(t)>-1){d.setAttribute('data-theme',t)}else{d.removeAttribute('data-theme')}var s=l.getItem(${JSON.stringify(
+)}.indexOf(t)>-1){d.setAttribute('data-theme',t)}else{d.removeAttribute('data-theme')}var s=l.getItem(${jsonForScript(
   SCHEME_STORAGE_KEY,
 )});if(s!=='light'&&s!=='dark'){s=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.classList.toggle('dark',s==='dark');d.style.colorScheme=s}catch(e){}})();`;

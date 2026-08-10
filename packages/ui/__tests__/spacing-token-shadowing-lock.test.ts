@@ -24,8 +24,8 @@
  * to be warned about in the consumer-facing layout docs.
  */
 
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { readdirSync, readFileSync } from 'fs';
+import { join, resolve } from 'path';
 
 import { describe, expect, it } from 'vitest';
 
@@ -57,12 +57,16 @@ function spacingScaleNames(): string[] {
  */
 const SHADOWED_PREFIXES = ['max-w'];
 
-const sourceFiles = (): string[] => {
-  const { execSync } = require('child_process') as typeof import('child_process');
-  return execSync(`find ${SRC} -name '*.tsx' -o -name '*.ts'`, { encoding: 'utf8' })
-    .split('\n')
-    .filter(Boolean);
-};
+// Walked in-process rather than shelled out to `find`. The old version
+// interpolated an absolute path into a shell string (CWE-78): harmless on a
+// developer's laptop, a command injection anywhere the checkout path is not
+// fully controlled — and a lock test is exactly the code nobody re-reads.
+const sourceFiles = (dir: string = SRC): string[] =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return sourceFiles(full);
+    return /\.tsx?$/.test(entry.name) ? [full] : [];
+  });
 
 describe('spacing tokens shadow Tailwind sizing utilities', () => {
   it('declares the scale this lock is about', () => {

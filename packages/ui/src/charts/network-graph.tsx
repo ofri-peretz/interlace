@@ -119,7 +119,9 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
 
     const onKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
       const lastIndex = shown.length - 1;
-      let next = cursor;
+      // No initializer: every case below either assigns `next` or returns, so
+      // seeding it with `cursor` only hid that fact from the reader.
+      let next: number;
       switch (event.key) {
         case 'ArrowRight':
         case 'ArrowDown':
