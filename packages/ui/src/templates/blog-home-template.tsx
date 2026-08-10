@@ -49,24 +49,30 @@ function BlogHomeTemplate({
     >
       <Topbar {...topbar} />
 
-      {hero ? (
-        <SectionBoundary name="blog-hero" skeletonVariant="page-header">
-          {hero}
-        </SectionBoundary>
-      ) : null}
+      {/* <main> is the skip-link's destination and the only landmark wrapping
+          the page body. Topbar emits <header>, Footer emits <footer>, and
+          SectionBoundary renders `display: contents` — so without this the
+          articles list belonged to no landmark at all. */}
+      <main id="main">
+        {hero ? (
+          <SectionBoundary name="blog-hero" skeletonVariant="page-header">
+            {hero}
+          </SectionBoundary>
+        ) : null}
 
-      <SectionBoundary name="blog-articles" skeletonVariant="article-card">
-        {articles}
-      </SectionBoundary>
-
-      {newsletter ? (
-        <SectionBoundary
-          name="blog-newsletter"
-          skeletonVariant="newsletter-form"
-        >
-          {newsletter}
+        <SectionBoundary name="blog-articles" skeletonVariant="article-card">
+          {articles}
         </SectionBoundary>
-      ) : null}
+
+        {newsletter ? (
+          <SectionBoundary
+            name="blog-newsletter"
+            skeletonVariant="newsletter-form"
+          >
+            {newsletter}
+          </SectionBoundary>
+        ) : null}
+      </main>
 
       <Footer {...footer} />
     </div>

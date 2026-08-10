@@ -25,17 +25,46 @@ function TooltipProvider({
 function Tooltip({
   ...props
 }: React.ComponentProps<typeof BaseTooltip.Root>) {
+  const descriptionId = React.useId();
   return (
     <TooltipProvider>
-      <BaseTooltip.Root data-slot="tooltip" {...props} />
+      <TooltipDescriptionContext.Provider value={descriptionId}>
+        <BaseTooltip.Root data-slot="tooltip" {...props} />
+      </TooltipDescriptionContext.Provider>
     </TooltipProvider>
   );
 }
 
+/**
+ * Shared id linking the trigger to its popup.
+ *
+ * Base UI 1.6 emits neither `role="tooltip"` on the popup nor
+ * `aria-describedby` on the trigger — the string `aria-describedby` does not
+ * appear anywhere in `@base-ui/react/tooltip`. So a tooltip was, to a screen
+ * reader, simply not there: the trigger announced its own label and nothing
+ * else, and the popup was an unlabelled box in a portal. WCAG 1.3.1 / 4.1.2.
+ *
+ * The wiring has to live here rather than in either part alone, because the id
+ * has to be the SAME on both ends and neither part can see the other.
+ *
+ * `aria-describedby` stays on the trigger even while the popup is unmounted.
+ * That is deliberate and is what Radix does too: a dangling reference is
+ * ignored by assistive tech, whereas toggling the attribute on open races the
+ * announcement and often loses.
+ */
+const TooltipDescriptionContext = React.createContext<string | undefined>(undefined);
+
 function TooltipTrigger(
   props: React.ComponentProps<typeof BaseTooltip.Trigger>,
 ) {
-  return <BaseTooltip.Trigger data-slot="tooltip-trigger" {...props} />;
+  const describedBy = React.useContext(TooltipDescriptionContext);
+  return (
+    <BaseTooltip.Trigger
+      data-slot="tooltip-trigger"
+      aria-describedby={describedBy}
+      {...props}
+    />
+  );
 }
 
 function TooltipContent({
@@ -48,12 +77,15 @@ function TooltipContent({
   side?: 'top' | 'right' | 'bottom' | 'left' | 'inline-start' | 'inline-end';
   sideOffset?: number;
 }) {
+  const describedById = React.useContext(TooltipDescriptionContext);
   return (
     <BaseTooltip.Portal>
       <BaseTooltip.Positioner side={side} sideOffset={sideOffset}>
         <BaseTooltip.Popup
           data-slot="tooltip-content"
           data-min-viewport={String(MIN_VIEWPORT)}
+          id={describedById}
+          role="tooltip"
           className={cn(
             'bg-primary text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[closed]:animate-out data-[closed]:fade-out-0 data-[closed]:zoom-out-95 z-50 w-fit origin-(--transform-origin) rounded-md px-3 py-1.5 text-xs text-balance',
             className,
