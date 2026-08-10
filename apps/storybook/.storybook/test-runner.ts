@@ -12,6 +12,37 @@
  * a11y-tested too, not just the initial render).
  *
  * Layer 4 of UX_PHILOSOPHY.md — per-component isolation.
+ *
+ * ─── The matrix (Phase 8.4) ───────────────────────────────────────
+ *
+ * Contrast is a property of a theme × scheme PAIR, not of a component. The
+ * scan above covers whichever pair the story happens to render in, and the
+ * corpus covers the SCHEME axis by construction — every component ships a
+ * default story and a `--dark` twin. Nothing covered the THEME axis: Harbor
+ * shipped a complete, contract-checked palette that no axe run had ever
+ * looked at, which makes "AA in every theme" an untested claim about a
+ * second brand rather than a measurement.
+ *
+ * So after the primary scan, `postVisit` re-runs the COLOUR rules once per
+ * other registered theme, at the scheme the story is already in. Together
+ * with the light/dark story pairs that is the full matrix, at the cost of
+ * one extra colour-only pass per story per extra theme.
+ *
+ * Two decisions worth stating, because both look like omissions:
+ *
+ *   1. The sweep flips `data-theme` and NEVER the scheme. Forcing `.dark`
+ *      off `<html>` would leave the `--dark` stories' own `.dark` wrapper
+ *      div in place — dark-scheme foregrounds on a light page — and every
+ *      one of them would report contrast failures that no user can reach.
+ *      The scheme axis belongs to the story, and it already has it.
+ *
+ *   2. The theme list is DISCOVERED from the stylesheet the page actually
+ *      loaded (`[data-theme='x']` selectors), not hard-coded here and not
+ *      imported from `theme-tokens.ts`. A hard-coded list is a list that
+ *      silently stops covering theme #3; and a sweep that finds no themes
+ *      at all — a CSS-build regression — must fail rather than pass by
+ *      finding nothing to check, which is why `expectedThemes` is asserted
+ *      rather than assumed.
  */
 import type { TestRunnerConfig } from '@storybook/test-runner';
 import { getStoryContext } from '@storybook/test-runner';
@@ -33,6 +64,29 @@ const STRICT_TAGS = [
 // physics-of-light constraint requires carving out a rule globally;
 // per-story carve-outs go in `parameters.a11y.config.rules`.
 const AAA_RULES_DISABLED: string[] = [];
+
+/**
+ * The rules the theme sweep re-runs. Swapping `data-theme` changes colour
+ * values and nothing else — no node is added, removed, named or re-roled —
+ * so re-running the structural rules would burn a full axe pass per theme
+ * to reproduce results that cannot have changed.
+ *
+ * `color-contrast-enhanced` (AAA) is deliberately absent: it is not in
+ * STRICT_TAGS either, and a sweep that holds a second theme to a bar the
+ * first one is not held to would fail Harbor for being Harbor.
+ */
+const COLOUR_RULES = ['color-contrast', 'link-in-text-block'];
+
+/**
+ * How many themes the sweep must find before it believes itself.
+ *
+ * `interlace` is `:root` (no attribute), so it is added by definition and
+ * proves nothing. This floor is really "at least one `[data-theme]` theme
+ * reached the page" — i.e. the DS stylesheet loaded and its theme files came
+ * with it. Without the floor, a broken `@import` turns the whole sweep into
+ * a loop over one theme that reports success.
+ */
+const MIN_THEMES = 2;
 
 const config: TestRunnerConfig = {
   async preVisit(page) {
@@ -83,6 +137,118 @@ const config: TestRunnerConfig = {
       console.log(lines.join('\n'));
       throw new Error(
         `${results.violations.length} accessibility violation(s) in ${context.title} > ${context.name} (see logged report above)`,
+      );
+    }
+
+    // ─── Theme-matrix colour sweep ────────────────────────────────────
+    // Same DOM, other brands. See the file header for why this flips the
+    // theme axis only, and why the theme list is discovered rather than
+    // declared.
+    const matrix: { themes: string[]; failures: string[] } = await page.evaluate(
+      async ({ rules, colourRules }) => {
+        const root = document.documentElement;
+        const originalTheme = root.getAttribute('data-theme');
+        // `:root` IS the default theme, so it is never spelled as an
+        // attribute anywhere — including here.
+        const activeTheme = originalTheme ?? 'interlace';
+
+        // Discover the theme axis from the CSS that actually reached this
+        // document. Layer blocks (`@layer interlace.brand { … }`) nest their
+        // rules, hence the recursive walk.
+        const discovered = new Set<string>(['interlace']);
+        const walk = (rules_: CSSRuleList): void => {
+          for (const rule of Array.from(rules_)) {
+            const selector = (rule as CSSStyleRule).selectorText;
+            if (typeof selector === 'string') {
+              const re = /\[data-theme=['"]([a-z0-9-]+)['"]\]/g;
+              let match: RegExpExecArray | null;
+              while ((match = re.exec(selector)) !== null) discovered.add(match[1]);
+            }
+            const nested = (rule as CSSGroupingRule).cssRules;
+            if (nested) walk(nested);
+          }
+        };
+        for (const sheet of Array.from(document.styleSheets)) {
+          try {
+            walk(sheet.cssRules);
+          } catch {
+            /* cross-origin sheet — nothing of ours is, so nothing is lost */
+          }
+        }
+
+        const ruleMap: Record<string, { enabled: boolean }> = {};
+        for (const r of rules) ruleMap[r.id] = { enabled: r.enabled !== false };
+
+        const failures: string[] = [];
+        for (const theme of discovered) {
+          if (theme === activeTheme) continue; // already scanned in full above
+          if (theme === 'interlace') root.removeAttribute('data-theme');
+          else root.setAttribute('data-theme', theme);
+
+          const result = await (
+            window as unknown as {
+              axe: {
+                run: (
+                  ctx: Element | null,
+                  opts: Record<string, unknown>,
+                ) => Promise<{
+                  violations: Array<{
+                    id: string;
+                    impact: string | null;
+                    help: string;
+                    nodes: Array<{ target: string[]; failureSummary: string }>;
+                  }>;
+                }>;
+              };
+            }
+          ).axe.run(document.querySelector('#storybook-root'), {
+            runOnly: { type: 'rule', values: colourRules },
+            ...(Object.keys(ruleMap).length > 0 ? { rules: ruleMap } : {}),
+          });
+
+          for (const v of result.violations) {
+            for (const n of v.nodes) {
+              failures.push(
+                `  [${theme}] ${v.id} — ${v.help}\n    ${n.target.join(' ')}\n` +
+                  `    ${n.failureSummary.replace(/\n/g, '\n    ')}`,
+              );
+            }
+          }
+        }
+
+        // Restore, always — the next assertion in this same postVisit reads
+        // computed styles, and a leaked `data-theme` would silently move it
+        // to another brand.
+        if (originalTheme === null) root.removeAttribute('data-theme');
+        else root.setAttribute('data-theme', originalTheme);
+
+        return { themes: [...discovered], failures };
+      },
+      { rules: ruleOverrides, colourRules: COLOUR_RULES },
+    );
+
+    if (matrix.themes.length < MIN_THEMES) {
+      throw new Error(
+        `Theme sweep found ${matrix.themes.length} theme(s) (${matrix.themes.join(', ')}) ` +
+          `in the page's stylesheets, expected at least ${MIN_THEMES}. Either a theme ` +
+          `file stopped being imported by packages/ui/styles/index.css, or the DS CSS ` +
+          `is not reaching the preview at all — both make this sweep pass by having ` +
+          `nothing to check.`,
+      );
+    }
+
+    if (matrix.failures.length > 0) {
+      const lines = [
+        '',
+        `=== A11Y violations in NON-ACTIVE THEMES: ${context.title} > ${context.name} ===`,
+        `(same DOM, same scheme, other brand palettes — themes found: ${matrix.themes.join(', ')})`,
+        ...matrix.failures,
+      ];
+      // eslint-disable-next-line no-console
+      console.log(lines.join('\n'));
+      throw new Error(
+        `${matrix.failures.length} theme-matrix accessibility violation(s) in ` +
+          `${context.title} > ${context.name} (see logged report above)`,
       );
     }
 

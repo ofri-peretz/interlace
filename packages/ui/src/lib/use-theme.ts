@@ -11,16 +11,32 @@
  *   theme   → `data-theme="<name>"`   (absent = the default, which IS `:root`)
  *   scheme  → `class="dark"`          (shadcn / next-themes canon)
  *
- * ─── No dependency ───────────────────────────────────────────────
+ * ─── No dependency, but not no coordination ──────────────────────
  *
  * next-themes is ~3kB to do this, and its API surface (`forcedTheme`,
  * `enableColorScheme`, `nonce`, `themes[]`, a provider, a context) exists to
  * serve apps whose theme list is dynamic. Ours is a compile-time constant
  * with a machine-checked contract behind it, so the provider has nothing to
- * provide: every consumer of this hook reads the same `<html>` element, which
- * is already the shared state. Adding a Context here would create a SECOND
- * source of truth that can disagree with the DOM after the bootstrap script
- * runs — the exact bug class the script exists to avoid.
+ * provide: the `<html>` element is the shared state, and a Context would be a
+ * SECOND source of truth that can disagree with the DOM after the bootstrap
+ * script runs — the exact bug class the script exists to avoid.
+ *
+ * What the DOM cannot do on its own is tell React that it changed. Two
+ * instances of this hook in ONE document — a switcher in the nav and, say, a
+ * themed preview frame in the page — each own their own `useState`, so the
+ * one that did not handle the click keeps rendering the previous theme
+ * forever: `storage` events fire in OTHER documents only, so nothing wakes
+ * it. Found exactly that way (Phase 8.4: ds.interlace.tools repainted into
+ * Harbor while every embedded preview stayed Interlace-orange), and it is
+ * the sort of bug that reads as "theming doesn't work" rather than as a
+ * missing subscription.
+ *
+ * The fix is a module-level subscriber list, not a provider: writes are
+ * broadcast to every live instance in the document. It is deliberately the
+ * VALUE that is broadcast rather than a "re-read storage" ping, because
+ * storage can refuse the write (Safari private mode) and a re-read would
+ * then roll the user's click back to the previous theme — turning a
+ * degraded-but-working page into a control that visibly does nothing.
  *
  * ─── Hydration ───────────────────────────────────────────────────
  *
@@ -84,6 +100,17 @@ function writeStorage(key: string, value: string | null): void {
      * reload — which is strictly better than throwing out of a click. */
   }
 }
+
+/**
+ * Every live `useTheme()` in THIS document, by axis.
+ *
+ * Module scope, so it is per-bundle rather than per-tree — which is what
+ * makes it work without a provider anywhere. Two separate sets rather than
+ * one state object: the axes are independent, and broadcasting a pair would
+ * make a theme change re-render every scheme-only consumer for nothing.
+ */
+const themeSubscribers = new Set<(theme: ThemeName) => void>();
+const schemeSubscribers = new Set<(preference: SchemePreference) => void>();
 
 /** The OS preference right now. `'light'` where the query is unsupported. */
 export function systemScheme(): Scheme {
@@ -175,6 +202,18 @@ export function useTheme(): UseThemeResult {
     return () => query.removeEventListener('change', onChange);
   }, []);
 
+  // Follow the other instances in THIS document. `setThemeState` /
+  // `setSchemePreferenceState` are stable, so the subscription is registered
+  // once and the set never churns.
+  useEffect(() => {
+    themeSubscribers.add(setThemeState);
+    schemeSubscribers.add(setSchemePreferenceState);
+    return () => {
+      themeSubscribers.delete(setThemeState);
+      schemeSubscribers.delete(setSchemePreferenceState);
+    };
+  }, []);
+
   // Follow other tabs. Without this, a user with two tabs open switches the
   // theme in one and the other keeps rendering the old one until reload,
   // while `localStorage` — the thing both of them believe — already moved.
@@ -201,17 +240,21 @@ export function useTheme(): UseThemeResult {
     applyTheme(theme, scheme);
   }, [mounted, theme, scheme]);
 
+  // Both writers broadcast rather than calling their own setter: the
+  // instance that handled the click is already subscribed, so one path
+  // updates all of them — including this one — and there is no ordering
+  // question about who sees the new value first.
   const setTheme = useCallback((next: ThemeName) => {
-    setThemeState(next);
     writeStorage(THEME_STORAGE_KEY, next);
+    for (const notify of themeSubscribers) notify(next);
   }, []);
 
   const setScheme = useCallback((next: SchemePreference) => {
-    setSchemePreferenceState(next);
     // `'system'` REMOVES the key rather than storing the string: absence is
     // how the bootstrap script knows to consult the OS, and it keeps one
     // representation of "no preference" instead of two.
     writeStorage(SCHEME_STORAGE_KEY, next === 'system' ? null : next);
+    for (const notify of schemeSubscribers) notify(next);
   }, []);
 
   return {

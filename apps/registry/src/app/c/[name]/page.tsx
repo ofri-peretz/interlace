@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
+import { ThemeSwitcher } from '@interlace/ui/theme-switcher';
 
 import { CategoryBadge } from '@/components/category-badge';
 import { ClientServerBadge } from '@/components/client-server-badge';
@@ -90,6 +91,15 @@ export default async function ComponentPage({ params }: PageProps) {
             >
               GitHub ↗
             </a>
+            {/*
+             * The switcher matters MOST on this page. Everything else on
+             * ds.interlace.tools is prose about the theme system; this is
+             * the page that renders the components, so it is the page where
+             * a reader can see a brand swap actually land — including in the
+             * live Storybook frames below, which carry the choice across the
+             * origin boundary (see components/story-preview.tsx).
+             */}
+            <ThemeSwitcher size="sm" align="end" />
           </nav>
         </div>
       </header>

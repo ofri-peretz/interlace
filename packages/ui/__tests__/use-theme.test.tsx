@@ -427,6 +427,60 @@ describe('useTheme', () => {
     expect(shown('scheme')).toBe('dark');
   });
 
+  it('keeps every instance in the SAME document in sync', async () => {
+    // The provider-less design's one real hazard, and a shipped bug until
+    // Phase 8.4 found it in a browser: `storage` events fire in OTHER
+    // documents, so a second instance in this one had nothing to wake it.
+    // ds.interlace.tools repainted into Harbor while every embedded preview
+    // — a separate `useTheme()` — kept rendering Interlace, which reads as
+    // "the theme system does not work" rather than as a missing subscription.
+    function Pair() {
+      const a = useTheme();
+      const b = useTheme();
+      return (
+        <div>
+          <span data-testid="a-theme">{a.theme}</span>
+          <span data-testid="a-scheme">{a.scheme}</span>
+          <span data-testid="b-theme">{b.theme}</span>
+          <span data-testid="b-scheme">{b.scheme}</span>
+          <button onClick={() => a.setTheme('harbor')}>a harbor</button>
+          <button onClick={() => a.setScheme('dark')}>a dark</button>
+        </div>
+      );
+    }
+
+    const user = userEvent.setup();
+    render(<Pair />);
+
+    await user.click(button('a harbor'));
+    expect(shown('a-theme')).toBe('harbor');
+    expect(shown('b-theme')).toBe('harbor');
+
+    await user.click(button('a dark'));
+    expect(shown('a-scheme')).toBe('dark');
+    expect(shown('b-scheme')).toBe('dark');
+  });
+
+  it('applies a choice storage refused to persist, instead of rolling it back', async () => {
+    // Why the broadcast carries the VALUE and not a "re-read storage" ping.
+    // Safari private mode throws on write; a listener that answered by
+    // re-reading storage would hand every instance the PREVIOUS theme back
+    // and the control would visibly do nothing.
+    const spy = vi
+      .spyOn(Storage.prototype, 'setItem')
+      .mockImplementation(() => {
+        throw new Error('QuotaExceededError');
+      });
+    const user = userEvent.setup();
+    render(<Probe />);
+
+    await user.click(button('harbor'));
+
+    expect(shown('theme')).toBe('harbor');
+    expect(html().getAttribute('data-theme')).toBe('harbor');
+    spy.mockRestore();
+  });
+
   it('ignores a theme another tab wrote that is not registered', () => {
     render(<Probe />);
     localStorage.setItem(THEME_STORAGE_KEY, 'ember');

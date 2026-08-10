@@ -82,7 +82,8 @@ const THEME_SELECTORS: Record<string, Record<Scheme, { file: string; selector: s
     dark: {
       file: HARBOR_CSS,
       selector:
-        "[data-theme='harbor'].dark,\n  [data-theme='harbor'][data-scheme='dark']",
+        "[data-theme='harbor'].dark,\n  [data-theme='harbor'][data-scheme='dark'],\n" +
+        "  [data-theme='harbor'] .dark,\n  [data-theme='harbor'] [data-scheme='dark']",
     },
   },
 };
@@ -483,6 +484,32 @@ describe('theme contract lock', () => {
       // Breaking it to gain a cleaner name would be vanity.
       expect(interlace).toContain(".dark,\n  [data-scheme='dark']");
       expect(harbor).toContain("[data-theme='harbor'].dark");
+    });
+
+    it('claims the whole SUBTREE, not just the element it is set on', () => {
+      // `.dark` in interlace-theme.css is unscoped, so it means "INTERLACE
+      // dark": it re-declares every brand literal on whatever element carries
+      // it. `[data-theme='X'].dark` needs both on the SAME element, so a
+      // `<div class="dark">` inside a themed page silently repaints that
+      // subtree in the default brand — a themed page with a default-branded
+      // panel in the middle of it, which reads as "the theme did not apply".
+      // Caught in a browser in 8.4; every theme owes the descendant forms.
+      for (const [name, schemes] of Object.entries(THEME_SELECTORS)) {
+        if (name === 'interlace') continue; // `:root` IS the default
+        const css = stripComments(readFileSync(schemes.dark.file, 'utf8'));
+        for (const form of [
+          `[data-theme='${name}'].dark`,
+          `[data-theme='${name}'] .dark`,
+          `[data-theme='${name}'] [data-scheme='dark']`,
+        ]) {
+          expect(
+            css,
+            `Theme \`${name}\` does not declare its dark palette for \`${form}\`. ` +
+              `Without every form, a dark region inside a ${name} page falls back ` +
+              `to the DEFAULT brand's dark values.`,
+          ).toContain(form);
+        }
+      }
     });
 
     it('no longer spends `data-theme` on the colour scheme', () => {
