@@ -1,6 +1,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
+import { HOMEPAGE } from '../../registry.config.mjs';
+
 import {
   type ComponentMetadata,
   extractMetadata,
@@ -59,7 +61,13 @@ export type RegistryIndex = {
   items: IndexEntry[];
 };
 
-const HOMEPAGE = 'https://ds.interlace.tools';
+/**
+ * Single source of truth, shared with `build-registry.mjs` — a second copy
+ * here would let the emitted `registryDependencies` and this security check
+ * drift apart on what counts as "our" registry. Normalised to an origin once
+ * so a trailing slash in the config can't break the comparison.
+ */
+const HOMEPAGE_ORIGIN = new URL(HOMEPAGE).origin;
 
 /**
  * `registryDependencies` are absolute URLs (a bare name would send the shadcn
@@ -68,7 +76,15 @@ const HOMEPAGE = 'https://ds.interlace.tools';
  */
 export const refToName = (ref: string): string | null => {
   const m = ref.match(/\/r\/([^/]+)\.json$/);
-  return m && ref.startsWith(HOMEPAGE) ? m[1] : null;
+  // Compare the parsed origin, not a string prefix: `startsWith(HOMEPAGE)`
+  // also accepts `https://ds.interlace.tools.example.com/r/x.json`.
+  let sameOrigin = false;
+  try {
+    sameOrigin = new URL(ref).origin === HOMEPAGE_ORIGIN;
+  } catch {
+    sameOrigin = false;
+  }
+  return m && sameOrigin ? m[1] : null;
 };
 
 const PUBLIC_R = join(process.cwd(), 'public', 'r');

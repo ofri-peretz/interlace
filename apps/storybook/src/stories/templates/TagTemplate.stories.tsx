@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TagTemplate } from '@interlace/ui/templates/tag-template';
 import { ArticleListGrid } from '@interlace/ui/patterns/article-list-grid';
-import { Tag, TagList } from '@interlace/ui/tag';
+import { TagList } from '@interlace/ui/tag';
 import { withDark, withRtl } from '@/decorators';
 
 const meta: Meta<typeof TagTemplate> = {

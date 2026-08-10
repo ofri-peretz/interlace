@@ -78,7 +78,7 @@ describe('Breakpoints lock', () => {
       // Match `<token>: <value>;` with flexible whitespace + a trailing
       // comment.
       const re = new RegExp(
-        `${token.replace(/-/g, '-')}\\s*:\\s*${value.replace('.', '\\.')}\\b`,
+        `${token}\\s*:\\s*${value.replace('.', '\\.')}\\b`,
       );
       expect(foundation).toMatch(re);
     },
