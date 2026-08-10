@@ -1,5 +1,12 @@
 # Follow-up: three entry animations exceed the 200ms entry budget
 
+**Status: RESOLVED, 2026-08-10** — option 1. All three are now
+`0.2s ease-out both` with no delay (`packages/ui/styles/theme.css`), and
+`packages/ui/__tests__/motion-contract-lock.test.ts` recomputes every
+duration/delay against the ceiling it parses out of MOTION_PHILOSOPHY.md.
+The "Known violation" section named below has been replaced with a
+pointer to that lock.
+
 **Type:** code bug (the rule is right, the shipped CSS isn't)
 **Found:** while reconciling `docs/philosophies/*` against source, 2026-08-10
 

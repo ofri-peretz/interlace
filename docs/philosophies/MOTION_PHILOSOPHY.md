@@ -224,20 +224,18 @@ If a real token scale is ever wanted, it is a `tokens.css` change plus
 a lock test — not a doc edit. Until then, do not write
 `var(--duration-fast)`; it resolves to nothing.
 
-### Known violation — the three entry classes
+### How the budget is held
 
-`packages/ui/styles/theme.css` ships three entry animations that break
-the "max 200ms on entry" rule below:
+`packages/ui/__tests__/motion-contract-lock.test.ts` reads the ceiling
+out of this document — the "Max 200ms on entry" sentence above is the
+number the test enforces — and recomputes every duration and delay from
+`tokens.css` and `theme.css`. Ambient loops (`infinite`) are exempt from
+the ceiling, and pay for it by having to appear in the reduced-motion
+class list.
 
-| Class | Shipped | Budget |
-| --- | --- | --- |
-| `.animate-fade-in-up` | 0.5s | 200ms |
-| `.animate-slide-in-left` | 0.5s + 0.3s delay | 200ms |
-| `.animate-scale-in` | 0.4s + 0.2s delay | 200ms |
-
-The rule stands; the code is what's wrong. Tracked in
-[`docs/follow-ups/motion-entry-duration-budget.md`](../follow-ups/motion-entry-duration-budget.md).
-Do not cite these three as precedent.
+The three entry classes in `theme.css` shipped at 0.5s, 0.5s + 0.3s and
+0.4s + 0.2s until 2026-08-10 — up to 800ms of invisible hero — which is
+what the lock exists to stop recurring. Do not cite them as precedent.
 
 ---
 

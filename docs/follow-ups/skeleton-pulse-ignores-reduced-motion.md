@@ -1,9 +1,35 @@
 # Follow-up: `animate-pulse` ignores `prefers-reduced-motion`
 
+**Status: RESOLVED, 2026-08-10** — `.animate-pulse` (plus `.animate-meteor`
+and `.animate-meteor-effect`, the other two bare utilities the DS emitted
+without listing) is now in the `tokens.css` allowlist, and
+`packages/ui/__tests__/motion-contract-lock.test.ts` fails if any bare
+`animate-*` utility in `packages/ui/src` is missing from it.
+
+**Correction to the severity below.** The stated impact — "a user with
+`reduce` set gets the full 2s infinite opacity pulse on every skeleton" —
+was wrong. `packages/ui/styles/preflight.css` carries a universal
+`@media (prefers-reduced-motion: reduce) { *, *::before, *::after {
+animation-duration: 0.01ms !important; animation-iteration-count: 1
+!important; … } }`, and `styles/index.css` — the canonical single import —
+pulls it in. Measured in Chrome against the real stylesheets, a
+`.animate-pulse` element under `reduce` computes
+`animation-duration: 1e-05s, animation-iteration-count: 1`. No skeleton
+in any app importing `index.css` has ever pulsed for a `reduce` user.
+
+The real defect was narrower and still worth fixing: every stylesheet is a
+separate `exports` entry, so a consumer can import `tokens.css` +
+`theme.css` and skip `preflight.css` — the case `index.css` was written to
+prevent, and the case where the allowlist is the entire contract. It also
+matters that Storybook's reset was blamed for hiding this: the reset that
+was actually doing the work ships in the package, and the audit's
+recommendation to remove the Storybook one would have changed nothing.
+
 **Type:** code bug (not a doc bug — the doc is right, the code isn't)
 **Found:** while reconciling `docs/philosophies/*` against source, 2026-08-10
-**Severity:** WCAG 2.3.3 / motion-sensitivity contract breach, on every
-skeleton the DS renders
+**Severity:** ~~WCAG 2.3.3 / motion-sensitivity contract breach, on every
+skeleton the DS renders~~ — see the correction above; the shipped default
+import path was never affected.
 
 ## The contract
 
