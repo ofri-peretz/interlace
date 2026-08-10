@@ -272,7 +272,7 @@ Hard bans.
 
 ## Implementation in this codebase
 
-Tailwind v4 `@theme` block (in `apps/docs/src/app/global.css` or
+Tailwind v4 `@theme` block (in `apps/landing/src/app/global.css` or
 equivalent):
 
 ```css

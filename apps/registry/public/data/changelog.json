@@ -27,6 +27,31 @@
           "bump": "patch",
           "migration": "Nothing changes today — `@interlace/ui/blocks/<name>` still\nresolves. Before 2.0.0, change those imports to\n`@interlace/ui/patterns/<name>`; the exported names are identical.",
           "source": ".changeset/deprecated-blocks-name-their-removal.md"
+        },
+        {
+          "summary": "The three entry animations in `styles/theme.css` now run at 200ms with no\ndelay, and the reduced-motion class list in `styles/tokens.css` covers\n`.animate-pulse`.\n\n`.animate-fade-in-up` was 0.5s, `.animate-slide-in-left` 0.5s behind a 0.3s\ndelay, and `.animate-scale-in` 0.4s behind a 0.2s delay — up to 800ms before\nthe reader saw anything, against the 200ms entry ceiling\n`MOTION_PHILOSOPHY.md` has always set. All three are now\n`0.2s ease-out both`. The delays were the worse half: an entry animation is\nalready laid out at `opacity: 0`, so a delay is time spent looking at nothing.\n\nSeparately, `.animate-pulse` — the animation `Skeleton` renders on every\nloading state — was missing from the `tokens.css` reduced-motion list, along\nwith `.animate-meteor` and `.animate-meteor-effect`. The universal clamp in\n`styles/preflight.css` was already covering all three, so apps importing\n`styles/index.css` were never affected; apps that import `tokens.css` and\n`theme.css` à la carte and skip `preflight.css` were. All three are now\nlisted.\n\nBoth are held by `packages/ui/__tests__/motion-contract-lock.test.ts`, which\nreads the ceiling out of `MOTION_PHILOSOPHY.md` rather than repeating it, and\nfails if any bare `animate-*` utility in `packages/ui/src` is missing from the\nlist.",
+          "components": [
+            "theme",
+            "skeleton",
+            "meteors",
+            "stars-background"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/motion-budget-and-reduced-motion-allowlist.md"
+        },
+        {
+          "summary": "Two theme defects that only a browser could find, both of which read as \"the theme system does not work\".\n\n`useTheme()` now keeps every instance in the SAME document in sync. Each instance owned private React state and only listened for `storage` events — which fire in OTHER documents — so a switcher in the nav updated itself and nothing else. A page with a switcher plus any second theme-aware component repainted the switcher and left the component on the previous theme, permanently.\n\nHarbor now declares its dark palette for `[data-theme='harbor'] .dark` and `[data-theme='harbor'] [data-scheme='dark']` as well as the same-element forms. The bare `.dark` block is unscoped, so it means \"Interlace dark\": it re-declares every `--interlace-*` literal on whatever element carries it, and `[data-theme='harbor'].dark` needs both on the same element. A `<div class=\"dark\">` anywhere inside a Harbor page therefore repainted that subtree in the default brand. `theme-contract-lock` now requires the descendant forms from every registered theme.",
+          "components": [
+            "theme-switcher"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/theme-axis-survives-a-dark-subtree.md"
         }
       ]
     },

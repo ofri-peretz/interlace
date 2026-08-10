@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
     source: docs/philosophies/LAYOUT_PHILOSOPHY.md
-    hash: de372482526c */}
+    hash: 9f90ff04aa07 */}
 
 # Layout & Responsiveness Philosophy
 
@@ -109,7 +109,7 @@ Base classes describe the smallest viewport. Breakpoints only *add*
 density and breathing room — they never take it away. Tailwind
 defaults do **not** govern: `packages/ui/styles/foundation.css`
 overrides `--breakpoint-*` with a narrower 4-tier ladder, and drops
-`2xl:` entirely. `packages/ui/BREAKPOINT_PHILOSOPHY.md`
+`2xl:` entirely. [`BREAKPOINT_PHILOSOPHY.md`](?path=/docs/philosophy-breakpoint--docs)
 is the source of truth for the ladder and the reasoning; the table
 below is the layout-side summary.
 
@@ -227,7 +227,7 @@ Web Vitals.
 
 ### 10. Build with the ecosystem
 
-Fumadocs ships `HomeLayout` (used at [apps/docs/src/app/(home)/layout.tsx](apps/docs/src/app/%28home%29/layout.tsx))
+Fumadocs ships `HomeLayout` (used at `apps/landing/src/app/(home)/layout.tsx`)
 and `DocsLayout` for the outer chrome — sidebar, search, navbar,
 TOC. Our primitives compose *inside* those layouts; they never
 replace them.
@@ -429,7 +429,7 @@ section variant, a breakpoint behavior the table doesn't cover —
 principle and practice is the failure mode, and the homepage is the
 evidence of what that drift looks like at scale.
 
-The companion artifact `apps/docs/HOMEPAGE_LAYOUT_AUDIT.md`
-documents the current homepage's specific deviations from this
-philosophy. It is a snapshot in time, not a doctrinal document. When
+The companion artifact `apps/docs/HOMEPAGE_LAYOUT_AUDIT.md` — in the eslint
+monorepo, where this philosophy used to live — documents that homepage's
+specific deviations from this philosophy. It is a snapshot in time, not a doctrinal document. When
 a refactor lands, that audit is closed; this philosophy stays.

@@ -309,6 +309,17 @@
 /* ─────────────────────────────────────────────────────────────────
  * 5. Lightweight CSS animations — fade-in-up / slide-in-left / scale-in.
  *    Reduced-motion is handled in tokens.css (already imported).
+ *
+ *    All three are ENTRY animations: fill mode `both`, starting from
+ *    `opacity: 0`. Nothing the reader came for is legible until they
+ *    finish, so MOTION_PHILOSOPHY caps them at 200ms and forbids an entry
+ *    delay outright — a delay is dead time where the content is already
+ *    painted at `opacity: 0` and the reader is looking at nothing.
+ *
+ *    They shipped at 0.5s / 0.5s+0.3s / 0.4s+0.2s, i.e. up to 800ms of
+ *    invisible hero. `motion-contract-lock` now recomputes these numbers
+ *    from this file, so the next 0.5s has to argue with a red test rather
+ *    than with a reviewer's memory of the budget.
  * ──────────────────────────────────────────────────────────────── */
 @keyframes fade-in-up {
   from {
@@ -342,11 +353,11 @@
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.5s ease-out both;
+  animation: fade-in-up 0.2s ease-out both;
 }
 .animate-slide-in-left {
-  animation: slide-in-left 0.5s ease-out 0.3s both;
+  animation: slide-in-left 0.2s ease-out both;
 }
 .animate-scale-in {
-  animation: scale-in 0.4s ease-out 0.2s both;
+  animation: scale-in 0.2s ease-out both;
 }

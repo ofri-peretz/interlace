@@ -12,8 +12,6 @@ In this package:
 
 - `FUMADOCS_BRIDGE.md` (layer-2 seam — the ONLY coupling between the DS
   and fumadocs; read before touching `theme.css` or `src/fumadocs/`)
-- `BREAKPOINT_PHILOSOPHY.md` (foundation layer — the 4-tier
-  `--breakpoint-*` ladder, and why there is no `2xl`)
 - `CONVENTIONS.md` (authoring rules: file structure, naming, headers)
 
 The canonical CSS import order is "The CSS import contract" below, and
@@ -22,6 +20,7 @@ earlier revisions of this list pointed at one that was never written.)
 
 In `docs/philosophies/`, at the repo root:
 
+- `../../docs/philosophies/BREAKPOINT_PHILOSOPHY.md` (foundation layer — the 4-tier `--breakpoint-*` ladder, and why there is no `2xl`)
 - `../../docs/philosophies/TYPOGRAPHY_PHILOSOPHY.md` (foundation layer — type scale)
 - `../../docs/philosophies/LAYOUT_PHILOSOPHY.md` (foundation layer — spacing scale)
 - `../../docs/philosophies/COLOR_PHILOSOPHY.md` (brand layer — semantic-token table)

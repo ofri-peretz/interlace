@@ -68,7 +68,7 @@ first-class surface.**
 **Mechanics**
 
 - **Per-page OG images.** Generated at build time via the existing
-  [`/og`](apps/docs/src/app/og/) route. Title + plugin badge + brand chrome.
+  [`/og`](../../apps/landing/src/app/og/) route. Title + plugin badge + brand chrome.
 - **Full Open Graph + Twitter Card metadata** on every route — `og:title`,
   `og:description`, `og:image`, `og:image:width`, `og:image:height`,
   `twitter:card="summary_large_image"`.
@@ -204,7 +204,9 @@ should be linted by our plugins, ship our patterns, conform to our rules.
 
 **Mechanics**
 
-- **Eat the dogfood.** `apps/docs` uses our plugins. Visible in `eslint.config.mjs`.
+- **Eat the dogfood.** Every app in the repo consumes the DS it documents,
+  and the eslint monorepo's `apps/docs` runs our own plugins — visible in its
+  `eslint.config.mjs`.
 - **Benchmark scorecards on the homepage** — our competitive edge
   becomes the docs site's centerpiece.
 - **"With our rule" vs "without" diff comparisons** as code samples on

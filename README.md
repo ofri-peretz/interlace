@@ -13,7 +13,7 @@ The Interlace community: design system, Storybook, and the **interlace.tools** l
 | [`packages/ui/`](./packages/ui/) | (npm: `@interlace/ui`) | Design-system primitives, blocks, and tokens. Each primitive is server-component-safe where it can be, declares a minimum viewport, and obeys the R1–R26 component-modeling floor. |
 | [`apps/storybook/`](./apps/storybook/) | **[storybook.interlace.tools](https://storybook.interlace.tools)** | Visual contract surface — every primitive + block + foundation specimen. axe + dark-mode + RTL run in CI against every story. |
 | [`apps/landing/`](./apps/landing/) | **[interlace.tools](https://interlace.tools)** | Community landing page. |
-| [`docs/philosophies/`](./docs/philosophies/) | — | The 25 `*_PHILOSOPHY.md` source-of-truth charters — typography / layout / color / motion / a11y / keyboard / loading / forms / etc. |
+| [`docs/philosophies/`](./docs/philosophies/) | — | The 27 `*_PHILOSOPHY.md` source-of-truth charters — typography / layout / color / motion / a11y / keyboard / loading / forms / etc. Projected into Storybook by `npm run sync:philosophies`; never edit the generated `apps/storybook/src/stories/philosophy/*.mdx` by hand. |
 | [`DESIGN_PRINCIPLES.md`](./DESIGN_PRINCIPLES.md) | — | The 14-principle look-and-feel charter that governs every surface. |
 
 The **registry storefront** (per-component install pages, browsable at `ds.interlace.tools`) lives in the [`ofri-peretz/eslint`](https://github.com/ofri-peretz/eslint) monorepo. It will move here in a follow-up.

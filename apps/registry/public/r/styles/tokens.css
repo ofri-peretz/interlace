@@ -151,6 +151,31 @@
  * Disables every CSS-driven animation registered above when the user has
  * motion-sensitivity preferences. JS-driven motion (motion/react, canvas)
  * is gated per-component via the useReducedMotion hook.
+ *
+ * ⚠️ THIS LIST IS THE SECOND LAYER, NOT THE FIRST.
+ *
+ * The primary reduced-motion guarantee is the wildcard in `preflight.css`
+ * (`*, *::before, *::after { animation-duration: 0.01ms !important; … }`),
+ * and it is the only thing that reaches the animations no selector here can
+ * name: Tailwind's own `animate-pulse` / `animate-bounce`, and the
+ * `data-[open]:animate-in` / `data-[closed]:animate-out` variants that every
+ * Dialog, Sheet, Popover, Tooltip, DropdownMenu and ContextMenu emits (those
+ * compile to `.data-\[open\]\:animate-in`, which `.animate-in` does not
+ * match). Delete the preflight wildcard and most of the DS starts animating
+ * under `reduce` with nothing here to catch it — `motion-contract-lock`
+ * fails if anyone tries.
+ *
+ * What this list buys on top of the wildcard is worth having, which is why
+ * both exist:
+ *   1. `animation: none` instead of a 0.01ms clamp — the animation never
+ *      runs at all, rather than running one imperceptible cycle.
+ *   2. cover for the à-la-carte import path. Every stylesheet here is a
+ *      separate `exports` entry, so a consumer can import tokens.css +
+ *      theme.css and skip preflight.css; then this list is the ONLY defence.
+ *
+ * Rule for adding to it: every bare `animate-*` utility that `packages/ui/src`
+ * puts on an element belongs here. `.animate-pulse` did not, for the whole of
+ * Skeleton's life, and the à-la-carte path pulsed for reduce users.
  */
 @media (prefers-reduced-motion: reduce) {
   .animate-shimmer-slide,
@@ -168,7 +193,10 @@
   .animate-accordion-up,
   .animate-fade-in-up,
   .animate-slide-in-left,
-  .animate-scale-in {
+  .animate-scale-in,
+  .animate-pulse,
+  .animate-meteor,
+  .animate-meteor-effect {
     animation: none !important;
     transition: none !important;
   }

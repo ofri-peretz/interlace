@@ -20,6 +20,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@base-ui/react": "^1.4.1",
     "@interlace/ui": "*",
     "next": "^16.2.4",
     "posthog-js": "^1.207.0",

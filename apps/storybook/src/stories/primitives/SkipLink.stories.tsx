@@ -99,6 +99,14 @@ export const KeyboardFlow: Story = {
     const link = canvasElement.querySelector('a[href="#main"]') as HTMLElement;
     const main = canvasElement.querySelector('#main') as HTMLElement;
 
+    // Read the resting clip BEFORE anything takes focus. `sr-only` hides with
+    // `clip-path: inset(50%)`, which no bounding box reports.
+    const restingClip = getComputedStyle(link).clipPath;
+
+    await step('At rest the link is clipped out of sight', async () => {
+      expect(restingClip).not.toBe('none');
+    });
+
     await step('The skip link is the first tab stop', async () => {
       expect(link).toBeTruthy();
       link.focus();
@@ -109,6 +117,12 @@ export const KeyboardFlow: Story = {
       const box = link.getBoundingClientRect();
       expect(box.width).toBeGreaterThan(1);
       expect(box.height).toBeGreaterThan(1);
+      // The box alone is NOT the contract. A link left `sr-only` on focus
+      // still measures ~32px wide off its padding while being clipped to
+      // nothing — `getBoundingClientRect` cannot see `clip-path`. Dropping
+      // `focus-visible:not-sr-only` used to pass this story. This is the
+      // assertion that proves a sighted keyboard user can actually see it.
+      expect(getComputedStyle(link).clipPath).toBe('none');
     });
 
     await step('Its target exists and can receive focus', async () => {

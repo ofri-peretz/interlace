@@ -163,7 +163,7 @@ a regression bug, not a tradeoff.
 
 ## What pagination looks like in our stack
 
-Concrete defaults for `apps/docs`:
+Concrete defaults for a docs surface:
 
 - **Route**: `app/<collection>/page.tsx` as a Server Component reading
   `searchParams`.

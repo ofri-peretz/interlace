@@ -4,7 +4,7 @@
   "components": [
     {
       "name": "a11y-starter",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -52,9 +52,9 @@
     },
     {
       "name": "article-list-grid",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-06-01"
+      "updated": "2026-08-10"
     },
     {
       "name": "article-template",
@@ -286,9 +286,9 @@
     },
     {
       "name": "feature-grid",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-06-01"
+      "updated": "2026-08-10"
     },
     {
       "name": "figure",
@@ -388,7 +388,7 @@
     },
     {
       "name": "layout-starter",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -400,7 +400,7 @@
     },
     {
       "name": "mdx-starter",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -448,9 +448,9 @@
     },
     {
       "name": "pagination",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-02"
+      "updated": "2026-08-10"
     },
     {
       "name": "particles",
@@ -472,9 +472,9 @@
     },
     {
       "name": "pricing-table",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-07-30"
+      "updated": "2026-08-10"
     },
     {
       "name": "progress",
@@ -496,9 +496,9 @@
     },
     {
       "name": "radio-group",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "since": "1.0.0",
-      "updated": "2026-08-02"
+      "updated": "2026-08-10"
     },
     {
       "name": "reading-time",
@@ -604,13 +604,13 @@
     },
     {
       "name": "skeleton",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
     {
       "name": "skeleton-variants",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -652,15 +652,15 @@
     },
     {
       "name": "stat-card",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": "1.0.0",
-      "updated": "2026-06-01"
+      "updated": "2026-08-10"
     },
     {
       "name": "stat-group",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-06-01"
+      "updated": "2026-08-10"
     },
     {
       "name": "stats-template",
@@ -700,9 +700,9 @@
     },
     {
       "name": "testimonial",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-06-01"
+      "updated": "2026-08-10"
     },
     {
       "name": "textarea",
@@ -712,27 +712,27 @@
     },
     {
       "name": "theme",
-      "version": "1.6.0",
+      "version": "1.7.1",
       "since": "1.0.0",
-      "updated": "2026-08-09"
+      "updated": "2026-08-10"
     },
     {
       "name": "theme-script",
       "version": "1.0.0",
       "since": "1.0.0",
-      "updated": null
+      "updated": "2026-08-10"
     },
     {
       "name": "theme-switcher",
       "version": "1.0.0",
       "since": "1.0.0",
-      "updated": null
+      "updated": "2026-08-10"
     },
     {
       "name": "theme-tokens",
       "version": "1.0.0",
       "since": "1.0.0",
-      "updated": null
+      "updated": "2026-08-10"
     },
     {
       "name": "time-series",
@@ -786,7 +786,7 @@
       "name": "use-theme",
       "version": "1.0.0",
       "since": "1.0.0",
-      "updated": null
+      "updated": "2026-08-10"
     },
     {
       "name": "visually-hidden",

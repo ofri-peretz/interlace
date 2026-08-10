@@ -19,6 +19,14 @@
  *   [data-theme='harbor']                          harbor · light
  *   [data-theme='harbor'].dark                     harbor · dark
  *   [data-theme='harbor'][data-scheme='dark']      harbor · dark (attr form)
+ *   [data-theme='harbor'] .dark                    harbor · dark (subtree)
+ *   [data-theme='harbor'] [data-scheme='dark']     harbor · dark (subtree, attr)
+ *
+ * The two DESCENDANT forms are not decoration — without them a `.dark`
+ * wrapper anywhere inside a Harbor page repaints that subtree in INTERLACE
+ * dark, because the bare `.dark` block in interlace-theme.css re-declares
+ * every brand literal on whatever element carries it. See the dark block
+ * below for the full story.
  *
  * Specificity note, because it is the whole mechanism: `[data-theme='harbor']`
  * and `.dark` are BOTH (0,1,0). On `<html data-theme="harbor" class="dark">`
@@ -221,9 +229,34 @@
    *  declares them — `.dark` (shadcn / next-themes canon, what the
    *  Storybook decorator and every consumer writes) and the attribute
    *  form for hosts that would rather not touch className.
+   *
+   *  ─── Why the DESCENDANT forms are here too ──────────────────────
+   *
+   *  `.dark` in interlace-theme.css is unscoped, so what it really means
+   *  is "INTERLACE dark" — it re-declares every `--interlace-*` literal on
+   *  whatever element carries it. A `.dark` on a SUBTREE of a Harbor page
+   *  therefore silently resets that subtree to the Interlace palette:
+   *  `[data-theme='harbor'].dark` needs both on the SAME element, and a
+   *  wrapper div has only the class.
+   *
+   *  Found in a browser (Phase 8.4): ds.interlace.tools in Harbor, with an
+   *  embedded Storybook preview whose story wraps itself in
+   *  `<div class="dark">` — navy page, burnt-orange button. It reads as
+   *  "the theme did not apply", and it is not a story artefact: any
+   *  consumer that darkens a panel rather than the document hits it.
+   *
+   *  So a theme claims its whole subtree. `[data-theme='harbor'] .dark`
+   *  is (0,2,0) — it out-specifies the bare `.dark` (0,1,0) it is
+   *  correcting, and ties with `[data-theme='harbor'].dark`, which is
+   *  fine: they declare identical values and cannot both match the same
+   *  element anyway. Every future theme owes the same two lines; the
+   *  selector table in `__tests__/theme-contract-lock.test.ts` is where
+   *  that is checked.
    * ──────────────────────────────────────────────────────────────── */
   [data-theme='harbor'].dark,
-  [data-theme='harbor'][data-scheme='dark'] {
+  [data-theme='harbor'][data-scheme='dark'],
+  [data-theme='harbor'] .dark,
+  [data-theme='harbor'] [data-scheme='dark'] {
     /* Brand — inverted weight: a light tint of the same harbour blue, so
      * both directions clear AAA. text-primary on the page is 10.03:1, and
      * a filled `bg-primary` chip with `text-primary-foreground` is the same

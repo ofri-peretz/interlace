@@ -36,6 +36,7 @@ const CHECK_MODE = process.argv.includes('--check');
 // Slug → lucide-react icon name.
 const ICON_BY_SLUG: Record<string, string> = {
   ux: 'Sparkles',
+  breakpoint: 'MonitorSmartphone',
   layout: 'Layout',
   typography: 'Type',
   color: 'Palette',
@@ -78,7 +79,7 @@ const CATEGORIES: Category[] = [
   {
     label: 'Foundations',
     hint: 'The visual contract. Every primitive consumes these tokens and rhythms.',
-    slugs: ['ux', 'layout', 'typography', 'color', 'motion'],
+    slugs: ['ux', 'layout', 'breakpoint', 'typography', 'color', 'motion'],
   },
   {
     label: 'Interaction & States',
