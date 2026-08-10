@@ -445,6 +445,408 @@ describe('TimeSeries', () => {
   });
 });
 
+/* ── TimeSeries — the x axis ────────────────────────────────────────────── */
+
+/**
+ * The labels themselves are HTML rather than SVG text because SVG text scales
+ * with the `viewBox`: at a 320 viewport the plot is 288px against a 900-unit
+ * box, so `text-xs` inside it paints at 4px. Measured in Chrome — jsdom reports
+ * every box as 0×0 and would have scored the illegible version green.
+ *
+ * What jsdom CAN prove is everything below: that the labels exist, that they
+ * are the slots `axisSlots` chose, that each has a tick to point at, and that
+ * the ones dropped below `sm` are the middles rather than the ends.
+ */
+describe('TimeSeries x axis', () => {
+  const axisSpans = (container: HTMLElement) => [
+    ...container.querySelectorAll('[data-slot="time-series-axis"] span'),
+  ];
+
+  it('labels the horizontal scale at all — a shape with no x axis is not a chart', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(axisSpans(container).map((s) => s.textContent)).toEqual(['08-01', '08-02', '08-03']);
+  });
+
+  it('caps the labels and keeps both ends, however long the series', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)} />,
+    );
+    const labels = axisSpans(container).map((s) => s.textContent);
+    expect(labels).toEqual(['08-01', '08-04', '08-08', '08-11', '08-14']);
+  });
+
+  it('drops the MIDDLE labels below sm, never an end — the ends are the range', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)} />,
+    );
+    const hidden = axisSpans(container).map((s) => (s.className || '').includes('hidden'));
+    expect(hidden).toEqual([false, true, false, true, false]);
+  });
+
+  it('keeps every label when there are few enough that none can collide', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(axisSpans(container).every((s) => !(s.className || '').includes('hidden'))).toBe(true);
+  });
+
+  it('gives every label a tick to point at, so the position is not approximate', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3, 4, 5, 6, 7, 8)} />);
+    expect(container.querySelectorAll('[data-slot="time-series-tick"]')).toHaveLength(
+      axisSpans(container).length,
+    );
+  });
+
+  it('stays out of the accessibility tree — the dates are in the table and the readout', () => {
+    // Announcing "08-01 08-04 08-08" before the chart is noise; the same dates
+    // are already reachable as row headers, in full.
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(
+      container.querySelector('[data-slot="time-series-axis"]')?.getAttribute('aria-hidden'),
+    ).toBe('true');
+  });
+
+  it('drops the year from the label but never from the caption', () => {
+    // 10-character labels are what makes five of them collide at 320.
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} label="Views" />);
+    expect(axisSpans(container)[0].textContent).toBe('08-01');
+    expect(container.querySelector('figcaption')?.textContent).toContain('2026-08-01');
+  });
+});
+
+/* ── TimeSeries — more than one series ──────────────────────────────────── */
+
+const other = (...values: (number | null)[]): Point[] =>
+  values.map((v, i) => ({ t: `2026-08-${String(i + 1).padStart(2, '0')}T00:00:00Z`, v }));
+
+describe('TimeSeries with compare', () => {
+  const lines = (container: HTMLElement) => [
+    ...container.querySelectorAll('[data-slot="time-series-plot"] g > path[stroke-width]'),
+  ];
+
+  it('draws a line per series, and `points` alone still means one line', () => {
+    const { container: one } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(one.querySelector('[data-slot="time-series"]')?.getAttribute('data-series-count')).toBe(
+      '1',
+    );
+    cleanup();
+    const { container: two } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    expect(two.querySelector('[data-slot="time-series"]')?.getAttribute('data-series-count')).toBe(
+      '2',
+    );
+    expect(lines(two)).toHaveLength(2);
+  });
+
+  it('separates the lines by DASH as well as by hue', () => {
+    // Two lines that differ only in `--chart-1` vs `--chart-2` are one line in
+    // a greyscale print and to a red-green colour-blind reader.
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    const dashes = lines(container).map((p) => p.getAttribute('stroke-dasharray'));
+    expect(dashes[0]).toBeNull();
+    expect(dashes[1]).toBeTruthy();
+    const hues = lines(container).map((p) => p.getAttribute('class'));
+    expect(new Set(hues).size).toBe(2);
+  });
+
+  it('gives every drawable series a distinct dash AND a distinct token', () => {
+    const points = series(1, 2, 3);
+    const { container } = render(
+      <TimeSeries
+        points={points}
+        compare={[
+          { points: other(4, 5, 6), label: 'B' },
+          { points: other(7, 8, 9), label: 'C' },
+          { points: other(10, 11, 12), label: 'D' },
+          { points: other(13, 14, 15), label: 'E' },
+        ]}
+      />,
+    );
+    const drawn = lines(container);
+    expect(new Set(drawn.map((p) => p.getAttribute('stroke-dasharray')))).toHaveProperty('size', 5);
+    expect(new Set(drawn.map((p) => p.getAttribute('class')))).toHaveProperty('size', 5);
+  });
+
+  it('names each line in a legend, so identity is never carried by colour alone', () => {
+    const { container } = render(
+      <TimeSeries
+        points={series(1, 2, 3)}
+        label="Downloads"
+        compare={[{ points: other(4, 5, 6), label: 'Stars' }]}
+      />,
+    );
+    const legend = container.querySelector('[data-slot="time-series-legend"]')!;
+    expect(legend.textContent).toContain('Downloads');
+    expect(legend.textContent).toContain('Stars');
+  });
+
+  it('repeats the line dash in the legend swatch, not just the colour', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    const swatches = [
+      ...container.querySelectorAll('[data-slot="time-series-legend"] svg line'),
+    ].map((l) => l.getAttribute('stroke-dasharray'));
+    const plotted = lines(container).map((p) => p.getAttribute('stroke-dasharray'));
+    expect(swatches).toEqual(plotted);
+  });
+
+  it('draws no legend for one series — it would restate the caption beneath it', () => {
+    const { container } = render(<TimeSeries points={series(1, 2)} label="Downloads" />);
+    expect(container.querySelector('[data-slot="time-series-legend"]')).toBeNull();
+  });
+
+  it('drops the area fill once there are two lines', () => {
+    // Two translucent fills overlap into a third colour that belongs to
+    // neither series and reads as a value.
+    const { container: one } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(one.querySelector('path[class*="fill-chart-1"]')).not.toBeNull();
+    cleanup();
+    const { container: two } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    expect(two.querySelector('path[class*="fill-chart-1"]')).toBeNull();
+  });
+
+  it('adds a COLUMN to the one data table rather than shipping a second table', () => {
+    render(
+      <TimeSeries
+        points={series(1, 2)}
+        label="Downloads"
+        compare={[{ points: other(4, 5), label: 'Stars' }]}
+      />,
+    );
+    expect(screen.getAllByRole('table')).toHaveLength(1);
+    expect(screen.getAllByRole('columnheader').map((h) => h.textContent)).toEqual([
+      'Date',
+      'Downloads',
+      'Stars',
+    ]);
+  });
+
+  it('describes every series in the accessible name, not only the first', () => {
+    render(
+      <TimeSeries
+        points={series(10, 20)}
+        label="Downloads"
+        compare={[{ points: other(90, 40), label: 'Stars' }]}
+      />,
+    );
+    const name = screen.getByRole('img').getAttribute('aria-label') ?? '';
+    expect(name).toContain('Downloads: 2 points');
+    expect(name).toContain('Stars: 2 points');
+    expect(name).toContain('down 50');
+  });
+
+  it('reads out every series from ONE live region, under keyboard control', async () => {
+    // The alternative — a hover tooltip with its own copy of these numbers — is
+    // a surface that can be right while the live region is wrong, and only a
+    // sighted mouse user would ever find out.
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20, 30)}
+        label="Downloads"
+        unit="downloads"
+        compare={[{ points: other(1, 2, 3), label: 'Stars', unit: 'stars' }]}
+      />,
+    );
+    expect(container.querySelectorAll('output')).toHaveLength(1);
+    screen.getByRole('img').focus();
+    await user.keyboard('{ArrowRight}');
+    expect(container.querySelector('output')?.textContent).toBe(
+      '2026-08-02 · Downloads 20 downloads · Stars 2 stars',
+    );
+  });
+
+  it('keeps the single-series readout unnamed — the caption already names it', () => {
+    const user = userEvent.setup();
+    render(<TimeSeries points={series(10, 20)} label="Downloads" unit="downloads" />);
+    screen.getByRole('img').focus();
+    return user.keyboard('{End}').then(() => {
+      expect(screen.getByText('2026-08-02 · 20 downloads')).toBeTruthy();
+    });
+  });
+
+  it('omits the unit for a series that has none, rather than printing "undefined"', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20)}
+        label="Downloads"
+        compare={[{ points: other(1, 2), label: 'Stars' }]}
+      />,
+    );
+    screen.getByRole('img').focus();
+    await user.keyboard('{End}');
+    expect(container.querySelector('output')?.textContent).toBe(
+      '2026-08-02 · Downloads 20 · Stars 2',
+    );
+  });
+
+  it('says "no data" for a day a series did not measure, instead of borrowing a neighbour', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20, 30)}
+        label="Downloads"
+        compare={[{ points: [{ t: '2026-08-03T00:00:00Z', v: 7 }], label: 'Stars' }]}
+      />,
+    );
+    screen.getByRole('img').focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toBe(
+      '2026-08-01 · Downloads 10 · Stars no data',
+    );
+  });
+
+  it('draws a crosshair dot only for the series that HAVE a reading there', async () => {
+    // A dot on the segment that bridges a gap is an invented value.
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20, 30)}
+        compare={[{ points: [{ t: '2026-08-03T00:00:00Z', v: 7 }], label: 'Stars' }]}
+      />,
+    );
+    const svg = screen.getByRole('img');
+    svg.focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelectorAll('circle')).toHaveLength(1);
+    await user.keyboard('{End}');
+    expect(container.querySelectorAll('circle')).toHaveLength(2);
+  });
+
+  it('widens the axis to the union of both series, so nothing plotted is off-scale', () => {
+    const { container } = render(
+      <TimeSeries
+        points={[{ t: '2026-08-03T00:00:00Z', v: 5 }, { t: '2026-08-04T00:00:00Z', v: 6 }]}
+        label="Downloads"
+        compare={[{ points: series(1, 2, 3), label: 'Stars' }]}
+      />,
+    );
+    expect(container.querySelector('figcaption')?.textContent).toContain('2026-08-01 → 2026-08-04');
+  });
+
+  it('judges "not enough data" on the PRIMARY series, not the union', () => {
+    // A comparison series with fourteen readings does not rescue a headline
+    // metric that has one — drawing it alone under that caption would credit
+    // one metric with another's shape.
+    render(
+      <TimeSeries
+        points={series(5)}
+        label="Downloads"
+        compare={[{ points: other(1, 2, 3), label: 'Stars' }]}
+      />,
+    );
+    expect(screen.getByText(/Only 1 point so far/)).toBeTruthy();
+  });
+
+  it('spells an unlabelled primary the same word everywhere — legend, readout, table', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries points={series(10, 20)} compare={[{ points: other(1, 2), label: 'Stars' }]} />,
+    );
+    expect(container.querySelector('[data-slot="time-series-legend"]')?.textContent).toContain(
+      'Value',
+    );
+    expect(screen.getByRole('columnheader', { name: 'Value' })).toBeTruthy();
+    screen.getByRole('img').focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toContain('Value 10');
+  });
+
+  it('captions the table with every series once there is more than one', () => {
+    render(
+      <TimeSeries
+        points={series(1, 2)}
+        label="Downloads"
+        unit="downloads"
+        compare={[{ points: other(3, 4), label: 'Stars' }]}
+      />,
+    );
+    expect(screen.getByText('Downloads, Stars — full data')).toBeTruthy();
+  });
+
+  it('resolves a pointer to the same slot the keyboard reaches, with two series', () => {
+    const spy = withLayout(900);
+    const { container } = render(
+      <TimeSeries points={series(10, 20, 30)} compare={[{ points: other(1, 2, 3), label: 'B' }]} />,
+    );
+    fireEvent.pointerMove(screen.getByRole('img'), { clientX: 900 });
+    const byPointer = container.querySelector('output')?.textContent;
+    fireEvent.pointerLeave(screen.getByRole('img'));
+    screen.getByRole('img').focus();
+    fireEvent.keyDown(screen.getByRole('img'), { key: 'End' });
+    expect(container.querySelector('output')?.textContent).toBe(byPointer);
+    spy.mockRestore();
+  });
+});
+
+describe('TimeSeries beyond the palette', () => {
+  const six = Array.from({ length: 5 }, (_, i) => ({
+    points: other(i + 1, i + 2, i + 3),
+    label: `S${i + 1}`,
+  }));
+
+  it('draws five and refuses the sixth — the palette is five tokens and five dashes', () => {
+    // Repeating a colour AND a dash produces two lines a reader cannot tell
+    // apart, which is worse than a line that is not drawn.
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} label="P" compare={six} />);
+    expect(
+      container.querySelector('[data-slot="time-series"]')?.getAttribute('data-series-count'),
+    ).toBe('5');
+    expect(
+      container.querySelectorAll('[data-slot="time-series-plot"] g > path[stroke-width]'),
+    ).toHaveLength(5);
+  });
+
+  it('keeps the undrawn series in the data table — the cap is a drawing limit', () => {
+    render(<TimeSeries points={series(1, 2, 3)} label="P" compare={six} />);
+    expect(screen.getAllByRole('columnheader').map((h) => h.textContent)).toEqual([
+      'Date',
+      'P',
+      'S1',
+      'S2',
+      'S3',
+      'S4',
+      'S5',
+    ]);
+  });
+
+  it('says in the legend how many series are missing from the picture', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} label="P" compare={six} />);
+    expect(container.querySelector('[data-slot="time-series-legend"]')?.textContent).toContain(
+      '1 more not plotted',
+    );
+  });
+
+  it('says nothing about missing series when none are missing', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3)} label="P" compare={six.slice(0, 2)} />,
+    );
+    expect(container.querySelector('[data-slot="time-series-legend"]')?.textContent).not.toContain(
+      'not plotted',
+    );
+  });
+
+  it('excludes an undrawn series from the y domain it cannot be read against', () => {
+    const { container } = render(
+      <TimeSeries
+        points={series(1, 2, 3)}
+        label="P"
+        compare={[...six, { points: other(9_000, 9_001, 9_002), label: 'Huge' }]}
+      />,
+    );
+    // 9,000 would otherwise flatten all five drawn lines against an axis whose
+    // top belongs to a series that is not on the chart.
+    expect(container.querySelector('[data-slot="time-series-readout"]')?.textContent).not.toContain(
+      '9,002',
+    );
+  });
+});
+
 /* ── MetricTable ────────────────────────────────────────────────────────── */
 
 const rows = [

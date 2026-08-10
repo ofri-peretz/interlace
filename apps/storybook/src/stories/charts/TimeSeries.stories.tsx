@@ -3,7 +3,7 @@ import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { TimeSeries } from '@interlace/ui/charts/time-series';
 import { withDark, withRtl } from '@/decorators';
 
-import { ANNOTATIONS, RISING, WITH_GAPS } from './fixtures';
+import { ANNOTATIONS, COMPARING, FALLING, FLAT, RAGGED, RISING, TINY, WITH_GAPS } from './fixtures';
 
 const meta: Meta<typeof TimeSeries> = {
   title: 'Charts/TimeSeries',
@@ -16,7 +16,9 @@ const meta: Meta<typeof TimeSeries> = {
           'One metric over time, with the actions that moved it drawn ON the curve.\n\n' +
           '**The annotation is the point.** A line going up is a fact; a line going up with a publish marker at the inflection is an argument. Grid, axis and crosshair are chrome that exists so the annotation can be read against a scale.\n\n' +
           '**The crosshair works from the keyboard** — ←/→ step, Home/End jump, Escape clears, and the readout is `aria-live="polite"`. This is the part charting libraries almost universally get wrong: hover-only inspection means the values exist for mouse users and nobody else. The pointer path and the keyboard path resolve through the same `nearestIndex` call, so they can never disagree.\n\n' +
-          '**Every chart ships an `sr-only` data table.** Axe reads an SVG as one opaque node and will score a labelled chart green whether or not the values are reachable.',
+          '**Every chart ships an `sr-only` data table.** Axe reads an SVG as one opaque node and will score a labelled chart green whether or not the values are reachable.\n\n' +
+          '**Two metrics, one y domain.** `compare` adds series against the same axes; the domain is the union of every value, because a second y axis lets an author slide two unrelated series until they appear to cross wherever the argument needs them to.\n\n' +
+          '**The x labels are HTML, not SVG text.** At a 320 viewport the plot is 288px wide against a 900-unit `viewBox`, so `text-xs` inside the SVG paints at 4px. Measured in Chrome, not reasoned about.',
       },
     },
   },
@@ -26,6 +28,12 @@ const meta: Meta<typeof TimeSeries> = {
       description:
         'The series, oldest first. `{ t, v }` where `t` is an ISO date (or any string that sorts correctly) and `v: null` is a day nobody measured — nulls are dropped, never coerced to zero. Below two numeric points the component says why it cannot plot instead of drawing an empty box.',
       table: { type: { summary: 'readonly Point[]' }, category: 'Data' },
+    },
+    compare: {
+      control: 'object',
+      description:
+        'Further series drawn against the SAME axes — `{ points, label, unit }`, `label` required. Additive: `points` is still the single-series prop it always was, so no existing call site moves. Identity is a DASH PATTERN first and a `--chart-N` hue second, matched by the legend swatch, so two lines stay two lines in greyscale. Capped at five drawn series (the size of the palette); anything past that stays in the data table and the legend says how many.',
+      table: { type: { summary: 'readonly ComparisonSeries[]' }, defaultValue: { summary: '[]' }, category: 'Data' },
     },
     annotations: {
       control: 'object',
@@ -143,6 +151,126 @@ export const KeyboardCrosshair: Story = {
   },
 };
 
+export const TwoSeries: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The most-asked-for chart behaviour there is. `compare` is additive — `points` is unchanged, so nothing that already calls this component moves.\n\n' +
+          'The second line is **dashed as well as differently coloured**, and the legend swatch repeats the dash. A legend of five identical bars in five hues identifies nothing in a greyscale print or to a red-green colour-blind reader — the same rule the annotation shapes follow.\n\n' +
+          'The crosshair reads out BOTH series at once, from one `<output>`. There is no second, hover-only tooltip to drift out of step with it.',
+      },
+    },
+  },
+  args: {
+    points: RISING,
+    label: 'npm downloads',
+    unit: 'downloads',
+    compare: [{ points: COMPARING, label: 'Docs page views', unit: 'views' }],
+  },
+};
+
+export const TwoSeriesCrosshair: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The multi-series readout under keyboard control. Both series are named and valued in the single live region, so a keyboard user gets exactly what a mouse user gets — and `RAGGED` starts a week late, so the early slots read "no data" rather than borrowing the neighbouring value.',
+      },
+    },
+  },
+  args: {
+    points: RISING,
+    label: 'npm downloads',
+    unit: 'downloads',
+    compare: [{ points: RAGGED, label: 'Registry installs', unit: 'installs' }],
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const plot = canvas.getByRole('img');
+
+    await step('Home reads out both series, naming each one', async () => {
+      plot.focus();
+      await userEvent.keyboard('{Home}');
+      await waitFor(() => {
+        const text = canvasElement.querySelector('output')?.textContent ?? '';
+        expect(text).toContain('npm downloads');
+        // The comparison series has no reading on day one — say so, do not
+        // silently attribute the first value it does have to this date.
+        expect(text).toContain('Registry installs no data');
+      });
+    });
+
+    await step('End reaches a slot where both series have a value', async () => {
+      await userEvent.keyboard('{End}');
+      await waitFor(() =>
+        expect(canvasElement.querySelector('output')?.textContent).toContain('2,205'),
+      );
+    });
+
+    await step('the legend names every drawn series', async () => {
+      const legend = canvasElement.querySelector('[data-slot="time-series-legend"]');
+      await expect(legend?.textContent).toContain('Registry installs');
+    });
+  },
+};
+
+export const RaggedDates: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The x axis is the UNION of every series\' days, not the first series\'. Letting series 0 own the axis is one line cheaper and drops every reading the others took on a day it missed — silently, and only in the picture, while the data table below still lists them. A chart that disagrees with its own table is worse than no chart.',
+      },
+    },
+  },
+  args: {
+    points: RAGGED,
+    label: 'Registry installs',
+    compare: [{ points: RISING, label: 'npm downloads' }],
+    showTable: true,
+  },
+};
+
+export const DifferentMagnitudes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'One y domain, always. The smaller series renders as a flat line at the floor — which is the true statement about a metric two orders of magnitude down. The fix a charting library offers here is a second y axis, and a second y axis is how two unrelated series are slid until they appear to cross wherever the argument needs them to. Give it its own chart, or a `MetricTable` row.',
+      },
+    },
+  },
+  args: {
+    points: RISING,
+    label: 'npm downloads',
+    compare: [{ points: TINY, label: 'Paying teams' }],
+  },
+};
+
+export const PaletteExhausted: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`--chart-1..5` is the whole identity palette and there are five line styles to pair with it, so five series are drawn and a sixth is not. A sixth would have to repeat both, which is two lines a reader cannot tell apart — worse than one that is not drawn. The cap is a DRAWING limit and never a data limit: the sixth series is still a column in the data table, and the legend says how many are missing from the picture.',
+      },
+    },
+  },
+  args: {
+    points: RISING,
+    label: 'npm downloads',
+    showTable: true,
+    compare: [
+      { points: COMPARING, label: 'Docs page views' },
+      { points: WITH_GAPS, label: 'GitHub stars' },
+      { points: RAGGED, label: 'Registry installs' },
+      { points: FLAT, label: 'Rules shipped' },
+      { points: FALLING, label: 'Open issues' },
+    ],
+  },
+};
+
 export const WithGaps: Story = {
   parameters: {
     docs: {
@@ -190,8 +318,71 @@ export const Loading: Story = {
   args: { points: [], label: 'npm downloads', loading: true },
 };
 
+export const MinViewportAxis: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The x axis at `MIN_VIEWPORT`. The labels are HTML at a real 12px — SVG text inside this `viewBox` paints at **4px** at this width, which is why the y labels shrink and these do not (the y scale survives in the readout row below, which is also HTML).\n\n' +
+          'The `play` measures the rendered boxes. jsdom reports every box as 0×0, so a unit test cannot tell whether two labels overlap; this is the only gate that can.',
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      // Not Tailwind: the point of this story is a hard 320px box, and the
+      // component must survive one whatever the surrounding viewport is.
+      <div style={{ width: 320, outline: '1px dashed color-mix(in oklch, currentColor 25%, transparent)' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  args: { points: RISING, label: 'npm downloads', unit: 'downloads' },
+  play: async ({ canvasElement, step }) => {
+    const axis = canvasElement.querySelector('[data-slot="time-series-axis"]')!;
+    const visible = [...axis.querySelectorAll('span')].filter(
+      (span) => span.getBoundingClientRect().width > 0,
+    );
+
+    await step('the axis actually labels something', async () => {
+      await expect(visible.length).toBeGreaterThanOrEqual(2);
+    });
+
+    await step('no two labels overlap', async () => {
+      const boxes = visible.map((span) => span.getBoundingClientRect());
+      for (let i = 1; i < boxes.length; i += 1) {
+        await expect(boxes[i].left).toBeGreaterThan(boxes[i - 1].right);
+      }
+    });
+
+    await step('the labels are legible, not viewBox-scaled to 4px', async () => {
+      await expect(
+        Number.parseFloat(getComputedStyle(visible[0]).fontSize),
+      ).toBeGreaterThanOrEqual(11);
+    });
+
+    await step('the first label starts where the plot does', async () => {
+      const svg = canvasElement.querySelector('[data-slot="time-series-plot"]')!;
+      const plotBox = svg.getBoundingClientRect();
+      // PAD_LEFT is 44 of 900 user units; the row pads by the same fraction.
+      const expected = plotBox.left + (44 / 900) * plotBox.width;
+      await expect(Math.abs(visible[0].getBoundingClientRect().left - expected)).toBeLessThan(2);
+    });
+
+    await step('nothing forces the page to scroll sideways', async () => {
+      const root = document.documentElement;
+      await expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
+    });
+  },
+};
+
 export const Dark: Story = {
-  args: { points: RISING, annotations: ANNOTATIONS, label: 'npm downloads' },
+  args: {
+    points: RISING,
+    annotations: ANNOTATIONS,
+    label: 'npm downloads',
+    compare: [{ points: COMPARING, label: 'Docs page views' }],
+  },
   decorators: [withDark],
 };
 

@@ -12,13 +12,16 @@ import { describe, expect, it } from 'vitest';
 
 import {
   areaPath,
+  axisSlots,
   compact,
   day,
   delta,
   describeSeries,
   linePath,
   nearestIndex,
+  nearestSlot,
   numeric,
+  plotScales,
   seriesScales,
   ticks,
   type Point,
@@ -219,6 +222,183 @@ describe('nearestIndex — one answer for pointer and keyboard alike', () => {
 
   it('returns 0 when there is at most one point', () => {
     expect(nearestIndex(seriesScales(series(1), 100, 50), 90, 100)).toBe(0);
+  });
+});
+
+describe('plotScales — two series, one truth', () => {
+  const a = series(10, 20, 30);
+  const late: Point[] = [
+    { t: '2026-08-03T00:00:00Z', v: 100 },
+    { t: '2026-08-04T00:00:00Z', v: 200 },
+  ];
+
+  it('takes the UNION of days as the axis, not the first series\' days', () => {
+    // "Series 0 owns the axis" is one line cheaper and silently drops every
+    // reading the others took on a day it missed — from the picture only, so
+    // the data table beside it would still list them.
+    const plot = plotScales([a, late], 100, 50);
+    expect(plot.keys).toEqual(['2026-08-01', '2026-08-02', '2026-08-03', '2026-08-04']);
+  });
+
+  it('sorts the union, so two series added in either order draw identically', () => {
+    expect(plotScales([late, a], 100, 50).keys).toEqual(
+      plotScales([a, late], 100, 50).keys,
+    );
+  });
+
+  it('puts every series on ONE y domain, so the two lines are comparable', () => {
+    const plot = plotScales([a, late], 100, 50);
+    expect([plot.min, plot.max]).toEqual([10, 200]);
+    // The per-series projectors report the SHARED domain, not their own — a
+    // series that quietly rescaled itself is a second y axis in disguise.
+    expect(plot.series.map((s) => [s.min, s.max])).toEqual([
+      [10, 200],
+      [10, 200],
+    ]);
+    expect(plot.series[0].y(200)).toBe(plot.series[1].y(200));
+  });
+
+  it('positions a series by its DAY, not by its index in its own array', () => {
+    // `late` has two points; index-based x would draw them at the far left and
+    // far right of a four-day axis instead of in the last two slots.
+    const plot = plotScales([a, late], 90, 50);
+    expect(plot.series[1].x(0)).toBe(plot.x(2));
+    expect(plot.series[1].x(1)).toBe(plot.x(3));
+  });
+
+  it('gives a series no vertex on a day it did not measure', () => {
+    const plot = plotScales([a, late], 100, 50);
+    expect(plot.series[1].points.map((p) => p.t)).toEqual(['2026-08-03', '2026-08-04']);
+  });
+
+  it('reports null for a day a series has no reading, so nothing is invented', () => {
+    const plot = plotScales([a, late], 100, 50);
+    expect(plot.at(1, 0)).toBeNull();
+    expect(plot.at(1, 3)).toBe(200);
+  });
+
+  it('reports null past the end of the axis rather than throwing', () => {
+    const plot = plotScales([a], 100, 50);
+    expect(plot.at(0, 99)).toBeNull();
+  });
+
+  it('collapses two readings on one day the way SeriesTable does — last wins', () => {
+    // Chart and table must not report a different number for the same date.
+    const twice: Point[] = [
+      { t: '2026-08-01T01:00:00Z', v: 5 },
+      { t: '2026-08-01T23:00:00Z', v: 9 },
+      { t: '2026-08-02T00:00:00Z', v: 12 },
+    ];
+    const plot = plotScales([twice], 100, 50);
+    expect(plot.keys).toEqual(['2026-08-01', '2026-08-02']);
+    expect(plot.at(0, 0)).toBe(9);
+  });
+
+  it('drops nulls before they can widen the domain to zero', () => {
+    const plot = plotScales([series(5, null, 15)], 100, 50);
+    expect([plot.min, plot.max]).toEqual([5, 15]);
+    expect(plot.keys).toEqual(['2026-08-01', '2026-08-03']);
+  });
+
+  it('centres a flat set instead of pinning it to the ceiling', () => {
+    const plot = plotScales([series(7, 7, 7)], 100, 50);
+    expect(plot.y(7)).toBe(25);
+  });
+
+  it('centres a single shared slot rather than starting a line at x=0', () => {
+    const plot = plotScales([series(4)], 100, 50);
+    expect(plot.x(0)).toBe(50);
+  });
+
+  it('survives having no data at all, so an empty chart does not throw', () => {
+    const plot = plotScales([[]], 100, 50);
+    expect(plot.keys).toEqual([]);
+    expect([plot.min, plot.max]).toEqual([0, 0]);
+    expect(plot.series[0].points).toEqual([]);
+  });
+
+  it('feeds `linePath` unchanged — the multi-series case needs no second path builder', () => {
+    const plot = plotScales([a, late], 90, 50);
+    expect(linePath(plot.series[1])).toBe(
+      `M${plot.x(2)},${plot.y(100)}L${plot.x(3)},${plot.y(200)}`,
+    );
+  });
+
+  it('feeds `ticks` through its slot keys, so both axes come from one function', () => {
+    const plot = plotScales([a, late], 100, 50);
+    expect(ticks({ points: plot.keys, min: plot.min, max: plot.max }, 3)).toEqual([10, 105, 200]);
+  });
+});
+
+describe('axisSlots — an x label per slot would collide long before it ran out', () => {
+  it('spaces labels evenly across a long series', () => {
+    expect(axisSlots(14)).toEqual([0, 3, 7, 10, 13]);
+  });
+
+  it('always includes both ends, so the reader can see the range', () => {
+    const slots = axisSlots(40);
+    expect(slots[0]).toBe(0);
+    expect(slots[slots.length - 1]).toBe(39);
+  });
+
+  it('labels every slot when the series is shorter than the budget', () => {
+    expect(axisSlots(3)).toEqual([0, 1, 2]);
+    expect(axisSlots(5)).toEqual([0, 1, 2, 3, 4]);
+  });
+
+  it('never repeats a slot, which would render two labels on one tick', () => {
+    for (let count = 1; count <= 30; count += 1) {
+      const slots = axisSlots(count);
+      expect(new Set(slots).size).toBe(slots.length);
+    }
+  });
+
+  it('returns a single slot for a single observation', () => {
+    expect(axisSlots(1)).toEqual([0]);
+  });
+
+  it('returns nothing for an empty axis rather than a label pointing at nothing', () => {
+    expect(axisSlots(0)).toEqual([]);
+    expect(axisSlots(-3)).toEqual([]);
+  });
+
+  it('degrades to one label rather than dividing by zero on a budget of one', () => {
+    expect(axisSlots(20, 1)).toEqual([0]);
+  });
+
+  it('honours a caller-supplied budget', () => {
+    expect(axisSlots(21, 3)).toEqual([0, 10, 20]);
+  });
+});
+
+describe('nearestSlot — the arithmetic both crosshairs share', () => {
+  it('rounds to the closest slot', () => {
+    expect(nearestSlot(5, 0, 100)).toBe(0);
+    expect(nearestSlot(5, 50, 100)).toBe(2);
+    expect(nearestSlot(5, 100, 100)).toBe(4);
+  });
+
+  it('clamps outside the plot instead of returning an out-of-range slot', () => {
+    expect(nearestSlot(5, -40, 100)).toBe(0);
+    expect(nearestSlot(5, 400, 100)).toBe(4);
+  });
+
+  it('returns 0 for a zero-width container', () => {
+    expect(nearestSlot(5, 10, 0)).toBe(0);
+  });
+
+  it('returns 0 for an axis with at most one slot', () => {
+    expect(nearestSlot(1, 90, 100)).toBe(0);
+    expect(nearestSlot(0, 90, 100)).toBe(0);
+  });
+
+  it('agrees with `nearestIndex` at every x, which is why one delegates to the other', () => {
+    // Two roundings of the same boundary is how a mouse user and a keyboard
+    // user end up reading different points.
+    const s = seriesScales(series(1, 2, 3, 4, 5), 100, 50);
+    for (let x = -20; x <= 120; x += 1) {
+      expect(nearestIndex(s, x, 100)).toBe(nearestSlot(s.points.length, x, 100));
+    }
   });
 });
 

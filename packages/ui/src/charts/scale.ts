@@ -89,6 +89,105 @@ export function seriesScales(
   return { points: pts, x, y, min, max };
 }
 
+/**
+ * Several series projected into ONE box: one x axis, one y domain.
+ *
+ * ## Why the axis is the union of days and not "series 0 wins"
+ *
+ * Letting the first series own the axis is a line of code cheaper and drops
+ * every reading the others took on a day the first one missed — silently, and
+ * only in the picture, so the `<SeriesTable>` beside it would still list them.
+ * A chart that disagrees with its own table is worse than no chart. The x axis
+ * is therefore the sorted union of `day(t)` across every series, exactly the
+ * key set `<SeriesTable>` builds, and a series simply has no vertex at a slot
+ * it did not measure.
+ *
+ * ## Why there is one y domain and never two
+ *
+ * A second y axis lets an author slide two unrelated series until they appear
+ * to cross where the argument needs them to. The domain here is the union of
+ * every value, so a series that is genuinely two orders of magnitude smaller
+ * *renders* as flat — which is the true statement about it. Plot it as its own
+ * chart, or as a `MetricTable` row.
+ */
+export interface PlotScales {
+  /** Sorted union of `day(t)` across every series. Slot i is `keys[i]`. */
+  keys: string[];
+  /** Slot index → user-unit x. */
+  x: (slot: number) => number;
+  /** Value → user-unit y. Shared, so two lines are on one scale. */
+  y: (value: number) => number;
+  min: number;
+  max: number;
+  /** One projector per input series, in input order, sharing the axis above. */
+  series: Scales[];
+  /** A series' value at a slot. `null` = that series has no reading that day. */
+  at: (seriesIndex: number, slot: number) => number | null;
+}
+
+/**
+ * Project several series onto one shared axis.
+ *
+ * Two readings on the same day collapse to the last one, which is the rule
+ * `<SeriesTable>` already applies — the alternative is a chart and a table that
+ * report a different number for the same date.
+ */
+export function plotScales(
+  series: readonly (readonly Point[])[],
+  width: number,
+  height: number,
+  pad = 4,
+): PlotScales {
+  const byKey = series.map((points) => new Map(numeric(points).map((p) => [day(p.t), p.v])));
+  const keys = [...new Set(byKey.flatMap((m) => [...m.keys()]))].sort();
+  const slotOf = new Map(keys.map((key, slot) => [key, slot]));
+
+  const values = byKey.flatMap((m) => [...m.values()]);
+  const min = values.length ? Math.min(...values) : 0;
+  const max = values.length ? Math.max(...values) : 0;
+  const span = max - min;
+  const lastSlot = keys.length - 1;
+
+  const x = (slot: number): number => (lastSlot > 0 ? (slot / lastSlot) * width : width / 2);
+  const y = (value: number): number =>
+    span === 0 ? height / 2 : height - pad - ((value - min) / span) * (height - pad * 2);
+
+  return {
+    keys,
+    x,
+    y,
+    min,
+    max,
+    // Each entry is an ordinary `Scales`, so `linePath` / `areaPath` need no
+    // multi-series variant: only the meaning of the index changes, and it
+    // stays private to this closure.
+    series: byKey.map((m) => {
+      const points: NumericPoint[] = keys
+        .filter((key) => m.has(key))
+        .map((key) => ({ t: key, v: m.get(key)! }));
+      return { points, x: (index) => x(slotOf.get(points[index].t)!), y, min, max };
+    }),
+    at: (seriesIndex, slot) => byKey[seriesIndex].get(keys[slot]) ?? null,
+  };
+}
+
+/**
+ * Which slots get a labelled tick.
+ *
+ * Evenly spaced and capped, because the x labels are HTML at a fixed 12px while
+ * the plot they sit under is `viewBox`-scaled — at 320 the plot is 288px wide
+ * and a label per observation would overlap long before the reader ran out of
+ * dates. Returns fewer than `max` when the series is shorter, and never repeats
+ * a slot.
+ */
+export function axisSlots(count: number, max = 5): number[] {
+  if (count <= 0) return [];
+  if (max < 2 || count === 1) return [0];
+  if (count <= max) return Array.from({ length: count }, (_, i) => i);
+  const last = count - 1;
+  return [...new Set(Array.from({ length: max }, (_, i) => Math.round((i / (max - 1)) * last)))];
+}
+
 /** An SVG path `d` for the series polyline. Empty string for <2 points. */
 export const linePath = (scales: Scales): string =>
   scales.points.length < 2
@@ -158,13 +257,26 @@ export function describeSeries(points: readonly Point[], label?: string): string
 }
 
 /**
+ * Anything carrying an observed domain plus something to count.
+ *
+ * `Scales` satisfies it directly; a multi-series plot passes its slot keys.
+ * Widening the parameter rather than adding a `multiTicks` is deliberate — two
+ * tick functions is how one chart ends up with two disagreeing y axes.
+ */
+export interface TickSource {
+  readonly points: readonly unknown[];
+  readonly min: number;
+  readonly max: number;
+}
+
+/**
  * Evenly spaced axis values across the observed domain.
  *
  * Deliberately NOT "nice" rounded ticks. A metric that ran 3,412 → 3,588 gets
  * ticks inside that band; rounding out to 0–4,000 would flatten the only thing
  * the reader came for. The axis labels the data, not a textbook scale.
  */
-export function ticks(scales: Scales, count = 3): number[] {
+export function ticks(scales: TickSource, count = 3): number[] {
   if (count < 2 || scales.points.length === 0) return [];
   if (scales.min === scales.max) return [scales.min];
   const step = (scales.max - scales.min) / (count - 1);
@@ -172,17 +284,30 @@ export function ticks(scales: Scales, count = 3): number[] {
 }
 
 /**
- * Index of the point nearest an x position, in SVG user units.
+ * Slot nearest an x position, in SVG user units.
  *
- * Shared by the pointer crosshair and the arrow-key crosshair so the two can
- * never disagree about which point is "here" — a keyboard user and a mouse user
- * read the same tooltip.
+ * The arithmetic behind every crosshair in this package. It takes a count
+ * rather than a series because with two series plotted there is no single
+ * series whose indices *are* the axis — the axis is the shared slot list. The
+ * pointer path and the arrow-key path both land here, which is the property
+ * that stops a mouse user and a keyboard user being told different things.
  */
-export function nearestIndex(scales: Scales, xPosition: number, width: number): number {
-  const last = scales.points.length - 1;
+export function nearestSlot(count: number, xPosition: number, width: number): number {
+  const last = count - 1;
   if (last <= 0) return 0;
   const ratio = width === 0 ? 0 : xPosition / width;
   return Math.max(0, Math.min(last, Math.round(ratio * last)));
+}
+
+/**
+ * Index of the point nearest an x position, for a single series.
+ *
+ * The one-series spelling of `nearestSlot`, kept because it is the published
+ * shape of this module and delegating is what guarantees the two cannot drift
+ * into rounding a boundary differently.
+ */
+export function nearestIndex(scales: Scales, xPosition: number, width: number): number {
+  return nearestSlot(scales.points.length, xPosition, width);
 }
 
 /** Compact number formatting for dense rows — 12.4k, 3.1M. */

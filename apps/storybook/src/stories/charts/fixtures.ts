@@ -33,6 +33,34 @@ export const WITH_GAPS: Point[] = series(
   312, 340, null, null, 398, 412, 405, 460, null, 512, 548, 561, 590, 604,
 );
 
+/**
+ * A second metric measured on the SAME days — the ordinary compare case.
+ * Same order of magnitude as `RISING`, so both lines keep their shape on the
+ * one shared y domain.
+ */
+export const COMPARING: Point[] = series(
+  980, 1_020, 1_005, 1_090, 1_140, 1_120, 1_210, 1_180, 1_260, 1_300,
+  1_290, 1_340, 1_410, 1_460,
+);
+
+/**
+ * A series that starts a week late and stops a day early. Proves the x axis is
+ * the UNION of both series' days rather than "series 0 owns the axis" — under
+ * which every reading below would silently vanish from the picture while
+ * staying in the data table.
+ */
+export const RAGGED: Point[] = [7, 8, 9, 10, 11, 12].map((index) => ({
+  t: `2026-07-${String(index + 1).padStart(2, '0')}T00:00:00Z`,
+  v: 1_500 + index * 90,
+}));
+
+/**
+ * A metric two orders of magnitude smaller. Renders as a flat line against
+ * `RISING`, which is the true statement about it — the alternative is a second
+ * y axis, which is how two unrelated series are made to appear to cross.
+ */
+export const TINY: Point[] = series(4, 5, 5, 6, 8, 9, 9, 11, 12, 14, 15, 17, 18, 21);
+
 /** Actions drawn ON the curve — the thing that turns a line into an argument. */
 export const ANNOTATIONS: Annotation[] = [
   { t: day(5), label: 'Published "AST, not printed source"', kind: 'publish' },
