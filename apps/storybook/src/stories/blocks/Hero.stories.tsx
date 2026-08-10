@@ -106,13 +106,15 @@ export const TwoColumn: Story = {
         <div className="text-muted-foreground">
           $ npx shadcn@latest add @interlace/button
         </div>
-        <div className="mt-2 text-emerald-600 dark:text-emerald-400">
+        {/* `text-success`, not `text-emerald-600` — the raw palette scored
+            3.65:1 on white and failed the enforced AA/AAA contrast gate. */}
+        <div className="mt-2 text-success">
           ✓ Created src/components/ui/button.tsx
         </div>
-        <div className="text-emerald-600 dark:text-emerald-400">
+        <div className="text-success">
           ✓ Updated tailwind.config.ts
         </div>
-        <div className="text-emerald-600 dark:text-emerald-400">
+        <div className="text-success">
           ✓ Installed dependencies
         </div>
       </div>

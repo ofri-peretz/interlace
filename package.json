@@ -33,7 +33,9 @@
     "release": "node scripts/release-tag.mjs",
     "versions:derive": "node apps/registry/scripts/derive-component-versions.mjs",
     "versions:check": "node apps/registry/scripts/derive-component-versions.mjs --check",
-    "registry:build": "node apps/registry/scripts/build-registry.mjs"
+    "registry:build": "node apps/registry/scripts/build-registry.mjs",
+    "sync:philosophies": "tsx scripts/sync-philosophies.ts",
+    "sync:philosophies:check": "tsx scripts/sync-philosophies.ts --check"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",

@@ -154,7 +154,7 @@ at desktop). The current variants:
 | `comfortable` | `py-16 md:py-20 lg:py-24` | Default for content sections |
 | `spacious` | `py-20 md:py-24 lg:py-32` | Hero adjacents, final CTAs |
 
-Locked by [layout-primitives-lock.test.tsx](apps/docs/src/__tests__/layout-primitives-lock.test.tsx).
+Locked by [layout-primitives-lock.test.tsx](../../packages/ui/__tests__/layout-primitives-lock.test.tsx).
 
 ### 6. Reserve space; never let content jump
 

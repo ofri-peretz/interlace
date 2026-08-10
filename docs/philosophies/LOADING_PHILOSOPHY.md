@@ -83,6 +83,17 @@ sub-element.
 - Under `prefers-reduced-motion: reduce`: no pulse. Static dimmed
   placeholder.
 
+> **This last rule is currently broken in code, not in doc.**
+> `packages/ui/src/primitives/skeleton.tsx` emits a bare
+> `animate-pulse` (lines 173, 210), and the `reduce` block in
+> `packages/ui/styles/tokens.css:155-175` is a 16-class allowlist that
+> does not include `.animate-pulse` — so the pulse runs under `reduce`.
+> Storybook's own global reduce-everything reset
+> (`apps/storybook/.storybook/preview.css`) hides this wherever we
+> normally look at components. The rule stands; the fix belongs in the
+> code. Tracked in
+> [`docs/follow-ups/skeleton-pulse-ignores-reduced-motion.md`](../follow-ups/skeleton-pulse-ignores-reduced-motion.md).
+
 ### 3. Skeleton color is semi-transparent foreground, not background
 
 A skeleton that uses the *background* color is invisible. A skeleton

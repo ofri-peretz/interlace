@@ -886,6 +886,7 @@
     "title": "Primitives/FocusRing",
     "storyIds": [
       "primitives-focusring--default",
+      "primitives-focusring--keyboardflow",
       "primitives-focusring--offsets",
       "primitives-focusring--customsurface",
       "primitives-focusring--dark",
@@ -1157,6 +1158,7 @@
     "storyIds": [
       "primitives-select--default",
       "primitives-select--grouped",
+      "primitives-select--keyboardflow",
       "primitives-select--disabled",
       "primitives-select--dark",
       "primitives-select--invalid",

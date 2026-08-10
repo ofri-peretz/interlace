@@ -3,7 +3,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Philosophy/Documentation/Docs" />
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
-    source: DOCS_PHILOSOPHY.md
+    source: docs/philosophies/DOCS_PHILOSOPHY.md
     hash: 0bbdb7e1836b */}
 
 # Documentation Philosophy
@@ -330,7 +330,7 @@ When a docs-related change is proposed, check it against the principles AND the 
 
 **Common failure modes.** (1) External link checks on every PR causing flakes, training the team to ignore the job. (2) Anchor validation skipped, so `#section` links rot invisibly when headings get edited.
 
-**Our verdict — extend existing checker (priority: high).** Audited 2026-05-10: link validation already exists at [apps/docs/scripts/check-links.ts](apps/docs/scripts/check-links.ts) gated by [.github/workflows/check-links.yml](.github/workflows/check-links.yml) on PR. It covers external `https?://…` URLs (status, HTTPS, suspicious redirects) with a skip-list and PR comments — solid baseline. **Gaps vs. the "great" rung:** (1) no internal link validation (`[foo](../bar.mdx)`, `[foo](/docs/...)`); (2) no anchor validation (`[foo](#section)`); (3) no awareness of Fumadocs `<Card href>` or future `<RuleLink>` components; (4) no agent-trust check that every rule's `meta.docs.url` resolves. **Next step:** extend `check-links.ts` to scan relative + anchor refs (largest immediate rot risk with 272 cross-linked rules), then add a separate package-level CI step that asserts each rule's `meta.docs.url` resolves. Keep external check as-is.
+**Our verdict — extend existing checker (priority: high).** Audited 2026-05-10: link validation already exists at [apps/docs/scripts/check-links.ts](apps/docs/scripts/check-links.ts) gated by [.github/workflows/check-links.yml](.github/workflows/check-links.yml) on PR. It covers external `https?://…` URLs (status, HTTPS, suspicious redirects) with a skip-list and PR comments — solid baseline. **Gaps vs. the "great" rung:** (1) no internal link validation (``foo``, `[foo](/docs/...)`); (2) no anchor validation (`[foo](#section)`); (3) no awareness of Fumadocs `<Card href>` or future `<RuleLink>` components; (4) no agent-trust check that every rule's `meta.docs.url` resolves. **Next step:** extend `check-links.ts` to scan relative + anchor refs (largest immediate rot risk with 272 cross-linked rules), then add a separate package-level CI step that asserts each rule's `meta.docs.url` resolves. Keep external check as-is.
 
 ---
 

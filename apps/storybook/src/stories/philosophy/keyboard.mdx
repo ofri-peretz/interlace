@@ -3,8 +3,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Philosophy/Interaction & States/Keyboard" />
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
-    source: KEYBOARD_PHILOSOPHY.md
-    hash: b146550fb7b0 */}
+    source: docs/philosophies/KEYBOARD_PHILOSOPHY.md
+    hash: b6f3c0797d95 */}
 
 # Keyboard Philosophy
 
@@ -37,9 +37,9 @@ keyboard affordance on the site.
 **Mechanics**
 
 - **Use the DS primitive.** `<SkipLink>` from
-  `packages/ui/src/primitives/skip-link.tsx`, rendered as the very first
-  element in the document — first child of `<body>`, before any
-  provider.
+  `packages/ui/src/primitives/skip-link.tsx`,
+  rendered as the very first element in the document — first child of
+  `<body>`, before any provider.
 - **Visually hidden until focused.** Use `sr-only focus:not-sr-only` so
   the link doesn't pollute layout but appears as a high-contrast brand
   pill the moment a Tab press lands on it. `<SkipLink>` already does.

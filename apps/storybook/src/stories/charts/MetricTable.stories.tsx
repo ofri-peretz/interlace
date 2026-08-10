@@ -142,7 +142,16 @@ export const Selectable: Story = {
     });
 
     await step('the promoted metric is the one now charted', async () => {
-      await waitFor(() => expect(canvas.getByText(/Open issues/)).toBeTruthy());
+      // Scope to the CHART, not the whole canvas. "Open issues" is also the
+      // table's own row header, so a canvas-wide getByText matched two nodes
+      // and threw — and it never proved promotion anyway, since that row
+      // header is present before any selection is made. Asserting inside
+      // `[data-slot="time-series"]` is the assertion this step meant.
+      await waitFor(() => {
+        const chart = canvasElement.querySelector<HTMLElement>('[data-slot="time-series"]');
+        expect(chart).toBeTruthy();
+        expect(within(chart!).getByText(/Open issues/)).toBeTruthy();
+      });
     });
   },
 };

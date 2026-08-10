@@ -23,11 +23,14 @@ const preview: Preview = {
       // Strict tag stack — matches apps/docs/e2e/a11y.spec.ts and the
       // test-runner gate. Keep these in sync: any tag added here must also
       // be added to apps/storybook/.storybook/test-runner.ts STRICT_TAGS.
-      // `context`, not `element`. addon-a11y 10 renamed this; the old key is
-      // not ignored — it leaves the addon stuck on "Preparing accessibility
-      // scan…" forever, so NO story was being axe-scanned in the dev UI while
-      // the system advertised a strict WCAG 2.2 AA + ACT gate. A gate that
-      // silently never runs is worse than no gate: it is a claim.
+      // `context`, not `element`. addon-a11y 10 renamed this, and the old key
+      // is not ignored: the scan throws
+      //   SB_ADDON_A11Y_0001 (ElementA11yParameterError)
+      // and every story reports an addon error instead of a result, so NO
+      // story is axe-scanned in the dev UI while the system advertises a
+      // strict WCAG 2.2 AA + ACT gate. Verified by A/B-ing the key against a
+      // running Storybook. (The test-runner gate is unaffected — it calls
+      // axe.run directly and never reads this parameter.)
       context: '#storybook-root',
       config: {
         rules: [
@@ -119,10 +122,16 @@ const preview: Preview = {
   },
   /**
    * `manual` moved from `parameters.a11y` to GLOBALS in Storybook 10. Left in
-   * parameters it is silently ignored, and the panel sits on "Preparing
-   * accessibility scan…" forever — so no story was axe-scanned in the dev UI
-   * while the system advertised a strict WCAG 2.2 AA + ACT gate. A gate that
-   * never runs is not a weaker gate; it is a false claim.
+   * parameters it is silently ignored — the addon then falls back to its own
+   * default (`manual: false`), so the practical effect is nil, but stating it
+   * here keeps the intent explicit and survives an upstream default flip.
+   *
+   * Unrelated known behaviour, so nobody re-files it as a bug: on a HARD page
+   * load the panel can sit on "Preparing accessibility scan…". The panel only
+   * leaves that state on a `STORY_FINISHED` it is mounted to receive, so a
+   * scan that completed before the panel mounted is never back-filled. Any
+   * story navigation or a "Reload story" click scans immediately. This is
+   * upstream panel behaviour, NOT a misconfiguration here.
    */
   initialGlobals: {
     // Run on story visit rather than on a button press. `manual` moved from

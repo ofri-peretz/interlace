@@ -96,6 +96,18 @@ const RadioGroupItem = React.forwardRef<
         className,
       )}
       {...props}
+      /**
+       * Base UI emits `aria-readonly` on this element unconditionally when the
+       * group is read-only (see RadioRoot.js `rootProps`), but ARIA 1.2 does
+       * not list `aria-readonly` as supported on `role="radio"` — only on
+       * `role="radiogroup"`. axe flags it CRITICAL (`aria-allowed-attr`).
+       *
+       * Nothing is lost by removing it: Base UI ALSO sets `aria-readonly` on
+       * the radiogroup root, which is the conformant place for it, so the
+       * read-only semantic still reaches assistive tech. External props merge
+       * after Base UI's internal `rootProps`, so this wins.
+       */
+      aria-readonly={undefined}
     >
       <Radio.Indicator
         data-slot="radio-group-indicator"

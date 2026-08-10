@@ -3,8 +3,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Philosophy/Foundations/Layout" />
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
-    source: LAYOUT_PHILOSOPHY.md
-    hash: 7fad95cdbfd1 */}
+    source: docs/philosophies/LAYOUT_PHILOSOPHY.md
+    hash: de372482526c */}
 
 # Layout & Responsiveness Philosophy
 
@@ -109,9 +109,9 @@ Base classes describe the smallest viewport. Breakpoints only *add*
 density and breathing room — they never take it away. Tailwind
 defaults do **not** govern: `packages/ui/styles/foundation.css`
 overrides `--breakpoint-*` with a narrower 4-tier ladder, and drops
-`2xl:` entirely. `packages/ui/BREAKPOINT_PHILOSOPHY.md` is the source
-of truth for the ladder and the reasoning; the table below is the
-layout-side summary.
+`2xl:` entirely. `packages/ui/BREAKPOINT_PHILOSOPHY.md`
+is the source of truth for the ladder and the reasoning; the table
+below is the layout-side summary.
 
 | Breakpoint | Width | What changes here |
 | --- | --- | --- |
@@ -162,7 +162,7 @@ at desktop). The current variants:
 | `comfortable` | `py-16 md:py-20 lg:py-24` | Default for content sections |
 | `spacious` | `py-20 md:py-24 lg:py-32` | Hero adjacents, final CTAs |
 
-Locked by [layout-primitives-lock.test.tsx](apps/docs/src/__tests__/layout-primitives-lock.test.tsx).
+Locked by `layout-primitives-lock.test.tsx`.
 
 ### 6. Reserve space; never let content jump
 
@@ -429,7 +429,7 @@ section variant, a breakpoint behavior the table doesn't cover —
 principle and practice is the failure mode, and the homepage is the
 evidence of what that drift looks like at scale.
 
-The companion artifact [apps/docs/HOMEPAGE_LAYOUT_AUDIT.md](./apps/docs/HOMEPAGE_LAYOUT_AUDIT.md)
+The companion artifact `apps/docs/HOMEPAGE_LAYOUT_AUDIT.md`
 documents the current homepage's specific deviations from this
 philosophy. It is a snapshot in time, not a doctrinal document. When
 a refactor lands, that audit is closed; this philosophy stays.

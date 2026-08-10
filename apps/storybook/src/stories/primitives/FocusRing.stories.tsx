@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { FocusRing, MIN_VIEWPORT } from '@interlace/ui/focus-ring';
 import { withDark, withRtl } from '@/decorators';
 
@@ -57,6 +58,25 @@ const FocusableCard = ({ children }: { children: React.ReactNode }) => (
   </a>
 );
 
+/**
+ * Thickness of the painted ring, in CSS px.
+ *
+ * Tailwind paints ring + offset as two stacked box-shadow layers whose spreads
+ * are `offset` and `offset + ring`. The difference is the ring itself, which is
+ * the number SC 2.4.13 actually constrains — and the only measurement that
+ * tells `ring-2` apart from `ring-0`. A "did the box-shadow change?" assertion
+ * passes on both, which is how a ring nobody can see ships green.
+ */
+const ringThickness = (el: HTMLElement): number => {
+  // Split on the layers, not on commas — commas live inside `rgb(…)` too.
+  const layers = getComputedStyle(el).boxShadow.match(/rgba?\([^)]*\)[^,]*/g);
+  if (!layers) return 0;
+  const spreads = layers.map((layer) =>
+    parseFloat((layer.match(/-?[\d.]+px/g) ?? [])[3] ?? '0'),
+  );
+  return Math.max(...spreads) - Math.min(...spreads);
+};
+
 export const Default: Story = {
   args: { offset: 'md', className: 'block' },
   render: (args) => (
@@ -70,6 +90,68 @@ export const Default: Story = {
       </FocusRing>
     </div>
   ),
+};
+
+/**
+ * The only behavioural proof this component has. `:focus-within` is a live
+ * pseudo-class, so axe — which renders the static tree and never presses a
+ * key — reports a clean pass for a ring that paints nothing. This story tabs
+ * in, reads the computed `box-shadow` (Tailwind paints the ring as one), and
+ * tabs back out.
+ *
+ * The width assertion guards the second defect, the one that already shipped
+ * as this component's live preview on the public registry: an `inline-block`
+ * wrapper around an auto-width `display: block` child is a circular width
+ * dependency, and Chrome resolves it to zero.
+ */
+export const KeyboardFlow: Story = {
+  args: { offset: 'md', className: 'block' },
+  render: (args) => (
+    <div className="flex w-[420px] max-w-full flex-col gap-3">
+      <FocusRing {...args}>
+        <FocusableCard>Tab here to paint the ring.</FocusableCard>
+      </FocusRing>
+      {/* Somewhere for Tab to go next, so the blur half is a real assertion. */}
+      <a href="#" className="text-sm underline">
+        Next stop
+      </a>
+    </div>
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const link = canvas.getByRole('link', { name: /tab here/i });
+    const wrapper = canvasElement.querySelector<HTMLElement>(
+      '[data-slot="focus-ring"]',
+    );
+    if (!wrapper) throw new Error('FocusRing rendered no wrapper span.');
+
+    // At rest Tailwind v4 still emits an always-on `--tw-ring-shadow`
+    // placeholder, so the resting box-shadow is a transparent 0px layer on some
+    // builds and `none` on others. Measure the ring, not the string.
+    expect(ringThickness(wrapper)).toBe(0);
+
+    await step('The block wrapper measures its child, not zero', async () => {
+      expect(wrapper.getBoundingClientRect().width).toBeGreaterThan(0);
+      expect(Math.round(wrapper.getBoundingClientRect().width)).toBe(
+        Math.round(link.getBoundingClientRect().width),
+      );
+    });
+
+    await step('Tab into the surface and the ring paints', async () => {
+      await userEvent.tab();
+      await waitFor(() => expect(document.activeElement).toBe(link));
+      // >= 2px is the DS contract (WCAG 2.2 SC 2.4.13 wants >= 2px, contiguous).
+      await waitFor(() =>
+        expect(ringThickness(wrapper)).toBeGreaterThanOrEqual(2),
+      );
+    });
+
+    await step('Tab out and the ring clears', async () => {
+      await userEvent.tab();
+      await waitFor(() => expect(document.activeElement).not.toBe(link));
+      await waitFor(() => expect(ringThickness(wrapper)).toBe(0));
+    });
+  },
 };
 
 export const Offsets: Story = {

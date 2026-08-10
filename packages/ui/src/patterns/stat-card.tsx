@@ -50,9 +50,9 @@ const statCardVariants = cva(
     variants: {
       tone: {
         default: '',
-        success: 'border-emerald-500/40',
-        warning: 'border-amber-500/40',
-        danger: 'border-rose-500/40',
+        success: 'border-success/40',
+        warning: 'border-warning/40',
+        danger: 'border-destructive/40',
       },
     },
     defaultVariants: {
@@ -61,11 +61,18 @@ const statCardVariants = cva(
   },
 );
 
+// Semantic tokens, NOT raw palette. `text-emerald-600` / `-rose-600` scored
+// 3.65:1 and 4.52:1 on white — failing `color-contrast` (AA, 4.5:1) and
+// `color-contrast-enhanced` (AAA, 7:1), both of which this DS enforces. The
+// `--success` / `--warning` / `--destructive` ladder in interlace-theme.css is
+// already tuned to clear AAA in BOTH schemes, so it needs no `dark:` variant:
+// the token itself re-resolves under `.dark`. This is what R19 ("tone classes
+// map to semantic tokens") meant all along.
 const deltaToneClass: Record<NonNullable<VariantProps<typeof statCardVariants>['tone']>, string> = {
   default: 'text-muted-foreground',
-  success: 'text-emerald-600 dark:text-emerald-400',
-  warning: 'text-amber-600 dark:text-amber-400',
-  danger: 'text-rose-600 dark:text-rose-400',
+  success: 'text-success',
+  warning: 'text-warning',
+  danger: 'text-destructive',
 };
 
 type StatCardProps = React.ComponentProps<'article'> &
