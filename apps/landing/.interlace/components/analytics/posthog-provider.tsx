@@ -72,10 +72,62 @@ export interface PostHogProviderProps {
   children: React.ReactNode;
 }
 
+/**
+ * Browser noise that is not an application error.
+ *
+ * "ResizeObserver loop completed with undelivered notifications" is emitted by
+ * the browser itself when an observer callback dirties layout in the same
+ * frame. It is unactionable and arrives in bursts — one Safari session
+ * produced 27 of them, enough to outrank every real bug in the shared inbox.
+ *
+ * "Script error." is the opaque cross-origin placeholder: no stack, no file,
+ * no message. There is nothing to fix and no way to tell two of them apart.
+ *
+ * This lives in the provider, not just in the standalone `posthog-init.ts`
+ * apps, because `capture_exceptions` is enabled here too — so without it the
+ * two highest-traffic properties (blog and the landing site) were the only
+ * ones still reporting the noise the other four had already filtered out.
+ *
+ * Anchored regexes against the first frame, deliberately, rather than a
+ * substring match: a genuine error whose message merely mentions
+ * ResizeObserver must still report.
+ */
+const NOISY_EXCEPTIONS: RegExp[] = [
+  /^ResizeObserver loop/i,
+  /^Script error\.?$/i,
+];
+
+function isNoisyException(properties?: Record<string, unknown>): boolean {
+  const list = properties?.["$exception_list"];
+  if (!Array.isArray(list) || list.length === 0) return false;
+  const value = (list[0] as { value?: unknown } | undefined)?.value;
+  return (
+    typeof value === "string" && NOISY_EXCEPTIONS.some((re) => re.test(value))
+  );
+}
+
 let initialized = false;
 function ensureInit(app: AppName): void {
   if (initialized || typeof window === "undefined" || !POSTHOG_KEY) return;
   posthog.init(POSTHOG_KEY, {
+    // Inside its own guard, and never allowed to throw: dropping noise must
+    // not become a way to drop real events.
+    before_send: (event) => {
+      if (!event) return event;
+      try {
+        if (
+          event.event === "$exception" &&
+          isNoisyException(
+            event.properties as Record<string, unknown> | undefined,
+          )
+        ) {
+          return null;
+        }
+      } catch {
+        /* never block ingest */
+      }
+      return event;
+    },
     api_host: POSTHOG_HOST,
     ui_host: POSTHOG_UI_HOST,
     person_profiles: "identified_only",
@@ -92,8 +144,8 @@ function ensureInit(app: AppName): void {
     // events, powering the performance dashboard without a separate tool.
     capture_performance: true,
   });
-  // Super-property: attached to every event from this app, persists across
-  // page loads in the same browser via localStorage.
+  // Super-property: attached to every event from this app for the lifetime
+  // of the JS session (no localStorage — matches `persistence: "memory"`).
   posthog.register({ app });
   initialized = true;
 }
