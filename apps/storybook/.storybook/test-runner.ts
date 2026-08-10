@@ -2,8 +2,12 @@
  * Storybook test-runner config.
  *
  * Runs axe-core against every story and asserts zero violations at the
- * strict tag stack (matches apps/docs/e2e/a11y.spec.ts and
- * scripts/a11y-summary.ts).
+ * strict tag stack. The sibling gate is apps/landing/e2e/a11y.spec.ts
+ * (`A11Y_TAGS`) — same seven tags, with `color-contrast-enhanced` explicitly
+ * excluded there because the marketing gradient cannot clear AAA. This gate
+ * DOES enforce AAA, because it scores DS tokens rather than gradients.
+ * (`apps/docs/e2e/a11y.spec.ts` and `scripts/a11y-summary.ts`, cited here
+ * before, do not exist in this repo.)
  *
  * The test-runner walks every story by composing them in a headless
  * browser and invoking the story's `play` function. Stories without play

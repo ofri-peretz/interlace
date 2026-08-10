@@ -17,8 +17,16 @@ const buttonVariants = cva(
         // to 4.27:1, under AA. Caught by composite-contrast-lock.
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
+        // `text-foreground` is NOT redundant. `outline` paints an opaque
+        // surface (`bg-background`) but was the only such variant that did not
+        // also set a foreground, so it INHERITED one. Dropped inside a section
+        // that flips the text colour — `<CTASection tone="primary">` is
+        // `bg-primary text-primary-foreground` — the button kept the page
+        // background and took the section's white text: 1.05:1, invisible.
+        // An opaque surface owns its foreground; anything else is a colour
+        // that depends on where you put it.
         outline:
-          'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+          'border bg-background text-foreground shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost:

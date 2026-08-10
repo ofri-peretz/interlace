@@ -54,6 +54,9 @@
  * | R20  | AA contrast                      | table above — every composite measured                      |
  * | R25  | Client component                 | required — Base UI RadioGroup ships client hooks            |
  * | R26  | A11y from upstream               | `role="radiogroup"` + arrow-key roving tabindex             |
+ *
+ * Upstream is trusted but not blindly: Base UI puts `aria-readonly` on the
+ * item, where ARIA does not allow it. See the note on `RadioGroupItem`.
  */
 
 import * as React from 'react';

@@ -20,16 +20,29 @@ const meta: Meta<typeof ShimmerButton> = {
   title: 'MagicUI/ShimmerButton',
   component: ShimmerButton,
   tags: ['autodocs'],
+  /**
+   * The cosmic surface, painted as a REAL ELEMENT rather than via
+   * `parameters.backgrounds`.
+   *
+   * These stories pass translucent fills (`rgba(255,255,255,0.12)`) with
+   * `text-white`, which only resolve against something dark. The backgrounds
+   * addon used to supply that, but it is disabled repo-wide in
+   * `.storybook/preview.ts` (it overrides the token cascade), so the dark
+   * surface silently stopped existing — leaving white text composited onto the
+   * page background. Under the `harbor` brand palette that is #ffffff on
+   * #f8fafb: 1.04:1, invisible, and caught by the theme-matrix a11y gate.
+   *
+   * A decorator puts the surface in the DOM, so axe scores the contrast the
+   * user actually sees, in every theme.
+   */
+  decorators: [
+    (Story) => (
+      <div className="rounded-lg bg-[#0b0418] p-8">
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    // ShimmerButton is designed to sit on a dark cosmic surface; render the
-    // story canvas dark so the default white shimmer color reads correctly.
-    backgrounds: {
-      default: 'cosmic',
-      values: [
-        { name: 'cosmic', value: '#0b0418' },
-        { name: 'light', value: '#ffffff' },
-      ],
-    },
     docs: {
       description: {
         component:

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, waitFor, within } from 'storybook/test';
+import { expect, userEvent, waitFor } from 'storybook/test';
 import { MetricTable } from '@interlace/ui/charts/metric-table';
 import { TimeSeries } from '@interlace/ui/charts/time-series';
 import { withDark, withRtl } from '@/decorators';
@@ -132,8 +132,6 @@ export const Selectable: Story = {
     );
   },
   play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
     await step('a row selects from the keyboard', async () => {
       const rows = canvasElement.querySelectorAll<HTMLElement>('[data-slot="metric-table-row"]');
       rows[3].focus();
@@ -142,15 +140,16 @@ export const Selectable: Story = {
     });
 
     await step('the promoted metric is the one now charted', async () => {
-      // Scope to the CHART, not the whole canvas. "Open issues" is also the
-      // table's own row header, so a canvas-wide getByText matched two nodes
-      // and threw — and it never proved promotion anyway, since that row
-      // header is present before any selection is made. Asserting inside
-      // `[data-slot="time-series"]` is the assertion this step meant.
+      // Assert on the CHART'S OWN CAPTION, not on canvas text. "Open issues"
+      // appears at least four times once promoted — the metric table's row
+      // header, plus the chart's figcaption, its sr-only data-table <caption>
+      // and that table's <th>. A getByText for it therefore always threw
+      // "Found multiple elements", and scoping to `[data-slot="time-series"]`
+      // is not enough because three of the four live inside the chart.
+      // The figcaption is the single node that names what got promoted.
       await waitFor(() => {
-        const chart = canvasElement.querySelector<HTMLElement>('[data-slot="time-series"]');
-        expect(chart).toBeTruthy();
-        expect(within(chart!).getByText(/Open issues/)).toBeTruthy();
+        const caption = canvasElement.querySelector('[data-slot="time-series"] figcaption');
+        expect(caption?.textContent).toMatch(/Open issues/);
       });
     });
   },

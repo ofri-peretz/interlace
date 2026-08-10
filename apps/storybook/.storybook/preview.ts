@@ -20,9 +20,14 @@ const preview: Preview = {
      // backgrounds picker is redundant for our use-case.
     backgrounds: { disable: true },
     a11y: {
-      // Strict tag stack — matches apps/docs/e2e/a11y.spec.ts and the
-      // test-runner gate. Keep these in sync: any tag added here must also
-      // be added to apps/storybook/.storybook/test-runner.ts STRICT_TAGS.
+      // Strict tag stack. Keep in sync with the two sibling gates:
+      //   - apps/storybook/.storybook/test-runner.ts  STRICT_TAGS
+      //   - apps/landing/e2e/a11y.spec.ts             A11Y_TAGS
+      // All three now run the same seven tags. Landing additionally excludes
+      // `color-contrast-enhanced` by name — its marketing gradient cannot
+      // clear AAA — which is the one intentional difference; see the block
+      // comment there. (`apps/docs` — cited here before — does not exist;
+      // neither does scripts/a11y-summary.ts.)
       // `context`, not `element`. addon-a11y 10 renamed this, and the old key
       // is not ignored: the scan throws
       //   SB_ADDON_A11Y_0001 (ElementA11yParameterError)
