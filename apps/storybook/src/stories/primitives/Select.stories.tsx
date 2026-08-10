@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import {
   Select,
   SelectContent,
@@ -188,6 +188,77 @@ export const Grouped: Story = {
       </SelectContent>
     </Select>
   ),
+};
+
+/**
+ * Keyboard-only flow per the APG listbox pattern: Enter opens the popup AND
+ * moves focus onto an option, arrows rove, Escape closes and returns focus to
+ * the trigger. This is the story the keyboard table in `select.tsx` claims as
+ * its proof — `overlay-nav-keyboard-lock` fails if it is deleted.
+ */
+export const KeyboardFlow: Story = {
+  render: () => (
+    <Select items={SORT_ITEMS}>
+      <SelectTrigger className="w-[180px] max-w-full" aria-label="Sort by">
+        <SelectValue placeholder="Sort by" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="date">Latest</SelectItem>
+        <SelectItem value="reactions">Popular</SelectItem>
+        <SelectItem value="comments">Most discussed</SelectItem>
+      </SelectContent>
+    </Select>
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole('combobox', { name: /sort by/i });
+    // The popup is portalled out of `canvasElement`, and Base UI force-mounts
+    // its items on trigger focus so closed-trigger typeahead works. So query
+    // by ROLE, not by selector: the closed positioner carries `hidden`, which
+    // takes it out of the a11y tree while its DOM is still there. A
+    // `querySelector('[role="listbox"]')` assertion would pass either way.
+    const body = within(document.body);
+
+    await step('The trigger advertises the listbox it owns', async () => {
+      // Base UI writes the ARIA pairing in a mount effect.
+      await waitFor(() => {
+        expect(trigger.getAttribute('aria-haspopup')).toBe('listbox');
+        expect(trigger.getAttribute('aria-expanded')).toBe('false');
+      });
+    });
+
+    await step('Enter opens the popup and focuses an option', async () => {
+      // Tab to it rather than calling .focus() — userEvent keeps its own
+      // notion of the focused element, and a raw focus() call leaves its
+      // keyboard dispatch pointed at the document instead of the trigger.
+      await userEvent.tab();
+      await waitFor(() => expect(document.activeElement).toBe(trigger));
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(body.queryByRole('listbox')).toBeTruthy());
+      await waitFor(() =>
+        expect(trigger.getAttribute('aria-expanded')).toBe('true'),
+      );
+      await waitFor(() =>
+        expect(document.activeElement?.getAttribute('role')).toBe('option'),
+      );
+    });
+
+    await step('ArrowDown roves to the next option', async () => {
+      const first = document.activeElement;
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => expect(document.activeElement).not.toBe(first));
+      expect(document.activeElement?.getAttribute('role')).toBe('option');
+    });
+
+    await step('Escape closes and restores focus to the trigger', async () => {
+      await userEvent.keyboard('{Escape}');
+      await waitFor(() => expect(body.queryByRole('listbox')).toBeFalsy());
+      await waitFor(() =>
+        expect(trigger.getAttribute('aria-expanded')).toBe('false'),
+      );
+      await waitFor(() => expect(document.activeElement).toBe(trigger));
+    });
+  },
 };
 
 export const Disabled: Story = {

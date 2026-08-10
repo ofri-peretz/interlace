@@ -106,17 +106,10 @@ type Story = StoryObj<typeof Tooltip>;
 /**
  * The `open` control is wired to `onOpenChange`, so flipping it opens the
  * popup and hovering / focusing / pressing Escape moves the control back —
- * flip it to `true` to park the tooltip on screen and inspect it.
- *
- * It deliberately starts closed. The DS renders the popup as a static child
- * of Base UI's `Tooltip.Positioner` (the positioner is the fixed element),
- * while `.storybook/test-runner.ts` asserts that any open
- * `[data-slot="tooltip-content"]` is itself `position: fixed|absolute` — so a
- * story that opens on load fails the styling sweep. That mismatch is real and
- * pre-existing; it just had no story exercising it until now. Fixing it means
- * touching either the primitive or the runner, both out of scope here.
+ * flip it to `false` to send it away.
  */
 export const Default: Story = {
+  args: { open: true },
   render: function DefaultTooltip(args) {
     const [, updateArgs] = useArgs();
     return (

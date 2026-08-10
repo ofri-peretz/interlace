@@ -123,14 +123,23 @@ const config: TestRunnerConfig = {
         if (alpha === 0) problems.push(`dialog-overlay background-color alpha=0 (expected > 0)`);
       }
 
-      // Popover / DropdownMenu / Tooltip content panels — same fixed-positioning
-      // contract as Dialog when open.
+      // Popover / DropdownMenu / Tooltip popups. NOT the Dialog contract:
+      // Base UI puts the positioning on the *Positioner*, and the popup is a
+      // `position: static` child of it. Asserting `fixed|absolute` on the
+      // popup fails for every open one; asserting it on the positioner would
+      // never fail, because that position is an inline style Base UI writes at
+      // runtime — it survives a CSS build that emitted nothing. So assert what
+      // Tailwind actually owns here: an opaque surface (`bg-popover` /
+      // `bg-primary`) with `rounded-md`. Both vanish if the CSS is missing.
       for (const slot of ['popover-content', 'dropdown-menu-content', 'tooltip-content']) {
         const sel = `[data-slot="${slot}"][data-open], [data-slot="${slot}"][data-state="open"]`;
         for (const el of document.querySelectorAll<HTMLElement>(sel)) {
           const cs = getComputedStyle(el);
-          if (cs.position !== 'fixed' && cs.position !== 'absolute') {
-            problems.push(`${slot} position=${cs.position} (expected fixed|absolute)`);
+          if (parseAlpha(cs.backgroundColor) === 0) {
+            problems.push(`${slot} background-color alpha=0 (expected an opaque surface)`);
+          }
+          if (Number.parseFloat(cs.borderTopLeftRadius) === 0) {
+            problems.push(`${slot} border-radius=0 (expected rounded-md)`);
           }
         }
       }

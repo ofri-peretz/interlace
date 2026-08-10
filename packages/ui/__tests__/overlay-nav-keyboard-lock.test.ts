@@ -54,6 +54,7 @@ const KEYBOARD_DRIVEN = [
   { primitive: 'hover-card', story: 'HoverCard' },
   { primitive: 'dropdown-menu', story: 'DropdownMenu' },
   { primitive: 'context-menu', story: 'ContextMenu' },
+  { primitive: 'select', story: 'Select' },
   // Nav / disclosure — roving tabindex, aria-expanded, bypass blocks.
   { primitive: 'tabs', story: 'Tabs' },
   { primitive: 'accordion', story: 'Accordion' },
@@ -79,6 +80,7 @@ const MUST_ASSERT_ESCAPE = new Set([
   'HoverCard',
   'DropdownMenu',
   'ContextMenu',
+  'Select',
   'ThemeSwitcher',
 ]);
 

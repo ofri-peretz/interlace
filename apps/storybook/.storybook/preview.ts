@@ -125,6 +125,9 @@ const preview: Preview = {
    * never runs is not a weaker gate; it is a false claim.
    */
   initialGlobals: {
+    // Run on story visit rather than on a button press. `manual` moved from
+    // `parameters.a11y` to globals in Storybook 10; left in parameters it is
+    // silently ignored.
     a11y: { manual: false },
   },
   decorators: [

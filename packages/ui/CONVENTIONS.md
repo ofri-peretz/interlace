@@ -151,9 +151,16 @@ Label, Separator, Pagination links, ArticleCard.
 ```
 src/
 ├── lib/                     # Hooks and utilities
-├── primitives/              # Single-element-wrap components (Button, Input, ...)
-├── blocks/                  # Purposeful compositions (ArticleCard, SearchInput, ...)
-├── patterns/                # Full-page presets (HeroCosmic, ...)
+├── primitives/              # Layer 3 — atomic components (Button, Input, ...)
+├── patterns/                # Layer 4 — composites of ≥2 primitives, not full
+│                            #           pages (AuthorByline, NewsletterForm, ...)
+├── templates/               # Layer 5 — full-page surfaces (ArticleTemplate,
+│                            #           AuthTemplate, ErrorTemplate, ...)
+├── charts/                  # Data-visualization components + their scale/graph
+│                            #   helpers (Sparkline, TimeSeries, MetricTable, ...)
+├── blocks/                  # DEPRECATED alias dir — one-line re-exports of
+│                            #   patterns/. Removed in @interlace/ui 2.0.0.
+│                            #   Never add a file here.
 ├── mdx/                     # MDX-author components (Mermaid)
 ├── fumadocs/                # Fumadocs-ecosystem helpers (RemoteMarkdown, ...)
 ├── magicui/                 # MagicUI-derived decorative motion
@@ -161,6 +168,10 @@ src/
 ```
 
 The path tells the consumer the level of opinion.
+`DESIGN_SYSTEM_LAYERS.md` is the authority on what belongs in which
+layer and the rules each layer owes (patterns never bypass a primitive;
+templates owe a `SectionBoundary` and a `.Skeleton`). If this list and
+that doc ever disagree, that doc wins.
 
 ## File header convention
 

@@ -99,16 +99,29 @@ component.
 
 Base classes describe the smallest viewport. Breakpoints only *add*
 density and breathing room — they never take it away. Tailwind
-defaults govern:
+defaults do **not** govern: `packages/ui/styles/foundation.css`
+overrides `--breakpoint-*` with a narrower 4-tier ladder, and drops
+`2xl:` entirely. [`packages/ui/BREAKPOINT_PHILOSOPHY.md`](../../packages/ui/BREAKPOINT_PHILOSOPHY.md)
+is the source of truth for the ladder and the reasoning; the table
+below is the layout-side summary.
 
 | Breakpoint | Width | What changes here |
 | --- | --- | --- |
-| (base) | 0–639 | Single column, smallest typography, page padding `px-4` |
-| `sm:` | ≥ 640 | Page padding `px-6`, side-by-side chips |
-| `md:` | ≥ 768 | Multi-column grids start, headlines scale up |
-| `lg:` | ≥ 1024 | Page padding `px-8`, section padding `py-24` |
-| `xl:` | ≥ 1280 | `wide` containers reach max width |
-| `2xl:` | ≥ 1536 | No new behavior; rare overrides only |
+| (base) | 0–479 | Single column, smallest typography, page padding `px-4` |
+| `sm:` | ≥ 480 (`30rem`) | Page padding `px-6`, side-by-side chips |
+| `md:` | ≥ 768 (`48rem`) | Multi-column grids start, headlines scale up |
+| `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding `py-24` |
+| `xl:` | ≥ 1280 (`80rem`) | `wide` containers reach max width |
+
+There is no `2xl:` variant. `Container size="wide"` (1280px) is the
+widest section the DS supports, so a variant that only fires above
+1536px has no DS-side meaning. `packages/ui/__tests__/breakpoints-lock.test.ts`
+asserts both the four values and the absence of `--breakpoint-2xl` —
+adding one is a test failure, not a style choice.
+
+The spacing scale in §3 also has a `2xl` token (96px). It is
+unrelated: that `2xl` is a *gap/padding* step, this `2xl:` would have
+been a *viewport* variant.
 
 Patterns like `lg:hidden md:flex` (hide on desktop, show on mobile)
 are a smell. The mobile layout is the base; `md:` and up extend it.
@@ -233,7 +246,7 @@ an `import`.
 | `<Section>` | `packages/ui/src/primitives/section.tsx` | Vertical rhythm + tone + dividers + container. Props: `spacing`, `tone`, `divider`, `container`, `as`. |
 | `<SectionHeader>` | `packages/ui/src/blocks/section-header.tsx` | The repeated `text-center mb-12` + h2 + tagline pattern. Props: `eyebrow`, `title`, `tagline`, `align`. |
 | `<Stack>` / `<Cluster>` | `packages/ui/src/primitives/stack.tsx` | Vertical (`Stack`) and horizontal-wrapping (`Cluster`) gap rhythm. Props: `gap`, `direction?`, `align?`, `wrap?`. |
-| `<Grid>` / `<GridItem>` | `packages/ui/src/primitives/grid.tsx` | 2-D CSS-grid rhythm on the §3 spacing scale: `<Grid>` sets columns + gap, `<GridItem>` spans responsively per breakpoint. Two flat components (never a `kind` union). Props: `cols`, `gap`, `rowGap?`, `colGap?` / `span`, `colStart?`. |
+| `<Grid>` / `<GridItem>` | `packages/ui/src/primitives/grid.tsx` | 2-D CSS-grid rhythm on the §3 spacing scale: `<Grid>` sets columns + gap, `<GridItem>` spans responsively per breakpoint. Two flat components (never a `kind` union). Props: `cols`, `gap`, `as` / `span`, `mdSpan`, `lgSpan`, `as`. Gap is a single token (no split `rowGap`/`colGap`), and there is no `colStart` — placement is span-only. |
 | `<Box>` | `packages/ui/src/primitives/box.tsx` | The lowest-altitude wrapper — surface + box-model on one element. Props: `surface`, `padding`, `radius`, `border`, `as`. Curated tokenized props only (no `sx` / `mt`/`px` style-prop soup). `<Card>` composes `<Box>`; reach for `<Section>`/`<Container>` for page rhythm. |
 
 **Forbidden** (do not add): grid-system _frameworks_ (no Bootstrap-grid,

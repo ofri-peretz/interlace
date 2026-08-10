@@ -8,13 +8,24 @@ docs page, **start here**.
 
 Sibling docs that drill into specific layers:
 
+In this package:
+
 - `FUMADOCS_BRIDGE.md` (layer-2 seam — the ONLY coupling between the DS
   and fumadocs; read before touching `theme.css` or `src/fumadocs/`)
-- `STYLES.md` (canonical CSS import order, this doc summarizes)
-- `TYPOGRAPHY_PHILOSOPHY.md` (foundation layer — type scale)
-- `LAYOUT_PHILOSOPHY.md` (foundation layer — spacing scale)
-- `COLOR_PHILOSOPHY.md` (brand layer — semantic-token table)
-- `MOTION_PHILOSOPHY.md` (primitives layer — animation tokens)
+- `BREAKPOINT_PHILOSOPHY.md` (foundation layer — the 4-tier
+  `--breakpoint-*` ladder, and why there is no `2xl`)
+- `CONVENTIONS.md` (authoring rules: file structure, naming, headers)
+
+The canonical CSS import order is "The CSS import contract" below, and
+`styles/index.css` is its executable form. (There is no `STYLES.md` —
+earlier revisions of this list pointed at one that was never written.)
+
+In `docs/philosophies/`, at the repo root:
+
+- `../../docs/philosophies/TYPOGRAPHY_PHILOSOPHY.md` (foundation layer — type scale)
+- `../../docs/philosophies/LAYOUT_PHILOSOPHY.md` (foundation layer — spacing scale)
+- `../../docs/philosophies/COLOR_PHILOSOPHY.md` (brand layer — semantic-token table)
+- `../../docs/philosophies/MOTION_PHILOSOPHY.md` (primitives layer — the motion budget)
 
 ---
 
@@ -130,7 +141,9 @@ bridge tokens. Read it before touching `theme.css` or `src/fumadocs/`.
 responsibility, single file, governed by the R1–R26 component API rules
 (see `eslint-plugin-react-features/docs/rules/component-api/*`).
 
-**Files:** `packages/ui/src/primitives/*.tsx` (42 today).
+**Files:** `packages/ui/src/primitives/*.tsx` (56 at time of writing —
+re-derive with `ls packages/ui/src/primitives/*.tsx | wc -l` rather
+than trusting this number; no test guards it).
 
 **Rule:** Never reference a layer-1 token directly (no hex literals in
 `className` or `style`, enforced by `no-raw-color-literal`). Always go
