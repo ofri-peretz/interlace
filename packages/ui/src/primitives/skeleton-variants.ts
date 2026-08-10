@@ -59,6 +59,11 @@ export const SKELETON_VARIANTS = [
   // ── Pattern-shaped (matches a pattern's full layout) ─────────────────
   'article-card',
   'author-byline',
+  // A table's loading state is the one most often left as a centred spinner,
+  // which reserves nothing: the body arrives, the page grows by 300px, and
+  // whatever the reader was aiming at moves. Composite (header row + body
+  // rows) — see skeleton.tsx.
+  'data-table',
   'newsletter-form',
   'page-header',
   'prev-next-post',
@@ -140,6 +145,9 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // Pattern-shaped (outer; composite inner rendered in skeleton.tsx)
   'article-card': 'h-72 w-full rounded-xl',
   'author-byline': 'h-12 w-full rounded-md',
+  // Bordered like the real DataTable scroll box, so the swap changes the
+  // contents of the frame and not the frame itself.
+  'data-table': 'w-full rounded-md border border-border',
   'newsletter-form': 'h-32 w-full rounded-md',
   'page-header': 'h-20 w-full rounded-md',
   // Transparent + unrounded on purpose: this variant paints TWO cards side
