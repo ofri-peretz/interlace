@@ -79,5 +79,12 @@ export const Decorative: Story = {
   },
 };
 
+export const Loading: Story = {
+  parameters: {
+    docs: { description: { story: 'The exact 90×22 inline cell, so the table column never reflows.' } },
+  },
+  args: { points: [], loading: true },
+};
+
 export const Dark: Story = { args: { points: RISING, label: 'Downloads' }, decorators: [withDark] };
 export const Rtl: Story = { args: { points: RISING, label: 'Downloads' }, decorators: [withRtl] };

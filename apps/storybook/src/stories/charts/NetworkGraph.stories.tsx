@@ -121,6 +121,10 @@ export const Empty: Story = {
   args: { nodes: [], edges: [] },
 };
 
+export const Loading: Story = {
+  args: { nodes: [], edges: [], loading: true },
+};
+
 export const Dark: Story = {
   args: { nodes: GRAPH_NODES, edges: GRAPH_EDGES, caption: 'comment ties' },
   decorators: [withDark],

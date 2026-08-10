@@ -109,6 +109,13 @@ export const Sparse: Story = {
   args: { rows: METRIC_ROWS.slice(1, 2), caption: 'A metric with holes', maxColumns: 6 },
 };
 
+export const Loading: Story = {
+  parameters: {
+    docs: { description: { story: 'Header row plus rows, at the width the data will occupy.' } },
+  },
+  args: { rows: [], caption: 'Ecosystem metrics', loading: true },
+};
+
 export const Dark: Story = {
   args: { rows: METRIC_ROWS, caption: 'Ecosystem metrics' },
   decorators: [withDark],

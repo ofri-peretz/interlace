@@ -121,6 +121,18 @@ export const NotEnoughData: Story = {
   args: { points: RISING.slice(0, 1), label: 'New metric' },
 };
 
+export const Loading: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Reserves the same box the chart will occupy. A spinner reserves nothing and guarantees a layout shift the moment the series lands — and "No data yet" while the request is still in flight is a claim the reader cannot check.',
+      },
+    },
+  },
+  args: { points: [], label: 'npm downloads', loading: true },
+};
+
 export const Dark: Story = {
   args: { points: RISING, annotations: ANNOTATIONS, label: 'npm downloads' },
   decorators: [withDark],

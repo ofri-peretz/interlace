@@ -106,6 +106,15 @@ describe('Sparkline', () => {
     expect(cls).toContain('align-middle');
   });
 
+  it('reserves the exact inline cell while loading, so the column does not reflow', () => {
+    // A spinner here would collapse the cell and shift every row beside it the
+    // moment the metric arrives.
+    const { container } = render(<Sparkline points={[]} loading />);
+    const skeleton = container.querySelector('[data-slot="sparkline"]');
+    expect(skeleton?.getAttribute('class')).toContain('w-[90px]');
+    expect(container.querySelector('svg')).toBeNull();
+  });
+
   it('forwards a ref to the svg element', () => {
     const ref = { current: null as SVGSVGElement | null };
     render(<Sparkline points={series(1, 2)} ref={ref} />);
@@ -405,6 +414,19 @@ describe('TimeSeries', () => {
     expect(container.querySelector('[data-annotation-kind]')).toBeNull();
   });
 
+  it('shows a chart-shaped placeholder while loading, not the empty-state copy', () => {
+    // "No data yet" while the request is still in flight is a false statement
+    // the reader has no way to check.
+    const { container } = render(<TimeSeries points={[]} loading />);
+    expect(container.querySelector('[data-slot="time-series"]')).not.toBeNull();
+    expect(screen.queryByText(/No data yet/)).toBeNull();
+  });
+
+  it('keeps the caller className on the loading placeholder', () => {
+    const { container } = render(<TimeSeries points={[]} loading className="mt-3" />);
+    expect(container.querySelector('[data-slot="time-series"]')?.getAttribute('class')).toContain('mt-3');
+  });
+
   it('forwards a ref to the figure', () => {
     const ref = { current: null as HTMLElement | null };
     render(<TimeSeries points={series(1, 2)} ref={ref} />);
@@ -497,6 +519,12 @@ describe('MetricTable', () => {
       d.getAttribute('data-tone'),
     );
     expect(tones).toEqual(['good', 'bad']);
+  });
+
+  it('renders a row-shaped placeholder while loading, not an empty table', () => {
+    const { container } = render(<MetricTable rows={[]} caption="c" loading />);
+    expect(container.querySelector('[data-slot="metric-table"]')).not.toBeNull();
+    expect(screen.queryByRole('table')).toBeNull();
   });
 
   it('forwards a ref and merges className', () => {

@@ -392,12 +392,13 @@
       "charts-metrictable--polarity",
       "charts-metrictable--selectable",
       "charts-metrictable--sparse",
+      "charts-metrictable--loading",
       "charts-metrictable--dark",
       "charts-metrictable--rtl"
     ],
     "preview": "charts-metrictable--default",
     "previewDark": "charts-metrictable--dark",
-    "skeleton": null
+    "skeleton": "charts-metrictable--loading"
   },
   "network-graph": {
     "title": "Charts/NetworkGraph",
@@ -407,12 +408,13 @@
       "charts-networkgraph--keyboardselection",
       "charts-networkgraph--capped",
       "charts-networkgraph--empty",
+      "charts-networkgraph--loading",
       "charts-networkgraph--dark",
       "charts-networkgraph--rtl"
     ],
     "preview": "charts-networkgraph--default",
     "previewDark": "charts-networkgraph--dark",
-    "skeleton": null
+    "skeleton": "charts-networkgraph--loading"
   },
   "series-table": {
     "title": "Charts/SeriesTable",
@@ -436,12 +438,13 @@
       "charts-sparkline--flat",
       "charts-sparkline--notenoughdata",
       "charts-sparkline--decorative",
+      "charts-sparkline--loading",
       "charts-sparkline--dark",
       "charts-sparkline--rtl"
     ],
     "preview": "charts-sparkline--rising",
     "previewDark": "charts-sparkline--dark",
-    "skeleton": null
+    "skeleton": "charts-sparkline--loading"
   },
   "time-series": {
     "title": "Charts/TimeSeries",
@@ -452,12 +455,13 @@
       "charts-timeseries--withgaps",
       "charts-timeseries--datatablevisible",
       "charts-timeseries--notenoughdata",
+      "charts-timeseries--loading",
       "charts-timeseries--dark",
       "charts-timeseries--rtl"
     ],
     "preview": "charts-timeseries--default",
     "previewDark": "charts-timeseries--dark",
-    "skeleton": null
+    "skeleton": "charts-timeseries--loading"
   },
   "colors": {
     "title": "Foundations/Colors",

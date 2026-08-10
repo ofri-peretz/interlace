@@ -113,6 +113,10 @@ const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   'pagination',
   'tabs',
   'toc',
+  // Charts (wave 5). `metric-table` is the only composite of the three: its
+  // silhouette is a header row plus repeating rows, which a single painted box
+  // cannot express. `chart` and `sparkline` are honest rectangles.
+  'metric-table',
 ]);
 
 function Skeleton({
@@ -392,6 +396,28 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
           <div className="bg-muted-foreground/10 ml-md h-3 w-1/2 rounded-sm" />
           <div className="bg-muted-foreground/10 h-3 w-4/5 rounded-sm" />
           <div className="bg-muted-foreground/10 ml-md h-3 w-3/5 rounded-sm" />
+        </div>
+      );
+    case 'metric-table':
+      // Header row plus four metric rows. The trailing narrow cells stand in
+      // for the sparkline and delta columns, so the row width the data will
+      // occupy is reserved before it arrives.
+      return (
+        <div className="flex flex-col gap-xs p-sm">
+          <div className="flex items-center gap-sm border-b border-border pb-xs">
+            <div className="bg-muted-foreground/10 h-3 w-1/4 rounded-sm" />
+            <div className="bg-muted-foreground/10 ml-auto h-3 w-10 rounded-sm" />
+            <div className="bg-muted-foreground/10 h-3 w-10 rounded-sm" />
+            <div className="bg-muted-foreground/10 h-3 w-12 rounded-sm" />
+          </div>
+          {[0, 1, 2, 3].map((row) => (
+            <div key={row} className="flex items-center gap-sm">
+              <div className="bg-muted-foreground/10 h-4 w-1/3 rounded-sm" />
+              <div className="bg-muted-foreground/10 ml-auto h-4 w-10 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-4 w-[90px] rounded-sm" />
+              <div className="bg-muted-foreground/10 h-4 w-12 rounded-sm" />
+            </div>
+          ))}
         </div>
       );
     default:

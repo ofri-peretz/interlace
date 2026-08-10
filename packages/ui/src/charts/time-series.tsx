@@ -39,7 +39,8 @@
  * | R14  | Declares min viewport      | `data-min-viewport={String(MIN_VIEWPORT)}`                |
  * | R18  | Tailwind only              | zero inline `style`                                       |
  * | R19  | Tokens only                | `stroke-viz-*`, `fill-viz-*`, `text-muted-foreground`     |
- * | R20  | AA contrast                | axis 3.49:1 / 3.83:1; grid deliberately decorative        |
+ * | R20  | AA contrast                | axis 3.64:1 light / 3.82:1 dark; grid deliberately decorative |
+ * | R23  | Loading reserves its box   | `loading` → `<Skeleton variant="chart">`, same height     |
  * | R25  | Client component           | pointer + key handlers, `useState`                        |
  * | R26  | A11y                       | `role="img"` + label + focusable + live readout + table   |
  */
@@ -47,6 +48,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { SeriesTable } from './series-table.js';
 import {
   areaPath,
@@ -99,10 +101,29 @@ export interface TimeSeriesProps extends Omit<React.ComponentProps<'figure'>, 'c
   unit?: string;
   /** Render the data table visibly under the chart instead of `sr-only`. */
   showTable?: boolean;
+  /**
+   * Render a `<Skeleton variant="chart" />` placeholder.
+   *
+   * A chart's data is in flight on first paint essentially always, so this is
+   * the state the component spends its first frames in — and the one most often
+   * left as a spinner, which reserves no space and guarantees a layout shift the
+   * moment the series lands.
+   */
+  loading?: boolean;
 }
 
 export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(function TimeSeries(
-  { points, annotations = [], height = 220, label, unit, showTable = false, className, ...props },
+  {
+    points,
+    annotations = [],
+    height = 220,
+    label,
+    unit,
+    showTable = false,
+    loading = false,
+    className,
+    ...props
+  },
   ref,
 ) {
   const [cursor, setCursor] = React.useState<number | null>(null);
@@ -161,6 +182,23 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     const userX = ((event.clientX - box.left) / box.width) * W - PAD_LEFT;
     move(nearestIndex(scales, userX, W - PAD_LEFT));
   };
+
+  // Loading is checked BEFORE the not-enough-data branch: data still in flight
+  // is not the same claim as "this metric has no history", and telling a reader
+  // the second while the first is true is simply wrong.
+  //
+  // Every hook above this point runs unconditionally — the guard sits after them
+  // on purpose, so toggling `loading` never changes the hook order.
+  if (loading) {
+    return (
+      <Skeleton
+        variant="chart"
+        data-slot="time-series"
+        data-min-viewport={String(MIN_VIEWPORT)}
+        className={className}
+      />
+    );
+  }
 
   // Below two points there is no line to draw. Say why, rather than rendering an
   // empty box that reads as a bug — a series genuinely cannot be back-filled.

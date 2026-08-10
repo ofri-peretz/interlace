@@ -358,6 +358,12 @@ describe('NetworkGraph', () => {
     expect(screen.getByText('detail for Ada')).toBeTruthy();
   });
 
+  it('shows a placeholder while loading rather than claiming the network is empty', () => {
+    const { container } = render(<NetworkGraph nodes={[]} edges={[]} loading />);
+    expect(container.querySelector('[data-slot="network-graph"]')).not.toBeNull();
+    expect(screen.queryByText(/No connections observed yet/)).toBeNull();
+  });
+
   it('forwards a ref and merges className', () => {
     const ref = { current: null as HTMLDivElement | null };
     render(<NetworkGraph ref={ref} className="mt-8" nodes={nodes} edges={edges} />);

@@ -35,6 +35,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { delta, describeSeries, linePath, seriesScales, type Point } from './scale.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -55,10 +56,24 @@ export interface SparklineProps
   decorative?: boolean;
   /** Name used in the accessible label. Ignored when `decorative`. */
   label?: string;
+  /**
+   * Render a `<Skeleton variant="sparkline" />` placeholder at the exact inline
+   * cell size, so a metric arriving mid-window does not reflow its column.
+   */
+  loading?: boolean;
 }
 
 export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(function Sparkline(
-  { points, width = 90, height = 22, decorative = false, label, className, ...props },
+  {
+    points,
+    width = 90,
+    height = 22,
+    decorative = false,
+    label,
+    loading = false,
+    className,
+    ...props
+  },
   ref,
 ) {
   const scales = React.useMemo(
@@ -67,6 +82,12 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(functio
   );
   const path = linePath(scales);
   const change = delta(points);
+
+  if (loading) {
+    return (
+      <Skeleton variant="sparkline" data-slot="sparkline" className={className} />
+    );
+  }
 
   // One point cannot show a trend, and an empty box that still occupies the
   // column keeps the table from reflowing when a metric starts mid-window.

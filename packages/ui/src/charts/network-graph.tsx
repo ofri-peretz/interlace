@@ -52,6 +52,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import {
   concentricLayout,
   describeGraph,
@@ -81,6 +82,8 @@ export interface NetworkGraphProps extends Omit<React.ComponentProps<'div'>, 'on
   limitOptions?: readonly number[];
   /** App-owned detail for the selected node. Omit to render no side panel. */
   renderDetail?: (node: GraphNode) => React.ReactNode;
+  /** Render a `<Skeleton variant="chart" />` placeholder. */
+  loading?: boolean;
 }
 
 export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
@@ -94,6 +97,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
       limit: limitProp = 90,
       limitOptions = [40, 90, 200],
       renderDetail,
+      loading = false,
       className,
       ...props
     },
@@ -146,6 +150,20 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
       setCursor(next);
       event.preventDefault();
     };
+
+    // Before the empty branch: a graph whose data has not arrived is not a graph
+    // with no connections, and saying the second while the first is true is a lie
+    // the reader has no way to detect.
+    if (loading) {
+      return (
+        <Skeleton
+          variant="chart"
+          data-slot="network-graph"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={className}
+        />
+      );
+    }
 
     if (shown.length === 0) {
       return (

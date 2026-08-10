@@ -1776,7 +1776,7 @@
         "tier": "chart",
         "client": true,
         "minViewport": 320,
-        "loading": false
+        "loading": true
       }
     },
     {
@@ -1792,7 +1792,7 @@
         "tier": "chart",
         "client": true,
         "minViewport": 320,
-        "loading": false
+        "loading": true
       }
     },
     {
@@ -1824,7 +1824,7 @@
         "tier": "chart",
         "client": false,
         "minViewport": 320,
-        "loading": false
+        "loading": true
       }
     },
     {
@@ -1840,7 +1840,7 @@
         "tier": "chart",
         "client": true,
         "minViewport": 320,
-        "loading": false
+        "loading": true
       }
     },
     {

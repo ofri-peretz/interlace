@@ -49,6 +49,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 import { Delta, type Polarity } from './delta.js';
 import { Sparkline } from './sparkline.js';
 import { compact, day, type Point } from './scale.js';
@@ -71,11 +72,22 @@ export interface MetricTableProps extends Omit<React.ComponentProps<'div'>, 'onS
   onSelect?: (key: string) => void;
   /** How many date columns to show. The rest stay in the sparkline. */
   maxColumns?: number;
+  /** Render a `<Skeleton variant="metric-table" />` placeholder. */
+  loading?: boolean;
 }
 
 export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
   function MetricTable(
-    { rows, caption, selected = null, onSelect, maxColumns = 8, className, ...props },
+    {
+      rows,
+      caption,
+      selected = null,
+      onSelect,
+      maxColumns = 8,
+      loading = false,
+      className,
+      ...props
+    },
     ref,
   ) {
     // The most recent N days present in ANY row, so a metric that started late
@@ -87,6 +99,18 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
     }, [rows, maxColumns]);
 
     const selectable = Boolean(onSelect);
+
+    // After the memo above, so hook order never depends on the prop.
+    if (loading) {
+      return (
+        <Skeleton
+          variant="metric-table"
+          data-slot="metric-table"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={className}
+        />
+      );
+    }
 
     return (
       <div
