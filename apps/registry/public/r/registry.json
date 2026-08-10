@@ -1748,6 +1748,102 @@
       }
     },
     {
+      "name": "delta",
+      "type": "registry:ui",
+      "title": "Delta",
+      "description": "@interlace/ui — delta (charts) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
+    },
+    {
+      "name": "metric-table",
+      "type": "registry:ui",
+      "title": "Metric Table",
+      "description": "@interlace/ui — metric-table (charts) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
+    },
+    {
+      "name": "network-graph",
+      "type": "registry:ui",
+      "title": "Network Graph",
+      "description": "@interlace/ui — network-graph (charts) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
+    },
+    {
+      "name": "series-table",
+      "type": "registry:ui",
+      "title": "Series Table",
+      "description": "@interlace/ui — series-table (charts) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
+    },
+    {
+      "name": "sparkline",
+      "type": "registry:ui",
+      "title": "Sparkline",
+      "description": "@interlace/ui — sparkline (charts) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": false,
+        "minViewport": 320,
+        "loading": false
+      }
+    },
+    {
+      "name": "time-series",
+      "type": "registry:ui",
+      "title": "Time Series",
+      "description": "@interlace/ui — time-series (charts) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": false
+      }
+    },
+    {
       "name": "article-template",
       "type": "registry:block",
       "title": "Article Template",

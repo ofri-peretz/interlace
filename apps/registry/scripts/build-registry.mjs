@@ -66,6 +66,13 @@ const DECORATIVE_DIRS = [
   { name: 'magicui', dir: path.join(REPO_ROOT, 'packages/ui/src/magicui') },
   { name: 'aceternity', dir: path.join(REPO_ROOT, 'packages/ui/src/aceternity') },
   { name: 'patterns', dir: path.join(REPO_ROOT, 'packages/ui/src/patterns') },
+  // Charts — the visualisation layer. Only the `.tsx` components become items;
+  // their pure cores (`scale.ts`, `graph.ts`) ride along as COMPANIONS via
+  // `splitRelativeImports`, exactly like the `*-variants.ts` cva files. That is
+  // deliberate: `@interlace/scale` and `@interlace/graph` would be absurdly
+  // generic names to occupy in a shared registry namespace, and neither file
+  // renders anything a consumer would install on its own.
+  { name: 'charts', dir: path.join(REPO_ROOT, 'packages/ui/src/charts') },
   // Phase 4 of the 5-layer architecture — templates are full-page
   // surfaces that compose patterns + primitives inside SectionBoundaries.
   // They ship as registry items so consumers can
@@ -343,6 +350,7 @@ const CROSS_TIER_IMPORT_RE = /from\s+['"]\.\.\/([\w-]+)\/([\w-]+)\.js['"]/g;
 const TIER_SUBDIR = {
   primitives: '',
   patterns: 'patterns/',
+  charts: 'charts/',
   templates: 'templates/',
   magicui: 'magicui/',
   aceternity: 'aceternity/',
@@ -773,17 +781,27 @@ const assertRegistryContract = (items) => {
         errors.push(`${item.name}: registryDependency "${dep}" names no item`);
       }
     }
+    // Targets this item writes itself. A companion (`scale.ts` under charts/,
+    // the `*-variants.ts` cva files) is shipped INSIDE its parent item's
+    // `files[]`, so an import of it resolves in the consumer tree even though
+    // no separate registry item is named after it. Checking only `names` here
+    // reported those as dangling — a false failure that would have been "fixed"
+    // by publishing `@interlace/scale`, occupying an absurdly generic name in a
+    // shared namespace for a file nobody installs on its own.
+    const ownTargets = new Set((item.files ?? []).map((f) => f.target));
     for (const file of item.files ?? []) {
       for (const [, spec] of (file.content ?? '').matchAll(
         /from\s+['"]([^'"]+)['"]/g,
       )) {
         if (spec.startsWith('.')) {
           errors.push(`${item.name}: relative import "${spec}" in ${file.target}`);
-        } else if (
-          spec.startsWith('@/components/ui/') &&
-          !names.has(spec.split('/').pop())
-        ) {
-          errors.push(`${item.name}: import "${spec}" names no item`);
+        } else if (spec.startsWith('@/components/ui/')) {
+          const bare = spec.replace(/^@\//, '');
+          const shipsItself =
+            ownTargets.has(`${bare}.ts`) || ownTargets.has(`${bare}.tsx`);
+          if (!shipsItself && !names.has(spec.split('/').pop())) {
+            errors.push(`${item.name}: import "${spec}" names no item`);
+          }
         }
       }
     }

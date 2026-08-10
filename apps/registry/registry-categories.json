@@ -4,7 +4,7 @@
     {
       "id": "foundation",
       "title": "Foundation",
-      "description": "Layout, typography, and surface primitives \u2014 the structural floor every page composes on top of."
+      "description": "Layout, typography, and surface primitives — the structural floor every page composes on top of."
     },
     {
       "id": "a11y",
@@ -19,32 +19,32 @@
     {
       "id": "overlay",
       "title": "Overlay",
-      "description": "Floating surfaces \u2014 dialogs, popovers, menus, tooltips. Base UI owns focus + dismissal; we own surface + motion."
+      "description": "Floating surfaces — dialogs, popovers, menus, tooltips. Base UI owns focus + dismissal; we own surface + motion."
     },
     {
       "id": "feedback",
       "title": "Feedback",
-      "description": "Communicate state \u2014 toast, alert, progress, skeleton, badge. Tone tokens (info / success / warning / danger) keep semantics consistent."
+      "description": "Communicate state — toast, alert, progress, skeleton, badge. Tone tokens (info / success / warning / danger) keep semantics consistent."
     },
     {
       "id": "navigation",
       "title": "Navigation",
-      "description": "Wayfinding \u2014 tabs, breadcrumb, pagination, headers, footers. Keyboard-equivalent everywhere (DESIGN_PRINCIPLES #10)."
+      "description": "Wayfinding — tabs, breadcrumb, pagination, headers, footers. Keyboard-equivalent everywhere (DESIGN_PRINCIPLES #10)."
     },
     {
       "id": "data",
       "title": "Data display",
-      "description": "Stats, scorecards, avatars, scroll areas \u2014 the chrome around numbers and content."
+      "description": "Stats, scorecards, avatars, scroll areas — the chrome around numbers and content."
     },
     {
       "id": "blog",
       "title": "Blog & long-form",
-      "description": "Article-body surfaces \u2014 Callout, Prose, CodeBlock, Tag, TOC, article cards and templates. Install via @interlace/mdx-starter."
+      "description": "Article-body surfaces — Callout, Prose, CodeBlock, Tag, TOC, article cards and templates. Install via @interlace/mdx-starter."
     },
     {
       "id": "marketing",
       "title": "Marketing",
-      "description": "Above-the-fold sections that sell \u2014 hero, pricing, FAQ, testimonial, feature grid, CTA."
+      "description": "Above-the-fold sections that sell — hero, pricing, FAQ, testimonial, feature grid, CTA."
     },
     {
       "id": "decorative",
@@ -54,24 +54,29 @@
     {
       "id": "other",
       "title": "Other",
-      "description": "Uncategorised \u2014 falls here so a newly added component surfaces immediately without a manual step."
+      "description": "Uncategorised — falls here so a newly added component surfaces immediately without a manual step."
     }
   ],
   "tierCategories": [
     {
       "id": "primitive",
       "title": "Primitives",
-      "description": "Layer 1 \u2014 single-purpose components with a closed prop API. Installed flat into components/ui/."
+      "description": "Layer 1 — single-purpose components with a closed prop API. Installed flat into components/ui/."
     },
     {
       "id": "pattern",
       "title": "Patterns",
-      "description": "Layer 3 \u2014 multi-primitive compositions with a page-level job (hero, footer, pricing table)."
+      "description": "Layer 3 — multi-primitive compositions with a page-level job (hero, footer, pricing table)."
+    },
+    {
+      "id": "chart",
+      "title": "Charts",
+      "description": "Data visualisation — series, deltas, tables, graphs. Dependency-free SVG on the --viz-* token family. Every chart ships an sr-only data table and a keyboard path to every value."
     },
     {
       "id": "template",
       "title": "Templates",
-      "description": "Layer 4 \u2014 full-page surfaces that compose patterns inside SectionBoundaries. The fastest path to a new site."
+      "description": "Layer 4 — full-page surfaces that compose patterns inside SectionBoundaries. The fastest path to a new site."
     },
     {
       "id": "effect",
@@ -86,7 +91,7 @@
     {
       "id": "theme",
       "title": "Theme",
-      "description": "The five-stylesheet CSS baseline \u2014 tokens, foundation, preflight, bridge, brand palette."
+      "description": "The five-stylesheet CSS baseline — tokens, foundation, preflight, bridge, brand palette."
     },
     {
       "id": "starter",
@@ -99,7 +104,8 @@
     "patterns": "pattern",
     "templates": "template",
     "magicui": "effect",
-    "aceternity": "effect"
+    "aceternity": "effect",
+    "charts": "chart"
   },
   "tierDefaultCategory": {
     "primitive": "other",
@@ -108,7 +114,8 @@
     "effect": "decorative",
     "util": "foundation",
     "theme": "foundation",
-    "starter": "foundation"
+    "starter": "foundation",
+    "chart": "data"
   },
   "assignments": {
     "a11y-starter": "a11y",
@@ -142,6 +149,7 @@
     "cta-section": "marketing",
     "dashboard-template": "data",
     "data-state": "feedback",
+    "delta": "data",
     "dialog": "overlay",
     "docs-page-template": "blog",
     "dot-pattern": "decorative",
@@ -167,6 +175,8 @@
     "layout-starter": "foundation",
     "mdx-starter": "blog",
     "meteors": "decorative",
+    "metric-table": "data",
+    "network-graph": "data",
     "newsletter-form": "marketing",
     "number-field": "form",
     "page-header": "navigation",
@@ -189,6 +199,7 @@
     "section-header": "navigation",
     "select": "form",
     "separator": "foundation",
+    "series-table": "data",
     "settings-template": "form",
     "share-buttons": "blog",
     "sheet": "overlay",
@@ -197,6 +208,7 @@
     "skeleton-variants": "feedback",
     "skip-link": "a11y",
     "slider": "form",
+    "sparkline": "data",
     "stack": "foundation",
     "stat-card": "data",
     "stat-group": "data",
@@ -208,6 +220,7 @@
     "testimonial": "marketing",
     "textarea": "form",
     "theme": "foundation",
+    "time-series": "data",
     "toast": "feedback",
     "toc": "blog",
     "toggle": "form",
