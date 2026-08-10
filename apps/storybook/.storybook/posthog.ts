@@ -14,7 +14,7 @@
  */
 import posthog, { type PostHogConfig } from 'posthog-js';
 
-const APP_ID = 'storybook' as const;
+const APP_ID = 'ds_storybook' as const;
 // `cross_subdomain_cookie: true` makes posthog set the cookie on
 // `.interlace.tools` automatically (the page's eTLD+1).
 const COOKIE_DOMAIN = '.interlace.tools';
@@ -85,9 +85,20 @@ export function initStorybookPostHog(): typeof posthog | null {
   if (initialised) return posthog;
   if (!isTrackingAllowed()) return null;
   const key = getKey();
-  if (!key) return null;
+  if (!key) {
+    // Visible, not silent. This is a static Storybook build: the key is baked
+    // in at build time from VITE_POSTHOG_KEY, so a missing var produces a
+    // deploy that looks completely healthy and reports nothing at all — which
+    // is exactly how this surface went unmeasured. Say so in the console.
+    if (import.meta.env?.DEV) {
+      console.debug(
+        '[posthog] VITE_POSTHOG_KEY is empty — Storybook analytics disabled',
+      );
+    }
+    return null;
+  }
   const config: Partial<PostHogConfig> = {
-    api_host: 'https://us.i.posthog.com',
+    api_host: '/ingest',
     ui_host: 'https://us.posthog.com',
     person_profiles: 'identified_only',
     capture_pageview: false,

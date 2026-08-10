@@ -23,7 +23,8 @@
  * Required Vercel env (Production scope on each app):
  *   NEXT_PUBLIC_POSTHOG_KEY  — publishable project key, starts `phc_...`
  *                              Safe to expose client-side by design.
- *   NEXT_PUBLIC_POSTHOG_HOST — defaults to `https://us.i.posthog.com`
+ *   NEXT_PUBLIC_POSTHOG_HOST — optional override; defaults to `/ingest`,
+ *                              the same-origin reverse proxy (see below)
  *
  * If `NEXT_PUBLIC_POSTHOG_KEY` is missing the provider is a no-op — site
  * still renders, no analytics. Same defensive pattern the scorecard
@@ -39,8 +40,20 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const POSTHOG_HOST =
-  process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
+// Defaults to the same-origin reverse proxy (ANALYTICS_PHILOSOPHY §9): ad
+// blockers match on the `*.i.posthog.com` hostname, so going direct silently
+// loses ~30-40% of visitors. Consuming apps MUST carry the matching
+// `/ingest/*` rewrites in their next.config — an app without them can opt back
+// out by setting NEXT_PUBLIC_POSTHOG_HOST to the absolute PostHog host.
+// Truthy-or, not nullish-coalescing. The Vercel production env defines
+// NEXT_PUBLIC_POSTHOG_HOST as an EMPTY STRING on at least one project, and
+// ?? only falls back on null/undefined — a blank value would sail straight
+// through and set api_host to "", silently breaking ingest on the flagship
+// site. Trim-and-truthy treats "declared but blank" as "not declared".
+const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST?.trim() || "/ingest";
+// Relative api_host means posthog-js can no longer infer where the PostHog UI
+// lives; without this, toolbar/session links point at our own origin and 404.
+const POSTHOG_UI_HOST = "https://us.posthog.com";
 
 export type AppName =
   | "blog"
@@ -64,6 +77,7 @@ function ensureInit(app: AppName): void {
   if (initialized || typeof window === "undefined" || !POSTHOG_KEY) return;
   posthog.init(POSTHOG_KEY, {
     api_host: POSTHOG_HOST,
+    ui_host: POSTHOG_UI_HOST,
     person_profiles: "identified_only",
     // Cookie-free: no ph_ cookie → no GDPR consent banner needed for EU.
     persistence: "memory",
