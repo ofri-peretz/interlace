@@ -518,13 +518,41 @@ const TIER_SUBDIR = {
   aceternity: 'aceternity/',
 };
 
+/**
+ * Strip comments before scanning for imports.
+ *
+ * Every primitive documents itself with a usage example in its header block,
+ * and those examples import from `@interlace/ui/<entry>` — the package name a
+ * CONSUMER of the library would write. Scanning the printed source counted
+ * those as real imports, so `theme-script` shipped
+ * `"dependencies": ["@interlace/ui"]` and `shadcn add` ran
+ * `npm install @interlace/ui`, which 404s: the package is `private: true` and
+ * has never been published. The CLI installs the whole batch in one npm call,
+ * so that single comment made ALL 132 items uninstallable.
+ *
+ * Line comments are only stripped at line start, so a `https://` inside a
+ * string literal survives.
+ */
+const stripComments = (source) =>
+  source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^[ \t]*\/\/.*$/gm, '');
+
+/**
+ * The workspace's own package. It is `private: true`, so it can never be a
+ * valid npm dependency of an installed item — registry items ship the SOURCE
+ * of this package, they do not depend on it. Belt to `stripComments`'s braces:
+ * a real (non-comment) self-import would otherwise break every install again.
+ */
+const PRIVATE_WORKSPACE_PKG = '@interlace/ui';
+
 const collectDependencies = (source) => {
   const deps = new Set();
-  for (const m of source.matchAll(NPM_IMPORT_RE)) {
+  for (const m of stripComments(source).matchAll(NPM_IMPORT_RE)) {
     const pkg = m[1].startsWith('@')
       ? m[1].split('/').slice(0, 2).join('/')
       : m[1].split('/')[0];
     if (pkg === 'react' || pkg === 'react-dom') continue;
+    if (pkg === PRIVATE_WORKSPACE_PKG || pkg.startsWith(`${PRIVATE_WORKSPACE_PKG}/`))
+      continue;
     deps.add(pkg);
   }
   return [...deps].sort();
