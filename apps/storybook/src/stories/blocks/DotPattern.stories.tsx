@@ -17,6 +17,70 @@ const meta: Meta<typeof DotPattern> = {
       },
     },
   },
+  argTypes: {
+    spacingX: {
+      control: { type: 'range', min: 4, max: 64, step: 1 },
+      description: 'Horizontal distance between dot centres, in px. Together with `spacingY` this is the tile size.',
+      table: { category: 'Grid', type: { summary: 'number' }, defaultValue: { summary: '16' } },
+    },
+    spacingY: {
+      control: { type: 'range', min: 4, max: 64, step: 1 },
+      description: 'Vertical distance between dot centres, in px.',
+      table: { category: 'Grid', type: { summary: 'number' }, defaultValue: { summary: '16' } },
+    },
+    offsetX: {
+      control: { type: 'range', min: -32, max: 32, step: 1 },
+      description: 'Shifts the whole grid origin horizontally — use it to line the field up with content above it.',
+      table: { category: 'Grid', type: { summary: 'number' }, defaultValue: { summary: '0' } },
+    },
+    offsetY: {
+      control: { type: 'range', min: -32, max: 32, step: 1 },
+      description: 'Shifts the whole grid origin vertically.',
+      table: { category: 'Grid', type: { summary: 'number' }, defaultValue: { summary: '0' } },
+    },
+    dotX: {
+      control: { type: 'range', min: 0, max: 32, step: 0.5 },
+      description: 'Where the dot sits inside its own cell on the x axis, in px. Distinct from `offsetX`: this moves the dot within the tile, not the tile.',
+      table: { category: 'Grid', type: { summary: 'number' }, defaultValue: { summary: '1' } },
+    },
+    dotY: {
+      control: { type: 'range', min: 0, max: 32, step: 0.5 },
+      description: 'Where the dot sits inside its own cell on the y axis, in px.',
+      table: { category: 'Grid', type: { summary: 'number' }, defaultValue: { summary: '1' } },
+    },
+    radius: {
+      control: { type: 'range', min: 0.25, max: 6, step: 0.05 },
+      description: 'Dot radius in px. Below ~1 the field reads as texture; above ~2 it reads as polka dots.',
+      table: { category: 'Appearance', type: { summary: 'number' }, defaultValue: { summary: '1' } },
+    },
+    color: {
+      control: 'text',
+      description:
+        'Any CSS colour string, but the intended value is `currentColor` — tint the field by setting a text colour on the wrapper (e.g. `text-muted-foreground/40`) so it follows the theme instead of pinning a literal.',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'currentColor' },
+      },
+    },
+    glow: {
+      control: 'boolean',
+      description:
+        'Pulse each dot on a randomised delay. Costs one DOM node per cell instead of one tiled `<rect>`, and falls back to the static tile under `prefers-reduced-motion` — so it belongs behind a hero, not behind a form.',
+      table: { category: 'Motion', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the root `<svg>`, which is already `absolute inset-0`. The colour utility goes here.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+    'data-testid': {
+      control: 'text',
+      description: 'Selector hook for E2E tests. No runtime default — the consumer supplies it.',
+      table: { category: 'Testing', type: { summary: 'string' } },
+    },
+  },
 };
 
 export default meta;
@@ -30,9 +94,22 @@ const Stage = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const Default: Story = {
-  render: () => (
+  args: {
+    spacingX: 16,
+    spacingY: 16,
+    offsetX: 0,
+    offsetY: 0,
+    dotX: 1,
+    dotY: 1,
+    radius: 1,
+    color: 'currentColor',
+    glow: false,
+    className: 'text-muted-foreground/40',
+    'data-testid': 'story-dots',
+  },
+  render: (args) => (
     <Stage>
-      <DotPattern className="text-muted-foreground/40" data-testid="story-dots" />
+      <DotPattern {...args} />
     </Stage>
   ),
 };

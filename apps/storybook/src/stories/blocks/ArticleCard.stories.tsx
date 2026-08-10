@@ -12,7 +12,121 @@ const meta: Meta<typeof ArticleCard> = {
   // NOT `centered`: an article card is a width-filling block. Centered sizes the
   // story root to content, so `w-full` inside resolves against an indefinite
   // container and the 380px card frame outgrows a 375px phone viewport.
-  parameters: { layout: 'padded' },
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component:
+          'Grid tile for one article link — cover, byline, headline, excerpt, tags and an ' +
+          'engagement meta row, with the whole tile acting as a single anchor. Reach for it ' +
+          'in "from the blog" grids, external-content lists and feed aggregations. For the ' +
+          'full-bleed hero tile that usually sits above such a grid, render ' +
+          '`FeaturedArticleCard` instead: the two are separate components because the ' +
+          'rendered tree differs entirely, which is why `variant` is deprecated.',
+      },
+    },
+  },
+  argTypes: {
+    title: {
+      control: 'text',
+      description:
+        'Article headline. Clamped to two lines, and reused as the gradient fallback when there is no cover. Optional only while `loading`.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    description: {
+      control: 'text',
+      description: 'Short excerpt under the headline. Clamped to two lines; omit it for a denser tile.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    href: {
+      control: 'text',
+      description: 'Destination URL. The entire card becomes the link to it.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    sourceLabel: {
+      control: 'text',
+      description:
+        'Small uppercase attribution chip floated over the cover (e.g. "Dev.to"). Omit for first-party content.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    imageUrl: {
+      control: 'text',
+      description:
+        'Cover image URL. When omitted the card paints a brand gradient with the title centred on it, so a missing cover is still a designed state.',
+      table: { category: 'Media', type: { summary: 'string' } },
+    },
+    tags: {
+      control: 'object',
+      description:
+        'Topic tags. The first three render as filled badges; anything beyond collapses into a single "+N" overflow chip.',
+      table: { category: 'Data', type: { summary: 'string[]' } },
+    },
+    author: {
+      control: 'object',
+      description: 'Author block — `name` is shown next to an optional round `imageUrl` avatar.',
+      table: {
+        category: 'Data',
+        type: { summary: '{ name: string; imageUrl?: string }' },
+      },
+    },
+    publishedAt: {
+      control: 'text',
+      description:
+        'Publication date — any value the `Date` constructor accepts. Rendered short-form (`Mar 5, 2026`).',
+      table: { category: 'Data', type: { summary: 'string | number | Date' } },
+    },
+    meta: {
+      control: 'object',
+      description:
+        'Footer engagement chips. Every field is optional and an absent field renders no chip; `views` abbreviates at ≥ 1000 (`1240` → `1.2k`).',
+      table: {
+        category: 'Data',
+        type: {
+          summary:
+            '{ reactions?: number; comments?: number; readingTimeMinutes?: number; views?: number }',
+        },
+      },
+    },
+    external: {
+      control: 'boolean',
+      description: 'Open the link in a new tab (`target="_blank"` + `rel="noopener noreferrer"`).',
+      table: { category: 'Behavior', type: { summary: 'boolean' }, defaultValue: { summary: 'true' } },
+    },
+    priority: {
+      control: 'boolean',
+      description:
+        'Declare the cover as the route LCP element — eager-loads it with `fetchpriority="high"`. Set it on the single card above the fold, never on a whole grid.',
+      table: { category: 'Behavior', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Swap the card for a shape-matched skeleton (cover + title lines + meta silhouette) so a grid does not shift when data arrives.',
+      table: { category: 'State', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    variant: {
+      control: 'select',
+      options: [undefined, 'stack', 'overlay'],
+      description:
+        'DEPRECATED. `overlay` still forwards to `FeaturedArticleCard` for one minor and warns in dev; pass no variant for the stacked tile.',
+      table: {
+        category: 'Deprecated',
+        type: { summary: "'stack' | 'overlay'" },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
+    'data-testid': {
+      control: 'text',
+      description:
+        'Required root selector hook. Every sub-part derives from it (`{value}-title`, `{value}-tags`, `{value}-meta-views`, …) — there is no runtime default, so an omission surfaces at the call site.',
+      table: { category: 'Testing', type: { summary: 'string' } },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the outer anchor — this is where a grid sets the tile width.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
 };
 
 export default meta;

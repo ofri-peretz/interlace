@@ -16,6 +16,47 @@ const meta: Meta<typeof ArticleTemplate> = {
       },
     },
   },
+  argTypes: {
+    title: {
+      control: 'text',
+      description: 'Article headline, rendered as the page h1.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    header: {
+      control: false,
+      description:
+        'Replaces the default title + byline header entirely. Use when the article needs a cover image or a custom kicker.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    byline: {
+      control: 'object',
+      description:
+        'Props forwarded to AuthorByline — author, avatar, publish date, reading time.',
+      table: { category: 'Data', type: { summary: 'AuthorBylineProps' } },
+    },
+    body: {
+      control: false,
+      description: 'Required. Article content; the template wraps it in Prose.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    share: {
+      control: 'object',
+      description:
+        'Props forwarded to ShareButtons. Pass `null` to suppress the share section (see the Empty story) — omitting it is not the same thing.',
+      table: { category: 'Data', type: { summary: 'ShareButtonsProps | null' } },
+    },
+    prevNext: {
+      control: 'object',
+      description:
+        'Props forwarded to PrevNextPost. Either end may be omitted for the first/last post in a series.',
+      table: { category: 'Data', type: { summary: 'PrevNextPostProps' } },
+    },
+    related: {
+      control: 'object',
+      description: 'Props forwarded to RelatedPosts. An empty `posts` array renders the empty state.',
+      table: { category: 'Data', type: { summary: 'RelatedPostsProps' } },
+    },
+  },
 };
 
 export default meta;
@@ -53,21 +94,25 @@ const SampleBody = () => (
 );
 
 const sampleRelated = {
+  'data-testid': 'article-related',
   posts: [
     {
       href: '/articles/the-eslint-rule-quality-bar',
       title: 'The ESLint rule quality bar',
-      description: 'How we score every rule before it ships.',
+      summary: 'How we score every rule before it ships.',
+      publishedDateIso: '2026-04-18',
     },
     {
       href: '/articles/shipping-strict-a11y',
       title: 'Shipping strict accessibility in our docs site',
-      description: 'WCAG 2.2 AA + ACT in CI, with no asterisks.',
+      summary: 'WCAG 2.2 AA + ACT in CI, with no asterisks.',
+      publishedDateIso: '2026-05-02',
     },
   ],
 };
 
 const samplePrevNext = {
+  'data-testid': 'article-prev-next',
   prev: {
     href: '/articles/the-eslint-rule-quality-bar',
     kicker: 'Previous',
@@ -85,17 +130,17 @@ const sampleShare = {
   title: 'Templates are the distribution surface',
 };
 
+// Args-driven, not `render: () => <ArticleTemplate ... />`: a hardcoded render
+// ignores args entirely, so every control in the panel would be inert.
 export const Default: Story = {
-  render: () => (
-    <ArticleTemplate
-      title="Templates are the distribution surface"
-      byline={sampleByline}
-      body={<SampleBody />}
-      share={sampleShare}
-      prevNext={samplePrevNext}
-      related={sampleRelated}
-    />
-  ),
+  args: {
+    title: 'Templates are the distribution surface',
+    byline: sampleByline,
+    body: <SampleBody />,
+    share: sampleShare,
+    prevNext: samplePrevNext,
+    related: sampleRelated,
+  },
 };
 
 /**
@@ -115,9 +160,10 @@ export const Loading: Story = {
       body={<ForeverPending />}
       share={{ url: '#', title: 'loading' }}
       prevNext={{
+        'data-testid': 'article-prev-next-loading',
         prev: { href: '#', kicker: 'Previous', title: 'loading' },
       }}
-      related={{ posts: [] }}
+      related={{ 'data-testid': 'article-related-loading', posts: [] }}
     />
   ),
 };

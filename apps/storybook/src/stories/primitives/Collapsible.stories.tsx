@@ -16,8 +16,63 @@ const meta = {
     docs: {
       description: {
         component:
-          'Single-section disclosure — one `CollapsibleTrigger` toggles one `CollapsiblePanel`. Use for "Show more" reveals, advanced-settings drawers, and footnotes. Compositional API: `Collapsible` (root) > `CollapsibleTrigger` + `CollapsiblePanel`. Per `MOTION_PHILOSOPHY.md` the open/close transition is killed under `prefers-reduced-motion`. MIN_VIEWPORT = 320px.',
+          'One trigger toggles one panel. Reach for it for "Show more" reveals, advanced-settings drawers, and footnotes — anywhere a single region of content is optional. For several sections where opening one should close the others, use `Accordion` instead; for content that overlays the page rather than pushing it down, use `Popover` or `Dialog`. The controls below sit on the root (`Collapsible`), which owns the open state; `CollapsibleTrigger` and `CollapsiblePanel` are styling-only wrappers over the Base UI parts. Per `MOTION_PHILOSOPHY.md` the height transition is killed under `prefers-reduced-motion`. MIN_VIEWPORT = 320px.',
       },
+    },
+  },
+  argTypes: {
+    defaultOpen: {
+      control: 'boolean',
+      description:
+        'Initial open state for an uncontrolled disclosure. Ignored once `open` is set.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'State',
+      },
+    },
+    open: {
+      control: 'boolean',
+      description:
+        'Controlled open state. Setting this at all takes ownership of the state machine — the trigger then only reports intent through `onOpenChange`, and the panel will not move unless you feed the new value back in.',
+      table: { type: { summary: 'boolean' }, category: 'State' },
+    },
+    disabled: {
+      control: 'boolean',
+      description:
+        'Ignore user interaction. The trigger keeps its accessible name and drops to 50% opacity with pointer events off.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'State',
+      },
+    },
+    onOpenChange: {
+      action: 'openChange',
+      description:
+        'Fired when the panel opens or closes. Receives `(open, eventDetails)` — `eventDetails.reason` distinguishes a trigger press from a programmatic change.',
+      table: {
+        type: { summary: '(open: boolean, details) => void' },
+        category: 'Events',
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the root `<div>`. The root is the layout box for the whole disclosure — width, border and radius belong here, not on the trigger.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
+    children: {
+      control: false,
+      description:
+        'Exactly one `CollapsibleTrigger` and one `CollapsiblePanel`. Base UI wires `aria-expanded` / `aria-controls` between them.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    render: {
+      control: false,
+      description:
+        'Base UI composition seam — render the root as a different element instead of a `<div>`.',
+      table: { type: { summary: 'ReactElement | (props, state) => ReactElement' }, category: 'Slots' },
     },
   },
 } satisfies Meta<typeof Collapsible>;
@@ -47,12 +102,43 @@ const PanelBody = () => (
 );
 
 // Default — opens with the panel already expanded so the rich content is
-// visible without a click, per the spec.
+// visible without a click, per the spec. Driven entirely from args so every
+// control in the panel moves something on screen.
 export const Default: Story = {
-  render: () => (
-    <Collapsible defaultOpen className="w-[420px] max-w-full rounded-md border">
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-md py-sm text-left text-ui-sm font-medium">
+  args: {
+    defaultOpen: true,
+    disabled: false,
+    className: 'w-[420px] max-w-full rounded-md border',
+  },
+  render: (args) => (
+    <Collapsible {...args}>
+      {/* `block`, not `flex`: the label is three inline nodes, and flex would
+          turn each into an item and space them apart. */}
+      <CollapsibleTrigger className="block w-full px-md py-sm text-left text-ui-sm font-medium">
         What does <span className="font-mono">eslint-plugin-jwt</span> detect?
+      </CollapsibleTrigger>
+      <CollapsiblePanel>
+        <PanelBody />
+      </CollapsiblePanel>
+    </Collapsible>
+  ),
+};
+
+/**
+ * `disabled` — the disclosure is inert. The trigger keeps its accessible name
+ * and its `aria-expanded` state so assistive tech still describes it
+ * correctly; only the interaction is removed.
+ */
+export const Disabled: Story = {
+  args: {
+    ...Default.args,
+    defaultOpen: false,
+    disabled: true,
+  },
+  render: (args) => (
+    <Collapsible {...args}>
+      <CollapsibleTrigger className="flex w-full items-center justify-between px-md py-sm text-left text-ui-sm font-medium">
+        Show advanced settings
       </CollapsibleTrigger>
       <CollapsiblePanel>
         <PanelBody />
@@ -74,7 +160,7 @@ export const Variants: Story = {
           open
         </div>
         <Collapsible defaultOpen className="rounded-md border">
-          <CollapsibleTrigger className="flex w-full items-center justify-between px-md py-sm text-left text-ui-sm font-medium">
+          <CollapsibleTrigger className="block w-full px-md py-sm text-left text-ui-sm font-medium">
             What does <span className="font-mono">eslint-plugin-jwt</span> detect?
           </CollapsibleTrigger>
           <CollapsiblePanel>
@@ -88,7 +174,7 @@ export const Variants: Story = {
           closed
         </div>
         <Collapsible className="rounded-md border">
-          <CollapsibleTrigger className="flex w-full items-center justify-between px-md py-sm text-left text-ui-sm font-medium">
+          <CollapsibleTrigger className="block w-full px-md py-sm text-left text-ui-sm font-medium">
             What does <span className="font-mono">eslint-plugin-jwt</span> detect?
           </CollapsibleTrigger>
           <CollapsiblePanel>

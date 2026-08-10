@@ -1,0 +1,299 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Stack, Cluster } from '@interlace/ui/stack';
+import { Container } from '@interlace/ui/container';
+import { Badge } from '@interlace/ui/badge';
+
+<Meta title="Concepts/Layout" />
+
+# Layout
+
+Layout in this system is deliberately small: **six spacing steps, four
+container widths, four primitives.** Everything else is composition.
+
+The size is the point. A spacing scale with twelve steps is a scale nobody
+can hold in their head, so people guess, and the guesses diverge across
+surfaces. Six steps can be memorised in an afternoon and defended in review.
+
+---
+
+## The spacing scale
+
+Six tokens, declared once in `packages/ui/styles/foundation.css`:
+
+```css
+--spacing-xs:  0.5rem;  /*  8px — inline chip / badge padding */
+--spacing-sm:  1rem;    /* 16px — card padding, mobile page padding */
+--spacing-md:  1.5rem;  /* 24px — card-grid gaps */
+--spacing-lg:  2.5rem;  /* 40px — mobile section vertical padding */
+--spacing-xl:  4rem;    /* 64px — desktop section vertical padding */
+--spacing-2xl: 6rem;    /* 96px — hero / final-CTA breathing room */
+```
+
+These generate `p-xs`, `gap-md`, `py-xl` and friends. They are **additive** —
+Tailwind's numeric scale (`p-4`, `gap-6`) still works and is not the
+contract. When a DS component needs spacing it uses the named token, so that
+"the gap between cards" is one decision made once rather than 30 call sites
+that happen to agree.
+
+Note that each token carries its *intent* in the comment, not just its value.
+`--spacing-lg` is not "40px"; it is "mobile section vertical padding". When
+someone asks whether to use `lg` or `xl` for a new section, the comment
+answers it.
+
+<div className="my-6 flex flex-col gap-2">
+  {[
+    ['xs', '8px', 'w-2'],
+    ['sm', '16px', 'w-4'],
+    ['md', '24px', 'w-6'],
+    ['lg', '40px', 'w-10'],
+    ['xl', '64px', 'w-16'],
+    ['2xl', '96px', 'w-24'],
+  ].map(([name, px, w]) => (
+    <div key={name} className="flex items-center gap-4">
+      <code className="w-14 shrink-0 text-sm text-muted-foreground">{name}</code>
+      <div className={`h-4 ${w} rounded-sm bg-primary`} />
+      <span className="text-sm text-muted-foreground">{px}</span>
+    </div>
+  ))}
+</div>
+
+Radius follows the same discipline — three steps, `8 / 12 / 16px`, and they
+deliberately override Tailwind's defaults (`2 / 6 / 8px`) so `rounded-md`
+means one thing in every consumer of the system.
+
+---
+
+## The named-scale trap
+
+This is the most useful thing on this page, and it is not specific to us. It
+will happen to any Tailwind v4 design system that names its spacing steps.
+
+Tailwind v4 generates utilities from theme keys **by namespace**, and the
+spacing namespace feeds far more than padding and gap. It also feeds `w-*`,
+`h-*`, `min-w-*`, `max-w-*`, `size-*`, `basis-*` and `inset-*`.
+
+So declaring `--spacing-sm: 1rem` does not only create `p-sm`. It silently
+**redefines `max-w-sm` from Tailwind's 24rem (384px) to 1rem (16px)**.
+
+```
+max-w-sm   → 384px  before        →   16px  after
+max-w-md   → 448px                →   24px
+max-w-2xl  → 672px                →   96px
+```
+
+Measured in a live browser against this system: `max-w-sm` computes to
+`16px`.
+
+What shipped before this was understood: **96px hero paragraphs, 40px
+dialogs, and 16px sheets**, on the public registry site. The failure is
+brutal to diagnose because nothing is misspelled — devtools shows
+`max-width: var(--spacing-sm)` resolving correctly to a value you did not
+intend.
+
+Two locks now hold the line:
+
+- `container-scale-lock.test.ts` — no `max-w-*` / `min-w-*` with a named key
+  (`xs`…`7xl`) anywhere in `packages/ui/src`, `apps/registry/src` or
+  `apps/storybook/src`. `xs`…`2xl` are broken; `3xl`…`7xl` work but violate
+  the four-width contract, so both are banned in the same rule.
+- `spacing-token-shadowing-lock.test.ts` — the same collision, scoped to
+  `max-w` and derived from the *actual* spacing keys rather than a hard-coded
+  list, so adding a seventh spacing token extends the ban automatically.
+
+The second lock's scope is itself a small lesson. An earlier, broader version
+flagged `min-h-2xl` on `Textarea` — which is intentional and correct — and a
+lock that cries wolf teaches the next reader to distrust it. It was narrowed
+to the utility family that is genuinely broken.
+
+**What stays safe:** numeric widths (`max-w-96` = 24rem) and arbitrary token
+values (`max-w-[65ch]`, `max-w-(--container-prose)`). Which is why the
+`Container` primitive below is written with arbitrary values rather than
+named ones.
+
+---
+
+## The four primitives
+
+| Reach for | When | Owns |
+| --- | --- | --- |
+| `Container` | You need a max width and page gutters | horizontal padding + max-width |
+| `Section` | You need a full-width page band | vertical rhythm, tone, dividers; injects a `Container` |
+| `Stack` / `Cluster` | Children flow one direction with a consistent gap | `flex` + one gap token |
+| `Grid` / `GridItem` | Children occupy tracks | `grid` + track count + gap |
+
+The decision is usually mechanical: **is this a page band, a width cap, a
+flow, or a set of tracks?** If two of them are true you are describing two
+elements, not one.
+
+### `Container` — four widths, no fifth
+
+```ts
+cva('mx-auto w-full px-4 sm:px-6 lg:px-8', {
+  variants: {
+    size: {
+      prose:   'max-w-[65ch]',
+      content: 'max-w-[1024px]',   // default
+      wide:    'max-w-[1280px]',
+      full:    'max-w-none px-0 sm:px-0 lg:px-0',
+    },
+  },
+});
+```
+
+The base string is the whole contract: centre (`mx-auto`), fill
+(`w-full`), and a **responsive gutter** of `px-4 sm:px-6 lg:px-8`. Gutters
+scale with the viewport because 16px of breathing room reads generous on a
+phone and cramped on a 1280px display.
+
+`prose` is `65ch`, not a pixel value, because the measure constraint is about
+*characters per line* (the reading research lands around 45–75), and `ch`
+tracks the font. A pixel width silently becomes the wrong measure the moment
+someone changes the body font.
+
+`full` is the only size that strips padding — full-bleed means full-bleed, and
+a "full width with gutters" variant would be `wide` with more steps.
+
+Open-coding `container mx-auto px-4` in app code is the thing this replaces.
+It looks harmless until two pages disagree about the gutter by 4px and nobody
+can find where.
+
+<div className="my-6 space-y-3">
+  <Container size="prose" className="rounded-md border border-border bg-card py-3 text-card-foreground">
+    <code className="text-sm">size="prose" — 65ch</code>
+  </Container>
+  <Container size="content" className="rounded-md border border-border bg-card py-3 text-card-foreground">
+    <code className="text-sm">size="content" — 1024px (default)</code>
+  </Container>
+  <Container size="wide" className="rounded-md border border-border bg-card py-3 text-card-foreground">
+    <code className="text-sm">size="wide" — 1280px</code>
+  </Container>
+</div>
+
+### `Section` — vertical rhythm, and it always contains
+
+```
+spacing="tight"       py-12 md:py-16 lg:py-20
+spacing="comfortable" py-16 md:py-20 lg:py-24    (default)
+spacing="spacious"    py-20 md:py-24 lg:py-32
+```
+
+Three things to notice.
+
+**Vertical padding is responsive too.** Most systems scale horizontal padding
+and leave vertical padding fixed, which makes desktop pages feel cramped
+between bands.
+
+**Every variant clears the documented floors** — 40px mobile, 64px desktop —
+at the matching breakpoint. `layout-primitives-lock.test.tsx` asserts the
+exact strings, and it also asserts the *absence* of `py-10` and `lg:py-14`,
+which is a regression that actually shipped on a stats bar in May 2026.
+Locking the absence of a wrong value, not just the presence of the right one,
+is what makes that test catch a partial revert.
+
+**`Section` always renders a `Container` child.** There is no edge-to-edge
+escape hatch other than `container="full"`. Content that touches the viewport
+edge on a 1280px screen is a bug in nearly every case, so the primitive makes
+it the deliberate choice rather than the default one.
+
+`tone` (`default` / `muted` / `inset`) and `divider` (`none` / `top` /
+`bottom` / `both`) cover band separation. Both use borders and background
+*tone*, not shadow stacks — hierarchy here reads from whitespace and 1px
+borders.
+
+### `Stack` and `Cluster`
+
+`Stack` is `flex` with one gap token; `Cluster` is the horizontal variant with
+wrap, `gap="sm"` and `align="center"` pre-set, because the chip row is the
+case it exists for.
+
+<div className="my-6 rounded-md border border-border p-4">
+  <Stack gap="md">
+    <div className="rounded-md border border-border bg-card p-3 text-card-foreground">
+      <code className="text-sm">Stack gap="md" → gap-md → 24px</code>
+    </div>
+    <Cluster>
+      <Badge>cluster</Badge>
+      <Badge variant="secondary">gap-sm</Badge>
+      <Badge variant="outline">wraps</Badge>
+    </Cluster>
+  </Stack>
+</div>
+
+The lock asserts `gap="md"` emits `gap-md` and **not** `gap-6` — even though
+those compute to the same 24px today. The token is the contract; the pixel
+value is an implementation detail that a theme is allowed to move.
+
+`Cluster` overrides `data-slot` to `"cluster"` rather than inheriting
+`"stack"`, so a `[data-slot="cluster"]` selector in consumer CSS keeps
+meaning what it says.
+
+---
+
+## The five layers, and why they are worth the ceremony
+
+```
+5. Templates   full pages          composes 3+ patterns, streams per section
+4. Patterns    composites          composes 2+ components
+3. Components  React primitives    Button, Input, Card, Dialog, Skeleton
+2. Semantics   CSS custom props    --background, --primary, --ring
+1. Primitives  raw values          hex, px, keyframes
+```
+
+**Each layer references only the layer beneath it.** Written as rules:
+
+- Layer 1 never references a semantic token. It is the source.
+- Layer 2 never declares a raw hex or px. It is alias mapping.
+- Layer 3 never reaches past layer 2 to a raw value. (Enforced by the
+  `no-raw-color-literal` lint rule.)
+- Layer 4 never bypasses a primitive to reach a token. If a pattern needs a
+  primitive that does not exist, ship the primitive first.
+- Layer 5 wraps every independently-loadable region in `SectionBoundary` and
+  ships a page-level `.Skeleton` static. `templates-section-boundary-lock.test.ts`
+  asserts both, for all 13 templates.
+
+The payoff is specific, not architectural piety:
+
+- Because layer 3 never names a colour, **re-branding is one CSS file.**
+- Because layer 4 composes layer 3 rather than forking it, a fix to `Button`
+  reaches every pattern that uses it without 12 edits.
+- Because layer 5 owns streaming boundaries, a slow section degrades to its
+  skeleton instead of holding the whole page.
+
+The rule that is easiest to break is layer 4's. When a pattern needs
+*almost* the primitive, the tempting move is to copy its class chain and
+tweak. That is a fork with no name, and it will not receive the next fix.
+Ship the variant on the primitive instead.
+
+### Where the layers live
+
+| Layer | Files | Cascade layer |
+| --- | --- | --- |
+| 1 | `styles/tokens.css`, `styles/foundation.css`, `styles/interlace-theme.css` (brand half) | `interlace.primitives`, `interlace.foundation`, `interlace.brand` |
+| 2 | `styles/theme.css`, `styles/interlace-theme.css` (semantic half) | `interlace.bridge`, `interlace.semantics` |
+| 3 | `src/primitives/**` | — |
+| 4 | `src/patterns/**` | — |
+| 5 | `src/templates/**` | — |
+
+Declared order, in `styles/index.css`:
+
+```css
+@layer interlace.primitives, interlace.foundation, interlace.preflight,
+       interlace.bridge, interlace.brand, interlace.semantics;
+```
+
+Order is load-bearing, and one detail is worth stealing outright: the
+fumadocs bridge (`theme.css`) is **wrapped in a layer on purpose**. Per the
+CSS cascade-layers spec, unlayered styles beat every layered style. An
+unlayered `:root { --background: … }` in the bridge would therefore trump the
+layered semantic bindings that are supposed to override it — the exact
+opposite of what "a bridge" means. Wrapping it puts it back under the
+system's control.
+
+---
+
+**Sources.** `packages/ui/styles/foundation.css` ·
+`packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` ·
+`packages/ui/src/primitives/{container,section,stack,grid}.tsx` ·
+`packages/ui/__tests__/layout-primitives-lock.test.tsx` ·
+`packages/ui/__tests__/container-scale-lock.test.ts` ·
+`packages/ui/__tests__/spacing-token-shadowing-lock.test.ts`

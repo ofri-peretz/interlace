@@ -10,14 +10,35 @@ const meta = {
     docs: {
       description: {
         component:
-          'CLS=0 layout frame for async media (images, embeds, video). Reserves space at a fixed `ratio` via native CSS `aspect-ratio`. Children position absolutely or use `object-cover`. Server component; MIN_VIEWPORT = 320px.',
+          'Layout frame that reserves its space before the content arrives — wrap it around images, embeds, video, or a chart that streams in, and the page stops jumping (CLS=0). Uses native CSS `aspect-ratio`; children position absolutely or use `object-cover`. Not needed for content whose height is already known at render. Server component; MIN_VIEWPORT = 320px.',
       },
     },
   },
   argTypes: {
     ratio: {
-      control: { type: 'number', min: 0.25, max: 4, step: 0.05 },
-      description: 'width / height (e.g. 16/9 ≈ 1.78, 4/3 ≈ 1.33, 1)',
+      control: { type: 'range', min: 0.25, max: 3, step: 0.05 },
+      description:
+        'width / height. 16/9 ≈ 1.78 (landscape), 4/3 ≈ 1.33, 1 (square), 3/4 = 0.75 (portrait). The single layout variable this primitive owns.',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'number' },
+        defaultValue: { summary: '16 / 9' },
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'The frame is `relative w-full`; add `overflow-hidden rounded-md` here when the media should be clipped to the frame.',
+      table: { category: 'Appearance' },
+    },
+    children: {
+      control: false,
+      description:
+        'Media that fills the frame — `absolute inset-0`, or an `<img>` / `<video>` with `object-cover`.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    style: {
+      table: { disable: true },
     },
   },
 } satisfies Meta<typeof AspectRatio>;
@@ -32,11 +53,11 @@ const Placeholder = ({ label }: { label: string }) => (
 );
 
 export const Default: Story = {
-  args: { ratio: 16 / 9 },
+  args: { ratio: 16 / 9, className: 'overflow-hidden rounded-md' },
   render: (args) => (
     <div className="w-[480px] max-w-full">
       <AspectRatio {...args}>
-        <Placeholder label="16 / 9 — default" />
+        <Placeholder label={`ratio = ${(args.ratio ?? 16 / 9).toFixed(2)}`} />
       </AspectRatio>
     </div>
   ),

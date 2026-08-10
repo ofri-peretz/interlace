@@ -30,7 +30,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Transient, portal-mounted notification. Four semantic tones (`info`, `success`, `warning`, `danger`) each pair an icon with a label so they read without colour alone. Default story renders the four tones statically for the screenshot harness; `Variants` wires `ToastTrigger` buttons inside a `ToastProvider` to fire each tone imperatively.',
+          'Confirms that something the user just did completed, without taking over the page. It is transient and portal-mounted, so it must never be the only place a fact appears and must never hold the only way to recover from an error — that belongs in an Alert or a Dialog. The tone is a 4px accent strip only; pass an icon as a child so the meaning survives without colour (`ERROR_PHILOSOPHY.md`). Passing a `toast` object hands lifecycle, focus and `aria-live` to Base UI\'s manager; omitting it renders the same surface statically, which is what these stories do.',
       },
     },
   },
@@ -38,7 +38,35 @@ const meta = {
     tone: {
       control: 'select',
       options: ['info', 'success', 'warning', 'danger'],
+      description:
+        'Semantic accent strip down the left edge. The strip is the only tone-coloured channel — the body stays neutral so the tone reads as reinforcement beside the icon, never as the sole carrier of meaning.',
+      table: {
+        category: 'Appearance',
+        type: { summary: "'info' | 'success' | 'warning' | 'danger'" },
+        defaultValue: { summary: "'info'" },
+      },
     },
+    toast: {
+      control: false,
+      description:
+        'The Base UI toast object from `useToastManager().toasts[i]`. With it, Base UI owns the timer, swipe-to-dismiss, focus and `aria-live`; without it the component degrades to a plain styled `<div>` for static rendering.',
+      table: { category: 'Data', type: { summary: 'Toast.Root["toast"]' } },
+    },
+    children: {
+      control: false,
+      description:
+        'An icon, then a column of `ToastTitle` + `ToastDescription`, then an optional `ToastClose`.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged after the tone and animation classes. The width comes from the viewport container, not from here.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
+  args: {
+    tone: 'info',
   },
 } satisfies Meta<typeof Toast>;
 
@@ -72,12 +100,23 @@ const TONES = [
   },
 ];
 
+const TONE_ICON = {
+  info: Info,
+  success: CheckCircle2,
+  warning: AlertTriangle,
+  danger: OctagonAlert,
+} as const;
+
 /**
- * Static render of all four tones — no real timers / dispatch — so the
- * Chromatic / Playwright screenshot is deterministic.
+ * The surface itself, rendered visible rather than behind a trigger — a
+ * toast is the thing worth looking at, and a "Fire toast" button alone in a
+ * canvas shows nothing. Static path (no `toast` prop), so the screenshot is
+ * deterministic and the `tone` control repaints the accent strip and swaps
+ * the paired icon live.
  */
 export const Default: Story = {
-  render: () => (
+  args: { tone: 'success' },
+  render: (args) => {
     // Static screenshot story — uses ToastTitle / ToastDescription as
     // normal. They detect the absence of a ToastProvider context (via
     // the internal ToastStaticContext set by the Toast root's static
@@ -85,6 +124,29 @@ export const Default: Story = {
     // UI's Title / Description (which would throw #66 without an active
     // toast object). The styling + data-slot stay identical to the
     // imperative path so visual + axe assertions still hold.
+    const Icon = TONE_ICON[args.tone ?? 'info'];
+    const copy = TONES.find((entry) => entry.tone === (args.tone ?? 'info'))!;
+    return (
+      <div className="w-[420px] max-w-full">
+        <Toast {...args}>
+          <Icon className="size-4" aria-hidden />
+          <div className="flex flex-col gap-xs">
+            <ToastTitle>{copy.title}</ToastTitle>
+            <ToastDescription>{copy.description}</ToastDescription>
+          </div>
+        </Toast>
+      </div>
+    );
+  },
+};
+
+/**
+ * All four tones side by side — the comparison that shows the accent strip is
+ * the only channel carrying the tone, and that each one is paired with an
+ * icon so it reads without colour.
+ */
+export const Tones: Story = {
+  render: () => (
     <div className="flex w-[420px] max-w-full flex-col gap-sm">
       {TONES.map(({ tone, Icon, title, description }) => (
         <Toast key={tone} tone={tone}>

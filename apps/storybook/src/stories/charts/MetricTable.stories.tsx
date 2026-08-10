@@ -22,13 +22,63 @@ const meta: Meta<typeof MetricTable> = {
       },
     },
   },
+  argTypes: {
+    rows: {
+      control: 'object',
+      description:
+        'One entry per metric: `{ key, label, points, polarity?, unit? }`. `points` is the full history — the table shows the last `maxColumns` dates, the sparkline and the `sr-only` table keep the rest, so nothing is dropped.',
+      table: { type: { summary: 'readonly MetricRow[]' }, category: 'Data' },
+    },
+    caption: {
+      control: 'text',
+      description:
+        'The `<caption>`. Required — an unnamed table of numbers is a wall of numbers. When the table is selectable it also carries the sr-only "press Enter or Space on a focused row" instruction.',
+      table: { type: { summary: 'string' }, category: 'Data' },
+    },
+    maxColumns: {
+      control: { type: 'range', min: 2, max: 14, step: 1 },
+      description:
+        'How many date columns to show. Defaults to 6, not 8: at 8 the dates consumed the whole width at a typical content measure and pushed trend and change off the right edge — the two columns the reader actually came for. Individual dates are the least valuable cells in the row, so they give up space first.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '6' }, category: 'Appearance' },
+    },
+    selected: {
+      control: 'text',
+      description:
+        'The `key` of the highlighted row, or `null`. Deliberately NOT internal state — the selected metric belongs in the URL so a view can be linked to a colleague. Type a key here (e.g. `issues`) to see the selected row style.',
+      table: { type: { summary: 'string | null' }, defaultValue: { summary: 'null' }, category: 'State' },
+    },
+    onSelect: {
+      action: 'select',
+      description:
+        'Called with the row `key` on click and on Enter/Space over a focused row. Passing it is what makes rows focusable at all. Note the row will not highlight until the caller feeds the key back through `selected` — that round trip is the point.',
+      table: { type: { summary: '(key: string) => void' }, category: 'Events' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Render a `<Skeleton variant="metric-table" />` — header row plus body rows at the width the data will occupy.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' }, category: 'State' },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the scroll container. The table scrolls horizontally inside its own box; the page never does.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { rows: METRIC_ROWS, caption: 'Ecosystem metrics — last 14 days' },
+  args: {
+    rows: METRIC_ROWS,
+    caption: 'Ecosystem metrics — last 14 days',
+    maxColumns: 6,
+    selected: null,
+    loading: false,
+  },
 };
 
 export const Polarity: Story = {

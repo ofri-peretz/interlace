@@ -23,21 +23,107 @@ const meta: Meta<typeof ThemeSwitcher> = {
     docs: {
       description: {
         component:
-          'Theme (`data-theme`) × colour scheme (`.dark`) picker built on Base UI Menu — `menuitemradio` roles, typeahead, roving focus, Escape-to-close and focus restore all come from upstream. Persists to `localStorage`; pair it with `THEME_SCRIPT` in `<head>` so the choice survives a reload without a flash.',
+          'The menu that owns both theme axes at once: `data-theme` picks the BRAND, `.dark` picks the SCHEME, and they are orthogonal — which is exactly why they are two radio groups in one popup rather than a flattened "Light / Dark / Harbor / Harbor Dark" cross-product. `system` is a first-class appearance choice, not a checkbox, so a user can always get back to following the OS. Base UI supplies `menuitemradio`, typeahead, roving focus, Escape and focus restore. The choice persists to `localStorage`; ship `THEME_SCRIPT` in `<head>` or the page will flash on reload. For a nav bar with no room for a menu, use `ThemeSchemeToggle` (see the SchemeToggle story) — it deliberately cannot reach `system`.',
       },
     },
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['sm', 'default'],
+      description: 'Trigger height: sm 32px · default 36px.',
+      table: {
+        category: 'Appearance',
+        type: { summary: "'sm' | 'default'" },
+        defaultValue: { summary: "'default'" },
+      },
+    },
+    label: {
+      control: 'text',
+      description:
+        'Accessible name for the trigger, and the visible fallback text before a theme resolves. Below the `sm` breakpoint the text is hidden and this is the only name the button has.',
+      table: {
+        category: 'A11y',
+        type: { summary: 'string' },
+        defaultValue: { summary: "'Theme'" },
+      },
+    },
+    align: {
+      control: 'select',
+      options: ['start', 'center', 'end'],
+      description:
+        'Popup alignment against the trigger. `end` keeps a right-hand nav button from pushing the menu off-screen.',
+      table: {
+        category: 'Placement',
+        type: { summary: "'start' | 'center' | 'end'" },
+        defaultValue: { summary: "'end'" },
+      },
+    },
+    side: {
+      control: 'select',
+      options: ['top', 'right', 'bottom', 'left', 'inline-start', 'inline-end'],
+      description:
+        'Which side of the trigger the popup opens on. Leave unset to let the positioner choose and flip when space runs out.',
+      table: {
+        category: 'Placement',
+        type: { summary: "'top' | 'right' | 'bottom' | 'left' | 'inline-start' | 'inline-end'" },
+      },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disable the trigger. Rarely right — a user can always change their own theme.',
+      table: {
+        category: 'State',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the trigger only; the popup is not configurable from here.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
+  args: {
+    size: 'default',
+    label: 'Theme',
+    align: 'end',
+    disabled: false,
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof ThemeSwitcher>;
 
+/**
+ * Shown against a strip of the surfaces the choice actually repaints, so the
+ * effect of picking a theme is visible in the same frame as the control.
+ */
 export const Default: Story = {
-  render: () => <ThemeSwitcher />,
+  render: (args) => (
+    <div className="flex w-[420px] max-w-full flex-col gap-md rounded-md border border-border bg-card p-md">
+      <div className="flex items-center justify-between gap-md">
+        <span className="text-ui-sm text-muted-foreground">Appearance</span>
+        <ThemeSwitcher {...args} />
+      </div>
+      <div className="flex flex-wrap items-center gap-xs">
+        <span className="rounded-md bg-primary px-3 py-1 text-ui-sm text-primary-foreground">
+          primary
+        </span>
+        <span className="rounded-md bg-muted px-3 py-1 text-ui-sm text-muted-foreground">
+          muted
+        </span>
+        <span className="rounded-md border border-border px-3 py-1 text-ui-sm">
+          border
+        </span>
+      </div>
+    </div>
+  ),
 };
 
 export const Small: Story = {
-  render: () => <ThemeSwitcher size="sm" />,
+  args: { size: 'sm' },
+  render: (args) => <ThemeSwitcher {...args} />,
 };
 
 /**

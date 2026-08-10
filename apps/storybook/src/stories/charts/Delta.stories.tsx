@@ -19,13 +19,55 @@ const meta: Meta<typeof Delta> = {
       },
     },
   },
-  argTypes: { polarity: { control: 'inline-radio', options: ['normal', 'inverse'] } },
+  argTypes: {
+    points: {
+      control: 'object',
+      description:
+        'The series to compare. Only the first and last numeric observations decide the answer — everything between them is context. `{ t, v }` where `v: null` is a day nobody measured, never a zero.',
+      table: { type: { summary: 'readonly Point[]' }, category: 'Data' },
+    },
+    polarity: {
+      control: 'inline-radio',
+      options: ['normal', 'inverse'],
+      description:
+        'Which direction counts as good. `inverse` for latency, cost, bounce rate, open issues. Flip it and the tone flips while the digits stay exactly where they were.',
+      table: {
+        type: { summary: "'normal' | 'inverse'" },
+        defaultValue: { summary: 'normal' },
+        category: 'Data',
+      },
+    },
+    unit: {
+      control: 'text',
+      description:
+        'Noun for the accessible sentence — "up 965 downloads, 77.8%, from 1,240 to 2,205". Never rendered visually; it exists for the screen reader.',
+      table: { type: { summary: 'string' }, category: 'Data' },
+    },
+    percent: {
+      control: 'boolean',
+      description:
+        'Show the percentage beside the absolute change. Turn it off where the base is small enough that a percentage flatters — 1 → 3 is "+200%".',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'true' },
+        category: 'Appearance',
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the `<span>`. Note this renders as plain inline text, not inline-flex — inside a `<td>` a shrink-to-fit box measured 0px wide while its digits painted 113px over the next column.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Up: Story = { args: { points: RISING, unit: 'downloads' } };
+export const Up: Story = {
+  args: { points: RISING, polarity: 'normal', percent: true, unit: 'downloads' },
+};
 export const Down: Story = { args: { points: FALLING, unit: 'issues' } };
 export const Flat: Story = {
   parameters: { docs: { description: { story: 'Says "unchanged" rather than "up 0".' } } },

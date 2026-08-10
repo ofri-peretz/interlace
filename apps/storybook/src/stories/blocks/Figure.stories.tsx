@@ -10,15 +10,55 @@ const meta = {
     docs: {
       description: {
         component:
-          'Semantic media block. Composes AspectRatio so the layout reserves space before the asset loads (CLS=0). `alt` is required at the type level — WCAG 1.1.1 is non-negotiable.',
+          'Semantic wrapper for self-contained media — an image, diagram, chart or screenshot ' +
+          'with a caption that travels with it. It composes AspectRatio, so the frame is ' +
+          'reserved before the asset loads and the surrounding prose never jumps. Use it for ' +
+          'media that is referenced from the text ("see Figure 1"); a purely decorative image ' +
+          'does not need a `<figure>` at all. `alt` is required at the type level — WCAG ' +
+          '1.1.1 is a compile error here, not a lint warning.',
       },
     },
   },
   argTypes: {
-    ratio: { control: { type: 'number', min: 0.25, max: 4, step: 0.05 } },
-    caption: { control: 'text' },
-    alt: { control: 'text' },
-    src: { control: 'text' },
+    src: {
+      control: 'text',
+      description: 'Image URL for the default `<img>`. Ignored entirely when `children` is provided.',
+      table: { category: 'Media', type: { summary: 'string' } },
+    },
+    alt: {
+      control: 'text',
+      description:
+        'Required. Describe what the media conveys, not what it is ("Coverage climbing from 62% to 100% over six weeks", not "a chart"). For a genuinely decorative figure pass an empty string explicitly — the type forces the choice at the call site.',
+      table: { category: 'A11y', type: { summary: 'string' } },
+    },
+    ratio: {
+      control: { type: 'range', min: 0.25, max: 4, step: 0.05 },
+      description:
+        'Width ÷ height handed to AspectRatio — this is what reserves the space, so it should match the asset (16/9 ≈ 1.78, 4/3 ≈ 1.33, square = 1). A wrong ratio letterboxes the media rather than shifting the page.',
+      table: {
+        category: 'Layout',
+        type: { summary: 'number' },
+        defaultValue: { summary: '16 / 9' },
+      },
+    },
+    caption: {
+      control: 'text',
+      description:
+        'Rendered in a `<figcaption>` under the frame. Omit it and no caption element is emitted at all.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    children: {
+      control: false,
+      description:
+        'Replaces the default `<img>` with your own node — next/image, a video, an inline SVG diagram, an embed. It is positioned inside the reserved frame, so it should be absolutely positioned to fill it (see the Variants story).',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the `<figure>`, which already carries `my-lg`. The block has no width of its own — it fills its parent — so width belongs on a wrapper, not here.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
   },
 } satisfies Meta<typeof Figure>;
 
@@ -33,6 +73,7 @@ export const Default: Story = {
     src: SAMPLE_SRC,
     alt: 'A developer typing on a laptop with code visible on the screen.',
     caption: 'Figure 1. The canonical CLS-free media block.',
+    ratio: 16 / 9,
   },
   decorators: [
     (Story) => (
@@ -43,7 +84,10 @@ export const Default: Story = {
   ],
 };
 
-export const Variants: Story = {
+// `StoryObj<typeof Figure>` rather than `StoryObj<typeof meta>`: `alt` is a
+// REQUIRED prop, which makes `args` mandatory on every meta-typed story — and
+// this one is a pure composition demo that renders its own Figures.
+export const Variants: StoryObj<typeof Figure> = {
   parameters: { layout: 'fullscreen' },
   render: () => (
     <div className="space-y-lg p-8">

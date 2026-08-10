@@ -21,8 +21,35 @@ const meta = {
     docs: {
       description: {
         component:
-          'Server-rendered, semantically-tagged ancestor trail. Compositional API: `Breadcrumb` (nav) > `BreadcrumbList` (ol) > `BreadcrumbItem` (li) > `BreadcrumbLink` / `BreadcrumbPage` / `BreadcrumbSeparator` / `BreadcrumbEllipsis`. `BreadcrumbLink` supports `asChild` for composing with routing primitives (e.g. `next/link`) without forcing a client boundary. MIN_VIEWPORT = 480px — below it, collapse with `BreadcrumbEllipsis`.',
+          'Ancestor trail for a page that sits several levels down a hierarchy the reader can actually walk (docs, rule pages, nested settings). Skip it on flat sites — a two-segment trail is noise. Compositional API: `Breadcrumb` (nav) > `BreadcrumbList` (ol) > `BreadcrumbItem` (li) > `BreadcrumbLink` / `BreadcrumbPage` / `BreadcrumbSeparator` / `BreadcrumbEllipsis`. `BreadcrumbLink` supports `asChild` for composing with routing primitives (e.g. `next/link`) without forcing a client boundary. MIN_VIEWPORT = 480px — below it, collapse with `BreadcrumbEllipsis`.',
       },
+    },
+  },
+  // The root is a bare `<nav aria-label="breadcrumb">`: it owns the landmark
+  // and nothing else. Every meaningful knob (href, asChild, the separator
+  // glyph, aria-current) lives on the parts composed as children, which is
+  // why this Controls panel is deliberately short.
+  argTypes: {
+    'aria-label': {
+      control: 'text',
+      description:
+        'Landmark name. Defaults to "breadcrumb"; override only when a page carries more than one trail, so each landmark is distinguishable.',
+      table: {
+        category: 'Accessibility',
+        defaultValue: { summary: 'breadcrumb' },
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Applied to the `<nav>`. Type scale and colour live on `BreadcrumbList`; use this for placement (margins, ordering in a page header).',
+      table: { category: 'Appearance' },
+    },
+    children: {
+      control: false,
+      description:
+        'Exactly one `BreadcrumbList`, holding `BreadcrumbItem`s separated by `BreadcrumbSeparator`. The last item is a `BreadcrumbPage`, never a link.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
     },
   },
 } satisfies Meta<typeof Breadcrumb>;
@@ -32,8 +59,9 @@ type Story = StoryObj<typeof meta>;
 
 // 4-segment path — Home / Docs / Plugins / Secure Coding (current).
 export const Default: Story = {
-  render: () => (
-    <Breadcrumb>
+  args: { 'aria-label': 'breadcrumb', className: '' },
+  render: (args) => (
+    <Breadcrumb {...args}>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>

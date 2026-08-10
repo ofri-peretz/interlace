@@ -22,9 +22,27 @@ const meta: Meta<typeof Skeleton> = {
     variant: {
       control: 'select',
       options: SKELETON_VARIANTS,
+      description:
+        'Silhouette to paint. Pick the one named after the component being waited on — a shape that does not match the arriving content reintroduces the layout shift the skeleton exists to prevent.',
+      table: { type: { summary: 'SkeletonVariant' }, defaultValue: { summary: 'rect' }, category: 'Appearance' },
     },
     count: {
-      control: { type: 'number', min: 1, max: 10, step: 1 },
+      control: { type: 'range', min: 1, max: 10, step: 1 },
+      description:
+        'Render N copies stacked with `gap-sm` — a 5-line paragraph or a 3-card list without composing in the consumer. The group carries a single `role="status"`; the copies are silent.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '1' }, category: 'Data' },
+    },
+    label: {
+      control: 'text',
+      description:
+        'Visually hidden loading text announced by screen readers. Set it to `null` when the surrounding region already exposes a busy state, so the page does not announce "Loading…" once per placeholder.',
+      table: { type: { summary: 'string | null' }, defaultValue: { summary: "'Loading…'" }, category: 'State' },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged after the variant classes — the escape hatch for a one-off footprint (`h-12 w-48`) when no registered variant matches.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
     },
   },
 };
@@ -33,7 +51,7 @@ export default meta;
 type Story = StoryObj<typeof Skeleton>;
 
 export const Default: Story = {
-  args: { variant: 'rect' },
+  args: { variant: 'rect', count: 1, label: 'Loading…' },
   render: (args) => (
     <div className="w-[360px] max-w-full">
       <Skeleton {...args} />

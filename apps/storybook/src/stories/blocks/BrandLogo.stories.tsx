@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { BrandLogo, BrandMark } from '@interlace/ui/patterns/brand-logo';
+import { withDark } from '@/decorators';
 
 const meta: Meta<typeof BrandLogo> = {
   title: 'Blocks/BrandLogo',
@@ -17,12 +18,52 @@ const meta: Meta<typeof BrandLogo> = {
       },
     },
   },
+  argTypes: {
+    markSize: {
+      control: { type: 'range', min: 12, max: 64, step: 1 },
+      description:
+        'Mark edge length in px (width = height), forwarded to `BrandMark`. The wordmark does NOT scale with it — it inherits the surrounding font size, so a large mark next to small text is on you.',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'number' },
+        defaultValue: { summary: '22' },
+      },
+    },
+    children: {
+      control: 'text',
+      description:
+        'Rendered after the wordmark inside the same inline row — the seam for a product suffix such as "/ docs" or a version chip. Leave empty for the bare lockup.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the root `<span>`. This is where the wordmark size comes from: set a type utility here (e.g. `text-lg`) and the word scales, the mark does not.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    markSize: 22,
+    className: 'text-ui',
+    children: '',
+  },
+};
+
+/**
+ * Both bar fills are theme-paired custom properties, so the lockup flips to the
+ * brighter dark-mode pair on its own. This story is the check that the pairing
+ * is actually wired — the mark should stay legible, not just invert.
+ */
+export const Dark: Story = {
+  args: { markSize: 32, className: 'text-lg' },
+  decorators: [withDark],
+};
 
 export const MarkOnly: Story = {
   parameters: {

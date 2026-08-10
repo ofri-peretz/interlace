@@ -30,26 +30,95 @@ const meta: Meta<typeof ShimmerButton> = {
         { name: 'light', value: '#ffffff' },
       ],
     },
+    docs: {
+      description: {
+        component:
+          'The hero CTA: a pill that owns its own fill and runs a conic-gradient spark around its border. It is a decoration budget spent in one place — reach for it for the single primary action on a landing surface, and use the plain `Button` everywhere else. Two of these on one screen and neither reads as primary.\n\n' +
+          '`shimmer` and `highlight` are gated **independently**, which is the whole reason this fork exists: a secondary CTA can keep the exact pill geometry and drop the animation, or keep the spark and drop the white inset glow that clashes with a non-white fill. Both are removed from the DOM rather than hidden, so `shimmer={false}` costs nothing at runtime.\n\n' +
+          'Styling is CSS-variable driven (`--bg`, `--shimmer-color`, `--radius`, `--speed`, `--cut`), so the string props take any valid CSS value — `background` in particular is a full background shorthand, which is how the brand gradient is passed. It is a real `<button>` by default (keyboard, `disabled`, focus all native); `as` swaps the element when the CTA needs to be a link.',
+      },
+    },
   },
   argTypes: {
     shimmer: {
       control: 'boolean',
       description:
-        'Render the rotating spark animation. Independent of `highlight`.',
+        'Render the rotating spark animation. Independent of `highlight` — when false the spark elements are not mounted at all.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'true' }, category: 'Appearance' },
     },
     highlight: {
       control: 'boolean',
       description:
-        'Render the inset white bottom-edge glow. Independent of `shimmer`.',
+        'Render the inset white bottom-edge glow (`box-shadow: inset 0 -8px 10px #ffffff1f`). Turn it off for darker or coloured fills, where a white inset reads as a smudge rather than a light source.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'true' }, category: 'Appearance' },
     },
     background: {
       control: 'text',
-      description: 'CSS background string (color, gradient, etc.).',
+      description:
+        'Any CSS background shorthand — a colour, or the brand gradient (`linear-gradient(135deg, #f4794a 0%, #a84c17 100%)`). Piped into `--bg`, which fills both the button and the inner mask, so the spark stays a rim rather than a wash.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'rgba(0, 0, 0, 1)' },
+        category: 'Appearance',
+      },
     },
-    shimmerColor: { control: 'color' },
-    shimmerSize: { control: 'text' },
-    borderRadius: { control: 'text' },
-    children: { control: false },
+    shimmerColor: {
+      control: 'color',
+      description:
+        'Colour of the sweeping spark. Keep it a tint of the fill rather than pure white on a coloured background — `#fbb99a` on the orange gradient, `#ffffff` on black.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: '#ffffff' }, category: 'Appearance' },
+    },
+    shimmerSize: {
+      control: 'select',
+      options: ['0.02em', '0.05em', '0.1em', '0.15em', '0.25em'],
+      description:
+        'Rim thickness — the inset of the inner mask (`--cut`). Any CSS length works; `em` keeps the rim proportional to the label so it does not thicken when the button is used at a larger font size.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: '0.05em' }, category: 'Appearance' },
+    },
+    shimmerDuration: {
+      control: 'select',
+      options: ['1s', '2s', '3s', '5s', '8s'],
+      description:
+        'One full rotation of the spark (`--speed`). Slower is calmer; below ~1.5s the motion competes with the label for attention. All of it is killed by `prefers-reduced-motion` in the global preview CSS.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: '3s' }, category: 'Appearance' },
+    },
+    borderRadius: {
+      control: 'select',
+      options: ['0px', '6px', '12px', '24px', '100px'],
+      description:
+        'Fed to `--radius` and used by both the outer shape and the inner mask, so they can never disagree. `100px` is the pill; anything smaller makes the rotating spark visibly corner.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: '100px' }, category: 'Appearance' },
+    },
+    disabled: {
+      control: 'boolean',
+      description:
+        'Native button disabled state — blocks activation by click and by keyboard. Note the decoration keeps animating: if a CTA can be disabled for a meaningful stretch, dim it via `className` too.',
+      table: { type: { summary: 'boolean' }, category: 'State' },
+    },
+    as: {
+      control: 'select',
+      options: ['button', 'a'],
+      description:
+        'Element to render. Use `a` when the CTA navigates — a click handler on a button is not a link, and readers lose middle-click, open-in-new-tab and the status bar. Pass `href` alongside it (untyped here, since the props extend `<button>`).',
+      table: { type: { summary: 'React.ElementType' }, defaultValue: { summary: 'button' }, category: 'Appearance' },
+    },
+    onClick: {
+      action: 'click',
+      description: 'Native click handler. Does not fire while `disabled`.',
+      table: { type: { summary: '(event: MouseEvent) => void' }, category: 'Events' },
+    },
+    children: {
+      control: 'text',
+      description:
+        'The label. Keep it short — the pill is `whitespace-nowrap`, so a sentence widens the button instead of wrapping.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged last, so it wins over the built-in padding and geometry. This is the seam for sizing (`px-8 py-4`) and for a disabled-state dim.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
   },
 };
 
@@ -61,6 +130,13 @@ export const Default: Story = {
     children: 'Get Started',
     shimmer: true,
     highlight: true,
+    background: 'rgba(0, 0, 0, 1)',
+    shimmerColor: '#ffffff',
+    shimmerSize: '0.05em',
+    shimmerDuration: '3s',
+    borderRadius: '100px',
+    disabled: false,
+    as: 'button',
   },
 };
 

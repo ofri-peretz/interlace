@@ -11,8 +11,47 @@ const meta: Meta<typeof Hero> = {
     docs: {
       description: {
         component:
-          'Above-the-fold landing section. Eyebrow + headline + body + actions, with an optional media slot that flips the layout to a two-column grid.',
+          'The above-the-fold landing section: eyebrow, headline, body, CTA cluster, and ' +
+          'an optional media slot that flips the layout from one centred column to a ' +
+          'two-column grid. It is the plain-surface hero — it inherits the page ' +
+          'background and paints no decoration; reach for HeroCosmic when the section ' +
+          'should own its own dark starfield surface.',
       },
+    },
+  },
+  argTypes: {
+    eyebrow: {
+      control: 'text',
+      description:
+        'Small accent line above the headline — version, date, or a category. Not a heading, so keep it short.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    headline: {
+      control: 'text',
+      description: 'Display headline. The only required prop.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    body: {
+      control: 'text',
+      description: 'Supporting paragraph, capped at prose width under the headline.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    actions: {
+      control: false,
+      description:
+        'CTA cluster — typically a primary Button and a secondary one. Elements only; see the Default story source.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    media: {
+      control: false,
+      description:
+        'Right-column visual: image, video, CodeWindow, decorative SVG. Supplying it is what switches the hero to the two-column layout — there is no `layout` prop.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the `<section>` — the padding / background seam.',
+      table: { category: 'Appearance' },
     },
   },
 };
@@ -22,6 +61,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    eyebrow: '',
     headline: 'Production-grade React primitives for shadcn.',
     body: 'Drop in @interlace/ui — brand tokens, theme bridge, animation keyframes, and a portable 26-rule component-modeling floor — installed alongside.',
     actions: (

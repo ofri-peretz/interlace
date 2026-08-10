@@ -16,6 +16,61 @@ const meta: Meta<typeof ScorecardRow> = {
       },
     },
   },
+  argTypes: {
+    name: {
+      control: 'text',
+      description: 'The dimension being scored — the row\'s label column.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    grade: {
+      control: 'select',
+      options: [
+        'A+', 'A', 'A-',
+        'B+', 'B', 'B-',
+        'C+', 'C', 'C-',
+        'D+', 'D', 'D-',
+        'F',
+      ],
+      description:
+        'Letter grade. The 13 rungs collapse onto five tones (excellent / good / fair / poor / fail) inside GradeBadge — the row does not pick a colour itself.',
+      table: {
+        type: { summary: "'A+' | 'A' | 'A-' | … | 'F'" },
+        category: 'Data',
+      },
+    },
+    score: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+      description:
+        'Numeric score, 0–100. Rendered tabular so a column of rows aligns on the digit. Not derived from `grade` — the two are independent inputs, so keep them consistent at the call site.',
+      table: { type: { summary: 'number' }, category: 'Data' },
+    },
+    caption: {
+      control: 'text',
+      description: 'Sub-line under the name — what the number is counting.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    details: {
+      control: false,
+      description:
+        'Expanded content under the header: a breakdown table, a sparkline, a list of failing checks. ReactNode, so the row never learns what any of those are.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Paint the resting shape while the aggregate query runs, so a column of rows does not reflow when the numbers land.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'State',
+      },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the `<article>` — the border / padding seam.',
+      table: { category: 'Appearance' },
+    },
+  },
 };
 
 export default meta;
@@ -27,7 +82,17 @@ export const Default: Story = {
     grade: 'A',
     score: 94,
     caption: '18 of 19 checks passing',
+    loading: false,
   },
+  decorators: [
+    // A single row alone in a 1200px canvas reads as a stray line of text; the
+    // content-width frame is the width it actually ships at.
+    (Story) => (
+      <div className="w-full max-w-content">
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const Grades: Story = {

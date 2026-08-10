@@ -21,13 +21,81 @@ const meta: Meta<typeof NetworkGraph> = {
       },
     },
   },
+  argTypes: {
+    nodes: {
+      control: 'object',
+      description:
+        '`{ id, weight, group?, label? }` and nothing domain-specific. `weight` is the only thing that drives layout: it ranks the node, and the rank becomes the radius. Anything an app knows about a node belongs in `renderDetail`, not here.',
+      table: { type: { summary: 'readonly GraphNode[]' }, category: 'Data' },
+    },
+    edges: {
+      control: 'object',
+      description:
+        '`{ from, to }` pairs of node ids. Edges whose endpoints are both below the display cap are not drawn — they are still counted in the header and reported in the `sr-only` table.',
+      table: { type: { summary: 'readonly GraphEdge[]' }, category: 'Data' },
+    },
+    caption: {
+      control: 'text',
+      description:
+        'Suffix for the header line ("10 nodes · 10 connections · comment ties") and the caption of the `sr-only` node table.',
+      table: { type: { summary: 'string' }, category: 'Data' },
+    },
+    limit: {
+      control: { type: 'range', min: 2, max: 200, step: 1 },
+      description:
+        'How many of the heaviest nodes to draw. Beyond roughly 200 the picture stops reading as a picture. This is the INITIAL cap — the in-chart buttons then own it, so changing this control re-mounts rather than re-renders.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '90' }, category: 'Data' },
+    },
+    limitOptions: {
+      control: 'object',
+      description:
+        'The caps offered to the reader as buttons. Pass `[]` to hide the control entirely when the caller owns the cap.',
+      table: { type: { summary: 'readonly number[]' }, defaultValue: { summary: '[40, 90, 200]' }, category: 'Appearance' },
+    },
+    selected: {
+      control: 'text',
+      description:
+        'Node id to light up, or `null`. Caller-owned, like MetricTable: type `dana` here to see the selection state without clicking.',
+      table: { type: { summary: 'string | null' }, defaultValue: { summary: 'null' }, category: 'State' },
+    },
+    onSelect: {
+      action: 'select',
+      description:
+        'Called with a node id, or `null` when the same node is toggled off / Escape is pressed. Wired to click, Enter and Space — a graph whose only affordance is hitting a 6px circle is unusable by keyboard and hostile on touch.',
+      table: { type: { summary: '(id: string | null) => void' }, category: 'Events' },
+    },
+    renderDetail: {
+      control: false,
+      description:
+        'Render prop for the side panel — the seam where the app supplies meaning. Omit it and no panel renders. A graph component that knows what a node represents is a graph component the next site cannot use.',
+      table: { type: { summary: '(node: GraphNode) => ReactNode' }, category: 'Slots' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Render a `<Skeleton variant="chart" />`. Checked before the empty branch: a graph whose data has not arrived is not a graph with no connections.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' }, category: 'State' },
+    },
+    className: {
+      control: 'text',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { nodes: GRAPH_NODES, edges: GRAPH_EDGES, caption: 'comment ties' },
+  args: {
+    nodes: GRAPH_NODES,
+    edges: GRAPH_EDGES,
+    caption: 'comment ties',
+    limit: 90,
+    limitOptions: [40, 90, 200],
+    selected: null,
+    loading: false,
+  },
 };
 
 export const WithDetail: Story = {

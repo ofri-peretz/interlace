@@ -10,12 +10,38 @@ const meta = {
     docs: {
       description: {
         component:
-          'Composable wrapper that paints the DS focus contract (WCAG 2.2 SC 2.4.13) around its child on focus-within. Use it for custom interactive surfaces or to reintroduce the ring on subtrees where the global preflight ring was opted out.',
+          'Paints the DS focus contract (WCAG 2.2 SC 2.4.13) on a `<span>` wrapper whenever anything inside it takes focus. Reach for it in two situations: you are composing a custom interactive surface (a card-as-button, a clickable list row) and do not want to hand-write the ring utility chain, or you opted a subtree out of the global preflight ring and need to put the contract back per-element. Every DS primitive already carries its own ring — wrapping one in this is redundant. The cost is one extra DOM node per surface. Server component; no hooks.',
       },
     },
   },
   argTypes: {
-    offset: { control: 'select', options: ['none', 'sm', 'md', 'lg'] },
+    offset: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg'],
+      description:
+        'Gap between the focused element and the ring: `none` = 0px, `sm` = 1px, `md` = 2px (the preflight contract), `lg` = 4px. Use `none` when the wrapped surface is flush against a container edge, so the ring is not clipped.',
+      table: {
+        type: { summary: "'none' | 'sm' | 'md' | 'lg'" },
+        defaultValue: { summary: 'md' },
+        category: 'Appearance',
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the wrapper span, which is `inline-block rounded-md` by default. **Wrapping a block-level child? You must pass `block` here.** An `inline-block` wrapper around an auto-width block child is a circular width dependency that Chrome resolves to zero — the wrapper measures 0px and the content renders one word per line. Set the control to `inline-block` to see it happen.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: "'inline-block rounded-md'" },
+        category: 'Appearance',
+      },
+    },
+    children: {
+      control: false,
+      description:
+        'The focusable element. The ring is applied on `focus-within` of the wrapper rather than `focus-visible` on the child, so it still lands when the child sets its own outline.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
   },
 } satisfies Meta<typeof FocusRing>;
 
@@ -32,11 +58,17 @@ const FocusableCard = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const Default: Story = {
-  args: { offset: 'md' },
+  args: { offset: 'md', className: 'block' },
   render: (args) => (
-    <FocusRing {...args} className="block">
-      <FocusableCard>Tab here to see the ring at 2px offset.</FocusableCard>
-    </FocusRing>
+    <div className="w-[420px] max-w-full">
+      <FocusRing {...args}>
+        <FocusableCard>
+          Tab here to see the ring. Change `offset` to move it, or set
+          `className` to <code className="font-mono">inline-block</code> to
+          watch the zero-width collapse the docs warn about.
+        </FocusableCard>
+      </FocusRing>
+    </div>
   ),
 };
 

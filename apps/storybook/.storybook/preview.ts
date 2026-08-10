@@ -81,6 +81,18 @@ const preview: Preview = {
         // instead of `Tokens/Color Contrast/Docs` (alphabetic default).
         order: [
           'Welcome',
+          // Reader-facing explainers (what the system guarantees and why),
+          // ahead of `Philosophy` — which is the raw contract corpus those
+          // pages cite. Concepts is the front door; Philosophy is the source.
+          'Concepts',
+          [
+            'Responsiveness',
+            'Layout',
+            'Color & Theming',
+            'Accessibility',
+            'Loading & Motion',
+            'Versioning',
+          ],
           'Philosophy',
           'Tokens',
           ['Color Contrast'],

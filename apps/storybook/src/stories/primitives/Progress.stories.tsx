@@ -1,8 +1,29 @@
+import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Progress, MIN_VIEWPORT } from '@interlace/ui/progress';
+import {
+  Progress,
+  ProgressTrack,
+  ProgressIndicator,
+  ProgressLabel,
+  ProgressValue,
+  MIN_VIEWPORT,
+} from '@interlace/ui/progress';
 import { withDark, withRtl } from '@/decorators';
 
-const meta = {
+/**
+ * `size` lives on `ProgressTrack` and `tone` on `ProgressIndicator` — the two
+ * axes are orthogonal and belong to different parts. They ride along in the
+ * story args (with `label` / `showValue` for the optional text parts) so the
+ * whole compound is drivable from one Controls panel.
+ */
+type ProgressStoryArgs = React.ComponentProps<typeof Progress> & {
+  size?: 'sm' | 'md' | 'lg';
+  tone?: 'default' | 'success' | 'warning' | 'danger';
+  label?: string;
+  showValue?: boolean;
+};
+
+const meta: Meta<ProgressStoryArgs> = {
   title: 'Primitives/Progress',
   component: Progress,
   tags: ['autodocs'],
@@ -10,43 +31,109 @@ const meta = {
     docs: {
       description: {
         component:
-          'Determinate progress indicator. Three sizes (sm / md / lg) × four tones (default / success / warning / danger) per `COLOR_PHILOSOPHY.md`. Token-only fills; never paint with raw hex. Server-safe; MIN_VIEWPORT = 320px.',
+          'Determinate progress rail for work whose completion is measurable — an upload, a multi-step form, a quota. Composed rather than monolithic: the root owns the value and the `role="progressbar"` ARIA, `ProgressTrack` owns the rail height, `ProgressIndicator` owns the fill tone, and `ProgressLabel` / `ProgressValue` are optional text parts. Pass `value={null}` for work of unknown length (the bar goes indeterminate), and reach for `Skeleton` instead when the thing being waited on is content, not a task.',
       },
     },
   },
   argTypes: {
     value: {
-      control: { type: 'number', min: 0, max: 100, step: 1 },
-      description: 'Progress percentage (0–100).',
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+      description:
+        'Current progress, between `min` and `max`. `null` switches the bar to indeterminate — the root reports no `aria-valuenow` and the status becomes `indeterminate`.',
+      table: { type: { summary: 'number | null' }, category: 'Data' },
+    },
+    min: {
+      control: 'number',
+      description: 'Lower bound of the scale.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '0' }, category: 'Data' },
+    },
+    max: {
+      control: 'number',
+      description: 'Upper bound of the scale — set it to the real total (e.g. bytes, steps) instead of pre-normalising to 100.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '100' }, category: 'Data' },
+    },
+    format: {
+      control: 'object',
+      description:
+        '`Intl.NumberFormatOptions` used by `ProgressValue`. Defaults to a percentage; pass e.g. `{ style: "unit", unit: "megabyte" }` to read out the real quantity.',
+      table: { type: { summary: 'Intl.NumberFormatOptions' }, category: 'Data' },
+    },
+    locale: {
+      control: 'text',
+      description: 'Locale for that formatter. Defaults to the runtime locale.',
+      table: { type: { summary: 'Intl.LocalesArgument' }, category: 'Data' },
     },
     size: {
-      control: 'select',
+      control: 'inline-radio',
       options: ['sm', 'md', 'lg'],
+      description: 'Rail height on `ProgressTrack` — `sm` 4px, `md` 8px, `lg` 12px.',
+      table: {
+        type: { summary: "'sm' | 'md' | 'lg'" },
+        defaultValue: { summary: 'md' },
+        category: 'Appearance',
+      },
     },
     tone: {
-      control: 'select',
+      control: 'inline-radio',
       options: ['default', 'success', 'warning', 'danger'],
+      description:
+        'Fill colour on `ProgressIndicator`. Semantic, not decorative: `danger` should mean the task is failing, not that the bar is nearly empty.',
+      table: {
+        type: { summary: "'default' | 'success' | 'warning' | 'danger'" },
+        defaultValue: { summary: 'default' },
+        category: 'Appearance',
+      },
+    },
+    label: {
+      control: 'text',
+      description:
+        'Text for the optional `ProgressLabel` part. Base UI wires it to the root as the accessible name — clear it and this story falls back to an `aria-label`, because a progressbar with no name is an axe failure.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    showValue: {
+      control: 'boolean',
+      description:
+        'Render the optional `ProgressValue` part, which prints the formatted value ("66%") next to the label.',
+      table: { type: { summary: 'boolean' }, category: 'Slots' },
+    },
+    getAriaValueText: {
+      control: false,
+      description:
+        'Override the spoken value text — e.g. "step 3 of 5" instead of "60%". Prefer this over hand-writing `aria-valuetext`.',
+      table: { type: { summary: '(formattedValue, value) => string' }, category: 'Data' },
     },
   },
-} satisfies Meta<typeof Progress>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<ProgressStoryArgs>;
 
 const SIZES = ['sm', 'md', 'lg'] as const;
 const TONES = ['default', 'success', 'warning', 'danger'] as const;
 
 export const Default: Story = {
-  args: { value: 66, size: 'md', tone: 'default' },
-  render: (args) => (
+  args: {
+    value: 66,
+    min: 0,
+    max: 100,
+    size: 'md',
+    tone: 'default',
+    label: 'Uploading…',
+    showValue: true,
+  },
+  render: ({ size, tone, label, showValue, ...args }) => (
     <div className="w-[320px] max-w-full">
-      <div className="mb-2 flex items-center justify-between text-sm">
-        <span className="text-foreground font-medium">Uploading…</span>
-        <span className="text-muted-foreground tabular-nums">
-          {args.value}%
-        </span>
-      </div>
-      <Progress {...args} aria-label="Upload progress" />
+      <Progress aria-label={label ? undefined : 'Upload progress'} {...args}>
+        {(label || showValue) && (
+          <div className="mb-2 flex items-center justify-between">
+            {label ? <ProgressLabel>{label}</ProgressLabel> : <span />}
+            {showValue ? <ProgressValue /> : null}
+          </div>
+        )}
+        <ProgressTrack size={size}>
+          <ProgressIndicator tone={tone} />
+        </ProgressTrack>
+      </Progress>
     </div>
   ),
 };
@@ -97,15 +184,33 @@ function SizeRow({
       {TONES.map((tone) => (
         <Progress
           key={`${size}-${tone}`}
-          size={size}
-          tone={tone}
           value={value}
           aria-label={`Progress ${size} ${tone} at ${value}%`}
-        />
+        >
+          <ProgressTrack size={size}>
+            <ProgressIndicator tone={tone} />
+          </ProgressTrack>
+        </Progress>
       ))}
     </>
   );
 }
+
+/**
+ * Indeterminate — `value={null}` for work whose length isn't known yet. The
+ * root drops `aria-valuenow` and reports `data-status="indeterminate"`; the
+ * rail stays at its resting tone rather than lying about a percentage.
+ */
+export const Indeterminate: Story = {
+  ...Default,
+  args: {
+    value: null,
+    size: 'md',
+    tone: 'default',
+    label: 'Contacting registry…',
+    showValue: false,
+  },
+};
 
 export const Dark: Story = {
   ...Default,
@@ -124,18 +229,15 @@ export const RTL: Story = {
 export const BelowMinViewport: Story = {
   render: () => (
     <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
-      <div className="mb-2 flex items-center justify-between text-sm">
-        <span className="text-foreground font-medium">
-          {`< ${MIN_VIEWPORT}px — dev outline`}
-        </span>
-        <span className="text-muted-foreground tabular-nums">66%</span>
-      </div>
-      <Progress
-        value={66}
-        size="md"
-        tone="default"
-        aria-label="Below-min-viewport demo progress"
-      />
+      <Progress value={66} aria-label="Below-min-viewport demo progress">
+        <div className="mb-2 flex items-center justify-between">
+          <ProgressLabel>{`< ${MIN_VIEWPORT}px — dev outline`}</ProgressLabel>
+          <ProgressValue />
+        </div>
+        <ProgressTrack size="md">
+          <ProgressIndicator tone="default" />
+        </ProgressTrack>
+      </Progress>
     </div>
   ),
   decorators: [

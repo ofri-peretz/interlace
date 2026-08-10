@@ -1,24 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { RelatedPosts, type RelatedPost } from '@interlace/ui/patterns/related-posts';
 import { withDark, withRtl } from '@/decorators';
-
-const meta = {
-  title: 'Blocks/RelatedPosts',
-  component: RelatedPosts,
-  tags: ['autodocs'],
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        component:
-          '"Keep reading" surface at the foot of an article. An h3 heading + a responsive grid of ArticleCards (1 / md:2 / lg:3, gap-md). Server-first; composes Typography + Grid + ArticleCard. MIN_VIEWPORT 480.',
-      },
-    },
-  },
-} satisfies Meta<typeof RelatedPosts>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
 
 const samplePosts: RelatedPost[] = [
   {
@@ -47,15 +29,94 @@ const samplePosts: RelatedPost[] = [
   },
 ];
 
+const meta = {
+  title: 'Blocks/RelatedPosts',
+  component: RelatedPosts,
+  tags: ['autodocs'],
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          'The "keep reading" grid at the foot of an article: an h3 plus one ArticleCard ' +
+          'per entry, 1 / md:2 / lg:3 columns. Feed it whatever your recommender returns — ' +
+          'it renders `null` on an empty array, so callers never guard the call site. ' +
+          'It is not a general card grid: the shape is editorial (`summary`, ' +
+          '`publishedDateIso`, `kicker`); use ArticleListGrid for a full index page.',
+      },
+    },
+  },
+  args: {
+    'data-testid': 'story-related-posts',
+    posts: samplePosts,
+  },
+  argTypes: {
+    title: {
+      control: 'text',
+      description: 'Section heading rendered as an h3.',
+      table: {
+        type: { summary: 'ReactNode' },
+        defaultValue: { summary: "'Related posts'" },
+      },
+    },
+    posts: {
+      control: 'object',
+      description:
+        'One ArticleCard per entry, in order. `{ href, title, summary, publishedDateIso, kicker? }`. An empty array renders nothing at all.',
+      table: { type: { summary: 'RelatedPost[]' }, category: 'Data' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Render `loadingCount` ArticleCard skeletons instead of posts, so the page reserves the grid footprint while the query resolves.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'State',
+      },
+    },
+    loadingCount: {
+      control: { type: 'range', min: 1, max: 6, step: 1 },
+      description: 'How many skeleton cards to paint while `loading`.',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: '3' },
+        category: 'State',
+      },
+    },
+    'data-testid': {
+      control: 'text',
+      description:
+        'Required selector hook (R5). Each card derives `{value}-card-0`, `{value}-card-1`, …',
+      table: { type: { summary: 'string' } },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the `<section>` — the outer spacing seam.',
+      table: { category: 'Appearance' },
+    },
+  },
+} satisfies Meta<typeof RelatedPosts>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+const framed: Decorator[] = [
+  (Story) => (
+    <div className="bg-background mx-auto max-w-wide p-lg">
+      <Story />
+    </div>
+  ),
+];
+
 export const Default: Story = {
-  args: { posts: samplePosts },
-  decorators: [
-    (Story) => (
-      <div className="bg-background mx-auto max-w-wide p-lg">
-        <Story />
-      </div>
-    ),
-  ],
+  args: {
+    title: 'Related posts',
+    posts: samplePosts,
+    loading: false,
+    loadingCount: 3,
+  },
+  decorators: framed,
 };
 
 /**
@@ -68,11 +129,16 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="bg-background mx-auto flex max-w-wide flex-col gap-2xl p-lg">
-      <RelatedPosts posts={samplePosts} />
-
-      <RelatedPosts title="More from Interlace" posts={samplePosts} />
+      <RelatedPosts data-testid="story-related-posts-a" posts={samplePosts} />
 
       <RelatedPosts
+        data-testid="story-related-posts-b"
+        title="More from Interlace"
+        posts={samplePosts}
+      />
+
+      <RelatedPosts
+        data-testid="story-related-posts-c"
         title="Two related posts"
         posts={samplePosts.slice(0, 2)}
       />
@@ -80,28 +146,22 @@ export const Variants: Story = {
   ),
 };
 
+/**
+ * Recommendations are usually a second query that resolves after the article
+ * body, so without the skeleton the page grows by a full card row exactly as
+ * the reader arrives at the footer.
+ */
+export const Loading: Story = {
+  args: { loading: true, loadingCount: 3 },
+  decorators: framed,
+};
+
 export const Dark: Story = {
-  args: { posts: samplePosts },
-  decorators: [
-    withDark,
-    (Story) => (
-      <div className="bg-background mx-auto max-w-wide p-lg">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [withDark, ...framed],
 };
 
 export const RTL: Story = {
-  args: { posts: samplePosts },
-  decorators: [
-    withRtl,
-    (Story) => (
-      <div className="bg-background mx-auto max-w-wide p-lg">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [withRtl, ...framed],
 };
 
 /**
@@ -111,7 +171,6 @@ export const RTL: Story = {
  * block is being asked to render below its declared floor.
  */
 export const BelowMinViewport: Story = {
-  args: { posts: samplePosts },
   render: (args) => (
     <div className="w-[400px] max-w-full border border-dashed border-fd-border p-sm">
       <RelatedPosts {...args} />

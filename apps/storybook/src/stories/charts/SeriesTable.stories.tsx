@@ -20,6 +20,34 @@ const meta: Meta<typeof SeriesTable> = {
       },
     },
   },
+  argTypes: {
+    series: {
+      control: 'object',
+      description:
+        'One entry per series: `{ label, points }`. Rows are the UNION of every timestamp across every series, so a metric that started late still lines up column-for-column with one that has full history — and the hole is spelled "No data", not left as an em dash a screen reader announces as silence.',
+      table: { type: { summary: '{ label: string; points: readonly Point[] }[]' }, category: 'Data' },
+    },
+    caption: {
+      control: 'text',
+      description: 'The `<caption>`. Required — this is the sentence that says which numbers these are.',
+      table: { type: { summary: 'string' }, category: 'Data' },
+    },
+    keyLabel: {
+      control: 'text',
+      description: 'Column header for the x axis. "Date" is right for a time series and wrong for anything else.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: 'Date' }, category: 'Data' },
+    },
+    hidden: {
+      control: 'boolean',
+      description:
+        'The default (`true`) renders `sr-only`: present in the DOM and the accessibility tree, absent from the layout. Toggle it to see exactly what sits under every chart in this package.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'true' }, category: 'Appearance' },
+    },
+    className: {
+      control: 'text',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
+  },
 };
 
 export default meta;
@@ -29,6 +57,7 @@ export const Visible: Story = {
   args: {
     series: [{ label: 'npm downloads', points: RISING.slice(0, 7) }],
     caption: 'npm downloads — first week',
+    keyLabel: 'Date',
     hidden: false,
   },
 };

@@ -7,7 +7,21 @@ const meta: Meta<typeof DashboardTemplate> = {
   title: 'Templates/DashboardTemplate',
   component: DashboardTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Logged-in application shell — topbar, persistent left nav, main content region. Below 480px the sidebar collapses and the consumer is expected to wire a Sheet drawer behind a hamburger. Use `SettingsTemplate` when the left rail selects sections of one page rather than routes of an app.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Props forwarded to Topbar.', table: { category: 'Data' } },
+    sidebar: { control: false, description: 'Persistent left nav. Hidden below the 480px min viewport.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    header: { control: false, description: 'Optional page header above the content region.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    children: { control: false, description: 'Main content region.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+  },
 };
 
 export default meta;

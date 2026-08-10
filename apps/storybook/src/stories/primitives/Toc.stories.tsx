@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import { Toc, TocPopover, MIN_VIEWPORT, type TocItem } from '@interlace/ui/toc';
+import {
+  Toc,
+  TocPopover,
+  MIN_VIEWPORT,
+  type TocItem,
+  type TocProps,
+} from '@interlace/ui/toc';
 import { Skeleton } from '@interlace/ui/skeleton';
 import { withDark, withRtl } from '@/decorators';
 
@@ -46,14 +52,14 @@ const ArticleMock = ({ items }: { items: TocItem[] }) => (
   </article>
 );
 
-const PageMock = ({ items = ITEMS }: { items?: TocItem[] }) => (
+const PageMock = ({ items = ITEMS, ...tocProps }: Partial<TocProps>) => (
   <div className="grid min-h-[80vh] grid-cols-1 gap-lg bg-background px-md py-lg text-foreground lg:grid-cols-[1fr_220px]">
     <ArticleMock items={items} />
     <aside className="sticky top-md self-start">
       <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
         On this page
       </div>
-      <Toc items={items} />
+      <Toc items={items} {...tocProps} />
     </aside>
   </div>
 );
@@ -67,17 +73,51 @@ const meta = {
     docs: {
       description: {
         component:
-          'In-page Table of Contents. Tracks the active heading via `IntersectionObserver`; smooth-scrolls on click (gated by `useReducedMotion`). Indent steps from LAYOUT_PHILOSOPHY.md — level 3 = `pl-md`, level 4 = `pl-lg`. `TocPopover` is the narrow-viewport companion.',
+          'The "where am I" rail for a page long enough that the reader loses the thread — docs, MDX articles, rule reference. It is a mirror of the heading outline, so it earns its place only when the outline is real: a page with three h2s does not need one. Active tracking is an `IntersectionObserver` over the heading ids you pass (no scroll math), and the click scroll drops to `instant` under `prefers-reduced-motion`. Below the 480px floor hide it entirely rather than shrink it; `TocPopover` is the narrow-but-not-tiny companion.',
       },
     },
+  },
+  argTypes: {
+    items: {
+      control: 'object',
+      description:
+        'The heading outline, in document order. Each `id` must match an `id` on a real heading element — that is the anchor the link points at AND the node the observer watches. `level` is 2–4; h1 is the page title and never appears.',
+      table: {
+        category: 'Data',
+        type: { summary: '{ id: string; label: ReactNode; level: 2 | 3 | 4 }[]' },
+      },
+    },
+    label: {
+      control: 'text',
+      description:
+        'Accessible name of the `<nav>` landmark. Override it when a page carries more than one navigation region, so screen-reader users can tell them apart.',
+      table: {
+        category: 'A11y',
+        type: { summary: 'string' },
+        defaultValue: { summary: "'Table of contents'" },
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the `<nav>`. Indentation is not configurable — level 3 is `pl-md`, level 4 is `pl-lg`, per LAYOUT_PHILOSOPHY.md.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
+  args: {
+    items: ITEMS,
+    label: 'Table of contents',
   },
 } satisfies Meta<typeof Toc>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+// `StoryObj<typeof Toc>` rather than `<typeof meta>`: `items` is a required
+// prop, and binding the story type to the meta makes `args` mandatory on every
+// render-only story below.
+type Story = StoryObj<typeof Toc>;
 
 export const Default: Story = {
-  render: () => <PageMock />,
+  render: (args) => <PageMock {...args} />,
 };
 
 export const Variants: Story = {

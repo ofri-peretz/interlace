@@ -1,0 +1,302 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Input } from '@interlace/ui/input';
+import { Label } from '@interlace/ui/label';
+import { SeriesTable } from '@interlace/ui/charts/series-table';
+
+<Meta title="Concepts/Accessibility" />
+
+# Accessibility
+
+The bar this system is built to, stated as four falsifiable claims:
+
+1. Every overlay and nav primitive has a **keyboard path that is written
+   down and executed in CI** — open, traverse, dismiss, return focus.
+2. Every focus ring and control border clears **3:1 against the surface
+   behind it**, measured, in four theme × scheme combinations.
+3. Every chart ships an **`sr-only` data equivalent** — the values, not a
+   label describing them.
+4. **Zero axe suppressions.** When a check fails, the token moves, not the
+   rule.
+
+And the sentence that organises the rest of this page:
+
+> **axe is necessary and never sufficient.** It cannot press a key, and it
+> cannot see a control's border against its surface.
+
+That is not a criticism of axe. It is a statement about what a static tree
+walk can observe. Everything below is a real defect this system shipped
+behind a green axe run.
+
+---
+
+## Failure class 1 — axe cannot see a border
+
+axe scores **text** against its background. It never scores a control's
+*border* against the surface behind it, because that is SC 1.4.11 (non-text
+contrast), and computing it requires knowing which element is "the control"
+and which is "the surface".
+
+Two things shipped through that hole.
+
+**The control border.** `--input` aliased `--border`. `--border` is
+`#eae7e2` — `1.23:1` on white, which is correct for a decorative separator
+and catastrophic for the edge of a text field. Every form control in light
+mode was effectively borderless. The fix was to fork the token to a warm
+mid-grey: `#8f857a` (**3.62:1**) light, `#6b635a` (**3.35:1**) dark.
+
+**The focus ring.** The ring was `ring-ring/60`… but it started as
+`ring-ring/50`. Fifty-percent-alpha primary composites to **2.57:1 on
+white** — under the 3:1 floor of SC 2.4.13. Raised to `/60`, which measures
+**3.23:1 light and 4.73:1 dark**, on `Input`, `Textarea`, `Select`,
+`Checkbox`, `RadioGroup` and `Switch`.
+
+Neither defect was visible to axe, and neither is visible to the eye at a
+glance — 2.57:1 looks like a focus ring. It looks like a focus ring right up
+until the person using it has low vision, which is the population the rule
+exists for.
+
+Two more from the same sweep:
+
+- The `Switch`'s dark unchecked track was `bg-input/80`, compositing to
+  **1.17:1**. The off state was invisible on dark.
+- The `Slider` rail was `bg-muted` — **1.07:1** on the background. An
+  invisible track.
+
+<div className="my-6 rounded-md border border-border p-4">
+  <Label htmlFor="ring-demo">Tab into this field to see the ring</Label>
+  <Input id="ring-demo" placeholder="ring-ring/60 — 3.23:1 light, 4.73:1 dark" className="mt-2 w-full" />
+</div>
+
+### What replaced the missing coverage
+
+`theme-contract-lock.test.ts` scores non-text pairs explicitly, with the
+comment naming the two defects above so the next reader knows what the test
+is defending:
+
+```ts
+{ fg: 'ring',     bg: 'background', floor: 3, why: 'focus ring (SC 2.4.13)' },
+{ fg: 'ring',     bg: 'card',       floor: 3, why: 'focus ring inside a card' },
+{ fg: 'input',    bg: 'background', floor: 3, why: 'control border (SC 1.4.11)' },
+{ fg: 'input',    bg: 'card',       floor: 3, why: 'control border inside a card' },
+{ fg: 'viz-axis', bg: 'background', floor: 3, why: 'chart axis (SC 1.4.11)' },
+{ fg: 'viz-axis', bg: 'card',       floor: 3, why: 'chart axis inside a card' },
+```
+
+Each pair is scored against **two** surfaces, because "on the page" and
+"inside a card" are different backgrounds and a token can clear one and fail
+the other.
+
+The document-level ring is declared once, in `preflight.css`:
+
+```css
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+@media (forced-colors: active) {
+  :focus-visible { outline-color: Highlight; }
+}
+```
+
+The `forced-colors` block matters more than it looks. In Windows High
+Contrast Mode the user's own palette replaces yours; deferring to the system
+`Highlight` keyword is how the ring survives that substitution instead of
+being flattened to the same colour as everything else.
+
+**Honest note:** the `3.23:1` / `4.73:1` alpha-composite figures live in
+per-component JSDoc tables and story descriptions. The lock scores the
+*solid* `--ring` (8.80:1 light / 11.79:1 dark). No automated test asserts the
+composited ring value today.
+
+---
+
+## Failure class 2 — axe cannot press a key
+
+The overlay/nav wave audited 16 primitives that were all passing axe. It
+found **seven real defects**. The two worst:
+
+- **`ContextMenu` had no keyboard path to open at all.** A WCAG 2.1.1
+  failure, and structurally invisible to a static scan: the menu is not in
+  the DOM until a pointer event fires, so there is nothing for axe to walk.
+- **`ContextMenu.Compose` crashed on open** for any item of `type: 'label'`.
+
+The rest of the list is a good tour of what a tree walk misses: a
+`Pagination` ellipsis whose `aria-hidden` swallowed its own `sr-only` text;
+an inert `HoverCard` trigger; `focus:` written where `focus-visible:` was
+meant; `ring-black/5`, invisible on dark; a `role="group"` with only a label.
+
+### The contract that replaced it
+
+Sixteen primitives — `dialog`, `alert-dialog`, `sheet`, `popover`,
+`tooltip`, `hover-card`, `dropdown-menu`, `context-menu`, `tabs`,
+`accordion`, `collapsible`, `breadcrumb`, `pagination`, `toc`, `skip-link`,
+`scroll-area` — each ship a story whose `play` function drives real keys.
+Eight of them (the dismissible surfaces) must additionally assert Escape.
+`overlay-nav-keyboard-lock.test.ts` fails the build if a story loses its
+`play` function, with the message:
+
+> `primitives need a keyboard story — axe cannot press a key.`
+
+The flows are written as named steps, so the docs and the test are the same
+artefact. `Dialog`, for example:
+
+| Step |
+| --- |
+| Open dialog by clicking trigger |
+| Dialog has accessible name + description |
+| Focus moves INTO the dialog (trap entered) |
+| Escape closes dialog |
+| **Focus is RESTORED to the trigger** |
+
+That last step is the one nothing else catches. A dialog that closes and
+drops focus to `<body>` looks perfect, passes axe, and strands a keyboard
+user at the top of the document.
+
+`ContextMenu`'s flow is worth reading for the same reason:
+*'Shift+F10 opens the menu from the keyboard'* — the key that makes a
+context menu reachable without a right-click, and the one nobody remembers
+to implement.
+
+Charts get the same treatment: `TimeSeries` asserts
+*'ArrowRight reads out a specific value'* and *'Escape clears the crosshair
+(WCAG 2.1.2)'*; `NetworkGraph` asserts arrow-key traversal and Enter to
+select. There are unit tests behind both, including
+*'leaves unrelated keys to the page — a focused chart is not a keyboard
+trap'*.
+
+---
+
+## Failure class 3 — axe reads an SVG as one opaque node
+
+A chart with a good `aria-label` scores green. Whether the *values* are
+reachable is not something a static scan can ask.
+
+WCAG 1.1.1 wants a text equivalent for non-text content, and **for data the
+equivalent is the data.** So every data chart ships a real `<table>`,
+`sr-only` by default:
+
+```tsx
+<SeriesTable
+  series={[{ label, points }]}
+  caption={`${label} — full data`}
+  hidden={!showTable}
+/>
+```
+
+`hidden` defaults to `true`, which renders `sr-only` — present in the
+accessibility tree and the DOM, absent from the layout. Pass
+`hidden={false}` to show it. A "show data" toggle next to a chart is a good
+default, not an admission.
+
+Details that make the difference between a table and a *useful* table:
+
+- **A required `caption`.** An unnamed table is a wall of numbers.
+- **`<th scope="col">` and `<th scope="row">`**, so a screen reader can
+  announce "March, revenue, 12,400" instead of "12,400".
+- **The row set is the union of every series' keys**, so a series with a gap
+  still lines up column-for-column with one that has none.
+- **Gaps say "No data".** An em dash announces as *nothing at all* — the
+  cell simply goes silent, and a silent cell is indistinguishable from a
+  zero to someone who cannot see the alignment.
+- **`NetworkGraph` discloses its own display cap** in the same `sr-only`
+  block: *"N lower-ranked nodes are below the display cap of `limit`. They
+  are not filtered out."* A truncated view that does not say it is truncated
+  makes a different claim than the data supports.
+
+Here is the same component rendered visibly. Screen-reader users get exactly
+this, positioned off-screen, from any `TimeSeries`:
+
+<div className="my-6 rounded-md border border-border p-4">
+  <SeriesTable
+    hidden={false}
+    caption="Weekly installs — full data"
+    keyLabel="Week"
+    series={[
+      { label: 'installs', points: [
+        { t: '2026-07-06', v: 412 },
+        { t: '2026-07-13', v: 508 },
+        { t: '2026-07-20', v: null },
+        { t: '2026-07-27', v: 690 },
+      ] },
+    ]}
+  />
+</div>
+
+`Delta` follows the same rule at a smaller scale: the arrow glyph and the
+digits are `aria-hidden`, and an `sr-only` span carries the sentence —
+including *"Not enough data to compare"* for the empty case, rather than
+rendering nothing and leaving the reader to infer it.
+
+---
+
+## The other pieces of the bar
+
+**Skip link.** `SkipLink` is `sr-only` until focused, then fully revealed
+(`focus-visible:not-sr-only` plus position, background, border and ring). Its
+story asserts it is the *first* tab stop and that focus makes it visible —
+"visible on focus" is the half of the pattern people forget, and a skip link
+you cannot see is a skip link nobody uses. The target must carry
+`tabIndex={-1}` so activating it moves **focus**, not just scroll position.
+
+**`VisuallyHidden`.** The `sr-only` clip technique, deliberately not
+`display: none` or `visibility: hidden` — those remove the node from the
+accessibility tree entirely.
+
+**Behaviour comes from a headless library.** Focus trapping, roving
+tabindex and dismiss semantics are Base UI's, not hand-rolled. Hand-rolled
+focus management is where the long tail of these bugs lives.
+
+**Coverage.** `src/charts/**` and `src/lib/**` sit at **100% statements,
+branches, functions and lines** — 387 statements, 305 branches, 107
+functions, 332 lines, all covered. The rule is that a category is either in
+the glob at 100 or it is out; primitives, patterns and templates are
+currently out, and saying so is more useful than a blended percentage that
+hides which half is tested.
+
+---
+
+## Where the bar is not yet met
+
+Published because a contract with undocumented holes is not a contract.
+
+- **`Select` has no keyboard `play` function**, despite its source comment
+  claiming its keyboard map is "asserted in `Select.stories.tsx`". It is also
+  outside the lock's primitive list, so nothing fails. The map itself is
+  Base UI's and is very likely correct — but "very likely correct" is the
+  state this whole page exists to replace.
+- **`FocusRing` has no behavioural test.** The component whose entire job is
+  the focus ring is covered only by the structural viewport lock.
+- **The overlay keyboard lock is a source parse.** It asserts the story file
+  contains `play:` and the literal `{Escape}`; the behaviour is verified when
+  the Storybook test runner executes those play functions, not by the lock.
+- **The landing site's live axe check covers one route.**
+- **The composited focus-ring ratios are documented, not asserted.**
+
+---
+
+## What to take from this
+
+- **Treat a green axe run as the start of the audit.** Then ask the two
+  questions it structurally cannot: *can I do this with the keyboard only*,
+  and *can I see the boundary of this control*.
+- **Write the keyboard path as named steps in a test.** It becomes the
+  documentation, and it fails when someone deletes it.
+- **For any data visual, ship the data.** A label describes the picture; a
+  table is the picture's equivalent.
+- **Score non-text contrast against every surface the element can sit on**,
+  not just the page background.
+- **Publish your gaps.** A reader who finds an undocumented hole stops
+  believing the documented guarantees too.
+
+---
+
+**Sources.** `packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts` ·
+`packages/ui/__tests__/theme-contract-lock.test.ts` ·
+`packages/ui/src/charts/{series-table,time-series,network-graph,delta}.tsx` ·
+`packages/ui/src/primitives/{skip-link,visually-hidden,focus-ring}.tsx` ·
+`packages/ui/styles/preflight.css` · `packages/ui/vitest.config.ts` ·
+`apps/storybook/.storybook/test-runner.ts` ·
+`docs/philosophies/{A11Y,KEYBOARD,VISUALIZATION}_PHILOSOPHY.md`

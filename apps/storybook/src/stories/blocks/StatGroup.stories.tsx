@@ -17,7 +17,35 @@ const meta: Meta<typeof StatGroup> = {
     },
   },
   argTypes: {
-    cols: { control: 'inline-radio', options: [2, 3, 4] },
+    stats: {
+      // Not an `object` control: every entry is a StatCard prop bag, and the
+      // realistic ones carry a lucide element in `icon`. A JSON editor cannot
+      // round-trip a React element — it would hand the card a plain object and
+      // React would throw on render. Edit the individual card in Blocks/StatCard
+      // instead; this control owns the layout, not the cell.
+      control: false,
+      description:
+        'One StatCard prop bag per cell — `{ label, value, delta?, footnote?, icon?, tone? }`. The group renders them in order and adds nothing: anything you want a card to say, say it here.',
+      table: { type: { summary: 'StatCardProps[]' }, defaultValue: { summary: '[]' }, category: 'Data' },
+    },
+    cols: {
+      control: 'inline-radio',
+      options: [2, 3, 4],
+      description:
+        'DESKTOP track count, and a closed set rather than a free number because the grid has to stay on the DS layout scale. It collapses to one column below `sm` — handed to the grid unqualified, 4 tracks at 375px is a 68px card whose label and trend icon spill off the viewport.',
+      table: { type: { summary: '2 | 3 | 4' }, defaultValue: { summary: '3' }, category: 'Appearance' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Render `cols` skeleton cards instead of the stats. The placeholder count follows `cols`, not `stats.length`, because on first paint the array is empty and the row would otherwise reserve nothing.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' }, category: 'State' },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the `<section>`. The group is `w-full`; constrain it from the page, not here.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
   },
 };
 
@@ -55,7 +83,7 @@ const STATS = [
 ];
 
 export const Default: Story = {
-  args: { stats: STATS.slice(0, 3), cols: 3 },
+  args: { stats: STATS.slice(0, 3), cols: 3, loading: false },
 };
 
 export const FourColumns: Story = {
