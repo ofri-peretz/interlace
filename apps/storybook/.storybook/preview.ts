@@ -53,7 +53,28 @@ const preview: Preview = {
       test: 'error',
       manual: false,
     },
-    layout: 'centered',
+    /**
+     * `padded`, NOT `centered`. This is a responsiveness contract, not a
+     * cosmetic preference.
+     *
+     * Storybook's centered layout sizes the story root to its CONTENT — it
+     * measured 32px wide against a 1280px body. Every component in this DS is
+     * built mobile-first and sizes itself from its container (`w-full`,
+     * `max-w-*`, `viewBox`), and a percentage width against an indefinite
+     * container resolves to nothing. So the centered layout rendered
+     * SignInForm as a ~40px column with circular inputs, FocusRing as one word
+     * per line, and every chart as a blank box — a layout no user will ever
+     * see, presented as the component's live preview on ds.interlace.tools.
+     *
+     * `padded` gives the root a definite, full width. Components that genuinely
+     * want centering (a lone Badge, a Button) opt in per story with
+     * `parameters: { layout: 'centered' }` — that is the exception, and it is
+     * safe because those components have intrinsic width.
+     *
+     * Corollary for anyone adding a story: if it only looks right centered, the
+     * component probably has no responsive width strategy, and THAT is the bug.
+     */
+    layout: 'padded',
     options: {
       storySort: {
         // `Welcome` first so the root URL deep-links to the landing page

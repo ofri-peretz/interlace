@@ -39,7 +39,7 @@ import { cn } from '../lib/cn.js';
  * | R6   | data-slot on root                | `data-slot="focus-ring"`                                    |
  * | R7   | className merged + ...rest       | `cn(BASE, className)` + `{...props}`                        |
  * | R8   | Enum for offset                  | `offset = 'none' | 'sm' | 'md' | 'lg'`                      |
- * | R10  | Composition seam                 | `as` prop swaps wrapper element                             |
+ * | R10  | Composition seam                 | `className` (the wrapper's display is the caller's call)    |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes only                   |
  * | R19  | Tokens only                      | `--ring` semantic token                                     |
@@ -68,10 +68,19 @@ type FocusRingProps = React.ComponentProps<'span'> & {
 };
 
 /**
- * Renders a `<span>`. If the consumer needs a block-level wrapper, set
- * `display: block` via className — the wrapper is `inline-block` by default
- * but accepts any display utility (the focus contract is independent of
- * box model).
+ * Renders a `<span>`, `inline-block` by default.
+ *
+ * **Wrapping a block-level child? Pass `className="block"`.** This is not a
+ * style preference — an `inline-block` box in normal flow whose child is a
+ * `display: block` element with `width: auto` is a circular width dependency,
+ * and Chrome resolves it to **zero**: the wrapper measures 0px, the child
+ * overflows it, and the content renders one word per line. That shipped as
+ * this component's live preview on the public registry.
+ *
+ * There is deliberately no `as` prop. The contract table used to claim one and
+ * none was ever implemented, so `as="div"` landed in `...props` and was written
+ * onto the span as an invalid DOM attribute. Per CONVENTIONS.md the DS
+ * composition seam is Base UI's `render` prop, not `as`.
  */
 export const FocusRing = React.forwardRef<HTMLSpanElement, FocusRingProps>(
   ({ className, offset = 'md', children, ...props }, ref) => (

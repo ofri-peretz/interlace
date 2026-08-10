@@ -34,7 +34,7 @@ const FocusableCard = ({ children }: { children: React.ReactNode }) => (
 export const Default: Story = {
   args: { offset: 'md' },
   render: (args) => (
-    <FocusRing {...args}>
+    <FocusRing {...args} className="block">
       <FocusableCard>Tab here to see the ring at 2px offset.</FocusableCard>
     </FocusRing>
   ),
@@ -46,16 +46,16 @@ export const Offsets: Story = {
   },
   render: () => (
     <div className="flex flex-col gap-3">
-      <FocusRing offset="none">
+      <FocusRing offset="none" className="block">
         <FocusableCard>offset = none</FocusableCard>
       </FocusRing>
-      <FocusRing offset="sm">
+      <FocusRing offset="sm" className="block">
         <FocusableCard>offset = sm</FocusableCard>
       </FocusRing>
-      <FocusRing offset="md">
+      <FocusRing offset="md" className="block">
         <FocusableCard>offset = md (default)</FocusableCard>
       </FocusRing>
-      <FocusRing offset="lg">
+      <FocusRing offset="lg" className="block">
         <FocusableCard>offset = lg</FocusableCard>
       </FocusRing>
     </div>
@@ -75,7 +75,7 @@ export const CustomSurface: Story = {
     <ul className="max-w-96 divide-y divide-border rounded-md border border-border">
       {['Alpha', 'Bravo', 'Charlie'].map((label) => (
         <li key={label}>
-          <FocusRing offset="none" as="div" className="rounded-none">
+          <FocusRing offset="none" className="block rounded-none">
             <a href="#" className="block px-4 py-3 text-sm hover:bg-muted focus:outline-none">
               {label}
             </a>
@@ -99,7 +99,7 @@ export const RTL: Story = {
 export const BelowMinViewport: Story = {
   render: () => (
     <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }} className="border-2 border-dashed border-muted p-3">
-      <FocusRing>
+      <FocusRing className="block">
         <FocusableCard>Below 320 px — ring contract still active.</FocusableCard>
       </FocusRing>
     </div>
