@@ -70,7 +70,16 @@ export interface MetricTableProps extends Omit<React.ComponentProps<'div'>, 'onS
   caption: string;
   selected?: string | null;
   onSelect?: (key: string) => void;
-  /** How many date columns to show. The rest stay in the sparkline. */
+  /**
+   * How many date columns to show. The rest of the history stays in the
+   * sparkline and in the `sr-only` data table, so nothing is lost.
+   *
+   * Defaults to 6, not 8. With 8 the date columns consumed the whole width at
+   * a typical content measure and pushed **trend and change off the right
+   * edge** — the two columns the reader actually came for, scrollable but
+   * invisible. Individual dates are the least valuable thing in the row; they
+   * are what should give up space first.
+   */
   maxColumns?: number;
   /** Render a `<Skeleton variant="metric-table" />` placeholder. */
   loading?: boolean;
@@ -83,7 +92,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
       caption,
       selected = null,
       onSelect,
-      maxColumns = 8,
+      maxColumns = 6,
       loading = false,
       className,
       ...props
@@ -137,6 +146,22 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
               >
                 Metric
               </th>
+              {/* Trend and Change sit BEFORE the dates, immediately after the
+                  row's identity. A dense table overflows and scrolls — that is
+                  inherent, not a bug — so the only real decision is which
+                  columns are allowed to scroll away. Trailing them after the
+                  dates meant the two columns the reader came for were the first
+                  off-screen, showing a bare direction glyph and no numbers.
+                  Individual dates are the least valuable cells in the row. */}
+              <th scope="col" className="border-b border-border px-3 py-2">
+                <span className="sr-only">Trend</span>
+              </th>
+              <th
+                scope="col"
+                className="whitespace-nowrap border-b border-border px-3 py-2 text-right text-xs font-medium text-muted-foreground"
+              >
+                Change
+              </th>
               {columns.map((column) => (
                 <th
                   key={column}
@@ -146,15 +171,6 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
                   {column.slice(5)}
                 </th>
               ))}
-              <th scope="col" className="border-b border-border px-3 py-2">
-                <span className="sr-only">Trend</span>
-              </th>
-              <th
-                scope="col"
-                className="border-b border-border px-3 py-2 text-right text-xs font-medium text-muted-foreground"
-              >
-                Change
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -192,6 +208,18 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
                   >
                     {row.label}
                   </th>
+                  <td className="px-3 py-1">
+                    {/* Decorative: the row already announces every value and the
+                        change cell announces the direction. */}
+                    <Sparkline points={row.points} polarity={row.polarity} decorative />
+                  </td>
+                  {/* `whitespace-nowrap`: auto table layout hands the date
+                      columns the space first and squeezes this one to a zero
+                      content box, which clips the digits and leaves only the
+                      direction glyph visible. The numbers ARE the column. */}
+                  <td className="whitespace-nowrap px-3 py-1.5 text-right">
+                    <Delta points={row.points} polarity={row.polarity} unit={row.unit} />
+                  </td>
                   {columns.map((column) => {
                     const value = values.get(column);
                     return (
@@ -213,14 +241,6 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
                       </td>
                     );
                   })}
-                  <td className="px-3 py-1">
-                    {/* Decorative: the row already announces every value and the
-                        change cell announces the direction. */}
-                    <Sparkline points={row.points} decorative />
-                  </td>
-                  <td className="px-3 py-1.5 text-right">
-                    <Delta points={row.points} polarity={row.polarity} unit={row.unit} />
-                  </td>
                 </tr>
               );
             })}

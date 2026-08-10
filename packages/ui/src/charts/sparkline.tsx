@@ -36,6 +36,7 @@ import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { Skeleton } from '../primitives/skeleton.js';
+import { toneFor, type Polarity } from './delta.js';
 import { delta, describeSeries, linePath, seriesScales, type Point } from './scale.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -57,6 +58,16 @@ export interface SparklineProps
   /** Name used in the accessible label. Ignored when `decorative`. */
   label?: string;
   /**
+   * Which direction counts as good. `inverse` for latency, cost, error rate,
+   * open issues.
+   *
+   * Without this the sparkline coloured purely by DIRECTION, so an
+   * inverse-polarity row rendered a red line beside a green delta — the same
+   * row asserting "bad" and "good" simultaneously. Only visible by looking at
+   * it; every unit test passed.
+   */
+  polarity?: Polarity;
+  /**
    * Render a `<Skeleton variant="sparkline" />` placeholder at the exact inline
    * cell size, so a metric arriving mid-window does not reflow its column.
    */
@@ -70,6 +81,7 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(functio
     height = 22,
     decorative = false,
     label,
+    polarity = 'normal',
     loading = false,
     className,
     ...props
@@ -110,7 +122,12 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(functio
   // that no input can ever reach — an unreachable default is a lie the coverage
   // report has to be argued with.
   const direction = change!.direction;
-  const tone = direction === 'down' ? 'text-viz-negative' : 'text-viz-positive';
+  const TONE = {
+    good: 'text-viz-positive',
+    bad: 'text-viz-negative',
+    flat: 'text-viz-neutral',
+  } as const;
+  const tone = TONE[toneFor(direction, polarity)];
   const last = scales.points.length - 1;
 
   return (

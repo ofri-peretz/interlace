@@ -208,7 +208,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         ref={ref}
         data-slot="time-series-empty"
         data-min-viewport={String(MIN_VIEWPORT)}
-        className={cn('m-0 rounded-lg border border-border p-6', className)}
+        className={cn('m-0 w-full rounded-lg border border-border p-6', className)}
         {...props}
       >
         <p className="text-sm text-muted-foreground">
@@ -228,7 +228,12 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
       ref={ref}
       data-slot="time-series"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('m-0 flex flex-col gap-2', className)}
+      // `w-full` is load-bearing, not cosmetic. The plot sizes itself from the
+      // container via `viewBox` + `w-full`, so a figure that collapses to
+      // zero width paints NOTHING — and a bare <figure> is a flex/grid item
+      // that does exactly that inside any centered parent. Caught in the
+      // browser; jsdom reports every box as 0×0 and cannot see it.
+      className={cn('m-0 flex w-full flex-col gap-2', className)}
       {...props}
     >
       {label && (

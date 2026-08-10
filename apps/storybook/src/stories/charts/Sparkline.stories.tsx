@@ -10,6 +10,11 @@ const meta: Meta<typeof Sparkline> = {
   component: Sparkline,
   tags: ['autodocs'],
   parameters: {
+    // Opt out of the global `layout: 'centered'`. A centered story sits in a
+    // fit-content parent, and a chart sized from its container via `viewBox` +
+    // `w-full` resolves to ZERO width there — it renders, paints nothing, and
+    // looks like a broken component. Charts are full-width surfaces.
+    layout: 'padded',
     docs: {
       description: {
         component:

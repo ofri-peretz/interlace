@@ -92,11 +92,14 @@ describe('Sparkline', () => {
     expect(svg.getAttribute('class')).toContain('text-viz-negative');
   });
 
-  it('treats a flat series as not-falling rather than painting it as a loss', () => {
+  it('paints a flat series neutral — it is neither a win nor a loss', () => {
+    // It used to render green, which quietly congratulated the reader for a
+    // metric that had not moved, AND disagreed with the neutral "–" its own
+    // Delta shows in the same row.
     render(<Sparkline points={series(7, 7)} />);
     const svg = screen.getByRole('img');
     expect(svg.getAttribute('data-direction')).toBe('flat');
-    expect(svg.getAttribute('class')).toContain('text-viz-positive');
+    expect(svg.getAttribute('class')).toContain('text-viz-neutral');
   });
 
   it('keeps the caller className alongside the DS classes', () => {
@@ -104,6 +107,14 @@ describe('Sparkline', () => {
     const cls = screen.getByRole('img').getAttribute('class') ?? '';
     expect(cls).toContain('mx-2');
     expect(cls).toContain('align-middle');
+  });
+
+  it('honours polarity, so a row cannot say "good" and "bad" at the same time', () => {
+    // Before this, Sparkline coloured purely by direction: an inverse-polarity
+    // row rendered a RED line beside a GREEN delta. Every unit test passed and
+    // it was obvious the moment anyone looked at the table.
+    render(<Sparkline points={series(84, 19)} polarity="inverse" label="Open issues" />);
+    expect(screen.getByRole('img').getAttribute('class')).toContain('text-viz-positive');
   });
 
   it('reserves the exact inline cell while loading, so the column does not reflow', () => {
@@ -519,6 +530,15 @@ describe('MetricTable', () => {
       d.getAttribute('data-tone'),
     );
     expect(tones).toEqual(['good', 'bad']);
+  });
+
+  it('passes polarity down to the sparkline, so the row reads consistently', () => {
+    const { container } = render(<MetricTable rows={rows} caption="Metrics" />);
+    const sparks = [...container.querySelectorAll('[data-slot="sparkline"]')].map((s) =>
+      s.getAttribute('class'),
+    );
+    // Latency rose, and rising latency is bad — the line must agree with the delta.
+    expect(sparks[1]).toContain('text-viz-negative');
   });
 
   it('renders a row-shaped placeholder while loading, not an empty table', () => {
