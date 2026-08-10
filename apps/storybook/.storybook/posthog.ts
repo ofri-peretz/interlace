@@ -57,22 +57,42 @@ function isTrackingAllowed(): boolean {
   return true;
 }
 
+/**
+ * The key, or null.
+ *
+ * `process.env.STORYBOOK_POSTHOG_KEY` is written out in full, exactly once,
+ * and that is not stylistic. This module is imported by manager.ts, and the
+ * Storybook manager is bundled by **esbuild, not Vite** — so `import.meta.env`
+ * is never substituted here and is stripped from the output entirely.
+ * Storybook's own mechanism is to `define`-replace the literal text
+ * `process.env.STORYBOOK_POSTHOG_KEY` at build time, which means any variation
+ * on that string silently defeats it.
+ *
+ * The previous implementation had both failure modes at once: it read
+ * `import.meta.env` first (never substituted in this bundle) and fell back to
+ * `process.env?.STORYBOOK_POSTHOG_KEY` — the optional chain makes the text no
+ * longer match the define, so it was replaced by nothing and evaluated to
+ * undefined in a browser that has no `process` at all.
+ *
+ * Verified against the deployed bundle: sb-addons/.../manager-bundle.js
+ * contained the PostHog code but zero occurrences of `phc_`. The env var was
+ * set in Vercel the whole time; the value simply had no way to reach the
+ * bundle. Storybook had therefore never sent a single event.
+ *
+ * `import.meta.env` is still consulted, second, so the same module keeps
+ * working if it is ever imported from the Vite-built preview bundle.
+ */
 function getKey(): string | null {
-  // Vite injects import.meta.env.* at build time; Storybook's manager
-  // bundle exposes the same set via `process.env` in the legacy mode but
-  // we don't rely on that. We accept either, prefer import.meta.env.
   try {
+    const defined = process.env.STORYBOOK_POSTHOG_KEY;
+    if (typeof defined === 'string' && defined.trim()) return defined.trim();
+
     const m = (
       import.meta as ImportMeta & {
         env?: Record<string, string | undefined>;
       }
     ).env;
-    const key =
-      m?.VITE_POSTHOG_KEY ??
-      m?.STORYBOOK_POSTHOG_KEY ??
-      (typeof process !== 'undefined'
-        ? process.env?.STORYBOOK_POSTHOG_KEY
-        : undefined);
+    const key = m?.STORYBOOK_POSTHOG_KEY ?? m?.VITE_POSTHOG_KEY;
     return key?.trim() || null;
   } catch {
     return null;
