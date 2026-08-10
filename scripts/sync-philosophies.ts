@@ -264,6 +264,19 @@ ${safeBody.trimEnd()}
 `;
 }
 
+/**
+ * Escape braces for MDX.
+ *
+ * `deriveDescription` flattens inline code to plain text, so a philosophy
+ * whose first paragraph mentions `@theme { --breakpoint-* }` arrives here as
+ * bare prose. MDX v3 hands anything in braces to acorn, so that description
+ * was parsed as JavaScript and the ENTIRE Storybook static build died at the
+ * indexing step — no story rendered, no a11y gate ran, from one sentence in a
+ * markdown source file. Descriptions are prose; braces in them are literal.
+ */
+const escapeMdxBraces = (text: string): string =>
+  text.replace(/([{}])/g, '\\$1');
+
 function renderStorybookIndex(philosophies: Philosophy[]): string {
   const bySlug = new Map(philosophies.map((p) => [p.slug, p]));
   // Storybook slugifies a nested title into `philosophy-<cat>-<slug>--docs`.
@@ -280,7 +293,7 @@ function renderStorybookIndex(philosophies: Philosophy[]): string {
     const list = members
       .map((p) => {
         seen.add(p.slug);
-        return `- **[${p.title}](?path=/docs/${sbSlug(cat.label, p.slug)})** — ${p.description}`;
+        return `- **[${p.title}](?path=/docs/${sbSlug(cat.label, p.slug)})** — ${escapeMdxBraces(p.description)}`;
       })
       .join('\n');
     blocks.push(`## ${cat.label}\n\n${cat.hint}\n\n${list}`);
@@ -289,7 +302,9 @@ function renderStorybookIndex(philosophies: Philosophy[]): string {
   if (orphans.length > 0) {
     blocks.push(
       `## Other\n\nUncategorised — assign a cluster in \`scripts/sync-philosophies.ts\`.\n\n` +
-        orphans.map((p) => `- **${p.title}** — ${p.description}`).join('\n'),
+        orphans
+          .map((p) => `- **${p.title}** — ${escapeMdxBraces(p.description)}`)
+          .join('\n'),
     );
   }
 
@@ -311,8 +326,25 @@ ${blocks.join('\n\n')}
 `;
 }
 
+/**
+ * Read a file, or null when it isn't there.
+ *
+ * `existsSync(f) ? readFileSync(f) : null` is a check-then-use race (CodeQL
+ * js/file-system-race): the file can vanish between the two calls and the
+ * read throws from inside a branch written to prove it cannot. Ask for the
+ * bytes and handle the one error that means "not there".
+ */
+function readIfPresent(file: string): string | null {
+  try {
+    return fs.readFileSync(file, 'utf-8');
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null;
+    throw error;
+  }
+}
+
 function writeIfChanged(file: string, content: string): boolean {
-  const existing = fs.existsSync(file) ? fs.readFileSync(file, 'utf-8') : null;
+  const existing = readIfPresent(file);
   if (existing === content) return false;
   if (CHECK_MODE) {
     process.stderr.write(`drift: ${path.relative(REPO_ROOT, file)}\n`);
