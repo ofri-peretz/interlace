@@ -274,8 +274,12 @@ ${safeBody.trimEnd()}
  * indexing step — no story rendered, no a11y gate ran, from one sentence in a
  * markdown source file. Descriptions are prose; braces in them are literal.
  */
+// The backslash is escaped FIRST, in the same pass — escaping `{` and `}` but
+// not the escape character is incomplete sanitization (CodeQL
+// js/incomplete-sanitization): a description ending in a literal `\` would
+// otherwise consume the backslash this adds and hand the brace back to acorn.
 const escapeMdxBraces = (text: string): string =>
-  text.replace(/([{}])/g, '\\$1');
+  text.replace(/([\\{}])/g, '\\$1');
 
 function renderStorybookIndex(philosophies: Philosophy[]): string {
   const bySlug = new Map(philosophies.map((p) => [p.slug, p]));
