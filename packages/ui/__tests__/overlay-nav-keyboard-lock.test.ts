@@ -20,8 +20,9 @@
  * as the sibling locks. We assert what the SOURCE says, so a refactor that
  * hides the assertion behind a helper can't launder past the check.
  *
- * If you add an interactive overlay or nav primitive, add it to
- * KEYBOARD_DRIVEN below AND write its `KeyboardFlow` story in the same PR.
+ * If you add an interactive overlay or nav primitive — or any primitive whose
+ * contract only exists while something is focused — add it to KEYBOARD_DRIVEN
+ * below AND write its `KeyboardFlow` story in the same PR.
  */
 
 import { describe, expect, it } from 'vitest';
@@ -54,6 +55,7 @@ const KEYBOARD_DRIVEN = [
   { primitive: 'hover-card', story: 'HoverCard' },
   { primitive: 'dropdown-menu', story: 'DropdownMenu' },
   { primitive: 'context-menu', story: 'ContextMenu' },
+  { primitive: 'select', story: 'Select' },
   // Nav / disclosure — roving tabindex, aria-expanded, bypass blocks.
   { primitive: 'tabs', story: 'Tabs' },
   { primitive: 'accordion', story: 'Accordion' },
@@ -63,6 +65,12 @@ const KEYBOARD_DRIVEN = [
   { primitive: 'toc', story: 'Toc' },
   { primitive: 'skip-link', story: 'SkipLink' },
   { primitive: 'scroll-area', story: 'ScrollArea' },
+  // Not an overlay and not nav — but its ENTIRE contract is a focus
+  // affordance painted by `:focus-within`, a live pseudo-class no static tree
+  // ever enters. axe reports a clean pass on a ring that paints nothing, so a
+  // play function is the only thing standing between the DS and an invisible
+  // focus indicator. Same requirement, same list.
+  { primitive: 'focus-ring', story: 'FocusRing' },
 ] as const;
 
 /**
@@ -79,6 +87,8 @@ const MUST_ASSERT_ESCAPE = new Set([
   'HoverCard',
   'DropdownMenu',
   'ContextMenu',
+  'Select',
+  'ThemeSwitcher',
 ]);
 
 const readStory = (name: string) =>

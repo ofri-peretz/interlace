@@ -51,6 +51,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    // The changelog is the upgrade path for copied source, so it is a
+    // higher-value landing page than the reference surfaces around it.
+    {
+      url: `${BASE}/changelog`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
   ];
 
   const componentRoutes: MetadataRoute.Sitemap = names.map((name) => ({

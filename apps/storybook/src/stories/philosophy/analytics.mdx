@@ -3,8 +3,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Philosophy/Observability/Analytics" />
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
-    source: ANALYTICS_PHILOSOPHY.md
-    hash: 5374df40e724 */}
+    source: docs/philosophies/ANALYTICS_PHILOSOPHY.md
+    hash: 7604f681d321 */}
 
 # Analytics Philosophy
 
@@ -116,7 +116,7 @@ export interface TrackedEventMap {
 ```
 
 **Mechanics:**
-- The existing `apps/docs/src/lib/analytics.ts` is the canonical pattern for
+- The existing `apps/registry/src/lib/analytics.ts` is the canonical pattern for
   the typed event channel — extend it, don't replace it. Each property owns
   its own `TrackedEventMap` because events are app-specific.
 - Add new events by editing the map first; the call site is forced to follow.

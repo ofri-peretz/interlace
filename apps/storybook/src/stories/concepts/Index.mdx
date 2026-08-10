@@ -1,0 +1,133 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Concepts" />
+
+# Concepts
+
+This section explains what the Interlace design system **is**, what it
+**guarantees**, and where each guarantee is enforced. It is written for
+someone deciding whether to adopt it — and for someone who will never adopt
+it but wants the technique.
+
+Every number on these pages is traceable. Where a claim is enforced by a
+test, the test file is named. Where it is only a convention, it says so.
+
+---
+
+## What this is
+
+A shadcn-compatible component registry plus the CSS token system underneath
+it. `npx shadcn add …` **copies source into your repository**. From that
+moment your file and our git history have nothing to do with each other. You
+will edit it. That is the pitch, and every other decision follows from it —
+see [Versioning](?path=/docs/concepts-versioning--docs).
+
+The package (`@interlace/ui`, v1.0.0) is `"private": true` and is not
+published to npm. That is deliberate, not an oversight: publishing would
+create a second distribution channel with a *different* upgrade model for the
+same components.
+
+## The five layers
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  5. Templates    full pages — ArticleTemplate, AuthTemplate      │
+│                  composes 3+ patterns; streams per section       │
+├──────────────────────────────────────────────────────────────────┤
+│  4. Patterns     composites — AuthorByline, NewsletterForm       │
+│                  composes 2+ components                          │
+├──────────────────────────────────────────────────────────────────┤
+│  3. Components   atomic React primitives — Button, Input, Card,  │
+│                  Skeleton, Dialog, …                             │
+├──────────────────────────────────────────────────────────────────┤
+│  2. Semantics    --background, --foreground, --primary, --ring   │
+│                  → resolves into the brand layer via var(…)      │
+├──────────────────────────────────────────────────────────────────┤
+│  1. Primitives   raw values — hex, px, keyframes, motion         │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+Layers 1 and 2 are CSS. Layers 3, 4, 5 are React.
+
+**The dependency rule: each layer only references the layer beneath it,
+never above.** A component reads a semantic token. A semantic token resolves
+to a brand primitive. A pattern composes components. A template composes
+patterns and components.
+
+The rule has a practical payoff. Because nothing above layer 1 ever names a
+colour, **a brand fork is a single file** — you redeclare the `--interlace-*`
+literals and nothing else moves. See
+[Color &amp; theming](?path=/docs/concepts-color-theming--docs).
+
+Source: `packages/ui/DESIGN_SYSTEM_LAYERS.md`.
+
+## What the system guarantees
+
+| Guarantee | Where it is enforced |
+| --- | --- |
+| Every primitive declares the narrowest viewport it supports, and the value is one of 320 / 480 / 768 | `primitives-min-viewport-lock.test.tsx` — 41 primitives + 13 templates, pinned literal by literal |
+| Breakpoints are 480 / 768 / 1024 / 1280 and no source file opens a raw `@media (min-width: …)` | `breakpoints-lock.test.ts` |
+| Every colour pair the themes paint clears 4.5:1 for body text and 3:1 for focus rings and control borders, in **four** combinations (2 themes × 2 schemes) | `theme-contract-lock.test.ts` |
+| Tinted composites (`bg-primary/10` + `text-primary`) clear 4.5:1 after alpha compositing | `composite-contrast-lock.test.ts` |
+| Every overlay and nav primitive ships a keyboard story that drives real keys; eight of them assert Escape | `overlay-nav-keyboard-lock.test.ts` |
+| Every `Skeleton variant="…"` call site resolves to a registered variant that paints a non-empty shape | `skeleton-variant-coverage-lock.test.ts` |
+| Every template composes a `SectionBoundary` and ships a page-level `.Skeleton` | `templates-section-boundary-lock.test.ts` |
+| `Container` / `Section` / `Stack` emit exactly the documented class strings | `layout-primitives-lock.test.tsx` (45 assertions) |
+| No sizing utility collides with the spacing scale (`max-w-sm` is 16px here, not 384px) | `container-scale-lock.test.ts`, `spacing-token-shadowing-lock.test.ts` |
+| `src/charts/**` and `src/lib/**` at 100% statements / branches / functions / lines | `packages/ui/vitest.config.ts` thresholds |
+| Every story passes axe at WCAG 2.2 AA **and** AAA `color-contrast-enhanced` | `.storybook/test-runner.ts`, CI gate 7 |
+
+The coverage threshold is worth reading twice. It is `100` on all four
+metrics, and the rule is that **a category is either in the glob at 100 or it
+is out**. There is no "87% and rising" — a threshold below 100 only records
+how much you have stopped caring. The glob is currently exactly two
+directories; primitives, patterns and templates are honestly outside it.
+
+## What the system does not guarantee
+
+Stated plainly, because a contract you have to discover is not a contract.
+
+- **No runtime horizontal-overflow test.** The "the page never scrolls
+  sideways" rule is enforced by review and by story frames that deliberately
+  under-size a component, not by an assertion on `scrollWidth`.
+- **No CLS measurement.** Skeletons are shape-matched to their components by
+  construction and by inspection; nothing compares the two rendered boxes.
+- **The keyboard lock is a source parse, not a behaviour test.** It asserts
+  the story file contains a `play` function and the literal `{Escape}`. The
+  behaviour itself is verified when Storybook's test runner executes those
+  play functions.
+- **The motion duration/easing table in the philosophy corpus is not
+  implemented as tokens.** Durations are literals inside `--animate-*`
+  shorthands. See [Loading &amp; motion](?path=/docs/concepts-loading-motion--docs).
+
+## The reason this section exists
+
+Nine leading shadcn registries were read in August 2026. None of them
+publishes a keyboard path for its overlays, a measured contrast table, a
+screen-reader data equivalent for its charts, or a coverage number. Four have
+no props table at all.
+
+So the differentiator is not the component count. It is the contract — and a
+contract nobody can read is not a contract. These pages are where it becomes
+legible.
+
+## Where to start
+
+1. **[Responsiveness](?path=/docs/concepts-responsiveness--docs)** — the
+   breakpoint ladder, the `MIN_VIEWPORT` contract, and the two ways a
+   responsive layout actually breaks.
+2. **[Layout](?path=/docs/concepts-layout--docs)** — the spacing scale, the
+   four container widths, and which of `Container` / `Section` / `Stack` /
+   `Grid` to reach for.
+3. **[Color &amp; theming](?path=/docs/concepts-color-theming--docs)** — the
+   token cascade, the two orthogonal axes, and how to fork the brand.
+4. **[Accessibility](?path=/docs/concepts-accessibility--docs)** — the actual
+   bar, and the three classes of failure axe scored green.
+5. **[Loading &amp; motion](?path=/docs/concepts-loading-motion--docs)** —
+   skeletons that reserve the silhouette, one pulse, one announcement.
+6. **[Versioning](?path=/docs/concepts-versioning--docs)** — why a registry's
+   changelog *is* its upgrade path.
+
+The 26 domain philosophies these pages draw on live under
+[Philosophy](?path=/docs/philosophy--docs). Concepts explain; the
+philosophies are the source contracts.

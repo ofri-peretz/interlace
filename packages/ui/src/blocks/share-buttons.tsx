@@ -1,9 +1,13 @@
 /**
- * @deprecated Moved to `@interlace/ui/patterns/share-buttons` as part of the
+ * @deprecated since 1.0.0 — removed in 2.0.0. Use
+ * `@interlace/ui/patterns/share-buttons`. Moved as part of the
  * 5-layer DS architecture (Phase 1). This alias is a one-line re-export so
  * existing consumers (`import { ... } from '@interlace/ui/blocks/share-buttons'`)
  * keep working; new code should import from the patterns/ path.
  *
- * Removal scheduled for one release cycle after the architecture PR lands.
+ * A deprecation with no removal release is a permanent one, so this names
+ * a real version: the alias disappears in `@interlace/ui` 2.0.0, as a
+ * breaking change with a migration note. See
+ * `docs/philosophies/VERSIONING_PHILOSOPHY.md`.
  */
 export * from '../patterns/share-buttons.js';

@@ -1,0 +1,259 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Skeleton } from '@interlace/ui/skeleton';
+import { Input } from '@interlace/ui/input';
+import { Label } from '@interlace/ui/label';
+
+<Meta title="Concepts/Loading & Motion" />
+
+# Loading &amp; motion
+
+One sentence for each half:
+
+- **Loading states are part of the design, not the absence of design.** A
+  skeleton reserves the exact silhouette of the thing that is coming, so the
+  swap costs zero layout shift.
+- **Motion is earned, not assumed.** Default to none; `prefers-reduced-motion`
+  is a contract, not a nicety.
+
+They are on the same page because they collide: the loading state is where
+most systems put their only animation, and it is the state a
+motion-sensitive user cannot avoid.
+
+---
+
+## Skeletons reserve the silhouette
+
+A spinner tells you *that* something is loading. A skeleton tells you
+*what* — and, more usefully, holds the space so nothing moves when the data
+arrives.
+
+The system ships **one** `Skeleton` component with **40 variants**, not 40
+paired `XSkeleton` components. That is one import path instead of dozens, and
+the `variant` union is literally the const tuple of registered variants, so an
+invalid value is a TypeScript error at dev time rather than an empty box at
+render time.
+
+Variants exist in five families:
+
+| Family | Examples |
+| --- | --- |
+| Generic | `rect`, `circle`, `text`, `paragraph` |
+| Primitive-shaped | `avatar`, `badge`, `button`, `input`, `select`, `tabs`, `toc`, `pagination` |
+| Form family | `checkbox`, `radio-group`, `switch`, `slider`, `textarea`, `label`, `form` |
+| Pattern-shaped | `article-card`, `author-byline`, `page-header`, `stat-card`, `prev-next-post` |
+| Chart-shaped | `chart`, `sparkline`, `metric-table` |
+
+The chart-shaped ones show what "reserve the silhouette" means concretely.
+`chart` is `h-56` because that matches `TimeSeries`'s default drawing height
+of 220 user units — the swap is CLS-neutral by construction, not by
+coincidence. `sparkline` is `h-[22px] w-[90px] inline-block align-middle`,
+because a sparkline lives *inside a table cell*, and a block-level
+placeholder there reflows the whole column.
+
+Sixteen of the 40 are **composite** — they render an internal arrangement of
+shapes rather than a single box, because a card's silhouette is a thumbnail
+plus two text lines plus a byline, and a single grey rectangle of the right
+height still makes the eye jump.
+
+<div className="my-6 grid gap-6 sm:grid-cols-2">
+  <div className="rounded-md border border-border p-4">
+    <p className="mb-3 text-sm text-muted-foreground">Loading</p>
+    <Skeleton variant="label" label={null} />
+    <div className="h-2" />
+    <Skeleton variant="input" label={null} />
+  </div>
+  <div className="rounded-md border border-border p-4">
+    <p className="mb-3 text-sm text-muted-foreground">Resolved</p>
+    <Label htmlFor="skeleton-demo">Email</Label>
+    <Input id="skeleton-demo" placeholder="you@example.com" className="mt-2 w-full" />
+  </div>
+</div>
+
+`skeleton-variant-coverage-lock.test.ts` asserts that every
+`<Skeleton variant="…">` call site in the codebase resolves to a registered
+variant, that every form primitive has one, and — the useful one — that
+**every form-primitive variant paints a non-empty shape**. A registered
+variant that maps to an empty class string reserves nothing and guarantees a
+shift the moment the real control arrives. That is a failure that looks like
+success in every test that only checks "the variant exists".
+
+At the page level, all 13 templates ship a `.Skeleton` static, asserted by
+`templates-section-boundary-lock.test.ts`. A page-shaped skeleton is what
+makes streaming worth doing: the server can return a fully-shaped document
+immediately and fill sections in as they resolve.
+
+---
+
+## One pulse, not many
+
+The animation lives on the **root** of the skeleton:
+
+```tsx
+className={cn('animate-pulse bg-muted', SKELETON_VARIANT_CLASSES[variant], className)}
+```
+
+Composite variants add their inner shapes with `bg-muted-foreground/10` and
+**no animation class**. So a card skeleton with six inner rectangles has
+exactly one pulse.
+
+The reason is not aesthetic. Six independently-animated children start at the
+same instant only in theory; in practice they drift, and a wall of
+out-of-phase pulses reads as a rendering fault rather than a loading state.
+It is also six times the compositing work for the same information.
+
+The pulse itself is Tailwind's stock `animate-pulse` — opacity between 1 and
+0.5 on a 2s cycle. Opacity only: no shimmer gradient sliding across the
+surface, which is a second animation carrying no extra meaning.
+
+## One announcement, not ten
+
+Every skeleton root carries `role="status"`, `aria-busy="true"`,
+`aria-live="polite"` and an `sr-only` label (default `"Loading…"`).
+
+Nested skeletons pass `label={null}`. A page skeleton that announces ten
+times says "Loading, Loading, Loading…" to a screen-reader user, which is
+noise standing exactly where the information should be. **One `role="status"`
+region per loading page.** The same rule applies to `count > 1`: the group
+announces, the children do not.
+
+This generalises past skeletons. Announce **transitions, not ticks**. A live
+region wrapped around a counter that increments every second is a firehose,
+not an accessibility feature.
+
+## Four states, and error beats empty
+
+`DataState` is the single conditional swap point, replacing the ad-hoc ladder
+that otherwise gets rewritten at every fetch site:
+
+```
+loading   → skeleton
+error     → error state
+empty     → empty state
+otherwise → children(data)
+```
+
+The precedence is deliberate: **error takes priority over empty.** A failed
+fetch that renders "No results" tells the reader something false and
+actionable-looking. They are different messages, and collapsing them is one
+of the most common data-UI bugs there is.
+
+`aria-busy` is set on the root while loading, and `data-state` carries the
+resolved state for devtools and E2E.
+
+---
+
+## Motion: the default is none
+
+The posture is opt-*out* of motion at the CSS layer and opt-*in* at the JS
+layer.
+
+**CSS-driven animation** is disabled wholesale under the media query, in
+`tokens.css`:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer-slide, .animate-spin-around, .animate-gradient,
+  .animate-marquee, .animate-marquee-vertical,
+  .animate-first, .animate-second, .animate-third, .animate-fourth,
+  .animate-fifth, .animate-border-beam,
+  .animate-accordion-down, .animate-accordion-up,
+  .animate-fade-in-up, .animate-slide-in-left, .animate-scale-in {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+```
+
+**JS-driven motion** — anything on a canvas, or driven by a spring — is gated
+per component on a hook:
+
+```ts
+export function useReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(mql.matches);
+    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+  return reduced;
+}
+```
+
+Thirty lines, and six tests — because of what its file header says about it:
+
+> if this hook silently returns `false` forever, nothing breaks, nothing
+> throws, and every motion-heavy component quietly ignores an accessibility
+> preference the user explicitly set. That is a failure with no symptom,
+> which is the kind that survives.
+
+Two of those tests are worth naming:
+
+- *'queries the reduce query specifically, not a near-miss string'* —
+  `(prefers-reduced-motion)` without `: reduce` also matches
+  `no-preference`, which **inverts the entire gate**. One missing token,
+  perfectly plausible in review, and every motion-sensitive user gets the
+  full experience.
+- *'removes its listener on unmount, so a long-lived page does not leak one
+  per mount'*.
+
+### What motion is for
+
+The remaining rules, in short form:
+
+- **Animate `transform` and `opacity` only.** Anything else is a layout or
+  paint animation, and the CLS budget is zero.
+- **Never animate a dimension to or from `auto`.** The
+  `grid-template-rows: 0fr → 1fr` recipe is the accessible-height trick that
+  actually works.
+- **Reserve the space before animating into it** — `min-h-*`, `aspect-[w/h]`,
+  or the skeleton above.
+- **No infinite attention loops**, no auto-advancing carousels, no
+  scroll-position parallax on the body.
+- **Motion communicates.** A card opening, a value ticking up, a panel
+  arriving from the side it will return to. If you cannot name what the
+  motion tells the reader, remove it.
+
+---
+
+## Where the shipped behaviour and the written contract disagree
+
+Published for the same reason as the gaps on the
+[Accessibility](?path=/docs/concepts-accessibility--docs) page.
+
+- **`animate-pulse` is not in the reduce allowlist above.** The `Skeleton`
+  emits a bare `animate-pulse`, not `motion-safe:animate-pulse`, so a
+  consumer importing `@interlace/ui/styles/index.css` alone still gets a
+  pulsing skeleton under `prefers-reduced-motion: reduce`. (This Storybook
+  does not show it, because its own preview stylesheet adds a global
+  reduce-everything reset — which is itself a good reminder that a
+  reduced-motion check performed inside a harness can pass for reasons that
+  have nothing to do with the component.)
+- **The duration and easing token table in `MOTION_PHILOSOPHY.md` does not
+  exist as tokens.** There is no `--duration-fast` or
+  `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)`; every duration is a literal
+  inside an `--animate-*` shorthand, and shipped easing is the CSS keyword
+  `ease-out`, which is a different curve.
+- **The documented "max 200ms on entry" budget is not met by three entry
+  animations** in `theme.css`: `fade-in-up` and `slide-in-left` at 500ms and
+  `scale-in` at 400ms, two of them with additional delays. The accordion, at
+  200ms, is on budget.
+- **Nothing measures CLS.** Skeleton/component shape parity is by
+  construction and by inspection.
+
+Each of those is a real gap, and each is exactly the kind that a page saying
+"we respect reduced motion" would hide.
+
+---
+
+**Sources.** `packages/ui/src/primitives/skeleton.tsx` ·
+`packages/ui/src/primitives/skeleton-variants.ts` ·
+`packages/ui/src/primitives/data-state.tsx` ·
+`packages/ui/src/lib/use-reduced-motion.ts` ·
+`packages/ui/styles/tokens.css` · `packages/ui/styles/theme.css` ·
+`packages/ui/__tests__/skeleton-variant-coverage-lock.test.ts` ·
+`packages/ui/__tests__/templates-section-boundary-lock.test.ts` ·
+`packages/ui/__tests__/use-reduced-motion.test.tsx` ·
+`docs/philosophies/{LOADING,MOTION}_PHILOSOPHY.md`

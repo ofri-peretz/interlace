@@ -33,22 +33,92 @@ import { articleFixtures } from '@/fixtures/articles';
  * @interlace/ui primitives + the ArticleCard block. No app-specific state,
  * no router — this is a render-only contract.
  */
-const meta: Meta = {
+
+/**
+ * There is no `ArticlesPage` component — this file composes one out of DS
+ * parts. So the controls below are the composition's own knobs, not a prop
+ * table: they change how the page is assembled (how many cards, how many
+ * tracks, which regions are present), which is exactly the set of decisions a
+ * consumer makes when building this surface for real.
+ */
+interface ArticlesPageArgs {
+  /** Cards rendered in the grid. */
+  articleCount?: number;
+  /** Desktop track count for the grid. */
+  columns?: 1 | 2 | 3;
+  /** Render the oversized featured card above the grid. */
+  featured?: boolean;
+  /** Render the pagination nav below the grid. */
+  pagination?: boolean;
+}
+
+const meta: Meta<ArticlesPageArgs> = {
   title: 'Pages/ArticlesPage',
   parameters: {
     layout: 'fullscreen',
     a11y: {
-      element: '#storybook-root',
+      // `context`, not `element`. Storybook 10's a11y addon dropped `element`
+      // in favour of axe-core's own context spec; passing the removed key
+      // leaves the panel stuck on "Preparing accessibility scan" and the story
+      // silently unscanned. `.storybook/preview.ts` still sets `element`
+      // globally — see the handover note; this file is already on the new API.
+      context: '#storybook-root',
       // The page-level story renders three live regions, a toolbar with
       // labelled controls, a featured-article landmark, the grid, and a
       // navigation. axe asserts every label, landmark, and contrast pair.
     },
+    docs: {
+      description: {
+        component:
+          'A whole `/articles` surface assembled from DS parts only — Topbar-less on purpose, so what is under test is the *content* column: a page header, a search/sort/filter toolbar, an optional featured card, the ArticleCard grid, and pagination.\n\n' +
+          'It exists for two reasons a single-component story cannot cover. First, it is the page-level axe gate: three live regions, a labelled `role="search"` toolbar, a featured landmark, the grid and a nav all in one accessibility tree, where the failures that only appear in composition (duplicate landmarks, an unlabelled second nav, contrast against a real page background) actually show up. Second, it is the reference assembly — the layout decisions (measure, gap scale, where the result count goes, what a filtered-to-nothing page says) that no component owns individually.\n\n' +
+          'There is no `ArticlesPage` export to install. Read it as a recipe: every element here is `@interlace/ui` plus `ArticleCard`, with no app state and no router.',
+      },
+    },
   },
   tags: ['autodocs'],
+  argTypes: {
+    articleCount: {
+      control: { type: 'range', min: 0, max: 12, step: 1 },
+      description:
+        'Cards in the grid, and the number the toolbar reports as results. Drag it to 0 to see why the EmptyState story exists — a grid that simply vanishes reads as a broken page rather than a filtered one.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '9' }, category: 'Data' },
+    },
+    columns: {
+      control: 'inline-radio',
+      options: [1, 2, 3],
+      description:
+        'Desktop track count. Always one column below `md` — the card carries a title, description and tag row, and none of that survives a 160px track.',
+      table: { type: { summary: '1 | 2 | 3' }, defaultValue: { summary: '3' }, category: 'Appearance' },
+    },
+    featured: {
+      control: 'boolean',
+      description:
+        'The oversized promoted card above the grid. It is a real duplicate of a grid entry, so turning it off is the honest layout when nothing is actually being promoted.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'true' }, category: 'Appearance' },
+    },
+    pagination: {
+      control: 'boolean',
+      description:
+        'The page nav below the grid. Hide it when everything fits on one page — a pagination row with a single reachable page is furniture.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'true' }, category: 'Appearance' },
+    },
+  },
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<ArticlesPageArgs>;
+
+/**
+ * Written out statically: Tailwind cannot scan a runtime-built
+ * `lg:grid-cols-${n}`, so a template literal here silently produces an
+ * unstyled single-column grid.
+ */
+const GRID_COLS: Record<1 | 2 | 3, string> = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-1 md:grid-cols-2',
+  3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+};
 
 const tags = [
   ['security', 12],
@@ -78,7 +148,7 @@ function PageHeader() {
   );
 }
 
-function Toolbar() {
+function Toolbar({ resultCount = articleFixtures.length }: { resultCount?: number }) {
   return (
     <div
       role="search"
@@ -102,7 +172,7 @@ function Toolbar() {
           />
         </div>
         <Select defaultValue="date">
-          <SelectTrigger className="w-[150px]" aria-label="Sort by">
+          <SelectTrigger className="w-[150px] max-w-full" aria-label="Sort by">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -124,7 +194,7 @@ function Toolbar() {
           aria-live="polite"
           role="status"
         >
-          {articleFixtures.length} results
+          {resultCount} results
         </p>
       </div>
       <div className="border-border mt-4 border-t pt-4">
@@ -209,59 +279,71 @@ function PaginationDemo() {
   );
 }
 
-export const Default: Story = {
-  render: () => (
+/** The whole surface, assembled from the args above. */
+function ArticlesSurface({
+  articleCount = 9,
+  columns = 3,
+  featured = true,
+  pagination = true,
+}: ArticlesPageArgs) {
+  // The fixture set is small; repeat it so the control's full range is reachable.
+  const pool = Array.from(
+    { length: 12 },
+    (_, i) => articleFixtures[i % articleFixtures.length],
+  );
+  const articles = pool.slice(0, articleCount);
+  return (
     <main className="bg-background min-h-screen">
       <div className="container mx-auto max-w-wide space-y-8 px-4 py-8">
         <PageHeader />
-        <Toolbar />
-        <FeaturedCard />
+        <Toolbar resultCount={articles.length} />
+        {featured ? <FeaturedCard /> : null}
         <section aria-label="Articles grid">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {articleFixtures.concat(articleFixtures).slice(0, 9).map((a, i) => (
+          <div className={`grid gap-6 ${GRID_COLS[columns]}`}>
+            {articles.map((a, i) => (
               <ArticleCard key={`${a.href}-${i}`} {...a} />
             ))}
           </div>
         </section>
-        <PaginationDemo />
+        {pagination ? <PaginationDemo /> : null}
         <p className="text-muted-foreground pt-8 text-center text-sm">
           Last synced: May 10, 2026, 3:21 PM
         </p>
       </div>
     </main>
-  ),
+  );
+}
+
+export const Default: Story = {
+  args: { articleCount: 9, columns: 3, featured: true, pagination: true },
+  render: (args) => <ArticlesSurface {...args} />,
 };
 
 export const Dark: Story = {
   globals: { theme: 'dark' },
   parameters: { backgrounds: { default: 'dark' } },
-  render: () => (
+  args: { articleCount: 6, columns: 3, featured: true, pagination: true },
+  render: (args) => (
     <div className="dark">
-      <main className="bg-background min-h-screen">
-        <div className="container mx-auto max-w-wide space-y-8 px-4 py-8">
-          <PageHeader />
-          <Toolbar />
-          <FeaturedCard />
-          <section aria-label="Articles grid">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {articleFixtures.concat(articleFixtures).slice(0, 6).map((a, i) => (
-                <ArticleCard key={`${a.href}-${i}`} {...a} />
-              ))}
-            </div>
-          </section>
-          <PaginationDemo />
-        </div>
-      </main>
+      <ArticlesSurface {...args} />
     </div>
   ),
 };
 
 export const EmptyState: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Filtered to nothing. The toolbar keeps its own result count honest (0, not the unfiltered total), and the panel is `role="status"` so the change is announced rather than only drawn — a filter that silently empties the page is indistinguishable from one that broke.',
+      },
+    },
+  },
   render: () => (
     <main className="bg-background min-h-screen">
       <div className="container mx-auto max-w-wide space-y-8 px-4 py-8">
         <PageHeader />
-        <Toolbar />
+        <Toolbar resultCount={0} />
         <div
           className="bg-muted/50 border-border flex flex-col items-center justify-center rounded-2xl border border-dashed py-16 text-center"
           role="status"

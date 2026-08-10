@@ -11,7 +11,25 @@ const meta: Meta<typeof LandingTemplate> = {
   title: 'Templates/LandingTemplate',
   component: LandingTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Marketing landing page. Topbar and footer are required; every section between them (features, testimonials, pricing, FAQ, CTA) is optional and streams inside its own SectionBoundary. Omitted sections render nothing at all rather than an empty band, so the same template covers a one-screen teaser and a full sales page.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Required. Props forwarded to Topbar.', table: { category: 'Data' } },
+    hero: { control: false, description: 'Required. The hero band — normally a Hero block.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    features: { control: false, description: 'Optional FeatureGrid band. Omit and nothing renders.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    testimonials: { control: false, description: 'Optional social-proof band.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    pricing: { control: false, description: 'Optional PricingTable band.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    faq: { control: false, description: 'Optional FAQ band.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    cta: { control: false, description: 'Closing CTASection band.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    footer: { control: 'object', description: 'Required. Props forwarded to Footer.', table: { category: 'Data' } },
+  },
 };
 
 export default meta;

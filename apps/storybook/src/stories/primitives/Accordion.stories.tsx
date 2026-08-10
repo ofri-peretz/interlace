@@ -16,8 +16,68 @@ const meta: Meta<typeof Accordion> = {
     docs: {
       description: {
         component:
-          'Vertical disclosure for FAQ, settings, or progressive content reveal. Each item opens its panel on click. Per `MOTION_PHILOSOPHY.md` the open/close transition is killed under `prefers-reduced-motion`.',
+          'Disclosure stack for content the reader should be able to skip: FAQ entries, advanced settings, per-rule detail under a summary row. Reach for it when the collapsed labels are scannable on their own; if the reader needs every panel open to make sense of the page, use headings and prose instead. Per `MOTION_PHILOSOPHY.md` the open/close transition is killed under `prefers-reduced-motion`.',
       },
+    },
+  },
+  // `Accordion` is a thin pass-through over `@base-ui/react/accordion` Root —
+  // react-docgen cannot follow `React.ComponentProps<typeof BaseAccordion.Root>`
+  // through the package boundary, so the Root API is declared by hand here.
+  argTypes: {
+    multiple: {
+      control: 'boolean',
+      description:
+        'Allow more than one panel to be expanded at the same time. `false` makes the stack behave like a radio group.',
+      table: { category: 'State', defaultValue: { summary: 'false' } },
+    },
+    defaultValue: {
+      control: 'object',
+      description:
+        'Uncontrolled initial open items, as an array of `AccordionItem` values (e.g. `["a"]`). Read once on mount.',
+      table: {
+        category: 'State',
+        type: { summary: 'Value[]' },
+        defaultValue: { summary: '[]' },
+      },
+    },
+    value: {
+      control: false,
+      description:
+        'Controlled open items. Supply together with `onValueChange`; leave undefined to stay uncontrolled via `defaultValue`.',
+      table: { category: 'State', type: { summary: 'Value[]' } },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Ignore all user interaction across every item.',
+      table: { category: 'State', defaultValue: { summary: 'false' } },
+    },
+    keepMounted: {
+      control: 'boolean',
+      description:
+        'Keep closed panels in the DOM (hidden) instead of unmounting them. Costs render time; buys you in-panel state that survives collapse.',
+      table: { category: 'State', defaultValue: { summary: 'false' } },
+    },
+    hiddenUntilFound: {
+      control: 'boolean',
+      description:
+        'Use `hidden="until-found"` so the browser\'s own Ctrl-F can find and expand panel text. Overrides `keepMounted`.',
+      table: { category: 'State', defaultValue: { summary: 'false' } },
+    },
+    onValueChange: {
+      action: 'valueChange',
+      description: 'Fires with the new open-item array whenever a panel toggles.',
+      table: { category: 'Events' },
+    },
+    className: {
+      control: 'text',
+      description:
+        'The width seam — the stack is full-width by construction, so the caller owns its measure.',
+      table: { category: 'Appearance' },
+    },
+    children: {
+      control: false,
+      description: '`AccordionItem` > `AccordionTrigger` + `AccordionContent`.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
     },
   },
 };
@@ -31,8 +91,16 @@ export const Default: Story = {
   // is well above WCAG 2.2's 24×24 threshold and the explicit `w-[420px]`
   // container makes the button's bounding box something axe can measure
   // without ambiguity.
-  render: () => (
-    <Accordion className="w-[420px]">
+  args: {
+    multiple: false,
+    disabled: false,
+    keepMounted: false,
+    hiddenUntilFound: false,
+    defaultValue: ['a'],
+    className: 'w-[420px] max-w-full',
+  },
+  render: (args) => (
+    <Accordion {...args}>
       <AccordionItem value="a">
         <AccordionTrigger>What does eslint-plugin-jwt detect?</AccordionTrigger>
         <AccordionContent>
@@ -58,7 +126,7 @@ export const Default: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Accordion className="w-[420px]">
+    <Accordion className="w-[420px] max-w-full">
       <AccordionItem value="a">
         <AccordionTrigger>First question</AccordionTrigger>
         <AccordionContent>First answer.</AccordionContent>

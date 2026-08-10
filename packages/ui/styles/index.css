@@ -89,3 +89,20 @@
 @import "./preflight.css";
 @import "./theme.css";
 @import "./interlace-theme.css";
+
+/* ─── Themes (the `[data-theme]` axis) ─────────────────────────────
+ *
+ * Every file below declares into `@layer interlace.brand` and overrides
+ * ONLY `--interlace-*` values, scoped to `[data-theme='<name>']` (light)
+ * and `[data-theme='<name>'].dark` (dark). Interlace itself is the
+ * unprefixed default and lives above, in interlace-theme.css.
+ *
+ * ORDER IS LOAD-BEARING: `[data-theme='X']` and `.dark` have identical
+ * specificity (0,1,0), so on `<html data-theme="X" class="dark">` the
+ * light block of theme X must come AFTER interlace's dark block for
+ * `[data-theme='X'].dark` (0,2,0) to sit on top of a coherent stack.
+ * Theme imports therefore always follow interlace-theme.css.
+ *
+ * Adding a theme = one file + one line here + its row in
+ * `THEMES` (src/lib/theme-tokens.ts). The contract lock reads both. */
+@import "./themes/harbor.css";

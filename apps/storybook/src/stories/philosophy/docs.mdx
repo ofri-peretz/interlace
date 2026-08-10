@@ -3,16 +3,25 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Philosophy/Documentation/Docs" />
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
-    source: DOCS_PHILOSOPHY.md
-    hash: 0bbdb7e1836b */}
+    source: docs/philosophies/DOCS_PHILOSOPHY.md
+    hash: 3280263e0093 */}
 
 # Documentation Philosophy
 
-> Holistic philosophy for `apps/docs` — vendor-neutral concepts, industry best practices, and our concrete decision per topic. This document supersedes `~/.claude/plans/what-is-our-philosophy-abundant-noodle.md` (the original Fumadocs-specific rubric) by widening it to industry context.
+> How a documentation surface explains itself — vendor-neutral concepts, industry best practices, and our decision per topic.
+
+> **Scope note (2026-08-10).** This document was split. The doctrine below is
+> vendor-neutral and governs any Interlace documentation surface — the landing
+> docs, the registry, Storybook. The **ESLint-product half** — per-rule page
+> generation, `meta.schema`/`meta.docs.url` projection, the 272-rule page tree,
+> the RuleSpec/llms.txt moat — stays in the eslint monorepo's own
+> `DOCS_PHILOSOPHY.md`, because those decisions are about that product, not
+> about a design system. Where a topic below is decided differently for rule
+> docs, that repo's copy is authoritative *for that repo*.
 
 ## Why this document exists
 
-`apps/docs` is the public docs site for our 11-plugin, 272-rule ESLint monorepo (built on Fumadocs / Next.js 16 / React 19). The goal of these docs is not to look good — it's to **lead static-code-analysis for JS, for both humans and AI coding agents**, per [benchmarks/LEADERSHIP_ROADMAP.md](benchmarks/LEADERSHIP_ROADMAP.md).
+A documentation surface is a product with two audiences and no marketing budget. The goal of Interlace's docs is not to look good — it's to make the design system **adoptable**: a reader (human or agent) should be able to go from "what is this" to a working, on-system component without reading our source.
 
 Modern technical docs sites have ~15 named concept areas (page conventions, navigation, i18n, OG, llms.txt, etc.) that each demand a deliberate decision. Without a written rubric, every concept becomes an ad-hoc choice and the site drifts. This document defines:
 
@@ -27,10 +36,10 @@ When a docs-related change is proposed, check it against the principles AND the 
 ## The five cross-cutting principles
 
 1. **Two readers, equal weight.** Every page is simultaneously human-readable and agent-readable. Features that don't serialize cleanly to plaintext (heavy iframes, JSX-only widgets, client-side-only renders) are second-class.
-2. **Source of truth lives in `packages/*`.** The docs site is a *projection* of plugin metadata (`meta.schema`, `meta.docs`, `fixable`, `recommended`, `replacedBy`). Re-typing in prose is a drift bug, not a documentation choice.
-3. **Derive, don't curate.** With 272 rules, anything hand-maintained will rot. Page tree, schemas, examples, OG cards, and llms.txt entries must all be generated from the same metadata pipeline.
-4. **Bet on the strategic moat.** Agent-native docs (llms.txt + RuleSpec JSON + future MCP server) are where we win the IDE-agent integration war. Invest disproportionately there.
-5. **Don't ship weight for absent content.** No KaTeX without equations, no Storybook without components, no i18n without translation budget. YAGNI applies to docs infrastructure.
+2. **Source of truth lives in the code.** A docs page is a *projection* of what the code already declares — a primitive's props, variants, `MIN_VIEWPORT`, tokens. Re-typing any of it in prose is a drift bug, not a documentation choice. The philosophies themselves obey this: `docs/philosophies/` is the source and `apps/storybook/src/stories/philosophy/` is generated from it by `npm run sync:philosophies`.
+3. **Derive, don't curate.** Anything hand-maintained rots, and it rots silently — a hand-copied mirror looks authoritative right up until it's wrong. Page tree, prop tables, examples, OG cards, and index pages are generated from one pipeline, and a drift lock fails the build when a projection falls behind its source.
+4. **Bet on the strategic moat.** Agent-readable docs are where adoption is won: an agent that can resolve a component's real API without rendering a page will reach for it. Invest disproportionately there.
+5. **Don't ship weight for absent content.** No KaTeX without equations, no i18n without a translation budget. YAGNI applies to docs infrastructure.
 
 ---
 
@@ -95,7 +104,7 @@ When a docs-related change is proposed, check it against the principles AND the 
 
 **Common failure modes.** (1) Always-on math bundle adding ~270 KB to every page. (2) Client-side render causing visible layout shift on first paint.
 
-**Our verdict — use-as-is, off (priority: none).** Skip by default. ESLint rules describe AST patterns, not equations; complexity bounds belong in inline code fences. If a future rule (e.g. `crypto/no-weak-entropy`) genuinely needs notation, opt in per-page with KaTeX SSR so the other 271 pages pay nothing. Never enable math globally. **Next step:** none.
+**Our verdict — use-as-is, off (priority: none).** Skip by default. A design system describes layout, tokens, and component contracts, not equations; ratios (contrast, aspect, type scale) belong in inline code fences or a table. If a page ever genuinely needs notation, opt in per-page with KaTeX SSR so every other page pays nothing. Never enable math globally. **Next step:** none.
 
 ---
 
@@ -181,7 +190,7 @@ When a docs-related change is proposed, check it against the principles AND the 
 
 **Common failure modes.** (1) Shipping a locale switcher exposing 30%-translated pages — worse than English-only. (2) Paying for translation once, never refreshing — docs describing v1 APIs while English describes v3.
 
-**Our verdict — use-as-is, English-only (priority: none).** Stay English-only. Readers are developers and AI agents; both consume English. Translating 272 rules × N locales × release cadence is a permanent staffing commitment with near-zero strategic upside (rule IDs, AST node names, ESLint config keys are untranslatable). The lingua franca of static analysis is English. **Next step:** keep the `i18n.ts` scaffold as a documented escape hatch; revisit only when a single plugin crosses 10M weekly downloads with measurable non-English traffic.
+**Our verdict — use-as-is, English-only (priority: none).** Stay English-only. Readers are developers and AI agents; both consume English. Translating every page × N locales × release cadence is a permanent staffing commitment with near-zero strategic upside — and the load-bearing nouns (prop names, token names, CSS properties) are untranslatable anyway. The lingua franca of front-end tooling is English. **Next step:** keep the `i18n.ts` scaffold as a documented escape hatch; revisit only when a single plugin crosses 10M weekly downloads with measurable non-English traffic.
 
 ---
 
@@ -252,6 +261,8 @@ When a docs-related change is proposed, check it against the principles AND the 
 
 ## 11. OpenAPI integration
 
+> **Decided in the eslint repo.** This topic's verdict below is about rendering *ESLint rule* options from `meta.schema`. It is kept for the industry survey; for the DS, the equivalent question is how a primitive's props and variants are projected into Storybook — see principle #2 and #3 above.
+
 **The concept.** Whether your API reference is *generated from a machine-readable contract* or *hand-authored prose*. The deeper question: where does truth live — in the spec, or in the docs?
 
 **Industry pattern.** Spec-as-source-of-truth has won for REST. Stripe maintains its OpenAPI spec at github.com/stripe/openapi as a generated artifact from an internal Ruby DSL; every SDK, mock server, and the public reference page derive from it. Vendor extensions (`x-expandableFields`) carry what plain OpenAPI cannot express. Scalar and Redoc/Swagger UI render that spec at runtime so the moment the spec changes, the docs change. Twilio and GitHub follow the same pattern.
@@ -273,6 +284,8 @@ When a docs-related change is proposed, check it against the principles AND the 
 
 ## 12. Component story / preview integration
 
+> **Decided in the eslint repo.** This topic's verdict below is about rendering *ESLint rule* options from `meta.schema`. It is kept for the industry survey; for the DS, the equivalent question is how a primitive's props and variants are projected into Storybook — see principle #2 and #3 above.
+
 **The concept.** Whether to render the *artifact being documented* alongside the prose. For UI components: a live preview. For CLIs: a runnable terminal. For ESLint rules: a before/after code panel.
 
 **Industry pattern.** Storybook is the canonical heavyweight: `.stories` files are the source, MDX wraps them with `<Story>`/`<Canvas>`/`<ArgsTable>` doc blocks. Lighter approach: Mintlify and Fumadocs ship `<CodeBlock>` + tabbed `<Preview>` MDX components rendering an inline iframe per snippet — no story file. Storybook when components have many states worth exploring; lightweight previews when there's one canonical example.
@@ -293,6 +306,8 @@ When a docs-related change is proposed, check it against the principles AND the 
 ---
 
 ## 13. TypeScript type rendering
+
+> **Decided in the eslint repo.** This topic's verdict below is about rendering *ESLint rule* options from `meta.schema`. It is kept for the industry survey; for the DS, the equivalent question is how a primitive's props and variants are projected into Storybook — see principle #2 and #3 above.
 
 **The concept.** Where do option/parameter shapes come from: `.d.ts` files, JSON Schema, or hand-written tables? The trade is *fidelity vs. narrative*.
 
@@ -330,7 +345,7 @@ When a docs-related change is proposed, check it against the principles AND the 
 
 **Common failure modes.** (1) External link checks on every PR causing flakes, training the team to ignore the job. (2) Anchor validation skipped, so `#section` links rot invisibly when headings get edited.
 
-**Our verdict — extend existing checker (priority: high).** Audited 2026-05-10: link validation already exists at [apps/docs/scripts/check-links.ts](apps/docs/scripts/check-links.ts) gated by [.github/workflows/check-links.yml](.github/workflows/check-links.yml) on PR. It covers external `https?://…` URLs (status, HTTPS, suspicious redirects) with a skip-list and PR comments — solid baseline. **Gaps vs. the "great" rung:** (1) no internal link validation (`[foo](../bar.mdx)`, `[foo](/docs/...)`); (2) no anchor validation (`[foo](#section)`); (3) no awareness of Fumadocs `<Card href>` or future `<RuleLink>` components; (4) no agent-trust check that every rule's `meta.docs.url` resolves. **Next step:** extend `check-links.ts` to scan relative + anchor refs (largest immediate rot risk with 272 cross-linked rules), then add a separate package-level CI step that asserts each rule's `meta.docs.url` resolves. Keep external check as-is.
+**Our verdict — extend existing checker (priority: high).** Audited 2026-05-10: link validation already exists at `apps/docs/scripts/check-links.ts` (eslint repo) gated by [.github/workflows/check-links.yml](.github/workflows/check-links.yml) on PR. It covers external `https?://…` URLs (status, HTTPS, suspicious redirects) with a skip-list and PR comments — solid baseline. **Gaps vs. the "great" rung:** (1) no internal link validation (``foo``, `[foo](/docs/...)`); (2) no anchor validation (`[foo](#section)`); (3) no awareness of Fumadocs `<Card href>` or future `<RuleLink>` components; (4) no agent-trust check that every rule's `meta.docs.url` resolves. **Next step:** extend `check-links.ts` to scan relative + anchor refs (largest immediate rot risk with 272 cross-linked rules), then add a separate package-level CI step that asserts each rule's `meta.docs.url` resolves. Keep external check as-is.
 
 ---
 
@@ -384,7 +399,7 @@ Built right, an agent answers "which Interlace rule catches hardcoded credential
 
 ## Top-3 strategic moves (in execution order)
 
-1. **Validate-links extension** — extend the existing [check-links.ts](apps/docs/scripts/check-links.ts) to cover internal MDX→MDX links and `#anchor` refs (currently external-only). Cheap, prevents silent rot, raises agent trust.
+1. **Validate-links extension** — extend the existing `check-links.ts` (eslint repo) to cover internal MDX→MDX links and `#anchor` refs (currently external-only). Cheap, prevents silent rot, raises agent trust.
 2. **RuleSpec JSON endpoints** — `/api/rules/index.json` + `/api/rules/[plugin]/[rule].json`. Contract drafted at [.agent/rule-spec.md](.agent/rule-spec.md). Unblocks LLMs leadership, OG enrichment, options-table rendering, MCP server.
 3. **MCP server over RuleSpec** — agentic moat. No competitor ships this. Differentiator for IDE-agent integration.
 
@@ -393,9 +408,9 @@ Built right, an agent answers "which Interlace rule catches hardcoded credential
 This is a philosophy doc; verification is **alignment, not testing**:
 
 1. Read each verdict against the [five cross-cutting principles](#the-five-cross-cutting-principles) — no contradictions.
-2. Confirm "current state" claims by spot-checking [source.config.ts](apps/docs/source.config.ts), [src/mdx-components.tsx](apps/docs/src/mdx-components.tsx), [src/lib/source.ts](apps/docs/src/lib/source.ts).
+2. Confirm "current state" claims by spot-checking the docs app's `source.config.ts`, `src/mdx-components.tsx`, and `src/lib/source.ts`.
 3. For each "Next step," validate it's actionable in &lt;1 PR (so they convert to issues cleanly).
-4. Sanity-check the strategic moves against [memory/competitive-landscape.md](.) and [benchmarks/LEADERSHIP_ROADMAP.md](benchmarks/LEADERSHIP_ROADMAP.md).
+4. Sanity-check the strategic moves against the competitive landscape; for rule-docs specifics that is `benchmarks/LEADERSHIP_ROADMAP.md` in the eslint repo.
 
 ---
 

@@ -68,11 +68,32 @@ a `categories` array onto every item (intent + DS tier), and
 site renders. Never categorise a component anywhere else — `--check` fails on
 any item that resolves to `other`.
 
+## Versions and release notes
+
+Every item carries `meta.version` / `meta.since`, and every installed `.ts(x)`
+file carries a four-line banner naming its version — because `shadcn add`
+copies the source into the consumer's tree, where nothing else can tell them
+which copy they have.
+
+| File | Role |
+| --- | --- |
+| `component-versions.json` | the manifest: `{ name, version, since, updated, deprecated? }` per item. **Generated** — `npm run versions:derive` (from the repo root) derives it from git history. `deprecated` is hand-authored and survives regeneration. |
+| `scripts/derive-component-versions.mjs` | the derivation. Introduction = 1.0.0; every later commit applies its conventional-commit bump; a change to a **companion** (`button-variants.ts`) bumps its parent. |
+| `scripts/build-changelog.mjs` | compiles `packages/ui/CHANGELOG.md` + pending `.changeset/*.md` into `public/data/changelog.json` — the one source behind both `/changelog` and each component's History section. |
+
+The manifest is committed and the registry build **reads** it rather than
+calling git, deliberately: a version derived from `HEAD` at build time would
+rewrite every item on every commit and put the drift gate in a permanent fight
+with itself. Full reasoning:
+[`docs/philosophies/VERSIONING_PHILOSOPHY.md`](../../docs/philosophies/VERSIONING_PHILOSOPHY.md).
+
 ## Verification
 
 | Command | What it proves |
 | --- | --- |
-| `npm run build:check --workspace=registry` | on-disk JSON matches the sources, and every item validates against the official shadcn schemas |
+| `npm run build:check --workspace=registry` | on-disk JSON matches the sources, every item validates against the official shadcn schemas, and the release notes compile |
+| `npm run changelog:check --workspace=registry` | `changelog.json` is current, every `Components:` name is a real item, and every breaking entry has a migration note |
+| `npm run versions:check` (repo root) | every shipped item has a version-manifest entry, and every entry names a shipped item |
 | `npm run registry:validate --workspace=registry` | schema conformance + no dangling `registryDependencies` + index covers every item |
 | `npm run registry:e2e --workspace=registry` | **every item actually installs**: scaffolds a real Next.js app, `shadcn add`s all of them through the `@interlace` namespace, wires the CSS baseline, and `next build`s the result |
 | `npm run schema:refresh --workspace=registry` | re-downloads the upstream schemas into `schema/` — commit the diff so a spec change is reviewable |

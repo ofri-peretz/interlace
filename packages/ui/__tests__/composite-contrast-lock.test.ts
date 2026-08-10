@@ -119,14 +119,21 @@ type Mode = 'light' | 'dark';
 /**
  * Pull the concrete `--interlace-*: #hex` declarations out of the brand
  * layer. The file declares light under `:root` and dark under
- * `.dark, [data-theme='dark']`, in that order, so splitting on the dark
+ * `.dark, [data-scheme='dark']`, in that order, so splitting on the dark
  * selector is enough — no CSS parser needed, and a structural change to the
  * file surfaces as an empty map (which fails the sanity test below) rather
  * than as a silently-passing lock.
+ *
+ * DELIBERATELY ONLY THE DEFAULT THEME. Since Phase 8 there is a second
+ * palette (`styles/themes/harbor.css`), but it lives in its own file and is
+ * checked by `theme-contract-lock` — which measures the palette. THIS lock
+ * measures COMPONENT SOURCE, where the tint alphas live, and component source
+ * is theme-agnostic by construction. Reading both palettes here would only
+ * let one silently overwrite the other in the maps below.
  */
 function readThemeTokens(): Record<Mode, Map<string, RGB>> {
   const css = readFileSync(THEME_CSS, 'utf8');
-  const darkAt = css.indexOf(".dark,\n  [data-theme='dark']");
+  const darkAt = css.indexOf(".dark,\n  [data-scheme='dark']");
   expect(
     darkAt,
     'interlace-theme.css no longer contains the expected dark-mode selector — ' +

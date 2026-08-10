@@ -147,7 +147,8 @@ Mandatory parts:
   in the MDX component. (Emojis in source are accessibility-hostile,
   break in print, and don't theme.)
 
-The component (`<DontDo>`, lives in `apps/docs/components/`) takes:
+The component (`<DontDo>`, a docs-site MDX component — not yet ported into
+this repo's `packages/ui`) takes:
 
 ```mdx
 <DontDo

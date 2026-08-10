@@ -10,14 +10,63 @@ const meta: Meta<typeof StatCard> = {
     docs: {
       description: {
         component:
-          'A single labeled metric. Building block of dashboards, scorecards, and KPI rows. Numbers render with tabular numerals so digits don\'t jump as values update.',
+          'One labelled number and, optionally, what it did recently. The unit dashboards and scorecards are built from — use it where a single figure is the point, and reach for MetricTable instead the moment a reader would want to compare several metrics across the same dates.\n\n' +
+          'Value and delta are `ReactNode`, not `number`: formatting (locale, compaction, currency) belongs to the caller, because the card cannot know whether 70348 should read as "70,348" or "70.3K". Numbers render with tabular numerals so digits do not jump as a value updates in place.\n\n' +
+          '`tone` is a claim about whether the movement is good, and nothing else derives it — a falling number is not automatically `danger`, which is exactly the mistake that paints a dropping error rate red.',
       },
     },
   },
   argTypes: {
+    label: {
+      control: 'text',
+      description: 'What the number is. Sits above the value in muted UI type.',
+      table: { type: { summary: 'ReactNode' }, category: 'Data' },
+    },
+    value: {
+      control: 'text',
+      description:
+        'The figure itself, pre-formatted by the caller. Rendered at h2 scale with tabular numerals.',
+      table: { type: { summary: 'ReactNode' }, category: 'Data' },
+    },
+    delta: {
+      control: 'text',
+      description:
+        'The change line — "+12.3% · 30d". Takes its colour from `tone`, so this string and that prop have to agree; nothing cross-checks them.',
+      table: { type: { summary: 'ReactNode' }, category: 'Data' },
+    },
+    footnote: {
+      control: 'text',
+      description:
+        'Secondary line under the delta — the window or the caveat ("since launch", "excludes CI").',
+      table: { type: { summary: 'ReactNode' }, category: 'Data' },
+    },
     tone: {
       control: 'select',
       options: ['default', 'success', 'warning', 'danger'],
+      description:
+        'Tints the card border and the delta text. It is an editorial judgement, not a function of the sign: `success` on a falling number is correct when the metric is latency or open issues.',
+      table: {
+        type: { summary: "'default' | 'success' | 'warning' | 'danger'" },
+        defaultValue: { summary: 'default' },
+        category: 'Appearance',
+      },
+    },
+    icon: {
+      control: false,
+      description:
+        'Lucide icon pinned to the top-right, rendered `aria-hidden` — it is a scanning aid for a grid of cards, never the only thing identifying the metric.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Render a `<Skeleton variant="stat-card" />` at the card\'s own size. These numbers come from aggregate queries and land late; without it a KPI row shoves the whole page down when it resolves.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' }, category: 'State' },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged after the tone variant, so it wins.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
     },
   },
 };
@@ -30,7 +79,22 @@ export const Default: Story = {
     label: 'Weekly downloads',
     value: '70,348',
     delta: '+12.3% · 30d',
+    footnote: 'across 19 published packages',
+    tone: 'default',
+    loading: false,
   },
+};
+
+export const Loading: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Reserves the card\'s exact footprint. A KPI row sits at the very top of the page, so a card that appears late does not shift itself — it shifts everything below it.',
+      },
+    },
+  },
+  args: { label: 'Weekly downloads', loading: true },
 };
 
 export const WithIcon: Story = {

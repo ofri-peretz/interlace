@@ -8,7 +8,21 @@ const meta: Meta<typeof AuthorTemplate> = {
   title: 'Templates/AuthorTemplate',
   component: AuthorTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Author profile page — bio header (avatar, name, role, links) above a grid of that author's posts. The `/authors/[slug]` shape. Use `TagTemplate` when the index is filtered by topic rather than by person.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Props forwarded to Topbar.', table: { category: 'Data' } },
+    bio: { control: false, description: 'Author identity block — avatar, name, role, bio copy, social links.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    articles: { control: false, description: "Rendered article list — normally an ArticleListGrid of this author's posts.", table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    footer: { control: 'object', description: 'Props forwarded to Footer.', table: { category: 'Data' } },
+  },
 };
 
 export default meta;
@@ -29,6 +43,7 @@ const samplePost = {
   description: 'Why lock tests are the best docs.',
   href: '/articles/lock-tests',
   tags: ['ts', 'arch'],
+  'data-testid': 'author-article-card',
 };
 
 export const Default: Story = {

@@ -8,7 +8,22 @@ const meta: Meta<typeof BlogHomeTemplate> = {
   title: 'Templates/BlogHomeTemplate',
   component: BlogHomeTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Blog index surface: topbar, greeting hero, featured + recent article grid, optional newsletter capture, footer. The default shape for a personal or company blog home. For a filtered index use `TagTemplate`; for a single post use `ArticleTemplate`.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Props forwarded to Topbar.', table: { category: 'Data' } },
+    hero: { control: false, description: 'Optional greeting / about block above the grid.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    articles: { control: false, description: 'Required. The rendered post list — normally an ArticleListGrid.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    newsletter: { control: false, description: 'Optional capture form. Omit to drop the section entirely.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    footer: { control: 'object', description: 'Props forwarded to Footer.', table: { category: 'Data' } },
+  },
 };
 
 export default meta;
@@ -29,6 +44,7 @@ const samplePost = {
   description: 'Why we ship full pages, not just primitives.',
   href: '/articles/templates-distribution',
   tags: ['ds', 'arch'],
+  'data-testid': 'blog-article-card',
 };
 
 export const Default: Story = {

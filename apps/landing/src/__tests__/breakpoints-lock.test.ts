@@ -93,7 +93,12 @@ describe("Breakpoint contract (BREAKPOINTS.md)", () => {
     }
     expect(
       offenders,
-      `Found viewport arbitrary breakpoints. Use sm/md/lg/xl/2xl per BREAKPOINTS.md.\n` +
+      // `2xl` is deliberately absent: the DS scale is FOUR tiers
+      // (`--breakpoint-sm/md/lg/xl` in packages/ui/styles/foundation.css,
+      // 30/48/64/80rem). Telling a developer to reach for `2xl` sends them to
+      // a breakpoint this system does not define, where their variant silently
+      // never matches — the exact failure this lock exists to prevent.
+      `Found viewport arbitrary breakpoints. Use sm/md/lg/xl per BREAKPOINTS.md.\n` +
         offenders.map((o) => `  ${o.file}: ${o.matches.join(", ")}`).join("\n"),
     ).toEqual([]);
   });

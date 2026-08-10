@@ -10,15 +10,73 @@ const meta: Meta<typeof Stack> = {
     docs: {
       description: {
         component:
-          'Gap rhythm from LAYOUT_PHILOSOPHY.md §3. `Stack` lays children out vertically; `Cluster` lays them out horizontally with wrap. Every gap maps to one of six tokens — never a per-page guess.',
+          'The one-dimensional layout primitive: a flex row or column whose gap is picked from the six-step token scale in LAYOUT_PHILOSOPHY.md §3, so spacing is never a per-page guess. `Cluster` is the same component pre-set to a wrapping horizontal row (tag rows, button rows). Reach for `Grid` instead when items need to line up in both axes, and for plain margins when a single element needs to move.',
       },
     },
   },
   argTypes: {
-    direction: { control: 'select', options: ['vertical', 'horizontal'] },
-    gap: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] },
-    align: { control: 'select', options: ['start', 'center', 'end', 'stretch', 'baseline'] },
-    justify: { control: 'select', options: ['start', 'center', 'end', 'between', 'around'] },
+    direction: {
+      control: 'select',
+      options: ['vertical', 'horizontal'],
+      description:
+        'Main axis. `horizontal` also turns wrapping on, so a row degrades to multiple lines instead of overflowing.',
+      table: {
+        category: 'Layout',
+        type: { summary: "'vertical' | 'horizontal'" },
+        defaultValue: { summary: "'vertical'" },
+      },
+    },
+    gap: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      description:
+        'Space between children, from the DS `--spacing-*` scale: xs 8 · sm 16 · md 24 · lg 40 · xl 64 · 2xl 96 (px). Shared with `Grid` so the two stay rhythm-consistent.',
+      table: {
+        category: 'Layout',
+        type: { summary: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'" },
+        defaultValue: { summary: "'md'" },
+      },
+    },
+    align: {
+      control: 'select',
+      options: ['start', 'center', 'end', 'stretch', 'baseline'],
+      description:
+        'Cross-axis alignment (`align-items`). `baseline` is the one to use when a row mixes type sizes.',
+      table: {
+        category: 'Layout',
+        type: { summary: "'start' | 'center' | 'end' | 'stretch' | 'baseline'" },
+      },
+    },
+    justify: {
+      control: 'select',
+      options: ['start', 'center', 'end', 'between', 'around'],
+      description: 'Main-axis distribution (`justify-content`).',
+      table: {
+        category: 'Layout',
+        type: { summary: "'start' | 'center' | 'end' | 'between' | 'around'" },
+      },
+    },
+    render: {
+      control: false,
+      description:
+        'Swap the rendered element — e.g. `render={<ul />}` when the stack is a real list. Same seam as the rest of the DS.',
+      table: { category: 'Slots', type: { summary: 'RenderProp' } },
+    },
+    children: {
+      control: false,
+      description: 'The items being laid out. Stack owns the gaps, never the items.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged last, so a one-off `w-full` / `max-w-prose` still wins over the variant classes.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
+  args: {
+    direction: 'vertical',
+    gap: 'md',
   },
 };
 
@@ -32,7 +90,7 @@ const Pill = ({ label }: { label: string }) => (
 );
 
 export const Vertical: Story = {
-  args: { direction: 'vertical', gap: 'md' },
+  args: { direction: 'vertical', gap: 'md', align: 'stretch', justify: 'start' },
   render: (args) => (
     <Stack {...args}>
       <Pill label="Item 1" />
@@ -43,7 +101,7 @@ export const Vertical: Story = {
 };
 
 export const Horizontal: Story = {
-  args: { direction: 'horizontal', gap: 'sm' },
+  args: { direction: 'horizontal', gap: 'sm', align: 'center', justify: 'start' },
   render: (args) => (
     <Stack {...args}>
       <Pill label="Item 1" />

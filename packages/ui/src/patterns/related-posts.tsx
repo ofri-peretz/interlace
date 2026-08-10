@@ -88,7 +88,13 @@ export interface RelatedPost {
   kicker?: string;
 }
 
-type RelatedPostsProps = React.ComponentProps<'section'> & {
+// `Omit<…, 'title'>` matches every sibling pattern (article-list-grid, faq,
+// feature-grid, pricing-table, cta-section, testimonial-grid). Without it, our
+// ReactNode `title` intersects the native `<section title>` string attribute
+// and collapses to `string & ReactNode` — so the component's own
+// `typeof title === 'string'` branch is unreachable by the type checker and
+// consumers passing an element have to cast.
+type RelatedPostsProps = Omit<React.ComponentProps<'section'>, 'title'> & {
   /** Section heading. Default: `"Related posts"`. */
   title?: React.ReactNode;
   /** Posts to render. One ArticleCard per entry, in order. Optional when `loading={true}`. */

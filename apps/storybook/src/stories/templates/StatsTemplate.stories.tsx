@@ -6,7 +6,24 @@ const meta: Meta<typeof StatsTemplate> = {
   title: 'Templates/StatsTemplate',
   component: StatsTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Public metrics page — headline KPIs in a StatGroup above arbitrary chart or table content, with an optional methodology footnote. Each region sits in its own SectionBoundary, so the KPIs paint while slower detail queries are still in flight.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Props forwarded to Topbar.', table: { category: 'Data' } },
+    title: { control: 'text', description: 'Page heading.', table: { category: 'Content' } },
+    lead: { control: 'text', description: 'One-line framing under the heading — say what the numbers mean.', table: { category: 'Content' } },
+    hero: { control: 'object', description: 'Headline KPI stats (StatCardProps[]), rendered as a StatGroup.', table: { category: 'Data', type: { summary: 'StatCardProps[]' } } },
+    children: { control: false, description: 'Detail region — charts, tables, whatever the page needs.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    methodology: { control: 'text', description: 'How the numbers were collected. Omit to drop the footnote.', table: { category: 'Content' } },
+    footer: { control: 'object', description: 'Props forwarded to Footer.', table: { category: 'Data' } },
+  },
 };
 
 export default meta;

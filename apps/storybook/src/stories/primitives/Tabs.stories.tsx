@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, within, waitFor } from 'storybook/test';
+import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
+import { useArgs } from 'storybook/preview-api';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@interlace/ui/tabs';
 import { Skeleton } from '@interlace/ui/skeleton';
 import { withDark, withRtl } from '@/decorators';
@@ -12,34 +13,105 @@ const meta: Meta<typeof Tabs> = {
     docs: {
       description: {
         component:
-          'Horizontal tab navigation with keyboard arrow-key traversal per `KEYBOARD_PHILOSOPHY.md`. Lazy-mount: a TabsContent renders only when its trigger is active.',
+          'Switches one region of the page between a small set of peer views that the reader is expected to compare. Not navigation — a tab that changes the route belongs in a nav, and more than about five panels belongs in a list or a select. Keyboard arrow-key traversal follows `KEYBOARD_PHILOSOPHY.md`; activation is manual (arrows move focus, Enter/Space selects) and a `TabsContent` mounts only while its trigger is active.',
       },
     },
+  },
+  argTypes: {
+    value: {
+      control: 'select',
+      options: ['security', 'quality', 'react'],
+      description:
+        'Controlled active tab. The Default story feeds this control back through `onValueChange`, so clicking a tab moves the control and vice-versa. `null` selects nothing.',
+      table: { category: 'State', type: { summary: 'string | number | null' } },
+    },
+    defaultValue: {
+      control: false,
+      description:
+        'Uncontrolled initial tab — read once on mount. Use `value` above to drive the tab set from the Controls panel.',
+      table: { category: 'State', type: { summary: 'string | number | null' } },
+    },
+    orientation: {
+      control: 'select',
+      options: ['horizontal', 'vertical'],
+      description:
+        'Layout flow, and which arrow keys traverse the list. `vertical` expects the consumer to lay the list out as a column.',
+      table: {
+        category: 'Appearance',
+        type: { summary: "'horizontal' | 'vertical'" },
+        defaultValue: { summary: "'horizontal'" },
+      },
+    },
+    onValueChange: {
+      action: 'valueChange',
+      description:
+        'Fires on selection. `eventDetails.reason` distinguishes a user click from the automatic fallback that runs when the selected tab is removed or disabled.',
+      table: {
+        category: 'Events',
+        type: { summary: '(value, details) => void' },
+      },
+    },
+    children: {
+      control: false,
+      description:
+        'One `TabsList` of `TabsTrigger`s plus one `TabsContent` per `value`.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the root — this is where the tab set gets its width.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
+  args: {
+    orientation: 'horizontal',
+    className: 'w-[420px] max-w-full',
+    onValueChange: fn(),
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Tabs>;
 
+const PANELS = [
+  { value: 'security', label: 'Security', body: '8 plugins, 224+ rules.' },
+  { value: 'quality', label: 'Code Quality', body: '6 plugins, 49+ rules.' },
+  { value: 'react', label: 'React', body: '2 plugins, 91 rules.' },
+] as const;
+
 export const Default: Story = {
-  render: () => (
-    <Tabs defaultValue="security" className="w-[420px]">
-      <TabsList>
-        <TabsTrigger value="security">Security</TabsTrigger>
-        <TabsTrigger value="quality">Code Quality</TabsTrigger>
-        <TabsTrigger value="react">React</TabsTrigger>
-      </TabsList>
-      <TabsContent value="security" className="text-muted-foreground p-3 text-sm">
-        8 plugins, 224+ rules.
-      </TabsContent>
-      <TabsContent value="quality" className="text-muted-foreground p-3 text-sm">
-        6 plugins, 49+ rules.
-      </TabsContent>
-      <TabsContent value="react" className="text-muted-foreground p-3 text-sm">
-        2 plugins, 91 rules.
-      </TabsContent>
-    </Tabs>
-  ),
+  args: { value: 'security' },
+  render: function DefaultTabs(args) {
+    // `useArgs` closes the controlled loop — without it a controlled `value`
+    // would freeze the tab set and the control would change nothing on screen.
+    const [, updateArgs] = useArgs();
+    return (
+      <Tabs
+        {...args}
+        onValueChange={(value, details) => {
+          args.onValueChange?.(value, details);
+          updateArgs({ value });
+        }}
+      >
+        <TabsList>
+          {PANELS.map((panel) => (
+            <TabsTrigger key={panel.value} value={panel.value}>
+              {panel.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {PANELS.map((panel) => (
+          <TabsContent
+            key={panel.value}
+            value={panel.value}
+            className="text-muted-foreground p-3 text-sm"
+          >
+            {panel.body}
+          </TabsContent>
+        ))}
+      </Tabs>
+    );
+  },
 };
 
 /**
@@ -57,7 +129,7 @@ export const Default: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Tabs defaultValue="security" className="w-[420px]">
+    <Tabs defaultValue="security" className="w-[420px] max-w-full">
       <TabsList>
         <TabsTrigger value="security">Security</TabsTrigger>
         <TabsTrigger value="quality">Quality</TabsTrigger>
@@ -132,7 +204,7 @@ export const KeyboardFlow: Story = {
  * loading tab group doesn't jump when the real tabs arrive.
  */
 export const Loading: Story = {
-  render: () => <Skeleton variant="tabs" className="w-[420px]" />,
+  render: () => <Skeleton variant="tabs" className="w-[420px] max-w-full" />,
 };
 
 export const Dark: Story = {

@@ -11,8 +11,57 @@ const meta: Meta<typeof PageHeader> = {
     docs: {
       description: {
         component:
-          'Top-of-page header for admin / docs / settings surfaces. Breadcrumb + title + description + actions slot, all renders as a real <header> landmark.',
+          'The rule-bounded `<header>` that opens an admin, docs or settings page: ' +
+          'breadcrumb, h1, description, a right-aligned actions cluster and a meta ' +
+          'strip. It renders the page h1, so use exactly one per route — a marketing ' +
+          'landing page wants Hero (which owns its own display type and background) ' +
+          'and a mid-page divider wants SectionHeader.',
       },
+    },
+  },
+  argTypes: {
+    title: {
+      control: 'text',
+      description: 'The page h1. Required in practice — the header has no other anchor.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    description: {
+      control: 'text',
+      description: 'Muted supporting line under the title.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    breadcrumb: {
+      control: false,
+      description:
+        'Slot above the title — pass your own `<nav aria-label="Breadcrumb">`. The block does not own breadcrumb semantics, so the router stays the router.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    actions: {
+      control: false,
+      description:
+        'Right-aligned cluster, typically Buttons. Wraps under the title below `sm`.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    meta: {
+      control: false,
+      description:
+        'Strip below the title for tags, version, status, dates. Rendered as a flex row of whatever you pass.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Swap the whole header for a `<Skeleton variant="page-header" />` so the page does not reflow when the title resolves.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'State',
+      },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the `<header>` — the bottom-border / padding seam.',
+      table: { category: 'Appearance' },
     },
   },
 };
@@ -24,6 +73,7 @@ export const Default: Story = {
   args: {
     title: 'Plugin catalog',
     description: 'Every Interlace ESLint plugin and its rules, grouped by domain.',
+    loading: false,
   },
 };
 
@@ -66,4 +116,13 @@ export const WithBreadcrumbAndMeta: Story = {
     ),
     actions: <Button variant="outline">Install</Button>,
   },
+};
+
+/**
+ * The header is the tallest above-the-fold element on an admin route, so it
+ * reserves its own footprint rather than letting the whole page slide down
+ * when the record resolves.
+ */
+export const Loading: Story = {
+  args: { loading: true },
 };

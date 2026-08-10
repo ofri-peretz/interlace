@@ -12,7 +12,10 @@ import { expect, test } from "@playwright/test";
  *   - WCAG 2.0/2.1/2.2 A + AA
  *   - axe `best-practice` tag (region landmarks, single h1, etc. — these
  *     run here because the live page IS a real page, unlike storybook)
- *   - AAA disabled (purple gradient breaks color-contrast-enhanced).
+ *   - `ACT` (W3C Accessibility Conformance Testing rules)
+ *   - AAA disabled (purple gradient breaks color-contrast-enhanced). This is
+ *     the ONE deliberate difference from the Storybook gate, which does
+ *     enforce AAA against DS tokens rather than marketing gradients.
  */
 
 const A11Y_TAGS = [
@@ -22,7 +25,30 @@ const A11Y_TAGS = [
   "wcag21aa",
   "wcag22aa",
   "best-practice",
+  // `ACT` was missing here while the Storybook gate
+  // (apps/storybook/.storybook/test-runner.ts STRICT_TAGS) has always run it,
+  // so this gate was silently the weaker of the two despite the comment above
+  // claiming it mirrors the Storybook config. Added to close the drift.
+  "ACT",
 ];
+
+/**
+ * `color-contrast-enhanced` is tagged BOTH `wcag2aaa` and `ACT`, so selecting
+ * the ACT tag drags AAA contrast back in through the side door — the one level
+ * this suite documents as deliberately out of scope. Excluded by name so the
+ * exemption is a decision you can see, rather than a side effect of a tag list.
+ *
+ * It is not hypothetical: with ACT on, this rule is the ONLY failure on `/` —
+ * `--color-fd-muted-foreground: hsl(0,0%,40%)` (#666666) scores 5.08:1 and
+ * 5.26:1 where AAA wants 7:1. That is a real, worth-fixing weakness.
+ *
+ * It is NOT fixed here on purpose: the token lives in
+ * `apps/landing/.interlace/css/brand.css`, which is copy-synced from
+ * `interlace/docs-baseline/css/brand.css`. Darkening it locally would be
+ * reverted by the next baseline sync. Fix it at the baseline, re-sync, then
+ * delete this exclusion and watch this suite stay green.
+ */
+const AAA_CONTRAST_RULE = "color-contrast-enhanced";
 
 const ROUTES_LIGHT_THEME: Array<{ path: string; description: string }> = [
   { path: "/", description: "home" },
@@ -35,6 +61,7 @@ for (const { path, description } of ROUTES_LIGHT_THEME) {
     await page.goto(path, { waitUntil: "networkidle" });
     const results = await new AxeBuilder({ page })
       .withTags(A11Y_TAGS)
+      .disableRules([AAA_CONTRAST_RULE])
       .analyze();
     expect(results.violations, formatViolations(results.violations)).toEqual(
       [],
@@ -57,6 +84,7 @@ for (const { path, description } of ROUTES_LIGHT_THEME) {
     expect(isDark, "dark class did not apply on <html>").toBe(true);
     const results = await new AxeBuilder({ page })
       .withTags(A11Y_TAGS)
+      .disableRules([AAA_CONTRAST_RULE])
       .analyze();
     expect(results.violations, formatViolations(results.violations)).toEqual(
       [],

@@ -184,6 +184,20 @@ export default [
       'reliability/require-network-timeout': 'warn',
     },
   },
+  // Lock tests read repo-relative paths built from `__dirname` plus a listing
+  // of a fixed directory (`docs/philosophies`, `src/stories/**`). The
+  // node-security path-traversal rules treat any `readdirSync`-derived name as
+  // untrusted input, so a build-time drift lock trips CWE-22 at ERROR. There is
+  // no request-derived path within a mile of this code and none of it ships.
+  // Scoped OFF for `__tests__` only — both rules stay at ERROR everywhere else,
+  // including every file that actually runs in an app.
+  {
+    files: ['**/__tests__/**/*.{ts,tsx,mts}'],
+    rules: {
+      'node-security/detect-non-literal-fs-filename': 'off',
+      'node-security/no-arbitrary-file-access': 'off',
+    },
+  },
   // TSX-scoped baseline (react-a11y + react-features ERRORs → warn).
   {
     files: TSX_FILES,

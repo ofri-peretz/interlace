@@ -22,9 +22,27 @@ const meta: Meta<typeof Skeleton> = {
     variant: {
       control: 'select',
       options: SKELETON_VARIANTS,
+      description:
+        'Silhouette to paint. Pick the one named after the component being waited on — a shape that does not match the arriving content reintroduces the layout shift the skeleton exists to prevent.',
+      table: { type: { summary: 'SkeletonVariant' }, defaultValue: { summary: 'rect' }, category: 'Appearance' },
     },
     count: {
-      control: { type: 'number', min: 1, max: 10, step: 1 },
+      control: { type: 'range', min: 1, max: 10, step: 1 },
+      description:
+        'Render N copies stacked with `gap-sm` — a 5-line paragraph or a 3-card list without composing in the consumer. The group carries a single `role="status"`; the copies are silent.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '1' }, category: 'Data' },
+    },
+    label: {
+      control: 'text',
+      description:
+        'Visually hidden loading text announced by screen readers. Set it to `null` when the surrounding region already exposes a busy state, so the page does not announce "Loading…" once per placeholder.',
+      table: { type: { summary: 'string | null' }, defaultValue: { summary: "'Loading…'" }, category: 'State' },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged after the variant classes — the escape hatch for a one-off footprint (`h-12 w-48`) when no registered variant matches.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
     },
   },
 };
@@ -33,9 +51,9 @@ export default meta;
 type Story = StoryObj<typeof Skeleton>;
 
 export const Default: Story = {
-  args: { variant: 'rect' },
+  args: { variant: 'rect', count: 1, label: 'Loading…' },
   render: (args) => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <Skeleton {...args} />
     </div>
   ),
@@ -59,8 +77,10 @@ export const Catalogue: Story = {
 
 function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
   return (
-    <div className="flex items-start gap-md">
-      <code className="text-muted-foreground font-mono text-ui-sm w-44 shrink-0 pt-2">
+    // flex-col below sm: the 176px `w-44 shrink-0` label plus a specimen leaves
+    // under 100px for the specimen on a 375px phone, so the row overflows.
+    <div className="flex flex-col items-start gap-md sm:flex-row">
+      <code className="text-muted-foreground font-mono text-ui-sm pt-2 sm:w-44 sm:shrink-0">
         variant=&quot;{variant}&quot;
       </code>
       <div className="w-[420px] max-w-full">
@@ -78,7 +98,7 @@ function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
 export const Count: Story = {
   args: { variant: 'text', count: 5 },
   render: (args) => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <Skeleton {...args} />
     </div>
   ),
@@ -91,7 +111,7 @@ export const Count: Story = {
 export const ArticleCardSkeleton: Story = {
   args: { variant: 'article-card' },
   render: (args) => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <Skeleton {...args} />
     </div>
   ),

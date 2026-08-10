@@ -12,8 +12,57 @@ const meta: Meta<typeof PricingTable> = {
     docs: {
       description: {
         component:
-          'Pricing-tier grid. 2-4 tiers, each with name + price + features + CTA. Mark one as `featured` for a "Most popular" highlight.',
+          'Comparison grid of 2–4 plans, each a card of name / price / description / ' +
+          'feature list / CTA, with one optionally `featured` for the "Most popular" ' +
+          'ring. `cols` is a DESKTOP track count — the grid collapses to one column on ' +
+          'phones regardless, because a 3-up pricing card at 375px overflows its own ' +
+          'price. Reach for it on a plans page; for a feature-by-feature matrix use a ' +
+          'real table, which this is not.',
       },
+    },
+  },
+  argTypes: {
+    title: {
+      control: 'text',
+      description: 'Section heading above the grid. Omit to render the cards alone.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    lead: {
+      control: 'text',
+      description: 'Supporting paragraph under the title, capped at prose width.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    tiers: {
+      control: 'object',
+      description:
+        'The plans, in display order: `{ name, price, pricePer?, description?, features?, cta?, featured? }`. `cta` and every text field are ReactNode, so the JSON control edits the strings but the CTA elements are opaque here.',
+      table: { type: { summary: 'PricingTier[]' }, category: 'Data' },
+    },
+    cols: {
+      control: 'select',
+      options: [2, 3, 4],
+      description:
+        'Desktop column count. Match it to `tiers.length`; a mismatch leaves an empty track.',
+      table: {
+        type: { summary: '2 | 3 | 4' },
+        defaultValue: { summary: '3' },
+        category: 'Appearance',
+      },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Render `cols` card skeletons instead of the tiers. Pricing is usually fetched (currency, geo, active promo), so the grid reserves its height first.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'State',
+      },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the `<section>` — the outer padding seam.',
+      table: { category: 'Appearance' },
     },
   },
 };
@@ -63,10 +112,12 @@ export const Default: Story = {
     title: 'Simple, transparent pricing',
     lead: 'Pay for what you ship.',
     tiers: sampleTiers,
+    cols: 3,
+    loading: false,
   },
 };
 
-export const Loading: Story = { args: { loading: true } };
+export const Loading: Story = { args: { loading: true, cols: 3 } };
 
 export const Dark: Story = { ...Default, decorators: [withDark] };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

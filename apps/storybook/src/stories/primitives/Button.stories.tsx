@@ -11,7 +11,7 @@ const meta: Meta<typeof Button> = {
     docs: {
       description: {
         component:
-          'Primary interactive element. Variants and sizes follow `CTA_PHILOSOPHY.md`; the `render` prop lets the same component become a `<Link>` or external `<a>` without rewriting the variant API.',
+          'The element that performs an action. One `default` button per view is the point — everything competing with it should step down to `secondary`/`outline`/`ghost`, per `CTA_PHILOSOPHY.md`. When the thing being done is navigation, keep the visual weight but pass `render` a `<Link>`/`<a>` so it is a real link for middle-click, keyboard, and crawlers.',
       },
     },
   },
@@ -19,15 +19,90 @@ const meta: Meta<typeof Button> = {
     variant: {
       control: 'select',
       options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      description:
+        'Emphasis ladder. `destructive` is reserved for irreversible actions and should be paired with an `AlertDialog` confirm.',
+      table: {
+        category: 'Appearance',
+        type: {
+          summary:
+            "'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'",
+        },
+        defaultValue: { summary: 'default' },
+      },
     },
-    size: { control: 'select', options: ['default', 'xs', 'sm', 'lg', 'icon'] },
+    size: {
+      control: 'select',
+      options: [
+        'default',
+        'xs',
+        'sm',
+        'lg',
+        'icon',
+        'icon-xs',
+        'icon-sm',
+        'icon-lg',
+      ],
+      description:
+        'Height ramp; the `icon*` sizes are square. `xs`/`sm` and `icon-xs` fall under WCAG 2.5.8 target size unless neighbours are spaced ≥24px — see the Sizes story.',
+      table: {
+        category: 'Appearance',
+        type: {
+          summary:
+            "'default' | 'xs' | 'sm' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg'",
+        },
+        defaultValue: { summary: 'default' },
+      },
+    },
+    disabled: {
+      control: 'boolean',
+      description:
+        'Blocks pointer events and drops to 50% opacity. There is no `loading` variant — see the Loading story for the canon.',
+      table: { category: 'State', defaultValue: { summary: 'false' } },
+    },
+    type: {
+      control: 'select',
+      options: ['button', 'submit', 'reset'],
+      description:
+        'Native button type. Inside a `<form>` the browser default is `submit` — set it explicitly when the button must not submit.',
+      table: { category: 'State', type: { summary: "'button' | 'submit' | 'reset'" } },
+    },
+    children: {
+      control: 'text',
+      description:
+        'Label, optionally with a lucide icon sibling (auto-sized per `size`). Icon-only buttons need an `aria-label`.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    onClick: {
+      action: 'click',
+      description:
+        'Native click — passed straight through, never wrapped in a bespoke handler name.',
+      table: { category: 'Events' },
+    },
+    render: {
+      control: false,
+      description:
+        "Replace the rendered element (Base UI render prop; shadcn's `asChild` equivalent). Pass `<Link href=\"…\" />` to keep the styling and get real link semantics.",
+      table: { category: 'Slots', type: { summary: 'ReactElement | function' } },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged after the variant classes, so it wins on conflicts.',
+      table: { category: 'Appearance' },
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = { args: { children: 'Get started' } };
+export const Default: Story = {
+  args: {
+    children: 'Get started',
+    variant: 'default',
+    size: 'default',
+    disabled: false,
+  },
+};
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-3">

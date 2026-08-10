@@ -1,10 +1,21 @@
+import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { ScrollArea } from '@interlace/ui/scroll-area';
 import { Separator } from '@interlace/ui/separator';
 import { withDark, withRtl } from '@/decorators';
 
-const meta: Meta<typeof ScrollArea> = {
+/**
+ * The root's own API is deliberately thin — it is sized by its parent and the
+ * viewport / scrollbar / thumb are composed internally. `itemCount` is a
+ * story-only knob (not a component prop) so the reader can push the content
+ * past the box height and watch the overlay scrollbar appear.
+ */
+type ScrollAreaStoryArgs = React.ComponentProps<typeof ScrollArea> & {
+  itemCount?: number;
+};
+
+const meta: Meta<ScrollAreaStoryArgs> = {
   title: 'Primitives/ScrollArea',
   component: ScrollArea,
   tags: ['autodocs'],
@@ -12,22 +23,54 @@ const meta: Meta<typeof ScrollArea> = {
     docs: {
       description: {
         component:
-          'Cross-browser scrollable region with token-styled scrollbars. Keeps overflow content discoverable without the platform-default scrollbar variance.',
+          'A bounded region whose overflow scrolls behind a token-styled overlay scrollbar, so a long list reads the same on macOS (where native bars are hidden until you scroll) as on Windows (where they steal 15px of layout). Reach for it when a box has a fixed height and its content does not — sidebars, command palettes, long option lists. Do not wrap the page body in it: the document scroller carries scroll restoration, `scroll-margin` anchoring and browser find-in-page, and a custom region loses all three.',
       },
+    },
+  },
+  argTypes: {
+    className: {
+      control: 'text',
+      description:
+        'The sizing seam. The root is `relative` and otherwise size-agnostic — it scrolls only once a height (or width) bounds it, so the box dimensions, border and padding all arrive through here.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
+    overflowEdgeThreshold: {
+      control: { type: 'number', min: 0, max: 64, step: 4 },
+      description:
+        'Pixels of scroll travel before the `data-overflow-*-start/end` attributes flip. Raise it to delay a fade-out mask at the edges of the region.',
+      table: { type: { summary: 'number | { xStart, xEnd, yStart, yEnd }' }, defaultValue: { summary: '0' }, category: 'Appearance' },
+    },
+    itemCount: {
+      control: { type: 'range', min: 1, max: 60, step: 1 },
+      description:
+        'Story-only: how many demo rows to render. Drop it below the point where the content fits and the scrollbar disappears — the region is only scrollable when it overflows.',
+      table: { type: { summary: 'number' }, category: 'Data' },
+    },
+    children: {
+      control: false,
+      description:
+        'Scrollable content. Mounted inside the internal `Viewport` → `Content` pair, which is what actually carries `tabindex="0"` for keyboard users.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof ScrollArea>;
+type Story = StoryObj<ScrollAreaStoryArgs>;
 
-const tags = Array.from({ length: 30 }, (_, i) => `topic-${i + 1}`);
+const topics = (count: number) =>
+  Array.from({ length: count }, (_, i) => `topic-${i + 1}`);
 
 export const Default: Story = {
-  render: () => (
-    <ScrollArea className="border-border h-72 w-60 rounded-md border p-3">
+  args: {
+    className: 'border-border h-72 w-60 rounded-md border p-3',
+    itemCount: 30,
+    overflowEdgeThreshold: 0,
+  },
+  render: ({ itemCount = 30, ...args }) => (
+    <ScrollArea {...args}>
       <h3 className="mb-2 text-sm font-semibold">Topics</h3>
-      {tags.map((t) => (
+      {topics(itemCount).map((t) => (
         <div key={t}>
           <p className="text-sm">#{t}</p>
           <Separator className="my-1" />
@@ -46,7 +89,7 @@ export const Default: Story = {
 export const KeyboardFlow: Story = {
   render: () => (
     <ScrollArea className="border-border h-40 w-60 rounded-md border p-3">
-      {tags.map((t) => (
+      {topics(30).map((t) => (
         <p key={t} className="text-sm">
           #{t}
         </p>
@@ -90,6 +133,18 @@ export const KeyboardFlow: Story = {
       await waitFor(() => expect(vp.scrollTop).toBeGreaterThan(0));
       expect(document.activeElement).toBe(vp);
     });
+  },
+};
+
+/**
+ * Content that fits — no scrollbar, no `tabindex`, no visual difference from
+ * a plain `<div>`. The region only asserts itself once it overflows.
+ */
+export const NoOverflow: Story = {
+  ...Default,
+  args: {
+    className: 'border-border h-72 w-60 rounded-md border p-3',
+    itemCount: 4,
   },
 };
 

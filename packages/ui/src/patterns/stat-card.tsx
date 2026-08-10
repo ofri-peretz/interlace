@@ -30,6 +30,19 @@ import { Typography } from '../primitives/typography.js';
  * MIN_VIEWPORT — 320. Dashboards must work on phones; this is the smallest
  * widget on the canvas.
  *
+ * ## Contrast — delta text on `--background` (measured in-browser)
+ *
+ * | tone    | Light  | Dark    | Floor              |
+ * | ------- | ------ | ------- | ------------------ |
+ * | default | 9.41:1 | 11.32:1 | 7:1 (SC 1.4.6 AAA) |
+ * | success | 7.68:1 | 10.30:1 | 7:1 (SC 1.4.6 AAA) |
+ * | warning | 9.07:1 |  9.22:1 | 7:1 (SC 1.4.6 AAA) |
+ * | danger  | 8.31:1 | 10.43:1 | 7:1 (SC 1.4.6 AAA) |
+ *
+ * These are semantic tokens, not palette. The previous `text-emerald-600` /
+ * `text-rose-600` measured 3.65:1 and 4.52:1 — below even AA — and failed the
+ * enforced `color-contrast` + `color-contrast-enhanced` gate.
+ *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R4   | Extends native el + VariantProps | `React.ComponentProps<'article'> & VariantProps<...>`       |
@@ -39,6 +52,7 @@ import { Typography } from '../primitives/typography.js';
  * | R10  | Composition seams                | `icon` / `delta` / `footnote` props                         |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R19  | Tokens only                      | tone classes map to semantic tokens                         |
+ * | R20  | AAA contrast                     | table above — every tone measured in both schemes           |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  */
 
@@ -50,9 +64,9 @@ const statCardVariants = cva(
     variants: {
       tone: {
         default: '',
-        success: 'border-emerald-500/40',
-        warning: 'border-amber-500/40',
-        danger: 'border-rose-500/40',
+        success: 'border-success/40',
+        warning: 'border-warning/40',
+        danger: 'border-destructive/40',
       },
     },
     defaultVariants: {
@@ -61,11 +75,18 @@ const statCardVariants = cva(
   },
 );
 
+// Semantic tokens, NOT raw palette. `text-emerald-600` / `-rose-600` scored
+// 3.65:1 and 4.52:1 on white — failing `color-contrast` (AA, 4.5:1) and
+// `color-contrast-enhanced` (AAA, 7:1), both of which this DS enforces. The
+// `--success` / `--warning` / `--destructive` ladder in interlace-theme.css is
+// already tuned to clear AAA in BOTH schemes, so it needs no `dark:` variant:
+// the token itself re-resolves under `.dark`. This is what R19 ("tone classes
+// map to semantic tokens") meant all along.
 const deltaToneClass: Record<NonNullable<VariantProps<typeof statCardVariants>['tone']>, string> = {
   default: 'text-muted-foreground',
-  success: 'text-emerald-600 dark:text-emerald-400',
-  warning: 'text-amber-600 dark:text-amber-400',
-  danger: 'text-rose-600 dark:text-rose-400',
+  success: 'text-success',
+  warning: 'text-warning',
+  danger: 'text-destructive',
 };
 
 type StatCardProps = React.ComponentProps<'article'> &

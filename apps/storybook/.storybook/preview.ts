@@ -20,10 +20,23 @@ const preview: Preview = {
      // backgrounds picker is redundant for our use-case.
     backgrounds: { disable: true },
     a11y: {
-      // Strict tag stack — matches apps/docs/e2e/a11y.spec.ts and the
-      // test-runner gate. Keep these in sync: any tag added here must also
-      // be added to apps/storybook/.storybook/test-runner.ts STRICT_TAGS.
-      element: '#storybook-root',
+      // Strict tag stack. Keep in sync with the two sibling gates:
+      //   - apps/storybook/.storybook/test-runner.ts  STRICT_TAGS
+      //   - apps/landing/e2e/a11y.spec.ts             A11Y_TAGS
+      // All three now run the same seven tags. Landing additionally excludes
+      // `color-contrast-enhanced` by name — its marketing gradient cannot
+      // clear AAA — which is the one intentional difference; see the block
+      // comment there. (`apps/docs` — cited here before — does not exist;
+      // neither does scripts/a11y-summary.ts.)
+      // `context`, not `element`. addon-a11y 10 renamed this, and the old key
+      // is not ignored: the scan throws
+      //   SB_ADDON_A11Y_0001 (ElementA11yParameterError)
+      // and every story reports an addon error instead of a result, so NO
+      // story is axe-scanned in the dev UI while the system advertises a
+      // strict WCAG 2.2 AA + ACT gate. Verified by A/B-ing the key against a
+      // running Storybook. (The test-runner gate is unaffected — it calls
+      // axe.run directly and never reads this parameter.)
+      context: '#storybook-root',
       config: {
         rules: [
           // WCAG 2.2 AAA (color-contrast-enhanced) is now ENFORCED.
@@ -51,26 +64,85 @@ const preview: Preview = {
         },
       },
       test: 'error',
-      manual: false,
     },
-    layout: 'centered',
+    /**
+     * `padded`, NOT `centered`. This is a responsiveness contract, not a
+     * cosmetic preference.
+     *
+     * Storybook's centered layout sizes the story root to its CONTENT — it
+     * measured 32px wide against a 1280px body. Every component in this DS is
+     * built mobile-first and sizes itself from its container (`w-full`,
+     * `max-w-*`, `viewBox`), and a percentage width against an indefinite
+     * container resolves to nothing. So the centered layout rendered
+     * SignInForm as a ~40px column with circular inputs, FocusRing as one word
+     * per line, and every chart as a blank box — a layout no user will ever
+     * see, presented as the component's live preview on ds.interlace.tools.
+     *
+     * `padded` gives the root a definite, full width. Components that genuinely
+     * want centering (a lone Badge, a Button) opt in per story with
+     * `parameters: { layout: 'centered' }` — that is the exception, and it is
+     * safe because those components have intrinsic width.
+     *
+     * Corollary for anyone adding a story: if it only looks right centered, the
+     * component probably has no responsive width strategy, and THAT is the bug.
+     */
+    layout: 'padded',
     options: {
       storySort: {
         // `Welcome` first so the root URL deep-links to the landing page
         // instead of `Tokens/Color Contrast/Docs` (alphabetic default).
         order: [
           'Welcome',
+          // Reader-facing explainers (what the system guarantees and why),
+          // ahead of `Philosophy` — which is the raw contract corpus those
+          // pages cite. Concepts is the front door; Philosophy is the source.
+          'Concepts',
+          [
+            'Responsiveness',
+            'Layout',
+            'Color & Theming',
+            'Accessibility',
+            'Loading & Motion',
+            'Versioning',
+          ],
           'Philosophy',
+          // `Foundations`, `Charts` and `Templates` were all UNLISTED, so they
+          // sorted to the bottom in arbitrary order and a reader reached
+          // MagicUI ornaments before the type scale. Vocabulary (foundations,
+          // tokens) precedes the components that spend it; our own layers
+          // precede third-party decoration.
+          'Foundations',
           'Tokens',
           ['Color Contrast'],
           'Primitives',
           'Blocks',
+          'Charts',
+          'Templates',
           'Pages',
           'Fumadocs',
           'MagicUI',
         ],
       },
     },
+  },
+  /**
+   * `manual` moved from `parameters.a11y` to GLOBALS in Storybook 10. Left in
+   * parameters it is silently ignored — the addon then falls back to its own
+   * default (`manual: false`), so the practical effect is nil, but stating it
+   * here keeps the intent explicit and survives an upstream default flip.
+   *
+   * Unrelated known behaviour, so nobody re-files it as a bug: on a HARD page
+   * load the panel can sit on "Preparing accessibility scan…". The panel only
+   * leaves that state on a `STORY_FINISHED` it is mounted to receive, so a
+   * scan that completed before the panel mounted is never back-filled. Any
+   * story navigation or a "Reload story" click scans immediately. This is
+   * upstream panel behaviour, NOT a misconfiguration here.
+   */
+  initialGlobals: {
+    // Run on story visit rather than on a button press. `manual` moved from
+    // `parameters.a11y` to globals in Storybook 10; left in parameters it is
+    // silently ignored.
+    a11y: { manual: false },
   },
   decorators: [
     withThemeByClassName({
@@ -89,7 +161,41 @@ const preview: Preview = {
       // iframe body near-black and giving axe the correct backdrop.
       parentSelector: 'html',
     }),
+    /**
+     * The THEME axis (`data-theme`), orthogonal to the scheme axis the
+     * decorator above owns (`.dark`).
+     *
+     * Written to `<html>` for the same reason the class is: the brand tokens
+     * are declared on the root, and `--primary: var(--interlace-primary)` is
+     * substituted on the element that declares it — so an attribute on a
+     * story-wrapper div changes the brand values and repaints nothing.
+     *
+     * The default theme writes NO attribute: `:root` already is that theme
+     * (see packages/ui/src/lib/use-theme.ts for the same rule at runtime).
+     */
+    (Story, context) => {
+      const theme = context.globals.interlaceTheme as string | undefined;
+      const html = document.documentElement;
+      if (!theme || theme === 'interlace') html.removeAttribute('data-theme');
+      else html.setAttribute('data-theme', theme);
+      return Story();
+    },
   ],
+  globalTypes: {
+    interlaceTheme: {
+      description: 'Interlace brand theme (data-theme)',
+      defaultValue: 'interlace',
+      toolbar: {
+        title: 'Theme',
+        icon: 'paintbrush',
+        dynamicTitle: true,
+        items: [
+          { value: 'interlace', title: 'Interlace' },
+          { value: 'harbor', title: 'Harbor' },
+        ],
+      },
+    },
+  },
   // No global `autodocs` tag. With autodocs on, every component's sidebar
   // entry becomes "Docs" as the default child, and the Docs view doesn't
   // render the Controls / Actions / Interactions / Accessibility bottom

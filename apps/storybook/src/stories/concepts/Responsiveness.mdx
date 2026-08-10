@@ -1,0 +1,350 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Grid, GridItem } from '@interlace/ui/grid';
+
+<Meta title="Concepts/Responsiveness" />
+
+# Responsiveness
+
+Responsiveness in this system is four separate contracts, not one adjective:
+
+1. **Mobile-first authoring** — base classes describe the narrowest viewport.
+2. **A locked breakpoint ladder** — four tiers, in `rem`, no `2xl`.
+3. **A declared floor per component** — `MIN_VIEWPORT`, one of 320 / 480 / 768.
+4. **An overflow rule** — the page never scrolls sideways; inner containers may.
+
+Each is enforced somewhere. This page says where, and shows the two failures
+that actually happen.
+
+---
+
+## 1. Mobile-first is a direction, not a preference
+
+The base class describes the smallest viewport. Breakpoint variants **add**
+breathing room; they never take it away.
+
+```tsx
+// Reads: one column everywhere, two from 480px, four from 1024px.
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" />
+
+// Smell: the base class describes the desktop and the breakpoint retracts it.
+<div className="grid grid-cols-4 sm:grid-cols-1" />
+```
+
+The practical reason is failure direction. If your media query never matches
+— old browser, a container query you forgot, a CSS bundle that half-loaded —
+mobile-first degrades to the narrow layout, which is legible on any screen.
+Desktop-first degrades to a four-column grid on a phone.
+
+`lg:hidden md:flex` is the same smell in visibility form: the default state is
+"visible on desktop" and the variant subtracts.
+
+## 2. The breakpoint ladder
+
+Declared once, in `packages/ui/styles/foundation.css`:
+
+```css
+--breakpoint-sm: 30rem;   /*  480px — handheld */
+--breakpoint-md: 48rem;   /*  768px — tablet / large phone */
+--breakpoint-lg: 64rem;   /* 1024px — laptop */
+--breakpoint-xl: 80rem;   /* 1280px — desktop */
+```
+
+Three decisions are embedded here.
+
+**Four tiers, not five.** Tailwind v4 ships `640 / 768 / 1024 / 1280 / 1536`.
+The `2xl` tier fires at ≥1536px, and 1280px is the widest section this system
+supports (`Container size="wide"`). A `2xl:` variant would therefore have no
+meaning — every element inside it has already stopped growing. So the tier is
+removed, and `breakpoints-lock.test.ts` asserts
+`foundation.css` does **not** declare `--breakpoint-2xl`.
+
+**`rem`, not `px`.** A user who sets their browser root font to 20px is
+telling you their text is too small. With `px` breakpoints the layout ignores
+that entirely: `480px` is `480px` whatever the type is doing. With `rem`,
+`30rem` becomes 600 CSS px at a 20px root, so the layout moves to a roomier
+tier at the same time the type gets bigger. Adobe Spectrum, Shopify Polaris
+and React Aria all make the same call.
+
+**480, not 640, as the first tier.** It lines up with the `MIN_VIEWPORT`
+ladder below: a component whose floor is 480 is exactly the `sm:` floor, and
+768 is exactly `md:`. One number means one thing in both systems.
+
+| System | Breakpoints |
+| --- | --- |
+| Tailwind v4 default | 640 / 768 / 1024 / 1280 / 1536 |
+| Vercel Geist | 600 / 960 / 1280 / 1600 |
+| Linear | 768 / 1024 / 1280 |
+| Adobe Spectrum | 304 / 768 / 1280 / 1768 |
+| Shopify Polaris | 490 / 768 / 1040 / 1620 |
+| Stripe Sail | 768 / 1024 / 1280 / 1440 |
+| **Interlace** | **480 / 768 / 1024 / 1280** |
+
+### What the lock actually asserts
+
+`packages/ui/__tests__/breakpoints-lock.test.ts`:
+
+- each of the four tokens is declared with its exact `rem` value;
+- `--breakpoint-2xl` is absent;
+- **no primitive, pattern or template source declares a raw
+  `@media (min-width: …)` / `(max-width: …)` query** — the entire responsive
+  surface goes through the four variants;
+- no source declares a custom `--breakpoint-*` key.
+
+The third rule is the load-bearing one. A single hand-written
+`@media (min-width: 900px)` in one component is invisible to every reader of
+the token file, and it is where breakpoint drift starts.
+
+Note that `prefers-reduced-motion` and `forced-colors` queries are
+deliberately *not* caught — the regex matches width queries only.
+
+## 3. `MIN_VIEWPORT` — the declared floor
+
+Every primitive exports a constant naming the narrowest viewport it is
+claimed to work at, and projects it onto the DOM:
+
+```tsx
+export const MIN_VIEWPORT = 320 as const;
+
+// …
+<div data-slot="scroll-area" data-min-viewport={String(MIN_VIEWPORT)} />
+```
+
+Only three values are legal:
+
+| Value | Means | Matching variant |
+| --- | --- | --- |
+| `320` | Works on every phone, including an iPhone SE | base (mobile-first) |
+| `480` | Below this, use a different surface | the `sm:` floor |
+| `768` | Desktop / tablet only, by design | the `md:` floor |
+
+Today that is 38 primitives at `320`, `breadcrumb` and `toc` at `480`,
+`hover-card` at `768`; and 11 templates at `320` with `dashboard-template`
+and `settings-template` at `480`.
+
+`primitives-min-viewport-lock.test.tsx` pins each one **by literal**, not by
+"is present". Changing `toc` from 480 to 320 fails the test even though 320
+is a legal value — because the number is a published claim, and silently
+widening it is as much a lie as silently narrowing it. (Narrowing is worse:
+raising a component's `MIN_VIEWPORT` is a **breaking** change, since you are
+retracting support for a viewport a consumer may already be shipping at. See
+[Versioning](?path=/docs/concepts-versioning--docs).)
+
+### Why declare a floor at all?
+
+Because "responsive" without a floor is unfalsifiable. A `HoverCard` is a
+pointer-oriented surface; making it work at 320px would mean making it not a
+hover card. Declaring `768` is more useful than pretending otherwise — the
+attribute is queryable in devtools and in end-to-end tests, and an app can
+opt into a dev-mode outline that flags any component rendered below its own
+floor:
+
+```css
+body[data-interlace-dev] [data-min-viewport='320'] {
+  @container (max-width: 319px) {
+    outline: 2px dashed …;
+  }
+}
+```
+
+That containment is gated on the `data-interlace-dev` opt-in, and the gate is
+itself a lesson. Until 2026-08-10 the `container-type: inline-size` needed to
+make those `@container` queries fire was applied unconditionally — and inline
+size containment makes an element's intrinsic inline size exactly **zero**.
+Every shrink-to-fit primitive carrying the attribute collapsed:
+`ReadingTime` measured **0px with the rule and 28.84px without it**;
+`NumberField` (154px), `ToggleGroup` (120px) and `PublishedDate` (88px) went
+the same way — live, on the public registry, where those are the previews.
+
+The general lesson: a debugging affordance that changes layout is not free,
+and `container-type` is a layout change wearing a diagnostics hat.
+
+## 4. The page never scrolls sideways. Inner containers may.
+
+These are not in tension — they are the same rule read at two scopes.
+
+A horizontal scrollbar on `<body>` is a navigation failure: it hides content
+with no affordance pointing at it, and on touch it fights vertical scroll. A
+horizontal scrollbar on a code block is a *feature*: code has an
+irreducible minimum width, and wrapping it silently changes what it says.
+
+So the system pushes overflow **inward**, to the element that owns the
+unwrappable content:
+
+| Surface | Treatment | Where |
+| --- | --- | --- |
+| Code blocks | `overflow-x-auto` on the `<pre>` | `code-block.tsx`, `prose.tsx` |
+| Markdown tables | `[&_table]:block [&_table]:overflow-x-auto` | `prose.tsx` |
+| Chart data tables | `w-full overflow-x-auto` | `metric-table.tsx`, `series-table.tsx` |
+| Settings tab rail | `flex overflow-x-auto md:flex-col` below 480 | `settings-template.tsx` |
+| Long content in a flex row | `min-w-0` on the child | 9 primitives/patterns |
+
+`min-w-0` deserves the callout. A flex item's default `min-width` is `auto`,
+which means "at least my content's intrinsic minimum". One long unbroken
+string in a flex row therefore pushes the row wider than its parent, and the
+overflow escapes upward until something clips it — usually the viewport.
+`min-w-0` is how you tell a flex child it is allowed to be narrower than its
+content, so that the `truncate` or `overflow-x-auto` you wrote actually has
+an effect.
+
+### The bug this rule was written from
+
+`Pagination` used to be a single unbreakable flex row:
+
+```tsx
+// A 9-page bar measured 444px inside a 375px viewport
+// and pushed the whole page sideways.
+className="flex flex-row items-center justify-center gap-1"
+```
+
+The fix is one word — `flex-wrap` — and the interesting part is *why it was
+not caught*. The component looked correct at every width anyone tested it at,
+because with fewer pages the row fits. The failure needed both a narrow
+viewport and enough data. That combination is exactly what a fixed-width
+story frame reproduces, which is why several stories here are deliberately
+pinned below their component's floor.
+
+**Honest scope note:** nothing asserts `document.body.scrollWidth <=
+clientWidth` at any viewport. This rule is upheld by review, by the primitives
+above, and by under-sized story frames — not by a test.
+
+---
+
+## Failure mode 1 — a desktop column count handed to a grid
+
+This is the single most common responsive bug in a component system, and the
+`Grid` API is shaped so that you meet it early rather than in production.
+
+`Grid`'s `cols` prop is a **closed numeric union, applied at every width**.
+There is no `mdCols` / `lgCols`, and no responsive-object form:
+
+```ts
+cols: {
+  1: 'grid-cols-1',
+  2: 'grid-cols-2',
+  3: 'grid-cols-3',
+  4: 'grid-cols-4',
+  6: 'grid-cols-6',
+  12: 'grid-cols-12',
+}
+```
+
+So this is wrong, and it is wrong *quietly* — it renders perfectly on the
+laptop it was written on:
+
+```tsx
+// ✗ Four tracks at 375px = 68px per card.
+//   The label and the trend icon spill past the viewport.
+<Grid cols={4} gap="md">{cards}</Grid>
+```
+
+Every pattern in this system that takes a `cols` prop treats it as a
+**desktop** count and maps it to a static mobile-first chain. From
+`patterns/stat-group.tsx`:
+
+```ts
+const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+};
+
+<Grid cols={cols} gap="md" className={STAT_GRID_COLS[cols]}>
+```
+
+Two details in those five lines are worth stealing:
+
+- **The map is written out statically** because Tailwind scans source text.
+  A runtime-built `` `sm:grid-cols-${n}` `` produces a class that exists in
+  the DOM and in no stylesheet — the most confusing possible failure, since
+  devtools shows the class applied and no rule matching it.
+- **`cols` is still passed to `Grid`**, so `data-cols` stays truthful for
+  devtools and E2E even though `className` wins the cascade.
+
+The same map appears, with the same reasoning, in `feature-grid.tsx`
+("at 375px a `cols={3}` board gives each feature card ~98px"),
+`pricing-table.tsx`, `article-list-grid.tsx` and `testimonial.tsx`.
+
+Below is the shape that survives a 375px viewport. Narrow this docs pane and
+the tracks collapse.
+
+<div className="not-prose my-6 rounded-md border border-border p-4">
+  <Grid cols={4} gap="md" className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+    {['One', 'Two', 'Three', 'Four'].map((label) => (
+      <div
+        key={label}
+        className="rounded-md border border-border bg-card p-4 text-card-foreground"
+      >
+        <p className="text-sm text-muted-foreground">Metric</p>
+        <p className="text-2xl font-semibold">{label}</p>
+      </div>
+    ))}
+  </Grid>
+</div>
+
+`GridItem`, unlike `Grid`, *is* responsive — via three discrete closed props
+rather than a nested object:
+
+<div className="not-prose my-6 rounded-md border border-border p-4">
+  <Grid cols={12} gap="md">
+    <GridItem span="full" mdSpan={8} className="rounded-md border border-border bg-card p-4 text-card-foreground">
+      <code className="text-sm">{'span="full" mdSpan={8}'}</code>
+    </GridItem>
+    <GridItem span="full" mdSpan={4} className="rounded-md border border-border bg-card p-4 text-card-foreground">
+      <code className="text-sm">{'span="full" mdSpan={4}'}</code>
+    </GridItem>
+  </Grid>
+</div>
+
+The choice of three flat props over a nested responsive object (MUI's
+`size={{ xs: 12, md: 8 }}`) is deliberate: flat props are greppable, are
+visible in a JSX diff, and let Tailwind see every class it has to emit.
+
+## Failure mode 2 — a fixed inline size with no cap
+
+The other half of the same coin. A component given an intrinsic width larger
+than its container does not shrink; it overflows, and the overflow travels
+upward until something clips it.
+
+```tsx
+// ✗ 420px of content inside a 375px viewport. The page scrolls sideways.
+<div className="w-[420px]">…</div>
+
+// ✓ 420px when there is room, and never wider than the parent.
+<div className="w-[420px] max-w-full">…</div>
+```
+
+Every fixed-width frame in this Storybook is written the second way
+(`w-[320px] max-w-full`), and the ones that are *not* — the deliberately
+under-sized demo frames for `HoverCard`, `PrevNextPost`, `Breadcrumb` and
+`Toc` — wrap themselves in `overflow-x-auto` so the demo, and not the docs
+page, absorbs the overflow.
+
+The same reasoning is why the system has exactly one place that hard-codes a
+detached-panel width. `--container-float: 26.25rem` (420px) sizes the toast
+stack and any edge-docked panel, and it lives in the token file rather than
+as `max-w-[420px]` at five call sites, so those five surfaces cannot drift
+apart.
+
+## Checklist
+
+Before you call a component responsive:
+
+- The base classes describe the narrowest supported viewport.
+- Any `cols`-like prop is mapped to a static mobile-first chain, not passed
+  through unqualified.
+- Every fixed width has a cap (`max-w-full`) or an inner scroller.
+- Every flex child that can hold long content has `min-w-0`.
+- The component has been rendered at its declared `MIN_VIEWPORT` **with a
+  realistic amount of data**, not with the two-item fixture.
+- The declared floor is a number you would defend, not the smallest number
+  that renders without an obvious break.
+
+---
+
+**Sources.** `packages/ui/BREAKPOINT_PHILOSOPHY.md` ·
+`packages/ui/styles/foundation.css` · `packages/ui/styles/preflight.css` ·
+`packages/ui/__tests__/breakpoints-lock.test.ts` ·
+`packages/ui/__tests__/primitives-min-viewport-lock.test.tsx` ·
+`packages/ui/src/primitives/grid.tsx` ·
+`packages/ui/src/patterns/stat-group.tsx` ·
+`packages/ui/src/primitives/pagination.tsx`

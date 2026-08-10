@@ -1,0 +1,329 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Concepts/Color & Theming" />
+
+# Color &amp; theming
+
+Two ideas carry this whole section:
+
+1. **A three-stage cascade** — brand literals → semantic aliases → utility
+   classes — so that no React component ever names a colour.
+2. **Two orthogonal axes** — *scheme* (light/dark) and *theme* (brand) — so
+   that "dark mode" and "a different brand" are independent choices rather
+   than a combinatorial mess.
+
+Everything else on this page is a consequence, including the measured
+contrast contract at the bottom.
+
+---
+
+## The cascade
+
+```
+  layer 1   --interlace-primary: #7d350c        ← the only hex literals
+     │
+     │      interlace-theme.css, @layer interlace.brand
+     ▼
+  layer 2   --primary: var(--interlace-primary) ← semantic alias
+     │
+     │      interlace-theme.css, @layer interlace.semantics
+     ▼
+  layer 3   @theme inline {
+     │        --color-primary: var(--primary);
+     │      }                                   ← Tailwind utility surface
+     ▼
+  usage     className="bg-primary text-primary-foreground"
+```
+
+A component writes `bg-primary`. It never writes `#7d350c`, and it never
+writes `var(--interlace-primary)` either — reaching past the semantic layer
+would couple the component to the brand, which is exactly the coupling the
+cascade exists to prevent.
+
+Flip the **Theme** and light/dark toolbar controls above and watch the strip
+below repaint. Not one class in it changes — only which brand block is
+winning on `<html>`.
+
+<div className="my-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+  {[
+    ['bg-background text-foreground border border-border', 'background'],
+    ['bg-card text-card-foreground border border-border', 'card'],
+    ['bg-muted text-muted-foreground', 'muted'],
+    ['bg-primary text-primary-foreground', 'primary'],
+    ['bg-secondary text-secondary-foreground', 'secondary'],
+    ['bg-destructive text-destructive-foreground', 'destructive'],
+  ].map(([cls, name]) => (
+    <div key={name} className={`rounded-md p-4 ${cls}`}>
+      <p className="text-sm font-medium">{name}</p>
+      <p className="text-sm">Body text at this pair.</p>
+    </div>
+  ))}
+</div>
+
+The full stylesheet layer order, from `styles/index.css`:
+
+```css
+@layer interlace.primitives, interlace.foundation, interlace.preflight,
+       interlace.bridge, interlace.brand, interlace.semantics;
+```
+
+| Layer | File | Owns |
+| --- | --- | --- |
+| `interlace.primitives` | `tokens.css` | keyframes, animation utilities |
+| `interlace.foundation` | `foundation.css` | type / spacing / radius / container / breakpoint scales |
+| `interlace.preflight` | `preflight.css` | body paint, `::selection`, the focus ring, scrollbar tint |
+| `interlace.bridge` | `theme.css` | the fumadocs ↔ shadcn seam |
+| `interlace.brand` | `interlace-theme.css` | the `--interlace-*` hex literals. **The supported override surface** |
+| `interlace.semantics` | `interlace-theme.css` | `--background`, `--primary`, `--ring`, … bound to the brand layer |
+
+### The substitution rule that makes this work
+
+A custom property whose value is a `var()` is substituted **at computed-value
+time, on the element that declares it.** That single sentence explains the
+shape of the semantic block:
+
+```css
+:root,
+.dark,
+[data-scheme='dark'],
+[data-theme] {
+  --primary: var(--interlace-primary);
+  --background: var(--interlace-background);
+  --ring: var(--interlace-ring);
+  /* … */
+}
+```
+
+If the aliases were declared only on `:root`, then setting
+`data-theme="harbor"` on `<html>` would change `--interlace-primary` but
+`--primary` would already have been resolved against the `:root` value. The
+selector list is therefore **the complete set of brand-override selectors** —
+`[data-theme]` is attribute-*presence*, not a value match, so it covers every
+theme file that will ever ship without needing to be edited when one is
+added.
+
+This is the kind of detail that is invisible until it bites: your new theme
+"does nothing", and the reason is not your file — it is where the alias was
+declared.
+
+---
+
+## Two orthogonal axes
+
+| Selector | Means |
+| --- | --- |
+| `:root` | interlace · light — the default |
+| `.dark`, `[data-scheme='dark']` | interlace · dark |
+| `[data-theme='X']` | theme X · light |
+| `[data-theme='X'].dark` | theme X · dark |
+
+Scheme is keyed on the `.dark` class, matching the shadcn / `next-themes`
+convention, so the system drops into an existing app without a migration.
+Theme is keyed on `data-theme`.
+
+`[data-theme='dark']` deliberately no longer means "the dark scheme". It now
+reads as "the theme named `dark`", which is not a registered theme, so it
+resolves to interlace · light. That was a breaking change, made on purpose:
+one attribute cannot carry two orthogonal axes without eventually producing
+a combination nobody can name.
+
+### Specificity is doing real work here
+
+`[data-theme='harbor']` and `.dark` are both specificity `(0,1,0)`. On
+`<html data-theme="harbor" class="dark">` the tie is broken by **source
+order** — the theme file is imported after the default theme — and only then
+does `[data-theme='harbor'].dark` at `(0,2,0)` sit cleanly on top.
+
+Which is why `styles/index.css` says, in a comment on the import list, that
+the order is load-bearing. If you fork this pattern, keep the default theme's
+dark block *before* any additional theme's light block, or the stack is
+incoherent in exactly one of the four combinations — the one nobody tests.
+
+### The default theme writes no attribute
+
+```ts
+export function applyTheme(theme: ThemeName, scheme: Scheme): void {
+  const root = document.documentElement;
+  if (theme === DEFAULT_THEME) root.removeAttribute('data-theme');
+  else root.setAttribute('data-theme', theme);
+  root.classList.toggle('dark', scheme === 'dark');
+  root.style.colorScheme = scheme;
+}
+```
+
+`:root` *already is* the default theme. Writing `data-theme="interlace"`
+would add a selector that has to be kept in sync with a stylesheet rule that
+does not exist. There is a test named after this exact rule:
+`'writes NO data-theme for the default theme — :root already is it'`.
+
+Two more details in those five lines:
+
+- **`style.colorScheme` is not decoration.** It is what makes the browser
+  paint form controls, scrollbars and the pre-CSS canvas in the matching
+  scheme. Without it a dark page keeps a white scrollbar and white native
+  select popups.
+- **The stored preference is the preference, not the resolution.** The hook
+  keeps `'light' | 'dark' | 'system'` and stores `system` as the *absence* of
+  the key. Storing the resolved value instead turns "follow my system" into
+  "dark, forever, because it was dark when I clicked".
+
+A bootstrap script applies both axes before first paint, from the same
+storage keys the hook writes, so there is no flash — and there is a test
+asserting the script and the hook agree (`'agrees with the bootstrap script —
+no repaint between them'`).
+
+---
+
+## Forking the brand
+
+The entire override surface is `@layer interlace.brand`: the `--interlace-*`
+literals, in both schemes. A theme file contains hex values and nothing
+else — no semantic alias, no `@theme` block, no component CSS.
+
+```css
+@layer interlace.brand {
+  [data-theme='harbor'] {
+    --interlace-primary: #0f4c81;
+    --interlace-background: #f7f9fb;
+    /* …the other 52… */
+  }
+
+  [data-theme='harbor'].dark,
+  [data-theme='harbor'][data-scheme='dark'] {
+    --interlace-primary: #8dc2f0;
+    --interlace-background: #06111f;
+    /* … */
+  }
+}
+```
+
+**54 tokens, twice.** The manifest is in `src/lib/theme-tokens.ts` and it is
+*derived* from the `:root` block of the default theme, in source order — not
+hand-typed — so a token added to the brand layer becomes a token every theme
+is required to define. `theme-contract-lock.test.ts` asserts both directions:
+every theme defines every token in the manifest, and **defines nothing
+outside it**. A theme that quietly adds a 55th token is a theme that has
+started to fork the system.
+
+Registering a theme is three edits: the file, one `@import` line, and a row
+in the `THEMES` registry. The contract lock reads all three.
+
+What you should not override: `interlace.preflight` (the focus ring, the body
+paint), `interlace.bridge` (the fumadocs seam), `interlace.foundation` (the
+scales). Those are the parts that are the same across brands by design.
+
+---
+
+## The measured contrast contract
+
+The floors, from `theme-contract-lock.test.ts`:
+
+```ts
+const AA_TEXT = 4.5;      // WCAG 2.2 SC 1.4.3
+const AA_NON_TEXT = 3;    // SC 1.4.11 (non-text) + SC 2.4.13 (focus)
+```
+
+The test is not a spot check. For **each of the four combinations** — two
+themes × two schemes — it parses the stylesheet, resolves `var()` aliases
+(and refuses to hang on a cycle), composites alpha, and asserts:
+
+- every body-text pair on every surface it paints clears 4.5:1 — over
+  20 pairs per combination;
+- the six status tones (`primary`, `destructive`, `success`, `warning`,
+  `info`, `caution`) clear 4.5:1 in three forms each: as a filled chip, as
+  text on the page, and as text inside a card;
+- the focus ring and control borders clear 3:1 against **both** the page
+  background and a card surface;
+- the chart axis colour clears 3:1 against both;
+- `bg-primary/10` + `text-primary` — the stock shadcn tinted-badge pattern —
+  clears 4.5:1 **after compositing**.
+
+The last one is the binding constraint on the entire palette, and it is worth
+walking through because it is not intuitive.
+
+### Why the brand orange is that dark
+
+`#7d350c` measures **8.80:1 on white** and **7.46:1 on its own 10% tint**.
+The tint is the constraint, not the page.
+
+A lighter, friendlier orange — `#8a3a10` — measures over 8:1 on white and
+would sail through a naive check. Composited onto white at 10% alpha it
+produces `#f3ebe7`, and the same orange on *that* measures **6.63:1**. It
+failed. So the palette is pinned by a surface that only exists when two
+utilities are combined.
+
+Dark mode inverts the pressure: the cover orange `#f4794a` is only 7.24:1 on
+near-black, too dark to carry the pair, so dark uses the lighter
+`#fbb99a` at **11.79:1**.
+
+`composite-contrast-lock.test.ts` exists specifically for these composites.
+It parses variant prefixes and alpha off real class chains found in source,
+picks the state-matched background over the unconditional one, and scores the
+result. Storybook's axe gate catches this class of failure only for the pairs
+some story happens to render; the lock catches it for every pair the source
+contains.
+
+### A published table, per theme
+
+Every theme file carries its own measured table. Harbor's, verbatim and
+unrounded:
+
+```
+                                       light      dark
+  foreground   on background         17.74:1   16.19:1   (AAA)
+  card-fg      on card               18.72:1   14.69:1   (AAA)
+  muted-fg     on background          7.82:1    9.52:1   (AAA)
+  muted-fg     on muted               7.34:1    8.64:1   (AAA)
+  primary-fg   on primary             8.86:1   10.03:1   (AAA)
+  primary      on background          8.39:1   10.03:1   (AAA)
+  primary      on primary/10 tint     7.15:1    8.42:1   (AAA)
+  destructive  on background          7.60:1   10.03:1   (AAA)
+  ─ non-text (SC 1.4.11 / 2.4.13, floor 3:1) ─
+  ring         on background          8.39:1   10.03:1
+  input        on background          3.43:1    4.25:1
+  viz-axis     on background          3.57:1    4.84:1
+```
+
+Publishing the number rather than a badge is the point. "AA compliant" is
+unfalsifiable; `3.43:1` tells a reader with a stricter internal bar exactly
+where they stand, and tells the next maintainer how much headroom a token
+change has.
+
+The bar in Storybook is stricter still: the axe gate enforces WCAG **AAA**
+`color-contrast-enhanced` (7:1) on every story, with an empty carve-out list.
+
+### Two tokens that are deliberately below the floor
+
+`--interlace-border` is `1.23:1` on white. That is not an oversight — it is a
+decorative separator, and SC 1.4.11 exempts decoration. What it is *not* is a
+control border. When the two were the same token, form fields were effectively
+borderless; see [Accessibility](?path=/docs/concepts-accessibility--docs) for
+how that shipped past a green axe run and what it cost.
+
+The fix was to fork `--interlace-input` off `--interlace-border` at a warm
+mid-grey: `#8f857a` (3.62:1) light, `#6b635a` (3.35:1) dark.
+
+---
+
+## What to take from this even if you never install anything
+
+- **Put the brand literals in exactly one layer, and make every other layer
+  forbidden to name a colour.** Then "re-brand" is a file, not a project.
+- **Declare the semantic aliases on every selector that can override the
+  brand layer**, because `var()` resolves on the declaring element.
+- **Keep scheme and theme on separate attributes.** The moment one attribute
+  carries both, you have `data-theme="dark-harbor"` and no way to ask "is it
+  dark?".
+- **Test the composited colour, not the token.** `bg-primary/10` is a colour
+  that appears nowhere in your stylesheet and on every one of your pages.
+- **Publish the ratios.** A badge is a claim; a table is evidence.
+
+---
+
+**Sources.** `packages/ui/styles/index.css` ·
+`packages/ui/styles/interlace-theme.css` ·
+`packages/ui/styles/themes/harbor.css` ·
+`packages/ui/src/lib/{use-theme,theme-script,theme-tokens}.ts` ·
+`packages/ui/__tests__/theme-contract-lock.test.ts` ·
+`packages/ui/__tests__/composite-contrast-lock.test.ts` ·
+`packages/ui/__tests__/use-theme.test.tsx`

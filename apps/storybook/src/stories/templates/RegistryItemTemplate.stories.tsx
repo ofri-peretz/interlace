@@ -18,6 +18,45 @@ const meta: Meta<typeof RegistryItemTemplate> = {
       },
     },
   },
+  argTypes: {
+    name: {
+      control: 'text',
+      description: 'Component name — rendered as the page h1 and used in the install command.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    description: {
+      control: 'text',
+      description: 'One-line summary under the name. Say what the component is for, not what it is called.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    install: {
+      control: false,
+      description:
+        'Install command, normally a `<CodeBlock language="bash">`. Passed as a node so the template takes no hard dependency on CodeBlock.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    anatomy: {
+      control: false,
+      description: 'Anatomy diagram plus the API surface — slots, props, R-rule mapping.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    variants: {
+      control: false,
+      description: 'Variants matrix — the CVA cells, shown in both light and dark.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    related: {
+      control: false,
+      description: '"Often used with…" grid of sibling components.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    footer: {
+      control: false,
+      description:
+        'Trailing content — back-to-index CTA, "report an issue" link. Renders after `related`, in its own SectionBoundary.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+  },
 };
 
 export default meta;

@@ -88,7 +88,15 @@ function StatsTemplate({
                 name="stats-hero"
                 skeletonVariant="stat-card"
               >
-                <StatGroup stats={hero} cols={hero.length >= 4 ? 4 : (hero.length as 2 | 3)} />
+                {/* Clamped into the Grid's actual variant range. The `as 2 | 3`
+                    cast this replaces was a lie the compiler accepted: a
+                    `hero` of 0 or 1 produced `cols={0}` / `cols={1}`, neither
+                    of which is a cva variant, so Grid emitted NO grid-cols-*
+                    class at all and the KPI row silently lost its track. */}
+                <StatGroup
+                  stats={hero}
+                  cols={hero.length >= 4 ? 4 : hero.length === 3 ? 3 : 2}
+                />
               </SectionBoundary>
             ) : null}
 

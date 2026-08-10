@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, waitFor } from 'storybook/test';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import { SkipLink, MIN_VIEWPORT } from '@interlace/ui/skip-link';
 import { withDark, withRtl } from '@/decorators';
 
@@ -12,18 +12,57 @@ const meta = {
     docs: {
       description: {
         component:
-          'Keyboard-first "skip to main content" link (WCAG 2.4.1 Bypass Blocks). Visually hidden by default; pops into the top-left corner when focused via Tab. Pair with a `<main id="main" tabIndex={-1}>` so focus moves into the content region.',
+          'The first tab stop on a page: a link that jumps a keyboard user past the header and nav landmarks straight into the content (WCAG 2.4.1 Bypass Blocks). It is `sr-only` until focused, then pops into the top-left corner, so mouse users never see it. Render it once, as the very first element in the document, and pair it with a `<main id="main" tabIndex={-1}>` — without the negative tabindex the browser scrolls but leaves focus stranded on the link.',
       },
     },
+  },
+  argTypes: {
+    href: {
+      control: 'text',
+      description:
+        'Hash target for the jump. Must match the id of a focusable region — `tabIndex={-1}` on `<main>`.',
+      table: {
+        category: 'Behaviour',
+        type: { summary: 'string' },
+        defaultValue: { summary: "'#main'" },
+      },
+    },
+    children: {
+      control: 'text',
+      description:
+        'Link text. Say where the user lands, not what the widget is — "Skip to main content", not "Skip link".',
+      table: {
+        category: 'Slots',
+        type: { summary: 'ReactNode' },
+        defaultValue: { summary: "'Skip to main content'" },
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged after the `sr-only` + `focus-visible:not-sr-only` stack. Override the `focus-visible:left-4 top-4` pair if the corner is already occupied.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+    onClick: {
+      action: 'click',
+      description:
+        'Native anchor click. Wire it only to move focus yourself in a SPA router that swallows hash navigation.',
+      table: { category: 'Events', type: { summary: '(event) => void' } },
+    },
+  },
+  args: {
+    href: '#main',
+    children: 'Skip to main content',
+    onClick: fn(),
   },
 } satisfies Meta<typeof SkipLink>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const PageMock = ({ skipChildren }: { skipChildren?: React.ReactNode }) => (
+const PageMock = (props: React.ComponentProps<typeof SkipLink>) => (
   <div className="min-h-[60vh] bg-background text-foreground">
-    <SkipLink>{skipChildren ?? 'Skip to main content'}</SkipLink>
+    <SkipLink {...props} />
     <header className="border-b border-border bg-card px-6 py-4 text-sm">
       Press <kbd className="rounded border border-border bg-background px-1.5 py-0.5 font-mono text-xs">Tab</kbd> to focus the SkipLink — it will appear top-left.
     </header>
@@ -41,11 +80,12 @@ const PageMock = ({ skipChildren }: { skipChildren?: React.ReactNode }) => (
 );
 
 export const Default: Story = {
-  render: () => <PageMock />,
+  render: (args) => <PageMock {...args} />,
 };
 
 export const CustomLabel: Story = {
-  render: () => <PageMock skipChildren="Jump to article body" />,
+  args: { children: 'Jump to article body' },
+  render: (args) => <PageMock {...args} />,
 };
 
 /**
@@ -54,10 +94,18 @@ export const CustomLabel: Story = {
  * activating it moves focus into `<main>`.
  */
 export const KeyboardFlow: Story = {
-  render: () => <PageMock />,
+  render: (args) => <PageMock {...args} />,
   play: async ({ canvasElement, step }) => {
     const link = canvasElement.querySelector('a[href="#main"]') as HTMLElement;
     const main = canvasElement.querySelector('#main') as HTMLElement;
+
+    // Read the resting clip BEFORE anything takes focus. `sr-only` hides with
+    // `clip-path: inset(50%)`, which no bounding box reports.
+    const restingClip = getComputedStyle(link).clipPath;
+
+    await step('At rest the link is clipped out of sight', async () => {
+      expect(restingClip).not.toBe('none');
+    });
 
     await step('The skip link is the first tab stop', async () => {
       expect(link).toBeTruthy();
@@ -69,6 +117,12 @@ export const KeyboardFlow: Story = {
       const box = link.getBoundingClientRect();
       expect(box.width).toBeGreaterThan(1);
       expect(box.height).toBeGreaterThan(1);
+      // The box alone is NOT the contract. A link left `sr-only` on focus
+      // still measures ~32px wide off its padding while being clipped to
+      // nothing — `getBoundingClientRect` cannot see `clip-path`. Dropping
+      // `focus-visible:not-sr-only` used to pass this story. This is the
+      // assertion that proves a sighted keyboard user can actually see it.
+      expect(getComputedStyle(link).clipPath).toBe('none');
     });
 
     await step('Its target exists and can receive focus', async () => {
@@ -95,13 +149,13 @@ export const RTL: Story = {
 };
 
 export const BelowMinViewport: Story = {
-  render: () => (
+  render: (args) => (
     <div
       data-interlace-dev
       style={{ width: MIN_VIEWPORT - 1 }}
       className="border-2 border-dashed border-muted"
     >
-      <PageMock />
+      <PageMock {...args} />
     </div>
   ),
 };

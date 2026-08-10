@@ -4,11 +4,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Design philosophies
 
-The Interlace design system ships **25 look-and-feel contracts**,
-grouped into 8 clusters. Each lives at the monorepo root
+The Interlace design system ships **28 look-and-feel contracts**,
+grouped into 8 clusters. Each lives in `docs/philosophies/`
 and is the single source of truth; this section projects them so they're
-discoverable from inside Storybook alongside the live components they
-govern.
+discoverable from inside Storybook alongside the live components they govern.
 
 If you're shipping a component change and can't point to the principle
 behind it, reconsider.
@@ -19,6 +18,7 @@ The visual contract. Every primitive consumes these tokens and rhythms.
 
 - **[UX Philosophy](?path=/docs/philosophy-foundations-ux--docs)** — This is the foundational document for every UI/UX decision in this repo — the docs site, the @interlace/ui package, OG images, link metadata, the plugin READ…
 - **[Layout & Responsiveness Philosophy](?path=/docs/philosophy-foundations-layout--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md, expanding Principle #1 ("Adoption is friction subtraction"), #6 ("Ease of use is performance"), #8 ("Open the s…
+- **[Interlace DS — Breakpoint Philosophy](?path=/docs/philosophy-foundations-breakpoint--docs)** — The Interlace DS ships a **4-tier breakpoint ladder** codified in packages/ui/styles/foundation.css (Tailwind v4 @theme \{ --breakpoint-* \}).
 - **[Typography & Reading Philosophy](?path=/docs/philosophy-foundations-typography--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md.
 - **[Color & Theming Philosophy](?path=/docs/philosophy-foundations-color--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md, paired with TYPOGRAPHY_PHILOSOPHY.md — together they define the page's visual contract.
 - **[Motion & Animation Philosophy](?path=/docs/philosophy-foundations-motion--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md, expanding Principle #6 ("Ease of use is performance") and Principle #1 ("Adoption is friction subtraction").
@@ -41,6 +41,7 @@ How information is presented inside the surface.
 - **[Search Philosophy](?path=/docs/philosophy-content-patterns-search--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md, expanding Principle #1 (friction subtraction) and Principle #5 (discoverability beats memory).
 - **[Pagination Philosophy](?path=/docs/philosophy-content-patterns-pagination--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md.
 - **[Data Table Philosophy](?path=/docs/philosophy-content-patterns-data-table--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md, expanding principle #1 (Adoption is friction subtraction), #5 (Discoverability beats memory), and #6 (Ease of u…
+- **[Visualization philosophy](?path=/docs/philosophy-content-patterns-visualization--docs)** — How Interlace draws data.
 - **[Form Philosophy](?path=/docs/philosophy-content-patterns-form--docs)** — A focused sub-philosophy of UX_PHILOSOPHY.md, expanding principles #1 (Adoption is friction subtraction) and #6 (Ease of use is performance) into the data-en…
 
 ## Navigation & Routing
@@ -74,6 +75,7 @@ How a deployed surface measures itself — pageviews, funnels, identity, cross-p
 
 ## Documentation
 
-How the design system explains itself to consumers.
+How the design system explains itself, and how it changes under consumers.
 
-- **[Documentation Philosophy](?path=/docs/philosophy-documentation-docs--docs)** — apps/docs is the public docs site for our 11-plugin, 272-rule ESLint monorepo (built on Fumadocs / Next.js 16 / React 19).
+- **[Documentation Philosophy](?path=/docs/philosophy-documentation-docs--docs)** — A documentation surface is a product with two audiences and no marketing budget.
+- **[Versioning philosophy](?path=/docs/philosophy-documentation-versioning--docs)** — How Interlace versions a design system that people **copy** rather than install.

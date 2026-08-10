@@ -60,12 +60,27 @@ import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
-/** Short, locale-friendly date for the visible byline (e.g. `Mar 5, 2026`). */
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-US', {
+/**
+ * Short, locale-friendly date for the visible byline (e.g. `Mar 5, 2026`).
+ *
+ * `timeZone: 'UTC'` is load-bearing, not a default. A date-only ISO string —
+ * which is exactly what `publishedDateIso` documents — parses as UTC midnight,
+ * and `toLocaleDateString` then renders it in the *reader's* zone. Without the
+ * pin, every reader west of UTC (all of the Americas) sees the previous day on
+ * every byline in the DS. A publication date is a calendar fact, not an
+ * instant, so it must not be re-projected into a local zone at all.
+ *
+ * Returns `null` for anything unparseable, so a byline rendered before its date
+ * has arrived degrades instead of printing the literal string "Invalid Date".
+ */
+function formatDate(iso: string): string | null {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
+    timeZone: 'UTC',
   });
 }
 
@@ -157,12 +172,17 @@ export function AuthorByline({
           data-slot="author-byline-meta"
           className="text-muted-foreground flex flex-wrap items-center gap-2 text-ui-sm"
         >
-          <time
-            data-slot="author-byline-published-date"
-            dateTime={publishedDateIso}
-          >
-            {formatDate(publishedDateIso ?? '')}
-          </time>
+          {/* No date, or an unparseable one, renders no <time> at all —
+              `<time dateTime="">` is invalid markup and "Invalid Date" is
+              worse than an absent byline date. */}
+          {publishedDateIso && formatDate(publishedDateIso) ? (
+            <time
+              data-slot="author-byline-published-date"
+              dateTime={publishedDateIso}
+            >
+              {formatDate(publishedDateIso)}
+            </time>
+          ) : null}
           {readingTimeMinutes !== undefined ? (
             <>
               <span aria-hidden className="opacity-60">

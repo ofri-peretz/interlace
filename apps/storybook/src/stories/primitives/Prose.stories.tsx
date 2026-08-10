@@ -10,13 +10,45 @@ const meta = {
     docs: {
       description: {
         component:
-          'Typographic article-body wrapper. Renders `<article>` (override via `as`) and styles descendant `h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img` through a single DS-token cascade. Measure bound to `--container-prose` (65ch); `variant="long"` switches to the long-form reading contract (17px / 1.7). Server component; MIN_VIEWPORT = 320px.',
+          'The landing surface for author-controlled markup — MDX pages, rendered Markdown, a CMS body. One descendant cascade maps every `h1`–`h6`, `p`, `a`, list, `blockquote`, `code`/`pre`, `table` and `img` to DS tokens, so content nobody added classes to still reads like a published article, with the measure bounded to 65ch. Use it only around body content: applying it to a page shell would restyle the UI chrome inside it too.',
       },
     },
   },
   argTypes: {
-    variant: { control: 'select', options: ['default', 'long'] },
-    as: { control: 'select', options: ['article', 'div', 'main', 'section'] },
+    variant: {
+      control: 'inline-radio',
+      options: ['default', 'long'],
+      description:
+        'Reading contract. `default` is the 16px / 1.6 body used for docs and changelogs; `long` moves to 17px / 1.7, which is what a multi-screen article wants.',
+      table: {
+        type: { summary: "'default' | 'long'" },
+        defaultValue: { summary: 'default' },
+        category: 'Appearance',
+      },
+    },
+    as: {
+      control: 'select',
+      options: ['article', 'div', 'main', 'section'],
+      description:
+        'Rendered element. `article` is the default; use `main` when this is the page\'s primary landmark, `section` inside a larger landmark, and `div` when the surrounding container already owns the landmark — two landmarks for one body is a screen-reader smell.',
+      table: {
+        type: { summary: "'article' | 'div' | 'main' | 'section'" },
+        defaultValue: { summary: 'article' },
+        category: 'Structure',
+      },
+    },
+    children: {
+      control: false,
+      description:
+        'The body markup. Plain elements, not DS components — the cascade targets tag names, so `<h2>` is styled but `<Heading>` is not.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged after the cascade. The one override worth knowing: `max-w-none` releases the 65ch measure when the wrapper sits inside a column that already bounds it.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
   },
 } satisfies Meta<typeof Prose>;
 
@@ -151,6 +183,7 @@ export default function Article() {
 );
 
 export const Default: Story = {
+  args: { variant: 'default', as: 'article' },
   render: (args) => (
     <Prose {...args}>
       <SampleArticle />

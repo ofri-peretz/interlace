@@ -6,8 +6,10 @@
   "scripts": {
     "prebuild": "node scripts/build-registry.mjs",
     "build": "next build",
-    "build:check": "node scripts/build-registry.mjs --check && node scripts/validate-registry.mjs",
+    "build:check": "node scripts/build-registry.mjs --check && node scripts/validate-registry.mjs && node scripts/build-changelog.mjs --check",
     "registry:validate": "node scripts/validate-registry.mjs",
+    "changelog:build": "node scripts/build-changelog.mjs",
+    "changelog:check": "node scripts/build-changelog.mjs --check",
     "registry:e2e": "node scripts/e2e-install.mjs",
     "schema:refresh": "curl -sfL https://ui.shadcn.com/schema/registry-item.json -o schema/registry-item.json && curl -sfL https://ui.shadcn.com/schema/registry.json -o schema/registry.json",
     "dev": "next dev -p 4178",
@@ -18,6 +20,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@base-ui/react": "^1.4.1",
     "@interlace/ui": "*",
     "next": "^16.2.4",
     "posthog-js": "^1.207.0",

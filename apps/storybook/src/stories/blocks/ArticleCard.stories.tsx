@@ -9,7 +9,124 @@ import { articleFixtures } from '@/fixtures/articles';
 const meta: Meta<typeof ArticleCard> = {
   title: 'Blocks/ArticleCard',
   component: ArticleCard,
-  parameters: { layout: 'centered' },
+  // NOT `centered`: an article card is a width-filling block. Centered sizes the
+  // story root to content, so `w-full` inside resolves against an indefinite
+  // container and the 380px card frame outgrows a 375px phone viewport.
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component:
+          'Grid tile for one article link — cover, byline, headline, excerpt, tags and an ' +
+          'engagement meta row, with the whole tile acting as a single anchor. Reach for it ' +
+          'in "from the blog" grids, external-content lists and feed aggregations. For the ' +
+          'full-bleed hero tile that usually sits above such a grid, render ' +
+          '`FeaturedArticleCard` instead: the two are separate components because the ' +
+          'rendered tree differs entirely, which is why `variant` is deprecated.',
+      },
+    },
+  },
+  argTypes: {
+    title: {
+      control: 'text',
+      description:
+        'Article headline. Clamped to two lines, and reused as the gradient fallback when there is no cover. Optional only while `loading`.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    description: {
+      control: 'text',
+      description: 'Short excerpt under the headline. Clamped to two lines; omit it for a denser tile.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    href: {
+      control: 'text',
+      description: 'Destination URL. The entire card becomes the link to it.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    sourceLabel: {
+      control: 'text',
+      description:
+        'Small uppercase attribution chip floated over the cover (e.g. "Dev.to"). Omit for first-party content.',
+      table: { category: 'Content', type: { summary: 'string' } },
+    },
+    imageUrl: {
+      control: 'text',
+      description:
+        'Cover image URL. When omitted the card paints a brand gradient with the title centred on it, so a missing cover is still a designed state.',
+      table: { category: 'Media', type: { summary: 'string' } },
+    },
+    tags: {
+      control: 'object',
+      description:
+        'Topic tags. The first three render as filled badges; anything beyond collapses into a single "+N" overflow chip.',
+      table: { category: 'Data', type: { summary: 'string[]' } },
+    },
+    author: {
+      control: 'object',
+      description: 'Author block — `name` is shown next to an optional round `imageUrl` avatar.',
+      table: {
+        category: 'Data',
+        type: { summary: '{ name: string; imageUrl?: string }' },
+      },
+    },
+    publishedAt: {
+      control: 'text',
+      description:
+        'Publication date — any value the `Date` constructor accepts. Rendered short-form (`Mar 5, 2026`).',
+      table: { category: 'Data', type: { summary: 'string | number | Date' } },
+    },
+    meta: {
+      control: 'object',
+      description:
+        'Footer engagement chips. Every field is optional and an absent field renders no chip; `views` abbreviates at ≥ 1000 (`1240` → `1.2k`).',
+      table: {
+        category: 'Data',
+        type: {
+          summary:
+            '{ reactions?: number; comments?: number; readingTimeMinutes?: number; views?: number }',
+        },
+      },
+    },
+    external: {
+      control: 'boolean',
+      description: 'Open the link in a new tab (`target="_blank"` + `rel="noopener noreferrer"`).',
+      table: { category: 'Behavior', type: { summary: 'boolean' }, defaultValue: { summary: 'true' } },
+    },
+    priority: {
+      control: 'boolean',
+      description:
+        'Declare the cover as the route LCP element — eager-loads it with `fetchpriority="high"`. Set it on the single card above the fold, never on a whole grid.',
+      table: { category: 'Behavior', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Swap the card for a shape-matched skeleton (cover + title lines + meta silhouette) so a grid does not shift when data arrives.',
+      table: { category: 'State', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    variant: {
+      control: 'select',
+      options: [undefined, 'stack', 'overlay'],
+      description:
+        'DEPRECATED. `overlay` still forwards to `FeaturedArticleCard` for one minor and warns in dev; pass no variant for the stacked tile.',
+      table: {
+        category: 'Deprecated',
+        type: { summary: "'stack' | 'overlay'" },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
+    'data-testid': {
+      control: 'text',
+      description:
+        'Required root selector hook. Every sub-part derives from it (`{value}-title`, `{value}-tags`, `{value}-meta-views`, …) — there is no runtime default, so an omission surfaces at the call site.',
+      table: { category: 'Testing', type: { summary: 'string' } },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the outer anchor — this is where a grid sets the tile width.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+  },
 };
 
 export default meta;
@@ -19,7 +136,7 @@ export const Default: Story = {
   args: articleFixtures[0],
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -30,7 +147,7 @@ export const WithoutImage: Story = {
   args: articleFixtures[1],
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -44,7 +161,7 @@ export const ManyTags: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -57,7 +174,7 @@ export const Dark: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   decorators: [
     (Story) => (
-      <div className="w-[380px] dark">
+      <div className="w-[380px] max-w-full dark">
         <Story />
       </div>
     ),
@@ -87,7 +204,7 @@ export const FeaturedPriority: Story = {
   args: { ...articleFixtures[0], priority: true },
   decorators: [
     (Story) => (
-      <div className="w-[760px]">
+      <div className="w-[760px] max-w-full">
         <Story />
       </div>
     ),
@@ -108,7 +225,7 @@ export const FeaturedLazy: Story = {
   args: { ...articleFixtures[0] },
   decorators: [
     (Story) => (
-      <div className="w-[760px]">
+      <div className="w-[760px] max-w-full">
         <Story />
       </div>
     ),
@@ -128,7 +245,7 @@ export const StackPriority: Story = {
   args: { ...articleFixtures[0], priority: true },
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -172,7 +289,7 @@ const lockArgs = {
 
 export const StackContract: Story = {
   args: { ...lockArgs },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[360px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -216,7 +333,7 @@ export const StackTagOverflow: Story = {
     ...lockArgs,
     tags: ['accessibility', 'tailwind', 'fumadocs', 'mdx', 'next', 'react'],
   },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[360px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     await step('First 3 tags shown verbatim', async () => {
@@ -241,7 +358,7 @@ export const StackMinimal: Story = {
     href: 'https://example.com',
     'data-testid': 'lock-card',
   },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[360px] max-w-full"><Story /></div>],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByRole('link')).toBeInTheDocument();
@@ -257,7 +374,7 @@ export const StackMinimal: Story = {
 export const FeaturedContract: Story = {
   render: (args) => <FeaturedArticleCard {...args} />,
   args: { ...lockArgs },
-  decorators: [(Story) => <div style={{ width: 760 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[760px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -286,7 +403,7 @@ export const FeaturedContract: Story = {
 export const FeaturedWithoutCover: Story = {
   render: (args) => <FeaturedArticleCard {...args} />,
   args: { ...lockArgs, imageUrl: undefined },
-  decorators: [(Story) => <div style={{ width: 760 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[760px] max-w-full"><Story /></div>],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByTestId('lock-card-featured-chip')).toBeInTheDocument();
@@ -344,7 +461,7 @@ export const Parity: Story = {
  */
 export const DeprecatedVariantStillWorks: Story = {
   args: { ...lockArgs, variant: 'overlay', 'data-testid': 'deprecated-card' },
-  decorators: [(Story) => <div style={{ width: 760 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[760px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 

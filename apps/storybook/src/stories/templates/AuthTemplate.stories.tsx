@@ -9,7 +9,29 @@ const meta: Meta<typeof AuthTemplate> = {
   title: 'Templates/AuthTemplate',
   component: AuthTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Full-page shell for the four credential flows — sign in, sign up, password reset, verify email. Centred narrow column: brand mark, the consumer's own form, then a helper link. Reach for it when the auth form IS the page; use `Blocks/SignInForm` on its own when the form sits inside a wider layout.",
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['signin', 'signup', 'reset', 'verify'],
+      description:
+        'Which credential flow. Only changes the default title/description copy — the form itself is always consumer-supplied.',
+      table: { category: 'Appearance', type: { summary: "'signin' | 'signup' | 'reset' | 'verify'" }, defaultValue: { summary: 'signin' } },
+    },
+    title: { control: 'text', description: 'Overrides the variant default headline.', table: { category: 'Content' } },
+    description: { control: 'text', description: 'Supporting copy under the headline.', table: { category: 'Content' } },
+    logo: { control: false, description: 'Brand mark above the form.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    form: { control: false, description: 'Required. The credential form — the template owns layout only.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    footer: { control: false, description: 'Cross-flow link ("Already have an account?").', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+  },
 };
 
 export default meta;
@@ -29,15 +51,20 @@ const sampleForm = (
   <form className="flex flex-col gap-md">
     <Field>
       <FieldLabel>Email</FieldLabel>
-      <FieldControl>
-        <Input type="email" placeholder="you@interlace.tools" />
-      </FieldControl>
+      {/* `render=`, not children: FieldControl clones the element it is
+          given. Passing `<Input>` as a child makes Base UI render an
+          `<input>` WITH children, which React rejects — that threw inside
+          SectionBoundary and painted the whole auth section as the error
+          fallback. */}
+      <FieldControl
+        render={<Input type="email" autoComplete="email" placeholder="you@interlace.tools" />}
+      />
     </Field>
     <Field>
       <FieldLabel>Password</FieldLabel>
-      <FieldControl>
-        <Input type="password" placeholder="••••••••" />
-      </FieldControl>
+      <FieldControl
+        render={<Input type="password" autoComplete="current-password" placeholder="••••••••" />}
+      />
     </Field>
     <Button type="submit" className="mt-sm">
       Sign in

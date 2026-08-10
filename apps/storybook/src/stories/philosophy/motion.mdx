@@ -3,8 +3,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Philosophy/Foundations/Motion" />
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
-    source: MOTION_PHILOSOPHY.md
-    hash: c3a93e8d7680 */}
+    source: docs/philosophies/MOTION_PHILOSOPHY.md
+    hash: c697f9d1cfbd */}
 
 # Motion & Animation Philosophy
 
@@ -195,27 +195,55 @@ GIF/video for genuinely hand-authored animation), per-frame
 
 ---
 
-## Duration & easing tokens
+## Duration & easing budget
 
-A small, opinionated set. New durations and easings get added to
-this table, not invented per-component.
+**These are budget bands, not CSS custom properties.** The DS ships no
+`--duration-*` and no `--ease-*` tokens — `grep -rE '\-\-duration|\-\-ease'
+packages/ui/styles/` returns nothing but `--duration`/`--speed`, which
+are *per-instance knobs* a Marquee/ShimmerButton call site sets, not a
+scale. Every shipped duration is a literal inside an `--animate-*`
+shorthand in `packages/ui/styles/tokens.css`
+(`--animate-accordion-down: accordion-down 0.2s ease-out`), and the
+shipped easing is the CSS keyword `ease-out`, not a custom curve.
 
-| Token | Duration | Use for |
+So the bands below are what you check a number against; the number
+itself is written as a Tailwind `duration-*` / `ease-*` utility at the
+call site, or as a literal in the `--animate-*` shorthand when you add
+a keyframe animation to `tokens.css`.
+
+| Band | Duration | Use for |
 | --- | --- | --- |
-| `instant` | 0ms | Reduced-motion fallback |
-| `fast` | 100ms | Hover/focus feedback, small state |
-| `base` | 150-200ms | Default for visible UI state transitions |
-| `medium` | 250-300ms | Sheets, modals, accordions |
-| `slow` | 400-500ms | Hero / continuity / cross-route transitions |
-| `forbidden` | > 600ms | Almost never. Requires justification in code comment. |
+| instant | 0ms | Reduced-motion fallback |
+| fast | 100ms | Hover/focus feedback, small state |
+| base | 150-200ms | Default for visible UI state transitions (`--animate-accordion-*` is 0.2s) |
+| medium | 250-300ms | Sheets, modals, accordions |
+| slow | 400-500ms | Hero / continuity / cross-route transitions |
+| forbidden | > 600ms | Almost never. Requires justification in code comment. Ambient decorative loops (`--animate-first` 30s, `--animate-gradient` 8s) are the carve-out: they are infinite background motion, never entry. |
 
-| Easing | Curve | Use for |
+| Easing | What ships | Use for |
 | --- | --- | --- |
-| `linear` | `linear` | Loading shimmer only |
-| `ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | Default for entry / appear |
-| `ease-in` | `cubic-bezier(0.7, 0, 0.84, 0)` | Default for exit / dismiss |
-| `ease-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` | Movement that returns |
-| `spring` | `motion/react` springs | Direct-manipulation only |
+| `linear` | `linear` | Loading shimmer, marquee |
+| `ease-out` | the CSS keyword — **not** a custom bezier | Default for entry / appear; what every `--animate-*` in `tokens.css` uses |
+| `ease-in` | Tailwind `ease-in` | Exit / dismiss |
+| `ease-in-out` | Tailwind `ease-in-out` | Movement that returns |
+| spring | `motion/react` springs | Direct-manipulation only |
+
+If a real token scale is ever wanted, it is a `tokens.css` change plus
+a lock test — not a doc edit. Until then, do not write
+`var(--duration-fast)`; it resolves to nothing.
+
+### How the budget is held
+
+`packages/ui/__tests__/motion-contract-lock.test.ts` reads the ceiling
+out of this document — the "Max 200ms on entry" sentence above is the
+number the test enforces — and recomputes every duration and delay from
+`tokens.css` and `theme.css`. Ambient loops (`infinite`) are exempt from
+the ceiling, and pay for it by having to appear in the reduced-motion
+class list.
+
+The three entry classes in `theme.css` shipped at 0.5s, 0.5s + 0.3s and
+0.4s + 0.2s until 2026-08-10 — up to 800ms of invisible hero — which is
+what the lock exists to stop recurring. Do not cite them as precedent.
 
 ---
 
@@ -314,8 +342,8 @@ When adding or reviewing motion, ask:
 3. **Reduced motion**: with `prefers-reduced-motion: reduce`, does
    the destination state still appear immediately? Does the page
    remain functional?
-4. **Duration / easing**: does this use a token from the table, or
-   invent its own?
+4. **Duration / easing**: does the number land in a band from the
+   budget table, or invent its own?
 5. **Stagger**: if staggered, is the total budget ≤ 150ms? Are
    children positionally stable from first paint?
 6. **Primitive**: is this CSS / Tailwind / view-transitions, or did

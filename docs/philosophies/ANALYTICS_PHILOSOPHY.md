@@ -108,7 +108,7 @@ export interface TrackedEventMap {
 ```
 
 **Mechanics:**
-- The existing `apps/docs/src/lib/analytics.ts` is the canonical pattern for
+- The existing `apps/registry/src/lib/analytics.ts` is the canonical pattern for
   the typed event channel — extend it, don't replace it. Each property owns
   its own `TrackedEventMap` because events are app-specific.
 - Add new events by editing the map first; the call site is forced to follow.

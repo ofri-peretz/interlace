@@ -12,8 +12,63 @@ const meta: Meta<typeof FeatureGrid> = {
     docs: {
       description: {
         component:
-          'Grid of feature cards (icon + title + description). 3 columns by default, 2 or 4 also supported. Mobile collapses to 1 column.',
+          'The "what we do" board: 3–6 small cards, each an optional icon plus a heading and ' +
+          'a line or two of copy, under a centred section title. Reach for it on a landing ' +
+          'or product page where the items are peers and none needs more than a sentence. ' +
+          'If one item needs an image, a longer body or its own CTA hierarchy, it has ' +
+          'outgrown this block.',
       },
+    },
+  },
+  argTypes: {
+    title: {
+      control: 'text',
+      description: 'Centred section heading, rendered as a balanced `h2` above the grid.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    lead: {
+      control: 'text',
+      description: 'One-line muted intro under the title, clamped to `max-w-prose`.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    features: {
+      control: 'object',
+      description:
+        'The cells. Each is `{ icon?, title, description?, action? }`; the card title renders as an `h3` and the icon is `aria-hidden`, so the icon must never be the only thing carrying the meaning. `icon` and `action` are ReactNode — editing them in this JSON control clears them rather than replacing them.',
+      table: {
+        category: 'Data',
+        type: {
+          summary:
+            'Array<{ icon?: ReactNode; title: ReactNode; description?: ReactNode; action?: ReactNode }>',
+        },
+        defaultValue: { summary: '[]' },
+      },
+    },
+    cols: {
+      control: 'select',
+      options: [2, 3, 4],
+      description:
+        'Desktop track count. Mobile is always 1 column and `sm` is 2, so this is the lg-and-up ceiling — a `cols={3}` board would give each card ~98px at 375px if it were taken literally.',
+      table: {
+        category: 'Appearance',
+        type: { summary: '2 | 3 | 4' },
+        defaultValue: { summary: '3' },
+      },
+    },
+    loading: {
+      control: 'boolean',
+      description: 'Render a grid of card skeletons instead of the features.',
+      table: { category: 'State', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    loadingCount: {
+      control: { type: 'range', min: 1, max: 12, step: 1 },
+      description: 'How many skeleton cards to paint while loading. Defaults to `cols`.',
+      table: { category: 'State', type: { summary: 'number' }, defaultValue: { summary: 'cols' } },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the `<section>` — the seam for section padding or a tinted band.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
     },
   },
 };
@@ -59,6 +114,8 @@ export const Default: Story = {
     title: 'Why Interlace',
     lead: 'Six contracts every primitive ships under.',
     features: sampleFeatures,
+    cols: 3,
+    loading: false,
   },
 };
 

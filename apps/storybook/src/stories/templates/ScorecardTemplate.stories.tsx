@@ -6,7 +6,24 @@ const meta: Meta<typeof ScorecardTemplate> = {
   title: 'Templates/ScorecardTemplate',
   component: ScorecardTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Graded-evaluation report — an overall grade header over per-dimension ScorecardRow entries, with an optional methodology note. Built for Lighthouse-style reports and plugin scorecards. Each dimension streams independently, so the overall grade paints before the detail rows resolve.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Props forwarded to Topbar.', table: { category: 'Data' } },
+    title: { control: 'text', description: 'What was graded.', table: { category: 'Content' } },
+    lead: { control: 'text', description: 'One-line summary under the title.', table: { category: 'Content' } },
+    overall: { control: 'object', description: 'Headline grade + score for the whole evaluation.', table: { category: 'Data' } },
+    dimensions: { control: 'object', description: 'Per-dimension rows — name, grade, score, caption.', table: { category: 'Data' } },
+    methodology: { control: 'text', description: 'How the grades were computed. Omit to drop the footnote.', table: { category: 'Content' } },
+    footer: { control: 'object', description: 'Props forwarded to Footer.', table: { category: 'Data' } },
+  },
 };
 
 export default meta;

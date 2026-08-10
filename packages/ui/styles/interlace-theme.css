@@ -16,6 +16,42 @@
  *     `@layer interlace.brand` block (see `THEME_AUTHORING.md` once it lands);
  *     the bridge layer (`theme.css`) stays.
  *
+ * ─── Two orthogonal axes: scheme × theme ──────────────────────────
+ *
+ * A colour SCHEME and a THEME are different questions and must not share a
+ * selector. Until Phase 8 they did: the dark block was keyed on
+ * `.dark, [data-theme='dark']`, which spends the `data-theme` attribute —
+ * the only obvious place to put "which brand" — on "which scheme".
+ *
+ *   scheme  →  light | dark              (`.dark` / `[data-scheme='dark']`)
+ *   theme   →  interlace | harbor | …    (`[data-theme='<name>']`)
+ *
+ * | Selector                        | Means                                |
+ * |---------------------------------|--------------------------------------|
+ * | `:root`                         | interlace · light  (the default)     |
+ * | `.dark`, `[data-scheme='dark']` | interlace · dark                     |
+ * | `[data-theme='X']`              | theme X · light   (themes/X.css)     |
+ * | `[data-theme='X'].dark`         | theme X · dark    (themes/X.css)     |
+ *
+ * `.dark` stays load-bearing on purpose: it is the shadcn / next-themes
+ * convention, every consumer and the Storybook `withThemeByClassName`
+ * decorator write it, and breaking it to gain a cleaner name would be
+ * vanity. The new axis is purely ADDITIVE — nothing that worked before
+ * stopped working, with one deliberate exception: `[data-theme='dark']` no
+ * longer means "dark scheme". It now reads as "the theme named dark", which
+ * is not a registered theme, so it resolves to interlace · light. Consumers
+ * on that spelling move to `[data-scheme='dark']` (or `.dark`).
+ *
+ * Every theme file declares into `@layer interlace.brand` and overrides ONLY
+ * `--interlace-*` hex values. The semantics layer below and the
+ * `@theme inline` block never change — that is the whole point of the
+ * cascade, and it is why a theme is a data file rather than a pile of CSS.
+ * `THEME_TOKENS` (src/lib/theme-tokens.ts) enumerates every token a theme
+ * must define, and `__tests__/theme-contract-lock.test.ts` fails on a theme
+ * that omits one — because a missing token does not throw, it silently
+ * inherits the PREVIOUS theme's value and ships a two-brand page nobody
+ * notices.
+ *
  * ─── Layer model ──────────────────────────────────────────────────
  *
  * This file declares content into TWO cascade layers:
@@ -189,6 +225,35 @@
     --interlace-chart-4: oklch(0.55 0.14 90);   /* olive */
     --interlace-chart-5: oklch(0.55 0.13 200);  /* cyan */
 
+    /* Visualisation chrome — the parts of a chart that are NOT the series.
+     *
+     * `--chart-N` answers "which line is which". These answer "what is the
+     * line drawn on": gridlines, axis, graph edges. Three hex values; every
+     * other `--viz-*` token in the semantics layer is a var() alias of an
+     * already-AA-verified token, so a brand fork has three numbers to pick,
+     * not fifteen. Warm-neutral to sit with the brand, not the cool greys.
+     *
+     * Contrast, measured against `--interlace-background` #ffffff (which is
+     * also `--interlace-card` in light mode):
+     *   grid  #e0dad2 → 1.39:1  DECORATIVE. Gridlines must never be the sole
+     *                           carrier of a value — that is what the axis
+     *                           labels and the sr-only table are for. Kept
+     *                           deliberately below 3:1 so a dense grid does
+     *                           not fight the series it exists to support.
+     *   axis  #8d857a → 3.64:1  Clears WCAG 2.2 SC 1.4.11 (3:1, non-text UI
+     *                           boundary). The axis IS structural — it is what
+     *                           tells you where zero is.
+     *   edge  #e0dad2 → 1.39:1  Ambient graph texture, same weight as grid.
+     *                           An edge that MEANS something (selected, on the
+     *                           highlighted path) switches to `--viz-edge-active`
+     *                           (= `--primary`). Same split as the slider rail
+     *                           vs knob: the low-contrast element is
+     *                           supplementary, the high-contrast one carries
+     *                           the success criterion. */
+    --interlace-viz-grid: #e0dad2;
+    --interlace-viz-axis: #8d857a;
+    --interlace-viz-edge: #e0dad2;
+
     /* Radii (8/12/16 — three-step scale) */
     --interlace-radius-sm: 0.5rem;   /*  8px */
     --interlace-radius-md: 0.75rem;  /* 12px */
@@ -203,10 +268,16 @@
   }
 
   /* ─────────────────────────────────────────────────────────────────
-   *  DARK — class-based + data-attribute switch
+   *  INTERLACE · DARK — the scheme axis.
+   *
+   *  `.dark` is the shadcn / next-themes class every consumer already
+   *  writes; `[data-scheme='dark']` is the attribute spelling for hosts
+   *  that would rather not touch className. They are the SAME axis, and
+   *  neither of them says anything about which brand is active — that is
+   *  `[data-theme]`, handled in styles/themes/*.css.
    * ──────────────────────────────────────────────────────────────── */
   .dark,
-  [data-theme='dark'] {
+  [data-scheme='dark'] {
     /* Brand — inverted weight: a light tint of the same burnt orange, so
      * both directions clear AAA. text-primary on near-black is 11.79:1, and
      * bg-primary with text-primary-foreground (#0a0a0a) is the same 11.79:1.
@@ -268,6 +339,34 @@
     --interlace-caution: #fdba74;
     --interlace-caution-foreground: #0a0a0a;
 
+    /* ── Scheme-invariant tokens, restated ──────────────────────────
+     * The nine tokens below plus the three radii hold the SAME value in
+     * both schemes — a scrim is dark because it sits on a photo, and the
+     * cosmic hero paints its own near-black surface in either scheme (see
+     * the light block for the full reasoning on each).
+     *
+     * They are restated here anyway, following the precedent the window
+     * controls set below: every theme × scheme block is a COMPLETE
+     * override surface. That is what makes `THEME_TOKENS` checkable — a
+     * per-scheme block that only carries the tokens which happen to
+     * invert gives a forking consumer no way to tell "deliberately the
+     * same" apart from "forgotten", and the lock no way to tell either. */
+    --interlace-scrim: #000000;
+    --interlace-scrim-foreground: #ffffff;
+
+    --interlace-hero-star: #fbb99a;   /* brand orange tint — star head */
+    --interlace-hero-trail: #0d9460;  /* brand green — trail gradient */
+    --interlace-hero-meteor: #fdd6c2; /* palest orange — meteor streak */
+
+    --interlace-hero-surface: #0d0b09;      /* gradient midpoint */
+    --interlace-hero-surface-deep: #000000; /* gradient floor */
+    --interlace-hero-foreground: #f0ede9;   /* 16.4:1 on the surface (AAA) */
+
+    /* Radii (8/12/16 — three-step scale) */
+    --interlace-radius-sm: 0.5rem;   /*  8px */
+    --interlace-radius-md: 0.75rem;  /* 12px */
+    --interlace-radius-lg: 1rem;     /* 16px */
+
     /* Window controls — macOS ships the same traffic-light hues in dark
      * mode, so these do not invert. Declared here anyway so the dark block
      * is a complete override surface for a forking consumer. */
@@ -284,6 +383,17 @@
     --interlace-chart-4: oklch(0.78 0.12 90);   /* olive */
     --interlace-chart-5: oklch(0.78 0.11 200);  /* cyan */
 
+    /* Visualisation chrome — dark. Measured against BOTH dark surfaces,
+     * because a chart normally renders inside a Card, not on the page:
+     *   grid  #2d2823 → 1.36:1 on bg / 1.26:1 on card   DECORATIVE
+     *   axis  #746c60 → 3.82:1 on bg / 3.54:1 on card   clears SC 1.4.11 on both
+     *   edge  #2d2823 → 1.36:1 on bg / 1.26:1 on card   ambient
+     * Perceptual weight matched to light mode (1.39 / 3.64 / 1.39) so a grid
+     * does not read as heavier in one theme than the other. */
+    --interlace-viz-grid: #2d2823;
+    --interlace-viz-axis: #746c60;
+    --interlace-viz-edge: #2d2823;
+
     /* Brand mark — brighter pair for dark chrome (favicon dark variant). */
     --interlace-brand-mark-bar-o: #f4794a;
     --interlace-brand-mark-bar-g: #0d9460;
@@ -298,10 +408,28 @@
    *  AFTER importing this file, or they can fork the entire brand layer
    *  upstream (`@layer interlace.brand { ... }`) to swap the underlying
    *  hex values without touching the alias graph.
+   *
+   *  WHY FOUR SELECTORS AND NOT JUST `:root`. A custom property whose
+   *  value is a `var()` is substituted at computed-value time on the
+   *  element that DECLARES it, then inherited as a resolved value. So
+   *  `:root { --primary: var(--interlace-primary) }` freezes whatever
+   *  `--interlace-primary` is on the root. If a subtree re-brands itself
+   *  (`<div class="dark">` — which is exactly what a Storybook decorator
+   *  or a side-by-side theme preview does), the brand token changes on
+   *  that div while `--primary` stays frozen at the root's value, and
+   *  nothing repaints. Re-binding on every element that can carry a brand
+   *  override is what makes subtree theming work.
+   *
+   *  `[data-theme]` is attribute-presence, not a value match: it covers
+   *  every theme file that ever ships, so adding themes/<name>.css needs
+   *  no edit here. THIS LIST IS THE COMPLETE SET OF BRAND-OVERRIDE
+   *  SELECTORS — a new one must be added here too, or its subtree will
+   *  render the parent's semantics over the child's brand.
    * ──────────────────────────────────────────────────────────────── */
   :root,
   .dark,
-  [data-theme='dark'] {
+  [data-scheme='dark'],
+  [data-theme] {
     --primary: var(--interlace-primary);
     --primary-foreground: var(--interlace-primary-foreground);
     --background: var(--interlace-background);
@@ -361,6 +489,47 @@
     --chart-3: var(--interlace-chart-3);
     --chart-4: var(--interlace-chart-4);
     --chart-5: var(--interlace-chart-5);
+
+    /* Visualisation semantics — the chart's non-series vocabulary.
+     *
+     * Declared HERE and not in `theme.css`, on purpose: `--chart-N` is a
+     * shadcn-bare name the bridge layer must supply for stock shadcn chart
+     * code, but `--viz-*` is Interlace-original. `index.css` imports both, so
+     * every consumer on the canonical one-line import gets it.
+     *
+     * Three resolve to brand hex (grid / axis / edge — contrast tables above).
+     * Every other one is an ALIAS of a token whose contrast is already verified
+     * in both themes. Deliberate: a diverging red/green scale that drifts away
+     * from `--success` / `--destructive` is how a product ends up with two
+     * greens that mean "good". One fork surface, one green. */
+    --viz-grid: var(--interlace-viz-grid);
+    --viz-axis: var(--interlace-viz-axis);
+    --viz-edge: var(--interlace-viz-edge);
+
+    /* Meaning-bearing marks — each an existing, verified token. */
+    --viz-edge-active: var(--primary);
+    --viz-node: var(--muted-foreground);
+    --viz-node-active: var(--primary);
+    --viz-crosshair: var(--muted-foreground);
+
+    /* Direction. NOTE FOR COMPONENT AUTHORS: colour must never be the only
+     * signal — red/green is invisible to ~8% of men. Every component using
+     * these also prints a sign, an arrow, or a shape. See
+     * docs/philosophies/VISUALIZATION_PHILOSOPHY.md. */
+    --viz-positive: var(--success);
+    --viz-negative: var(--destructive);
+    --viz-neutral: var(--muted-foreground);
+
+    /* Threshold / target bands drawn behind the series. Alpha-composited off
+     * `--foreground` so it tracks the theme instead of needing a pair. */
+    --viz-band: color-mix(in srgb, var(--foreground) 6%, transparent);
+
+    /* Annotations — an action drawn ON the curve. Three kinds, three verified
+     * hues, distinguished by marker SHAPE as well as hue (shape is what
+     * survives greyscale). */
+    --viz-annotation-publish: var(--primary);
+    --viz-annotation-release: var(--info);
+    --viz-annotation-action: var(--warning);
 
     /* Override fumadocs-prefixed tokens for AA contrast.
      *
@@ -458,4 +627,23 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* Visualisation utilities — generates stroke-viz-axis, fill-viz-band,
+   * text-viz-positive, bg-viz-grid etc. Charts are SVG, so `stroke-*` and
+   * `fill-*` are the utilities actually used; Tailwind emits them from the
+   * same `--color-*` registration as `bg-*` / `text-*`. */
+  --color-viz-grid: var(--viz-grid);
+  --color-viz-axis: var(--viz-axis);
+  --color-viz-edge: var(--viz-edge);
+  --color-viz-edge-active: var(--viz-edge-active);
+  --color-viz-node: var(--viz-node);
+  --color-viz-node-active: var(--viz-node-active);
+  --color-viz-crosshair: var(--viz-crosshair);
+  --color-viz-positive: var(--viz-positive);
+  --color-viz-negative: var(--viz-negative);
+  --color-viz-neutral: var(--viz-neutral);
+  --color-viz-band: var(--viz-band);
+  --color-viz-annotation-publish: var(--viz-annotation-publish);
+  --color-viz-annotation-release: var(--viz-annotation-release);
+  --color-viz-annotation-action: var(--viz-annotation-action);
 }

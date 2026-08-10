@@ -30,46 +30,100 @@ Three corollaries:
 
 ---
 
+## The three token layers
+
+Before the table: a token name in this DS tells you which layer you're
+standing on. There are three, and they are not interchangeable.
+
+| Layer | Spelling | Where | What it is |
+| --- | --- | --- | --- |
+| **Brand** | `--interlace-*` | `packages/ui/styles/interlace-theme.css`, `@layer interlace.brand` | The concrete hex values. **The only layer a theme overrides.** |
+| **Semantics** | `--primary`, `--muted`, `--success`, … | same file, `@layer interlace.semantics` | shadcn-bare aliases, each `var(--interlace-*)`. Re-bound on every brand-override selector so subtree theming repaints. |
+| **Utilities** | `bg-primary`, `text-success`, … | `@theme inline` in the same file | What component code writes. Never a hex, never an `--interlace-*` read. |
+
+`fd-*` is **not** a fourth layer of ours — it is the *fumadocs bridge*,
+and it runs the other direction. `packages/ui/styles/theme.css` maps
+shadcn-bare names onto whatever fumadocs exposes
+(`--background: var(--color-fd-background)`) so fumadocs chrome and DS
+components agree in a fumadocs app. Consumer app code reaches for
+`bg-background`, not `bg-fd-background`. See
+[`packages/ui/FUMADOCS_BRIDGE.md`](../../packages/ui/FUMADOCS_BRIDGE.md).
+
+Two orthogonal axes select which brand values are live:
+
+- **scheme** — `light` | `dark`, via `.dark` / `[data-scheme='dark']`
+- **theme** — `interlace` | `harbor` | …, via `[data-theme='<name>']`
+  (`packages/ui/styles/themes/*.css`)
+
+They do not share a selector. `[data-theme='dark']` reads as "the theme
+named dark", which is not a registered theme — use `.dark` or
+`[data-scheme='dark']` for the scheme.
+`packages/ui/src/lib/theme-tokens.ts` (`THEME_TOKENS`) enumerates every
+token a theme must define, and `__tests__/theme-contract-lock.test.ts`
+fails a theme that omits one — a missing token silently inherits the
+previous theme's value and ships a two-brand page.
+
+---
+
 ## The semantic token table
 
-The full set. New tokens get added here, not invented per-component.
+The full set, as shipped in `interlace-theme.css`. New tokens get
+added there and here, not invented per-component. Values below are the
+brand layer (`--interlace-*`); write them as the utility
+(`--interlace-card` → `bg-card`).
 
-### Foundation tokens (Fumadocs-derived)
+### Surface tokens
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
-| `fd-background` | `#ffffff` | `#0a0a0a` | Page surface |
-| `fd-foreground` | `#0a0a0a` | `#fafafa` | Primary text |
-| `fd-muted` | `#f5f5f5` | `#171717` | Secondary surface (code blocks, skeleton, hover) |
-| `fd-muted-foreground` | `#737373` | `#a3a3a3` | De-emphasized text (timestamps, captions) |
-| `fd-card` | `#ffffff` | `#0f0f0f` | Card surface (one layer above page) |
-| `fd-card-foreground` | `#0a0a0a` | `#fafafa` | Text on cards |
-| `fd-border` | `#e5e5e5` | `#262626` | Default border |
-| `fd-input` | `#e5e5e5` | `#262626` | Input field border |
-| `fd-ring` | `var(--fd-primary)` | `var(--fd-primary)` | Focus ring |
+| `--interlace-background` | `#ffffff` | `#0a0a0a` | Page surface |
+| `--interlace-foreground` | `#0d0b09` (warm near-black) | `#f0ede9` | Primary text |
+| `--interlace-muted` | `#faf7f4` | `#171412` | Secondary surface (code blocks, skeleton, hover) |
+| `--interlace-muted-foreground` | `#4d453c` (8.06:1) | `#c9c3bb` (9.6:1) | De-emphasized text (timestamps, captions) |
+| `--interlace-card` | `#ffffff` | `#171412` | Card surface (one layer above page) |
+| `--interlace-card-foreground` | `#0d0b09` | `#f0ede9` | Text on cards |
+| `--interlace-border` | `#eae7e2` | `#252019` | Decorative separators **only** (1.2:1 — exempt from SC 1.4.11) |
+| `--interlace-input` | `#8f857a` (3.62:1) | `#6b635a` (3.35:1) | Form-control boundary. **Deliberately forked from `--border`** — it identifies the control, so SC 1.4.11 demands ≥3:1 |
+| `--interlace-ring` | `var(--interlace-primary)` | `var(--interlace-primary)` | Focus ring |
 
 ### Brand tokens
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
-| `fd-primary` | `#7d350c` (burnt orange) | `#fbb99a` (light burnt orange) | Primary action, brand accent, focus ring |
-| `fd-primary-foreground` | `#fafafa` | `#0a0a0a` | Text on primary |
-| `fd-accent` | `#f4f4f5` | `#262626` | Subtle accent, hover backgrounds |
-| `fd-accent-foreground` | `#0a0a0a` | `#fafafa` | Text on accent |
+| `--interlace-primary` | `#7d350c` (burnt orange, 8.80:1) | `#fbb99a` (light burnt orange, 11.79:1) | Primary action, brand accent, focus ring |
+| `--interlace-primary-hover` | `#6b2b09` | `#fcc9b0` | Hover weight |
+| `--interlace-primary-active` | `#4d2009` | `#fdd6c2` | Active weight |
+| `--interlace-primary-foreground` | `#ffffff` | `#0a0a0a` | Text on primary |
+| `--interlace-primary-subtle` | `#fef4ed` | `#3d1a08` | Tinted primary background |
+| `--interlace-accent` | `#fef4ed` (warm tint) | `#3d1a08` | Subtle accent, hover backgrounds |
+| `--interlace-accent-foreground` | `#73300d` | `#fcc9b0` | Text on accent |
+| `--interlace-secondary` | `#f5f3f0` | `#201c17` | Secondary surface |
+| `--interlace-secondary-foreground` | `#1f1a15` | `#f0ede9` | Text on secondary |
 
 ### Status tokens
 
+Every status token is AAA (≥7:1) **in both directions** — as text on
+the page surface, and as `-foreground` on its own filled chip. That is
+why several sit darker than the obvious Tailwind pick; the inline
+comments in `interlace-theme.css` record each bump.
+
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
-| `fd-success` | `#15803d` (green-700) | `#4ade80` (green-400) | Pass, complete, available |
-| `fd-warning` | `#b45309` (amber-700) | `#fbbf24` (amber-400) | Caveat, deprecated, needs attention |
-| `fd-destructive` | `#b91c1c` (red-700) | `#f87171` (red-400) | Error, delete, security alert |
-| `fd-info` | `#1d4ed8` (blue-700) | `#60a5fa` (blue-400) | Note, neutral aside, link |
+| `--interlace-success` | `#065f46` (emerald-800, 7.3:1) | `#34d399` (emerald-400, 8.5:1) | Pass, complete, available |
+| `--interlace-warning` | `#78350f` (amber-900, 8.5:1) | `#f59e0b` (amber-500, 7.7:1) | Caveat, deprecated, needs attention |
+| `--interlace-caution` | `#7c2d12` (orange-900, 9.0:1) | `#fdba74` (orange-300, 10.9:1) | The rung between warning and destructive (5-tone scorecard ladders) |
+| `--interlace-destructive` | `#991b1b` (red-800, 8.0:1) | `#fca5a5` (red-300, 9:1) | Error, delete, security alert |
+| `--interlace-info` | `#1e40af` (blue-800, 8.5:1) | `#93c5fd` (blue-300, 8.7:1) | Note, neutral aside, link |
 
-Status tokens are **never decorative**. A red `fd-destructive` border
-on a card means "this is destructive," not "let's add color." If a
-surface needs visual variety, it uses `fd-accent` or `fd-muted`, not
-status colors.
+Each ships a paired `-foreground`. Yellow can't clear 7:1 on white at
+its brand-bright value, so `--interlace-warning` is the *text* token —
+for a yellow-background treatment pair a decorative `bg-amber-500`
+with `text-warning`, and the contrast is warning-on-amber.
+
+Status tokens are **never decorative**. A red `border-destructive` on a
+card means "this is destructive," not "let's add color." If a surface
+needs visual variety, it uses `bg-accent` or `bg-muted`, not status
+colors.
 
 ---
 
@@ -86,9 +140,9 @@ means orange is the signal that *this is the action* or *this is us*.
 
 Where orange is **forbidden**:
 
-- Body text (use `fd-foreground`)
-- Most borders (use `fd-border`)
-- Backgrounds of large surfaces (use `fd-background` or `fd-muted`)
+- Body text (use `text-foreground`)
+- Most borders (use `border-border`)
+- Backgrounds of large surfaces (use `bg-background` or `bg-muted`)
 - Status indicators (use the status tokens, not orange)
 
 The test: if you covered the orange with masking tape, would the page
@@ -104,8 +158,8 @@ Dark mode is a **separate designed surface**. Not "same site, dimmed."
 ### Rules
 
 - **Backgrounds get progressively lighter as they layer up.**
-  - `fd-background` (page) is the darkest layer
-  - `fd-card` is one step lighter
+  - `background` (page) is the darkest layer
+  - `card` is one step lighter
   - Modal/popover surfaces another step lighter still
   - The reverse is *wrong* on dark mode (light mode has darker layers
     above lighter; dark mode has lighter layers above darker)
@@ -119,7 +173,7 @@ Dark mode is a **separate designed surface**. Not "same site, dimmed."
 - **Shadows become glows.** A `shadow-lg` on a card in light mode
   becomes a soft `shadow-primary/10` glow on dark mode. Black
   shadows on dark surfaces are invisible.
-- **Borders desaturate.** `fd-border` is more visible against dark
+- **Borders desaturate.** `border` is more visible against dark
   surfaces; reduce opacity to compensate.
 - **Images get a subtle treatment** — slight `filter: brightness(0.95)`
   on photos prevents them from punching holes in the dark surface.
@@ -148,7 +202,7 @@ Every text/background combination has a measured contrast ratio.
 | Body text | 4.5:1 (WCAG AA) | 7:1 (AAA) |
 | Large text (≥ 18px or ≥ 14px bold) | 3:1 (AA) | 4.5:1 (AAA) |
 | UI text (button labels, form labels) | 4.5:1 | 4.5:1 |
-| De-emphasized text (`fd-muted-foreground`) | 4.5:1 | 4.5:1 |
+| De-emphasized text (`muted-foreground`) | 4.5:1 | 4.5:1 |
 | Disabled text | 3:1 (AA Large only) | 3:1 |
 | Borders separating interactive elements | 3:1 against adjacent surface | 3:1 |
 | Focus ring | 3:1 against background AND adjacent border | 3:1 |
@@ -202,7 +256,7 @@ Three patterns for how a component picks its colors:
 ### 1. Semantic-token (default)
 
 ```tsx
-<div className="bg-fd-card text-fd-card-foreground border border-fd-border" />
+<div className="bg-card text-card-foreground border border-border" />
 ```
 
 Component picks tokens for its semantic role. Both light and dark
@@ -212,7 +266,7 @@ possible.
 ### 2. Mode-divergent (when designed differently per mode)
 
 ```tsx
-<div className="bg-fd-card dark:bg-zinc-900/50 dark:backdrop-blur-md" />
+<div className="bg-card dark:bg-zinc-900/50 dark:backdrop-blur-md" />
 ```
 
 When dark mode genuinely needs a different treatment (e.g.
@@ -244,10 +298,10 @@ Hard bans.
   check.
 - **Color-only status signals.** Caught by manual review.
 - **`opacity` to dim disabled state.** Use a token specifically for
-  disabled (`fd-muted-foreground` + reduced contrast). Opacity also
+  disabled (`muted-foreground` + reduced contrast). Opacity also
   dims focus rings.
 - **More than 7 hues on one page.** Brand orange, foundation grays,
-  4 status colors. Anything else is decoration.
+  and the status ladder. Anything else is decoration.
 - **Status colors used non-semantically.** Red border for "this is
   cool" is wrong. Red is destructive, not aesthetic.
 - **Gradients as primary surface.** Gradients are accents (cosmic
@@ -259,53 +313,68 @@ Hard bans.
 
 ## Implementation in this codebase
 
-Tailwind v4 `@theme` (single source of truth in
-`apps/docs/src/app/global.css`):
+The single source of truth is `packages/ui/styles/interlace-theme.css`
+— not an app's `global.css`. A consumer gets the whole contract with
+one import:
 
 ```css
-@theme {
-  /* Foundation */
-  --color-fd-background: #ffffff;
-  --color-fd-foreground: #0a0a0a;
-  --color-fd-muted: #f5f5f5;
-  --color-fd-muted-foreground: #737373;
-  --color-fd-card: #ffffff;
-  --color-fd-card-foreground: #0a0a0a;
-  --color-fd-border: #e5e5e5;
+@import "tailwindcss";
+@import "@interlace/ui/styles/index.css";
+```
 
-  /* Brand */
-  --color-fd-primary: #7d350c;
-  --color-fd-primary-foreground: #fafafa;
-  --color-fd-accent: #f4f4f5;
-  --color-fd-accent-foreground: #0a0a0a;
+Inside that file, the three layers of the table above:
 
-  /* Status */
-  --color-fd-success: #15803d;
-  --color-fd-warning: #b45309;
-  --color-fd-destructive: #b91c1c;
-  --color-fd-info: #1d4ed8;
-}
+```css
+/* 1. Brand — the hex values. The ONLY layer a theme overrides. */
+@layer interlace.brand {
+  :root {
+    --interlace-primary: #7d350c;
+    --interlace-background: #ffffff;
+    --interlace-success: #065f46;
+    --interlace-destructive: #991b1b;
+    /* … */
+  }
 
-@layer base {
-  .dark {
-    --color-fd-background: #0a0a0a;
-    --color-fd-foreground: #fafafa;
-    --color-fd-muted: #171717;
-    --color-fd-muted-foreground: #a3a3a3;
-    --color-fd-card: #0f0f0f;
-    --color-fd-card-foreground: #fafafa;
-    --color-fd-border: #262626;
-    --color-fd-primary: #fbb99a;
-    --color-fd-primary-foreground: #0a0a0a;
-    --color-fd-accent: #262626;
-    --color-fd-accent-foreground: #fafafa;
-    --color-fd-success: #4ade80;
-    --color-fd-warning: #fbbf24;
-    --color-fd-destructive: #f87171;
-    --color-fd-info: #60a5fa;
+  .dark,
+  [data-scheme='dark'] {
+    --interlace-primary: #fbb99a;
+    --interlace-background: #0a0a0a;
+    --interlace-success: #34d399;
+    --interlace-destructive: #fca5a5;
+    /* … */
   }
 }
+
+/* 2. Semantics — shadcn-bare aliases. Re-bound on EVERY selector that
+ *    can carry a brand override, or a `<div class="dark">` subtree
+ *    keeps the root's frozen value and nothing repaints. */
+@layer interlace.semantics {
+  :root,
+  .dark,
+  [data-scheme='dark'],
+  [data-theme] {
+    --primary: var(--interlace-primary);
+    --background: var(--interlace-background);
+    --success: var(--interlace-success);
+    --destructive: var(--interlace-destructive);
+    /* … */
+  }
+}
+
+/* 3. Utilities — what component code writes: bg-primary, text-success. */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-success: var(--success);
+  /* … */
+}
 ```
+
+Forking the brand is a re-declaration of layer 1 after the import — see
+"Consumer override pattern" in
+[`packages/ui/DESIGN_SYSTEM_LAYERS.md`](../../packages/ui/DESIGN_SYSTEM_LAYERS.md).
+A whole alternate theme is a data file that touches only
+`--interlace-*`: `packages/ui/styles/themes/harbor.css` is the worked
+example.
 
 ---
 

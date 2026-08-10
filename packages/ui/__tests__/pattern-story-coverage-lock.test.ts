@@ -96,9 +96,18 @@ describe('Storybook pattern coverage (a11y + dark-mode enforcement surface)', ()
     // DS's own showcase still reaches through the alias, the alias can never
     // be retired, because "nothing references it" will never become true.
     const { readFileSync } = require('fs') as typeof import('fs');
+    // Match an IMPORT, not the string anywhere in the file. A bare
+    // `includes('@interlace/ui/blocks/')` also matches the deprecation NOTE in
+    // a comment — which is how this lock failed a story that imports from
+    // `patterns/` perfectly well and merely documents what it no longer uses.
+    // Same lesson the ESLint rules learned: match the construct, not the
+    // printed source, because comments and identifiers look identical to a
+    // substring search.
+    const IMPORTS_BLOCKS_ALIAS =
+      /^\s*(?:import|export)[^\n]*?from\s*['"]@interlace\/ui\/blocks\/[^'"]+['"]/m;
     const offenders = listStories().filter((file) =>
-      readFileSync(join(STORIES_DIR, file), 'utf8').includes(
-        '@interlace/ui/blocks/',
+      IMPORTS_BLOCKS_ALIAS.test(
+        readFileSync(join(STORIES_DIR, file), 'utf8'),
       ),
     );
 

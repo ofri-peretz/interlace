@@ -3,8 +3,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Philosophy/Interaction & States/CTA" />
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
-    source: CTA_PHILOSOPHY.md
-    hash: 8b52c11cf977 */}
+    source: docs/philosophies/CTA_PHILOSOPHY.md
+    hash: e8e9e23e6656 */}
 
 # CTA Philosophy
 
@@ -138,7 +138,7 @@ either important enough to be primary or it isn't.
   this surface."
 - **`ShimmerButton` and other animated skins are *primary skins*** — see #8.
 
-**Measure**: button-variant audit script — if any CTA in `apps/docs/src` uses
+**Measure**: button-variant audit script — if any CTA in `apps/*/src` uses
 a custom Tailwind class set instead of `buttonVariants({ variant })`, flag.
 
 ---
@@ -371,13 +371,17 @@ lock it via tests. The contract:
 
 **Enforced by:**
 
-- [`apps/docs/src/__tests__/homepage-lock.test.tsx`](apps/docs/src/__tests__/homepage-lock.test.tsx)
-  — source-text asserts per JSX element (primary has no `shimmer={false}`,
-  secondary has both, plus the GitHub icon/label and the `mb-16` gap).
-- [`apps/docs/src/__tests__/hero-section-render.test.tsx`](apps/docs/src/__tests__/hero-section-render.test.tsx)
-  — DOM render-time asserts via `data-slot="shimmer-button"`,
-  `data-shimmer-spark`, `data-shimmer-highlight` seams on the actual mounted
-  output.
+> **Not yet enforced in this repo.** The two lock tests below live in the
+> eslint monorepo (`apps/docs/src/__tests__/`), where this philosophy used to
+> live. Nothing in interlace asserts the hero CTA contract today — porting
+> them is open work.
+>
+> - `homepage-lock.test.tsx` — source-text asserts per JSX element (primary
+>   has no `shimmer={false}`, secondary has both, plus the GitHub icon/label
+>   and the `mb-16` gap).
+> - `hero-section-render.test.tsx` — DOM render-time asserts via
+>   `data-slot="shimmer-button"`, `data-shimmer-spark`,
+>   `data-shimmer-highlight` seams on the actual mounted output.
 
 **Workflow if you need to break this contract:** edit this section *first*
 (state what's changing and why), then update the two test files, then

@@ -11,25 +11,68 @@ const meta = {
     docs: {
       description: {
         component:
-          'Screen-reader-only content. Renders invisible to sighted users (1px clipped) but exposed in the accessibility tree. Component form of the `sr-only` utility — use this when you want a named, slot-aware element.',
+          'Text that reaches a screen reader but takes no visible space — the component form of the `sr-only` utility. Use it for the words a sighted reader gets from layout or an icon and an assistive-tech user does not: "(opens in a new tab)", a table caption, a label for a placeholder-only field. Not an alternative to `display: none` or `hidden`, which remove the node from the accessibility tree entirely; reach for the `sr-only` class instead when you are only tweaking an existing element inline.',
       },
     },
+  },
+  argTypes: {
+    children: {
+      control: 'text',
+      description:
+        'The screen-reader-only text. Edit it and nothing on the canvas moves — inspect the DOM, or read the mirror below.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged after `sr-only`. Anything that re-establishes layout (e.g. `not-sr-only`) makes the text visible again — that is how SkipLink pops into view on focus.',
+      table: { category: 'Appearance', type: { summary: 'string' } },
+    },
+    id: {
+      control: 'text',
+      description:
+        'Useful when the hidden string is the target of an `aria-describedby` / `aria-labelledby` on another element.',
+      table: { category: 'A11y', type: { summary: 'string' } },
+    },
+    lang: {
+      control: 'text',
+      description:
+        'Set this when the hidden string is in a different language from the page, so the screen reader switches voice (WCAG 3.1.2).',
+      table: { category: 'A11y', type: { summary: 'string' } },
+    },
+  },
+  args: {
+    children: ' — only visible to assistive technology',
   },
 } satisfies Meta<typeof VisuallyHidden>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * The component paints nothing, so the story pairs the live sentence with a
+ * mirror of what a screen reader would actually announce — otherwise the
+ * `children` control would appear to do nothing at all.
+ */
 export const Default: Story = {
-  render: () => (
+  render: (args) => (
     <div className="space-y-4 text-sm">
       <p>
         This sentence has hidden context for screen readers
-        <VisuallyHidden> — only visible to assistive technology</VisuallyHidden>.
+        <VisuallyHidden {...args} />.
       </p>
+      <div className="rounded-md border border-dashed border-border p-3">
+        <div className="mb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          What a screen reader announces
+        </div>
+        <p className="font-mono text-xs">
+          This sentence has hidden context for screen readers
+          <span className="text-primary">{args.children}</span>.
+        </p>
+      </div>
       <p className="text-muted-foreground">
-        Inspect the DOM: the highlighted span lives in the accessibility tree but
-        takes no visible space.
+        Inspect the DOM: the span lives in the accessibility tree but takes no
+        visible space.
       </p>
     </div>
   ),
@@ -67,15 +110,15 @@ export const AsLabel: Story = {
     docs: {
       description: {
         story:
-          'When used as `<label>`, the visually-hidden text labels a form control. SR users hear it; sighted users see the placeholder.',
+          'Labelling a placeholder-only field. VisuallyHidden always renders a `<span>` — it has no `as` / `render` seam — so put it INSIDE a real `<label htmlFor>`: the outer label owns the association, the inner span owns the invisibility. SR users hear the label; sighted users see the placeholder.',
       },
     },
   },
   render: () => (
     <div className="max-w-80">
-      <VisuallyHidden as="label" htmlFor="search">
-        Search the site
-      </VisuallyHidden>
+      <label htmlFor="search">
+        <VisuallyHidden>Search the site</VisuallyHidden>
+      </label>
       <input
         id="search"
         type="search"

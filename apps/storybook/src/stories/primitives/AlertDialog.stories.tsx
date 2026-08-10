@@ -23,8 +23,42 @@ const meta = {
     docs: {
       description: {
         component:
-          'Destructive-confirm surface. Unlike `Dialog`, an `AlertDialog` interrupts the user with a decision they cannot dismiss by clicking outside — Cancel + Confirm are the only exits. Use for irreversible actions (delete a rule, revoke a key). A11y, focus trap, and Escape-to-cancel are inherited from `@base-ui/react/alert-dialog`.',
+          'Destructive-confirm surface. Unlike `Dialog`, an `AlertDialog` interrupts the user with a decision they cannot dismiss by clicking outside — Cancel + Confirm are the only exits. Use for irreversible actions (delete a rule, revoke a key); if the action is undoable, prefer an inline control plus a toast with Undo. A11y, focus trap, and Escape-to-cancel are inherited from `@base-ui/react/alert-dialog`.',
       },
+    },
+  },
+  // The root renders no element of its own — its whole API is open-state
+  // orchestration, and react-docgen cannot follow it through
+  // `@base-ui/react/alert-dialog`. Declared by hand.
+  argTypes: {
+    defaultOpen: {
+      control: 'boolean',
+      description:
+        'Uncontrolled initial open state. Use this when the trigger is the only thing that opens the dialog.',
+      table: { category: 'State', defaultValue: { summary: 'false' } },
+    },
+    open: {
+      control: 'boolean',
+      description:
+        'Controlled open state. Supply together with `onOpenChange` — on its own it pins the dialog and Cancel/Escape stop working.',
+      table: { category: 'State' },
+    },
+    onOpenChange: {
+      action: 'openChange',
+      description:
+        'Fires with the next open state plus an event-details object carrying the dismissal reason.',
+      table: { category: 'Events' },
+    },
+    onOpenChangeComplete: {
+      action: 'openChangeComplete',
+      description: 'Fires after the open/close animation settles.',
+      table: { category: 'Events' },
+    },
+    children: {
+      control: false,
+      description:
+        '`AlertDialogTrigger` + `AlertDialogPortal` > `AlertDialogBackdrop` + `AlertDialogPopup`.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
     },
   },
 } satisfies Meta<typeof AlertDialog>;
@@ -33,13 +67,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * Default — destructive confirm shown open so reviewers can see the surface
- * without having to drive the trigger. The trigger is still rendered for
- * shape parity with the production composition.
+ * Default — destructive confirm opened on mount (`defaultOpen`) so reviewers
+ * see the surface without driving the trigger, while Cancel and Escape still
+ * work because the state stays uncontrolled.
  */
 export const Default: Story = {
-  render: () => (
-    <AlertDialog open={true}>
+  args: { defaultOpen: true },
+  render: (args) => (
+    <AlertDialog {...args}>
       <AlertDialogTrigger render={<Button variant="outline">Delete rule</Button>} />
       <AlertDialogPortal>
         <AlertDialogBackdrop />

@@ -7,7 +7,27 @@ const meta: Meta<typeof ErrorTemplate> = {
   title: 'Templates/ErrorTemplate',
   component: ErrorTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Full-page error surface for 404 / 500 / 503 plus a generic fallback. Each variant supplies its own status code, title and copy; pass `actions` for the recovery CTAs. Use `Primitives/DataState` instead when only a region of an otherwise-working page failed.",
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['404', '500', '503', 'generic'],
+      description: 'Selects the built-in status code, title and description. Any of the three can still be overridden individually.',
+      table: { category: 'Appearance', type: { summary: "'404' | '500' | '503' | 'generic'" }, defaultValue: { summary: '404' } },
+    },
+    statusCode: { control: 'text', description: 'Overrides the variant status code.', table: { category: 'Content' } },
+    title: { control: 'text', description: 'Overrides the variant headline.', table: { category: 'Content' } },
+    description: { control: 'text', description: 'Overrides the variant explanatory copy.', table: { category: 'Content' } },
+    actions: { control: false, description: 'Recovery CTA cluster — back home, retry, contact support.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+  },
 };
 
 export default meta;

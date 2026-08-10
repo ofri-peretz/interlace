@@ -67,47 +67,55 @@ function LandingTemplate({
     >
       <Topbar {...topbar} />
 
-      <SectionBoundary name="landing-hero" skeletonVariant="page-header">
-        {hero}
-      </SectionBoundary>
-
-      {children}
-
-      {features ? (
-        <SectionBoundary
-          name="landing-features"
-          skeletonVariant="article-card"
-        >
-          {features}
+      {/* Every section below sits inside <main>, and it is not decoration.
+          Topbar emits <header>, Footer emits <footer>, and SectionBoundary
+          renders `display: contents` — so without this element the entire body
+          of the page was outside any landmark, and SkipLink had nothing to skip
+          TO. AuthorTemplate / TagTemplate / StatsTemplate already wrap; this is
+          the marketing page catching up. */}
+      <main id="main">
+        <SectionBoundary name="landing-hero" skeletonVariant="page-header">
+          {hero}
         </SectionBoundary>
-      ) : null}
 
-      {testimonials ? (
-        <SectionBoundary
-          name="landing-testimonials"
-          skeletonVariant="article-card"
-        >
-          {testimonials}
-        </SectionBoundary>
-      ) : null}
+        {children}
 
-      {pricing ? (
-        <SectionBoundary name="landing-pricing" skeletonVariant="card">
-          {pricing}
-        </SectionBoundary>
-      ) : null}
+        {features ? (
+          <SectionBoundary
+            name="landing-features"
+            skeletonVariant="article-card"
+          >
+            {features}
+          </SectionBoundary>
+        ) : null}
 
-      {faq ? (
-        <SectionBoundary name="landing-faq" skeletonVariant="card">
-          {faq}
-        </SectionBoundary>
-      ) : null}
+        {testimonials ? (
+          <SectionBoundary
+            name="landing-testimonials"
+            skeletonVariant="article-card"
+          >
+            {testimonials}
+          </SectionBoundary>
+        ) : null}
 
-      {cta ? (
-        <SectionBoundary name="landing-cta" skeletonVariant="card">
-          {cta}
-        </SectionBoundary>
-      ) : null}
+        {pricing ? (
+          <SectionBoundary name="landing-pricing" skeletonVariant="card">
+            {pricing}
+          </SectionBoundary>
+        ) : null}
+
+        {faq ? (
+          <SectionBoundary name="landing-faq" skeletonVariant="card">
+            {faq}
+          </SectionBoundary>
+        ) : null}
+
+        {cta ? (
+          <SectionBoundary name="landing-cta" skeletonVariant="card">
+            {cta}
+          </SectionBoundary>
+        ) : null}
+      </main>
 
       <Footer {...footer} />
     </div>

@@ -18,8 +18,31 @@ const meta = {
     tone: {
       control: 'select',
       options: ['info', 'note', 'success', 'warn', 'danger'],
+      description:
+        'Narrative tone. Drives the fixed lucide icon and the left-border tint; the surface stays neutral so stacked callouts do not compete. Not a severity level — `danger` means "this destroys something", not "this is important".',
+      table: {
+        category: 'Appearance',
+        type: { summary: "'info' | 'note' | 'success' | 'warn' | 'danger'" },
+        defaultValue: { summary: 'info' },
+      },
     },
-    title: { control: 'text' },
+    title: {
+      control: 'text',
+      description:
+        'Optional headline above the body, rendered as `Typography variant="ui"`. Shadows the native `<div title>` tooltip attribute by design.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    children: {
+      control: 'text',
+      description: 'Body prose. Free-form — block elements are fine.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Callout is full-width inside its prose column; use this to constrain the measure when it sits outside one.',
+      table: { category: 'Appearance' },
+    },
   },
 } satisfies Meta<typeof Callout>;
 
@@ -30,11 +53,12 @@ export const Default: Story = {
   args: {
     tone: 'info',
     title: 'Type-aware rule',
+    className: '',
     children:
       'This rule needs TypeScript type information to flag the violation. Enable parserOptions.project in your ESLint config.',
   },
   render: (args) => (
-    <div className="w-[640px]">
+    <div className="w-[640px] max-w-full">
       <Callout {...args} />
     </div>
   ),
@@ -57,7 +81,7 @@ export const Variants: Story = {
     };
 
     return (
-      <div className="flex w-[640px] flex-col gap-md">
+      <div className="flex w-[640px] max-w-full flex-col gap-md">
         {tones.map((tone) => (
           <Callout
             key={`${tone}-titled`}

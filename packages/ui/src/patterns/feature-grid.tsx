@@ -63,6 +63,20 @@ interface FeatureGridProps extends Omit<React.ComponentProps<'section'>, 'title'
   loadingCount?: number;
 }
 
+/**
+ * Mobile-first track counts per desktop `cols`. Handed to Grid unqualified,
+ * `cols` holds N narrow tracks at every width — at 375px a `cols={3}` board
+ * gives each feature card ~98px and its copy overflows the viewport.
+ *
+ * Written out statically because Tailwind cannot scan a runtime-built
+ * `sm:grid-cols-${n}`.
+ */
+const FEATURE_GRID_COLS: Record<2 | 3 | 4, string> = {
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+};
+
 function FeatureGrid({
   title,
   lead,
@@ -98,13 +112,13 @@ function FeatureGrid({
             </Stack>
           )}
           {loading ? (
-            <Grid cols={cols} gap="md">
+            <Grid cols={cols} gap="md" className={FEATURE_GRID_COLS[cols]}>
               {Array.from({ length: skeletonCount }).map((_, i) => (
                 <Skeleton key={i} variant="card" label={null} />
               ))}
             </Grid>
           ) : features.length > 0 ? (
-            <Grid cols={cols} gap="md">
+            <Grid cols={cols} gap="md" className={FEATURE_GRID_COLS[cols]}>
               {features.map((f, i) => (
                 <article
                   key={i}

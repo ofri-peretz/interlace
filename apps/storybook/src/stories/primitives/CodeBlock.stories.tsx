@@ -33,13 +33,45 @@ const meta = {
     docs: {
       description: {
         component:
-          'Fenced code block with a header bar (title left, language tag + copy button right). Client component — owns a `useState` for the 1.5s "Copied!" affordance, delegates the actual copy to `navigator.clipboard.writeText`. MIN_VIEWPORT = 320px; long lines `overflow-x-auto` rather than wrap.',
+          'Renders a multi-line snippet as `<figure><pre><code class="language-{lang}">`, with a header bar carrying the filename, the language tag, and a copy button. Reach for it whenever a snippet is long enough that a reader will want to copy it rather than retype it — docs pages, rule examples, install instructions. It does no highlighting itself: the `language-*` class and `data-language` attribute are the seam a downstream highlighter (Shiki, Prism) hooks into. Do not use it for a single inline token — the header bar always renders, so a one-word snippet should be a plain `<code>`.',
       },
     },
   },
   argTypes: {
-    title: { control: 'text' },
-    language: { control: 'text' },
+    title: {
+      control: 'text',
+      description:
+        'Header title, left-aligned. Usually the filename the snippet belongs to. Truncates rather than wrapping when the header is narrow.',
+      table: { type: { summary: 'ReactNode' }, category: 'Content' },
+    },
+    language: {
+      control: 'text',
+      description:
+        'Language tag shown at the right of the header. Also emitted as `class="language-{lang}"` on the `<code>` and `data-language` on the `<figure>` — the contract a syntax highlighter reads. Omit it and no tag renders.',
+      table: { type: { summary: 'string' }, category: 'Content' },
+    },
+    children: {
+      control: 'text',
+      description:
+        'The fenced source. A string copies verbatim; pre-highlighted JSX copies via the rendered `textContent` instead.',
+      table: { type: { summary: 'ReactNode' }, category: 'Content' },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Replace the whole figure with a `<Skeleton variant="code-block">` while a highlight or fetch resolves. Reserves the block so the page around it does not reflow when the snippet lands.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'State',
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the `<figure>` (and onto the skeleton while `loading`). Sizing is the caller’s job — the figure is block-level and fills its parent.',
+      table: { type: { summary: 'string' }, category: 'Appearance' },
+    },
   },
 } satisfies Meta<typeof CodeBlock>;
 
@@ -51,12 +83,23 @@ export const Default: Story = {
     title: 'eslint.config.mjs',
     language: 'ts',
     children: SAMPLE_TS,
+    loading: false,
+    className: 'w-[640px] max-w-full',
   },
-  render: (args) => (
-    <div className="w-[640px]">
-      <CodeBlock {...args} />
-    </div>
-  ),
+  render: (args) => <CodeBlock {...args} />,
+};
+
+/**
+ * `loading` swaps the figure for the `code-block` skeleton variant — a
+ * multi-line monospace silhouette at the same height, so a snippet that
+ * arrives after a Shiki pass or a fetch does not shift the page.
+ */
+export const Loading: Story = {
+  args: {
+    ...Default.args,
+    loading: true,
+  },
+  render: (args) => <CodeBlock {...args} />,
 };
 
 /**
@@ -65,7 +108,7 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="w-[720px] space-y-lg">
+    <div className="w-[720px] max-w-full space-y-lg">
       <div className="space-y-xs">
         <div className="text-ui-sm font-mono text-muted-foreground">
           title + language

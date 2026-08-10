@@ -25,6 +25,63 @@ const meta: Meta<typeof HeroCosmic> = {
       },
     },
   },
+  argTypes: {
+    headline: {
+      control: 'text',
+      description:
+        'Main headline. Pass JSX (`<>foo<br/>bar</>`) when you need a line break or a gradient span. The only required content prop.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    tagline: {
+      control: 'text',
+      description: 'Sub-headline under the headline.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    eyebrow: {
+      control: false,
+      description:
+        'Content above the headline — usually a trust chip. Element slot; tint it with `hero-foreground`, not `foreground`, or it disappears on the dark surface.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    primaryCta: {
+      control: 'object',
+      description:
+        '`{ label, href, render? }`. `render` swaps the element (a router `<Link>`, a `<ShimmerButton>`) while the hero keeps the layout.',
+      table: { type: { summary: 'HeroCosmicCTA' }, category: 'Data' },
+    },
+    secondaryCta: {
+      control: 'object',
+      description: 'Same shape as `primaryCta`, rendered as the quieter of the pair.',
+      table: { type: { summary: 'HeroCosmicCTA' }, category: 'Data' },
+    },
+    footer: {
+      control: false,
+      description:
+        'Slot under the CTAs — the conventional home for trust signals. ReactNode, so the hero never learns what a download count is.',
+      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    effects: {
+      control: 'object',
+      description:
+        'Starfield tuning: `starDensity` (stars/px², ~0.0001–0.0005), `twinkleProbability` (0–1), `minTwinkleSpeed` / `maxTwinkleSpeed` (s), `shootingMinSpeed` / `shootingMaxSpeed`, `shootingMinDelay` / `shootingMaxDelay` (ms), `meteorCount`, `meteorMinDuration` / `meteorMaxDuration` (s). Colours are deliberately absent — they come from the `--hero-*` tokens.',
+      table: {
+        type: { summary: 'HeroCosmicEffects' },
+        defaultValue: { summary: '{}' },
+        category: 'Appearance',
+      },
+    },
+    'data-testid': {
+      control: 'text',
+      description:
+        'Required selector hook (R5). Sub-parts derive `{value}-headline` and `{value}-effects`.',
+      table: { type: { summary: 'string' } },
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the outer `<div>` — the height / padding seam.',
+      table: { category: 'Appearance' },
+    },
+  },
 };
 
 export default meta;

@@ -10,13 +10,55 @@ const meta: Meta<typeof Grid> = {
     docs: {
       description: {
         component:
-          'Two-dimensional layout primitive on top of the foundation spacing scale. `cols` / `mdCols` / `lgCols` declare responsive column counts; `gap` reuses the six-step `--spacing-*` token set.',
+          'The 2-D sibling of `Stack`: a thin CSS-grid container whose column count and gap are both closed token sets, so no call site can invent an off-system track or spacing. Responsiveness lives on the cells — `GridItem` takes `span` / `mdSpan` / `lgSpan` — not on the container. Reach for it when content genuinely occupies rows *and* columns; a single row of equal items is a `Stack`, and a page-level width constraint is `Container`.',
       },
     },
   },
   argTypes: {
-    cols: { control: 'select', options: [1, 2, 3, 4, 6, 12] },
-    gap: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] },
+    cols: {
+      control: 'select',
+      options: [1, 2, 3, 4, 6, 12],
+      description:
+        'Column track count. Closed set (R21) — 12 is the base track most layouts span against.',
+      table: {
+        category: 'Appearance',
+        type: { summary: '1 | 2 | 3 | 4 | 6 | 12' },
+        defaultValue: { summary: '12' },
+      },
+    },
+    gap: {
+      control: 'select',
+      options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      description:
+        'Gutter from the foundation `--spacing` scale (8 / 16 / 24 / 40 / 64 / 96px). Applies to both axes.',
+      table: {
+        category: 'Appearance',
+        type: { summary: "'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'" },
+        defaultValue: { summary: 'md' },
+      },
+    },
+    as: {
+      control: 'select',
+      options: ['div', 'section'],
+      description:
+        'Render as a different element so the grid can also carry the semantics of the region it lays out. Any `React.ElementType` is accepted — `ul`/`ol` are valid too, provided the cells render as `li` (`<GridItem as="li">`).',
+      table: {
+        category: 'Appearance',
+        type: { summary: 'React.ElementType' },
+        defaultValue: { summary: 'div' },
+      },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged via `cn()` after the variant classes — the seam for row sizing (`auto-rows-fr`) or alignment, which the closed variant API deliberately does not cover.',
+      table: { category: 'Appearance' },
+    },
+    children: {
+      control: false,
+      description: 'The cells. Plain elements, or `GridItem` when a cell must span.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
   },
 };
 
@@ -30,7 +72,7 @@ const Cell = ({ label }: { label: string }) => (
 );
 
 export const Default: Story = {
-  args: { cols: 3, gap: 'md' },
+  args: { cols: 3, gap: 'md', as: 'div', className: '' },
   render: (args) => (
     <Grid {...args}>
       {Array.from({ length: 6 }).map((_, i) => (
@@ -40,11 +82,19 @@ export const Default: Story = {
   ),
 };
 
+/**
+ * Responsiveness is a CELL concern, not a container one — `Grid` has no
+ * `mdCols`/`lgCols`. Keep the track at 12 and let each `GridItem` restate its
+ * span per breakpoint: full width on phones, halves from `md`, quarters from
+ * `lg`. Resize the canvas to see it move.
+ */
 export const Responsive: Story = {
   render: () => (
-    <Grid cols={1} mdCols={2} lgCols={4} gap="md">
+    <Grid cols={12} gap="md">
       {Array.from({ length: 8 }).map((_, i) => (
-        <Cell key={`responsive-cell-${i}`} label={`Cell ${i + 1}`} />
+        <GridItem key={`responsive-cell-${i}`} span="full" mdSpan={6} lgSpan={3}>
+          <Cell label={`Cell ${i + 1}`} />
+        </GridItem>
       ))}
     </Grid>
   ),

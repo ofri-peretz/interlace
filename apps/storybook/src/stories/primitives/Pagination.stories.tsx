@@ -1,5 +1,6 @@
+import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { Skeleton } from '@interlace/ui/skeleton';
 import {
   Pagination,
@@ -12,55 +13,166 @@ import {
 } from '@interlace/ui/pagination';
 import { withDark, withRtl } from '@/decorators';
 
-const meta: Meta<typeof Pagination> = {
+/**
+ * Story-only args. `page` / `totalPages` / `onPageChange` are NOT props of
+ * `Pagination` — the primitive is a presentational `<nav>` and owns no page
+ * state. They drive the demo below (which is what a real call site has to
+ * write) so the Controls panel can exercise the window/ellipsis behaviour and
+ * the Actions panel can show the navigation intent.
+ */
+type PaginationStoryArgs = React.ComponentProps<typeof Pagination> & {
+  page: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+};
+
+const meta: Meta<PaginationStoryArgs> = {
   title: 'Primitives/Pagination',
   component: Pagination,
+  subcomponents: { PaginationLink, PaginationEllipsis },
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component:
-          'Classic numbered pagination per `PAGINATION_PHILOSOPHY.md` — explicit page links, URL state, never infinite scroll. The active page is marked with `aria-current="page"` for assistive tech.',
+          'Numbered page navigation, per `PAGINATION_PHILOSOPHY.md`: explicit page links that live in the URL, never infinite scroll — so a result is linkable, back works, and the crawler can reach page 7. The primitive is presentational: it renders a labelled `<nav>` and its parts, while the page window, the ellipsis placement and the current-page state stay with the caller. Mark the current page with `active` on `PaginationLink` (it emits `aria-current="page"`), and render every page control as a real `<a href>` rather than a button.',
       },
     },
+  },
+  argTypes: {
+    page: {
+      control: { type: 'number', min: 1 },
+      description:
+        'STORY ARG (not a component prop) — the current page the demo renders as `active`.',
+      table: { category: 'Story data' },
+    },
+    totalPages: {
+      control: { type: 'range', min: 1, max: 40, step: 1 },
+      description:
+        'STORY ARG (not a component prop) — how many pages the demo windows over. Push it past ~7 to see the ellipsis appear.',
+      table: { category: 'Story data' },
+    },
+    onPageChange: {
+      action: 'pageChange',
+      description:
+        'STORY ARG (not a component prop) — the callback a real call site would use to push the new page into the URL.',
+      table: { category: 'Events' },
+    },
+    className: {
+      control: 'text',
+      description:
+        'Merged onto the `<nav>` (`mx-auto flex w-full justify-center`) — the seam for aligning the bar left/right instead of centred.',
+      table: { category: 'Appearance' },
+    },
+    'aria-label': {
+      control: 'text',
+      description:
+        'Defaults to `"pagination"`. Override it when a page has two of these (e.g. one per list) so screen-reader users can tell them apart.',
+      table: { category: 'Appearance', defaultValue: { summary: 'pagination' } },
+    },
+    children: {
+      control: false,
+      description: 'The `PaginationContent` list and its items.',
+      table: { category: 'Slots', type: { summary: 'ReactNode' } },
+    },
+  },
+  args: {
+    page: 2,
+    totalPages: 9,
+    className: '',
+    'aria-label': 'pagination',
+    onPageChange: fn(),
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Pagination>;
+type Story = StoryObj<PaginationStoryArgs>;
 
-export const Default: Story = {
-  // Pagination anchors are `size-9` (36×36 — well above WCAG 2.2's 24×24
-  // target-size threshold). The earlier suppression existed because the
-  // adjacent `gap-1` (4px) put axe's spacing-exception circle math into a
-  // borderline state. Override the default content gap to a comfortable
-  // `gap-2` (8px) — boundary-to-boundary spacing is now well clear of the
-  // target-size threshold, and the suppression is no longer needed.
-  render: () => (
-    <Pagination>
+/**
+ * The windowing a real call site has to write: first page, last page, the
+ * neighbours of the current page, and an ellipsis wherever the sequence jumps.
+ * `null` marks a gap.
+ */
+function pageWindow(page: number, totalPages: number): (number | null)[] {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+  const around = [page - 1, page, page + 1].filter(
+    (p) => p > 1 && p < totalPages,
+  );
+  const shown = [1, ...around, totalPages];
+  const out: (number | null)[] = [];
+  let previous = 0;
+  for (const p of shown) {
+    if (p - previous > 1) out.push(null);
+    out.push(p);
+    previous = p;
+  }
+  return out;
+}
+
+function PaginationDemo({
+  page: initialPage,
+  totalPages,
+  onPageChange,
+  ...navProps
+}: PaginationStoryArgs) {
+  const [page, setPage] = React.useState(initialPage);
+  const go = (next: number) => (event: React.MouseEvent) => {
+    // The href stays real (linkable, middle-clickable); the demo just keeps
+    // Storybook from navigating the iframe.
+    event.preventDefault();
+    const clamped = Math.min(Math.max(next, 1), totalPages);
+    setPage(clamped);
+    onPageChange?.(clamped);
+  };
+
+  return (
+    // gap-2 (8px), not the default gap-1: the `size-9` anchors clear WCAG 2.2's
+    // 24×24 target-size threshold on their own, and 8px boundary-to-boundary
+    // keeps axe's spacing-exception circle math well clear too.
+    <Pagination {...navProps}>
       <PaginationContent className="gap-2">
         <PaginationItem>
-          <PaginationPrevious href="#" />
+          <PaginationPrevious
+            href={`?page=${Math.max(page - 1, 1)}`}
+            onClick={go(page - 1)}
+            aria-disabled={page === 1 || undefined}
+          />
         </PaginationItem>
+        {pageWindow(page, totalPages).map((p, i) =>
+          p === null ? (
+            <PaginationItem key={`gap-${i}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={p}>
+              <PaginationLink
+                href={`?page=${p}`}
+                active={p === page}
+                onClick={go(p)}
+              >
+                {p}
+              </PaginationLink>
+            </PaginationItem>
+          ),
+        )}
         <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#" active>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#" />
+          <PaginationNext
+            href={`?page=${Math.min(page + 1, totalPages)}`}
+            onClick={go(page + 1)}
+            aria-disabled={page === totalPages || undefined}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
+  );
+}
+
+export const Default: Story = {
+  // key: `page` seeds local state, so remount when the control changes it.
+  render: (args) => (
+    <PaginationDemo key={`${args.page}-${args.totalPages}`} {...args} />
   ),
 };
 
@@ -123,6 +235,17 @@ export const KeyboardFlow: Story = {
       }
     });
   },
+};
+
+/**
+ * Short result sets get no ellipsis — every page is worth a link, and a gap
+ * marker over six pages is pure noise.
+ */
+export const FewPages: Story = {
+  args: { page: 1, totalPages: 4 },
+  render: (args) => (
+    <PaginationDemo key={`${args.page}-${args.totalPages}`} {...args} />
+  ),
 };
 
 /**

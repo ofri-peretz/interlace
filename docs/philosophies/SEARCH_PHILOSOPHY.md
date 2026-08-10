@@ -287,7 +287,8 @@ Hard bans.
 - **`docsearch.json`** at the repo root — the crawler config (which
   pages to index, which selectors are titles vs. body, facet
   metadata).
-- **`ranking.test.ts`** in `apps/docs/src/__tests__/` — golden-file
+- **`ranking.test.ts`** (in the eslint monorepo's `apps/docs/src/__tests__/`;
+  not ported here) — golden-file
   test for the top-5 result of canonical queries.
 - **Build-time index extraction** from rule MDX files: each rule
   page emits `{ title, plugin, cwe, owasp, severity, fixable, body }`

@@ -9,7 +9,22 @@ const meta: Meta<typeof SettingsTemplate> = {
   title: 'Templates/SettingsTemplate',
   component: SettingsTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Account/app settings surface — topbar, section rail, and the active section's content. The active section comes from the consumer's router (one route per section), not internal state, so the template stays a server component. Below 480px the rail becomes a horizontal scroller above the content.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Props forwarded to Topbar.', table: { category: 'Data' } },
+    title: { control: 'text', description: 'Page heading above the rail.', table: { category: 'Content' } },
+    sections: { control: 'object', description: 'Rail entries — { id, label, href }. Each is a real route, not a tab.', table: { category: 'Data' } },
+    activeSection: { control: 'text', description: 'Which section id is current. Driven by the router, not by state.', table: { category: 'State' } },
+    children: { control: false, description: 'The active section body.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+  },
 };
 
 export default meta;
@@ -42,15 +57,12 @@ export const Profile: Story = {
       <form className="border-border bg-card rounded-lg border p-md flex flex-col gap-md">
         <Field>
           <FieldLabel>Display name</FieldLabel>
-          <FieldControl>
-            <Input placeholder="Ada Lovelace" />
-          </FieldControl>
+          {/* `render=`, not children — see AuthTemplate.stories.tsx. */}
+          <FieldControl render={<Input placeholder="Ada Lovelace" />} />
         </Field>
         <Field>
           <FieldLabel>Bio</FieldLabel>
-          <FieldControl>
-            <Input placeholder="Engineer @ Interlace" />
-          </FieldControl>
+          <FieldControl render={<Input placeholder="Engineer @ Interlace" />} />
         </Field>
         <div className="flex gap-sm">
           <Button>Save</Button>

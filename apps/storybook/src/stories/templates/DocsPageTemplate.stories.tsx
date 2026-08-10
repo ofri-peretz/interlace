@@ -6,7 +6,22 @@ const meta: Meta<typeof DocsPageTemplate> = {
   title: 'Templates/DocsPageTemplate',
   component: DocsPageTemplate,
   tags: ['autodocs'],
-  parameters: { layout: 'fullscreen' },
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component:
+          "Documentation page shell — topbar, optional left nav (md+), Prose-wrapped body, optional TOC rail (xl+). Both ds.interlace.tools and the ESLint plugin docs render through it. Sidebar and TOC are independently optional, so the same template covers a full docs site and a one-off standalone page.",
+      },
+    },
+  },
+  argTypes: {
+    topbar: { control: 'object', description: 'Props forwarded to Topbar.', table: { category: 'Data' } },
+    sidebar: { control: false, description: 'Left nav tree. Omit for a standalone page; appears at md and up.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    toc: { control: false, description: 'Right-hand table of contents. Appears at xl and up.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    body: { control: false, description: 'Required. Page content — the template wraps it in Prose.', table: { category: 'Slots', type: { summary: 'ReactNode' } } },
+    footer: { control: 'object', description: 'Props forwarded to Footer.', table: { category: 'Data' } },
+  },
 };
 
 export default meta;

@@ -31,6 +31,16 @@ interface StatGroupProps extends React.ComponentProps<'section'> {
   loading?: boolean;
 }
 
+/**
+ * Mobile-first track counts per desktop `cols`. Written out statically because
+ * Tailwind cannot scan a runtime-built `sm:grid-cols-${n}`.
+ */
+const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+};
+
 function StatGroup({
   stats = [],
   cols = 3,
@@ -45,7 +55,10 @@ function StatGroup({
       className={cn('w-full', className)}
       {...props}
     >
-      <Grid cols={cols} gap="md">
+      {/* Responsive collapse: `cols` is a DESKTOP count. Handed to Grid
+          unqualified it stays 4 tracks at every width, which on a 375px phone
+          is a 68px card whose label and trend icon spill past the viewport. */}
+      <Grid cols={cols} gap="md" className={STAT_GRID_COLS[cols]}>
         {loading
           ? Array.from({ length: cols }).map((_, i) => (
               <Skeleton key={i} variant="stat-card" label={null} />

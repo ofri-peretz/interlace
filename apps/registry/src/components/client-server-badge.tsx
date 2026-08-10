@@ -10,7 +10,7 @@ export function ClientServerBadge({ isClient }: Props) {
     return (
       <span
         title="Renders on the client. Includes the React 'use client' directive — required by hooks / Base UI client surfaces."
-        className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/40 bg-sky-500/10 px-3 py-1 font-mono text-xs text-sky-600 dark:text-sky-300"
+        className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/40 bg-sky-500/10 px-3 py-1 font-mono text-xs text-sky-700 dark:text-sky-300"
       >
         <span aria-hidden>⚡</span>
         <span>client</span>
@@ -20,7 +20,7 @@ export function ClientServerBadge({ isClient }: Props) {
   return (
     <span
       title="Server-component-safe. Renders during SSR / RSC without hydration."
-      className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 font-mono text-xs text-emerald-600 dark:text-emerald-300"
+      className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 font-mono text-xs text-emerald-700 dark:text-emerald-300"
     >
       <span aria-hidden>◐</span>
       <span>server</span>

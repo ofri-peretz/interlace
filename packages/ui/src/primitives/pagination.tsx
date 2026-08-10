@@ -35,7 +35,13 @@ function PaginationContent({
   return (
     <ul
       data-slot="pagination-content"
-      className={cn('flex flex-row items-center gap-1', className)}
+      // flex-wrap: without it an N-page bar is one unbreakable row that
+      // overflows any container narrower than its content (a 9-page bar
+      // measured 444px inside a 375px viewport and pushed the page sideways).
+      className={cn(
+        'flex flex-row flex-wrap items-center justify-center gap-1',
+        className,
+      )}
       {...props}
     />
   );

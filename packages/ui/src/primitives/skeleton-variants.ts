@@ -64,6 +64,17 @@ export const SKELETON_VARIANTS = [
   'prev-next-post',
   'stat-card',
 
+  // ── Chart-shaped (Phase 5) ───────────────────────────────────────────
+  // A loading chart is the most common state a data surface has — the data
+  // is always in flight on first paint — and it is the one most often left
+  // as a spinner, which reserves nothing and guarantees a layout shift the
+  // moment the series arrives. Each variant reserves the real silhouette:
+  // `chart` an axis + plot box, `metric-table` a header row plus rows,
+  // `sparkline` the exact inline 90×22 cell so a table does not reflow.
+  'chart',
+  'metric-table',
+  'sparkline',
+
   // ── Template-shaped (matches a template's full-page layout) ──────────
   // Added by Phase 4 when the templates land.
 ] as const;
@@ -99,7 +110,10 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // Overlay/nav surfaces (wave 1.2). `menu` matches the DropdownMenu /
   // ContextMenu popup silhouette; `pagination` the nav row; `tabs` the
   // list + panel; `toc` the indented heading rail.
-  menu: 'h-40 w-56 rounded-md border',
+  // max-w-full: `menu` is the only variant with a fixed inline size. Without
+  // the cap its 224px cannot shrink (flex items floor at min-content), so the
+  // placeholder overflows any slot narrower than itself — e.g. a 375px phone.
+  menu: 'h-40 w-56 max-w-full rounded-md border',
   pagination: 'h-9 w-full rounded-md',
   prose: 'h-4 w-full rounded-sm',
   tabs: 'h-32 w-full rounded-lg',
@@ -133,4 +147,13 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // root would draw a third block behind them.
   'prev-next-post': 'h-24 w-full bg-transparent',
   'stat-card': 'h-24 w-full rounded-lg',
+
+  // Chart-shaped. `chart` matches the TimeSeries default drawing height
+  // (220 user units ≈ h-56) so the swap is CLS-neutral; `metric-table` is a
+  // composite (header + rows) rendered in skeleton.tsx; `sparkline` reserves
+  // the exact inline cell so a metric arriving mid-window does not reflow the
+  // column around it.
+  chart: 'h-56 w-full rounded-md',
+  'metric-table': 'w-full rounded-md',
+  sparkline: 'inline-block h-[22px] w-[90px] rounded-sm align-middle',
 };
