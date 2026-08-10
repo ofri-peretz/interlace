@@ -52,6 +52,16 @@ interface ArticleListGridProps extends Omit<React.ComponentProps<'section'>, 'ti
   emptyState?: React.ReactNode;
 }
 
+/**
+ * Mobile-first track counts per desktop `cols`. Written out statically because
+ * Tailwind cannot scan a runtime-built `sm:grid-cols-${n}`.
+ */
+const ARTICLE_GRID_COLS: Record<2 | 3 | 4, string> = {
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+};
+
 function ArticleListGrid({
   title,
   lead,
@@ -92,7 +102,10 @@ function ArticleListGrid({
           {loading ? (
             <>
               <Skeleton variant="article-card" className="h-72 w-full" label={null} />
-              <Grid cols={cols} gap="md">
+              {/* Responsive collapse: `cols` is a DESKTOP count. Unqualified it
+                  holds 3 tracks at 375px and the truncated author name inside
+                  each card measures 0px wide — invisible. */}
+              <Grid cols={cols} gap="md" className={ARTICLE_GRID_COLS[cols]}>
                 {Array.from({ length: skeletonCount }).map((_, i) => (
                   <Skeleton key={i} variant="article-card" label={null} />
                 ))}
@@ -110,7 +123,7 @@ function ArticleListGrid({
                 <ArticleCard {...featured} variant="overlay" priority />
               ) : null}
               {posts.length > 0 ? (
-                <Grid cols={cols} gap="md">
+                <Grid cols={cols} gap="md" className={ARTICLE_GRID_COLS[cols]}>
                   {posts.map((post, i) => (
                     <ArticleCard key={i} {...post} />
                   ))}

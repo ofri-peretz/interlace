@@ -102,7 +102,7 @@ function Toolbar() {
           />
         </div>
         <Select defaultValue="date">
-          <SelectTrigger className="w-[150px]" aria-label="Sort by">
+          <SelectTrigger className="w-[150px] max-w-full" aria-label="Sort by">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

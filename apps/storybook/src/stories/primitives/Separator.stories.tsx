@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Separator>;
 
 export const Horizontal: Story = {
   render: () => (
-    <div className="w-[320px]">
+    <div className="w-[320px] max-w-full">
       <p className="text-sm font-semibold">Reactions</p>
       <p className="text-muted-foreground text-xs">218 across 12 articles</p>
       <Separator className="my-3" />

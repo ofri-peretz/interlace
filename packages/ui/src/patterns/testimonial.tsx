@@ -125,6 +125,16 @@ interface TestimonialGridProps extends Omit<React.ComponentProps<'section'>, 'ti
   loadingCount?: number;
 }
 
+/**
+ * Mobile-first track counts per desktop `cols`. Written out statically because
+ * Tailwind cannot scan a runtime-built `sm:grid-cols-${n}`.
+ */
+const TESTIMONIAL_GRID_COLS: Record<1 | 2 | 3, string> = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+};
+
 function TestimonialGrid({
   title,
   lead,
@@ -159,7 +169,10 @@ function TestimonialGrid({
               ) : null}
             </Stack>
           )}
-          <Grid cols={cols} gap="md">
+          {/* Responsive collapse: `cols` is a DESKTOP count. Unqualified it
+              keeps 3 tracks at 375px, squeezing each quote card until the
+              author name and role collapse to zero width and vanish. */}
+          <Grid cols={cols} gap="md" className={TESTIMONIAL_GRID_COLS[cols]}>
             {loading
               ? Array.from({ length: skeletonCount }).map((_, i) => (
                   <Skeleton key={i} variant="card" label={null} />

@@ -34,7 +34,7 @@ export const Default: Story = {
       'This rule needs TypeScript type information to flag the violation. Enable parserOptions.project in your ESLint config.',
   },
   render: (args) => (
-    <div className="w-[640px]">
+    <div className="w-[640px] max-w-full">
       <Callout {...args} />
     </div>
   ),
@@ -57,7 +57,7 @@ export const Variants: Story = {
     };
 
     return (
-      <div className="flex w-[640px] flex-col gap-md">
+      <div className="flex w-[640px] max-w-full flex-col gap-md">
         {tones.map((tone) => (
           <Callout
             key={`${tone}-titled`}

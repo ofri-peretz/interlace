@@ -223,7 +223,33 @@ table,
  *    devtools, queryable in E2E tests). The visual dev-mode warning is wired
  *    in apps that opt-in via `<body data-interlace-dev>`.
  * ──────────────────────────────────────────────────────────────── */
-[data-min-viewport] {
+/*
+ * ⚠️ The containment is GATED on the dev opt-in, and that gate is load-bearing.
+ *
+ * `container-type: inline-size` applies inline-axis SIZE CONTAINMENT, which
+ * makes an element's intrinsic inline size exactly ZERO. Applied unconditionally
+ * — as it was until 2026-08-10 — every primitive that declares
+ * `data-min-viewport` AND is shrink-to-fit (`inline-block`, `inline-flex`, or a
+ * content-sized flex item) computed `width: 0px`, its children overflowed the
+ * box, and the component rendered as a sliver or as one word per line.
+ *
+ * Measured on `ReadingTime`: 0px with the rule, 28.84px without it. It also
+ * zeroed NumberField (154px), ToggleGroup (120px), PublishedDate (88px), the
+ * Delta cell in MetricTable, and FocusRing — and it was live on
+ * ds.interlace.tools, where these render as the public previews.
+ *
+ * The containment exists only so the `@container` queries below can fire. Those
+ * queries are themselves gated on `body[data-interlace-dev]`, so outside dev
+ * mode the containment bought nothing and cost this. Gating it matches the
+ * queries it serves.
+ *
+ * Known limitation, accepted deliberately: inside the dev gate a shrink-to-fit
+ * primitive still collapses, because there is no CSS selector for "block-level"
+ * and containment is meaningless on an inline box. A dev-only visual artefact in
+ * an opt-in debugging mode is a far better trade than a zero-width component in
+ * production, which is what we had.
+ */
+body[data-interlace-dev] [data-min-viewport] {
   container-type: inline-size;
 }
 

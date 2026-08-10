@@ -123,7 +123,7 @@ export const RTL: Story = {
 /** Loading placeholder — the 8px rail. */
 export const Loading: Story = {
   render: () => (
-    <div className="w-[260px]">
+    <div className="w-[260px] max-w-full">
       <Skeleton variant="slider" />
     </div>
   ),

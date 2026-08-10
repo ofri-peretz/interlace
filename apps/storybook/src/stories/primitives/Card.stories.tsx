@@ -29,7 +29,7 @@ type Story = StoryObj<typeof Card>;
 
 export const Default: Story = {
   render: () => (
-    <Card className="w-[360px]">
+    <Card className="w-[360px] max-w-full">
       <CardHeader>
         <CardTitle>Plugin: secure-coding</CardTitle>
         <CardDescription>
@@ -50,7 +50,7 @@ export const Dark: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: () => (
     <div className="dark">
-      <Card className="w-[360px]">
+      <Card className="w-[360px] max-w-full">
         <CardHeader>
           <CardTitle>Plugin: secure-coding</CardTitle>
           <CardDescription>

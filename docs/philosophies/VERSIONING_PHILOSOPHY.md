@@ -1,0 +1,235 @@
+# Versioning philosophy
+
+How Interlace versions a design system that people **copy** rather than
+install. Sibling to `INTEROP_PHILOSOPHY.md` (which owns how our surface meets
+someone else's code) and `DOCS_PHILOSOPHY.md` (which owns how that surface is
+explained).
+
+**Home.** This lives in `docs/philosophies/` and not in an ADR because it is a
+standing contract, not a decision record. An ADR answers "why did we choose X
+in July 2026" once and then freezes; this document is consulted every time
+somebody writes a changeset, and it changes when the contract changes. The repo
+has no `docs/adr/` today, and the one decision inside here that IS a point in
+time — keeping the package private — is recorded in § 2 with its reasoning
+intact, so nothing is lost by not opening one.
+
+---
+
+## 1. The copy is the product
+
+`npx shadcn add @interlace/button` does not add a dependency. It writes
+`components/ui/button.tsx` into someone's repository, and from that instant our
+git history and their file have nothing to do with each other. They will edit
+it. They should — that is the pitch.
+
+Everything downstream follows from that one fact:
+
+- **There is no `npm update`.** A fix we ship reaches them only if they read
+  that it exists and choose to re-run the install. The changelog is not
+  documentation of the upgrade path; it **is** the upgrade path.
+- **There is no version range.** `^1.2.0` cannot express "I have the copy from
+  March". The only place a version can live for them is *inside the file*,
+  which is why every installed file carries a banner (§ 6).
+- **Breaking means something different.** For an npm package, breaking is
+  "your build fails". For copied source, their build cannot fail — they own the
+  file. Breaking means **"the copy you own and the copy we ship have diverged
+  in a way that makes our note, our docs, or your next re-install wrong."**
+
+## 2. Private, and still versioned
+
+`@interlace/ui` is `"private": true` and is **not published to npm**. That is a
+decision, not an oversight, and it is not going to change quietly:
+
+- Publishing would create a second distribution channel with a *different*
+  upgrade model — `npm update` for one set of users, re-copy for the other —
+  for the same components. The first time a consumer edits their copy, the two
+  models disagree about what "version 1.3.0 of Button" means for them.
+- The registry is the product surface we are trying to make excellent
+  (`ds.interlace.tools` as a top shadcn registry). A published package splits
+  that attention and gives people a way to consume the DS that bypasses every
+  contract the registry enforces — theme install, registry dependencies,
+  installability E2E.
+
+Private does not mean unversioned. Changesets is configured with
+`privatePackages: { version: true, tag: true }`, so the package gets a real
+version and a real git tag; the release step is
+`scripts/release-tag.mjs` (tag + push) where a public package would run
+`npm publish`. The version is load-bearing in three places: the banner in the
+consumer's file, the anchor every release note is filed under, and `since` on
+each component.
+
+Consequence to accept honestly: **the version is only as real as the release
+notes**, because nothing else enforces it. Hence § 5.
+
+## 3. What counts as BREAKING
+
+For a component whose source somebody already owns, all of these are **major**:
+
+| Change | Why it breaks a copy |
+| --- | --- |
+| A **renamed or removed prop** | Their call sites use the old name. Our docs, our examples and every note we write from now on describe a component they do not have. |
+| A **narrowed prop type** — a union losing a member, an optional becoming required | Their existing call is now invalid against our documentation even though their file still compiles. |
+| A **changed default** | The component behaves differently for the same call. Silent, and worse than a compile error. |
+| A **renamed or removed design token** | They may reference `--color-brand-soft` from their own CSS. A token rename is a public API change even though no `.tsx` moved. |
+| A **changed DOM structure** | Wrapper added, element swapped, nesting order changed. Anyone who wrote a descendant selector against our markup — which the DS invites, via `data-slot` — has a rule that silently stops matching. |
+| A **removed or renamed `data-slot`** | `data-slot` is the styling contract. Removing one is removing the API, not tidying an attribute. |
+| A **changed `registryDependencies` target** | Their re-install now writes different files into different places. |
+| A **raised `MIN_VIEWPORT`** | We are declaring the component no longer supports a viewport they may be shipping it at. |
+
+**Minor (Added)**: a new component, a new optional prop, a new variant option, a
+new token, a new `data-slot`. Nothing they own changes underneath them.
+
+**Patch (Changed)**: a fix or an internal change with an identical public
+surface — same props, same defaults, same DOM, same slots. Safe to re-install,
+safe to skip.
+
+The test to apply, in one sentence: **if a reader who installed this component
+six months ago would have to edit their own file to match what we now
+document, it is breaking.**
+
+## 4. The migration note is mandatory
+
+Every `major` entry carries a `Migration:` block, and
+`apps/registry/scripts/build-changelog.mjs --check` fails the build without
+one. It is not a formality:
+
+- it is the **only** actionable artefact for someone with a copy — there is no
+  codemod we can run in their repo and no dependency bump that carries it;
+- it must name the **literal edit**: the file, the identifier, the before and
+  the after. "Update your usage of Badge" is not a migration note;
+- it must state what did *not* change, when that is load-bearing. "The accepted
+  values are unchanged. `data-slot="badge"` is unchanged." saves the reader a
+  diff.
+
+Write it for the person, not for the reviewer. The reviewer has the PR.
+
+## 5. `@deprecated` names the release it disappears in
+
+A deprecation with no removal date is a permanent one — everybody keeps using
+it, and the DS carries the alias forever. So the convention is:
+
+```ts
+/**
+ * @deprecated since 1.0.0 — removed in 2.0.0. Use `@interlace/ui/patterns/hero`.
+ * Kept as a re-export so existing imports keep resolving until then.
+ */
+export * from '../patterns/hero.js';
+```
+
+Three parts, all required: **since** (when it was deprecated), **removed in**
+(a real version, never "eventually" or "a future release"), and the
+**replacement**, named by its import path.
+
+For a component that ships through the registry, the same three facts go in the
+manifest so the site can render them:
+
+```json
+{ "name": "old-thing", "version": "1.4.0", "since": "1.0.0",
+  "deprecated": { "removedIn": "2.0.0", "replacement": "Use `new-thing` instead." } }
+```
+
+`derive-component-versions.mjs --check` rejects a `deprecated` block whose
+`removedIn` is not a version. Deprecation is authored by hand — git cannot know
+a component is on its way out — and is preserved across every regeneration of
+the manifest.
+
+Removal itself is a **breaking** change with a migration note, on the release
+the deprecation named. Slipping it is worse than never deprecating: it teaches
+readers the dates are decorative.
+
+## 6. Per-component versions, derived from git
+
+A hand-maintained per-component version rots inside a month — nobody remembers
+to bump `badge` because they edited `badge-variants.ts`. So it is derived.
+
+`apps/registry/scripts/derive-component-versions.mjs` walks every non-merge
+commit touching a component's **own files**: its `.tsx`, its companions
+(`*-variants.ts`, `scale.ts`, `graph.ts`) and its optional `<name>.meta.json`.
+
+- the first commit that introduces the component establishes **1.0.0** — a
+  component the DS ships has a contract, so it is never `0.x`;
+- each later commit applies its conventional-commit bump: `feat!:` /
+  `BREAKING CHANGE:` → major, `feat:` → minor, `fix|perf|refactor|revert|style`
+  → patch, and `chore|docs|test|ci|build` → nothing, because none of those
+  change what a consumer installs.
+
+`since` — the `@interlace/ui` release a component first shipped in — is
+resolved from the release tags (`@interlace/ui@X.Y.Z`) that contain its first
+commit. A component whose first commit predates every tag gets the current
+package version, which is exactly right for the first release and
+self-maintaining after it.
+
+Two safety rules, both in the merge step:
+
+- **versions never go backwards.** If a rebase or a squash makes the derived
+  version lower than the one already published, the published one wins and the
+  script says so. Consumers have the old number written into their files;
+  moving it down makes the diff lie.
+- **`deprecated` survives.** Regeneration never drops hand-authored fields.
+
+### The drift gate
+
+The registry has a drift check — `build-registry.mjs --check` rebuilds every
+item in memory and diffs it against the committed `public/r/*.json`. A version
+derived from `git HEAD` at *build* time would rewrite all 128 item files on
+every commit, and that gate would be red forever after.
+
+So the pipeline has a seam in it, deliberately:
+
+```
+git history ──(derive-component-versions.mjs, on demand / at release)──▶ component-versions.json  [committed]
+component-versions.json ──(build-registry.mjs, pure)──────────────────▶ public/r/*.json          [committed]
+```
+
+The registry build never touches git. It reads a committed manifest, which
+makes it a pure function of tracked files — the same input produces the same
+JSON on any machine, at any HEAD. The manifest moves only when someone runs
+`npm run versions:derive`, and the release script runs the derive and the
+registry rebuild **in the same commit**, so the two can never be one commit out
+of step.
+
+What CI checks on every PR is therefore *completeness*, not recomputation:
+every shipped item has an entry, every entry names a shipped item, every
+version is valid semver, every deprecation names a removal release. All of that
+is true regardless of which commit you are standing on.
+
+## 7. The banner in the consumer's tree
+
+Every `.ts`/`.tsx` file the registry installs carries a four-line banner:
+
+```ts
+// @interlace/button v1.1.0 — Interlace design system.
+// Docs, props and live preview: https://ds.interlace.tools/c/button
+// What changed since: https://ds.interlace.tools/c/button#history
+// Generated banner — keep it, the upgrade diff reads this version.
+```
+
+It sits **after** `'use client'` (comments before a directive are legal, but
+"the directive must come first" has a long history of bundlers enforcing it
+inconsistently and there is no upside to finding out which one the consumer
+uses), and it is written with `//` rather than JSDoc so that neither our own
+metadata parser nor the consumer's IDE attributes it to their component.
+
+This is the prerequisite for the upgrade diff (plan phase 9.5): a tool can only
+tell someone what changed since they installed if the version they installed
+exists somewhere in their repository. Stylesheets and the starter READMEs do
+not get a banner — different comment syntax, and neither is a file anyone
+diffs.
+
+## 8. The loop
+
+1. **Author.** Any PR touching `packages/ui/**` adds `.changeset/<name>.md`.
+   The `changeset` CI job fails the PR without one. Format and the required
+   `Components:` / `Migration:` lines: `.changeset/README.md`.
+2. **Merge.** The changeset sits in `.changeset/` and renders on
+   `/changelog` under **Unreleased**, so the release is visible while it forms.
+3. **Release.** `.github/workflows/release.yml` opens a version PR:
+   `changeset version` bumps the package and folds the notes into
+   `packages/ui/CHANGELOG.md`, then `versions:derive` re-derives every
+   component version and `registry:build` restamps every item and banner.
+4. **Tag.** Merging that PR tags `@interlace/ui@<version>` and the registry
+   deploys. `/changelog` and every component's History section pick the new
+   release up from the same generated JSON.
+
+The only manual step in that loop is step 1, and it is the only one that
+requires judgement.

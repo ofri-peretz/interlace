@@ -90,7 +90,9 @@ function Specimen() {
           </Typography>
         </Stack>
 
-        <Grid cols={12} gap="lg">
+        {/* gap-sm below md: a 12-track grid needs 11 gutters, so gap-lg alone
+            demands 440px of pure gutter and overflows any phone viewport. */}
+        <Grid cols={12} gap="lg" className="gap-sm md:gap-lg">
           {STEPS.map((step) => (
             <GridItem key={step.key} span={12} mdSpan={4}>
               <Swatch step={step} />

@@ -32,7 +32,7 @@ export const Default: Story = {
     placeholder: 'Tell us what you think…',
   },
   render: (args) => (
-    <div className="w-[480px]">
+    <div className="w-[480px] max-w-full">
       <Textarea {...args} />
     </div>
   ),
@@ -49,13 +49,13 @@ export const Variants: Story = {
     const resizes = ['y', 'none'] as const;
 
     return (
-      <div className="w-[960px] space-y-lg">
+      <div className="w-[960px] max-w-full space-y-lg">
         {resizes.map((resize) => (
           <section key={resize} className="space-y-sm">
             <h3 className="text-ui-sm font-mono uppercase text-muted-foreground">
               resize=&quot;{resize}&quot;
             </h3>
-            <div className="grid grid-cols-3 gap-md">
+            <div className="grid grid-cols-1 gap-md md:grid-cols-3">
               {sizes.map((size) =>
                 tones.map((tone) => (
                   <div key={`${size}-${tone}`} className="space-y-xs">
@@ -125,7 +125,7 @@ export const Disabled: Story = {
   render: () => (
     <Textarea
       aria-label="Disabled notes"
-      className="w-[320px]"
+      className="w-[320px] max-w-full"
       defaultValue="Read-only while the run is in flight."
       disabled
     />
@@ -139,7 +139,7 @@ export const Disabled: Story = {
  */
 export const Invalid: Story = {
   render: () => (
-    <div className="flex w-[320px] flex-col gap-1">
+    <div className="flex w-[320px] max-w-full flex-col gap-1">
       <Textarea
         aria-label="Rule rationale"
         aria-invalid="true"
@@ -156,7 +156,7 @@ export const Invalid: Story = {
 /** Loading placeholder — reserves the md size's min-height. */
 export const Loading: Story = {
   render: () => (
-    <div className="w-[320px]">
+    <div className="w-[320px] max-w-full">
       <Skeleton variant="textarea" />
     </div>
   ),

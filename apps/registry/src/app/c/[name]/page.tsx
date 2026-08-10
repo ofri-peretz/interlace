@@ -7,9 +7,11 @@ import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
 import { CategoryBadge } from '@/components/category-badge';
 import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
+import { ReleaseNote } from '@/components/release-note';
 import { SourceViewer } from '@/components/source-viewer';
 import { StoryPreview } from '@/components/story-preview';
 import { categoryById, intentCategoryOf } from '@/lib/categories';
+import { historyFor, releaseAnchor } from '@/lib/changelog';
 import { listItemNames, loadEnrichedItem, refToName } from '@/lib/registry';
 import { exampleStories, storiesFor } from '@/lib/stories';
 
@@ -66,6 +68,7 @@ export default async function ComponentPage({ params }: PageProps) {
   const category = categoryById(categoryId);
   const stories = storiesFor(item.name);
   const examples = stories ? exampleStories(stories) : [];
+  const history = historyFor(item.name);
 
   return (
     <div className="bg-background text-foreground min-h-screen">
@@ -127,7 +130,32 @@ export default async function ComponentPage({ params }: PageProps) {
             <span className="border-border text-muted-foreground rounded-full border px-3 py-1 font-mono text-xs">
               {item.type.replace('registry:', '')}
             </span>
+            {contract?.version ? (
+              <a
+                href="#history"
+                className="border-primary/40 bg-primary/10 text-primary rounded-full border px-3 py-1 font-mono text-xs font-semibold"
+                title={`This component's own version. First shipped in @interlace/ui ${contract.since}.`}
+              >
+                v{contract.version}
+              </a>
+            ) : null}
           </div>
+
+          {contract?.deprecated ? (
+            <div className="border-destructive/40 bg-destructive/10 text-destructive mt-5 rounded-lg border p-4">
+              <div className="text-xs font-semibold tracking-wider uppercase">
+                Deprecated
+              </div>
+              <p className="mt-1 text-sm">
+                {contract.deprecated.replacement} Removed in{' '}
+                <code className="font-mono">
+                  @interlace/ui {contract.deprecated.removedIn}
+                </code>
+                . Your installed copy keeps working — nothing is deleted out of
+                your tree — but it stops receiving fixes at that release.
+              </p>
+            </div>
+          ) : null}
         </div>
 
         {/* ─── Live preview ───────────────────────────────────────── */}
@@ -188,6 +216,79 @@ export default async function ComponentPage({ params }: PageProps) {
               code={`npx shadcn@latest add @interlace/${item.name}`}
             />
           </div>
+        </section>
+
+        {/* ─── History ───────────────────────────────────────────── */}
+        {/*
+          Same data as /changelog, filtered to the entries that name this
+          component — `lib/changelog.ts` is the only reader of the compiled
+          notes, and `ReleaseNote` the only renderer, so the two views cannot
+          drift into disagreeing about what happened.
+        */}
+        <section id="history" className="mt-12 scroll-mt-20">
+          <h2 className="text-xl font-semibold">History</h2>
+          <p className="text-muted-foreground mt-2 max-w-prose text-sm">
+            This component is at{' '}
+            <code className="text-foreground font-mono">
+              v{contract?.version ?? '—'}
+            </code>
+            {contract?.since ? (
+              <>
+                , first shipped in{' '}
+                <code className="text-foreground font-mono">
+                  @interlace/ui {contract.since}
+                </code>
+              </>
+            ) : null}
+            . The version is stamped as a banner into the file the install
+            writes, so the copy in your tree says which one you have — compare
+            it with the number above before deciding whether to re-run the
+            install.
+          </p>
+
+          {history.length > 0 ? (
+            <div className="mt-5 space-y-8">
+              {history.map((release) => (
+                <div key={release.version}>
+                  <h3 className="border-border flex flex-wrap items-baseline justify-between gap-3 border-b pb-2 text-sm font-semibold">
+                    <Link
+                      href={`/changelog#${releaseAnchor(release.version)}`}
+                      className="hover:text-primary transition-colors"
+                    >
+                      {release.unreleased
+                        ? 'Unreleased'
+                        : `@interlace/ui ${release.version}`}
+                    </Link>
+                    <span className="text-muted-foreground font-mono text-xs font-normal">
+                      {release.entries.length} entr
+                      {release.entries.length === 1 ? 'y' : 'ies'}
+                    </span>
+                  </h3>
+                  <ul className="mt-3 space-y-4">
+                    {release.entries.map((entry, i) => (
+                      <ReleaseNote
+                        key={`${entry.source}-${i}`}
+                        entry={entry}
+                        omitComponent={item.name}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="border-border bg-card text-muted-foreground mt-4 rounded-lg border p-5 text-sm">
+              No release note names this component yet. It shipped with the
+              release above and has not changed since — see the{' '}
+              <Link
+                href="/changelog"
+                className="text-primary underline-offset-4 hover:underline"
+              >
+                full changelog
+              </Link>{' '}
+              for what moved elsewhere in the DS.
+            </p>
+          )}
         </section>
 
         {/* ─── Import + exports ─────────────────────────────────── */}

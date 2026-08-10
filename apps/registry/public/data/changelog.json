@@ -1,0 +1,156 @@
+{
+  "releases": [
+    {
+      "version": "Unreleased",
+      "unreleased": true,
+      "entries": [
+        {
+          "summary": "The fourteen `blocks/*` re-export aliases now name the release they disappear\nin. They previously said \"removal scheduled for one release cycle after the\narchitecture PR lands\", which is not a date anyone can plan around — so the\naliases were, in practice, permanent. They are now `@deprecated since 1.0.0 —\nremoved in 2.0.0`, and removal will land as a breaking change with a migration\nnote.",
+          "components": [
+            "article-card",
+            "author-byline",
+            "code-window",
+            "empty-state",
+            "figure",
+            "hero",
+            "newsletter-form",
+            "page-header",
+            "prev-next-post",
+            "related-posts",
+            "section-header",
+            "share-buttons",
+            "sign-in-form",
+            "stat-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": "Nothing changes today — `@interlace/ui/blocks/<name>` still\nresolves. Before 2.0.0, change those imports to\n`@interlace/ui/patterns/<name>`; the exported names are identical.",
+          "source": ".changeset/deprecated-blocks-name-their-removal.md"
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "unreleased": false,
+      "entries": [
+        {
+          "summary": "The design system takes a version. `@interlace/ui` was `0.0.0` with no\nchangelog, no release tag and no per-component version, while\nds.interlace.tools had already been serving installable copies of every\ncomponent. 1.0.0 is the first release with a written contract behind it:\nsemver, per-component versions derived from git, a public changelog, and a\ndocumented definition of what \"breaking\" means for source you copied.",
+          "components": [],
+          "componentsDeclared": true,
+          "kind": "Breaking",
+          "bump": "major",
+          "migration": "Nothing to do. Components installed before 1.0.0 carry no version\nbanner in your tree; anything installed from 1.0.0 onward does. To adopt the\nbanner on an already-installed component, re-run\n`npx shadcn@latest add @interlace/<name>` and keep your local edits.",
+          "source": "CHANGELOG.md#1.0.0"
+        },
+        {
+          "summary": "The visualization layer ships: a token-driven chart set built on the\n`VISUALIZATION_PHILOSOPHY` row-first doctrine — `MetricTable` as the\ncentrepiece, `TimeSeries` as the thing a row is promoted into, plus a\nnetwork graph, sparklines and deltas. Every chart carries the DS-wide\n`loading` skeleton opt-in.",
+          "components": [
+            "metric-table",
+            "time-series",
+            "series-table",
+            "network-graph",
+            "sparkline",
+            "delta"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#1.0.0"
+        },
+        {
+          "summary": "The component floor reaches every tier: form, overlay, navigation and\ndisplay primitives were modelled to the portable 26-rule floor with\nskeletons, locked breakpoints, and AA contrast measured per composite\nrather than eyeballed.",
+          "components": [
+            "input",
+            "textarea",
+            "select",
+            "checkbox",
+            "radio-group",
+            "switch",
+            "slider",
+            "number-field",
+            "form",
+            "label",
+            "dialog",
+            "alert-dialog",
+            "sheet",
+            "popover",
+            "tooltip",
+            "hover-card",
+            "dropdown-menu",
+            "context-menu",
+            "tabs",
+            "accordion",
+            "collapsible",
+            "breadcrumb",
+            "pagination",
+            "toast",
+            "card",
+            "badge",
+            "avatar",
+            "alert",
+            "separator",
+            "progress",
+            "skeleton"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#1.0.0"
+        },
+        {
+          "summary": "The five-layer architecture lands: primitives → patterns → charts →\ntemplates, with `SectionBoundary` as the composition seam and thirteen\nfull-page templates installable as registry blocks.",
+          "components": [
+            "section-boundary",
+            "article-template",
+            "auth-template",
+            "author-template",
+            "blog-home-template",
+            "dashboard-template",
+            "docs-page-template",
+            "error-template",
+            "landing-template",
+            "registry-item-template",
+            "scorecard-template",
+            "settings-template",
+            "stats-template",
+            "tag-template"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#1.0.0"
+        },
+        {
+          "summary": "The brand layer is forkable: the whole palette moved from Tailwind violet to\nthe burnt-orange/green Interlace palette inside `@layer interlace.brand`\nwith zero component edits, and the CSS baseline ships as one installable\n`theme` item — tokens, foundation, preflight (WCAG 2.2 SC 2.4.13 focus ring\nand the `[data-min-viewport]` contract), the shadcn↔fumadocs bridge, and the\nbrand palette.",
+          "components": [
+            "theme"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#1.0.0"
+        },
+        {
+          "summary": "Day-one install surfaces: three starter bundles that pull a curated set of\nitems in one command, and the two library utilities every primitive needs.",
+          "components": [
+            "a11y-starter",
+            "layout-starter",
+            "mdx-starter",
+            "cn",
+            "use-reduced-motion"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#1.0.0"
+        }
+      ]
+    }
+  ]
+}

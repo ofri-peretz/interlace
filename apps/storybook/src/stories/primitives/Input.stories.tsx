@@ -24,7 +24,7 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
   render: () => (
-    <div className="flex w-[320px] flex-col gap-2">
+    <div className="flex w-[320px] max-w-full flex-col gap-2">
       <Label htmlFor="search">Search articles</Label>
       <Input id="search" placeholder="JWT, SQL, prototype pollution…" />
     </div>
@@ -32,7 +32,7 @@ export const Default: Story = {
 };
 export const Disabled: Story = {
   render: () => (
-    <div className="flex w-[320px] flex-col gap-2">
+    <div className="flex w-[320px] max-w-full flex-col gap-2">
       <Label htmlFor="search-d">Search</Label>
       <Input id="search-d" placeholder="Disabled" disabled />
     </div>
@@ -41,7 +41,7 @@ export const Disabled: Story = {
 
 export const Invalid: Story = {
   render: () => (
-    <div className="flex w-[320px] flex-col gap-2">
+    <div className="flex w-[320px] max-w-full flex-col gap-2">
       <Label htmlFor="search-inv">Search</Label>
       <Input
         id="search-inv"
@@ -63,7 +63,7 @@ export const Dark: Story = {
 
 export const RTL: Story = {
   render: () => (
-    <div className="flex w-[320px] flex-col gap-2">
+    <div className="flex w-[320px] max-w-full flex-col gap-2">
       <Label htmlFor="search-rtl">بحث المقالات</Label>
       <Input id="search-rtl" placeholder="JWT, SQL, تلوث النموذج الأولي…" />
     </div>
@@ -82,7 +82,7 @@ export const Focused: Story = {
     <Input
       aria-label="Focus ring demo"
       placeholder="Tab to me"
-      className="w-[260px]"
+      className="w-[260px] max-w-full"
     />
   ),
   play: async ({ canvasElement }) => {
@@ -96,7 +96,7 @@ export const Focused: Story = {
 /** Loading placeholder — reserves the exact 36px control height (CLS=0). */
 export const Loading: Story = {
   render: () => (
-    <div className="w-[260px]">
+    <div className="w-[260px] max-w-full">
       <Skeleton variant="input" />
     </div>
   ),

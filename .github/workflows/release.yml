@@ -1,0 +1,76 @@
+name: release
+
+# Versioning for a design system that is distributed as COPIED SOURCE.
+#
+# `@interlace/ui` is `private: true` and is never published to npm — consumers
+# get their copy from the shadcn registry at ds.interlace.tools. That does not
+# make the version decorative: it is the number stamped into the banner of the
+# file in their tree, and the anchor every release note is filed under. See
+# `docs/philosophies/VERSIONING_PHILOSOPHY.md`.
+#
+# The loop:
+#
+#   1. every PR touching packages/ui adds a changeset (gated in ci.yml);
+#   2. this workflow opens/maintains a "Version Packages" PR that applies them:
+#      bumps packages/ui/package.json, folds the notes into CHANGELOG.md,
+#      re-derives per-component versions from git, and rebuilds the registry so
+#      every item's `meta.version` and banner move in the SAME commit as the
+#      version bump — that lock-step is what keeps the registry drift gate
+#      green;
+#   3. merging that PR tags `@interlace/ui@<version>`.
+#
+# Step 2 is why `version-packages` is one npm script rather than a list of
+# steps here: a contributor cutting a release by hand runs the same command and
+# gets the same commit.
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+
+jobs:
+  release:
+    name: version / tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: `derive-component-versions.mjs` walks every commit
+          # that touched each component, and a shallow clone would silently
+          # produce 1.0.0 for everything.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+
+      - name: Configure git identity for the version commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Version PR / tag release
+        uses: changesets/action@v1
+        with:
+          # Applies the pending changesets, re-derives component versions and
+          # rebuilds the registry — see the `version-packages` script.
+          version: npm run version-packages
+          # Not `npm publish`: the package is private by design. This tags the
+          # release so the registry deploy for it is identifiable and
+          # `since` can be resolved for future components.
+          publish: npm run release
+          commit: 'chore(release): version packages'
+          title: 'chore(release): version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

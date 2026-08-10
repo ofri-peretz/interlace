@@ -23,7 +23,7 @@ type Story = StoryObj<typeof Tabs>;
 
 export const Default: Story = {
   render: () => (
-    <Tabs defaultValue="security" className="w-[420px]">
+    <Tabs defaultValue="security" className="w-[420px] max-w-full">
       <TabsList>
         <TabsTrigger value="security">Security</TabsTrigger>
         <TabsTrigger value="quality">Code Quality</TabsTrigger>
@@ -57,7 +57,7 @@ export const Default: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Tabs defaultValue="security" className="w-[420px]">
+    <Tabs defaultValue="security" className="w-[420px] max-w-full">
       <TabsList>
         <TabsTrigger value="security">Security</TabsTrigger>
         <TabsTrigger value="quality">Quality</TabsTrigger>
@@ -132,7 +132,7 @@ export const KeyboardFlow: Story = {
  * loading tab group doesn't jump when the real tabs arrive.
  */
 export const Loading: Story = {
-  render: () => <Skeleton variant="tabs" className="w-[420px]" />,
+  render: () => <Skeleton variant="tabs" className="w-[420px] max-w-full" />,
 };
 
 export const Dark: Story = {

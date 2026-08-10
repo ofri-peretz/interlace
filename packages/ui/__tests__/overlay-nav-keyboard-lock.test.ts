@@ -79,6 +79,7 @@ const MUST_ASSERT_ESCAPE = new Set([
   'HoverCard',
   'DropdownMenu',
   'ContextMenu',
+  'ThemeSwitcher',
 ]);
 
 const readStory = (name: string) =>

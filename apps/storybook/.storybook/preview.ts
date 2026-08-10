@@ -110,7 +110,41 @@ const preview: Preview = {
       // iframe body near-black and giving axe the correct backdrop.
       parentSelector: 'html',
     }),
+    /**
+     * The THEME axis (`data-theme`), orthogonal to the scheme axis the
+     * decorator above owns (`.dark`).
+     *
+     * Written to `<html>` for the same reason the class is: the brand tokens
+     * are declared on the root, and `--primary: var(--interlace-primary)` is
+     * substituted on the element that declares it — so an attribute on a
+     * story-wrapper div changes the brand values and repaints nothing.
+     *
+     * The default theme writes NO attribute: `:root` already is that theme
+     * (see packages/ui/src/lib/use-theme.ts for the same rule at runtime).
+     */
+    (Story, context) => {
+      const theme = context.globals.interlaceTheme as string | undefined;
+      const html = document.documentElement;
+      if (!theme || theme === 'interlace') html.removeAttribute('data-theme');
+      else html.setAttribute('data-theme', theme);
+      return Story();
+    },
   ],
+  globalTypes: {
+    interlaceTheme: {
+      description: 'Interlace brand theme (data-theme)',
+      defaultValue: 'interlace',
+      toolbar: {
+        title: 'Theme',
+        icon: 'paintbrush',
+        dynamicTitle: true,
+        items: [
+          { value: 'interlace', title: 'Interlace' },
+          { value: 'harbor', title: 'Harbor' },
+        ],
+      },
+    },
+  },
   // No global `autodocs` tag. With autodocs on, every component's sidebar
   // entry becomes "Docs" as the default child, and the Docs view doesn't
   // render the Controls / Actions / Interactions / Accessibility bottom

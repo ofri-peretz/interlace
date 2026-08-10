@@ -26,9 +26,17 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "lint": "turbo run lint",
-    "ci:local": "lefthook run pre-push --all-files --force"
+    "ci:local": "lefthook run pre-push --all-files --force",
+    "changeset": "changeset",
+    "changeset:check": "node scripts/require-changeset.mjs",
+    "version-packages": "changeset version && npm run versions:derive && npm run registry:build && npm install --package-lock-only --ignore-scripts",
+    "release": "node scripts/release-tag.mjs",
+    "versions:derive": "node apps/registry/scripts/derive-component-versions.mjs",
+    "versions:check": "node apps/registry/scripts/derive-component-versions.mjs --check",
+    "registry:build": "node apps/registry/scripts/build-registry.mjs"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.1",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.61.1",

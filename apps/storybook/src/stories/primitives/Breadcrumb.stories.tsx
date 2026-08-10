@@ -114,7 +114,7 @@ export const Variants: Story = {
         <div className="text-ui-sm text-muted-foreground">
           Long trail — wraps via flex-wrap (constrained to 360px)
         </div>
-        <div className="w-[360px]">
+        <div className="w-[360px] max-w-full">
           <Breadcrumb aria-label="Breadcrumb — long wrapping trail">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -232,26 +232,31 @@ export const RTL: Story = {
  */
 export const BelowMinViewport: Story = {
   render: () => (
-    <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/docs/plugins">Plugins</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Secure Coding</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+    <div className="overflow-x-auto">
+      {/* overflow-x-auto: this frame is pinned to a fixed pixel width to trip the
+        min-viewport contract, so without an inner scroller it pushes the whole
+        page sideways on a 375px phone. */}
+      <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/docs/plugins">Plugins</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Secure Coding</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
     </div>
   ),
   decorators: [

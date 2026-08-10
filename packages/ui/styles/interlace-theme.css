@@ -16,6 +16,42 @@
  *     `@layer interlace.brand` block (see `THEME_AUTHORING.md` once it lands);
  *     the bridge layer (`theme.css`) stays.
  *
+ * ─── Two orthogonal axes: scheme × theme ──────────────────────────
+ *
+ * A colour SCHEME and a THEME are different questions and must not share a
+ * selector. Until Phase 8 they did: the dark block was keyed on
+ * `.dark, [data-theme='dark']`, which spends the `data-theme` attribute —
+ * the only obvious place to put "which brand" — on "which scheme".
+ *
+ *   scheme  →  light | dark              (`.dark` / `[data-scheme='dark']`)
+ *   theme   →  interlace | harbor | …    (`[data-theme='<name>']`)
+ *
+ * | Selector                        | Means                                |
+ * |---------------------------------|--------------------------------------|
+ * | `:root`                         | interlace · light  (the default)     |
+ * | `.dark`, `[data-scheme='dark']` | interlace · dark                     |
+ * | `[data-theme='X']`              | theme X · light   (themes/X.css)     |
+ * | `[data-theme='X'].dark`         | theme X · dark    (themes/X.css)     |
+ *
+ * `.dark` stays load-bearing on purpose: it is the shadcn / next-themes
+ * convention, every consumer and the Storybook `withThemeByClassName`
+ * decorator write it, and breaking it to gain a cleaner name would be
+ * vanity. The new axis is purely ADDITIVE — nothing that worked before
+ * stopped working, with one deliberate exception: `[data-theme='dark']` no
+ * longer means "dark scheme". It now reads as "the theme named dark", which
+ * is not a registered theme, so it resolves to interlace · light. Consumers
+ * on that spelling move to `[data-scheme='dark']` (or `.dark`).
+ *
+ * Every theme file declares into `@layer interlace.brand` and overrides ONLY
+ * `--interlace-*` hex values. The semantics layer below and the
+ * `@theme inline` block never change — that is the whole point of the
+ * cascade, and it is why a theme is a data file rather than a pile of CSS.
+ * `THEME_TOKENS` (src/lib/theme-tokens.ts) enumerates every token a theme
+ * must define, and `__tests__/theme-contract-lock.test.ts` fails on a theme
+ * that omits one — because a missing token does not throw, it silently
+ * inherits the PREVIOUS theme's value and ships a two-brand page nobody
+ * notices.
+ *
  * ─── Layer model ──────────────────────────────────────────────────
  *
  * This file declares content into TWO cascade layers:
@@ -232,10 +268,16 @@
   }
 
   /* ─────────────────────────────────────────────────────────────────
-   *  DARK — class-based + data-attribute switch
+   *  INTERLACE · DARK — the scheme axis.
+   *
+   *  `.dark` is the shadcn / next-themes class every consumer already
+   *  writes; `[data-scheme='dark']` is the attribute spelling for hosts
+   *  that would rather not touch className. They are the SAME axis, and
+   *  neither of them says anything about which brand is active — that is
+   *  `[data-theme]`, handled in styles/themes/*.css.
    * ──────────────────────────────────────────────────────────────── */
   .dark,
-  [data-theme='dark'] {
+  [data-scheme='dark'] {
     /* Brand — inverted weight: a light tint of the same burnt orange, so
      * both directions clear AAA. text-primary on near-black is 11.79:1, and
      * bg-primary with text-primary-foreground (#0a0a0a) is the same 11.79:1.
@@ -297,6 +339,34 @@
     --interlace-caution: #fdba74;
     --interlace-caution-foreground: #0a0a0a;
 
+    /* ── Scheme-invariant tokens, restated ──────────────────────────
+     * The nine tokens below plus the three radii hold the SAME value in
+     * both schemes — a scrim is dark because it sits on a photo, and the
+     * cosmic hero paints its own near-black surface in either scheme (see
+     * the light block for the full reasoning on each).
+     *
+     * They are restated here anyway, following the precedent the window
+     * controls set below: every theme × scheme block is a COMPLETE
+     * override surface. That is what makes `THEME_TOKENS` checkable — a
+     * per-scheme block that only carries the tokens which happen to
+     * invert gives a forking consumer no way to tell "deliberately the
+     * same" apart from "forgotten", and the lock no way to tell either. */
+    --interlace-scrim: #000000;
+    --interlace-scrim-foreground: #ffffff;
+
+    --interlace-hero-star: #fbb99a;   /* brand orange tint — star head */
+    --interlace-hero-trail: #0d9460;  /* brand green — trail gradient */
+    --interlace-hero-meteor: #fdd6c2; /* palest orange — meteor streak */
+
+    --interlace-hero-surface: #0d0b09;      /* gradient midpoint */
+    --interlace-hero-surface-deep: #000000; /* gradient floor */
+    --interlace-hero-foreground: #f0ede9;   /* 16.4:1 on the surface (AAA) */
+
+    /* Radii (8/12/16 — three-step scale) */
+    --interlace-radius-sm: 0.5rem;   /*  8px */
+    --interlace-radius-md: 0.75rem;  /* 12px */
+    --interlace-radius-lg: 1rem;     /* 16px */
+
     /* Window controls — macOS ships the same traffic-light hues in dark
      * mode, so these do not invert. Declared here anyway so the dark block
      * is a complete override surface for a forking consumer. */
@@ -338,10 +408,28 @@
    *  AFTER importing this file, or they can fork the entire brand layer
    *  upstream (`@layer interlace.brand { ... }`) to swap the underlying
    *  hex values without touching the alias graph.
+   *
+   *  WHY FOUR SELECTORS AND NOT JUST `:root`. A custom property whose
+   *  value is a `var()` is substituted at computed-value time on the
+   *  element that DECLARES it, then inherited as a resolved value. So
+   *  `:root { --primary: var(--interlace-primary) }` freezes whatever
+   *  `--interlace-primary` is on the root. If a subtree re-brands itself
+   *  (`<div class="dark">` — which is exactly what a Storybook decorator
+   *  or a side-by-side theme preview does), the brand token changes on
+   *  that div while `--primary` stays frozen at the root's value, and
+   *  nothing repaints. Re-binding on every element that can carry a brand
+   *  override is what makes subtree theming work.
+   *
+   *  `[data-theme]` is attribute-presence, not a value match: it covers
+   *  every theme file that ever ships, so adding themes/<name>.css needs
+   *  no edit here. THIS LIST IS THE COMPLETE SET OF BRAND-OVERRIDE
+   *  SELECTORS — a new one must be added here too, or its subtree will
+   *  render the parent's semantics over the child's brand.
    * ──────────────────────────────────────────────────────────────── */
   :root,
   .dark,
-  [data-theme='dark'] {
+  [data-scheme='dark'],
+  [data-theme] {
     --primary: var(--interlace-primary);
     --primary-foreground: var(--interlace-primary-foreground);
     --background: var(--interlace-background);

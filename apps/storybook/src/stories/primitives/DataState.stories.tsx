@@ -40,7 +40,7 @@ function List({ items }: { items: Item[] }) {
 
 export const Idle: Story = {
   render: () => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <DataState<Item[]>
         loading={false}
         error={null}
@@ -56,7 +56,7 @@ export const Idle: Story = {
 
 export const Loading: Story = {
   render: () => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <DataState<Item[]>
         loading
         error={null}
@@ -72,7 +72,7 @@ export const Loading: Story = {
 
 export const Empty: Story = {
   render: () => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <DataState<Item[]>
         loading={false}
         error={null}
@@ -87,7 +87,7 @@ export const Empty: Story = {
 
 export const ErrorState: Story = {
   render: () => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <DataState<Item[]>
         loading={false}
         error={new Error('Network unreachable')}
@@ -107,7 +107,7 @@ export const ErrorState: Story = {
  */
 export const CustomStates: Story = {
   render: () => (
-    <div className="flex w-[360px] flex-col gap-md">
+    <div className="flex w-[360px] max-w-full flex-col gap-md">
       <DataState<Item[]>
         loading
         skeleton={

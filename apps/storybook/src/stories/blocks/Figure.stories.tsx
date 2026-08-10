@@ -36,7 +36,7 @@ export const Default: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="w-[640px]">
+      <div className="w-[640px] max-w-full">
         <Story />
       </div>
     ),
@@ -47,14 +47,14 @@ export const Variants: Story = {
   parameters: { layout: 'fullscreen' },
   render: () => (
     <div className="space-y-lg p-8">
-      <div className="w-[480px]">
+      <div className="w-[480px] max-w-full">
         <Figure
           src={SAMPLE_SRC}
           alt="16:9 widescreen frame."
           caption="ratio = 16 / 9 (default widescreen)"
         />
       </div>
-      <div className="w-[480px]">
+      <div className="w-[480px] max-w-full">
         <Figure
           src={SAMPLE_SRC}
           alt="4:3 classic frame."
@@ -62,7 +62,7 @@ export const Variants: Story = {
           caption="ratio = 4 / 3"
         />
       </div>
-      <div className="w-[320px]">
+      <div className="w-[320px] max-w-full">
         <Figure
           src={SAMPLE_SRC}
           alt="1:1 square frame."
@@ -70,13 +70,13 @@ export const Variants: Story = {
           caption="ratio = 1 (square)"
         />
       </div>
-      <div className="w-[480px]">
+      <div className="w-[480px] max-w-full">
         <Figure
           src={SAMPLE_SRC}
           alt="No caption — just the framed media."
         />
       </div>
-      <div className="w-[480px]">
+      <div className="w-[480px] max-w-full">
         <Figure alt="Composed child overriding the default img.">
           <div className="absolute inset-0 flex items-center justify-center rounded-md bg-muted text-muted-foreground">
             Custom child (SVG / video / next-image)
@@ -92,7 +92,7 @@ export const Dark: Story = {
   decorators: [
     withDark,
     (Story) => (
-      <div className="w-[640px] p-6">
+      <div className="w-[640px] max-w-full p-6">
         <Story />
       </div>
     ),
@@ -104,7 +104,7 @@ export const RTL: Story = {
   decorators: [
     withRtl,
     (Story) => (
-      <div className="w-[640px] p-6">
+      <div className="w-[640px] max-w-full p-6">
         <Story />
       </div>
     ),
@@ -120,7 +120,7 @@ export const BelowMinViewport: Story = {
   parameters: { layout: 'fullscreen' },
   decorators: [
     (Story) => (
-      <div className="w-[280px] p-4">
+      <div className="w-[280px] max-w-full p-4">
         <Story />
       </div>
     ),

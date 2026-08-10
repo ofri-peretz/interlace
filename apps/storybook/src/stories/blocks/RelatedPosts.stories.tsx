@@ -113,7 +113,7 @@ export const RTL: Story = {
 export const BelowMinViewport: Story = {
   args: { posts: samplePosts },
   render: (args) => (
-    <div className="w-[400px] border border-dashed border-fd-border p-sm">
+    <div className="w-[400px] max-w-full border border-dashed border-fd-border p-sm">
       <RelatedPosts {...args} />
     </div>
   ),

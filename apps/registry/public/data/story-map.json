@@ -1279,6 +1279,21 @@
     "previewDark": "primitives-textarea--dark",
     "skeleton": "primitives-textarea--loading"
   },
+  "theme-switcher": {
+    "title": "Primitives/ThemeSwitcher",
+    "storyIds": [
+      "primitives-themeswitcher--default",
+      "primitives-themeswitcher--small",
+      "primitives-themeswitcher--schemetoggle",
+      "primitives-themeswitcher--keyboardflow",
+      "primitives-themeswitcher--dark",
+      "primitives-themeswitcher--rtl",
+      "primitives-themeswitcher--reducedmotion"
+    ],
+    "preview": "primitives-themeswitcher--default",
+    "previewDark": "primitives-themeswitcher--dark",
+    "skeleton": null
+  },
   "toast": {
     "title": "Primitives/Toast",
     "storyIds": [

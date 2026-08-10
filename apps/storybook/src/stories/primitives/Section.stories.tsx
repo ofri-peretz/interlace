@@ -53,7 +53,7 @@ export const InsetStrip: Story = {
   args: { spacing: 'tight', tone: 'inset', divider: 'both', container: 'content' },
   render: (args) => (
     <Section {...args}>
-      <div className="grid grid-cols-4 gap-6 text-center">
+      <div className="grid grid-cols-2 gap-6 text-center md:grid-cols-4">
         <div><div className="text-3xl font-bold">18</div><div className="text-xs uppercase text-fd-muted-foreground">Plugins</div></div>
         <div><div className="text-3xl font-bold">350+</div><div className="text-xs uppercase text-fd-muted-foreground">Rules</div></div>
         <div><div className="text-3xl font-bold">11</div><div className="text-xs uppercase text-fd-muted-foreground">Security</div></div>

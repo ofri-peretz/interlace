@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-// @ts-expect-error — plain .mjs build script, no type declarations.
+// Plain .mjs build script — `allowJs` in tsconfig.json covers `scripts/**`, so
+// the signature is inferred from the source rather than declared.
 import { hasUseClient } from '../../scripts/build-registry.mjs';
 
 /**

@@ -103,7 +103,7 @@ export const Default: Story = {
 // ─────────────────────────────────────────────────────────────────
 export const Variants: Story = {
   render: () => (
-    <div className="grid grid-cols-2 gap-2xl p-2xl">
+    <div className="grid grid-cols-1 gap-2xl p-2xl md:grid-cols-2">
       {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
         <div key={side} className="flex items-center justify-center">
           <HoverCard open>
@@ -176,18 +176,27 @@ export const RTL: Story = {
  * card; on real touch devices the consumer should switch to Popover.
  */
 export const BelowMinViewport: Story = {
+  // NOT the meta-level `centered`: centered sizes the story root to its content,
+  // so the overflow-x-auto scroller below inherits the 767px frame width instead
+  // of the viewport and the whole page scrolls sideways at 375px.
+  parameters: { layout: 'padded' },
   render: () => (
-    <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
-      <HoverCard open>
-        <HoverCardTrigger render={<UsernameLink />} />
-        <HoverCardPortal>
-          <HoverCardPositioner>
-            <HoverCardPopup className="w-72">
-              <BioCard />
-            </HoverCardPopup>
-          </HoverCardPositioner>
-        </HoverCardPortal>
-      </HoverCard>
+    <div className="overflow-x-auto">
+      {/* overflow-x-auto: this frame is pinned to a fixed pixel width to trip the
+        min-viewport contract, so without an inner scroller it pushes the whole
+        page sideways on a 375px phone. */}
+      <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
+        <HoverCard open>
+          <HoverCardTrigger render={<UsernameLink />} />
+          <HoverCardPortal>
+            <HoverCardPositioner>
+              <HoverCardPopup className="w-72">
+                <BioCard />
+              </HoverCardPopup>
+            </HoverCardPositioner>
+          </HoverCardPortal>
+        </HoverCard>
+      </div>
     </div>
   ),
   decorators: [

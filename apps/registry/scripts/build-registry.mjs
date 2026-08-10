@@ -106,6 +106,79 @@ const CATEGORY_DATA = JSON.parse(
 const uncategorised = [];
 
 /**
+ * Per-component versions (phase 9.2).
+ *
+ * `component-versions.json` is DERIVED from git history by
+ * `scripts/derive-component-versions.mjs` — but it is a COMMITTED artefact,
+ * and this generator reads the artefact rather than shelling out to git.
+ *
+ * That indirection is the whole trick. If the version were computed from
+ * `git HEAD` at build time, every commit would change every item's
+ * `meta.version` and the drift gate (`--check`, which diffs the built items
+ * against `public/r/*.json`) would fail on the commit that introduced it and
+ * on every commit after. Reading a committed manifest makes this build a pure
+ * function of tracked files again: the JSON changes when the manifest
+ * changes, and the manifest changes when someone runs `npm run
+ * versions:derive` — which the release workflow does, in the same commit that
+ * rebuilds the registry.
+ *
+ * See `docs/philosophies/VERSIONING_PHILOSOPHY.md` § "The drift gate".
+ */
+const VERSIONS_FILE = path.join(REGISTRY_ROOT, 'component-versions.json');
+// Tolerant read: `derive-component-versions.mjs` imports this module to learn
+// the item set, so on a fresh checkout with no manifest yet the two would
+// deadlock. An absent manifest means "everything unversioned", which `--check`
+// reports as an error rather than a crash.
+const VERSION_DATA = JSON.parse(
+  await readFile(VERSIONS_FILE, 'utf8').catch(() => '{"components":[]}'),
+);
+const VERSION_BY_NAME = new Map(
+  VERSION_DATA.components.map((c) => [c.name, c]),
+);
+/** Items with no manifest entry — CI (`--check`) fails on these. */
+const unversioned = [];
+
+const versionInfoFor = (name) => {
+  const entry = VERSION_BY_NAME.get(name);
+  if (!entry) {
+    unversioned.push(name);
+    // `null` rather than a guessed version: a wrong version stamped into a
+    // consumer's tree is worse than an absent one, and `--check` fails anyway.
+    return { version: null, since: null };
+  }
+  return entry;
+};
+
+/**
+ * The three version facts published on every item's `meta`:
+ *   - `version`    — this component's own semver, bumped by its own history.
+ *   - `since`      — the @interlace/ui release it first shipped in.
+ *   - `deprecated` — present only when the manifest declares it.
+ */
+const versionMetaFor = (name) => {
+  const info = versionInfoFor(name);
+  return {
+    version: info.version,
+    since: info.since,
+    ...(info.deprecated ? { deprecated: info.deprecated } : {}),
+  };
+};
+
+/**
+ * Source paths (repo-root-relative) that each item is built from, collected
+ * during the build and exported for `derive-component-versions.mjs`.
+ *
+ * Deriving versions means knowing which files constitute a component — its
+ * own file plus its companions (`button-variants.ts`, `scale.ts`, the
+ * optional `<name>.meta.json`). That knowledge already lives here; a second
+ * copy in the derive script would rot the first time a companion convention
+ * changes, so the derive script imports this map instead.
+ */
+export const SOURCE_PATHS = new Map();
+
+const relToRepo = (abs) => path.relative(REPO_ROOT, abs).split(path.sep).join('/');
+
+/**
  * shadcn `categories` is an array, so each item carries BOTH axes:
  *   - intent  ("what am I trying to do") — form / overlay / marketing / …
  *   - tier    ("which layer of the DS")  — primitive / pattern / template / …
@@ -133,7 +206,7 @@ const MIN_VIEWPORT_RE = /export\s+const\s+MIN_VIEWPORT\s*=\s*(\d+)/;
  * backtracks exponentially on `*//*` repetitions (CodeQL js/redos), so strip
  * leading comments/whitespace with a single linear pass instead.
  */
-export const hasUseClient = (source) => {
+const firstStatementIndex = (source) => {
   let i = 0;
   while (i < source.length) {
     const ch = source[i];
@@ -141,30 +214,86 @@ export const hasUseClient = (source) => {
       i += 1;
     } else if (source.startsWith('/*', i)) {
       const end = source.indexOf('*/', i + 2);
-      if (end === -1) return false; // unterminated comment — no directive
+      if (end === -1) return -1; // unterminated comment — no statement follows
       i = end + 2;
     } else if (source.startsWith('//', i)) {
       const end = source.indexOf('\n', i + 2);
-      if (end === -1) return false;
+      if (end === -1) return -1;
       i = end + 1;
     } else {
       break;
     }
   }
-  return /^['"]use client['"]/.test(source.slice(i));
+  return i;
+};
+
+export const hasUseClient = (source) => {
+  const i = firstStatementIndex(source);
+  return i !== -1 && /^['"]use client['"]/.test(source.slice(i));
 };
 
 /** `loading?: boolean` — the DS-wide skeleton-placeholder opt-in. */
 const LOADING_PROP_RE = /^\s*loading\?:\s*boolean/m;
 
-const metaFor = (source, tier) => {
+const metaFor = (source, tier, name) => {
   const mv = source.match(MIN_VIEWPORT_RE);
   return {
     tier: CATEGORY_DATA.tierOf[tier] ?? tier,
     client: hasUseClient(source),
     minViewport: mv ? Number.parseInt(mv[1], 10) : null,
     loading: LOADING_PROP_RE.test(source),
+    ...versionMetaFor(name),
   };
+};
+
+// ─── Version banner stamped into the consumer's copy ─────────────────────────
+
+/**
+ * Index just past the leading `'use client'` statement, or 0 when the file has
+ * none. Comments before the directive are legal and common (our sources put a
+ * JSDoc header there), so the scan is the same linear one `hasUseClient` uses.
+ */
+const afterDirective = (source) => {
+  if (!hasUseClient(source)) return 0;
+  const eol = source.indexOf('\n', firstStatementIndex(source));
+  return eol === -1 ? source.length : eol + 1;
+};
+
+/**
+ * Stamp the component's version into the file the consumer ends up owning.
+ *
+ * `shadcn add` COPIES this content into their tree, at which point our git
+ * history and their file are unrelated forever — so the only place a version
+ * can live for them is inside the file itself. This banner is the prerequisite
+ * for any "what changed since I installed" diff (phase 9.5): without it there
+ * is nothing to diff against.
+ *
+ * Placed AFTER `'use client'` rather than before it. Comments before the
+ * directive are legal, but "the directive must be first" is a rule with a long
+ * history of bundlers enforcing it inconsistently, and there is no upside to
+ * finding out which one the consumer uses.
+ *
+ * Line comments, not JSDoc: `src/lib/component-metadata.ts` parses the source's
+ * JSDoc header for the Anatomy section and the R-rule table, and a second
+ * JSDoc block at the top of the file is an invitation for that parser — and
+ * every consumer's IDE — to attribute our banner to their component.
+ */
+const stampVersionBanner = (content, name, version) => {
+  if (!version) return content;
+  const banner =
+    [
+      `// @interlace/${name} v${version} — Interlace design system.`,
+      `// Docs, props and live preview: ${HOMEPAGE}/c/${name}`,
+      `// What changed since: ${HOMEPAGE}/c/${name}#history`,
+      `// Generated banner — keep it, the upgrade diff reads this version.`,
+    ].join('\n') + '\n';
+  const cut = afterDirective(content);
+  const rest = content.slice(cut);
+  // A blank line after the banner unless the source already opens with one —
+  // without it the banner runs straight into the component's own leading
+  // comment and reads as one block.
+  const gap = rest.startsWith('\n') ? '' : '\n';
+  return content.slice(0, cut) + banner + gap + rest;
 };
 
 /**
@@ -239,6 +368,12 @@ const STYLE_FILES = [
   'preflight.css',
   'theme.css',
   'interlace-theme.css',
+  // Alternate brand themes (phase 8.2). Shipping them with `@interlace/theme`
+  // rather than as separate items is deliberate: a theme file is inert on its
+  // own — it only overrides `--interlace-*` inside `@layer interlace.brand`,
+  // which the baseline declares. Installing one without the baseline would
+  // resolve to nothing, so they are one contract, not two.
+  'themes/harbor.css',
 ];
 
 /**
@@ -270,6 +405,33 @@ const LIB_FILES = [
     title: 'useReducedMotion hook',
     description:
       '@interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user\'s OS preference.',
+  },
+  // Phase 8.3. These three are what `theme-switcher.tsx` imports, so without
+  // them the switcher installs with dangling relative imports — which is
+  // exactly what `assertRegistryContract` reported.
+  {
+    name: 'theme-tokens',
+    sourceFile: 'theme-tokens.ts',
+    target: 'lib/theme-tokens.ts',
+    title: 'Theme token manifest',
+    description:
+      '@interlace/ui — the registry of themes and the list of every `--interlace-*` token a theme must define. A missing token does not throw; it silently inherits the previous theme\'s value.',
+  },
+  {
+    name: 'use-theme',
+    sourceFile: 'use-theme.ts',
+    target: 'hooks/use-theme.ts',
+    title: 'useTheme hook',
+    description:
+      '@interlace/ui — reads and writes the theme (`data-theme`) and colour scheme (`.dark`) axes, persists to localStorage, and follows the OS when no preference is stored.',
+  },
+  {
+    name: 'theme-script',
+    sourceFile: 'theme-script.ts',
+    target: 'lib/theme-script.ts',
+    title: 'No-flash theme bootstrap script',
+    description:
+      '@interlace/ui — the inline `<head>` script that applies the stored theme before first paint. Without it every page load flashes the default theme.',
   },
 ];
 
@@ -503,6 +665,12 @@ const buildItem = async (filePath, fileName, tier = null) => {
   // is the spec's type for those. Every file carries an explicit `target`, so
   // the type only changes how the item is classified, never where it lands.
   const itemType = tier === 'templates' ? 'registry:block' : 'registry:ui';
+  const { version } = versionInfoFor(name);
+  SOURCE_PATHS.set(name, [
+    relToRepo(filePath),
+    ...companions.map((c) => relToRepo(path.join(sourceDir, `${c}.ts`))),
+    ...(meta ? [relToRepo(filePath.replace(/\.tsx?$/, '.meta.json'))] : []),
+  ]);
   const item = {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name,
@@ -520,7 +688,14 @@ const buildItem = async (filePath, fileName, tier = null) => {
         path: `registry/interlace-ui/${subdir}${name}${ext}`,
         target,
         type: itemType,
-        content: rewriteImportsForConsumer(source, subdir),
+        // Banner on the item's own file only — a companion is an
+        // implementation detail of this item, and four banners in one install
+        // is noise the consumer has to read past every time they open it.
+        content: stampVersionBanner(
+          rewriteImportsForConsumer(source, subdir),
+          name,
+          version,
+        ),
       },
       ...(await Promise.all(
         companions.map(async (companion) => ({
@@ -534,7 +709,7 @@ const buildItem = async (filePath, fileName, tier = null) => {
         })),
       )),
     ],
-    meta: metaFor(source, tier ?? 'primitives'),
+    meta: metaFor(source, tier ?? 'primitives', name),
     docs: docsFor(name, target),
   };
   // Optional sibling `<name>.meta.json` adds shadcn-schema fields the source
@@ -553,9 +728,40 @@ const buildItem = async (filePath, fileName, tier = null) => {
 // on shadcn's default `cn` or vendor the hook manually. Now they're
 // first-class registry items, target paths match shadcn defaults.
 
+/**
+ * Consumer-side alias for a lib item, e.g. `theme-tokens` → `@/lib/theme-tokens`.
+ * Built from the LIB_FILES targets so it can never disagree with where the file
+ * is actually written.
+ */
+const LIB_ALIAS = new Map(
+  LIB_FILES.map((e) => [
+    e.sourceFile.replace(/\.ts$/, ''),
+    `@/${e.target.replace(/\.ts$/, '')}`,
+  ]),
+);
+
+/**
+ * Rewrite lib→lib relative imports to their consumer aliases.
+ *
+ * `cn` and `use-reduced-motion` are standalone, so this case did not exist
+ * until the theme trio landed: `use-theme` imports `./theme-tokens.js` and
+ * `./theme-script.js`, and those two land in DIFFERENT consumer directories
+ * (`hooks/` vs `lib/`), so a relative specifier cannot survive the copy.
+ * Left alone it installs a file importing a sibling that isn't there —
+ * caught by `assertRegistryContract`, which is why it is a build error and
+ * not a support ticket.
+ */
+const rewriteLibImports = (source) =>
+  source.replace(/from\s+['"]\.\/([\w-]+)\.js['"]/g, (match, name) => {
+    const alias = LIB_ALIAS.get(name);
+    return alias ? `from '${alias}'` : match;
+  });
+
 const buildLibItem = async (entry) => {
   const sourcePath = path.join(LIB_DIR, entry.sourceFile);
-  const source = await readFile(sourcePath, 'utf8');
+  const rawSource = await readFile(sourcePath, 'utf8');
+  const source = rewriteLibImports(rawSource);
+  SOURCE_PATHS.set(entry.name, [relToRepo(sourcePath)]);
   return {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name: entry.name,
@@ -565,23 +771,39 @@ const buildLibItem = async (entry) => {
     author: AUTHOR,
     categories: categoriesFor(entry.name, 'util'),
     dependencies: collectDependencies(source),
-    registryDependencies: [],
+    // Sibling lib items this one imports — without these, installing
+    // `use-theme` alone leaves two unresolvable aliases in the consumer tree.
+    registryDependencies: [...rawSource.matchAll(/from\s+['"]\.\/([\w-]+)\.js['"]/g)]
+      .map((m) => m[1])
+      .filter((name) => LIB_ALIAS.has(name))
+      .map(itemRef),
     files: [
       {
         path: `registry/interlace-ui/lib/${entry.sourceFile}`,
         target: entry.target,
         type: 'registry:lib',
-        content: source,
+        content: stampVersionBanner(
+          source,
+          entry.name,
+          versionInfoFor(entry.name).version,
+        ),
       },
     ],
-    meta: metaFor(source, 'util'),
+    meta: metaFor(source, 'util', entry.name),
     docs: docsFor(entry.name, entry.target, { requiresTheme: false }),
   };
 };
 
 // ─── Starter-pack registry items ─────────────────────────────────────────────
 
-const buildStarterItem = (entry) => ({
+const buildStarterItem = (entry) => {
+  // A starter has no component source — its content is authored right here, so
+  // this generator IS its source file for version-derivation purposes.
+  SOURCE_PATHS.set(entry.name, ['apps/registry/scripts/build-registry.mjs']);
+  return starterItem(entry);
+};
+
+const starterItem = (entry) => ({
   $schema: 'https://ui.shadcn.com/schema/registry-item.json',
   name: entry.name,
   type: 'registry:ui',
@@ -599,7 +821,13 @@ const buildStarterItem = (entry) => ({
       content: entry.body,
     },
   ],
-  meta: { tier: 'starter', client: false, minViewport: null, loading: false },
+  meta: {
+    tier: 'starter',
+    client: false,
+    minViewport: null,
+    loading: false,
+    ...versionMetaFor(entry.name),
+  },
   docs: entry.body,
 });
 
@@ -617,6 +845,10 @@ const buildStarterItem = (entry) => ({
 // their global stylesheet).
 
 const buildStyleItem = async () => {
+  SOURCE_PATHS.set(
+    STYLE_ITEM,
+    STYLE_FILES.map((f) => `packages/ui/styles/${f}`),
+  );
   const files = await Promise.all(
     STYLE_FILES.map(async (name) => {
       const content = await readFile(path.join(STYLES_DIR, name), 'utf8');
@@ -640,7 +872,13 @@ const buildStyleItem = async () => {
     dependencies: ['tw-animate-css'],
     registryDependencies: [],
     files,
-    meta: { tier: 'theme', client: false, minViewport: null, loading: false },
+    meta: {
+      tier: 'theme',
+      client: false,
+      minViewport: null,
+      loading: false,
+      ...versionMetaFor(STYLE_ITEM),
+    },
     docs: [
       '## @interlace/theme',
       '',
@@ -709,7 +947,7 @@ const indexEntry = (item) => ({
  * through this, so the drift gate can never diverge from what gets written —
  * and `index.json` is covered by the same comparison as the items.
  */
-const buildAll = async () => {
+export const buildAll = async () => {
   await stat(PRIMITIVES_DIR);
   const primitiveFiles = (await readdir(PRIMITIVES_DIR))
     .filter((f) => f.endsWith('.tsx') || f.endsWith('.ts'))
@@ -830,6 +1068,15 @@ const main = async () => {
         `uncategorised in registry-categories.json: ${[...new Set(uncategorised)].sort().join(', ')}`,
       );
     }
+    // A new component with no manifest entry would ship with `version: null`
+    // in `meta` and no banner in the consumer's file — i.e. silently outside
+    // the versioning contract. Deterministic under any HEAD: this compares the
+    // item set against the committed manifest, it does not consult git.
+    if (unversioned.length) {
+      errors.push(
+        `missing from component-versions.json (run \`npm run versions:derive\`): ${[...new Set(unversioned)].sort().join(', ')}`,
+      );
+    }
     if (errors.length) {
       console.error('Registry drift detected:\n  ' + errors.join('\n  '));
       process.exit(1);
@@ -875,6 +1122,11 @@ const main = async () => {
       // Maps each item to its Storybook story ids, so component pages can
       // embed a live render instead of linking away.
       'scripts/build-story-map.mjs',
+      // Compiles CHANGELOG.md + the pending changesets into the JSON that
+      // /changelog and every component's History section read. Runs here so
+      // the release notes can never describe a registry that no longer
+      // matches — one command rebuilds both.
+      'scripts/build-changelog.mjs',
     ]) {
       const result = spawnSync('node', [path.join(REGISTRY_ROOT, script)], {
         stdio: 'inherit',
@@ -892,6 +1144,17 @@ const main = async () => {
       `WARNING — ${new Set(uncategorised).size} item(s) have no entry in registry-categories.json and fell into "other": ` +
         [...new Set(uncategorised)].sort().join(', ') +
         '\n  CI (`--check`) fails on this. Add them to `assignments`.',
+    );
+  }
+
+  // Same shape as the categorisation warning above: a local build never blocks
+  // on a component you are still writing, but it says out loud that the item
+  // just shipped with `version: null` and no banner in the consumer's file.
+  if (unversioned.length) {
+    console.warn(
+      `WARNING — ${new Set(unversioned).size} item(s) have no entry in component-versions.json, so they ship unversioned and unbannered: ` +
+        [...new Set(unversioned)].sort().join(', ') +
+        '\n  Run `npm run versions:derive` then rebuild. CI (`--check`) fails on this.',
     );
   }
 

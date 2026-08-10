@@ -87,6 +87,46 @@ jobs:
         run: node apps/registry/scripts/build-registry.mjs --check
       - name: Validate items against the official shadcn schemas
         run: node apps/registry/scripts/validate-registry.mjs
+      # Completeness, NOT recomputation. The versions themselves are derived
+      # from git and committed to `component-versions.json`; re-deriving them
+      # here would make the answer depend on HEAD and put this gate in a fight
+      # with the drift check above. What is verified is that every shipped item
+      # has an entry, every entry names a shipped item, and every version is
+      # valid semver — all of which hold under any HEAD.
+      - name: Check every item carries a version
+        run: npm run versions:check
+      # The public release notes are generated from CHANGELOG.md + the pending
+      # changesets. This fails on a stale `changelog.json`, on a `Components:`
+      # name that is not a registry item (a dead link on the site), and on a
+      # breaking entry with no `Migration:` note.
+      - name: Check release notes compile and reference real components
+        run: npm run changelog:check --workspace=registry
+
+  # ─── Gate 8: every DS change is written down ───────────────────────────
+  # A changelog nobody is forced to write stops after two releases. For a
+  # registry that hands consumers a COPY of the source there is no `npm
+  # update` to carry a fix across — the changelog IS the upgrade path, so the
+  # requirement to write one is a build gate, not a review convention.
+  changeset:
+    name: changeset (required for packages/ui)
+    needs: install
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Needs the merge base with main to diff the PR.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Fetch the base branch
+        run: git fetch --no-tags --depth=100 origin ${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+      - name: Require a changeset for design-system changes
+        run: node scripts/require-changeset.mjs
+        env:
+          CHANGESET_BASE: origin/${{ github.base_ref }}
 
   # ─── Gate 5b: registry installs for real ───────────────────────────────
   # Schema-valid JSON is not the same as an installable registry. This

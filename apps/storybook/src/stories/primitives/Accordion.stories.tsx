@@ -32,7 +32,7 @@ export const Default: Story = {
   // container makes the button's bounding box something axe can measure
   // without ambiguity.
   render: () => (
-    <Accordion className="w-[420px]">
+    <Accordion className="w-[420px] max-w-full">
       <AccordionItem value="a">
         <AccordionTrigger>What does eslint-plugin-jwt detect?</AccordionTrigger>
         <AccordionContent>
@@ -58,7 +58,7 @@ export const Default: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Accordion className="w-[420px]">
+    <Accordion className="w-[420px] max-w-full">
       <AccordionItem value="a">
         <AccordionTrigger>First question</AccordionTrigger>
         <AccordionContent>First answer.</AccordionContent>

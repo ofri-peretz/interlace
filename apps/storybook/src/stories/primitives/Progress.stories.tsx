@@ -39,7 +39,7 @@ const TONES = ['default', 'success', 'warning', 'danger'] as const;
 export const Default: Story = {
   args: { value: 66, size: 'md', tone: 'default' },
   render: (args) => (
-    <div className="w-[320px]">
+    <div className="w-[320px] max-w-full">
       <div className="mb-2 flex items-center justify-between text-sm">
         <span className="text-foreground font-medium">Uploading…</span>
         <span className="text-muted-foreground tabular-nums">
@@ -55,7 +55,7 @@ export const Default: Story = {
 // reader's eye walks the tone palette without numeric noise.
 export const Variants: Story = {
   render: () => (
-    <div className="w-[640px]">
+    <div className="w-[640px] max-w-full">
       <div
         className="grid items-center gap-x-6 gap-y-4"
         style={{ gridTemplateColumns: 'auto repeat(4, minmax(0, 1fr))' }}

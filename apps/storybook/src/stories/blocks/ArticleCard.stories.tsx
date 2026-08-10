@@ -9,7 +9,10 @@ import { articleFixtures } from '@/fixtures/articles';
 const meta: Meta<typeof ArticleCard> = {
   title: 'Blocks/ArticleCard',
   component: ArticleCard,
-  parameters: { layout: 'centered' },
+  // NOT `centered`: an article card is a width-filling block. Centered sizes the
+  // story root to content, so `w-full` inside resolves against an indefinite
+  // container and the 380px card frame outgrows a 375px phone viewport.
+  parameters: { layout: 'padded' },
 };
 
 export default meta;
@@ -19,7 +22,7 @@ export const Default: Story = {
   args: articleFixtures[0],
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -30,7 +33,7 @@ export const WithoutImage: Story = {
   args: articleFixtures[1],
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -44,7 +47,7 @@ export const ManyTags: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -57,7 +60,7 @@ export const Dark: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   decorators: [
     (Story) => (
-      <div className="w-[380px] dark">
+      <div className="w-[380px] max-w-full dark">
         <Story />
       </div>
     ),
@@ -87,7 +90,7 @@ export const FeaturedPriority: Story = {
   args: { ...articleFixtures[0], priority: true },
   decorators: [
     (Story) => (
-      <div className="w-[760px]">
+      <div className="w-[760px] max-w-full">
         <Story />
       </div>
     ),
@@ -108,7 +111,7 @@ export const FeaturedLazy: Story = {
   args: { ...articleFixtures[0] },
   decorators: [
     (Story) => (
-      <div className="w-[760px]">
+      <div className="w-[760px] max-w-full">
         <Story />
       </div>
     ),
@@ -128,7 +131,7 @@ export const StackPriority: Story = {
   args: { ...articleFixtures[0], priority: true },
   decorators: [
     (Story) => (
-      <div className="w-[380px]">
+      <div className="w-[380px] max-w-full">
         <Story />
       </div>
     ),
@@ -172,7 +175,7 @@ const lockArgs = {
 
 export const StackContract: Story = {
   args: { ...lockArgs },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[360px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -216,7 +219,7 @@ export const StackTagOverflow: Story = {
     ...lockArgs,
     tags: ['accessibility', 'tailwind', 'fumadocs', 'mdx', 'next', 'react'],
   },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[360px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     await step('First 3 tags shown verbatim', async () => {
@@ -241,7 +244,7 @@ export const StackMinimal: Story = {
     href: 'https://example.com',
     'data-testid': 'lock-card',
   },
-  decorators: [(Story) => <div style={{ width: 360 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[360px] max-w-full"><Story /></div>],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByRole('link')).toBeInTheDocument();
@@ -257,7 +260,7 @@ export const StackMinimal: Story = {
 export const FeaturedContract: Story = {
   render: (args) => <FeaturedArticleCard {...args} />,
   args: { ...lockArgs },
-  decorators: [(Story) => <div style={{ width: 760 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[760px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -286,7 +289,7 @@ export const FeaturedContract: Story = {
 export const FeaturedWithoutCover: Story = {
   render: (args) => <FeaturedArticleCard {...args} />,
   args: { ...lockArgs, imageUrl: undefined },
-  decorators: [(Story) => <div style={{ width: 760 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[760px] max-w-full"><Story /></div>],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByTestId('lock-card-featured-chip')).toBeInTheDocument();
@@ -344,7 +347,7 @@ export const Parity: Story = {
  */
 export const DeprecatedVariantStillWorks: Story = {
   args: { ...lockArgs, variant: 'overlay', 'data-testid': 'deprecated-card' },
-  decorators: [(Story) => <div style={{ width: 760 }}><Story /></div>],
+  decorators: [(Story) => <div className="w-[760px] max-w-full"><Story /></div>],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 

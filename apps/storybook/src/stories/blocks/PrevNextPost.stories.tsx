@@ -104,8 +104,12 @@ export const BelowMinViewport: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: 400 }}>
-        <Story />
+      // overflow-x-auto: the 400px frame is deliberately below MIN_VIEWPORT, so
+      // without an inner scroller it pushes the whole page sideways at 375px.
+      <div className="overflow-x-auto">
+        <div style={{ width: 400 }}>
+          <Story />
+        </div>
       </div>
     ),
   ],

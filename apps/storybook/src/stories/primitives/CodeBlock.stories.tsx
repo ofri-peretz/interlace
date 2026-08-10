@@ -53,7 +53,7 @@ export const Default: Story = {
     children: SAMPLE_TS,
   },
   render: (args) => (
-    <div className="w-[640px]">
+    <div className="w-[640px] max-w-full">
       <CodeBlock {...args} />
     </div>
   ),
@@ -65,7 +65,7 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="w-[720px] space-y-lg">
+    <div className="w-[720px] max-w-full space-y-lg">
       <div className="space-y-xs">
         <div className="text-ui-sm font-mono text-muted-foreground">
           title + language

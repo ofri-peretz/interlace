@@ -22,7 +22,7 @@ type Story = StoryObj<typeof Alert>;
 
 export const Default: Story = {
   render: () => (
-    <Alert className="w-[460px]">
+    <Alert className="w-[460px] max-w-full">
       <Terminal className="size-4" />
       <AlertTitle>Heads up</AlertTitle>
       <AlertDescription>
@@ -33,7 +33,7 @@ export const Default: Story = {
 };
 export const Destructive: Story = {
   render: () => (
-    <Alert variant="destructive" className="w-[460px]">
+    <Alert variant="destructive" className="w-[460px] max-w-full">
       <AlertTriangle className="size-4" />
       <AlertTitle>Sync failed</AlertTitle>
       <AlertDescription>

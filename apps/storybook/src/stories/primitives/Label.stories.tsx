@@ -23,7 +23,7 @@ type Story = StoryObj<typeof Label>;
 
 export const Default: Story = {
   render: () => (
-    <div className="flex w-[260px] flex-col gap-2">
+    <div className="flex w-[260px] max-w-full flex-col gap-2">
       <Label htmlFor="email">Email</Label>
       <Input id="email" type="email" placeholder="you@example.com" />
     </div>
@@ -37,7 +37,7 @@ export const Dark: Story = {
 
 export const RTL: Story = {
   render: () => (
-    <div className="flex w-[260px] flex-col gap-2">
+    <div className="flex w-[260px] max-w-full flex-col gap-2">
       <Label htmlFor="email-rtl">البريد الإلكتروني</Label>
       <Input id="email-rtl" type="email" placeholder="you@example.com" />
     </div>
@@ -53,7 +53,7 @@ export const RTL: Story = {
  */
 export const Disabled: Story = {
   render: () => (
-    <div className="flex w-[260px] flex-col gap-2">
+    <div className="flex w-[260px] max-w-full flex-col gap-2">
       <Input
         id="email-disabled"
         type="email"
@@ -71,7 +71,7 @@ export const Disabled: Story = {
 /** Loading placeholder. */
 export const Loading: Story = {
   render: () => (
-    <div className="flex w-[260px] flex-col gap-2">
+    <div className="flex w-[260px] max-w-full flex-col gap-2">
       <Skeleton variant="label" />
       <Skeleton variant="input" />
     </div>

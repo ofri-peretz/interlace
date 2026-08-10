@@ -29,6 +29,22 @@ export type RegistryItemMeta = {
   minViewport: number | null;
   /** Declares `loading?: boolean` — the DS-wide skeleton opt-in. */
   loading: boolean;
+  /**
+   * This component's own semver, derived from its git history by
+   * `scripts/derive-component-versions.mjs` and stamped into the banner of the
+   * file the consumer installs. `null` only when the manifest is missing an
+   * entry, which the registry drift gate refuses to let through.
+   */
+  version: string | null;
+  /** The `@interlace/ui` release this component first shipped in. */
+  since: string | null;
+  /** Set when the component is on its way out — see VERSIONING_PHILOSOPHY.md. */
+  deprecated?: {
+    /** The release it disappears in. Never "eventually". */
+    removedIn: string;
+    /** What to use instead, in one sentence. */
+    replacement: string;
+  };
 };
 
 export type RegistryItem = {

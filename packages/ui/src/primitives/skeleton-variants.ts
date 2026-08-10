@@ -110,7 +110,10 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // Overlay/nav surfaces (wave 1.2). `menu` matches the DropdownMenu /
   // ContextMenu popup silhouette; `pagination` the nav row; `tabs` the
   // list + panel; `toc` the indented heading rail.
-  menu: 'h-40 w-56 rounded-md border',
+  // max-w-full: `menu` is the only variant with a fixed inline size. Without
+  // the cap its 224px cannot shrink (flex items floor at min-content), so the
+  // placeholder overflows any slot narrower than itself — e.g. a 375px phone.
+  menu: 'h-40 w-56 max-w-full rounded-md border',
   pagination: 'h-9 w-full rounded-md',
   prose: 'h-4 w-full rounded-sm',
   tabs: 'h-32 w-full rounded-lg',

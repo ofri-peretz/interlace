@@ -29,7 +29,9 @@
     "tier": "starter",
     "client": false,
     "minViewport": null,
-    "loading": false
+    "loading": false,
+    "version": "1.6.0",
+    "since": "1.0.0"
   },
   "docs": "# @interlace/a11y-starter\n\nInstalled:\n\n- `SkipLink` — focus-visible skip-to-main link.\n- `VisuallyHidden` — screen-reader-only span (component variant).\n- `FocusRing` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- `useReducedMotion` — gates every animation in the DS.\n- `theme` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
 }

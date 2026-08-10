@@ -30,6 +30,7 @@ const LINKS: NavLink[] = [
   { href: '/css-contract', label: 'CSS contract' },
   { href: '/theme-authoring', label: 'Theme authoring' },
   { href: '/semantics-catalog', label: 'Semantics' },
+  { href: '/changelog', label: 'Changelog' },
   { href: STORYBOOK_URL, label: 'Storybook', external: true },
   { href: REPO_URL, label: 'GitHub', external: true },
 ];

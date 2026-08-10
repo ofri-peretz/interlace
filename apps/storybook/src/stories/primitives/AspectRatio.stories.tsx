@@ -34,7 +34,7 @@ const Placeholder = ({ label }: { label: string }) => (
 export const Default: Story = {
   args: { ratio: 16 / 9 },
   render: (args) => (
-    <div className="w-[480px]">
+    <div className="w-[480px] max-w-full">
       <AspectRatio {...args}>
         <Placeholder label="16 / 9 — default" />
       </AspectRatio>
@@ -46,7 +46,7 @@ export const Default: Story = {
 // sample of common values rather than enumerating an enum.
 export const Variants: Story = {
   render: () => (
-    <div className="grid w-[640px] grid-cols-2 gap-4">
+    <div className="grid w-[640px] max-w-full grid-cols-1 gap-4 md:grid-cols-2">
       {[
         { ratio: 16 / 9, label: '16 / 9 — landscape' },
         { ratio: 4 / 3, label: '4 / 3 — classic' },
@@ -63,7 +63,7 @@ export const Variants: Story = {
 
 export const WithImage: Story = {
   render: () => (
-    <div className="w-[480px]">
+    <div className="w-[480px] max-w-full">
       <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
         {/* Placeholder shape — no network — exercises the object-cover seam. */}
         <div className="from-primary/40 to-accent/40 absolute inset-0 bg-gradient-to-br" />

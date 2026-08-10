@@ -38,7 +38,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   render: () => (
-    <Form className="w-[360px]">
+    <Form className="w-[360px] max-w-full">
       <Field name="email">
         <FieldLabel>Email</FieldLabel>
         <FieldControl render={<Input type="email" autoComplete="email" placeholder="you@interlace.tools" />} />
@@ -66,7 +66,7 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="grid w-[720px] grid-cols-2 gap-md">
+    <div className="grid w-[720px] max-w-full grid-cols-1 gap-md md:grid-cols-2">
       <Form>
         <div className="mb-sm text-ui-sm font-mono uppercase text-muted-foreground">
           valid
@@ -111,7 +111,7 @@ export const Dark: Story = {
 
 export const RTL: Story = {
   render: () => (
-    <Form className="w-[360px]" dir="rtl" lang="ar">
+    <Form className="w-[360px] max-w-full" dir="rtl" lang="ar">
       <Field name="email-rtl">
         <FieldLabel>البريد الإلكتروني</FieldLabel>
         <FieldControl
@@ -181,7 +181,7 @@ export const BelowMinViewport: Story = {
  */
 export const Loading: Story = {
   render: () => (
-    <div className="w-[320px]">
+    <div className="w-[320px] max-w-full">
       <Skeleton variant="form" />
     </div>
   ),

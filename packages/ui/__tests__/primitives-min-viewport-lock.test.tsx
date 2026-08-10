@@ -112,6 +112,11 @@ const PRIMITIVES = [
   // Pagination is a server primitive — plain anchors, no state.
   { name: 'pagination', viewport: 320, tier: 'server' },
   { name: 'scroll-area', viewport: 320, tier: 'client' },
+  // ── Phase 8 — semantic themes ─────────────────────────────────────────
+  // ThemeSwitcher is client-tier by necessity, not by preference: it reads
+  // localStorage and matchMedia and writes to <html>. Its trigger collapses
+  // to a 36px icon square below `sm`, so 320 is honest.
+  { name: 'theme-switcher', viewport: 320, tier: 'client' },
 ] as const;
 
 /**

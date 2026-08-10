@@ -27,7 +27,7 @@ type Story = StoryObj<typeof SectionBoundary>;
  */
 export const Idle: Story = {
   render: () => (
-    <div className="w-[420px]">
+    <div className="w-[420px] max-w-full">
       <SectionBoundary name="example-section">
         <div className="border-border rounded-md border p-md">
           <h3 className="font-body text-h5 font-semibold">Hello, world</h3>
@@ -52,7 +52,7 @@ const ForeverPending = () => {
 
 export const Loading: Story = {
   render: () => (
-    <div className="w-[420px]">
+    <div className="w-[420px] max-w-full">
       <SectionBoundary name="example-section" skeletonVariant="article-card">
         {/* never resolves */}
         {React.createElement(ForeverPending)}
@@ -71,7 +71,7 @@ const Thrower = () => {
 
 export const ErrorState: Story = {
   render: () => (
-    <div className="w-[420px]">
+    <div className="w-[420px] max-w-full">
       <SectionBoundary name="example-section">
         {React.createElement(Thrower)}
       </SectionBoundary>
@@ -85,7 +85,7 @@ export const ErrorState: Story = {
  */
 export const CustomFallbacks: Story = {
   render: () => (
-    <div className="flex w-[420px] flex-col gap-md">
+    <div className="flex w-[420px] max-w-full flex-col gap-md">
       <SectionBoundary
         name="custom-loading"
         skeleton={
@@ -121,7 +121,7 @@ export const CustomFallbacks: Story = {
  */
 export const ThreeIndependentSections: Story = {
   render: () => (
-    <div className="flex w-[420px] flex-col gap-md">
+    <div className="flex w-[420px] max-w-full flex-col gap-md">
       <SectionBoundary name="header" skeletonVariant="page-header">
         <div className="border-border rounded-md border p-md">
           <h3 className="text-h5 font-semibold">Header (idle)</h3>

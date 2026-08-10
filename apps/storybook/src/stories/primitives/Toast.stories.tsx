@@ -23,7 +23,10 @@ const meta = {
   component: Toast,
   tags: ['autodocs'],
   parameters: {
-    layout: 'centered',
+    // NOT `centered`: a toast panel is a width-filling surface, and centered
+    // sizes the story root to content, so the 420px stack outgrows a 375px
+    // viewport instead of clamping to it.
+    layout: 'padded',
     docs: {
       description: {
         component:
@@ -82,7 +85,7 @@ export const Default: Story = {
     // UI's Title / Description (which would throw #66 without an active
     // toast object). The styling + data-slot stay identical to the
     // imperative path so visual + axe assertions still hold.
-    <div className="flex w-[420px] flex-col gap-sm">
+    <div className="flex w-[420px] max-w-full flex-col gap-sm">
       {TONES.map(({ tone, Icon, title, description }) => (
         <Toast key={tone} tone={tone}>
           <Icon className="size-4" aria-hidden />

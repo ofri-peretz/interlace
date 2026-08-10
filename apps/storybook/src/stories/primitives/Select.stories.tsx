@@ -33,7 +33,7 @@ type Story = StoryObj<typeof Select>;
 export const Default: Story = {
   render: () => (
     <Select defaultValue="date">
-      <SelectTrigger className="w-[180px]" aria-label="Sort by">
+      <SelectTrigger className="w-[180px] max-w-full" aria-label="Sort by">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent>
@@ -49,7 +49,7 @@ export const Default: Story = {
 export const Grouped: Story = {
   render: () => (
     <Select defaultValue="security">
-      <SelectTrigger className="w-[220px]" aria-label="Choose plugin">
+      <SelectTrigger className="w-[220px] max-w-full" aria-label="Choose plugin">
         <SelectValue placeholder="Choose plugin" />
       </SelectTrigger>
       <SelectContent>
@@ -73,7 +73,7 @@ export const Grouped: Story = {
 export const Disabled: Story = {
   render: () => (
     <Select disabled>
-      <SelectTrigger className="w-[180px]" aria-label="Disabled select">
+      <SelectTrigger className="w-[180px] max-w-full" aria-label="Disabled select">
         <SelectValue placeholder="Disabled" />
       </SelectTrigger>
       <SelectContent>
@@ -89,7 +89,7 @@ export const Dark: Story = {
   render: () => (
     <div className="dark">
       <Select defaultValue="date">
-        <SelectTrigger className="w-[180px]" aria-label="Sort by">
+        <SelectTrigger className="w-[180px] max-w-full" aria-label="Sort by">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
@@ -106,7 +106,7 @@ export const Invalid: Story = {
     <div className="flex flex-col gap-1">
       <Select>
         <SelectTrigger
-          className="w-[180px]"
+          className="w-[180px] max-w-full"
           aria-label="Choose plan"
           aria-invalid="true"
           aria-describedby="plan-err-sel"
@@ -128,7 +128,7 @@ export const Invalid: Story = {
 export const RTL: Story = {
   render: () => (
     <Select defaultValue="date">
-      <SelectTrigger className="w-[180px]" aria-label="رتب حسب">
+      <SelectTrigger className="w-[180px] max-w-full" aria-label="رتب حسب">
         <SelectValue placeholder="رتب حسب" />
       </SelectTrigger>
       <SelectContent>
@@ -148,7 +148,7 @@ export const ReducedMotion: Story = {
 /** Loading placeholder — reserves the 36px trigger height (CLS=0). */
 export const Loading: Story = {
   render: () => (
-    <div className="w-[220px]">
+    <div className="w-[220px] max-w-full">
       <Skeleton variant="select" />
     </div>
   ),

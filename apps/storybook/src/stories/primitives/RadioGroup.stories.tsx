@@ -118,7 +118,7 @@ export const Disabled: Story = {
 /** Loading placeholder — three option rows at the group's own gap-2 pitch. */
 export const Loading: Story = {
   render: () => (
-    <div className="w-[260px]">
+    <div className="w-[260px] max-w-full">
       <Skeleton variant="radio-group" />
     </div>
   ),

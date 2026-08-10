@@ -10,7 +10,9 @@ const meta: Meta<typeof Testimonial> = {
   component: Testimonial,
   tags: ['autodocs'],
   parameters: {
-    layout: 'centered',
+    // NOT `centered`: the testimonial card fills its container. Centered sizes
+    // the story root to content, pushing the 420px frame past a 375px viewport.
+    layout: 'padded',
     docs: {
       description: {
         component:
@@ -33,7 +35,7 @@ const sampleItem = {
 export const Default: Story = {
   args: sampleItem,
   render: (args) => (
-    <div className="w-[420px]">
+    <div className="w-[420px] max-w-full">
       <Testimonial {...args} />
     </div>
   ),
@@ -53,7 +55,7 @@ export const Grid: Story = {
 export const Loading: Story = {
   args: { ...sampleItem, loading: true },
   render: (args) => (
-    <div className="w-[420px]">
+    <div className="w-[420px] max-w-full">
       <Testimonial {...args} />
     </div>
   ),

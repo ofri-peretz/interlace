@@ -35,7 +35,7 @@ type Story = StoryObj<typeof Skeleton>;
 export const Default: Story = {
   args: { variant: 'rect' },
   render: (args) => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <Skeleton {...args} />
     </div>
   ),
@@ -59,8 +59,10 @@ export const Catalogue: Story = {
 
 function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
   return (
-    <div className="flex items-start gap-md">
-      <code className="text-muted-foreground font-mono text-ui-sm w-44 shrink-0 pt-2">
+    // flex-col below sm: the 176px `w-44 shrink-0` label plus a specimen leaves
+    // under 100px for the specimen on a 375px phone, so the row overflows.
+    <div className="flex flex-col items-start gap-md sm:flex-row">
+      <code className="text-muted-foreground font-mono text-ui-sm pt-2 sm:w-44 sm:shrink-0">
         variant=&quot;{variant}&quot;
       </code>
       <div className="w-[420px] max-w-full">
@@ -78,7 +80,7 @@ function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
 export const Count: Story = {
   args: { variant: 'text', count: 5 },
   render: (args) => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <Skeleton {...args} />
     </div>
   ),
@@ -91,7 +93,7 @@ export const Count: Story = {
 export const ArticleCardSkeleton: Story = {
   args: { variant: 'article-card' },
   render: (args) => (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-full">
       <Skeleton {...args} />
     </div>
   ),

@@ -47,7 +47,7 @@ const ArticleMock = ({ items }: { items: TocItem[] }) => (
 );
 
 const PageMock = ({ items = ITEMS }: { items?: TocItem[] }) => (
-  <div className="grid min-h-[80vh] grid-cols-[1fr_220px] gap-lg bg-background px-md py-lg text-foreground">
+  <div className="grid min-h-[80vh] grid-cols-1 gap-lg bg-background px-md py-lg text-foreground lg:grid-cols-[1fr_220px]">
     <ArticleMock items={items} />
     <aside className="sticky top-md self-start">
       <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -164,15 +164,20 @@ export const RTL: Story = {
 
 export const BelowMinViewport: Story = {
   render: () => (
-    <div
-      data-interlace-dev
-      style={{ width: MIN_VIEWPORT - 1 }}
-      className="border-2 border-dashed border-muted bg-background p-md text-foreground"
-    >
-      <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        Below {MIN_VIEWPORT}px — consumer should hide the TOC entirely.
+    <div className="overflow-x-auto">
+      {/* overflow-x-auto: the frame below is pinned to 479px to trip the
+        min-viewport contract; without an inner scroller it drags the whole
+        page sideways on a 375px phone. */}
+      <div
+        data-interlace-dev
+        style={{ width: MIN_VIEWPORT - 1 }}
+        className="border-2 border-dashed border-muted bg-background p-md text-foreground"
+      >
+        <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          Below {MIN_VIEWPORT}px — consumer should hide the TOC entirely.
+        </div>
+        <Toc items={ITEMS} />
       </div>
-      <Toc items={ITEMS} />
     </div>
   ),
 };

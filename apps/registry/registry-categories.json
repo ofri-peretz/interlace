@@ -220,6 +220,9 @@
     "testimonial": "marketing",
     "textarea": "form",
     "theme": "foundation",
+    "theme-script": "foundation",
+    "theme-switcher": "foundation",
+    "theme-tokens": "foundation",
     "time-series": "data",
     "toast": "feedback",
     "toc": "blog",
@@ -228,6 +231,7 @@
     "topbar": "navigation",
     "typography": "foundation",
     "use-reduced-motion": "foundation",
+    "use-theme": "foundation",
     "visually-hidden": "a11y"
   }
 }

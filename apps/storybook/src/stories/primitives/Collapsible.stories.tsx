@@ -50,7 +50,7 @@ const PanelBody = () => (
 // visible without a click, per the spec.
 export const Default: Story = {
   render: () => (
-    <Collapsible defaultOpen className="w-[420px] rounded-md border">
+    <Collapsible defaultOpen className="w-[420px] max-w-full rounded-md border">
       <CollapsibleTrigger className="flex w-full items-center justify-between px-md py-sm text-left text-ui-sm font-medium">
         What does <span className="font-mono">eslint-plugin-jwt</span> detect?
       </CollapsibleTrigger>
@@ -68,7 +68,7 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="grid w-[880px] grid-cols-2 gap-lg">
+    <div className="grid w-[880px] max-w-full grid-cols-1 gap-lg md:grid-cols-2">
       <section className="flex flex-col gap-xs">
         <div className="text-ui-sm font-mono uppercase text-muted-foreground">
           open
@@ -106,7 +106,7 @@ export const Variants: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Collapsible className="w-[420px] rounded-md border">
+    <Collapsible className="w-[420px] max-w-full rounded-md border">
       <CollapsibleTrigger className="text-ui-sm flex w-full items-center justify-between px-md py-sm text-left font-medium">
         Show advanced settings
       </CollapsibleTrigger>
