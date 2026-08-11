@@ -43,6 +43,7 @@ interface NavLink {
 
 const LINKS: NavLink[] = [
   { href: '/getting-started', label: 'Getting started' },
+  { href: '/concepts', label: 'Concepts' },
   { href: '/css-contract', label: 'CSS contract' },
   { href: '/theme-authoring', label: 'Theme authoring' },
   { href: '/semantics-catalog', label: 'Semantics' },

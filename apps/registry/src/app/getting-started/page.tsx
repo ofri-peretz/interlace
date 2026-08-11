@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { InstallProofPanel } from '@/components/install-proof';
 import { SiteNav } from '@/components/site-nav';
+import { loadInstallProof } from '@/lib/install-proof';
 
 export const metadata: Metadata = {
   title: 'Getting started',
@@ -15,7 +17,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GettingStartedPage() {
+export default async function GettingStartedPage() {
+  const proof = await loadInstallProof();
+
   return (
     <div className="bg-background text-foreground min-h-screen">
       <SiteNav />
@@ -241,6 +245,15 @@ export default function GettingStartedPage() {
             </a>
           </div>
         </section>
+
+        {/*
+          The three steps above are instructions. This is the evidence they
+          work — the same commands, run by CI against a throwaway app, with the
+          result committed. It goes last because it answers the question a
+          reader has only after reading the instructions: "and does that
+          actually happen?"
+        */}
+        {proof ? <InstallProofPanel proof={proof} /> : null}
 
         <footer className="border-border mt-16 border-t pt-8 text-sm">
           <p className="text-muted-foreground">

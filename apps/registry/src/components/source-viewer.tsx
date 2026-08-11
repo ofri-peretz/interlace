@@ -13,7 +13,11 @@ import { useState } from 'react';
  */
 type Props = {
   source: string;
-  githubUrl: string;
+  /**
+   * Omitted for the meta-items (the starters), which ship no file of their own
+   * — a "github" link that resolves to nothing is worse than no link.
+   */
+  githubUrl?: string;
 };
 
 const PREVIEW_LINES = 20;
@@ -50,14 +54,16 @@ export function SourceViewer({ source, githubUrl }: Props) {
           >
             {copied ? '✓ copied' : 'copy'}
           </button>
-          <a
-            href={githubUrl}
-            className="text-muted-foreground hover:text-foreground font-mono text-xs transition-colors"
-            target="_blank"
-            rel="noreferrer"
-          >
-            github ↗
-          </a>
+          {githubUrl ? (
+            <a
+              href={githubUrl}
+              className="text-muted-foreground hover:text-foreground font-mono text-xs transition-colors"
+              target="_blank"
+              rel="noreferrer"
+            >
+              github ↗
+            </a>
+          ) : null}
         </div>
       </div>
       <pre className="overflow-x-auto px-4 py-3">

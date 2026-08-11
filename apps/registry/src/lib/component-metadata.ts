@@ -28,13 +28,28 @@ export type PropEntry = {
   type: string;
   required: boolean;
   description: string | null;
+  /**
+   * The default from the component's own destructuring
+   * (`size = 'default'`) — the value you get when you pass nothing.
+   */
+  defaultValue?: string | null;
 };
 
 export type PropsTable = {
-  /** The `<Name>Props` type this came from. */
+  /** The `<Name>Props` type this came from, or the component's own name. */
   typeName: string;
   /** The DOM element whose props are spread in, e.g. `span` — null if none. */
   extendsElement: string | null;
+  /**
+   * The Base UI part whose props are spread in, e.g. `Select.Trigger`.
+   *
+   * Most of this DS's overlay and form primitives are thin skins over Base UI
+   * and type themselves as `React.ComponentProps<typeof BaseSelect.Trigger>`.
+   * Before this field existed the page rendered a heading and an empty table
+   * for those — which reads as "this component has no API", the opposite of
+   * the truth.
+   */
+  extendsComponent: string | null;
   /** True when the type composes `VariantProps<typeof …>` (see `variants`). */
   hasVariantProps: boolean;
   props: PropEntry[];
@@ -230,6 +245,15 @@ export function extractLucideIcons(content: string): string[] {
  */
 const PROPS_DECL_RE = /\b(?:type|interface)\s+(\w*Props)\b/g;
 const ELEMENT_PROPS_RE = /React\.ComponentProps(?:WithoutRef)?<\s*'([\w-]+)'/;
+/**
+ * `React.ComponentProps<typeof BaseSelect.Trigger>` → `Select.Trigger`.
+ *
+ * The `Base` prefix is the import convention in every primitive
+ * (`import { Select as BaseSelect } from '@base-ui/react/select'`), so
+ * stripping it gives the name a reader will find in Base UI's own docs.
+ */
+const COMPONENT_PROPS_RE =
+  /React\.ComponentProps(?:WithoutRef)?<\s*typeof\s+(?:Base)?(\w+)\.(\w+)\s*>/;
 const VARIANT_PROPS_RE = /VariantProps<\s*typeof\s+\w+\s*>/;
 /** One member of an object-type body, with any preceding JSDoc block. */
 const MEMBER_RE =
@@ -260,35 +284,146 @@ function sliceDeclaration(content: string, start: number): string {
   return content.slice(start);
 }
 
+/** The members of an object-type body, with their JSDoc. */
+function membersOf(body: string): PropEntry[] {
+  const props: PropEntry[] = [];
+  MEMBER_RE.lastIndex = 0;
+  let member: RegExpExecArray | null;
+  while ((member = MEMBER_RE.exec(body)) !== null) {
+    const [, doc, name, optional, type] = member;
+    props.push({
+      name,
+      type: type.trim(),
+      required: optional !== '?',
+      description: doc ? stripJsdoc(doc).replace(/\s+/g, ' ') || null : null,
+    });
+  }
+  return props;
+}
+
+const tableFrom = (typeName: string, body: string): PropsTable => ({
+  typeName,
+  extendsElement: body.match(ELEMENT_PROPS_RE)?.[1] ?? null,
+  extendsComponent: (() => {
+    const m = body.match(COMPONENT_PROPS_RE);
+    return m ? `${m[1]}.${m[2]}` : null;
+  })(),
+  hasVariantProps: VARIANT_PROPS_RE.test(body),
+  props: membersOf(body),
+});
+
+/**
+ * Read the type annotation of a destructured parameter list.
+ *
+ * From the `:` after `}`, scan to the `)` that closes the parameter list,
+ * tracking every bracket kind — a Base UI props type is full of `<>` and `{}`
+ * and stopping at the first `)` returns half a type.
+ */
+function sliceAnnotation(content: string, colon: number): string {
+  let angle = 0;
+  let brace = 0;
+  let paren = 0;
+  for (let i = colon + 1; i < content.length; i += 1) {
+    const ch = content[i];
+    if (ch === '<') angle += 1;
+    else if (ch === '>') angle -= 1;
+    else if (ch === '{') brace += 1;
+    else if (ch === '}') brace -= 1;
+    else if (ch === '(') paren += 1;
+    else if (ch === ')') {
+      if (angle <= 0 && brace <= 0 && paren <= 0) {
+        return content.slice(colon + 1, i);
+      }
+      paren -= 1;
+    }
+  }
+  return content.slice(colon + 1);
+}
+
+/** `size = 'default'` inside a destructuring → `{ size: "'default'" }`. */
+function defaultsIn(destructuring: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const [, name, value] of destructuring.matchAll(
+    /(\w+)\s*=\s*([^,\n]+)/g,
+  )) {
+    out.set(name, value.trim());
+  }
+  return out;
+}
+
+/**
+ * Components that never declare a `<Name>Props` type.
+ *
+ * `Select`, `Tabs`, `Checkbox`, `Switch`, `Input` and 25 other items type
+ * themselves inline —
+ * `function SelectTrigger({ … }: React.ComponentProps<typeof BaseSelect.Trigger> & { size?: … })`
+ * — and rendered NO API reference at all before this pass existed. The API is
+ * right there in the signature; it just was not in the shape the first parser
+ * looked for.
+ */
+const INLINE_FN_RE =
+  /(?:export\s+)?function\s+([A-Z]\w*)\s*\(\s*\{([\s\S]{0,600}?)\}\s*:/g;
+const FORWARD_REF_RE =
+  /const\s+([A-Z]\w*)\s*=\s*React\.forwardRef<\s*[\s\S]{0,200}?,\s*([\s\S]{0,300}?)\s*>\s*\(\s*function\s+\w+\s*\(\s*\{([\s\S]{0,400}?)\}\s*,/g;
+
+function extractInlinePropsTables(content: string): PropsTable[] {
+  const tables: PropsTable[] = [];
+
+  INLINE_FN_RE.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = INLINE_FN_RE.exec(content)) !== null) {
+    const colon = match.index + match[0].length - 1;
+    const annotation = sliceAnnotation(content, colon);
+    const table = tableFrom(match[1], annotation);
+    const defaults = defaultsIn(match[2]);
+    for (const prop of table.props) {
+      prop.defaultValue = defaults.get(prop.name) ?? null;
+    }
+    tables.push(table);
+  }
+
+  FORWARD_REF_RE.lastIndex = 0;
+  while ((match = FORWARD_REF_RE.exec(content)) !== null) {
+    const table = tableFrom(match[1], match[2]);
+    const defaults = defaultsIn(match[3]);
+    for (const prop of table.props) {
+      prop.defaultValue = defaults.get(prop.name) ?? null;
+    }
+    tables.push(table);
+  }
+
+  return tables;
+}
+
 export function extractPropsTables(content: string): PropsTable[] {
   const tables: PropsTable[] = [];
   PROPS_DECL_RE.lastIndex = 0;
   let match: RegExpExecArray | null;
   while ((match = PROPS_DECL_RE.exec(content)) !== null) {
-    const body = sliceDeclaration(content, match.index);
-    const props: PropEntry[] = [];
-    MEMBER_RE.lastIndex = 0;
-    let member: RegExpExecArray | null;
-    while ((member = MEMBER_RE.exec(body)) !== null) {
-      const [, doc, name, optional, type] = member;
-      props.push({
-        name,
-        type: type.trim(),
-        required: optional !== '?',
-        description: doc ? stripJsdoc(doc).replace(/\s+/g, ' ') || null : null,
-      });
-    }
-    tables.push({
-      typeName: match[1],
-      extendsElement: body.match(ELEMENT_PROPS_RE)?.[1] ?? null,
-      hasVariantProps: VARIANT_PROPS_RE.test(body),
-      props,
-    });
+    tables.push(
+      tableFrom(match[1], sliceDeclaration(content, match.index)),
+    );
   }
-  // Drop re-export lines (`export type { BadgeProps }`) — they match the
-  // declaration regex but carry no API surface.
-  return tables.filter(
-    (t) => t.props.length > 0 || t.extendsElement || t.hasVariantProps,
+
+  // Only fall back to the signatures when the file declares no props type of
+  // its own. Files that do declare one (`badge`, `card`, …) are already
+  // described by it, and adding a second table per sub-component would bury
+  // the real one.
+  const named = tables.filter(
+    (t) =>
+      t.props.length > 0 ||
+      t.extendsElement ||
+      t.extendsComponent ||
+      t.hasVariantProps,
+  );
+  if (named.length > 0) return named;
+
+  return extractInlinePropsTables(content).filter(
+    (t) =>
+      t.props.length > 0 ||
+      t.extendsElement ||
+      t.extendsComponent ||
+      t.hasVariantProps,
   );
 }
 

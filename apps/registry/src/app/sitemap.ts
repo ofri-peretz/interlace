@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 
+import { listConcepts } from '@/lib/concepts';
 import { listItemNames, loadIndex } from '@/lib/registry';
 
 const BASE = 'https://ds.interlace.tools';
@@ -33,6 +34,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    // The concept pages are the doctrine a buyer reads before the catalogue,
+    // so the index sits with the other high-value landing pages.
+    {
+      url: `${BASE}/concepts`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    ...listConcepts().map((page) => ({
+      url: `${BASE}/concepts/${page.slug}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     {
       url: `${BASE}/css-contract`,
       lastModified,

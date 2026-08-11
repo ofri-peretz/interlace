@@ -1,10 +1,12 @@
 import Link from 'next/link';
 
 import { ClientServerBadge } from '@/components/client-server-badge';
+import { InstallProofLine } from '@/components/install-proof';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
 import { RegistrySearch } from '@/components/registry-search';
 import { SiteNav } from '@/components/site-nav';
 import { CATEGORIES, groupByCategory, TIER_CATEGORIES } from '@/lib/categories';
+import { loadInstallProof } from '@/lib/install-proof';
 import { loadIndex } from '@/lib/registry';
 
 const PRIMARY_INSTALL =
@@ -15,7 +17,7 @@ const STYLE_INSTALL =
   'npx shadcn@latest add https://ds.interlace.tools/r/theme.json';
 
 export default async function HomePage() {
-  const index = await loadIndex();
+  const [index, proof] = await Promise.all([loadIndex(), loadInstallProof()]);
   const styleItem = index.items.find((i) => i.name === 'theme');
   // Every installable item, not just the primitives — patterns, templates and
   // the vendored effects are 60% of the registry and used to be unbrowsable.
@@ -76,6 +78,17 @@ export default async function HomePage() {
             <code className="font-mono">components.json</code>:{' '}
             <code className="font-mono text-foreground">{ALIAS_INSTALL}</code>
           </p>
+
+          {/*
+            The command above is a promise; this is the receipt. Kept to one
+            sentence in the hero — the run itself is on /getting-started, where
+            a reader who cares about it is already standing.
+          */}
+          {proof ? (
+            <div className="mt-4">
+              <InstallProofLine proof={proof} />
+            </div>
+          ) : null}
         </div>
       </section>
 
