@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArticleListGrid } from '@interlace/ui/patterns/article-list-grid';
+import { DataState } from '@interlace/ui/data-state';
+// Aliased — `EmptyState` is taken by a story export name in this file's family.
+import { EmptyState as EmptyPanel } from '@interlace/ui/patterns/empty-state';
 import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof ArticleListGrid> = {
@@ -120,5 +123,70 @@ export const Loading: Story = { args: { loading: true } };
 
 export const Empty: Story = { args: { posts: [] } };
 
+/**
+ * The built-in empty state, replaced with the `EmptyState` pattern.
+ *
+ * `Empty` above renders the component's own default — "No articles yet.",
+ * which is the right sentence for an index that has genuinely never had a
+ * post. It is the WRONG sentence for a filtered index, where the reader made
+ * the list empty and needs a way back. Same absence, different cause,
+ * different copy — which is what the `emptyState` slot exists for.
+ */
+export const EmptyFiltered: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '"No articles yet." is right for an index that never had a post and wrong for one the reader just filtered to nothing. The `emptyState` slot takes the `EmptyState` pattern so the panel can carry the way out.',
+      },
+    },
+  },
+  args: {
+    posts: [],
+    featured: undefined,
+    emptyState: (
+      <EmptyPanel
+        title="No articles match these filters"
+        description="Try a broader tag, or clear the date range."
+      />
+    ),
+  },
+};
+
+/**
+ * A failed fetch, which `ArticleListGrid` has no prop for — deliberately.
+ *
+ * The component owns `loading` and `emptyState` and stops there. Adding an
+ * `error` prop to every list-shaped pattern in the package is how you end up
+ * with five slightly different retry buttons and five spellings of the same
+ * sentence. `DataState` is the one place that vocabulary lives.
+ *
+ * The distinction it preserves is not cosmetic: "there are no articles" and
+ * "we could not find out whether there are articles" lead to different reader
+ * actions, and only the second one is worth a retry.
+ */
+export const ErrorState: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'No `error` prop, on purpose — `DataState` owns the failure vocabulary so every list does not grow its own. Announced through `role="alert"`, and visibly distinct from the empty case.',
+      },
+    },
+  },
+  render: () => (
+    <DataState<typeof samplePosts>
+      error={new Error('content API unreachable')}
+      data={undefined}
+      announce={{ noun: 'articles' }}
+      className="p-lg"
+    >
+      {(posts) => <ArticleListGrid title="Latest articles" posts={posts} />}
+    </DataState>
+  ),
+};
+
 export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
+export const EmptyFilteredDark: Story = { ...EmptyFiltered, globals: { theme: 'dark' } };
+export const ErrorStateDark: Story = { ...ErrorState, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

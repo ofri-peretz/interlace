@@ -22,10 +22,22 @@ const badgeVariants = cva(
         // to 4.27:1 — under AA. Caught by composite-contrast-lock.
         destructive:
           'bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
+        // `bg-background` is NOT decoration — it is what makes `text-foreground`
+        // mean anything. Transparent, this variant declared a foreground over
+        // a surface it did not paint, so a badge in a `bg-primary` section
+        // rendered `#0d0b09` on `#7d350c`: 2.23:1 light, 1.44:1 dark. Same
+        // defect the button `outline` shipped, same fix, and the two `outline`s
+        // now agree on what the word means: an opaque face plus its own text.
         outline:
-          'border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+          'border-border bg-background text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+        // Declares neither colour at rest — inherits both, which is safe on
+        // any surface — and its hover paints an opaque `bg-accent` with the
+        // matching foreground. The correct shape, kept as the reference.
         ghost: '[a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 [a&]:hover:underline',
+        // No `text-primary` — see the long note on `buttonVariants.link`.
+        // Same 1.00:1-on-`bg-primary` defect, same fix: inherit the colour,
+        // underline at rest so the affordance is not the hue.
+        link: 'underline underline-offset-4 decoration-from-font [a&]:hover:decoration-2',
       },
     },
     defaultVariants: {

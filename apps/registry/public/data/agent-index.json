@@ -2277,7 +2277,7 @@
       "name": "dialog",
       "title": "Dialog",
       "type": "registry:ui",
-      "summary": "This file is the canonical example of the portable component-modeling floor. Every rule R1–R26 from `skills/interlace-component/SKILL.md` that is applicable to a Dialog primitive is illustrated here.",
+      "summary": "A MODAL dialog: it traps focus, dismisses on Escape and on an outside click, marks the rest of the page inert while open, and restores focus to the trigger on close. Base UI owns all of that, which is exactly why this file never says so anywhere else — and…",
       "topics": [],
       "categories": [
         "overlay",
@@ -4243,7 +4243,7 @@
       "name": "popover",
       "title": "Popover",
       "type": "registry:ui",
-      "summary": "The popup is `w-72` (288px), which still clears the 320 floor with gutters; Base UI's positioner flips/shifts it into the viewport rather than letting it clip. Projected onto the popup — `Popover.Root` renders no DOM node.",
+      "summary": "The popup is A NON-MODAL floating panel: dismisses on Escape and on an outside click, and restores focus to the trigger on close, but does NOT trap focus or make the page inert — that is the line between this and Dialog/Sheet, and it is the reason to pick…",
       "topics": [],
       "categories": [
         "overlay",
@@ -5340,7 +5340,7 @@
       "name": "sheet",
       "title": "Sheet",
       "type": "registry:ui",
-      "summary": "Left/right sheets are `w-3/4` (240px at the 320 floor) and top/bottom are `h-auto`, so nothing clips at the iPhone SE width. Projected onto the popup — Base UI's `Dialog.Root` renders no DOM node of its own.",
+      "summary": "Left/right sheets A MODAL side panel (drawer): traps focus, dismisses on Escape and on an outside click, marks the rest of the page inert while open, and restores focus to the trigger on close. Base UI owns that behaviour — which is why this file never…",
       "topics": [],
       "categories": [
         "overlay",

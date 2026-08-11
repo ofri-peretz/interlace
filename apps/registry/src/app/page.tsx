@@ -48,7 +48,7 @@ export default async function HomePage() {
 
         <div className="relative mx-auto max-w-wide px-6 py-20 sm:py-28">
           <div className="text-muted-foreground inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs">
-            <span className="size-1.5 rounded-full bg-emerald-500" />
+            <span aria-hidden className="bg-success size-1.5 rounded-full" />
             {components.length} components · 1 theme bundle · WCAG 2.2 AA floor
           </div>
 

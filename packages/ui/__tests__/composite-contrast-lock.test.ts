@@ -37,6 +37,11 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { resolve, join, relative } from 'path';
 
+import { buttonVariants } from '../src/primitives/button-variants.js';
+import { badgeVariants } from '../src/primitives/badge.js';
+import { tagVariants } from '../src/primitives/tag.js';
+import { gradeBadgeVariants } from '../src/primitives/grade-badge.js';
+
 const REPO_ROOT = resolve(__dirname, '../../..');
 const THEME_CSS = resolve(__dirname, '../styles/interlace-theme.css');
 const SCAN_ROOTS = [resolve(__dirname, '../src')];
@@ -290,9 +295,11 @@ const stateKey = (u: Utility) =>
  *   3. Within either group, a `dark:` background wins in dark mode, because
  *      that is exactly what the prefix is for.
  *
- * Returns `null` when the resulting background is opaque: an alpha-free
- * surface is a colour someone already measured, and it is the tint case
- * this lock exists for.
+ * Returns `null` only when the element declares no background at all in this
+ * state — it inherits whatever it was dropped on, and there is nothing here
+ * to measure. Callers decide what to do with an opaque winner: the tint scan
+ * skips it (someone already measured that colour), the button-variant scan
+ * keeps it (an opaque winner is precisely the passing case it asserts).
  */
 function effectiveBackground(
   text: Utility,
@@ -316,7 +323,7 @@ function effectiveBackground(
       ? [...candidates].reverse().find((bg) => bg.prefixes.includes('dark'))
       : undefined) ?? candidates[candidates.length - 1];
 
-  return winner.alpha < 1 ? winner : null;
+  return winner;
 }
 
 /**
@@ -348,7 +355,9 @@ function collectPairs(themeTokens: Set<string>): Pair[] {
         for (const text of utils.filter((u) => u.kind === 'text')) {
           for (const mode of ['light', 'dark'] as const) {
             const bg = effectiveBackground(text, bgs, mode);
-            if (!bg) continue;
+            // An opaque surface is a colour someone already measured; the
+            // tint is what nobody did.
+            if (!bg || bg.alpha === 1) continue;
             pairs.push({
               file,
               line: i + 1,
@@ -412,8 +421,20 @@ describe('composite AA contrast lock', () => {
     const text = utils.find((u) => u.kind === 'text')!;
     const bgs = utils.filter((u) => u.kind === 'bg');
 
-    // `data-[checked]:bg-primary` is opaque, so there is no tint to measure.
-    expect(effectiveBackground(text, bgs, 'dark')).toBeNull();
+    // The winner is `data-[checked]:bg-primary` — opaque, and NOT the resting
+    // `dark:bg-input/30` field, which never coexists with the checkmark.
+    expect(effectiveBackground(text, bgs, 'dark')).toMatchObject({
+      token: 'primary',
+      alpha: 1,
+    });
+  });
+
+  it('reports no background when the element declares none', () => {
+    // `ghost` at rest and `link` paint no surface at all: they inherit
+    // whatever they were dropped on, so there is nothing to resolve.
+    const utils = parseUtilities(`'text-primary underline-offset-4'`);
+    const text = utils.find((u) => u.kind === 'text')!;
+    expect(effectiveBackground(text, [], 'light')).toBeNull();
   });
 
   it('parses both brand-layer palettes out of interlace-theme.css', () => {
@@ -571,6 +592,202 @@ describe('composite AA contrast lock', () => {
     expect(
       failures,
       `Status tokens below the AA floor as body text:\n${failures.join('\n')}`,
+    ).toEqual([]);
+  });
+
+  it('droppable variants stay legible on every surface they can land on', () => {
+    // WHY THIS IS NOT COVERED BY THE TINT SCAN ABOVE
+    // ----------------------------------------------
+    // That scan composites a tint over `bg-background`, because for most of
+    // the DS the page background IS the backdrop. The small inline variants
+    // are the exception, and deliberately so: `buttonVariants` ships as a
+    // server-safe class string precisely so consumers drop it onto surfaces
+    // the DS never sees — `<CTASection tone="primary">` is `bg-primary
+    // text-primary-foreground`, and `<Link className={buttonVariants({
+    // variant: 'outline' })}>` inside it is the documented use case. Badges,
+    // tags and grade badges get scattered the same way.
+    //
+    // So the backdrop is a free variable, and the only honest check is to
+    // range over it. Every failure below was invisible to the story-level axe
+    // sweep except where a story happened to paint the pair, and they come in
+    // exactly two shapes.
+    //
+    // SHAPE 1 — a `dark:` translucent override of a state that was opaque in
+    // light, under a foreground the variant declares itself:
+    //
+    //   button outline rest   dark:bg-input/30  + text-foreground        2.00:1
+    //   button outline hover  dark:bg-input/50  + text-accent-foreground 2.00:1
+    //   button ghost   hover  dark:bg-accent/50 + text-accent-foreground 3.07:1
+    //
+    // SHAPE 2 — a declared foreground over NO surface at all, which is the
+    // same bug with the alpha taken all the way to zero. Worse in practice,
+    // because the inherited surface can be the brand colour the foreground
+    // token is made of:
+    //
+    //   button link    text-primary    on bg-primary  1.00:1 both schemes
+    //   badge  link    text-primary    on bg-primary  1.00:1 both schemes
+    //   badge  outline text-foreground on bg-primary  2.23 light / 1.44 dark
+    //   tag    *       text-{fg,primary,muted-fg}     1.00–2.23:1
+    //
+    // The two shapes share one rule, which is what this test encodes: A
+    // VARIANT THAT DECLARES A FOREGROUND MUST PAINT AN OPAQUE SURFACE IN THE
+    // SAME STATE. Declaring neither is fine — `ghost` at rest and `link`
+    // after the fix inherit both, and an inherited pair is by construction
+    // one the theme already measured. Declaring only a foreground is the
+    // broken third case, and it has no safe reading.
+    //
+    // Resolving each variant through CVA rather than parsing source is what
+    // makes this robust: the function returns the exact string a consumer
+    // gets, so a chain reflowed across lines, or moved into
+    // `compoundVariants`, cannot slip past the scanner.
+    const BACKDROPS = [
+      'background',
+      'card',
+      'muted',
+      'primary',
+      'secondary',
+      'destructive',
+      'accent',
+    ] as const;
+
+    // Every variant set small enough to land inside someone else's section.
+    // Block-level surfaces (alert, callout, toast, section) are out of scope
+    // on purpose: they OWN the surface they paint rather than borrowing one.
+    const DROPPABLE: Record<string, { fn: (o: never) => string; keys: readonly string[]; prop: string }> = {
+      button: {
+        fn: buttonVariants as never,
+        prop: 'variant',
+        keys: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      },
+      badge: {
+        fn: badgeVariants as never,
+        prop: 'variant',
+        keys: ['default', 'secondary', 'destructive', 'outline', 'ghost', 'link'],
+      },
+      tag: {
+        fn: tagVariants as never,
+        prop: 'tone',
+        keys: ['default', 'primary', 'muted'],
+      },
+      gradeBadge: {
+        fn: gradeBadgeVariants as never,
+        prop: 'tone',
+        keys: ['excellent', 'good', 'fair', 'poor', 'fail'],
+      },
+    };
+
+    const known = new Set([...theme.light.keys(), ...theme.dark.keys()]);
+    const failures: string[] = [];
+    const checked: string[] = [];
+
+    for (const [component, { fn, prop, keys }] of Object.entries(DROPPABLE)) {
+      for (const key of keys) {
+        const chain = fn({ [prop]: key } as never);
+        const utils = parseUtilities(chain).filter((u) => known.has(u.token));
+        const bgs = utils.filter((u) => u.kind === 'bg');
+
+        for (const text of utils.filter((u) => u.kind === 'text')) {
+          for (const mode of ['light', 'dark'] as const) {
+            const palette = theme[mode];
+            const textToken = palette.get(text.token);
+            if (!textToken) continue;
+
+            // `null` means the variant declares no background in this state,
+            // so the surface IS whatever it was dropped on. That is the
+            // shape-2 case and it must be measured, not skipped — skipping it
+            // is what let `text-primary` on `bg-primary` sit at 1.00:1.
+            const bg = effectiveBackground(text, bgs, mode);
+            const bgToken = bg ? palette.get(bg.token) : undefined;
+            if (bg && !bgToken) continue;
+
+            for (const backdrop of BACKDROPS) {
+              const under = palette.get(backdrop);
+              if (!under) continue;
+
+              // No declared background → the backdrop shows through whole.
+              // An opaque one ignores `under` entirely and every backdrop
+              // yields the same ratio, which is the passing shape stated as a
+              // measurement rather than as a syntactic ban on alpha.
+              const surface = bgToken
+                ? composite(bgToken, under, bg!.alpha)
+                : under;
+              const fg = composite(textToken, surface, text.alpha);
+              const ratio = contrast(fg, surface);
+
+              const label = `${mode} ${component}.${key}:${stateKey(text) || 'rest'} on bg-${backdrop}`;
+              checked.push(label);
+
+              if (ratio < AA_NORMAL) {
+                const surfaceLabel = bg
+                  ? `bg-${bg.token}${bg.alpha < 1 ? `/${Math.round(bg.alpha * 100)}` : ''}`
+                  : `(inherited bg-${backdrop})`;
+                failures.push(
+                  `  ${label}\n` +
+                    `    ${surfaceLabel} + text-${text.token}` +
+                    ` → ${ratio.toFixed(2)}:1 (needs ${AA_NORMAL}:1)`,
+                );
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // The compositions this lock was written for, named so the scanner cannot
+    // go blind: if a chain stops declaring a foreground, or the resolver stops
+    // matching it, these vanish from `checked` rather than silently passing.
+    // `button.link` is deliberately NOT here — the fix was to stop declaring a
+    // colour at all, so it correctly contributes nothing to measure, and the
+    // assertion below pins that instead.
+    for (const pinned of [
+      'dark button.outline:rest on bg-primary',
+      'light button.outline:rest on bg-primary',
+      'dark button.outline:hover on bg-primary',
+      'dark button.ghost:hover on bg-primary',
+      'light badge.outline:rest on bg-primary',
+      'dark badge.outline:rest on bg-primary',
+      'light tag.primary:rest on bg-primary',
+      'dark gradeBadge.good:rest on bg-primary',
+    ]) {
+      expect(
+        checked,
+        `${pinned} was never measured. This lock exists for that exact ` +
+          `composition; its absence means the variant chain or the resolver ` +
+          `changed shape, not that the pair is safe.`,
+      ).toContain(pinned);
+    }
+
+    // The other half of the contract, which the loop above cannot state: a
+    // surfaceless variant passes vacuously BECAUSE it names no colour, so
+    // assert that is still true rather than trusting an empty result.
+    for (const surfaceless of [
+      buttonVariants({ variant: 'link' }),
+      badgeVariants({ variant: 'link' }),
+      buttonVariants({ variant: 'ghost' }),
+    ]) {
+      const resting = parseUtilities(surfaceless).filter(
+        (u) => known.has(u.token) && stateKey(u) === '',
+      );
+      expect(
+        resting,
+        `A variant with no surface of its own named a resting colour: ` +
+          `"${surfaceless}". It will be measured against whatever it is ` +
+          `dropped on, which is exactly how link sat at 1.00:1 on bg-primary. ` +
+          `Either paint an opaque surface or name no colour.`,
+      ).toEqual([]);
+    }
+
+    expect(
+      failures,
+      `Variants below the AA floor on a surface a consumer can legitimately ` +
+        `drop them on.\n\n` +
+        `A variant that declares its own foreground must paint an OPAQUE ` +
+        `surface in the same state. A translucent surface lets the section's ` +
+        `colour through; no surface at all lets it through whole. Either way ` +
+        `the foreground it declared ends up measured against a colour nobody ` +
+        `chose. Fix by painting the surface, or by naming no colour and ` +
+        `inheriting the one the section already measured — not by exempting ` +
+        `the pair.\n\n${failures.join('\n')}`,
     ).toEqual([]);
   });
 });

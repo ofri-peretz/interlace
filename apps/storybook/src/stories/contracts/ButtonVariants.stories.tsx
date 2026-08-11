@@ -28,24 +28,38 @@ import { withRtl } from '@/decorators';
  * icon-only, which variants carry their own surface, which one is a link in
  * disguise.
  *
- * ─── The `outline` note is a bug this repo shipped ────────────────
+ * ─── The `outline` note is a bug this repo shipped, twice ─────────
  *
  * `outline` paints an opaque surface (`bg-background`) but was the only such
  * variant that did NOT also set a foreground, so it inherited one. Dropped
  * inside a section that flips the text colour — `<CTASection tone="primary">`
  * is `bg-primary text-primary-foreground` — the button kept the page
- * background and took the section's white text: **1.05:1, invisible.** The
- * fix was one class, `text-foreground`, and the rule it encodes is general:
- * an opaque surface owns its foreground; anything else is a colour that
- * depends on where you put it.
+ * background and took the section's white text: **1.05:1, invisible.**
  *
- * The tinted panel below is that composition — with the CTA it should
- * actually use. Declaring a foreground is only half the contract: in the
- * dark scheme `outline` is `dark:bg-input/30`, 30% translucent, so the
- * branded background shows through and `text-foreground` lands on it at
- * **2:1**. The theme-matrix sweep measures that, which is why the panel
- * renders `secondary` — opaque in both schemes — and states the
- * `outline`-in-dark result in text rather than painting a failure.
+ * Adding `text-foreground` fixed the light scheme and left the dark one
+ * broken, because declaring a foreground only means something if the surface
+ * under it is opaque. `outline` also carried stock shadcn's
+ * `dark:bg-input/30`, which overrode `bg-background` with a 30% tint — so on
+ * the same branded section the primary colour bled through and
+ * `text-foreground` measured **2:1**. `ghost` had the identical defect on
+ * hover (`dark:hover:bg-accent/50`, 3.07:1).
+ *
+ * Both are gone now, and dark simply does what light already did: no fill,
+ * the control identified by its border.
+ *
+ * `link` was the same bug with the alpha taken all the way to zero — a
+ * declared `text-primary` over no surface at all, so on the same section it
+ * was `#7d350c` on `#7d350c`: **1.00:1**, the button exactly the colour of its
+ * own background. It inherits its colour now and underlines at rest.
+ *
+ * The rule, stated so it is checkable: **a variant either declares an opaque
+ * surface AND the foreground on it, or declares neither and inherits both.**
+ * Declaring only a foreground is the broken third case, because a button is
+ * dropped onto surfaces the design system does not control.
+ * `composite-contrast-lock` composites every droppable variant — button,
+ * badge, tag, grade badge — over every brandable backdrop and asserts it.
+ *
+ * The tinted panel below paints all of it for real, in both schemes.
  */
 
 // ── The axes ────────────────────────────────────────────────────────────────
@@ -201,8 +215,8 @@ function TintedPanel() {
             <code className="font-mono">outline</code> once rendered at{' '}
             <strong>1.05:1</strong>: it painted{' '}
             <code className="font-mono">bg-background</code> and never declared
-            a foreground. One class,{' '}
-            <code className="font-mono">text-foreground</code>, fixed it.
+            a foreground. Both buttons below are the composition that broke.
+            Switch this story to the dark scheme and they must stay legible.
           </Typography>
         </Stack>
 
@@ -216,27 +230,60 @@ function TintedPanel() {
             >
               Copy the command
             </a>
+            <a
+              href="#button-variants"
+              className={buttonVariants({ variant: 'outline' })}
+              data-slot="tinted-outline-cta"
+            >
+              Read the docs
+            </a>
+            <a
+              href="#button-variants"
+              className={buttonVariants({ variant: 'link' })}
+              data-slot="tinted-link-cta"
+            >
+              Or skip it
+            </a>
           </div>
         </div>
 
         <Typography variant="ui-sm" tone="muted" className="max-w-prose">
           <strong>
-            And the reason the button in that block is{' '}
-            <code className="font-mono">secondary</code>, not{' '}
-            <code className="font-mono">outline</code>.
+            Declaring a foreground was only half the contract.
           </strong>{' '}
-          Declaring a foreground is only half the contract — the surface has to
-          be opaque for it to mean anything. In the dark scheme{' '}
-          <code className="font-mono">outline</code> is{' '}
-          <code className="font-mono">dark:bg-input/30</code>, i.e. 30%
-          translucent, so on this branded background the section&rsquo;s
-          primary colour shows through and{' '}
-          <code className="font-mono">text-foreground</code> lands on it at{' '}
-          <strong>2:1</strong> — measured by the theme-matrix sweep, which is
-          why this panel does not render that composition.{' '}
-          <code className="font-mono">secondary</code> is opaque in both
-          schemes and carries its own pair, so it is the correct CTA on a
-          tinted section.
+          The surface has to be opaque for it to mean anything, and{' '}
+          <code className="font-mono">outline</code> also carried stock
+          shadcn&rsquo;s <code className="font-mono">dark:bg-input/30</code> —
+          30% translucent, so in the dark scheme this section&rsquo;s primary
+          colour bled through and{' '}
+          <code className="font-mono">text-foreground</code> landed on it at{' '}
+          <strong>2:1</strong>. Dropping that tint is a deliberate deviation
+          from stock, like the one on{' '}
+          <code className="font-mono">destructive</code>: dark now does what
+          light always did — no fill, the control read from its{' '}
+          <code className="font-mono">dark:border-input</code> boundary at
+          3.35:1. <code className="font-mono">ghost</code> lost{' '}
+          <code className="font-mono">dark:hover:bg-accent/50</code> for the
+          same reason (3.07:1 on hover).
+        </Typography>
+
+        <Typography variant="ui-sm" tone="muted" className="max-w-prose">
+          <strong>
+            The third button is the other legal shape, not a third fix.
+          </strong>{' '}
+          <code className="font-mono">link</code> paints no surface, so it
+          cannot name a colour either — stock&rsquo;s{' '}
+          <code className="font-mono">text-primary</code> put{' '}
+          <code className="font-mono">#7d350c</code> on{' '}
+          <code className="font-mono">#7d350c</code> here, <strong>1.00:1</strong>,
+          the button exactly the colour of its own background. It now inherits
+          the section&rsquo;s foreground and carries its affordance in a
+          persistent underline, which is what{' '}
+          <code className="font-mono">Prose</code> already does for links and
+          retires a colour-only cue besides. So a variant either declares{' '}
+          <em>both</em> an opaque surface and the text on it, or declares{' '}
+          <em>neither</em> — declaring only a foreground is the broken third
+          case, and it is what every defect on this panel had in common.
         </Typography>
       </Stack>
     </Box>
@@ -320,7 +367,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The whole 6 × 8 surface at once, because a variant function has no single representative sample. Every cell is a bare `<button>` carrying only the generated class string — no `Button` component — since what is documented is the string. It ships as a registry item separate from `button` because `button.tsx` is `\'use client\'` and a server component must be able to paint `<Link className={buttonVariants(...)}>` without pulling a client component in for it. The "opaque surface owns its foreground" panel reproduces a defect this repo shipped: `outline` paints `bg-background` and inherited its text colour, so inside a `bg-primary text-primary-foreground` section it rendered at 1.05:1 — invisible. It also records the half of that contract the fix does not reach: in the dark scheme `outline` is `dark:bg-input/30`, 30% translucent, so on the same branded surface `text-foreground` measures 2:1, which is why the panel renders `secondary` there.',
+          'The whole 6 × 8 surface at once, because a variant function has no single representative sample. Every cell is a bare `<button>` carrying only the generated class string — no `Button` component — since what is documented is the string. It ships as a registry item separate from `button` because `button.tsx` is `\'use client\'` and a server component must be able to paint `<Link className={buttonVariants(...)}>` without pulling a client component in for it. The "opaque surface owns its foreground" panel reproduces a defect this repo shipped twice: `outline` painted `bg-background` and inherited its text colour, so inside a `bg-primary text-primary-foreground` section it rendered at 1.05:1 — invisible. Adding `text-foreground` fixed light and left dark broken, because `dark:bg-input/30` made the surface 30% translucent and the section bled through at 2:1 (`ghost` had the same defect on hover, 3.07:1). Both `dark:` tints are dropped — a deliberate deviation from stock shadcn, like the one on `destructive` — so the panel now paints the real composition in both schemes instead of describing it.',
       },
     },
   },
@@ -372,16 +419,35 @@ export const Variants: Story = {
       '[data-slot="button-variants-tinted"]',
     ) as HTMLElement;
     const surface = tinted.querySelector('.bg-primary') as HTMLElement;
-    const cta = tinted.querySelector(
-      '[data-slot="tinted-safe-cta"]',
+
+    // Shape 1 — declares BOTH: an opaque surface and the foreground on it.
+    // Its colour must differ from the section's (it is not inheriting), and
+    // its surface must be fully opaque, which is the half the colour
+    // comparison alone cannot see: a translucent variant passes the colour
+    // test and still fails contrast because the section shows through.
+    // `outline` did exactly that in dark mode at 2:1 — the reason the Dark
+    // twin below exists.
+    for (const slot of ['tinted-safe-cta', 'tinted-outline-cta']) {
+      const cta = tinted.querySelector(`[data-slot="${slot}"]`) as HTMLElement;
+      await expect(getComputedStyle(cta).color).not.toBe(
+        getComputedStyle(surface).color,
+      );
+      const bg = getComputedStyle(cta).backgroundColor;
+      await expect(bg).not.toContain('rgba');
+      await expect(bg).not.toBe('transparent');
+    }
+
+    // Shape 2 — declares NEITHER, and the assertions invert accordingly.
+    // `link` paints no surface, so the only legible foreground is the one it
+    // inherits: its colour must EQUAL the section's, where `text-primary`
+    // used to make it 1.00:1 against the very background it sat on.
+    const link = tinted.querySelector(
+      '[data-slot="tinted-link-cta"]',
     ) as HTMLElement;
-    await expect(getComputedStyle(cta).color).not.toBe(
+    await expect(getComputedStyle(link).color).toBe(
       getComputedStyle(surface).color,
     );
-    // …and its surface is opaque, which is the half of the contract the
-    // colour comparison alone cannot see: a translucent variant passes the
-    // test above and still fails contrast, because the section shows through.
-    await expect(getComputedStyle(cta).backgroundColor).not.toContain('rgba');
+    await expect(getComputedStyle(link).textDecorationLine).toBe('underline');
   },
 };
 

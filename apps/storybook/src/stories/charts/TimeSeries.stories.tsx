@@ -304,6 +304,49 @@ export const NotEnoughData: Story = {
     },
   },
   args: { points: RISING.slice(0, 1), label: 'New metric' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // "Only 1 point so far" — a DIFFERENT claim from "no data yet", and the
+    // distinction is the whole reason this branch counts its own points.
+    await expect(canvas.getByText(/Only 1 point so far/i)).toBeTruthy();
+  },
+};
+
+/**
+ * Zero points — the other half of the not-enough-data branch, and the half no
+ * story showed until now.
+ *
+ * `NotEnoughData` above renders "Only 1 point so far."; this renders "No data
+ * yet." They are two different sentences because they are two different facts:
+ * one metric has started and has nothing to compare against, the other has not
+ * started. Collapsing them into one "no data" message throws away the only
+ * information the reader could act on.
+ *
+ * Note what this is NOT: it is not `Loading`. The loading branch is checked
+ * first precisely so that "no data yet" never renders over a request still in
+ * flight, which would be a claim the reader cannot check.
+ */
+export const Empty: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Zero observations. Distinct wording from the one-point case above — "no data yet" and "only 1 point so far" are different facts, and a reader can act on the difference.',
+      },
+    },
+  },
+  args: { points: [], label: 'New metric' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText(/No data yet/i)).toBeTruthy();
+    // The reason travels with the absence — an empty box reads as a bug.
+    await expect(canvas.getByText(/cannot be back-filled/i)).toBeTruthy();
+  },
+};
+
+export const EmptyDark: Story = {
+  ...Empty,
+  globals: { theme: 'dark' },
 };
 
 export const Loading: Story = {

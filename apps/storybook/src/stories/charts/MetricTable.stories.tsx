@@ -3,6 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { MetricTable } from '@interlace/ui/charts/metric-table';
 import { TimeSeries } from '@interlace/ui/charts/time-series';
+import { DataState } from '@interlace/ui/data-state';
+// Aliased: the story export below is also called `EmptyState`, and the panel
+// is the thing being slotted INTO the state, not the state itself.
+import { EmptyState as EmptyPanel } from '@interlace/ui/patterns/empty-state';
 import { withRtl } from '@/decorators';
 
 import { ANNOTATIONS, METRIC_ROWS } from './fixtures';
@@ -173,6 +177,99 @@ export const Loading: Story = {
   },
   args: { rows: [], caption: 'Ecosystem metrics', loading: true },
 };
+
+/* ── Absence ────────────────────────────────────────────────────────────────
+ *
+ * MetricTable has a `loading` branch and nothing else. Given `rows={[]}` it
+ * renders a header and an empty `<tbody>` — structurally valid, and completely
+ * silent about WHY there are no rows. "The filter matched nothing", "the
+ * request failed" and "this project has no metrics yet" are three different
+ * facts and an empty tbody is all three at once.
+ *
+ * Rather than grow a fourth bespoke empty-state prop on a fifth component,
+ * these stories wrap it in `DataState` — the nine-state absence vocabulary the
+ * package already ships. That is the intended composition: the table renders
+ * the data, `DataState` renders its absence, and the sentence a screen reader
+ * hears comes from one place instead of N.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+export const EmptyState: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`rows={[]}` on its own renders a header over an empty `<tbody>` — valid markup that says nothing. Wrapped in `DataState empty`, the absence gets a sentence and a reason. The `emptyState` slot takes the `EmptyState` pattern so the panel can also carry the way out.',
+      },
+    },
+  },
+  render: () => (
+    <DataState<typeof METRIC_ROWS>
+      empty
+      data={[]}
+      announce={{ noun: 'metrics' }}
+      emptyState={
+        <EmptyPanel
+          title="No metrics match these filters"
+          description="Every metric was filtered out. Widen the date window or clear the plugin filter."
+        />
+      }
+    >
+      {(rows) => <MetricTable rows={rows} caption="Ecosystem metrics" />}
+    </DataState>
+  ),
+};
+
+export const ErrorState: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'A failed fetch is NOT an empty table. `DataState` replaces the body and announces through `role="alert"`, so the reader is never left to infer a network failure from a table with no rows.',
+      },
+    },
+  },
+  render: () => (
+    <DataState<typeof METRIC_ROWS>
+      error={new Error('registry unreachable')}
+      data={undefined}
+      announce={{ noun: 'metrics' }}
+    >
+      {(rows) => <MetricTable rows={rows} caption="Ecosystem metrics" />}
+    </DataState>
+  ),
+};
+
+/**
+ * `partial` QUALIFIES rather than replaces — the numbers still render, with a
+ * badge saying they are a floor.
+ *
+ * This is the state the absence vocabulary exists for. The alternatives are
+ * both lies: hiding the table implies there is nothing, and showing it bare
+ * implies the totals are complete. A partially-covered count is a real number
+ * that must not be used as a denominator, and the badge is what says so.
+ */
+export const Partial: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Two of eleven sources failed to report. The measurements are real and still shown — `partial` annotates them as a floor instead of replacing them, because hiding a partial count and publishing it as complete are both wrong.',
+      },
+    },
+  },
+  render: () => (
+    <DataState<typeof METRIC_ROWS>
+      partial
+      data={METRIC_ROWS}
+      announce={{ noun: 'metrics', coverage: '9 of 11 sources' }}
+    >
+      {(rows) => <MetricTable rows={rows} caption="Ecosystem metrics" />}
+    </DataState>
+  ),
+};
+
+export const EmptyStateDark: Story = { ...EmptyState, globals: { theme: 'dark' } };
+export const ErrorStateDark: Story = { ...ErrorState, globals: { theme: 'dark' } };
 
 export const Dark: Story = {
   args: { rows: METRIC_ROWS, caption: 'Ecosystem metrics' },

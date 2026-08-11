@@ -145,7 +145,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Data State Model](https://ds.interlace.tools/c/data-state-model): Nothing in this file imports React, touches the DOM, or renders anything. It is the part of the absence contract that can be *proved* — the union, the precedence order, the announcement each state owes a screen reader, and the class set that paints it — so…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/data-state-model.json`
   - contract: server, loading state, states loading|error|not-applicable|not-counted|empty|partial|truncated|first-measurement|idle, v1.0.0
-- [Dialog](https://ds.interlace.tools/c/dialog): This file is the canonical example of the portable component-modeling floor. Every rule R1–R26 from `skills/interlace-component/SKILL.md` that is applicable to a Dialog primitive is illustrated here.
+- [Dialog](https://ds.interlace.tools/c/dialog): A MODAL dialog: it traps focus, dismisses on Escape and on an outside click, marks the rest of the page inert while open, and restores focus to the trigger on close. Base UI owns all of that, which is exactly why this file never says so anywhere else — and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialog.json`
   - contract: client, min 320px, keyboard via Base UI dialog, v1.3.0
 - [Dropdown Menu](https://ds.interlace.tools/c/dropdown-menu): The popup is `min-w-40` (160px) and capped by `max-h-(--available-height)`, so it fits and scrolls at the 320 floor; Base UI's positioner shifts it into view. Projected onto the popup — `Menu.Root` renders no DOM node.
@@ -187,7 +187,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Pagination](https://ds.interlace.tools/c/pagination): Prev/Next collapse to icon-only below `sm` (`hidden sm:block` on the labels), so a 5-item bar fits 320px without wrapping.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/pagination.json`
   - contract: server, min 320px, v1.2.0
-- [Popover](https://ds.interlace.tools/c/popover): The popup is `w-72` (288px), which still clears the 320 floor with gutters; Base UI's positioner flips/shifts it into the viewport rather than letting it clip. Projected onto the popup — `Popover.Root` renders no DOM node.
+- [Popover](https://ds.interlace.tools/c/popover): The popup is A NON-MODAL floating panel: dismisses on Escape and on an outside click, and restores focus to the trigger on close, but does NOT trap focus or make the page inert — that is the line between this and Dialog/Sheet, and it is the reason to pick…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/popover.json`
   - contract: client, min 320px, keyboard via Base UI popover, v1.2.0
 - [Progress](https://ds.interlace.tools/c/progress): Determinate progress indicator. Wraps the Base UI `Progress` compound — Root, Track, Indicator, Label, Value — and re-exports DS-styled parts that consume theme tokens (no raw px, no hex). The Track defines the rail height (`size`); the Indicator carries…
@@ -220,7 +220,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Separator](https://ds.interlace.tools/c/separator): @interlace/ui — separator (shadcn-compatible).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/separator.json`
   - contract: server, keyboard via Base UI separator, v1.0.0
-- [Sheet](https://ds.interlace.tools/c/sheet): Left/right sheets are `w-3/4` (240px at the 320 floor) and top/bottom are `h-auto`, so nothing clips at the iPhone SE width. Projected onto the popup — Base UI's `Dialog.Root` renders no DOM node of its own.
+- [Sheet](https://ds.interlace.tools/c/sheet): Left/right sheets A MODAL side panel (drawer): traps focus, dismisses on Escape and on an outside click, marks the rest of the page inert while open, and restores focus to the trigger on close. Base UI owns that behaviour — which is why this file never…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/sheet.json`
   - contract: client, min 320px, keyboard via Base UI dialog, v1.3.0
 - [Skeleton](https://ds.interlace.tools/c/skeleton): Loading-state placeholder. ONE component, many shapes — the `variant` prop picks the silhouette of the resting component being loaded so the page layout doesn't jump when real data arrives.

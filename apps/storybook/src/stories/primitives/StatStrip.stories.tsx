@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { StatStrip } from '@interlace/ui/stat-strip';
+import { StatStrip, type StatItem } from '@interlace/ui/stat-strip';
+import { DataState } from '@interlace/ui/data-state';
 import { Delta } from '@interlace/ui/charts/delta';
 import { withRtl } from '@/decorators';
 
@@ -245,6 +246,58 @@ export const Dense: Story = {
 export const Loading: Story = {
   args: { caption: 'loading', loading: true, items: [] },
 };
+
+/* ── Whole-strip absence ────────────────────────────────────────────────────
+ *
+ * `AbsenceVocabulary` above shows PER-CELL absence: a strip that exists, with
+ * some cells that could not be measured. These two are the other axis — the
+ * strip itself has nothing to show, or could not be fetched at all.
+ *
+ * `StatStrip` deliberately has no `empty` or `error` prop. An empty `items`
+ * array renders an empty `<dl>`: structurally fine, and silent about whether
+ * the filter matched nothing or the request failed. The composition below is
+ * the intended answer — `DataState` owns the absence, `StatStrip` owns the
+ * numbers, and neither grows a prop that duplicates the other.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+export const EmptyState: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'No metrics at all — as against `AbsenceVocabulary`, where the strip exists and individual cells are unmeasured. `announce.noun` turns the default "No data." into "No metrics.", which is the sentence a screen reader actually gets.',
+      },
+    },
+  },
+  render: () => (
+    <DataState<StatItem[]> empty data={[]} announce={{ noun: 'metrics' }}>
+      {(items) => <StatStrip caption="ecosystem · last 30 days" cols={4} items={items} />}
+    </DataState>
+  ),
+};
+
+export const ErrorState: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'A failed fetch. Critically NOT the same rendering as `EmptyState`: "we asked and there are none" and "we could not ask" are different facts, and only one of them means the reader should retry. The message goes out through `role="alert"`.',
+      },
+    },
+  },
+  render: () => (
+    <DataState<StatItem[]>
+      error={new Error('metrics API unreachable')}
+      data={undefined}
+      announce={{ noun: 'metrics' }}
+    >
+      {(items) => <StatStrip caption="ecosystem · last 30 days" cols={4} items={items} />}
+    </DataState>
+  ),
+};
+
+export const EmptyStateDark: Story = { ...EmptyState, globals: { theme: 'dark' } };
+export const ErrorStateDark: Story = { ...ErrorState, globals: { theme: 'dark' } };
 
 export const Dark: Story = {
   ...AbsenceVocabulary,
