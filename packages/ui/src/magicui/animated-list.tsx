@@ -1,5 +1,57 @@
 "use client";
 
+/**
+ * @interlace/ui — AnimatedList + AnimatedListItem
+ *
+ * A feed that reveals its children one at a time, newest on top, each entry
+ * springing in from `scale: 0`. One more appears every `delay` ms (1000 by
+ * default) until the list is full, then it stops — or restarts, with `loop`.
+ *
+ * The list is `aria-live="polite"`, so each arrival is announced.
+ *
+ * ## Provenance
+ *
+ * Our reimplementation of the Magic UI `AnimatedList` concept. What is ours:
+ * the reduced-motion gating, the visible pause control, and a `loop` that
+ * really restarts — upstream advanced with `% length` but never reset the
+ * visible window, so it stalled at the end instead of looping. The spring
+ * physics, gap, direction and per-step delay are all props with structural
+ * defaults, so nothing product-specific is baked in.
+ *
+ * ## Anatomy
+ *
+ *   div.relative
+ *     ├─ div                         (data-slot="animated-list", aria-live=polite)
+ *     │   └─ AnimatedListItem ×      (data-slot="animated-list-item", motion.div)
+ *     └─ button                      (data-slot="animated-list-pause", aria-pressed)
+ *
+ * ## Motion
+ *
+ * The sequencing is JS-driven (a `setTimeout` chain) and the pop-in is
+ * `motion/react`, so the CSS reset in `styles/preflight.css` reaches neither.
+ * Every layer is gated in JS instead:
+ *
+ * | Layer            | Driven by                    | Under `reduce`                       |
+ * | ---------------- | ---------------------------- | ------------------------------------ |
+ * | auto-advance     | `setTimeout` chain           | `isPlaying` false — never ticks      |
+ * | visible window   | `revealCount` state          | full child count, rendered at once   |
+ * | pause control    | —                            | not rendered (nothing left to pause) |
+ * | entry pop-in     | `motion/react` spring        | `initial={false}` — mounts settled   |
+ * | reflow slide     | `motion/react` `layout` FLIP | `layout` off                         |
+ *
+ * `AnimatedListItem` reads the preference itself rather than inheriting it
+ * from the list, because it is exported and composed standalone. No
+ * `MotionConfig` wraps this tree, so there is no ambient fallback — the gate
+ * has to live on the component that emits the animation.
+ *
+ * ## WCAG 2.2.2 (Pause, Stop, Hide)
+ *
+ * A reveal running longer than 5s is auto-updating content and needs an
+ * explicit pause affordance, so `showPauseControl` defaults to `true` and
+ * renders a Tab-reachable button carrying `aria-pressed`. `pauseOnHover` is
+ * the pointer-only complement and defaults to `false`.
+ */
+
 import {
   Children,
   forwardRef,
@@ -15,29 +67,6 @@ import { Pause, Play } from "lucide-react";
 
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
-
-/**
- * ## API parity
- *
- * Re-authored from the Magic UI `AnimatedList` concept (a feed that reveals
- * its children one-at-a-time with a spring pop-in). Three deliberate
- * deviations from that reference, each justified inline:
- *
- *   1. **Reduced-motion contract.** The upstream component auto-advances and
- *      springs unconditionally. We read `prefers-reduced-motion` and, when
- *      set, render every child at once with no animation and no auto-advance
- *      — a WCAG 2.3.3 (Animation from Interactions) obligation.
- *   2. **WCAG 2.2.2 (Pause, Stop, Hide).** A reveal that runs longer than 5s
- *      is auto-updating content; it needs an explicit pause affordance.
- *      Mirrors the `Marquee` primitive's visible play/pause control +
- *      optional `pauseOnHover`.
- *   3. **Honest looping.** Upstream advanced with `% length` but never reset
- *      the visible window, so it stalled at the end rather than looping.
- *      We expose an explicit `loop` boolean and a real restart.
- *
- * The spring physics, gap, fill direction, and per-step delay are all props
- * with structural defaults so the component stays product-neutral.
- */
 
 const DEFAULT_TRANSITION: Transition = {
   type: "spring",
@@ -64,20 +93,34 @@ interface AnimatedListItemProps extends ComponentPropsWithoutRef<typeof motion.d
  * compose the list manually (e.g. drive the visible window from their own
  * state) instead of relying on the auto-advance behavior.
  */
+/** The at-rest keyframe. Under `reduce` every phase collapses onto it. */
+const SETTLED = { scale: 1, opacity: 1 } as const;
+
 export const AnimatedListItem = forwardRef<HTMLDivElement, AnimatedListItemProps>(
   function AnimatedListItem(
     { children, transition = DEFAULT_TRANSITION, className, ...props },
     ref,
   ) {
+    // Gated here rather than at the list, because this component is exported
+    // and composed on its own — a consumer driving the visible window from
+    // their own state gets the same contract as `AnimatedList` does.
+    //
+    // `initial={false}` is motion's "mount at the `animate` values", which is
+    // the only spelling that skips the pop-in outright; `initial={SETTLED}`
+    // would still run a zero-distance animation and still write a transform.
+    const reducedMotion = useReducedMotion();
+
     return (
       <motion.div
         ref={ref}
         data-slot="animated-list-item"
-        layout
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0, opacity: 0 }}
-        transition={transition}
+        // `layout` is a JS-driven FLIP on every reflow — a sibling arriving
+        // slides this one down. That is motion too, so it goes with the rest.
+        layout={!reducedMotion}
+        initial={reducedMotion ? false : { scale: 0, opacity: 0 }}
+        animate={SETTLED}
+        exit={reducedMotion ? SETTLED : { scale: 0, opacity: 0 }}
+        transition={reducedMotion ? { duration: 0 } : transition}
         className={cn("mx-auto w-full", className)}
         {...props}
       >
@@ -142,8 +185,8 @@ export interface AnimatedListProps extends ComponentPropsWithoutRef<"div"> {
  * spring pop-in.
  *
  * Motion control is layered like the `Marquee` primitive:
- *   1. `prefers-reduced-motion: reduce` → renders the full list instantly with
- *      no animation and no auto-advance.
+ *   1. `prefers-reduced-motion: reduce` → renders the full list at once, with
+ *      no auto-advance and no pop-in. See the table in the file header.
  *   2. `pauseOnHover` → pointer users can hold the reveal.
  *   3. Visible play/pause button → keyboard + screen-reader users get an
  *      explicit, Tab-reachable control.

@@ -3,7 +3,7 @@
   "name": "article-list-grid",
   "type": "registry:ui",
   "title": "Article List Grid",
-  "description": "@interlace/ui — article-list-grid (patterns) (shadcn-compatible).",
+  "description": "Grid of ArticleCards with an optional featured slot above. The pattern blog index pages reach for: one big featured card (overlay variant) above N tiles. Composes RelatedPosts-style streaming with proper loading + empty states.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

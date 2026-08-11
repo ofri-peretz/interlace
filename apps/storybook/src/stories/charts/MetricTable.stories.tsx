@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, waitFor } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { MetricTable } from '@interlace/ui/charts/metric-table';
 import { TimeSeries } from '@interlace/ui/charts/time-series';
 import { DataState } from '@interlace/ui/data-state';
@@ -280,3 +280,28 @@ export const Rtl: Story = {
   args: { rows: METRIC_ROWS, caption: 'Ecosystem metrics' },
   decorators: [withRtl],
 };
+
+/**
+ * The component's OWN error state, as opposed to `ErrorState` above, which
+ * wraps it in `<DataState>`.
+ *
+ * Both exist for a reason: `DataState` is the switch a page uses when it owns
+ * several surfaces, and this is what a caller gets for free when it owns one.
+ * An empty `<tbody>` under a real `<caption>` reads as "we looked, and you
+ * track nothing" — a claim about the reader rather than about the request.
+ */
+export const FetchFailed: Story = {
+  args: {
+    rows: [],
+    caption: 'Ecosystem metrics',
+    error: 'ECONNRESET',
+    announce: { noun: 'metrics' },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('alert').textContent).toMatch(/could not be loaded/i);
+    await expect(canvas.queryByRole('table')).toBeNull();
+  },
+};
+
+export const FetchFailedDark: Story = { ...FetchFailed, globals: { theme: 'dark' } };

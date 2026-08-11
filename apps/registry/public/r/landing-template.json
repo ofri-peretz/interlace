@@ -3,7 +3,7 @@
   "name": "landing-template",
   "type": "registry:block",
   "title": "Landing Template",
-  "description": "@interlace/ui — landing-template (templates) (shadcn-compatible).",
+  "description": "Marketing landing page surface. Composes Topbar + Hero + (optional) FeatureGrid + (optional) TestimonialGrid + (optional) PricingTable + (optional) FAQ + CTASection + Footer — each in its own SectionBoundary so the page streams section-by-section.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "marketing",

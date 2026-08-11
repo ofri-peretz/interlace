@@ -3,7 +3,7 @@
   "name": "stats-template",
   "type": "registry:block",
   "title": "Stats Template",
-  "description": "@interlace/ui — stats-template (templates) (shadcn-compatible).",
+  "description": "Public-facing metrics page. Topbar + header (title + lead) + SectionBoundary(StatGroup) + SectionBoundary(arbitrary chart/table content) + optional methodology footnote + Footer.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "data",

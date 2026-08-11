@@ -3,7 +3,7 @@
   "name": "figure",
   "type": "registry:ui",
   "title": "Figure",
-  "description": "@interlace/ui — figure (patterns) (shadcn-compatible).",
+  "description": "Semantic media block. `<figure>` is the right element for *self-contained* media (image, diagram, code screenshot, chart) with an optional caption that scrolls with it. Composes `AspectRatio` so the layout reserves space before the asset loads — preventing…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

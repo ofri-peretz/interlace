@@ -1,9 +1,3 @@
-import * as React from 'react';
-
-import { cn } from '../lib/cn.js';
-import { Stack } from '../primitives/stack.js';
-import { Typography } from '../primitives/typography.js';
-
 /**
  * @interlace/ui — Hero
  *
@@ -22,8 +16,10 @@ import { Typography } from '../primitives/typography.js';
  *     │   └─ {actions}               (Cluster of Buttons — primary first)
  *     └─ {media}                     (optional right-column visual slot)
  *
- * MIN_VIEWPORT — 320. Heroes must read on phones — the headline reflows,
- * the CTA stacks vertically, the media slot drops below.
+ * ## MIN_VIEWPORT — 320
+ *
+ * Heroes must read on phones — the headline reflows, the CTA stacks
+ * vertically, the media slot drops below.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -35,6 +31,12 @@ import { Typography } from '../primitives/typography.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y landmark                    | `<section aria-labelledby>` is the rendered element         |
  */
+
+import * as React from 'react';
+
+import { cn } from '../lib/cn.js';
+import { Stack } from '../primitives/stack.js';
+import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

@@ -3,7 +3,7 @@
   "name": "callout",
   "type": "registry:ui",
   "title": "Callout",
-  "description": "@interlace/ui — callout (shadcn-compatible).",
+  "description": "Inline-prose annotation. The \"stop and read this\" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner (\"your save failed\"), Callout is an in-band authored aside (\"note: this rule is…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

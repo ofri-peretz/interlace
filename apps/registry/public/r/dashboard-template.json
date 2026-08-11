@@ -3,7 +3,7 @@
   "name": "dashboard-template",
   "type": "registry:block",
   "title": "Dashboard Template",
-  "description": "@interlace/ui — dashboard-template (templates) (shadcn-compatible).",
+  "description": "Application dashboard surface. Topbar at top, persistent left sidebar (nav links), main content area (children). The standard \"logged-in app\" layout: every SaaS dashboard reaches for this shape.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "data",

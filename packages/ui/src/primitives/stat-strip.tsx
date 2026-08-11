@@ -55,7 +55,7 @@
  * | R4   | Extends native el                | `React.ComponentProps<'section'>`                            |
  * | R6   | data-slot on every part          | `data-slot="stat-strip" / "-item"` + `data-state`             |
  * | R7   | className merged + ...rest       | `cn(...)` + `{...props}`                                      |
- * | R8   | No `isXxx`; enum for cols        | `cols` is `2 | 3 | 4 | 5 | 6`                                  |
+ * | R8   | No `isXxx`; enum for cols        | `cols` is `2 | 3 | 4 | 5 | 6`; `tone` is a four-name enum      |
  * | R10  | Composition seams                | `delta` and `note` are ReactNode slots                        |
  * | R11  | One variable per part            | the strip owns the track count; an item owns its own state    |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const   |
@@ -78,6 +78,15 @@ import { announceDataState, resolveDataState } from './data-state-model.js';
 import { Skeleton } from './skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
+
+/**
+ * Which semantic a number carries. Never its magnitude — only its meaning.
+ *
+ * The same four names as `MeterTone`, on purpose: a strip and a meter on one
+ * page describing the same metric must not need two different words for "this
+ * is bad".
+ */
+export type StatTone = 'default' | 'positive' | 'negative' | 'neutral';
 
 /** One measurement. */
 export interface StatItem {
@@ -111,6 +120,27 @@ export interface StatItem {
    * to own polarity, units, or the "is up good here" question.
    */
   delta?: React.ReactNode;
+  /**
+   * Whether this number is GOOD, and nothing else.
+   *
+   * The gap this closes: a strip could say what a number is and how it changed,
+   * and had no way at all to say **this one is bad**. A dashboard whose error
+   * budget is blown renders it in the same weight as the one that is fine, and
+   * the reader has to know the thresholds to see it — which is the entire job
+   * the strip was supposed to do.
+   *
+   * Same vocabulary as `MeterTone`, and the same rule: tone answers "is this
+   * good", NEVER "how big". Two different values at one tone differ only in the
+   * digits. Deliberately not derived from `delta` — up is good for downloads
+   * and bad for latency, and only the caller knows which this is (`Delta`
+   * already makes exactly this argument with its `polarity`).
+   *
+   * Three carriers, because colour alone fails a greyscale print and ~8% of
+   * men: the RAIL down the cell, the value's colour, and a sentence in the
+   * accessible name. If you find yourself dropping the sentence because the
+   * colour "already says it", it does not.
+   */
+  tone?: StatTone;
   /** Absence flags for this one metric. */
   state?: DataStateFlags;
   /** Context for this metric's spoken sentences. */
@@ -132,8 +162,36 @@ const RAIL_CLASS = {
   recede: 'border-muted-foreground/25',
   muted: 'border-muted-foreground/50',
   accent: 'border-primary',
+  positive: 'border-viz-positive',
   danger: 'border-destructive',
 } as const;
+
+/**
+ * Tone → its three carriers.
+ *
+ * `spoken` is the one that is easiest to skip and the one that matters most:
+ * `--viz-negative` is invisible in a greyscale print, in a screenshot pasted
+ * into a chat, and to a screen reader. `neutral` earns no sentence because it
+ * makes no claim — it is the tone for a number deliberately NOT being judged,
+ * which is a different thing from `default`, a number nobody HAS judged.
+ *
+ * The rail is reused rather than a second colour: `danger` already exists for
+ * the error state, and a cell cannot be both — a failed cell has no value to
+ * have an opinion about.
+ */
+const TONE: Record<
+  StatTone,
+  { value: string; rail: keyof typeof RAIL_CLASS; spoken: string }
+> = {
+  default: { value: '', rail: 'idle', spoken: '' },
+  positive: { value: 'text-viz-positive', rail: 'positive', spoken: 'Good.' },
+  negative: {
+    value: 'text-viz-negative',
+    rail: 'danger',
+    spoken: 'Needs attention.',
+  },
+  neutral: { value: 'text-viz-neutral', rail: 'idle', spoken: '' },
+};
 
 /**
  * Mobile-first track counts. Written out statically because Tailwind scans
@@ -249,12 +307,16 @@ export const StatStrip = React.forwardRef<HTMLElement, StatStripProps>(
  * on its own, not buried in a `.map()` inside the strip's layout.
  */
 function StatStripItem({ item }: { item: StatItem }) {
-  const { label, value, unit, note, prior, delta, state, announce } = item;
+  const { label, value, unit, note, prior, delta, tone = 'default', state, announce } = item;
 
   const resolved = resolveDataState(state, announce);
+  const judgement = TONE[tone];
+  // Absence outranks judgement. A cell that failed to load, or was never
+  // counted, has no value for a tone to have an opinion about — painting it
+  // "good" would be an opinion about a number nobody has.
   const emphasis =
     resolved.state === 'idle'
-      ? 'idle'
+      ? judgement.rail
       : resolved.state === 'error'
         ? 'danger'
         : resolved.state === 'not-applicable'
@@ -278,6 +340,7 @@ function StatStripItem({ item }: { item: StatItem }) {
       data-slot="stat-strip-item"
       data-key={item.key}
       data-state={resolved.state}
+      data-tone={tone === 'default' ? undefined : tone}
       // The ONLY element allowed between `<dl>` and its `<dt>`/`<dd>` pair.
       // The rail is this element's inline-start border for exactly that
       // reason — see RAIL_CLASS.
@@ -303,13 +366,23 @@ function StatStripItem({ item }: { item: StatItem }) {
                   character, so the measurement keeps its own reading order. */}
             <span
               dir="auto"
-              className="font-body text-h4 font-semibold leading-none tabular-nums break-words"
+              className={cn(
+                'font-body text-h4 font-semibold leading-none tabular-nums break-words',
+                judgement.value,
+              )}
             >
               {typeof value === 'number' ? value.toLocaleString() : value}
               {unit ? (
                 <span className="ml-0.5 text-ui font-normal text-muted-foreground">
                   {unit}
                 </span>
+              ) : null}
+              {/* The third carrier. A tone that lives only in a hue is a
+                    judgement a screen reader never hears and a greyscale print
+                    never shows — the same argument `Delta` makes about its
+                    direction glyph. */}
+              {judgement.spoken ? (
+                <span className="sr-only"> {judgement.spoken}</span>
               ) : null}
             </span>
             {/* A measured value can still be qualified — a count that is a

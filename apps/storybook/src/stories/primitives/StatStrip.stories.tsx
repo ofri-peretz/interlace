@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { StatStrip, type StatItem } from '@interlace/ui/stat-strip';
 import { DataState } from '@interlace/ui/data-state';
 import { Delta } from '@interlace/ui/charts/delta';
@@ -308,3 +309,75 @@ export const RTL: Story = {
   ...AbsenceVocabulary,
   decorators: [withRtl],
 };
+
+/**
+ * Tone — "this number is bad", said three ways.
+ *
+ * The gap this closes: the strip could say what a number IS and how it
+ * CHANGED, and had no way at all to say that it is bad. A blown error budget
+ * rendered in the same weight as a healthy one, and the reader had to already
+ * know the thresholds to see it — which is the job the strip existed to do.
+ *
+ * Three carriers, because a hue is not a sentence: the RAIL down the cell, the
+ * value's colour, and an `sr-only` judgement. `--viz-negative` is invisible in
+ * a greyscale print, in a screenshot pasted into a chat, and to a screen
+ * reader. Same argument `Delta` makes about its direction glyph.
+ *
+ * Tone answers "is this good" and NEVER "how big" — two values at one tone
+ * differ only in their digits. And it is deliberately not derived from the
+ * delta: up is good for downloads and bad for latency, and only the caller
+ * knows which this is.
+ */
+export const Tone: Story = {
+  args: {
+    caption: 'service health · last 24h',
+    cols: 4,
+    items: [
+      {
+        key: 'uptime',
+        label: 'uptime',
+        value: 99.98,
+        unit: '%',
+        tone: 'positive',
+        note: 'target 99.9%',
+      },
+      {
+        key: 'budget',
+        label: 'error budget',
+        value: 4,
+        unit: '% left',
+        tone: 'negative',
+        note: 'burns out in 2 days',
+      },
+      {
+        key: 'p95',
+        label: 'p95 latency',
+        value: 812,
+        unit: 'ms',
+        tone: 'neutral',
+        note: 'no target set',
+      },
+      { key: 'deploys', label: 'deploys', value: 17, note: 'nobody has judged this' },
+    ],
+  },
+  play: async ({ canvasElement, step }) => {
+    const cell = (key: string) =>
+      canvasElement.querySelector(`[data-slot="stat-strip-item"][data-key="${key}"]`)!;
+
+    await step('the judgement is published, not only painted', async () => {
+      await expect(cell('budget').getAttribute('data-tone')).toBe('negative');
+      // A number nobody has judged makes no claim at all.
+      await expect(cell('deploys').getAttribute('data-tone')).toBeNull();
+    });
+
+    await step('and it is audible as well as visible', async () => {
+      await expect(cell('budget').textContent).toContain('Needs attention.');
+      await expect(cell('uptime').textContent).toContain('Good.');
+      // `neutral` is a number deliberately NOT being judged, which is a
+      // different thing from one nobody HAS judged.
+      await expect(cell('p95').textContent).not.toContain('Needs attention.');
+    });
+  },
+};
+
+export const ToneDark: Story = { ...Tone, globals: { theme: 'dark' } };

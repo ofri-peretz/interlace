@@ -6,7 +6,16 @@ import {
   DocsDescription,
 } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
-import { useMDXComponents } from "@/mdx-components";
+// Aliased on import, deliberately. `useMDXComponents` is NOT a hook — it is a
+// plain function returning a component map, and the `use` prefix is a Next.js
+// naming convention for the `mdx-components` module export, which is why the
+// export itself must keep that name. But this file is an async server
+// component, and `react-hooks/rules-of-hooks` correctly reads a `use*` call
+// there as a violation. Renaming at the call site tells the truth to both: the
+// framework keeps its convention, the linter stops seeing a hook that is not
+// one, and nobody has to write a suppression comment that would also hide a
+// real violation later.
+import { useMDXComponents as getMDXComponents } from "@/mdx-components";
 
 export default async function Page({
   params,
@@ -18,7 +27,7 @@ export default async function Page({
   if (!page) notFound();
 
   const MDX = page.data.body;
-  const components = useMDXComponents();
+  const components = getMDXComponents();
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>

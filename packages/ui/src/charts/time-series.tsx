@@ -65,6 +65,7 @@
  * | R19  | Tokens only                | `stroke-chart-1..5`, `stroke-viz-*`, `text-muted-foreground` |
  * | R20  | AA contrast                | axis 3.64:1 light / 3.82:1 dark; grid deliberately decorative |
  * | R23  | Loading reserves its box   | `loading` → `<Skeleton variant="chart">`, same height     |
+ * | R23  | Absence is a vocabulary    | `loading` / `error` / not-enough-data are three messages  |
  * | R25  | Client component           | pointer + key handlers, `useState`                        |
  * | R26  | A11y                       | `role="img"` + label + focusable + live readout + table   |
  */
@@ -72,6 +73,11 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import {
+  announceDataState,
+  resolveDataState,
+  type AnnouncementOptions,
+} from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
 import { SeriesTable } from './series-table.js';
 import {
@@ -79,6 +85,7 @@ import {
   axisSlots,
   day,
   describeSeries,
+  keepAtNarrow,
   linePath,
   nearestSlot,
   plotScales,
@@ -124,15 +131,6 @@ const SERIES_STYLE: readonly { stroke: string; fill: string; dash?: string }[] =
   { stroke: 'stroke-chart-4', fill: 'fill-chart-4', dash: '18 6 2 6' },
   { stroke: 'stroke-chart-5', fill: 'fill-chart-5', dash: '12 6 2 6 2 6' },
 ];
-
-/**
- * Which x labels survive below `sm`: the two ends, plus the midpoint when the
- * count is odd. Five five-character labels clear a 288px plot by ~12px and a
- * longer date format would not — so the narrow case drops to three rather than
- * depending on the labels staying short.
- */
-const keepAtMobile = (index: number, count: number): boolean =>
-  index === 0 || index === count - 1 || index === (count - 1) / 2;
 
 /**
  * The name a reader sees. `<SeriesTable>` already spells an unlabelled series
@@ -213,6 +211,23 @@ export interface TimeSeriesProps extends Omit<React.ComponentProps<'figure'>, 'c
    * moment the series lands.
    */
   loading?: boolean;
+  /**
+   * The fetch failed.
+   *
+   * `unknown` rather than `boolean` for the same reason `DataStateFlags.error`
+   * is: a caught value can be handed straight through, and only its truthiness
+   * is ever read — nothing here renders it, because a stack trace is not a
+   * message for a reader.
+   *
+   * This is a different STATEMENT from an empty series, not a different
+   * severity of one. "No data yet" says the metric has no history; a failed
+   * request says the history is unknown, which is the one thing an empty-state
+   * message cannot be allowed to claim. Ranked directly under `loading`, per
+   * `DATA_STATES`.
+   */
+  error?: unknown;
+  /** Context for the absence sentences — noun, coverage, reason. */
+  announce?: AnnouncementOptions;
 }
 
 export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(function TimeSeries(
@@ -225,6 +240,8 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     unit,
     showTable = false,
     loading = false,
+    error,
+    announce,
     className,
     ...props
   },
@@ -300,13 +317,19 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     move(nearestSlot(plot.keys.length, userX, W - PAD_LEFT));
   };
 
-  // Loading is checked BEFORE the not-enough-data branch: data still in flight
-  // is not the same claim as "this metric has no history", and telling a reader
-  // the second while the first is true is simply wrong.
+  // Loading and error are both checked BEFORE the not-enough-data branch: data
+  // still in flight, and data that failed to arrive, are each a different claim
+  // from "this metric has no history" — and telling a reader the last one while
+  // either of the others is true is simply wrong. The order is `DATA_STATES`'
+  // order, resolved by the same function every other surface in the package
+  // uses, so a chart and a stat strip on one page cannot disagree about which
+  // absence wins.
   //
-  // Every hook above this point runs unconditionally — the guard sits after them
+  // Every hook above this point runs unconditionally — the guards sit after them
   // on purpose, so toggling `loading` never changes the hook order.
-  if (loading) {
+  const absence = resolveDataState({ loading, error }, announce);
+
+  if (absence.state === 'loading') {
     return (
       <Skeleton
         variant="chart"
@@ -314,6 +337,31 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         data-min-viewport={String(MIN_VIEWPORT)}
         className={className}
       />
+    );
+  }
+
+  if (absence.state === 'error') {
+    return (
+      <figure
+        ref={ref}
+        data-slot="time-series-error"
+        data-state="error"
+        data-min-viewport={String(MIN_VIEWPORT)}
+        className={cn(
+          'm-0 w-full rounded-lg border border-destructive/40 p-6',
+          className,
+        )}
+        {...props}
+      >
+        {/* `role="alert"` and not the muted empty-state paragraph. The reader
+            has to be able to tell "we asked and could not find out" from "we
+            asked and the answer was nothing" — those license different
+            conclusions, and only one of them is about the metric. */}
+        <p role="alert" className="text-sm text-destructive">
+          {announceDataState('error', announce)} The history is unknown, not
+          absent — this is not an empty series.
+        </p>
+      </figure>
     );
   }
 
@@ -613,7 +661,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         {xSlots.map((slot, index) => (
           <span
             key={plot.keys[slot]}
-            className={keepAtMobile(index, xSlots.length) ? undefined : 'hidden sm:inline'}
+            className={keepAtNarrow(index, xSlots.length) ? undefined : 'hidden sm:inline'}
           >
             {/* MM-DD. The year is in the figcaption and the full ISO date is in
                 the readout and the table; repeating it here is 10 characters

@@ -1,11 +1,11 @@
-// Grid + GridItem — the 2-D sibling of Stack. A thin, token-bound CSS-grid
-// primitive (NOT a grid framework): <Grid> sets the column track + gap on the
-// foundation --spacing scale; <GridItem> spans columns, responsively. Two FLAT
-// components (never a kind:"container"|"item" union — R11). Server components
-// (as-prop seam, like Section). See LAYOUT_PHILOSOPHY.md "Allowed primitives".
-
 /**
  * @interlace/ui — Grid / GridItem
+ *
+ * The 2-D sibling of Stack: a thin, token-bound CSS-grid primitive, not a grid
+ * framework. `<Grid>` sets the column track and gap on the foundation
+ * `--spacing` scale; `<GridItem>` spans columns, responsively. Two FLAT
+ * components rather than one with a `kind: "container" | "item"` union, and
+ * both are server components.
  *
  * | Rule | Concept                          | Where in this file                                  |
  * | ---- | -------------------------------- | --------------------------------------------------- |

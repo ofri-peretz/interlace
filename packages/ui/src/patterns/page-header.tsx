@@ -1,10 +1,3 @@
-import * as React from 'react';
-
-import { cn } from '../lib/cn.js';
-import { Skeleton } from '../primitives/skeleton.js';
-import { Stack } from '../primitives/stack.js';
-import { Typography } from '../primitives/typography.js';
-
 /**
  * @interlace/ui — PageHeader
  *
@@ -24,10 +17,12 @@ import { Typography } from '../primitives/typography.js';
  *     │   └─ {actions}               (right column — Cluster of Buttons)
  *     └─ {meta}                      (optional — tags / status / dates row)
  *
- * MIN_VIEWPORT — 480. Page headers expect a breadcrumb + title + actions
- * row, which doesn't fit cleanly below the iPhone-mini-portrait floor; the
- * actions stack vertically below, but the meta strip + breadcrumb crowd
- * the title. Reach for a simpler title-only header on narrower phones.
+ * ## MIN_VIEWPORT — 480
+ *
+ * Page headers expect a breadcrumb + title + actions row, which doesn't fit
+ * cleanly below the iPhone-mini-portrait floor; the actions stack vertically
+ * below, but the meta strip + breadcrumb crowd the title. Reach for a simpler
+ * title-only header on narrower phones.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -39,6 +34,13 @@ import { Typography } from '../primitives/typography.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y landmark                    | `<header>` is the rendered element                          |
  */
+
+import * as React from 'react';
+
+import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
+import { Stack } from '../primitives/stack.js';
+import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 480 as const;
 

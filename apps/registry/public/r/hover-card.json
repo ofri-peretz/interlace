@@ -3,7 +3,7 @@
   "name": "hover-card",
   "type": "registry:ui",
   "title": "Hover Card",
-  "description": "@interlace/ui — hover-card (shadcn-compatible).",
+  "description": "A rich, non-modal overlay that opens on pointer-hover (and keyboard focus) of its trigger, used to preview the *contents* of a target — author cards, repo cards, link previews. Distinct from `Tooltip` (short, one-line, no interactive content) and `Popover`…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "overlay",

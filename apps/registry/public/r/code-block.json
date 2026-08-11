@@ -3,7 +3,7 @@
   "name": "code-block",
   "type": "registry:ui",
   "title": "Code Block",
-  "description": "@interlace/ui — code-block (shadcn-compatible).",
+  "description": "Fenced code block with a title bar (title left, language tag + copy button right). The copy action shells out to `navigator.clipboard.writeText` and flips an inline \"Copied!\" affordance for 1.5s — the only piece of state this primitive owns. Everything…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

@@ -3,7 +3,7 @@
   "name": "toast",
   "type": "registry:ui",
   "title": "Toast",
-  "description": "@interlace/ui — toast (shadcn-compatible).",
+  "description": "Transient, portal-mounted notification. Wraps `@base-ui/react/toast` (Provider, Portal, Viewport, Root, Title, Description, Close) and overlays the Interlace tone system on top — four semantic tones (`info`, `success`, `warning`, `danger`) that each render…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "feedback",

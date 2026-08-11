@@ -1,11 +1,3 @@
-import * as React from 'react';
-
-import { Button } from '../primitives/button.js';
-import { Field, FieldControl, FieldDescription, FieldError, FieldLabel, Form } from '../primitives/form.js';
-import { Input } from '../primitives/input.js';
-import { Stack } from '../primitives/stack.js';
-import { Typography } from '../primitives/typography.js';
-
 /**
  * @interlace/ui — SignInForm
  *
@@ -30,8 +22,10 @@ import { Typography } from '../primitives/typography.js';
  *     │   └─ Button type="submit"
  *     └─ <slot for sign-up link>
  *
- * MIN_VIEWPORT — 320. Auth must work on the narrowest phone: this is the
- * smallest target the WCAG 2.5.5 floor allows for the input + submit pair.
+ * ## MIN_VIEWPORT — 320
+ *
+ * Auth must work on the narrowest phone: this is the smallest target the
+ * WCAG 2.5.5 floor allows for the input + submit pair.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -46,6 +40,14 @@ import { Typography } from '../primitives/typography.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from primitives             | Base UI Field owns label association + aria-describedby    |
  */
+
+import * as React from 'react';
+
+import { Button } from '../primitives/button.js';
+import { Field, FieldControl, FieldDescription, FieldError, FieldLabel, Form } from '../primitives/form.js';
+import { Input } from '../primitives/input.js';
+import { Stack } from '../primitives/stack.js';
+import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

@@ -3,7 +3,7 @@
   "name": "author-template",
   "type": "registry:block",
   "title": "Author Template",
-  "description": "@interlace/ui — author-template (templates) (shadcn-compatible).",
+  "description": "Author profile page — bio header + their articles grid. Used by `/authors/[slug]` routes on a blog. The bio header is a multi-part card (avatar + name + role + bio + social links); the grid uses ArticleListGrid for the article list.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

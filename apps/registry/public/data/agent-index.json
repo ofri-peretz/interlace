@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 137
+    "itemCount": 140
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -25,34 +25,34 @@
     "meta.deprecated": "Present only when the item is on its way out. Carries `removedIn` (a real release, never \"eventually\") and `replacement`.",
     "keyboard": "Observed evidence only. `baseUi` names the Base UI primitive that owns focus and dismissal; `keys` lists the UI Events key values this file branches on itself; `handled` is the disjunction. An item with handled:false is not asserted to be inaccessible — it is asserted to add no keyboard behaviour of its own.",
     "states": "The string unions a caller has to satisfy, read from the source. Where a union is a precedence ladder (DATA_STATES) the array order IS the precedence, lowest index wins.",
-    "a11y": "ARIA roles and attributes written literally in the shipped file, plus whether it gates motion on prefers-reduced-motion and opts into the WCAG 2.2 SC 2.4.13 focus ring."
+    "a11y": "ARIA roles and attributes written literally in the shipped file, what drives its motion (a CSS driver is clamped by our preflight; a JS driver is out of reach of it), whether the file references prefers-reduced-motion at all, and whether it opts into the WCAG 2.2 SC 2.4.13 focus ring."
   },
   "facets": {
     "tier": {
-      "primitive": 62,
+      "primitive": 64,
       "pattern": 30,
       "effect": 17,
       "template": 13,
-      "chart": 6,
+      "chart": 7,
       "util": 5,
       "starter": 3,
       "theme": 1
     },
     "category": {
-      "primitive": 62,
+      "primitive": 64,
       "pattern": 30,
       "blog": 22,
       "decorative": 21,
       "foundation": 20,
-      "data": 18,
+      "data": 19,
       "effect": 17,
-      "form": 15,
+      "form": 16,
       "template": 13,
       "feedback": 11,
       "navigation": 9,
+      "overlay": 9,
       "marketing": 9,
-      "overlay": 8,
-      "chart": 6,
+      "chart": 7,
       "util": 5,
       "a11y": 4,
       "starter": 3,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 78,
-      "client": 59
+      "client": 62
     },
     "keyboard": {
       "none": 106,
-      "handled": 31
+      "handled": 34
     },
     "loading": {
-      "none": 107,
-      "built-in": 30
+      "none": 109,
+      "built-in": 31
     },
     "minViewport": {
-      "320": 79,
+      "320": 82,
       "480": 7,
       "768": 1,
       "inherited": 50
@@ -102,11 +102,15 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [],
-      "version": "1.7.2",
+      "version": "1.7.3",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -127,8 +131,12 @@
       "name": "accordion",
       "title": "Accordion",
       "type": "registry:ui",
-      "summary": "A disclosure stack is full-width by construction: the trigger row is `flex-1` with the chevron `shrink-0`, so headings wrap instead of clipping at 320px.",
-      "topics": [],
+      "summary": "A disclosure stack: a column of headers whose panels open and close. Wraps @base-ui/react/accordion — Base UI owns the open state (single or multiple), the keyboard model and every piece of the accordion ARIA.",
+      "topics": [
+        "Anatomy",
+        "Where `className` lands",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "navigation",
         "primitive"
@@ -147,7 +155,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -197,7 +209,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -223,8 +239,11 @@
       "name": "alert",
       "title": "Alert",
       "type": "registry:ui",
-      "summary": "@interlace/ui — alert (shadcn-compatible).",
-      "topics": [],
+      "summary": "A bordered in-page message with `role=\"alert\"`, an optional leading icon, a title and a description, in two tones (default and destructive).",
+      "topics": [
+        "Anatomy",
+        "Two things to know before reaching for it"
+      ],
       "categories": [
         "feedback",
         "primitive"
@@ -245,7 +264,11 @@
           "alert"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -269,8 +292,13 @@
       "name": "animated-gradient-text",
       "title": "Animated Gradient Text",
       "type": "registry:ui",
-      "summary": "@interlace/ui — animated-gradient-text (magicui) (shadcn-compatible).",
-      "topics": [],
+      "summary": "Gradient-filled text: a `bg-clip-text text-transparent` span whose three-stop linear gradient slides horizontally on a loop. Built for a short eyebrow, badge or headline fragment — never a paragraph, since the text has no solid fill to fall back to.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "`speed` changes distance, not duration",
+        "The gradient IS the text, so both stops are text-grade tokens"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -289,7 +317,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -337,7 +369,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [],
@@ -362,8 +398,13 @@
       "name": "animated-list",
       "title": "Animated List",
       "type": "registry:ui",
-      "summary": "AnimatedList — reveals its children one at a time, newest on top, with a spring pop-in.",
-      "topics": [],
+      "summary": "A feed that reveals its children one at a time, newest on top, each entry springing in from `scale: 0`. One more appears every `delay` ms (1000 by default) until the list is full, then it stops — or restarts, with `loop`.",
+      "topics": [
+        "Provenance",
+        "Anatomy",
+        "Motion",
+        "WCAG 2.2.2 (Pause, Stop, Hide)"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -387,7 +428,11 @@
           "aria-live",
           "aria-pressed"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": true
       },
       "exports": [
@@ -416,8 +461,12 @@
       "name": "article-card",
       "title": "Article Card",
       "type": "registry:ui",
-      "summary": "Article grid tile: cover image on top, then author / title / description / tags / meta stacked on the card surface. The default shape — use it for \"from the blog\" grids, external content lists, feed aggregations.",
-      "topics": [],
+      "summary": "Two article tiles that share one focusable-anchor shell: `ArticleCard`, the stacked grid tile with the cover on top, and `FeaturedArticleCard`, the full-bleed hero whose copy sits on a gradient scrim over the image. Both read the same props.",
+      "topics": [
+        "Anatomy",
+        "Dates are pinned to UTC",
+        "Motion"
+      ],
       "categories": [
         "blog",
         "pattern"
@@ -444,7 +493,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -496,7 +549,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -554,7 +611,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -588,7 +649,7 @@
       "name": "aspect-ratio",
       "title": "Aspect Ratio",
       "type": "registry:ui",
-      "summary": "Anatomy: a single block-level wrapper that reserves space by ratio (CSS `aspect-ratio`) and stretches to the parent's width. Use it as the *frame* for media that arrives async (images, video, embeds, charts) so the surrounding layout never shifts…",
+      "summary": "A single block-level wrapper that reserves space by ratio (CSS `aspect-ratio`) and stretches to the parent's width. Use it as the *frame* for media that arrives async — images, video, embeds, charts — so the surrounding layout never shifts…",
       "topics": [],
       "categories": [
         "foundation",
@@ -608,7 +669,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -670,7 +735,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -699,8 +768,11 @@
       "name": "author-byline",
       "title": "Author Byline",
       "type": "registry:ui",
-      "summary": "Article hero adornment — author + date + reading time. Server component.",
-      "topics": [],
+      "summary": "The \"who wrote this + when + how long it takes to read\" adornment that sits directly under an article H1. Pure surface composition over existing primitives — Avatar (large) on the left, a vertical Stack on the right with author name (UI semibold), optional…",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "blog",
         "pattern"
@@ -719,7 +791,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -776,7 +852,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -806,8 +886,11 @@
       "name": "avatar",
       "title": "Avatar",
       "type": "registry:ui",
-      "summary": "@interlace/ui — avatar (shadcn-compatible).",
-      "topics": [],
+      "summary": "A circular image with a text fallback. Wraps @base-ui/react/avatar: Base UI owns the image load/error state machine that decides when the fallback shows, and we own the surface.",
+      "topics": [
+        "Anatomy",
+        "Two different absences"
+      ],
       "categories": [
         "data",
         "primitive"
@@ -826,7 +909,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -851,8 +938,12 @@
       "name": "background-beams-with-collision",
       "title": "Background Beams With Collision",
       "type": "registry:ui",
-      "summary": "Background Beams with Collision Component",
-      "topics": [],
+      "summary": "A hero surface where thin vertical beams fall from the top and burst into a ten-particle explosion when they reach the strip along the bottom. Your children render above them on a `z-10` layer.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "Where it leaves the token system"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -871,7 +962,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -898,8 +993,13 @@
       "name": "background-gradient-animation",
       "title": "Background Gradient Animation",
       "type": "registry:ui",
-      "summary": "BackgroundGradientAnimation — a decorative, animated multi-blob gradient surface (the \"lava lamp\" / aurora effect).",
-      "topics": [],
+      "summary": "The \"lava lamp\" surface: five radial-gradient blobs orbiting behind an SVG goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth blob that eases toward the pointer.",
+      "topics": [
+        "Provenance",
+        "Anatomy",
+        "Motion — two kinds, gated two ways",
+        "The goo filter id is per-instance"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -920,7 +1020,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -945,8 +1049,12 @@
       "name": "background-lines",
       "title": "Background Lines",
       "type": "registry:ui",
-      "summary": "@interlace/ui — background-lines (aceternity) (shadcn-compatible).",
-      "topics": [],
+      "summary": "A full-bleed backdrop of twelve long, sweeping SVG curves that draw themselves in and fade out on a loop, each staggered by a fixed delay so the field never pulses in unison.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "What it does not give you"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -964,8 +1072,14 @@
       "states": [],
       "a11y": {
         "roles": [],
-        "aria": [],
-        "reducedMotion": true,
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -992,8 +1106,12 @@
       "name": "badge",
       "title": "Badge",
       "type": "registry:ui",
-      "summary": "@interlace/ui — badge (shadcn-compatible).",
-      "topics": [],
+      "summary": "A small pill for a status, a count, a label or a tag. Renders a `<span>` by default, or whatever Base UI's `render` prop is given, so the same badge can be an anchor without losing its shape.",
+      "topics": [
+        "Anatomy",
+        "The variant rule this file exists to hold",
+        "`loading` and the hook order"
+      ],
       "categories": [
         "feedback",
         "primitive"
@@ -1014,11 +1132,15 @@
         "aria": [
           "aria-invalid"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [],
-      "version": "1.2.0",
+      "version": "1.2.1",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1067,7 +1189,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1097,8 +1223,13 @@
       "name": "border-beam",
       "title": "Border Beam",
       "type": "registry:ui",
-      "summary": "BorderBeam Component - Performance Optimized",
-      "topics": [],
+      "summary": "A single gradient square that travels around the inside edge of its parent, drawn with `offset-path` and a two-layer CSS mask so only the border ring shows. Drop it inside any `relative`, rounded container to give that container a moving outline.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "Colour, and why `--chart-2` is allowed here",
+        "One API edge worth knowing"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -1117,7 +1248,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1141,7 +1276,7 @@
       "name": "box",
       "title": "Box",
       "type": "registry:ui",
-      "summary": "API parity: MUI `component=` → `as`; MUI `sx` (CSS-in-JS) → tokenized cva + className (no runtime). No open-ended system props (`mt`/`px`/`bgcolor`).",
+      "summary": "The lowest-altitude layout primitive: surface + box-model on one element. Mirrors MUI `<Box>` (a polymorphic, unopinionated wrapper) minus the `sx` CSS-in-JS prop — Interlace uses a curated, tokenized cva variant set instead, so it cannot reopen the…",
       "topics": [],
       "categories": [
         "foundation",
@@ -1161,7 +1296,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -1210,7 +1349,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -1232,7 +1375,7 @@
       "name": "breadcrumb",
       "title": "Breadcrumb",
       "type": "registry:ui",
-      "summary": "Anatomy: Breadcrumb (nav[aria-label=\"breadcrumb\"], data-min-viewport) └─ BreadcrumbList (ol) ├─ BreadcrumbItem (li) │ └─ BreadcrumbLink (a, or asChild = cloned child) ├─ BreadcrumbSeparator (li[role=\"presentation\"] · ChevronRight) ├─ BreadcrumbItem │ └─…",
+      "summary": "A server-rendered, semantically-tagged trail of ancestor links. The compositional API mirrors the shadcn surface so consumers swap drop-in, and `BreadcrumbLink` keeps a server-safe `asChild` seam (`React.cloneElement`, NOT Base UI `useRender`) so the whole…",
       "topics": [],
       "categories": [
         "navigation",
@@ -1260,7 +1403,11 @@
           "aria-hidden",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1286,8 +1433,11 @@
       "name": "button-variants",
       "title": "Button Variants",
       "type": "registry:ui",
-      "summary": "@interlace/ui — button-variants (shadcn-compatible).",
-      "topics": [],
+      "summary": "The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.",
+      "topics": [
+        "Anatomy",
+        "Why half this file is comments"
+      ],
       "categories": [
         "form",
         "primitive"
@@ -1308,11 +1458,15 @@
         "aria": [
           "aria-invalid"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [],
-      "version": "1.1.1",
+      "version": "1.1.2",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -1353,11 +1507,15 @@
         "aria": [
           "aria-invalid"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [],
-      "version": "1.1.1",
+      "version": "1.1.2",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1404,7 +1562,11 @@
           "note"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1432,8 +1594,11 @@
       "name": "card",
       "title": "Card",
       "type": "registry:ui",
-      "summary": "Card composes Box for the surface/border/radius floor; layout utilities (flex, gap, py, shadow) stay local because they're card-specific, not surface-level.",
-      "topics": [],
+      "summary": "A bordered, rounded content surface with header / title / description / action / content / footer parts. The surface, radius and border come from `Box`; the card owns only its column layout, its padding and its shadow.",
+      "topics": [
+        "Anatomy",
+        "What the card does not give you"
+      ],
       "categories": [
         "foundation",
         "primitive"
@@ -1452,7 +1617,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -1507,7 +1676,11 @@
           "aria-checked",
           "aria-invalid"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -1534,8 +1707,12 @@
       "name": "cloud-particles",
       "title": "Cloud Particles",
       "type": "registry:ui",
-      "summary": "CloudParticles — see file header for the visual model and deviations.",
-      "topics": [],
+      "summary": "Volumetric drifting clouds as a decorative backdrop. Each cloud is a radial-gradient ellipse pushed through a five-pass SVG turbulence filter — body, cool underside, soft shadow, deep shadow — and translated across `130vw`.",
+      "topics": [
+        "Provenance",
+        "Anatomy",
+        "Motion"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -1554,7 +1731,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1579,7 +1760,7 @@
       "name": "cn",
       "title": "cn — class-name merge utility",
       "type": "registry:lib",
-      "summary": "The DS type scale, as declared in `styles/foundation.css`.",
+      "summary": "@interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically.",
       "topics": [],
       "categories": [
         "foundation",
@@ -1617,7 +1798,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1667,7 +1852,11 @@
           "aria-label",
           "aria-live"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -1694,8 +1883,11 @@
       "name": "code-window",
       "title": "Code Window",
       "type": "registry:ui",
-      "summary": "macOS-style code-window chrome — a shadcn-conventional `data-slot`-tagged component for wrapping editor / terminal / code-preview content with a polished IDE aesthetic.",
-      "topics": [],
+      "summary": "macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.",
+      "topics": [
+        "Anatomy",
+        "No accessible name, deliberately"
+      ],
       "categories": [
         "blog",
         "pattern"
@@ -1714,7 +1906,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -1759,7 +1955,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1782,11 +1982,143 @@
       "docs": "https://ds.interlace.tools/c/collapsible"
     },
     {
+      "name": "combobox",
+      "title": "Combobox",
+      "type": "registry:ui",
+      "summary": "A text input that filters a list. Built on `@base-ui/react/combobox`: Base UI owns the filtering (`Intl.Collator`-backed `useFilter`), the combobox/listbox ARIA pairing, VIRTUAL focus (the input keeps DOM focus and `aria-activedescendant` moves), single +…",
+      "topics": [
+        "Combobox vs Select vs DropdownMenu",
+        "Anatomy",
+        "Filtering — the one trap in this API",
+        "Keyboard contract",
+        "MIN_VIEWPORT — 320",
+        "Contrast (verified by token math)"
+      ],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "combobox",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-invalid",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "1.0.0",
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/combobox.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/combobox.json",
+      "item": "https://ds.interlace.tools/r/combobox.json",
+      "docs": "https://ds.interlace.tools/c/combobox"
+    },
+    {
+      "name": "command-palette",
+      "title": "Command Palette",
+      "type": "registry:ui",
+      "summary": "⌘K. A modal surface holding one filterable list of actions.",
+      "topics": [
+        "Why `inline` is load-bearing",
+        "Anatomy",
+        "Keyboard contract",
+        "MIN_VIEWPORT — 320",
+        "Contrast (verified by token math)"
+      ],
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "combobox",
+        "keys": [],
+        "ownHandler": true
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "combobox",
+          "dialog",
+          "status"
+        ],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "1.0.0",
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "dialog",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/command-palette.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/command-palette.json",
+      "item": "https://ds.interlace.tools/r/command-palette.json",
+      "docs": "https://ds.interlace.tools/c/command-palette"
+    },
+    {
       "name": "container",
       "title": "Container",
       "type": "registry:ui",
-      "summary": "`<Container>` — width contract from LAYOUT_PHILOSOPHY.md §2.",
-      "topics": [],
+      "summary": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8` (§5).",
+      "topics": [
+        "The four sizes",
+        "Anatomy",
+        "Two things worth knowing"
+      ],
       "categories": [
         "foundation",
         "primitive"
@@ -1805,7 +2137,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -1858,7 +2194,11 @@
           "menu"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1916,7 +2256,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -1971,7 +2315,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2047,7 +2395,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2129,7 +2481,11 @@
         "aria": [
           "aria-busy"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2212,7 +2568,11 @@
           "aria-selected",
           "aria-sort"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -2294,7 +2654,11 @@
           "img"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2341,7 +2705,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -2363,6 +2731,95 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dialog.json",
       "item": "https://ds.interlace.tools/r/dialog.json",
       "docs": "https://ds.interlace.tools/c/dialog"
+    },
+    {
+      "name": "distribution",
+      "title": "Distribution",
+      "type": "registry:ui",
+      "summary": "One quantity spread across a fixed set of bins — hours of the day, days of the week, cohorts, buckets — with an optional REFERENCE distribution drawn over it.",
+      "topics": [
+        "Why this is not `TimeSeries` with three more props",
+        "The reference is the whole point, and it shares one domain",
+        "An unmeasured bin is not an empty bin",
+        "MIN_VIEWPORT — 320",
+        "Anatomy"
+      ],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowLeft",
+          "ArrowRight",
+          "End",
+          "Escape",
+          "Home"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "ANNOTATION_KINDS",
+          "values": [
+            "publish",
+            "release",
+            "action"
+          ]
+        },
+        {
+          "name": "Direction",
+          "values": [
+            "up",
+            "down",
+            "flat"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "alert",
+          "img"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ANNOTATION_KINDS",
+        "Distribution",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "1.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "data-state",
+        "series-table",
+        "skeleton",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/charts/distribution.tsx",
+        "components/ui/charts/scale.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/distribution.json",
+      "item": "https://ds.interlace.tools/r/distribution.json",
+      "docs": "https://ds.interlace.tools/c/distribution"
     },
     {
       "name": "docs-page-template",
@@ -2395,7 +2852,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2450,7 +2911,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [],
@@ -2475,8 +2940,13 @@
       "name": "dropdown-menu",
       "title": "Dropdown Menu",
       "type": "registry:ui",
-      "summary": "The popup is `min-w-40` (160px) and capped by `max-h-(--available-height)`, so it fits and scrolls at the 320 floor; Base UI's positioner shifts it into view. Projected onto the popup — `Menu.Root` renders no DOM node.",
-      "topics": [],
+      "summary": "A button-triggered command menu — items, checkbox and radio items, submenus, plus a `Compose` array shorthand. Wraps @base-ui/react/menu: Base UI owns open state, positioning, focus and typeahead; we own the popup and the rows.",
+      "topics": [
+        "Anatomy",
+        "Where we deliberately left Base UI",
+        "`Compose` — the array form",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "overlay",
         "primitive"
@@ -2497,7 +2967,11 @@
           "separator"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2525,7 +2999,10 @@
       "title": "Empty State",
       "type": "registry:ui",
       "summary": "The \"nothing here yet\" surface. Used wherever a list, table, or search returns zero rows AND the consumer can act on it (create the first item, adjust filters, link to docs). Empty states are first-class UX, not an afterthought — `LOADING_PHILOSOPHY` flags…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "feedback",
         "pattern"
@@ -2544,7 +3021,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2598,7 +3079,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2649,7 +3134,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2700,7 +3189,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2752,7 +3245,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2777,8 +3274,13 @@
       "name": "flip-words",
       "title": "Flip Words",
       "type": "registry:ui",
-      "summary": "FlipWords — an animated headline word that flips through a list, revealing each replacement letter-by-letter with a soft blur-and-rise.",
-      "topics": [],
+      "summary": "A headline word that flips through a list. Each replacement enters letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs and scales away.",
+      "topics": [
+        "Provenance",
+        "Anatomy",
+        "Motion",
+        "Layout"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -2800,7 +3302,11 @@
           "aria-hidden",
           "aria-live"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -2827,8 +3333,13 @@
       "name": "focus-cards",
       "title": "Focus Cards",
       "type": "registry:ui",
-      "summary": "Focus Cards — a responsive grid that spotlights one card at a time. Pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs, so the user's attention follows their cursor or focus ring.",
-      "topics": [],
+      "summary": "A grid that spotlights one card at a time: pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs. Real list semantics — `ul` › `li` › `article` — and a controlled or uncontrolled active index.",
+      "topics": [
+        "Provenance",
+        "Anatomy",
+        "Motion",
+        "The caption scrim is dark in both themes, on purpose"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -2847,7 +3358,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -2873,8 +3388,11 @@
       "name": "focus-ring",
       "title": "Focus Ring",
       "type": "registry:ui",
-      "summary": "Renders a `<span>`, `inline-block` by default.",
-      "topics": [],
+      "summary": "A `<span>` that paints the DS focus ring when anything inside it takes focus — `focus-within` on the wrapper, not `focus-visible` on the child.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "a11y",
         "primitive"
@@ -2903,7 +3421,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -2953,7 +3475,11 @@
         "aria": [
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3001,7 +3527,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3063,7 +3593,11 @@
         "aria": [
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3089,8 +3623,11 @@
       "name": "grid-pattern",
       "title": "Grid Pattern",
       "type": "registry:ui",
-      "summary": "GridPattern — a decorative, consumer-agnostic SVG grid backdrop.",
-      "topics": [],
+      "summary": "A decorative SVG line grid that fills its positioned parent, with optional accent cells (`squares`, addressed as `[column, row]`) that can pulse. Colour comes from `currentColor`, so a text-colour class on `className` sets the tone.",
+      "topics": [
+        "Anatomy",
+        "Motion"
+      ],
       "categories": [
         "decorative",
         "pattern"
@@ -3111,7 +3648,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -3138,7 +3679,7 @@
       "name": "grid",
       "title": "Grid",
       "type": "registry:ui",
-      "summary": "API parity: MUI Grid v2 (container/item, columns, spacing, size). Deviations: MUI's nested `size={{xs,md}}` object → discrete `span`/`mdSpan`/`lgSpan` props for JSX ergonomics; MUI `component=` → `as`; spacing → Tailwind gap on the DS scale (not…",
+      "summary": "The 2-D sibling of Stack: a thin, token-bound CSS-grid primitive, not a grid framework. `<Grid>` sets the column track and gap on the foundation `--spacing` scale; `<GridItem>` spans columns, responsively. Two FLAT components rather than one with a `kind…",
       "topics": [],
       "categories": [
         "foundation",
@@ -3158,7 +3699,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -3182,8 +3727,13 @@
       "name": "hero-cosmic",
       "title": "Hero Cosmic",
       "type": "registry:ui",
-      "summary": "Cosmic landing-hero preset: starfield + shooting stars + meteors over a deep gradient. Drop-in replacement for a hand-rolled hero — pass headline / tagline / CTAs and you're done.",
-      "topics": [],
+      "summary": "The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.",
+      "topics": [
+        "Anatomy",
+        "The effect layer can legitimately never appear",
+        "Motion",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "marketing",
         "pattern"
@@ -3202,7 +3752,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3230,7 +3784,10 @@
       "title": "Hero",
       "type": "registry:ui",
       "summary": "The above-the-fold section every landing page reaches for: eyebrow, headline, supporting copy, primary + secondary CTAs, optional media slot. Server-component-safe; the calm-confident-technical voice is enforced by Typography variants (no h1 with…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "marketing",
         "pattern"
@@ -3251,7 +3808,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3301,7 +3862,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3353,7 +3918,11 @@
         "aria": [
           "aria-invalid"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -3377,8 +3946,12 @@
       "name": "interactive-grid-pattern",
       "title": "Interactive Grid Pattern",
       "type": "registry:ui",
-      "summary": "`InteractiveGridPattern` — a decorative, pointer-reactive grid of squares, sized to fill its positioned parent. Each cell highlights on hover; the fade honors `prefers-reduced-motion`.",
-      "topics": [],
+      "summary": "A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className=\"text-border\"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "The `<title>` is not an accessible name"
+      ],
       "categories": [
         "decorative",
         "pattern"
@@ -3401,7 +3974,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3450,7 +4027,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3501,7 +4082,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3551,11 +4136,15 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
-      "version": "1.7.2",
+      "version": "1.7.3",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3578,8 +4167,11 @@
       "name": "marquee",
       "title": "Marquee",
       "type": "registry:ui",
-      "summary": "Marquee — WCAG 2.2.2 (Pause, Stop, Hide) compliant by default.",
-      "topics": [],
+      "summary": "An infinitely scrolling strip: it renders its children `repeat` times side by side (or stacked, with `vertical`) inside an `overflow-hidden` track and translates each copy by its own width plus the gap, so the row reads as continuous.",
+      "topics": [
+        "Anatomy",
+        "Motion"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -3602,7 +4194,11 @@
           "aria-label",
           "aria-pressed"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -3649,11 +4245,15 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
-      "version": "1.7.2",
+      "version": "1.7.3",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3695,7 +4295,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -3748,7 +4352,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3854,7 +4462,11 @@
           "aria-valuenow",
           "aria-valuetext"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -3932,13 +4544,18 @@
       ],
       "a11y": {
         "roles": [
+          "alert",
           "img",
           "row"
         ],
         "aria": [
           "aria-selected"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -3951,6 +4568,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "data-state",
         "delta",
         "skeleton",
         "sparkline",
@@ -4002,13 +4620,18 @@
       "states": [],
       "a11y": {
         "roles": [
+          "alert",
           "img"
         ],
         "aria": [
           "aria-label",
           "aria-pressed"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -4021,6 +4644,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "data-state",
         "skeleton",
         "theme"
       ],
@@ -4037,7 +4661,10 @@
       "title": "Newsletter Form",
       "type": "registry:ui",
       "summary": "Canonical email-signup pattern: title + (optional) description + email field + consent checkbox + submit. Composition of the auth primitive set (Form / Field / Input / Button + Checkbox + Typography). The block owns *structure*; consumers wire `action` and…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "marketing",
         "pattern"
@@ -4056,7 +4683,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4112,7 +4743,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4138,8 +4773,13 @@
       "name": "number-ticker",
       "title": "Number Ticker",
       "type": "registry:ui",
-      "summary": "NumberTicker - Performance Optimized",
-      "topics": [],
+      "summary": "A count-up number that starts when it scrolls into view and eases to `value`. It does nothing by default: `startValue` defaults to `value`, so you get an honest static number — and an honest SSR render — until you pass a lower one to opt into the count.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "Colour",
+        "One API edge worth knowing"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -4158,7 +4798,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -4184,7 +4828,10 @@
       "title": "Page Header",
       "type": "registry:ui",
       "summary": "The header band at the top of admin / docs / settings pages. Carries a breadcrumb (optional), title, optional description, and a right-aligned actions slot (typically a primary CTA + an optional menu). Renders a `<header>` landmark for screen-reader…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 480"
+      ],
       "categories": [
         "navigation",
         "pattern"
@@ -4203,7 +4850,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4231,8 +4882,11 @@
       "name": "pagination",
       "title": "Pagination",
       "type": "registry:ui",
-      "summary": "Prev/Next collapse to icon-only below `sm` (`hidden sm:block` on the labels), so a 5-item bar fits 320px without wrapping.",
-      "topics": [],
+      "summary": "The page-navigation bar: a `<nav aria-label=\"pagination\">` of anchor links with previous / next / ellipsis parts. It is presentation only — it computes no page numbers and knows no total.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "navigation",
         "primitive"
@@ -4254,7 +4908,11 @@
           "aria-current",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4282,8 +4940,13 @@
       "name": "particles",
       "title": "Particles",
       "type": "registry:ui",
-      "summary": "Particles — an ambient, token-driven particle field for hero and section backdrops. Decorative-only: `aria-hidden` and `pointer-events-none`, so it never reaches the accessibility tree or intercepts input.",
-      "topics": [],
+      "summary": "An ambient `<canvas>` particle field for hero and section backdrops: `quantity` dots (100 by default) drifting on their own velocities, fading in near the middle and out near the edges, respawned whenever one leaves the box.",
+      "topics": [
+        "Provenance",
+        "Anatomy",
+        "Motion",
+        "Two things to know before you rely on it"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -4304,7 +4967,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -4329,8 +4996,11 @@
       "name": "popover",
       "title": "Popover",
       "type": "registry:ui",
-      "summary": "The popup is A NON-MODAL floating panel: dismisses on Escape and on an outside click, and restores focus to the trigger on close, but does NOT trap focus or make the page inert — that is the line between this and Dialog/Sheet, and it is the reason to pick…",
-      "topics": [],
+      "summary": "A non-modal floating panel anchored to its trigger. It dismisses on Escape and on an outside click and returns focus to the trigger, but it does NOT trap focus or make the page inert.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "overlay",
         "primitive"
@@ -4349,7 +5019,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4376,7 +5050,10 @@
       "title": "Prev Next Post",
       "type": "registry:ui",
       "summary": "Paired previous / next link cards rendered at the foot of an article. The canonical \"what to read next\" surface — improves session depth, reduces bounce, and gives keyboard / screen-reader users a deterministic exit ramp from long-form content. Wrapped in…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 480"
+      ],
       "categories": [
         "blog",
         "pattern"
@@ -4398,7 +5075,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -4448,7 +5129,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4504,7 +5189,11 @@
           "progressbar"
         ],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4565,7 +5254,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4622,7 +5315,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4679,7 +5376,11 @@
           "aria-invalid",
           "aria-readonly"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -4706,8 +5407,11 @@
       "name": "reading-time",
       "title": "Reading Time",
       "type": "registry:ui",
-      "summary": "Compact \"<N> min read\" badge for articles, blog cards, docs index entries — anywhere a content surface needs to signal expected reading effort before the reader commits. Renders as an inline `<span>` so it can sit next to a date, an author, or a tag…",
-      "topics": [],
+      "summary": "A compact \"N min read\" badge for article headers, blog cards and docs index rows. It renders an inline `<span>`, so it sits beside a date or a tag row without imposing block layout.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "blog",
         "primitive"
@@ -4726,7 +5430,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4782,7 +5490,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4811,8 +5523,11 @@
       "name": "related-posts",
       "title": "Related Posts",
       "type": "registry:ui",
-      "summary": "\"Keep reading\" grid. Server component (no hooks).",
-      "topics": [],
+      "summary": "\"Keep reading\" surface that sits at the foot of an article page (or any long-form route). Renders an h3 section heading followed by a responsive grid of ArticleCards: one column on phones, two from `md` up, three from `lg` up — the same 1/2/3 cadence the…",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 480"
+      ],
       "categories": [
         "blog",
         "pattern"
@@ -4834,7 +5549,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4885,7 +5604,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4939,7 +5662,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -4972,8 +5699,11 @@
       "name": "scroll-area",
       "title": "Scroll Area",
       "type": "registry:ui",
-      "summary": "The root is size-agnostic (`relative`, sized by its parent) and the 10px scrollbar track is an overlay, so it costs no horizontal space at the 320 floor.",
-      "topics": [],
+      "summary": "A scrollable region with a styled overlay scrollbar in place of the platform one. Wraps @base-ui/react/scroll-area: Base UI owns overflow detection and thumb geometry; we own the track, the thumb colour and the focus ring.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "data",
         "primitive"
@@ -4992,7 +5722,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -5046,7 +5780,11 @@
         "aria": [
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5071,8 +5809,12 @@
       "name": "section-header",
       "title": "Section Header",
       "type": "registry:ui",
-      "summary": "`<SectionHeader>` — the \"text-center mb-12 + h2 + tagline\" pattern from LAYOUT_PHILOSOPHY.md §1, lifted into a single primitive.",
-      "topics": [],
+      "summary": "The \"section intro\" block — optional eyebrow, a heading, and a `max-w-prose` tagline — with the bottom margin, the alignment and the type rhythm owned in one place instead of being re-typed as `text-center mb-12` on every section.",
+      "topics": [
+        "Anatomy",
+        "Variants",
+        "`align` reaches the eyebrow too"
+      ],
       "categories": [
         "navigation",
         "pattern"
@@ -5091,7 +5833,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -5115,8 +5861,11 @@
       "name": "section",
       "title": "Section",
       "type": "registry:ui",
-      "summary": "`<Section>` — vertical rhythm + tone + dividers + container, from LAYOUT_PHILOSOPHY.md §7-8.",
-      "topics": [],
+      "summary": "The page's rhythm unit, from LAYOUT_PHILOSOPHY.md §7-8: one band that owns its vertical padding, its background tone, its transition dividers and the `<Container>` that measures its children.",
+      "topics": [
+        "The four axes",
+        "Anatomy"
+      ],
       "categories": [
         "foundation",
         "primitive"
@@ -5135,7 +5884,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -5188,7 +5941,11 @@
           "listbox"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -5215,8 +5972,10 @@
       "name": "separator",
       "title": "Separator",
       "type": "registry:ui",
-      "summary": "@interlace/ui — separator (shadcn-compatible).",
-      "topics": [],
+      "summary": "A one-pixel rule between blocks of content, horizontal or vertical. Wraps @base-ui/react/separator, which owns the `role` and `aria-orientation` semantics; this file owns exactly two things — the `bg-border` colour and the axis geometry.",
+      "topics": [
+        "Anatomy"
+      ],
       "categories": [
         "foundation",
         "primitive"
@@ -5235,7 +5994,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -5301,7 +6064,11 @@
           "img"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5356,7 +6123,11 @@
           "aria-current",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5387,7 +6158,10 @@
       "title": "Share Buttons",
       "type": "registry:ui",
       "summary": "A compact \"share this page\" cluster: one ghost icon-button per social network plus a copy-link affordance. Each share button opens its network's prefilled share URL in a new tab; the copy button writes the URL to the clipboard and flips its icon +…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "blog",
         "pattern"
@@ -5419,7 +6193,11 @@
           "aria-label",
           "aria-live"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5448,8 +6226,11 @@
       "name": "sheet",
       "title": "Sheet",
       "type": "registry:ui",
-      "summary": "Left/right sheets A MODAL side panel (drawer): traps focus, dismisses on Escape and on an outside click, marks the rest of the page inert while open, and restores focus to the trigger on close. Base UI owns that behaviour — which is why this file never…",
-      "topics": [],
+      "summary": "A modal panel anchored to one edge of the viewport — a nav drawer, a filter panel, a settings pane. Base UI's Dialog owns the open state, the focus trap, page inerting, Escape and outside-press dismissal; we own the scrim, the slide and the side geometry.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "overlay",
         "primitive"
@@ -5468,7 +6249,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -5495,8 +6280,12 @@
       "name": "shimmer-button",
       "title": "Shimmer Button",
       "type": "registry:ui",
-      "summary": "@interlace/ui — shimmer-button (magicui) (shadcn-compatible).",
-      "topics": [],
+      "summary": "A dark pill CTA with a conic-gradient spark that sweeps around its edge: a rotating cone inside a sliding container, masked by an inset panel that redraws the fill and leaves only the rim glowing.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "It is deliberately dark, on the scrim tokens"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -5515,7 +6304,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5540,7 +6333,10 @@
       "title": "Sign In Form",
       "type": "registry:ui",
       "summary": "Canonical sign-in pattern: title + email + password + submit. Composition of the auth primitive set (Form / Field / Input / Button + Typography for the title). The block owns *structure*; consumers wire `action` / `onSubmit` and pass the brand specifics…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "form",
         "pattern"
@@ -5559,7 +6355,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5652,7 +6452,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5749,7 +6553,11 @@
           "aria-busy",
           "aria-live"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5776,8 +6584,11 @@
       "name": "skip-link",
       "title": "Skip Link",
       "type": "registry:ui",
-      "summary": "The \"jump to main content\" link that satisfies WCAG 2.4.1 (Bypass Blocks). Renders as a visually-hidden focusable anchor at the top of the document; when a keyboard user hits Tab on page load, it pops into the top-left corner as a focus-visible button that…",
-      "topics": [],
+      "summary": "The \"jump to main content\" link that satisfies WCAG 2.4.1 (Bypass Blocks): an `sr-only` anchor that pops into the top-left corner the moment it takes focus, letting a keyboard user step past the header and nav in one Tab.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "a11y",
         "primitive"
@@ -5796,7 +6607,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -5849,7 +6664,11 @@
           "aria-label",
           "aria-labels"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -5917,7 +6736,11 @@
           "img"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -5930,6 +6753,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "data-state",
         "delta",
         "skeleton",
         "theme"
@@ -5946,8 +6770,12 @@
       "name": "spotlight",
       "title": "Spotlight",
       "type": "registry:ui",
-      "summary": "Spotlight — a soft, blurred conic glow that fades in to draw the eye toward hero content. Adapted from the Aceternity UI \"Spotlight\" effect.",
-      "topics": [],
+      "summary": "The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.",
+      "topics": [
+        "Anatomy",
+        "Motion",
+        "Types"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -5968,7 +6796,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -5995,8 +6827,12 @@
       "name": "stack",
       "title": "Stack",
       "type": "registry:ui",
-      "summary": "`<Stack>` / `<Cluster>` — gap rhythm from LAYOUT_PHILOSOPHY.md §3.",
-      "topics": [],
+      "summary": "Flex layout whose gap comes from the DS six-step spacing scale, not from a number at the call site (LAYOUT_PHILOSOPHY.md §3). `Stack` stacks children vertically; `Cluster` is the horizontal, wrapping form for chip, tag and button rows.",
+      "topics": [
+        "Anatomy",
+        "Two things worth knowing",
+        "The gap scale"
+      ],
       "categories": [
         "foundation",
         "primitive"
@@ -6015,7 +6851,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -6040,8 +6880,13 @@
       "name": "stars-background",
       "title": "Stars Background",
       "type": "registry:ui",
-      "summary": "Meteors component - Aceternity-inspired falling meteor effect Uses pure CSS animations for optimal performance (no Framer Motion) Follows the project's CSS Animation Shift pattern",
-      "topics": [],
+      "summary": "Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.",
+      "topics": [
+        "Anatomy",
+        "Motion — three different mechanisms, three different still states",
+        "Per-instance SVG ids",
+        "Known edges"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -6060,7 +6905,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [
@@ -6088,7 +6937,11 @@
       "title": "Stat Card",
       "type": "registry:ui",
       "summary": "A single labeled metric — the building block of dashboards, scorecards, and \"key results\" rows. Renders: label / value / optional delta / optional icon. The `tone` variant pairs the delta accent with one of four semantic colors (default / success / warning…",
-      "topics": [],
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320",
+        "Contrast — delta text on `--background` (measured in-browser)"
+      ],
       "categories": [
         "data",
         "pattern"
@@ -6107,7 +6960,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6156,7 +7013,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6219,6 +7080,15 @@
           ]
         },
         {
+          "name": "StatTone",
+          "values": [
+            "default",
+            "positive",
+            "negative",
+            "neutral"
+          ]
+        },
+        {
           "name": "DataStateEmphasis",
           "values": [
             "recede",
@@ -6231,7 +7101,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6292,7 +7166,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6325,8 +7203,14 @@
       "name": "sunny-background",
       "title": "Sunny Background",
       "type": "registry:ui",
-      "summary": "SunnyBackground — a consumer-agnostic, fully tokenizable daylight surface.",
-      "topics": [],
+      "summary": "A daylight sky you drop behind hero or section content: a two-stop sky gradient with a haze wash, a sun disc (corona → glow → overexposed core → slowly rotating conic rays → four lens flares), a golden-hour horizon band and a depth vignette.",
+      "topics": [
+        "Provenance",
+        "Anatomy",
+        "Motion",
+        "The instance id does not scope anything",
+        "Colour defaults are literals, by design"
+      ],
       "categories": [
         "decorative",
         "effect"
@@ -6347,7 +7231,11 @@
         "aria": [
           "aria-hidden"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6400,7 +7288,11 @@
           "switch"
         ],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -6426,8 +7318,12 @@
       "name": "tabs",
       "title": "Tabs",
       "type": "registry:ui",
-      "summary": "The list is `w-fit` with `flex-1` triggers, so a two- or three-tab bar fits 320px. Consumers with long labels should wrap the list in a horizontally scrollable container rather than raise this floor.",
-      "topics": [],
+      "summary": "A tab bar and its panels. Wraps @base-ui/react/tabs: Base UI owns which tab is selected, arrow-key roving focus and the tablist/tab/tabpanel ARIA; we own the muted pill list and the raised face of the selected tab.",
+      "topics": [
+        "Anatomy",
+        "No overflow strategy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "navigation",
         "primitive"
@@ -6446,7 +7342,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -6499,7 +7399,11 @@
           "aria-busy",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6554,13 +7458,17 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "1.2.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -6603,7 +7511,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6659,7 +7571,11 @@
         "aria": [
           "aria-invalid"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -6685,7 +7601,7 @@
       "name": "theme-script",
       "title": "No-flash theme bootstrap script",
       "type": "registry:lib",
-      "summary": "A theme applied after hydration is a WHITE FLASH on every page load: the document paints `:root` (Interlace · light) first, React mounts, an effect reads localStorage, and only then does the page repaint into the dark or re-branded palette the user…",
+      "summary": "@interlace/ui — the inline `<head>` script that applies the stored theme before first paint. Without it every page load flashes the default theme.",
       "topics": [],
       "categories": [
         "foundation",
@@ -6705,7 +7621,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6761,7 +7681,11 @@
           "aria-hidden",
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -6792,7 +7716,7 @@
       "name": "theme-tokens",
       "title": "Theme token manifest",
       "type": "registry:lib",
-      "summary": "`THEME_TOKENS` enumerates every `--interlace-*` custom property a theme MUST define, for BOTH colour schemes. `THEMES` is the registry of themes that claim to satisfy it.",
+      "summary": "@interlace/ui — the registry of themes and the list of every `--interlace-*` token a theme must define. A missing token does not throw; it silently inherits the previous theme's value.",
       "topics": [],
       "categories": [
         "foundation",
@@ -6887,7 +7811,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -6933,7 +7861,11 @@
           "grid"
         ],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [],
@@ -7008,13 +7940,18 @@
       ],
       "a11y": {
         "roles": [
+          "alert",
           "img"
         ],
         "aria": [
           "aria-label",
           "aria-live"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -7027,6 +7964,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "data-state",
         "series-table",
         "skeleton",
         "theme"
@@ -7070,7 +8008,11 @@
         "aria": [
           "aria-label"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -7125,7 +8067,11 @@
           "aria-current",
           "aria-label"
         ],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -7181,7 +8127,11 @@
         "aria": [
           "aria-orientation"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": true
       },
       "exports": [
@@ -7208,8 +8158,12 @@
       "name": "tooltip",
       "title": "Tooltip",
       "type": "registry:ui",
-      "summary": "Unlike HoverCard (768 — hover-only rich content), a tooltip is a short `w-fit` label that Base UI also opens on keyboard focus, so it stays usable on a 320px touch screen. Projected onto the popup — `Tooltip.Root` renders no DOM node.",
-      "topics": [],
+      "summary": "A short label that appears beside its trigger on hover or on keyboard focus. Wraps @base-ui/react/tooltip and adds the one thing Base UI 1.6 does not emit: the `role=\"tooltip\"` / `aria-describedby` pair.",
+      "topics": [
+        "Anatomy",
+        "One consequence of that shape, and how `delay` survives it",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "overlay",
         "primitive"
@@ -7232,7 +8186,11 @@
         "aria": [
           "aria-describedby"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -7283,7 +8241,11 @@
         "aria": [
           "aria-label"
         ],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [
@@ -7327,7 +8289,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -7351,7 +8317,7 @@
       "name": "use-reduced-motion",
       "title": "useReducedMotion hook",
       "type": "registry:lib",
-      "summary": "Returns `true` when the user has `prefers-reduced-motion: reduce` set.",
+      "summary": "@interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference.",
       "topics": [],
       "categories": [
         "foundation",
@@ -7371,7 +8337,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": true,
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
         "focusRing": false
       },
       "exports": [],
@@ -7390,7 +8360,7 @@
       "name": "use-theme",
       "title": "useTheme hook",
       "type": "registry:lib",
-      "summary": "The runtime half of the two-axis theme contract. It owns the two pieces of state a user can change (which THEME, which SCHEME), persists them, and projects them onto `<html>` in exactly the shape `styles/index.css` expects:",
+      "summary": "@interlace/ui — reads and writes the theme (`data-theme`) and colour scheme (`.dark`) axes, persists to localStorage, and follows the OS when no preference is stored.",
       "topics": [],
       "categories": [
         "foundation",
@@ -7410,7 +8380,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [],
@@ -7432,8 +8406,11 @@
       "name": "visually-hidden",
       "title": "Visually Hidden",
       "type": "registry:ui",
-      "summary": "Default `<span>` element. To label a form control with a visually-hidden string, wrap your `<label htmlFor>` content with VisuallyHidden — the outer span doesn't break label semantics; the inner text is still read. For paragraph-level hidden content, wrap…",
-      "topics": [],
+      "summary": "A `<span>` that is invisible on screen but still read by assistive tech — the component form of the `sr-only` utility.",
+      "topics": [
+        "Anatomy",
+        "MIN_VIEWPORT — 320"
+      ],
       "categories": [
         "a11y",
         "primitive"
@@ -7452,7 +8429,11 @@
       "a11y": {
         "roles": [],
         "aria": [],
-        "reducedMotion": false,
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
         "focusRing": false
       },
       "exports": [

@@ -3,7 +3,7 @@
   "name": "data-state-model",
   "type": "registry:ui",
   "title": "Data State Model",
-  "description": "@interlace/ui — data-state-model (shadcn-compatible).",
+  "description": "Nothing in this file imports React, touches the DOM, or renders anything. It is the part of the absence contract that can be *proved* — the union, the precedence order, the announcement each state owes a screen reader, and the class set that paints it — so…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "feedback",

@@ -3,7 +3,7 @@
   "name": "blog-home-template",
   "type": "registry:block",
   "title": "Blog Home Template",
-  "description": "@interlace/ui — blog-home-template (templates) (shadcn-compatible).",
+  "description": "Blog index surface. Topbar + hero (greeting / about) + ArticleListGrid (featured + recent) + optional NewsletterForm + Footer. The shape every personal / company blog reaches for.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

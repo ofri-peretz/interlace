@@ -103,3 +103,61 @@ export const GRAPH_EDGES = [
   { from: 'rin', to: 'tal' },
   { from: 'kai', to: 'yuv' },
 ];
+
+/**
+ * The audience clock, as bins.
+ *
+ * This is the fixture that pays for `Distribution`: a 24-slot cyclical axis
+ * where the interesting statement is the GAP between two distributions, not
+ * the movement of one. Both series are shares, in percent, on purpose — the
+ * component draws one y domain and refuses a second axis, so a reference in
+ * raw counts against bars in percent is a chart it will not draw. Converting
+ * both to shares of their own denominator is the caller's job and it is what
+ * makes the comparison mean anything.
+ *
+ * `hours` sums to 100: it is where the week's reading actually happened.
+ * `awake` does not and should not — it is the share of readers who are awake
+ * at that hour, and those shares overlap.
+ */
+const READING_SHARE = [
+  1.2, 0.9, 0.7, 0.6, 0.8, 1.4, 2.3, 3.6, 6.9, 7.4, 5.1, 4.6,
+  5.2, 8.8, 9.4, 9.1, 6.3, 5.5, 4.8, 4.2, 3.9, 3.3, 2.4, 1.6,
+];
+
+const AWAKE_SHARE = [
+  38, 34, 31, 29, 30, 35, 44, 55, 64, 70, 74, 77,
+  80, 83, 84, 82, 78, 73, 68, 63, 59, 54, 48, 43,
+];
+
+/** UTC hour label, with the same instant in a +03:00 zone as the second reading. */
+const hourBin = (index: number, share: number | null) => ({
+  label: `${String(index).padStart(2, '0')}:00`,
+  note: `${String((index + 3) % 24).padStart(2, '0')}:00`,
+  v: share,
+  reference: AWAKE_SHARE[index],
+});
+
+export const AUDIENCE_CLOCK = READING_SHARE.map((share, index) => hourBin(index, share));
+
+/**
+ * The same clock with two hours nobody measured. A bar of height zero and a bar
+ * that was never drawn are the same picture, which is why those two slots
+ * hatch instead of going quietly blank.
+ */
+export const AUDIENCE_CLOCK_WITH_GAPS = READING_SHARE.map((share, index) =>
+  hourBin(index, index === 3 || index === 4 ? null : share),
+);
+
+/**
+ * Seven bins whose order is not their alphabetical order. Sorted, this reads
+ * Fri, Mon, Sat… — a week that does not exist. The caller's order IS the axis.
+ */
+export const BY_WEEKDAY = [
+  { label: 'Mon', v: 41 },
+  { label: 'Tue', v: 38 },
+  { label: 'Wed', v: 44 },
+  { label: 'Thu', v: 36 },
+  { label: 'Fri', v: 29 },
+  { label: 'Sat', v: 12 },
+  { label: 'Sun', v: 17 },
+];

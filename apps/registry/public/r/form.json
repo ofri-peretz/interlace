@@ -3,7 +3,7 @@
   "name": "form",
   "type": "registry:ui",
   "title": "Form",
-  "description": "@interlace/ui — form (shadcn-compatible).",
+  "description": "A composition primitive over `@base-ui/react/field`. The form ecosystem owns a long tail of subtle a11y wiring — label/control association via generated ids, `aria-describedby` for description + error, `aria-invalid` flipping on validity, focus management…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

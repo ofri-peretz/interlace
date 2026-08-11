@@ -3,7 +3,7 @@
   "name": "switch",
   "type": "registry:ui",
   "title": "Switch",
-  "description": "@interlace/ui — switch (shadcn-compatible).",
+  "description": "Binary on/off control with immediate effect (no submit step) — the distinction from Checkbox, which collects a value for a form. Built on @base-ui/react/switch: Base UI owns `role=\"switch\"`, `aria-checked`, Space/Enter activation and the…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

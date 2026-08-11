@@ -3,7 +3,7 @@
   "name": "article-template",
   "type": "registry:block",
   "title": "Article Template",
-  "description": "@interlace/ui — article-template (templates) (shadcn-compatible).",
+  "description": "Full-page surface for long-form articles. Composes the header (title + AuthorByline), the body (Prose-wrapped MDX/HTML), the related-posts grid, prev/next navigation, and share buttons — each in its own `<SectionBoundary>` so the page streams section-by-…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

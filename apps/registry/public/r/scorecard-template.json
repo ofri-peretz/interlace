@@ -3,7 +3,7 @@
   "name": "scorecard-template",
   "type": "registry:block",
   "title": "Scorecard Template",
-  "description": "@interlace/ui — scorecard-template (templates) (shadcn-compatible).",
+  "description": "Graded-evaluation page. Topbar + overall-grade header + per-dimension scorecard rows + optional methodology footnote + Footer.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "data",

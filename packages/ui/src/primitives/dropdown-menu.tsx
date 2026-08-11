@@ -1,5 +1,69 @@
 'use client';
 
+/**
+ * @interlace/ui — DropdownMenu
+ *
+ * A button-triggered command menu — items, checkbox and radio items, submenus,
+ * plus a `Compose` array shorthand. Wraps @base-ui/react/menu: Base UI owns
+ * open state, positioning, focus and typeahead; we own the popup and the rows.
+ *
+ * The menu ARIA is upstream's too, except where this file steps out of it on
+ * purpose — see below.
+ *
+ * ## Anatomy
+ *
+ *   DropdownMenu                     (Menu.Root — renders no DOM node)
+ *     ├─ DropdownMenuTrigger         (Menu.Trigger)
+ *     └─ DropdownMenuContent         (Portal → Positioner(z-50) → Popup — data-min-viewport=320)
+ *          ├─ DropdownMenuLabel      (a plain div — see below)
+ *          ├─ DropdownMenuGroup      (Menu.Group)
+ *          ├─ DropdownMenuItem       (Menu.Item — variant default | destructive)
+ *          ├─ DropdownMenuCheckboxItem / DropdownMenuRadioGroup + RadioItem
+ *          ├─ DropdownMenuSeparator  (a plain div with role="separator")
+ *          ├─ DropdownMenuShortcut   (span, ml-auto)
+ *          └─ DropdownMenuSub        (SubmenuRoot → SubTrigger + SubContent)
+ *
+ * `DropdownMenuContent` is not a thin wrapper: it bundles Portal, Positioner
+ * and Popup, so `side` / `align` / `sideOffset` are lifted onto it and any
+ * other prop lands on the Popup.
+ *
+ * ## Where we deliberately left Base UI
+ *
+ *   - `DropdownMenuLabel` is a `<div>`, not `Menu.GroupLabel`. Base UI throws
+ *     error #31 when a GroupLabel has no `Menu.Group` ancestor, and the
+ *     canonical call site puts a heading straight inside the content. For a
+ *     label that is semantically tied to a set of items, wrap them in
+ *     `DropdownMenuGroup` and use Base UI's own GroupLabel inside it.
+ *   - `DropdownMenuSeparator` is a `<div role="separator">` for the same
+ *     reason of independence from menu structure.
+ *
+ * ## `Compose` — the array form
+ *
+ * `DropdownMenuCompose` (also reachable as `DropdownMenu.Compose`) renders
+ * Root + Trigger + Content from `{ label, onSelect, shortcut, tone }` entries
+ * plus `{ type: 'separator' | 'label' }`. Note it wires each entry's
+ * `onSelect` to the item's `onClick`, not to Base UI's `onSelect`.
+ *
+ * ## MIN_VIEWPORT — 320
+ *
+ * The popup is `min-w-40` (160px) and capped by `max-h-(--available-height)`,
+ * so it fits and scrolls at the 320 floor while Base UI's positioner shifts it
+ * into view. Declared on the popup, because `Menu.Root` renders no DOM node.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends Base UI part props       | `React.ComponentProps<typeof BaseMenu.*>` on every wrapper  |
+ * | R6   | data-slot per part               | dropdown-menu / -trigger / -content / -item / -sub-… (15)   |
+ * | R7   | cn + ...rest                     | `cn('…', className)` + `{...props}` on every styled part    |
+ * | R8   | Enum for item tone               | `variant = default | destructive` on `DropdownMenuItem`     |
+ * | R10  | Composition seam                 | `Compose` for the array case; the parts for everything else |
+ * | R12  | Reuse over wrap                  | Base UI owns open state, positioning, typeahead, roving focus |
+ * | R14  | Declares min viewport            | `data-min-viewport` on the popup + exported const           |
+ * | R19  | Tokens only                      | `bg-popover`, `bg-accent`, `text-destructive`, `ring-border` |
+ * | R25  | Client component                 | Required — Base UI Menu ships client hooks                  |
+ * | R26  | Keyboard contract                | Escape-dismissal asserted by `DropdownMenu.stories.tsx`, locked by `overlay-nav-keyboard-lock` |
+ */
+
 import * as React from 'react';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react';

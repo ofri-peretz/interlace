@@ -3,7 +3,7 @@
   "name": "typography",
   "type": "registry:ui",
   "title": "Typography",
-  "description": "@interlace/ui — typography (shadcn-compatible).",
+  "description": "One component renders every row of the type scale (h1–h6, body, long-form, UI, caption, code) through a single `variant`, plus an orthogonal semantic `tone`. The reading-vs-UI distinction (TYPOGRAPHY_PHILOSOPHY \"Reading mode vs UI mode\") is encoded in the…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "foundation",

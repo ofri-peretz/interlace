@@ -191,3 +191,40 @@ export const InContext: Story = {
 
 export const Dark: Story = { ...InContext, globals: { theme: 'dark' } };
 export const Rtl: Story = { args: { points: RISING, label: 'Downloads' }, decorators: [withRtl] };
+
+/**
+ * A failed row, in a table of rows that loaded.
+ *
+ * The empty placeholder is `aria-hidden` on purpose — in a `MetricTable` row
+ * the value and delta cells already say there is no trend, and a second
+ * announcement is noise. A FAILED row is the opposite case: nothing else in
+ * the row knows, so this is the only element that can say so, and it does.
+ */
+export const FetchFailed: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Holds the exact 90×22 cell so the column does not reflow, shows the `error` chip from the shared absence vocabulary, and carries the full sentence for a screen reader.',
+      },
+    },
+  },
+  render: () => (
+    <ul className="flex w-full max-w-content flex-col divide-y divide-border rounded-lg border border-border">
+      {[
+        { label: 'npm downloads', value: '2,205', points: RISING, error: undefined },
+        { label: 'GitHub stars', value: '—', points: [], error: 'ECONNRESET' },
+      ].map((row) => (
+        <li key={row.label} className="flex items-center justify-between gap-4 px-4 py-2.5 text-sm">
+          <span className="text-muted-foreground">{row.label}</span>
+          <span className="flex items-center gap-4">
+            <Sparkline points={row.points} error={row.error} decorative={!row.error} />
+            <span className="w-16 text-right tabular-nums">{row.value}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  ),
+};
+
+export const FetchFailedDark: Story = { ...FetchFailed, globals: { theme: 'dark' } };

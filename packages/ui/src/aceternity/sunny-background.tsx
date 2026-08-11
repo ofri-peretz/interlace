@@ -1,5 +1,72 @@
 "use client";
 
+/**
+ * @interlace/ui — SunnyBackground
+ *
+ * A daylight sky you drop behind hero or section content: a two-stop sky
+ * gradient with a haze wash, a sun disc (corona → glow → overexposed core →
+ * slowly rotating conic rays → four lens flares), a golden-hour horizon band
+ * and a depth vignette.
+ *
+ * Decorative only — `aria-hidden`, `pointer-events-none`, `absolute inset-0`.
+ *
+ * ## Provenance
+ *
+ * No upstream design system ships an atmospheric backdrop, so the API follows
+ * the local `aceternity/` convention: a decorative root that spreads native
+ * `div` props, merges `className`, and anchors absolutely. Against the effect
+ * this was adapted from, what is ours: the ~40 baked `rgba()` / `hsl()`
+ * literals became a `var(--sunny-*)` layer driven by props, so the surface
+ * re-tints per brand; all geometry is a fraction of one `size` prop rather
+ * than fixed pixels; and the rotation is gated in JS, not only by a media
+ * query.
+ *
+ * ## Anatomy
+ *
+ *   SunnyBackground                  (div — data-slot="sunny-background")
+ *     ├─ style                       (SUNNY_CSS — geometry + gradients)
+ *     ├─ div[data-slot=sunny-sky] / sunny-haze
+ *     ├─ div[data-slot=sunny-disc]   (positioned by `corner`)
+ *     │   ├─ sunny-corona-outer / -middle / -glow / -core
+ *     │   ├─ sunny-rays              (data-animated="true" | "false")
+ *     │   └─ sunny-flare ×4          (h, v, diag-1, diag-2)
+ *     └─ div[data-slot=sunny-horizon] / sunny-vignette
+ *
+ * The whole effect is plain CSS — no canvas, no animation library — so it
+ * costs one composited layer and the markup renders identically on the server.
+ *
+ * ## Motion
+ *
+ * One `transform` rotation on `[data-slot="sunny-rays"]`, and it is stopped
+ * three ways. `raysActive = animated && !reduceMotion` writes
+ * `data-animated="false"`, and the animation rule only matches
+ * `[data-animated="true"]`; `SUNNY_CSS` carries its own
+ * `@media (prefers-reduced-motion: reduce)` block setting `animation: none
+ * !important`; and the wildcard in `styles/preflight.css` would clamp it
+ * anyway. Reading the preference in JS as well is what makes the rotation
+ * never start — including when the user flips the setting mid-session.
+ *
+ * Only the rays stop. Every static atmospheric layer keeps rendering, so under
+ * `reduce` the surface still reads as daylight.
+ *
+ * ## The instance id does not scope anything
+ *
+ * `SUNNY_CSS` is injected per instance and its selectors are global
+ * `[data-slot="sunny-*"]` matches, so N mounted surfaces inject N identical
+ * copies of the same rules. The `data-interlace-sunny={instanceId}` attribute
+ * on the root is referenced by no selector. Per-instance palettes still work,
+ * but they work because the `--sunny-*` variables are set inline on each root
+ * and inherit down — not because of that attribute.
+ *
+ * ## Colour defaults are literals, by design
+ *
+ * `DEFAULT_CORE` / `DEFAULT_GLOW` / `DEFAULT_SKY_TOP` / `DEFAULT_SKY_BOTTOM`
+ * are `oklch()` values held in module constants, deliberately outside the JSX
+ * so the raw-literal lint scans the render path rather than the palette table.
+ * Pass `var(--token)` to any of the four colour props to put the sky on a
+ * brand theme.
+ */
+
 import { ComponentPropsWithoutRef, useId, useMemo } from "react";
 
 import { cn } from "../lib/cn.js";
@@ -281,32 +348,8 @@ const SUNNY_CSS = `
 `;
 
 /**
- * SunnyBackground — a consumer-agnostic, fully tokenizable daylight surface.
- *
- * A layered atmospheric sky with a photoreal sun: corona → glow → overexposed
- * core → slowly-rotating conic light rays → anamorphic lens flares → horizon
- * golden-hour band → depth vignette. Renders as a purely decorative,
- * non-interactive layer (`aria-hidden`, `pointer-events-none`) you drop behind
- * hero or section content.
- *
- * Built with the ecosystem (R13): the whole effect is plain CSS — no canvas,
- * no animation library — so it runs on the server and costs one composited
- * layer. Motion is a single `transform` rotation that the GPU handles cheaply.
- *
- * ## Design notes / API parity (R17)
- * There is no upstream DS equivalent for an atmospheric backdrop, so the API
- * follows the local aceternity-background convention (decorative root that
- * spreads native `div` props, merges `className`, anchors absolutely). It
- * improves on the inspiration source by:
- *   - replacing ~40 hard-coded `rgba()`/`hsl()` literals with a `var(--sunny-*)`
- *     token layer driven by props, so the surface re-tints per brand/theme;
- *   - expressing all geometry as fractions of one `size` prop (no fixed px),
- *     so the disc scales without layout drift;
- *   - reading `useReducedMotion()` in JS (not only the CSS media query) so the
- *     rotation truly never starts for reduced-motion users, even mid-session.
- *
- * Reduced motion (R-motion): only the rays rotation is suppressed; the static
- * atmospheric layers keep rendering so the surface still reads as daylight.
+ * SunnyBackground — see the file header for the layer stack, the CSS-variable
+ * palette layer, and the reduced-motion contract.
  */
 export function SunnyBackground({
   className,

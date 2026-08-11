@@ -3,7 +3,7 @@
   "name": "data-table",
   "type": "registry:ui",
   "title": "Data Table",
-  "description": "@interlace/ui — data-table (patterns) (shadcn-compatible).",
+  "description": "Columns, sorting, row selection, pagination, and the three states a table spends most of its life in (loading / empty / error). It composes primitives — Checkbox, Pagination, Skeleton, Button — so it is a pattern, not a primitive.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "data",

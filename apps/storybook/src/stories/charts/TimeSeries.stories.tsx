@@ -433,3 +433,36 @@ export const Rtl: Story = {
   args: { points: RISING, label: 'npm downloads' },
   decorators: [withRtl],
 };
+
+/**
+ * The state this component did not have, and the reason it needed one.
+ *
+ * `DATA_STATES` ranks `error` above `empty` because they are different claims.
+ * "No data yet" is a statement about the METRIC, and a reader is entitled to
+ * act on it — stop waiting, go and publish something. A failed fetch is a
+ * statement about the REQUEST and licenses none of that. Rendering the first
+ * while the second is true is a lie the reader cannot detect.
+ */
+export const FetchFailed: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`role="alert"` in `--destructive`, not the muted "No data yet" panel. The sentence comes from `announceDataState`, so a chart, a stat strip and a meter on one page cannot each invent their own wording for the same failure.',
+      },
+    },
+  },
+  args: {
+    points: [],
+    label: 'npm downloads',
+    error: 'ECONNRESET',
+    announce: { noun: 'downloads' },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('alert').textContent).toMatch(/could not be loaded/i);
+    await expect(canvas.queryByText(/No data yet/i)).toBeNull();
+  },
+};
+
+export const FetchFailedDark: Story = { ...FetchFailed, globals: { theme: 'dark' } };

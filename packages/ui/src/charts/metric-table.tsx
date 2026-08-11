@@ -42,6 +42,7 @@
  * | R18  | Tailwind only              | zero inline `style`                                    |
  * | R19  | Tokens only                | `border-border`, `bg-accent`, `text-muted-foreground`  |
  * | R20  | AA contrast                | selected row uses `bg-accent`/`text-accent-foreground` (9.31:1 light, 9.85:1 dark) |
+ * | R23  | Absence is a vocabulary    | `loading` / `error` resolve through `resolveDataState` |
  * | R25  | Client component           | row key/click handlers                                 |
  * | R26  | A11y                       | native table semantics + `aria-selected` + focus ring  |
  */
@@ -49,6 +50,11 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import {
+  announceDataState,
+  resolveDataState,
+  type AnnouncementOptions,
+} from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
 import { Delta, type Polarity } from './delta.js';
 import { Sparkline } from './sparkline.js';
@@ -83,6 +89,17 @@ export interface MetricTableProps extends Omit<React.ComponentProps<'div'>, 'onS
   maxColumns?: number;
   /** Render a `<Skeleton variant="metric-table" />` placeholder. */
   loading?: boolean;
+  /**
+   * The fetch failed.
+   *
+   * A table of metrics that failed to load must not render as a table with no
+   * rows: an empty `<tbody>` under a real `<caption>` reads as "we looked, and
+   * you track nothing" — a claim about the reader rather than about the
+   * request. Ranked directly under `loading`, per `DATA_STATES`.
+   */
+  error?: unknown;
+  /** Context for the absence sentences — noun, coverage, reason. */
+  announce?: AnnouncementOptions;
 }
 
 export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
@@ -94,6 +111,8 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
       onSelect,
       maxColumns = 6,
       loading = false,
+      error,
+      announce,
       className,
       ...props
     },
@@ -110,7 +129,9 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
     const selectable = Boolean(onSelect);
 
     // After the memo above, so hook order never depends on the prop.
-    if (loading) {
+    const absence = resolveDataState({ loading, error }, announce);
+
+    if (absence.state === 'loading') {
       return (
         <Skeleton
           variant="metric-table"
@@ -118,6 +139,27 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
           data-min-viewport={String(MIN_VIEWPORT)}
           className={className}
         />
+      );
+    }
+
+    if (absence.state === 'error') {
+      return (
+        <div
+          ref={ref}
+          data-slot="metric-table-error"
+          data-state="error"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={cn(
+            'w-full rounded-lg border border-destructive/40 p-6',
+            className,
+          )}
+          {...props}
+        >
+          <p role="alert" className="text-sm text-destructive">
+            {announceDataState('error', announce)} The rows are unknown, not
+            absent — this is not a table with nothing in it.
+          </p>
+        </div>
       );
     }
 

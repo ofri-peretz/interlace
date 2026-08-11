@@ -3,7 +3,7 @@
   "name": "docs-page-template",
   "type": "registry:block",
   "title": "Docs Page Template",
-  "description": "@interlace/ui — docs-page-template (templates) (shadcn-compatible).",
+  "description": "Documentation page surface. Topbar at top, optional sidebar nav on the left (md+), main content in the centre with a `<Prose>` wrapper, and an optional TOC rail on the right (xl+).",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

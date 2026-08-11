@@ -3,7 +3,7 @@
   "name": "topbar",
   "type": "registry:ui",
   "title": "Topbar",
-  "description": "@interlace/ui — topbar (patterns) (shadcn-compatible).",
+  "description": "Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "navigation",

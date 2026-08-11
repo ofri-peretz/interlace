@@ -305,6 +305,98 @@ describe('StatStrip — the three-state null', () => {
     expect(skeleton.getAttribute('aria-busy')).toBe('true');
   });
 
+  /**
+   * Finding 3 from the control-room conversion: the strip could say what a
+   * number is and how it changed, and had no way at all to say **this one is
+   * bad**. A blown error budget rendered in the same weight as a healthy one,
+   * and the reader had to know the thresholds to see it — which is the job the
+   * strip existed to do.
+   */
+  describe('tone — "this number is bad", said three ways', () => {
+    it('colours the value and the rail', () => {
+      render(
+        <StatStrip
+          items={[{ key: 'budget', label: 'error budget', value: 4, tone: 'negative' }]}
+        />,
+      );
+      expect(cell('budget').className).toContain('border-destructive');
+      expect(cell('budget').querySelector('[dir="auto"]')!.className).toContain(
+        'text-viz-negative',
+      );
+    });
+
+    it('says it out loud as well, because a hue is not a sentence', () => {
+      // `--viz-negative` is invisible in a greyscale print, in a screenshot
+      // pasted into a chat, and to a screen reader.
+      render(
+        <StatStrip items={[{ key: 'a', label: 'a', value: 4, tone: 'negative' }]} />,
+      );
+      expect(document.body.textContent).toMatch(/Needs attention\./);
+      cleanup();
+      render(
+        <StatStrip items={[{ key: 'a', label: 'a', value: 4, tone: 'positive' }]} />,
+      );
+      expect(document.body.textContent).toMatch(/Good\./);
+    });
+
+    it('publishes the judgement as `data-tone`, and says nothing when there is none', () => {
+      render(
+        <StatStrip
+          items={[
+            { key: 'judged', label: 'a', value: 1, tone: 'positive' },
+            { key: 'unjudged', label: 'b', value: 2 },
+          ]}
+        />,
+      );
+      expect(cell('judged').getAttribute('data-tone')).toBe('positive');
+      expect(cell('unjudged').getAttribute('data-tone')).toBeNull();
+    });
+
+    it('leaves a `neutral` number uncoloured by judgement and unannounced', () => {
+      // `neutral` is a number deliberately NOT being judged, which is a
+      // different thing from `default` — a number nobody HAS judged.
+      render(
+        <StatStrip items={[{ key: 'a', label: 'a', value: 4, tone: 'neutral' }]} />,
+      );
+      expect(cell('a').querySelector('[dir="auto"]')!.className).toContain(
+        'text-viz-neutral',
+      );
+      expect(cell('a').getAttribute('data-tone')).toBe('neutral');
+      expect(document.body.textContent).not.toMatch(/Needs attention|Good\./);
+    });
+
+    it('never carries magnitude in the tone — two values at one tone differ only in digits', () => {
+      render(
+        <StatStrip
+          items={[
+            { key: 'small', label: 'a', value: 1, tone: 'negative' },
+            { key: 'large', label: 'b', value: 9_999, tone: 'negative' },
+          ]}
+        />,
+      );
+      expect(cell('small').className).toBe(cell('large').className);
+    });
+
+    it('lets ABSENCE outrank judgement — an unmeasured cell has no number to judge', () => {
+      render(
+        <StatStrip
+          items={[
+            {
+              key: 'gap',
+              label: 'a',
+              value: null,
+              tone: 'positive',
+              state: { notCounted: true },
+            },
+          ]}
+        />,
+      );
+      // The rail reports the absence, not an opinion about a value nobody has.
+      expect(cell('gap').className).toContain('border-muted-foreground/50');
+      expect(cell('gap').textContent).not.toMatch(/Good\./);
+    });
+  });
+
   it('collapses to two tracks at the 320 floor whatever `cols` says', () => {
     render(
       <StatStrip cols={6} items={[{ key: 'a', label: 'a', value: 1 }]} />,

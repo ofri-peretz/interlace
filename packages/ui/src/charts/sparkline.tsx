@@ -29,12 +29,18 @@
  * | R18  | Tailwind only              | zero inline `style`; sizing via width/height attributes  |
  * | R19  | Tokens only                | `stroke-viz-positive` / `stroke-viz-negative`            |
  * | R20  | AA contrast                | both tokens alias `--success` / `--destructive` (≥7:1)   |
+ * | R23  | Absence is a vocabulary    | `loading` / `error` / no-trend are three different cells |
  * | R26  | A11y                       | `role="img"` + computed label, or `aria-hidden` when decorative |
  */
 
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import {
+  DataStateBadge,
+  resolveDataState,
+  type AnnouncementOptions,
+} from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
 import { toneFor, type Polarity } from './delta.js';
 import { delta, describeSeries, linePath, seriesScales, type Point } from './scale.js';
@@ -72,6 +78,17 @@ export interface SparklineProps
    * cell size, so a metric arriving mid-window does not reflow its column.
    */
   loading?: boolean;
+  /**
+   * The fetch failed.
+   *
+   * The empty form of this component is `aria-hidden` — correct, because in a
+   * `MetricTable` row the numbers beside it already say there is no trend. A
+   * FAILED row is the opposite case: nothing else in the row knows, so this is
+   * the only element that can say so, and it says it out loud.
+   */
+  error?: unknown;
+  /** Context for the absence sentence — noun, coverage, reason. */
+  announce?: AnnouncementOptions;
 }
 
 export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(function Sparkline(
@@ -83,6 +100,8 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(functio
     label,
     polarity = 'normal',
     loading = false,
+    error,
+    announce,
     className,
     ...props
   },
@@ -95,9 +114,29 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(functio
   const path = linePath(scales);
   const change = delta(points);
 
-  if (loading) {
+  const absence = resolveDataState({ loading, error }, announce);
+
+  if (absence.state === 'loading') {
     return (
       <Skeleton variant="sparkline" data-slot="sparkline" className={className} />
+    );
+  }
+
+  // A failed request is not a flat trend and it is not a missing one. It holds
+  // the same box as the placeholder below — the column must not reflow just
+  // because one row failed — and unlike that placeholder it is announced,
+  // because no other cell in the row knows the fetch failed.
+  if (absence.state === 'error') {
+    return (
+      <span
+        data-slot="sparkline-error"
+        data-state="error"
+        className={cn('inline-flex items-center align-middle', className)}
+        // Same intrinsic sizing argument as the placeholder below.
+        style={{ width, height }}
+      >
+        <DataStateBadge state="error" glyphOnly announce={announce} />
+      </span>
     );
   }
 

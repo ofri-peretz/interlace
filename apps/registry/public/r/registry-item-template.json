@@ -3,7 +3,7 @@
   "name": "registry-item-template",
   "type": "registry:block",
   "title": "Registry Item Template",
-  "description": "@interlace/ui — registry-item-template (templates) (shadcn-compatible).",
+  "description": "Full-page surface for a single registry item's documentation (`/c/[name]` on ds.interlace.tools). Composes the header (item name + description + install snippet), the anatomy diagram, the variants matrix, related-components grid, and a CTA back to the…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

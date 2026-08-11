@@ -3,7 +3,7 @@
   "name": "animated-grid-pattern",
   "type": "registry:ui",
   "title": "Animated Grid Pattern",
-  "description": "@interlace/ui — animated-grid-pattern (magicui) (shadcn-compatible).",
+  "description": "A tiled SVG grid where a handful of cells softly pulse in and out, then teleport to a new random cell on each cycle — a \"breathing\" graph-paper backdrop for heroes and section bands. Re-authored from the MagicUI pattern to the Interlace component floor.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "decorative",

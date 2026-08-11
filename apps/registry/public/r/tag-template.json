@@ -3,7 +3,7 @@
   "name": "tag-template",
   "type": "registry:block",
   "title": "Tag Template",
-  "description": "@interlace/ui — tag-template (templates) (shadcn-compatible).",
+  "description": "Tag-filtered article index. Used by `/tags/[slug]` routes on a blog to show \"all articles tagged #typescript\" etc. Shows a header (\"Tagged: #typescript\") then an ArticleListGrid of matching posts.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

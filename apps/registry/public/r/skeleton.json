@@ -3,7 +3,7 @@
   "name": "skeleton",
   "type": "registry:ui",
   "title": "Skeleton",
-  "description": "@interlace/ui — skeleton (shadcn-compatible).",
+  "description": "Loading-state placeholder. ONE component, many shapes — the `variant` prop picks the silhouette of the resting component being loaded so the page layout doesn't jump when real data arrives.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "feedback",

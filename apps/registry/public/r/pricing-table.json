@@ -3,7 +3,7 @@
   "name": "pricing-table",
   "type": "registry:ui",
   "title": "Pricing Table",
-  "description": "@interlace/ui — pricing-table (patterns) (shadcn-compatible).",
+  "description": "2-4 column pricing-tier grid. Each tier is a card with name, price, description, feature list, and a CTA button. The \"Most popular\" tier gets a highlight border. Server component.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "marketing",

@@ -1,29 +1,63 @@
 "use client";
+
+/**
+ * @interlace/ui — BackgroundBeamsWithCollision
+ *
+ * A hero surface where thin vertical beams fall from the top and burst into a
+ * ten-particle explosion when they reach the strip along the bottom. Your
+ * children render above them on a `z-10` layer.
+ *
+ * The container is `h-96 md:h-[40rem]` unless `containerClassName` says
+ * otherwise.
+ *
+ * Our reimplementation of the Aceternity UI effect of the same name. What is
+ * ours: the beams are painted from `--primary` / `--chart-2` rather than the
+ * upstream purple/indigo literals, so they re-resolve per theme; an
+ * `IntersectionObserver` unmounts the whole beam layer when the hero scrolls
+ * out of view; the collision poll runs at 200ms instead of 50ms; and the
+ * explosion is ten particles instead of twenty.
+ *
+ * ## Anatomy
+ *
+ *   div                              (parent — gradient, overflow-hidden,
+ *                                     contain: layout style paint)
+ *     ├─ CollisionMechanism ×beams   (motion.div beam + AnimatePresence)
+ *     │   └─ Explosion               (glow line + 10 motion.span particles)
+ *     ├─ div.z-10                    (your children)
+ *     └─ div                         (collision surface, bottom strip —
+ *                                     styling suppressed by hideCollisionSurface)
+ *
+ * Each beam is a `BeamConfig` (`initialX`, `translateY`, `duration`, `delay`,
+ * `repeatDelay`, `className`); `beams` replaces the seven-beam default wholesale.
+ *
+ * ## Motion
+ *
+ * JS-driven throughout — `motion/react` transforms for the fall, a
+ * `setInterval` collision poll, and `AnimatePresence` for the burst. None of
+ * it is reachable by the CSS reset in `styles/preflight.css`, so the gate is
+ * in JS and it is total: `{isVisible && !reduceMotion && beams.map(…)}` means
+ * that under `prefers-reduced-motion: reduce` no `CollisionMechanism` mounts
+ * at all — no beams, no interval, no explosions. What remains is the gradient
+ * background, the collision strip, and your content. That is the intended
+ * still state, not a degraded one.
+ *
+ * ## Where it leaves the token system
+ *
+ * The beams and the explosion are tokenised, but the surface around them is
+ * not: the parent gradient is `from-white to-neutral-100` /
+ * `dark:from-neutral-950 … dark:to-neutral-900`, the collision strip is
+ * `bg-neutral-100` / `dark:bg-neutral-900/50`, and its `boxShadow` is a stack
+ * of raw `rgba()` literals. Pass `containerClassName` to put the surface back
+ * on your own background.
+ *
+ * The explosion's particle directions come from `Math.random()`, so no two
+ * bursts match and the effect is not snapshot-testable.
+ */
+
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
 import { motion, AnimatePresence } from "motion/react";
 import React, { useRef, useState, useEffect } from "react";
-
-/**
- * Background Beams with Collision Component
- *
- * A dynamic background effect featuring animated beams that fall from the top
- * and create particle explosions when colliding with a surface at the bottom.
- *
- * Adapted from Aceternity UI:
- * https://ui.aceternity.com/components/background-beams-with-collision
- *
- * Theme Support:
- * - Light mode: Purple/indigo beams on a light gradient background
- * - Dark mode: Brighter purple/cyan beams on a dark gradient background
- *
- * @example
- * ```tsx
- * <BackgroundBeamsWithCollision> 
- *   <h1>Your Content Here</h1>
- * </BackgroundBeamsWithCollision>
- * ```
- */
 
 // =========================================
 // TYPES

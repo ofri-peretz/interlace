@@ -1,5 +1,51 @@
 'use client';
 
+/**
+ * @interlace/ui — Badge
+ *
+ * A small pill for a status, a count, a label or a tag. Renders a `<span>` by
+ * default, or whatever Base UI's `render` prop is given, so the same badge can
+ * be an anchor without losing its shape.
+ *
+ * Six variants, and every one that names a text colour also paints an opaque
+ * surface under it — see the rule below.
+ *
+ * ## Anatomy
+ *
+ *   Badge                            (span by default, or the `render` element)
+ *     └─ children                    (text and/or an svg, sized to size-3 here)
+ *
+ * ## The variant rule this file exists to hold
+ *
+ * A badge is dropped onto surfaces the design system does not control. So a
+ * variant that declares a foreground must paint an opaque background in the
+ * same state, and a variant with no surface of its own (`ghost`, `link`) must
+ * inherit its colour rather than name one. The per-variant comments below
+ * record the measured failures that produced that rule — `link` with
+ * `text-primary` measured 1.00:1 inside a `bg-primary` section — and
+ * `composite-contrast-lock` is what keeps it true.
+ *
+ * ## `loading` and the hook order
+ *
+ * Until 2026-08-11 `useRender` sat AFTER the `loading` early return, so the
+ * hook was behind a conditional. Toggling `loading` on a mounted Badge did not
+ * actually throw — Base UI's `useRenderElement` occupies one hook slot on every
+ * path — but the ordering was invalid regardless of whether this version of
+ * that dependency happened to tolerate it. `useRender` is now unconditional and
+ * its result discarded on a loading render.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends native el                | `React.ComponentProps<'span'>`                              |
+ * | R6   | data-slot + data-variant on root | `'data-slot': 'badge'`, `'data-variant': variant`           |
+ * | R7   | cva + cn + ...rest               | `cn(badgeVariants({ variant }), className)` + `...props`    |
+ * | R8   | Enum for variant                 | default / secondary / destructive / outline / ghost / link  |
+ * | R10  | Composition seam                 | `render` — Base UI's `useRender`, not an `as` prop          |
+ * | R19  | Tokens only                      | `bg-primary`, `bg-secondary`, `bg-destructive`, `bg-accent` |
+ * | R20  | AA contrast                      | every variant composited by `composite-contrast-lock`       |
+ * | R25  | Client component                 | Required — `useRender` is a hook                            |
+ */
+
 import * as React from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -64,16 +110,17 @@ function Badge({
   loading,
   ...props
 }: BadgeProps) {
-  if (loading) {
-    return (
-      <Skeleton
-        variant="badge"
-        data-slot="badge"
-        className={className}
-      />
-    );
-  }
-
+  // `useRender` runs BEFORE the `loading` branch, not after it — a hook may not
+  // sit behind a conditional return.
+  //
+  // Measured, because the honest version of this comment matters: with the old
+  // ordering, mounting loading and then toggling to loaded does NOT throw on
+  // React 19 + Base UI 1.4. `useRenderElement`'s only hook is `useMergedRefs`,
+  // which is written to occupy one slot on every path. So this was a latent
+  // violation, not an observable crash — and the fix is worth making anyway,
+  // because "it happens not to throw with this version of that dependency" is
+  // not a property this file controls. The cost is one element built and
+  // discarded on a loading render.
   const element = useRender({
     render: render ?? <span />,
     props: {
@@ -83,6 +130,16 @@ function Badge({
       ...props,
     },
   });
+
+  if (loading) {
+    return (
+      <Skeleton
+        variant="badge"
+        data-slot="badge"
+        className={className}
+      />
+    );
+  }
 
   return element;
 }

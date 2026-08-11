@@ -3,7 +3,7 @@
   "name": "checkbox",
   "type": "registry:ui",
   "title": "Checkbox",
-  "description": "@interlace/ui — checkbox (shadcn-compatible).",
+  "description": "Tri-state boolean form control (checked / unchecked / indeterminate). Built on @base-ui/react/checkbox: Base UI owns `role=\"checkbox\"`, `aria-checked=\"mixed\"`, Space activation, and the controlled/uncontrolled pair (`checked` + `onCheckedChange` /…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

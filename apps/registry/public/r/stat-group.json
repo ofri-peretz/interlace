@@ -3,7 +3,7 @@
   "name": "stat-group",
   "type": "registry:ui",
   "title": "Stat Group",
-  "description": "@interlace/ui — stat-group (patterns) (shadcn-compatible).",
+  "description": "Horizontal row (or grid) of StatCards. The pattern stat pages reach for: 3-5 hero KPIs at the top of a page, each a labelled big number. Server component.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "data",

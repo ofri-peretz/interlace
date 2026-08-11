@@ -53,7 +53,18 @@ export const withReducedMotion: Decorator = (Story) => (
  * switcher writes to as well — withThemeByClassName, parentSelector
  * `'html'`).
  */
-export const withDark: Decorator = (Story) => {
+/**
+ * The effect lives in a real component, not in the decorator body.
+ *
+ * A Storybook decorator is an ordinary function that returns JSX; React never
+ * mounts `withDark` itself, so a hook called directly in its body belongs to
+ * whatever component happened to render the story — its identity and its
+ * position in the hook order are not `withDark`'s to control. It works today
+ * only because that caller is stable. `react-hooks/rules-of-hooks` flags it,
+ * and it is right to: the fix is one component, and then the effect is
+ * anchored to a mount/unmount pair that is genuinely this decorator's own.
+ */
+function DarkScheme({ children }: { children: React.ReactNode }) {
   React.useLayoutEffect(() => {
     const html = document.documentElement;
     const had = html.classList.contains('dark');
@@ -62,5 +73,11 @@ export const withDark: Decorator = (Story) => {
       if (!had) html.classList.remove('dark');
     };
   }, []);
-  return <Story />;
-};
+  return <>{children}</>;
+}
+
+export const withDark: Decorator = (Story) => (
+  <DarkScheme>
+    <Story />
+  </DarkScheme>
+);

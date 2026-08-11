@@ -38,6 +38,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 
 import reactA11y from 'eslint-plugin-react-a11y';
 import reactFeatures from 'eslint-plugin-react-features';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 // À-la-carte clean presets — spread each plugin's OWN flat recommended.
 import { configs as browserSecurityCfg } from 'eslint-plugin-browser-security';
@@ -101,6 +102,32 @@ export default [
   {
     ...reactA11y.configs.recommended,
     files: TSX_FILES,
+  },
+
+  // ── 2b. Rules of Hooks ─────────────────────────────────────────────────────
+  // Added 2026-08-11, and the gap it closes is the point: this repo ships 64
+  // React primitives and had NO rules-of-hooks rule at all. `react-features`
+  // provides `hooks-exhaustive-deps` — the deps-array rule — which reads like
+  // the hooks rule and is not it. Nothing checked that a hook was called
+  // unconditionally.
+  //
+  // Found by `badge.tsx`, which called `useRender` after a `loading` early
+  // return. That one happened not to throw (Base UI's `useRenderElement`
+  // occupies a hook slot on every path), which is exactly why a lint rule is
+  // the right gate and a test is not: the violation is real whether or not the
+  // current version of a dependency tolerates it, and no runtime assertion can
+  // see it until the day it stops being tolerated.
+  //
+  // Only `rules-of-hooks`. The plugin's v7 line also ships the React Compiler
+  // diagnostics (`purity`, `immutability`, `set-state-in-effect`, …); those are
+  // a separate, much larger conversation and enabling them wholesale here would
+  // bury the one rule that has a known violation behind hundreds of new ones.
+  {
+    files: TSX_FILES,
+    plugins: { 'react-hooks': reactHooks },
+    rules: {
+      'react-hooks/rules-of-hooks': 'error',
+    },
   },
 
   // ── 3. React best-practices (react-features) ───────────────────────────────

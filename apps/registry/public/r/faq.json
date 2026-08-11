@@ -3,7 +3,7 @@
   "name": "faq",
   "type": "registry:ui",
   "title": "Faq",
-  "description": "@interlace/ui — faq (patterns) (shadcn-compatible).",
+  "description": "Frequently-asked-questions accordion. Composes the canonical Accordion primitive into a single-prop API: pass an array of {question, answer} and get the full disclosure pattern (keyboard, ARIA, animation) inherited from Accordion → Base UI.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "marketing",

@@ -1,3 +1,43 @@
+/**
+ * @interlace/ui — Alert
+ *
+ * A bordered in-page message with `role="alert"`, an optional leading icon, a
+ * title and a description, in two tones (default and destructive).
+ *
+ * The icon column exists only when a direct `<svg>` child does — `has-[>svg]`
+ * switches the grid from `[0_1fr]` to two columns — so a text-only alert has
+ * no empty gutter.
+ *
+ * ## Anatomy
+ *
+ *   Alert                            (div — role=alert, CSS grid)
+ *     ├─ <svg>                       (optional, any icon; sizing is imposed here)
+ *     ├─ AlertTitle                  (div — col-start-2)
+ *     └─ AlertDescription            (div — col-start-2)
+ *
+ * The icon is styled by descendant selectors on the root (`[&>svg]:size-4`,
+ * `translate-y-0.5`, `text-current`), so it must be a DIRECT child — an icon
+ * wrapped in a span gets neither the sizing nor the grid column.
+ *
+ * ## Two things to know before reaching for it
+ *
+ *   - `role="alert"` is unconditional. It is an assertive live region, so this
+ *     component is for a message that APPEARS in response to something. One
+ *     rendered with the page competes with the page's own announcement.
+ *   - `AlertTitle` is `line-clamp-1`. A title longer than one line is cut, not
+ *     wrapped; the sentence belongs in `AlertDescription`.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends native el                | `React.ComponentProps<'div'>` on all three parts            |
+ * | R6   | data-slot per part               | alert / alert-title / alert-description                     |
+ * | R7   | cva + cn + ...rest               | `cn(alertVariants({ variant }), className)` + `{...props}`  |
+ * | R8   | Enum for tone                    | `variant = default | destructive` — no `isError` boolean    |
+ * | R19  | Tokens only                      | `bg-card`, `text-card-foreground`, `text-destructive`       |
+ * | R25  | Server component                 | No hooks → no `'use client'`                                |
+ * | R26  | A11y                             | `role="alert"` on the root; the icon inherits `text-current` |
+ */
+
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 

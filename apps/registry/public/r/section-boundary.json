@@ -3,7 +3,7 @@
   "name": "section-boundary",
   "type": "registry:ui",
   "title": "Section Boundary",
-  "description": "@interlace/ui — section-boundary (shadcn-compatible).",
+  "description": "The \"stream per section\" primitive. Fuses React Suspense + a class-based ErrorBoundary into one component so a template can render section-by-section with per-section skeleton + per-section error fallback. The page paints whatever's ready; slow / failed…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "foundation",

@@ -3,7 +3,7 @@
   "name": "radio-group",
   "type": "registry:ui",
   "title": "Radio Group",
-  "description": "@interlace/ui — radio-group (shadcn-compatible).",
+  "description": "Single-select control over 2+ mutually exclusive options. Built on @base-ui/react/radio-group + /radio: Base UI owns `role=\"radiogroup\"`, roving-tabindex arrow navigation, and the controlled/uncontrolled pair (`value` + `onValueChange` / `defaultValue`).…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

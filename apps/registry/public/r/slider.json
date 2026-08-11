@@ -3,7 +3,7 @@
   "name": "slider",
   "type": "registry:ui",
   "title": "Slider",
-  "description": "@interlace/ui — slider (shadcn-compatible).",
+  "description": "Range / value-picker primitive on top of @base-ui/react/slider. Compositional API: Slider.Root + Track + Indicator + Thumb. Re-exports the DS-styled surface (rail, fill, thumb) without owning state — Base UI handles keyboard (Arrow / Home / End / PageUp /…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

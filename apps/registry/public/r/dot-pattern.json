@@ -3,7 +3,7 @@
   "name": "dot-pattern",
   "type": "registry:ui",
   "title": "Dot Pattern",
-  "description": "@interlace/ui — dot-pattern (patterns) (shadcn-compatible).",
+  "description": "A resolution-independent dotted-grid background that fills its positioned container. Two render modes share one tiled SVG `<pattern>`:",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "decorative",

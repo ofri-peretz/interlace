@@ -41,6 +41,7 @@ import path from 'node:path';
 
 import { AUTHOR, HOMEPAGE, itemRef } from '../registry.config.mjs';
 import { collectThemeClaims, collisionMarkdown } from '../token-namespace.mjs';
+import { describeFrom } from '../blurb.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -866,7 +867,14 @@ const buildItem = async (filePath, fileName, tier = null) => {
     title: name.replace(/(^|-)([a-z])/g, (_, dash, c) =>
       dash ? ' ' + c.toUpperCase() : c.toUpperCase(),
     ),
-    description: `@interlace/ui — ${name}${tierLabel} (shadcn-compatible).`,
+    // The component's own header sentence, not a restatement of its name.
+    // `shadcn add` prints this, the shadcn directory lists us under it, the
+    // storefront card shows it and an agent chooses on it — see blurb.mjs.
+    description: describeFrom(
+      source,
+      name,
+      `@interlace/ui — ${name}${tierLabel} (shadcn-compatible).`,
+    ),
     author: AUTHOR,
     categories: categoriesFor(name, tier ?? 'primitives'),
     dependencies: collectDependencies(source),

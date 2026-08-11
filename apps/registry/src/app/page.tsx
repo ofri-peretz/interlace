@@ -247,6 +247,19 @@ export default async function HomePage() {
                         <p className="text-muted-foreground mt-1 font-mono text-xs">
                           @interlace/{item.name}
                         </p>
+                        {/*
+                          The card carried the name twice and said nothing
+                          else, because `description` was generated boilerplate
+                          for 128 of 137 items — there was nothing worth the
+                          space. It is now the component's own header sentence
+                          (blurb.mjs), so the card can answer "what is this"
+                          without a click. Clamped to two lines: the sentences
+                          run to 260 characters and a card that grows to fit
+                          the longest one breaks the grid's rhythm.
+                        */}
+                        <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
+                          {item.description}
+                        </p>
                       </div>
                       {item.meta ? (
                         <div className="flex flex-wrap gap-1.5">

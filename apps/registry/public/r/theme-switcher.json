@@ -3,7 +3,7 @@
   "name": "theme-switcher",
   "type": "registry:ui",
   "title": "Theme Switcher",
-  "description": "@interlace/ui — theme-switcher (shadcn-compatible).",
+  "description": "The UI half of the two-axis theme contract (`styles/index.css`, `src/lib/use-theme.ts`). Two controls, because the two axes are genuinely different questions and a single control that tries to serve both ends up as a four-item list called \"Light / Dark /…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "foundation",

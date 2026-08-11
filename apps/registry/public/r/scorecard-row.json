@@ -3,7 +3,7 @@
   "name": "scorecard-row",
   "type": "registry:ui",
   "title": "Scorecard Row",
-  "description": "@interlace/ui — scorecard-row (patterns) (shadcn-compatible).",
+  "description": "A single dimension row in a scorecard: name + GradeBadge + numeric score + optional details. Used by ScorecardTemplate to render each scored category (Performance, Coverage, Adoption, ...).",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "data",

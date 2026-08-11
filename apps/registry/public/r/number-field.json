@@ -3,7 +3,7 @@
   "name": "number-field",
   "type": "registry:ui",
   "title": "Number Field",
-  "description": "@interlace/ui — number-field (shadcn-compatible).",
+  "description": "A numeric input with increment/decrement controls and built-in scrubbing. Wraps @base-ui/react/number-field. Re-exports the compositional parts (Root, Group, Increment, Input, Decrement, ScrubArea) under DS-styled wrappers without owning state.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

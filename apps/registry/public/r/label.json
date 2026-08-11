@@ -3,7 +3,7 @@
   "name": "label",
   "type": "registry:ui",
   "title": "Label",
-  "description": "@interlace/ui — label (shadcn-compatible).",
+  "description": "Form-control label. No headless dep — Base UI's `Field.Label` is the forms-aware variant (see `form.tsx`); this is the lower-level shadcn-canon label for controls that own their own id wiring. Server component. Mirrors…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "foundation",

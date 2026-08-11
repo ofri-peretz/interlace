@@ -1,11 +1,3 @@
-import * as React from 'react';
-
-import { cn } from '../lib/cn.js';
-import { Grid } from '../primitives/grid.js';
-import { Skeleton } from '../primitives/skeleton.js';
-import { Typography } from '../primitives/typography.js';
-import { ArticleCard } from './article-card.js';
-
 /**
  * @interlace/ui — RelatedPosts
  *
@@ -53,6 +45,14 @@ import { ArticleCard } from './article-card.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `<section>` landmark; heading carries the accessible name   |
  */
+
+import * as React from 'react';
+
+import { cn } from '../lib/cn.js';
+import { Grid } from '../primitives/grid.js';
+import { Skeleton } from '../primitives/skeleton.js';
+import { Typography } from '../primitives/typography.js';
+import { ArticleCard } from './article-card.js';
 
 export const MIN_VIEWPORT = 480 as const;
 

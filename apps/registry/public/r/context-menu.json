@@ -3,7 +3,7 @@
   "name": "context-menu",
   "type": "registry:ui",
   "title": "Context Menu",
-  "description": "@interlace/ui — context-menu (shadcn-compatible).",
+  "description": "Right-click / long-press menu. Wraps `@base-ui/react/context-menu` (same Menu compositional API as DropdownMenu, just with a Root that handles right-click / long-press / Shift+F10 as the open gesture).",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "overlay",

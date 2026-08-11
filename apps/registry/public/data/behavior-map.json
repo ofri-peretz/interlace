@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-11T19:49:30.128Z",
+  "generatedAt": "2026-08-11T21:08:52.203Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -2753,6 +2753,542 @@
         "inGate": false
       }
     },
+    "combobox": {
+      "sourcePath": "packages/ui/src/primitives/combobox.tsx",
+      "keyboard": {
+        "storyId": "primitives-combobox--keyboard-flow",
+        "storyExport": "KeyboardFlow",
+        "storyFile": "apps/storybook/src/stories/primitives/Combobox.stories.tsx",
+        "steps": [
+          {
+            "title": "The input advertises the listbox it owns",
+            "keys": []
+          },
+          {
+            "title": "Typing opens the popup and filters",
+            "keys": [
+              "Tab"
+            ]
+          },
+          {
+            "title": "ArrowDown highlights WITHOUT moving DOM focus",
+            "keys": [
+              "ArrowDown"
+            ]
+          },
+          {
+            "title": "Enter commits the highlighted item and closes",
+            "keys": [
+              "Enter"
+            ]
+          },
+          {
+            "title": "Escape on a closed popup clears the field",
+            "keys": [
+              "Escape"
+            ]
+          },
+          {
+            "title": "Escape while open closes the popup, not the page",
+            "keys": [
+              "Escape"
+            ]
+          }
+        ],
+        "escapeLocked": true
+      },
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.62,
+            3.35,
+            3.43,
+            4.25
+          ],
+          "worst": 3.35,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint on the page surface",
+          "ratios": [
+            8.31,
+            10.43,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint inside a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.8,
+            11.79,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint on the page surface",
+          "ratios": [
+            8.8,
+            11.79,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "accent-foreground",
+          "bg": "accent",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "hover/highlight face",
+          "ratios": [
+            8.98,
+            10.46,
+            8.95,
+            9.65
+          ],
+          "worst": 8.95,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "secondary-foreground",
+          "bg": "secondary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary button face",
+          "ratios": [
+            15.58,
+            14.51,
+            14.63,
+            14.04
+          ],
+          "worst": 14.04,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "popover-foreground",
+          "bg": "popover",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a popover",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "command-palette": {
+      "sourcePath": "packages/ui/src/primitives/command-palette.tsx",
+      "keyboard": {
+        "storyId": "primitives-commandpalette--keyboard-flow",
+        "storyExport": "KeyboardFlow",
+        "storyFile": "apps/storybook/src/stories/primitives/CommandPalette.stories.tsx",
+        "steps": [
+          {
+            "title": "Enter on the trigger opens the palette",
+            "keys": [
+              "Enter",
+              "Tab"
+            ]
+          },
+          {
+            "title": "Focus lands in the search input, not on the panel",
+            "keys": []
+          },
+          {
+            "title": "The input is wired to the listbox it filters",
+            "keys": []
+          },
+          {
+            "title": "Typing filters the list",
+            "keys": []
+          },
+          {
+            "title": "ArrowDown highlights WITHOUT moving DOM focus",
+            "keys": [
+              "ArrowDown"
+            ]
+          },
+          {
+            "title": "Enter runs the highlighted command and closes",
+            "keys": [
+              "Enter"
+            ]
+          },
+          {
+            "title": "Focus returns to the trigger",
+            "keys": []
+          },
+          {
+            "title": "Escape closes the palette (WCAG 2.1.2 — no trap)",
+            "keys": [
+              "Enter",
+              "Escape"
+            ]
+          }
+        ],
+        "escapeLocked": true
+      },
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint on the page surface",
+          "ratios": [
+            8.8,
+            11.79,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "accent-foreground",
+          "bg": "accent",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "hover/highlight face",
+          "ratios": [
+            8.98,
+            10.46,
+            8.95,
+            9.65
+          ],
+          "worst": 8.95,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "container": {
       "sourcePath": "packages/ui/src/primitives/container.tsx",
       "keyboard": null,
@@ -3644,6 +4180,194 @@
       "states": [],
       "coverage": {
         "inGate": false
+      }
+    },
+    "distribution": {
+      "sourcePath": "packages/ui/src/charts/distribution.tsx",
+      "keyboard": {
+        "storyId": "charts-distribution--keyboard-crosshair",
+        "storyExport": "KeyboardCrosshair",
+        "storyFile": "apps/storybook/src/stories/charts/Distribution.stories.tsx",
+        "steps": [
+          {
+            "title": "the plot is reachable by keyboard at all",
+            "keys": []
+          },
+          {
+            "title": "Home reads out the first bin, naming both series",
+            "keys": [
+              "Home"
+            ]
+          },
+          {
+            "title": "an unmeasured bin reads \"not measured\", never zero",
+            "keys": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowRight"
+            ]
+          },
+          {
+            "title": "Escape clears the crosshair (WCAG 2.1.2)",
+            "keys": [
+              "Escape"
+            ]
+          }
+        ],
+        "escapeLocked": false
+      },
+      "contrast": [
+        {
+          "fg": "viz-axis",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "chart axis inside a card",
+          "ratios": [
+            3.64,
+            3.54,
+            3.77,
+            4.39
+          ],
+          "worst": 3.54,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "viz-axis",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "chart axis (SC 1.4.11)",
+          "ratios": [
+            3.64,
+            3.82,
+            3.57,
+            4.84
+          ],
+          "worst": 3.57,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint on the page surface",
+          "ratios": [
+            8.31,
+            10.43,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint inside a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "series-table-consumer",
+        "detail": "Renders <SeriesTable> alongside the graphic: every plotted value is available as a real table row, sr-only by default."
+      },
+      "states": [
+        "loading",
+        "error",
+        "not-applicable",
+        "not-counted",
+        "empty",
+        "partial",
+        "truncated",
+        "first-measurement",
+        "idle"
+      ],
+      "coverage": {
+        "inGate": true
       }
     },
     "docs-page-template": {
@@ -5434,6 +6158,25 @@
           "passes": true
         },
         {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint on the page surface",
+          "ratios": [
+            8.31,
+            10.43,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
           "fg": "muted-foreground",
           "bg": "background",
           "kind": "text",
@@ -5446,6 +6189,25 @@
             9.52
           ],
           "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint inside a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
@@ -5495,7 +6257,17 @@
         "kind": "sr-only-copy",
         "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
-      "states": [],
+      "states": [
+        "loading",
+        "error",
+        "not-applicable",
+        "not-counted",
+        "empty",
+        "partial",
+        "truncated",
+        "first-measurement",
+        "idle"
+      ],
       "coverage": {
         "inGate": true
       }
@@ -5548,6 +6320,25 @@
           "passes": true
         },
         {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint on the page surface",
+          "ratios": [
+            8.31,
+            10.43,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
           "fg": "muted-foreground",
           "bg": "background",
           "kind": "text",
@@ -5560,6 +6351,25 @@
             9.52
           ],
           "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint inside a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
@@ -5685,7 +6495,17 @@
         "kind": "sr-only-table",
         "detail": "Ships an sr-only <table> carrying the same rows the graphic draws."
       },
-      "states": [],
+      "states": [
+        "loading",
+        "error",
+        "not-applicable",
+        "not-counted",
+        "empty",
+        "partial",
+        "truncated",
+        "first-measurement",
+        "idle"
+      ],
       "coverage": {
         "inGate": true
       }
@@ -5835,7 +6655,27 @@
     "number-ticker": {
       "sourcePath": "packages/ui/src/magicui/number-ticker.tsx",
       "keyboard": null,
-      "contrast": [],
+      "contrast": [
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -8118,7 +8958,17 @@
         "kind": null,
         "detail": null
       },
-      "states": [],
+      "states": [
+        "loading",
+        "error",
+        "not-applicable",
+        "not-counted",
+        "empty",
+        "partial",
+        "truncated",
+        "first-measurement",
+        "idle"
+      ],
       "coverage": {
         "inGate": true
       }
@@ -9636,6 +10486,25 @@
           "passes": true
         },
         {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint on the page surface",
+          "ratios": [
+            8.31,
+            10.43,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
           "fg": "muted-foreground",
           "bg": "background",
           "kind": "text",
@@ -9648,6 +10517,25 @@
             9.52
           ],
           "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint inside a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
@@ -9697,7 +10585,17 @@
         "kind": "series-table-consumer",
         "detail": "Renders <SeriesTable> alongside the graphic: every plotted value is available as a real table row, sr-only by default."
       },
-      "states": [],
+      "states": [
+        "loading",
+        "error",
+        "not-applicable",
+        "not-counted",
+        "empty",
+        "partial",
+        "truncated",
+        "first-measurement",
+        "idle"
+      ],
       "coverage": {
         "inGate": true
       }

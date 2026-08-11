@@ -3,7 +3,7 @@
   "name": "footer",
   "type": "registry:ui",
   "title": "Footer",
-  "description": "@interlace/ui — footer (patterns) (shadcn-compatible).",
+  "description": "Site footer with grouped link columns + copyright row. Composes with a primary brand mark, 1-4 link groups (each a sub-heading + list of links), and a tail row for copyright + social. Server component.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "navigation",

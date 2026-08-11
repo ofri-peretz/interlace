@@ -35,7 +35,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.7.2",
+        "version": "1.7.3",
         "since": "1.0.0"
       }
     },
@@ -53,7 +53,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.7.2",
+        "version": "1.7.3",
         "since": "1.0.0"
       }
     },
@@ -71,7 +71,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.7.2",
+        "version": "1.7.3",
         "since": "1.0.0"
       }
     },
@@ -169,7 +169,7 @@
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
-      "description": "@interlace/ui — accordion (shadcn-compatible).",
+      "description": "A disclosure stack: a column of headers whose panels open and close. Wraps @base-ui/react/accordion — Base UI owns the open state (single or multiple), the keyboard model and every piece of the accordion ARIA.",
       "categories": [
         "navigation",
         "primitive"
@@ -187,7 +187,7 @@
       "name": "alert-dialog",
       "type": "registry:ui",
       "title": "Alert Dialog",
-      "description": "@interlace/ui — alert-dialog (shadcn-compatible).",
+      "description": "A modal confirmation dialog for *destructive or otherwise consequential* actions (\"Delete project\", \"Sign out everywhere\"). Distinct from `Dialog`: the underlying Base UI primitive disables outside-click and Escape-only dismissal so the user MUST…",
       "categories": [
         "overlay",
         "primitive"
@@ -205,7 +205,7 @@
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
-      "description": "@interlace/ui — alert (shadcn-compatible).",
+      "description": "A bordered in-page message with `role=\"alert\"`, an optional leading icon, a title and a description, in two tones (default and destructive).",
       "categories": [
         "feedback",
         "primitive"
@@ -223,7 +223,7 @@
       "name": "aspect-ratio",
       "type": "registry:ui",
       "title": "Aspect Ratio",
-      "description": "@interlace/ui — aspect-ratio (shadcn-compatible).",
+      "description": "A single block-level wrapper that reserves space by ratio (CSS `aspect-ratio`) and stretches to the parent's width. Use it as the *frame* for media that arrives async — images, video, embeds, charts — so the surrounding layout never shifts…",
       "categories": [
         "foundation",
         "primitive"
@@ -241,7 +241,7 @@
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "@interlace/ui — avatar (shadcn-compatible).",
+      "description": "A circular image with a text fallback. Wraps @base-ui/react/avatar: Base UI owns the image load/error state machine that decides when the fallback shows, and we own the surface.",
       "categories": [
         "data",
         "primitive"
@@ -259,7 +259,7 @@
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "@interlace/ui — badge (shadcn-compatible).",
+      "description": "A small pill for a status, a count, a label or a tag. Renders a `<span>` by default, or whatever Base UI's `render` prop is given, so the same badge can be an anchor without losing its shape.",
       "categories": [
         "feedback",
         "primitive"
@@ -269,7 +269,7 @@
         "client": true,
         "minViewport": null,
         "loading": true,
-        "version": "1.2.0",
+        "version": "1.2.1",
         "since": "1.0.0"
       }
     },
@@ -277,7 +277,7 @@
       "name": "box",
       "type": "registry:ui",
       "title": "Box",
-      "description": "@interlace/ui — box (shadcn-compatible).",
+      "description": "The lowest-altitude layout primitive: surface + box-model on one element. Mirrors MUI `<Box>` (a polymorphic, unopinionated wrapper) minus the `sx` CSS-in-JS prop — Interlace uses a curated, tokenized cva variant set instead, so it cannot reopen the…",
       "categories": [
         "foundation",
         "primitive"
@@ -295,7 +295,7 @@
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",
-      "description": "@interlace/ui — breadcrumb (shadcn-compatible).",
+      "description": "A server-rendered, semantically-tagged trail of ancestor links. The compositional API mirrors the shadcn surface so consumers swap drop-in, and `BreadcrumbLink` keeps a server-safe `asChild` seam (`React.cloneElement`, NOT Base UI `useRender`) so the whole…",
       "categories": [
         "navigation",
         "primitive"
@@ -313,7 +313,7 @@
       "name": "button-variants",
       "type": "registry:ui",
       "title": "Button Variants",
-      "description": "@interlace/ui — button-variants (shadcn-compatible).",
+      "description": "The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.",
       "categories": [
         "form",
         "primitive"
@@ -323,7 +323,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.1.1",
+        "version": "1.1.2",
         "since": "1.0.0"
       }
     },
@@ -331,7 +331,7 @@
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "@interlace/ui — button (shadcn-compatible).",
+      "description": "The minimal-surface counterpart to [dialog.tsx](./dialog.tsx). Where Dialog exercises compound composition + portal + focus, Button exercises the variant + render-prop polymorphism + native-event passthrough surface.",
       "categories": [
         "form",
         "primitive"
@@ -341,7 +341,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.1.1",
+        "version": "1.1.2",
         "since": "1.0.0"
       }
     },
@@ -349,7 +349,7 @@
       "name": "callout",
       "type": "registry:ui",
       "title": "Callout",
-      "description": "@interlace/ui — callout (shadcn-compatible).",
+      "description": "Inline-prose annotation. The \"stop and read this\" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner (\"your save failed\"), Callout is an in-band authored aside (\"note: this rule is…",
       "categories": [
         "blog",
         "primitive"
@@ -367,7 +367,7 @@
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
-      "description": "@interlace/ui — card (shadcn-compatible).",
+      "description": "A bordered, rounded content surface with header / title / description / action / content / footer parts. The surface, radius and border come from `Box`; the card owns only its column layout, its padding and its shadow.",
       "categories": [
         "foundation",
         "primitive"
@@ -385,7 +385,7 @@
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
-      "description": "@interlace/ui — checkbox (shadcn-compatible).",
+      "description": "Tri-state boolean form control (checked / unchecked / indeterminate). Built on @base-ui/react/checkbox: Base UI owns `role=\"checkbox\"`, `aria-checked=\"mixed\"`, Space activation, and the controlled/uncontrolled pair (`checked` + `onCheckedChange` /…",
       "categories": [
         "form",
         "primitive"
@@ -403,7 +403,7 @@
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
-      "description": "@interlace/ui — code-block (shadcn-compatible).",
+      "description": "Fenced code block with a title bar (title left, language tag + copy button right). The copy action shells out to `navigator.clipboard.writeText` and flips an inline \"Copied!\" affordance for 1.5s — the only piece of state this primitive owns. Everything…",
       "categories": [
         "blog",
         "primitive"
@@ -421,9 +421,45 @@
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
-      "description": "@interlace/ui — collapsible (shadcn-compatible).",
+      "description": "A single open/close disclosure surface. Wraps Base UI's `Collapsible.Root`, `Collapsible.Trigger`, `Collapsible.Panel` so consumers get the controlled / uncontrolled state machine, ARIA wiring (`aria-controls`, `aria-expanded`, `id`), keyboard semantics…",
       "categories": [
         "navigation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": "1.0.0"
+      }
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "A text input that filters a list. Built on `@base-ui/react/combobox`: Base UI owns the filtering (`Intl.Collator`-backed `useFilter`), the combobox/listbox ARIA pairing, VIRTUAL focus (the input keeps DOM focus and `aria-activedescendant` moves), single +…",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": "1.0.0"
+      }
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "Command Palette",
+      "description": "⌘K. A modal surface holding one filterable list of actions.",
+      "categories": [
+        "overlay",
         "primitive"
       ],
       "meta": {
@@ -439,7 +475,7 @@
       "name": "container",
       "type": "registry:ui",
       "title": "Container",
-      "description": "@interlace/ui — container (shadcn-compatible).",
+      "description": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8` (§5).",
       "categories": [
         "foundation",
         "primitive"
@@ -457,7 +493,7 @@
       "name": "context-menu",
       "type": "registry:ui",
       "title": "Context Menu",
-      "description": "@interlace/ui — context-menu (shadcn-compatible).",
+      "description": "Right-click / long-press menu. Wraps `@base-ui/react/context-menu` (same Menu compositional API as DropdownMenu, just with a Root that handles right-click / long-press / Shift+F10 as the open gesture).",
       "categories": [
         "overlay",
         "primitive"
@@ -475,7 +511,7 @@
       "name": "data-state-model",
       "type": "registry:ui",
       "title": "Data State Model",
-      "description": "@interlace/ui — data-state-model (shadcn-compatible).",
+      "description": "Nothing in this file imports React, touches the DOM, or renders anything. It is the part of the absence contract that can be *proved* — the union, the precedence order, the announcement each state owes a screen reader, and the class set that paints it — so…",
       "categories": [
         "feedback",
         "primitive"
@@ -493,7 +529,7 @@
       "name": "data-state",
       "type": "registry:ui",
       "title": "Data State",
-      "description": "@interlace/ui — data-state (shadcn-compatible).",
+      "description": "The single conditional swap point for a data surface, and the place the design system says what an ABSENCE is.",
       "categories": [
         "feedback",
         "primitive"
@@ -511,7 +547,7 @@
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
-      "description": "@interlace/ui — dialog (shadcn-compatible).",
+      "description": "A MODAL dialog: it traps focus, dismisses on Escape and on an outside click, marks the rest of the page inert while open, and restores focus to the trigger on close. Base UI owns all of that, which is exactly why this file never says so anywhere else — and…",
       "categories": [
         "overlay",
         "primitive"
@@ -529,7 +565,7 @@
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown Menu",
-      "description": "@interlace/ui — dropdown-menu (shadcn-compatible).",
+      "description": "A button-triggered command menu — items, checkbox and radio items, submenus, plus a `Compose` array shorthand. Wraps @base-ui/react/menu: Base UI owns open state, positioning, focus and typeahead; we own the popup and the rows.",
       "categories": [
         "overlay",
         "primitive"
@@ -547,7 +583,7 @@
       "name": "focus-ring",
       "type": "registry:ui",
       "title": "Focus Ring",
-      "description": "@interlace/ui — focus-ring (shadcn-compatible).",
+      "description": "A `<span>` that paints the DS focus ring when anything inside it takes focus — `focus-within` on the wrapper, not `focus-visible` on the child.",
       "categories": [
         "a11y",
         "primitive"
@@ -565,7 +601,7 @@
       "name": "form",
       "type": "registry:ui",
       "title": "Form",
-      "description": "@interlace/ui — form (shadcn-compatible).",
+      "description": "A composition primitive over `@base-ui/react/field`. The form ecosystem owns a long tail of subtle a11y wiring — label/control association via generated ids, `aria-describedby` for description + error, `aria-invalid` flipping on validity, focus management…",
       "categories": [
         "form",
         "primitive"
@@ -583,7 +619,7 @@
       "name": "grade-badge",
       "type": "registry:ui",
       "title": "Grade Badge",
-      "description": "@interlace/ui — grade-badge (shadcn-compatible).",
+      "description": "Visual grade pill — A+ / A / A- / B+ / B / … / F. The atomic surface for scorecard pages: a single chip that announces a tier without making the reader compute. Five tones (excellent/good/fair/poor/fail) map onto the 13-grade ladder so the colour story…",
       "categories": [
         "feedback",
         "primitive"
@@ -601,7 +637,7 @@
       "name": "grid",
       "type": "registry:ui",
       "title": "Grid",
-      "description": "@interlace/ui — grid (shadcn-compatible).",
+      "description": "The 2-D sibling of Stack: a thin, token-bound CSS-grid primitive, not a grid framework. `<Grid>` sets the column track and gap on the foundation `--spacing` scale; `<GridItem>` spans columns, responsively. Two FLAT components rather than one with a `kind…",
       "categories": [
         "foundation",
         "primitive"
@@ -619,7 +655,7 @@
       "name": "hover-card",
       "type": "registry:ui",
       "title": "Hover Card",
-      "description": "@interlace/ui — hover-card (shadcn-compatible).",
+      "description": "A rich, non-modal overlay that opens on pointer-hover (and keyboard focus) of its trigger, used to preview the *contents* of a target — author cards, repo cards, link previews. Distinct from `Tooltip` (short, one-line, no interactive content) and `Popover`…",
       "categories": [
         "overlay",
         "primitive"
@@ -637,7 +673,7 @@
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
-      "description": "@interlace/ui — input (shadcn-compatible).",
+      "description": "Single-line text input. A pure surface primitive with no controlled-state machinery: the native `<input>` already owns selection, IME, undo/redo and `onChange`, so we add structure (surface, border, focus + invalid rings) without wrapping a single native…",
       "categories": [
         "form",
         "primitive"
@@ -655,7 +691,7 @@
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
-      "description": "@interlace/ui — label (shadcn-compatible).",
+      "description": "Form-control label. No headless dep — Base UI's `Field.Label` is the forms-aware variant (see `form.tsx`); this is the lower-level shadcn-canon label for controls that own their own id wiring. Server component. Mirrors…",
       "categories": [
         "foundation",
         "primitive"
@@ -673,7 +709,7 @@
       "name": "meteors",
       "type": "registry:ui",
       "title": "Meteors",
-      "description": "@interlace/ui — meteors (shadcn-compatible).",
+      "description": "Aceternity-style falling-meteor effect with per-meteor variety: viewport- distributed origins (some above the fold), trail lengths randomized between 50–140px, opacities 0.45–1.0, durations 3–9s. The variety is the difference between \"meteors\" and \"looks…",
       "categories": [
         "decorative",
         "primitive"
@@ -691,7 +727,7 @@
       "name": "meter-scale",
       "type": "registry:ui",
       "title": "Meter Scale",
-      "description": "@interlace/ui — meter-scale (shadcn-compatible).",
+      "description": "The maths behind `Meter` and `RankedBarList`. No React, no DOM — the same split `charts/scale.ts` makes, and for the same reason: a bar that draws a beautiful wrong length is worse than one that fails to render, and the length is the part that can be…",
       "categories": [
         "data",
         "primitive"
@@ -709,7 +745,7 @@
       "name": "meter",
       "type": "registry:ui",
       "title": "Meter",
-      "description": "@interlace/ui — meter (shadcn-compatible).",
+      "description": "ONE inline bar, absorbing three that were hand-rolled separately across the phase-10 corpus: an odds bar, a score meter and a reviewer bar. They differed in tone and in what the denominator meant; they did not differ in anything that justified three…",
       "categories": [
         "data",
         "primitive"
@@ -727,7 +763,7 @@
       "name": "number-field",
       "type": "registry:ui",
       "title": "Number Field",
-      "description": "@interlace/ui — number-field (shadcn-compatible).",
+      "description": "A numeric input with increment/decrement controls and built-in scrubbing. Wraps @base-ui/react/number-field. Re-exports the compositional parts (Root, Group, Increment, Input, Decrement, ScrubArea) under DS-styled wrappers without owning state.",
       "categories": [
         "form",
         "primitive"
@@ -745,7 +781,7 @@
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
-      "description": "@interlace/ui — pagination (shadcn-compatible).",
+      "description": "The page-navigation bar: a `<nav aria-label=\"pagination\">` of anchor links with previous / next / ellipsis parts. It is presentation only — it computes no page numbers and knows no total.",
       "categories": [
         "navigation",
         "primitive"
@@ -763,7 +799,7 @@
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
-      "description": "@interlace/ui — popover (shadcn-compatible).",
+      "description": "A non-modal floating panel anchored to its trigger. It dismisses on Escape and on an outside click and returns focus to the trigger, but it does NOT trap focus or make the page inert.",
       "categories": [
         "overlay",
         "primitive"
@@ -781,7 +817,7 @@
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress",
-      "description": "@interlace/ui — progress (shadcn-compatible).",
+      "description": "Determinate progress indicator. Wraps the Base UI `Progress` compound — Root, Track, Indicator, Label, Value — and re-exports DS-styled parts that consume theme tokens (no raw px, no hex). The Track defines the rail height (`size`); the Indicator carries…",
       "categories": [
         "feedback",
         "primitive"
@@ -799,7 +835,7 @@
       "name": "prose",
       "type": "registry:ui",
       "title": "Prose",
-      "description": "@interlace/ui — prose (shadcn-compatible).",
+      "description": "The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer. Think MDX-target…",
       "categories": [
         "blog",
         "primitive"
@@ -817,7 +853,7 @@
       "name": "published-date",
       "type": "registry:ui",
       "title": "Published Date",
-      "description": "@interlace/ui — published-date (shadcn-compatible).",
+      "description": "Article publish-date stamp. A pure surface primitive that renders a semantic `<time dateTime={iso}>` with a human-readable label produced by `Intl.DateTimeFormat` at render time. The native element owns the machine value (the `dateTime` attribute is what…",
       "categories": [
         "blog",
         "primitive"
@@ -835,7 +871,7 @@
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
-      "description": "@interlace/ui — radio-group (shadcn-compatible).",
+      "description": "Single-select control over 2+ mutually exclusive options. Built on @base-ui/react/radio-group + /radio: Base UI owns `role=\"radiogroup\"`, roving-tabindex arrow navigation, and the controlled/uncontrolled pair (`value` + `onValueChange` / `defaultValue`).…",
       "categories": [
         "form",
         "primitive"
@@ -853,7 +889,7 @@
       "name": "reading-time",
       "type": "registry:ui",
       "title": "Reading Time",
-      "description": "@interlace/ui — reading-time (shadcn-compatible).",
+      "description": "A compact \"N min read\" badge for article headers, blog cards and docs index rows. It renders an inline `<span>`, so it sits beside a date or a tag row without imposing block layout.",
       "categories": [
         "blog",
         "primitive"
@@ -871,7 +907,7 @@
       "name": "scroll-area",
       "type": "registry:ui",
       "title": "Scroll Area",
-      "description": "@interlace/ui — scroll-area (shadcn-compatible).",
+      "description": "A scrollable region with a styled overlay scrollbar in place of the platform one. Wraps @base-ui/react/scroll-area: Base UI owns overflow detection and thumb geometry; we own the track, the thumb colour and the focus ring.",
       "categories": [
         "data",
         "primitive"
@@ -889,7 +925,7 @@
       "name": "section-boundary",
       "type": "registry:ui",
       "title": "Section Boundary",
-      "description": "@interlace/ui — section-boundary (shadcn-compatible).",
+      "description": "The \"stream per section\" primitive. Fuses React Suspense + a class-based ErrorBoundary into one component so a template can render section-by-section with per-section skeleton + per-section error fallback. The page paints whatever's ready; slow / failed…",
       "categories": [
         "foundation",
         "primitive"
@@ -907,7 +943,7 @@
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
-      "description": "@interlace/ui — section (shadcn-compatible).",
+      "description": "The page's rhythm unit, from LAYOUT_PHILOSOPHY.md §7-8: one band that owns its vertical padding, its background tone, its transition dividers and the `<Container>` that measures its children.",
       "categories": [
         "foundation",
         "primitive"
@@ -925,7 +961,7 @@
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "@interlace/ui — select (shadcn-compatible).",
+      "description": "Single-select listbox with a portalled popup. Built on @base-ui/react/select: Base UI owns `role=\"combobox\"` / `role=\"listbox\"`, typeahead, arrow + Home/End navigation, focus return on close, and the controlled/uncontrolled pair (`value` + `onValueChange`…",
       "categories": [
         "form",
         "primitive"
@@ -943,7 +979,7 @@
       "name": "separator",
       "type": "registry:ui",
       "title": "Separator",
-      "description": "@interlace/ui — separator (shadcn-compatible).",
+      "description": "A one-pixel rule between blocks of content, horizontal or vertical. Wraps @base-ui/react/separator, which owns the `role` and `aria-orientation` semantics; this file owns exactly two things — the `bg-border` colour and the axis geometry.",
       "categories": [
         "foundation",
         "primitive"
@@ -961,7 +997,7 @@
       "name": "sheet",
       "type": "registry:ui",
       "title": "Sheet",
-      "description": "@interlace/ui — sheet (shadcn-compatible).",
+      "description": "A modal panel anchored to one edge of the viewport — a nav drawer, a filter panel, a settings pane. Base UI's Dialog owns the open state, the focus trap, page inerting, Escape and outside-press dismissal; we own the scrim, the slide and the side geometry.",
       "categories": [
         "overlay",
         "primitive"
@@ -979,7 +1015,7 @@
       "name": "skeleton-variants",
       "type": "registry:ui",
       "title": "Skeleton Variants",
-      "description": "@interlace/ui — skeleton-variants (shadcn-compatible).",
+      "description": "Single source of truth for the `<Skeleton variant>` discriminated union. Every entry maps to a Tailwind shape class set that paints a placeholder matching the corresponding primitive / pattern / template.",
       "categories": [
         "feedback",
         "primitive"
@@ -997,7 +1033,7 @@
       "name": "skeleton",
       "type": "registry:ui",
       "title": "Skeleton",
-      "description": "@interlace/ui — skeleton (shadcn-compatible).",
+      "description": "Loading-state placeholder. ONE component, many shapes — the `variant` prop picks the silhouette of the resting component being loaded so the page layout doesn't jump when real data arrives.",
       "categories": [
         "feedback",
         "primitive"
@@ -1015,7 +1051,7 @@
       "name": "skip-link",
       "type": "registry:ui",
       "title": "Skip Link",
-      "description": "@interlace/ui — skip-link (shadcn-compatible).",
+      "description": "The \"jump to main content\" link that satisfies WCAG 2.4.1 (Bypass Blocks): an `sr-only` anchor that pops into the top-left corner the moment it takes focus, letting a keyboard user step past the header and nav in one Tab.",
       "categories": [
         "a11y",
         "primitive"
@@ -1033,7 +1069,7 @@
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
-      "description": "@interlace/ui — slider (shadcn-compatible).",
+      "description": "Range / value-picker primitive on top of @base-ui/react/slider. Compositional API: Slider.Root + Track + Indicator + Thumb. Re-exports the DS-styled surface (rail, fill, thumb) without owning state — Base UI handles keyboard (Arrow / Home / End / PageUp /…",
       "categories": [
         "form",
         "primitive"
@@ -1051,7 +1087,7 @@
       "name": "stack",
       "type": "registry:ui",
       "title": "Stack",
-      "description": "@interlace/ui — stack (shadcn-compatible).",
+      "description": "Flex layout whose gap comes from the DS six-step spacing scale, not from a number at the call site (LAYOUT_PHILOSOPHY.md §3). `Stack` stacks children vertically; `Cluster` is the horizontal, wrapping form for chip, tag and button rows.",
       "categories": [
         "foundation",
         "primitive"
@@ -1069,7 +1105,7 @@
       "name": "stat-strip",
       "type": "registry:ui",
       "title": "Stat Strip",
-      "description": "@interlace/ui — stat-strip (shadcn-compatible).",
+      "description": "The measurement strip: a dense row of labelled numbers, each with an optional note and an optional change. It appeared in **all six** of the artifacts catalogued for phase 10, hand-rolled four separate times, and it is the smallest surface where the…",
       "categories": [
         "data",
         "primitive"
@@ -1087,7 +1123,7 @@
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
-      "description": "@interlace/ui — switch (shadcn-compatible).",
+      "description": "Binary on/off control with immediate effect (no submit step) — the distinction from Checkbox, which collects a value for a form. Built on @base-ui/react/switch: Base UI owns `role=\"switch\"`, `aria-checked`, Space/Enter activation and the…",
       "categories": [
         "form",
         "primitive"
@@ -1105,7 +1141,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "@interlace/ui — tabs (shadcn-compatible).",
+      "description": "A tab bar and its panels. Wraps @base-ui/react/tabs: Base UI owns which tab is selected, arrow-key roving focus and the tablist/tab/tabpanel ARIA; we own the muted pill list and the raised face of the selected tab.",
       "categories": [
         "navigation",
         "primitive"
@@ -1123,7 +1159,7 @@
       "name": "tag",
       "type": "registry:ui",
       "title": "Tag",
-      "description": "@interlace/ui — tag (shadcn-compatible).",
+      "description": "A tiny inline anchor used to surface taxonomy (rule categories, plugin tags, article topics). Two exports because tag chips almost always appear in a wrapping cluster — `TagList` ships the canonical `<ul>`-of-`<li>` semantics so consumers don't reinvent…",
       "categories": [
         "blog",
         "primitive"
@@ -1133,7 +1169,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "1.2.0",
+        "version": "1.2.1",
         "since": "1.0.0"
       }
     },
@@ -1141,7 +1177,7 @@
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
-      "description": "@interlace/ui — textarea (shadcn-compatible).",
+      "description": "Multi-line text input. A pure surface primitive with no controlled-state machinery: the native `<textarea>` already owns selection, IME, undo/redo, `onChange` etc., so we add structure (size + tone) without wrapping a single native behaviour. Server…",
       "categories": [
         "form",
         "primitive"
@@ -1159,7 +1195,7 @@
       "name": "theme-switcher",
       "type": "registry:ui",
       "title": "Theme Switcher",
-      "description": "@interlace/ui — theme-switcher (shadcn-compatible).",
+      "description": "The UI half of the two-axis theme contract (`styles/index.css`, `src/lib/use-theme.ts`). Two controls, because the two axes are genuinely different questions and a single control that tries to serve both ends up as a four-item list called \"Light / Dark /…",
       "categories": [
         "foundation",
         "primitive"
@@ -1177,7 +1213,7 @@
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
-      "description": "@interlace/ui — toast (shadcn-compatible).",
+      "description": "Transient, portal-mounted notification. Wraps `@base-ui/react/toast` (Provider, Portal, Viewport, Root, Title, Description, Close) and overlays the Interlace tone system on top — four semantic tones (`info`, `success`, `warning`, `danger`) that each render…",
       "categories": [
         "feedback",
         "primitive"
@@ -1195,7 +1231,7 @@
       "name": "toc",
       "type": "registry:ui",
       "title": "Toc",
-      "description": "@interlace/ui — toc (shadcn-compatible).",
+      "description": "The in-page Table of Contents. Long-form pages (docs, MDX articles, rule reference) need a persistent navigation rail that mirrors the heading outline so a reader can both orient themselves and jump. On wide viewports this lives in a right-hand rail…",
       "categories": [
         "blog",
         "primitive"
@@ -1213,7 +1249,7 @@
       "name": "toggle",
       "type": "registry:ui",
       "title": "Toggle",
-      "description": "@interlace/ui — toggle (shadcn-compatible).",
+      "description": "A two-state button (pressed / not-pressed) and a grouped form thereof (mutually-exclusive or multi-select). Wraps @base-ui/react/toggle and @base-ui/react/toggle-group; we own the surface (size, variant, focus ring) and Base UI owns the pressed-state…",
       "categories": [
         "form",
         "primitive"
@@ -1231,7 +1267,7 @@
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
-      "description": "@interlace/ui — tooltip (shadcn-compatible).",
+      "description": "A short label that appears beside its trigger on hover or on keyboard focus. Wraps @base-ui/react/tooltip and adds the one thing Base UI 1.6 does not emit: the `role=\"tooltip\"` / `aria-describedby` pair.",
       "categories": [
         "overlay",
         "primitive"
@@ -1249,7 +1285,7 @@
       "name": "typography",
       "type": "registry:ui",
       "title": "Typography",
-      "description": "@interlace/ui — typography (shadcn-compatible).",
+      "description": "One component renders every row of the type scale (h1–h6, body, long-form, UI, caption, code) through a single `variant`, plus an orthogonal semantic `tone`. The reading-vs-UI distinction (TYPOGRAPHY_PHILOSOPHY \"Reading mode vs UI mode\") is encoded in the…",
       "categories": [
         "foundation",
         "primitive"
@@ -1267,7 +1303,7 @@
       "name": "visually-hidden",
       "type": "registry:ui",
       "title": "Visually Hidden",
-      "description": "@interlace/ui — visually-hidden (shadcn-compatible).",
+      "description": "A `<span>` that is invisible on screen but still read by assistive tech — the component form of the `sr-only` utility.",
       "categories": [
         "a11y",
         "primitive"
@@ -1285,7 +1321,7 @@
       "name": "animated-gradient-text",
       "type": "registry:ui",
       "title": "Animated Gradient Text",
-      "description": "@interlace/ui — animated-gradient-text (magicui) (shadcn-compatible).",
+      "description": "Gradient-filled text: a `bg-clip-text text-transparent` span whose three-stop linear gradient slides horizontally on a loop. Built for a short eyebrow, badge or headline fragment — never a paragraph, since the text has no solid fill to fall back to.",
       "categories": [
         "decorative",
         "effect"
@@ -1303,7 +1339,7 @@
       "name": "animated-grid-pattern",
       "type": "registry:ui",
       "title": "Animated Grid Pattern",
-      "description": "@interlace/ui — animated-grid-pattern (magicui) (shadcn-compatible).",
+      "description": "A tiled SVG grid where a handful of cells softly pulse in and out, then teleport to a new random cell on each cycle — a \"breathing\" graph-paper backdrop for heroes and section bands. Re-authored from the MagicUI pattern to the Interlace component floor.",
       "categories": [
         "decorative",
         "effect"
@@ -1321,7 +1357,7 @@
       "name": "animated-list",
       "type": "registry:ui",
       "title": "Animated List",
-      "description": "@interlace/ui — animated-list (magicui) (shadcn-compatible).",
+      "description": "A feed that reveals its children one at a time, newest on top, each entry springing in from `scale: 0`. One more appears every `delay` ms (1000 by default) until the list is full, then it stops — or restarts, with `loop`.",
       "categories": [
         "decorative",
         "effect"
@@ -1339,7 +1375,7 @@
       "name": "border-beam",
       "type": "registry:ui",
       "title": "Border Beam",
-      "description": "@interlace/ui — border-beam (magicui) (shadcn-compatible).",
+      "description": "A single gradient square that travels around the inside edge of its parent, drawn with `offset-path` and a two-layer CSS mask so only the border ring shows. Drop it inside any `relative`, rounded container to give that container a moving outline.",
       "categories": [
         "decorative",
         "effect"
@@ -1357,7 +1393,7 @@
       "name": "marquee",
       "type": "registry:ui",
       "title": "Marquee",
-      "description": "@interlace/ui — marquee (magicui) (shadcn-compatible).",
+      "description": "An infinitely scrolling strip: it renders its children `repeat` times side by side (or stacked, with `vertical`) inside an `overflow-hidden` track and translates each copy by its own width plus the gap, so the row reads as continuous.",
       "categories": [
         "decorative",
         "effect"
@@ -1375,7 +1411,7 @@
       "name": "number-ticker",
       "type": "registry:ui",
       "title": "Number Ticker",
-      "description": "@interlace/ui — number-ticker (magicui) (shadcn-compatible).",
+      "description": "A count-up number that starts when it scrolls into view and eases to `value`. It does nothing by default: `startValue` defaults to `value`, so you get an honest static number — and an honest SSR render — until you pass a lower one to opt into the count.",
       "categories": [
         "decorative",
         "effect"
@@ -1393,7 +1429,7 @@
       "name": "particles",
       "type": "registry:ui",
       "title": "Particles",
-      "description": "@interlace/ui — particles (magicui) (shadcn-compatible).",
+      "description": "An ambient `<canvas>` particle field for hero and section backdrops: `quantity` dots (100 by default) drifting on their own velocities, fading in near the middle and out near the edges, respawned whenever one leaves the box.",
       "categories": [
         "decorative",
         "effect"
@@ -1411,7 +1447,7 @@
       "name": "shimmer-button",
       "type": "registry:ui",
       "title": "Shimmer Button",
-      "description": "@interlace/ui — shimmer-button (magicui) (shadcn-compatible).",
+      "description": "A dark pill CTA with a conic-gradient spark that sweeps around its edge: a rotating cone inside a sliding container, masked by an inset panel that redraws the fill and leaves only the rim glowing.",
       "categories": [
         "decorative",
         "effect"
@@ -1429,7 +1465,7 @@
       "name": "background-beams-with-collision",
       "type": "registry:ui",
       "title": "Background Beams With Collision",
-      "description": "@interlace/ui — background-beams-with-collision (aceternity) (shadcn-compatible).",
+      "description": "A hero surface where thin vertical beams fall from the top and burst into a ten-particle explosion when they reach the strip along the bottom. Your children render above them on a `z-10` layer.",
       "categories": [
         "decorative",
         "effect"
@@ -1447,7 +1483,7 @@
       "name": "background-gradient-animation",
       "type": "registry:ui",
       "title": "Background Gradient Animation",
-      "description": "@interlace/ui — background-gradient-animation (aceternity) (shadcn-compatible).",
+      "description": "The \"lava lamp\" surface: five radial-gradient blobs orbiting behind an SVG goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth blob that eases toward the pointer.",
       "categories": [
         "decorative",
         "effect"
@@ -1465,7 +1501,7 @@
       "name": "background-lines",
       "type": "registry:ui",
       "title": "Background Lines",
-      "description": "@interlace/ui — background-lines (aceternity) (shadcn-compatible).",
+      "description": "A full-bleed backdrop of twelve long, sweeping SVG curves that draw themselves in and fade out on a loop, each staggered by a fixed delay so the field never pulses in unison.",
       "categories": [
         "decorative",
         "effect"
@@ -1483,7 +1519,7 @@
       "name": "cloud-particles",
       "type": "registry:ui",
       "title": "Cloud Particles",
-      "description": "@interlace/ui — cloud-particles (aceternity) (shadcn-compatible).",
+      "description": "Volumetric drifting clouds as a decorative backdrop. Each cloud is a radial-gradient ellipse pushed through a five-pass SVG turbulence filter — body, cool underside, soft shadow, deep shadow — and translated across `130vw`.",
       "categories": [
         "decorative",
         "effect"
@@ -1501,7 +1537,7 @@
       "name": "flip-words",
       "type": "registry:ui",
       "title": "Flip Words",
-      "description": "@interlace/ui — flip-words (aceternity) (shadcn-compatible).",
+      "description": "A headline word that flips through a list. Each replacement enters letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs and scales away.",
       "categories": [
         "decorative",
         "effect"
@@ -1519,7 +1555,7 @@
       "name": "focus-cards",
       "type": "registry:ui",
       "title": "Focus Cards",
-      "description": "@interlace/ui — focus-cards (aceternity) (shadcn-compatible).",
+      "description": "A grid that spotlights one card at a time: pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs. Real list semantics — `ul` › `li` › `article` — and a controlled or uncontrolled active index.",
       "categories": [
         "decorative",
         "effect"
@@ -1537,7 +1573,7 @@
       "name": "spotlight",
       "type": "registry:ui",
       "title": "Spotlight",
-      "description": "@interlace/ui — spotlight (aceternity) (shadcn-compatible).",
+      "description": "The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.",
       "categories": [
         "decorative",
         "effect"
@@ -1555,7 +1591,7 @@
       "name": "stars-background",
       "type": "registry:ui",
       "title": "Stars Background",
-      "description": "@interlace/ui — stars-background (aceternity) (shadcn-compatible).",
+      "description": "Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.",
       "categories": [
         "decorative",
         "effect"
@@ -1573,7 +1609,7 @@
       "name": "sunny-background",
       "type": "registry:ui",
       "title": "Sunny Background",
-      "description": "@interlace/ui — sunny-background (aceternity) (shadcn-compatible).",
+      "description": "A daylight sky you drop behind hero or section content: a two-stop sky gradient with a haze wash, a sun disc (corona → glow → overexposed core → slowly rotating conic rays → four lens flares), a golden-hour horizon band and a depth vignette.",
       "categories": [
         "decorative",
         "effect"
@@ -1591,7 +1627,7 @@
       "name": "article-card",
       "type": "registry:ui",
       "title": "Article Card",
-      "description": "@interlace/ui — article-card (patterns) (shadcn-compatible).",
+      "description": "Two article tiles that share one focusable-anchor shell: `ArticleCard`, the stacked grid tile with the cover on top, and `FeaturedArticleCard`, the full-bleed hero whose copy sits on a gradient scrim over the image. Both read the same props.",
       "categories": [
         "blog",
         "pattern"
@@ -1609,7 +1645,7 @@
       "name": "article-list-grid",
       "type": "registry:ui",
       "title": "Article List Grid",
-      "description": "@interlace/ui — article-list-grid (patterns) (shadcn-compatible).",
+      "description": "Grid of ArticleCards with an optional featured slot above. The pattern blog index pages reach for: one big featured card (overlay variant) above N tiles. Composes RelatedPosts-style streaming with proper loading + empty states.",
       "categories": [
         "blog",
         "pattern"
@@ -1627,7 +1663,7 @@
       "name": "author-byline",
       "type": "registry:ui",
       "title": "Author Byline",
-      "description": "@interlace/ui — author-byline (patterns) (shadcn-compatible).",
+      "description": "The \"who wrote this + when + how long it takes to read\" adornment that sits directly under an article H1. Pure surface composition over existing primitives — Avatar (large) on the left, a vertical Stack on the right with author name (UI semibold), optional…",
       "categories": [
         "blog",
         "pattern"
@@ -1645,7 +1681,7 @@
       "name": "brand-logo",
       "type": "registry:ui",
       "title": "Brand Logo",
-      "description": "@interlace/ui — brand-logo (patterns) (shadcn-compatible).",
+      "description": "The locked two-bar Interlace mark plus the lowercase monospace wordmark \"interlace\". This is the SAME lockup eslint.interlace.tools ships in its top nav — one component so every *.interlace.tools site renders an identical brand header instead of…",
       "categories": [
         "foundation",
         "pattern"
@@ -1663,7 +1699,7 @@
       "name": "code-window",
       "type": "registry:ui",
       "title": "Code Window",
-      "description": "@interlace/ui — code-window (patterns) (shadcn-compatible).",
+      "description": "macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.",
       "categories": [
         "blog",
         "pattern"
@@ -1681,7 +1717,7 @@
       "name": "cta-section",
       "type": "registry:ui",
       "title": "Cta Section",
-      "description": "@interlace/ui — cta-section (patterns) (shadcn-compatible).",
+      "description": "Call-to-action section. Title + description + 1-2 action buttons in a centred column on a tinted surface. The shape every landing page reaches for (\"Ready to ship?\" / \"Start your trial\" / \"Read the docs\"). Server component.",
       "categories": [
         "marketing",
         "pattern"
@@ -1699,7 +1735,7 @@
       "name": "data-table",
       "type": "registry:ui",
       "title": "Data Table",
-      "description": "@interlace/ui — data-table (patterns) (shadcn-compatible).",
+      "description": "Columns, sorting, row selection, pagination, and the three states a table spends most of its life in (loading / empty / error). It composes primitives — Checkbox, Pagination, Skeleton, Button — so it is a pattern, not a primitive.",
       "categories": [
         "data",
         "pattern"
@@ -1717,7 +1753,7 @@
       "name": "dot-pattern",
       "type": "registry:ui",
       "title": "Dot Pattern",
-      "description": "@interlace/ui — dot-pattern (patterns) (shadcn-compatible).",
+      "description": "A resolution-independent dotted-grid background that fills its positioned container. Two render modes share one tiled SVG `<pattern>`:",
       "categories": [
         "decorative",
         "pattern"
@@ -1735,7 +1771,7 @@
       "name": "empty-state",
       "type": "registry:ui",
       "title": "Empty State",
-      "description": "@interlace/ui — empty-state (patterns) (shadcn-compatible).",
+      "description": "The \"nothing here yet\" surface. Used wherever a list, table, or search returns zero rows AND the consumer can act on it (create the first item, adjust filters, link to docs). Empty states are first-class UX, not an afterthought — `LOADING_PHILOSOPHY` flags…",
       "categories": [
         "feedback",
         "pattern"
@@ -1753,7 +1789,7 @@
       "name": "faq",
       "type": "registry:ui",
       "title": "Faq",
-      "description": "@interlace/ui — faq (patterns) (shadcn-compatible).",
+      "description": "Frequently-asked-questions accordion. Composes the canonical Accordion primitive into a single-prop API: pass an array of {question, answer} and get the full disclosure pattern (keyboard, ARIA, animation) inherited from Accordion → Base UI.",
       "categories": [
         "marketing",
         "pattern"
@@ -1771,7 +1807,7 @@
       "name": "feature-grid",
       "type": "registry:ui",
       "title": "Feature Grid",
-      "description": "@interlace/ui — feature-grid (patterns) (shadcn-compatible).",
+      "description": "Grid of small \"feature\" cards: icon + title + 1-2 line description. The shape every landing page reaches for to spell out \"what we do\" in 3-6 cells. Server component, no hooks.",
       "categories": [
         "marketing",
         "pattern"
@@ -1789,7 +1825,7 @@
       "name": "figure",
       "type": "registry:ui",
       "title": "Figure",
-      "description": "@interlace/ui — figure (patterns) (shadcn-compatible).",
+      "description": "Semantic media block. `<figure>` is the right element for *self-contained* media (image, diagram, code screenshot, chart) with an optional caption that scrolls with it. Composes `AspectRatio` so the layout reserves space before the asset loads — preventing…",
       "categories": [
         "blog",
         "pattern"
@@ -1807,7 +1843,7 @@
       "name": "footer",
       "type": "registry:ui",
       "title": "Footer",
-      "description": "@interlace/ui — footer (patterns) (shadcn-compatible).",
+      "description": "Site footer with grouped link columns + copyright row. Composes with a primary brand mark, 1-4 link groups (each a sub-heading + list of links), and a tail row for copyright + social. Server component.",
       "categories": [
         "navigation",
         "pattern"
@@ -1825,7 +1861,7 @@
       "name": "grid-pattern",
       "type": "registry:ui",
       "title": "Grid Pattern",
-      "description": "@interlace/ui — grid-pattern (patterns) (shadcn-compatible).",
+      "description": "A decorative SVG line grid that fills its positioned parent, with optional accent cells (`squares`, addressed as `[column, row]`) that can pulse. Colour comes from `currentColor`, so a text-colour class on `className` sets the tone.",
       "categories": [
         "decorative",
         "pattern"
@@ -1843,7 +1879,7 @@
       "name": "hero-cosmic",
       "type": "registry:ui",
       "title": "Hero Cosmic",
-      "description": "@interlace/ui — hero-cosmic (patterns) (shadcn-compatible).",
+      "description": "The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.",
       "categories": [
         "marketing",
         "pattern"
@@ -1861,7 +1897,7 @@
       "name": "hero",
       "type": "registry:ui",
       "title": "Hero",
-      "description": "@interlace/ui — hero (patterns) (shadcn-compatible).",
+      "description": "The above-the-fold section every landing page reaches for: eyebrow, headline, supporting copy, primary + secondary CTAs, optional media slot. Server-component-safe; the calm-confident-technical voice is enforced by Typography variants (no h1 with…",
       "categories": [
         "marketing",
         "pattern"
@@ -1879,7 +1915,7 @@
       "name": "interactive-grid-pattern",
       "type": "registry:ui",
       "title": "Interactive Grid Pattern",
-      "description": "@interlace/ui — interactive-grid-pattern (patterns) (shadcn-compatible).",
+      "description": "A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className=\"text-border\"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.",
       "categories": [
         "decorative",
         "pattern"
@@ -1897,7 +1933,7 @@
       "name": "newsletter-form",
       "type": "registry:ui",
       "title": "Newsletter Form",
-      "description": "@interlace/ui — newsletter-form (patterns) (shadcn-compatible).",
+      "description": "Canonical email-signup pattern: title + (optional) description + email field + consent checkbox + submit. Composition of the auth primitive set (Form / Field / Input / Button + Checkbox + Typography). The block owns *structure*; consumers wire `action` and…",
       "categories": [
         "marketing",
         "pattern"
@@ -1915,7 +1951,7 @@
       "name": "page-header",
       "type": "registry:ui",
       "title": "Page Header",
-      "description": "@interlace/ui — page-header (patterns) (shadcn-compatible).",
+      "description": "The header band at the top of admin / docs / settings pages. Carries a breadcrumb (optional), title, optional description, and a right-aligned actions slot (typically a primary CTA + an optional menu). Renders a `<header>` landmark for screen-reader…",
       "categories": [
         "navigation",
         "pattern"
@@ -1933,7 +1969,7 @@
       "name": "prev-next-post",
       "type": "registry:ui",
       "title": "Prev Next Post",
-      "description": "@interlace/ui — prev-next-post (patterns) (shadcn-compatible).",
+      "description": "Paired previous / next link cards rendered at the foot of an article. The canonical \"what to read next\" surface — improves session depth, reduces bounce, and gives keyboard / screen-reader users a deterministic exit ramp from long-form content. Wrapped in…",
       "categories": [
         "blog",
         "pattern"
@@ -1951,7 +1987,7 @@
       "name": "pricing-table",
       "type": "registry:ui",
       "title": "Pricing Table",
-      "description": "@interlace/ui — pricing-table (patterns) (shadcn-compatible).",
+      "description": "2-4 column pricing-tier grid. Each tier is a card with name, price, description, feature list, and a CTA button. The \"Most popular\" tier gets a highlight border. Server component.",
       "categories": [
         "marketing",
         "pattern"
@@ -1969,7 +2005,7 @@
       "name": "related-posts",
       "type": "registry:ui",
       "title": "Related Posts",
-      "description": "@interlace/ui — related-posts (patterns) (shadcn-compatible).",
+      "description": "\"Keep reading\" surface that sits at the foot of an article page (or any long-form route). Renders an h3 section heading followed by a responsive grid of ArticleCards: one column on phones, two from `md` up, three from `lg` up — the same 1/2/3 cadence the…",
       "categories": [
         "blog",
         "pattern"
@@ -1987,7 +2023,7 @@
       "name": "scorecard-row",
       "type": "registry:ui",
       "title": "Scorecard Row",
-      "description": "@interlace/ui — scorecard-row (patterns) (shadcn-compatible).",
+      "description": "A single dimension row in a scorecard: name + GradeBadge + numeric score + optional details. Used by ScorecardTemplate to render each scored category (Performance, Coverage, Adoption, ...).",
       "categories": [
         "data",
         "pattern"
@@ -2005,7 +2041,7 @@
       "name": "section-header",
       "type": "registry:ui",
       "title": "Section Header",
-      "description": "@interlace/ui — section-header (patterns) (shadcn-compatible).",
+      "description": "The \"section intro\" block — optional eyebrow, a heading, and a `max-w-prose` tagline — with the bottom margin, the alignment and the type rhythm owned in one place instead of being re-typed as `text-center mb-12` on every section.",
       "categories": [
         "navigation",
         "pattern"
@@ -2023,7 +2059,7 @@
       "name": "share-buttons",
       "type": "registry:ui",
       "title": "Share Buttons",
-      "description": "@interlace/ui — share-buttons (patterns) (shadcn-compatible).",
+      "description": "A compact \"share this page\" cluster: one ghost icon-button per social network plus a copy-link affordance. Each share button opens its network's prefilled share URL in a new tab; the copy button writes the URL to the clipboard and flips its icon +…",
       "categories": [
         "blog",
         "pattern"
@@ -2041,7 +2077,7 @@
       "name": "sign-in-form",
       "type": "registry:ui",
       "title": "Sign In Form",
-      "description": "@interlace/ui — sign-in-form (patterns) (shadcn-compatible).",
+      "description": "Canonical sign-in pattern: title + email + password + submit. Composition of the auth primitive set (Form / Field / Input / Button + Typography for the title). The block owns *structure*; consumers wire `action` / `onSubmit` and pass the brand specifics…",
       "categories": [
         "form",
         "pattern"
@@ -2059,7 +2095,7 @@
       "name": "stat-card",
       "type": "registry:ui",
       "title": "Stat Card",
-      "description": "@interlace/ui — stat-card (patterns) (shadcn-compatible).",
+      "description": "A single labeled metric — the building block of dashboards, scorecards, and \"key results\" rows. Renders: label / value / optional delta / optional icon. The `tone` variant pairs the delta accent with one of four semantic colors (default / success / warning…",
       "categories": [
         "data",
         "pattern"
@@ -2077,7 +2113,7 @@
       "name": "stat-group",
       "type": "registry:ui",
       "title": "Stat Group",
-      "description": "@interlace/ui — stat-group (patterns) (shadcn-compatible).",
+      "description": "Horizontal row (or grid) of StatCards. The pattern stat pages reach for: 3-5 hero KPIs at the top of a page, each a labelled big number. Server component.",
       "categories": [
         "data",
         "pattern"
@@ -2095,7 +2131,7 @@
       "name": "testimonial",
       "type": "registry:ui",
       "title": "Testimonial",
-      "description": "@interlace/ui — testimonial (patterns) (shadcn-compatible).",
+      "description": "Quote + attribution surfaces. Single Testimonial cells render an blockquote with an author avatar; TestimonialGrid lays them out in a 1-3 column grid. Server components.",
       "categories": [
         "marketing",
         "pattern"
@@ -2113,7 +2149,7 @@
       "name": "topbar",
       "type": "registry:ui",
       "title": "Topbar",
-      "description": "@interlace/ui — topbar (patterns) (shadcn-compatible).",
+      "description": "Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…",
       "categories": [
         "navigation",
         "pattern"
@@ -2131,7 +2167,7 @@
       "name": "delta",
       "type": "registry:ui",
       "title": "Delta",
-      "description": "@interlace/ui — delta (charts) (shadcn-compatible).",
+      "description": "\"It moved, this much, this way.\" The smallest complete unit of analysis and the most-repeated element in a dense view, so it is worth getting exactly right once.",
       "categories": [
         "data",
         "chart"
@@ -2146,10 +2182,28 @@
       }
     },
     {
+      "name": "distribution",
+      "type": "registry:ui",
+      "title": "Distribution",
+      "description": "One quantity spread across a fixed set of bins — hours of the day, days of the week, cohorts, buckets — with an optional REFERENCE distribution drawn over it.",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.1.0",
+        "since": "1.0.0"
+      }
+    },
+    {
       "name": "metric-table",
       "type": "registry:ui",
       "title": "Metric Table",
-      "description": "@interlace/ui — metric-table (charts) (shadcn-compatible).",
+      "description": "The roic.ai row: metric name, values across time, sparkline, delta. Click a row to promote it into whatever chart the caller renders above.",
       "categories": [
         "data",
         "chart"
@@ -2167,7 +2221,7 @@
       "name": "network-graph",
       "type": "registry:ui",
       "title": "Network Graph",
-      "description": "@interlace/ui — network-graph (charts) (shadcn-compatible).",
+      "description": "Who is connected to whom, and who the network converges on.",
       "categories": [
         "data",
         "chart"
@@ -2185,7 +2239,7 @@
       "name": "series-table",
       "type": "registry:ui",
       "title": "Series Table",
-      "description": "@interlace/ui — series-table (charts) (shadcn-compatible).",
+      "description": "The data behind a chart, as a real `<table>`.",
       "categories": [
         "data",
         "chart"
@@ -2203,7 +2257,7 @@
       "name": "sparkline",
       "type": "registry:ui",
       "title": "Sparkline",
-      "description": "@interlace/ui — sparkline (charts) (shadcn-compatible).",
+      "description": "A trend in the width of a table cell. The densest thing in the package: it exists so a `MetricTable` row can show *shape* without spending a chart's worth of pixels, which is the whole roic.ai lesson — one row that reads a decade beats one chart that reads…",
       "categories": [
         "data",
         "chart"
@@ -2221,7 +2275,7 @@
       "name": "time-series",
       "type": "registry:ui",
       "title": "Time Series",
-      "description": "@interlace/ui — time-series (charts) (shadcn-compatible).",
+      "description": "One metric over time, with the actions that moved it drawn ON the curve.",
       "categories": [
         "data",
         "chart"
@@ -2239,7 +2293,7 @@
       "name": "article-template",
       "type": "registry:block",
       "title": "Article Template",
-      "description": "@interlace/ui — article-template (templates) (shadcn-compatible).",
+      "description": "Full-page surface for long-form articles. Composes the header (title + AuthorByline), the body (Prose-wrapped MDX/HTML), the related-posts grid, prev/next navigation, and share buttons — each in its own `<SectionBoundary>` so the page streams section-by-…",
       "categories": [
         "blog",
         "template"
@@ -2257,7 +2311,7 @@
       "name": "auth-template",
       "type": "registry:block",
       "title": "Auth Template",
-      "description": "@interlace/ui — auth-template (templates) (shadcn-compatible).",
+      "description": "Full-page surface for sign-in / sign-up / password-reset / verify-email flows. Centred narrow column with brand mark at top, form in the middle, helper link at the bottom (\"Already have an account?\" / \"Forgot password?\").",
       "categories": [
         "form",
         "template"
@@ -2275,7 +2329,7 @@
       "name": "author-template",
       "type": "registry:block",
       "title": "Author Template",
-      "description": "@interlace/ui — author-template (templates) (shadcn-compatible).",
+      "description": "Author profile page — bio header + their articles grid. Used by `/authors/[slug]` routes on a blog. The bio header is a multi-part card (avatar + name + role + bio + social links); the grid uses ArticleListGrid for the article list.",
       "categories": [
         "blog",
         "template"
@@ -2293,7 +2347,7 @@
       "name": "blog-home-template",
       "type": "registry:block",
       "title": "Blog Home Template",
-      "description": "@interlace/ui — blog-home-template (templates) (shadcn-compatible).",
+      "description": "Blog index surface. Topbar + hero (greeting / about) + ArticleListGrid (featured + recent) + optional NewsletterForm + Footer. The shape every personal / company blog reaches for.",
       "categories": [
         "blog",
         "template"
@@ -2311,7 +2365,7 @@
       "name": "dashboard-template",
       "type": "registry:block",
       "title": "Dashboard Template",
-      "description": "@interlace/ui — dashboard-template (templates) (shadcn-compatible).",
+      "description": "Application dashboard surface. Topbar at top, persistent left sidebar (nav links), main content area (children). The standard \"logged-in app\" layout: every SaaS dashboard reaches for this shape.",
       "categories": [
         "data",
         "template"
@@ -2329,7 +2383,7 @@
       "name": "docs-page-template",
       "type": "registry:block",
       "title": "Docs Page Template",
-      "description": "@interlace/ui — docs-page-template (templates) (shadcn-compatible).",
+      "description": "Documentation page surface. Topbar at top, optional sidebar nav on the left (md+), main content in the centre with a `<Prose>` wrapper, and an optional TOC rail on the right (xl+).",
       "categories": [
         "blog",
         "template"
@@ -2347,7 +2401,7 @@
       "name": "error-template",
       "type": "registry:block",
       "title": "Error Template",
-      "description": "@interlace/ui — error-template (templates) (shadcn-compatible).",
+      "description": "Full-page error surface — 404 / 500 / 503 / generic. Centred column with the status code + title + description + action buttons (back home, contact support, retry).",
       "categories": [
         "feedback",
         "template"
@@ -2365,7 +2419,7 @@
       "name": "landing-template",
       "type": "registry:block",
       "title": "Landing Template",
-      "description": "@interlace/ui — landing-template (templates) (shadcn-compatible).",
+      "description": "Marketing landing page surface. Composes Topbar + Hero + (optional) FeatureGrid + (optional) TestimonialGrid + (optional) PricingTable + (optional) FAQ + CTASection + Footer — each in its own SectionBoundary so the page streams section-by-section.",
       "categories": [
         "marketing",
         "template"
@@ -2383,7 +2437,7 @@
       "name": "registry-item-template",
       "type": "registry:block",
       "title": "Registry Item Template",
-      "description": "@interlace/ui — registry-item-template (templates) (shadcn-compatible).",
+      "description": "Full-page surface for a single registry item's documentation (`/c/[name]` on ds.interlace.tools). Composes the header (item name + description + install snippet), the anatomy diagram, the variants matrix, related-components grid, and a CTA back to the…",
       "categories": [
         "blog",
         "template"
@@ -2401,7 +2455,7 @@
       "name": "scorecard-template",
       "type": "registry:block",
       "title": "Scorecard Template",
-      "description": "@interlace/ui — scorecard-template (templates) (shadcn-compatible).",
+      "description": "Graded-evaluation page. Topbar + overall-grade header + per-dimension scorecard rows + optional methodology footnote + Footer.",
       "categories": [
         "data",
         "template"
@@ -2419,7 +2473,7 @@
       "name": "settings-template",
       "type": "registry:block",
       "title": "Settings Template",
-      "description": "@interlace/ui — settings-template (templates) (shadcn-compatible).",
+      "description": "Account / app settings surface. Topbar + left tab-rail (sections) + main content area (rendered section). Server-friendly; the active section is driven by the consumer's routing (each section is a route).",
       "categories": [
         "form",
         "template"
@@ -2437,7 +2491,7 @@
       "name": "stats-template",
       "type": "registry:block",
       "title": "Stats Template",
-      "description": "@interlace/ui — stats-template (templates) (shadcn-compatible).",
+      "description": "Public-facing metrics page. Topbar + header (title + lead) + SectionBoundary(StatGroup) + SectionBoundary(arbitrary chart/table content) + optional methodology footnote + Footer.",
       "categories": [
         "data",
         "template"
@@ -2455,7 +2509,7 @@
       "name": "tag-template",
       "type": "registry:block",
       "title": "Tag Template",
-      "description": "@interlace/ui — tag-template (templates) (shadcn-compatible).",
+      "description": "Tag-filtered article index. Used by `/tags/[slug]` routes on a blog to show \"all articles tagged #typescript\" etc. Shows a header (\"Tagged: #typescript\") then an ArticleListGrid of matching posts.",
       "categories": [
         "blog",
         "template"

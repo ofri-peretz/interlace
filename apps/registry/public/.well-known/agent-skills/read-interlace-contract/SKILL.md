@@ -36,7 +36,16 @@ to claim. Read it before writing props; the props table on
   dismissal. If it is set, do not re-implement key handling on top.
 - `keyboard.keys` — the key values this file branches on itself. This is the
   behaviour a static a11y scan cannot see, so it is the behaviour to test.
-- `a11y.reducedMotion` — the component gates its animation on the OS setting.
+- `a11y.motion.driver` — `css` | `js` | `both` | `none`. This decides WHO
+  honours `prefers-reduced-motion`. A `css` driver is clamped to 0.01ms by
+  `preflight.css` whether or not the component mentions the preference — as
+  long as you imported the stylesheet barrel. A `js` driver (motion,
+  `requestAnimationFrame`, a timer) is out of reach of every reset we ship and
+  must gate itself.
+- `a11y.motion.declaresPreference` — the file REFERENCES the preference. It is
+  deliberately not called "honours": whether every animation inside is gated is
+  not decidable by reading text, and one component here gated its list and not
+  its list items. Treat it as necessary, never as sufficient.
 - `version` / `since` / `deprecated` — the file you install is stamped with
   `version`; an upgrade diff reads it out of the banner.
 
@@ -47,18 +56,18 @@ to claim. Read it before writing props; the props table on
 same render the accessibility gate asserts against, including the loading and
 dark variants.
 
-## Worked example — `metric-table`
+## Worked example — `distribution`
 
 ```
 rendering    client
 minViewport  320
-keyboard     none of its own
+keyboard     ArrowLeft, ArrowRight, End, Escape, Home
 states       ANNOTATION_KINDS = publish | release | action
              Direction = up | down | flat
-exports      ANNOTATION_KINDS, MIN_VIEWPORT, MetricTable
+exports      ANNOTATION_KINDS, Distribution, MIN_VIEWPORT
 ```
 
-The roic.ai row: metric name, values across time, sparkline, delta. Click a row to promote it into whatever chart the caller renders above.
+One quantity spread across a fixed set of bins — hours of the day, days of the week, cohorts, buckets — with an optional REFERENCE distribution drawn over it.
 
 ## The rule
 

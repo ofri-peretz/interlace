@@ -1,9 +1,3 @@
-import * as React from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-
-import { cn } from '../lib/cn.js';
-import { Skeleton } from '../primitives/skeleton.js';
-
 /**
  * @interlace/ui — PrevNextPost
  *
@@ -47,6 +41,12 @@ import { Skeleton } from '../primitives/skeleton.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `<a href>` per card; `<nav aria-label>` landmark            |
  */
+
+import * as React from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+
+import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
 
 export const MIN_VIEWPORT = 480 as const;
 

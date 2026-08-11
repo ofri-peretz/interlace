@@ -3,7 +3,7 @@
   "name": "collapsible",
   "type": "registry:ui",
   "title": "Collapsible",
-  "description": "@interlace/ui — collapsible (shadcn-compatible).",
+  "description": "A single open/close disclosure surface. Wraps Base UI's `Collapsible.Root`, `Collapsible.Trigger`, `Collapsible.Panel` so consumers get the controlled / uncontrolled state machine, ARIA wiring (`aria-controls`, `aria-expanded`, `id`), keyboard semantics…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "navigation",

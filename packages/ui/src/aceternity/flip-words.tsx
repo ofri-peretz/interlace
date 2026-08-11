@@ -1,5 +1,57 @@
 "use client";
 
+/**
+ * @interlace/ui — FlipWords
+ *
+ * A headline word that flips through a list. Each replacement enters
+ * letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs
+ * and scales away.
+ *
+ * It runs itself on a `duration` dwell timer (3000ms by default), or you hand
+ * it `index` + `onIndexChange` and drive it yourself.
+ *
+ * ## Provenance
+ *
+ * Our reimplementation of the Aceternity UI `FlipWords`. What is ours: a
+ * numeric index with a controlled mode — upstream is uncontrolled-only and
+ * derives its position from `words.indexOf(currentWord)`, which misbehaves the
+ * moment the list contains a duplicate; `currentColor` instead of a hard-coded
+ * `text-neutral-900 dark:text-neutral-100` pair; `pauseOnHover`; and the
+ * reduced-motion branch below.
+ *
+ * ## Anatomy
+ *
+ *   FlipWords                        (span — data-slot="flip-words")
+ *     ├─ span.sr-only aria-live=polite   (the announced text)
+ *     └─ span[data-slot=flip-words-static]  (under reduce)
+ *        | motion.span[data-slot=flip-words-word]
+ *            └─ span per word
+ *                └─ motion.span per letter
+ *
+ * The visible word is `aria-hidden` in BOTH branches. Everything a screen
+ * reader gets comes from the polite live region, so the letter-by-letter
+ * staging is never spelled out.
+ *
+ * ## Motion
+ *
+ * JS-driven — `motion/react` enter/exit variants plus a `setTimeout` cycle —
+ * so the CSS reset in `styles/preflight.css` reaches none of it. It is gated
+ * in JS, at both levels: `cyclingPaused` includes `reducedMotion`, so the
+ * timer never fires, and the render swaps the entire `AnimatePresence` subtree
+ * for a plain `<span>` carrying the active word. Under
+ * `prefers-reduced-motion: reduce` you get one stable, readable word and no
+ * animation object is ever constructed.
+ *
+ * `pauseOnHover` is documented as a no-op under reduce for the same reason:
+ * there is nothing left to pause.
+ *
+ * ## Layout
+ *
+ * The outgoing word animates to `position: absolute`, so the span does not
+ * reserve width for the longest entry. A list with very different word lengths
+ * will reflow the line around it as it cycles.
+ */
+
 import {
   type ComponentPropsWithoutRef,
   useCallback,
@@ -12,30 +64,6 @@ import { AnimatePresence, motion } from "motion/react";
 
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
-
-/**
- * ## API parity
- *
- * Re-authored from Aceternity UI's `FlipWords`
- * (https://ui.aceternity.com/components/flip-words). Deviations from upstream,
- * each justified:
- *
- * - **Controlled + uncontrolled cycling.** Upstream is uncontrolled-only and
- *   reads its own index off `words.indexOf(currentWord)` (buggy with duplicate
- *   words). We track a numeric `index` and expose `index` + `onIndexChange` for
- *   controlled use, `defaultIndex` for uncontrolled (R14).
- * - **Reduced-motion contract.** Upstream animates unconditionally. We read
- *   `useReducedMotion()` and render a static word with no enter/exit transition,
- *   honoring `prefers-reduced-motion: reduce` (MOTION_PHILOSOPHY).
- * - **Tokens, not raw colors.** Upstream hard-codes
- *   `text-neutral-900 dark:text-neutral-100`. We default to `currentColor`
- *   (inherit from the consumer's text context) and never ship a color literal
- *   (R19).
- * - **Consumer-agnostic root.** Extends `<span>` props, spreads `...props`,
- *   merges `className`, and exposes `data-testid` / `data-slot` (R4–R7).
- * - **`pauseOnHover`.** Lets pointer users hold a word to read it; a small
- *   ergonomic win over the upstream fixed cadence.
- */
 
 interface FlipWordsProps
   extends Omit<ComponentPropsWithoutRef<"span">, "children"> {

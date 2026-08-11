@@ -1,3 +1,45 @@
+/**
+ * @interlace/ui — buttonVariants
+ *
+ * The cva variant map that `button.tsx` imports — variant × size class strings
+ * and nothing else. Pure CVA: no React, no client APIs, so a server component
+ * can style a plain `<a>` with `buttonVariants({ variant, size })`.
+ *
+ * This is not a component. It exports a function and a type, renders nothing,
+ * and has no props, no slots and no DOM — which is exactly why it is a
+ * separate module from the `'use client'` Button that consumes it.
+ *
+ * ## Anatomy
+ *
+ *   buttonVariants({ variant, size })
+ *     ├─ variant  default | destructive | outline | secondary | ghost | link
+ *     └─ size     default | xs | sm | lg | icon | icon-xs | icon-sm | icon-lg
+ *
+ * Defaults are `variant: 'default'`, `size: 'default'`. `pagination.tsx` is
+ * the in-repo example of styling an element rather than nesting a Button: its
+ * `<a>` takes `buttonVariants({ variant, size })` directly. (It reaches the
+ * function through `button.js`, which re-exports it — that path is
+ * `'use client'`; import from this module to keep a server tree server-side.)
+ *
+ * ## Why half this file is comments
+ *
+ * Four of the six variants carry a long note recording a measured contrast
+ * failure and the rule it produced: a variant that declares its own foreground
+ * must paint an opaque surface in the same state, because a button is dropped
+ * onto surfaces the design system does not control. `outline` inheriting the
+ * page text into a `bg-primary` section measured 1.05:1; `link` with
+ * `text-primary` on the same section measured 1.00:1. `composite-contrast-lock`
+ * composites every variant over every brandable backdrop, so those notes are
+ * checkable rather than folklore.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R8   | Enums, no booleans               | `variant` and `size` are closed string enums                |
+ * | R19  | Tokens only                      | `bg-primary`, `bg-destructive`, `bg-accent`, `ring-ring/50` |
+ * | R20  | AA contrast                      | every pair composited by `composite-contrast-lock`          |
+ * | R25  | Server-safe                      | no React import, no hooks, no `'use client'`                |
+ */
+
 // Server-safe button variants. The full `<Button>` component lives in
 // `./button.tsx` and is `'use client'` (Base UI useRender). Variants are a
 // pure CVA function — no React, no client APIs — so they can be called

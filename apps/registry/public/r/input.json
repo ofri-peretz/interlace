@@ -3,7 +3,7 @@
   "name": "input",
   "type": "registry:ui",
   "title": "Input",
-  "description": "@interlace/ui — input (shadcn-compatible).",
+  "description": "Single-line text input. A pure surface primitive with no controlled-state machinery: the native `<input>` already owns selection, IME, undo/redo and `onChange`, so we add structure (surface, border, focus + invalid rings) without wrapping a single native…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

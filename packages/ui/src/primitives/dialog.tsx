@@ -234,19 +234,25 @@ function DialogCompose({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger render={trigger as React.ReactElement} />
-      <DialogPortal>
-        <DialogOverlay />
-        <DialogContent className={className}>
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            {description ? (
-              <DialogDescription>{description}</DialogDescription>
-            ) : null}
-          </DialogHeader>
-          {children}
-          {footer ? <DialogFooter>{footer}</DialogFooter> : null}
-        </DialogContent>
-      </DialogPortal>
+      {/*
+        No `DialogPortal` / `DialogOverlay` wrapper here — `DialogContent`
+        mounts both itself.
+        Wrapping them again rendered TWO backdrops, so the page behind a
+        `DialogCompose` was roughly twice as dark as behind the hand-composed
+        tree the docs show. The same component, two appearances, decided by
+        which API you reached for. `sheet.tsx` had this verbatim; `alert-dialog`
+        was checked and is clean.
+      */}
+      <DialogContent className={className}>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          {description ? (
+            <DialogDescription>{description}</DialogDescription>
+          ) : null}
+        </DialogHeader>
+        {children}
+        {footer ? <DialogFooter>{footer}</DialogFooter> : null}
+      </DialogContent>
     </Dialog>
   );
 }

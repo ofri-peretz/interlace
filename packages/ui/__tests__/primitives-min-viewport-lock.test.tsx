@@ -129,6 +129,18 @@ const PRIMITIVES = [
   // is inline text, which has no viewport contract either.
   { name: 'stat-strip', viewport: 320, tier: 'server' },
   { name: 'meter', viewport: 320, tier: 'server' },
+  // ── Combobox + CommandPalette ─────────────────────────────────────────
+  // Both client-tier: Base UI's combobox is a filtering state machine, and
+  // the palette adds Dialog's focus trap on top. 320 for both — a combobox
+  // is a form control, and the palette panel is `w-full` with a `40rem` cap
+  // that only engages above `sm`, so at 320 it is a full-bleed card with the
+  // 16px gutter intact.
+  //
+  // Like the other overlays, they project the attribute onto the surface
+  // that owns DOM: the combobox's INPUT and POPUP, and the palette's panel.
+  // `Combobox.Root` renders nothing.
+  { name: 'combobox', viewport: 320, tier: 'client' },
+  { name: 'command-palette', viewport: 320, tier: 'client' },
 ] as const;
 
 /**

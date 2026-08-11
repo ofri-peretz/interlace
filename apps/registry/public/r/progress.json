@@ -3,7 +3,7 @@
   "name": "progress",
   "type": "registry:ui",
   "title": "Progress",
-  "description": "@interlace/ui — progress (shadcn-compatible).",
+  "description": "Determinate progress indicator. Wraps the Base UI `Progress` compound — Root, Track, Indicator, Label, Value — and re-exports DS-styled parts that consume theme tokens (no raw px, no hex). The Track defines the rail height (`size`); the Indicator carries…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "feedback",

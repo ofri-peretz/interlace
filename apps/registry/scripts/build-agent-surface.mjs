@@ -45,6 +45,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 import { HOMEPAGE } from '../registry.config.mjs';
+import { docBlocks, headerFrom, stripJsdoc } from '../blurb.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -77,134 +78,13 @@ const CATEGORY_TITLE = new Map(
 // a registry that overstates its own a11y is worse than one that says nothing.
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Strip JSDoc `*` gutters and normalise blank lines. */
-const stripJsdoc = (s) =>
-  s
-    .replace(/^[ \t]*\*[ \t]?/gm, '')
-    .replace(/\r/g, '')
-    .trim();
-
-/**
- * Every `/** … *\/` block in the source, with the code that follows it.
- *
- * `[\s\S]*?` is NOT good enough for the body: anchored to something after the
- * closing `*\/` (as `exportDocFrom` is), a lazy any-char run happily swallows
- * several comments and the code between them — which is how ArticleCard's blurb
- * became the literal text `Reaction / like count. *\/ reactions?: number; …`.
- * `(?:[^*]|\*(?!\/))*` cannot cross a comment boundary.
- */
-const DOC_BLOCK_RE = /\/\*\*((?:[^*]|\*(?!\/))*)\*\/[ \t]*\n?([^\n]*)/g;
-
-const docBlocks = (src) =>
-  [...src.matchAll(DOC_BLOCK_RE)].map((m) => ({
-    text: stripJsdoc(m[1]),
-    follows: m[2],
-    index: m.index,
-  }));
+// `stripJsdoc` / `docBlocks` / `headerFrom` and the whole blurb chain moved to
+// `../blurb.mjs` when `build-registry.mjs` started deriving item `description`
+// from the same prose. Two copies of "what is this component for" is one copy
+// too many — see that file's header.
 
 /** Just the prose of every doc block — the indexer's corpus. */
 const docComments = (src) => docBlocks(src).map((b) => b.text);
-
-/**
- * The FILE header, if this component has one.
- *
- * Not simply "the first doc comment": 59 of 137 items have no header at all
- * (`badge.tsx` opens with `'use client'` and goes straight to imports), and for
- * those the first doc comment is a prop's — which is how an early version of
- * this script decided that Card was "When true, render a Skeleton composite".
- * A header is a doc comment that precedes the first statement in the file.
- */
-const PROLOGUE_RE = /^[ \t]*(?:import|export|const|function|type|interface|class)\s/m;
-const headerFrom = (blocks, src) => {
-  const first = blocks[0];
-  if (!first) return null;
-  const firstStatement = src.search(PROLOGUE_RE);
-  return firstStatement === -1 || first.index < firstStatement ? first.text : null;
-};
-
-/** PascalCase name this item's main export is expected to carry. */
-const pascal = (name) =>
-  name
-    .split('-')
-    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-    .join('');
-
-/**
- * The doc comment attached to the component's own export, for the items that
- * document there instead of at the top of the file. Matched on the export NAME
- * so a `loading?: boolean` prop doc can never be mistaken for the component's.
- */
-const exportDocFrom = (blocks, name) => {
-  const want = pascal(name).toLowerCase();
-  for (const block of blocks) {
-    const exported = /^\s*export\s+(?:const|function)\s+([A-Z]\w*)/.exec(block.follows);
-    if (exported && exported[1].toLowerCase() === want) return block.text;
-  }
-  return null;
-};
-
-/**
- * Last resort: the first doc comment that documents a DECLARATION rather than a
- * prop.
- *
- * The discriminator is what follows the comment. `loading?: boolean;` is an
- * object member — its doc describes one prop and reads as nonsense as a
- * component summary ("When true, render a Skeleton composite…"). A comment
- * followed by `const containerVariants = cva(` or `function Card(` is about the
- * component, and for the two dozen items with no file header it is the only
- * prose anyone wrote.
- */
-const MEMBER_FOLLOWER_RE = /^\s*\w+\??\s*:/;
-/** Boilerplate opener on every `MIN_VIEWPORT` doc; the sentence after it is the real one. */
-const MIN_VIEWPORT_PREAMBLE = /^Minimum viable viewport \(CSS px\)[^.]*\.\s*/;
-
-const declarationDocFrom = (blocks) => {
-  for (const block of blocks) {
-    if (MEMBER_FOLLOWER_RE.test(block.follows)) continue;
-    const text = block.text.replace(MIN_VIEWPORT_PREAMBLE, '');
-    if (text.length >= 40) return text;
-  }
-  return null;
-};
-
-/**
- * The one-sentence "what is this for" line.
- *
- * Item `description` is generated boilerplate — `"@interlace/ui — data-state
- * (shadcn-compatible)."` for 100+ items — so it is worthless both to a reader
- * and to a ranker. The first prose paragraph a human actually wrote about the
- * component is the blurb, looked for in descending order of authority: file
- * header (78 items), the component export's own doc, then any declaration's
- * doc. The handful left over fall back to the boilerplate description; they are
- * still fully indexed from their doc comments, they just have nothing better to
- * SHOW.
- */
-const blurbFrom = (text, fallback) => {
-  if (!text) return fallback;
-  const lines = text.split('\n');
-  const para = [];
-  for (const raw of lines) {
-    const line = raw.trim();
-    // Skip the `@interlace/ui — Name` title line and anything before real prose.
-    if (para.length === 0) {
-      if (!line) continue;
-      if (/^@interlace\//.test(line)) continue;
-      if (/^#{1,6}\s/.test(line)) continue;
-      if (/^\|/.test(line)) continue;
-    }
-    if (!line) {
-      if (para.length) break;
-      continue;
-    }
-    if (/^#{1,6}\s/.test(line) || /^\|/.test(line)) break;
-    para.push(line);
-  }
-  const prose = para.join(' ').replace(/\s+/g, ' ').trim();
-  if (!prose) return fallback;
-  return prose.length > 260
-    ? `${prose.slice(0, 257).replace(/[\s,;:]+\S*$/, '')}…`
-    : prose;
-};
 
 /** `## Heading` lines from the source header — the author's own topic list. */
 const topicsFrom = (header) =>
@@ -298,10 +178,58 @@ const statesFrom = (src) => {
 const A11Y_ROLE_RE = /\brole\s*[=:]\s*['"]([\w-]+)['"]/g;
 const A11Y_ARIA_RE = /\b(aria-[a-z]+)\s*[=:]/g;
 
+/**
+ * What actually moves, and whether the OS preference can stop it.
+ *
+ * The old field here was a single boolean, `reducedMotion`, documented as "the
+ * component gates its animation on the OS setting". It was a regex for
+ * `useReducedMotion|prefers-reduced-motion|motion-reduce:` — i.e. it reported
+ * whether the file MENTIONS the preference, and then published that as a claim
+ * that the file HONOURS it. `animated-list` mentions it (it gates auto-advance)
+ * while every entry still springs in from `scale: 0` under `reduce`. So the
+ * registry was overstating its own accessibility, which this script's own
+ * header calls worse than saying nothing.
+ *
+ * The honest split is by DRIVER, because the driver decides who is responsible:
+ *
+ *   css — `animate-*`, a keyframe, a Tailwind transition. `preflight.css`
+ *         clamps `animation-duration` and `transition-duration` to 0.01ms under
+ *         `reduce`, with `!important`, for `*`. A CSS-driven component is
+ *         covered whether or not it says so, PROVIDED the consumer imports that
+ *         stylesheet — which the `index.css` barrel guarantees and an
+ *         à-la-carte import does not.
+ *   js  — `motion`/`framer-motion`, `requestAnimationFrame`, `setInterval`, a
+ *         timer-driven step. NOTHING in any stylesheet reaches these. The
+ *         component must gate itself or it ignores the user's preference
+ *         outright (WCAG 2.3.3).
+ *
+ * `declaresPreference` is reported as exactly what it is — the file references
+ * the preference somewhere — and NOT as "every animation in it is gated", which
+ * is not decidable by reading text. The pair is still the useful signal: a
+ * `js` driver with no reference at all cannot be honouring the preference, and
+ * that is a fact, not an inference. `motion-driver-lock` fails the build on it.
+ */
+const JS_MOTION_RE =
+  /from\s+['"](?:motion|framer-motion)|requestAnimationFrame|setInterval\(|animate\(/;
+const CSS_MOTION_RE = /animate-[a-z]|@keyframes|transition-(?:all|colors|transform|opacity)|duration-\d/;
+const PREFERENCE_RE = /useReducedMotion|prefers-reduced-motion|motion-reduce:|motion-safe:/;
+
+export const motionFrom = (src) => {
+  const js = JS_MOTION_RE.test(src);
+  const css = CSS_MOTION_RE.test(src);
+  return {
+    driver: js && css ? 'both' : js ? 'js' : css ? 'css' : 'none',
+    declaresPreference: PREFERENCE_RE.test(src),
+    // The one thing a stylesheet cannot save. Not "this component is broken" —
+    // "this component's motion is out of reach of every reset we ship".
+    stylesheetCannotReach: js,
+  };
+};
+
 const a11yFrom = (src) => ({
   roles: [...new Set([...src.matchAll(A11Y_ROLE_RE)].map(([, r]) => r))].sort(),
   aria: [...new Set([...src.matchAll(A11Y_ARIA_RE)].map(([, a]) => a))].sort(),
-  reducedMotion: /useReducedMotion|prefers-reduced-motion|motion-reduce:/.test(src),
+  motion: motionFrom(src),
   focusRing: /focus-visible:|FocusRing/.test(src),
 });
 
@@ -427,10 +355,10 @@ const readItems = async () => {
       src,
       comments,
       header,
-      blurb: blurbFrom(
-        header ?? exportDocFrom(blocks, item.name) ?? declarationDocFrom(blocks),
-        item.description,
-      ),
+      // `description` IS the blurb now — `build-registry.mjs` derives it from
+      // the same prose via `blurb.mjs`. Deriving it a second time here is how
+      // the two surfaces drift; reading it back is how they cannot.
+      blurb: item.description,
       topics: topicsFrom(header),
       keyboard,
       states,
@@ -543,7 +471,7 @@ const buildAgentIndex = (items) => ({
       'Observed evidence only. `baseUi` names the Base UI primitive that owns focus and dismissal; `keys` lists the UI Events key values this file branches on itself; `handled` is the disjunction. An item with handled:false is not asserted to be inaccessible — it is asserted to add no keyboard behaviour of its own.',
     states:
       'The string unions a caller has to satisfy, read from the source. Where a union is a precedence ladder (DATA_STATES) the array order IS the precedence, lowest index wins.',
-    a11y: 'ARIA roles and attributes written literally in the shipped file, plus whether it gates motion on prefers-reduced-motion and opts into the WCAG 2.2 SC 2.4.13 focus ring.',
+    a11y: 'ARIA roles and attributes written literally in the shipped file, what drives its motion (a CSS driver is clamped by our preflight; a JS driver is out of reach of it), whether the file references prefers-reduced-motion at all, and whether it opts into the WCAG 2.2 SC 2.4.13 focus ring.',
   },
   facets: {
     tier: tally(items, (it) => [it.raw.meta?.tier ?? 'unknown']),
@@ -1015,7 +943,16 @@ to claim. Read it before writing props; the props table on
   dismissal. If it is set, do not re-implement key handling on top.
 - \`keyboard.keys\` — the key values this file branches on itself. This is the
   behaviour a static a11y scan cannot see, so it is the behaviour to test.
-- \`a11y.reducedMotion\` — the component gates its animation on the OS setting.
+- \`a11y.motion.driver\` — \`css\` | \`js\` | \`both\` | \`none\`. This decides WHO
+  honours \`prefers-reduced-motion\`. A \`css\` driver is clamped to 0.01ms by
+  \`preflight.css\` whether or not the component mentions the preference — as
+  long as you imported the stylesheet barrel. A \`js\` driver (motion,
+  \`requestAnimationFrame\`, a timer) is out of reach of every reset we ship and
+  must gate itself.
+- \`a11y.motion.declaresPreference\` — the file REFERENCES the preference. It is
+  deliberately not called "honours": whether every animation inside is gated is
+  not decidable by reading text, and one component here gated its list and not
+  its list items. Treat it as necessary, never as sufficient.
 - \`version\` / \`since\` / \`deprecated\` — the file you install is stamped with
   \`version\`; an upgrade diff reads it out of the banner.
 

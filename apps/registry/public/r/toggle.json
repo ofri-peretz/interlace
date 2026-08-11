@@ -3,7 +3,7 @@
   "name": "toggle",
   "type": "registry:ui",
   "title": "Toggle",
-  "description": "@interlace/ui — toggle (shadcn-compatible).",
+  "description": "A two-state button (pressed / not-pressed) and a grouped form thereof (mutually-exclusive or multi-select). Wraps @base-ui/react/toggle and @base-ui/react/toggle-group; we own the surface (size, variant, focus ring) and Base UI owns the pressed-state…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

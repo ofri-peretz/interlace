@@ -17,7 +17,7 @@ will.
 
 `GET https://ds.interlace.tools/data/agent-index.json`
 
-137 items, each with `tier`, `categories`, `summary`, `topics`,
+140 items, each with `tier`, `categories`, `summary`, `topics`,
 `rendering`, `minViewport`, `loadingState`, `keyboard`, `states`, `a11y`,
 `exports`, `version` and `install`. It is a flat array — filter it directly.
 
@@ -30,11 +30,11 @@ jq '.items[] | select(.rendering=="server" and .loadingState) | .name' agent-ind
 
 # owns its own key handling (not just inherited from Base UI)
 jq '.items[] | select(.keyboard.keys | length > 0) | {name, keys: .keyboard.keys}' agent-index.json
-# → context-menu, network-graph, time-series
+# → context-menu, distribution, network-graph, time-series
 
 # models an explicit state union — i.e. absence is a value, not a null check
 jq '.items[] | select(.states | length > 0) | {name, states: [.states[].name]}' agent-index.json
-# → 23 item(s)
+# → 24 item(s)
 
 # safe down to a 320px viewport
 jq '.items[] | select(.minViewport == null or .minViewport <= 320) | .name' agent-index.json
@@ -51,7 +51,7 @@ jq '.items[] | select(.minViewport == null or .minViewport <= 320) | .name' agen
 - `meta.deprecated` — Present only when the item is on its way out. Carries `removedIn` (a real release, never "eventually") and `replacement`.
 - `keyboard` — Observed evidence only. `baseUi` names the Base UI primitive that owns focus and dismissal; `keys` lists the UI Events key values this file branches on itself; `handled` is the disjunction. An item with handled:false is not asserted to be inaccessible — it is asserted to add no keyboard behaviour of its own.
 - `states` — The string unions a caller has to satisfy, read from the source. Where a union is a precedence ladder (DATA_STATES) the array order IS the precedence, lowest index wins.
-- `a11y` — ARIA roles and attributes written literally in the shipped file, plus whether it gates motion on prefers-reduced-motion and opts into the WCAG 2.2 SC 2.4.13 focus ring.
+- `a11y` — ARIA roles and attributes written literally in the shipped file, what drives its motion (a CSS driver is clamped by our preflight; a JS driver is out of reach of it), whether the file references prefers-reduced-motion at all, and whether it opts into the WCAG 2.2 SC 2.4.13 focus ring.
 
 ## Worked example
 

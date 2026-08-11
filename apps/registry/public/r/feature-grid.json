@@ -3,7 +3,7 @@
   "name": "feature-grid",
   "type": "registry:ui",
   "title": "Feature Grid",
-  "description": "@interlace/ui — feature-grid (patterns) (shadcn-compatible).",
+  "description": "Grid of small \"feature\" cards: icon + title + 1-2 line description. The shape every landing page reaches for to spell out \"what we do\" in 3-6 cells. Server component, no hooks.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "marketing",

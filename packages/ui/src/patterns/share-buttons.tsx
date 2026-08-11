@@ -1,12 +1,5 @@
 'use client';
 
-import * as React from 'react';
-import { Check, Cloud, Copy, Briefcase, Send } from 'lucide-react';
-
-import { cn } from '../lib/cn.js';
-import { Button } from '../primitives/button.js';
-import { Cluster } from '../primitives/stack.js';
-
 /**
  * @interlace/ui — ShareButtons
  *
@@ -22,10 +15,14 @@ import { Cluster } from '../primitives/stack.js';
  * ## Anatomy
  *
  *   ShareButtons                       (Cluster — data-min-viewport=320)
- *     ├─ <a>   Button variant=ghost size=sm  (twitter — Twitter icon)
- *     ├─ <a>   Button variant=ghost size=sm  (bluesky — Cloud icon)
- *     ├─ <a>   Button variant=ghost size=sm  (linkedin — Linkedin icon)
+ *     ├─ <a>   Button variant=ghost size=sm  (twitter — lucide Send icon)
+ *     ├─ <a>   Button variant=ghost size=sm  (bluesky — lucide Cloud icon)
+ *     ├─ <a>   Button variant=ghost size=sm  (linkedin — lucide Briefcase icon)
  *     └─ <button> Button variant=ghost size=sm  (copy — Copy / Check icon)
+ *
+ * The three network glyphs are generic lucide icons, not the networks' own
+ * brand marks — lucide ships no Twitter/X, Bluesky or LinkedIn logo, and the
+ * `aria-label` (`"Share on Twitter"`) is what actually names each button.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -48,6 +45,13 @@ import { Cluster } from '../primitives/stack.js';
  * | R25  | Client component                 | `'use client'` — clipboard + `useState` toggle              |
  * | R26  | A11y from native el              | `aria-label` per button; copy state announces via aria-live |
  */
+
+import * as React from 'react';
+import { Check, Cloud, Copy, Briefcase, Send } from 'lucide-react';
+
+import { cn } from '../lib/cn.js';
+import { Button } from '../primitives/button.js';
+import { Cluster } from '../primitives/stack.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

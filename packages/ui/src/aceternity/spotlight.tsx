@@ -1,35 +1,54 @@
 "use client";
 
+/**
+ * @interlace/ui — Spotlight
+ *
+ * The soft, angled glow that fades in behind hero copy: one rotated ellipse
+ * under a 151-unit Gaussian blur, absolutely positioned and sized as a
+ * percentage of its container. `fill` defaults to `currentColor`, so a
+ * text-colour class on the parent tints it.
+ *
+ * Decorative by contract — `aria-hidden`, `focusable="false"`,
+ * `pointer-events-none`, and out of flow, so CLS is zero.
+ *
+ * Our reimplementation of the Aceternity UI "Spotlight". What is ours: the
+ * reveal is self-contained — a `motion` fade with `duration` and `delay` props
+ * rather than an external `animate-spotlight` keyframe a consumer has to
+ * import; the fill is a token/`currentColor` rather than a literal; and the
+ * blur filter id comes from `useId()` so two Spotlights on one page do not
+ * collide on a shared `url(#filter)`.
+ *
+ * ## Anatomy
+ *
+ *   Spotlight                        (motion.svg — data-slot="spotlight",
+ *                                     viewBox "0 0 3787 2842")
+ *     ├─ g filter=url(#spotlight-blur-…)
+ *     │   └─ ellipse                 (rotated by a transform matrix)
+ *     └─ defs > filter               (feFlood → feBlend → feGaussianBlur 151)
+ *
+ * ## Motion
+ *
+ * JS-driven — a `motion/react` opacity tween, invisible to the CSS reset in
+ * `styles/preflight.css`. It is gated in JS: under
+ * `prefers-reduced-motion: reduce` the component passes `initial={false}` and
+ * `transition={undefined}`, so the glow is simply present at full opacity on
+ * first paint with no tween scheduled. Nothing is lost visually; only the
+ * 1.5s fade goes away. This is the only motion in the file — the glow does not
+ * loop or drift.
+ *
+ * ## Types
+ *
+ * `SpotlightNativeProps` omits `onAnimationStart` / `onAnimationEnd` /
+ * `onDrag*` and `values` from the native `<svg>` props, because `motion`
+ * overloads all five for its own gesture and animation lifecycle. Extending
+ * the native element without that `Omit` is a type conflict, not a choice.
+ */
+
 import React, { forwardRef, useId } from "react";
 import { motion } from "motion/react";
 
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
-
-/**
- * Spotlight — a soft, blurred conic glow that fades in to draw the eye toward
- * hero content. Adapted from the Aceternity UI "Spotlight" effect.
- *
- * Re-authored to the Interlace floor:
- *   - Self-contained reveal (no external `animate-spotlight` keyframe). The
- *     fade-and-drift is driven by `motion`, fully controllable via `duration`
- *     and `delay`, and disabled under `prefers-reduced-motion`.
- *   - Token-safe color: `fill` defaults to `currentColor`, so the glow
- *     inherits whatever text color its container sets — no hard-coded literal.
- *   - Consumer-agnostic: extends the native `<svg>` element, forwards `ref`,
- *     merges `className`, and spreads `...props`.
- *
- * Decorative by contract: rendered `aria-hidden`, `pointer-events-none`, and
- * absolutely positioned so it never participates in layout (CLS=0).
- *
- * @example
- * ```tsx
- * <div className="relative text-primary">
- *   <Spotlight data-testid="hero-spotlight" className="-top-40 left-0" />
- *   <h1>Your headline</h1>
- * </div>
- * ```
- */
 
 // =========================================
 // CONSTANTS

@@ -216,6 +216,14 @@
       "types": "./dist/primitives/select.d.ts",
       "default": "./dist/primitives/select.js"
     },
+    "./combobox": {
+      "types": "./dist/primitives/combobox.d.ts",
+      "default": "./dist/primitives/combobox.js"
+    },
+    "./command-palette": {
+      "types": "./dist/primitives/command-palette.d.ts",
+      "default": "./dist/primitives/command-palette.js"
+    },
     "./scroll-area": {
       "types": "./dist/primitives/scroll-area.d.ts",
       "default": "./dist/primitives/scroll-area.js"
@@ -351,6 +359,10 @@
     "./charts/series-table": {
       "types": "./dist/charts/series-table.d.ts",
       "default": "./dist/charts/series-table.js"
+    },
+    "./charts/distribution": {
+      "types": "./dist/charts/distribution.d.ts",
+      "default": "./dist/charts/distribution.js"
     },
     "./charts/time-series": {
       "types": "./dist/charts/time-series.d.ts",

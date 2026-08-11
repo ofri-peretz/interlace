@@ -3,7 +3,7 @@
   "name": "settings-template",
   "type": "registry:block",
   "title": "Settings Template",
-  "description": "@interlace/ui — settings-template (templates) (shadcn-compatible).",
+  "description": "Account / app settings surface. Topbar + left tab-rail (sections) + main content area (rendered section). Server-friendly; the active section is driven by the consumer's routing (each section is a route).",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

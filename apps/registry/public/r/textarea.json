@@ -3,7 +3,7 @@
   "name": "textarea",
   "type": "registry:ui",
   "title": "Textarea",
-  "description": "@interlace/ui — textarea (shadcn-compatible).",
+  "description": "Multi-line text input. A pure surface primitive with no controlled-state machinery: the native `<textarea>` already owns selection, IME, undo/redo, `onChange` etc., so we add structure (size + tone) without wrapping a single native behaviour. Server…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

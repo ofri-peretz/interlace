@@ -3,7 +3,7 @@
   "name": "published-date",
   "type": "registry:ui",
   "title": "Published Date",
-  "description": "@interlace/ui — published-date (shadcn-compatible).",
+  "description": "Article publish-date stamp. A pure surface primitive that renders a semantic `<time dateTime={iso}>` with a human-readable label produced by `Intl.DateTimeFormat` at render time. The native element owns the machine value (the `dateTime` attribute is what…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

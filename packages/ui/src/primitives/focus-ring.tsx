@@ -1,28 +1,20 @@
-import * as React from 'react';
-
-import { cn } from '../lib/cn.js';
-
 /**
  * @interlace/ui — FocusRing
  *
- * A composable wrapper that applies the DS focus contract to its child
- * **on focus-within** (the child becomes focused). Use it when:
+ * A `<span>` that paints the DS focus ring when anything inside it takes
+ * focus — `focus-within` on the wrapper, not `focus-visible` on the child.
  *
- *   1. You're composing a custom interactive surface (a card-as-button,
- *      a clickable list-row) and need the WCAG 2.2 SC 2.4.13 focus ring
- *      without manually writing the utility chain.
- *   2. You opted out of the global preflight ring on a particular subtree
- *      (e.g. inside a third-party component that sets its own outline)
- *      and need to reintroduce the contract per-element.
+ * Reach for it when composing a custom interactive surface (a card-as-button,
+ * a clickable row), or in a subtree that opted out of the global ring.
  *
- * The component renders no DOM of its own by default — it relies on the
- * child's existing element and wraps it in a single `<span>` (or a custom
- * `as` element). The ring lives on the wrapper via `focus-within:` rather
- * than the child's `focus-visible:` so the wrapper can host the contract
- * even when the child sets its own outline.
+ * Two consequences of putting the ring on a wrapper. It works even when the
+ * child sets its own outline, which is the point. And it is `focus-within`,
+ * not `focus-visible`: a MOUSE click that lands focus inside will paint the
+ * ring too, where the global preflight contract would not have.
  *
- * For server-rendered surfaces. No hooks, no client boundary. The cost is
- * one extra DOM node per wrapped surface — measure if you wrap thousands.
+ * It renders one real DOM node per wrapped surface — a `<span>`, always. There
+ * is no `as` prop and the span is not optional; measure before wrapping
+ * thousands of rows.
  *
  * ## Anatomy
  *
@@ -47,6 +39,10 @@ import { cn } from '../lib/cn.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y per WCAG 2.2 SC 2.4.13      | 2px solid ring, ≥3:1 contrast, configurable offset          |
  */
+
+import * as React from 'react';
+
+import { cn } from '../lib/cn.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

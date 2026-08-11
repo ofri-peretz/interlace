@@ -1,5 +1,46 @@
 'use client';
 
+/**
+ * @interlace/ui — Tabs
+ *
+ * A tab bar and its panels. Wraps @base-ui/react/tabs: Base UI owns which tab
+ * is selected, arrow-key roving focus and the tablist/tab/tabpanel ARIA; we
+ * own the muted pill list and the raised face of the selected tab.
+ *
+ * ## Anatomy
+ *
+ *   Tabs                             (Tabs.Root — flex-col gap-2, data-min-viewport=320)
+ *     ├─ TabsList                    (Tabs.List — bg-muted pill, h-9, w-fit)
+ *     │    └─ TabsTrigger            (Tabs.Tab — flex-1, raised on data-[selected])
+ *     └─ TabsContent                 (Tabs.Panel)
+ *
+ * The selected tab is drawn by `data-[selected]` state attributes rather than
+ * by a prop, so selection stays entirely upstream's — nothing in this file
+ * reads or stores it.
+ *
+ * ## No overflow strategy
+ *
+ * `TabsList` is `w-fit` and every trigger is `flex-1 whitespace-nowrap`. A bar
+ * with many tabs or long labels does not scroll, wrap or truncate — it grows.
+ * Wrap the list in a horizontally scrollable container at the call site.
+ *
+ * ## MIN_VIEWPORT — 320
+ *
+ * Two or three short tabs fit 320px. The floor assumes that shape; long
+ * labels are the caller's problem per the note above, not a reason to raise it.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends Base UI part props       | `React.ComponentProps<typeof BaseTabs.Root/List/Tab/Panel>` |
+ * | R6   | data-slot per part               | tabs / tabs-list / tabs-trigger / tabs-content              |
+ * | R7   | cn + ...rest                     | `cn('…', className)` + `{...props}` on every part           |
+ * | R12  | Reuse over wrap                  | Base UI owns selection, roving focus and ARIA               |
+ * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
+ * | R19  | Tokens only                      | `bg-muted`, `text-muted-foreground`, `ring-ring/50`         |
+ * | R25  | Client component                 | Required — Base UI Tabs ships client hooks                  |
+ * | R26  | Keyboard contract                | arrow-key flow asserted by `Tabs.stories.tsx`, locked by `overlay-nav-keyboard-lock` |
+ */
+
 import * as React from 'react';
 import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 

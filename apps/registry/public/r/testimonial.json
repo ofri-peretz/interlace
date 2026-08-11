@@ -3,7 +3,7 @@
   "name": "testimonial",
   "type": "registry:ui",
   "title": "Testimonial",
-  "description": "@interlace/ui — testimonial (patterns) (shadcn-compatible).",
+  "description": "Quote + attribution surfaces. Single Testimonial cells render an blockquote with an author avatar; TestimonialGrid lays them out in a 1-3 column grid. Server components.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "marketing",

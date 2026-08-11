@@ -3,7 +3,7 @@
   "name": "error-template",
   "type": "registry:block",
   "title": "Error Template",
-  "description": "@interlace/ui — error-template (templates) (shadcn-compatible).",
+  "description": "Full-page error surface — 404 / 500 / 503 / generic. Centred column with the status code + title + description + action buttons (back home, contact support, retry).",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "feedback",

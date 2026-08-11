@@ -1,8 +1,65 @@
 "use client";
 
+/**
+ * @interlace/ui — BackgroundGradientAnimation
+ *
+ * The "lava lamp" surface: five radial-gradient blobs orbiting behind an SVG
+ * goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth
+ * blob that eases toward the pointer.
+ *
+ * Every colour is a prop that falls back to an `--interlace-*` token, so the
+ * default look is on-brand and no literal ships in source.
+ *
+ * ## Provenance
+ *
+ * Our reimplementation of the Aceternity UI component of the same name. What
+ * is ours: the whole token fallback chain (upstream shipped colour literals);
+ * self-scoping — the original mutated `document.body.style`, this one writes
+ * its CSS variables to its own root so several instances can coexist; and a
+ * pointer loop that actually schedules frames, replacing upstream's
+ * stale-closure nested `setState` that never re-ran.
+ *
+ * ## Anatomy
+ *
+ *   div                              (data-slot="background-gradient-animation",
+ *                                     isolate, backdrop linear-gradient)
+ *     ├─ svg.hidden                  (data-slot="gradient-filter" — feGaussianBlur
+ *     │                               → feColorMatrix → feBlend, the goo)
+ *     ├─ div aria-hidden             (data-slot="gradient-blobs", filter:url(#<gooId>))
+ *     │   ├─ div.animate-first … .animate-fifth
+ *     │   └─ div                     (data-slot="gradient-pointer" — only when active)
+ *     └─ div.z-10                    (data-slot="gradient-content" — your children)
+ *
+ * ## Motion — two kinds, gated two ways
+ *
+ * The five orbits are CSS keyframes (`--animate-first`…`--animate-fifth` in
+ * `styles/tokens.css`). They are named in that file's
+ * `prefers-reduced-motion: reduce` block (`animation: none !important`) and
+ * also caught by the wildcard in `styles/preflight.css`, so they need no JS.
+ * The blobs stay on screen, parked.
+ *
+ * The pointer blob is a `requestAnimationFrame` loop writing
+ * `node.style.transform`, which neither CSS rule can reach. It is gated in JS:
+ * `pointerActive = interactive && !reducedMotion`, and when that is false the
+ * element is not rendered and the effect returns before adding its listener.
+ *
+ * ## The goo filter id is per-instance
+ *
+ * `bga-goo-<useId()>`, not a literal. SVG ids are document-global: as
+ * `id="bga-goo"` two instances on one page emitted duplicate ids and browsers
+ * resolved `url(#bga-goo)` to the first, so both surfaces shared whichever
+ * filter mounted first — and unmounting that one took the other's goo with it.
+ *
+ * The reference therefore moves from an arbitrary Tailwind utility to an
+ * inline `style`, because Tailwind scans source as raw text and cannot emit a
+ * class whose value is a template literal. That is the same R18 carve-out the
+ * colour variables already use, for the same reason: the value is computed.
+ */
+
 import {
   forwardRef,
   useEffect,
+  useId,
   useRef,
   type ComponentPropsWithoutRef,
   type CSSProperties,
@@ -11,42 +68,6 @@ import {
 
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
-
-/**
- * BackgroundGradientAnimation — a decorative, animated multi-blob gradient
- * surface (the "lava lamp" / aurora effect).
- *
- * Adapted in spirit from Aceternity UI
- * (https://ui.aceternity.com/components/background-gradient-animation), but
- * re-authored to the Interlace floor:
- *
- *   - **Tokens, not literals.** Every color resolves through a CSS custom
- *     property that falls back to a brand design token (`--interlace-*`), so the
- *     default look is on-brand and the build's `no-raw-color-literal` rule stays
- *     green. Consumers override any color via props.
- *   - **Self-scoped.** The original mutated `document.body.style` (a global side
- *     effect, hostile to any consumer). This version writes its CSS variables to
- *     its OWN root element via the inline-`style` CSS-variable exception, so
- *     multiple instances coexist and nothing leaks to the page.
- *   - **Motion-safe.** The looping blob animation is driven by CSS keyframes that
- *     the global `prefers-reduced-motion` reset already disables; the pointer
- *     follow-effect additionally reads `useReducedMotion()` and is skipped
- *     entirely for motion-sensitive users.
- *   - **Consumer-agnostic.** Extends the native `<div>`, forwards `ref`, spreads
- *     `...props`, merges `className`. No app/route/content assumptions; defaults
- *     are structural (full-bleed cover), never product copy.
- *
- * The animation keyframes (`animate-first`…`animate-fifth`, `moveVertical`,
- * `moveInCircle`, `moveHorizontal`) and the reduced-motion reset live in
- * `@interlace/ui/styles/tokens.css` — import it once in the consuming app.
- *
- * @example
- * ```tsx
- * <BackgroundGradientAnimation data-testid="hero-bg" className="h-[40rem]">
- *   <h1 className="text-foreground">Your content</h1>
- * </BackgroundGradientAnimation>
- * ```
- */
 
 /**
  * CSS-blend-mode applied between the orbiting blobs. `hard-light` gives the
@@ -184,6 +205,10 @@ export const BackgroundGradientAnimation = forwardRef<
 ) {
   const pointerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  // Per-instance, because SVG ids are document-global. `useId()`'s output is
+  // stripped to `[A-Za-z0-9_-]` so it is safe inside a `url(#…)` reference
+  // whatever punctuation React decides to spell it with.
+  const gooId = `bga-goo-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   // The pointer-follow blob runs only when interactivity is requested AND the
   // user has not opted out of motion. Reduced motion always wins.
   const pointerActive = interactive && !reducedMotion;
@@ -256,7 +281,7 @@ export const BackgroundGradientAnimation = forwardRef<
       {/* SVG goo filter — purely decorative, never in the a11y tree. */}
       <svg aria-hidden="true" className="hidden" data-slot="gradient-filter">
         <defs>
-          <filter id="bga-goo">
+          <filter id={gooId}>
             <feGaussianBlur
               in="SourceGraphic"
               stdDeviation="10"
@@ -277,7 +302,13 @@ export const BackgroundGradientAnimation = forwardRef<
       <div
         aria-hidden="true"
         data-slot="gradient-blobs"
-        className="pointer-events-none absolute inset-0 [filter:url(#bga-goo)_blur(40px)]"
+        className="pointer-events-none absolute inset-0"
+        // Inline rather than an arbitrary `[filter:url(#…)]` utility, and not
+        // by preference: Tailwind scans source as raw TEXT, so a class built
+        // from a template literal is a candidate it never sees and never emits.
+        // The id has to be per-instance, so the declaration has to leave the
+        // class system. Same R18 carve-out as the CSS variables above.
+        style={{ filter: `url(#${gooId}) blur(40px)` }}
       >
         <div
           className={cn(

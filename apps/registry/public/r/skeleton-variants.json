@@ -3,7 +3,7 @@
   "name": "skeleton-variants",
   "type": "registry:ui",
   "title": "Skeleton Variants",
-  "description": "@interlace/ui — skeleton-variants (shadcn-compatible).",
+  "description": "Single source of truth for the `<Skeleton variant>` discriminated union. Every entry maps to a Tailwind shape class set that paints a placeholder matching the corresponding primitive / pattern / template.",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "feedback",

@@ -3,7 +3,7 @@
   "name": "select",
   "type": "registry:ui",
   "title": "Select",
-  "description": "@interlace/ui — select (shadcn-compatible).",
+  "description": "Single-select listbox with a portalled popup. Built on @base-ui/react/select: Base UI owns `role=\"combobox\"` / `role=\"listbox\"`, typeahead, arrow + Home/End navigation, focus return on close, and the controlled/uncontrolled pair (`value` + `onValueChange`…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",

@@ -1,5 +1,70 @@
 'use client';
 
+/**
+ * @interlace/ui — ArticleCard + FeaturedArticleCard
+ *
+ * Two article tiles that share one focusable-anchor shell: `ArticleCard`, the
+ * stacked grid tile with the cover on top, and `FeaturedArticleCard`, the
+ * full-bleed hero whose copy sits on a gradient scrim over the image. Both
+ * read the same props.
+ *
+ * They are two components rather than one `variant` prop because the rendered
+ * tree differs entirely (R11). The old `variant` still type-checks for one
+ * minor: `variant="overlay"` delegates to `FeaturedArticleCard` and a
+ * dev-only `console.warn` fires from `useDeprecatedVariantWarning`.
+ *
+ * ## Anatomy
+ *
+ *   CardShell                        (a[href] — data-slot="article-card")
+ *     └─ Card                        (primitives/card, py-0 gap-0)
+ *         ├─ StackBody               (ArticleCard)
+ *         │   ├─ cover h-44 + SourceChip
+ *         │   ├─ CardHeader          (avatar + author name + date)
+ *         │   ├─ CardContent         (title, description, tag Badges)
+ *         │   └─ CardFooter          (MetaChips + ExternalLink on hover)
+ *         └─ OverlayBody             (FeaturedArticleCard)
+ *             ├─ absolute cover + scrim gradient
+ *             ├─ FeaturedChip / SourceChip
+ *             └─ tags, h2 title, description, author · date · MetaChips
+ *
+ * ## Dates are pinned to UTC
+ *
+ * `formatDate` passes `timeZone: 'UTC'`, matching `patterns/author-byline.tsx`.
+ * A date-only ISO string (`"2026-05-10"`) parses as UTC midnight, so without
+ * the pin `toLocaleDateString` re-projects it into the reader's zone and
+ * everyone west of UTC is shown the previous day — on a grid of cards, next to
+ * a post whose byline said otherwise.
+ *
+ * ## Motion
+ *
+ * CSS only — no JS-driven animation and no `useReducedMotion` call.
+ *
+ * | Effect                  | Class                                  | Under `reduce`          |
+ * | ----------------------- | -------------------------------------- | ----------------------- |
+ * | cover zoom              | `motion-safe:group-hover:scale-105`    | not applied at all      |
+ * | card surface / border   | `transition-all duration-300`          | preflight duration clamp |
+ * | hover `ExternalLink`    | `transition-opacity`                   | preflight duration clamp |
+ *
+ * The cover zoom is the one that carries its own gate. `motion-safe:` compiles
+ * to `@media (prefers-reduced-motion: no-preference)` inside the utility
+ * itself, so it holds on the à-la-carte import path — a consumer taking
+ * `tokens.css` + `theme.css` and skipping `preflight.css` (the path
+ * `styles/index.css` exists to prevent, and `motion-contract-lock` treats as
+ * live). The remaining two are colour and opacity changes rather than
+ * movement, so the preflight clamp is the appropriate layer for them.
+ *
+ * | Rule | Concept                     | Where in this file                                       |
+ * | ---- | --------------------------- | -------------------------------------------------------- |
+ * | R5   | testid required, no default | `'data-testid': string` → `{value}-title` / `-tags` / …  |
+ * | R6   | data-slot on every part     | `article-card` / `-source` / `-scrim` / `-meta-views`    |
+ * | R10  | Composition seam            | `CardShell` wraps both bodies; `Card*` primitives inside |
+ * | R11  | No kind-prop                | two exports, `variant` deprecated                        |
+ * | R19  | Tokens only                 | `bg-scrim/70`, `text-scrim-foreground`, `text-primary`   |
+ * | R23  | CLS=0                       | stack cover reserves `h-44`; hero pins `h-105 md:h-95`   |
+ * | R25  | Client component            | `React.useEffect` in the deprecation warning             |
+ * | R26  | A11y                        | cover `alt=""`; overlay title is `<h2>` for heading order |
+ */
+
 import * as React from 'react';
 import { Heart, MessageCircle, Clock, ExternalLink, Eye, Sparkles } from 'lucide-react';
 
@@ -101,12 +166,21 @@ export interface ArticleCardProps extends ArticleCardBaseProps {
 /** `<FeaturedArticleCard>` takes the same data, minus the retired knob. */
 export type FeaturedArticleCardProps = ArticleCardBaseProps;
 
+/**
+ * `timeZone: 'UTC'` is load-bearing, not a default — same reasoning, same
+ * value as `patterns/author-byline.tsx`. A date-only ISO string (`"2026-05-10"`)
+ * parses as UTC midnight; without the pin, `toLocaleDateString` re-projects
+ * that instant into the reader's zone and everyone west of UTC is shown the
+ * previous day. The two components have to agree: the same article renders its
+ * date through `ArticleCard` in a grid and through `AuthorByline` on the post.
+ */
 function formatDate(value: ArticleCardProps['publishedAt']): string {
   if (value === undefined) return '';
   return new Date(value).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
+    timeZone: 'UTC',
   });
 }
 
@@ -381,7 +455,10 @@ function CoverImage({
         fetchPriority={priority ? 'high' : 'auto'}
         decoding="async"
         className={cn(
-          'h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105',
+          // `motion-safe:` on the SCALE, not on the transition. The transition
+          // is inert once nothing transforms, and gating the transform is what
+          // survives the à-la-carte import path — see the file header.
+          'h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-105',
           className,
         )}
       />

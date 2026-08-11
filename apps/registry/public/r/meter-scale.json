@@ -3,7 +3,7 @@
   "name": "meter-scale",
   "type": "registry:ui",
   "title": "Meter Scale",
-  "description": "@interlace/ui — meter-scale (shadcn-compatible).",
+  "description": "The maths behind `Meter` and `RankedBarList`. No React, no DOM — the same split `charts/scale.ts` makes, and for the same reason: a bar that draws a beautiful wrong length is worse than one that fails to render, and the length is the part that can be…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "data",

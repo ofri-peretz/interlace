@@ -491,6 +491,43 @@
     "previewDark": "foundations-colors--dark",
     "skeleton": null
   },
+  "combobox": {
+    "title": "Primitives/Combobox",
+    "storyIds": [
+      "primitives-combobox--default",
+      "primitives-combobox--compose",
+      "primitives-combobox--with-trigger",
+      "primitives-combobox--grouped",
+      "primitives-combobox--multiple",
+      "primitives-combobox--async-status",
+      "primitives-combobox--keyboard-flow",
+      "primitives-combobox--disabled",
+      "primitives-combobox--invalid",
+      "primitives-combobox--dark",
+      "primitives-combobox--rtl",
+      "primitives-combobox--reduced-motion",
+      "primitives-combobox--loading"
+    ],
+    "preview": "primitives-combobox--default",
+    "previewDark": "primitives-combobox--dark",
+    "skeleton": "primitives-combobox--loading"
+  },
+  "command-palette": {
+    "title": "Primitives/CommandPalette",
+    "storyIds": [
+      "primitives-commandpalette--default",
+      "primitives-commandpalette--flat",
+      "primitives-commandpalette--with-hotkey",
+      "primitives-commandpalette--keyboard-flow",
+      "primitives-commandpalette--no-results",
+      "primitives-commandpalette--dark",
+      "primitives-commandpalette--rtl",
+      "primitives-commandpalette--reduced-motion"
+    ],
+    "preview": "primitives-commandpalette--default",
+    "previewDark": "primitives-commandpalette--dark",
+    "skeleton": null
+  },
   "container": {
     "title": "Primitives/Container",
     "storyIds": [
@@ -627,6 +664,27 @@
     "preview": "primitives-dialog--default",
     "previewDark": "primitives-dialog--dark",
     "skeleton": null
+  },
+  "distribution": {
+    "title": "Charts/Distribution",
+    "storyIds": [
+      "charts-distribution--audience-clock",
+      "charts-distribution--two-axis-families",
+      "charts-distribution--unmeasured-bins",
+      "charts-distribution--categorical-order",
+      "charts-distribution--keyboard-crosshair",
+      "charts-distribution--no-reference",
+      "charts-distribution--no-bins",
+      "charts-distribution--loading",
+      "charts-distribution--fetch-failed",
+      "charts-distribution--fetch-failed-dark",
+      "charts-distribution--min-viewport",
+      "charts-distribution--dark",
+      "charts-distribution--rtl"
+    ],
+    "preview": "charts-distribution--audience-clock",
+    "previewDark": "charts-distribution--dark",
+    "skeleton": "charts-distribution--loading"
   },
   "docs-page-template": {
     "title": "Templates/DocsPageTemplate",
@@ -1047,7 +1105,9 @@
       "charts-metrictable--empty-state-dark",
       "charts-metrictable--error-state-dark",
       "charts-metrictable--dark",
-      "charts-metrictable--rtl"
+      "charts-metrictable--rtl",
+      "charts-metrictable--fetch-failed",
+      "charts-metrictable--fetch-failed-dark"
     ],
     "preview": "charts-metrictable--default",
     "previewDark": "charts-metrictable--dark",
@@ -1077,7 +1137,9 @@
       "charts-networkgraph--empty",
       "charts-networkgraph--loading",
       "charts-networkgraph--dark",
-      "charts-networkgraph--rtl"
+      "charts-networkgraph--rtl",
+      "charts-networkgraph--fetch-failed",
+      "charts-networkgraph--fetch-failed-dark"
     ],
     "preview": "charts-networkgraph--default",
     "previewDark": "charts-networkgraph--dark",
@@ -1460,7 +1522,8 @@
       "charts-seriestable--gaps",
       "charts-seriestable--screen-reader-only",
       "charts-seriestable--dark",
-      "charts-seriestable--rtl"
+      "charts-seriestable--rtl",
+      "charts-seriestable--categorical-axis"
     ],
     "preview": "charts-seriestable--visible",
     "previewDark": "charts-seriestable--dark",
@@ -1617,7 +1680,9 @@
       "charts-sparkline--loading",
       "charts-sparkline--in-context",
       "charts-sparkline--dark",
-      "charts-sparkline--rtl"
+      "charts-sparkline--rtl",
+      "charts-sparkline--fetch-failed",
+      "charts-sparkline--fetch-failed-dark"
     ],
     "preview": "charts-sparkline--in-context",
     "previewDark": "charts-sparkline--dark",
@@ -1703,7 +1768,9 @@
       "primitives-statstrip--empty-state-dark",
       "primitives-statstrip--error-state-dark",
       "primitives-statstrip--dark",
-      "primitives-statstrip--rtl"
+      "primitives-statstrip--rtl",
+      "primitives-statstrip--tone",
+      "primitives-statstrip--tone-dark"
     ],
     "preview": "primitives-statstrip--default",
     "previewDark": "primitives-statstrip--dark",
@@ -1888,7 +1955,9 @@
       "charts-timeseries--loading",
       "charts-timeseries--min-viewport-axis",
       "charts-timeseries--dark",
-      "charts-timeseries--rtl"
+      "charts-timeseries--rtl",
+      "charts-timeseries--fetch-failed",
+      "charts-timeseries--fetch-failed-dark"
     ],
     "preview": "charts-timeseries--default",
     "previewDark": "charts-timeseries--dark",

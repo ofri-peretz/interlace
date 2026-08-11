@@ -3,7 +3,7 @@
   "name": "prose",
   "type": "registry:ui",
   "title": "Prose",
-  "description": "@interlace/ui — prose (shadcn-compatible).",
+  "description": "The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer. Think MDX-target…",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "blog",

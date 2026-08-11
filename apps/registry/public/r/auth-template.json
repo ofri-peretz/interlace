@@ -3,7 +3,7 @@
   "name": "auth-template",
   "type": "registry:block",
   "title": "Auth Template",
-  "description": "@interlace/ui — auth-template (templates) (shadcn-compatible).",
+  "description": "Full-page surface for sign-in / sign-up / password-reset / verify-email flows. Centred narrow column with brand mark at top, form in the middle, helper link at the bottom (\"Already have an account?\" / \"Forgot password?\").",
   "author": "ofri-peretz <https://github.com/ofri-peretz>",
   "categories": [
     "form",
