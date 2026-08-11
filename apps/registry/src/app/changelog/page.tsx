@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ReleaseNote } from '@/components/release-note';
 import { SiteNav } from '@/components/site-nav';
 import { KIND_ORDER, releaseAnchor, releases } from '@/lib/changelog';
+import { HOMEPAGE } from '../../../registry.config.mjs';
 
 export const metadata: Metadata = {
   title: 'Changelog',
@@ -54,6 +55,49 @@ export default function ChangelogPage() {
             </span>
           </div>
         </div>
+
+        {/* ─── Which version am I holding? ───────────────────────── */}
+        {/*
+          The page above tells you what changed. This section answers the
+          question that has to come first and had no answer at all: which copy
+          do you actually hold?
+
+          Measured 2026-08-11 against our own only real consumer — 50 installed
+          items, checked on normalised token streams so formatting did not
+          count. Zero matched. Forty were strictly behind and eighteen still
+          imported a package name that no longer exists. Nobody had done
+          anything wrong; there was simply no command that would have said so.
+        */}
+        <section className="mt-10">
+          <h2 className="text-xl font-semibold">Which version am I holding?</h2>
+          <p className="text-muted-foreground mt-3 max-w-prose">
+            Every installed file carries a version banner a few lines in. To
+            check a whole project against this registry at once:
+          </p>
+          <pre className="border-border bg-card mt-4 overflow-x-auto rounded-lg border p-4 font-mono text-sm">
+            <code>{`# in your project — every installed file states its own version
+grep -h "^// @interlace/" src/components/ui/*.tsx
+
+# what this registry ships right now, per item
+curl -s ${HOMEPAGE}/data/agent-index.json | jq -r '.items[] | "\\(.name) \\(.version)"'`}</code>
+          </pre>
+          <p className="text-muted-foreground mt-3 max-w-prose text-sm">
+            A file with no banner was installed before the banner shipped, or
+            had its leading comments stripped by an older CLI — in that case we
+            genuinely cannot tell which version you hold, and re-adding the item
+            is the way to adopt one you can track. Compare{' '}
+            <strong>versions</strong>, never content: you are <em>expected</em>{' '}
+            to edit your copy, and a check that flagged every deliberate
+            customisation as drift would be ignored within a week.
+          </p>
+          <p className="text-muted-foreground mt-3 max-w-prose text-sm">
+            A packaged one-command form of this (
+            <code className="text-foreground font-mono">consumer:check</code> in
+            the registry repo) reports every file as current, behind,
+            unversioned or local and exits non-zero when anything is stale. It
+            is not published to npm yet.
+          </p>
+        </section>
 
         {/* ─── How to read it ────────────────────────────────────── */}
         <section className="mt-10">

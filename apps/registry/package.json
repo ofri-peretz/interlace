@@ -23,7 +23,8 @@
     "lint": "npm run lint:eslint && npm run lint:oxlint",
     "lint:eslint": "eslint .",
     "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "consumer:check": "node scripts/check-consumer.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
