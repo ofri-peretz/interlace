@@ -53,7 +53,7 @@ export default meta;
 type Story = StoryObj<typeof Container>;
 
 const Sample = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-dashed border-fd-border bg-fd-card/40 p-6 text-sm text-fd-muted-foreground">
+  <div className="rounded-md border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
     {label} — children fit inside the configured max-width with responsive horizontal padding.
   </div>
 );

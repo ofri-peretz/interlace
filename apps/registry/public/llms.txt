@@ -489,13 +489,13 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [A11y Starter](https://ds.interlace.tools/c/a11y-starter): @interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/a11y-starter.json`
-  - contract: server, v1.7.1
+  - contract: server, v1.7.2
 - [Layout Starter](https://ds.interlace.tools/c/layout-starter): @interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json`
-  - contract: server, v1.7.1
+  - contract: server, v1.7.2
 - [MDX Starter](https://ds.interlace.tools/c/mdx-starter): @interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/mdx-starter.json`
-  - contract: server, v1.7.1
+  - contract: server, v1.7.2
 
 ## Items — tier `util`
 

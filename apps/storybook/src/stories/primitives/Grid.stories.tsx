@@ -66,7 +66,7 @@ export default meta;
 type Story = StoryObj<typeof Grid>;
 
 const Cell = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-fd-border bg-fd-card/40 px-4 py-3 text-sm">
+  <div className="rounded-md border border-border bg-card/40 px-4 py-3 text-sm">
     {label}
   </div>
 );

@@ -114,11 +114,22 @@ const preview: Preview = {
           'Foundations',
           'Tokens',
           ['Color Contrast'],
+          // The non-component registry items. `Utilities` is the `registry:lib`
+          // tier (cn, the two hooks, the theme manifest and bootstrap);
+          // `Contracts` is the pure `.ts` modules that a component spends but
+          // that render nothing themselves (variant catalogues, the absence
+          // vocabulary, the meter arithmetic). Both sit here — after the
+          // vocabulary, before the components — because that is what they are:
+          // shared language, not parts.
+          'Utilities',
+          'Contracts',
           'Primitives',
           'Blocks',
           'Charts',
           'Templates',
           'Pages',
+          // Meta-installs, so they come after everything they pull in.
+          'Starters',
           'Fumadocs',
           'MagicUI',
         ],

@@ -162,7 +162,7 @@ export const BelowMinViewport: Story = {
     readingTimeMinutes: 7,
   },
   render: (args) => (
-    <div className="w-[280px] max-w-full border border-dashed border-fd-border p-sm">
+    <div className="w-[280px] max-w-full border border-dashed border-border p-sm">
       <AuthorByline {...args} />
     </div>
   ),

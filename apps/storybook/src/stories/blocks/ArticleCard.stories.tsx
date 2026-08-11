@@ -431,7 +431,7 @@ export const FeaturedWithoutCover: Story = {
 export const Parity: Story = {
   parameters: { layout: 'fullscreen' },
   render: () => (
-    <div className="space-y-6 p-6 bg-fd-background">
+    <div className="space-y-6 p-6 bg-background">
       <FeaturedArticleCard {...lockArgs} data-testid="parity-featured" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ArticleCard {...lockArgs} data-testid="parity-tile-0" />

@@ -93,7 +93,7 @@ export const Default: Story = {
 export const WithEyebrow: Story = {
   args: {
     eyebrow: (
-      <span className="inline-flex items-center gap-2 rounded-full border border-fd-border bg-fd-card px-3 py-1 text-xs font-medium text-fd-muted-foreground">
+      <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
         <Trophy className="size-3.5 text-orange-500" aria-hidden />
         Featured in DEV Community Top 7
       </span>
@@ -129,7 +129,7 @@ export const AllVariants: Story = {
       />
       <SectionHeader
         eyebrow={
-          <span className="rounded-full border border-fd-border bg-fd-card px-3 py-1 text-xs font-medium text-fd-muted-foreground">
+          <span className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
             With eyebrow
           </span>
         }

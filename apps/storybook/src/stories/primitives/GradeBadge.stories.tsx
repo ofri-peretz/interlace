@@ -56,7 +56,7 @@ export const Default: Story = {
   // Shown in the row it was built for — a chip alone in the canvas hides the
   // one thing that matters, that the colour is legible next to real copy.
   render: (args) => (
-    <div className="flex w-full max-w-float items-center justify-between rounded-md border border-fd-border px-4 py-3">
+    <div className="flex w-full max-w-float items-center justify-between rounded-md border border-border px-4 py-3">
       <div className="flex flex-col">
         <span className="text-sm font-medium">eslint-plugin-jwt</span>
         <span className="text-xs text-muted-foreground">Security scorecard</span>
