@@ -89,6 +89,28 @@
     "previewDark": null,
     "skeleton": null
   },
+  "data-table": {
+    "title": "Blocks/DataTable",
+    "storyIds": [
+      "blocks-datatable--default",
+      "blocks-datatable--sorted",
+      "blocks-datatable--keyboardsort",
+      "blocks-datatable--selected",
+      "blocks-datatable--keyboardselection",
+      "blocks-datatable--selectpage",
+      "blocks-datatable--loading",
+      "blocks-datatable--empty",
+      "blocks-datatable--errorstate",
+      "blocks-datatable--dense",
+      "blocks-datatable--manycolumns",
+      "blocks-datatable--paginated",
+      "blocks-datatable--dark",
+      "blocks-datatable--rtl"
+    ],
+    "preview": "blocks-datatable--default",
+    "previewDark": "blocks-datatable--dark",
+    "skeleton": "blocks-datatable--loading"
+  },
   "dot-pattern": {
     "title": "Blocks/DotPattern",
     "storyIds": [
@@ -462,10 +484,16 @@
       "charts-timeseries--default",
       "charts-timeseries--withannotations",
       "charts-timeseries--keyboardcrosshair",
+      "charts-timeseries--twoseries",
+      "charts-timeseries--twoseriescrosshair",
+      "charts-timeseries--raggeddates",
+      "charts-timeseries--differentmagnitudes",
+      "charts-timeseries--paletteexhausted",
       "charts-timeseries--withgaps",
       "charts-timeseries--datatablevisible",
       "charts-timeseries--notenoughdata",
       "charts-timeseries--loading",
+      "charts-timeseries--minviewportaxis",
       "charts-timeseries--dark",
       "charts-timeseries--rtl"
     ],

@@ -17,7 +17,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.7.1",
+        "version": "1.8.0",
         "since": "1.0.0"
       }
     },
@@ -35,7 +35,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.7.0",
+        "version": "1.7.1",
         "since": "1.0.0"
       }
     },
@@ -53,7 +53,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.7.0",
+        "version": "1.7.1",
         "since": "1.0.0"
       }
     },
@@ -71,7 +71,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.7.0",
+        "version": "1.7.1",
         "since": "1.0.0"
       }
     },
@@ -143,7 +143,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": "1.0.0"
       }
     },
@@ -161,7 +161,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.0.1",
         "since": "1.0.0"
       }
     },
@@ -323,7 +323,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.1.1",
         "since": "1.0.0"
       }
     },
@@ -341,7 +341,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.1.1",
         "since": "1.0.0"
       }
     },
@@ -791,7 +791,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.1",
+        "version": "1.1.2",
         "since": "1.0.0"
       }
     },
@@ -935,7 +935,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.5.0",
+        "version": "1.6.0",
         "since": "1.0.0"
       }
     },
@@ -953,7 +953,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.6.0",
+        "version": "1.7.0",
         "since": "1.0.0"
       }
     },
@@ -1624,6 +1624,24 @@
       }
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "@interlace/ui — data-table (patterns) (shadcn-compatible).",
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": "1.0.0"
+      }
+    },
+    {
       "name": "dot-pattern",
       "type": "registry:ui",
       "title": "Dot Pattern",
@@ -1979,7 +1997,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "1.0.1",
+        "version": "1.0.2",
         "since": "1.0.0"
       }
     },
@@ -2051,7 +2069,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.1",
+        "version": "1.1.0",
         "since": "1.0.0"
       }
     },
@@ -2069,7 +2087,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.1.1",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -2087,7 +2105,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.1.1",
+        "version": "1.1.2",
         "since": "1.0.0"
       }
     },
@@ -2105,7 +2123,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": "1.0.0"
       }
     },
@@ -2123,7 +2141,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "1.1.1",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -2141,7 +2159,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.1.1",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },

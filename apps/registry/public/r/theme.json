@@ -56,7 +56,7 @@
     "client": false,
     "minViewport": null,
     "loading": false,
-    "version": "1.7.1",
+    "version": "1.8.0",
     "since": "1.0.0"
   },
   "docs": "## @interlace/theme\n\nFive stylesheets landed in `styles/interlace/`, in cascade order: tokens.css → foundation.css → preflight.css → theme.css → interlace-theme.css → themes/harbor.css.\n\nImport them from your global stylesheet in exactly that order.\n\nFull contract: https://ds.interlace.tools/css-contract"

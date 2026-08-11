@@ -5,6 +5,29 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "New `DataTable` pattern — a real `<table>` with column definitions, sorting,\nrow selection, pagination, and designed loading / empty / error states.\n\nSort and selection are the caller's state (`sort` / `onSortChange`,\n`selected` / `onSelectionChange`), so the whole view can live in the query\nstring and a sorted, paged, partly-selected table can be linked to a\ncolleague. Selection is keyed by row id, so it survives sorting and paging.\nSemantics are the point: `<caption>`, `<th scope=\"col\">`, one\n`<th scope=\"row\">` per row, `aria-sort` on sortable headers, and a selection\ncheckbox whose accessible name identifies the row. Pure logic (sort cycle,\ncomparators, page-window, selection maths) ships alongside as\n`data-table-model` and is exported for callers wiring their own URL state.\n\nSkeleton gains a `data-table` variant — a header row plus body rows, so the\nloading state reserves the real silhouette instead of collapsing to a spinner.\n\nNot included, deliberately: filtering UI, column resize/reorder,\nvirtualization, grouping.",
+          "components": [
+            "data-table",
+            "skeleton"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/data-table-pattern.md"
+        },
+        {
+          "summary": "`TimeSeries` can plot more than one metric, and it finally draws an x axis.\n\n`compare` takes further series — `{ points, label, unit }` — drawn against the\nsame axes. It is purely additive: `points` is still the required single-series\nprop it always was, so nothing that already calls this component changes. Each\nline gets a `--chart-N` hue **and** a distinct dash pattern, and the new legend\nswatch repeats the dash, so two lines stay two lines in a greyscale print and\nto a red-green colour-blind reader. Five series are drawn (the size of the\npalette); any beyond that stay in the data table and the legend says how many.\n\nAll series share one y domain, and that is not configurable. A second y axis\nlets an author slide two unrelated metrics until they appear to cross wherever\nthe argument needs them to; a series two orders of magnitude smaller will render\nas flat here, which is the true statement about it.\n\nThe x axis is a baseline, a tick per labelled slot, and up to five HTML labels\nbelow the plot — HTML because SVG text scales with the `viewBox`, and at a 320\nviewport this plot is 288px wide against a 900-unit box, so `text-xs` inside it\npaints at 4px. Below `sm` the middle labels drop and the two ends stay.\n\nThe crosshair readout now names and values every series at the cursor, from the\none `aria-live` `<output>` that the arrow keys already fed. There is deliberately\nno second, hover-only tooltip to fall out of step with it.",
+          "components": [
+            "time-series"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/time-series-multi-series-and-x-axis.md"
+        },
+        {
           "summary": "The fourteen `blocks/*` re-export aliases now name the release they disappear\nin. They previously said \"removal scheduled for one release cycle after the\narchitecture PR lands\", which is not a date anyone can plan around — so the\naliases were, in practice, permanent. They are now `@deprecated since 1.0.0 —\nremoved in 2.0.0`, and removal will land as a breaking change with a migration\nnote.",
           "components": [
             "article-card",

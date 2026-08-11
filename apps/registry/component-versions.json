@@ -4,7 +4,7 @@
   "components": [
     {
       "name": "a11y-starter",
-      "version": "1.7.0",
+      "version": "1.7.1",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -148,15 +148,15 @@
     },
     {
       "name": "button",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "since": "1.0.0",
-      "updated": "2026-08-02"
+      "updated": "2026-08-10"
     },
     {
       "name": "button-variants",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "since": "1.0.0",
-      "updated": "2026-08-02"
+      "updated": "2026-08-10"
     },
     {
       "name": "callout",
@@ -237,8 +237,14 @@
       "updated": "2026-06-01"
     },
     {
+      "name": "data-table",
+      "version": "1.0.0",
+      "since": "1.0.0",
+      "updated": "2026-08-10"
+    },
+    {
       "name": "delta",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -388,7 +394,7 @@
     },
     {
       "name": "layout-starter",
-      "version": "1.7.0",
+      "version": "1.7.1",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -400,7 +406,7 @@
     },
     {
       "name": "mdx-starter",
-      "version": "1.7.0",
+      "version": "1.7.1",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -412,13 +418,13 @@
     },
     {
       "name": "metric-table",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
     {
       "name": "network-graph",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -496,7 +502,7 @@
     },
     {
       "name": "radio-group",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -568,9 +574,9 @@
     },
     {
       "name": "series-table",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-09"
+      "updated": "2026-08-10"
     },
     {
       "name": "settings-template",
@@ -604,13 +610,13 @@
     },
     {
       "name": "skeleton",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
     {
       "name": "skeleton-variants",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -628,7 +634,7 @@
     },
     {
       "name": "sparkline",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -652,7 +658,7 @@
     },
     {
       "name": "stat-card",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -712,13 +718,13 @@
     },
     {
       "name": "theme",
-      "version": "1.7.1",
+      "version": "1.8.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
     {
       "name": "theme-script",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -736,7 +742,7 @@
     },
     {
       "name": "time-series",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -784,7 +790,7 @@
     },
     {
       "name": "use-theme",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
