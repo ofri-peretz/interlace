@@ -11,7 +11,12 @@ import { cn } from '../lib/cn.js';
 
 /**
  * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. Left/right sheets
- * are `w-3/4` (240px at the 320 floor) and top/bottom are `h-auto`, so nothing
+ * A MODAL side panel (drawer): traps focus, dismisses on Escape and on an
+ * outside click, marks the rest of the page inert while open, and restores
+ * focus to the trigger on close. Base UI owns that behaviour — which is why
+ * this file never named it, and why a reader searching for what it DOES could
+ * not find it.
+ * * are `w-3/4` (240px at the 320 floor) and top/bottom are `h-auto`, so nothing
  * clips at the iPhone SE width. Projected onto the popup — Base UI's
  * `Dialog.Root` renders no DOM node of its own.
  */

@@ -3,6 +3,13 @@
 /**
  * @interlace/ui — Dialog (gold-standard reference for the interlace-component skill)
  *
+ * A MODAL dialog: it traps focus, dismisses on Escape and on an outside click,
+ * marks the rest of the page inert while open, and restores focus to the
+ * trigger on close. Base UI owns all of that, which is exactly why this file
+ * never says so anywhere else — and why a reader searching for "modal I can
+ * close with escape" could not find it. Behaviour a consumer relies on has to
+ * be written down in the file they install, not left implicit in a dependency.
+ *
  * This file is the canonical example of the portable component-modeling floor.
  * Every rule R1–R26 from `skills/interlace-component/SKILL.md` that is applicable
  * to a Dialog primitive is illustrated here.

@@ -7,7 +7,12 @@ import { cn } from '../lib/cn.js';
 
 /**
  * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. The popup is
- * `w-72` (288px), which still clears the 320 floor with gutters; Base UI's
+ * A NON-MODAL floating panel: dismisses on Escape and on an outside click, and
+ * restores focus to the trigger on close, but does NOT trap focus or make the
+ * page inert — that is the line between this and Dialog/Sheet, and it is the
+ * reason to pick one over the other. Base UI owns the behaviour; naming it here
+ * is what makes the component findable by what it does.
+ * * `w-72` (288px), which still clears the 320 floor with gutters; Base UI's
  * positioner flips/shifts it into the viewport rather than letting it clip.
  * Projected onto the popup — `Popover.Root` renders no DOM node.
  */
