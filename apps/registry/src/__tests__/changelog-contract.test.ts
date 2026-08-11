@@ -9,6 +9,22 @@ import {
 } from '../../scripts/build-changelog.mjs';
 
 /**
+ * The shapes the .mjs parsers return. `allowJs` gives us the functions but no
+ * types — an object literal like `{ entries: [] }` infers as `never[]`, so the
+ * assertions below would not compile without naming the contract here. Kept
+ * deliberately narrow: only the fields these tests assert on.
+ */
+type ParsedEntry = {
+  summary: string;
+  kind: string;
+  bump: string;
+  components: string[];
+  migration: string | null;
+  source: string;
+};
+type ParsedRelease = { version: string; unreleased: boolean; entries: ParsedEntry[] };
+
+/**
  * The release notes are the upgrade path for copied source (see
  * `docs/philosophies/VERSIONING_PHILOSOPHY.md`), so the two rules that make
  * them usable — every entry names its components, every breaking entry carries
@@ -87,7 +103,7 @@ describe('parseChangelogMarkdown', () => {
   ].join('\n');
 
   it('reads releases newest-first with their entries', () => {
-    const releases = parseChangelogMarkdown(markdown);
+    const releases = parseChangelogMarkdown(markdown) as ParsedRelease[];
     expect(releases.map((r) => r.version)).toEqual(['1.1.0', '1.0.0']);
     expect(releases[0].entries[0].components).toEqual(['badge']);
     expect(releases[1].entries[0].kind).toBe('Breaking');
@@ -95,7 +111,7 @@ describe('parseChangelogMarkdown', () => {
   });
 
   it('strips the commit-hash prefix changesets writes', () => {
-    const releases = parseChangelogMarkdown(markdown);
+    const releases = parseChangelogMarkdown(markdown) as ParsedRelease[];
     expect(releases[0].entries[0].summary).toBe('Added a thing.');
   });
 });
@@ -107,7 +123,7 @@ describe('parseChangeset', () => {
         '\n',
       ),
       'shiny-pandas-jam.md',
-    );
+    ) as ParsedEntry;
     expect(entry).toMatchObject({ bump: 'minor', kind: 'Added' });
     expect(entry.source).toBe('.changeset/shiny-pandas-jam.md');
   });

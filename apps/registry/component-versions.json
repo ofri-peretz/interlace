@@ -232,9 +232,15 @@
     },
     {
       "name": "data-state",
+      "version": "1.1.0",
+      "since": "1.0.0",
+      "updated": "2026-08-10"
+    },
+    {
+      "name": "data-state-model",
       "version": "1.0.0",
       "since": "1.0.0",
-      "updated": "2026-06-01"
+      "updated": "2026-08-10"
     },
     {
       "name": "data-table",
@@ -415,6 +421,18 @@
       "version": "1.1.0",
       "since": "1.0.0",
       "updated": "2026-08-02"
+    },
+    {
+      "name": "meter",
+      "version": "1.0.0",
+      "since": "1.0.0",
+      "updated": "2026-08-10"
+    },
+    {
+      "name": "meter-scale",
+      "version": "1.0.0",
+      "since": "1.0.0",
+      "updated": "2026-08-10"
     },
     {
       "name": "metric-table",
@@ -610,13 +628,13 @@
     },
     {
       "name": "skeleton",
-      "version": "1.7.0",
+      "version": "1.8.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
     {
       "name": "skeleton-variants",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },
@@ -665,6 +683,12 @@
     {
       "name": "stat-group",
       "version": "1.1.0",
+      "since": "1.0.0",
+      "updated": "2026-08-10"
+    },
+    {
+      "name": "stat-strip",
+      "version": "1.0.0",
       "since": "1.0.0",
       "updated": "2026-08-10"
     },

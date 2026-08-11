@@ -1,0 +1,2809 @@
+{
+  "generatedAt": "2026-08-11T02:06:30.039Z",
+  "source": "apps/storybook/src/stories/concepts",
+  "pages": [
+    {
+      "slug": "overview",
+      "title": "Concepts",
+      "storyTitle": "Concepts",
+      "storybookId": "concepts--docs",
+      "file": "apps/storybook/src/stories/concepts/Index.mdx",
+      "lead": "This section explains what the Interlace design system is, what it guarantees, and where each guarantee is enforced. It is written for someone deciding whether to adopt it — and for someone who will never adopt it but wants the technique.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "This section explains what the Interlace design system **is**, what it **guarantees**, and where each guarantee is enforced. It is written for someone deciding whether to adopt it — and for someone who will never adopt it but wants the technique."
+        },
+        {
+          "type": "paragraph",
+          "text": "Every number on these pages is traceable. Where a claim is enforced by a test, the test file is named. Where it is only a convention, it says so."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What this is",
+          "id": "what-this-is"
+        },
+        {
+          "type": "paragraph",
+          "text": "A shadcn-compatible component registry plus the CSS token system underneath it. `npx shadcn add …` **copies source into your repository**. From that moment your file and our git history have nothing to do with each other. You will edit it. That is the pitch, and every other decision follows from it — see [Versioning](/concepts/versioning)."
+        },
+        {
+          "type": "paragraph",
+          "text": "The package (`@interlace/ui`, v1.0.0) is `\"private\": true` and is not published to npm. That is deliberate, not an oversight: publishing would create a second distribution channel with a *different* upgrade model for the same components."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The five layers",
+          "id": "the-five-layers"
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "┌──────────────────────────────────────────────────────────────────┐\n│  5. Templates    full pages — ArticleTemplate, AuthTemplate      │\n│                  composes 3+ patterns; streams per section       │\n├──────────────────────────────────────────────────────────────────┤\n│  4. Patterns     composites — AuthorByline, NewsletterForm       │\n│                  composes 2+ components                          │\n├──────────────────────────────────────────────────────────────────┤\n│  3. Components   atomic React primitives — Button, Input, Card,  │\n│                  Skeleton, Dialog, …                             │\n├──────────────────────────────────────────────────────────────────┤\n│  2. Semantics    --background, --foreground, --primary, --ring   │\n│                  → resolves into the brand layer via var(…)      │\n├──────────────────────────────────────────────────────────────────┤\n│  1. Primitives   raw values — hex, px, keyframes, motion         │\n└──────────────────────────────────────────────────────────────────┘"
+        },
+        {
+          "type": "paragraph",
+          "text": "Layers 1 and 2 are CSS. Layers 3, 4, 5 are React."
+        },
+        {
+          "type": "paragraph",
+          "text": "**The dependency rule: each layer only references the layer beneath it, never above.** A component reads a semantic token. A semantic token resolves to a brand primitive. A pattern composes components. A template composes patterns and components."
+        },
+        {
+          "type": "paragraph",
+          "text": "The rule has a practical payoff. Because nothing above layer 1 ever names a colour, **a brand fork is a single file** — you redeclare the `--interlace-*` literals and nothing else moves. See [Color & theming](/concepts/color-theming)."
+        },
+        {
+          "type": "paragraph",
+          "text": "Source: `packages/ui/DESIGN_SYSTEM_LAYERS.md`."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What the system guarantees",
+          "id": "what-the-system-guarantees"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Guarantee",
+            "Where it is enforced"
+          ],
+          "rows": [
+            [
+              "Every primitive declares the narrowest viewport it supports, and the value is one of 320 / 480 / 768",
+              "`primitives-min-viewport-lock.test.tsx` — 41 primitives + 13 templates, pinned literal by literal"
+            ],
+            [
+              "Breakpoints are 480 / 768 / 1024 / 1280 and no source file opens a raw `@media (min-width: …)`",
+              "`breakpoints-lock.test.ts`"
+            ],
+            [
+              "Every colour pair the themes paint clears 4.5:1 for body text and 3:1 for focus rings and control borders, in **four** combinations (2 themes × 2 schemes)",
+              "`theme-contract-lock.test.ts`"
+            ],
+            [
+              "Tinted composites (`bg-primary/10` + `text-primary`) clear 4.5:1 after alpha compositing",
+              "`composite-contrast-lock.test.ts`"
+            ],
+            [
+              "Every overlay and nav primitive ships a keyboard story that drives real keys; eight of them assert Escape",
+              "`overlay-nav-keyboard-lock.test.ts`"
+            ],
+            [
+              "Every `Skeleton variant=\"…\"` call site resolves to a registered variant that paints a non-empty shape",
+              "`skeleton-variant-coverage-lock.test.ts`"
+            ],
+            [
+              "Every template composes a `SectionBoundary` and ships a page-level `.Skeleton`",
+              "`templates-section-boundary-lock.test.ts`"
+            ],
+            [
+              "`Container` / `Section` / `Stack` emit exactly the documented class strings",
+              "`layout-primitives-lock.test.tsx` (45 assertions)"
+            ],
+            [
+              "No sizing utility collides with the spacing scale (`max-w-sm` is 16px here, not 384px)",
+              "`container-scale-lock.test.ts`, `spacing-token-shadowing-lock.test.ts`"
+            ],
+            [
+              "`src/charts/**` and `src/lib/**` at 100% statements / branches / functions / lines",
+              "`packages/ui/vitest.config.ts` thresholds"
+            ],
+            [
+              "Every story passes axe at WCAG 2.2 AA **and** AAA `color-contrast-enhanced`",
+              "`.storybook/test-runner.ts`, CI gate 7"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The coverage threshold is worth reading twice. It is `100` on all four metrics, and the rule is that **a category is either in the glob at 100 or it is out**. There is no \"87% and rising\" — a threshold below 100 only records how much you have stopped caring. The glob is currently exactly two directories; primitives, patterns and templates are honestly outside it."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What the system does not guarantee",
+          "id": "what-the-system-does-not-guarantee"
+        },
+        {
+          "type": "paragraph",
+          "text": "Stated plainly, because a contract you have to discover is not a contract."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**No runtime horizontal-overflow test.** The \"the page never scrolls sideways\" rule is enforced by review and by story frames that deliberately under-size a component, not by an assertion on `scrollWidth`."
+            },
+            {
+              "depth": 0,
+              "text": "**No CLS measurement.** Skeletons are shape-matched to their components by construction and by inspection; nothing compares the two rendered boxes."
+            },
+            {
+              "depth": 0,
+              "text": "**The keyboard lock is a source parse, not a behaviour test.** It asserts the story file contains a `play` function and the literal `{Escape}`. The behaviour itself is verified when Storybook's test runner executes those play functions."
+            },
+            {
+              "depth": 0,
+              "text": "**The motion duration/easing table in the philosophy corpus is not implemented as tokens.** Durations are literals inside `--animate-*` shorthands. See [Loading & motion](/concepts/loading-motion)."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The reason this section exists",
+          "id": "the-reason-this-section-exists"
+        },
+        {
+          "type": "paragraph",
+          "text": "Nine leading shadcn registries were read in August 2026. None of them publishes a keyboard path for its overlays, a measured contrast table, a screen-reader data equivalent for its charts, or a coverage number. Four have no props table at all."
+        },
+        {
+          "type": "paragraph",
+          "text": "So the differentiator is not the component count. It is the contract — and a contract nobody can read is not a contract. These pages are where it becomes legible."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Where to start",
+          "id": "where-to-start"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**[Responsiveness](/concepts/responsiveness)** — the breakpoint ladder, the `MIN_VIEWPORT` contract, and the two ways a responsive layout actually breaks."
+            },
+            {
+              "depth": 0,
+              "text": "**[Layout](/concepts/layout)** — the spacing scale, the four container widths, and which of `Container` / `Section` / `Stack` / `Grid` to reach for."
+            },
+            {
+              "depth": 0,
+              "text": "**[Color & theming](/concepts/color-theming)** — the token cascade, the two orthogonal axes, and how to fork the brand."
+            },
+            {
+              "depth": 0,
+              "text": "**[Accessibility](/concepts/accessibility)** — the actual bar, and the three classes of failure axe scored green."
+            },
+            {
+              "depth": 0,
+              "text": "**[Loading & motion](/concepts/loading-motion)** — skeletons that reserve the silhouette, one pulse, one announcement."
+            },
+            {
+              "depth": 0,
+              "text": "**[Versioning](/concepts/versioning)** — why a registry's changelog *is* its upgrade path."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The 26 domain philosophies these pages draw on live under [Philosophy](https://storybook.interlace.tools/?path=/docs/philosophy--docs). Concepts explain; the philosophies are the source contracts."
+        }
+      ],
+      "headings": [
+        {
+          "id": "what-this-is",
+          "text": "What this is"
+        },
+        {
+          "id": "the-five-layers",
+          "text": "The five layers"
+        },
+        {
+          "id": "what-the-system-guarantees",
+          "text": "What the system guarantees"
+        },
+        {
+          "id": "what-the-system-does-not-guarantee",
+          "text": "What the system does not guarantee"
+        },
+        {
+          "id": "the-reason-this-section-exists",
+          "text": "The reason this section exists"
+        },
+        {
+          "id": "where-to-start",
+          "text": "Where to start"
+        }
+      ]
+    },
+    {
+      "slug": "accessibility",
+      "title": "Accessibility",
+      "storyTitle": "Concepts/Accessibility",
+      "storybookId": "concepts-accessibility--docs",
+      "file": "apps/storybook/src/stories/concepts/Accessibility.mdx",
+      "lead": "axe is necessary and never sufficient. It cannot press a key, and it cannot see a control's border against its surface.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The bar this system is built to, stated as four falsifiable claims:"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            {
+              "depth": 0,
+              "text": "Every overlay and nav primitive has a **keyboard path that is written down and executed in CI** — open, traverse, dismiss, return focus."
+            },
+            {
+              "depth": 0,
+              "text": "Every focus ring and control border clears **3:1 against the surface behind it**, measured, in four theme × scheme combinations."
+            },
+            {
+              "depth": 0,
+              "text": "Every chart ships an **`sr-only` data equivalent** — the values, not a label describing them."
+            },
+            {
+              "depth": 0,
+              "text": "**Zero axe suppressions.** When a check fails, the token moves, not the rule."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "And the sentence that organises the rest of this page:"
+        },
+        {
+          "type": "quote",
+          "text": "**axe is necessary and never sufficient.** It cannot press a key, and it cannot see a control's border against its surface."
+        },
+        {
+          "type": "paragraph",
+          "text": "That is not a criticism of axe. It is a statement about what a static tree walk can observe. Everything below is a real defect this system shipped behind a green axe run."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Failure class 1 — axe cannot see a border",
+          "id": "failure-class-1-axe-cannot-see-a-border"
+        },
+        {
+          "type": "paragraph",
+          "text": "axe scores **text** against its background. It never scores a control's *border* against the surface behind it, because that is SC 1.4.11 (non-text contrast), and computing it requires knowing which element is \"the control\" and which is \"the surface\"."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two things shipped through that hole."
+        },
+        {
+          "type": "paragraph",
+          "text": "**The control border.** `--input` aliased `--border`. `--border` is `#eae7e2` — `1.23:1` on white, which is correct for a decorative separator and catastrophic for the edge of a text field. Every form control in light mode was effectively borderless. The fix was to fork the token to a warm mid-grey: `#8f857a` (**3.62:1**) light, `#6b635a` (**3.35:1**) dark."
+        },
+        {
+          "type": "paragraph",
+          "text": "**The focus ring.** The ring was `ring-ring/60`… but it started as `ring-ring/50`. Fifty-percent-alpha primary composites to **2.57:1 on white** — under the 3:1 floor of SC 2.4.13. Raised to `/60`, which measures **3.23:1 light and 4.73:1 dark**, on `Input`, `Textarea`, `Select`, `Checkbox`, `RadioGroup` and `Switch`."
+        },
+        {
+          "type": "paragraph",
+          "text": "Neither defect was visible to axe, and neither is visible to the eye at a glance — 2.57:1 looks like a focus ring. It looks like a focus ring right up until the person using it has low vision, which is the population the rule exists for."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two more from the same sweep:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "The `Switch`'s dark unchecked track was `bg-input/80`, compositing to **1.17:1**. The off state was invisible on dark."
+            },
+            {
+              "depth": 0,
+              "text": "The `Slider` rail was `bg-muted` — **1.07:1** on the background. An invisible track."
+            }
+          ]
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-accessibility--docs"
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "What replaced the missing coverage",
+          "id": "what-replaced-the-missing-coverage"
+        },
+        {
+          "type": "paragraph",
+          "text": "`theme-contract-lock.test.ts` scores non-text pairs explicitly, with the comment naming the two defects above so the next reader knows what the test is defending:"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "{ fg: 'ring',     bg: 'background', floor: 3, why: 'focus ring (SC 2.4.13)' },\n{ fg: 'ring',     bg: 'card',       floor: 3, why: 'focus ring inside a card' },\n{ fg: 'input',    bg: 'background', floor: 3, why: 'control border (SC 1.4.11)' },\n{ fg: 'input',    bg: 'card',       floor: 3, why: 'control border inside a card' },\n{ fg: 'viz-axis', bg: 'background', floor: 3, why: 'chart axis (SC 1.4.11)' },\n{ fg: 'viz-axis', bg: 'card',       floor: 3, why: 'chart axis inside a card' },"
+        },
+        {
+          "type": "paragraph",
+          "text": "Each pair is scored against **two** surfaces, because \"on the page\" and \"inside a card\" are different backgrounds and a token can clear one and fail the other."
+        },
+        {
+          "type": "paragraph",
+          "text": "The document-level ring is declared once, in `preflight.css`:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": ":focus-visible {\n  outline: 2px solid var(--ring);\n  outline-offset: 2px;\n  border-radius: 2px;\n}\n:focus:not(:focus-visible) { outline: none; }\n\n@media (forced-colors: active) {\n  :focus-visible { outline-color: Highlight; }\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "The `forced-colors` block matters more than it looks. In Windows High Contrast Mode the user's own palette replaces yours; deferring to the system `Highlight` keyword is how the ring survives that substitution instead of being flattened to the same colour as everything else."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Honest note:** the `3.23:1` / `4.73:1` alpha-composite figures live in per-component JSDoc tables and story descriptions. The lock scores the *solid* `--ring` (8.80:1 light / 11.79:1 dark). No automated test asserts the composited ring value today."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Failure class 2 — axe cannot press a key",
+          "id": "failure-class-2-axe-cannot-press-a-key"
+        },
+        {
+          "type": "paragraph",
+          "text": "The overlay/nav wave audited 16 primitives that were all passing axe. It found **seven real defects**. The two worst:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**`ContextMenu` had no keyboard path to open at all.** A WCAG 2.1.1 failure, and structurally invisible to a static scan: the menu is not in the DOM until a pointer event fires, so there is nothing for axe to walk."
+            },
+            {
+              "depth": 0,
+              "text": "**`ContextMenu.Compose` crashed on open** for any item of `type: 'label'`."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The rest of the list is a good tour of what a tree walk misses: a `Pagination` ellipsis whose `aria-hidden` swallowed its own `sr-only` text; an inert `HoverCard` trigger; `focus:` written where `focus-visible:` was meant; `ring-black/5`, invisible on dark; a `role=\"group\"` with only a label."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "The contract that replaced it",
+          "id": "the-contract-that-replaced-it"
+        },
+        {
+          "type": "paragraph",
+          "text": "Sixteen primitives — `dialog`, `alert-dialog`, `sheet`, `popover`, `tooltip`, `hover-card`, `dropdown-menu`, `context-menu`, `tabs`, `accordion`, `collapsible`, `breadcrumb`, `pagination`, `toc`, `skip-link`, `scroll-area` — each ship a story whose `play` function drives real keys. Eight of them (the dismissible surfaces) must additionally assert Escape. `overlay-nav-keyboard-lock.test.ts` fails the build if a story loses its `play` function, with the message:"
+        },
+        {
+          "type": "quote",
+          "text": "`primitives need a keyboard story — axe cannot press a key.`"
+        },
+        {
+          "type": "paragraph",
+          "text": "The flows are written as named steps, so the docs and the test are the same artefact. `Dialog`, for example:"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Step"
+          ],
+          "rows": [
+            [
+              "Open dialog by clicking trigger"
+            ],
+            [
+              "Dialog has accessible name + description"
+            ],
+            [
+              "Focus moves INTO the dialog (trap entered)"
+            ],
+            [
+              "Escape closes dialog"
+            ],
+            [
+              "**Focus is RESTORED to the trigger**"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "That last step is the one nothing else catches. A dialog that closes and drops focus to `<body>` looks perfect, passes axe, and strands a keyboard user at the top of the document."
+        },
+        {
+          "type": "paragraph",
+          "text": "`ContextMenu`'s flow is worth reading for the same reason: *'Shift+F10 opens the menu from the keyboard'* — the key that makes a context menu reachable without a right-click, and the one nobody remembers to implement."
+        },
+        {
+          "type": "paragraph",
+          "text": "Charts get the same treatment: `TimeSeries` asserts *'ArrowRight reads out a specific value'* and *'Escape clears the crosshair (WCAG 2.1.2)'*; `NetworkGraph` asserts arrow-key traversal and Enter to select. There are unit tests behind both, including *'leaves unrelated keys to the page — a focused chart is not a keyboard trap'*."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Failure class 3 — axe reads an SVG as one opaque node",
+          "id": "failure-class-3-axe-reads-an-svg-as-one-opaque-node"
+        },
+        {
+          "type": "paragraph",
+          "text": "A chart with a good `aria-label` scores green. Whether the *values* are reachable is not something a static scan can ask."
+        },
+        {
+          "type": "paragraph",
+          "text": "WCAG 1.1.1 wants a text equivalent for non-text content, and **for data the equivalent is the data.** So every data chart ships a real `<table>`, `sr-only` by default:"
+        },
+        {
+          "type": "code",
+          "lang": "tsx",
+          "code": "<SeriesTable\n  series={[{ label, points }]}\n  caption={`${label} — full data`}\n  hidden={!showTable}\n/>"
+        },
+        {
+          "type": "paragraph",
+          "text": "`hidden` defaults to `true`, which renders `sr-only` — present in the accessibility tree and the DOM, absent from the layout. Pass `hidden={false}` to show it. A \"show data\" toggle next to a chart is a good default, not an admission."
+        },
+        {
+          "type": "paragraph",
+          "text": "Details that make the difference between a table and a *useful* table:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**A required `caption`.** An unnamed table is a wall of numbers."
+            },
+            {
+              "depth": 0,
+              "text": "**`<th scope=\"col\">` and `<th scope=\"row\">`**, so a screen reader can announce \"March, revenue, 12,400\" instead of \"12,400\"."
+            },
+            {
+              "depth": 0,
+              "text": "**The row set is the union of every series' keys**, so a series with a gap still lines up column-for-column with one that has none."
+            },
+            {
+              "depth": 0,
+              "text": "**Gaps say \"No data\".** An em dash announces as *nothing at all* — the cell simply goes silent, and a silent cell is indistinguishable from a zero to someone who cannot see the alignment."
+            },
+            {
+              "depth": 0,
+              "text": "**`NetworkGraph` discloses its own display cap** in the same `sr-only` block: *\"N lower-ranked nodes are below the display cap of `limit`. They are not filtered out.\"* A truncated view that does not say it is truncated makes a different claim than the data supports."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Here is the same component rendered visibly. Screen-reader users get exactly this, positioned off-screen, from any `TimeSeries`:"
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-accessibility--docs"
+        },
+        {
+          "type": "paragraph",
+          "text": "`Delta` follows the same rule at a smaller scale: the arrow glyph and the digits are `aria-hidden`, and an `sr-only` span carries the sentence — including *\"Not enough data to compare\"* for the empty case, rather than rendering nothing and leaving the reader to infer it."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The other pieces of the bar",
+          "id": "the-other-pieces-of-the-bar"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Skip link.** `SkipLink` is `sr-only` until focused, then fully revealed (`focus-visible:not-sr-only` plus position, background, border and ring). Its story asserts it is the *first* tab stop and that focus makes it visible — \"visible on focus\" is the half of the pattern people forget, and a skip link you cannot see is a skip link nobody uses. The target must carry `tabIndex={-1}` so activating it moves **focus**, not just scroll position."
+        },
+        {
+          "type": "paragraph",
+          "text": "**`VisuallyHidden`.** The `sr-only` clip technique, deliberately not `display: none` or `visibility: hidden` — those remove the node from the accessibility tree entirely."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Behaviour comes from a headless library.** Focus trapping, roving tabindex and dismiss semantics are Base UI's, not hand-rolled. Hand-rolled focus management is where the long tail of these bugs lives."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Coverage.** `src/charts/**` and `src/lib/**` sit at **100% statements, branches, functions and lines** — 387 statements, 305 branches, 107 functions, 332 lines, all covered. The rule is that a category is either in the glob at 100 or it is out; primitives, patterns and templates are currently out, and saying so is more useful than a blended percentage that hides which half is tested."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Where the bar is not yet met",
+          "id": "where-the-bar-is-not-yet-met"
+        },
+        {
+          "type": "paragraph",
+          "text": "Published because a contract with undocumented holes is not a contract."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**`Select` has no keyboard `play` function**, despite its source comment claiming its keyboard map is \"asserted in `Select.stories.tsx`\". It is also outside the lock's primitive list, so nothing fails. The map itself is Base UI's and is very likely correct — but \"very likely correct\" is the state this whole page exists to replace."
+            },
+            {
+              "depth": 0,
+              "text": "**`FocusRing` has no behavioural test.** The component whose entire job is the focus ring is covered only by the structural viewport lock."
+            },
+            {
+              "depth": 0,
+              "text": "**The overlay keyboard lock is a source parse.** It asserts the story file contains `play:` and the literal `{Escape}`; the behaviour is verified when the Storybook test runner executes those play functions, not by the lock."
+            },
+            {
+              "depth": 0,
+              "text": "**The landing site's live axe check covers one route.**"
+            },
+            {
+              "depth": 0,
+              "text": "**The composited focus-ring ratios are documented, not asserted.**"
+            }
+          ]
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What to take from this",
+          "id": "what-to-take-from-this"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Treat a green axe run as the start of the audit.** Then ask the two questions it structurally cannot: *can I do this with the keyboard only*, and *can I see the boundary of this control*."
+            },
+            {
+              "depth": 0,
+              "text": "**Write the keyboard path as named steps in a test.** It becomes the documentation, and it fails when someone deletes it."
+            },
+            {
+              "depth": 0,
+              "text": "**For any data visual, ship the data.** A label describes the picture; a table is the picture's equivalent."
+            },
+            {
+              "depth": 0,
+              "text": "**Score non-text contrast against every surface the element can sit on**, not just the page background."
+            },
+            {
+              "depth": 0,
+              "text": "**Publish your gaps.** A reader who finds an undocumented hole stops believing the documented guarantees too."
+            }
+          ]
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Sources.** `packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/src/charts/{series-table,time-series,network-graph,delta}.tsx` · `packages/ui/src/primitives/{skip-link,visually-hidden,focus-ring}.tsx` · `packages/ui/styles/preflight.css` · `packages/ui/vitest.config.ts` · `apps/storybook/.storybook/test-runner.ts` · `docs/philosophies/{A11Y,KEYBOARD,VISUALIZATION}_PHILOSOPHY.md`"
+        }
+      ],
+      "headings": [
+        {
+          "id": "failure-class-1-axe-cannot-see-a-border",
+          "text": "Failure class 1 — axe cannot see a border"
+        },
+        {
+          "id": "failure-class-2-axe-cannot-press-a-key",
+          "text": "Failure class 2 — axe cannot press a key"
+        },
+        {
+          "id": "failure-class-3-axe-reads-an-svg-as-one-opaque-node",
+          "text": "Failure class 3 — axe reads an SVG as one opaque node"
+        },
+        {
+          "id": "the-other-pieces-of-the-bar",
+          "text": "The other pieces of the bar"
+        },
+        {
+          "id": "where-the-bar-is-not-yet-met",
+          "text": "Where the bar is not yet met"
+        },
+        {
+          "id": "what-to-take-from-this",
+          "text": "What to take from this"
+        }
+      ]
+    },
+    {
+      "slug": "color-theming",
+      "title": "Color & theming",
+      "storyTitle": "Concepts/Color & Theming",
+      "storybookId": "concepts-color-theming--docs",
+      "file": "apps/storybook/src/stories/concepts/ColorAndTheming.mdx",
+      "lead": "Everything else on this page is a consequence, including the measured contrast contract at the bottom.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Two ideas carry this whole section:"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**A three-stage cascade** — brand literals → semantic aliases → utility classes — so that no React component ever names a colour."
+            },
+            {
+              "depth": 0,
+              "text": "**Two orthogonal axes** — *scheme* (light/dark) and *theme* (brand) — so that \"dark mode\" and \"a different brand\" are independent choices rather than a combinatorial mess."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Everything else on this page is a consequence, including the measured contrast contract at the bottom."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The cascade",
+          "id": "the-cascade"
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "  layer 1   --interlace-primary: #7d350c        ← the only hex literals\n     │\n     │      interlace-theme.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      interlace-theme.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
+        },
+        {
+          "type": "paragraph",
+          "text": "A component writes `bg-primary`. It never writes `#7d350c`, and it never writes `var(--interlace-primary)` either — reaching past the semantic layer would couple the component to the brand, which is exactly the coupling the cascade exists to prevent."
+        },
+        {
+          "type": "paragraph",
+          "text": "Flip the **Theme** and light/dark toolbar controls above and watch the strip below repaint. Not one class in it changes — only which brand block is winning on `<html>`."
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-color-theming--docs"
+        },
+        {
+          "type": "paragraph",
+          "text": "The full stylesheet layer order, from `styles/index.css`:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": "@layer interlace.primitives, interlace.foundation, interlace.preflight,\n       interlace.bridge, interlace.brand, interlace.semantics;"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Layer",
+            "File",
+            "Owns"
+          ],
+          "rows": [
+            [
+              "`interlace.primitives`",
+              "`tokens.css`",
+              "keyframes, animation utilities"
+            ],
+            [
+              "`interlace.foundation`",
+              "`foundation.css`",
+              "type / spacing / radius / container / breakpoint scales"
+            ],
+            [
+              "`interlace.preflight`",
+              "`preflight.css`",
+              "body paint, `::selection`, the focus ring, scrollbar tint"
+            ],
+            [
+              "`interlace.bridge`",
+              "`theme.css`",
+              "the fumadocs ↔ shadcn seam"
+            ],
+            [
+              "`interlace.brand`",
+              "`interlace-theme.css`",
+              "the `--interlace-*` hex literals. **The supported override surface**"
+            ],
+            [
+              "`interlace.semantics`",
+              "`interlace-theme.css`",
+              "`--background`, `--primary`, `--ring`, … bound to the brand layer"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "The substitution rule that makes this work",
+          "id": "the-substitution-rule-that-makes-this-work"
+        },
+        {
+          "type": "paragraph",
+          "text": "A custom property whose value is a `var()` is substituted **at computed-value time, on the element that declares it.** That single sentence explains the shape of the semantic block:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": ":root,\n.dark,\n[data-scheme='dark'],\n[data-theme] {\n  --primary: var(--interlace-primary);\n  --background: var(--interlace-background);\n  --ring: var(--interlace-ring);\n  /* … */\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "If the aliases were declared only on `:root`, then setting `data-theme=\"harbor\"` on `<html>` would change `--interlace-primary` but `--primary` would already have been resolved against the `:root` value. The selector list is therefore **the complete set of brand-override selectors** — `[data-theme]` is attribute-*presence*, not a value match, so it covers every theme file that will ever ship without needing to be edited when one is added."
+        },
+        {
+          "type": "paragraph",
+          "text": "This is the kind of detail that is invisible until it bites: your new theme \"does nothing\", and the reason is not your file — it is where the alias was declared."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Two orthogonal axes",
+          "id": "two-orthogonal-axes"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Selector",
+            "Means"
+          ],
+          "rows": [
+            [
+              "`:root`",
+              "interlace · light — the default"
+            ],
+            [
+              "`.dark`, `[data-scheme='dark']`",
+              "interlace · dark"
+            ],
+            [
+              "`[data-theme='X']`",
+              "theme X · light"
+            ],
+            [
+              "`[data-theme='X'].dark`",
+              "theme X · dark"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Scheme is keyed on the `.dark` class, matching the shadcn / `next-themes` convention, so the system drops into an existing app without a migration. Theme is keyed on `data-theme`."
+        },
+        {
+          "type": "paragraph",
+          "text": "`[data-theme='dark']` deliberately no longer means \"the dark scheme\". It now reads as \"the theme named `dark`\", which is not a registered theme, so it resolves to interlace · light. That was a breaking change, made on purpose: one attribute cannot carry two orthogonal axes without eventually producing a combination nobody can name."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "Specificity is doing real work here",
+          "id": "specificity-is-doing-real-work-here"
+        },
+        {
+          "type": "paragraph",
+          "text": "`[data-theme='harbor']` and `.dark` are both specificity `(0,1,0)`. On `<html data-theme=\"harbor\" class=\"dark\">` the tie is broken by **source order** — the theme file is imported after the default theme — and only then does `[data-theme='harbor'].dark` at `(0,2,0)` sit cleanly on top."
+        },
+        {
+          "type": "paragraph",
+          "text": "Which is why `styles/index.css` says, in a comment on the import list, that the order is load-bearing. If you fork this pattern, keep the default theme's dark block *before* any additional theme's light block, or the stack is incoherent in exactly one of the four combinations — the one nobody tests."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "The default theme writes no attribute",
+          "id": "the-default-theme-writes-no-attribute"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "export function applyTheme(theme: ThemeName, scheme: Scheme): void {\n  const root = document.documentElement;\n  if (theme === DEFAULT_THEME) root.removeAttribute('data-theme');\n  else root.setAttribute('data-theme', theme);\n  root.classList.toggle('dark', scheme === 'dark');\n  root.style.colorScheme = scheme;\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "`:root` *already is* the default theme. Writing `data-theme=\"interlace\"` would add a selector that has to be kept in sync with a stylesheet rule that does not exist. There is a test named after this exact rule: `'writes NO data-theme for the default theme — :root already is it'`."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two more details in those five lines:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**`style.colorScheme` is not decoration.** It is what makes the browser paint form controls, scrollbars and the pre-CSS canvas in the matching scheme. Without it a dark page keeps a white scrollbar and white native select popups."
+            },
+            {
+              "depth": 0,
+              "text": "**The stored preference is the preference, not the resolution.** The hook keeps `'light' | 'dark' | 'system'` and stores `system` as the *absence* of the key. Storing the resolved value instead turns \"follow my system\" into \"dark, forever, because it was dark when I clicked\"."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "A bootstrap script applies both axes before first paint, from the same storage keys the hook writes, so there is no flash — and there is a test asserting the script and the hook agree (`'agrees with the bootstrap script — no repaint between them'`)."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Forking the brand",
+          "id": "forking-the-brand"
+        },
+        {
+          "type": "paragraph",
+          "text": "The entire override surface is `@layer interlace.brand`: the `--interlace-*` literals, in both schemes. A theme file contains hex values and nothing else — no semantic alias, no `@theme` block, no component CSS."
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": "@layer interlace.brand {\n  [data-theme='harbor'] {\n    --interlace-primary: #0f4c81;\n    --interlace-background: #f7f9fb;\n    /* …the other 52… */\n  }\n\n  [data-theme='harbor'].dark,\n  [data-theme='harbor'][data-scheme='dark'] {\n    --interlace-primary: #8dc2f0;\n    --interlace-background: #06111f;\n    /* … */\n  }\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "**54 tokens, twice.** The manifest is in `src/lib/theme-tokens.ts` and it is *derived* from the `:root` block of the default theme, in source order — not hand-typed — so a token added to the brand layer becomes a token every theme is required to define. `theme-contract-lock.test.ts` asserts both directions: every theme defines every token in the manifest, and **defines nothing outside it**. A theme that quietly adds a 55th token is a theme that has started to fork the system."
+        },
+        {
+          "type": "paragraph",
+          "text": "Registering a theme is three edits: the file, one `@import` line, and a row in the `THEMES` registry. The contract lock reads all three."
+        },
+        {
+          "type": "paragraph",
+          "text": "What you should not override: `interlace.preflight` (the focus ring, the body paint), `interlace.bridge` (the fumadocs seam), `interlace.foundation` (the scales). Those are the parts that are the same across brands by design."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The measured contrast contract",
+          "id": "the-measured-contrast-contract"
+        },
+        {
+          "type": "paragraph",
+          "text": "The floors, from `theme-contract-lock.test.ts`:"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "const AA_TEXT = 4.5;      // WCAG 2.2 SC 1.4.3\nconst AA_NON_TEXT = 3;    // SC 1.4.11 (non-text) + SC 2.4.13 (focus)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The test is not a spot check. For **each of the four combinations** — two themes × two schemes — it parses the stylesheet, resolves `var()` aliases (and refuses to hang on a cycle), composites alpha, and asserts:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "every body-text pair on every surface it paints clears 4.5:1 — over 20 pairs per combination;"
+            },
+            {
+              "depth": 0,
+              "text": "the six status tones (`primary`, `destructive`, `success`, `warning`, `info`, `caution`) clear 4.5:1 in three forms each: as a filled chip, as text on the page, and as text inside a card;"
+            },
+            {
+              "depth": 0,
+              "text": "the focus ring and control borders clear 3:1 against **both** the page background and a card surface;"
+            },
+            {
+              "depth": 0,
+              "text": "the chart axis colour clears 3:1 against both;"
+            },
+            {
+              "depth": 0,
+              "text": "`bg-primary/10` + `text-primary` — the stock shadcn tinted-badge pattern — clears 4.5:1 **after compositing**."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The last one is the binding constraint on the entire palette, and it is worth walking through because it is not intuitive."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "Why the brand orange is that dark",
+          "id": "why-the-brand-orange-is-that-dark"
+        },
+        {
+          "type": "paragraph",
+          "text": "`#7d350c` measures **8.80:1 on white** and **7.46:1 on its own 10% tint**. The tint is the constraint, not the page."
+        },
+        {
+          "type": "paragraph",
+          "text": "A lighter, friendlier orange — `#8a3a10` — measures over 8:1 on white and would sail through a naive check. Composited onto white at 10% alpha it produces `#f3ebe7`, and the same orange on *that* measures **6.63:1**. It failed. So the palette is pinned by a surface that only exists when two utilities are combined."
+        },
+        {
+          "type": "paragraph",
+          "text": "Dark mode inverts the pressure: the cover orange `#f4794a` is only 7.24:1 on near-black, too dark to carry the pair, so dark uses the lighter `#fbb99a` at **11.79:1**."
+        },
+        {
+          "type": "paragraph",
+          "text": "`composite-contrast-lock.test.ts` exists specifically for these composites. It parses variant prefixes and alpha off real class chains found in source, picks the state-matched background over the unconditional one, and scores the result. Storybook's axe gate catches this class of failure only for the pairs some story happens to render; the lock catches it for every pair the source contains."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "A published table, per theme",
+          "id": "a-published-table-per-theme"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every theme file carries its own measured table. Harbor's, verbatim and unrounded:"
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "                                       light      dark\n  foreground   on background         17.74:1   16.19:1   (AAA)\n  card-fg      on card               18.72:1   14.69:1   (AAA)\n  muted-fg     on background          7.82:1    9.52:1   (AAA)\n  muted-fg     on muted               7.34:1    8.64:1   (AAA)\n  primary-fg   on primary             8.86:1   10.03:1   (AAA)\n  primary      on background          8.39:1   10.03:1   (AAA)\n  primary      on primary/10 tint     7.15:1    8.42:1   (AAA)\n  destructive  on background          7.60:1   10.03:1   (AAA)\n  ─ non-text (SC 1.4.11 / 2.4.13, floor 3:1) ─\n  ring         on background          8.39:1   10.03:1\n  input        on background          3.43:1    4.25:1\n  viz-axis     on background          3.57:1    4.84:1"
+        },
+        {
+          "type": "paragraph",
+          "text": "Publishing the number rather than a badge is the point. \"AA compliant\" is unfalsifiable; `3.43:1` tells a reader with a stricter internal bar exactly where they stand, and tells the next maintainer how much headroom a token change has."
+        },
+        {
+          "type": "paragraph",
+          "text": "The bar in Storybook is stricter still: the axe gate enforces WCAG **AAA** `color-contrast-enhanced` (7:1) on every story, with an empty carve-out list."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "Two tokens that are deliberately below the floor",
+          "id": "two-tokens-that-are-deliberately-below-the-floor"
+        },
+        {
+          "type": "paragraph",
+          "text": "`--interlace-border` is `1.23:1` on white. That is not an oversight — it is a decorative separator, and SC 1.4.11 exempts decoration. What it is *not* is a control border. When the two were the same token, form fields were effectively borderless; see [Accessibility](/concepts/accessibility) for how that shipped past a green axe run and what it cost."
+        },
+        {
+          "type": "paragraph",
+          "text": "The fix was to fork `--interlace-input` off `--interlace-border` at a warm mid-grey: `#8f857a` (3.62:1) light, `#6b635a` (3.35:1) dark."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What to take from this even if you never install anything",
+          "id": "what-to-take-from-this-even-if-you-never-install-anything"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Put the brand literals in exactly one layer, and make every other layer forbidden to name a colour.** Then \"re-brand\" is a file, not a project."
+            },
+            {
+              "depth": 0,
+              "text": "**Declare the semantic aliases on every selector that can override the brand layer**, because `var()` resolves on the declaring element."
+            },
+            {
+              "depth": 0,
+              "text": "**Keep scheme and theme on separate attributes.** The moment one attribute carries both, you have `data-theme=\"dark-harbor\"` and no way to ask \"is it dark?\"."
+            },
+            {
+              "depth": 0,
+              "text": "**Test the composited colour, not the token.** `bg-primary/10` is a colour that appears nowhere in your stylesheet and on every one of your pages."
+            },
+            {
+              "depth": 0,
+              "text": "**Publish the ratios.** A badge is a claim; a table is evidence."
+            }
+          ]
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Sources.** `packages/ui/styles/index.css` · `packages/ui/styles/interlace-theme.css` · `packages/ui/styles/themes/harbor.css` · `packages/ui/src/lib/{use-theme,theme-script,theme-tokens}.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/__tests__/composite-contrast-lock.test.ts` · `packages/ui/__tests__/use-theme.test.tsx`"
+        }
+      ],
+      "headings": [
+        {
+          "id": "the-cascade",
+          "text": "The cascade"
+        },
+        {
+          "id": "two-orthogonal-axes",
+          "text": "Two orthogonal axes"
+        },
+        {
+          "id": "forking-the-brand",
+          "text": "Forking the brand"
+        },
+        {
+          "id": "the-measured-contrast-contract",
+          "text": "The measured contrast contract"
+        },
+        {
+          "id": "what-to-take-from-this-even-if-you-never-install-anything",
+          "text": "What to take from this even if you never install anything"
+        }
+      ]
+    },
+    {
+      "slug": "layout",
+      "title": "Layout",
+      "storyTitle": "Concepts/Layout",
+      "storybookId": "concepts-layout--docs",
+      "file": "apps/storybook/src/stories/concepts/Layout.mdx",
+      "lead": "Layout in this system is deliberately small: six spacing steps, four container widths, four primitives. Everything else is composition.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Layout in this system is deliberately small: **six spacing steps, four container widths, four primitives.** Everything else is composition."
+        },
+        {
+          "type": "paragraph",
+          "text": "The size is the point. A spacing scale with twelve steps is a scale nobody can hold in their head, so people guess, and the guesses diverge across surfaces. Six steps can be memorised in an afternoon and defended in review."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The spacing scale",
+          "id": "the-spacing-scale"
+        },
+        {
+          "type": "paragraph",
+          "text": "Six tokens, declared once in `packages/ui/styles/foundation.css`:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": "--spacing-xs:  0.5rem;  /*  8px — inline chip / badge padding */\n--spacing-sm:  1rem;    /* 16px — card padding, mobile page padding */\n--spacing-md:  1.5rem;  /* 24px — card-grid gaps */\n--spacing-lg:  2.5rem;  /* 40px — mobile section vertical padding */\n--spacing-xl:  4rem;    /* 64px — desktop section vertical padding */\n--spacing-2xl: 6rem;    /* 96px — hero / final-CTA breathing room */"
+        },
+        {
+          "type": "paragraph",
+          "text": "These generate `p-xs`, `gap-md`, `py-xl` and friends. They are **additive** — Tailwind's numeric scale (`p-4`, `gap-6`) still works and is not the contract. When a DS component needs spacing it uses the named token, so that \"the gap between cards\" is one decision made once rather than 30 call sites that happen to agree."
+        },
+        {
+          "type": "paragraph",
+          "text": "Note that each token carries its *intent* in the comment, not just its value. `--spacing-lg` is not \"40px\"; it is \"mobile section vertical padding\". When someone asks whether to use `lg` or `xl` for a new section, the comment answers it."
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-layout--docs"
+        },
+        {
+          "type": "paragraph",
+          "text": "Radius follows the same discipline — three steps, `8 / 12 / 16px`, and they deliberately override Tailwind's defaults (`2 / 6 / 8px`) so `rounded-md` means one thing in every consumer of the system."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The named-scale trap",
+          "id": "the-named-scale-trap"
+        },
+        {
+          "type": "paragraph",
+          "text": "This is the most useful thing on this page, and it is not specific to us. It will happen to any Tailwind v4 design system that names its spacing steps."
+        },
+        {
+          "type": "paragraph",
+          "text": "Tailwind v4 generates utilities from theme keys **by namespace**, and the spacing namespace feeds far more than padding and gap. It also feeds `w-*`, `h-*`, `min-w-*`, `max-w-*`, `size-*`, `basis-*` and `inset-*`."
+        },
+        {
+          "type": "paragraph",
+          "text": "So declaring `--spacing-sm: 1rem` does not only create `p-sm`. It silently **redefines `max-w-sm` from Tailwind's 24rem (384px) to 1rem (16px)**."
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "max-w-sm   → 384px  before        →   16px  after\nmax-w-md   → 448px                →   24px\nmax-w-2xl  → 672px                →   96px"
+        },
+        {
+          "type": "paragraph",
+          "text": "Measured in a live browser against this system: `max-w-sm` computes to `16px`."
+        },
+        {
+          "type": "paragraph",
+          "text": "What shipped before this was understood: **96px hero paragraphs, 40px dialogs, and 16px sheets**, on the public registry site. The failure is brutal to diagnose because nothing is misspelled — devtools shows `max-width: var(--spacing-sm)` resolving correctly to a value you did not intend."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two locks now hold the line:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "`container-scale-lock.test.ts` — no `max-w-*` / `min-w-*` with a named key (`xs`…`7xl`) anywhere in `packages/ui/src`, `apps/registry/src` or `apps/storybook/src`. `xs`…`2xl` are broken; `3xl`…`7xl` work but violate the four-width contract, so both are banned in the same rule."
+            },
+            {
+              "depth": 0,
+              "text": "`spacing-token-shadowing-lock.test.ts` — the same collision, scoped to `max-w` and derived from the *actual* spacing keys rather than a hard-coded list, so adding a seventh spacing token extends the ban automatically."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The second lock's scope is itself a small lesson. An earlier, broader version flagged `min-h-2xl` on `Textarea` — which is intentional and correct — and a lock that cries wolf teaches the next reader to distrust it. It was narrowed to the utility family that is genuinely broken."
+        },
+        {
+          "type": "paragraph",
+          "text": "**What stays safe:** numeric widths (`max-w-96` = 24rem) and arbitrary token values (`max-w-[65ch]`, `max-w-(--container-prose)`). Which is why the `Container` primitive below is written with arbitrary values rather than named ones."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The four primitives",
+          "id": "the-four-primitives"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Reach for",
+            "When",
+            "Owns"
+          ],
+          "rows": [
+            [
+              "`Container`",
+              "You need a max width and page gutters",
+              "horizontal padding + max-width"
+            ],
+            [
+              "`Section`",
+              "You need a full-width page band",
+              "vertical rhythm, tone, dividers; injects a `Container`"
+            ],
+            [
+              "`Stack` / `Cluster`",
+              "Children flow one direction with a consistent gap",
+              "`flex` + one gap token"
+            ],
+            [
+              "`Grid` / `GridItem`",
+              "Children occupy tracks",
+              "`grid` + track count + gap"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The decision is usually mechanical: **is this a page band, a width cap, a flow, or a set of tracks?** If two of them are true you are describing two elements, not one."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "`Container` — four widths, no fifth",
+          "id": "container-four-widths-no-fifth"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "cva('mx-auto w-full px-4 sm:px-6 lg:px-8', {\n  variants: {\n    size: {\n      prose:   'max-w-[65ch]',\n      content: 'max-w-[1024px]',   // default\n      wide:    'max-w-[1280px]',\n      full:    'max-w-none px-0 sm:px-0 lg:px-0',\n    },\n  },\n});"
+        },
+        {
+          "type": "paragraph",
+          "text": "The base string is the whole contract: centre (`mx-auto`), fill (`w-full`), and a **responsive gutter** of `px-4 sm:px-6 lg:px-8`. Gutters scale with the viewport because 16px of breathing room reads generous on a phone and cramped on a 1280px display."
+        },
+        {
+          "type": "paragraph",
+          "text": "`prose` is `65ch`, not a pixel value, because the measure constraint is about *characters per line* (the reading research lands around 45–75), and `ch` tracks the font. A pixel width silently becomes the wrong measure the moment someone changes the body font."
+        },
+        {
+          "type": "paragraph",
+          "text": "`full` is the only size that strips padding — full-bleed means full-bleed, and a \"full width with gutters\" variant would be `wide` with more steps."
+        },
+        {
+          "type": "paragraph",
+          "text": "Open-coding `container mx-auto px-4` in app code is the thing this replaces. It looks harmless until two pages disagree about the gutter by 4px and nobody can find where."
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-layout--docs"
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "`Section` — vertical rhythm, and it always contains",
+          "id": "section-vertical-rhythm-and-it-always-contains"
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "spacing=\"tight\"       py-12 md:py-16 lg:py-20\nspacing=\"comfortable\" py-16 md:py-20 lg:py-24    (default)\nspacing=\"spacious\"    py-20 md:py-24 lg:py-32"
+        },
+        {
+          "type": "paragraph",
+          "text": "Three things to notice."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Vertical padding is responsive too.** Most systems scale horizontal padding and leave vertical padding fixed, which makes desktop pages feel cramped between bands."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Every variant clears the documented floors** — 40px mobile, 64px desktop — at the matching breakpoint. `layout-primitives-lock.test.tsx` asserts the exact strings, and it also asserts the *absence* of `py-10` and `lg:py-14`, which is a regression that actually shipped on a stats bar in May 2026. Locking the absence of a wrong value, not just the presence of the right one, is what makes that test catch a partial revert."
+        },
+        {
+          "type": "paragraph",
+          "text": "**`Section` always renders a `Container` child.** There is no edge-to-edge escape hatch other than `container=\"full\"`. Content that touches the viewport edge on a 1280px screen is a bug in nearly every case, so the primitive makes it the deliberate choice rather than the default one."
+        },
+        {
+          "type": "paragraph",
+          "text": "`tone` (`default` / `muted` / `inset`) and `divider` (`none` / `top` / `bottom` / `both`) cover band separation. Both use borders and background *tone*, not shadow stacks — hierarchy here reads from whitespace and 1px borders."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "`Stack` and `Cluster`",
+          "id": "stack-and-cluster"
+        },
+        {
+          "type": "paragraph",
+          "text": "`Stack` is `flex` with one gap token; `Cluster` is the horizontal variant with wrap, `gap=\"sm\"` and `align=\"center\"` pre-set, because the chip row is the case it exists for."
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-layout--docs"
+        },
+        {
+          "type": "paragraph",
+          "text": "The lock asserts `gap=\"md\"` emits `gap-md` and **not** `gap-6` — even though those compute to the same 24px today. The token is the contract; the pixel value is an implementation detail that a theme is allowed to move."
+        },
+        {
+          "type": "paragraph",
+          "text": "`Cluster` overrides `data-slot` to `\"cluster\"` rather than inheriting `\"stack\"`, so a `[data-slot=\"cluster\"]` selector in consumer CSS keeps meaning what it says."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The five layers, and why they are worth the ceremony",
+          "id": "the-five-layers-and-why-they-are-worth-the-ceremony"
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "5. Templates   full pages          composes 3+ patterns, streams per section\n4. Patterns    composites          composes 2+ components\n3. Components  React primitives    Button, Input, Card, Dialog, Skeleton\n2. Semantics   CSS custom props    --background, --primary, --ring\n1. Primitives  raw values          hex, px, keyframes"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Each layer references only the layer beneath it.** Written as rules:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "Layer 1 never references a semantic token. It is the source."
+            },
+            {
+              "depth": 0,
+              "text": "Layer 2 never declares a raw hex or px. It is alias mapping."
+            },
+            {
+              "depth": 0,
+              "text": "Layer 3 never reaches past layer 2 to a raw value. (Enforced by the `no-raw-color-literal` lint rule.)"
+            },
+            {
+              "depth": 0,
+              "text": "Layer 4 never bypasses a primitive to reach a token. If a pattern needs a primitive that does not exist, ship the primitive first."
+            },
+            {
+              "depth": 0,
+              "text": "Layer 5 wraps every independently-loadable region in `SectionBoundary` and ships a page-level `.Skeleton` static. `templates-section-boundary-lock.test.ts` asserts both, for all 13 templates."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The payoff is specific, not architectural piety:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "Because layer 3 never names a colour, **re-branding is one CSS file.**"
+            },
+            {
+              "depth": 0,
+              "text": "Because layer 4 composes layer 3 rather than forking it, a fix to `Button` reaches every pattern that uses it without 12 edits."
+            },
+            {
+              "depth": 0,
+              "text": "Because layer 5 owns streaming boundaries, a slow section degrades to its skeleton instead of holding the whole page."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The rule that is easiest to break is layer 4's. When a pattern needs *almost* the primitive, the tempting move is to copy its class chain and tweak. That is a fork with no name, and it will not receive the next fix. Ship the variant on the primitive instead."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "Where the layers live",
+          "id": "where-the-layers-live"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Layer",
+            "Files",
+            "Cascade layer"
+          ],
+          "rows": [
+            [
+              "1",
+              "`styles/tokens.css`, `styles/foundation.css`, `styles/interlace-theme.css` (brand half)",
+              "`interlace.primitives`, `interlace.foundation`, `interlace.brand`"
+            ],
+            [
+              "2",
+              "`styles/theme.css`, `styles/interlace-theme.css` (semantic half)",
+              "`interlace.bridge`, `interlace.semantics`"
+            ],
+            [
+              "3",
+              "`src/primitives/**`",
+              "—"
+            ],
+            [
+              "4",
+              "`src/patterns/**`",
+              "—"
+            ],
+            [
+              "5",
+              "`src/templates/**`",
+              "—"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Declared order, in `styles/index.css`:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": "@layer interlace.primitives, interlace.foundation, interlace.preflight,\n       interlace.bridge, interlace.brand, interlace.semantics;"
+        },
+        {
+          "type": "paragraph",
+          "text": "Order is load-bearing, and one detail is worth stealing outright: the fumadocs bridge (`theme.css`) is **wrapped in a layer on purpose**. Per the CSS cascade-layers spec, unlayered styles beat every layered style. An unlayered `:root { --background: … }` in the bridge would therefore trump the layered semantic bindings that are supposed to override it — the exact opposite of what \"a bridge\" means. Wrapping it puts it back under the system's control."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Sources.** `packages/ui/styles/foundation.css` · `packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` · `packages/ui/src/primitives/{container,section,stack,grid}.tsx` · `packages/ui/__tests__/layout-primitives-lock.test.tsx` · `packages/ui/__tests__/container-scale-lock.test.ts` · `packages/ui/__tests__/spacing-token-shadowing-lock.test.ts`"
+        }
+      ],
+      "headings": [
+        {
+          "id": "the-spacing-scale",
+          "text": "The spacing scale"
+        },
+        {
+          "id": "the-named-scale-trap",
+          "text": "The named-scale trap"
+        },
+        {
+          "id": "the-four-primitives",
+          "text": "The four primitives"
+        },
+        {
+          "id": "the-five-layers-and-why-they-are-worth-the-ceremony",
+          "text": "The five layers, and why they are worth the ceremony"
+        }
+      ]
+    },
+    {
+      "slug": "loading-motion",
+      "title": "Loading & motion",
+      "storyTitle": "Concepts/Loading & Motion",
+      "storybookId": "concepts-loading-motion--docs",
+      "file": "apps/storybook/src/stories/concepts/LoadingAndMotion.mdx",
+      "lead": "They are on the same page because they collide: the loading state is where most systems put their only animation, and it is the state a motion-sensitive user cannot avoid.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "One sentence for each half:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Loading states are part of the design, not the absence of design.** A skeleton reserves the exact silhouette of the thing that is coming, so the swap costs zero layout shift."
+            },
+            {
+              "depth": 0,
+              "text": "**Motion is earned, not assumed.** Default to none; `prefers-reduced-motion` is a contract, not a nicety."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "They are on the same page because they collide: the loading state is where most systems put their only animation, and it is the state a motion-sensitive user cannot avoid."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Skeletons reserve the silhouette",
+          "id": "skeletons-reserve-the-silhouette"
+        },
+        {
+          "type": "paragraph",
+          "text": "A spinner tells you *that* something is loading. A skeleton tells you *what* — and, more usefully, holds the space so nothing moves when the data arrives."
+        },
+        {
+          "type": "paragraph",
+          "text": "The system ships **one** `Skeleton` component with **40 variants**, not 40 paired `XSkeleton` components. That is one import path instead of dozens, and the `variant` union is literally the const tuple of registered variants, so an invalid value is a TypeScript error at dev time rather than an empty box at render time."
+        },
+        {
+          "type": "paragraph",
+          "text": "Variants exist in five families:"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Family",
+            "Examples"
+          ],
+          "rows": [
+            [
+              "Generic",
+              "`rect`, `circle`, `text`, `paragraph`"
+            ],
+            [
+              "Primitive-shaped",
+              "`avatar`, `badge`, `button`, `input`, `select`, `tabs`, `toc`, `pagination`"
+            ],
+            [
+              "Form family",
+              "`checkbox`, `radio-group`, `switch`, `slider`, `textarea`, `label`, `form`"
+            ],
+            [
+              "Pattern-shaped",
+              "`article-card`, `author-byline`, `page-header`, `stat-card`, `prev-next-post`"
+            ],
+            [
+              "Chart-shaped",
+              "`chart`, `sparkline`, `metric-table`"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The chart-shaped ones show what \"reserve the silhouette\" means concretely. `chart` is `h-56` because that matches `TimeSeries`'s default drawing height of 220 user units — the swap is CLS-neutral by construction, not by coincidence. `sparkline` is `h-[22px] w-[90px] inline-block align-middle`, because a sparkline lives *inside a table cell*, and a block-level placeholder there reflows the whole column."
+        },
+        {
+          "type": "paragraph",
+          "text": "Sixteen of the 40 are **composite** — they render an internal arrangement of shapes rather than a single box, because a card's silhouette is a thumbnail plus two text lines plus a byline, and a single grey rectangle of the right height still makes the eye jump."
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-loading-motion--docs"
+        },
+        {
+          "type": "paragraph",
+          "text": "`skeleton-variant-coverage-lock.test.ts` asserts that every `<Skeleton variant=\"…\">` call site in the codebase resolves to a registered variant, that every form primitive has one, and — the useful one — that **every form-primitive variant paints a non-empty shape**. A registered variant that maps to an empty class string reserves nothing and guarantees a shift the moment the real control arrives. That is a failure that looks like success in every test that only checks \"the variant exists\"."
+        },
+        {
+          "type": "paragraph",
+          "text": "At the page level, all 13 templates ship a `.Skeleton` static, asserted by `templates-section-boundary-lock.test.ts`. A page-shaped skeleton is what makes streaming worth doing: the server can return a fully-shaped document immediately and fill sections in as they resolve."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "One pulse, not many",
+          "id": "one-pulse-not-many"
+        },
+        {
+          "type": "paragraph",
+          "text": "The animation lives on the **root** of the skeleton:"
+        },
+        {
+          "type": "code",
+          "lang": "tsx",
+          "code": "className={cn('animate-pulse bg-muted', SKELETON_VARIANT_CLASSES[variant], className)}"
+        },
+        {
+          "type": "paragraph",
+          "text": "Composite variants add their inner shapes with `bg-muted-foreground/10` and **no animation class**. So a card skeleton with six inner rectangles has exactly one pulse."
+        },
+        {
+          "type": "paragraph",
+          "text": "The reason is not aesthetic. Six independently-animated children start at the same instant only in theory; in practice they drift, and a wall of out-of-phase pulses reads as a rendering fault rather than a loading state. It is also six times the compositing work for the same information."
+        },
+        {
+          "type": "paragraph",
+          "text": "The pulse itself is Tailwind's stock `animate-pulse` — opacity between 1 and 0.5 on a 2s cycle. Opacity only: no shimmer gradient sliding across the surface, which is a second animation carrying no extra meaning."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "One announcement, not ten",
+          "id": "one-announcement-not-ten"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every skeleton root carries `role=\"status\"`, `aria-busy=\"true\"`, `aria-live=\"polite\"` and an `sr-only` label (default `\"Loading…\"`)."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nested skeletons pass `label={null}`. A page skeleton that announces ten times says \"Loading, Loading, Loading…\" to a screen-reader user, which is noise standing exactly where the information should be. **One `role=\"status\"` region per loading page.** The same rule applies to `count > 1`: the group announces, the children do not."
+        },
+        {
+          "type": "paragraph",
+          "text": "This generalises past skeletons. Announce **transitions, not ticks**. A live region wrapped around a counter that increments every second is a firehose, not an accessibility feature."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Four states, and error beats empty",
+          "id": "four-states-and-error-beats-empty"
+        },
+        {
+          "type": "paragraph",
+          "text": "`DataState` is the single conditional swap point, replacing the ad-hoc ladder that otherwise gets rewritten at every fetch site:"
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "loading   → skeleton\nerror     → error state\nempty     → empty state\notherwise → children(data)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The precedence is deliberate: **error takes priority over empty.** A failed fetch that renders \"No results\" tells the reader something false and actionable-looking. They are different messages, and collapsing them is one of the most common data-UI bugs there is."
+        },
+        {
+          "type": "paragraph",
+          "text": "`aria-busy` is set on the root while loading, and `data-state` carries the resolved state for devtools and E2E."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Motion: the default is none",
+          "id": "motion-the-default-is-none"
+        },
+        {
+          "type": "paragraph",
+          "text": "The posture is opt-*out* of motion at the CSS layer and opt-*in* at the JS layer."
+        },
+        {
+          "type": "paragraph",
+          "text": "**CSS-driven animation** is disabled wholesale under the media query, in `tokens.css`:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": "@media (prefers-reduced-motion: reduce) {\n  .animate-shimmer-slide, .animate-spin-around, .animate-gradient,\n  .animate-marquee, .animate-marquee-vertical,\n  .animate-first, .animate-second, .animate-third, .animate-fourth,\n  .animate-fifth, .animate-border-beam,\n  .animate-accordion-down, .animate-accordion-up,\n  .animate-fade-in-up, .animate-slide-in-left, .animate-scale-in {\n    animation: none !important;\n    transition: none !important;\n  }\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "**JS-driven motion** — anything on a canvas, or driven by a spring — is gated per component on a hook:"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "export function useReducedMotion(): boolean {\n  const [reduced, setReduced] = useState(false);\n  useEffect(() => {\n    if (typeof window === 'undefined' || !window.matchMedia) return;\n    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');\n    setReduced(mql.matches);\n    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);\n    mql.addEventListener('change', onChange);\n    return () => mql.removeEventListener('change', onChange);\n  }, []);\n  return reduced;\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "Thirty lines, and six tests — because of what its file header says about it:"
+        },
+        {
+          "type": "quote",
+          "text": "if this hook silently returns `false` forever, nothing breaks, nothing throws, and every motion-heavy component quietly ignores an accessibility preference the user explicitly set. That is a failure with no symptom, which is the kind that survives."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two of those tests are worth naming:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "*'queries the reduce query specifically, not a near-miss string'* — `(prefers-reduced-motion)` without `: reduce` also matches `no-preference`, which **inverts the entire gate**. One missing token, perfectly plausible in review, and every motion-sensitive user gets the full experience."
+            },
+            {
+              "depth": 0,
+              "text": "*'removes its listener on unmount, so a long-lived page does not leak one per mount'*."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "What motion is for",
+          "id": "what-motion-is-for"
+        },
+        {
+          "type": "paragraph",
+          "text": "The remaining rules, in short form:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Animate `transform` and `opacity` only.** Anything else is a layout or paint animation, and the CLS budget is zero."
+            },
+            {
+              "depth": 0,
+              "text": "**Never animate a dimension to or from `auto`.** The `grid-template-rows: 0fr → 1fr` recipe is the accessible-height trick that actually works."
+            },
+            {
+              "depth": 0,
+              "text": "**Reserve the space before animating into it** — `min-h-*`, `aspect-[w/h]`, or the skeleton above."
+            },
+            {
+              "depth": 0,
+              "text": "**No infinite attention loops**, no auto-advancing carousels, no scroll-position parallax on the body."
+            },
+            {
+              "depth": 0,
+              "text": "**Motion communicates.** A card opening, a value ticking up, a panel arriving from the side it will return to. If you cannot name what the motion tells the reader, remove it."
+            }
+          ]
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Where the shipped behaviour and the written contract disagree",
+          "id": "where-the-shipped-behaviour-and-the-written-contract-disagree"
+        },
+        {
+          "type": "paragraph",
+          "text": "Published for the same reason as the gaps on the [Accessibility](/concepts/accessibility) page."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**`animate-pulse` is not in the reduce allowlist above.** The `Skeleton` emits a bare `animate-pulse`, not `motion-safe:animate-pulse`, so a consumer importing `@interlace/ui/styles/index.css` alone still gets a pulsing skeleton under `prefers-reduced-motion: reduce`. (This Storybook does not show it, because its own preview stylesheet adds a global reduce-everything reset — which is itself a good reminder that a reduced-motion check performed inside a harness can pass for reasons that have nothing to do with the component.)"
+            },
+            {
+              "depth": 0,
+              "text": "**The duration and easing token table in `MOTION_PHILOSOPHY.md` does not exist as tokens.** There is no `--duration-fast` or `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)`; every duration is a literal inside an `--animate-*` shorthand, and shipped easing is the CSS keyword `ease-out`, which is a different curve."
+            },
+            {
+              "depth": 0,
+              "text": "**The documented \"max 200ms on entry\" budget is not met by three entry animations** in `theme.css`: `fade-in-up` and `slide-in-left` at 500ms and `scale-in` at 400ms, two of them with additional delays. The accordion, at 200ms, is on budget."
+            },
+            {
+              "depth": 0,
+              "text": "**Nothing measures CLS.** Skeleton/component shape parity is by construction and by inspection."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Each of those is a real gap, and each is exactly the kind that a page saying \"we respect reduced motion\" would hide."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Sources.** `packages/ui/src/primitives/skeleton.tsx` · `packages/ui/src/primitives/skeleton-variants.ts` · `packages/ui/src/primitives/data-state.tsx` · `packages/ui/src/lib/use-reduced-motion.ts` · `packages/ui/styles/tokens.css` · `packages/ui/styles/theme.css` · `packages/ui/__tests__/skeleton-variant-coverage-lock.test.ts` · `packages/ui/__tests__/templates-section-boundary-lock.test.ts` · `packages/ui/__tests__/use-reduced-motion.test.tsx` · `docs/philosophies/{LOADING,MOTION}_PHILOSOPHY.md`"
+        }
+      ],
+      "headings": [
+        {
+          "id": "skeletons-reserve-the-silhouette",
+          "text": "Skeletons reserve the silhouette"
+        },
+        {
+          "id": "one-pulse-not-many",
+          "text": "One pulse, not many"
+        },
+        {
+          "id": "one-announcement-not-ten",
+          "text": "One announcement, not ten"
+        },
+        {
+          "id": "four-states-and-error-beats-empty",
+          "text": "Four states, and error beats empty"
+        },
+        {
+          "id": "motion-the-default-is-none",
+          "text": "Motion: the default is none"
+        },
+        {
+          "id": "where-the-shipped-behaviour-and-the-written-contract-disagree",
+          "text": "Where the shipped behaviour and the written contract disagree"
+        }
+      ]
+    },
+    {
+      "slug": "responsiveness",
+      "title": "Responsiveness",
+      "storyTitle": "Concepts/Responsiveness",
+      "storybookId": "concepts-responsiveness--docs",
+      "file": "apps/storybook/src/stories/concepts/Responsiveness.mdx",
+      "lead": "Each is enforced somewhere. This page says where, and shows the two failures that actually happen.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Responsiveness in this system is four separate contracts, not one adjective:"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Mobile-first authoring** — base classes describe the narrowest viewport."
+            },
+            {
+              "depth": 0,
+              "text": "**A locked breakpoint ladder** — four tiers, in `rem`, no `2xl`."
+            },
+            {
+              "depth": 0,
+              "text": "**A declared floor per component** — `MIN_VIEWPORT`, one of 320 / 480 / 768."
+            },
+            {
+              "depth": 0,
+              "text": "**An overflow rule** — the page never scrolls sideways; inner containers may."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Each is enforced somewhere. This page says where, and shows the two failures that actually happen."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "1. Mobile-first is a direction, not a preference",
+          "id": "1-mobile-first-is-a-direction-not-a-preference"
+        },
+        {
+          "type": "paragraph",
+          "text": "The base class describes the smallest viewport. Breakpoint variants **add** breathing room; they never take it away."
+        },
+        {
+          "type": "code",
+          "lang": "tsx",
+          "code": "// Reads: one column everywhere, two from 480px, four from 1024px.\n<div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4\" />\n\n// Smell: the base class describes the desktop and the breakpoint retracts it.\n<div className=\"grid grid-cols-4 sm:grid-cols-1\" />"
+        },
+        {
+          "type": "paragraph",
+          "text": "The practical reason is failure direction. If your media query never matches — old browser, a container query you forgot, a CSS bundle that half-loaded — mobile-first degrades to the narrow layout, which is legible on any screen. Desktop-first degrades to a four-column grid on a phone."
+        },
+        {
+          "type": "paragraph",
+          "text": "`lg:hidden md:flex` is the same smell in visibility form: the default state is \"visible on desktop\" and the variant subtracts."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "2. The breakpoint ladder",
+          "id": "2-the-breakpoint-ladder"
+        },
+        {
+          "type": "paragraph",
+          "text": "Declared once, in `packages/ui/styles/foundation.css`:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": "--breakpoint-sm: 30rem;   /*  480px — handheld */\n--breakpoint-md: 48rem;   /*  768px — tablet / large phone */\n--breakpoint-lg: 64rem;   /* 1024px — laptop */\n--breakpoint-xl: 80rem;   /* 1280px — desktop */"
+        },
+        {
+          "type": "paragraph",
+          "text": "Three decisions are embedded here."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Four tiers, not five.** Tailwind v4 ships `640 / 768 / 1024 / 1280 / 1536`. The `2xl` tier fires at ≥1536px, and 1280px is the widest section this system supports (`Container size=\"wide\"`). A `2xl:` variant would therefore have no meaning — every element inside it has already stopped growing. So the tier is removed, and `breakpoints-lock.test.ts` asserts `foundation.css` does **not** declare `--breakpoint-2xl`."
+        },
+        {
+          "type": "paragraph",
+          "text": "**`rem`, not `px`.** A user who sets their browser root font to 20px is telling you their text is too small. With `px` breakpoints the layout ignores that entirely: `480px` is `480px` whatever the type is doing. With `rem`, `30rem` becomes 600 CSS px at a 20px root, so the layout moves to a roomier tier at the same time the type gets bigger. Adobe Spectrum, Shopify Polaris and React Aria all make the same call."
+        },
+        {
+          "type": "paragraph",
+          "text": "**480, not 640, as the first tier.** It lines up with the `MIN_VIEWPORT` ladder below: a component whose floor is 480 is exactly the `sm:` floor, and 768 is exactly `md:`. One number means one thing in both systems."
+        },
+        {
+          "type": "table",
+          "head": [
+            "System",
+            "Breakpoints"
+          ],
+          "rows": [
+            [
+              "Tailwind v4 default",
+              "640 / 768 / 1024 / 1280 / 1536"
+            ],
+            [
+              "Vercel Geist",
+              "600 / 960 / 1280 / 1600"
+            ],
+            [
+              "Linear",
+              "768 / 1024 / 1280"
+            ],
+            [
+              "Adobe Spectrum",
+              "304 / 768 / 1280 / 1768"
+            ],
+            [
+              "Shopify Polaris",
+              "490 / 768 / 1040 / 1620"
+            ],
+            [
+              "Stripe Sail",
+              "768 / 1024 / 1280 / 1440"
+            ],
+            [
+              "**Interlace**",
+              "**480 / 768 / 1024 / 1280**"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "What the lock actually asserts",
+          "id": "what-the-lock-actually-asserts"
+        },
+        {
+          "type": "paragraph",
+          "text": "`packages/ui/__tests__/breakpoints-lock.test.ts`:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "each of the four tokens is declared with its exact `rem` value;"
+            },
+            {
+              "depth": 0,
+              "text": "`--breakpoint-2xl` is absent;"
+            },
+            {
+              "depth": 0,
+              "text": "**no primitive, pattern or template source declares a raw `@media (min-width: …)` / `(max-width: …)` query** — the entire responsive surface goes through the four variants;"
+            },
+            {
+              "depth": 0,
+              "text": "no source declares a custom `--breakpoint-*` key."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The third rule is the load-bearing one. A single hand-written `@media (min-width: 900px)` in one component is invisible to every reader of the token file, and it is where breakpoint drift starts."
+        },
+        {
+          "type": "paragraph",
+          "text": "Note that `prefers-reduced-motion` and `forced-colors` queries are deliberately *not* caught — the regex matches width queries only."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "3. `MIN_VIEWPORT` — the declared floor",
+          "id": "3-min-viewport-the-declared-floor"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every primitive exports a constant naming the narrowest viewport it is claimed to work at, and projects it onto the DOM:"
+        },
+        {
+          "type": "code",
+          "lang": "tsx",
+          "code": "export const MIN_VIEWPORT = 320 as const;\n\n// …\n<div data-slot=\"scroll-area\" data-min-viewport={String(MIN_VIEWPORT)} />"
+        },
+        {
+          "type": "paragraph",
+          "text": "Only three values are legal:"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Value",
+            "Means",
+            "Matching variant"
+          ],
+          "rows": [
+            [
+              "`320`",
+              "Works on every phone, including an iPhone SE",
+              "base (mobile-first)"
+            ],
+            [
+              "`480`",
+              "Below this, use a different surface",
+              "the `sm:` floor"
+            ],
+            [
+              "`768`",
+              "Desktop / tablet only, by design",
+              "the `md:` floor"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Today that is 38 primitives at `320`, `breadcrumb` and `toc` at `480`, `hover-card` at `768`; and 11 templates at `320` with `dashboard-template` and `settings-template` at `480`."
+        },
+        {
+          "type": "paragraph",
+          "text": "`primitives-min-viewport-lock.test.tsx` pins each one **by literal**, not by \"is present\". Changing `toc` from 480 to 320 fails the test even though 320 is a legal value — because the number is a published claim, and silently widening it is as much a lie as silently narrowing it. (Narrowing is worse: raising a component's `MIN_VIEWPORT` is a **breaking** change, since you are retracting support for a viewport a consumer may already be shipping at. See [Versioning](/concepts/versioning).)"
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "Why declare a floor at all?",
+          "id": "why-declare-a-floor-at-all"
+        },
+        {
+          "type": "paragraph",
+          "text": "Because \"responsive\" without a floor is unfalsifiable. A `HoverCard` is a pointer-oriented surface; making it work at 320px would mean making it not a hover card. Declaring `768` is more useful than pretending otherwise — the attribute is queryable in devtools and in end-to-end tests, and an app can opt into a dev-mode outline that flags any component rendered below its own floor:"
+        },
+        {
+          "type": "code",
+          "lang": "css",
+          "code": "body[data-interlace-dev] [data-min-viewport='320'] {\n  @container (max-width: 319px) {\n    outline: 2px dashed …;\n  }\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "That containment is gated on the `data-interlace-dev` opt-in, and the gate is itself a lesson. Until 2026-08-10 the `container-type: inline-size` needed to make those `@container` queries fire was applied unconditionally — and inline size containment makes an element's intrinsic inline size exactly **zero**. Every shrink-to-fit primitive carrying the attribute collapsed: `ReadingTime` measured **0px with the rule and 28.84px without it**; `NumberField` (154px), `ToggleGroup` (120px) and `PublishedDate` (88px) went the same way — live, on the public registry, where those are the previews."
+        },
+        {
+          "type": "paragraph",
+          "text": "The general lesson: a debugging affordance that changes layout is not free, and `container-type` is a layout change wearing a diagnostics hat."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "4. The page never scrolls sideways. Inner containers may.",
+          "id": "4-the-page-never-scrolls-sideways-inner-containers-may"
+        },
+        {
+          "type": "paragraph",
+          "text": "These are not in tension — they are the same rule read at two scopes."
+        },
+        {
+          "type": "paragraph",
+          "text": "A horizontal scrollbar on `<body>` is a navigation failure: it hides content with no affordance pointing at it, and on touch it fights vertical scroll. A horizontal scrollbar on a code block is a *feature*: code has an irreducible minimum width, and wrapping it silently changes what it says."
+        },
+        {
+          "type": "paragraph",
+          "text": "So the system pushes overflow **inward**, to the element that owns the unwrappable content:"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Surface",
+            "Treatment",
+            "Where"
+          ],
+          "rows": [
+            [
+              "Code blocks",
+              "`overflow-x-auto` on the `<pre>`",
+              "`code-block.tsx`, `prose.tsx`"
+            ],
+            [
+              "Markdown tables",
+              "`[&_table]:block [&_table]:overflow-x-auto`",
+              "`prose.tsx`"
+            ],
+            [
+              "Chart data tables",
+              "`w-full overflow-x-auto`",
+              "`metric-table.tsx`, `series-table.tsx`"
+            ],
+            [
+              "Settings tab rail",
+              "`flex overflow-x-auto md:flex-col` below 480",
+              "`settings-template.tsx`"
+            ],
+            [
+              "Long content in a flex row",
+              "`min-w-0` on the child",
+              "9 primitives/patterns"
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "`min-w-0` deserves the callout. A flex item's default `min-width` is `auto`, which means \"at least my content's intrinsic minimum\". One long unbroken string in a flex row therefore pushes the row wider than its parent, and the overflow escapes upward until something clips it — usually the viewport. `min-w-0` is how you tell a flex child it is allowed to be narrower than its content, so that the `truncate` or `overflow-x-auto` you wrote actually has an effect."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "The bug this rule was written from",
+          "id": "the-bug-this-rule-was-written-from"
+        },
+        {
+          "type": "paragraph",
+          "text": "`Pagination` used to be a single unbreakable flex row:"
+        },
+        {
+          "type": "code",
+          "lang": "tsx",
+          "code": "// A 9-page bar measured 444px inside a 375px viewport\n// and pushed the whole page sideways.\nclassName=\"flex flex-row items-center justify-center gap-1\""
+        },
+        {
+          "type": "paragraph",
+          "text": "The fix is one word — `flex-wrap` — and the interesting part is *why it was not caught*. The component looked correct at every width anyone tested it at, because with fewer pages the row fits. The failure needed both a narrow viewport and enough data. That combination is exactly what a fixed-width story frame reproduces, which is why several stories here are deliberately pinned below their component's floor."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Honest scope note:** nothing asserts `document.body.scrollWidth <= clientWidth` at any viewport. This rule is upheld by review, by the primitives above, and by under-sized story frames — not by a test."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Failure mode 1 — a desktop column count handed to a grid",
+          "id": "failure-mode-1-a-desktop-column-count-handed-to-a-grid"
+        },
+        {
+          "type": "paragraph",
+          "text": "This is the single most common responsive bug in a component system, and the `Grid` API is shaped so that you meet it early rather than in production."
+        },
+        {
+          "type": "paragraph",
+          "text": "`Grid`'s `cols` prop is a **closed numeric union, applied at every width**. There is no `mdCols` / `lgCols`, and no responsive-object form:"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "cols: {\n  1: 'grid-cols-1',\n  2: 'grid-cols-2',\n  3: 'grid-cols-3',\n  4: 'grid-cols-4',\n  6: 'grid-cols-6',\n  12: 'grid-cols-12',\n}"
+        },
+        {
+          "type": "paragraph",
+          "text": "So this is wrong, and it is wrong *quietly* — it renders perfectly on the laptop it was written on:"
+        },
+        {
+          "type": "code",
+          "lang": "tsx",
+          "code": "// ✗ Four tracks at 375px = 68px per card.\n//   The label and the trend icon spill past the viewport.\n<Grid cols={4} gap=\"md\">{cards}</Grid>"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every pattern in this system that takes a `cols` prop treats it as a **desktop** count and maps it to a static mobile-first chain. From `patterns/stat-group.tsx`:"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {\n  2: 'grid-cols-1 sm:grid-cols-2',\n  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',\n  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',\n};\n\n<Grid cols={cols} gap=\"md\" className={STAT_GRID_COLS[cols]}>"
+        },
+        {
+          "type": "paragraph",
+          "text": "Two details in those five lines are worth stealing:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**The map is written out statically** because Tailwind scans source text. A runtime-built `` `sm:grid-cols-${n}` `` produces a class that exists in the DOM and in no stylesheet — the most confusing possible failure, since devtools shows the class applied and no rule matching it."
+            },
+            {
+              "depth": 0,
+              "text": "**`cols` is still passed to `Grid`**, so `data-cols` stays truthful for devtools and E2E even though `className` wins the cascade."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The same map appears, with the same reasoning, in `feature-grid.tsx` (\"at 375px a `cols={3}` board gives each feature card ~98px\"), `pricing-table.tsx`, `article-list-grid.tsx` and `testimonial.tsx`."
+        },
+        {
+          "type": "paragraph",
+          "text": "Below is the shape that survives a 375px viewport. Narrow this docs pane and the tracks collapse."
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-responsiveness--docs"
+        },
+        {
+          "type": "paragraph",
+          "text": "`GridItem`, unlike `Grid`, *is* responsive — via three discrete closed props rather than a nested object:"
+        },
+        {
+          "type": "demo",
+          "storybookId": "concepts-responsiveness--docs"
+        },
+        {
+          "type": "paragraph",
+          "text": "The choice of three flat props over a nested responsive object (MUI's `size={{ xs: 12, md: 8 }}`) is deliberate: flat props are greppable, are visible in a JSX diff, and let Tailwind see every class it has to emit."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Failure mode 2 — a fixed inline size with no cap",
+          "id": "failure-mode-2-a-fixed-inline-size-with-no-cap"
+        },
+        {
+          "type": "paragraph",
+          "text": "The other half of the same coin. A component given an intrinsic width larger than its container does not shrink; it overflows, and the overflow travels upward until something clips it."
+        },
+        {
+          "type": "code",
+          "lang": "tsx",
+          "code": "// ✗ 420px of content inside a 375px viewport. The page scrolls sideways.\n<div className=\"w-[420px]\">…</div>\n\n// ✓ 420px when there is room, and never wider than the parent.\n<div className=\"w-[420px] max-w-full\">…</div>"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every fixed-width frame in this Storybook is written the second way (`w-[320px] max-w-full`), and the ones that are *not* — the deliberately under-sized demo frames for `HoverCard`, `PrevNextPost`, `Breadcrumb` and `Toc` — wrap themselves in `overflow-x-auto` so the demo, and not the docs page, absorbs the overflow."
+        },
+        {
+          "type": "paragraph",
+          "text": "The same reasoning is why the system has exactly one place that hard-codes a detached-panel width. `--container-float: 26.25rem` (420px) sizes the toast stack and any edge-docked panel, and it lives in the token file rather than as `max-w-[420px]` at five call sites, so those five surfaces cannot drift apart."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Checklist",
+          "id": "checklist"
+        },
+        {
+          "type": "paragraph",
+          "text": "Before you call a component responsive:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "The base classes describe the narrowest supported viewport."
+            },
+            {
+              "depth": 0,
+              "text": "Any `cols`-like prop is mapped to a static mobile-first chain, not passed through unqualified."
+            },
+            {
+              "depth": 0,
+              "text": "Every fixed width has a cap (`max-w-full`) or an inner scroller."
+            },
+            {
+              "depth": 0,
+              "text": "Every flex child that can hold long content has `min-w-0`."
+            },
+            {
+              "depth": 0,
+              "text": "The component has been rendered at its declared `MIN_VIEWPORT` **with a realistic amount of data**, not with the two-item fixture."
+            },
+            {
+              "depth": 0,
+              "text": "The declared floor is a number you would defend, not the smallest number that renders without an obvious break."
+            }
+          ]
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Sources.** `packages/ui/BREAKPOINT_PHILOSOPHY.md` · `packages/ui/styles/foundation.css` · `packages/ui/styles/preflight.css` · `packages/ui/__tests__/breakpoints-lock.test.ts` · `packages/ui/__tests__/primitives-min-viewport-lock.test.tsx` · `packages/ui/src/primitives/grid.tsx` · `packages/ui/src/patterns/stat-group.tsx` · `packages/ui/src/primitives/pagination.tsx`"
+        }
+      ],
+      "headings": [
+        {
+          "id": "1-mobile-first-is-a-direction-not-a-preference",
+          "text": "1. Mobile-first is a direction, not a preference"
+        },
+        {
+          "id": "2-the-breakpoint-ladder",
+          "text": "2. The breakpoint ladder"
+        },
+        {
+          "id": "3-min-viewport-the-declared-floor",
+          "text": "3. MIN_VIEWPORT — the declared floor"
+        },
+        {
+          "id": "4-the-page-never-scrolls-sideways-inner-containers-may",
+          "text": "4. The page never scrolls sideways. Inner containers may."
+        },
+        {
+          "id": "failure-mode-1-a-desktop-column-count-handed-to-a-grid",
+          "text": "Failure mode 1 — a desktop column count handed to a grid"
+        },
+        {
+          "id": "failure-mode-2-a-fixed-inline-size-with-no-cap",
+          "text": "Failure mode 2 — a fixed inline size with no cap"
+        },
+        {
+          "id": "checklist",
+          "text": "Checklist"
+        }
+      ]
+    },
+    {
+      "slug": "versioning",
+      "title": "Versioning",
+      "storyTitle": "Concepts/Versioning",
+      "storybookId": "concepts-versioning--docs",
+      "file": "apps/storybook/src/stories/concepts/Versioning.mdx",
+      "lead": "npx shadcn add @interlace/button does not add a dependency. It writes components/ui/button.tsx into your repository, and from that instant our git history and your file have nothing to do with each other.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Everything on this page follows from one fact:"
+        },
+        {
+          "type": "quote",
+          "text": "`npx shadcn add @interlace/button` does not add a dependency. It writes `components/ui/button.tsx` into your repository, and from that instant our git history and your file have nothing to do with each other."
+        },
+        {
+          "type": "paragraph",
+          "text": "You will edit that file. You *should* — that is the pitch. But it means the usual versioning machinery does not apply, and pretending otherwise is how copied-source registries end up with changelogs nobody can act on."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Three things that stop being true",
+          "id": "three-things-that-stop-being-true"
+        },
+        {
+          "type": "paragraph",
+          "text": "**There is no `npm update`.** A fix we ship reaches you only if you read that it exists and choose to re-run the install. So the changelog is not *documentation of* the upgrade path — it **is** the upgrade path. It is the product surface, and it deserves the attention a product surface gets."
+        },
+        {
+          "type": "paragraph",
+          "text": "**There is no version range.** `^1.2.0` cannot express \"I have the copy from March\". The only place a version can live for you is *inside the file*, which is why every installed file carries a banner (below)."
+        },
+        {
+          "type": "paragraph",
+          "text": "**\"Breaking\" means something different.** For an npm package, breaking means \"your build fails\". For copied source your build *cannot* fail — you own the file. Breaking means:"
+        },
+        {
+          "type": "quote",
+          "text": "the copy you own and the copy we ship have diverged in a way that makes our note, our docs, or your next re-install wrong."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Private, and still versioned",
+          "id": "private-and-still-versioned"
+        },
+        {
+          "type": "paragraph",
+          "text": "`@interlace/ui` is `\"private\": true` and is not published to npm. That is a decision, recorded with its reasoning:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "Publishing creates a second distribution channel with a **different upgrade model** — `npm update` for one set of users, re-copy for the other — for the same components. The first time someone edits their copy, the two models disagree about what \"version 1.3.0 of Button\" means for them."
+            },
+            {
+              "depth": 0,
+              "text": "A published package also gives people a way to consume the system that bypasses every contract the registry enforces: theme install, registry dependencies, installability checks."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Private does not mean unversioned. Changesets runs with `privatePackages: { version: true, tag: true }`, so the package gets a real version and a real git tag; the release step pushes the tag where a public package would run `npm publish`."
+        },
+        {
+          "type": "paragraph",
+          "text": "The consequence, stated honestly: **the version is only as real as the release notes**, because nothing else enforces it. Which is why the next two sections exist."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What counts as breaking",
+          "id": "what-counts-as-breaking"
+        },
+        {
+          "type": "paragraph",
+          "text": "For a component whose source somebody already owns, all of these are **major**:"
+        },
+        {
+          "type": "table",
+          "head": [
+            "Change",
+            "Why it breaks a copy"
+          ],
+          "rows": [
+            [
+              "A renamed or removed prop",
+              "Their call sites use the old name. Every note we write from now on describes a component they do not have."
+            ],
+            [
+              "A narrowed prop type — a union losing a member, an optional becoming required",
+              "Their existing call is invalid against our documentation even though their file still compiles."
+            ],
+            [
+              "A changed default",
+              "The component behaves differently for the same call. Silent, and worse than a compile error."
+            ],
+            [
+              "A renamed or removed design token",
+              "They may reference it from their own CSS. A token rename is a public API change even though no `.tsx` moved."
+            ],
+            [
+              "A changed DOM structure",
+              "Anyone who wrote a descendant selector against our markup — which this system *invites*, via `data-slot` — has a rule that silently stops matching."
+            ],
+            [
+              "A removed or renamed `data-slot`",
+              "`data-slot` is the styling contract. Removing one is removing API, not tidying an attribute."
+            ],
+            [
+              "A changed `registryDependencies` target",
+              "Their re-install now writes different files into different places."
+            ],
+            [
+              "A raised `MIN_VIEWPORT`",
+              "We are declaring the component no longer supports a viewport they may be shipping it at."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Three of those rows are unusual, and they are the interesting ones."
+        },
+        {
+          "type": "paragraph",
+          "text": "**A changed default is major.** In a dependency it would be a minor with a note. In copied source it produces a component that behaves differently from the one documented, with no signal at all — the reader's file compiles, runs, and quietly disagrees with the docs."
+        },
+        {
+          "type": "paragraph",
+          "text": "**A changed DOM structure is major.** Most systems treat markup as internal. This one publishes `data-slot` on every root and actively encourages consumers to style against it, which means the DOM *is* API. You do not get to invite descendant selectors and then reserve the right to move the nodes."
+        },
+        {
+          "type": "paragraph",
+          "text": "**A raised `MIN_VIEWPORT` is major.** It is a pure metadata change — no code moves — but it retracts a support claim. See [Responsiveness](/concepts/responsiveness)."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Minor** is a new component, a new optional prop, a new variant option, a new token, a new `data-slot`. Nothing they own changes underneath them."
+        },
+        {
+          "type": "paragraph",
+          "text": "**Patch** is a fix with an identical public surface — same props, same defaults, same DOM, same slots. Safe to re-install, safe to skip."
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "The one-sentence test",
+          "id": "the-one-sentence-test"
+        },
+        {
+          "type": "quote",
+          "text": "If a reader who installed this component six months ago would have to edit their own file to match what we now document, it is breaking."
+        },
+        {
+          "type": "paragraph",
+          "text": "That test is portable to any copy-source distribution, and it resolves nearly every argument about the bump."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The migration note is mandatory",
+          "id": "the-migration-note-is-mandatory"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every `major` entry carries a `Migration:` block, and `build-changelog.mjs --check` fails the build without one."
+        },
+        {
+          "type": "paragraph",
+          "text": "It is not a formality. It is the **only** actionable artefact for someone with a copy: there is no codemod we can run in their repo and no dependency bump that carries it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two rules for writing one:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Name the literal edit** — the file, the identifier, the before, the after. \"Update your usage of Badge\" is not a migration note; it is an acknowledgement that one is needed."
+            },
+            {
+              "depth": 0,
+              "text": "**State what did *not* change**, when that is load-bearing. \"The accepted values are unchanged. `data-slot=\"badge\"` is unchanged.\" saves the reader a diff of a file they have already modified."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Write it for the person, not for the reviewer. The reviewer has the PR."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "`@deprecated` names the release it disappears in",
+          "id": "deprecated-names-the-release-it-disappears-in"
+        },
+        {
+          "type": "paragraph",
+          "text": "A deprecation with no removal date is a permanent one: everybody keeps using it and the system carries the alias forever."
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "/**\n * @deprecated since 1.0.0 — removed in 2.0.0. Use `@interlace/ui/patterns/hero`.\n * Kept as a re-export so existing imports keep resolving until then.\n */\nexport * from '../patterns/hero.js';"
+        },
+        {
+          "type": "paragraph",
+          "text": "Three parts, all required: **since**, **removed in** (a real version, never \"eventually\" or \"a future release\"), and the **replacement**, named by its import path."
+        },
+        {
+          "type": "paragraph",
+          "text": "The same three facts go into the registry manifest so the site can render them, and `derive-component-versions.mjs --check` rejects a `deprecated` block whose `removedIn` is not a version."
+        },
+        {
+          "type": "paragraph",
+          "text": "Removal itself is a breaking change with a migration note, **on the release the deprecation named.** Slipping that date is worse than never deprecating — it teaches readers the dates are decorative, and then no deprecation you write does any work."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "Per-component versions, derived from git",
+          "id": "per-component-versions-derived-from-git"
+        },
+        {
+          "type": "paragraph",
+          "text": "A hand-maintained per-component version rots inside a month; nobody remembers to bump `badge` because they edited `badge-variants.ts`. So it is derived."
+        },
+        {
+          "type": "paragraph",
+          "text": "`derive-component-versions.mjs` walks every non-merge commit touching a component's **own** files — its `.tsx`, its companions (`*-variants.ts`, `scale.ts`, `graph.ts`) and its optional `<name>.meta.json`:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "the first commit that introduces a component establishes **1.0.0** — a component this system ships has a contract, so it is never `0.x`;"
+            },
+            {
+              "depth": 0,
+              "text": "each later commit applies its conventional-commit bump: `feat!:` / `BREAKING CHANGE:` → major, `feat:` → minor, `fix|perf|refactor|revert|style` → patch, and `chore|docs|test|ci|build` → **nothing**, because none of those change what a consumer installs."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "`since` — the release a component first shipped in — is resolved from the release tags containing its first commit."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two safety rules, both in the merge step:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Versions never go backwards.** If a rebase or squash makes the derived version lower than the one already published, the published one wins. Your consumers have the old number written into their files; moving it down makes their diff lie."
+            },
+            {
+              "depth": 0,
+              "text": "**Hand-authored `deprecated` blocks survive regeneration.** Git cannot know a component is on its way out."
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "depth": 3,
+          "text": "The drift gate, and the seam inside it",
+          "id": "the-drift-gate-and-the-seam-inside-it"
+        },
+        {
+          "type": "paragraph",
+          "text": "The registry has a drift check: `build-registry.mjs --check` rebuilds every item in memory and diffs it against the committed JSON."
+        },
+        {
+          "type": "paragraph",
+          "text": "A version derived from `git HEAD` *at build time* would rewrite all 128 item files on every commit, and that gate would be red forever. So the pipeline has a deliberate seam:"
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "code": "git history ──(derive, on demand / at release)──▶ component-versions.json  [committed]\ncomponent-versions.json ──(build-registry, pure)──▶ public/r/*.json        [committed]"
+        },
+        {
+          "type": "paragraph",
+          "text": "**The registry build never touches git.** It reads a committed manifest, which makes it a pure function of tracked files: same input, same JSON, on any machine, at any HEAD. The manifest moves only when someone runs the derive step, and the release script runs the derive and the rebuild **in the same commit**, so the two can never be one commit out of step."
+        },
+        {
+          "type": "paragraph",
+          "text": "What CI checks on every PR is therefore *completeness*, not recomputation: every shipped item has an entry, every entry names a shipped item, every version is valid semver, every deprecation names a removal release. All of that is true regardless of which commit you are standing on."
+        },
+        {
+          "type": "paragraph",
+          "text": "This is a generally useful pattern — **when a build input is non-deterministic, commit the derivation and make the build pure** — and it is the difference between a drift gate that works and one everybody learns to ignore."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The banner in your tree",
+          "id": "the-banner-in-your-tree"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every `.ts` / `.tsx` file the registry installs carries four lines:"
+        },
+        {
+          "type": "code",
+          "lang": "ts",
+          "code": "// @interlace/button v1.1.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/button\n// What changed since: https://ds.interlace.tools/c/button#history\n// Generated banner — keep it, the upgrade diff reads this version."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two placement decisions:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "It sits **after** `'use client'`. Comments before a directive are legal, but \"the directive must come first\" has a long history of being enforced inconsistently by bundlers, and there is no upside to discovering which one a consumer uses."
+            },
+            {
+              "depth": 0,
+              "text": "It is written with `//` rather than JSDoc, so neither our metadata parser nor your IDE attributes it to *your* component."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The banner is the prerequisite for everything else: a tool can only tell you what changed since you installed if the version you installed exists somewhere in your repository. Keep it. Stylesheets and starter READMEs do not get one — different comment syntax, and neither is a file anyone diffs."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "The loop",
+          "id": "the-loop"
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Author.** Any PR touching `packages/ui/**` adds a changeset. CI fails the PR without one."
+            },
+            {
+              "depth": 0,
+              "text": "**Merge.** The changeset renders on `/changelog` under **Unreleased**, so the release is visible while it forms."
+            },
+            {
+              "depth": 0,
+              "text": "**Release.** A version PR bumps the package, folds the notes into the changelog, re-derives every component version and restamps every registry item and banner."
+            },
+            {
+              "depth": 0,
+              "text": "**Tag.** Merging it tags the release and deploys the registry. The changelog and every component's History section pick it up from the same generated JSON."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "**The only manual step is step 1, and it is the only one that requires judgement.** Everything downstream — the version numbers, the banners, the history sections, the drift check — is derived from it. That is the design goal: a human writes one honest paragraph about what changed and who it affects, and the machinery does the rest."
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What to take from this",
+          "id": "what-to-take-from-this"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "If your distribution model is **copy**, your changelog is your upgrade mechanism. Budget for it accordingly."
+            },
+            {
+              "depth": 0,
+              "text": "Define \"breaking\" in terms of **your reader's file**, not your build."
+            },
+            {
+              "depth": 0,
+              "text": "**Derive per-component versions from git**; hand-maintained ones are wrong within a month."
+            },
+            {
+              "depth": 0,
+              "text": "**Every deprecation names its removal release**, or it is permanent."
+            },
+            {
+              "depth": 0,
+              "text": "**Stamp the version into the artefact you ship**, or you can never compute a diff for the person holding it."
+            }
+          ]
+        },
+        {
+          "type": "rule"
+        },
+        {
+          "type": "paragraph",
+          "text": "**Sources.** `docs/philosophies/VERSIONING_PHILOSOPHY.md` · `.changeset/config.json` · `apps/registry/scripts/derive-component-versions.mjs` · `apps/registry/scripts/build-registry.mjs` · `apps/registry/scripts/build-changelog.mjs`"
+        }
+      ],
+      "headings": [
+        {
+          "id": "three-things-that-stop-being-true",
+          "text": "Three things that stop being true"
+        },
+        {
+          "id": "private-and-still-versioned",
+          "text": "Private, and still versioned"
+        },
+        {
+          "id": "what-counts-as-breaking",
+          "text": "What counts as breaking"
+        },
+        {
+          "id": "the-migration-note-is-mandatory",
+          "text": "The migration note is mandatory"
+        },
+        {
+          "id": "deprecated-names-the-release-it-disappears-in",
+          "text": "@deprecated names the release it disappears in"
+        },
+        {
+          "id": "per-component-versions-derived-from-git",
+          "text": "Per-component versions, derived from git"
+        },
+        {
+          "id": "the-banner-in-your-tree",
+          "text": "The banner in your tree"
+        },
+        {
+          "id": "the-loop",
+          "text": "The loop"
+        },
+        {
+          "id": "what-to-take-from-this",
+          "text": "What to take from this"
+        }
+      ]
+    }
+  ]
+}

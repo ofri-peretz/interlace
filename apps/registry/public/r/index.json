@@ -472,6 +472,24 @@
       }
     },
     {
+      "name": "data-state-model",
+      "type": "registry:ui",
+      "title": "Data State Model",
+      "description": "@interlace/ui — data-state-model (shadcn-compatible).",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": true,
+        "version": "1.0.0",
+        "since": "1.0.0"
+      }
+    },
+    {
       "name": "data-state",
       "type": "registry:ui",
       "title": "Data State",
@@ -483,9 +501,9 @@
       "meta": {
         "tier": "primitive",
         "client": false,
-        "minViewport": null,
-        "loading": true,
-        "version": "1.0.0",
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.1.0",
         "since": "1.0.0"
       }
     },
@@ -666,6 +684,42 @@
         "minViewport": null,
         "loading": false,
         "version": "1.1.0",
+        "since": "1.0.0"
+      }
+    },
+    {
+      "name": "meter-scale",
+      "type": "registry:ui",
+      "title": "Meter Scale",
+      "description": "@interlace/ui — meter-scale (shadcn-compatible).",
+      "categories": [
+        "data",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": "1.0.0"
+      }
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "@interlace/ui — meter (shadcn-compatible).",
+      "categories": [
+        "data",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
         "since": "1.0.0"
       }
     },
@@ -935,7 +989,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.6.0",
+        "version": "1.7.0",
         "since": "1.0.0"
       }
     },
@@ -953,7 +1007,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.7.0",
+        "version": "1.8.0",
         "since": "1.0.0"
       }
     },
@@ -1007,6 +1061,24 @@
         "client": false,
         "minViewport": null,
         "loading": false,
+        "version": "1.0.0",
+        "since": "1.0.0"
+      }
+    },
+    {
+      "name": "stat-strip",
+      "type": "registry:ui",
+      "title": "Stat Strip",
+      "description": "@interlace/ui — stat-strip (shadcn-compatible).",
+      "categories": [
+        "data",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": true,
         "version": "1.0.0",
         "since": "1.0.0"
       }

@@ -49,10 +49,12 @@ describe('extractPropsTables', () => {
     const components = index.items.filter(
       (i: { name: string; meta?: { tier: string } }) =>
         (i.meta?.tier === 'primitive' || i.meta?.tier === 'pattern') &&
-        // `*-variants` items are cva definitions, not components — they export
-        // a class-name builder and have no props interface by construction, so
-        // they belong in neither side of this ratio.
-        !i.name.endsWith('-variants'),
+        // `*-variants` items are cva definitions and `*-model` / `*-scale` are
+        // the pure companions (`data-state-model`, `meter-scale`) — React-free
+        // modules that export a resolver or a maths core. None of the three
+        // species has a props interface by construction, so they belong in
+        // neither side of this ratio.
+        !/-(variants|model|scale)$/.test(i.name),
     );
     const withTable: string[] = [];
     for (const item of components) {
