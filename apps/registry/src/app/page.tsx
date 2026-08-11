@@ -105,10 +105,12 @@ export default async function HomePage() {
             <p className="text-muted-foreground mt-4">
               Every primitive ships with{' '}
               <code className="text-foreground font-mono">theme</code> as a
-              registry dependency. The shadcn CLI bundles the three Interlace
-              stylesheets into your project — brand palette, shadcn-bare token
-              bridge, animation keyframes — so primitives render the moment
-              you import them.
+              registry dependency. The shadcn CLI lands the whole CSS contract
+              in your project —
+              brand palette, shadcn-bare token bridge, animation keyframes,
+              type / spacing / radius scales — behind the one{' '}
+              <code className="text-foreground font-mono">index.css</code>{' '}
+              barrel, so primitives render the moment you import them.
             </p>
             {styleItem ? (
               <p className="text-muted-foreground mt-3 text-sm">

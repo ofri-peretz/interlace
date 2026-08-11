@@ -160,6 +160,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -208,6 +209,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -253,6 +255,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -296,6 +299,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -343,7 +347,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/magicui/animated-grid-pattern.tsx"
@@ -395,7 +401,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/magicui/animated-list.tsx"
@@ -451,6 +459,7 @@
       "registryDependencies": [
         "badge",
         "card",
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -498,6 +507,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "article-card",
+        "cn",
         "container",
         "grid",
         "skeleton",
@@ -555,6 +565,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "author-byline",
+        "cn",
         "container",
         "prev-next-post",
         "prose",
@@ -607,6 +618,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -668,6 +680,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "section-boundary",
         "skeleton",
@@ -720,6 +733,7 @@
       ],
       "registryDependencies": [
         "avatar",
+        "cn",
         "skeleton",
         "theme",
         "typography"
@@ -772,6 +786,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "footer",
         "section-boundary",
@@ -821,6 +836,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -867,7 +883,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/background-beams-with-collision.tsx"
@@ -912,7 +930,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/background-gradient-animation.tsx"
@@ -957,7 +977,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/background-lines.tsx"
@@ -1003,6 +1025,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -1054,6 +1077,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "footer",
         "section-boundary",
@@ -1103,6 +1127,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1146,6 +1171,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1192,6 +1218,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1245,6 +1272,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1336,6 +1364,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1388,6 +1417,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme",
         "typography"
       ],
@@ -1431,6 +1461,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "box",
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -1489,6 +1520,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1532,7 +1564,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/cloud-particles.tsx"
@@ -1645,6 +1679,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -1687,6 +1722,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1735,6 +1771,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1779,6 +1816,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1833,6 +1871,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -1887,6 +1926,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "skeleton",
         "stack",
@@ -1941,6 +1981,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "section-boundary",
         "skeleton",
         "stack",
@@ -2105,6 +2146,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -2185,6 +2227,7 @@
       "registryDependencies": [
         "button",
         "checkbox",
+        "cn",
         "pagination",
         "skeleton",
         "theme"
@@ -2263,6 +2306,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -2310,6 +2354,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -2360,6 +2405,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "footer",
         "prose",
@@ -2414,7 +2460,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/patterns/dot-pattern.tsx"
@@ -2462,6 +2510,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -2506,6 +2555,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "stack",
         "theme",
         "typography"
@@ -2558,6 +2608,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "section-boundary",
         "skeleton",
@@ -2609,6 +2660,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "accordion",
+        "cn",
         "container",
         "skeleton",
         "stack",
@@ -2658,6 +2710,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "grid",
         "skeleton",
@@ -2710,6 +2763,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "aspect-ratio",
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -2758,7 +2812,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/flip-words.tsx"
@@ -2802,7 +2858,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/focus-cards.tsx"
@@ -2856,6 +2914,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -2904,6 +2963,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -2953,6 +3013,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -3014,6 +3075,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -3061,7 +3123,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/patterns/grid-pattern.tsx"
@@ -3104,6 +3168,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -3148,6 +3213,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "stars-background",
         "theme"
@@ -3196,6 +3262,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "stack",
         "theme",
         "typography"
@@ -3246,6 +3313,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -3295,6 +3363,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -3342,7 +3411,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/patterns/interactive-grid-pattern.tsx"
@@ -3389,6 +3460,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -3439,6 +3511,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "footer",
         "section-boundary",
@@ -3541,7 +3614,9 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/magicui/marquee.tsx"
@@ -3628,6 +3703,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -3798,6 +3874,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "data-state",
         "skeleton",
         "theme"
@@ -3873,6 +3950,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "delta",
         "skeleton",
         "sparkline",
@@ -3942,6 +4020,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -4045,6 +4124,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -4088,7 +4168,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/magicui/number-ticker.tsx"
@@ -4132,6 +4214,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "stack",
         "theme",
@@ -4185,6 +4268,7 @@
       ],
       "registryDependencies": [
         "button",
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -4230,7 +4314,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/magicui/particles.tsx"
@@ -4275,6 +4361,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -4324,6 +4411,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -4372,6 +4460,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "container",
         "grid",
         "skeleton",
@@ -4428,7 +4517,9 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/progress.tsx"
@@ -4486,6 +4577,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -4540,6 +4632,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -4599,6 +4692,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -4645,6 +4739,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -4697,6 +4792,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "section-boundary",
         "skeleton",
@@ -4750,6 +4846,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "article-card",
+        "cn",
         "grid",
         "skeleton",
         "theme",
@@ -4798,6 +4895,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "grade-badge",
         "skeleton",
         "theme",
@@ -4851,6 +4949,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "footer",
         "grade-badge",
@@ -4905,6 +5004,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -4956,6 +5056,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -5000,6 +5101,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5043,6 +5145,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "container",
         "theme"
       ],
@@ -5098,6 +5201,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5141,6 +5245,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5208,6 +5313,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5260,6 +5366,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "section-boundary",
         "skeleton",
@@ -5326,6 +5433,7 @@
       ],
       "registryDependencies": [
         "button",
+        "cn",
         "stack",
         "theme"
       ],
@@ -5373,6 +5481,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5416,6 +5525,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5651,6 +5761,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5696,6 +5807,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5749,6 +5861,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5816,6 +5929,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "delta",
         "skeleton",
         "theme"
@@ -5866,7 +5980,9 @@
         "motion"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/spotlight.tsx"
@@ -5910,6 +6026,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -5955,7 +6072,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/stars-background.tsx"
@@ -6001,6 +6120,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme",
         "typography"
@@ -6046,6 +6166,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "grid",
         "skeleton",
         "stat-card",
@@ -6127,6 +6248,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "data-state",
         "skeleton",
         "theme"
@@ -6180,6 +6302,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "footer",
         "section-boundary",
@@ -6234,7 +6357,9 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/aceternity/sunny-background.tsx"
@@ -6287,6 +6412,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -6332,6 +6458,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -6382,6 +6509,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "container",
         "footer",
         "section-boundary",
@@ -6438,6 +6566,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "skeleton",
         "theme"
       ],
@@ -6485,6 +6614,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "avatar",
+        "cn",
         "container",
         "grid",
         "skeleton",
@@ -6541,6 +6671,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -6643,9 +6774,12 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "cn",
         "dropdown-menu",
         "theme",
-        "toggle"
+        "theme-tokens",
+        "toggle",
+        "use-theme"
       ],
       "installsTo": [
         "components/ui/theme-switcher.tsx"
@@ -6810,6 +6944,7 @@
       ],
       "registryDependencies": [],
       "installsTo": [
+        "styles/interlace/index.css",
         "styles/interlace/tokens.css",
         "styles/interlace/foundation.css",
         "styles/interlace/preflight.css",
@@ -6891,6 +7026,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "series-table",
         "skeleton",
         "theme"
@@ -6948,7 +7084,9 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "theme"
+        "cn",
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/toast.tsx"
@@ -6999,8 +7137,10 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "popover",
-        "theme"
+        "theme",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/toc.tsx"
@@ -7054,6 +7194,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -7103,6 +7244,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -7151,6 +7293,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -7194,6 +7337,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [
@@ -7319,6 +7463,7 @@
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
+        "cn",
         "theme"
       ],
       "installsTo": [

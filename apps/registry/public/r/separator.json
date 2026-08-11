@@ -13,14 +13,15 @@
     "@base-ui/react"
   ],
   "registryDependencies": [
-    "https://ds.interlace.tools/r/theme.json"
+    "https://ds.interlace.tools/r/theme.json",
+    "https://ds.interlace.tools/r/cn.json"
   ],
   "files": [
     {
       "path": "registry/interlace-ui/separator.tsx",
       "target": "components/ui/separator.tsx",
       "type": "registry:ui",
-      "content": "// @interlace/separator v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/separator\n// What changed since: https://ds.interlace.tools/c/separator#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\nimport * as React from 'react';\nimport { Separator as BaseSeparator } from '@base-ui/react/separator';\n\nimport { cn } from '@/lib/utils';\n\ntype SeparatorProps = React.ComponentProps<typeof BaseSeparator> & {\n  orientation?: 'horizontal' | 'vertical';\n};\n\nfunction Separator({\n  className,\n  orientation = 'horizontal',\n  ...props\n}: SeparatorProps) {\n  return (\n    <BaseSeparator\n      data-slot=\"separator\"\n      orientation={orientation}\n      className={cn(\n        'bg-border shrink-0',\n        orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Separator };\nexport type { SeparatorProps };\n"
+      "content": "import * as React from 'react';\n\n// @interlace/separator v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/separator\n// What changed since: https://ds.interlace.tools/c/separator#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\nimport { Separator as BaseSeparator } from '@base-ui/react/separator';\n\nimport { cn } from '@/lib/utils';\n\ntype SeparatorProps = React.ComponentProps<typeof BaseSeparator> & {\n  orientation?: 'horizontal' | 'vertical';\n};\n\nfunction Separator({\n  className,\n  orientation = 'horizontal',\n  ...props\n}: SeparatorProps) {\n  return (\n    <BaseSeparator\n      data-slot=\"separator\"\n      orientation={orientation}\n      className={cn(\n        'bg-border shrink-0',\n        orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Separator };\nexport type { SeparatorProps };\n"
     }
   ],
   "meta": {
