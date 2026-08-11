@@ -90,6 +90,16 @@ export const Default: Story = {
   ),
 };
 
+/**
+ * The skeleton the registry embeds as this component's loading demo, in the
+ * same meta row as `Default` so the reserved shape can be compared against
+ * the resolved chip without switching stories.
+ */
+export const Loading: Story = {
+  ...Default,
+  args: { loading: true, children: '' },
+};
+
 export const Variants: Story = {
   render: () => (
     <TagList

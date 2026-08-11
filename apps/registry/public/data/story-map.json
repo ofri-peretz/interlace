@@ -38,12 +38,51 @@
     "previewDark": "primitives-alertdialog--dark",
     "skeleton": null
   },
+  "animated-gradient-text": {
+    "title": "MagicUI/AnimatedGradientText",
+    "storyIds": [
+      "magicui-animatedgradienttext--default",
+      "magicui-animatedgradienttext--dark",
+      "magicui-animatedgradienttext--fast-sweep",
+      "magicui-animatedgradienttext--slow-sweep",
+      "magicui-animatedgradienttext--brand-gradient"
+    ],
+    "preview": "magicui-animatedgradienttext--default",
+    "previewDark": "magicui-animatedgradienttext--dark",
+    "skeleton": null
+  },
+  "animated-grid-pattern": {
+    "title": "MagicUI/AnimatedGridPattern",
+    "storyIds": [
+      "magicui-animatedgridpattern--default",
+      "magicui-animatedgridpattern--dark",
+      "magicui-animatedgridpattern--dense",
+      "magicui-animatedgridpattern--sparse",
+      "magicui-animatedgridpattern--large-dashed-cells"
+    ],
+    "preview": "magicui-animatedgridpattern--default",
+    "previewDark": "magicui-animatedgridpattern--dark",
+    "skeleton": null
+  },
+  "animated-list": {
+    "title": "MagicUI/AnimatedList",
+    "storyIds": [
+      "magicui-animatedlist--default",
+      "magicui-animatedlist--dark",
+      "magicui-animatedlist--pause-on-hover",
+      "magicui-animatedlist--fast-reveal"
+    ],
+    "preview": "magicui-animatedlist--default",
+    "previewDark": "magicui-animatedlist--dark",
+    "skeleton": null
+  },
   "article-card": {
     "title": "Blocks/ArticleCard",
     "storyIds": [
       "blocks-articlecard--default",
       "blocks-articlecard--without-image",
       "blocks-articlecard--many-tags",
+      "blocks-articlecard--loading",
       "blocks-articlecard--dark",
       "blocks-articlecard--grid",
       "blocks-articlecard--featured-priority",
@@ -59,7 +98,7 @@
     ],
     "preview": "blocks-articlecard--default",
     "previewDark": "blocks-articlecard--dark",
-    "skeleton": null
+    "skeleton": "blocks-articlecard--loading"
   },
   "article-list-grid": {
     "title": "Blocks/ArticleListGrid",
@@ -168,17 +207,54 @@
     "previewDark": "primitives-avatar--dark",
     "skeleton": "primitives-avatar--loading"
   },
+  "background-beams-with-collision": {
+    "title": "Aceternity/BackgroundBeamsWithCollision",
+    "storyIds": [
+      "aceternity-backgroundbeamswithcollision--default",
+      "aceternity-backgroundbeamswithcollision--hidden-collision-surface",
+      "aceternity-backgroundbeamswithcollision--custom-beams",
+      "aceternity-backgroundbeamswithcollision--dark"
+    ],
+    "preview": "aceternity-backgroundbeamswithcollision--default",
+    "previewDark": "aceternity-backgroundbeamswithcollision--dark",
+    "skeleton": null
+  },
+  "background-gradient-animation": {
+    "title": "Aceternity/BackgroundGradientAnimation",
+    "storyIds": [
+      "aceternity-backgroundgradientanimation--default",
+      "aceternity-backgroundgradientanimation--calm-surface",
+      "aceternity-backgroundgradientanimation--custom-palette",
+      "aceternity-backgroundgradientanimation--dark"
+    ],
+    "preview": "aceternity-backgroundgradientanimation--default",
+    "previewDark": "aceternity-backgroundgradientanimation--dark",
+    "skeleton": null
+  },
+  "background-lines": {
+    "title": "Aceternity/BackgroundLines",
+    "storyIds": [
+      "aceternity-backgroundlines--default",
+      "aceternity-backgroundlines--slow-loop",
+      "aceternity-backgroundlines--fast-loop",
+      "aceternity-backgroundlines--dark"
+    ],
+    "preview": "aceternity-backgroundlines--default",
+    "previewDark": "aceternity-backgroundlines--dark",
+    "skeleton": null
+  },
   "badge": {
     "title": "Primitives/Badge",
     "storyIds": [
       "primitives-badge--default",
+      "primitives-badge--loading",
       "primitives-badge--variants",
       "primitives-badge--dark",
       "primitives-badge--rtl"
     ],
     "preview": "primitives-badge--variants",
     "previewDark": "primitives-badge--dark",
-    "skeleton": null
+    "skeleton": "primitives-badge--loading"
   },
   "blog-home-template": {
     "title": "Templates/BlogHomeTemplate",
@@ -191,6 +267,19 @@
     "preview": "templates-bloghometemplate--default",
     "previewDark": "templates-bloghometemplate--dark",
     "skeleton": "templates-bloghometemplate--page-skeleton"
+  },
+  "border-beam": {
+    "title": "MagicUI/BorderBeam",
+    "storyIds": [
+      "magicui-borderbeam--default",
+      "magicui-borderbeam--dark",
+      "magicui-borderbeam--reverse",
+      "magicui-borderbeam--thick-and-slow",
+      "magicui-borderbeam--brand-gradient"
+    ],
+    "preview": "magicui-borderbeam--default",
+    "previewDark": "magicui-borderbeam--dark",
+    "skeleton": null
   },
   "box": {
     "title": "Primitives/Box",
@@ -286,6 +375,18 @@
     "preview": "primitives-checkbox--default",
     "previewDark": "primitives-checkbox--dark",
     "skeleton": "primitives-checkbox--loading"
+  },
+  "cloud-particles": {
+    "title": "Aceternity/CloudParticles",
+    "storyIds": [
+      "aceternity-cloudparticles--default",
+      "aceternity-cloudparticles--dark",
+      "aceternity-cloudparticles--dense-and-slow",
+      "aceternity-cloudparticles--sparse"
+    ],
+    "preview": "aceternity-cloudparticles--default",
+    "previewDark": "aceternity-cloudparticles--dark",
+    "skeleton": null
   },
   "code-block": {
     "title": "Primitives/CodeBlock",
@@ -591,6 +692,31 @@
     "previewDark": "blocks-figure--dark",
     "skeleton": null
   },
+  "flip-words": {
+    "title": "Aceternity/FlipWords",
+    "storyIds": [
+      "aceternity-flipwords--default",
+      "aceternity-flipwords--headline",
+      "aceternity-flipwords--dark",
+      "aceternity-flipwords--long-dwell",
+      "aceternity-flipwords--pause-on-hover"
+    ],
+    "preview": "aceternity-flipwords--headline",
+    "previewDark": "aceternity-flipwords--dark",
+    "skeleton": null
+  },
+  "focus-cards": {
+    "title": "Aceternity/FocusCards",
+    "storyIds": [
+      "aceternity-focuscards--default",
+      "aceternity-focuscards--dark",
+      "aceternity-focuscards--two-columns",
+      "aceternity-focuscards--preselected-active"
+    ],
+    "preview": "aceternity-focuscards--default",
+    "previewDark": "aceternity-focuscards--dark",
+    "skeleton": null
+  },
   "focus-ring": {
     "title": "Primitives/FocusRing",
     "storyIds": [
@@ -774,6 +900,19 @@
     "previewDark": "templates-landingtemplate--dark",
     "skeleton": "templates-landingtemplate--page-skeleton"
   },
+  "marquee": {
+    "title": "MagicUI/Marquee",
+    "storyIds": [
+      "magicui-marquee--default",
+      "magicui-marquee--reverse",
+      "magicui-marquee--pause-on-hover",
+      "magicui-marquee--vertical",
+      "magicui-marquee--dark"
+    ],
+    "preview": "magicui-marquee--default",
+    "previewDark": "magicui-marquee--dark",
+    "skeleton": null
+  },
   "meteors": {
     "title": "Primitives/Meteors",
     "storyIds": [
@@ -884,6 +1023,19 @@
     "previewDark": "primitives-numberfield--dark",
     "skeleton": "primitives-numberfield--loading"
   },
+  "number-ticker": {
+    "title": "MagicUI/NumberTicker",
+    "storyIds": [
+      "magicui-numberticker--default",
+      "magicui-numberticker--no-animation",
+      "magicui-numberticker--count-down",
+      "magicui-numberticker--decimal-places",
+      "magicui-numberticker--dark"
+    ],
+    "preview": "magicui-numberticker--default",
+    "previewDark": "magicui-numberticker--dark",
+    "skeleton": null
+  },
   "page-header": {
     "title": "Blocks/PageHeader",
     "storyIds": [
@@ -909,6 +1061,19 @@
     "preview": "primitives-pagination--default",
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
+  },
+  "particles": {
+    "title": "MagicUI/Particles",
+    "storyIds": [
+      "magicui-particles--default",
+      "magicui-particles--dense",
+      "magicui-particles--brand-color",
+      "magicui-particles--non-interactive",
+      "magicui-particles--dark"
+    ],
+    "preview": "magicui-particles--default",
+    "previewDark": "magicui-particles--dark",
+    "skeleton": null
   },
   "popover": {
     "title": "Primitives/Popover",
@@ -1355,6 +1520,19 @@
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
   },
+  "spotlight": {
+    "title": "Aceternity/Spotlight",
+    "storyIds": [
+      "aceternity-spotlight--default",
+      "aceternity-spotlight--high-opacity",
+      "aceternity-spotlight--slow-reveal",
+      "aceternity-spotlight--repositioned",
+      "aceternity-spotlight--dark"
+    ],
+    "preview": "aceternity-spotlight--default",
+    "previewDark": "aceternity-spotlight--dark",
+    "skeleton": null
+  },
   "stack": {
     "title": "Primitives/Stack",
     "storyIds": [
@@ -1367,6 +1545,19 @@
     ],
     "preview": "primitives-stack--vertical",
     "previewDark": "primitives-stack--dark",
+    "skeleton": null
+  },
+  "stars-background": {
+    "title": "Aceternity/StarsBackground",
+    "storyIds": [
+      "aceternity-starsbackground--default",
+      "aceternity-starsbackground--dense",
+      "aceternity-starsbackground--slow-twinkle",
+      "aceternity-starsbackground--with-shooting-stars",
+      "aceternity-starsbackground--dark"
+    ],
+    "preview": "aceternity-starsbackground--default",
+    "previewDark": "aceternity-starsbackground--dark",
     "skeleton": null
   },
   "stat-card": {
@@ -1423,6 +1614,19 @@
     "previewDark": "templates-statstemplate--dark",
     "skeleton": "templates-statstemplate--page-skeleton"
   },
+  "sunny-background": {
+    "title": "Aceternity/SunnyBackground",
+    "storyIds": [
+      "aceternity-sunnybackground--default",
+      "aceternity-sunnybackground--top-left",
+      "aceternity-sunnybackground--custom-palette",
+      "aceternity-sunnybackground--static",
+      "aceternity-sunnybackground--dark"
+    ],
+    "preview": "aceternity-sunnybackground--default",
+    "previewDark": "aceternity-sunnybackground--dark",
+    "skeleton": null
+  },
   "switch": {
     "title": "Primitives/Switch",
     "storyIds": [
@@ -1457,6 +1661,7 @@
     "title": "Primitives/Tag",
     "storyIds": [
       "primitives-tag--default",
+      "primitives-tag--loading",
       "primitives-tag--variants",
       "primitives-tag--list",
       "primitives-tag--dark",
@@ -1465,7 +1670,7 @@
     ],
     "preview": "primitives-tag--default",
     "previewDark": "primitives-tag--dark",
-    "skeleton": null
+    "skeleton": "primitives-tag--loading"
   },
   "tag-template": {
     "title": "Templates/TagTemplate",

@@ -945,6 +945,29 @@ const checkRawStyleFiles = async () => {
 
 // ─── Main ────────────────────────────────────────────────────────────────────
 
+/**
+ * `public/data/story-map.json` must match what the story sources say TODAY.
+ *
+ * It is regenerated on every full build but was never compared in `--check`,
+ * so it rotted silently: the committed copy was two components behind HEAD,
+ * and those two component pages shipped with no live preview at all while
+ * every gate stayed green. A stale preview map is invisible by construction —
+ * the page just renders the "no embeddable story" fallback.
+ */
+const checkStoryMap = async () => {
+  const { buildStoryMap } = await import('./build-story-map.mjs');
+  const { map } = await buildStoryMap();
+  const file = path.join(REGISTRY_ROOT, 'public/data/story-map.json');
+  try {
+    const current = JSON.parse(await readFile(file, 'utf8'));
+    return JSON.stringify(current) === JSON.stringify(map)
+      ? []
+      : ['drift: public/data/story-map.json (run `npm run registry:build`)'];
+  } catch {
+    return ['missing: public/data/story-map.json'];
+  }
+};
+
 const compareAgainstDisk = async (fileName, built, errors) => {
   try {
     const current = JSON.parse(
@@ -1088,6 +1111,7 @@ const main = async () => {
     await compareAgainstDisk('registry.json', built.index, errors);
     errors.push(...assertRegistryContract(built.items));
     errors.push(...(await checkRawStyleFiles()));
+    errors.push(...(await checkStoryMap()));
     // Every shipped item must carry an explicit intent category — an "Other"
     // bucket on a public registry is a browse dead-end. Local builds only warn
     // (so adding a component never blocks); CI fails.
@@ -1155,6 +1179,13 @@ const main = async () => {
       // the release notes can never describe a registry that no longer
       // matches — one command rebuilds both.
       'scripts/build-changelog.mjs',
+      // Regenerates llms.txt, /.well-known/agent-skills/ and the two indexes
+      // (agent-index.json for machines, search-index.json for the site's own
+      // search). Runs LAST because it reads the `public/r/*.json` this build
+      // just wrote — an agent-facing description of a registry that no longer
+      // exists is worse than none, and a hand-maintained llms.txt is wrong the
+      // day someone adds a component.
+      'scripts/build-agent-surface.mjs',
     ]) {
       const result = spawnSync('node', [path.join(REGISTRY_ROOT, script)], {
         stdio: 'inherit',

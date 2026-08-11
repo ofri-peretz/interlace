@@ -65,28 +65,32 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: (args) => (
     <div className="flex flex-col gap-md">
       <div>
-        <div className="mb-2 text-xs font-mono uppercase text-fd-muted-foreground">
+        <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           networks = all (default)
         </div>
         <ShareButtons {...args} />
       </div>
       <div>
-        <div className="mb-2 text-xs font-mono uppercase text-fd-muted-foreground">
+        <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           networks = ['twitter', 'copy']
         </div>
         <ShareButtons {...args} networks={['twitter', 'copy']} />
       </div>
       <div>
-        <div className="mb-2 text-xs font-mono uppercase text-fd-muted-foreground">
+        <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           networks = ['linkedin', 'bluesky']
         </div>
         <ShareButtons {...args} networks={['linkedin', 'bluesky']} />
       </div>
       <div>
-        <div className="mb-2 text-xs font-mono uppercase text-fd-muted-foreground">
+        <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           networks = ['copy']
         </div>
         <ShareButtons {...args} networks={['copy']} />
@@ -96,6 +100,7 @@ export const Variants: Story = {
 };
 
 export const Dark: Story = {
+  ...Variants,
   globals: { theme: 'dark' },
 };
 

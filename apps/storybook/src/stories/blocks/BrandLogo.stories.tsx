@@ -54,16 +54,6 @@ export const Default: Story = {
   },
 };
 
-/**
- * Both bar fills are theme-paired custom properties, so the lockup flips to the
- * brighter dark-mode pair on its own. This story is the check that the pairing
- * is actually wired — the mark should stay legible, not just invert.
- */
-export const Dark: Story = {
-  args: { markSize: 32, className: 'text-lg' },
-  globals: { theme: 'dark' },
-};
-
 export const MarkOnly: Story = {
   parameters: {
     docs: {
@@ -78,6 +68,10 @@ export const MarkOnly: Story = {
 };
 
 export const Sizes: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   parameters: {
     docs: {
       description: {
@@ -99,6 +93,20 @@ export const Sizes: Story = {
       ))}
     </div>
   ),
+};
+
+/**
+ * Both bar fills are theme-paired custom properties, so the lockup flips to the
+ * brighter dark-mode pair on its own. This story is the check that the pairing
+ * is actually wired — the mark should stay legible, not just invert.
+ *
+ * Declared after `Sizes` because it spreads it: a story that spreads a later
+ * `const` throws on module evaluation, and Storybook reports that as the whole
+ * file failing to load.
+ */
+export const Dark: Story = {
+  ...Sizes,
+  globals: { theme: 'dark' },
 };
 
 export const InNavContext: Story = {

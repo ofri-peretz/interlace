@@ -123,6 +123,10 @@ export const ThreeBarsInOne: Story = {
  * survives, because it is texture and text rather than hue.
  */
 export const ZeroIsNotMissing: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="flex w-full max-w-float flex-col gap-6">
       <Row label="measured zero — we ran it, the answer was none">

@@ -87,6 +87,10 @@ export const Loading: Story = {
 };
 
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="flex flex-col gap-4 bg-background p-6 text-foreground">
       <div>

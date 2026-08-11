@@ -138,6 +138,10 @@ export const Outline: Story = {
 };
 
 export const Sizes: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   parameters: {
     docs: { description: { story: 'Three sizes match the WCAG 2.5.5 target-size floor at sm.' } },
   },
@@ -174,3 +178,7 @@ export const Group: Story = {
     </ToggleGroup>
   ),
 };
+
+/** Dark twin of the preview, so the site's scheme toggle repaints it
+ *  rather than swapping it for a different composition. */
+export const Dark: Story = { ...Sizes, globals: { theme: 'dark' } };

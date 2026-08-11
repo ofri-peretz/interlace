@@ -151,6 +151,10 @@ export const Checked: Story = {
  * label association this primitive depends on.
  */
 export const SettingsRows: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="w-full max-w-float divide-y divide-border rounded-md border border-border">
       {[
@@ -231,7 +235,7 @@ export const Invalid: Story = {
 };
 
 export const Dark: Story = {
-  ...Default,
+  ...SettingsRows,
   globals: { theme: 'dark' },
 };
 

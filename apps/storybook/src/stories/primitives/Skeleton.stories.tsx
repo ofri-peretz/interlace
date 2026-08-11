@@ -109,6 +109,10 @@ export const Count: Story = {
  * pattern (image surface + title lines + description + author row).
  */
 export const ArticleCardSkeleton: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   args: { variant: 'article-card' },
   render: (args) => (
     <div className="w-[360px] max-w-full">
@@ -118,7 +122,7 @@ export const ArticleCardSkeleton: Story = {
 };
 
 export const Dark: Story = {
-  ...Catalogue,
+  ...ArticleCardSkeleton,
   globals: { theme: 'dark' },
 };
 

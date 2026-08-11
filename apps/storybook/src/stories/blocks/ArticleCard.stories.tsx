@@ -168,6 +168,16 @@ export const ManyTags: Story = {
   ],
 };
 
+/**
+ * The skeleton the registry embeds as this component's loading demo — the
+ * shape the card reserves before the article resolves, at the same 380px the
+ * real card occupies, so the swap costs no layout shift.
+ */
+export const Loading: Story = {
+  ...Default,
+  args: { loading: true },
+};
+
 export const Dark: Story = {
   args: articleFixtures[2],
   globals: { theme: 'dark' },

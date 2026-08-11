@@ -163,6 +163,10 @@ export const Default: Story = {
  * control rather than this grid pretending to be exhaustive.
  */
 export const Placement: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   parameters: { layout: 'padded' },
   render: () => (
     <div className="grid grid-cols-1 gap-2xl p-2xl md:grid-cols-2">
@@ -231,8 +235,7 @@ export const KeyboardFlow: Story = {
 };
 
 export const Dark: Story = {
-  ...Default,
-  args: { defaultOpen: true },
+  ...Placement,
   globals: { theme: 'dark' },
 };
 

@@ -155,6 +155,10 @@ export const Loading: Story = {
 };
 
 export const InContext: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   parameters: {
     // A composition demo, not a prop demo: the row builds three Sparklines of
     // its own, so leaving the panel on would show controls that move nothing.
@@ -185,5 +189,5 @@ export const InContext: Story = {
   ),
 };
 
-export const Dark: Story = { args: { points: RISING, label: 'Downloads' }, globals: { theme: 'dark' } };
+export const Dark: Story = { ...InContext, globals: { theme: 'dark' } };
 export const Rtl: Story = { args: { points: RISING, label: 'Downloads' }, decorators: [withRtl] };

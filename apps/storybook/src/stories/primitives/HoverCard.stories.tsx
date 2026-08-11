@@ -178,6 +178,10 @@ export const Default: Story = {
 // the placement is visible at a glance.
 // ─────────────────────────────────────────────────────────────────
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="grid grid-cols-1 gap-2xl p-2xl md:grid-cols-2">
       {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
@@ -238,7 +242,7 @@ export const KeyboardFlow: Story = {
 };
 
 export const Dark: Story = {
-  ...Default,
+  ...Variants,
   globals: { theme: 'dark' },
 };
 
