@@ -18,7 +18,11 @@ const meta: Meta<typeof Select> = {
   component: Select,
   tags: ['autodocs'],
   parameters: {
-    layout: 'centered',
+    // Not centered. Select is a FORM CONTROL — it belongs at the width of
+    // the field it fills, and a fit-content root collapsed its story root to
+    // 212px inside a 1280px canvas. The other centered stories are overlays
+    // whose trigger really is intrinsic; this one is not.
+    layout: 'padded',
     docs: {
       description: {
         component:

@@ -85,7 +85,7 @@ export const Default: Story = {
     value: 96,
     max: 100,
     unit: '%',
-    className: 'w-[420px] max-w-full',
+    className: 'w-full max-w-float',
   },
 };
 
@@ -96,7 +96,7 @@ export const Default: Story = {
  */
 export const ThreeBarsInOne: Story = {
   render: () => (
-    <div className="flex w-[420px] max-w-full flex-col gap-6">
+    <div className="flex w-full max-w-float flex-col gap-6">
       <Row label="odds bar — an explicit fraction">
         <Meter
           label="Merge odds"
@@ -124,7 +124,7 @@ export const ThreeBarsInOne: Story = {
  */
 export const ZeroIsNotMissing: Story = {
   render: () => (
-    <div className="flex w-[420px] max-w-full flex-col gap-6">
+    <div className="flex w-full max-w-float flex-col gap-6">
       <Row label="measured zero — we ran it, the answer was none">
         <Meter label="Findings" value={0} max={120} unit="findings" />
       </Row>
@@ -144,7 +144,7 @@ export const ZeroIsNotMissing: Story = {
 /** Tone answers "is this good". It never answers "how big". */
 export const Tones: Story = {
   render: () => (
-    <div className="flex w-[420px] max-w-full flex-col gap-6">
+    <div className="flex w-full max-w-float flex-col gap-6">
       <Meter label="Coverage" value={96} max={100} unit="%" tone="positive" />
       <Meter label="False positives" value={30} max={100} tone="negative" />
       <Meter label="Rules" value={409} max={500} tone="neutral" />
@@ -154,7 +154,7 @@ export const Tones: Story = {
 };
 
 export const Loading: Story = {
-  args: { label: 'Coverage', value: null, loading: true, className: 'w-[420px] max-w-full' },
+  args: { label: 'Coverage', value: null, loading: true, className: 'w-full max-w-float' },
 };
 
 // ── RankedBarList ───────────────────────────────────────────────────────────

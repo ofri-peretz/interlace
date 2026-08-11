@@ -83,7 +83,7 @@ function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
       <code className="text-muted-foreground font-mono text-ui-sm pt-2 sm:w-44 sm:shrink-0">
         variant=&quot;{variant}&quot;
       </code>
-      <div className="w-[420px] max-w-full">
+      <div className="w-full max-w-float">
         <Skeleton variant={variant} />
       </div>
     </div>

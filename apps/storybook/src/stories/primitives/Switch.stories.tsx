@@ -152,7 +152,7 @@ export const Checked: Story = {
  */
 export const SettingsRows: Story = {
   render: () => (
-    <div className="w-[420px] max-w-full divide-y divide-border rounded-md border border-border">
+    <div className="w-full max-w-float divide-y divide-border rounded-md border border-border">
       {[
         {
           label: 'Respect reduced motion',

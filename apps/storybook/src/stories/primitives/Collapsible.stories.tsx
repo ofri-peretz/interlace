@@ -108,7 +108,7 @@ export const Default: Story = {
   args: {
     defaultOpen: true,
     disabled: false,
-    className: 'w-[420px] max-w-full rounded-md border',
+    className: 'w-full max-w-float rounded-md border',
   },
   render: (args) => (
     <Collapsible {...args}>
@@ -192,7 +192,7 @@ export const Variants: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Collapsible className="w-[420px] max-w-full rounded-md border">
+    <Collapsible className="w-full max-w-float rounded-md border">
       <CollapsibleTrigger className="text-ui-sm flex w-full items-center justify-between px-md py-sm text-left font-medium">
         Show advanced settings
       </CollapsibleTrigger>

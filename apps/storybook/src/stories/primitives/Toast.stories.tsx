@@ -127,7 +127,7 @@ export const Default: Story = {
     const Icon = TONE_ICON[args.tone ?? 'info'];
     const copy = TONES.find((entry) => entry.tone === (args.tone ?? 'info'))!;
     return (
-      <div className="w-[420px] max-w-full">
+      <div className="w-full max-w-float">
         <Toast {...args}>
           <Icon className="size-4" aria-hidden />
           <div className="flex flex-col gap-xs">
@@ -147,7 +147,7 @@ export const Default: Story = {
  */
 export const Tones: Story = {
   render: () => (
-    <div className="flex w-[420px] max-w-full flex-col gap-sm">
+    <div className="flex w-full max-w-float flex-col gap-sm">
       {TONES.map(({ tone, Icon, title, description }) => (
         <Toast key={tone} tone={tone}>
           <Icon className="size-4" aria-hidden />

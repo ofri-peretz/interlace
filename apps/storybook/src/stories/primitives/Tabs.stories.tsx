@@ -65,7 +65,7 @@ const meta: Meta<typeof Tabs> = {
   },
   args: {
     orientation: 'horizontal',
-    className: 'w-[420px] max-w-full',
+    className: 'w-full max-w-float',
     onValueChange: fn(),
   },
 };
@@ -129,7 +129,7 @@ export const Default: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Tabs defaultValue="security" className="w-[420px] max-w-full">
+    <Tabs defaultValue="security" className="w-full max-w-float">
       <TabsList>
         <TabsTrigger value="security">Security</TabsTrigger>
         <TabsTrigger value="quality">Quality</TabsTrigger>
@@ -204,7 +204,7 @@ export const KeyboardFlow: Story = {
  * loading tab group doesn't jump when the real tabs arrive.
  */
 export const Loading: Story = {
-  render: () => <Skeleton variant="tabs" className="w-[420px] max-w-full" />,
+  render: () => <Skeleton variant="tabs" className="w-full max-w-float" />,
 };
 
 export const Dark: Story = {

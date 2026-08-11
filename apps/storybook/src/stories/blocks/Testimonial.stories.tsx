@@ -74,7 +74,7 @@ const sampleItem = {
 export const Default: Story = {
   args: { ...sampleItem, loading: false },
   render: (args) => (
-    <div className="w-[420px] max-w-full">
+    <div className="w-full max-w-float">
       <Testimonial {...args} />
     </div>
   ),
@@ -102,7 +102,7 @@ export const WithAvatar: Story = {
   },
   args: { ...sampleItem, authorAvatar: AVATAR_SRC },
   render: (args) => (
-    <div className="w-[420px] max-w-full">
+    <div className="w-full max-w-float">
       <Testimonial {...args} />
     </div>
   ),
@@ -122,7 +122,7 @@ export const Grid: Story = {
 export const Loading: Story = {
   args: { ...sampleItem, loading: true },
   render: (args) => (
-    <div className="w-[420px] max-w-full">
+    <div className="w-full max-w-float">
       <Testimonial {...args} />
     </div>
   ),
