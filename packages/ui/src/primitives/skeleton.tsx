@@ -118,6 +118,11 @@ const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   // silhouette is a header row plus repeating rows, which a single painted box
   // cannot express. `chart` and `sparkline` are honest rectangles.
   'metric-table',
+  // Absence vocabulary (wave 10). Both are composites: a strip is label/value
+  // pairs across a grid and a meter is a label row above a track, and neither
+  // silhouette can be expressed as a single painted box.
+  'meter',
+  'stat-strip',
 ]);
 
 function Skeleton({
@@ -445,6 +450,34 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
               <div className="bg-muted-foreground/10 ml-auto h-4 w-10 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-[90px] rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-12 rounded-sm" />
+            </div>
+          ))}
+        </div>
+      );
+    case 'meter':
+      // Label row (name left, value right) above the track — the exact
+      // geometry Meter settles into, so the swap is CLS-neutral.
+      return (
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between gap-sm">
+            <div className="bg-muted-foreground/10 h-3 w-1/3 rounded-sm" />
+            <div className="bg-muted-foreground/10 h-3 w-10 rounded-sm" />
+          </div>
+          <div className="bg-muted-foreground/10 h-2.5 w-full rounded-full" />
+        </div>
+      );
+    case 'stat-strip':
+      // Four label/value pairs on the strip's own two-track mobile grid, so
+      // the placeholder reflows at exactly the breakpoints the real strip does.
+      return (
+        <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-3 lg:grid-cols-4">
+          {[0, 1, 2, 3].map((cell) => (
+            <div
+              key={cell}
+              className="border-muted-foreground/10 flex min-w-0 flex-col gap-1 border-s-2 ps-2"
+            >
+              <div className="bg-muted-foreground/10 h-3 w-3/4 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-5 w-1/2 rounded-sm" />
             </div>
           ))}
         </div>

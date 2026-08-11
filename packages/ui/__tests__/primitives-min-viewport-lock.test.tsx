@@ -117,6 +117,18 @@ const PRIMITIVES = [
   // localStorage and matchMedia and writes to <html>. Its trigger collapses
   // to a 36px icon square below `sm`, so 320 is honest.
   { name: 'theme-switcher', viewport: 320, tier: 'client' },
+  // ── Phase 10.2 / 10.3 — the absence vocabulary ────────────────────────
+  // Both are server-tier: the whole vocabulary is a pure function of props,
+  // so a dashboard can render a strip of measurements in an RSC without
+  // shipping a byte of it to the browser. 320 across the board — a strip
+  // collapses to two tracks and a meter is label-over-bar, which is the
+  // layout that survives an iPhone SE.
+  //
+  // DataState itself stays OFF this list for the reason recorded above: it
+  // is a state-orchestration wrapper with no chrome of its own. Its badge
+  // is inline text, which has no viewport contract either.
+  { name: 'stat-strip', viewport: 320, tier: 'server' },
+  { name: 'meter', viewport: 320, tier: 'server' },
 ] as const;
 
 /**

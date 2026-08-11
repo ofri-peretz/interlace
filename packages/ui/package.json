@@ -164,6 +164,22 @@
       "types": "./dist/primitives/data-state.d.ts",
       "default": "./dist/primitives/data-state.js"
     },
+    "./data-state-model": {
+      "types": "./dist/primitives/data-state-model.d.ts",
+      "default": "./dist/primitives/data-state-model.js"
+    },
+    "./stat-strip": {
+      "types": "./dist/primitives/stat-strip.d.ts",
+      "default": "./dist/primitives/stat-strip.js"
+    },
+    "./meter": {
+      "types": "./dist/primitives/meter.d.ts",
+      "default": "./dist/primitives/meter.js"
+    },
+    "./meter-scale": {
+      "types": "./dist/primitives/meter-scale.d.ts",
+      "default": "./dist/primitives/meter-scale.js"
+    },
     "./section-boundary": {
       "types": "./dist/primitives/section-boundary.d.ts",
       "default": "./dist/primitives/section-boundary.js"

@@ -80,6 +80,14 @@ export const SKELETON_VARIANTS = [
   'metric-table',
   'sparkline',
 
+  // ── Absence-vocabulary shapes (Phase 10.2 / 10.3) ────────────────────
+  // Both reserve the resting silhouette of a surface whose data is ALWAYS
+  // in flight on first paint. `stat-strip` is a composite (label + value
+  // pairs across a grid); `meter` is a label row plus a track, and its
+  // `count` prop is what a RankedBarList reserves rows with.
+  'meter',
+  'stat-strip',
+
   // ── Template-shaped (matches a template's full-page layout) ──────────
   // Added by Phase 4 when the templates land.
 ] as const;
@@ -163,5 +171,10 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // column around it.
   chart: 'h-56 w-full rounded-md',
   'metric-table': 'w-full rounded-md',
+  // Composites (inner JSX in skeleton.tsx). Both are transparent at the root:
+  // the shape lives entirely in the body, and a filled root would paint a
+  // block behind the parts.
+  meter: 'w-full bg-transparent',
+  'stat-strip': 'w-full bg-transparent',
   sparkline: 'inline-block h-[22px] w-[90px] rounded-sm align-middle',
 };

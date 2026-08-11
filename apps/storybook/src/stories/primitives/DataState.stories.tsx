@@ -10,7 +10,7 @@ const meta: Meta<typeof DataState> = {
     docs: {
       description: {
         component:
-          'The one place a fetch site decides what to render. Put it around anything whose content arrives asynchronously, instead of hand-writing the `isLoading ? … : error ? … : !data.length ? … : …` ladder again. It is a switch, not a fetcher: you own the request and pass in the three gate flags. Precedence is fixed — **loading → error → empty → idle** — and error deliberately beats empty, because a failed request is not "no results". The `children` render-prop only runs when every gate is clear, so `data` needs no null-check inside it. Toggle the three gates below to walk the machine.',
+          'The one place a fetch site decides what to render, and the place this design system says what an ABSENCE is.\n\nIt is a switch, not a fetcher: you own the request and pass the flags. Precedence is fixed and it is the `DATA_STATES` array itself — **loading → error → not-applicable → not-counted → empty → partial → truncated → first-measurement → idle**. Error deliberately beats empty, because a failed request is not "no results"; truncated is not empty at all, and does not replace the body.\n\nFour states was not enough, and the missing five are the interesting ones. **`not-counted`** = no run happened, drawn as a diagonal hatch, because a run that returned zero and a run that never happened must not look the same. **`not-applicable`** recedes — it was never going to have a value. **`partial`** means every count below is a floor. **`truncated`** means never a denominator. **`first-measurement`** is the only absence that gets the accent colour and a dashed outline, because it is the only one a reader can act on.\n\nStates co-occur, so the resolver returns the winner AND the qualifiers, and the announcement says both — `data-qualifiers` carries the facts `data-state` cannot. **Every state owes a sentence.** A hatch that exists only in pixels keeps the distinction for sighted readers and destroys it for everyone else, and axe scores all of it green.',
       },
     },
   },
@@ -34,12 +34,54 @@ const meta: Meta<typeof DataState> = {
     empty: {
       control: 'boolean',
       description:
-        'Third gate. Truthy → render `emptyState`. Compute it yourself (`!data?.length`) — the component never inspects `data` to decide.',
+        'Truthy → render `emptyState`. Compute it yourself (`!data?.length`) — the component never inspects `data` to decide. A COMPLETE result with nothing in it; the only absence that is a real, observed zero-length.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
         category: 'State',
       },
+    },
+    notApplicable: {
+      control: 'boolean',
+      description:
+        'The metric has no meaning for this subject. Any number, `0` included, would be a category error. Recedes — it was never going to have a value.',
+      table: { type: { summary: 'boolean' }, category: 'State' },
+    },
+    notCounted: {
+      control: 'boolean',
+      description:
+        'No run happened. Measurable in principle, deliberately not tallied. This is the hatch, and `0` here invents a measurement nobody took.',
+      table: { type: { summary: 'boolean' }, category: 'State' },
+    },
+    partial: {
+      control: 'boolean',
+      description:
+        'Some sources did not report. Every count below is a FLOOR, not a total. Ranked above `truncated` because it is invisible: a reader can see a list stop, but cannot see a source that never replied. Does NOT replace the body.',
+      table: { type: { summary: 'boolean' }, category: 'State' },
+    },
+    truncated: {
+      control: 'boolean',
+      description:
+        'The list is cut. Must never become a denominator. Does NOT replace the body.',
+      table: { type: { summary: 'boolean' }, category: 'State' },
+    },
+    firstMeasurement: {
+      control: 'boolean',
+      description:
+        'A reading exists but no prior does. The one absence with an accent colour, because it is the one a reader can resolve — by measuring again tomorrow. Does NOT replace the body.',
+      table: { type: { summary: 'boolean' }, category: 'State' },
+    },
+    notice: {
+      control: 'boolean',
+      description:
+        'Show the badge row for qualifying states. The `sr-only` announcement is emitted either way — set this to `false` only when the surrounding surface already shows the same badge, never to make the caveat go away.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'true' }, category: 'State' },
+    },
+    announce: {
+      control: 'object',
+      description:
+        'Context folded into every sentence this instance emits — `noun`, `shown`, `coverage`, `reason`.',
+      table: { type: { summary: 'AnnouncementOptions' }, category: 'State' },
     },
     data: {
       control: 'object',
@@ -255,12 +297,102 @@ export const CustomStates: Story = {
   ),
 };
 
+/**
+ * The five states the four-state ladder never had. The first two REPLACE the
+ * body (there is nothing to show); the last three QUALIFY a body that still
+ * renders, which is why "truncated" is not a synonym for "empty".
+ */
+export const AbsenceVocabulary: Story = {
+  render: () => (
+    <div className="grid w-[880px] max-w-full grid-cols-1 gap-lg sm:grid-cols-2">
+      {(
+        [
+          [
+            'not-counted — no run happened (hatch)',
+            { notCounted: true } as const,
+            {},
+          ],
+          [
+            'not-applicable — never going to have a value (recedes)',
+            { notApplicable: true } as const,
+            { reason: 'package has no test suite' },
+          ],
+          [
+            'partial — every count below is a floor',
+            { partial: true } as const,
+            { coverage: '4 of 9 sources reported' },
+          ],
+          [
+            'truncated — not a denominator',
+            { truncated: true } as const,
+            { shown: 3 },
+          ],
+          [
+            'first-measurement — no prior to compare',
+            { firstMeasurement: true } as const,
+            {},
+          ],
+          [
+            'partial + truncated — wrong twice, said twice',
+            { partial: true, truncated: true } as const,
+            { shown: 3, coverage: '4 of 9 sources reported' },
+          ],
+        ] as const
+      ).map(([label, flags, announce]) => (
+        <section key={label} className="flex flex-col gap-xs">
+          <div className="text-ui-sm font-mono uppercase text-muted-foreground">
+            {label}
+          </div>
+          <DataState<Item[]> data={sample} announce={announce} {...flags}>
+            {(items) => <List items={items ?? []} />}
+          </DataState>
+        </section>
+      ))}
+    </div>
+  ),
+};
+
+/**
+ * Precedence, walked. Each row adds one higher-precedence flag to the row
+ * above it, and `data-qualifiers` (inspect the DOM) keeps every loser rather
+ * than throwing it away.
+ */
+export const Precedence: Story = {
+  render: () => (
+    <div className="flex w-[520px] max-w-full flex-col gap-md">
+      {(
+        [
+          ['truncated', { truncated: true }],
+          ['+ partial → partial wins', { truncated: true, partial: true }],
+          [
+            '+ empty → empty wins',
+            { truncated: true, partial: true, empty: true },
+          ],
+          [
+            '+ error → error wins, and it is not "no results"',
+            { truncated: true, partial: true, empty: true, error: 'ECONNRESET' },
+          ],
+        ] as const
+      ).map(([label, flags]) => (
+        <section key={label} className="flex flex-col gap-xs">
+          <div className="text-ui-sm font-mono uppercase text-muted-foreground">
+            {label}
+          </div>
+          <DataState<Item[]> data={sample} {...flags}>
+            {(items) => <List items={items ?? []} />}
+          </DataState>
+        </section>
+      ))}
+    </div>
+  ),
+};
+
 export const Dark: Story = {
-  ...Loading,
+  ...AbsenceVocabulary,
   decorators: [withDark],
 };
 
 export const RTL: Story = {
-  ...Loading,
+  ...AbsenceVocabulary,
   decorators: [withRtl],
 };
