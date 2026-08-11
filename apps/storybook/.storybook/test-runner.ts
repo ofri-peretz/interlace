@@ -98,6 +98,62 @@ const config: TestRunnerConfig = {
   },
 
   async postVisit(page, context) {
+
+    /**
+     * A padded story's root must FILL the canvas.
+     *
+     * This catches the regression class that shipped to the public registry:
+     * `#storybook-root` sized to its CONTENT rather than the viewport, so a
+     * component that sizes itself from its container (`w-full`, `max-w-*`,
+     * SVG `viewBox`) resolved its percentage against an indefinite width and
+     * collapsed. SignInForm rendered as a ~40px column with circular inputs;
+     * FocusRing rendered one word per line; charts painted nothing at all.
+     * Every one of those looked like a broken component and was a broken
+     * CONTAINER.
+     *
+     * Only `layout: 'padded'` (our global default) is asserted. `centered` is
+     * a legitimate opt-in for components with intrinsic width — a lone Badge,
+     * an overlay trigger — and there the fit-content root is the point, so
+     * asserting against it would be asserting against the feature.
+     *
+     * Note what this does NOT claim: a 384px SignInForm inside a 1248px canvas
+     * is CORRECT. `max-w-96` is the component's own decision and a sign-in form
+     * has no business being 1248px wide. Narrow-by-design is a presentation
+     * question, not a bug; a collapsed root is the bug.
+     */
+    // The runner's TestContext does not expose `parameters`, so read the
+    // resolved layout off the preview itself — which is also more honest: it
+    // reports what the story ACTUALLY rendered with, not what its meta asked
+    // for.
+    const layout = await page.evaluate(() => {
+      const b = document.body.className;
+      if (b.includes('sb-main-centered')) return 'centered';
+      if (b.includes('sb-main-fullscreen')) return 'fullscreen';
+      return 'padded';
+    });
+    if (layout === 'padded') {
+      const box = await page.evaluate(() => {
+        const root = document.getElementById('storybook-root');
+        return {
+          root: root ? root.getBoundingClientRect().width : 0,
+          body: document.body.getBoundingClientRect().width,
+        };
+      });
+      // 0.8 rather than 1.0: `padded` adds its own gutter, and a story may add
+      // its own. A root under 80% of the body has not been padded, it has
+      // collapsed.
+      if (box.body > 0 && box.root < box.body * 0.8) {
+        throw new Error(
+          `Story root collapsed: #storybook-root is ${Math.round(box.root)}px ` +
+            `inside a ${Math.round(box.body)}px canvas (layout: '${layout}').\n` +
+            `A padded story's root must fill the canvas. Either the component ` +
+            `has no responsive width strategy, or this story wants ` +
+            `\`parameters: { layout: 'centered' }\` because it is ` +
+            `intrinsically narrow. Do NOT "fix" this by hardcoding a pixel ` +
+            `width on a wrapper.`,
+        );
+      }
+    }
     const storyContext = await getStoryContext(page, context);
     if (storyContext.parameters?.a11y?.skip) return;
 
