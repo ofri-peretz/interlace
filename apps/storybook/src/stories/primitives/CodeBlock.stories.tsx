@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CodeBlock, MIN_VIEWPORT } from '@interlace/ui/code-block';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const SAMPLE_TS = `import { defineConfig } from 'eslint/config';
 import interlace from '@interlace/eslint-config';
@@ -141,7 +141,7 @@ export const Variants: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

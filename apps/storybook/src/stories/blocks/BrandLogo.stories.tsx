@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { BrandLogo, BrandMark } from '@interlace/ui/patterns/brand-logo';
-import { withDark } from '@/decorators';
 
 const meta: Meta<typeof BrandLogo> = {
   title: 'Blocks/BrandLogo',
@@ -62,7 +61,7 @@ export const Default: Story = {
  */
 export const Dark: Story = {
   args: { markSize: 32, className: 'text-lg' },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const MarkOnly: Story = {

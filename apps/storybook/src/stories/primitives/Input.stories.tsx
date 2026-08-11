@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { Input } from '@interlace/ui/input';
 import { Label } from '@interlace/ui/label';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof Input> = {
@@ -192,7 +192,7 @@ export const Types: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

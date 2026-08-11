@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Tag, TagList } from '@interlace/ui/tag';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/Tag',
@@ -108,7 +108,7 @@ export const List: Story = {
 
 export const Dark: Story = {
   ...List,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

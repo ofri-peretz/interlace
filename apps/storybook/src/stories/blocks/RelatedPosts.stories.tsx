@@ -1,6 +1,6 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { RelatedPosts, type RelatedPost } from '@interlace/ui/patterns/related-posts';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const samplePosts: RelatedPost[] = [
   {
@@ -157,7 +157,8 @@ export const Loading: Story = {
 };
 
 export const Dark: Story = {
-  decorators: [withDark, ...framed],
+  globals: { theme: 'dark' },
+  decorators: [...framed],
 };
 
 export const RTL: Story = {

@@ -11,7 +11,7 @@ import {
   ContextMenuShortcut,
 } from '@interlace/ui/context-menu';
 import { Skeleton } from '@interlace/ui/skeleton';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof ContextMenu> = {
   title: 'Primitives/ContextMenu',
@@ -255,5 +255,5 @@ export const Loading: Story = {
   render: () => <Skeleton variant="menu" />,
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

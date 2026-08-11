@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 import { SeriesTable } from '@interlace/ui/charts/series-table';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { RISING, WITH_GAPS } from './fixtures';
 
@@ -118,7 +118,7 @@ export const ScreenReaderOnly: Story = {
 
 export const Dark: Story = {
   args: { series: [{ label: 'Downloads', points: RISING.slice(0, 7) }], caption: 'Downloads', hidden: false },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 export const Rtl: Story = {
   args: { series: [{ label: 'Downloads', points: RISING.slice(0, 7) }], caption: 'Downloads', hidden: false },

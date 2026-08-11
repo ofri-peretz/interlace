@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { TimeSeries } from '@interlace/ui/charts/time-series';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { ANNOTATIONS, COMPARING, FALLING, FLAT, RAGGED, RISING, TINY, WITH_GAPS } from './fixtures';
 
@@ -383,7 +383,7 @@ export const Dark: Story = {
     label: 'npm downloads',
     compare: [{ points: COMPARING, label: 'Docs page views' }],
   },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const Rtl: Story = {

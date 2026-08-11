@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ExternalLink } from 'lucide-react';
 import { VisuallyHidden, MIN_VIEWPORT } from '@interlace/ui/visually-hidden';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/VisuallyHidden',
@@ -131,7 +131,7 @@ export const AsLabel: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

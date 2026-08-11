@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TagTemplate } from '@interlace/ui/templates/tag-template';
 import { ArticleListGrid } from '@interlace/ui/patterns/article-list-grid';
 import { TagList } from '@interlace/ui/tag';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof TagTemplate> = {
   title: 'Templates/TagTemplate',
@@ -71,7 +71,7 @@ export const Default: Story = {
   },
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
 
 /**

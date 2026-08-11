@@ -4,7 +4,7 @@ import {
   SKELETON_VARIANTS,
   type SkeletonVariant,
 } from '@interlace/ui/skeleton';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 const meta: Meta<typeof Skeleton> = {
   title: 'Primitives/Skeleton',
@@ -119,7 +119,7 @@ export const ArticleCardSkeleton: Story = {
 
 export const Dark: Story = {
   ...Catalogue,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

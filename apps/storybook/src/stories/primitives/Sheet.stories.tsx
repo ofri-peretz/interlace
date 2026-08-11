@@ -11,7 +11,7 @@ import {
 } from '@interlace/ui/sheet';
 import { Button } from '@interlace/ui/button';
 import { Badge } from '@interlace/ui/badge';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 /**
  * `side` lives on `SheetContent`, not on the root — but it is the prop a
@@ -236,7 +236,7 @@ export const Sides: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

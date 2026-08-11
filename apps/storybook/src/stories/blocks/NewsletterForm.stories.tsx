@@ -5,7 +5,7 @@ import {
   NewsletterForm,
   MIN_VIEWPORT,
 } from '@interlace/ui/patterns/newsletter-form';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Blocks/NewsletterForm',
@@ -146,7 +146,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   ...Variants,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

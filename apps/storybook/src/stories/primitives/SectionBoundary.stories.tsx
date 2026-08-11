@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SectionBoundary } from '@interlace/ui/section-boundary';
 import { Skeleton, SKELETON_VARIANTS } from '@interlace/ui/skeleton';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof SectionBoundary> = {
   title: 'Primitives/SectionBoundary',
@@ -182,7 +182,7 @@ export const ThreeIndependentSections: Story = {
 
 export const Dark: Story = {
   ...ThreeIndependentSections,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

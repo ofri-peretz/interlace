@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { StatStrip } from '@interlace/ui/stat-strip';
 import { Delta } from '@interlace/ui/charts/delta';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof StatStrip> = {
   title: 'Primitives/StatStrip',
@@ -248,7 +248,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   ...AbsenceVocabulary,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Meter, RankedBarList } from '@interlace/ui/meter';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Meter> = {
   title: 'Primitives/Meter',
@@ -239,7 +239,7 @@ export const RankedLoading: StoryObj<typeof RankedBarList> = {
 
 export const Dark: Story = {
   ...ZeroIsNotMissing,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

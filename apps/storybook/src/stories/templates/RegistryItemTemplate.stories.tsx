@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RegistryItemTemplate } from '@interlace/ui/templates/registry-item-template';
 import { CodeBlock } from '@interlace/ui/code-block';
 import { Typography } from '@interlace/ui/typography';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof RegistryItemTemplate> = {
   title: 'Templates/RegistryItemTemplate',
@@ -151,7 +151,7 @@ export const Minimal: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

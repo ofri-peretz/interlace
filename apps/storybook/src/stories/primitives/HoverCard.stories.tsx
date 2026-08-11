@@ -10,7 +10,7 @@ import {
   MIN_VIEWPORT,
 } from '@interlace/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@interlace/ui/avatar';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * `HoverCard` is Base UI's `PreviewCard.Root` — a logical container that
@@ -239,7 +239,7 @@ export const KeyboardFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

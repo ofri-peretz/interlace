@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 // Canonical path. `@interlace/ui/blocks/prev-next-post` is a deprecated
 // re-export scheduled for removal in 2.0.0.
 import { PrevNextPost } from '@interlace/ui/patterns/prev-next-post';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const prev = {
   href: '/articles/the-eslint-rule-quality-bar',
@@ -150,7 +150,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   args: { prev, next },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

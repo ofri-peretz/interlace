@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { NetworkGraph } from '@interlace/ui/charts/network-graph';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { GRAPH_EDGES, GRAPH_NODES } from './fixtures';
 
@@ -195,7 +195,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   args: { nodes: GRAPH_NODES, edges: GRAPH_EDGES, caption: 'comment ties' },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const Rtl: Story = {

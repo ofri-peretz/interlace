@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { GradeBadge, GRADE_VALUES } from '@interlace/ui/grade-badge';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof GradeBadge> = {
   title: 'Primitives/GradeBadge',
@@ -86,5 +86,5 @@ export const Sizes: Story = {
   ),
 };
 
-export const Dark: Story = { ...Ladder, decorators: [withDark] };
+export const Dark: Story = { ...Ladder, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Ladder, decorators: [withRtl] };

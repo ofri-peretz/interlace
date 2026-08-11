@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArticleListGrid } from '@interlace/ui/patterns/article-list-grid';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof ArticleListGrid> = {
   title: 'Blocks/ArticleListGrid',
@@ -120,5 +120,5 @@ export const Loading: Story = { args: { loading: true } };
 
 export const Empty: Story = { args: { posts: [] } };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

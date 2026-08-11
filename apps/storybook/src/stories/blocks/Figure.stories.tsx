@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Figure } from '@interlace/ui/patterns/figure';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Blocks/Figure',
@@ -133,8 +133,8 @@ export const Variants: StoryObj<typeof Figure> = {
 
 export const Dark: Story = {
   ...Default,
+  globals: { theme: 'dark' },
   decorators: [
-    withDark,
     (Story) => (
       <div className="w-[640px] max-w-full p-6">
         <Story />

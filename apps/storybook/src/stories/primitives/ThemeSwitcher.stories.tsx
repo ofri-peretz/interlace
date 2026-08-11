@@ -4,7 +4,7 @@ import {
   ThemeSchemeToggle,
   ThemeSwitcher,
 } from '@interlace/ui/theme-switcher';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 /**
  * The two-axis theme control. `data-theme` selects the BRAND, `.dark`
@@ -203,7 +203,7 @@ export const KeyboardFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

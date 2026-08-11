@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AuthorByline } from '@interlace/ui/patterns/author-byline';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Blocks/AuthorByline',
@@ -134,7 +134,7 @@ export const Dark: Story = {
     publishedDateIso: '2026-05-30T08:00:00.000Z',
     readingTimeMinutes: 7,
   },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

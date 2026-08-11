@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
 } from '@interlace/ui/dropdown-menu';
 import { Button } from '@interlace/ui/button';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 const meta: Meta<typeof DropdownMenu> = {
   title: 'Primitives/DropdownMenu',
@@ -238,7 +238,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

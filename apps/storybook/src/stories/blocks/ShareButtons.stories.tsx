@@ -4,7 +4,7 @@ import {
   MIN_VIEWPORT,
   ShareButtons,
 } from '@interlace/ui/patterns/share-buttons';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Blocks/ShareButtons',
@@ -96,7 +96,7 @@ export const Variants: Story = {
 };
 
 export const Dark: Story = {
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

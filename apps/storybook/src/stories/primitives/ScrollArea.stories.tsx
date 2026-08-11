@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { ScrollArea } from '@interlace/ui/scroll-area';
 import { Separator } from '@interlace/ui/separator';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * The root's own API is deliberately thin — it is sized by its parent and the
@@ -150,7 +150,7 @@ export const NoOverflow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

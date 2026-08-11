@@ -7,7 +7,7 @@ import {
   type DataTableColumn,
   type DataTableSort,
 } from '@interlace/ui/patterns/data-table';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /* ── Fixture ───────────────────────────────────────────────────────────── */
 
@@ -457,7 +457,7 @@ export const Dark: Story = {
     onSortChange: () => {},
     rows: sortRows(PLUGINS, { columnId: 'downloads', direction: 'desc' }, sortValue),
   },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 /**

@@ -3,7 +3,7 @@ import { expect, fn, userEvent, within, waitFor } from 'storybook/test';
 import { useArgs } from 'storybook/preview-api';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@interlace/ui/tabs';
 import { Skeleton } from '@interlace/ui/skeleton';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Tabs> = {
   title: 'Primitives/Tabs',
@@ -209,7 +209,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

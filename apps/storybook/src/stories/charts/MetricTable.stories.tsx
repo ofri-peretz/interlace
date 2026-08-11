@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import { MetricTable } from '@interlace/ui/charts/metric-table';
 import { TimeSeries } from '@interlace/ui/charts/time-series';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { ANNOTATIONS, METRIC_ROWS } from './fixtures';
 
@@ -176,7 +176,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   args: { rows: METRIC_ROWS, caption: 'Ecosystem metrics' },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const Rtl: Story = {

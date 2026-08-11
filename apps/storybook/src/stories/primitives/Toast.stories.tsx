@@ -9,7 +9,7 @@ import {
 } from '@interlace/ui/toast';
 import { Button } from '@interlace/ui/button';
 import { Info, CheckCircle2, AlertTriangle, OctagonAlert } from 'lucide-react';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * Transient, dismissible notification surfaced via a portal. Per
@@ -186,7 +186,7 @@ export const Variants: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

@@ -6,7 +6,7 @@ import {
   CollapsiblePanel,
   MIN_VIEWPORT,
 } from '@interlace/ui/collapsible';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/Collapsible',
@@ -236,7 +236,7 @@ export const KeyboardFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

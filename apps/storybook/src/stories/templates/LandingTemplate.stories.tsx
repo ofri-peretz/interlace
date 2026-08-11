@@ -5,7 +5,7 @@ import { FeatureGrid } from '@interlace/ui/patterns/feature-grid';
 import { CTASection } from '@interlace/ui/patterns/cta-section';
 import { Button } from '@interlace/ui/button';
 import { Shield, Zap, Heart } from 'lucide-react';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof LandingTemplate> = {
   title: 'Templates/LandingTemplate',
@@ -95,7 +95,7 @@ export const Default: Story = {
   },
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
 
 /**

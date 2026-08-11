@@ -8,7 +8,7 @@ import {
   type TocProps,
 } from '@interlace/ui/toc';
 import { Skeleton } from '@interlace/ui/skeleton';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const ITEMS: TocItem[] = [
   { id: 'intro', label: 'Introduction', level: 2 },
@@ -194,7 +194,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

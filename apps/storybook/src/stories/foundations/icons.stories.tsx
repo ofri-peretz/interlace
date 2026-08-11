@@ -44,7 +44,7 @@ import { Stack } from '@interlace/ui/stack';
 import { Grid } from '@interlace/ui/grid';
 import { Box } from '@interlace/ui/box';
 
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * Icon specimen — DESIGN_PRINCIPLES #8 ("Outlined iconography").
@@ -426,7 +426,7 @@ export const Default: Story = {};
 
 /** Same specimen, rewrapped in `.dark`. */
 export const Dark: Story = {
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 /** Same specimen under RTL — verifies icons that connote direction. */

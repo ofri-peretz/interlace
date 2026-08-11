@@ -8,7 +8,7 @@ import {
   ProgressValue,
   MIN_VIEWPORT,
 } from '@interlace/ui/progress';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * `size` lives on `ProgressTrack` and `tone` on `ProgressIndicator` — the two
@@ -214,7 +214,7 @@ export const Indeterminate: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

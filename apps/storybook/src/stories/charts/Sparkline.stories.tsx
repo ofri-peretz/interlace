@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 import { Sparkline } from '@interlace/ui/charts/sparkline';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { FLAT, FALLING, RISING } from './fixtures';
 
@@ -185,5 +185,5 @@ export const InContext: Story = {
   ),
 };
 
-export const Dark: Story = { args: { points: RISING, label: 'Downloads' }, decorators: [withDark] };
+export const Dark: Story = { args: { points: RISING, label: 'Downloads' }, globals: { theme: 'dark' } };
 export const Rtl: Story = { args: { points: RISING, label: 'Downloads' }, decorators: [withRtl] };

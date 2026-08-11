@@ -5,7 +5,7 @@ import { Stack } from '@interlace/ui/stack';
 import { Grid, GridItem } from '@interlace/ui/grid';
 import { Box } from '@interlace/ui/box';
 
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * Spacing — six-step scale specimen.
@@ -235,7 +235,7 @@ export const Default: Story = {};
 export const Variants: Story = {};
 
 export const Dark: Story = {
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

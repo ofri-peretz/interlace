@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ReadingTime, MIN_VIEWPORT } from '@interlace/ui/reading-time';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/ReadingTime',
@@ -109,7 +109,7 @@ export const Variants: Story = {
 
 export const Dark: Story = {
   ...Variants,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

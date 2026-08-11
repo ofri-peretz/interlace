@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { BlogHomeTemplate } from '@interlace/ui/templates/blog-home-template';
 import { ArticleListGrid } from '@interlace/ui/patterns/article-list-grid';
 import { NewsletterForm } from '@interlace/ui/patterns/newsletter-form';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof BlogHomeTemplate> = {
   title: 'Templates/BlogHomeTemplate',
@@ -82,7 +82,7 @@ export const Default: Story = {
   },
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
 
 /**

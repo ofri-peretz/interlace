@@ -9,7 +9,7 @@ import {
 import { Button } from '@interlace/ui/button';
 import { Label } from '@interlace/ui/label';
 import { Input } from '@interlace/ui/input';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 /**
  * `Popover` is Base UI's `Popover.Root` — a logical container with no DOM, so
@@ -233,7 +233,7 @@ export const KeyboardFlow: Story = {
 export const Dark: Story = {
   ...Default,
   args: { defaultOpen: true },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

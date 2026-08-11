@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PublishedDate, MIN_VIEWPORT } from '@interlace/ui/published-date';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/PublishedDate',
@@ -125,7 +125,7 @@ export const Variants: Story = {
 
 export const Dark: Story = {
   ...Variants,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

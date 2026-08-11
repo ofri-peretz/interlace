@@ -11,7 +11,7 @@ import {
   BreadcrumbEllipsis,
   MIN_VIEWPORT,
 } from '@interlace/ui/breadcrumb';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/Breadcrumb',
@@ -243,7 +243,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {
