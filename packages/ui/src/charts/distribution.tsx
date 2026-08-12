@@ -665,7 +665,21 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
                   >
                     {bin.label}
                     {bin.note ? (
-                      <span className="block opacity-70">{bin.note}</span>
+                      // Hierarchy by WEIGHT, not by opacity.
+                      //
+                      // This was `opacity-70`, and opacity is the one way to
+                      // de-emphasise text that no token can protect you from:
+                      // `--muted-foreground` is 8.06:1 on white, and the same
+                      // colour at 70% composites to #827d77 — 4.07:1, under the
+                      // AA floor for 12px text. The token measured fine; the
+                      // rendered pixels did not, and only axe folding the
+                      // ancestor opacity into the computed value caught it.
+                      //
+                      // Sharper still: `bin.note` exists BECAUSE a timezone
+                      // toggle hides half the truth. Printing the second
+                      // reading and then dimming it below AA is the same
+                      // mistake wearing a different hat.
+                      <span className="block font-normal">{bin.note}</span>
                     ) : null}
                   </span>
                 )}

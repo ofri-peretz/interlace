@@ -425,6 +425,7 @@
     "styles"
   ],
   "scripts": {
+    "prebuild": "test -d dist || rm -f tsconfig.lib.tsbuildinfo",
     "build": "tsc -b tsconfig.lib.json && node scripts/preserve-use-client.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "npm run lint:eslint && npm run lint:oxlint",
