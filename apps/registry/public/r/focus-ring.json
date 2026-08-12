@@ -28,7 +28,7 @@
     "minViewport": 320,
     "loading": false,
     "version": "1.2.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/focus-ring\n\nInstalled to `components/ui/focus-ring.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/focus-ring';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/focus-ring\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

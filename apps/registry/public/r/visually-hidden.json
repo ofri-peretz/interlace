@@ -28,7 +28,7 @@
     "minViewport": 320,
     "loading": false,
     "version": "1.1.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/visually-hidden\n\nInstalled to `components/ui/visually-hidden.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/visually-hidden';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/visually-hidden\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -37,7 +37,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.3.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/button\n\nInstalled to `components/ui/button.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/button';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/button\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

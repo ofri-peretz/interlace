@@ -27,7 +27,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.0.1",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/theme-script\n\nInstalled to `lib/theme-script.ts`.\n\n```tsx\nimport { /* … */ } from '@/lib/theme-script';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/theme-script"
 }

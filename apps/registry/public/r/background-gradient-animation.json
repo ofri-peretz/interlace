@@ -29,7 +29,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.2.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/background-gradient-animation\n\nInstalled to `components/ui/aceternity/background-gradient-animation.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/aceternity/background-gradient-animation';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/background-gradient-animation\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

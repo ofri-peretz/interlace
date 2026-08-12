@@ -25,7 +25,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.0.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/theme-tokens\n\nInstalled to `lib/theme-tokens.ts`.\n\n```tsx\nimport { /* … */ } from '@/lib/theme-tokens';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/theme-tokens"
 }

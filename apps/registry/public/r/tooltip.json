@@ -30,7 +30,7 @@
     "minViewport": 320,
     "loading": false,
     "version": "1.4.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/tooltip\n\nInstalled to `components/ui/tooltip.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/tooltip';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/tooltip\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

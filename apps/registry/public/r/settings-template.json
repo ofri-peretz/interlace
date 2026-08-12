@@ -34,7 +34,7 @@
     "minViewport": 480,
     "loading": false,
     "version": "1.1.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/settings-template\n\nInstalled to `components/ui/templates/settings-template.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/templates/settings-template';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/settings-template\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

@@ -25,7 +25,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.1.0",
-    "since": "1.1.0"
+    "since": "1.0.0"
   },
   "docs": "## @interlace/use-reduced-motion\n\nInstalled to `hooks/use-reduced-motion.ts`.\n\n```tsx\nimport { /* … */ } from '@/hooks/use-reduced-motion';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/use-reduced-motion"
 }
