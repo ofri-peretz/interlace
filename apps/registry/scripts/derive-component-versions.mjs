@@ -283,12 +283,18 @@ const readManifest = async () => {
  *     already published, keep the published one and say so. Consumers have the
  *     old number written into their files; moving it down makes the diff lie.
  */
-const mergeWithPrevious = (derived, previous) => {
+const mergeWithPrevious = (derived, previous, packageVersion) => {
   const before = new Map((previous?.components ?? []).map((c) => [c.name, c]));
   const clamped = [];
   const merged = derived.map((entry) => {
     const prev = before.get(entry.name);
-    if (!prev) return entry;
+    // A component with no prior record has not shipped in any release yet, so
+    // its `since` is not knowable here — `packageVersion` on a feature branch
+    // is the LAST RELEASED version, not the one this component will debut in.
+    // That is exactly how eight components came to claim `since: "1.0.0"` for
+    // a 1.0.0 that had already shipped without them. `null` means pending; the
+    // release run below resolves it.
+    if (!prev) return { ...entry, since: null };
     const out = { ...entry };
     if (compareSemver(entry.version, prev.version) < 0) {
       clamped.push(`${entry.name}: derived ${entry.version} < published ${prev.version}`);
@@ -310,10 +316,20 @@ const mergeWithPrevious = (derived, previous) => {
     // The committed manifest IS the record of what shipped when. Trusting it
     // over a re-derivation is the whole reason this merge step exists.
     if (prev.since) out.since = prev.since;
+    else out.since = null;
     if (prev.deprecated) out.deprecated = prev.deprecated;
     return out;
   });
-  return { merged, clamped };
+  // THE RELEASE MOMENT. `packageVersion` in package.json has moved ahead of the
+  // one recorded in the manifest exactly once per release — that is changesets
+  // bumping it in the version PR. Every pending `since` resolves to that new
+  // number, because this is the release those components debut in.
+  const released =
+    previous?.packageVersion && previous.packageVersion !== packageVersion;
+  const stamped = merged.map((e) =>
+    e.since === null && released ? { ...e, since: packageVersion } : e,
+  );
+  return { merged: stamped, clamped };
 };
 
 const manifestPayload = (components, packageVersion) => ({
@@ -343,7 +359,7 @@ const check = (manifest, names, packageVersion) => {
     if (!parseSemver(entry.version)) {
       errors.push(`${name}: invalid version "${entry.version}"`);
     }
-    if (!parseSemver(entry.since)) {
+    if (entry.since !== null && !parseSemver(entry.since)) {
       errors.push(`${name}: invalid since "${entry.since}"`);
     }
     if (entry.deprecated && !parseSemver(entry.deprecated.removedIn)) {
@@ -388,7 +404,7 @@ const main = async () => {
     tags: readReleaseTags(),
     packageVersion,
   });
-  const { merged, clamped } = mergeWithPrevious(derived, previous);
+  const { merged, clamped } = mergeWithPrevious(derived, previous, packageVersion);
   await writeFile(
     MANIFEST,
     JSON.stringify(manifestPayload(merged, packageVersion), null, 2) + '\n',
