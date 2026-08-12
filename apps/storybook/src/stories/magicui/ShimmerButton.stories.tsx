@@ -62,7 +62,7 @@ const meta: Meta<typeof ShimmerButton> = {
     highlight: {
       control: 'boolean',
       description:
-        'Render the inset white bottom-edge glow (`box-shadow: inset 0 -8px 10px #ffffff1f`). Turn it off for darker or coloured fills, where a white inset reads as a smudge rather than a light source.',
+        'Render the inset bottom-edge glow (`box-shadow: inset 0 -8px 10px var(--shimmer-glow)`). Turn it off for darker or coloured fills, where the inset reads as a smudge rather than a light source.',
       table: { type: { summary: 'boolean' }, defaultValue: { summary: 'true' }, category: 'Appearance' },
     },
     background: {
@@ -309,7 +309,7 @@ export const ShimmerPropGatesSpark: Story = {
       '`highlight` is independent — the white inset shadow IS still in the DOM',
       async () => {
         await expect(canvasElement.innerHTML).toContain(
-          'shadow-[inset_0_-8px_10px_#ffffff1f]',
+          'shadow-[inset_0_-8px_10px_var(--shimmer-glow)]',
         );
       },
     );
@@ -326,7 +326,7 @@ export const HighlightPropGatesGlow: Story = {
   play: async ({ canvasElement, step }) => {
     await step('No inset white shadow class is in the rendered HTML', async () => {
       await expect(canvasElement.innerHTML).not.toContain(
-        'shadow-[inset_0_-8px_10px_#ffffff1f]',
+        'shadow-[inset_0_-8px_10px_var(--shimmer-glow)]',
       );
     });
 
@@ -358,7 +358,7 @@ export const StaticPillHasNoEffects: Story = {
         canvasElement.querySelector('.animate-spin-around'),
       ).toBeNull();
       await expect(canvasElement.innerHTML).not.toContain(
-        'shadow-[inset_0_-8px_10px_#ffffff1f]',
+        'shadow-[inset_0_-8px_10px_var(--shimmer-glow)]',
       );
     });
 
