@@ -73,6 +73,13 @@ import { ORIGIN } from '../../../../../registry.config.mjs';
  * fix exists.
  */
 
+/**
+ * The production origin, parsed once. `ORIGIN` is a module constant, so
+ * re-deriving this inside the per-dependency loop was work repeated 140×
+ * per request for a value that cannot change.
+ */
+const PROD_ORIGIN = new URL(ORIGIN).origin;
+
 /** Read from disk on every request; never prerendered with a baked origin. */
 export const dynamic = 'force-dynamic';
 
@@ -133,8 +140,14 @@ export const withRequestOrigin = (body: string, origin: string): string => {
     try {
       // Origin equality, not a prefix test: `ds.interlace.tools.example.com`
       // shares the prefix and is a different host entirely.
-      return new URL(dep).origin === new URL(ORIGIN).origin
-        ? origin + dep.slice(new URL(dep).origin.length)
+      //
+      // `dep` is parsed once and `ORIGIN` once per module rather than once per
+      // dependency — this runs over every item's whole dependency list on
+      // every request, and `ORIGIN` is a module constant that cannot change
+      // between iterations.
+      const parsedDep = new URL(dep);
+      return parsedDep.origin === PROD_ORIGIN
+        ? origin + dep.slice(parsedDep.origin.length)
         : dep;
     } catch {
       return dep;
