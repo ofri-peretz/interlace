@@ -40,6 +40,20 @@
  * block in `styles/tokens.css`, which is belt-and-braces: the component has
  * already returned `null` by then.
  *
+ * ## Accessibility — all three roots are `aria-hidden`
+ *
+ * Each layer's root (`canvas`, `svg`, the meteor `div`) carries
+ * `aria-hidden="true"`. None of them holds content, a label or a role, and
+ * `HeroCosmic` stacks all three at once — so a reader working through a hero
+ * used to walk an unlabelled canvas, an unlabelled graphics node and an
+ * anonymous group before reaching the headline. `aria-hidden` goes on the
+ * ROOT of each layer and nowhere else: a subtree hidden at its root is hidden
+ * entire, and every child here (the star `rect`, the gradient `defs`, the
+ * meteor `span`s, the injected `style`) is inside one of the three.
+ *
+ * This matches `magicui/border-beam.tsx` and the rest of `aceternity/`;
+ * `background-lines.tsx` acquired the same attribute for the same reason.
+ *
  * ## Per-instance SVG ids
  *
  * `ShootingStars`' trail gradient is `useScopedId("shooting-star-trail")`, not
@@ -246,6 +260,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className={cn("h-full w-full absolute inset-0 will-change-transform", className)}
       suppressHydrationWarning
     />
@@ -399,7 +414,11 @@ export const ShootingStars: React.FC<ShootingStarProps> = ({
   if (reduceMotion) return null;
 
   return (
-    <svg ref={svgRef} className={cn("w-full h-full absolute inset-0 pointer-events-none", className)}>
+    <svg
+      ref={svgRef}
+      aria-hidden="true"
+      className={cn("w-full h-full absolute inset-0 pointer-events-none", className)}
+    >
       {star && (
         <rect
           x={star.x}
@@ -533,6 +552,7 @@ export const Meteors: React.FC<MeteorsProps> = ({
   return (
     <div
       ref={containerRef}
+      aria-hidden="true"
       className={cn(
         "absolute inset-0 overflow-hidden pointer-events-none",
         className

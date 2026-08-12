@@ -765,14 +765,67 @@ const resolveSourcePath = async (registryPath) => {
   return null;
 };
 
-/** Does this item's source live inside the directories the gate covers? */
-const inCoverageGate = (item, globs) =>
-  (item.files ?? []).some((f) =>
-    globs.some((glob) => {
-      const dir = glob.split('/**')[0].replace(/^src\//, '');
-      return f.path.includes(`/${dir}/`);
-    }),
+/**
+ * `a/{x,y}.ts` → `['a/x.ts', 'a/y.ts']`. Recursive, so nested groups work,
+ * though the config only uses one level.
+ */
+const expandBraces = (glob) => {
+  const m = /\{([^{}]*)\}/.exec(glob);
+  if (!m) return [glob];
+  return m[1]
+    .split(',')
+    .flatMap((alt) =>
+      expandBraces(
+        glob.slice(0, m.index) + alt + glob.slice(m.index + m[0].length),
+      ),
+    );
+};
+
+/**
+ * Minimal glob → RegExp: a globstar segment spans any depth, `*` stays inside
+ * one segment.
+ *
+ * ponytail: hand-rolled rather than picomatch — picomatch is only present as
+ * a hoisted transitive here, and the coverage `include` globs are the only
+ * input. Swap in a real matcher if this ever has to read user globs.
+ */
+const globToRe = (glob) =>
+  new RegExp(
+    '^' +
+      glob
+        .replace(/[.+^${}()|[\]\\]/g, '\\$&')
+        // One pass, so the globstar arm is decided before plain `*` sees it.
+        .replace(/\*\*\/|\*/g, (m) => (m === '*' ? '[^/]*' : '(?:.*/)?')) +
+      '$',
   );
+
+/**
+ * Does this item's source sit in the coverage gate?
+ *
+ * Matched file-by-file against the real globs, NOT by deriving a directory
+ * token from each one. A token derived by splitting on `/**` is the whole
+ * literal string for a brace glob — `src/primitives/{alert,badge,…}.tsx` has
+ * no `/**` in it — so `includes('/' + dir + '/')` could never match, and the
+ * two brace globs carrying 35 of the gate's 48 files contributed nothing.
+ *
+ * A directory token would be wrong even fixed up: `src/primitives/` holds 62
+ * files and the gate names 35. The file list IS the ratchet (see the ledger
+ * in `packages/ui/vitest.config.ts`), so it has to be honoured per file.
+ *
+ * Takes resolved repo paths (`packages/ui/src/primitives/alert.tsx`), because
+ * `item.files[].path` is a publishing address — a primitive ships as
+ * `registry/interlace-ui/alert.tsx`, with no `primitives/` segment to match.
+ */
+const COVERAGE_ROOT = 'packages/ui/';
+
+const inCoverageGate = (sourcePaths, globs) => {
+  const res = globs.flatMap((g) => expandBraces(g)).map(globToRe);
+  return sourcePaths.some((p) => {
+    if (!p?.startsWith(COVERAGE_ROOT)) return false;
+    const rel = p.slice(COVERAGE_ROOT.length);
+    return res.some((re) => re.test(rel));
+  });
+};
 
 // ─── assembly ────────────────────────────────────────────────────────────────
 
@@ -819,10 +872,12 @@ export const buildBehaviorMap = async () => {
     const usesStateModel =
       /resolveDataState|announceDataState|data-state-model/.test(source);
 
-    const firstFile = (item.files ?? [])[0];
+    const sourcePaths = await Promise.all(
+      (item.files ?? []).map((f) => resolveSourcePath(f.path)),
+    );
 
     components[name] = {
-      sourcePath: firstFile ? await resolveSourcePath(firstFile.path) : null,
+      sourcePath: sourcePaths[0] ?? null,
       keyboard: keyboard
         ? { ...keyboard, escapeLocked: escapeLock.escape.includes(name) }
         : null,
@@ -830,7 +885,7 @@ export const buildBehaviorMap = async () => {
       textAlternative,
       states: usesStateModel ? dataStates.states.map((s) => s.name) : [],
       coverage: {
-        inGate: inCoverageGate(item, coverage.include),
+        inGate: inCoverageGate(sourcePaths, coverage.include),
       },
     };
   }

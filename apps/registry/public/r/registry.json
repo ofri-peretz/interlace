@@ -266,7 +266,7 @@
       ],
       "meta": {
         "tier": "primitive",
-        "client": true,
+        "client": false,
         "minViewport": null,
         "loading": true,
         "version": "1.2.1",

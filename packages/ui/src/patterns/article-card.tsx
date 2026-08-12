@@ -18,7 +18,7 @@
  *   CardShell                        (a[href] — data-slot="article-card")
  *     └─ Card                        (primitives/card, py-0 gap-0)
  *         ├─ StackBody               (ArticleCard)
- *         │   ├─ cover h-44 + SourceChip
+ *         │   ├─ cover aspect-[1000/420] + SourceChip
  *         │   ├─ CardHeader          (avatar + author name + date)
  *         │   ├─ CardContent         (title, description, tag Badges)
  *         │   └─ CardFooter          (MetaChips + ExternalLink on hover)
@@ -34,6 +34,42 @@
  * the pin `toLocaleDateString` re-projects it into the reader's zone and
  * everyone west of UTC is shown the previous day — on a grid of cards, next to
  * a post whose byline said otherwise.
+ *
+ * ## The cover box matches the cover's own aspect ratio
+ *
+ * The stacked tile reserves `aspect-[1000/420]`, the exact ratio of the
+ * `width={1000} height={420}` the card already declares on the image. It used
+ * to reserve `h-44` — a fixed 176px HEIGHT, which fixes nothing about the
+ * ratio, because the ratio then floats with the card's width. At the 320px
+ * viewport floor a tile is ~302px wide, so `h-44` is a 1.72:1 box holding a
+ * 2.38:1 image: `object-cover` scales the image to 419px wide to cover 176px
+ * of height and the box throws away 117 of them — 28% of the cover, gone,
+ * and a different amount at every breakpoint.
+ *
+ * `aspect-[1000/420]` crops nothing at any width, and reserves space just as
+ * well as a fixed height did (R23) — better, in fact: the reservation is
+ * derived from the width the grid has already resolved, so it is correct
+ * before the image has a byte.
+ *
+ * `object-center` stays. The right-edge crop that motivated moving it to
+ * `object-left` downstream was a symptom of the box, not of the position:
+ * with the box fixed there is no crop to bias. For a cover that is NOT
+ * 1000×420, centre is the neutral default; a caller whose art is
+ * left-weighted owns that through `renderImage`.
+ *
+ * ## `renderImage` — the framework seam
+ *
+ * The DS cannot import `next/image` and stay framework-agnostic, and every
+ * Next.js consumer was re-patching the plain `<img>` by hand. `renderImage` is
+ * a render prop handed the exact bag of props the card would have put on the
+ * element — `src`, `alt`, `width`, `height`, `loading`, `fetchPriority`,
+ * `decoding`, `className` — and it defaults to spreading them onto an `<img>`,
+ * so the un-passed path is the old path byte for byte.
+ *
+ * The bag is the contract, not the element: `className` in it carries the
+ * `motion-safe:group-hover:scale-105` gate and the `object-cover` fit, so an
+ * adapter that forwards it keeps the hover zoom and the reduced-motion
+ * contract for free. An adapter that drops it opts out of both, visibly.
  *
  * ## Motion
  *
@@ -60,7 +96,7 @@
  * | R10  | Composition seam            | `CardShell` wraps both bodies; `Card*` primitives inside |
  * | R11  | No kind-prop                | two exports, `variant` deprecated                        |
  * | R19  | Tokens only                 | `bg-scrim/70`, `text-scrim-foreground`, `text-primary`   |
- * | R23  | CLS=0                       | stack cover reserves `h-44`; hero pins `h-105 md:h-95`   |
+ * | R23  | CLS=0                       | stack cover reserves `aspect-[1000/420]`; hero pins `h-105 md:h-95` |
  * | R25  | Client component            | `React.useEffect` in the deprecation warning             |
  * | R26  | A11y                        | cover `alt=""`; overlay title is `<h2>` for heading order |
  */
@@ -109,6 +145,33 @@ export interface ArticleCardMeta {
  */
 export type ArticleCardVariant = 'stack' | 'overlay';
 
+/**
+ * The exact props the card would have put on its `<img>`, handed to
+ * {@link ArticleCardBaseProps.renderImage} so a framework-specific image
+ * component can receive them instead.
+ *
+ * Every field is required: there is no "the card might not send this" case, so
+ * an adapter destructuring the bag never has to guess a default. `alt` is
+ * always `''` — the cover is decorative, the title beside it carries the text.
+ */
+export interface ArticleCardImageProps {
+  src: string;
+  /** Always `''`. The cover is decorative; the card title is the accessible name. */
+  alt: string;
+  /** Intrinsic cover dimensions — also the ratio the cover box reserves. */
+  width: number;
+  height: number;
+  loading: 'eager' | 'lazy';
+  fetchPriority: 'high' | 'auto';
+  decoding: 'async';
+  /**
+   * Carries `object-cover`, the object-position, and the
+   * `motion-safe:group-hover:scale-105` hover gate. Forward it to keep the
+   * card's motion and reduced-motion contract; drop it and you own both.
+   */
+  className: string;
+}
+
 /** Fields both card shapes read. Neither adds a prop the other ignores. */
 export interface ArticleCardBaseProps {
   /** Card title (article headline). Optional when `loading={true}`. */
@@ -137,6 +200,25 @@ export interface ArticleCardBaseProps {
    * fold; leave default on every grid tile. @default false
    */
   priority?: boolean;
+  /**
+   * Render the cover with something other than a plain `<img>` — typically
+   * `next/image`, which the DS cannot depend on and stay framework-agnostic.
+   *
+   * Receives the full {@link ArticleCardImageProps} bag the card would
+   * otherwise have spread onto the element. Defaults to exactly that spread,
+   * so omitting it is identical to the behaviour before the slot existed. A
+   * `next/image` adapter is a one-line function that forwards the bag; keep
+   * `className`, which carries the fit and the reduced-motion gate.
+   *
+   * The live example is Storybook's `Blocks/ArticleCard → renderImage` story.
+   * It is deliberately NOT a fenced code block in this comment: the registry
+   * build inlines these headers into `r/*.json`, and a JSDoc usage example has
+   * already made 131 of 132 items silently uninstallable once.
+   *
+   * Not called at all when `imageUrl` is absent — the gradient-and-title
+   * fallback is the card's own chrome, not an image.
+   */
+  renderImage?: (props: ArticleCardImageProps) => React.ReactNode;
   /** Class on the outer anchor wrapper. */
   className?: string;
   /**
@@ -422,12 +504,39 @@ function FeaturedChip({ testId }: { testId: string }) {
   );
 }
 
+/**
+ * Intrinsic cover dimensions. These are the numbers the `<img>` declares AND
+ * the ratio `StackBody` reserves — `aspect-[1000/420]`. They have to agree, or
+ * `object-cover` starts cropping (see the file header). Tailwind scans source
+ * as raw text, so the class cannot interpolate these; the coupling is asserted
+ * in `decorative-contract-lock` instead.
+ */
+const COVER_WIDTH = 1000;
+const COVER_HEIGHT = 420;
+
+/**
+ * The plain-`<img>` default for the `renderImage` slot.
+ *
+ * `alt` is named rather than left inside the spread, so the attribute is
+ * visible in the JSX rather than hidden behind `{...props}`. `react-a11y/alt-text`
+ * still reports it: the rule wants a literal and flags any `alt={expr}`,
+ * which is why it already fires twice in this file on the author avatars'
+ * `alt={author.name}`. Left un-suppressed — a blanket disable here would also
+ * hide a genuinely missing alt if this function is ever edited, and the rule's
+ * dynamic-value blind spot is a defect to fix upstream, not to paper over at
+ * three call sites.
+ */
+const renderPlainImage = ({ alt, ...rest }: ArticleCardImageProps) => (
+  <img alt={alt} {...rest} />
+);
+
 function CoverImage({
   imageUrl,
   title,
   className,
   fallbackTextClassName,
   priority = false,
+  renderImage = renderPlainImage,
 }: {
   imageUrl?: string;
   title: string;
@@ -440,29 +549,33 @@ function CoverImage({
    * (lazy-loaded, fine for grid tiles below the fold).
    */
   priority?: boolean;
+  /** See {@link ArticleCardBaseProps.renderImage}. */
+  renderImage?: (props: ArticleCardImageProps) => React.ReactNode;
 }) {
   if (imageUrl) {
-    return (
-      <img
-        src={imageUrl}
-        alt=""
-        width={1000}
-        height={420}
-        loading={priority ? 'eager' : 'lazy'}
-        // `fetchpriority` is the lowercase DOM attr name; React 19 normalizes
-        // either casing, but lowercase is the canonical HTML form and avoids
-        // hydration mismatches across SSR/CSR.
-        fetchPriority={priority ? 'high' : 'auto'}
-        decoding="async"
-        className={cn(
-          // `motion-safe:` on the SCALE, not on the transition. The transition
-          // is inert once nothing transforms, and gating the transform is what
-          // survives the à-la-carte import path — see the file header.
-          'h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-105',
-          className,
-        )}
-      />
-    );
+    // Built as a value, not spread inline, so the slot and the default `<img>`
+    // are provably given the same bag — there is no second call site that
+    // could drift.
+    const imageProps: ArticleCardImageProps = {
+      src: imageUrl,
+      alt: '',
+      width: COVER_WIDTH,
+      height: COVER_HEIGHT,
+      loading: priority ? 'eager' : 'lazy',
+      // `fetchpriority` is the lowercase DOM attr name; React 19 normalizes
+      // either casing, but lowercase is the canonical HTML form and avoids
+      // hydration mismatches across SSR/CSR.
+      fetchPriority: priority ? 'high' : 'auto',
+      decoding: 'async',
+      className: cn(
+        // `motion-safe:` on the SCALE, not on the transition. The transition
+        // is inert once nothing transforms, and gating the transform is what
+        // survives the à-la-carte import path — see the file header.
+        'h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-105',
+        className,
+      ),
+    };
+    return <>{renderImage(imageProps)}</>;
   }
   return (
     <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/25 via-scrim to-chart-2/25 p-md">
@@ -568,15 +681,24 @@ function StackBody({
   meta,
   sourceLabel,
   priority = false,
+  renderImage,
   testId,
 }: BodyProps) {
   return (
     <>
       {/* Cover (or gradient title fallback) — edge-to-edge top of the card.
-          The fixed `h-44` is the CLS reservation: the tile holds its shape
-          before the image decodes (R23). */}
-      <div className="relative h-44 w-full shrink-0 overflow-hidden">
-        <CoverImage imageUrl={imageUrl} title={title} priority={priority} />
+          `aspect-[1000/420]` is the CLS reservation AND the anti-crop measure:
+          it is the ratio of the `width`/`height` the cover declares, so the box
+          holds its shape before the image decodes (R23) and `object-cover` has
+          nothing to trim. A fixed height cannot do the second job — see the
+          file header. */}
+      <div className="relative aspect-[1000/420] w-full shrink-0 overflow-hidden">
+        <CoverImage
+          imageUrl={imageUrl}
+          title={title}
+          priority={priority}
+          renderImage={renderImage}
+        />
         {sourceLabel ? <SourceChip label={sourceLabel} testId={testId} /> : null}
       </div>
 
@@ -687,19 +809,26 @@ function OverlayBody({
   meta,
   sourceLabel,
   priority = false,
+  renderImage,
   testId,
 }: BodyProps) {
   return (
     <>
       {/* Cover fills the entire card. Image lives in an absolute layer so a
           dark gradient scrim can sit between it and the text — that scrim is
-          what guarantees WCAG-AA contrast over arbitrary covers. */}
+          what guarantees WCAG-AA contrast over arbitrary covers.
+
+          The hero is the one place a crop is intended: it pins `h-105 md:h-95`
+          against a full-bleed width, so its box ratio is a viewport decision
+          and `object-cover` trimming the cover is the whole point. Only the
+          STACK tile reserves the cover's own ratio. */}
       <div className="absolute inset-0 overflow-hidden">
         <CoverImage
           imageUrl={imageUrl}
           title={title}
           fallbackTextClassName="text-2xl"
           priority={priority}
+          renderImage={renderImage}
         />
       </div>
       {/* Scrim — opacity stack tuned so titles + meta on top read clean over

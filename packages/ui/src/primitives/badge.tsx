@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @interlace/ui — Badge
  *
@@ -34,6 +32,38 @@
  * that dependency happened to tolerate it. `useRender` is now unconditional and
  * its result discarded on a loading render.
  *
+ * ## Why there is no `'use client'` here
+ *
+ * There used to be one, and the R25 row below used to read "Required —
+ * `useRender` is a hook". That reasoning was wrong: `useRender` is a hook, but
+ * a hook is only a client boundary if it needs client state, and this one does
+ * not. `@base-ui/react/use-render` ships no `'use client'` of its own, and
+ * `useRenderElement` guards its single hook (`useMergedRefs`) behind
+ * `typeof document !== 'undefined'` — on the server it takes the no-hook path
+ * and just builds an element. Which is exactly why `Stack`, `Container`,
+ * `Box` and `Typography` call the same thing with no directive
+ * (DESIGN_PRINCIPLES §11: layout primitives are zero-hook and RSC-safe).
+ *
+ * Measured, not reasoned. A server component in a Next 16 App Router tree
+ * rendering `<Badge>`, `<Badge render={<a/>}>` and `<Badge loading />` was
+ * statically prerendered by `next build`, exit 0, all three appearing as
+ * `data-slot="badge"` in the emitted HTML. With the directive, the same page's
+ * flight payload carried `I[…,"Badge"]` — a client module reference plus two
+ * route chunks — and no badge markup was server-rendered at all. The harness
+ * was proved able to fail first: the same page with a real `React.useState`
+ * in a server component died with `useState is not a function`.
+ *
+ * `Skeleton` (the `loading` branch) is likewise not a client component, but
+ * that was never the deciding factor — a server component may render a client
+ * one, so a client Skeleton would not have forced a boundary here either.
+ *
+ * The consequence, and the reason this matters more for Badge than for most:
+ * Badge is one of the most-rendered primitives in the catalogue, so every
+ * server tree containing one was paying a boundary plus badge + cva + clsx +
+ * tailwind-merge + Skeleton to render a `<span>`. `use-client-scan.test.ts`
+ * pins this file to the server side so the directive cannot come back
+ * unnoticed.
+ *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R4   | Extends native el                | `React.ComponentProps<'span'>`                              |
@@ -43,7 +73,7 @@
  * | R10  | Composition seam                 | `render` — Base UI's `useRender`, not an `as` prop          |
  * | R19  | Tokens only                      | `bg-primary`, `bg-secondary`, `bg-destructive`, `bg-accent` |
  * | R20  | AA contrast                      | every variant composited by `composite-contrast-lock`       |
- * | R25  | Client component                 | Required — `useRender` is a hook                            |
+ * | R25  | Client component                 | Not required — server component, see the note above         |
  */
 
 import * as React from 'react';

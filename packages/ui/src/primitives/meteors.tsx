@@ -17,13 +17,35 @@
  * | R7   | className merged + ...rest      | `cn(...)` + `{...rest}`                                                     |
  * | R9   | Honors `prefers-reduced-motion` | Inline `useReducedMotion()` returns null when reduce is requested           |
  * | R18  | Tailwind only                   | Inline `style` is per-meteor randomized values only (top/left/duration/etc) |
- * | R19  | Tokens                          | Head rim consumes `--color-meteor-glow`. Rod uses slate-300/dark:slate-200. |
+ * | R19  | Tokens                          | Head rim consumes `--meteor-glow`. Rod uses slate-300/dark:slate-200.      |
  * | R26  | a11y                            | `aria-hidden` + `pointer-events-none` — decorative, not announced           |
  *
  * Out of scope: this primitive does not own a `data-testid` default (R6) —
  * consumers supply one. Theming for the head rim ships via this registry
  * item's `cssVars` block; rod color is a Tailwind utility that resolves
  * against the consumer's neutral palette without extra wiring.
+ *
+ * ## The glow reads `--meteor-glow`, and the `--color-` prefix is not optional garnish
+ *
+ * This used to be `var(--color-meteor-glow)` while `meteors.meta.json` declares
+ * the token under `cssVars.light` / `cssVars.dark` as `meteor-glow`. Those two
+ * blocks are not the same namespace and nothing bridges them: `cssVars.light` /
+ * `cssVars.dark` write a plain `--meteor-glow` custom property into `:root` /
+ * `.dark`, whereas `--color-*` is the Tailwind v4 `@theme` COLOR namespace,
+ * populated only by `@theme` (here: `cssVars.theme`). So on a stock install the
+ * `shadow-[0_0_2px_1px_var(--color-meteor-glow)]` colour resolved to nothing,
+ * the whole `box-shadow` was invalid at computed-value time, and the head rim
+ * simply never painted — no console error, no failing build, no visual diff
+ * anyone could point at.
+ *
+ * It stayed invisible in-house because `apps/landing/.interlace/css/brand.css`
+ * hand-declares `--color-meteor-glow` itself. Only a consumer installing from
+ * the registry got the broken path.
+ *
+ * The rule this encodes: a component may only read a `--color-*` name that
+ * something declares in `@theme` / `cssVars.theme`. If the token ships through
+ * `cssVars.light`/`dark`, read it under its bare name. Enforced by
+ * `__tests__/registry-css-var-contract-lock.test.ts` across every component.
  */
 
 import { useEffect, useState } from 'react';
@@ -122,7 +144,7 @@ function Meteors({
           key={idx}
           className={cn(
             'pointer-events-none absolute rotate-[215deg] animate-meteor rounded-full bg-slate-300 dark:bg-slate-200',
-            'shadow-[0_0_2px_1px_var(--color-meteor-glow)]',
+            'shadow-[0_0_2px_1px_var(--meteor-glow)]',
             'h-[1px] w-[1px]',
             "before:absolute before:top-1/2 before:left-0 before:h-px before:w-[var(--trail)] before:-translate-y-1/2",
             'before:bg-linear-to-r before:from-slate-300 before:via-slate-300/70 before:to-transparent',

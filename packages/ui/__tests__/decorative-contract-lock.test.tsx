@@ -55,15 +55,21 @@ const { AnimatedList, AnimatedListItem } = await import(
 );
 const { Marquee } = await import('../src/magicui/marquee.js');
 const { Particles } = await import('../src/magicui/particles.js');
-const { ShootingStars, Meteors } = await import(
+const { StarsBackground, ShootingStars, Meteors } = await import(
   '../src/aceternity/stars-background.js'
 );
+const { CloudParticles } = await import('../src/aceternity/cloud-particles.js');
+const { BorderBeam } = await import('../src/magicui/border-beam.js');
+const { NumberTicker } = await import('../src/magicui/number-ticker.js');
 const { BackgroundLines } = await import('../src/aceternity/background-lines.js');
 const { BackgroundGradientAnimation } = await import(
   '../src/aceternity/background-gradient-animation.js'
 );
 const { SectionHeader } = await import('../src/patterns/section-header.js');
-const { ArticleCard } = await import('../src/patterns/article-card.js');
+const { ArticleCard, FeaturedArticleCard } = await import(
+  '../src/patterns/article-card.js'
+);
+type ArticleCardImageProps = import('../src/patterns/article-card.js').ArticleCardImageProps;
 
 // ── jsdom shims ─────────────────────────────────────────────────────────
 //
@@ -541,6 +547,114 @@ describe('BackgroundLines — the decorative layer is hidden from AT', () => {
   });
 });
 
+/**
+ * `aria-hidden` on the ROOT of a decorative layer, and the reason the check is
+ * "the root, and every node under it is covered by it" rather than "every
+ * node carries the attribute": `aria-hidden` prunes a SUBTREE. Asserting it on
+ * children too would lock in redundancy, and — worse — would pass just as well
+ * against a component that hid a child while leaving the parent group
+ * announced. So each test below finds the layer's root and asserts the
+ * attribute is there, plus that no OTHER element in the tree is left outside
+ * a hidden subtree.
+ */
+function assertFullyHidden(roots: Element[], label: string) {
+  expect(roots.length, `${label}: nothing rendered; nothing was asserted.`)
+    .toBeGreaterThan(0);
+  for (const root of roots) {
+    expect(
+      root.getAttribute('aria-hidden'),
+      `${label}: <${root.tagName.toLowerCase()}> is an empty, roleless, ` +
+        `decorative node that a screen reader walks into.`,
+    ).toBe('true');
+  }
+}
+
+describe('BorderBeam — the ring and the beam are out of the a11y tree', () => {
+  it('hides the wrapper, which takes the beam with it', () => {
+    // THE DEFECT: two empty `<div>`s, no role, no text, no `aria-hidden`
+    // anywhere in the file. The effect is decoration drawn inside someone
+    // else's card, so a reader working through that card met two anonymous
+    // group nodes on the way to its content.
+    const { container } = render(<BorderBeam />);
+    const wrapper = container.firstElementChild!;
+    assertFullyHidden([wrapper], 'BorderBeam wrapper');
+
+    // The beam is the wrapper's child, so it inherits the pruning. Pin the
+    // structural fact the inheritance rests on — if the beam is ever hoisted
+    // out of the wrapper, this fails and the `aria-hidden` has to follow it.
+    const beam = container.querySelector('.animate-border-beam')!;
+    expect(beam, 'the beam element is gone').not.toBeNull();
+    expect(
+      wrapper.contains(beam),
+      'The beam is no longer inside the aria-hidden wrapper, so it is back in ' +
+        'the a11y tree on its own.',
+    ).toBe(true);
+  });
+
+  it('does not put aria-hidden anywhere className can reach', () => {
+    // `className` lands on the BEAM by this component's documented API. If the
+    // attribute lived there, a consumer restyling the gradient would be one
+    // prop away from hiding whatever they aimed it at.
+    const { container } = render(<BorderBeam className="custom-beam" />);
+    const beam = container.querySelector('.custom-beam')!;
+    expect(beam.hasAttribute('aria-hidden')).toBe(false);
+  });
+});
+
+describe('StarsBackground family — all three layers are hidden from AT', () => {
+  // `HeroCosmic` stacks all three at once, which is what made this worth
+  // three separate assertions: the defect was not one missed attribute, it
+  // was a whole file with zero occurrences of `aria-hidden`, and a hero
+  // therefore opened with three unannounced graphics nodes in a row.
+
+  it('StarsBackground: the canvas', () => {
+    stubCanvas();
+    reduced.value = false;
+    const { container } = render(<StarsBackground />);
+    assertFullyHidden([...container.querySelectorAll('canvas')], 'StarsBackground');
+  });
+
+  it('ShootingStars: the svg, gradient defs included', () => {
+    reduced.value = false;
+    const { container } = render(<ShootingStars />);
+    const svg = container.querySelector('svg')!;
+    assertFullyHidden([svg], 'ShootingStars');
+    // The `<defs>`/`<linearGradient>` are inside it — no separate attribute
+    // needed, but prove they are actually inside it.
+    const defs = container.querySelector('defs')!;
+    expect(svg.contains(defs)).toBe(true);
+  });
+
+  it('Meteors: the streak container', () => {
+    reduced.value = false;
+    const { container } = render(<Meteors number={2} />);
+    const root = container.firstElementChild!;
+    assertFullyHidden([root], 'aceternity Meteors');
+    // Every streak lives under the hidden root; none escaped into a sibling.
+    for (const streak of container.querySelectorAll('span')) {
+      expect(root.contains(streak)).toBe(true);
+    }
+  });
+
+  it('leaves no un-hidden decorative root in the composed hero (negative control)', () => {
+    // The three assertions above pass one at a time even if a fourth layer is
+    // added with no attribute. Render them the way `HeroCosmic` does and
+    // sweep the whole tree: every top-level element must be hidden.
+    stubCanvas();
+    reduced.value = false;
+    const { container } = render(
+      <div>
+        <StarsBackground />
+        <ShootingStars />
+        <Meteors number={1} />
+      </div>,
+    );
+    const layers = [...container.firstElementChild!.children];
+    expect(layers).toHaveLength(3);
+    assertFullyHidden(layers, 'composed hero');
+  });
+});
+
 // ════════════════════════════════════════════════════════════════════════
 // E. Tokens
 // ════════════════════════════════════════════════════════════════════════
@@ -739,6 +853,61 @@ describe('token defaults, weighed against what the colour is doing', () => {
     expect(defaults.colorTo).toBe('var(--chart-2)');
   });
 
+  it('CloudParticles: the body fill is a material, so it does not inherit text colour', () => {
+    // THE DEFECT: `bodyColor = "var(--cloud-body-color, currentColor)"`. The DS
+    // declares no `--cloud-body-color`, so `currentColor` WAS the shipped
+    // default and the cloud body painted in whatever `--foreground` the
+    // surface had. On a dark hero that is near-white and looks intentional,
+    // which is exactly why it survived review; on a light hero it is
+    // `#0d0b09` and the field renders as a near-black smear. Nothing but a
+    // browser can see it — jsdom has no cascade and the value is syntactically
+    // valid either way, so the check has to be about WHICH TOKEN, not about
+    // what painted.
+    const defaults = defaultsOf('aceternity/cloud-particles.tsx');
+    expect(defaults.bodyColor).toBe(
+      'var(--cloud-body-color, var(--scrim-foreground))',
+    );
+    expect(
+      defaults.bodyColor,
+      'The body fill is back on `currentColor`. A volumetric fill is a ' +
+        'material, not a mark — it must not invert with the paragraph it ' +
+        'happens to sit near.',
+    ).not.toContain('currentColor');
+
+    // `--scrim-foreground` is admissible here for one specific property: it is
+    // the DS's "light by intent, not by mode" token, so a cloud stays light in
+    // BOTH schemes. A token that inverts would reintroduce the defect with an
+    // extra step.
+    expect(theme.light.get('scrim-foreground')).toEqual(
+      theme.dark.get('scrim-foreground'),
+    );
+    for (const mode of ['light', 'dark'] as const) {
+      const l = luminance(theme[mode].get('scrim-foreground')!);
+      expect(
+        l,
+        `${mode}: the chosen body token has luminance ${l.toFixed(3)}. A cloud ` +
+          `is lit from above by day and from below at night; in neither case ` +
+          `is it darker than the sky.`,
+      ).toBeGreaterThan(0.8);
+    }
+  });
+
+  it('…and the old default really was dark on the light theme (negative control)', () => {
+    // Without this, the assertion above passes against any token at all — it
+    // would never have to demonstrate that `currentColor` was WRONG, only that
+    // it is gone. `currentColor` resolves to `--foreground`; measure it.
+    const inherited = luminance(theme.light.get('foreground')!);
+    expect(
+      inherited,
+      `--interlace-foreground has luminance ${inherited.toFixed(3)} on the ` +
+        `light theme. If that is genuinely bright now the palette moved and ` +
+        `this control needs rewriting — its job is to show that inheriting ` +
+        `the text colour produced a near-black fill.`,
+    ).toBeLessThan(0.05);
+    // …and inverted in dark mode, which is the half that made it look fine.
+    expect(luminance(theme.dark.get('foreground')!)).toBeGreaterThan(0.8);
+  });
+
   it('NumberTicker: text-foreground, not a hand-rolled black/white', () => {
     // THE DEFECT: `text-black dark:text-white` — an approximation of
     // `text-foreground` that is wrong under both shipped themes
@@ -753,6 +922,228 @@ describe('token defaults, weighed against what the colour is doing', () => {
     expect(code).toContain('text-foreground');
     expect(code).not.toContain('text-black');
     expect(code).not.toContain('dark:text-white');
+  });
+});
+
+// ════════════════════════════════════════════════════════════════════════
+// F. Things a real consumer tree found that no story did
+// ════════════════════════════════════════════════════════════════════════
+//
+// Everything below came out of upgrading ofriperetz.dev — 50 installed items —
+// onto the current registry. The pattern is the same in all three: the DS was
+// not wrong in isolation, it was missing the seam the consumer needed, so the
+// consumer re-patched the component locally and the DS never heard about it.
+
+describe('CloudParticles — the chosen body token reaches the gradient', () => {
+  it('paints the fill from the token, not from currentColor', () => {
+    // The source assertion in section E proves the DEFAULT changed. This
+    // proves the default is what the element is actually given — a default
+    // that never reaches the `background` is the same defect with a nicer
+    // string in the props table.
+    render(<CloudParticles data-testid="clouds" count={2} />);
+    const shapes = [
+      ...document.querySelectorAll('[data-slot="cloud-particles-shape"]'),
+    ];
+    expect(shapes.length, 'no clouds rendered; nothing was asserted')
+      .toBeGreaterThan(0);
+    for (const shape of shapes) {
+      expect(styleOf(shape)).toContain('var(--scrim-foreground)');
+      expect(styleOf(shape)).not.toContain('currentColor');
+    }
+  });
+
+  it('still lets a caller ask for currentColor explicitly', () => {
+    // Removing a bad default must not remove the behaviour. Someone painting
+    // clouds inside a deliberately-tinted block still gets to opt in.
+    render(
+      <CloudParticles data-testid="clouds" count={1} bodyColor="currentColor" />,
+    );
+    const shape = document.querySelector('[data-slot="cloud-particles-shape"]')!;
+    expect(styleOf(shape)).toContain('currentColor');
+  });
+});
+
+describe('NumberTicker — `notation` is a prop, not a re-patch', () => {
+  // THE DEFECT: none, strictly — the component was simply missing an option
+  // `Intl.NumberFormat` already supports, and every consumer with a six-figure
+  // metric re-implemented `notation: "compact"` on top of it. `128,400` is
+  // eight tabular glyphs; in a stat tile at the 320px floor it wraps.
+
+  it('formats compact when asked', () => {
+    reduced.value = false;
+    render(<NumberTicker value={128400} notation="compact" />);
+    expect(
+      document.querySelector('span')!.textContent,
+      'notation="compact" did not reach Intl.NumberFormat.',
+    ).toBe('128K');
+  });
+
+  it('keeps decimalPlaces meaningful under compact', () => {
+    reduced.value = false;
+    render(<NumberTicker value={128400} notation="compact" decimalPlaces={1} />);
+    expect(document.querySelector('span')!.textContent).toBe('128.4K');
+  });
+
+  it('changes nothing for a caller that does not pass it', () => {
+    // The half that matters more. `notation` defaults to `"standard"`, which
+    // is Intl's own default, so an existing call site must render the exact
+    // grouped string it rendered before the prop existed.
+    reduced.value = false;
+    render(<NumberTicker value={128400} />);
+    expect(
+      document.querySelector('span')!.textContent,
+      'The default notation changed. Every existing stat just moved.',
+    ).toBe('128,400');
+  });
+
+  it('applies to the reduced-motion write path too', () => {
+    // Under `reduce` a separate effect writes `formatNumber(value)` straight
+    // to the node. It closes over the SAME memoized formatter — a `notation`
+    // left out of that formatter's dep list would make this path disagree
+    // with the render path, and only for users who asked for less motion.
+    reduced.value = true;
+    render(<NumberTicker value={128400} startValue={0} notation="compact" />);
+    expect(document.querySelector('span')!.textContent).toBe('128K');
+  });
+});
+
+describe('ArticleCard — the cover is a slot, and the box is the cover’s ratio', () => {
+  const COVER = 'https://example.com/cover.png';
+
+  it('defaults to a plain <img> with the props it always had', () => {
+    render(
+      <ArticleCard data-testid="card" title="T" href="#" imageUrl={COVER} />,
+    );
+    const img = document.querySelector('img')!;
+    expect(img.getAttribute('src')).toBe(COVER);
+    expect(img.getAttribute('alt')).toBe('');
+    expect(img.getAttribute('width')).toBe('1000');
+    expect(img.getAttribute('height')).toBe('420');
+    expect(img.getAttribute('loading')).toBe('lazy');
+    expect(img.getAttribute('decoding')).toBe('async');
+  });
+
+  it('hands renderImage the full bag and renders THAT instead', () => {
+    // THE DEFECT: the DS shipped a hard `<img>`, so every Next.js consumer
+    // replaced it by hand with `next/image` — a fork of the component for one
+    // element. The DS cannot import `next/image` and stay framework-agnostic,
+    // so the seam is a render prop.
+    const seen: ArticleCardImageProps[] = [];
+    render(
+      <ArticleCard
+        data-testid="card"
+        title="T"
+        href="#"
+        imageUrl={COVER}
+        priority
+        renderImage={(props) => {
+          seen.push(props);
+          return <picture data-testid="custom-cover" />;
+        }}
+      />,
+    );
+
+    expect(seen, 'renderImage was never called').toHaveLength(1);
+    const [bag] = seen;
+    expect(bag.src).toBe(COVER);
+    expect(bag.alt).toBe('');
+    expect(bag.width).toBe(1000);
+    expect(bag.height).toBe(420);
+    // `priority` has to survive the seam — it is the LCP hint, and a consumer
+    // reconstructing it from nothing is exactly the re-patching this removes.
+    expect(bag.loading).toBe('eager');
+    expect(bag.fetchPriority).toBe('high');
+    expect(bag.decoding).toBe('async');
+
+    // The class string is the contract, not the element: it carries the fit
+    // AND the reduced-motion gate, so an adapter that forwards it keeps both.
+    expect(bag.className).toContain('object-cover');
+    expect(bag.className).toContain('motion-safe:group-hover:scale-105');
+
+    // Replaced, not augmented.
+    expect(document.querySelector('picture')).not.toBeNull();
+    expect(
+      document.querySelectorAll('img'),
+      'The default <img> is still in the tree next to the slot output, so the ' +
+        'consumer now ships two covers and downloads the image twice.',
+    ).toHaveLength(0);
+  });
+
+  it('reaches the featured card too', () => {
+    const seen: ArticleCardImageProps[] = [];
+    render(
+      <FeaturedArticleCard
+        data-testid="hero"
+        title="T"
+        href="#"
+        imageUrl={COVER}
+        renderImage={(props) => {
+          seen.push(props);
+          return <picture />;
+        }}
+      />,
+    );
+    expect(seen, 'the hero shape ignores renderImage').toHaveLength(1);
+  });
+
+  it('is not called at all without an imageUrl', () => {
+    // The gradient-and-title fallback is the card's own chrome. Calling the
+    // slot with an empty `src` would push a broken-image request onto every
+    // adapter.
+    const renderImage = vi.fn(() => <picture />);
+    render(<ArticleCard data-testid="card" title="T" href="#" renderImage={renderImage} />);
+    expect(renderImage).not.toHaveBeenCalled();
+  });
+
+  it('reserves the cover’s own aspect ratio, not a fixed height', () => {
+    // THE DEFECT: `h-44` — a fixed 176px HEIGHT, which fixes nothing about the
+    // ratio, because the ratio then floats with the card's width. At the 320px
+    // floor a tile is ~302px wide: a 1.72:1 box holding a 2.38:1 cover, so
+    // `object-cover` scales the image to 419px to cover 176px of height and the
+    // box discards 117 of them — 28% of the cover, and a different figure at
+    // every breakpoint.
+    //
+    // jsdom reports every box as 0x0, so this cannot be measured by layout.
+    // What IS checkable is the coupling the fix rests on: the reserved ratio
+    // and the declared intrinsic size must be the same number.
+    render(
+      <ArticleCard data-testid="card" title="T" href="#" imageUrl={COVER} />,
+    );
+    const img = document.querySelector('img')!;
+    const box = img.parentElement!;
+
+    expect(
+      box.className,
+      'The cover box is back on a fixed height. A height cannot hold a ratio.',
+    ).not.toMatch(/\bh-\d+\b/);
+
+    const aspect = /aspect-\[(\d+)\/(\d+)\]/.exec(box.className);
+    expect(aspect, `no aspect-[W/H] on the cover box (got "${box.className}")`)
+      .not.toBeNull();
+
+    const [, w, h] = aspect!;
+    expect(
+      [w, h],
+      `The cover box reserves ${w}/${h} while the image declares ` +
+        `${img.getAttribute('width')}/${img.getAttribute('height')}. ` +
+        `object-cover crops the difference.`,
+    ).toEqual([img.getAttribute('width'), img.getAttribute('height')]);
+  });
+
+  it('keeps object-center, because with the box fixed there is nothing to bias', () => {
+    // The consumer also moved `object-center` to `object-left`. That was a
+    // workaround for the crop above — bias the surviving window toward the
+    // side its cover art puts the title on — and the crop is now zero for a
+    // 1000x420 cover at every width. For a cover of some OTHER ratio, centre
+    // is the neutral default; `object-left` would bake one consumer's art
+    // direction into the design system. A caller who wants it owns the class
+    // through `renderImage`.
+    render(
+      <ArticleCard data-testid="card" title="T" href="#" imageUrl={COVER} />,
+    );
+    const classes = document.querySelector('img')!.className.split(/\s+/);
+    expect(classes).toContain('object-center');
+    expect(classes).not.toContain('object-left');
   });
 });
 

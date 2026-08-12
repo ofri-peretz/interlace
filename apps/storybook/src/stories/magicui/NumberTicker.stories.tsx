@@ -68,6 +68,17 @@ const meta: Meta<typeof NumberTicker> = {
       description: 'Fraction digits to keep, formatted with `Intl.NumberFormat`.',
       table: { type: { summary: 'number' }, defaultValue: { summary: '0' }, category: 'Appearance' },
     },
+    notation: {
+      control: 'inline-radio',
+      options: ['standard', 'compact', 'scientific', 'engineering'],
+      description:
+        '`Intl.NumberFormat` notation, forwarded verbatim. `compact` turns `128,400` into `128K` — eight tabular glyphs down to four, which is the difference between fitting and wrapping in a stat tile at the 320px floor.',
+      table: {
+        type: { summary: "'standard' | 'compact' | 'scientific' | 'engineering'" },
+        defaultValue: { summary: 'standard' },
+        category: 'Appearance',
+      },
+    },
     duration: {
       control: { type: 'number', min: 200, max: 4000, step: 100 },
       description: 'Animation length in milliseconds.',
@@ -127,6 +138,61 @@ export const DecimalPlaces: Story = {
   args: { value: 4.87, startValue: 0, decimalPlaces: 2 },
   render: (args) => (
     <Stat label="average review score" caption="out of 10">
+      <NumberTicker {...args} />
+    </Stat>
+  ),
+};
+
+/**
+ * `notation="compact"` — the six-figure case, at the width it actually breaks.
+ *
+ * Both tiles below are pinned to 288px, a stat card inside the 320px viewport
+ * floor once the page gutters are paid. The grouped form is eight tabular
+ * glyphs at `text-3xl` and does not fit; the compact form is four. The count
+ * animates through the compact string too, so the width is stable for the
+ * whole run instead of growing a digit at a time.
+ *
+ * This shipped as a local re-patch in the design system's only real consumer
+ * before it was a prop.
+ */
+export const Compact: Story = {
+  name: 'notation="compact" — six figures in a 288px tile',
+  args: { value: 128400, startValue: 0, notation: 'compact' },
+  render: (args) => (
+    <div className="flex flex-col gap-4">
+      <div className="w-72 max-w-[288px] rounded-lg border border-border bg-background p-4">
+        <span className="text-sm font-medium text-muted-foreground">
+          page views · notation=&quot;compact&quot;
+        </span>
+        <div className="text-3xl font-semibold text-foreground">
+          <NumberTicker {...args} />
+        </div>
+        <span className="text-xs text-muted-foreground">fits</span>
+      </div>
+      <div className="w-72 max-w-[288px] rounded-lg border border-border bg-background p-4">
+        <span className="text-sm font-medium text-muted-foreground">
+          page views · notation=&quot;standard&quot; (default)
+        </span>
+        <div className="text-3xl font-semibold text-foreground">
+          <NumberTicker value={128400} startValue={0} />
+        </div>
+        <span className="text-xs text-muted-foreground">
+          the same number, four glyphs wider
+        </span>
+      </div>
+    </div>
+  ),
+};
+
+/**
+ * Compact keeps `decimalPlaces` meaningful — one place buys back the precision
+ * the rounding threw away, still in five glyphs.
+ */
+export const CompactWithDecimal: Story = {
+  name: 'notation="compact" + decimalPlaces={1}',
+  args: { value: 128400, startValue: 0, notation: 'compact', decimalPlaces: 1 },
+  render: (args) => (
+    <Stat label="page views" caption="128.4K instead of 128K">
       <NumberTicker {...args} />
     </Stat>
   ),

@@ -26,7 +26,7 @@ will.
 ```bash
 # usable inside a React Server Component, with its own skeleton
 jq '.items[] | select(.rendering=="server" and .loadingState) | .name' agent-index.json
-# → article-list-grid, author-byline, card, cta-section
+# → article-list-grid, author-byline, badge, card
 
 # owns its own key handling (not just inherited from Base UI)
 jq '.items[] | select(.keyboard.keys | length > 0) | {name, keys: .keyboard.keys}' agent-index.json

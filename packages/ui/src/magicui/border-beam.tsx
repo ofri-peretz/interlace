@@ -47,6 +47,17 @@
  * where the gradient IS the glyph fill and both stops are consequently pinned
  * to text-grade tokens.
  *
+ * ## Accessibility
+ *
+ * The wrapper carries `aria-hidden="true"`, which takes the beam with it — a
+ * subtree hidden at the root is hidden entire. Both divs are empty, roleless
+ * and `pointer-events-none`; there is nothing here for a screen reader to
+ * announce, and before this the reader walked two anonymous group nodes
+ * inside every card that used the effect. `aria-hidden` sits on the wrapper
+ * ONLY: putting it on the beam as well would be redundant, and putting it
+ * anywhere a consumer's `className` could reach would let a caller
+ * accidentally hide real content.
+ *
  * ## One API edge worth knowing
  *
  * `className` lands on the BEAM element, not the wrapper. Use it to restyle
@@ -120,6 +131,7 @@ export const BorderBeam = ({
 }: BorderBeamProps) => {
   return (
     <div
+      aria-hidden="true"
       className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
       style={
         {

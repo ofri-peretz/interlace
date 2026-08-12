@@ -56,10 +56,11 @@ const meta: Meta<typeof CloudParticles> = {
     },
     bodyColor: {
       control: 'color',
-      description: 'Main cloud-body color. Defaults through a CSS custom property so the design system owns the palette.',
+      description:
+        'Main cloud-body color. Defaults through a CSS custom property so the design system owns the palette, terminating in `--scrim-foreground` — white in BOTH schemes. It is deliberately not `currentColor`: a volumetric fill is a material, not a mark, and must not invert with the text colour it happens to sit near.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'var(--cloud-body-color, currentColor)' },
+        defaultValue: { summary: 'var(--cloud-body-color, var(--scrim-foreground))' },
         category: 'Appearance',
       },
     },
@@ -101,4 +102,69 @@ export const Sparse: Story = {
   name: 'Sparse (count=1)',
   args: { ...Default.args, count: 1 },
   render: Default.render,
+};
+
+/**
+ * The case the default was wrong for, and the only place it is visible.
+ *
+ * `bodyColor` used to default to `var(--cloud-body-color, currentColor)`. The
+ * DS declares no `--cloud-body-color`, so `currentColor` was the shipped
+ * default and the cloud body inherited the surrounding text colour — near-white
+ * over a dark hero (fine, and the reason it survived review) and near-black
+ * over a light one, where the field rendered as a smear rather than as
+ * atmosphere. jsdom has no cascade and the value is valid CSS either way, so
+ * nothing but a browser could see it.
+ *
+ * The two panels are the same component with the same props on a light and a
+ * dark hero. The default (`--scrim-foreground`, white in both schemes) reads as
+ * cloud on both; the explicit `currentColor` on the right of each pair is what
+ * used to ship.
+ */
+export const BodyColorOnLightAndDarkHeroes: Story = {
+  name: 'bodyColor — default vs the old currentColor, on both heroes',
+  render: () => {
+    const Hero = ({
+      label,
+      surface,
+      text,
+      bodyColor,
+    }: {
+      label: string;
+      surface: string;
+      text: string;
+      bodyColor?: string;
+    }) => (
+      <div
+        className={`relative h-[220px] w-full overflow-hidden rounded-lg border border-border ${surface}`}
+      >
+        <CloudParticles
+          data-testid={`clouds-${label}`}
+          count={3}
+          bodyColor={bodyColor}
+        />
+        <div className={`relative z-10 flex h-full items-end p-3 ${text}`}>
+          <span className="text-xs uppercase tracking-widest">{label}</span>
+        </div>
+      </div>
+    );
+
+    return (
+      <div className="grid grid-cols-1 gap-md md:grid-cols-2">
+        <Hero label="light hero · default" surface="bg-sky-100" text="text-slate-700" />
+        <Hero
+          label="light hero · currentColor (the old default)"
+          surface="bg-sky-100"
+          text="text-slate-700"
+          bodyColor="currentColor"
+        />
+        <Hero label="dark hero · default" surface="bg-slate-900" text="text-slate-100" />
+        <Hero
+          label="dark hero · currentColor (the old default)"
+          surface="bg-slate-900"
+          text="text-slate-100"
+          bodyColor="currentColor"
+        />
+      </div>
+    );
+  },
 };

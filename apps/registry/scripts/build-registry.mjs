@@ -329,6 +329,76 @@ const stampVersionBanner = (content, name, version) => {
 };
 
 /**
+ * Move the file's own leading comments below the first import, in the emitted
+ * copy.
+ *
+ * Same CLI mechanism as the banner above, so the same fix. Measured on
+ * `data-state`: the item ships 14,887 bytes of `content` and the installed
+ * `components/ui/data-state.tsx` was 9,741. The 5,146-byte difference was
+ * exactly the leading trivia — in that file, the whole explanation of what the
+ * nine states mean and why `not-counted` is not `empty`.
+ *
+ * Every component item lost its header the same way, and for most of them the
+ * loss is more than prose: 76 sources carry a `## Anatomy` section and 90 carry
+ * the R1–R26 compliance table, which is also what `src/lib/component-metadata.ts`
+ * renders on the component pages.
+ *
+ * ─── Why the emitted copy and not `packages/ui/src` ───────────────────────
+ *
+ * Relocating in the sources would fix it too, but a header below the imports is
+ * worse to read in ~130 files that do not have the CLI's problem. So the source
+ * keeps its header at the top and only the copy is rearranged. Nothing
+ * downstream cares about the position: `src/lib/component-metadata.ts` parses
+ * this same emitted content (`loadItem(name).files[].content`) with
+ * position-independent regexes, so the component pages see identical bytes in a
+ * different order, and `describeFrom`/`metaFor`/`collectDependencies` all read
+ * the untouched `source`.
+ */
+export const relocateDocHeader = (content) => {
+  // The CLI drops exactly one range — everything before the file's first token
+  // — so that range, and not "the JSDoc block", is the unit that has to move.
+  // Four primitives (avatar, scroll-area, sheet, typography) and the
+  // `*-variants.ts` companions lead with `//` blocks rather than JSDoc, and a
+  // JSDoc-only rule would have left those to be dropped exactly as before.
+  //
+  // `firstStatementIndex` rather than a regex over the comment prefix: that
+  // shape nests quantifiers and backtracks exponentially on `*//*` (CodeQL
+  // js/redos), which is why the scan exists in the first place.
+  let i = firstStatementIndex(content);
+  if (i === -1 || i >= content.length) return content;
+  const comments = [content.slice(0, i)];
+  // A leading `'use client'` must stay the first statement, but the comments
+  // UNDER it are at the same risk as the ones above: `transformRsc` deletes
+  // the directive when `rsc: false`, promoting them into the dropped range.
+  // The semicolon is optional and the magicui tier omits it — `border-beam`
+  // and `number-ticker` open with a bare `"use client"`, and requiring `;`
+  // left both of their headers above the first import to be dropped.
+  const directive = /^['"]use \w+['"];?[ \t]*\r?\n/.exec(content.slice(i));
+  const keep = directive ? directive[0] : '';
+  if (directive) {
+    i += keep.length;
+    const j = firstStatementIndex(content.slice(i));
+    if (j === -1) return content;
+    comments.push(content.slice(i, i + j));
+    i += j;
+  }
+  const header = comments.join('').trim();
+  if (!header) return content;
+  const body = keep ? `${keep}\n${content.slice(i)}` : content.slice(i);
+  const cut = afterFirstImport(body);
+  // Same fallback as the banner, for the same reason: the end of the file is
+  // inside the preserved range, and a header the consumer scrolls to beats one
+  // that never arrives. Only `lib/theme-tokens.ts` has no import to sit under.
+  if (cut === -1) {
+    const tail = body.endsWith('\n') ? '' : '\n';
+    return `${body}${tail}\n${header}\n`;
+  }
+  const rest = body.slice(cut);
+  const gap = rest.startsWith('\n') ? '' : '\n';
+  return `${body.slice(0, cut)}\n${header}\n${gap}${rest}`;
+};
+
+/**
  * `docs` is printed by the shadcn CLI after a successful install. Keep it to
  * what a consumer needs in the terminal at that moment: where the file landed,
  * how to import it, and where the full contract lives.
@@ -833,8 +903,10 @@ const buildItem = async (filePath, fileName, tier = null) => {
       // Banner on the item's own file only — a companion is an
       // implementation detail of this item, and four banners in one install
       // is noise the consumer has to read past every time they open it.
+      // Banner outermost, so the four short lines land between the import and
+      // the component's own header rather than after several hundred of them.
       content: stampVersionBanner(
-        rewriteImportsForConsumer(source, subdir),
+        relocateDocHeader(rewriteImportsForConsumer(source, subdir)),
         name,
         version,
       ),
@@ -844,9 +916,13 @@ const buildItem = async (filePath, fileName, tier = null) => {
         path: `registry/interlace-ui/${subdir}${companion}.ts`,
         target: `components/ui/${subdir}${companion}.ts`,
         type: itemType,
-        content: rewriteImportsForConsumer(
-          await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8'),
-          subdir,
+        // No banner on a companion (see above), but it keeps its own header —
+        // that is the file's documentation, not a repeated stamp.
+        content: relocateDocHeader(
+          rewriteImportsForConsumer(
+            await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8'),
+            subdir,
+          ),
         ),
       })),
     )),
@@ -939,7 +1015,7 @@ const buildLibItem = async (entry) => {
       target: entry.target,
       type: 'registry:lib',
       content: stampVersionBanner(
-        source,
+        relocateDocHeader(source),
         entry.name,
         versionInfoFor(entry.name).version,
       ),

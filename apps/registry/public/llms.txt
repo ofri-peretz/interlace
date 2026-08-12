@@ -43,7 +43,7 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 78 server, 62 client
+- rendering: 79 server, 61 client
 - keyboard: 106 none, 34 handled
 - built-in loading state: 31 of 140
 - declared minViewport: 82 at 320, 7 at 480, 1 at 768, 50 at inherited
@@ -105,7 +105,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, loading state, keyboard via Base UI avatar, v1.1.0
 - [Badge](https://ds.interlace.tools/c/badge): A small pill for a status, a count, a label or a tag. Renders a `<span>` by default, or whatever Base UI's `render` prop is given, so the same badge can be an anchor without losing its shape.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/badge.json`
-  - contract: client, loading state, keyboard via Base UI use-render, v1.2.1
+  - contract: server, loading state, keyboard via Base UI use-render, v1.2.1
 - [Box](https://ds.interlace.tools/c/box): The lowest-altitude layout primitive: surface + box-model on one element. Mirrors MUI `<Box>` (a polymorphic, unopinionated wrapper) minus the `sx` CSS-in-JS prop — Interlace uses a curated, tokenized cva variant set instead, so it cannot reopen the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/box.json`
   - contract: server, v1.0.0

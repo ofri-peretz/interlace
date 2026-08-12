@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-11T21:08:52.203Z",
+  "generatedAt": "2026-08-12T00:33:56.203Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -622,7 +622,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "animated-gradient-text": {
@@ -925,7 +925,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "auth-template": {
@@ -1075,7 +1075,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "background-beams-with-collision": {
@@ -1376,7 +1376,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "blog-home-template": {
@@ -1531,7 +1531,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "brand-logo": {
@@ -1636,7 +1636,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "button-variants": {
@@ -1897,7 +1897,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "button": {
@@ -2158,7 +2158,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "callout": {
@@ -2267,7 +2267,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "card": {
@@ -2319,7 +2319,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "checkbox": {
@@ -2504,7 +2504,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "cloud-particles": {
@@ -3299,7 +3299,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "context-menu": {
@@ -3737,7 +3737,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "data-state": {
@@ -3875,7 +3875,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "data-table": {
@@ -4951,7 +4951,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "footer": {
@@ -5430,7 +5430,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "grid-pattern": {
@@ -5456,7 +5456,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "hero-cosmic": {
@@ -5832,7 +5832,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "interactive-grid-pattern": {
@@ -5858,7 +5858,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "landing-template": {
@@ -5976,7 +5976,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "meter": {
@@ -6114,7 +6114,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "metric-table": {
@@ -6772,7 +6772,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "particles": {
@@ -7539,7 +7539,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "radio-group": {
@@ -7757,7 +7757,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "registry-item-template": {
@@ -7970,7 +7970,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "section-header": {
@@ -8035,7 +8035,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "select": {
@@ -8301,7 +8301,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "series-table": {
@@ -8652,7 +8652,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "skeleton": {
@@ -8723,7 +8723,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "skip-link": {
@@ -8819,7 +8819,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "slider": {
@@ -8996,7 +8996,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "stars-background": {
@@ -9345,7 +9345,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "stats-template": {
@@ -9954,7 +9954,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "testimonial": {
@@ -10210,7 +10210,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "theme-script": {
@@ -11384,7 +11384,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "use-reduced-motion": {
@@ -11423,7 +11423,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     }
   }

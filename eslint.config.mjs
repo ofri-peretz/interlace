@@ -74,6 +74,12 @@ export default [
       '**/.interlace/**',
       // oxlint JS-plugin shims — CJS tooling, not app source (legit `require`).
       '**/tools/oxlint-plugins/**',
+      // Agent scratch space, including nested git worktrees. Linting a worktree
+      // means linting a SECOND COPY of this repo from inside itself: it
+      // produced 9,100 warnings and 13 errors that were duplicates of the
+      // findings in the real tree, which is how a genuine error hides — the
+      // signal was there, buried in a report nobody could read to the end.
+      '**/.claude/**',
     ],
   },
 

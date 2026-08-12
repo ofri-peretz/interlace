@@ -42,6 +42,24 @@
  * `--interlace-foreground` is `#0d0b09` light, `#f0ede9` dark). Override via
  * `className` when the surrounding surface is not the page background.
  *
+ * ## Formatting
+ *
+ * `Intl.NumberFormat("en-US", …)`, on every frame and on the SSR render, so
+ * the string never changes shape mid-count. `notation` is forwarded straight
+ * through and defaults to `"standard"` — Intl's own default — so nothing moves
+ * for an existing caller.
+ *
+ * `notation="compact"` exists because six-figure stats overflow a tile.
+ * `128,400` is eight glyphs at `tabular-nums`; in a stat card at the 320px
+ * floor that wraps or clips, and every consumer so far has re-patched the same
+ * `Intl` option locally rather than reaching for a prop that did not exist.
+ * `128K` is four. The count still animates through the compact form, which is
+ * the point: the width is stable for the whole run instead of growing a digit
+ * at a time.
+ *
+ * Pair it with `decimalPlaces`: compact + `decimalPlaces={0}` rounds `128400`
+ * to `128K`, compact + `decimalPlaces={1}` gives `128.4K`.
+ *
  * ## One API edge worth knowing
  *
  * Units are mixed: `duration` is milliseconds (default 1500) but `delay` is
@@ -65,6 +83,16 @@ interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   direction?: "up" | "down"
   delay?: number
   decimalPlaces?: number
+  /**
+   * `Intl.NumberFormat` notation, forwarded verbatim.
+   *
+   * Defaults to `"standard"`, which is Intl's own default — so leaving it
+   * unset is byte-identical to the pre-prop behaviour. Use `"compact"` for
+   * six-figure metrics in a fixed-width tile (`128400` → `128K`), where the
+   * grouped form overflows at the 320px floor.
+   * @default "standard"
+   */
+  notation?: Intl.NumberFormatOptions["notation"]
   /** Duration of animation in ms (default: 1500) */
   duration?: number
 }
@@ -83,6 +111,7 @@ export function NumberTicker({
   delay = 0,
   className,
   decimalPlaces = 0,
+  notation = "standard",
   duration = 1500,
   ...props
 }: NumberTickerProps) {
@@ -92,12 +121,15 @@ export function NumberTicker({
   const from = startValue ?? value
   const shouldAnimate = from !== value
 
-  // Format number with locale (memoized to prevent useEffect recreation)
+  // Format number with locale (memoized to prevent useEffect recreation).
+  // `notation` joins the dep list — a formatter memoized on the old deps alone
+  // would keep the previous notation for the life of the mount.
   const formatNumber = useCallback((num: number) =>
     Intl.NumberFormat("en-US", {
+      notation,
       minimumFractionDigits: decimalPlaces,
       maximumFractionDigits: decimalPlaces,
-    }).format(Number(num.toFixed(decimalPlaces))), [decimalPlaces])
+    }).format(Number(num.toFixed(decimalPlaces))), [decimalPlaces, notation])
 
   // Reduced-motion: jump straight to the final value — no easing, no observer.
   useEffect(() => {

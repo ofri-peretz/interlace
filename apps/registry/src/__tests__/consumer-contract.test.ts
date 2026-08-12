@@ -122,6 +122,68 @@ describe('version banner survives shadcn add', () => {
 });
 
 /**
+ * The same dropped range costs far more than the banner.
+ *
+ * Every source in `packages/ui/src` opens with its own documentation — the
+ * `## Anatomy` section (76 files) and the R1–R26 compliance table (90 files)
+ * that `src/lib/component-metadata.ts` renders on the component pages. All of
+ * it sits before the first token, so `sourceFile.getText()` discarded the lot:
+ * `data-state` shipped 14,887 bytes of `content` and arrived as a 9,741-byte
+ * file, the 5,146-byte difference being exactly the header.
+ *
+ * `relocateDocHeader` moves that trivia below the first import in the EMITTED
+ * copy only — the sources keep their headers on top, where they read better.
+ * The invariant that makes it work is the one locked here: in a published
+ * item, NOTHING but a `'use client'` directive may precede the first import.
+ */
+describe('component documentation survives shadcn add', () => {
+  /** Text before the first import — the exact range the CLI throws away. */
+  const beforeFirstImport = (content: string) => {
+    const at = content.search(/^import\s/m);
+    return at === -1 ? null : content.slice(0, at);
+  };
+
+  it('leaves no comment above the first import in any emitted file', async () => {
+    const items = await loadAll();
+    const offenders: string[] = [];
+    for (const item of items) {
+      for (const file of item.files ?? []) {
+        if (!file.content || !file.target?.match(/\.tsx?$/)) continue;
+        const head = beforeFirstImport(file.content);
+        if (head === null) continue; // no import — covered by the test below
+        if (/\/\*|\/\//.test(head)) {
+          offenders.push(`${item.name} → ${file.target}`);
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it('keeps the header somewhere in the file when there is no import', async () => {
+    // `lib/theme-tokens.ts` is the only such file. Its header has nowhere safe
+    // above to go, so it is appended instead — inside the preserved range.
+    const items = await loadAll();
+    const tokens = items.find((i) => i.name === 'theme-tokens');
+    const content = tokens?.files?.[0]?.content ?? '';
+    expect(beforeFirstImport(content)).toBeNull();
+    expect(content).toMatch(/@interlace\/ui — the theme contract\./);
+  });
+
+  it('still ships the Anatomy and R-rule sources the pages parse', async () => {
+    // A guard on the guard: moving the trivia must not drop it. These counts
+    // come from the sources, so a relocation that silently ate a header would
+    // show up here rather than as an empty component page.
+    const items = await loadAll();
+    const contentOf = (i: { files?: { content?: string }[] }) =>
+      (i.files ?? []).map((f) => f.content ?? '').join('\n');
+    const withAnatomy = items.filter((i) => contentOf(i).includes('## Anatomy'));
+    const withRRules = items.filter((i) => /\|\s*R\d+\s*\|/.test(contentOf(i)));
+    expect(withAnatomy.length).toBeGreaterThan(70);
+    expect(withRRules.length).toBeGreaterThan(85);
+  });
+});
+
+/**
  * The `theme` item must ship the barrel, not just the leaves. It exists
  * because a skipped file "silently degraded half the contract"; withholding it
  * handed every consumer that exact problem, plus a cascade order whose last

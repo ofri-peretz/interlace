@@ -105,7 +105,9 @@
       "blocks-articlecard--featured-contract",
       "blocks-articlecard--featured-without-cover",
       "blocks-articlecard--parity",
-      "blocks-articlecard--deprecated-variant-still-works"
+      "blocks-articlecard--deprecated-variant-still-works",
+      "blocks-articlecard--render-image-slot",
+      "blocks-articlecard--cover-ratio-across-widths"
     ],
     "preview": "blocks-articlecard--default",
     "previewDark": "blocks-articlecard--dark",
@@ -408,7 +410,8 @@
       "aceternity-cloudparticles--default",
       "aceternity-cloudparticles--dark",
       "aceternity-cloudparticles--dense-and-slow",
-      "aceternity-cloudparticles--sparse"
+      "aceternity-cloudparticles--sparse",
+      "aceternity-cloudparticles--body-color-on-light-and-dark-heroes"
     ],
     "preview": "aceternity-cloudparticles--default",
     "previewDark": "aceternity-cloudparticles--dark",
@@ -1182,6 +1185,8 @@
       "magicui-numberticker--no-animation",
       "magicui-numberticker--count-down",
       "magicui-numberticker--decimal-places",
+      "magicui-numberticker--compact",
+      "magicui-numberticker--compact-with-decimal",
       "magicui-numberticker--dark"
     ],
     "preview": "magicui-numberticker--default",

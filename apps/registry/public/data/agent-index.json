@@ -59,8 +59,8 @@
       "theme": 1
     },
     "rendering": {
-      "server": 78,
-      "client": 62
+      "server": 79,
+      "client": 61
     },
     "keyboard": {
       "none": 106,
@@ -132,11 +132,7 @@
       "title": "Accordion",
       "type": "registry:ui",
       "summary": "A disclosure stack: a column of headers whose panels open and close. Wraps @base-ui/react/accordion — Base UI owns the open state (single or multiple), the keyboard model and every piece of the accordion ARIA.",
-      "topics": [
-        "Anatomy",
-        "Where `className` lands",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "primitive"
@@ -187,10 +183,7 @@
       "title": "Alert Dialog",
       "type": "registry:ui",
       "summary": "A modal confirmation dialog for *destructive or otherwise consequential* actions (\"Delete project\", \"Sign out everywhere\"). Distinct from `Dialog`: the underlying Base UI primitive disables outside-click and Escape-only dismissal so the user MUST…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -240,10 +233,7 @@
       "title": "Alert",
       "type": "registry:ui",
       "summary": "A bordered in-page message with `role=\"alert\"`, an optional leading icon, a title and a description, in two tones (default and destructive).",
-      "topics": [
-        "Anatomy",
-        "Two things to know before reaching for it"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
@@ -293,12 +283,7 @@
       "title": "Animated Gradient Text",
       "type": "registry:ui",
       "summary": "Gradient-filled text: a `bg-clip-text text-transparent` span whose three-stop linear gradient slides horizontally on a loop. Built for a short eyebrow, badge or headline fragment — never a paragraph, since the text has no solid fill to fall back to.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "`speed` changes distance, not duration",
-        "The gradient IS the text, so both stops are text-grade tokens"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -346,9 +331,7 @@
       "title": "Animated Grid Pattern",
       "type": "registry:ui",
       "summary": "A tiled SVG grid where a handful of cells softly pulse in and out, then teleport to a new random cell on each cycle — a \"breathing\" graph-paper backdrop for heroes and section bands. Re-authored from the MagicUI pattern to the Interlace component floor.",
-      "topics": [
-        "API parity"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -399,12 +382,7 @@
       "title": "Animated List",
       "type": "registry:ui",
       "summary": "A feed that reveals its children one at a time, newest on top, each entry springing in from `scale: 0`. One more appears every `delay` ms (1000 by default) until the list is full, then it stops — or restarts, with `loop`.",
-      "topics": [
-        "Provenance",
-        "Anatomy",
-        "Motion",
-        "WCAG 2.2.2 (Pause, Stop, Hide)"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -462,11 +440,7 @@
       "title": "Article Card",
       "type": "registry:ui",
       "summary": "Two article tiles that share one focusable-anchor shell: `ArticleCard`, the stacked grid tile with the cover on top, and `FeaturedArticleCard`, the full-bleed hero whose copy sits on a gradient scrim over the image. Both read the same props.",
-      "topics": [
-        "Anatomy",
-        "Dates are pinned to UTC",
-        "Motion"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -528,9 +502,7 @@
       "title": "Article List Grid",
       "type": "registry:ui",
       "summary": "Grid of ArticleCards with an optional featured slot above. The pattern blog index pages reach for: one big featured card (overlay variant) above N tiles. Composes RelatedPosts-style streaming with proper loading + empty states.",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -584,10 +556,7 @@
       "title": "Article Template",
       "type": "registry:block",
       "summary": "Full-page surface for long-form articles. Composes the header (title + AuthorByline), the body (Prose-wrapped MDX/HTML), the related-posts grid, prev/next navigation, and share buttons — each in its own `<SectionBoundary>` so the page streams section-by-…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "template"
@@ -698,10 +667,7 @@
       "title": "Auth Template",
       "type": "registry:block",
       "summary": "Full-page surface for sign-in / sign-up / password-reset / verify-email flows. Centred narrow column with brand mark at top, form in the middle, helper link at the bottom (\"Already have an account?\" / \"Forgot password?\").",
-      "topics": [
-        "MIN_VIEWPORT — 320",
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "template"
@@ -769,10 +735,7 @@
       "title": "Author Byline",
       "type": "registry:ui",
       "summary": "The \"who wrote this + when + how long it takes to read\" adornment that sits directly under an article H1. Pure surface composition over existing primitives — Avatar (large) on the left, a vertical Stack on the right with author name (UI semibold), optional…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -826,9 +789,7 @@
       "title": "Author Template",
       "type": "registry:block",
       "summary": "Author profile page — bio header + their articles grid. Used by `/authors/[slug]` routes on a blog. The bio header is a multi-part card (avatar + name + role + bio + social links); the grid uses ArticleListGrid for the article list.",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "template"
@@ -887,10 +848,7 @@
       "title": "Avatar",
       "type": "registry:ui",
       "summary": "A circular image with a text fallback. Wraps @base-ui/react/avatar: Base UI owns the image load/error state machine that decides when the fallback shows, and we own the surface.",
-      "topics": [
-        "Anatomy",
-        "Two different absences"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "primitive"
@@ -939,11 +897,7 @@
       "title": "Background Beams With Collision",
       "type": "registry:ui",
       "summary": "A hero surface where thin vertical beams fall from the top and burst into a ten-particle explosion when they reach the strip along the bottom. Your children render above them on a `z-10` layer.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "Where it leaves the token system"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -994,12 +948,7 @@
       "title": "Background Gradient Animation",
       "type": "registry:ui",
       "summary": "The \"lava lamp\" surface: five radial-gradient blobs orbiting behind an SVG goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth blob that eases toward the pointer.",
-      "topics": [
-        "Provenance",
-        "Anatomy",
-        "Motion — two kinds, gated two ways",
-        "The goo filter id is per-instance"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -1050,11 +999,7 @@
       "title": "Background Lines",
       "type": "registry:ui",
       "summary": "A full-bleed backdrop of twelve long, sweeping SVG curves that draw themselves in and fade out on a loop, each staggered by a fixed delay so the field never pulses in unison.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "What it does not give you"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -1107,17 +1052,13 @@
       "title": "Badge",
       "type": "registry:ui",
       "summary": "A small pill for a status, a count, a label or a tag. Renders a `<span>` by default, or whatever Base UI's `render` prop is given, so the same badge can be an anchor without losing its shape.",
-      "topics": [
-        "Anatomy",
-        "The variant rule this file exists to hold",
-        "`loading` and the hook order"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
       ],
       "tier": "primitive",
-      "rendering": "client",
+      "rendering": "server",
       "minViewport": null,
       "loadingState": true,
       "keyboard": {
@@ -1163,9 +1104,7 @@
       "title": "Blog Home Template",
       "type": "registry:block",
       "summary": "Blog index surface. Topbar + hero (greeting / about) + ArticleListGrid (featured + recent) + optional NewsletterForm + Footer. The shape every personal / company blog reaches for.",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "template"
@@ -1224,12 +1163,7 @@
       "title": "Border Beam",
       "type": "registry:ui",
       "summary": "A single gradient square that travels around the inside edge of its parent, drawn with `offset-path` and a two-layer CSS mask so only the border ring shows. Drop it inside any `relative`, rounded container to give that container a moving outline.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "Colour, and why `--chart-2` is allowed here",
-        "One API edge worth knowing"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -1247,7 +1181,9 @@
       "states": [],
       "a11y": {
         "roles": [],
-        "aria": [],
+        "aria": [
+          "aria-hidden"
+        ],
         "motion": {
           "driver": "css",
           "declaresPreference": true,
@@ -1325,10 +1261,7 @@
       "title": "Brand Logo",
       "type": "registry:ui",
       "summary": "The locked two-bar Interlace mark plus the lowercase monospace wordmark \"interlace\". This is the SAME lockup eslint.interlace.tools ships in its top nav — one component so every *.interlace.tools site renders an identical brand header instead of…",
-      "topics": [
-        "Geometry (locked — never bend)",
-        "Color contract"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "pattern"
@@ -1434,10 +1367,7 @@
       "title": "Button Variants",
       "type": "registry:ui",
       "summary": "The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.",
-      "topics": [
-        "Anatomy",
-        "Why half this file is comments"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -1538,10 +1468,7 @@
       "title": "Callout",
       "type": "registry:ui",
       "summary": "Inline-prose annotation. The \"stop and read this\" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner (\"your save failed\"), Callout is an in-band authored aside (\"note: this rule is…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "primitive"
@@ -1595,10 +1522,7 @@
       "title": "Card",
       "type": "registry:ui",
       "summary": "A bordered, rounded content surface with header / title / description / action / content / footer parts. The surface, radius and border come from `Box`; the card owns only its column layout, its padding and its shadow.",
-      "topics": [
-        "Anatomy",
-        "What the card does not give you"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -1646,13 +1570,7 @@
       "title": "Checkbox",
       "type": "registry:ui",
       "summary": "Tri-state boolean form control (checked / unchecked / indeterminate). Built on @base-ui/react/checkbox: Base UI owns `role=\"checkbox\"`, `aria-checked=\"mixed\"`, Space activation, and the controlled/uncontrolled pair (`checked` + `onCheckedChange` /…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Target size (SC 2.5.8, AA)",
-        "Contrast (verified by token math)",
-        "API parity"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -1708,11 +1626,7 @@
       "title": "Cloud Particles",
       "type": "registry:ui",
       "summary": "Volumetric drifting clouds as a decorative backdrop. Each cloud is a radial-gradient ellipse pushed through a five-pass SVG turbulence filter — body, cool underside, soft shadow, deep shadow — and translated across `130vw`.",
-      "topics": [
-        "Provenance",
-        "Anatomy",
-        "Motion"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -1827,10 +1741,7 @@
       "title": "Code Block",
       "type": "registry:ui",
       "summary": "Fenced code block with a title bar (title left, language tag + copy button right). The copy action shells out to `navigator.clipboard.writeText` and flips an inline \"Copied!\" affordance for 1.5s — the only piece of state this primitive owns. Everything…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "primitive"
@@ -1884,10 +1795,7 @@
       "title": "Code Window",
       "type": "registry:ui",
       "summary": "macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.",
-      "topics": [
-        "Anatomy",
-        "No accessible name, deliberately"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -1933,10 +1841,7 @@
       "title": "Collapsible",
       "type": "registry:ui",
       "summary": "A single open/close disclosure surface. Wraps Base UI's `Collapsible.Root`, `Collapsible.Trigger`, `Collapsible.Panel` so consumers get the controlled / uncontrolled state machine, ARIA wiring (`aria-controls`, `aria-expanded`, `id`), keyboard semantics…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "primitive"
@@ -1986,14 +1891,7 @@
       "title": "Combobox",
       "type": "registry:ui",
       "summary": "A text input that filters a list. Built on `@base-ui/react/combobox`: Base UI owns the filtering (`Intl.Collator`-backed `useFilter`), the combobox/listbox ARIA pairing, VIRTUAL focus (the input keeps DOM focus and `aria-activedescendant` moves), single +…",
-      "topics": [
-        "Combobox vs Select vs DropdownMenu",
-        "Anatomy",
-        "Filtering — the one trap in this API",
-        "Keyboard contract",
-        "MIN_VIEWPORT — 320",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -2050,13 +1948,7 @@
       "title": "Command Palette",
       "type": "registry:ui",
       "summary": "⌘K. A modal surface holding one filterable list of actions.",
-      "topics": [
-        "Why `inline` is load-bearing",
-        "Anatomy",
-        "Keyboard contract",
-        "MIN_VIEWPORT — 320",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -2114,11 +2006,7 @@
       "title": "Container",
       "type": "registry:ui",
       "summary": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8` (§5).",
-      "topics": [
-        "The four sizes",
-        "Anatomy",
-        "Two things worth knowing"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -2167,10 +2055,7 @@
       "title": "Context Menu",
       "type": "registry:ui",
       "summary": "Right-click / long-press menu. Wraps `@base-ui/react/context-menu` (same Menu compositional API as DropdownMenu, just with a Root that handles right-click / long-press / Shift+F10 as the open gesture).",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -2226,9 +2111,7 @@
       "title": "Cta Section",
       "type": "registry:ui",
       "summary": "Call-to-action section. Title + description + 1-2 action buttons in a centred column on a tinted surface. The shape every landing page reaches for (\"Ready to ship?\" / \"Start your trial\" / \"Read the docs\"). Server component.",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -2289,9 +2172,7 @@
       "title": "Dashboard Template",
       "type": "registry:block",
       "summary": "Application dashboard surface. Topbar at top, persistent left sidebar (nav links), main content area (children). The standard \"logged-in app\" layout: every SaaS dashboard reaches for this shape.",
-      "topics": [
-        "MIN_VIEWPORT — 480"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "template"
@@ -2348,11 +2229,7 @@
       "title": "Data State Model",
       "type": "registry:ui",
       "summary": "Nothing in this file imports React, touches the DOM, or renders anything. It is the part of the absence contract that can be *proved* — the union, the precedence order, the announcement each state owes a screen reader, and the class set that paints it — so…",
-      "topics": [
-        "Why absence is a vocabulary and not a placeholder",
-        "Two kinds of state, which is what makes the precedence tractable",
-        "Precedence"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
@@ -2428,12 +2305,7 @@
       "title": "Data State",
       "type": "registry:ui",
       "summary": "The single conditional swap point for a data surface, and the place the design system says what an ABSENCE is.",
-      "topics": [
-        "Four states was not enough, and the missing five were the interesting ones",
-        "Precedence, and why the loser is not thrown away",
-        "The hatch must not exist only in pixels",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
@@ -2519,12 +2391,7 @@
       "title": "Data Table",
       "type": "registry:ui",
       "summary": "Columns, sorting, row selection, pagination, and the three states a table spends most of its life in (loading / empty / error). It composes primitives — Checkbox, Pagination, Skeleton, Button — so it is a pattern, not a primitive.",
-      "topics": [
-        "It is a real `<table>`",
-        "State is the caller's",
-        "MIN_VIEWPORT — 320",
-        "What this is not"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "pattern"
@@ -2605,11 +2472,7 @@
       "title": "Delta",
       "type": "registry:ui",
       "summary": "\"It moved, this much, this way.\" The smallest complete unit of analysis and the most-repeated element in a dense view, so it is worth getting exactly right once.",
-      "topics": [
-        "Three signals, not one",
-        "\"Good\" is not a property of a number",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "chart"
@@ -2737,13 +2600,7 @@
       "title": "Distribution",
       "type": "registry:ui",
       "summary": "One quantity spread across a fixed set of bins — hours of the day, days of the week, cohorts, buckets — with an optional REFERENCE distribution drawn over it.",
-      "topics": [
-        "Why this is not `TimeSeries` with three more props",
-        "The reference is the whole point, and it shares one domain",
-        "An unmeasured bin is not an empty bin",
-        "MIN_VIEWPORT — 320",
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "chart"
@@ -2826,9 +2683,7 @@
       "title": "Docs Page Template",
       "type": "registry:block",
       "summary": "Documentation page surface. Topbar at top, optional sidebar nav on the left (md+), main content in the centre with a `<Prose>` wrapper, and an optional TOC rail on the right (xl+).",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "template"
@@ -2888,9 +2743,7 @@
       "title": "Dot Pattern",
       "type": "registry:ui",
       "summary": "A resolution-independent dotted-grid background that fills its positioned container. Two render modes share one tiled SVG `<pattern>`:",
-      "topics": [
-        "API parity"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "pattern"
@@ -2941,12 +2794,7 @@
       "title": "Dropdown Menu",
       "type": "registry:ui",
       "summary": "A button-triggered command menu — items, checkbox and radio items, submenus, plus a `Compose` array shorthand. Wraps @base-ui/react/menu: Base UI owns open state, positioning, focus and typeahead; we own the popup and the rows.",
-      "topics": [
-        "Anatomy",
-        "Where we deliberately left Base UI",
-        "`Compose` — the array form",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -2999,10 +2847,7 @@
       "title": "Empty State",
       "type": "registry:ui",
       "summary": "The \"nothing here yet\" surface. Used wherever a list, table, or search returns zero rows AND the consumer can act on it (create the first item, adjust filters, link to docs). Empty states are first-class UX, not an afterthought — `LOADING_PHILOSOPHY` flags…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "pattern"
@@ -3053,9 +2898,7 @@
       "title": "Error Template",
       "type": "registry:block",
       "summary": "Full-page error surface — 404 / 500 / 503 / generic. Centred column with the status code + title + description + action buttons (back home, contact support, retry).",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "template"
@@ -3113,9 +2956,7 @@
       "title": "Faq",
       "type": "registry:ui",
       "summary": "Frequently-asked-questions accordion. Composes the canonical Accordion primitive into a single-prop API: pass an array of {question, answer} and get the full disclosure pattern (keyboard, ARIA, animation) inherited from Accordion → Base UI.",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -3168,9 +3009,7 @@
       "title": "Feature Grid",
       "type": "registry:ui",
       "summary": "Grid of small \"feature\" cards: icon + title + 1-2 line description. The shape every landing page reaches for to spell out \"what we do\" in 3-6 cells. Server component, no hooks.",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -3223,10 +3062,7 @@
       "title": "Figure",
       "type": "registry:ui",
       "summary": "Semantic media block. `<figure>` is the right element for *self-contained* media (image, diagram, code screenshot, chart) with an optional caption that scrolls with it. Composes `AspectRatio` so the layout reserves space before the asset loads — preventing…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -3275,12 +3111,7 @@
       "title": "Flip Words",
       "type": "registry:ui",
       "summary": "A headline word that flips through a list. Each replacement enters letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs and scales away.",
-      "topics": [
-        "Provenance",
-        "Anatomy",
-        "Motion",
-        "Layout"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -3334,12 +3165,7 @@
       "title": "Focus Cards",
       "type": "registry:ui",
       "summary": "A grid that spotlights one card at a time: pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs. Real list semantics — `ul` › `li` › `article` — and a controlled or uncontrolled active index.",
-      "topics": [
-        "Provenance",
-        "Anatomy",
-        "Motion",
-        "The caption scrim is dark in both themes, on purpose"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -3389,10 +3215,7 @@
       "title": "Focus Ring",
       "type": "registry:ui",
       "summary": "A `<span>` that paints the DS focus ring when anything inside it takes focus — `focus-within` on the wrapper, not `focus-visible` on the child.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "a11y",
         "primitive"
@@ -3451,10 +3274,7 @@
       "title": "Footer",
       "type": "registry:ui",
       "summary": "Site footer with grouped link columns + copyright row. Composes with a primary brand mark, 1-4 link groups (each a sub-heading + list of links), and a tail row for copyright + social. Server component.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "pattern"
@@ -3504,11 +3324,7 @@
       "title": "Form",
       "type": "registry:ui",
       "summary": "A composition primitive over `@base-ui/react/field`. The form ecosystem owns a long tail of subtle a11y wiring — label/control association via generated ids, `aria-describedby` for description + error, `aria-invalid` flipping on validity, focus management…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -3558,10 +3374,7 @@
       "title": "Grade Badge",
       "type": "registry:ui",
       "summary": "Visual grade pill — A+ / A / A- / B+ / B / … / F. The atomic surface for scorecard pages: a single chip that announces a tier without making the reader compute. Five tones (excellent/good/fair/poor/fail) map onto the 13-grade ladder so the colour story…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
@@ -3624,10 +3437,7 @@
       "title": "Grid Pattern",
       "type": "registry:ui",
       "summary": "A decorative SVG line grid that fills its positioned parent, with optional accent cells (`squares`, addressed as `[column, row]`) that can pulse. Colour comes from `currentColor`, so a text-colour class on `className` sets the tone.",
-      "topics": [
-        "Anatomy",
-        "Motion"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "pattern"
@@ -3728,12 +3538,7 @@
       "title": "Hero Cosmic",
       "type": "registry:ui",
       "summary": "The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.",
-      "topics": [
-        "Anatomy",
-        "The effect layer can legitimately never appear",
-        "Motion",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -3784,10 +3589,7 @@
       "title": "Hero",
       "type": "registry:ui",
       "summary": "The above-the-fold section every landing page reaches for: eyebrow, headline, supporting copy, primary + secondary CTAs, optional media slot. Server-component-safe; the calm-confident-technical voice is enforced by Typography variants (no h1 with…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -3840,10 +3642,7 @@
       "title": "Hover Card",
       "type": "registry:ui",
       "summary": "A rich, non-modal overlay that opens on pointer-hover (and keyboard focus) of its trigger, used to preview the *contents* of a target — author cards, repo cards, link previews. Distinct from `Tooltip` (short, one-line, no interactive content) and `Popover`…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 768 (the headline trade-off)"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -3893,11 +3692,7 @@
       "title": "Input",
       "type": "registry:ui",
       "summary": "Single-line text input. A pure surface primitive with no controlled-state machinery: the native `<input>` already owns selection, IME, undo/redo and `onChange`, so we add structure (surface, border, focus + invalid rings) without wrapping a single native…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Contrast (verified by token math, not by eye)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -3947,11 +3742,7 @@
       "title": "Interactive Grid Pattern",
       "type": "registry:ui",
       "summary": "A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className=\"text-border\"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "The `<title>` is not an accessible name"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "pattern"
@@ -4004,11 +3795,7 @@
       "title": "Label",
       "type": "registry:ui",
       "summary": "Form-control label. No headless dep — Base UI's `Field.Label` is the forms-aware variant (see `form.tsx`); this is the lower-level shadcn-canon label for controls that own their own id wiring. Server component. Mirrors…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Contrast"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -4056,9 +3843,7 @@
       "title": "Landing Template",
       "type": "registry:block",
       "summary": "Marketing landing page surface. Composes Topbar + Hero + (optional) FeatureGrid + (optional) TestimonialGrid + (optional) PricingTable + (optional) FAQ + CTASection + Footer — each in its own SectionBoundary so the page streams section-by-section.",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "template"
@@ -4168,10 +3953,7 @@
       "title": "Marquee",
       "type": "registry:ui",
       "summary": "An infinitely scrolling strip: it renders its children `repeat` times side by side (or stacked, with `vertical`) inside an `overflow-hidden` track and translates each copy by its own width plus the gap, so the row reads as continuous.",
-      "topics": [
-        "Anatomy",
-        "Motion"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -4322,10 +4104,7 @@
       "title": "Meter Scale",
       "type": "registry:ui",
       "summary": "The maths behind `Meter` and `RankedBarList`. No React, no DOM — the same split `charts/scale.ts` makes, and for the same reason: a bar that draws a beautiful wrong length is worse than one that fails to render, and the length is the part that can be…",
-      "topics": [
-        "`null` is unmeasured, and it stays that way",
-        "Length and number, never hue"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "primitive"
@@ -4381,13 +4160,7 @@
       "title": "Meter",
       "type": "registry:ui",
       "summary": "ONE inline bar, absorbing three that were hand-rolled separately across the phase-10 corpus: an odds bar, a score meter and a reviewer bar. They differed in tone and in what the denominator meant; they did not differ in anything that justified three…",
-      "topics": [
-        "Length and number. Never hue.",
-        "Two absences, drawn differently on purpose",
-        "Why `RankedBarList` supports a log scale",
-        "MIN_VIEWPORT — 320",
-        "Contrast, measured (never eyeballed — see COLOR_PHILOSOPHY.md)"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "primitive"
@@ -4505,11 +4278,7 @@
       "title": "Metric Table",
       "type": "registry:ui",
       "summary": "The roic.ai row: metric name, values across time, sparkline, delta. Click a row to promote it into whatever chart the caller renders above.",
-      "topics": [
-        "Why this is the centrepiece and not the chart",
-        "It is a real table",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "chart"
@@ -4587,12 +4356,7 @@
       "title": "Network Graph",
       "type": "registry:ui",
       "summary": "Who is connected to whom, and who the network converges on.",
-      "topics": [
-        "Position means something",
-        "The DS owns the graph; the app owns the meaning",
-        "Ambient edges, meaningful edges",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "chart"
@@ -4661,10 +4425,7 @@
       "title": "Newsletter Form",
       "type": "registry:ui",
       "summary": "Canonical email-signup pattern: title + (optional) description + email field + consent checkbox + submit. Composition of the auth primitive set (Form / Field / Input / Button + Checkbox + Typography). The block owns *structure*; consumers wire `action` and…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -4719,12 +4480,7 @@
       "title": "Number Field",
       "type": "registry:ui",
       "summary": "A numeric input with increment/decrement controls and built-in scrubbing. Wraps @base-ui/react/number-field. Re-exports the compositional parts (Root, Group, Increment, Input, Decrement, ScrubArea) under DS-styled wrappers without owning state.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Target size (SC 2.5.8, AA)",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -4774,12 +4530,7 @@
       "title": "Number Ticker",
       "type": "registry:ui",
       "summary": "A count-up number that starts when it scrolls into view and eases to `value`. It does nothing by default: `startValue` defaults to `value`, so you get an honest static number — and an honest SSR render — until you pass a lower one to opt into the count.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "Colour",
-        "One API edge worth knowing"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -4828,10 +4579,7 @@
       "title": "Page Header",
       "type": "registry:ui",
       "summary": "The header band at the top of admin / docs / settings pages. Carries a breadcrumb (optional), title, optional description, and a right-aligned actions slot (typically a primary CTA + an optional menu). Renders a `<header>` landmark for screen-reader…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 480"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "pattern"
@@ -4883,10 +4631,7 @@
       "title": "Pagination",
       "type": "registry:ui",
       "summary": "The page-navigation bar: a `<nav aria-label=\"pagination\">` of anchor links with previous / next / ellipsis parts. It is presentation only — it computes no page numbers and knows no total.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "primitive"
@@ -4941,12 +4686,7 @@
       "title": "Particles",
       "type": "registry:ui",
       "summary": "An ambient `<canvas>` particle field for hero and section backdrops: `quantity` dots (100 by default) drifting on their own velocities, fading in near the middle and out near the edges, respawned whenever one leaves the box.",
-      "topics": [
-        "Provenance",
-        "Anatomy",
-        "Motion",
-        "Two things to know before you rely on it"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -4997,10 +4737,7 @@
       "title": "Popover",
       "type": "registry:ui",
       "summary": "A non-modal floating panel anchored to its trigger. It dismisses on Escape and on an outside click and returns focus to the trigger, but it does NOT trap focus or make the page inert.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -5050,10 +4787,7 @@
       "title": "Prev Next Post",
       "type": "registry:ui",
       "summary": "Paired previous / next link cards rendered at the foot of an article. The canonical \"what to read next\" surface — improves session depth, reduces bounce, and gives keyboard / screen-reader users a deterministic exit ramp from long-form content. Wrapped in…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 480"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -5108,9 +4842,7 @@
       "title": "Pricing Table",
       "type": "registry:ui",
       "summary": "2-4 column pricing-tier grid. Each tier is a card with name, price, description, feature list, and a CTA button. The \"Most popular\" tier gets a highlight border. Server component.",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -5165,10 +4897,7 @@
       "title": "Progress",
       "type": "registry:ui",
       "summary": "Determinate progress indicator. Wraps the Base UI `Progress` compound — Root, Track, Indicator, Label, Value — and re-exports DS-styled parts that consume theme tokens (no raw px, no hex). The Track defines the rail height (`size`); the Indicator carries…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
@@ -5222,10 +4951,7 @@
       "title": "Prose",
       "type": "registry:ui",
       "summary": "The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer. Think MDX-target…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "primitive"
@@ -5285,10 +5011,7 @@
       "title": "Published Date",
       "type": "registry:ui",
       "summary": "Article publish-date stamp. A pure surface primitive that renders a semantic `<time dateTime={iso}>` with a human-readable label produced by `Intl.DateTimeFormat` at render time. The native element owns the machine value (the `dateTime` attribute is what…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "primitive"
@@ -5345,13 +5068,7 @@
       "title": "Radio Group",
       "type": "registry:ui",
       "summary": "Single-select control over 2+ mutually exclusive options. Built on @base-ui/react/radio-group + /radio: Base UI owns `role=\"radiogroup\"`, roving-tabindex arrow navigation, and the controlled/uncontrolled pair (`value` + `onValueChange` / `defaultValue`).…",
-      "topics": [
-        "Anatomy",
-        "Keyboard (owned by Base UI, asserted in RadioGroup.stories.tsx)",
-        "MIN_VIEWPORT — 320",
-        "Target size (SC 2.5.8, AA)",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -5408,10 +5125,7 @@
       "title": "Reading Time",
       "type": "registry:ui",
       "summary": "A compact \"N min read\" badge for article headers, blog cards and docs index rows. It renders an inline `<span>`, so it sits beside a date or a tag row without imposing block layout.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "primitive"
@@ -5463,10 +5177,7 @@
       "title": "Registry Item Template",
       "type": "registry:block",
       "summary": "Full-page surface for a single registry item's documentation (`/c/[name]` on ds.interlace.tools). Composes the header (item name + description + install snippet), the anatomy diagram, the variants matrix, related-components grid, and a CTA back to the…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "template"
@@ -5524,10 +5235,7 @@
       "title": "Related Posts",
       "type": "registry:ui",
       "summary": "\"Keep reading\" surface that sits at the foot of an article page (or any long-form route). Renders an h3 section heading followed by a responsive grid of ArticleCards: one column on phones, two from `md` up, three from `lg` up — the same 1/2/3 cadence the…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 480"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -5583,9 +5291,7 @@
       "title": "Scorecard Row",
       "type": "registry:ui",
       "summary": "A single dimension row in a scorecard: name + GradeBadge + numeric score + optional details. Used by ScorecardTemplate to render each scored category (Performance, Coverage, Adoption, ...).",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "pattern"
@@ -5636,9 +5342,7 @@
       "title": "Scorecard Template",
       "type": "registry:block",
       "summary": "Graded-evaluation page. Topbar + overall-grade header + per-dimension scorecard rows + optional methodology footnote + Footer.",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "template"
@@ -5700,10 +5404,7 @@
       "title": "Scroll Area",
       "type": "registry:ui",
       "summary": "A scrollable region with a styled overlay scrollbar in place of the platform one. Wraps @base-ui/react/scroll-area: Base UI owns overflow detection and thumb geometry; we own the track, the thumb colour and the focus ring.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "primitive"
@@ -5753,10 +5454,7 @@
       "title": "Section Boundary",
       "type": "registry:ui",
       "summary": "The \"stream per section\" primitive. Fuses React Suspense + a class-based ErrorBoundary into one component so a template can render section-by-section with per-section skeleton + per-section error fallback. The page paints whatever's ready; slow / failed…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -5810,11 +5508,7 @@
       "title": "Section Header",
       "type": "registry:ui",
       "summary": "The \"section intro\" block — optional eyebrow, a heading, and a `max-w-prose` tagline — with the bottom margin, the alignment and the type rhythm owned in one place instead of being re-typed as `text-center mb-12` on every section.",
-      "topics": [
-        "Anatomy",
-        "Variants",
-        "`align` reaches the eyebrow too"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "pattern"
@@ -5862,10 +5556,7 @@
       "title": "Section",
       "type": "registry:ui",
       "summary": "The page's rhythm unit, from LAYOUT_PHILOSOPHY.md §7-8: one band that owns its vertical padding, its background tone, its transition dividers and the `<Container>` that measures its children.",
-      "topics": [
-        "The four axes",
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -5914,12 +5605,7 @@
       "title": "Select",
       "type": "registry:ui",
       "summary": "Single-select listbox with a portalled popup. Built on @base-ui/react/select: Base UI owns `role=\"combobox\"` / `role=\"listbox\"`, typeahead, arrow + Home/End navigation, focus return on close, and the controlled/uncontrolled pair (`value` + `onValueChange`…",
-      "topics": [
-        "Anatomy",
-        "Keyboard (owned by Base UI, asserted in Select.stories.tsx)",
-        "MIN_VIEWPORT — 320",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -5973,9 +5659,7 @@
       "title": "Separator",
       "type": "registry:ui",
       "summary": "A one-pixel rule between blocks of content, horizontal or vertical. Wraps @base-ui/react/separator, which owns the `role` and `aria-orientation` semantics; this file owns exactly two things — the `bg-border` colour and the axis geometry.",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -6023,10 +5707,7 @@
       "title": "Series Table",
       "type": "registry:ui",
       "summary": "The data behind a chart, as a real `<table>`.",
-      "topics": [
-        "Why every chart in this package ships one",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "chart"
@@ -6096,9 +5777,7 @@
       "title": "Settings Template",
       "type": "registry:block",
       "summary": "Account / app settings surface. Topbar + left tab-rail (sections) + main content area (rendered section). Server-friendly; the active section is driven by the consumer's routing (each section is a route).",
-      "topics": [
-        "MIN_VIEWPORT — 480"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "template"
@@ -6158,10 +5837,7 @@
       "title": "Share Buttons",
       "type": "registry:ui",
       "summary": "A compact \"share this page\" cluster: one ghost icon-button per social network plus a copy-link affordance. Each share button opens its network's prefilled share URL in a new tab; the copy button writes the URL to the clipboard and flips its icon +…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "pattern"
@@ -6227,10 +5903,7 @@
       "title": "Sheet",
       "type": "registry:ui",
       "summary": "A modal panel anchored to one edge of the viewport — a nav drawer, a filter panel, a settings pane. Base UI's Dialog owns the open state, the focus trap, page inerting, Escape and outside-press dismissal; we own the scrim, the slide and the side geometry.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -6281,11 +5954,7 @@
       "title": "Shimmer Button",
       "type": "registry:ui",
       "summary": "A dark pill CTA with a conic-gradient spark that sweeps around its edge: a rotating cone inside a sliding container, masked by an inset panel that redraws the fill and leaves only the rim glowing.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "It is deliberately dark, on the scrim tokens"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -6333,10 +6002,7 @@
       "title": "Sign In Form",
       "type": "registry:ui",
       "summary": "Canonical sign-in pattern: title + email + password + submit. Composition of the auth primitive set (Form / Field / Input / Button + Typography for the title). The block owns *structure*; consumers wire `action` / `onSubmit` and pass the brand specifics…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "pattern"
@@ -6481,11 +6147,7 @@
       "title": "Skeleton",
       "type": "registry:ui",
       "summary": "Loading-state placeholder. ONE component, many shapes — the `variant` prop picks the silhouette of the resting component being loaded so the page layout doesn't jump when real data arrives.",
-      "topics": [
-        "Why one component, not paired `<XSkeleton>` per primitive",
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
@@ -6585,10 +6247,7 @@
       "title": "Skip Link",
       "type": "registry:ui",
       "summary": "The \"jump to main content\" link that satisfies WCAG 2.4.1 (Bypass Blocks): an `sr-only` anchor that pops into the top-left corner the moment it takes focus, letting a keyboard user step past the header and nav in one Tab.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "a11y",
         "primitive"
@@ -6637,12 +6296,7 @@
       "title": "Slider",
       "type": "registry:ui",
       "summary": "Range / value-picker primitive on top of @base-ui/react/slider. Compositional API: Slider.Root + Track + Indicator + Thumb. Re-exports the DS-styled surface (rail, fill, thumb) without owning state — Base UI handles keyboard (Arrow / Home / End / PageUp /…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Target size (SC 2.5.8, AA)",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -6695,10 +6349,7 @@
       "title": "Sparkline",
       "type": "registry:ui",
       "summary": "A trend in the width of a table cell. The densest thing in the package: it exists so a `MetricTable` row can show *shape* without spending a chart's worth of pixels, which is the whole roic.ai lesson — one row that reads a decade beats one chart that reads…",
-      "topics": [
-        "Colour is never the only signal",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "chart"
@@ -6771,11 +6422,7 @@
       "title": "Spotlight",
       "type": "registry:ui",
       "summary": "The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.",
-      "topics": [
-        "Anatomy",
-        "Motion",
-        "Types"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -6828,11 +6475,7 @@
       "title": "Stack",
       "type": "registry:ui",
       "summary": "Flex layout whose gap comes from the DS six-step spacing scale, not from a number at the call site (LAYOUT_PHILOSOPHY.md §3). `Stack` stacks children vertically; `Cluster` is the horizontal, wrapping form for chip, tag and button rows.",
-      "topics": [
-        "Anatomy",
-        "Two things worth knowing",
-        "The gap scale"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -6881,12 +6524,7 @@
       "title": "Stars Background",
       "type": "registry:ui",
       "summary": "Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.",
-      "topics": [
-        "Anatomy",
-        "Motion — three different mechanisms, three different still states",
-        "Per-instance SVG ids",
-        "Known edges"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -6904,7 +6542,9 @@
       "states": [],
       "a11y": {
         "roles": [],
-        "aria": [],
+        "aria": [
+          "aria-hidden"
+        ],
         "motion": {
           "driver": "both",
           "declaresPreference": true,
@@ -6937,11 +6577,7 @@
       "title": "Stat Card",
       "type": "registry:ui",
       "summary": "A single labeled metric — the building block of dashboards, scorecards, and \"key results\" rows. Renders: label / value / optional delta / optional icon. The `tone` variant pairs the delta accent with one of four semantic colors (default / success / warning…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Contrast — delta text on `--background` (measured in-browser)"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "pattern"
@@ -7045,11 +6681,7 @@
       "title": "Stat Strip",
       "type": "registry:ui",
       "summary": "The measurement strip: a dense row of labelled numbers, each with an optional note and an optional change. It appeared in **all six** of the artifacts catalogued for phase 10, hand-rolled four separate times, and it is the smallest surface where the…",
-      "topics": [
-        "Why it is not `StatGroup` with tighter padding",
-        "The three-state null, which is the entire reason this exists",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "primitive"
@@ -7140,9 +6772,7 @@
       "title": "Stats Template",
       "type": "registry:block",
       "summary": "Public-facing metrics page. Topbar + header (title + lead) + SectionBoundary(StatGroup) + SectionBoundary(arbitrary chart/table content) + optional methodology footnote + Footer.",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "template"
@@ -7204,13 +6834,7 @@
       "title": "Sunny Background",
       "type": "registry:ui",
       "summary": "A daylight sky you drop behind hero or section content: a two-stop sky gradient with a haze wash, a sun disc (corona → glow → overexposed core → slowly rotating conic rays → four lens flares), a golden-hour horizon band and a depth vignette.",
-      "topics": [
-        "Provenance",
-        "Anatomy",
-        "Motion",
-        "The instance id does not scope anything",
-        "Colour defaults are literals, by design"
-      ],
+      "topics": [],
       "categories": [
         "decorative",
         "effect"
@@ -7261,13 +6885,7 @@
       "title": "Switch",
       "type": "registry:ui",
       "summary": "Binary on/off control with immediate effect (no submit step) — the distinction from Checkbox, which collects a value for a form. Built on @base-ui/react/switch: Base UI owns `role=\"switch\"`, `aria-checked`, Space/Enter activation and the…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Target size (SC 2.5.8, AA)",
-        "Contrast (verified by token math)",
-        "API parity"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -7319,11 +6937,7 @@
       "title": "Tabs",
       "type": "registry:ui",
       "summary": "A tab bar and its panels. Wraps @base-ui/react/tabs: Base UI owns which tab is selected, arrow-key roving focus and the tablist/tab/tabpanel ARIA; we own the muted pill list and the raised face of the selected tab.",
-      "topics": [
-        "Anatomy",
-        "No overflow strategy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "primitive"
@@ -7373,9 +6987,7 @@
       "title": "Tag Template",
       "type": "registry:block",
       "summary": "Tag-filtered article index. Used by `/tags/[slug]` routes on a blog to show \"all articles tagged #typescript\" etc. Shows a header (\"Tagged: #typescript\") then an ArticleListGrid of matching posts.",
-      "topics": [
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "template"
@@ -7436,10 +7048,7 @@
       "title": "Tag",
       "type": "registry:ui",
       "summary": "A tiny inline anchor used to surface taxonomy (rule categories, plugin tags, article topics). Two exports because tag chips almost always appear in a wrapping cluster — `TagList` ships the canonical `<ul>`-of-`<li>` semantics so consumers don't reinvent…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "primitive"
@@ -7490,9 +7099,7 @@
       "title": "Testimonial",
       "type": "registry:ui",
       "summary": "Quote + attribution surfaces. Single Testimonial cells render an blockquote with an author avatar; TestimonialGrid lays them out in a 1-3 column grid. Server components.",
-      "topics": [
-        "Anatomy"
-      ],
+      "topics": [],
       "categories": [
         "marketing",
         "pattern"
@@ -7546,11 +7153,7 @@
       "title": "Textarea",
       "type": "registry:ui",
       "summary": "Multi-line text input. A pure surface primitive with no controlled-state machinery: the native `<textarea>` already owns selection, IME, undo/redo, `onChange` etc., so we add structure (size + tone) without wrapping a single native behaviour. Server…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Contrast (verified by token math)"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -7651,12 +7254,7 @@
       "title": "Theme Switcher",
       "type": "registry:ui",
       "summary": "The UI half of the two-axis theme contract (`styles/index.css`, `src/lib/use-theme.ts`). Two controls, because the two axes are genuinely different questions and a single control that tries to serve both ends up as a four-item list called \"Light / Dark /…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320",
-        "Why no colour swatches",
-        "Out of scope"
-      ],
+      "topics": [],
       "categories": [
         "foundation",
         "primitive"
@@ -7893,13 +7491,7 @@
       "title": "Time Series",
       "type": "registry:ui",
       "summary": "One metric over time, with the actions that moved it drawn ON the curve.",
-      "topics": [
-        "The annotation is the point",
-        "The crosshair works from the keyboard",
-        "There is no floating tooltip, and that is the design",
-        "Legibility at 320 — why the x labels are HTML and the y labels are not",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "data",
         "chart"
@@ -7982,10 +7574,7 @@
       "title": "Toast",
       "type": "registry:ui",
       "summary": "Transient, portal-mounted notification. Wraps `@base-ui/react/toast` (Provider, Portal, Viewport, Root, Title, Description, Close) and overlays the Interlace tone system on top — four semantic tones (`info`, `success`, `warning`, `danger`) that each render…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "feedback",
         "primitive"
@@ -8042,10 +7631,7 @@
       "title": "Toc",
       "type": "registry:ui",
       "summary": "The in-page Table of Contents. Long-form pages (docs, MDX articles, rule reference) need a persistent navigation rail that mirrors the heading outline so a reader can both orient themselves and jump. On wide viewports this lives in a right-hand rail…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 480"
-      ],
+      "topics": [],
       "categories": [
         "blog",
         "primitive"
@@ -8100,10 +7686,7 @@
       "title": "Toggle",
       "type": "registry:ui",
       "summary": "A two-state button (pressed / not-pressed) and a grouped form thereof (mutually-exclusive or multi-select). Wraps @base-ui/react/toggle and @base-ui/react/toggle-group; we own the surface (size, variant, focus ring) and Base UI owns the pressed-state…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "form",
         "primitive"
@@ -8159,11 +7742,7 @@
       "title": "Tooltip",
       "type": "registry:ui",
       "summary": "A short label that appears beside its trigger on hover or on keyboard focus. Wraps @base-ui/react/tooltip and adds the one thing Base UI 1.6 does not emit: the `role=\"tooltip\"` / `aria-describedby` pair.",
-      "topics": [
-        "Anatomy",
-        "One consequence of that shape, and how `delay` survives it",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "overlay",
         "primitive"
@@ -8217,10 +7796,7 @@
       "title": "Topbar",
       "type": "registry:ui",
       "summary": "Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "navigation",
         "pattern"
@@ -8407,10 +7983,7 @@
       "title": "Visually Hidden",
       "type": "registry:ui",
       "summary": "A `<span>` that is invisible on screen but still read by assistive tech — the component form of the `sr-only` utility.",
-      "topics": [
-        "Anatomy",
-        "MIN_VIEWPORT — 320"
-      ],
+      "topics": [],
       "categories": [
         "a11y",
         "primitive"

@@ -50,6 +50,36 @@
  * Under `reduce` the clouds stay on screen, scaled and still (`transform:
  * scale(...)` replaces the animation), because the atmosphere is the point and
  * the drift is decoration on top of it.
+ *
+ * ## Why `bodyColor` is NOT `currentColor`
+ *
+ * It was `var(--cloud-body-color, currentColor)`, and since the DS declares no
+ * `--cloud-body-color`, `currentColor` WAS the shipped default: the cloud body
+ * painted in whatever text colour the overlay happened to inherit. Over a dark
+ * hero that is near-white and looks deliberate, which is why it survived
+ * review; over a light hero it is `--foreground` (`#0d0b09`) and the field
+ * renders as a near-black smear. Only a browser shows it — jsdom has no
+ * cascade and the token is syntactically valid either way.
+ *
+ * `currentColor` is a good default for a STROKE or a glyph: a line or an icon
+ * is a mark on top of text and should read as part of it. A volumetric fill is
+ * not a mark, it is a material — it stands in for the light scattering off
+ * water vapour — and no material's colour is a function of the paragraph it
+ * happens to sit near. Inheriting there means the fill inverts with the theme
+ * while the thing it depicts does not.
+ *
+ * The default is now `var(--scrim-foreground)`: the DS's "light by intent, not
+ * by mode" token, `#ffffff` in BOTH schemes (its partner `--scrim` is the
+ * matching always-dark one). A cloud is lit from above in daylight and lit
+ * from below at night; in neither case does it invert to near-black. The
+ * underside and shadow layers keep reading `--muted-foreground`, which DOES
+ * invert — that is correct, because those are shading, and shading is relative
+ * to the surface behind it.
+ *
+ * Note the failure mode if a fork ships neither property: `var()` with no
+ * usable substitution makes the whole `background` declaration invalid at
+ * computed-value time, so the cloud paints nothing. Invisible beats a black
+ * smear.
  */
 
 import { ComponentPropsWithoutRef, useEffect, useId, useState } from "react";
@@ -114,9 +144,14 @@ interface CloudParticlesProps extends ComponentPropsWithoutRef<"div"> {
   maxScale?: number;
   /**
    * Main cloud-body color. Any CSS color is valid; defaults resolve through a
-   * CSS custom property so the design system owns the palette. Use
-   * `currentColor` to inherit from the parent's text color.
-   * @default "var(--cloud-body-color, currentColor)"
+   * CSS custom property so the design system owns the palette.
+   *
+   * Defaults to `--scrim-foreground` — white in both schemes — because a
+   * volumetric fill is a material, not a mark, and must not invert with the
+   * surrounding text colour. Pass `currentColor` explicitly if you genuinely
+   * want the clouds to track the inherited foreground; see the file header for
+   * why that is the wrong default.
+   * @default "var(--cloud-body-color, var(--scrim-foreground))"
    */
   bodyColor?: string;
   /**
@@ -198,7 +233,7 @@ export function CloudParticles({
   maxSpeed = 250,
   minScale = 0.5,
   maxScale = 0.9,
-  bodyColor = "var(--cloud-body-color, currentColor)",
+  bodyColor = "var(--cloud-body-color, var(--scrim-foreground))",
   undersideColor = "var(--cloud-underside-color, var(--muted-foreground, currentColor))",
   shadowColor = "var(--cloud-shadow-color, var(--muted-foreground, currentColor))",
   undersideOpacity = 0.08,
