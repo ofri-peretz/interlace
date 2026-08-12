@@ -30,7 +30,7 @@
     "minViewport": 320,
     "loading": false,
     "version": "1.1.0",
-    "since": "1.0.0"
+    "since": "1.1.0"
   },
   "docs": "## @interlace/grade-badge\n\nInstalled to `components/ui/grade-badge.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/grade-badge';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/grade-badge\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

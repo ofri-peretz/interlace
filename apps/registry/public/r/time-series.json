@@ -37,7 +37,7 @@
     "minViewport": 320,
     "loading": true,
     "version": "1.2.0",
-    "since": "1.0.0"
+    "since": "1.1.0"
   },
   "docs": "## @interlace/time-series\n\nInstalled to `components/ui/charts/time-series.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/charts/time-series';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/time-series\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

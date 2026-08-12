@@ -28,7 +28,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.0.0",
-    "since": "1.0.0"
+    "since": "1.1.0"
   },
   "docs": "## @interlace/brand-logo\n\nInstalled to `components/ui/patterns/brand-logo.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/brand-logo';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/brand-logo\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

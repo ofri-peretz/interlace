@@ -32,7 +32,7 @@
     "minViewport": 320,
     "loading": false,
     "version": "1.0.0",
-    "since": "1.0.0"
+    "since": "1.1.0"
   },
   "docs": "## @interlace/command-palette\n\nInstalled to `components/ui/command-palette.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/command-palette';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/command-palette\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }
