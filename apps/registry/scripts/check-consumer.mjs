@@ -116,7 +116,16 @@ const main = async () => {
   let files = [];
   for (const dir of candidates) {
     try {
-      files = (await readdir(dir)).filter((f) => /\.tsx?$/.test(f));
+      // RECURSIVE, and that is not a nicety. The registry nests its
+      // decorative and pattern tiers (`aceternity/`, `magicui/`,
+      // `patterns/`) to preserve provenance, so a top-level-only scan misses
+      // them — measured: 23 of 50 items on the first consumer we ran this
+      // against. It reported "29 installed" over a tree of 52 files and
+      // looked entirely healthy, which is the exact false pass this file's
+      // header warns about, produced by the checker itself.
+      files = (await readdir(dir, { recursive: true })).filter((f) =>
+        /\.tsx?$/.test(f),
+      );
       uiDir = dir;
       break;
     } catch {
@@ -147,18 +156,42 @@ const main = async () => {
     }),
   );
 
+  /**
+   * Files an item ships ALONGSIDE its own — `button-variants.ts`,
+   * `skeleton-variants.ts`, the model modules. `stampVersionBanner` puts the
+   * banner on the item's own file only, deliberately: four banners in one
+   * install is noise the consumer reads past every time they open it.
+   *
+   * So a companion has no banner BY DESIGN, and reporting it as `unversioned`
+   * would be a false alarm that trains the reader to ignore the real ones.
+   */
+  const companions = new Set();
+  for (const { item } of versions.values()) {
+    for (const f of (item.files ?? []).slice(1)) {
+      companions.add(path.basename(f.target));
+    }
+  }
+
   const rows = [];
   for (const file of files.sort()) {
-    const name = file.replace(/\.tsx?$/, '');
+    const base = path.basename(file);
+    const name = base.replace(/\.tsx?$/, '');
     const source = await readFile(path.join(uiDir, file), 'utf8');
     const known = versions.get(name);
     if (!known) {
-      rows.push({ file, state: 'local' });
+      rows.push({ file, state: companions.has(base) ? 'companion' : 'local' });
       continue;
     }
     const banner = BANNER_RE.exec(source);
     if (!banner) {
-      rows.push({ file, state: 'unknown', latest: known.version });
+      // A companion that is ALSO published as an item of its own (so `known`
+      // resolved) still arrives without a banner when it came in as somebody
+      // else's companion. Same reason, same non-alarm.
+      rows.push({
+        file,
+        state: companions.has(base) ? 'companion' : 'unknown',
+        latest: known.version,
+      });
       continue;
     }
     const held = banner[2];
@@ -199,18 +232,20 @@ const main = async () => {
     const count = (s) => rows.filter((r) => r.state === s).length;
     for (const r of rows) {
       if (r.state === 'current') continue;
-      const label = { behind: 'BEHIND ', unknown: 'UNKNOWN', local: 'local  ' }[r.state];
+      const label = { behind: 'BEHIND ', unknown: 'UNKNOWN', local: 'local  ', companion: 'part of' }[r.state];
       const detail =
         r.state === 'behind'
           ? `v${r.held} → v${r.latest}   ${origin}/c/${r.file.replace(/\.tsx?$/, '')}#history`
           : r.state === 'unknown'
             ? `no version banner — registry is at v${r.latest}`
-            : 'not a registry item';
+            : r.state === 'companion'
+              ? 'shipped as part of another item — no banner by design'
+              : 'not a registry item';
       console.log(`  ${label}  ${r.file.padEnd(38)} ${detail}`);
     }
     console.log(
       `\n${rows.length} installed · ${count('current')} current · ${count('behind')} behind · ` +
-        `${count('unknown')} unversioned · ${count('local')} local`,
+        `${count('unknown')} unversioned · ${count('companion')} companion · ${count('local')} local`,
     );
     if (count('unknown')) {
       console.log(
