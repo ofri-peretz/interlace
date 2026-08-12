@@ -1,5 +1,23 @@
 # @interlace/ui
 
+<!--
+  Changesets prepends each new `## x.y.z` section directly under this title, so
+  the paragraphs below get pushed under the newest release on every version
+  bump. Move them back when you notice; it is cosmetic. It used to be fatal:
+  `Components:` is the last field of an entry and the parser let fields wrap,
+  so it swallowed this prose and reported it as an unknown registry item.
+  `parseEntryBody` now ends every field except `Migration:` at a blank line.
+-->
+
+Release notes for the Interlace design system. Rendered publicly at
+<https://ds.interlace.tools/changelog> — that page is generated from this file
+plus the pending `.changeset/*.md` entries, so this is the single source.
+
+`@interlace/ui` is **not published to npm**. It is distributed as copied
+source through the shadcn registry at ds.interlace.tools, which means there is
+no `npm update` and no version range: the changelog _is_ the upgrade path. See
+`docs/philosophies/VERSIONING_PHILOSOPHY.md`.
+
 ## 1.1.0
 
 ### Minor Changes
@@ -268,15 +286,6 @@ removed in 2.0.0`, and removal will land as a breaking change with a migration
   Harbor now declares its dark palette for `[data-theme='harbor'] .dark` and `[data-theme='harbor'] [data-scheme='dark']` as well as the same-element forms. The bare `.dark` block is unscoped, so it means "Interlace dark": it re-declares every `--interlace-*` literal on whatever element carries it, and `[data-theme='harbor'].dark` needs both on the same element. A `<div class="dark">` anywhere inside a Harbor page therefore repainted that subtree in the default brand. `theme-contract-lock` now requires the descendant forms from every registered theme.
 
   Components: theme-switcher
-
-Release notes for the Interlace design system. Rendered publicly at
-<https://ds.interlace.tools/changelog> — that page is generated from this file
-plus the pending `.changeset/*.md` entries, so this is the single source.
-
-`@interlace/ui` is **not published to npm**. It is distributed as copied
-source through the shadcn registry at ds.interlace.tools, which means there is
-no `npm update` and no version range: the changelog _is_ the upgrade path. See
-`docs/philosophies/VERSIONING_PHILOSOPHY.md`.
 
 ## 1.0.0
 
