@@ -150,3 +150,8 @@ benchmarks/results/ilb-oxlint-parity/.parity.oxlintrc.json
 packages/*/src/**/*.js
 packages/*/src/**/*.js.map
 packages/*/src/**/*.d.ts
+
+# Agent scratch space, including nested git worktrees created by background
+# tasks. Never committable: a worktree here is a second checkout of this repo,
+# which git stages as an embedded repository and eslint lints as a second copy.
+.claude/
