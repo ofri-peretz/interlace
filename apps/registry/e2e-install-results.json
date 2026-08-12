@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-12T03:52:21.876Z",
+  "generatedAt": "2026-08-12T03:58:25.162Z",
   "registryUrl": "(next start + recording proxy)",
   "consumerProfile": "pre-existing components.json — `shadcn init` is NOT run, so lib/utils.ts must arrive from the `cn` item",
   "itemCount": 140,
   "steps": {
     "createNextApp": {
       "ok": true,
-      "log": "Creating a new Next.js app in \u001b[32m/private/var/folders/sx/x7lz_ynn1rl343rtf7wq7vmc0000gp/T/interlace-e2e-9XRECJ/app\u001b[39m.\n\n\u001b[1mUsing npm.\u001b[22m\n\nInitializing project with template: app-tw \n\n\nInstalling dependencies:\n- \u001b[36mnext\u001b[39m\n- \u001b[36mreact\u001b[39m\n- \u001b[36mreact-dom\u001b[39m\n\nInstalling devDependencies:\n- \u001b[36m@tailwindcss/postcss\u001b[39m\n- \u001b[36m@types/node\u001b[39m\n- \u001b[36m@types/react\u001b[39m\n- \u001b[36m@types/react-dom\u001b[39m\n- \u001b[36mtailwindcss\u001b[39m\n- \u001b[36mtypescript\u001b[39m\n\n\nadded 47 packages, and audited 48 packages in 9s\n\n11 packages are looking for funding\n  run `npm fund` for details\n\nfound 0 vulnerabilities\n\nGenerating route types...\n✓ Types generated successfully\n\nInitialized a git repository.\n\n\u001b[32mSuccess!\u001b[39m Created app at /private/var/folders/sx/x7lz_ynn1rl343rtf7wq7vmc0000gp/T/interlace-e2e-9XRECJ/app\n\n"
+      "log": "Creating a new Next.js app in \u001b[32m/private/var/folders/sx/x7lz_ynn1rl343rtf7wq7vmc0000gp/T/interlace-e2e-7cCbeu/app\u001b[39m.\n\n\u001b[1mUsing npm.\u001b[22m\n\nInitializing project with template: app-tw \n\n\nInstalling dependencies:\n- \u001b[36mnext\u001b[39m\n- \u001b[36mreact\u001b[39m\n- \u001b[36mreact-dom\u001b[39m\n\nInstalling devDependencies:\n- \u001b[36m@tailwindcss/postcss\u001b[39m\n- \u001b[36m@types/node\u001b[39m\n- \u001b[36m@types/react\u001b[39m\n- \u001b[36m@types/react-dom\u001b[39m\n- \u001b[36mtailwindcss\u001b[39m\n- \u001b[36mtypescript\u001b[39m\n\n\nadded 47 packages, and audited 48 packages in 13s\n\n11 packages are looking for funding\n  run `npm fund` for details\n\nfound 0 vulnerabilities\n\nGenerating route types...\n✓ Types generated successfully\n\nInitialized a git repository.\n\n\u001b[32mSuccess!\u001b[39m Created app at /private/var/folders/sx/x7lz_ynn1rl343rtf7wq7vmc0000gp/T/interlace-e2e-7cCbeu/app\n\n"
     },
     "consumerProfile": {
       "ok": true,
@@ -58,7 +58,7 @@
     },
     "build": {
       "ok": true,
-      "log": "\n> app@0.1.0 build\n> next build\n\n▲ Next.js 16.3.0 (Turbopack)\n✓ Running next.config.ts took 21ms\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 2.6s\n  Running TypeScript ...\n  Finished TypeScript in 5.9s ...\n  Collecting page data using 5 workers ...\n  Generating static pages using 5 workers (0/4) ...\n  Generating static pages using 5 workers (1/4) \r\n  Generating static pages using 5 workers (2/4) \r\n  Generating static pages using 5 workers (3/4) \r\n✓ Generating static pages using 5 workers (4/4) in 2.3s\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n└ ○ /_not-found\n\n\n○  (Static)  prerendered as static content\n\n"
+      "log": "\n> app@0.1.0 build\n> next build\n\n▲ Next.js 16.3.0 (Turbopack)\n✓ Running next.config.ts took 23ms\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 2.6s\n  Running TypeScript ...\n  Finished TypeScript in 4.5s ...\n  Collecting page data using 5 workers ...\n  Generating static pages using 5 workers (0/4) ...\n  Generating static pages using 5 workers (1/4) \r\n  Generating static pages using 5 workers (2/4) \r\n  Generating static pages using 5 workers (3/4) \r\n✓ Generating static pages using 5 workers (4/4) in 549ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n└ ○ /_not-found\n\n\n○  (Static)  prerendered as static content\n\n"
     }
   },
   "items": {
@@ -623,6 +623,6 @@
       "files": 1
     }
   },
-  "durationSeconds": 70,
+  "durationSeconds": 78,
   "ok": true
 }

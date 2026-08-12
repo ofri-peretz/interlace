@@ -45,15 +45,13 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 import { HOMEPAGE } from '../registry.config.mjs';
-import { docBlocks, headerFrom, stripJsdoc } from '../blurb.mjs';
+import { docBlocks, headerFrom } from '../blurb.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
 const REPO_ROOT = path.resolve(REGISTRY_ROOT, '..', '..');
 const R_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const PUBLIC_DIR = path.join(REGISTRY_ROOT, 'public');
-const DATA_DIR = path.join(PUBLIC_DIR, 'data');
-const SKILLS_DIR = path.join(PUBLIC_DIR, '.well-known/agent-skills');
 
 const CHECK_ONLY = process.argv.includes('--check');
 
@@ -82,9 +80,6 @@ const CATEGORY_TITLE = new Map(
 // `../blurb.mjs` when `build-registry.mjs` started deriving item `description`
 // from the same prose. Two copies of "what is this component for" is one copy
 // too many — see that file's header.
-
-/** Just the prose of every doc block — the indexer's corpus. */
-const docComments = (src) => docBlocks(src).map((b) => b.text);
 
 /** `## Heading` lines from the source header — the author's own topic list. */
 const topicsFrom = (header) =>
@@ -164,11 +159,26 @@ const statesFrom = (src) => {
     const values = [...body.matchAll(/'([a-z][a-z0-9-]*)'/g)].map(([, v]) => v);
     if (values.length > 1) unions.push({ name, values });
   }
-  for (const [, name, body] of src.matchAll(
-    /\btype\s+(\w+)\s*=\s*((?:\s*\|?\s*'[a-z][a-z0-9-]*'\s*)+);/g,
-  )) {
-    const values = [...body.matchAll(/'([a-z][a-z0-9-]*)'/g)].map(([, v]) => v);
-    if (values.length > 1) unions.push({ name, values });
+  // Grab the whole right-hand side, then validate the members by SPLITTING.
+  //
+  // The previous shape was
+  // `/\btype\s+(\w+)\s*=\s*((?:\s*\|?\s*'…'\s*)+);/` — a group ending in
+  // `\s*` repeated by `+`, with another `\s*` at its start. Two adjacent
+  // optional whitespace runs inside a repeated group is the textbook
+  // catastrophic-backtracking shape: on a near-miss the engine has
+  // exponentially many ways to divide the same spaces between them. CodeQL
+  // flagged it `js/redos` at HIGH, and it was right. The input here is our own
+  // source, so it was never reachable by an attacker — but this file is a
+  // build script we ship the output of, and "the input happens to be trusted"
+  // is a property of today's caller, not of the regex.
+  //
+  // `[^;\n]*` is linear. Splitting on `|` and testing each member with an
+  // anchored, quantifier-free pattern is linear. Same result, no backtracking.
+  for (const [, name, body] of src.matchAll(/\btype\s+(\w+)\s*=\s*([^;\n]*);/g)) {
+    const members = body.split('|').map((m) => m.trim());
+    if (members.length < 2) continue;
+    if (!members.every((m) => /^'[a-z][a-z0-9-]*'$/.test(m))) continue;
+    unions.push({ name, values: members.map((m) => m.slice(1, -1)) });
   }
   // De-dupe on name; a re-exported alias would otherwise list twice.
   const seen = new Set();

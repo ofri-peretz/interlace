@@ -273,9 +273,23 @@ const main = async () => {
   const index = JSON.parse(
     await readFile(path.join(PUBLIC_DIR, 'r', 'index.json'), 'utf8'),
   );
+  // Every name here becomes BOTH a URL path (`/r/<name>.json`) and a file path
+  // in the scratch tree, and it arrives from a JSON file on disk — so this
+  // validation is not ceremony. CodeQL flags the dataflow as
+  // `js/file-access-to-http` ("outbound network request depends on file data")
+  // and the honest response is a guard, not a suppression: a generated
+  // `index.json` with a `..` or a slash in a name would escape both the URL
+  // and the directory. The registry's own naming rule is this exact charset.
+  const NAME_RE = /^[a-z][a-z0-9-]*$/;
   const itemNames = index.items
     .map((i) => i.name)
     .filter((n) => !ONLY || ONLY.includes(n));
+  const badNames = itemNames.filter((n) => !NAME_RE.test(n));
+  if (badNames.length) {
+    throw new Error(
+      `registry index contains item name(s) outside [a-z0-9-]: ${badNames.join(', ')}`,
+    );
+  }
 
   const scratchRoot = await mkdtemp(path.join(tmpdir(), 'interlace-e2e-'));
   const app = path.join(scratchRoot, 'app');
