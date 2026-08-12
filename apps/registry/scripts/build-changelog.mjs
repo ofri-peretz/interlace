@@ -79,6 +79,22 @@ export const parseEntryBody = (body, bump) => {
       fields[current] = [line.trim().slice(m[0].length)];
       continue;
     }
+    // A BLANK LINE closes every field except `Migration:`.
+    //
+    // Wrapping was written for `Migration:`, which is usually three paragraphs
+    // of instructions. `Components:` inherited it, and `Components:` is a
+    // one-line comma list — so when it was the LAST field in an entry it kept
+    // swallowing whatever followed. In the released `CHANGELOG.md` that is the
+    // file's own preamble, because changesets prepends each new version ABOVE
+    // it: the parser reported `"Release notes for the Interlace design
+    // system…"` as an unknown registry item and failed the build.
+    //
+    // Only `Migration:` may cross a blank line. Everything else ends where the
+    // paragraph does, which is also how a reader parses it.
+    if (current && !line.trim() && current !== 'migration') {
+      current = null;
+      continue;
+    }
     if (current) fields[current].push(line.trim());
     else summary.push(line.trim());
   }
