@@ -442,6 +442,17 @@ const main = async () => {
     // written against: branch `stat-strip` + production `data-state` is a tree
     // that does not compile, from an install that says it succeeded.
     const probe = itemNames.includes('stat-strip') ? 'stat-strip' : itemNames[0];
+    // Re-assert on the value that actually reaches the URL. The NAME_RE check
+    // above already throws on a bad index, but it tests a DERIVED array
+    // (`badNames`), so nothing breaks the dataflow from `index.json` to this
+    // fetch — which is why `js/file-access-to-http` stayed open on this line
+    // after that guard landed. Testing `probe` itself is both the honest place
+    // for the check and the one a static analyser can follow.
+    if (!NAME_RE.test(probe)) {
+      throw new Error(
+        `refusing to build a URL from an item name outside [a-z0-9-]: ${probe}`,
+      );
+    }
     const served = await (await fetch(`${baseUrl}/r/${probe}.json`)).json();
     const leakedOrigin = (served.registryDependencies ?? []).some((d) =>
       d.startsWith(PROD_ORIGIN),
