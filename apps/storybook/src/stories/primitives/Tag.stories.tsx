@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Tag, TagList } from '@interlace/ui/tag';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/Tag',
@@ -90,6 +90,16 @@ export const Default: Story = {
   ),
 };
 
+/**
+ * The skeleton the registry embeds as this component's loading demo, in the
+ * same meta row as `Default` so the reserved shape can be compared against
+ * the resolved chip without switching stories.
+ */
+export const Loading: Story = {
+  ...Default,
+  args: { loading: true, children: '' },
+};
+
 export const Variants: Story = {
   render: () => (
     <TagList
@@ -108,7 +118,7 @@ export const List: Story = {
 
 export const Dark: Story = {
   ...List,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Container } from '@interlace/ui/container';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Container> = {
   title: 'Primitives/Container',
@@ -53,7 +53,7 @@ export default meta;
 type Story = StoryObj<typeof Container>;
 
 const Sample = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-dashed border-fd-border bg-fd-card/40 p-6 text-sm text-fd-muted-foreground">
+  <div className="rounded-md border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
     {label} — children fit inside the configured max-width with responsive horizontal padding.
   </div>
 );
@@ -108,7 +108,7 @@ export const AllSizes: Story = {
 
 export const Dark: Story = {
   ...Content,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

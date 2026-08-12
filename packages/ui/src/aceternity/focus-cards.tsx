@@ -1,10 +1,63 @@
-// Focus Cards — a grid of cards where pointing-at or focusing one card
-// dims and softly blurs the rest, drawing the eye to the active card.
-// Re-authored to the Interlace floor from the Aceternity UI "Focus Cards"
-// pattern (https://ui.aceternity.com/components/focus-cards): focus (not
-// just hover) now drives the active state, the active card is controllable,
-// content is composed via slots, and all color comes from design tokens.
 "use client";
+
+/**
+ * @interlace/ui — FocusCards + FocusCard
+ *
+ * A grid that spotlights one card at a time: pointing at or keyboard-focusing
+ * a card keeps it sharp while every sibling dims and blurs. Real list
+ * semantics — `ul` › `li` › `article` — and a controlled or uncontrolled
+ * active index.
+ *
+ * The media is whatever node you pass: image, `next/image`, video, canvas.
+ * Nothing here assumes an `<img>`.
+ *
+ * ## Provenance
+ *
+ * Our reimplementation of the Aceternity UI "Focus Cards" pattern. What is
+ * ours: focus, not just hover, drives the active state (so the grid works from
+ * the keyboard); the active index is controllable and reports why it changed;
+ * the card is a `renderItem` + `caption` composition rather than a fixed
+ * `{src, title}` shape; and all colour comes from tokens.
+ *
+ * ## Anatomy
+ *
+ *   FocusCards                       (ul — data-slot="focus-cards")
+ *     └─ li                          (data-slot="focus-cards-item",
+ *                                     group/focus-item, data-active/data-dimmed,
+ *                                     owns the pointer + focus handlers)
+ *         └─ FocusCard               (article — data-slot="focus-card")
+ *             ├─ div                 (data-slot="focus-card-media")
+ *             └─ div                 (data-slot="focus-card-caption")
+ *
+ * The active/dim state travels down as `group-data-[active]/focus-item` and
+ * `group-data-[dimmed]/focus-item` CSS, so `renderItem` never forwards a prop
+ * for it. `FocusCard`'s own `active` / `dimmed` props exist only for composing
+ * a card outside the grid.
+ *
+ * ## Motion
+ *
+ * Tailwind transitions, JS-gated. `FocusCard` calls `useReducedMotion()` and
+ * omits three class groups when it returns true: the
+ * `transition-[filter,transform,opacity] duration-300` on the card, the
+ * `scale-[0.98] blur-sm` / `scale-100 blur-none` pair, and the caption's
+ * `transition-opacity`. What survives under `prefers-reduced-motion: reduce`
+ * is the part that carries the meaning — `opacity-60` on the receding cards
+ * and `opacity-100` on the active one, applied instantly, plus the caption
+ * appearing without a fade. The grid stays fully operable; no motion is
+ * required to use it.
+ *
+ * `FocusCards` itself does not read the preference — the gate lives entirely
+ * in `FocusCard`, so a consumer who renders something else from `renderItem`
+ * owns that contract themselves.
+ *
+ * ## The caption scrim is dark in both themes, on purpose
+ *
+ * `--focus-card-scrim` defaults to `black/70%` and
+ * `--focus-card-caption-color` to `white`, resolved through the Tailwind theme
+ * rather than as literals. A theme-relative token would flip to light in dark
+ * mode and fail contrast against the light caption text sitting on arbitrary
+ * media. Both are overridable per card via `[--focus-card-scrim:…]`.
+ */
 
 import {
   type ComponentPropsWithoutRef,

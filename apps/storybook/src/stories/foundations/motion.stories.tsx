@@ -9,7 +9,7 @@ import { Grid, GridItem } from '@interlace/ui/grid';
 import { Box } from '@interlace/ui/box';
 import { useReducedMotion } from '@interlace/ui/use-reduced-motion';
 
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 /**
  * Motion — duration + reduced-motion specimen.
@@ -335,7 +335,7 @@ export const Default: Story = {};
 export const Variants: Story = {};
 
 export const Dark: Story = {
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 /**

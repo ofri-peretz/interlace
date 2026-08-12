@@ -1,7 +1,93 @@
 "use client";
+
+/**
+ * @interlace/ui — StarsBackground, ShootingStars, Meteors
+ *
+ * Three night-sky layers you stack behind hero content: `StarsBackground`, a
+ * canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at
+ * a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.
+ *
+ * All three are `absolute inset-0` overlays and are meant to be composed —
+ * `patterns/hero-cosmic.tsx` renders all three at once.
+ *
+ * Our reimplementation of the Aceternity UI starfield family. What is ours:
+ * an `IntersectionObserver` on each layer so an off-screen hero stops
+ * painting, deterministic index-seeded meteor placement (so SSR and the client
+ * agree), and the reduced-motion contract below.
+ *
+ * ## Anatomy
+ *
+ *   StarsBackground                  (canvas — 2D context, resized by a
+ *                                     ResizeObserver, repainted per rAF frame)
+ *   ShootingStars                    (svg > rect + linearGradient#gradient)
+ *   Meteors                          (div > injected <style> + span ×number)
+ *
+ * ## Motion — three different mechanisms, three different still states
+ *
+ * | Layer            | Driven by                    | Under `reduce`                      |
+ * | ---------------- | ---------------------------- | ----------------------------------- |
+ * | StarsBackground  | `requestAnimationFrame` loop | `drawStatic()` once, then returns   |
+ * | ShootingStars    | rAF + `setTimeout` spawner   | `return null` — renders nothing     |
+ * | Meteors          | injected CSS keyframe        | `return null` — renders nothing     |
+ *
+ * None of it is reachable by the CSS reset in `styles/preflight.css` — a
+ * canvas repaint and a JS-scheduled SVG transform are invisible to it — so all
+ * three read `useReducedMotion()` themselves. The stars survive because a
+ * still starfield is still a starfield; a shooting star and a meteor are
+ * nothing but their motion, so they are removed rather than frozen.
+ *
+ * `.animate-meteor-effect` is also listed in the `prefers-reduced-motion`
+ * block in `styles/tokens.css`, which is belt-and-braces: the component has
+ * already returned `null` by then.
+ *
+ * ## Accessibility — all three roots are `aria-hidden`
+ *
+ * Each layer's root (`canvas`, `svg`, the meteor `div`) carries
+ * `aria-hidden="true"`. None of them holds content, a label or a role, and
+ * `HeroCosmic` stacks all three at once — so a reader working through a hero
+ * used to walk an unlabelled canvas, an unlabelled graphics node and an
+ * anonymous group before reaching the headline. `aria-hidden` goes on the
+ * ROOT of each layer and nowhere else: a subtree hidden at its root is hidden
+ * entire, and every child here (the star `rect`, the gradient `defs`, the
+ * meteor `span`s, the injected `style`) is inside one of the three.
+ *
+ * This matches `magicui/border-beam.tsx` and the rest of `aceternity/`;
+ * `background-lines.tsx` acquired the same attribute for the same reason.
+ *
+ * ## Per-instance SVG ids
+ *
+ * `ShootingStars`' trail gradient is `useScopedId("shooting-star-trail")`, not
+ * a literal. SVG ids are document-global and this used to be `id="gradient"`,
+ * so two starfields on one page — or one starfield next to any other component
+ * that reached for the same obvious name — silently shared whichever gradient
+ * mounted first.
+ *
+ * ## Known edges
+ *
+ * - `StarsBackground` fills every star with `rgba(255, 255, 255, α)` — white,
+ *   hard-coded, with no prop and no token. It only reads on a dark surface.
+ * - `ShootingStars` defaults `starColor` / `trailColor` to the hex literals
+ *   `#9E00FF` / `#2EB9DF`, and `Meteors` defaults `meteorColor` to `#e9d5ff`.
+ *   `HeroCosmic` passes computed `--hero-*` token values in instead.
+ * - When `StarsBackground` scrolls out of view it keeps requesting frames and
+ *   skips only the paint; `Meteors` switches to `animationPlayState: paused`.
+ */
+
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useId, useRef, useCallback } from "react";
+
+/**
+ * A DOM-id-safe token derived from `useId()`.
+ *
+ * SVG ids are document-global, so any literal one collides the moment a page
+ * renders two of the same layer. `useId()` is the per-instance source, but its
+ * output carries framework punctuation that has no business inside a `url(#…)`
+ * reference, so strip it to `[A-Za-z0-9_-]` and give it a readable prefix.
+ */
+function useScopedId(prefix: string): string {
+  return `${prefix}-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
+}
 
 interface StarProps {
   x: number;
@@ -174,6 +260,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className={cn("h-full w-full absolute inset-0 will-change-transform", className)}
       suppressHydrationWarning
     />
@@ -214,6 +301,8 @@ export const ShootingStars: React.FC<ShootingStarProps> = ({
   const svgRef = useRef<SVGSVGElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const reduceMotion = useReducedMotion();
+  // Was a literal `id="gradient"` — about as collision-prone as an SVG id gets.
+  const gradientId = useScopedId("shooting-star-trail");
 
   // Performance: Pre-compute trig values for fixed 215° angle
   const angleRad = (215 * Math.PI) / 180;
@@ -239,7 +328,17 @@ export const ShootingStars: React.FC<ShootingStarProps> = ({
     // Don't create new stars if not visible
     if (!isVisible) return;
 
+    // The spawn chain is self-perpetuating, so it needs an owner. Without one,
+    // every dep change below (a re-tuned speed or delay, or scrolling back into
+    // view) started a SECOND chain while the first kept running: the effect's
+    // teardown had nothing to cancel, and the old chain only stopped once
+    // `svgRef.current` went null at unmount. Two chains means two stars a
+    // period and a `setStar` fighting itself.
+    let pending: ReturnType<typeof setTimeout> | null = null;
+    let cancelled = false;
+
     const createStar = () => {
+      if (cancelled) return;
       const svg = svgRef.current;
       if (!svg) return;
 
@@ -255,10 +354,15 @@ export const ShootingStars: React.FC<ShootingStarProps> = ({
       setStar(newStar);
 
       const randomDelay = Math.random() * (maxDelay - minDelay) + minDelay;
-      setTimeout(createStar, randomDelay);
+      pending = setTimeout(createStar, randomDelay);
     };
 
     createStar();
+
+    return () => {
+      cancelled = true;
+      if (pending !== null) clearTimeout(pending);
+    };
   }, [minSpeed, maxSpeed, minDelay, maxDelay, isVisible]);
 
   useEffect(() => {
@@ -310,21 +414,25 @@ export const ShootingStars: React.FC<ShootingStarProps> = ({
   if (reduceMotion) return null;
 
   return (
-    <svg ref={svgRef} className={cn("w-full h-full absolute inset-0 pointer-events-none", className)}>
+    <svg
+      ref={svgRef}
+      aria-hidden="true"
+      className={cn("w-full h-full absolute inset-0 pointer-events-none", className)}
+    >
       {star && (
         <rect
           x={star.x}
           y={star.y}
           width={starWidth * star.scale}
           height={starHeight}
-          fill="url(#gradient)"
+          fill={`url(#${gradientId})`}
           transform={`rotate(${star.angle}, ${
             star.x + (starWidth * star.scale) / 2
           }, ${star.y + starHeight / 2})`}
         />
       )}
       <defs>
-        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style={{ stopColor: trailColor, stopOpacity: 0 }} />
           <stop
             offset="100%"
@@ -343,9 +451,14 @@ interface MeteorsProps {
   minDuration?: number;
   /** Maximum animation duration in seconds */
   maxDuration?: number;
-  /** Meteor color */
+  /** Meteor color — the bright head of the streak. */
   meteorColor?: string;
-  /** Trail color (gradient start) */
+  /**
+   * Colour the tail fades OUT to, at the far end of the 120px streak.
+   * Defaults to `"transparent"`, which is the streak's natural falloff; pass a
+   * colour to have the tail land on it instead (e.g. a dim brand tint over a
+   * dark hero).
+   */
   trailColor?: string;
   /** Additional CSS classes */
   className?: string;
@@ -363,7 +476,7 @@ export const Meteors: React.FC<MeteorsProps> = ({
   minDuration = 12,
   maxDuration = 30,
   meteorColor = "#e9d5ff",
-  trailColor: _trailColor = "transparent",
+  trailColor = "transparent",
   className,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -439,6 +552,7 @@ export const Meteors: React.FC<MeteorsProps> = ({
   return (
     <div
       ref={containerRef}
+      aria-hidden="true"
       className={cn(
         "absolute inset-0 overflow-hidden pointer-events-none",
         className
@@ -458,8 +572,10 @@ export const Meteors: React.FC<MeteorsProps> = ({
             // Longer, thinner tail for realistic meteor trail
             width: "120px",
             height: "1px",
-            // Bright head fading to transparent tail
-            background: `linear-gradient(90deg, ${meteorColor} 0%, ${meteorColor}80 10%, transparent 100%)`,
+            // Bright head fading down the tail to `trailColor` (transparent by
+            // default, which is why wiring the prop up changes nothing unless
+            // you pass one).
+            background: `linear-gradient(90deg, ${meteorColor} 0%, ${meteorColor}80 10%, ${trailColor} 100%)`,
             opacity: 0.8,
             // Very subtle glow for thin, delicate meteor look
             boxShadow: `0 0 2px 0px ${meteorColor}50`,

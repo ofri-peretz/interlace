@@ -56,6 +56,12 @@ const KEYBOARD_DRIVEN = [
   { primitive: 'dropdown-menu', story: 'DropdownMenu' },
   { primitive: 'context-menu', story: 'ContextMenu' },
   { primitive: 'select', story: 'Select' },
+  // A combobox's entire value proposition is the keyboard: type to filter,
+  // arrow to highlight, Enter to commit. And the palette is a combobox
+  // inside a modal, where a swallowed Escape is a WCAG 2.1.2 trap — see the
+  // `inline` note in command-palette.tsx.
+  { primitive: 'combobox', story: 'Combobox' },
+  { primitive: 'command-palette', story: 'CommandPalette' },
   // Nav / disclosure — roving tabindex, aria-expanded, bypass blocks.
   { primitive: 'tabs', story: 'Tabs' },
   { primitive: 'accordion', story: 'Accordion' },
@@ -89,6 +95,8 @@ const MUST_ASSERT_ESCAPE = new Set([
   'ContextMenu',
   'Select',
   'ThemeSwitcher',
+  'Combobox',
+  'CommandPalette',
 ]);
 
 const readStory = (name: string) =>

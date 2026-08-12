@@ -104,6 +104,10 @@ export const Default: Story = {
   },
 };
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
       <Button>Default</Button>
@@ -136,7 +140,7 @@ export const Sizes: Story = {
 };
 export const Disabled: Story = { args: { children: 'Disabled', disabled: true } };
 export const Dark: Story = {
-  args: { children: 'Get started' },
+  ...Variants,
   globals: { theme: 'dark' },
   parameters: { backgrounds: { default: 'dark' } },
   decorators: [(S) => <div className="dark"><S /></div>],

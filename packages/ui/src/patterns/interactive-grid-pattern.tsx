@@ -1,5 +1,57 @@
 "use client";
 
+/**
+ * @interlace/ui — InteractiveGridPattern
+ *
+ * A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that
+ * fills the cell under the pointer. Cells inherit `currentColor`, so
+ * `className="text-border"` sets the hue and `lineOpacity` / `hoverOpacity`
+ * tune it.
+ *
+ * The hovered cell is controllable via `hoveredSquare` + `onHoveredSquareChange`.
+ *
+ * Our reimplementation of the effect Magic UI publishes as
+ * `InteractiveGridPattern`. Ours is what differs: token-driven colour instead
+ * of hard-coded grays, a controllable/observable hover cell instead of trapped
+ * `useState`, a per-cell `squareProps` seam, and a reduced-motion contract.
+ *
+ * ## Anatomy
+ *
+ *   InteractiveGridPattern           (svg — data-slot="interactive-grid-pattern")
+ *     ├─ title                       (tooling only — the root is aria-hidden)
+ *     └─ rect × columns·rows         (data-slot="interactive-grid-square")
+ *                                    (data-active on the hovered cell)
+ *
+ * ## Motion
+ *
+ * CSS transitions, but JS-gated as well. The hover fade is
+ * `transition-[fill] duration-100` in, `duration-1000` out; under
+ * `prefers-reduced-motion: reduce` `useReducedMotion` swaps the whole class
+ * for `transition-none`, so the fill snaps instantly rather than relying on
+ * the `transition-duration: 0.01ms` clamp in `styles/preflight.css`. Nothing
+ * here animates on its own — motion happens only while a pointer moves.
+ *
+ * ## The `<title>` is not an accessible name
+ *
+ * The root is `aria-hidden="true"`, so the `label` prop reaches no assistive
+ * technology. It exists for tooling that opens the SVG on its own. This used
+ * to be `role="presentation"` + `aria-labelledby`, which axe flags as
+ * `presentation-role-conflict` — a global ARIA attribute cancels the
+ * presentational role and re-exposes the grid as a labelled image.
+ *
+ * | Rule | Concept                     | Where in this file                                       |
+ * | ---- | --------------------------- | -------------------------------------------------------- |
+ * | R4   | Extends native el           | `Omit<ComponentPropsWithoutRef<'svg'>, 'width'\|'height'>` |
+ * | R5   | testid required, no default | `'data-testid': string` → `{value}-cell-{index}`          |
+ * | R6   | data-slot per part          | `interactive-grid-pattern` / `interactive-grid-square`    |
+ * | R9   | Noun-first change event     | `onHoveredSquareChange(index, details)`                   |
+ * | R10  | Composition seam            | `squareProps(index, {row, column})` merges onto each rect |
+ * | R14  | Controlled + uncontrolled   | `hoveredSquare` / `defaultHoveredSquare`                  |
+ * | R18  | Inline style is CSS vars    | `--grid-line-opacity` / `--grid-hover-opacity` only       |
+ * | R19  | Tokens only                 | `text-border` + `stroke-current` / `fill-current`         |
+ * | R25  | Client component            | `useState` + `useId` + `useReducedMotion`                 |
+ */
+
 import {
   type ComponentPropsWithoutRef,
   forwardRef,

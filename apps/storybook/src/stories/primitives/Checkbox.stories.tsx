@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from '@interlace/ui/checkbox';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof Checkbox> = {
@@ -142,7 +142,7 @@ export const Invalid: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

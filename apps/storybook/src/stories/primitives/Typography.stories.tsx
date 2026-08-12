@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Typography } from '@interlace/ui/typography';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Typography> = {
   title: 'Primitives/Typography',
@@ -148,7 +148,7 @@ export const Tones: Story = {
 
 export const Dark: Story = {
   ...Headings,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

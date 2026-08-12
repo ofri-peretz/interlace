@@ -1,25 +1,52 @@
+/**
+ * @interlace/ui — Section
+ *
+ * The page's rhythm unit, from LAYOUT_PHILOSOPHY.md §7-8: one band that owns
+ * its vertical padding, its background tone, its transition dividers and the
+ * `<Container>` that measures its children.
+ *
+ * A page is N of these, so the page file says what is IN each band and never
+ * what the band looks like.
+ *
+ * ## The four axes
+ *
+ *   - `spacing`  → vertical padding, responsive at each step
+ *                  (tight / comfortable / spacious / none; default comfortable)
+ *   - `tone`     → background (default / muted / inset — `inset` also blurs)
+ *   - `divider`  → border at the transition (none / top / bottom / both)
+ *   - `container`→ which `<Container>` size wraps the children (default `content`)
+ *
+ * Every `spacing` step clears the philosophy's floors — `py-10` mobile,
+ * `py-16` desktop — at the matching breakpoint; `none` is the deliberate
+ * escape hatch for a band that abuts another.
+ *
+ * ## Anatomy
+ *
+ *   Section                          (section by default — data-spacing / -tone / -divider)
+ *     └─ Container                   (always present, size from `container`)
+ *          └─ children
+ *
+ * The wrapper element is chosen by `as` (`section | header | footer | aside |
+ * div`), a plain string swap rather than Base UI's `render` prop. `children`
+ * always go through a Container: there is no full-bleed escape except
+ * `container="full"`.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends native el                | `Omit<React.ComponentProps<'section'>, 'children'>`         |
+ * | R6   | data-slot + data-* on root       | `data-slot="section"` + spacing / tone / divider            |
+ * | R7   | cva + cn + ...rest               | `cn(sectionVariants({…}), className)` + `{...props}`        |
+ * | R8   | Enums, no booleans               | four closed enums; no `isMuted`, no `hasDivider`            |
+ * | R12  | Reuse over wrap                  | width and gutters come from `Container`, not from here      |
+ * | R19  | Tokens only                      | `bg-card/30`, `bg-card/50`, `border-border`                 |
+ * | R25  | Server component                 | No hooks → no `'use client'`                                |
+ */
+
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../lib/cn.js';
 import { Container, type ContainerProps } from './container.js';
-
-/**
- * `<Section>` — vertical rhythm + tone + dividers + container, from
- * LAYOUT_PHILOSOPHY.md §7-8.
- *
- * A page composes `<Section>` × N. The page file describes what's *in* each
- * section, never what each section's wrapper looks like. Open-coded
- * `<section className="container mx-auto px-4 py-24">` is forbidden in app
- * code (philosophy §1, §7).
- *
- * Props own:
- *   - `spacing`  → vertical padding (token from the §3 spacing scale).
- *   - `tone`     → background. `inset` adds the muted card-like tone.
- *   - `divider`  → top/bottom borders at section transitions.
- *   - `container`→ which `<Container>` size wraps the children.
- *   - `as`       → semantic element (`section`, `header`, `aside`, ...).
- */
 
 const sectionVariants = cva('relative', {
   variants: {

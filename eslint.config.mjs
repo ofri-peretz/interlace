@@ -38,6 +38,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 
 import reactA11y from 'eslint-plugin-react-a11y';
 import reactFeatures from 'eslint-plugin-react-features';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 // À-la-carte clean presets — spread each plugin's OWN flat recommended.
 import { configs as browserSecurityCfg } from 'eslint-plugin-browser-security';
@@ -73,6 +74,12 @@ export default [
       '**/.interlace/**',
       // oxlint JS-plugin shims — CJS tooling, not app source (legit `require`).
       '**/tools/oxlint-plugins/**',
+      // Agent scratch space, including nested git worktrees. Linting a worktree
+      // means linting a SECOND COPY of this repo from inside itself: it
+      // produced 9,100 warnings and 13 errors that were duplicates of the
+      // findings in the real tree, which is how a genuine error hides — the
+      // signal was there, buried in a report nobody could read to the end.
+      '**/.claude/**',
     ],
   },
 
@@ -101,6 +108,32 @@ export default [
   {
     ...reactA11y.configs.recommended,
     files: TSX_FILES,
+  },
+
+  // ── 2b. Rules of Hooks ─────────────────────────────────────────────────────
+  // Added 2026-08-11, and the gap it closes is the point: this repo ships 64
+  // React primitives and had NO rules-of-hooks rule at all. `react-features`
+  // provides `hooks-exhaustive-deps` — the deps-array rule — which reads like
+  // the hooks rule and is not it. Nothing checked that a hook was called
+  // unconditionally.
+  //
+  // Found by `badge.tsx`, which called `useRender` after a `loading` early
+  // return. That one happened not to throw (Base UI's `useRenderElement`
+  // occupies a hook slot on every path), which is exactly why a lint rule is
+  // the right gate and a test is not: the violation is real whether or not the
+  // current version of a dependency tolerates it, and no runtime assertion can
+  // see it until the day it stops being tolerated.
+  //
+  // Only `rules-of-hooks`. The plugin's v7 line also ships the React Compiler
+  // diagnostics (`purity`, `immutability`, `set-state-in-effect`, …); those are
+  // a separate, much larger conversation and enabling them wholesale here would
+  // bury the one rule that has a known violation behind hundreds of new ones.
+  {
+    files: TSX_FILES,
+    plugins: { 'react-hooks': reactHooks },
+    rules: {
+      'react-hooks/rules-of-hooks': 'error',
+    },
   },
 
   // ── 3. React best-practices (react-features) ───────────────────────────────
@@ -198,6 +231,33 @@ export default [
       'node-security/no-arbitrary-file-access': 'off',
     },
   },
+  // `secure-coding/no-xxe-injection` and `no-ldap-injection` fire on code that
+  // parses JSON and code that regex-matches a string — measured, with a minimal
+  // repro: `JSON.parse(body)` trips XXE at CVSS 9.1 while `JSON.parse(payload)`
+  // is silent. The rules are keying on the IDENTIFIER NAME, not on an XML
+  // parser or an LDAP query, neither of which exists anywhere in this repo.
+  //
+  // Both are OURS — `eslint-plugin-secure-coding`, which we publish. So this is
+  // a workaround with a deadline, not a decision: the rules are fixed upstream
+  // and this block comes out when the fixed version ships. It is scoped to the
+  // registry's build scripts and tests rather than turned off globally,
+  // because a real XXE or LDAP sink in app code must still be an error.
+  //
+  // The cost of leaving it: a security rule that cries wolf at CVSS 9.1 on
+  // `JSON.parse` is a rule whose whole plugin gets disabled by the first
+  // adopter who hits it. That is worse than the finding it was meant to catch.
+  {
+    files: [
+      'apps/registry/scripts/**/*.mjs',
+      'apps/registry/src/__tests__/**/*.{ts,tsx}',
+      'apps/registry/src/app/api/**/*.ts',
+    ],
+    rules: {
+      'secure-coding/no-xxe-injection': 'off',
+      'secure-coding/no-ldap-injection': 'off',
+    },
+  },
+
   // TSX-scoped baseline (react-a11y + react-features ERRORs → warn).
   {
     files: TSX_FILES,

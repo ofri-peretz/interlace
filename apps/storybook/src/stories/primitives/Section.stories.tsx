@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Section } from '@interlace/ui/section';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Section> = {
   title: 'Primitives/Section',
@@ -88,7 +88,7 @@ export default meta;
 type Story = StoryObj<typeof Section>;
 
 const SectionBody = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-dashed border-fd-border bg-fd-card/40 p-6 text-sm text-fd-muted-foreground">
+  <div className="rounded-md border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
     {label}
   </div>
 );
@@ -122,10 +122,10 @@ export const InsetStrip: Story = {
   render: (args) => (
     <Section {...args}>
       <div className="grid grid-cols-2 gap-6 text-center md:grid-cols-4">
-        <div><div className="text-3xl font-bold">18</div><div className="text-xs uppercase text-fd-muted-foreground">Plugins</div></div>
-        <div><div className="text-3xl font-bold">350+</div><div className="text-xs uppercase text-fd-muted-foreground">Rules</div></div>
-        <div><div className="text-3xl font-bold">11</div><div className="text-xs uppercase text-fd-muted-foreground">Security</div></div>
-        <div><div className="text-3xl font-bold">7</div><div className="text-xs uppercase text-fd-muted-foreground">Quality</div></div>
+        <div><div className="text-3xl font-bold">18</div><div className="text-xs uppercase text-muted-foreground">Plugins</div></div>
+        <div><div className="text-3xl font-bold">350+</div><div className="text-xs uppercase text-muted-foreground">Rules</div></div>
+        <div><div className="text-3xl font-bold">11</div><div className="text-xs uppercase text-muted-foreground">Security</div></div>
+        <div><div className="text-3xl font-bold">7</div><div className="text-xs uppercase text-muted-foreground">Quality</div></div>
       </div>
     </Section>
   ),
@@ -150,10 +150,10 @@ export const ToneVariants: Story = {
         <SectionBody label='tone="default" — no background' />
       </Section>
       <Section spacing="comfortable" tone="muted" divider="bottom">
-        <SectionBody label='tone="muted" — bg-fd-card/30' />
+        <SectionBody label='tone="muted" — bg-card/30' />
       </Section>
       <Section spacing="comfortable" tone="inset" divider="bottom">
-        <SectionBody label='tone="inset" — bg-fd-card/50 with backdrop-blur' />
+        <SectionBody label='tone="inset" — bg-card/50 with backdrop-blur' />
       </Section>
     </div>
   ),
@@ -161,7 +161,7 @@ export const ToneVariants: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

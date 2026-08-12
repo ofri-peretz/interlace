@@ -11,7 +11,7 @@ import {
 } from '@interlace/ui/form';
 import { Input } from '@interlace/ui/input';
 import { Button } from '@interlace/ui/button';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta = {
@@ -207,7 +207,7 @@ export const Variants: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

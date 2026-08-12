@@ -17,6 +17,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { Delta, toneFor } from '../src/charts/delta.js';
+import { Distribution, type DistributionBin } from '../src/charts/distribution.js';
 import { MetricTable } from '../src/charts/metric-table.js';
 import { SeriesTable } from '../src/charts/series-table.js';
 import { Sparkline } from '../src/charts/sparkline.js';
@@ -445,6 +446,408 @@ describe('TimeSeries', () => {
   });
 });
 
+/* ── TimeSeries — the x axis ────────────────────────────────────────────── */
+
+/**
+ * The labels themselves are HTML rather than SVG text because SVG text scales
+ * with the `viewBox`: at a 320 viewport the plot is 288px against a 900-unit
+ * box, so `text-xs` inside it paints at 4px. Measured in Chrome — jsdom reports
+ * every box as 0×0 and would have scored the illegible version green.
+ *
+ * What jsdom CAN prove is everything below: that the labels exist, that they
+ * are the slots `axisSlots` chose, that each has a tick to point at, and that
+ * the ones dropped below `sm` are the middles rather than the ends.
+ */
+describe('TimeSeries x axis', () => {
+  const axisSpans = (container: HTMLElement) => [
+    ...container.querySelectorAll('[data-slot="time-series-axis"] span'),
+  ];
+
+  it('labels the horizontal scale at all — a shape with no x axis is not a chart', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(axisSpans(container).map((s) => s.textContent)).toEqual(['08-01', '08-02', '08-03']);
+  });
+
+  it('caps the labels and keeps both ends, however long the series', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)} />,
+    );
+    const labels = axisSpans(container).map((s) => s.textContent);
+    expect(labels).toEqual(['08-01', '08-04', '08-08', '08-11', '08-14']);
+  });
+
+  it('drops the MIDDLE labels below sm, never an end — the ends are the range', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)} />,
+    );
+    const hidden = axisSpans(container).map((s) => (s.className || '').includes('hidden'));
+    expect(hidden).toEqual([false, true, false, true, false]);
+  });
+
+  it('keeps every label when there are few enough that none can collide', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(axisSpans(container).every((s) => !(s.className || '').includes('hidden'))).toBe(true);
+  });
+
+  it('gives every label a tick to point at, so the position is not approximate', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3, 4, 5, 6, 7, 8)} />);
+    expect(container.querySelectorAll('[data-slot="time-series-tick"]')).toHaveLength(
+      axisSpans(container).length,
+    );
+  });
+
+  it('stays out of the accessibility tree — the dates are in the table and the readout', () => {
+    // Announcing "08-01 08-04 08-08" before the chart is noise; the same dates
+    // are already reachable as row headers, in full.
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(
+      container.querySelector('[data-slot="time-series-axis"]')?.getAttribute('aria-hidden'),
+    ).toBe('true');
+  });
+
+  it('drops the year from the label but never from the caption', () => {
+    // 10-character labels are what makes five of them collide at 320.
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} label="Views" />);
+    expect(axisSpans(container)[0].textContent).toBe('08-01');
+    expect(container.querySelector('figcaption')?.textContent).toContain('2026-08-01');
+  });
+});
+
+/* ── TimeSeries — more than one series ──────────────────────────────────── */
+
+const other = (...values: (number | null)[]): Point[] =>
+  values.map((v, i) => ({ t: `2026-08-${String(i + 1).padStart(2, '0')}T00:00:00Z`, v }));
+
+describe('TimeSeries with compare', () => {
+  const lines = (container: HTMLElement) => [
+    ...container.querySelectorAll('[data-slot="time-series-plot"] g > path[stroke-width]'),
+  ];
+
+  it('draws a line per series, and `points` alone still means one line', () => {
+    const { container: one } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(one.querySelector('[data-slot="time-series"]')?.getAttribute('data-series-count')).toBe(
+      '1',
+    );
+    cleanup();
+    const { container: two } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    expect(two.querySelector('[data-slot="time-series"]')?.getAttribute('data-series-count')).toBe(
+      '2',
+    );
+    expect(lines(two)).toHaveLength(2);
+  });
+
+  it('separates the lines by DASH as well as by hue', () => {
+    // Two lines that differ only in `--chart-1` vs `--chart-2` are one line in
+    // a greyscale print and to a red-green colour-blind reader.
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    const dashes = lines(container).map((p) => p.getAttribute('stroke-dasharray'));
+    expect(dashes[0]).toBeNull();
+    expect(dashes[1]).toBeTruthy();
+    const hues = lines(container).map((p) => p.getAttribute('class'));
+    expect(new Set(hues).size).toBe(2);
+  });
+
+  it('gives every drawable series a distinct dash AND a distinct token', () => {
+    const points = series(1, 2, 3);
+    const { container } = render(
+      <TimeSeries
+        points={points}
+        compare={[
+          { points: other(4, 5, 6), label: 'B' },
+          { points: other(7, 8, 9), label: 'C' },
+          { points: other(10, 11, 12), label: 'D' },
+          { points: other(13, 14, 15), label: 'E' },
+        ]}
+      />,
+    );
+    const drawn = lines(container);
+    expect(new Set(drawn.map((p) => p.getAttribute('stroke-dasharray')))).toHaveProperty('size', 5);
+    expect(new Set(drawn.map((p) => p.getAttribute('class')))).toHaveProperty('size', 5);
+  });
+
+  it('names each line in a legend, so identity is never carried by colour alone', () => {
+    const { container } = render(
+      <TimeSeries
+        points={series(1, 2, 3)}
+        label="Downloads"
+        compare={[{ points: other(4, 5, 6), label: 'Stars' }]}
+      />,
+    );
+    const legend = container.querySelector('[data-slot="time-series-legend"]')!;
+    expect(legend.textContent).toContain('Downloads');
+    expect(legend.textContent).toContain('Stars');
+  });
+
+  it('repeats the line dash in the legend swatch, not just the colour', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    const swatches = [
+      ...container.querySelectorAll('[data-slot="time-series-legend"] svg line'),
+    ].map((l) => l.getAttribute('stroke-dasharray'));
+    const plotted = lines(container).map((p) => p.getAttribute('stroke-dasharray'));
+    expect(swatches).toEqual(plotted);
+  });
+
+  it('draws no legend for one series — it would restate the caption beneath it', () => {
+    const { container } = render(<TimeSeries points={series(1, 2)} label="Downloads" />);
+    expect(container.querySelector('[data-slot="time-series-legend"]')).toBeNull();
+  });
+
+  it('drops the area fill once there are two lines', () => {
+    // Two translucent fills overlap into a third colour that belongs to
+    // neither series and reads as a value.
+    const { container: one } = render(<TimeSeries points={series(1, 2, 3)} />);
+    expect(one.querySelector('path[class*="fill-chart-1"]')).not.toBeNull();
+    cleanup();
+    const { container: two } = render(
+      <TimeSeries points={series(1, 2, 3)} compare={[{ points: other(4, 5, 6), label: 'B' }]} />,
+    );
+    expect(two.querySelector('path[class*="fill-chart-1"]')).toBeNull();
+  });
+
+  it('adds a COLUMN to the one data table rather than shipping a second table', () => {
+    render(
+      <TimeSeries
+        points={series(1, 2)}
+        label="Downloads"
+        compare={[{ points: other(4, 5), label: 'Stars' }]}
+      />,
+    );
+    expect(screen.getAllByRole('table')).toHaveLength(1);
+    expect(screen.getAllByRole('columnheader').map((h) => h.textContent)).toEqual([
+      'Date',
+      'Downloads',
+      'Stars',
+    ]);
+  });
+
+  it('describes every series in the accessible name, not only the first', () => {
+    render(
+      <TimeSeries
+        points={series(10, 20)}
+        label="Downloads"
+        compare={[{ points: other(90, 40), label: 'Stars' }]}
+      />,
+    );
+    const name = screen.getByRole('img').getAttribute('aria-label') ?? '';
+    expect(name).toContain('Downloads: 2 points');
+    expect(name).toContain('Stars: 2 points');
+    expect(name).toContain('down 50');
+  });
+
+  it('reads out every series from ONE live region, under keyboard control', async () => {
+    // The alternative — a hover tooltip with its own copy of these numbers — is
+    // a surface that can be right while the live region is wrong, and only a
+    // sighted mouse user would ever find out.
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20, 30)}
+        label="Downloads"
+        unit="downloads"
+        compare={[{ points: other(1, 2, 3), label: 'Stars', unit: 'stars' }]}
+      />,
+    );
+    expect(container.querySelectorAll('output')).toHaveLength(1);
+    screen.getByRole('img').focus();
+    await user.keyboard('{ArrowRight}');
+    expect(container.querySelector('output')?.textContent).toBe(
+      '2026-08-02 · Downloads 20 downloads · Stars 2 stars',
+    );
+  });
+
+  it('keeps the single-series readout unnamed — the caption already names it', () => {
+    const user = userEvent.setup();
+    render(<TimeSeries points={series(10, 20)} label="Downloads" unit="downloads" />);
+    screen.getByRole('img').focus();
+    return user.keyboard('{End}').then(() => {
+      expect(screen.getByText('2026-08-02 · 20 downloads')).toBeTruthy();
+    });
+  });
+
+  it('omits the unit for a series that has none, rather than printing "undefined"', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20)}
+        label="Downloads"
+        compare={[{ points: other(1, 2), label: 'Stars' }]}
+      />,
+    );
+    screen.getByRole('img').focus();
+    await user.keyboard('{End}');
+    expect(container.querySelector('output')?.textContent).toBe(
+      '2026-08-02 · Downloads 20 · Stars 2',
+    );
+  });
+
+  it('says "no data" for a day a series did not measure, instead of borrowing a neighbour', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20, 30)}
+        label="Downloads"
+        compare={[{ points: [{ t: '2026-08-03T00:00:00Z', v: 7 }], label: 'Stars' }]}
+      />,
+    );
+    screen.getByRole('img').focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toBe(
+      '2026-08-01 · Downloads 10 · Stars no data',
+    );
+  });
+
+  it('draws a crosshair dot only for the series that HAVE a reading there', async () => {
+    // A dot on the segment that bridges a gap is an invented value.
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries
+        points={series(10, 20, 30)}
+        compare={[{ points: [{ t: '2026-08-03T00:00:00Z', v: 7 }], label: 'Stars' }]}
+      />,
+    );
+    const svg = screen.getByRole('img');
+    svg.focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelectorAll('circle')).toHaveLength(1);
+    await user.keyboard('{End}');
+    expect(container.querySelectorAll('circle')).toHaveLength(2);
+  });
+
+  it('widens the axis to the union of both series, so nothing plotted is off-scale', () => {
+    const { container } = render(
+      <TimeSeries
+        points={[{ t: '2026-08-03T00:00:00Z', v: 5 }, { t: '2026-08-04T00:00:00Z', v: 6 }]}
+        label="Downloads"
+        compare={[{ points: series(1, 2, 3), label: 'Stars' }]}
+      />,
+    );
+    expect(container.querySelector('figcaption')?.textContent).toContain('2026-08-01 → 2026-08-04');
+  });
+
+  it('judges "not enough data" on the PRIMARY series, not the union', () => {
+    // A comparison series with fourteen readings does not rescue a headline
+    // metric that has one — drawing it alone under that caption would credit
+    // one metric with another's shape.
+    render(
+      <TimeSeries
+        points={series(5)}
+        label="Downloads"
+        compare={[{ points: other(1, 2, 3), label: 'Stars' }]}
+      />,
+    );
+    expect(screen.getByText(/Only 1 point so far/)).toBeTruthy();
+  });
+
+  it('spells an unlabelled primary the same word everywhere — legend, readout, table', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <TimeSeries points={series(10, 20)} compare={[{ points: other(1, 2), label: 'Stars' }]} />,
+    );
+    expect(container.querySelector('[data-slot="time-series-legend"]')?.textContent).toContain(
+      'Value',
+    );
+    expect(screen.getByRole('columnheader', { name: 'Value' })).toBeTruthy();
+    screen.getByRole('img').focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toContain('Value 10');
+  });
+
+  it('captions the table with every series once there is more than one', () => {
+    render(
+      <TimeSeries
+        points={series(1, 2)}
+        label="Downloads"
+        unit="downloads"
+        compare={[{ points: other(3, 4), label: 'Stars' }]}
+      />,
+    );
+    expect(screen.getByText('Downloads, Stars — full data')).toBeTruthy();
+  });
+
+  it('resolves a pointer to the same slot the keyboard reaches, with two series', () => {
+    const spy = withLayout(900);
+    const { container } = render(
+      <TimeSeries points={series(10, 20, 30)} compare={[{ points: other(1, 2, 3), label: 'B' }]} />,
+    );
+    fireEvent.pointerMove(screen.getByRole('img'), { clientX: 900 });
+    const byPointer = container.querySelector('output')?.textContent;
+    fireEvent.pointerLeave(screen.getByRole('img'));
+    screen.getByRole('img').focus();
+    fireEvent.keyDown(screen.getByRole('img'), { key: 'End' });
+    expect(container.querySelector('output')?.textContent).toBe(byPointer);
+    spy.mockRestore();
+  });
+});
+
+describe('TimeSeries beyond the palette', () => {
+  const six = Array.from({ length: 5 }, (_, i) => ({
+    points: other(i + 1, i + 2, i + 3),
+    label: `S${i + 1}`,
+  }));
+
+  it('draws five and refuses the sixth — the palette is five tokens and five dashes', () => {
+    // Repeating a colour AND a dash produces two lines a reader cannot tell
+    // apart, which is worse than a line that is not drawn.
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} label="P" compare={six} />);
+    expect(
+      container.querySelector('[data-slot="time-series"]')?.getAttribute('data-series-count'),
+    ).toBe('5');
+    expect(
+      container.querySelectorAll('[data-slot="time-series-plot"] g > path[stroke-width]'),
+    ).toHaveLength(5);
+  });
+
+  it('keeps the undrawn series in the data table — the cap is a drawing limit', () => {
+    render(<TimeSeries points={series(1, 2, 3)} label="P" compare={six} />);
+    expect(screen.getAllByRole('columnheader').map((h) => h.textContent)).toEqual([
+      'Date',
+      'P',
+      'S1',
+      'S2',
+      'S3',
+      'S4',
+      'S5',
+    ]);
+  });
+
+  it('says in the legend how many series are missing from the picture', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} label="P" compare={six} />);
+    expect(container.querySelector('[data-slot="time-series-legend"]')?.textContent).toContain(
+      '1 more not plotted',
+    );
+  });
+
+  it('says nothing about missing series when none are missing', () => {
+    const { container } = render(
+      <TimeSeries points={series(1, 2, 3)} label="P" compare={six.slice(0, 2)} />,
+    );
+    expect(container.querySelector('[data-slot="time-series-legend"]')?.textContent).not.toContain(
+      'not plotted',
+    );
+  });
+
+  it('excludes an undrawn series from the y domain it cannot be read against', () => {
+    const { container } = render(
+      <TimeSeries
+        points={series(1, 2, 3)}
+        label="P"
+        compare={[...six, { points: other(9_000, 9_001, 9_002), label: 'Huge' }]}
+      />,
+    );
+    // 9,000 would otherwise flatten all five drawn lines against an axis whose
+    // top belongs to a series that is not on the chart.
+    expect(container.querySelector('[data-slot="time-series-readout"]')?.textContent).not.toContain(
+      '9,002',
+    );
+  });
+});
+
 /* ── MetricTable ────────────────────────────────────────────────────────── */
 
 const rows = [
@@ -551,5 +954,614 @@ describe('MetricTable', () => {
     const ref = { current: null as HTMLDivElement | null };
     render(<MetricTable ref={ref} className="mt-8" rows={rows} caption="c" />);
     expect(ref.current?.className).toContain('mt-8');
+  });
+});
+
+/* ── The error state, across every chart that fetches ───────────────────── */
+
+/**
+ * Finding 2 from the control-room conversion: these components had `loading`,
+ * had "no data", and had no way at all to say **the request failed**.
+ *
+ * That is not a missing nicety. `DATA_STATES` ranks `error` above `empty`
+ * precisely because they are different claims: "no data yet" is a statement
+ * about the METRIC, and a reader is entitled to act on it — to stop waiting,
+ * to go and publish something. A failed fetch is a statement about the
+ * REQUEST, and licenses none of that. Rendering the first while the second is
+ * true is the exact defect `absence-vocabulary.test.tsx` was written for.
+ */
+describe('charts — a failed fetch is not an empty result', () => {
+  it('TimeSeries says the history is unknown, not absent', () => {
+    render(<TimeSeries points={[]} error={new Error('ECONNRESET')} label="Views" />);
+    expect(screen.getByRole('alert').textContent).toMatch(/could not be loaded/i);
+    // The empty-state copy must not appear: it claims the metric has no history.
+    expect(screen.queryByText(/No data yet/)).toBeNull();
+    expect(screen.getByRole('alert').textContent).toMatch(/not an empty series/i);
+  });
+
+  it('TimeSeries keeps loading ABOVE error — nothing is known yet', () => {
+    const { container } = render(<TimeSeries points={[]} loading error="boom" />);
+    expect(container.querySelector('[data-slot="time-series"]')).not.toBeNull();
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+
+  it('TimeSeries folds the caller noun into the error sentence', () => {
+    render(<TimeSeries points={[]} error="x" announce={{ noun: 'downloads' }} />);
+    expect(screen.getByRole('alert').textContent).toMatch(/Downloads could not be loaded/);
+  });
+
+  it('TimeSeries merges className and forwards a ref on the error state', () => {
+    const ref = { current: null as HTMLElement | null };
+    const { container } = render(
+      <TimeSeries points={[]} error="x" className="mb-4" ref={ref} />,
+    );
+    const box = container.querySelector('[data-slot="time-series-error"]')!;
+    expect(box.className).toContain('mb-4');
+    expect(box.getAttribute('data-state')).toBe('error');
+    expect(ref.current).toBe(box);
+  });
+
+  it('Sparkline holds its cell and announces the failure, unlike the empty form', () => {
+    // The empty placeholder is `aria-hidden` because the row's other cells
+    // already say there is no trend. Nothing else in the row knows the fetch
+    // failed, so this one has to say it.
+    const { container } = render(<Sparkline points={[]} error="x" width={90} height={22} />);
+    const cell = container.querySelector('[data-slot="sparkline-error"]') as HTMLElement;
+    expect(cell.style.width).toBe('90px');
+    expect(cell.textContent).toMatch(/could not be loaded/i);
+    expect(container.querySelector('[data-slot="sparkline-empty"]')).toBeNull();
+  });
+
+  it('Sparkline still prefers the skeleton while the request is in flight', () => {
+    const { container } = render(<Sparkline points={[]} loading error="x" />);
+    expect(container.querySelector('[data-slot="sparkline-error"]')).toBeNull();
+  });
+
+  it('MetricTable refuses to render as a table with no rows', () => {
+    // An empty <tbody> under a real <caption> reads as "you track nothing",
+    // which is a claim about the reader rather than about the request.
+    render(<MetricTable rows={[]} caption="Metrics" error="x" />);
+    expect(screen.queryByRole('table')).toBeNull();
+    expect(screen.getByRole('alert').textContent).toMatch(/not a table with nothing in it/i);
+  });
+
+  it('MetricTable keeps the skeleton while loading, error or not', () => {
+    const { container } = render(<MetricTable rows={[]} caption="c" loading error="x" />);
+    expect(container.querySelector('[data-slot="metric-table"]')).not.toBeNull();
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+
+  it('MetricTable merges className and forwards a ref on the error state', () => {
+    const ref = { current: null as HTMLDivElement | null };
+    render(<MetricTable rows={[]} caption="c" error="x" className="mt-2" ref={ref} />);
+    expect(ref.current?.className).toContain('mt-2');
+    expect(ref.current?.getAttribute('data-slot')).toBe('metric-table-error');
+  });
+});
+
+/* ── SeriesTable — a categorical axis is not a calendar ─────────────────── */
+
+describe('SeriesTable with a categorical axis', () => {
+  const weekdays = [
+    { t: 'Thu', v: 3 },
+    { t: 'Fri', v: 4 },
+    { t: 'Sat', v: 5 },
+  ];
+
+  it('keeps the caller order instead of sorting the week into alphabetical', () => {
+    // Sorted, this reads Fri, Sat, Thu — a week that does not exist, and one
+    // that disagrees with the chart directly above it.
+    render(
+      <SeriesTable
+        axis="category"
+        caption="By weekday"
+        keyLabel="Weekday"
+        hidden={false}
+        series={[{ label: 'Reads', points: weekdays }]}
+      />,
+    );
+    expect(screen.getAllByRole('rowheader').map((h) => h.textContent)).toEqual([
+      'Thu',
+      'Fri',
+      'Sat',
+    ]);
+  });
+
+  it('does not truncate a long bin name to ten characters', () => {
+    // `day()` is a date-shaped assumption: it would leave "Wednesday ".
+    render(
+      <SeriesTable
+        axis="category"
+        caption="c"
+        hidden={false}
+        series={[{ label: 'Reads', points: [{ t: 'Wednesday morning', v: 1 }] }]}
+      />,
+    );
+    expect(screen.getByRole('rowheader', { name: 'Wednesday morning' })).toBeTruthy();
+  });
+
+  it('still aligns two series on the union of their bins', () => {
+    render(
+      <SeriesTable
+        axis="category"
+        caption="c"
+        hidden={false}
+        series={[
+          { label: 'A', points: weekdays },
+          { label: 'B', points: [{ t: 'Sat', v: 9 }] },
+        ]}
+      />,
+    );
+    expect(screen.getAllByText('No data')).toHaveLength(2);
+  });
+
+  it('leaves the default axis chronological and sorted', () => {
+    render(
+      <SeriesTable
+        caption="c"
+        hidden={false}
+        series={[
+          {
+            label: 'A',
+            points: [
+              { t: '2026-08-03T00:00:00Z', v: 1 },
+              { t: '2026-08-01T00:00:00Z', v: 2 },
+            ],
+          },
+        ]}
+      />,
+    );
+    expect(screen.getAllByRole('rowheader').map((h) => h.textContent)).toEqual([
+      '2026-08-01',
+      '2026-08-03',
+    ]);
+  });
+});
+
+/* ── Distribution ───────────────────────────────────────────────────────── */
+
+/**
+ * The component extracted from the one dashboard element that could NOT be
+ * converted onto this design system: a 24-bin audience clock.
+ *
+ * What it needed and `TimeSeries` could not express: an axis of names rather
+ * than dates, marks that do not interpolate between samples that have no
+ * in-between, a reference distribution to read the observed one against, and a
+ * bin that was never measured looking different from a bin that measured zero.
+ */
+const hours = (...values: (number | null)[]): DistributionBin[] =>
+  values.map((v, i) => ({ label: `${String(i).padStart(2, '0')}:00`, v }));
+
+describe('Distribution', () => {
+  const bars = (container: HTMLElement) =>
+    [...container.querySelectorAll('[data-slot="distribution-bar"]')];
+  const gaps = (container: HTMLElement) =>
+    [...container.querySelectorAll('[data-slot="distribution-gap"]')];
+
+  it('draws one bar per measured bin, in the order given', () => {
+    const { container } = render(<Distribution bins={hours(3, 1, 2)} label="Reads" />);
+    expect(bars(container)).toHaveLength(3);
+    expect(
+      container.querySelector('[data-slot="distribution"]')?.getAttribute('data-bin-count'),
+    ).toBe('3');
+  });
+
+  it('hatches an unmeasured bin rather than leaving the slot blank', () => {
+    // The defect this exists to prevent: a bar of height zero and a bar that
+    // was never drawn are the same picture.
+    const { container } = render(<Distribution bins={hours(3, null, 2)} />);
+    expect(bars(container)).toHaveLength(2);
+    expect(gaps(container)).toHaveLength(1);
+    expect(gaps(container)[0].getAttribute('data-state')).toBe('not-counted');
+    expect(gaps(container)[0].getAttribute('fill')).toMatch(/^url\(#distribution-hatch-/);
+  });
+
+  it('draws a measured zero as a zero-length bar — a different mark from the hatch', () => {
+    const { container } = render(<Distribution bins={hours(0, 5)} />);
+    expect(bars(container)).toHaveLength(2);
+    expect(gaps(container)).toHaveLength(0);
+    expect(bars(container)[0].getAttribute('height')).toBe('0');
+  });
+
+  it('counts the unmeasured bins in the accessible name, where a hatch cannot go', () => {
+    render(<Distribution bins={hours(1, null, 2)} label="Reads" />);
+    expect(screen.getByRole('img').getAttribute('aria-label')).toContain(
+      '1 bin not measured',
+    );
+  });
+
+  it('gives every instance its own hatch id, so two charts cannot share one pattern', () => {
+    const { container } = render(
+      <>
+        <Distribution bins={hours(1, null)} />
+        <Distribution bins={hours(2, null)} />
+      </>,
+    );
+    const ids = [...container.querySelectorAll('pattern')].map((p) => p.getAttribute('id'));
+    expect(new Set(ids).size).toBe(2);
+    // No `:` — React's generated ids are legal in an id and awkward in a url().
+    expect(ids.every((id) => !id!.includes(':'))).toBe(true);
+  });
+
+  it('publishes the peak rather than making every caller re-derive it', () => {
+    const { container } = render(<Distribution bins={hours(1, 9, 2)} />);
+    expect(
+      container.querySelector('[data-slot="distribution"]')?.getAttribute('data-peak-bin'),
+    ).toBe('1');
+  });
+
+  it('claims no peak when nothing at all was measured', () => {
+    const { container } = render(<Distribution bins={hours(null, null)} />);
+    expect(
+      container.querySelector('[data-slot="distribution"]')?.getAttribute('data-peak-bin'),
+    ).toBeNull();
+    // Still an axis, still 24 hours we looked at — hatch, not an empty box.
+    expect(gaps(container)).toHaveLength(2);
+    expect(screen.getByRole('img').getAttribute('aria-label')).toContain('no data');
+  });
+
+  it('says there are no BINS, which is not the same as no measurements', () => {
+    render(<Distribution bins={[]} label="Reads" />);
+    expect(screen.getByText(/No bins to plot/)).toBeTruthy();
+    expect(screen.queryByRole('img')).toBeNull();
+  });
+
+  it('keeps the caller className on the no-bins state', () => {
+    const { container } = render(<Distribution bins={[]} className="mb-6" />);
+    expect(container.querySelector('[data-slot="distribution-empty"]')?.className).toContain(
+      'mb-6',
+    );
+  });
+
+  it('reserves the chart box while loading instead of claiming there are no bins', () => {
+    const { container } = render(<Distribution bins={[]} loading className="mt-3" />);
+    expect(container.querySelector('[data-slot="distribution"]')?.getAttribute('class')).toContain(
+      'mt-3',
+    );
+    expect(screen.queryByText(/No bins to plot/)).toBeNull();
+  });
+
+  it('says a failed fetch is unknown, not flat', () => {
+    render(<Distribution bins={hours(1, 2)} error="x" />);
+    expect(screen.getByRole('alert').textContent).toMatch(/unknown, not flat/i);
+    expect(screen.queryByRole('img')).toBeNull();
+  });
+
+  it('merges className and forwards a ref on the error state', () => {
+    const ref = { current: null as HTMLElement | null };
+    const { container } = render(
+      <Distribution bins={[]} error="x" className="mb-2" ref={ref} />,
+    );
+    const box = container.querySelector('[data-slot="distribution-error"]')!;
+    expect(box.className).toContain('mb-2');
+    expect(ref.current).toBe(box);
+  });
+
+  it('forwards a ref and merges className on the plotted figure', () => {
+    const ref = { current: null as HTMLElement | null };
+    render(<Distribution bins={hours(1, 2)} ref={ref} className="mt-8" />);
+    expect(ref.current?.getAttribute('data-slot')).toBe('distribution');
+    expect(ref.current?.className).toContain('mt-8');
+  });
+
+  it('renders no caption when unlabelled', () => {
+    const { container } = render(<Distribution bins={hours(1, 2)} />);
+    expect(container.querySelector('figcaption')).toBeNull();
+  });
+
+  it('names the bin count in the caption when labelled', () => {
+    const { container } = render(<Distribution bins={hours(1, 2)} label="Reads" />);
+    expect(container.querySelector('figcaption')?.textContent).toContain('2 bins');
+  });
+});
+
+describe('Distribution — the second axis family, without a toggle', () => {
+  it('prints both readings of a slot instead of hiding one behind a switch', () => {
+    // The hand-rolled version had a UTC/local button. A toggle shows one axis
+    // and hides the other, so the reader holds one in their head — and the
+    // hidden one is missing from every screenshot of the chart.
+    const { container } = render(
+      <Distribution
+        bins={[
+          { label: '14:00 UTC', note: '09:00 local', v: 4 },
+          { label: '15:00 UTC', note: '10:00 local', v: 6 },
+        ]}
+      />,
+    );
+    const axis = container.querySelector('[data-slot="distribution-axis"]')!;
+    expect(axis.textContent).toContain('14:00 UTC');
+    expect(axis.textContent).toContain('09:00 local');
+  });
+
+  it('carries both readings into the readout and the data table', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <Distribution
+        showTable
+        bins={[{ label: '14:00 UTC', note: '09:00 local', v: 4 }, { label: '15:00 UTC', v: 6 }]}
+      />,
+    );
+    screen.getByRole('img').focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toContain(
+      '14:00 UTC (09:00 local)',
+    );
+    expect(screen.getByRole('rowheader', { name: '14:00 UTC (09:00 local)' })).toBeTruthy();
+  });
+});
+
+describe('Distribution — the reference overlay', () => {
+  const withReference: DistributionBin[] = [
+    { label: '00:00', v: 2, reference: 10 },
+    { label: '06:00', v: 8, reference: 40 },
+    { label: '12:00', v: 30, reference: 70 },
+  ];
+
+  it('draws the reference as a step, never as a sloped line', () => {
+    // A diagonal between two hourly aggregates claims the quantity passed
+    // through every value in between. Nothing exists in between to pass.
+    const { container } = render(<Distribution bins={withReference} />);
+    const path = container.querySelector('[data-slot="distribution-reference"]');
+    expect(path).not.toBeNull();
+    expect(path!.getAttribute('stroke-dasharray')).toBe('6 4');
+  });
+
+  it('draws nothing when no bin carries a reference', () => {
+    const { container } = render(<Distribution bins={hours(1, 2)} />);
+    expect(container.querySelector('[data-slot="distribution-reference"]')).toBeNull();
+    expect(container.querySelector('[data-slot="distribution-legend"]')).toBeNull();
+  });
+
+  it('puts both series on ONE domain, so the reference cannot be slid to cross', () => {
+    const { container } = render(<Distribution bins={withReference} />);
+    // 70 is the reference maximum; the readout prints the shared domain.
+    expect(
+      container.querySelector('[data-slot="distribution-readout"]')?.textContent,
+    ).toContain('70');
+  });
+
+  it('distinguishes the two marks in the legend by SHAPE, not only by hue', () => {
+    const { container } = render(
+      <Distribution bins={withReference} label="Reading" referenceLabel="Readers awake" />,
+    );
+    const legend = container.querySelector('[data-slot="distribution-legend"]')!;
+    expect(legend.textContent).toContain('Reading');
+    expect(legend.textContent).toContain('Readers awake');
+    expect(legend.querySelector('rect')).not.toBeNull();
+    expect(legend.querySelector('line')?.getAttribute('stroke-dasharray')).toBe('6 4');
+  });
+
+  it('names an unlabelled pair the same word everywhere — legend, readout, table', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Distribution bins={withReference} showTable />);
+    expect(container.querySelector('[data-slot="distribution-legend"]')?.textContent).toContain(
+      'Value',
+    );
+    expect(screen.getByRole('columnheader', { name: 'Reference' })).toBeTruthy();
+    screen.getByRole('img').focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toBe(
+      '00:00 · Value 2 · Reference 10',
+    );
+  });
+
+  it('describes BOTH series in the accessible name', () => {
+    render(
+      <Distribution bins={withReference} label="Reading" referenceLabel="Readers awake" />,
+    );
+    const name = screen.getByRole('img').getAttribute('aria-label') ?? '';
+    expect(name).toContain('Reading: 3 bins');
+    expect(name).toContain('Readers awake: 3 bins');
+  });
+
+  it('says "not measured" for a bin one series missed, rather than borrowing a neighbour', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <Distribution
+        bins={[
+          { label: '00:00', v: 2, reference: null },
+          { label: '06:00', v: 8, reference: 40 },
+        ]}
+      />,
+    );
+    screen.getByRole('img').focus();
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toContain(
+      'Reference not measured',
+    );
+  });
+
+  it('captions the table with both series once there is a reference', () => {
+    render(<Distribution bins={withReference} label="Reading" referenceLabel="Awake" />);
+    expect(screen.getByText('Reading, Awake — full data')).toBeTruthy();
+  });
+
+  it('captions a single-series table with its unit', () => {
+    render(<Distribution bins={hours(1, 2)} label="Reads" unit="views" />);
+    expect(screen.getByText('Reads — full data (views)')).toBeTruthy();
+  });
+
+  it('omits the unit from the caption when there is none', () => {
+    render(<Distribution bins={hours(1, 2)} label="Reads" />);
+    expect(screen.getByText('Reads — full data')).toBeTruthy();
+  });
+
+  it('labels the bin column with the caller noun', () => {
+    render(<Distribution bins={hours(1, 2)} showTable binLabel="Hour" />);
+    expect(screen.getByRole('columnheader', { name: 'Hour' })).toBeTruthy();
+  });
+
+  it('defaults the bin column label rather than leaving it blank', () => {
+    render(<Distribution bins={hours(1, 2)} showTable />);
+    expect(screen.getByRole('columnheader', { name: 'Bin' })).toBeTruthy();
+  });
+
+  it('ships the data table sr-only by default and visibly on request', () => {
+    const { container, rerender } = render(<Distribution bins={hours(1, 2)} />);
+    expect(container.querySelector('[data-slot="series-table"]')?.className).toContain(
+      'sr-only',
+    );
+    rerender(<Distribution bins={hours(1, 2)} showTable />);
+    expect(container.querySelector('[data-slot="series-table"]')?.className).not.toContain(
+      'sr-only',
+    );
+  });
+});
+
+describe('Distribution — reading a bin without a mouse', () => {
+  it('tells the reader the keyboard works, in the accessible name', () => {
+    render(<Distribution bins={hours(1, 2, 3)} label="Reads" />);
+    expect(screen.getByRole('img').getAttribute('aria-label')).toContain('arrow keys');
+  });
+
+  it('steps with the arrow keys and clamps instead of wrapping', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Distribution bins={hours(1, 2, 3)} unit="views" />);
+    screen.getByRole('img').focus();
+    await user.keyboard('{ArrowRight}');
+    expect(container.querySelector('output')?.textContent).toBe('01:00 · 2 views');
+    await user.keyboard('{ArrowLeft}{ArrowLeft}{ArrowLeft}');
+    expect(container.querySelector('output')?.textContent).toBe('00:00 · 1 views');
+  });
+
+  it('jumps to either end with Home and End', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Distribution bins={hours(1, 2, 3)} />);
+    screen.getByRole('img').focus();
+    await user.keyboard('{End}');
+    expect(container.querySelector('output')?.textContent).toBe('02:00 · 3');
+    await user.keyboard('{Home}');
+    expect(container.querySelector('output')?.textContent).toBe('00:00 · 1');
+  });
+
+  it('reads an unmeasured bin as "not measured", never as zero', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Distribution bins={hours(1, null)} />);
+    screen.getByRole('img').focus();
+    await user.keyboard('{End}');
+    expect(container.querySelector('output')?.textContent).toBe('01:00 · not measured');
+  });
+
+  it('clears the crosshair on Escape', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Distribution bins={hours(1, 2)} />);
+    screen.getByRole('img').focus();
+    await user.keyboard('{End}{Escape}');
+    expect(container.querySelector('output')?.textContent).toBe('');
+  });
+
+  it('leaves unrelated keys to the page — a focused chart is not a keyboard trap', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Distribution bins={hours(1, 2)} />);
+    screen.getByRole('img').focus();
+    await user.keyboard('a');
+    expect(container.querySelector('output')?.textContent).toBe('');
+  });
+
+  it('highlights the band the pointer is INSIDE, not the nearest bar centre', () => {
+    const spy = withLayout(900);
+    const { container } = render(<Distribution bins={hours(1, 2, 3, 4)} />);
+    // 44 of 900 user units is the left pad; the second band starts a quarter of
+    // the way across the remaining 856.
+    fireEvent.pointerMove(screen.getByRole('img'), { clientX: 44 + 856 * 0.3 });
+    expect(container.querySelector('output')?.textContent).toContain('01:00');
+    expect(container.querySelector('[data-slot="distribution-cursor"]')).not.toBeNull();
+    spy.mockRestore();
+  });
+
+  it('ignores pointer movement when the chart has no layout box', () => {
+    const { container } = render(<Distribution bins={hours(1, 2)} />);
+    fireEvent.pointerMove(screen.getByRole('img'), { clientX: 50 });
+    expect(container.querySelector('output')?.textContent).toBe('');
+  });
+
+  it('clears the crosshair when the pointer leaves and when focus leaves', () => {
+    const spy = withLayout(900);
+    const { container } = render(<Distribution bins={hours(1, 2, 3)} />);
+    const svg = screen.getByRole('img');
+    fireEvent.pointerMove(svg, { clientX: 900 });
+    fireEvent.pointerLeave(svg);
+    expect(container.querySelector('output')?.textContent).toBe('');
+    fireEvent.pointerMove(svg, { clientX: 900 });
+    fireEvent.blur(svg);
+    expect(container.querySelector('output')?.textContent).toBe('');
+    spy.mockRestore();
+  });
+});
+
+describe('Distribution — the x axis', () => {
+  const axisCells = (container: HTMLElement) => [
+    ...container.querySelectorAll('[data-slot="distribution-axis"] > span'),
+  ];
+
+  it('gives every bin a cell, so a label stays centred under its own band', () => {
+    // The alternative is percentage positioning, which needs an inline style.
+    const { container } = render(<Distribution bins={hours(1, 2, 3, 4, 5)} />);
+    expect(axisCells(container)).toHaveLength(5);
+  });
+
+  it('labels every bin while they still fit', () => {
+    const { container } = render(<Distribution bins={hours(1, 2, 3)} />);
+    expect(axisCells(container).map((c) => c.textContent)).toEqual([
+      '00:00',
+      '01:00',
+      '02:00',
+    ]);
+  });
+
+  it('thins to at most eight labels on a 24-bin clock', () => {
+    const { container } = render(
+      <Distribution bins={hours(...Array.from({ length: 24 }, (_, i) => i))} />,
+    );
+    const labelled = axisCells(container).filter((c) => c.textContent !== '');
+    expect(labelled).toHaveLength(8);
+    // Both ends survive — the ends are the range.
+    expect(labelled[0].textContent).toBe('00:00');
+    expect(labelled[7].textContent).toBe('23:00');
+  });
+
+  it('drops the MIDDLE labels below sm, never an end', () => {
+    const { container } = render(
+      <Distribution bins={hours(...Array.from({ length: 24 }, (_, i) => i))} />,
+    );
+    const hidden = axisCells(container)
+      .map((cell) => cell.firstElementChild)
+      .filter((child): child is Element => child !== null)
+      .map((child) => child.className.includes('hidden'));
+    expect(hidden[0]).toBe(false);
+    expect(hidden[hidden.length - 1]).toBe(false);
+    expect(hidden).toContain(true);
+  });
+
+  it('stays out of the accessibility tree — the bins are in the table and the readout', () => {
+    const { container } = render(<Distribution bins={hours(1, 2)} />);
+    expect(
+      container.querySelector('[data-slot="distribution-axis"]')?.getAttribute('aria-hidden'),
+    ).toBe('true');
+  });
+
+  it('pins the two end labels inward, because they are the only ones that can spill outside', () => {
+    // 24 bins at a 320 viewport gives each cell ~11px and "00:00" wants 30.
+    // Spilling over an empty neighbouring cell is harmless; spilling outside
+    // the row is what makes the page scroll sideways.
+    const { container } = render(<Distribution bins={hours(1, 2, 3, 4, 5)} />);
+    const alignments = axisCells(container).map((cell) =>
+      /text-(start|center|end)/.exec(cell.className)?.[0],
+    );
+    expect(alignments).toEqual([
+      'text-start',
+      'text-center',
+      'text-center',
+      'text-center',
+      'text-end',
+    ]);
+  });
+
+  it('anchors the y axis at zero, so bar lengths are comparable as ratios', () => {
+    const { container } = render(<Distribution bins={hours(3_412, 3_588)} />);
+    expect(
+      container.querySelector('[data-slot="distribution-readout"]')?.textContent,
+    ).toContain('0');
+    expect(container.querySelector('[data-slot="distribution-baseline"]')).not.toBeNull();
   });
 });

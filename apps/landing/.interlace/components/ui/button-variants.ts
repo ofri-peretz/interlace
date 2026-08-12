@@ -1,8 +1,24 @@
 /**
- * AUTO-GENERATED FILE — DO NOT EDIT DIRECTLY.
- * Source: apps/interlace-docs-baseline/ in the agents repo.
- * Edit there, then run `npm run sync` to redistribute.
- * Local edits will be overwritten on next sync (or refused without --force).
+ * ORPHANED COPY — hand-maintained here, and nothing syncs it.
+ *
+ * The old banner said "DO NOT EDIT — source: apps/interlace-docs-baseline/ in
+ * the agents repo, run `npm run sync`". The generator is real and still runs,
+ * but it does NOT write here: `agents/interlace/docs-baseline/
+ * interlace.targets.json` lists four targets — `eslint/apps/docs`,
+ * `serverless/apps/docs`, and the agents repo's own `apps/interlace-landing`
+ * and `apps/blog`. This app is not among them. It was seeded from that
+ * baseline once and has been on its own since (last touched 2026-05-29).
+ *
+ * So editing here is correct and durable — no sync will overwrite it — and
+ * the "edit the source instead" instruction would have sent the fix to a repo
+ * that never delivers it to this file.
+ *
+ * Two things follow. This file is also a SNAPSHOT of
+ * `packages/ui/src/primitives/button-variants.ts` and has drifted from it;
+ * diff before trusting it, since the contrast contract below is enforced
+ * there by `composite-contrast-lock` and by nothing here. And the upstream
+ * baseline still carries the defects fixed below, so its four real consumers
+ * still have them.
  */
 /**
  * Adapted from shadcn/ui: https://ui.shadcn.com/docs/components/button-variants
@@ -23,13 +39,28 @@ const buttonVariants = cva(
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
         destructive:
           'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+        // The three fixes below are ported from
+        // `packages/ui/src/primitives/button-variants.ts`, where each carries
+        // its full derivation and a lock. The rule they share: a variant either
+        // declares an opaque surface AND the foreground on it, or declares
+        // neither and inherits both. Declaring only a foreground — or painting
+        // a translucent surface under one — measures the text against whatever
+        // section it was dropped into.
+        //
+        // `text-foreground` added, `dark:bg-input/30` and
+        // `dark:hover:bg-input/50` removed. This snapshot was two fixes behind:
+        // it never got the original `text-foreground` (1.05:1 on a branded
+        // section) nor the opacity fix (2.00:1 in dark).
         outline:
-          'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+          'border bg-background text-foreground shadow-xs hover:bg-accent hover:text-accent-foreground dark:border-input',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost:
-          'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
-        link: 'text-primary underline-offset-4 hover:underline',
+        // `dark:hover:bg-accent/50` removed — 3.07:1 on a branded surface.
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        // `text-primary` removed — it was 1.00:1 on `bg-primary`, the exact
+        // colour of its own background. Inherits now, underlined at rest so
+        // the affordance is not the hue.
+        link: 'underline underline-offset-4 decoration-from-font hover:decoration-2',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

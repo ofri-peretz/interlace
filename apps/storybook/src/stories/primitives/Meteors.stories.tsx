@@ -1,6 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Meteors } from '@interlace/ui/meteors';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
+
+/**
+ * The head-rim glow token, as `meteors.meta.json` ships it.
+ *
+ * It is declared in the registry item's `cssVars.light` / `cssVars.dark` — NOT
+ * in `packages/ui/styles` — so a stock Storybook has no `--meteor-glow` at all
+ * and the rim silently does not paint. Every hero below therefore declares it
+ * itself, at the value a consumer's `:root` / `.dark` would get, so these
+ * stories show what an installed component looks like rather than what the
+ * package alone can render.
+ *
+ * (Until this session the component read `var(--color-meteor-glow)` while the
+ * item declared `meteor-glow`. `--color-*` is the Tailwind `@theme` colour
+ * namespace and `cssVars.light`/`dark` write the BARE name, so the two never
+ * met and the glow was dead on every install. Setting the wrong name here
+ * would make these stories green over a broken component again — which is why
+ * the value comes from the item's own key.)
+ */
+const GLOW_ON_DARK = { '--meteor-glow': 'oklch(1 0 0 / 0.1)' } as React.CSSProperties;
+const GLOW_ON_LIGHT = { '--meteor-glow': 'oklch(1 0 0 / 0.06)' } as React.CSSProperties;
 
 const meta: Meta<typeof Meteors> = {
   title: 'Primitives/Meteors',
@@ -10,7 +30,7 @@ const meta: Meta<typeof Meteors> = {
     docs: {
       description: {
         component:
-          'A decorative meteor shower for hero surfaces. It is `absolute inset-0`, `aria-hidden` and `pointer-events-none`, so it only works inside a `relative` ancestor that has real height and `overflow-hidden` — every story below supplies one. `number` is the whole API: trail length, opacity, duration and origin are randomised per meteor at mount, because a shower of identical streaks reads as a CSS animation rather than a sky. Emits `null` under `prefers-reduced-motion: reduce`.',
+          'A decorative meteor shower for hero surfaces. It is `absolute inset-0`, `aria-hidden` and `pointer-events-none`, so it only works inside a `relative` ancestor that has real height and `overflow-hidden` — every story below supplies one. `number` is the whole API: trail length, opacity, duration and origin are randomised per meteor at mount, because a shower of identical streaks reads as a CSS animation rather than a sky. Emits `null` under `prefers-reduced-motion: reduce`. The head-rim glow reads `--meteor-glow`, which the registry item ships via `cssVars.light` / `cssVars.dark`; each story declares it so the rim is visible here too.',
       },
     },
   },
@@ -52,7 +72,10 @@ export const Default: Story = {
   // key: origins/trails/durations are randomised once per mount, so remount on
   // every arg change — otherwise raising `number` only appends meteors.
   render: (args) => (
-    <div className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950">
+    <div
+      style={GLOW_ON_DARK}
+      className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950"
+    >
       <Meteors key={args.number} {...args} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-100">
         <span className="text-xs uppercase tracking-widest">
@@ -65,7 +88,10 @@ export const Default: Story = {
 
 export const LightSurface: Story = {
   render: () => (
-    <div className="relative h-[480px] w-full overflow-hidden rounded-xl bg-gradient-to-b from-sky-50 to-sky-200">
+    <div
+      style={GLOW_ON_LIGHT}
+      className="relative h-[480px] w-full overflow-hidden rounded-xl bg-gradient-to-b from-sky-50 to-sky-200"
+    >
       <Meteors number={15} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-700">
         <span className="text-xs uppercase tracking-widest">
@@ -78,7 +104,10 @@ export const LightSurface: Story = {
 
 export const Sparse: Story = {
   render: () => (
-    <div className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950">
+    <div
+      style={GLOW_ON_DARK}
+      className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950"
+    >
       <Meteors number={6} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-100">
         <span className="text-xs uppercase tracking-widest">
@@ -100,6 +129,7 @@ export const Density: Story = {
       {[8, 22, 45].map((n) => (
         <div
           key={n}
+          style={GLOW_ON_DARK}
           className="relative h-[360px] overflow-hidden rounded-xl bg-slate-950"
         >
           <Meteors number={n} />
@@ -116,7 +146,7 @@ export const Density: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

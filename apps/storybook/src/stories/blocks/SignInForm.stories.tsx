@@ -2,7 +2,7 @@ import type { FormEvent } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { SignInForm } from '@interlace/ui/patterns/sign-in-form';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof SignInForm> = {
   title: 'Blocks/SignInForm',
@@ -119,7 +119,7 @@ export const WithActionsAndFooter: Story = {
  */
 export const Dark: Story = {
   ...WithActionsAndFooter,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 /**

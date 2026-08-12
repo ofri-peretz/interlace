@@ -11,7 +11,7 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from '@interlace/ui/pagination';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * Story-only args. `page` / `totalPages` / `onPageChange` are NOT props of
@@ -258,7 +258,7 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PublishedDate, MIN_VIEWPORT } from '@interlace/ui/published-date';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/PublishedDate',
@@ -87,6 +87,10 @@ export const Loading: Story = {
 };
 
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="flex flex-col gap-4 bg-background p-6 text-foreground">
       <div>
@@ -125,7 +129,7 @@ export const Variants: Story = {
 
 export const Dark: Story = {
   ...Variants,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

@@ -97,6 +97,7 @@ interface SkeletonProps
 const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   'article-card',
   'author-byline',
+  'data-table',
   'newsletter-form',
   'page-header',
   'prev-next-post',
@@ -117,6 +118,11 @@ const COMPOSITE_VARIANTS = new Set<SkeletonVariant>([
   // silhouette is a header row plus repeating rows, which a single painted box
   // cannot express. `chart` and `sparkline` are honest rectangles.
   'metric-table',
+  // Absence vocabulary (wave 10). Both are composites: a strip is label/value
+  // pairs across a grid and a meter is a label row above a track, and neither
+  // silhouette can be expressed as a single painted box.
+  'meter',
+  'stat-strip',
 ]);
 
 function Skeleton({
@@ -398,6 +404,34 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
           <div className="bg-muted-foreground/10 ml-md h-3 w-3/5 rounded-sm" />
         </div>
       );
+    case 'data-table':
+      // Header row plus five body rows at the DataTable's own cadence: a
+      // narrow leading cell for the selection checkbox, a wide first column
+      // (the row header), then three data columns. Five rows because the
+      // shortest page size the DS ships is 10 and half a page is enough to
+      // reserve a table-shaped hole without pretending to know the caller's
+      // pageSize — the variant catalogue is a static class map, so the count
+      // cannot be a prop.
+      return (
+        <div className="flex flex-col gap-sm p-sm">
+          <div className="flex items-center gap-sm border-b border-border pb-sm">
+            <div className="bg-muted-foreground/10 size-4 rounded-sm" />
+            <div className="bg-muted-foreground/10 h-3 w-1/4 rounded-sm" />
+            <div className="bg-muted-foreground/10 ml-auto h-3 w-16 rounded-sm" />
+            <div className="bg-muted-foreground/10 h-3 w-16 rounded-sm" />
+            <div className="bg-muted-foreground/10 h-3 w-12 rounded-sm" />
+          </div>
+          {[0, 1, 2, 3, 4].map((row) => (
+            <div key={row} className="flex items-center gap-sm">
+              <div className="bg-muted-foreground/10 size-4 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-4 w-1/3 rounded-sm" />
+              <div className="bg-muted-foreground/10 ml-auto h-4 w-16 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-4 w-16 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-4 w-12 rounded-sm" />
+            </div>
+          ))}
+        </div>
+      );
     case 'metric-table':
       // Header row plus four metric rows. The trailing narrow cells stand in
       // for the sparkline and delta columns, so the row width the data will
@@ -416,6 +450,34 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
               <div className="bg-muted-foreground/10 ml-auto h-4 w-10 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-[90px] rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-12 rounded-sm" />
+            </div>
+          ))}
+        </div>
+      );
+    case 'meter':
+      // Label row (name left, value right) above the track — the exact
+      // geometry Meter settles into, so the swap is CLS-neutral.
+      return (
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between gap-sm">
+            <div className="bg-muted-foreground/10 h-3 w-1/3 rounded-sm" />
+            <div className="bg-muted-foreground/10 h-3 w-10 rounded-sm" />
+          </div>
+          <div className="bg-muted-foreground/10 h-2.5 w-full rounded-full" />
+        </div>
+      );
+    case 'stat-strip':
+      // Four label/value pairs on the strip's own two-track mobile grid, so
+      // the placeholder reflows at exactly the breakpoints the real strip does.
+      return (
+        <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-3 lg:grid-cols-4">
+          {[0, 1, 2, 3].map((cell) => (
+            <div
+              key={cell}
+              className="border-muted-foreground/10 flex min-w-0 flex-col gap-1 border-s-2 ps-2"
+            >
+              <div className="bg-muted-foreground/10 h-3 w-3/4 rounded-sm" />
+              <div className="bg-muted-foreground/10 h-5 w-1/2 rounded-sm" />
             </div>
           ))}
         </div>

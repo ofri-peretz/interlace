@@ -1,23 +1,19 @@
-import * as React from 'react';
-import { Clock } from 'lucide-react';
-
-import { cn } from '../lib/cn.js';
-import { Skeleton } from './skeleton.js';
-
 /**
  * @interlace/ui — ReadingTime
  *
- * Compact "<N> min read" badge for articles, blog cards, docs index entries
- * — anywhere a content surface needs to signal expected reading effort
- * before the reader commits. Renders as an inline `<span>` so it can sit
- * next to a date, an author, or a tag cluster without imposing block
- * layout. Server primitive — no hooks, no client surface.
+ * A compact "N min read" badge for article headers, blog cards and docs index
+ * rows. It renders an inline `<span>`, so it sits beside a date or a tag row
+ * without imposing block layout.
  *
- * The displayed string is always `"<minutes> min read"` (English-only at
- * this primitive layer; localisation belongs in a higher-altitude wrapper
- * that swaps the label text via children). The numeric `minutes` value is
- * also exposed on `data-reading-time` so scrapers, analytics, and JSON-LD
- * builders can read it without parsing the rendered text.
+ * The number is repeated on `data-reading-time`, so analytics, scrapers and
+ * JSON-LD builders never have to parse the rendered text.
+ *
+ * The label is a literal: `{minutes} min read`, English, hard-coded. There is
+ * no children slot and no way to translate it from a call site — localisation
+ * means a wrapper at a higher altitude, not a prop here. Nothing rounds or
+ * validates `minutes` either; a `2.5` prints as "2.5 min read".
+ *
+ * Server primitive — no hooks, no client boundary.
  *
  * ## Anatomy
  *
@@ -45,6 +41,12 @@ import { Skeleton } from './skeleton.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `<span>` is inert text; icon marked `aria-hidden`           |
  */
+
+import * as React from 'react';
+import { Clock } from 'lucide-react';
+
+import { cn } from '../lib/cn.js';
+import { Skeleton } from './skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

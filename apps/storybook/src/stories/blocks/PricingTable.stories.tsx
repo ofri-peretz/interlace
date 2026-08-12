@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PricingTable } from '@interlace/ui/patterns/pricing-table';
 import { Button } from '@interlace/ui/button';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof PricingTable> = {
   title: 'Blocks/PricingTable',
@@ -119,5 +119,5 @@ export const Default: Story = {
 
 export const Loading: Story = { args: { loading: true, cols: 3 } };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

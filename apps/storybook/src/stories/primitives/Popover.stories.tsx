@@ -9,7 +9,7 @@ import {
 import { Button } from '@interlace/ui/button';
 import { Label } from '@interlace/ui/label';
 import { Input } from '@interlace/ui/input';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 /**
  * `Popover` is Base UI's `Popover.Root` — a logical container with no DOM, so
@@ -163,6 +163,10 @@ export const Default: Story = {
  * control rather than this grid pretending to be exhaustive.
  */
 export const Placement: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   parameters: { layout: 'padded' },
   render: () => (
     <div className="grid grid-cols-1 gap-2xl p-2xl md:grid-cols-2">
@@ -231,9 +235,8 @@ export const KeyboardFlow: Story = {
 };
 
 export const Dark: Story = {
-  ...Default,
-  args: { defaultOpen: true },
-  decorators: [withDark],
+  ...Placement,
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

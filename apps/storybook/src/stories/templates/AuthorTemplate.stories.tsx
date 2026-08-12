@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AuthorTemplate } from '@interlace/ui/templates/author-template';
 import { AuthorByline } from '@interlace/ui/patterns/author-byline';
 import { ArticleListGrid } from '@interlace/ui/patterns/article-list-grid';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof AuthorTemplate> = {
   title: 'Templates/AuthorTemplate',
@@ -67,7 +67,7 @@ export const Default: Story = {
   },
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
 
 /**

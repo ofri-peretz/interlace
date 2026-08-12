@@ -45,6 +45,7 @@
  * | R18  | Tailwind only              | zero inline `style`                                      |
  * | R19  | Tokens only                | `fill-viz-node`, `stroke-viz-edge`, `--viz-*` family     |
  * | R20  | AA contrast                | active edge/node ≥9:1; ambient edge documented decorative|
+ * | R23  | Absence is a vocabulary    | `loading` / `error` / no-nodes are three different panels|
  * | R25  | Client component           | selection state + key handlers                           |
  * | R26  | A11y                       | `role="img"` + label + roving focus + node table         |
  */
@@ -52,6 +53,11 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import {
+  announceDataState,
+  resolveDataState,
+  type AnnouncementOptions,
+} from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
 import {
   concentricLayout,
@@ -84,6 +90,17 @@ export interface NetworkGraphProps extends Omit<React.ComponentProps<'div'>, 'on
   renderDetail?: (node: GraphNode) => React.ReactNode;
   /** Render a `<Skeleton variant="chart" />` placeholder. */
   loading?: boolean;
+  /**
+   * The fetch failed.
+   *
+   * "No connections observed yet" is a statement about the NETWORK — it says
+   * the reader has not built one. A failed request says nothing about the
+   * network at all, and letting the empty copy stand in for it accuses the
+   * reader of an absence that may not exist.
+   */
+  error?: unknown;
+  /** Context for the absence sentences — noun, coverage, reason. */
+  announce?: AnnouncementOptions;
 }
 
 export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
@@ -98,6 +115,8 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
       limitOptions = [40, 90, 200],
       renderDetail,
       loading = false,
+      error,
+      announce,
       className,
       ...props
     },
@@ -156,7 +175,9 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
     // Before the empty branch: a graph whose data has not arrived is not a graph
     // with no connections, and saying the second while the first is true is a lie
     // the reader has no way to detect.
-    if (loading) {
+    const absence = resolveDataState({ loading, error }, announce);
+
+    if (absence.state === 'loading') {
       return (
         <Skeleton
           variant="chart"
@@ -164,6 +185,27 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
           data-min-viewport={String(MIN_VIEWPORT)}
           className={className}
         />
+      );
+    }
+
+    if (absence.state === 'error') {
+      return (
+        <div
+          ref={ref}
+          data-slot="network-graph-error"
+          data-state="error"
+          data-min-viewport={String(MIN_VIEWPORT)}
+          className={cn(
+            'w-full rounded-lg border border-destructive/40 p-6',
+            className,
+          )}
+          {...props}
+        >
+          <p role="alert" className="text-sm text-destructive">
+            {announceDataState('error', announce)} The network is unknown, not
+            empty.
+          </p>
+        </div>
       );
     }
 

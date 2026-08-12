@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { useArgs } from 'storybook/preview-api';
 import { Switch } from '@interlace/ui/switch';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 import { Skeleton } from '@interlace/ui/skeleton';
 
 const meta: Meta<typeof Switch> = {
@@ -151,8 +151,12 @@ export const Checked: Story = {
  * label association this primitive depends on.
  */
 export const SettingsRows: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
-    <div className="w-[420px] max-w-full divide-y divide-border rounded-md border border-border">
+    <div className="w-full max-w-float divide-y divide-border rounded-md border border-border">
       {[
         {
           label: 'Respect reduced motion',
@@ -231,8 +235,8 @@ export const Invalid: Story = {
 };
 
 export const Dark: Story = {
-  ...Default,
-  decorators: [withDark],
+  ...SettingsRows,
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

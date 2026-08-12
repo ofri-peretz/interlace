@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { InstallProofPanel } from '@/components/install-proof';
 import { SiteNav } from '@/components/site-nav';
+import { TokenNamespaceWarning } from '@/components/token-namespace';
+import { loadInstallProof } from '@/lib/install-proof';
 
 export const metadata: Metadata = {
   title: 'Getting started',
@@ -15,7 +18,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GettingStartedPage() {
+export default async function GettingStartedPage() {
+  const proof = await loadInstallProof();
+
   return (
     <div className="bg-background text-foreground min-h-screen">
       <SiteNav />
@@ -41,14 +46,21 @@ export default function GettingStartedPage() {
           description={
             <>
               The <code className="font-mono text-foreground">@interlace/theme</code>{' '}
-              bundle ships five stylesheets in the right cascade order:{' '}
+              bundle ships the{' '}
+              <code className="font-mono">styles/interlace/index.css</code>{' '}
+              barrel plus the six leaves it imports (
               <code className="font-mono">tokens</code> →{' '}
               <code className="font-mono">foundation</code> →{' '}
               <code className="font-mono">preflight</code> →{' '}
               <code className="font-mono">theme</code> →{' '}
-              <code className="font-mono">interlace-theme</code>. One command
-              lands the type / spacing / radius scales, the WCAG 2.2 SC 2.4.13
-              focus ring, the <code className="font-mono">[data-min-viewport]</code>{' '}
+              <code className="font-mono">interlace-theme</code> →{' '}
+              <code className="font-mono">themes/harbor</code>). Import the
+              barrel and the cascade order — including the part that is not
+              guessable, where a theme file must come <em>after</em>{' '}
+              <code className="font-mono">interlace-theme</code> — is handled
+              for you. One command lands the type / spacing / radius scales, the
+              WCAG 2.2 SC 2.4.13 focus ring, the{' '}
+              <code className="font-mono">[data-min-viewport]</code>{' '}
               container contract, reduced-motion respect, and the burnt-orange
               brand palette.
             </>
@@ -58,6 +70,12 @@ export default function GettingStartedPage() {
             label="Install the theme"
             code="npx shadcn@latest add @interlace/theme"
           />
+          <div className="mt-3">
+            <CodeBlock
+              label="globals.css — one import, not six"
+              code={`@import "tailwindcss";\n@import "./styles/interlace/index.css";`}
+            />
+          </div>
         </Step>
 
         {/* ─── Step 2: layout starter ────────────────────────────────── */}
@@ -103,6 +121,12 @@ export default function GettingStartedPage() {
             code="npx shadcn@latest add @interlace/a11y-starter"
           />
         </Step>
+
+        {/* ─── Token namespace collisions ────────────────────────────── */}
+        {/* Placed immediately after the install steps, not at the bottom:
+            an adopter who reads this AFTER installing has already shipped
+            the collision. */}
+        <TokenNamespaceWarning />
 
         {/* ─── data-interlace-dev opt-in ─────────────────────────────── */}
         <section className="mt-16">
@@ -241,6 +265,15 @@ export default function GettingStartedPage() {
             </a>
           </div>
         </section>
+
+        {/*
+          The three steps above are instructions. This is the evidence they
+          work — the same commands, run by CI against a throwaway app, with the
+          result committed. It goes last because it answers the question a
+          reader has only after reading the instructions: "and does that
+          actually happen?"
+        */}
+        {proof ? <InstallProofPanel proof={proof} /> : null}
 
         <footer className="border-border mt-16 border-t pt-8 text-sm">
           <p className="text-muted-foreground">

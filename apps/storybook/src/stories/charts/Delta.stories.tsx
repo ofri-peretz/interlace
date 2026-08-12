@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 import { Delta } from '@interlace/ui/charts/delta';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { FALLING, FLAT, RISING } from './fixtures';
 
@@ -113,5 +113,5 @@ export const NotEnoughData: Story = {
   },
 };
 
-export const Dark: Story = { args: { points: RISING, unit: 'downloads' }, decorators: [withDark] };
+export const Dark: Story = { args: { points: RISING, unit: 'downloads' }, globals: { theme: 'dark' } };
 export const Rtl: Story = { args: { points: RISING, unit: 'downloads' }, decorators: [withRtl] };

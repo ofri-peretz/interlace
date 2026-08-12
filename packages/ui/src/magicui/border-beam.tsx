@@ -1,5 +1,69 @@
 "use client"
 
+/**
+ * @interlace/ui — BorderBeam
+ *
+ * A single gradient square that travels around the inside edge of its parent,
+ * drawn with `offset-path` and a two-layer CSS mask so only the border ring
+ * shows. Drop it inside any `relative`, rounded container to give that
+ * container a moving outline.
+ *
+ * It positions itself `absolute inset-0` and inherits the parent's radius, so
+ * the only thing the parent has to supply is a stacking context.
+ *
+ * Our reimplementation of the Magic UI component of the same name, rebuilt on
+ * CSS `offset-path` instead of Framer Motion — the whole effect is one
+ * compositor-driven property and this file imports no animation library.
+ *
+ * ## Anatomy
+ *
+ *   div                              (absolute inset-0, rounded-[inherit],
+ *                                     transparent border + mask-intersect —
+ *                                     this is what clips the beam to the ring)
+ *     └─ div.animate-border-beam     (the beam: an aspect-square gradient
+ *                                     riding `offset-path: rect(… round Npx)`)
+ *
+ * ## Motion
+ *
+ * Pure CSS, and covered twice: `.animate-border-beam` is named in the
+ * `prefers-reduced-motion: reduce` block in `styles/tokens.css`
+ * (`animation: none !important`) and also caught by the `animation-duration`
+ * wildcard in `styles/preflight.css`. There is no `useReducedMotion` call and
+ * none is needed. Note what `reduce` leaves behind: with the animation off,
+ * `offset-distance` sits at its initial `0%`, so the beam parks as a static
+ * gradient square at the start of the path rather than disappearing.
+ *
+ * ## Colour, and why `--chart-2` is allowed here
+ *
+ * `colorFrom` / `colorTo` default to `var(--primary)` → `var(--chart-2)`, the
+ * brand orange-to-green sweep. They were the raw literals `#ffaa40` / `#9c40ff`
+ * (R19), which also meant the beam did not re-resolve per theme.
+ *
+ * `--chart-2` is a 3:1-class token, not a 4.5:1 one, and that is the right
+ * choice HERE specifically: the beam is a decorative overlay inside a container
+ * that draws its own `border`, so it is neither text (SC 1.4.3) nor the
+ * boundary that identifies a control (SC 1.4.11) — remove it entirely and
+ * nothing becomes unusable. Contrast `magicui/animated-gradient-text.tsx`,
+ * where the gradient IS the glyph fill and both stops are consequently pinned
+ * to text-grade tokens.
+ *
+ * ## Accessibility
+ *
+ * The wrapper carries `aria-hidden="true"`, which takes the beam with it — a
+ * subtree hidden at the root is hidden entire. Both divs are empty, roleless
+ * and `pointer-events-none`; there is nothing here for a screen reader to
+ * announce, and before this the reader walked two anonymous group nodes
+ * inside every card that used the effect. `aria-hidden` sits on the wrapper
+ * ONLY: putting it on the beam as well would be redundant, and putting it
+ * anywhere a consumer's `className` could reach would let a caller
+ * accidentally hide real content.
+ *
+ * ## One API edge worth knowing
+ *
+ * `className` lands on the BEAM element, not the wrapper. Use it to restyle
+ * the travelling gradient; you cannot reach the masked ring from outside.
+ */
+
 import { cn } from "../lib/cn.js"
 
 interface BorderBeamProps {
@@ -16,11 +80,13 @@ interface BorderBeamProps {
    */
   delay?: number
   /**
-   * The color of the border beam from.
+   * Leading colour of the travelling gradient.
+   * @default "var(--primary)"
    */
   colorFrom?: string
   /**
-   * The color of the border beam to.
+   * Trailing colour of the travelling gradient, before it fades to transparent.
+   * @default "var(--chart-2)"
    */
   colorTo?: string
   /**
@@ -56,8 +122,8 @@ export const BorderBeam = ({
   size = 50,
   delay = 0,
   duration = 6,
-  colorFrom = "#ffaa40",
-  colorTo = "#9c40ff",
+  colorFrom = "var(--primary)",
+  colorTo = "var(--chart-2)",
   style,
   reverse = false,
   initialOffset = 0,
@@ -65,6 +131,7 @@ export const BorderBeam = ({
 }: BorderBeamProps) => {
   return (
     <div
+      aria-hidden="true"
       className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
       style={
         {

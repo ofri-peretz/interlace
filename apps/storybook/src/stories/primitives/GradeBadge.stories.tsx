@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { GradeBadge, GRADE_VALUES } from '@interlace/ui/grade-badge';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof GradeBadge> = {
   title: 'Primitives/GradeBadge',
@@ -56,7 +56,7 @@ export const Default: Story = {
   // Shown in the row it was built for — a chip alone in the canvas hides the
   // one thing that matters, that the colour is legible next to real copy.
   render: (args) => (
-    <div className="flex w-[420px] max-w-full items-center justify-between rounded-md border border-fd-border px-4 py-3">
+    <div className="flex w-full max-w-float items-center justify-between rounded-md border border-border px-4 py-3">
       <div className="flex flex-col">
         <span className="text-sm font-medium">eslint-plugin-jwt</span>
         <span className="text-xs text-muted-foreground">Security scorecard</span>
@@ -86,5 +86,5 @@ export const Sizes: Story = {
   ),
 };
 
-export const Dark: Story = { ...Ladder, decorators: [withDark] };
+export const Dark: Story = { ...Ladder, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Ladder, decorators: [withRtl] };

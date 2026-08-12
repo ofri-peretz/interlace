@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ScorecardTemplate } from '@interlace/ui/templates/scorecard-template';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof ScorecardTemplate> = {
   title: 'Templates/ScorecardTemplate',
@@ -84,7 +84,7 @@ export const Default: Story = {
   },
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
 
 /**

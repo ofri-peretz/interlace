@@ -56,7 +56,16 @@ export const MIN_VIEWPORT = 320 as const;
 const tagVariants = cva(
   [
     // Pill anchor — rounded-full border, compact padding, small UI type.
-    'inline-flex items-center rounded-full border border-border',
+    //
+    // `bg-background` belongs to the base, not to a tone, because EVERY tone
+    // below names a foreground and none of them named a surface. Transparent,
+    // a tag took whatever it was dropped on: `tone="primary"` inside a
+    // `<CTASection tone="primary">` was `text-primary` on `bg-primary`, i.e.
+    // 1.00:1, and `default` was 2.23:1 light / 1.44:1 dark. Painting the
+    // surface here keeps the whole tone API intact — each tone is once again
+    // measured against the background it was designed for — and costs one
+    // class instead of a redesign. Locked by composite-contrast-lock.
+    'inline-flex items-center rounded-full border border-border bg-background',
     'px-2.5 py-0.5 text-xs',
     'transition-colors',
     // Brand-accent hover lift (only on the interactive surface).

@@ -33,6 +33,16 @@ const NON_COMPONENT_FILES = new Set([
   // primitive; the Skeleton component itself (skeleton.tsx) is what
   // ships the matching Skeleton.stories.tsx.
   'skeleton-variants.ts',
+  // The absence vocabulary's pure halves (wave 10.2/10.3). Both are `.ts`
+  // modules with no React import — the union + precedence + announcements,
+  // and the meter arithmetic. They live beside their components rather than
+  // in `src/lib/` because a `../lib/` import that is not a declared LIB_FILE
+  // survives unrewritten into the registry item and makes the whole component
+  // silently uninstallable; a sibling `.ts` ships inside the item's `files[]`.
+  // Their contract is proved by `data-state-model.test.ts` /
+  // `meter-scale.test.ts`, not by a story.
+  'data-state-model.ts',
+  'meter-scale.ts',
 ]);
 
 const kebabToPascal = (name: string) =>

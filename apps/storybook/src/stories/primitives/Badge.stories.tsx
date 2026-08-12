@@ -69,7 +69,22 @@ type Story = StoryObj<typeof Badge>;
 export const Default: Story = {
   args: { children: 'Security', variant: 'default', loading: false },
 };
+/**
+ * The skeleton the registry embeds as this component's loading demo.
+ *
+ * A dedicated story rather than the site's `args: loading:!true` override:
+ * the preview story is a `render` composition, and a render callback that
+ * ignores `args` swallows an arg override silently — the page would have
+ * shown a normal Badge under a "loading state" caption.
+ */
+export const Loading: Story = {
+  args: { children: 'Security', loading: true },
+};
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="flex flex-wrap items-center gap-2">
       <Badge>Default</Badge>
@@ -82,7 +97,7 @@ export const Variants: Story = {
   ),
 };
 export const Dark: Story = {
-  args: { children: 'Security' },
+  ...Variants,
   globals: { theme: 'dark' },
   parameters: { backgrounds: { default: 'dark' } },
   decorators: [(S) => <div className="dark"><S /></div>],

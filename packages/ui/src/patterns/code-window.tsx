@@ -1,41 +1,64 @@
 'use client';
 
+/**
+ * @interlace/ui — CodeWindow + CodeWindowTitleBar
+ *
+ * macOS-style window chrome for wrapping editor, terminal, or code-preview
+ * content: a bordered `bg-card` box plus an optional title bar with the three
+ * traffic-light dots, a centred monospace filename, and an actions slot.
+ *
+ * It is chrome only — it renders whatever you nest inside it and has no
+ * opinion about the content.
+ *
+ * Modeled on MagicUI's `Terminal` chrome (the dots + bar layout convention)
+ * but reduced to the visual primitive — no animation, no terminal-specific
+ * line emitter. Reach for MagicUI's `Terminal` when you want the typed-prompt
+ * animation; reach for this when you want a window-shaped container.
+ *
+ * ## Anatomy
+ *
+ *   CodeWindow                       (div — data-slot="code-window")
+ *     ├─ CodeWindowTitleBar          (div — data-slot="code-window-title-bar")
+ *     │   ├─ span aria-hidden        (data-slot="code-window-traffic-lights")
+ *     │   │   └─ 3 × span size-3     (bg-window-control-close/-minimize/-zoom)
+ *     │   ├─ span                    (title — centred, font-mono text-xs)
+ *     │   └─ span                    (actions — ml-auto)
+ *     └─ children                    (the body: editor, <pre>, anything)
+ *
+ * ## No accessible name, deliberately
+ *
+ * The root is a bare `<div>`: no role, no label. That is the correct shape for
+ * this component rather than a gap in it. It claims no role, so ARIA requires
+ * it to expose no name — and an `aria-label` on a roleless `<div>` is ignored
+ * by most of the mapping specs anyway, so adding one would buy a false sense
+ * of coverage. Nothing is hidden either: the dots are `aria-hidden` because
+ * they are ornament, while the `title` slot is an ordinary `<span>` whose text
+ * is read in document order like any other text, and the body renders whatever
+ * you nest with its own semantics intact.
+ *
+ * If a particular window needs to be announced AS a region — a labelled
+ * landmark a screen-reader user can jump to — that is a call-site decision
+ * about that page's structure, so give it a role and a name there. Baking one
+ * in would make every code sample on a docs page a landmark.
+ *
+ * There is also no `MIN_VIEWPORT`: the chrome is one border and a 40px bar, so
+ * it inherits whatever width its container gives it.
+ *
+ * | Rule | Concept                     | Where in this file                                        |
+ * | ---- | --------------------------- | --------------------------------------------------------- |
+ * | R4   | Extends native el           | `React.ComponentProps<'div'>` on both parts               |
+ * | R6   | data-slot per part          | `code-window` / `-title-bar` / `-traffic-lights`          |
+ * | R7   | className merged + ...rest  | `cn(BASE, className)` + `{...props}`                      |
+ * | R10  | Composition seams           | `title` and `actions` are `ReactNode`, not strings        |
+ * | R18  | Tailwind only               | zero inline `style`                                       |
+ * | R19  | Tokens only                 | dots use `--window-control-*`, not the macOS hex literals |
+ * | R25  | Client directive            | `'use client'` is declared although neither part uses a hook |
+ */
+
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 
-/**
- * macOS-style code-window chrome — a shadcn-conventional `data-slot`-tagged
- * component for wrapping editor / terminal / code-preview content with a
- * polished IDE aesthetic.
- *
- * The chrome consists of:
- *   - A title bar (`<CodeWindowTitleBar>`) with the three macOS traffic-light
- *     dots (decorative — `aria-hidden`, the title slot carries the
- *     accessible name) and an optional title slot.
- *   - The body — anything you nest inside `<CodeWindow>` after the title bar.
- *
- * The styling is intentionally light: a subtle border, modest shadow,
- * and rounded corners. The dots quote the colors macOS ships in its window
- * controls so the chrome reads as "code window" at a glance — but they run
- * through the `--window-control-*` brand tokens (interlace-theme.css)
- * rather than raw hex, so a consumer forking the brand restyles the chrome
- * from CSS instead of patching this file (R19).
- *
- * Modeled on MagicUI's `Terminal` chrome (the dots + bar layout convention)
- * but reduced to the visual primitive — no animation, no terminal-specific
- * line emitter. Use this when you want a window-shaped container; reach
- * for `Terminal` from MagicUI when you want a terminal-prompt animation.
- *
- * Example:
- *
- * ```tsx
- * <CodeWindow>
- *   <CodeWindowTitleBar title="example.ts" />
- *   <MyEditor />
- * </CodeWindow>
- * ```
- */
 function CodeWindow({
   className,
   children,

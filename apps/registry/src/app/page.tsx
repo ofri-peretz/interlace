@@ -1,10 +1,12 @@
 import Link from 'next/link';
 
 import { ClientServerBadge } from '@/components/client-server-badge';
+import { InstallProofLine } from '@/components/install-proof';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
 import { RegistrySearch } from '@/components/registry-search';
 import { SiteNav } from '@/components/site-nav';
 import { CATEGORIES, groupByCategory, TIER_CATEGORIES } from '@/lib/categories';
+import { loadInstallProof } from '@/lib/install-proof';
 import { loadIndex } from '@/lib/registry';
 
 const PRIMARY_INSTALL =
@@ -15,7 +17,7 @@ const STYLE_INSTALL =
   'npx shadcn@latest add https://ds.interlace.tools/r/theme.json';
 
 export default async function HomePage() {
-  const index = await loadIndex();
+  const [index, proof] = await Promise.all([loadIndex(), loadInstallProof()]);
   const styleItem = index.items.find((i) => i.name === 'theme');
   // Every installable item, not just the primitives — patterns, templates and
   // the vendored effects are 60% of the registry and used to be unbrowsable.
@@ -46,7 +48,7 @@ export default async function HomePage() {
 
         <div className="relative mx-auto max-w-wide px-6 py-20 sm:py-28">
           <div className="text-muted-foreground inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs">
-            <span className="size-1.5 rounded-full bg-emerald-500" />
+            <span aria-hidden className="bg-success size-1.5 rounded-full" />
             {components.length} components · 1 theme bundle · WCAG 2.2 AA floor
           </div>
 
@@ -76,6 +78,17 @@ export default async function HomePage() {
             <code className="font-mono">components.json</code>:{' '}
             <code className="font-mono text-foreground">{ALIAS_INSTALL}</code>
           </p>
+
+          {/*
+            The command above is a promise; this is the receipt. Kept to one
+            sentence in the hero — the run itself is on /getting-started, where
+            a reader who cares about it is already standing.
+          */}
+          {proof ? (
+            <div className="mt-4">
+              <InstallProofLine proof={proof} />
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -92,10 +105,12 @@ export default async function HomePage() {
             <p className="text-muted-foreground mt-4">
               Every primitive ships with{' '}
               <code className="text-foreground font-mono">theme</code> as a
-              registry dependency. The shadcn CLI bundles the three Interlace
-              stylesheets into your project — brand palette, shadcn-bare token
-              bridge, animation keyframes — so primitives render the moment
-              you import them.
+              registry dependency. The shadcn CLI lands the whole CSS contract
+              in your project —
+              brand palette, shadcn-bare token bridge, animation keyframes,
+              type / spacing / radius scales — behind the one{' '}
+              <code className="text-foreground font-mono">index.css</code>{' '}
+              barrel, so primitives render the moment you import them.
             </p>
             {styleItem ? (
               <p className="text-muted-foreground mt-3 text-sm">
@@ -231,6 +246,19 @@ export default async function HomePage() {
                         <h4 className="font-semibold">{item.title}</h4>
                         <p className="text-muted-foreground mt-1 font-mono text-xs">
                           @interlace/{item.name}
+                        </p>
+                        {/*
+                          The card carried the name twice and said nothing
+                          else, because `description` was generated boilerplate
+                          for 128 of 137 items — there was nothing worth the
+                          space. It is now the component's own header sentence
+                          (blurb.mjs), so the card can answer "what is this"
+                          without a click. Clamped to two lines: the sentences
+                          run to 260 characters and a card that grows to fit
+                          the longest one breaks the grid's rhythm.
+                        */}
+                        <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
+                          {item.description}
                         </p>
                       </div>
                       {item.meta ? (

@@ -60,24 +60,56 @@ export interface SeriesTableProps extends React.ComponentProps<'div'> {
   hidden?: boolean;
   /** Column header for the x axis. */
   keyLabel?: string;
+  /**
+   * What kind of axis the `t` values are.
+   *
+   *   - `time` (default) — `t` is an instant. Rows are keyed by `day(t)` and
+   *     SORTED, because a chronological axis has exactly one true order and two
+   *     readings on one day are one row.
+   *   - `category` — `t` is a name. Rows are keyed by `t` verbatim, in the order
+   *     the series first mentions them.
+   *
+   * The second exists because sorting is *wrong* for a categorical axis, not
+   * merely unnecessary: `['Mon','Tue','Wed']` sorts to `['Mon','Tue','Wed']`
+   * only by luck, `['Thu','Fri','Sat']` sorts to `['Fri','Sat','Thu']`, and the
+   * table then disagrees with the picture beside it about what order the week
+   * happens in. `day()` is skipped for the same reason — it truncates to ten
+   * characters, which is a date-shaped assumption, and "Wednesday morning"
+   * would become "Wednesday ".
+   */
+  axis?: 'time' | 'category';
 }
 
 export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
   function SeriesTable(
-    { series, caption, hidden = true, keyLabel = 'Date', className, ...props },
+    {
+      series,
+      caption,
+      hidden = true,
+      keyLabel = 'Date',
+      axis = 'time',
+      className,
+      ...props
+    },
     ref,
   ) {
-    // Union of every timestamp across every series, so a series with a gap
-    // still lines up column-for-column with one that has none.
+    // Union of every key across every series, so a series with a gap still
+    // lines up row-for-row with one that has none. A `Set` preserves insertion
+    // order, which is what makes the categorical case "first mentioned" rather
+    // than "whatever the last series said".
     const rows = React.useMemo(() => {
       const keys = new Set<string>();
-      for (const s of series) for (const p of s.points) keys.add(day(p.t));
-      return [...keys].sort();
-    }, [series]);
+      for (const s of series)
+        for (const p of s.points) keys.add(axis === 'time' ? day(p.t) : p.t);
+      return axis === 'time' ? [...keys].sort() : [...keys];
+    }, [series, axis]);
 
     const byKey = React.useMemo(
-      () => series.map((s) => new Map(s.points.map((p) => [day(p.t), p.v]))),
-      [series],
+      () =>
+        series.map(
+          (s) => new Map(s.points.map((p) => [axis === 'time' ? day(p.t) : p.t, p.v])),
+        ),
+      [series, axis],
     );
 
     return (

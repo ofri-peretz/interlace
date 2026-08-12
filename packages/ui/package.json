@@ -164,6 +164,22 @@
       "types": "./dist/primitives/data-state.d.ts",
       "default": "./dist/primitives/data-state.js"
     },
+    "./data-state-model": {
+      "types": "./dist/primitives/data-state-model.d.ts",
+      "default": "./dist/primitives/data-state-model.js"
+    },
+    "./stat-strip": {
+      "types": "./dist/primitives/stat-strip.d.ts",
+      "default": "./dist/primitives/stat-strip.js"
+    },
+    "./meter": {
+      "types": "./dist/primitives/meter.d.ts",
+      "default": "./dist/primitives/meter.js"
+    },
+    "./meter-scale": {
+      "types": "./dist/primitives/meter-scale.d.ts",
+      "default": "./dist/primitives/meter-scale.js"
+    },
     "./section-boundary": {
       "types": "./dist/primitives/section-boundary.d.ts",
       "default": "./dist/primitives/section-boundary.js"
@@ -199,6 +215,14 @@
     "./select": {
       "types": "./dist/primitives/select.d.ts",
       "default": "./dist/primitives/select.js"
+    },
+    "./combobox": {
+      "types": "./dist/primitives/combobox.d.ts",
+      "default": "./dist/primitives/combobox.js"
+    },
+    "./command-palette": {
+      "types": "./dist/primitives/command-palette.d.ts",
+      "default": "./dist/primitives/command-palette.js"
     },
     "./scroll-area": {
       "types": "./dist/primitives/scroll-area.d.ts",
@@ -336,6 +360,10 @@
       "types": "./dist/charts/series-table.d.ts",
       "default": "./dist/charts/series-table.js"
     },
+    "./charts/distribution": {
+      "types": "./dist/charts/distribution.d.ts",
+      "default": "./dist/charts/distribution.js"
+    },
     "./charts/time-series": {
       "types": "./dist/charts/time-series.d.ts",
       "default": "./dist/charts/time-series.js"
@@ -397,6 +425,7 @@
     "styles"
   ],
   "scripts": {
+    "prebuild": "test -d dist || rm -f tsconfig.lib.tsbuildinfo",
     "build": "tsc -b tsconfig.lib.json && node scripts/preserve-use-client.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "npm run lint:eslint && npm run lint:oxlint",

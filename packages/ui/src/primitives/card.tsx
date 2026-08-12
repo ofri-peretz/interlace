@@ -1,3 +1,45 @@
+/**
+ * @interlace/ui — Card
+ *
+ * A bordered, rounded content surface with header / title / description /
+ * action / content / footer parts. The surface, radius and border come from
+ * `Box`; the card owns only its column layout, its padding and its shadow.
+ *
+ * A `loading` card renders the shape-matched `Skeleton variant="card"`
+ * instead, so a card grid does not shift when the data lands.
+ *
+ * ## Anatomy
+ *
+ *   Card                             (Box — surface=card, radius=lg, border, flex-col gap-6 py-6)
+ *     ├─ CardHeader                  (grid — @container/card-header, px-6)
+ *     │    ├─ CardTitle
+ *     │    ├─ CardDescription
+ *     │    └─ CardAction             (col 2, spans both header rows)
+ *     ├─ CardContent                 (px-6)
+ *     └─ CardFooter                  (flex, px-6)
+ *
+ * The header is a one-column grid until a `CardAction` is present:
+ * `has-data-[slot=card-action]` switches it to `[1fr_auto]`, so the action
+ * column is created by the child that needs it rather than by a prop.
+ *
+ * ## What the card does not give you
+ *
+ * `CardTitle` is a `<div>`, not a heading. It carries the type treatment and
+ * nothing else, so a card that participates in the document outline needs the
+ * caller to put a real `<h2>`/`<h3>` inside it. Only `Card` takes `loading` —
+ * the parts have no state contract of their own.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends native el                | `React.ComponentProps<'div'>` on every part                 |
+ * | R6   | data-slot per part               | card / -header / -title / -description / -action / -content / -footer |
+ * | R7   | cn + ...rest                     | `cn('px-6', className)` + `{...props}` on each part         |
+ * | R10  | Composition seam                 | header layout keys off the `card-action` slot, not a prop   |
+ * | R12  | Reuse over wrap                  | `Box` owns surface + radius + border; `Skeleton` owns loading |
+ * | R19  | Tokens only                      | `surface="card"`, `text-muted-foreground`                   |
+ * | R25  | Server component                 | No hooks → no `'use client'`                                |
+ */
+
 import * as React from 'react';
 
 import { Box } from './box.js';

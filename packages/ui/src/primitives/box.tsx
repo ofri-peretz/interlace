@@ -1,13 +1,12 @@
-// Box — the lowest-altitude layout primitive: surface + box-model on one
-// element. Mirrors MUI <Box> (polymorphic unopinionated wrapper) minus the `sx`
-// CSS-in-JS prop — Interlace uses a curated, tokenized cva variant set instead,
-// so it can't reopen the magic-number problem LAYOUT_PHILOSOPHY closes.
-// `<Card>` composes `<Box>` (not the reverse); reach for <Section>/<Container>
-// for page rhythm. Server component (as-prop seam, like Section). See
-// LAYOUT_PHILOSOPHY.md "Allowed primitives".
-
 /**
  * @interlace/ui — Box
+ *
+ * The lowest-altitude layout primitive: surface + box-model on one element.
+ * Mirrors MUI `<Box>` (a polymorphic, unopinionated wrapper) minus the `sx`
+ * CSS-in-JS prop — Interlace uses a curated, tokenized cva variant set instead,
+ * so it cannot reopen the magic-number problem LAYOUT_PHILOSOPHY closes.
+ * `<Card>` composes `<Box>`, never the reverse; reach for `<Section>` /
+ * `<Container>` for page rhythm.
  *
  * | Rule | Concept                          | Where in this file                                   |
  * | ---- | -------------------------------- | ---------------------------------------------------- |

@@ -11,7 +11,7 @@ import {
   BreadcrumbEllipsis,
   MIN_VIEWPORT,
 } from '@interlace/ui/breadcrumb';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/Breadcrumb',
@@ -90,6 +90,10 @@ export const Default: Story = {
  *   3. Long trail that demonstrates wrapping via `flex-wrap` on the list.
  */
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="flex flex-col gap-lg">
       <section className="flex flex-col gap-xs">
@@ -242,8 +246,8 @@ export const Loading: Story = {
 };
 
 export const Dark: Story = {
-  ...Default,
-  decorators: [withDark],
+  ...Variants,
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

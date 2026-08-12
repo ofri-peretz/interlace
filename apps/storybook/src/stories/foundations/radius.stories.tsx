@@ -5,7 +5,6 @@ import { Stack } from '@interlace/ui/stack';
 import { Grid, GridItem } from '@interlace/ui/grid';
 import { Box } from '@interlace/ui/box';
 
-import { withDark } from '@/decorators';
 
 /**
  * Radius — three-step scale specimen.
@@ -131,7 +130,7 @@ export const Variants: Story = {};
 export const Light: Story = {};
 
 export const Dark: Story = {
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CTASection } from '@interlace/ui/patterns/cta-section';
 import { Button } from '@interlace/ui/button';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof CTASection> = {
   title: 'Blocks/CTASection',
@@ -84,5 +84,5 @@ export const Default: Story = {
 export const Primary: Story = { args: { ...Default.args, tone: 'primary' } };
 export const Neutral: Story = { args: { ...Default.args, tone: 'neutral' } };
 export const Loading: Story = { args: { loading: true } };
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

@@ -1,5 +1,44 @@
 "use client";
 
+/**
+ * @interlace/ui — GridPattern
+ *
+ * A decorative SVG line grid that fills its positioned parent, with optional
+ * accent cells (`squares`, addressed as `[column, row]`) that can pulse.
+ * Colour comes from `currentColor`, so a text-colour class on `className` sets
+ * the tone.
+ *
+ * The whole surface is `aria-hidden` and `pointer-events-none`.
+ *
+ * ## Anatomy
+ *
+ *   GridPattern                      (svg — data-slot="grid-pattern")
+ *     ├─ defs > pattern              (one cell: `M.5 {h}V.5H{w}`, id from useId)
+ *     ├─ rect 100%×100%              (fills the parent with the tiled pattern)
+ *     └─ svg                         (data-slot="grid-pattern-squares")
+ *         └─ rect | motion.rect      (data-slot="grid-pattern-square")
+ *
+ * ## Motion
+ *
+ * JS-driven, not CSS. The pulse is a `motion.rect` from `motion/react`
+ * animating `opacity: [0.5, 1, 0.5]` on `repeat: Infinity` — inline styles the
+ * `prefers-reduced-motion` reset in `styles/preflight.css` cannot reach. It is
+ * gated in JS instead: `shouldAnimate = animated && !reducedMotion`, and when
+ * that is false the accent cells render as plain `<rect>` elements with no
+ * animation object at all. The grid lines themselves never animate.
+ *
+ * | Rule | Concept                     | Where in this file                                     |
+ * | ---- | --------------------------- | ------------------------------------------------------ |
+ * | R4   | Extends native el           | `ComponentPropsWithoutRef<'svg'>` + `forwardRef`       |
+ * | R5   | testid required, no default | `'data-testid': string`                                |
+ * | R6   | data-slot per part          | `grid-pattern` / `-squares` / `-square`                |
+ * | R7   | className merged + ...rest  | `cn(BASE, className)` + `{...props}`                   |
+ * | R8   | No `isXxx`                  | `animated`, `squares`, `dashArray`                     |
+ * | R19  | Tokens only                 | `fill-current` / `stroke-current`; no colour prop      |
+ * | R25  | Client component            | `useId` + `useReducedMotion`                           |
+ * | R26  | A11y                        | `aria-hidden="true"` — decorative, never in the tree   |
+ */
+
 import { ComponentPropsWithoutRef, forwardRef, useId } from "react";
 import { motion } from "motion/react";
 

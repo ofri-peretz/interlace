@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '@interlace/ui/accordion';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 const meta: Meta<typeof Accordion> = {
   title: 'Primitives/Accordion',
@@ -88,7 +88,7 @@ type Story = StoryObj<typeof Accordion>;
 export const Default: Story = {
   // AccordionTrigger is `py-4` (32px tall) on a full-width container.
   // Suppression for `target-size` was removed 2026-05-18 — the trigger
-  // is well above WCAG 2.2's 24×24 threshold and the explicit `w-[420px]`
+  // is well above WCAG 2.2's 24×24 threshold and the explicit `w-full max-w-float`
   // container makes the button's bounding box something axe can measure
   // without ambiguity.
   args: {
@@ -97,7 +97,7 @@ export const Default: Story = {
     keepMounted: false,
     hiddenUntilFound: false,
     defaultValue: ['a'],
-    className: 'w-[420px] max-w-full',
+    className: 'w-full max-w-float',
   },
   render: (args) => (
     <Accordion {...args}>
@@ -126,7 +126,7 @@ export const Default: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Accordion className="w-[420px] max-w-full">
+    <Accordion className="w-full max-w-float">
       <AccordionItem value="a">
         <AccordionTrigger>First question</AccordionTrigger>
         <AccordionContent>First answer.</AccordionContent>
@@ -180,7 +180,7 @@ export const KeyboardFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

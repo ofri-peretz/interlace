@@ -168,6 +168,16 @@ export const ManyTags: Story = {
   ],
 };
 
+/**
+ * The skeleton the registry embeds as this component's loading demo — the
+ * shape the card reserves before the article resolves, at the same 380px the
+ * real card occupies, so the swap costs no layout shift.
+ */
+export const Loading: Story = {
+  ...Default,
+  args: { loading: true },
+};
+
 export const Dark: Story = {
   args: articleFixtures[2],
   globals: { theme: 'dark' },
@@ -421,7 +431,7 @@ export const FeaturedWithoutCover: Story = {
 export const Parity: Story = {
   parameters: { layout: 'fullscreen' },
   render: () => (
-    <div className="space-y-6 p-6 bg-fd-background">
+    <div className="space-y-6 p-6 bg-background">
       <FeaturedArticleCard {...lockArgs} data-testid="parity-featured" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ArticleCard {...lockArgs} data-testid="parity-tile-0" />
@@ -472,6 +482,119 @@ export const DeprecatedVariantStillWorks: Story = {
       expect(canvas.getByTestId('deprecated-card-featured-chip')).toHaveTextContent(
         /featured/i,
       );
+    });
+  },
+};
+
+/**
+ * `renderImage` — the framework seam, and why it exists.
+ *
+ * The DS ships a plain `<img>` and cannot import `next/image` without giving
+ * up being framework-agnostic. So every Next.js consumer replaced that one
+ * element by hand — a fork of the whole component to change its cover. The
+ * slot hands a render prop the exact bag of props the card would have spread
+ * onto the element, and defaults to spreading them onto an `<img>`, so not
+ * passing it is byte-identical to the old behaviour.
+ *
+ * The adapter below stands in for `next/image`: it forwards `className`, which
+ * is where the `object-cover` fit and the `motion-safe:group-hover:scale-105`
+ * reduced-motion gate live. An adapter that drops it opts out of both — hover
+ * the two tiles and only the left one zooms.
+ */
+export const RenderImageSlot: Story = {
+  name: 'renderImage — a framework-specific cover',
+  args: { ...lockArgs },
+  decorators: [(Story) => <div className="w-[380px] max-w-full"><Story /></div>],
+  render: (args) => (
+    <div className="flex flex-wrap gap-md">
+      <div className="w-[380px] max-w-full">
+        <ArticleCard
+          {...args}
+          data-testid="slot-card"
+          renderImage={({ src, alt, width, height, className, ...rest }) => (
+            // Stand-in for `next/image`: a different element, the same bag.
+            <img
+              data-slot="custom-cover"
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              className={className}
+              {...rest}
+            />
+          )}
+        />
+      </div>
+      <div className="w-[380px] max-w-full">
+        <ArticleCard {...args} data-testid="default-card" />
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement, step }) => {
+    await step('The slot output REPLACES the default img, it does not join it', async () => {
+      const slotCard = canvasElement.querySelector('[data-testid="slot-card"]')!;
+      const covers = slotCard.querySelectorAll('img[width="1000"]');
+      // One cover, and it is the adapter's element — two would mean the card
+      // renders both and the consumer downloads the image twice.
+      expect(covers.length).toBe(1);
+      expect(covers[0]).toHaveAttribute('data-slot', 'custom-cover');
+    });
+
+    await step('The bag carries the fit and the reduced-motion gate', async () => {
+      const cover = canvasElement.querySelector('[data-slot="custom-cover"]')!;
+      expect(cover.className).toContain('object-cover');
+      expect(cover.className).toContain('motion-safe:group-hover:scale-105');
+    });
+
+    await step('Omitting the slot still renders a plain img', async () => {
+      const defaultCard = canvasElement.querySelector('[data-testid="default-card"]')!;
+      const cover = defaultCard.querySelector('img[width="1000"]')!;
+      expect(cover.tagName).toBe('IMG');
+      expect(cover).not.toHaveAttribute('data-slot', 'custom-cover');
+    });
+  },
+};
+
+/**
+ * The cover box reserves the cover's own ratio.
+ *
+ * It used to reserve `h-44` — a fixed 176px height, which fixes nothing about
+ * the RATIO, because the ratio then floats with the card's width. At the 320px
+ * viewport floor a tile is ~302px wide: a 1.72:1 box holding a 2.38:1 cover, so
+ * `object-cover` scaled the image to 419px to cover 176px of height and the box
+ * threw away 117 of them — 28% of the cover, and a different figure at every
+ * breakpoint. `aspect-[1000/420]` is the ratio of the `width`/`height` the card
+ * already declares on the image, so the crop is zero at every width below.
+ *
+ * The three tiles are the same card at the 320px floor, a typical grid column
+ * and a wide column. Watch the right edge of the cover: it is the same picture
+ * in all three.
+ */
+export const CoverRatioAcrossWidths: Story = {
+  name: 'Cover box — same crop at 302 / 380 / 560px',
+  args: { ...lockArgs },
+  render: (args) => (
+    <div className="flex flex-wrap items-start gap-md">
+      {[302, 380, 560].map((w) => (
+        <div key={w} style={{ width: w, maxWidth: '100%' }}>
+          <ArticleCard {...args} data-testid={`ratio-card-${w}`} />
+          <p className="mt-2 text-xs text-muted-foreground">{w}px column</p>
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement, step }) => {
+    await step('Every cover box is the image’s own ratio, not a fixed height', async () => {
+      for (const w of [302, 380, 560]) {
+        const card = canvasElement.querySelector(`[data-testid="ratio-card-${w}"]`)!;
+        const img = card.querySelector('img[width="1000"]') as HTMLImageElement;
+        const box = img.parentElement!;
+        // Real layout, not jsdom: the rendered box must match 1000/420 to
+        // within a pixel of rounding.
+        const rect = box.getBoundingClientRect();
+        const ratio = rect.width / rect.height;
+        expect(Math.abs(ratio - 1000 / 420)).toBeLessThan(0.02);
+      }
     });
   },
 };

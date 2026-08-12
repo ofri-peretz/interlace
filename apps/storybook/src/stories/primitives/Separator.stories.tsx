@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Separator } from '@interlace/ui/separator';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Separator> = {
   title: 'Primitives/Separator',
@@ -78,7 +78,7 @@ export const Vertical: Story = {
 
 export const Dark: Story = {
   ...Horizontal,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

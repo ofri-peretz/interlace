@@ -11,7 +11,7 @@ import {
   DialogClose,
 } from '@interlace/ui/dialog';
 import { Button } from '@interlace/ui/button';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Primitives/Dialog',
@@ -222,7 +222,7 @@ export const OpenCloseFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

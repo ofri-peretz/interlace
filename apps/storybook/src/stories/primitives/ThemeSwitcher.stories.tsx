@@ -4,7 +4,7 @@ import {
   ThemeSchemeToggle,
   ThemeSwitcher,
 } from '@interlace/ui/theme-switcher';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 /**
  * The two-axis theme control. `data-theme` selects the BRAND, `.dark`
@@ -101,7 +101,7 @@ type Story = StoryObj<typeof ThemeSwitcher>;
  */
 export const Default: Story = {
   render: (args) => (
-    <div className="flex w-[420px] max-w-full flex-col gap-md rounded-md border border-border bg-card p-md">
+    <div className="flex w-full max-w-float flex-col gap-md rounded-md border border-border bg-card p-md">
       <div className="flex items-center justify-between gap-md">
         <span className="text-ui-sm text-muted-foreground">Appearance</span>
         <ThemeSwitcher {...args} />
@@ -203,7 +203,7 @@ export const KeyboardFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

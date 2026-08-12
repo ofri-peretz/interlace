@@ -5,12 +5,14 @@ import { notFound } from 'next/navigation';
 import { BrandLogo } from '@interlace/ui/patterns/brand-logo';
 import { ThemeSwitcher } from '@interlace/ui/theme-switcher';
 
+import { BehaviorSection } from '@/components/behavior';
 import { CategoryBadge } from '@/components/category-badge';
 import { ClientServerBadge } from '@/components/client-server-badge';
 import { MinViewportBadge } from '@/components/min-viewport-badge';
 import { ReleaseNote } from '@/components/release-note';
 import { SourceViewer } from '@/components/source-viewer';
 import { StoryPreview } from '@/components/story-preview';
+import { behaviorFor, hasBehavior } from '@/lib/behavior';
 import { categoryById, intentCategoryOf } from '@/lib/categories';
 import { historyFor, releaseAnchor } from '@/lib/changelog';
 import { listItemNames, loadEnrichedItem, refToName } from '@/lib/registry';
@@ -29,8 +31,16 @@ const storybookPath = (name: string, type: string): string => {
   return `${STORYBOOK_URL}/?path=/docs/primitives-${name.toLowerCase()}--docs`;
 };
 
-const githubSourceUrl = (name: string) =>
-  `https://github.com/ofri-peretz/interlace/blob/main/packages/ui/src/primitives/${name}.tsx`;
+/**
+ * The component's real source on GitHub.
+ *
+ * `sourcePath` comes from `behavior-map.json`, where it is probed against the
+ * filesystem at build time — the previous hard-coded
+ * `packages/ui/src/primitives/<name>.tsx` was a 404 for every chart, pattern,
+ * template and style item, which is most of the catalogue.
+ */
+const githubSourceUrl = (sourcePath: string) =>
+  `https://github.com/ofri-peretz/interlace/blob/main/${sourcePath}`;
 
 export const dynamicParams = false;
 
@@ -70,6 +80,8 @@ export default async function ComponentPage({ params }: PageProps) {
   const stories = storiesFor(item.name);
   const examples = stories ? exampleStories(stories) : [];
   const history = historyFor(item.name);
+  const behavior = behaviorFor(item.name);
+  const sourcePath = behavior?.sourcePath ?? null;
 
   return (
     <div className="bg-background text-foreground min-h-screen">
@@ -227,6 +239,23 @@ export default async function ComponentPage({ params }: PageProps) {
             />
           </div>
         </section>
+
+        {/* ─── Behavior ──────────────────────────────────────────── */}
+        {/*
+          Placed right after Install on purpose: the reader has just decided
+          they might paste this into their tree, and this is the section that
+          tells them what they are agreeing to. Everything below it — history,
+          anatomy, source — is reference.
+        */}
+        {hasBehavior(behavior) && behavior ? (
+          <BehaviorSection
+            behavior={behavior}
+            isClient={contract?.client ?? false}
+            minViewport={contract?.minViewport ?? null}
+            sourcePath={sourcePath ?? file.path}
+            storybookUrl={STORYBOOK_URL}
+          />
+        ) : null}
 
         {/* ─── History ───────────────────────────────────────────── */}
         {/*
@@ -401,8 +430,27 @@ export default async function ComponentPage({ params }: PageProps) {
                       attribute.{' '}
                     </>
                   ) : null}
+                  {table.extendsComponent ? (
+                    <>
+                      Also accepts every prop of{' '}
+                      <a
+                        href={`https://base-ui.com/react/components/${table.extendsComponent
+                          .split('.')[0]
+                          .toLowerCase()}`}
+                        className="text-foreground font-mono underline-offset-4 hover:underline"
+                      >
+                        Base UI&apos;s &lt;{table.extendsComponent}&gt;
+                      </a>{' '}
+                      — behaviour we compose rather than reimplement.{' '}
+                    </>
+                  ) : null}
                   {table.hasVariantProps
                     ? 'Plus the variant props listed above.'
+                    : null}
+                  {table.props.length === 0 &&
+                  !table.extendsElement &&
+                  !table.extendsComponent
+                    ? 'No props of its own.'
                     : null}
                 </p>
                 {table.props.length > 0 ? (
@@ -416,6 +464,11 @@ export default async function ComponentPage({ params }: PageProps) {
                           <th className="border-border border-b px-4 py-2 text-left font-semibold">
                             Type
                           </th>
+                          {table.props.some((p) => p.defaultValue) ? (
+                            <th className="border-border border-b px-4 py-2 text-left font-semibold">
+                              Default
+                            </th>
+                          ) : null}
                           <th className="border-border border-b px-4 py-2 text-left font-semibold">
                             Description
                           </th>
@@ -441,6 +494,19 @@ export default async function ComponentPage({ params }: PageProps) {
                             <td className="text-muted-foreground px-4 py-2 font-mono text-xs">
                               {prop.type}
                             </td>
+                            {table.props.some((p) => p.defaultValue) ? (
+                              <td className="px-4 py-2 font-mono text-xs whitespace-nowrap">
+                                {prop.defaultValue ? (
+                                  <span className="text-foreground">
+                                    {prop.defaultValue}
+                                  </span>
+                                ) : (
+                                  <span className="text-muted-foreground">
+                                    —
+                                  </span>
+                                )}
+                              </td>
+                            ) : null}
                             <td className="px-4 py-2 text-sm">
                               {prop.description ?? (
                                 <span className="text-muted-foreground">—</span>
@@ -498,6 +564,18 @@ export default async function ComponentPage({ params }: PageProps) {
             That gate has no{' '}
             <code className="text-foreground font-mono">continue-on-error</code>
             , so what ships has zero known violations.
+          </p>
+          <p className="text-muted-foreground mt-2 max-w-prose text-sm">
+            What follows is what static analysis can see. Axe cannot press a
+            key and never sees an overlay open, so the operable-without-a-mouse
+            claim lives in{' '}
+            <Link
+              href="#behavior"
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              Behavior
+            </Link>{' '}
+            instead, where the keyboard path is replayed step by step.
           </p>
           <dl className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
             <MetaCell label="Focus + keyboard behaviour">
@@ -631,7 +709,7 @@ export default async function ComponentPage({ params }: PageProps) {
 
         {/* ─── Min-viewport contract ────────────────────────────── */}
         {contract?.minViewport != null ? (
-          <section className="mt-12">
+          <section id="min-viewport" className="mt-12 scroll-mt-20">
             <h2 className="text-xl font-semibold">Minimum viewport</h2>
             <p className="text-muted-foreground mt-2 text-sm">
               This primitive declares{' '}
@@ -749,7 +827,10 @@ export default async function ComponentPage({ params }: PageProps) {
             <code className="text-foreground font-mono">{file.target}</code>{' '}
             once installed.
           </p>
-          <SourceViewer source={file.content} githubUrl={githubSourceUrl(item.name)} />
+          <SourceViewer
+            source={file.content}
+            githubUrl={sourcePath ? githubSourceUrl(sourcePath) : undefined}
+          />
         </section>
 
         {/* ─── JSON endpoint ─────────────────────────────────────── */}
@@ -770,15 +851,22 @@ export default async function ComponentPage({ params }: PageProps) {
         </section>
 
         <footer className="border-border mt-16 border-t pt-8 text-sm">
-          <p className="text-muted-foreground">
-            Source of truth:{' '}
-            <a
-              href={githubSourceUrl(item.name)}
-              className="text-foreground underline-offset-4 hover:underline"
-            >
-              packages/ui/src/primitives/{item.name}.tsx
-            </a>
-          </p>
+          {sourcePath ? (
+            <p className="text-muted-foreground">
+              Source of truth:{' '}
+              <a
+                href={githubSourceUrl(sourcePath)}
+                className="text-foreground underline-offset-4 hover:underline"
+              >
+                {sourcePath}
+              </a>
+            </p>
+          ) : (
+            <p className="text-muted-foreground">
+              A meta-item: it ships no file of its own, only the registry
+              dependencies listed above.
+            </p>
+          )}
         </footer>
       </main>
     </div>

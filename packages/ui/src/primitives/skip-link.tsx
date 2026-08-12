@@ -1,20 +1,20 @@
-import * as React from 'react';
-
-import { cn } from '../lib/cn.js';
-
 /**
  * @interlace/ui — SkipLink
  *
- * The "jump to main content" link that satisfies WCAG 2.4.1 (Bypass Blocks).
- * Renders as a visually-hidden focusable anchor at the top of the document;
- * when a keyboard user hits Tab on page load, it pops into the top-left
- * corner as a focus-visible button that jumps past header / nav landmarks
- * to the page's main content. After that first Tab, sighted mouse users
- * never see it.
+ * The "jump to main content" link that satisfies WCAG 2.4.1 (Bypass Blocks):
+ * an `sr-only` anchor that pops into the top-left corner the moment it takes
+ * focus, letting a keyboard user step past the header and nav in one Tab.
+ *
+ * It only earns that if it is the first focusable element in the document.
+ * A mouse user never sees it.
  *
  * Pair this with a `<main id="main">` (or whichever target you point at).
  * The target MUST be focusable (set `tabIndex={-1}` on `<main>` so the skip
  * action moves focus into it, not just the scroll position).
+ *
+ * The visible state is painted entirely by `focus-visible:` utilities — the
+ * link is `sr-only` until then, so a browser that resolves focus-visible
+ * differently changes when it appears, not whether it works.
  *
  * ## Anatomy
  *
@@ -40,6 +40,10 @@ import { cn } from '../lib/cn.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `<a href>` is the native element; focus + activation inherit |
  */
+
+import * as React from 'react';
+
+import { cn } from '../lib/cn.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

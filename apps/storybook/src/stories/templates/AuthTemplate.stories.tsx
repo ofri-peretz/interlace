@@ -3,7 +3,7 @@ import { AuthTemplate } from '@interlace/ui/templates/auth-template';
 import { Button } from '@interlace/ui/button';
 import { Field, FieldControl, FieldLabel } from '@interlace/ui/form';
 import { Input } from '@interlace/ui/input';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof AuthTemplate> = {
   title: 'Templates/AuthTemplate',
@@ -96,7 +96,7 @@ export const Reset: Story = {
   args: { ...SignIn.args, variant: 'reset' },
 };
 
-export const Dark: Story = { ...SignIn, decorators: [withDark] };
+export const Dark: Story = { ...SignIn, globals: { theme: 'dark' } };
 export const RTL: Story = { ...SignIn, decorators: [withRtl] };
 
 /**

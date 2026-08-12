@@ -370,3 +370,31 @@ describe('NetworkGraph', () => {
     expect(ref.current?.className).toContain('mt-8');
   });
 });
+
+describe('NetworkGraph — a failed fetch is not an empty network', () => {
+  it('says the network is unknown rather than accusing the reader of having none', () => {
+    // "No connections observed yet" is a statement about the reader's network.
+    // A failed request says nothing about it at all.
+    render(<NetworkGraph nodes={[]} edges={[]} error={new Error('ECONNRESET')} />);
+    expect(screen.getByRole('alert').textContent).toMatch(/unknown, not empty/i);
+    expect(screen.queryByText(/No connections observed yet/)).toBeNull();
+  });
+
+  it('folds the caller noun into the sentence', () => {
+    render(<NetworkGraph nodes={[]} edges={[]} error="x" announce={{ noun: 'connections' }} />);
+    expect(screen.getByRole('alert').textContent).toMatch(/Connections could not be loaded/);
+  });
+
+  it('keeps loading above error — nothing is known yet', () => {
+    const { container } = render(<NetworkGraph nodes={[]} edges={[]} loading error="x" />);
+    expect(container.querySelector('[data-slot="network-graph"]')).not.toBeNull();
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+
+  it('merges className and forwards a ref on the error state', () => {
+    const ref = { current: null as HTMLDivElement | null };
+    render(<NetworkGraph nodes={[]} edges={[]} error="x" className="mt-4" ref={ref} />);
+    expect(ref.current?.className).toContain('mt-4');
+    expect(ref.current?.getAttribute('data-slot')).toBe('network-graph-error');
+  });
+});

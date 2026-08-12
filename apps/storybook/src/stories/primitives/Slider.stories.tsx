@@ -10,7 +10,7 @@ import {
   SliderTrack,
 } from '@interlace/ui/slider';
 import { Skeleton } from '@interlace/ui/skeleton';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Slider> = {
   title: 'Primitives/Slider',
@@ -290,7 +290,7 @@ export const Disabled: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

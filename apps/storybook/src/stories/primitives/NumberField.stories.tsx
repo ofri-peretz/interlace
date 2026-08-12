@@ -9,7 +9,7 @@ import {
 } from '@interlace/ui/number-field';
 import { Skeleton } from '@interlace/ui/skeleton';
 import { Label } from '@interlace/ui/label';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof NumberField> = {
   title: 'Primitives/NumberField',
@@ -241,7 +241,7 @@ export const ReadOnly: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

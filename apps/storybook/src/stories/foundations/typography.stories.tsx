@@ -8,7 +8,6 @@ import { Stack } from '@interlace/ui/stack';
 import { Grid, GridItem } from '@interlace/ui/grid';
 import { Box } from '@interlace/ui/box';
 
-import { withDark } from '@/decorators';
 
 /**
  * Typography — type-scale specimen.
@@ -600,7 +599,7 @@ export const Variants: Story = {};
 
 /** Same specimen, rewrapped in `.dark`. */
 export const Dark: Story = {
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 /** Same specimen, rendered in `dir="rtl"` to surface left/right asymmetry. */

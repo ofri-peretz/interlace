@@ -21,26 +21,51 @@
  * the readout below is `aria-live="polite"` so each step is announced. Learned
  * in 1.2 — axe cannot press a key, so it scored the hover-only version green.
  *
- * The pointer path and the keyboard path both resolve through `nearestIndex`,
+ * The pointer path and the keyboard path both resolve through `nearestSlot`,
  * so the two can never disagree about which point is under the crosshair.
+ *
+ * ## There is no floating tooltip, and that is the design
+ *
+ * A tooltip that follows the pointer is a *second* inspection surface: it has
+ * to be kept in step with the live readout a keyboard user gets, it has to be
+ * positioned in viewport pixels while the plot is `viewBox` scaled, and at 320
+ * it lands on top of the very points it describes. The readout row IS the
+ * tooltip — it names the date and every series' value at the crosshair, it is
+ * fed by the same slot the arrow keys move, and there is exactly one of it.
+ *
+ * ## Legibility at 320 — why the x labels are HTML and the y labels are not
+ *
+ * SVG text scales with the `viewBox`. At a 320 viewport the plot is 288px wide
+ * against a 900-unit box, so `text-xs` inside the SVG paints at **4px** —
+ * measured in Chrome, not reasoned about. The x labels are therefore real HTML
+ * under the plot, where 12px means 12px, aligned to the plot by a percentage
+ * pad that matches `PAD_LEFT`.
+ *
+ * The y labels stay in the SVG and do shrink with it; the y scale survives
+ * because the readout row prints `min` and `max` as HTML at every width.
+ * Moving them out needs a per-tick vertical offset, and percentage padding in
+ * CSS resolves against *width* — that is a separate change, not a line of this
+ * one.
  *
  * ## MIN_VIEWPORT — 320
  *
  * The SVG scales to its container via `viewBox` (no fixed width), the readout
- * wraps, and `<SeriesTable>` scrolls inside its own box. Nothing forces the
- * page to scroll horizontally.
+ * and legend wrap, the x axis drops to three labels below `sm`, and
+ * `<SeriesTable>` scrolls inside its own box. Nothing forces the page to
+ * scroll horizontally.
  *
  * | Rule | Concept                    | Where in this file                                       |
  * | ---- | -------------------------- | -------------------------------------------------------- |
- * | R6   | data-slot on every part    | `data-slot="time-series" / "-plot" / "-readout"`          |
+ * | R6   | data-slot on every part    | `"time-series" / "-plot" / "-axis" / "-legend" / "-readout"` |
  * | R7   | className merged + ...rest | `cn(...)` + `{...props}`                                  |
  * | R8   | No `isXxx`; enums          | `polarity`; annotation `kind`                             |
- * | R13  | Ecosystem first            | no charting dep — `seriesScales` + SVG is the engine      |
+ * | R13  | Ecosystem first            | no charting dep — `plotScales` + SVG is the engine        |
  * | R14  | Declares min viewport      | `data-min-viewport={String(MIN_VIEWPORT)}`                |
  * | R18  | Tailwind only              | zero inline `style`                                       |
- * | R19  | Tokens only                | `stroke-viz-*`, `fill-viz-*`, `text-muted-foreground`     |
+ * | R19  | Tokens only                | `stroke-chart-1..5`, `stroke-viz-*`, `text-muted-foreground` |
  * | R20  | AA contrast                | axis 3.64:1 light / 3.82:1 dark; grid deliberately decorative |
  * | R23  | Loading reserves its box   | `loading` → `<Skeleton variant="chart">`, same height     |
+ * | R23  | Absence is a vocabulary    | `loading` / `error` / not-enough-data are three messages  |
  * | R25  | Client component           | pointer + key handlers, `useState`                        |
  * | R26  | A11y                       | `role="img"` + label + focusable + live readout + table   |
  */
@@ -48,15 +73,22 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import {
+  announceDataState,
+  resolveDataState,
+  type AnnouncementOptions,
+} from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
 import { SeriesTable } from './series-table.js';
 import {
   areaPath,
+  axisSlots,
   day,
   describeSeries,
+  keepAtNarrow,
   linePath,
-  nearestIndex,
-  seriesScales,
+  nearestSlot,
+  plotScales,
   ticks,
   type Annotation,
   type AnnotationKind,
@@ -69,6 +101,43 @@ export const MIN_VIEWPORT = 320 as const;
 const W = 900;
 const PAD_LEFT = 44;
 const PAD_TOP = 14;
+
+/**
+ * `PAD_LEFT` as a percentage of `W` (44 / 900), so the HTML x-axis row starts
+ * exactly where the plot does at every width. The SVG scales; a px pad cannot.
+ */
+const AXIS_PAD_LEFT = 'pl-[4.889%]';
+
+/**
+ * How many series can be drawn at once.
+ *
+ * `--chart-1..5` is the whole identity palette, and there are five line styles
+ * to pair with it. A sixth series would reuse both, which is two lines a reader
+ * cannot tell apart — worse than a line that is not drawn. Series past the
+ * fifth stay in `<SeriesTable>`, so nothing is lost, and the legend says so.
+ */
+const MAX_PLOTTED_SERIES = 5;
+
+/**
+ * Series identity is a DASH PATTERN first and a hue second — the same rule the
+ * annotation marks follow, for the same reason. Two lines separated only by
+ * `--chart-1` vs `--chart-2` are one line in a greyscale print, in a screenshot
+ * pasted into Slack, and to a red-green colour-blind reader.
+ */
+const SERIES_STYLE: readonly { stroke: string; fill: string; dash?: string }[] = [
+  { stroke: 'stroke-chart-1', fill: 'fill-chart-1' },
+  { stroke: 'stroke-chart-2', fill: 'fill-chart-2', dash: '12 6' },
+  { stroke: 'stroke-chart-3', fill: 'fill-chart-3', dash: '2 6' },
+  { stroke: 'stroke-chart-4', fill: 'fill-chart-4', dash: '18 6 2 6' },
+  { stroke: 'stroke-chart-5', fill: 'fill-chart-5', dash: '12 6 2 6 2 6' },
+];
+
+/**
+ * The name a reader sees. `<SeriesTable>` already spells an unlabelled series
+ * "Value"; the legend, the readout and the table must not each invent their own
+ * word for the same column.
+ */
+const named = (label?: string): string => label ?? 'Value';
 
 /**
  * Annotation marks differ by SHAPE first and hue second. A photocopy, a
@@ -90,8 +159,40 @@ const MARK: Record<AnnotationKind, { className: string; d: (x: number, y: number
   },
 };
 
+/**
+ * A series plotted alongside `points`.
+ *
+ * `label` is required, unlike the primary series' — with one line the
+ * figcaption names it, but with two the name is the only thing that says which
+ * line is which in the readout and the data table.
+ */
+export interface ComparisonSeries {
+  points: readonly Point[];
+  label: string;
+  /** Noun for this series' values. Series in one chart rarely share a unit. */
+  unit?: string;
+}
+
+/** Stable identity, so the plot memo does not recompute on every render. */
+const NO_COMPARE: readonly ComparisonSeries[] = [];
+
 export interface TimeSeriesProps extends Omit<React.ComponentProps<'figure'>, 'children'> {
   points: readonly Point[];
+  /**
+   * Further series drawn against the same axes.
+   *
+   * `points` stays the required single-series prop it always was — every
+   * existing call site and story is untouched — and this is purely additive.
+   * The alternative (one required `series: Series[]`) would have been a rename
+   * of the only prop this component has.
+   *
+   * All series share ONE y domain. That is the honest choice and it is not
+   * configurable: a second y axis lets an author slide two unrelated metrics
+   * until they appear to cross wherever the argument needs them to. A series
+   * two orders of magnitude smaller will render as flat, which is the true
+   * statement about it — give it its own chart, or a `MetricTable` row.
+   */
+  compare?: readonly ComparisonSeries[];
   annotations?: readonly Annotation[];
   /** Drawing height in user units. The rendered height follows the container width. */
   height?: number;
@@ -110,17 +211,37 @@ export interface TimeSeriesProps extends Omit<React.ComponentProps<'figure'>, 'c
    * moment the series lands.
    */
   loading?: boolean;
+  /**
+   * The fetch failed.
+   *
+   * `unknown` rather than `boolean` for the same reason `DataStateFlags.error`
+   * is: a caught value can be handed straight through, and only its truthiness
+   * is ever read — nothing here renders it, because a stack trace is not a
+   * message for a reader.
+   *
+   * This is a different STATEMENT from an empty series, not a different
+   * severity of one. "No data yet" says the metric has no history; a failed
+   * request says the history is unknown, which is the one thing an empty-state
+   * message cannot be allowed to claim. Ranked directly under `loading`, per
+   * `DATA_STATES`.
+   */
+  error?: unknown;
+  /** Context for the absence sentences — noun, coverage, reason. */
+  announce?: AnnouncementOptions;
 }
 
 export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(function TimeSeries(
   {
     points,
+    compare = NO_COMPARE,
     annotations = [],
     height = 220,
     label,
     unit,
     showTable = false,
     loading = false,
+    error,
+    announce,
     className,
     ...props
   },
@@ -129,22 +250,35 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
   const [cursor, setCursor] = React.useState<number | null>(null);
   const svgRef = React.useRef<SVGSVGElement>(null);
 
-  const scales = React.useMemo(
-    () => seriesScales(points, W - PAD_LEFT, height - PAD_TOP, PAD_TOP),
-    [points, height],
+  // The primary series is series 0. Everything below indexes off this list, so
+  // "the first line" and "the first table column" cannot come apart.
+  // The primary keeps an OPTIONAL label so `describeSeries` still falls back to
+  // "Series" for an unlabelled chart; `named()` supplies the visible fallback.
+  const all: readonly { points: readonly Point[]; label?: string; unit?: string }[] =
+    React.useMemo(() => [{ points, label, unit }, ...compare], [points, label, unit, compare]);
+  const drawn = React.useMemo(() => all.slice(0, MAX_PLOTTED_SERIES), [all]);
+  const undrawn = all.length - drawn.length;
+
+  const plot = React.useMemo(
+    () => plotScales(drawn.map((s) => s.points), W - PAD_LEFT, height - PAD_TOP, PAD_TOP),
+    [drawn, height],
   );
   // Shift the plot right of the axis labels without threading an offset through
   // every scale call.
-  const px = React.useCallback((i: number) => PAD_LEFT + scales.x(i), [scales]);
+  const px = React.useCallback((slot: number) => PAD_LEFT + plot.x(slot), [plot]);
 
-  const line = linePath(scales);
-  const axisTicks = React.useMemo(() => ticks(scales, 4), [scales]);
-  const indexByDay = React.useMemo(
-    () => new Map(scales.points.map((p, i) => [day(p.t), i])),
-    [scales.points],
+  const line = linePath(plot.series[0]);
+  const axisTicks = React.useMemo(
+    () => ticks({ points: plot.keys, min: plot.min, max: plot.max }, 4),
+    [plot],
+  );
+  const xSlots = React.useMemo(() => axisSlots(plot.keys.length), [plot]);
+  const slotByDay = React.useMemo(
+    () => new Map(plot.keys.map((key, slot) => [key, slot])),
+    [plot],
   );
 
-  const last = scales.points.length - 1;
+  const last = plot.keys.length - 1;
 
   const move = React.useCallback(
     (next: number) => setCursor(Math.max(0, Math.min(last, next))),
@@ -180,16 +314,22 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     const box = svgRef.current?.getBoundingClientRect();
     if (!box || box.width === 0) return;
     const userX = ((event.clientX - box.left) / box.width) * W - PAD_LEFT;
-    move(nearestIndex(scales, userX, W - PAD_LEFT));
+    move(nearestSlot(plot.keys.length, userX, W - PAD_LEFT));
   };
 
-  // Loading is checked BEFORE the not-enough-data branch: data still in flight
-  // is not the same claim as "this metric has no history", and telling a reader
-  // the second while the first is true is simply wrong.
+  // Loading and error are both checked BEFORE the not-enough-data branch: data
+  // still in flight, and data that failed to arrive, are each a different claim
+  // from "this metric has no history" — and telling a reader the last one while
+  // either of the others is true is simply wrong. The order is `DATA_STATES`'
+  // order, resolved by the same function every other surface in the package
+  // uses, so a chart and a stat strip on one page cannot disagree about which
+  // absence wins.
   //
-  // Every hook above this point runs unconditionally — the guard sits after them
+  // Every hook above this point runs unconditionally — the guards sit after them
   // on purpose, so toggling `loading` never changes the hook order.
-  if (loading) {
+  const absence = resolveDataState({ loading, error }, announce);
+
+  if (absence.state === 'loading') {
     return (
       <Skeleton
         variant="chart"
@@ -200,9 +340,40 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     );
   }
 
+  if (absence.state === 'error') {
+    return (
+      <figure
+        ref={ref}
+        data-slot="time-series-error"
+        data-state="error"
+        data-min-viewport={String(MIN_VIEWPORT)}
+        className={cn(
+          'm-0 w-full rounded-lg border border-destructive/40 p-6',
+          className,
+        )}
+        {...props}
+      >
+        {/* `role="alert"` and not the muted empty-state paragraph. The reader
+            has to be able to tell "we asked and could not find out" from "we
+            asked and the answer was nothing" — those license different
+            conclusions, and only one of them is about the metric. */}
+        <p role="alert" className="text-sm text-destructive">
+          {announceDataState('error', announce)} The history is unknown, not
+          absent — this is not an empty series.
+        </p>
+      </figure>
+    );
+  }
+
   // Below two points there is no line to draw. Say why, rather than rendering an
   // empty box that reads as a bug — a series genuinely cannot be back-filled.
+  //
+  // The test is the PRIMARY series, not the union: a chart whose headline
+  // metric has one reading is not rescued by a comparison series that has
+  // fourteen, and drawing the comparison alone under the primary's caption
+  // would attribute one metric's shape to another.
   if (!line) {
+    const own = plot.series[0].points.length;
     return (
       <figure
         ref={ref}
@@ -212,22 +383,44 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         {...props}
       >
         <p className="text-sm text-muted-foreground">
-          {scales.points.length === 0
-            ? 'No data yet.'
-            : `Only ${scales.points.length} point so far.`}{' '}
+          {own === 0 ? 'No data yet.' : `Only ${own} point so far.`}{' '}
           A trend needs at least two observations, and history cannot be back-filled.
         </p>
       </figure>
     );
   }
 
-  const active = cursor === null ? null : scales.points[cursor];
+  /**
+   * The crosshair readout, for BOTH the pointer and the keyboard.
+   *
+   * One string, built once, rendered once. The moment a hover tooltip renders
+   * its own copy of this it becomes a thing that can be right while the live
+   * region is wrong, and only the sighted mouse user would ever find out.
+   *
+   * The series name is included only when there is more than one — with a
+   * single line the figcaption already names it, and prefixing every readout
+   * with a name the reader can see two lines up is noise in a live region.
+   */
+  const readout =
+    cursor === null
+      ? ''
+      : [
+          plot.keys[cursor],
+          ...drawn.map((series, index) => {
+            const value = plot.at(index, cursor);
+            const name = drawn.length > 1 ? `${named(series.label)} ` : '';
+            return value === null
+              ? `${name}no data`
+              : `${name}${value.toLocaleString()}${series.unit ? ` ${series.unit}` : ''}`;
+          }),
+        ].join(' · ');
 
   return (
     <figure
       ref={ref}
       data-slot="time-series"
       data-min-viewport={String(MIN_VIEWPORT)}
+      data-series-count={String(drawn.length)}
       // `w-full` is load-bearing, not cosmetic. The plot sizes itself from the
       // container via `viewBox` + `w-full`, so a figure that collapses to
       // zero width paints NOTHING — and a bare <figure> is a flex/grid item
@@ -241,8 +434,47 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
           {label}
           <span className="sr-only">, </span>
           <span aria-hidden> · </span>
-          {day(scales.points[0].t)} → {day(scales.points[last].t)}
+          {plot.keys[0]} → {plot.keys[last]}
         </figcaption>
+      )}
+
+      {/* The legend is only drawn when there is something to tell apart. With
+          one series it would restate the figcaption directly beneath it. */}
+      {drawn.length > 1 && (
+        <ul
+          data-slot="time-series-legend"
+          className="m-0 flex list-none flex-wrap items-center gap-x-4 gap-y-1 p-0 text-xs text-muted-foreground"
+        >
+          {drawn.map((series, index) => (
+            <li key={named(series.label)} className="flex items-center gap-1.5">
+              {/* The swatch repeats the line's DASH, not only its hue, so the
+                  legend identifies the same way the plot does. A row of five
+                  identical bars in five colours identifies nothing in
+                  greyscale. */}
+              <svg
+                aria-hidden
+                width={24}
+                height={8}
+                viewBox="0 0 24 8"
+                className="shrink-0"
+              >
+                <line
+                  x1={0}
+                  y1={4}
+                  x2={24}
+                  y2={4}
+                  strokeWidth={2}
+                  strokeDasharray={SERIES_STYLE[index].dash}
+                  className={SERIES_STYLE[index].stroke}
+                />
+              </svg>
+              {named(series.label)}
+            </li>
+          ))}
+          {undrawn > 0 && (
+            <li>{`${undrawn} more not plotted — see the data table`}</li>
+          )}
+        </ul>
       )}
 
       <svg
@@ -254,7 +486,9 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
         )}
         role="img"
-        aria-label={`${describeSeries(points, label)} Focus this chart and use the left and right arrow keys to read individual values.`}
+        aria-label={`${drawn
+          .map((series) => describeSeries(series.points, series.label))
+          .join(' ')} Focus this chart and use the left and right arrow keys to read individual values.`}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onPointerMove={onPointerMove}
@@ -264,7 +498,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         {/* Grid + axis. Decorative weight for the lines, real contrast for the
             labels — the label is what tells you where zero is. */}
         {axisTicks.map((value) => {
-          const y = scales.y(value);
+          const y = plot.y(value);
           return (
             <g key={value}>
               <line
@@ -299,25 +533,65 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
           aria-hidden
         />
 
+        {/* The x axis: a baseline and a tick per labelled slot. The tick is what
+            makes the HTML label below it point at a position rather than float
+            in the general area — the labels themselves cannot live in here,
+            because SVG text at this viewBox paints 4px wide at a 320 viewport. */}
+        <line
+          x1={PAD_LEFT}
+          y1={height}
+          x2={W}
+          y2={height}
+          className="stroke-viz-axis"
+          strokeWidth={1}
+          aria-hidden
+        />
+        {xSlots.map((slot) => (
+          <line
+            key={`tick-${plot.keys[slot]}`}
+            data-slot="time-series-tick"
+            x1={px(slot)}
+            y1={height - 6}
+            x2={px(slot)}
+            y2={height}
+            className="stroke-viz-axis"
+            strokeWidth={1}
+            aria-hidden
+          />
+        ))}
+
         {/* The series paths are built in unshifted scale space, so they live in
             one translated group. Everything outside this <g> — annotations,
             crosshair — positions with `px()`, which adds the same offset.
             Two ways to say "left edge" in one file is how coordinate bugs
             start; this is the seam between them. */}
         <g transform={`translate(${PAD_LEFT} 0)`}>
-          <path d={areaPath(scales, height)} className="fill-chart-1 opacity-10" aria-hidden />
-          <path
-            d={line}
-            fill="none"
-            strokeWidth={2}
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            className="stroke-chart-1"
-          />
+          {/* The area fill is a one-series affordance. Two translucent fills
+              overlap into a third colour that belongs to neither series and
+              reads as a value. */}
+          {drawn.length === 1 && (
+            <path
+              d={areaPath(plot.series[0], height)}
+              className="fill-chart-1 opacity-10"
+              aria-hidden
+            />
+          )}
+          {plot.series.map((series, index) => (
+            <path
+              key={`line-${named(drawn[index].label)}`}
+              d={linePath(series)}
+              fill="none"
+              strokeWidth={2}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeDasharray={SERIES_STYLE[index].dash}
+              className={SERIES_STYLE[index].stroke}
+            />
+          ))}
         </g>
 
         {annotations.map((annotation) => {
-          const index = indexByDay.get(day(annotation.t));
+          const index = slotByDay.get(day(annotation.t));
           if (index == null) return null;
           const kind: AnnotationKind = annotation.kind ?? 'action';
           const mark = MARK[kind];
@@ -343,7 +617,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
           );
         })}
 
-        {cursor !== null && active && (
+        {cursor !== null && (
           <g aria-hidden>
             <line
               x1={px(cursor)}
@@ -353,16 +627,49 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
               className="stroke-viz-crosshair opacity-50"
               strokeWidth={1}
             />
-            <circle
-              cx={px(cursor)}
-              cy={scales.y(active.v)}
-              r={4}
-              className="fill-chart-1 stroke-background"
-              strokeWidth={2}
-            />
+            {/* A dot per series that HAS a reading here. A series with a gap on
+                this day gets no dot rather than one parked on the line segment
+                that bridges the gap — that dot would be an invented value. */}
+            {plot.series.map((series, index) => {
+              const value = plot.at(index, cursor);
+              return value === null ? null : (
+                <circle
+                  key={`dot-${named(drawn[index].label)}`}
+                  cx={px(cursor)}
+                  cy={plot.y(value)}
+                  r={4}
+                  className={cn('stroke-background', SERIES_STYLE[index].fill)}
+                  strokeWidth={2}
+                />
+              );
+            })}
           </g>
         )}
       </svg>
+
+      {/* The x scale, in HTML. Below `sm` only the ends and the midpoint are
+          rendered — `hidden` removes them from the flex row, so the survivors
+          re-spread rather than leaving gaps where the dropped labels were. */}
+      <div
+        data-slot="time-series-axis"
+        aria-hidden
+        className={cn(
+          'flex justify-between text-xs text-muted-foreground tabular-nums',
+          AXIS_PAD_LEFT,
+        )}
+      >
+        {xSlots.map((slot, index) => (
+          <span
+            key={plot.keys[slot]}
+            className={keepAtNarrow(index, xSlots.length) ? undefined : 'hidden sm:inline'}
+          >
+            {/* MM-DD. The year is in the figcaption and the full ISO date is in
+                the readout and the table; repeating it here is 10 characters
+                per label, which is what makes five of them collide at 320. */}
+            {plot.keys[slot].slice(5)}
+          </span>
+        ))}
+      </div>
 
       {/* The readout is both the tooltip and the live region. One element, so a
           keyboard user and a mouse user are never told different things. */}
@@ -370,18 +677,22 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         data-slot="time-series-readout"
         className="flex flex-wrap items-baseline justify-between gap-x-4 text-xs text-muted-foreground tabular-nums"
       >
-        <span aria-hidden>{scales.min.toLocaleString()}</span>
+        <span aria-hidden>{plot.min.toLocaleString()}</span>
         <output aria-live="polite" className="font-medium text-foreground">
-          {active
-            ? `${day(active.t)} · ${active.v.toLocaleString()}${unit ? ` ${unit}` : ''}`
-            : ''}
+          {readout}
         </output>
-        <span aria-hidden>{scales.max.toLocaleString()}</span>
+        <span aria-hidden>{plot.max.toLocaleString()}</span>
       </div>
 
+      {/* Every series, including any past `MAX_PLOTTED_SERIES`. The cap is a
+          drawing limit, never a data limit — the table stays lossless. */}
       <SeriesTable
-        series={[{ label: label ?? 'Value', points }]}
-        caption={`${label ?? 'Series'} — full data${unit ? ` (${unit})` : ''}`}
+        series={all.map((series) => ({ label: named(series.label), points: series.points }))}
+        caption={
+          all.length === 1
+            ? `${label ?? 'Series'} — full data${unit ? ` (${unit})` : ''}`
+            : `${all.map((series) => named(series.label)).join(', ')} — full data`
+        }
         hidden={!showTable}
       />
     </figure>

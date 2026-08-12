@@ -10,7 +10,7 @@ import {
   MIN_VIEWPORT,
 } from '@interlace/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@interlace/ui/avatar';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 /**
  * `HoverCard` is Base UI's `PreviewCard.Root` — a logical container that
@@ -178,6 +178,10 @@ export const Default: Story = {
 // the placement is visible at a glance.
 // ─────────────────────────────────────────────────────────────────
 export const Variants: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   render: () => (
     <div className="grid grid-cols-1 gap-2xl p-2xl md:grid-cols-2">
       {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
@@ -238,8 +242,8 @@ export const KeyboardFlow: Story = {
 };
 
 export const Dark: Story = {
-  ...Default,
-  decorators: [withDark],
+  ...Variants,
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

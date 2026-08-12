@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, within } from 'storybook/test';
 import { SeriesTable } from '@interlace/ui/charts/series-table';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { RISING, WITH_GAPS } from './fixtures';
 
@@ -118,9 +118,45 @@ export const ScreenReaderOnly: Story = {
 
 export const Dark: Story = {
   args: { series: [{ label: 'Downloads', points: RISING.slice(0, 7) }], caption: 'Downloads', hidden: false },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 export const Rtl: Story = {
   args: { series: [{ label: 'Downloads', points: RISING.slice(0, 7) }], caption: 'Downloads', hidden: false },
   decorators: [withRtl],
+};
+
+/**
+ * A categorical axis, which is not a calendar.
+ *
+ * The default keys rows by `day(t)` and sorts them, which is right for an
+ * axis of instants and wrong for an axis of names: sorted, this week reads
+ * Fri, Mon, Sat, Sun, Thu, Tue, Wed — and the table then disagrees with the
+ * chart above it about what order the week happens in. `axis="category"` also
+ * stops `day()` truncating a bin name to ten characters.
+ */
+export const CategoricalAxis: Story = {
+  args: {
+    axis: 'category',
+    keyLabel: 'Weekday',
+    hidden: false,
+    caption: 'Deploys by weekday',
+    series: [
+      {
+        label: 'Deploys',
+        points: [
+          { t: 'Mon', v: 41 },
+          { t: 'Tue', v: 38 },
+          { t: 'Wed', v: 44 },
+          { t: 'Thu', v: 36 },
+          { t: 'Fri', v: 29 },
+          { t: 'Sat', v: 12 },
+          { t: 'Sun', v: 17 },
+        ],
+      },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const headers = [...canvasElement.querySelectorAll('tbody th')].map((h) => h.textContent);
+    await expect(headers).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+  },
 };

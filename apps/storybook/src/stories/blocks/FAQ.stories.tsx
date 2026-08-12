@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FAQ } from '@interlace/ui/patterns/faq';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof FAQ> = {
   title: 'Blocks/FAQ',
@@ -107,5 +107,5 @@ export const Multiple: Story = {
 
 export const Loading: Story = { args: { loading: true } };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

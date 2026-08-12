@@ -59,6 +59,11 @@ export const SKELETON_VARIANTS = [
   // ── Pattern-shaped (matches a pattern's full layout) ─────────────────
   'article-card',
   'author-byline',
+  // A table's loading state is the one most often left as a centred spinner,
+  // which reserves nothing: the body arrives, the page grows by 300px, and
+  // whatever the reader was aiming at moves. Composite (header row + body
+  // rows) — see skeleton.tsx.
+  'data-table',
   'newsletter-form',
   'page-header',
   'prev-next-post',
@@ -74,6 +79,14 @@ export const SKELETON_VARIANTS = [
   'chart',
   'metric-table',
   'sparkline',
+
+  // ── Absence-vocabulary shapes (Phase 10.2 / 10.3) ────────────────────
+  // Both reserve the resting silhouette of a surface whose data is ALWAYS
+  // in flight on first paint. `stat-strip` is a composite (label + value
+  // pairs across a grid); `meter` is a label row plus a track, and its
+  // `count` prop is what a RankedBarList reserves rows with.
+  'meter',
+  'stat-strip',
 
   // ── Template-shaped (matches a template's full-page layout) ──────────
   // Added by Phase 4 when the templates land.
@@ -140,6 +153,9 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // Pattern-shaped (outer; composite inner rendered in skeleton.tsx)
   'article-card': 'h-72 w-full rounded-xl',
   'author-byline': 'h-12 w-full rounded-md',
+  // Bordered like the real DataTable scroll box, so the swap changes the
+  // contents of the frame and not the frame itself.
+  'data-table': 'w-full rounded-md border border-border',
   'newsletter-form': 'h-32 w-full rounded-md',
   'page-header': 'h-20 w-full rounded-md',
   // Transparent + unrounded on purpose: this variant paints TWO cards side
@@ -155,5 +171,10 @@ export const SKELETON_VARIANT_CLASSES: Record<SkeletonVariant, string> = {
   // column around it.
   chart: 'h-56 w-full rounded-md',
   'metric-table': 'w-full rounded-md',
+  // Composites (inner JSX in skeleton.tsx). Both are transparent at the root:
+  // the shape lives entirely in the body, and a filled root would paint a
+  // block behind the parts.
+  meter: 'w-full bg-transparent',
+  'stat-strip': 'w-full bg-transparent',
   sparkline: 'inline-block h-[22px] w-[90px] rounded-sm align-middle',
 };

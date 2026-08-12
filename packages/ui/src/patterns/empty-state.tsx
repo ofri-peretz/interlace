@@ -1,9 +1,3 @@
-import * as React from 'react';
-
-import { cn } from '../lib/cn.js';
-import { Stack } from '../primitives/stack.js';
-import { Typography } from '../primitives/typography.js';
-
 /**
  * @interlace/ui — EmptyState
  *
@@ -21,8 +15,10 @@ import { Typography } from '../primitives/typography.js';
  *     ├─ Typography variant=body     (description)
  *     └─ {actions}                   (optional CTA cluster, often a Button)
  *
- * MIN_VIEWPORT — 320. Always usable on phones; this is the failure-mode
- * surface, so it must work on every device.
+ * ## MIN_VIEWPORT — 320
+ *
+ * Always usable on phones; this is the failure-mode surface, so it must work
+ * on every device.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -36,6 +32,12 @@ import { Typography } from '../primitives/typography.js';
  * | R19  | Tokens only                      | bg/border/text from semantic tokens                         |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  */
+
+import * as React from 'react';
+
+import { cn } from '../lib/cn.js';
+import { Stack } from '../primitives/stack.js';
+import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

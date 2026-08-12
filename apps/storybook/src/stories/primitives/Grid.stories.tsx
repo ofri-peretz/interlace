@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Grid, GridItem } from '@interlace/ui/grid';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Grid> = {
   title: 'Primitives/Grid',
@@ -66,7 +66,7 @@ export default meta;
 type Story = StoryObj<typeof Grid>;
 
 const Cell = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-fd-border bg-fd-card/40 px-4 py-3 text-sm">
+  <div className="rounded-md border border-border bg-card/40 px-4 py-3 text-sm">
     {label}
   </div>
 );
@@ -113,7 +113,7 @@ export const WithSpan: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

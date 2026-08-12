@@ -11,13 +11,15 @@
  *   - `registry:ui`     — per primitive (`packages/ui/src/primitives/*.tsx`)
  *                       — plus three "starter bundle" composite items
  *                         (`a11y-starter`, `layout-starter`, `mdx-starter`).
- *   - `registry:style`  — the `theme` bundle: ALL five DS stylesheets
- *                         (tokens, foundation, preflight, theme,
- *                         interlace-theme) so a consumer who runs
+ *   - `registry:style`  — the `theme` bundle: the `index.css` BARREL plus
+ *                         every leaf it imports (tokens, foundation,
+ *                         preflight, theme, interlace-theme,
+ *                         themes/harbor), so a consumer who runs
  *                         `npx shadcn add @interlace/theme` gets the full
- *                         DS baseline — including the WCAG 2.2 SC 2.4.13
- *                         focus ring, the `[data-min-viewport]` container
- *                         contract, and the type / spacing / radius scales.
+ *                         DS baseline behind ONE `@import` — including the
+ *                         WCAG 2.2 SC 2.4.13 focus ring, the
+ *                         `[data-min-viewport]` container contract, and the
+ *                         type / spacing / radius scales.
  *   - `registry:lib`    — utilities under `packages/ui/src/lib/*.ts` exposed
  *                         to consumers: `cn` → `@/lib/utils.ts`,
  *                         `use-reduced-motion` → `@/hooks/use-reduced-motion.ts`.
@@ -38,6 +40,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 import { AUTHOR, HOMEPAGE, itemRef } from '../registry.config.mjs';
+import { collectThemeClaims, collisionMarkdown } from '../token-namespace.mjs';
+import { describeFrom } from '../blurb.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -249,14 +253,16 @@ const metaFor = (source, tier, name) => {
 // ─── Version banner stamped into the consumer's copy ─────────────────────────
 
 /**
- * Index just past the leading `'use client'` statement, or 0 when the file has
- * none. Comments before the directive are legal and common (our sources put a
- * JSDoc header there), so the scan is the same linear one `hasUseClient` uses.
+ * Index just past the FIRST import statement, or -1 when the file has none.
+ *
+ * Deliberately textual rather than AST-based: this runs over the same source
+ * the CLI will parse, and all it needs is "where does statement two begin".
+ * Matches a top-of-file `import …` (single- or multi-line) up to its
+ * terminating newline.
  */
-const afterDirective = (source) => {
-  if (!hasUseClient(source)) return 0;
-  const eol = source.indexOf('\n', firstStatementIndex(source));
-  return eol === -1 ? source.length : eol + 1;
+const afterFirstImport = (source) => {
+  const m = /^import\s[\s\S]*?(?:;|['"]\s*)\n/m.exec(source);
+  return m ? m.index + m[0].length : -1;
 };
 
 /**
@@ -268,10 +274,33 @@ const afterDirective = (source) => {
  * for any "what changed since I installed" diff (phase 9.5): without it there
  * is nothing to diff against.
  *
- * Placed AFTER `'use client'` rather than before it. Comments before the
- * directive are legal, but "the directive must be first" is a rule with a long
- * history of bundlers enforcing it inconsistently, and there is no upside to
- * finding out which one the consumer uses.
+ * ─── Why it goes after the first IMPORT ───────────────────────────────────
+ *
+ * It used to go straight after `'use client'`, and it did not survive the
+ * install. `data-state.tsx` arrived in a consumer tree at 2,712 bytes from a
+ * 14,314-byte item — banner gone, and with it the only mechanism the DS has
+ * for telling a consumer which copy they hold.
+ *
+ * The cause is in the CLI, not in us, and it is two mechanisms stacked:
+ *
+ *   1. `shadcn` (v4.16.2) runs each file through ts-morph and returns
+ *      `sourceFile.getText()`. That is `getFullText().substring(getStart(), …)`
+ *      and `getStart()` skips leading trivia — so EVERY comment before the
+ *      first token of the file is discarded, transform or no transform.
+ *   2. Its `transformRsc` step removes the `'use client'` statement whenever
+ *      `components.json` has `rsc: false` (the default). Removing that
+ *      statement promotes whatever followed it to file-leading trivia, where
+ *      step 1 then eats it.
+ *
+ * Measured across both `rsc` settings: a banner at the top of the file is
+ * always lost; a banner after `'use client'` is lost when `rsc: false`; a
+ * banner after the first import survives in every configuration, because it is
+ * attached to a statement that is not the first token and so falls inside the
+ * preserved range.
+ *
+ * The fallback for a file with no import at all is the end of the file —
+ * unattractive, but it is inside the preserved range, and a banner the
+ * consumer has to scroll for beats one that does not arrive.
  *
  * Line comments, not JSDoc: `src/lib/component-metadata.ts` parses the source's
  * JSDoc header for the Anatomy section and the R-rule table, and a second
@@ -287,13 +316,86 @@ const stampVersionBanner = (content, name, version) => {
       `// What changed since: ${HOMEPAGE}/c/${name}#history`,
       `// Generated banner — keep it, the upgrade diff reads this version.`,
     ].join('\n') + '\n';
-  const cut = afterDirective(content);
+  const cut = afterFirstImport(content);
+  if (cut === -1) {
+    const tail = content.endsWith('\n') ? '' : '\n';
+    return `${content}${tail}\n${banner}`;
+  }
   const rest = content.slice(cut);
-  // A blank line after the banner unless the source already opens with one —
-  // without it the banner runs straight into the component's own leading
-  // comment and reads as one block.
+  // A blank line on each side so the banner reads as its own block rather
+  // than as a comment on the import above it or the statement below it.
   const gap = rest.startsWith('\n') ? '' : '\n';
-  return content.slice(0, cut) + banner + gap + rest;
+  return content.slice(0, cut) + '\n' + banner + gap + rest;
+};
+
+/**
+ * Move the file's own leading comments below the first import, in the emitted
+ * copy.
+ *
+ * Same CLI mechanism as the banner above, so the same fix. Measured on
+ * `data-state`: the item ships 14,887 bytes of `content` and the installed
+ * `components/ui/data-state.tsx` was 9,741. The 5,146-byte difference was
+ * exactly the leading trivia — in that file, the whole explanation of what the
+ * nine states mean and why `not-counted` is not `empty`.
+ *
+ * Every component item lost its header the same way, and for most of them the
+ * loss is more than prose: 76 sources carry a `## Anatomy` section and 90 carry
+ * the R1–R26 compliance table, which is also what `src/lib/component-metadata.ts`
+ * renders on the component pages.
+ *
+ * ─── Why the emitted copy and not `packages/ui/src` ───────────────────────
+ *
+ * Relocating in the sources would fix it too, but a header below the imports is
+ * worse to read in ~130 files that do not have the CLI's problem. So the source
+ * keeps its header at the top and only the copy is rearranged. Nothing
+ * downstream cares about the position: `src/lib/component-metadata.ts` parses
+ * this same emitted content (`loadItem(name).files[].content`) with
+ * position-independent regexes, so the component pages see identical bytes in a
+ * different order, and `describeFrom`/`metaFor`/`collectDependencies` all read
+ * the untouched `source`.
+ */
+export const relocateDocHeader = (content) => {
+  // The CLI drops exactly one range — everything before the file's first token
+  // — so that range, and not "the JSDoc block", is the unit that has to move.
+  // Four primitives (avatar, scroll-area, sheet, typography) and the
+  // `*-variants.ts` companions lead with `//` blocks rather than JSDoc, and a
+  // JSDoc-only rule would have left those to be dropped exactly as before.
+  //
+  // `firstStatementIndex` rather than a regex over the comment prefix: that
+  // shape nests quantifiers and backtracks exponentially on `*//*` (CodeQL
+  // js/redos), which is why the scan exists in the first place.
+  let i = firstStatementIndex(content);
+  if (i === -1 || i >= content.length) return content;
+  const comments = [content.slice(0, i)];
+  // A leading `'use client'` must stay the first statement, but the comments
+  // UNDER it are at the same risk as the ones above: `transformRsc` deletes
+  // the directive when `rsc: false`, promoting them into the dropped range.
+  // The semicolon is optional and the magicui tier omits it — `border-beam`
+  // and `number-ticker` open with a bare `"use client"`, and requiring `;`
+  // left both of their headers above the first import to be dropped.
+  const directive = /^['"]use \w+['"];?[ \t]*\r?\n/.exec(content.slice(i));
+  const keep = directive ? directive[0] : '';
+  if (directive) {
+    i += keep.length;
+    const j = firstStatementIndex(content.slice(i));
+    if (j === -1) return content;
+    comments.push(content.slice(i, i + j));
+    i += j;
+  }
+  const header = comments.join('').trim();
+  if (!header) return content;
+  const body = keep ? `${keep}\n${content.slice(i)}` : content.slice(i);
+  const cut = afterFirstImport(body);
+  // Same fallback as the banner, for the same reason: the end of the file is
+  // inside the preserved range, and a header the consumer scrolls to beats one
+  // that never arrives. Only `lib/theme-tokens.ts` has no import to sit under.
+  if (cut === -1) {
+    const tail = body.endsWith('\n') ? '' : '\n';
+    return `${body}${tail}\n${header}\n`;
+  }
+  const rest = body.slice(cut);
+  const gap = rest.startsWith('\n') ? '' : '\n';
+  return `${body.slice(0, cut)}\n${header}\n${gap}${rest}`;
 };
 
 /**
@@ -375,6 +477,57 @@ const STYLE_FILES = [
   // resolve to nothing, so they are one contract, not two.
   'themes/harbor.css',
 ];
+
+/**
+ * The barrel — `styles/index.css` — shipped alongside the leaves.
+ *
+ * It was NOT shipped, and that was the single biggest gap in the CSS half of
+ * the registry. `index.css` exists precisely because "a typo or skipped file
+ * silently degraded half the contract" (its own header). Withholding it from
+ * the registry handed every consumer exactly the problem it was written to
+ * remove: reconstruct the `@layer` declaration and six `@import`s by hand, in
+ * order, including the non-obvious rule that `themes/harbor.css` must come
+ * AFTER `interlace-theme.css` or a Harbor dark page resolves against
+ * Interlace's dark block.
+ *
+ * No path rewriting is required, and that is a property worth stating rather
+ * than assuming: the barrel lands at `styles/interlace/index.css` and the
+ * leaves at `styles/interlace/<name>`, so its `./tokens.css` and
+ * `./themes/harbor.css` specifiers resolve as-authored. `assertStyleBarrel`
+ * below turns that from an assumption into a build-time check — if a leaf is
+ * ever retargeted, the barrel fails the build instead of shipping a dangling
+ * `@import` that CSS resolves to nothing, silently, at paint time.
+ */
+const STYLE_BARREL = 'index.css';
+
+/** Everything the `theme` item ships: the barrel plus the six leaves. */
+const ALL_STYLE_FILES = [STYLE_BARREL, ...STYLE_FILES];
+
+/**
+ * Every `@import "./x.css"` in the barrel must name a file the item also
+ * ships, at the path the barrel expects to find it.
+ */
+const assertStyleBarrel = (barrelSource) => {
+  const shipped = new Set(STYLE_FILES);
+  const errors = [];
+  for (const [, spec] of barrelSource.matchAll(
+    /@import\s+["']\.\/([^"']+)["']/g,
+  )) {
+    if (!shipped.has(spec)) {
+      errors.push(
+        `theme: styles/${STYLE_BARREL} imports "./${spec}", which the item does not ship`,
+      );
+    }
+  }
+  for (const leaf of STYLE_FILES) {
+    if (!barrelSource.includes(`"./${leaf}"`)) {
+      errors.push(
+        `theme: styles/${leaf} is shipped but styles/${STYLE_BARREL} never imports it — a consumer using the barrel would not get it`,
+      );
+    }
+  }
+  return errors;
+};
 
 /**
  * Library utilities exposed as `registry:lib` items so consumers can install
@@ -671,6 +824,52 @@ const readOptionalMeta = async (filePath) => {
   }
 };
 
+/**
+ * Consumer-facing alias → the `registry:lib` item that ships it.
+ *
+ *   `@/lib/utils`               → `cn`
+ *   `@/hooks/use-reduced-motion`→ `use-reduced-motion`
+ *   `@/lib/theme-tokens`        → `theme-tokens`
+ *   …
+ *
+ * Derived from LIB_FILES so it can never disagree with `rewriteImportsForConsumer`,
+ * which produces exactly these specifiers.
+ */
+const LIB_ITEM_BY_ALIAS = new Map(
+  LIB_FILES.map((e) => [`@/${e.target.replace(/\.tsx?$/, '')}`, e.name]),
+);
+
+/**
+ * The `registry:lib` items an item's EMITTED content actually imports.
+ *
+ * This is read off the rewritten content rather than off the source, because
+ * the content is what the consumer ends up with — the two can only agree if
+ * one is derived from the other.
+ *
+ * Why this function exists at all: 102 items imported `@/lib/utils` and not
+ * one declared `cn`. `cn.json` shipped `lib/utils.ts` perfectly well; nothing
+ * referenced it. The install therefore succeeded and the first import in every
+ * installed file failed — but only for a consumer who already had a
+ * `components.json`, i.e. every real app. Anyone who reached the registry via
+ * `shadcn init` got `lib/utils.ts` written by the CLI's own scaffold and never
+ * saw it, and so did the E2E harness, which ran `shadcn init -d` before adding
+ * anything. `assertRegistryContract` now fails the build on an undeclared lib
+ * alias, and `e2e-install.mjs` installs into a pre-existing `components.json`
+ * app, so neither half of that blind spot survives.
+ */
+const libDepsOf = (files) => {
+  const found = new Set();
+  for (const file of files) {
+    for (const [, spec] of (file.content ?? '').matchAll(
+      /from\s+['"]([^'"]+)['"]/g,
+    )) {
+      const item = LIB_ITEM_BY_ALIAS.get(spec);
+      if (item) found.add(item);
+    }
+  }
+  return [...found];
+};
+
 const buildItem = async (filePath, fileName, tier = null) => {
   const source = await readFile(filePath, 'utf8');
   const name = fileName.replace(/\.tsx?$/, '');
@@ -681,9 +880,6 @@ const buildItem = async (filePath, fileName, tier = null) => {
   const meta = await readOptionalMeta(filePath);
   const sourceDir = path.dirname(filePath);
   const { deps, companions } = await splitRelativeImports(source, sourceDir);
-  // Every primitive depends on the shared theme item so consumers get the
-  // brand tokens + animation keyframes installed alongside the .tsx.
-  const registryDependencies = [STYLE_ITEM, ...deps].map(itemRef);
   // Decorative tiers (magicui / aceternity / patterns) nest under their
   // subdir in the consumer tree to preserve provenance. Primitives stay flat.
   const subdir = TIER_SUBDIR[tier ?? 'primitives'] ?? '';
@@ -699,6 +895,47 @@ const buildItem = async (filePath, fileName, tier = null) => {
     ...companions.map((c) => relToRepo(path.join(sourceDir, `${c}.ts`))),
     ...(meta ? [relToRepo(filePath.replace(/\.tsx?$/, '.meta.json'))] : []),
   ]);
+  const files = [
+    {
+      path: `registry/interlace-ui/${subdir}${name}${ext}`,
+      target,
+      type: itemType,
+      // Banner on the item's own file only — a companion is an
+      // implementation detail of this item, and four banners in one install
+      // is noise the consumer has to read past every time they open it.
+      // Banner outermost, so the four short lines land between the import and
+      // the component's own header rather than after several hundred of them.
+      content: stampVersionBanner(
+        relocateDocHeader(rewriteImportsForConsumer(source, subdir)),
+        name,
+        version,
+      ),
+    },
+    ...(await Promise.all(
+      companions.map(async (companion) => ({
+        path: `registry/interlace-ui/${subdir}${companion}.ts`,
+        target: `components/ui/${subdir}${companion}.ts`,
+        type: itemType,
+        // No banner on a companion (see above), but it keeps its own header —
+        // that is the file's documentation, not a repeated stamp.
+        content: relocateDocHeader(
+          rewriteImportsForConsumer(
+            await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8'),
+            subdir,
+          ),
+        ),
+      })),
+    )),
+  ];
+  // Every primitive depends on the shared theme item so consumers get the
+  // brand tokens + animation keyframes installed alongside the .tsx — plus
+  // every `registry:lib` item the EMITTED files import (`@/lib/utils` → `cn`
+  // and friends). Derived from `files`, so an item can never ship an import
+  // it did not ask the CLI to install.
+  const registryDependencies = [
+    STYLE_ITEM,
+    ...[...new Set([...deps, ...libDepsOf(files)])].sort(),
+  ].map(itemRef);
   const item = {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name,
@@ -706,37 +943,19 @@ const buildItem = async (filePath, fileName, tier = null) => {
     title: name.replace(/(^|-)([a-z])/g, (_, dash, c) =>
       dash ? ' ' + c.toUpperCase() : c.toUpperCase(),
     ),
-    description: `@interlace/ui — ${name}${tierLabel} (shadcn-compatible).`,
+    // The component's own header sentence, not a restatement of its name.
+    // `shadcn add` prints this, the shadcn directory lists us under it, the
+    // storefront card shows it and an agent chooses on it — see blurb.mjs.
+    description: describeFrom(
+      source,
+      name,
+      `@interlace/ui — ${name}${tierLabel} (shadcn-compatible).`,
+    ),
     author: AUTHOR,
     categories: categoriesFor(name, tier ?? 'primitives'),
     dependencies: collectDependencies(source),
     registryDependencies,
-    files: [
-      {
-        path: `registry/interlace-ui/${subdir}${name}${ext}`,
-        target,
-        type: itemType,
-        // Banner on the item's own file only — a companion is an
-        // implementation detail of this item, and four banners in one install
-        // is noise the consumer has to read past every time they open it.
-        content: stampVersionBanner(
-          rewriteImportsForConsumer(source, subdir),
-          name,
-          version,
-        ),
-      },
-      ...(await Promise.all(
-        companions.map(async (companion) => ({
-          path: `registry/interlace-ui/${subdir}${companion}.ts`,
-          target: `components/ui/${subdir}${companion}.ts`,
-          type: itemType,
-          content: rewriteImportsForConsumer(
-            await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8'),
-            subdir,
-          ),
-        })),
-      )),
-    ],
+    files,
     meta: metaFor(source, tier ?? 'primitives', name),
     docs: docsFor(name, target),
   };
@@ -790,6 +1009,18 @@ const buildLibItem = async (entry) => {
   const rawSource = await readFile(sourcePath, 'utf8');
   const source = rewriteLibImports(rawSource);
   SOURCE_PATHS.set(entry.name, [relToRepo(sourcePath)]);
+  const files = [
+    {
+      path: `registry/interlace-ui/lib/${entry.sourceFile}`,
+      target: entry.target,
+      type: 'registry:lib',
+      content: stampVersionBanner(
+        relocateDocHeader(source),
+        entry.name,
+        versionInfoFor(entry.name).version,
+      ),
+    },
+  ];
   return {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name: entry.name,
@@ -801,22 +1032,13 @@ const buildLibItem = async (entry) => {
     dependencies: collectDependencies(source),
     // Sibling lib items this one imports — without these, installing
     // `use-theme` alone leaves two unresolvable aliases in the consumer tree.
-    registryDependencies: [...rawSource.matchAll(/from\s+['"]\.\/([\w-]+)\.js['"]/g)]
-      .map((m) => m[1])
-      .filter((name) => LIB_ALIAS.has(name))
+    // Read off the emitted content (same rule as every other item), minus
+    // itself: `LIB_ITEM_BY_ALIAS` maps this file's own target too.
+    registryDependencies: libDepsOf(files)
+      .filter((dep) => dep !== entry.name)
+      .sort()
       .map(itemRef),
-    files: [
-      {
-        path: `registry/interlace-ui/lib/${entry.sourceFile}`,
-        target: entry.target,
-        type: 'registry:lib',
-        content: stampVersionBanner(
-          source,
-          entry.name,
-          versionInfoFor(entry.name).version,
-        ),
-      },
-    ],
+    files,
     meta: metaFor(source, 'util', entry.name),
     docs: docsFor(entry.name, entry.target, { requiresTheme: false }),
   };
@@ -861,11 +1083,11 @@ const starterItem = (entry) => ({
 
 // ─── Theme / style registry item ─────────────────────────────────────────
 //
-// Publishes the five @interlace/ui stylesheets (tokens, foundation,
-// preflight, theme, interlace-theme) as a single shadcn `registry:style`
-// item so consumers get the full DS CSS baseline installed when they
-// `npx shadcn add` any primitive — focus ring, min-viewport contract,
-// type scale, spacing scale, radius scale, brand palette.
+// Publishes the @interlace/ui CSS contract — the barrel (`index.css`) plus
+// the six leaf stylesheets it imports — as a single shadcn `registry:style`
+// item, so consumers get the full DS CSS baseline installed when they
+// `npx shadcn add` any primitive: focus ring, min-viewport contract, type
+// scale, spacing scale, radius scale, brand palette.
 //
 // The raw .css files are also copied to `public/r/styles/*.css` so
 // consumers can pull them directly without the shadcn CLI (e.g. as plain
@@ -875,10 +1097,10 @@ const starterItem = (entry) => ({
 const buildStyleItem = async () => {
   SOURCE_PATHS.set(
     STYLE_ITEM,
-    STYLE_FILES.map((f) => `packages/ui/styles/${f}`),
+    ALL_STYLE_FILES.map((f) => `packages/ui/styles/${f}`),
   );
   const files = await Promise.all(
-    STYLE_FILES.map(async (name) => {
+    ALL_STYLE_FILES.map(async (name) => {
       const content = await readFile(path.join(STYLES_DIR, name), 'utf8');
       return {
         path: `registry/interlace-ui/styles/${name}`,
@@ -888,6 +1110,7 @@ const buildStyleItem = async () => {
       };
     }),
   );
+  const claims = await collectThemeClaims(STYLE_FILES);
   return {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name: STYLE_ITEM,
@@ -910,9 +1133,24 @@ const buildStyleItem = async () => {
     docs: [
       '## @interlace/theme',
       '',
-      `Five stylesheets landed in \`styles/interlace/\`, in cascade order: ${STYLE_FILES.join(' → ')}.`,
+      // The count comes from the array, so it cannot say "five" while
+      // shipping six again. It said "Five stylesheets" for the whole of the
+      // release that added `themes/harbor.css`.
+      `${ALL_STYLE_FILES.length} stylesheets landed in \`styles/interlace/\`: the \`${STYLE_BARREL}\` barrel plus ${STYLE_FILES.length} leaves.`,
       '',
-      'Import them from your global stylesheet in exactly that order.',
+      'Add ONE line to your global stylesheet:',
+      '',
+      '```css',
+      '@import "tailwindcss";',
+      `@import "./styles/interlace/${STYLE_BARREL}";`,
+      '```',
+      '',
+      // The barrel is the point. Reconstructing it by hand means the @layer
+      // declaration AND six imports in an order whose last step (harbor after
+      // interlace-theme) is not guessable — see STYLE_BARREL above.
+      `The barrel declares the cascade layers and imports the leaves in the one order that works (${STYLE_FILES.join(' → ')}). Importing the leaves yourself means reproducing that order exactly; the last step in particular is load-bearing and not guessable.`,
+      '',
+      collisionMarkdown(claims, HOMEPAGE),
       '',
       `Full contract: ${HOMEPAGE}/css-contract`,
     ].join('\n'),
@@ -920,16 +1158,24 @@ const buildStyleItem = async () => {
 };
 
 const writeRawStyleFiles = async () => {
-  await mkdir(STYLES_OUT_DIR, { recursive: true });
-  for (const name of STYLE_FILES) {
+  for (const name of ALL_STYLE_FILES) {
+    const outPath = path.join(STYLES_OUT_DIR, name);
+    // `themes/harbor.css` nests, so the mkdir has to follow the file, not
+    // just the root.
+    await mkdir(path.dirname(outPath), { recursive: true });
     const content = await readFile(path.join(STYLES_DIR, name), 'utf8');
-    await writeFile(path.join(STYLES_OUT_DIR, name), content, 'utf8');
+    await writeFile(outPath, content, 'utf8');
   }
 };
 
 const checkRawStyleFiles = async () => {
   const errors = [];
-  for (const name of STYLE_FILES) {
+  errors.push(
+    ...assertStyleBarrel(
+      await readFile(path.join(STYLES_DIR, STYLE_BARREL), 'utf8'),
+    ),
+  );
+  for (const name of ALL_STYLE_FILES) {
     const sourcePath = path.join(STYLES_DIR, name);
     const outPath = path.join(STYLES_OUT_DIR, name);
     try {
@@ -944,6 +1190,29 @@ const checkRawStyleFiles = async () => {
 };
 
 // ─── Main ────────────────────────────────────────────────────────────────────
+
+/**
+ * `public/data/story-map.json` must match what the story sources say TODAY.
+ *
+ * It is regenerated on every full build but was never compared in `--check`,
+ * so it rotted silently: the committed copy was two components behind HEAD,
+ * and those two component pages shipped with no live preview at all while
+ * every gate stayed green. A stale preview map is invisible by construction —
+ * the page just renders the "no embeddable story" fallback.
+ */
+const checkStoryMap = async () => {
+  const { buildStoryMap } = await import('./build-story-map.mjs');
+  const { map } = await buildStoryMap();
+  const file = path.join(REGISTRY_ROOT, 'public/data/story-map.json');
+  try {
+    const current = JSON.parse(await readFile(file, 'utf8'));
+    return JSON.stringify(current) === JSON.stringify(map)
+      ? []
+      : ['drift: public/data/story-map.json (run `npm run registry:build`)'];
+  } catch {
+    return ['missing: public/data/story-map.json'];
+  }
+};
 
 const compareAgainstDisk = async (fileName, built, errors) => {
   try {
@@ -1029,14 +1298,25 @@ export const buildAll = async () => {
  *      not ours (404, or worse — silently installs THEIR component);
  *   2. a relative import survives into `content`, pointing at a path that does
  *      not exist in a consumer tree;
- *   3. a dependency or `@/components/ui/*` import names an item we never ship.
+ *   3. a dependency or `@/components/ui/*` import names an item we never ship;
+ *   4. an emitted file imports a `registry:lib` alias (`@/lib/utils`,
+ *      `@/hooks/use-reduced-motion`, …) that the item does not DECLARE as a
+ *      registry dependency. The CLI writes only what it is told to write, so
+ *      an undeclared alias is a file that will not resolve — and it is
+ *      invisible to anyone who ran `shadcn init` first, because the CLI's own
+ *      scaffold happens to create `lib/utils.ts`. 102 items were in this state.
  *
- * Runs on every build and in `--check` (CI), so none of the three can regress.
+ * Runs on every build and in `--check` (CI), so none of the four can regress.
  */
 const assertRegistryContract = (items) => {
   const names = new Set(items.map((i) => i.name));
   const errors = [];
   for (const item of items) {
+    const declared = new Set(
+      (item.registryDependencies ?? []).map((d) =>
+        d.split('/').pop().replace(/\.json$/, ''),
+      ),
+    );
     for (const dep of item.registryDependencies ?? []) {
       if (!dep.startsWith('http')) {
         errors.push(`${item.name}: bare registryDependency "${dep}" — must be a URL`);
@@ -1061,6 +1341,18 @@ const assertRegistryContract = (items) => {
       )) {
         if (spec.startsWith('.')) {
           errors.push(`${item.name}: relative import "${spec}" in ${file.target}`);
+        } else if (LIB_ITEM_BY_ALIAS.has(spec)) {
+          const libItem = LIB_ITEM_BY_ALIAS.get(spec);
+          // An item that SHIPS the aliased file (the lib item itself) needs no
+          // dependency on itself.
+          const shipsItself = (item.files ?? []).some(
+            (f) => `@/${f.target.replace(/\.tsx?$/, '')}` === spec,
+          );
+          if (!shipsItself && !declared.has(libItem)) {
+            errors.push(
+              `${item.name}: imports "${spec}" in ${file.target} but does not declare registry dependency "${libItem}" — the file will not exist in a consumer tree that already has components.json`,
+            );
+          }
         } else if (spec.startsWith('@/components/ui/')) {
           const bare = spec.replace(/^@\//, '');
           const shipsItself =
@@ -1076,7 +1368,7 @@ const assertRegistryContract = (items) => {
 };
 
 const summary = (built) =>
-  `${built.primitiveCount} primitive(s) + ${built.decorativeCount} decorative + 1 style + ${STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s)`;
+  `${built.primitiveCount} primitive(s) + ${built.decorativeCount} decorative + 1 style + ${ALL_STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s)`;
 
 const main = async () => {
   const built = await buildAll();
@@ -1088,6 +1380,7 @@ const main = async () => {
     await compareAgainstDisk('registry.json', built.index, errors);
     errors.push(...assertRegistryContract(built.items));
     errors.push(...(await checkRawStyleFiles()));
+    errors.push(...(await checkStoryMap()));
     // Every shipped item must carry an explicit intent category — an "Other"
     // bucket on a public registry is a browse dead-end. Local builds only warn
     // (so adding a component never blocks); CI fails.
@@ -1113,7 +1406,12 @@ const main = async () => {
     return;
   }
 
-  const contractErrors = assertRegistryContract(built.items);
+  const contractErrors = [
+    ...assertRegistryContract(built.items),
+    ...assertStyleBarrel(
+      await readFile(path.join(STYLES_DIR, STYLE_BARREL), 'utf8'),
+    ),
+  ];
   if (contractErrors.length) {
     console.error(
       'Registry contract violated — these items are not installable:\n  ' +
@@ -1155,6 +1453,13 @@ const main = async () => {
       // the release notes can never describe a registry that no longer
       // matches — one command rebuilds both.
       'scripts/build-changelog.mjs',
+      // Regenerates llms.txt, /.well-known/agent-skills/ and the two indexes
+      // (agent-index.json for machines, search-index.json for the site's own
+      // search). Runs LAST because it reads the `public/r/*.json` this build
+      // just wrote — an agent-facing description of a registry that no longer
+      // exists is worse than none, and a hand-maintained llms.txt is wrong the
+      // day someone adds a component.
+      'scripts/build-agent-surface.mjs',
     ]) {
       const result = spawnSync('node', [path.join(REGISTRY_ROOT, script)], {
         stdio: 'inherit',

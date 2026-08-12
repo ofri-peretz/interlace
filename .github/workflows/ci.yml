@@ -150,6 +150,14 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci --no-audit --no-fund
+      # The registry app imports `@interlace/ui` through its `exports` map,
+      # which resolves to `dist/`. This job used to serve `public/` as static
+      # files and never built anything; it now starts a real `next start` so
+      # the origin-rewrite route is exercised over HTTP, and that build cannot
+      # resolve a package that has not been compiled. Failing here looks like a
+      # registry bug and is a missing build step.
+      - name: Build @interlace/ui (the registry app resolves it via dist/)
+        run: npm run build --workspace=@interlace/ui
       - name: Install every registry item into a scratch Next.js app
         run: npm run registry:e2e --workspace=registry
       - name: Upload results

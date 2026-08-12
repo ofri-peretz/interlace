@@ -3,6 +3,62 @@
 // Upstream: https://base-ui.com/react/components/dialog
 'use client';
 
+/**
+ * @interlace/ui — Sheet
+ *
+ * A modal panel anchored to one edge of the viewport — a nav drawer, a filter
+ * panel, a settings pane. Base UI's Dialog owns the open state, the focus
+ * trap, page inerting, Escape and outside-press dismissal; we own the scrim,
+ * the slide and the side geometry.
+ *
+ * Reach for `Dialog` when the task must be finished before returning, and
+ * `Popover` when the content is a short aside anchored to a control.
+ *
+ * ## Anatomy
+ *
+ *   Sheet                            (Dialog.Root — renders no DOM node)
+ *     ├─ SheetTrigger                (Dialog.Trigger)
+ *     └─ SheetPortal                 (Dialog.Portal)
+ *          ├─ SheetOverlay           (Dialog.Backdrop — fixed, bg-black/50)
+ *          └─ SheetContent           (Dialog.Popup — data-side, data-min-viewport=320)
+ *               ├─ SheetHeader → SheetTitle + SheetDescription
+ *               ├─ children
+ *               ├─ SheetFooter       (mt-auto)
+ *               └─ a Dialog.Close "X" (always rendered, sr-only label "Close")
+ *
+ * `SheetContent` mounts its own `SheetPortal` and `SheetOverlay`, so neither is
+ * needed at a call site — nesting one inside a hand-written `SheetPortal` +
+ * `SheetOverlay` stacks two `bg-black/50` scrims and dims the page to 75%
+ * instead of 50%. `SheetCompose` therefore renders `SheetContent` alone, and
+ * `primitive-api-contract-lock` counts the backdrops to keep it that way.
+ *
+ * Every prop this file does not name rides through to `Dialog.Root`, including
+ * Base UI's `modal` — pass `modal={false}` for a drawer that leaves the page
+ * interactive, and the focus trap and inerting go with it.
+ *
+ * `bg-black/50` on the scrim is deliberate and NOT a theme token: a paired
+ * token would invert in dark mode and light the page up behind the panel.
+ *
+ * ## MIN_VIEWPORT — 320
+ *
+ * Left/right sheets are `w-3/4` (240px at the floor) capped at `sm:max-w-96`,
+ * and top/bottom are `h-auto`, so nothing clips at the iPhone SE width.
+ * Declared on the popup, because `Dialog.Root` renders no DOM node.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends Base UI part props       | `React.ComponentProps<typeof BaseDialog.*>`                 |
+ * | R6   | data-slot per part               | sheet / -trigger / -close / -portal / -overlay / -content / -header / -footer / -title / -description / -close-x |
+ * | R7   | cn + ...rest                     | `cn('bg-background …', side && …, className)` + `{...props}` |
+ * | R8   | Enum for edge                    | `side = top | right | bottom | left` (default right)        |
+ * | R10  | Composition seam                 | `Compose` for the standard tree; the parts for the rest     |
+ * | R12  | Reuse over wrap                  | Base UI Dialog owns focus trap, inerting and dismissal      |
+ * | R14  | Declares min viewport            | `data-min-viewport` on the popup + exported const           |
+ * | R19  | Tokens only                      | `bg-background`, `text-muted-foreground` (the scrim excepted, above) |
+ * | R25  | Client component                 | Required — Base UI Dialog ships client hooks                |
+ * | R26  | Keyboard contract                | Escape-dismissal + focus restore asserted by `Sheet.stories.tsx`, locked by `overlay-nav-keyboard-lock` |
+ */
+
 import * as React from 'react';
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { XIcon } from 'lucide-react';
@@ -146,9 +202,10 @@ function SheetDescription({
 /* ─────────────────────────────────────────────────────────────────
  * SheetCompose — convenience composition.
  *
- * Renders the canonical Root → Trigger → Portal → Overlay → Content
- * tree with a title + body + optional footer for the side-drawer
- * pattern (nav drawers, filter panels, settings).
+ * Renders the canonical Root → Trigger → Content tree — `SheetContent`
+ * supplies the Portal and the Overlay — with a title + body + optional
+ * footer for the side-drawer pattern (nav drawers, filter panels,
+ * settings).
  *
  *   <SheetCompose
  *     trigger={<Button variant="ghost">Filters</Button>}
@@ -185,21 +242,26 @@ function SheetCompose({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger render={trigger as React.ReactElement} />
-      <SheetPortal>
-        <SheetOverlay />
-        <SheetContent side={side} className={className}>
-          {(title || description) && (
-            <SheetHeader>
-              {title ? <SheetTitle>{title}</SheetTitle> : null}
-              {description ? (
-                <SheetDescription>{description}</SheetDescription>
-              ) : null}
-            </SheetHeader>
-          )}
-          {children}
-          {footer ? <SheetFooter>{footer}</SheetFooter> : null}
-        </SheetContent>
-      </SheetPortal>
+      {/*
+       * No `SheetPortal` / `SheetOverlay` here — `SheetContent` mounts both
+       * itself. Wrapping them again stacked two `bg-black/50` scrims, so a
+       * composed sheet dimmed the page to 75% black while a hand-composed one
+       * dimmed it to 50%: one component, two appearances, decided by which
+       * entry point the caller happened to use. Locked by
+       * `primitive-api-contract-lock`.
+       */}
+      <SheetContent side={side} className={className}>
+        {(title || description) && (
+          <SheetHeader>
+            {title ? <SheetTitle>{title}</SheetTitle> : null}
+            {description ? (
+              <SheetDescription>{description}</SheetDescription>
+            ) : null}
+          </SheetHeader>
+        )}
+        {children}
+        {footer ? <SheetFooter>{footer}</SheetFooter> : null}
+      </SheetContent>
     </Sheet>
   );
 }

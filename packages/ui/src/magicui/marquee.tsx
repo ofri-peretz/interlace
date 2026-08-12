@@ -1,5 +1,48 @@
 "use client";
 
+/**
+ * @interlace/ui — Marquee
+ *
+ * An infinitely scrolling strip: it renders its children `repeat` times side
+ * by side (or stacked, with `vertical`) inside an `overflow-hidden` track and
+ * translates each copy by its own width plus the gap, so the row reads as
+ * continuous.
+ *
+ * Logo walls, testimonial rails, ticker strips.
+ *
+ * Our reimplementation of the Magic UI component of the same name. What is
+ * ours: the visible, Tab-reachable pause button and the reduced-motion gate.
+ *
+ * ## Anatomy
+ *
+ *   div.relative
+ *     ├─ div                         (track — overflow-hidden, --duration:40s,
+ *     │                               --gap:1rem, flex-row or flex-col)
+ *     │   └─ div ×repeat             (.animate-marquee / -vertical, each
+ *     │                               carrying the same children)
+ *     └─ button                      (play/pause, aria-pressed, top-right)
+ *
+ * ## Motion
+ *
+ * A CSS keyframe (`--animate-marquee` in `styles/tokens.css`) covered three
+ * ways under `prefers-reduced-motion: reduce`: the `animation: none` block in
+ * `tokens.css` names both marquee classes, the wildcard in `preflight.css`
+ * clamps the duration, and this component reads the preference in JS and adds
+ * `[animation-play-state:paused]`. Nothing depends on a single layer.
+ *
+ * Two things the layering decides:
+ *
+ * - `isAnimating` is `!paused && !reducedMotion`: reduced motion outranks the
+ *   click, so the button could never resume under `reduce`. It is therefore
+ *   not rendered at all there (`showControl`), rather than shipped as a "Play"
+ *   control that does nothing. Same call as `AnimatedList`.
+ * - `pauseOnHover` is a `group-hover:` class on the track, so it pauses on
+ *   pointer only. The button is the keyboard path, which is why
+ *   `showPauseControl` defaults to `true` — WCAG 2.2.2 (Pause, Stop, Hide)
+ *   applies to anything auto-scrolling for more than five seconds, and the
+ *   default duration is 40.
+ */
+
 import { ComponentPropsWithoutRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 
@@ -32,7 +75,7 @@ interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
   vertical?: boolean;
   /**
    * Number of times to repeat the content
-   * @default 4
+   * @default 2
    */
   repeat?: number;
   /**
@@ -52,15 +95,7 @@ interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 /**
- * Marquee — WCAG 2.2.2 (Pause, Stop, Hide) compliant by default.
- *
- * Three layers of motion control:
- *   1. `prefers-reduced-motion: reduce` → animation stops via the global
- *      reset in brand.css; this component also reads the preference and
- *      starts in the paused state so the user sees a static row.
- *   2. `pauseOnHover` → mouse users can pause by hovering.
- *   3. Visible play/pause button → keyboard + screen-reader users get an
- *      explicit control they can reach via Tab.
+ * Marquee — see the file header for the motion contract and its edges.
  */
 export function Marquee({
   className,
@@ -79,6 +114,12 @@ export function Marquee({
   // they don't have reduced-motion preference. Reduced motion overrides the
   // user's button click — anything else would re-animate when they don't want it.
   const isAnimating = !paused && !reducedMotion;
+  // …and because `reduce` outranks the click, the control is withdrawn rather
+  // than rendered inert. WCAG 2.2.2 asks for a mechanism to pause auto-updating
+  // content; under `reduce` nothing is updating, so there is nothing to offer —
+  // and a "Play" button that cannot play is a worse answer than no button.
+  // Matches `AnimatedList`.
+  const showControl = showPauseControl && !reducedMotion;
 
   return (
     <div className="relative">
@@ -110,7 +151,7 @@ export function Marquee({
             </div>
           ))}
       </div>
-      {showPauseControl && (
+      {showControl && (
         <button
           type="button"
           onClick={() => setPaused((p) => !p)}

@@ -1,11 +1,3 @@
-import * as React from 'react';
-import { Clock } from 'lucide-react';
-
-import { cn } from '../lib/cn.js';
-import { Avatar, AvatarImage, AvatarFallback } from '../primitives/avatar.js';
-import { Skeleton } from '../primitives/skeleton.js';
-import { Typography } from '../primitives/typography.js';
-
 /**
  * @interlace/ui — AuthorByline
  *
@@ -57,6 +49,14 @@ import { Typography } from '../primitives/typography.js';
  * | R25  | Server component                 | No hooks → no `'use client'` (Avatar is the client boundary) |
  * | R26  | A11y from native el              | `<time dateTime>` for the date; reading-time chip has visible text |
  */
+
+import * as React from 'react';
+import { Clock } from 'lucide-react';
+
+import { cn } from '../lib/cn.js';
+import { Avatar, AvatarImage, AvatarFallback } from '../primitives/avatar.js';
+import { Skeleton } from '../primitives/skeleton.js';
+import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

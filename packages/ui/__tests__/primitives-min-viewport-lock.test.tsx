@@ -117,6 +117,30 @@ const PRIMITIVES = [
   // localStorage and matchMedia and writes to <html>. Its trigger collapses
   // to a 36px icon square below `sm`, so 320 is honest.
   { name: 'theme-switcher', viewport: 320, tier: 'client' },
+  // ── Phase 10.2 / 10.3 — the absence vocabulary ────────────────────────
+  // Both are server-tier: the whole vocabulary is a pure function of props,
+  // so a dashboard can render a strip of measurements in an RSC without
+  // shipping a byte of it to the browser. 320 across the board — a strip
+  // collapses to two tracks and a meter is label-over-bar, which is the
+  // layout that survives an iPhone SE.
+  //
+  // DataState itself stays OFF this list for the reason recorded above: it
+  // is a state-orchestration wrapper with no chrome of its own. Its badge
+  // is inline text, which has no viewport contract either.
+  { name: 'stat-strip', viewport: 320, tier: 'server' },
+  { name: 'meter', viewport: 320, tier: 'server' },
+  // ── Combobox + CommandPalette ─────────────────────────────────────────
+  // Both client-tier: Base UI's combobox is a filtering state machine, and
+  // the palette adds Dialog's focus trap on top. 320 for both — a combobox
+  // is a form control, and the palette panel is `w-full` with a `40rem` cap
+  // that only engages above `sm`, so at 320 it is a full-bleed card with the
+  // 16px gutter intact.
+  //
+  // Like the other overlays, they project the attribute onto the surface
+  // that owns DOM: the combobox's INPUT and POPUP, and the palette's panel.
+  // `Combobox.Root` renders nothing.
+  { name: 'combobox', viewport: 320, tier: 'client' },
+  { name: 'command-palette', viewport: 320, tier: 'client' },
 ] as const;
 
 /**

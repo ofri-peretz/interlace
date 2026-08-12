@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { NetworkGraph } from '@interlace/ui/charts/network-graph';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 import { GRAPH_EDGES, GRAPH_NODES } from './fixtures';
 
@@ -195,10 +195,27 @@ export const Loading: Story = {
 
 export const Dark: Story = {
   args: { nodes: GRAPH_NODES, edges: GRAPH_EDGES, caption: 'comment ties' },
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const Rtl: Story = {
   args: { nodes: GRAPH_NODES, edges: GRAPH_EDGES },
   decorators: [withRtl],
 };
+
+/**
+ * "No connections observed yet" is a statement about the reader's network — it
+ * says they have not built one. A failed request says nothing about the network
+ * at all, and letting the empty copy stand in for it accuses the reader of an
+ * absence that may not exist.
+ */
+export const FetchFailed: Story = {
+  args: {
+    nodes: [],
+    edges: [],
+    error: 'ECONNRESET',
+    announce: { noun: 'connections' },
+  },
+};
+
+export const FetchFailedDark: Story = { ...FetchFailed, globals: { theme: 'dark' } };

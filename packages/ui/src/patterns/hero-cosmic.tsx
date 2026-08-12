@@ -1,5 +1,67 @@
 'use client';
 
+/**
+ * @interlace/ui — HeroCosmic
+ *
+ * The cosmic landing hero: a full-height gradient surface carrying a twinkling
+ * starfield, shooting stars and meteors behind an eyebrow / headline / tagline
+ * / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative
+ * layer is already wired.
+ *
+ * ## Anatomy
+ *
+ *   HeroCosmic                       (div — data-slot="hero-cosmic", min-viewport 320)
+ *     └─ div                         (min-h-screen gradient, text-hero-foreground)
+ *         ├─ div aria-hidden         (data-slot="hero-cosmic-effects")
+ *         │   ├─ StarsBackground     (canvas)
+ *         │   ├─ ShootingStars       (svg)
+ *         │   └─ Meteors             (CSS-animated spans)
+ *         └─ Container size=content  (data-slot="hero-cosmic-body")
+ *             ├─ eyebrow / h1 / tagline
+ *             ├─ actions             (primaryCta + secondaryCta)
+ *             └─ footer
+ *
+ * ## The effect layer can legitimately never appear
+ *
+ * `useEffectColors` reads `--hero-star`, `--hero-trail` and `--hero-meteor`
+ * off `document.documentElement` on mount and returns `null` until all three
+ * resolve non-empty. While it is `null` no decorative layer renders at all —
+ * which also means a consumer who imports this component but not
+ * `styles/interlace-theme.css` gets the gradient and the copy and no stars,
+ * silently and permanently. That is deliberate: the components concatenate an
+ * alpha suffix onto the colour (`${meteorColor}80`) and paint to `<canvas>`,
+ * neither of which can consume a `var()` reference, and painting an arbitrary
+ * fallback colour over someone's brand is the worse failure.
+ *
+ * ## Motion
+ *
+ * This file contains no `useReducedMotion` call — the contract is delegated to
+ * the three children in `aceternity/stars-background.tsx`, each of which reads
+ * the preference itself. Under `prefers-reduced-motion: reduce` the starfield
+ * paints one static frame (no twinkle loop) and `ShootingStars` and `Meteors`
+ * both `return null`. So a reduced-motion reader sees a still starfield on the
+ * gradient and nothing moving. All three are JS-gated; the CSS reset in
+ * `styles/preflight.css` reaches only the meteor keyframe.
+ *
+ * ## MIN_VIEWPORT — 320
+ *
+ * The copy column is a `<Container size="content">` on a mobile-first ladder
+ * (`py-lg md:py-xl lg:py-2xl`, `text-4xl` → `lg:text-7xl`) and the CTAs stack
+ * vertically below `sm`, so the hero reads on the narrowest phone.
+ *
+ * | Rule | Concept                     | Where in this file                                     |
+ * | ---- | --------------------------- | ------------------------------------------------------ |
+ * | R4   | Extends native el           | `Omit<React.ComponentProps<'div'>, 'children'\|'title'>` |
+ * | R5   | testid required, no default | `'data-testid': string` + derived part ids             |
+ * | R6   | data-slot on every part     | `hero-cosmic` / `-effects` / `-headline` / `-cta` / …  |
+ * | R7   | className + rest + ref      | `cn(...)`, `{...props}`, `ref` on the root             |
+ * | R10  | Composition seam            | `HeroCosmicCTA.render` clones any element as the button |
+ * | R19  | Tokens only                 | effect colours resolve from `--hero-*` — no hex here   |
+ * | R21  | Layout primitive            | `<Container size="content">`, not open-coded `mx-auto` |
+ * | R23  | CLS=0                       | effects are `absolute` + `aria-hidden`; copy never moves |
+ * | R25  | Client component            | canvas + `getComputedStyle` need the DOM               |
+ */
+
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
@@ -147,23 +209,8 @@ const EFFECT_DEFAULTS: Required<HeroCosmicEffects> = {
 };
 
 /**
- * Cosmic landing-hero preset: starfield + shooting stars + meteors over a
- * deep gradient. Drop-in replacement for a hand-rolled hero — pass
- * headline / tagline / CTAs and you're done.
- *
- * ## MIN_VIEWPORT — 320
- *
- * | Rule | Concept                     | Where in this file                                     |
- * | ---- | --------------------------- | ------------------------------------------------------ |
- * | R4   | Extends native el + JSDoc   | `Omit<React.ComponentProps<'div'>, 'children'\|'title'>` |
- * | R5   | testid required, no default | `'data-testid': string` + derived part ids             |
- * | R6   | data-slot on every part     | `hero-cosmic` / `-effects` / `-headline` / `-cta` / …  |
- * | R7   | className + rest + ref      | `cn(...)`, `{...props}`, `ref` on the root             |
- * | R19  | Tokens only                 | effect colours resolve from `--hero-*` (no hex here)   |
- * | R21  | Layout primitive            | `<Container size="content">`, not open-coded `mx-auto` |
- * | R22  | Mobile-first ladder         | `py-lg md:py-xl lg:py-2xl`, `text-4xl` → `lg:text-7xl` |
- * | R23  | CLS=0                       | effects are `absolute` + `aria-hidden`; copy never moves |
- * | R25  | Client component            | `'use client'` — canvas + token resolution need the DOM  |
+ * Cosmic landing-hero preset — see the file header for the effect layer, the
+ * token-resolution gate, and the reduced-motion behaviour.
  */
 export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
   function HeroCosmic(

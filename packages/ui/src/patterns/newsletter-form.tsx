@@ -1,13 +1,3 @@
-import * as React from 'react';
-
-import { Button } from '../primitives/button.js';
-import { Checkbox } from '../primitives/checkbox.js';
-import { Field, FieldControl, FieldError, FieldLabel, Form } from '../primitives/form.js';
-import { Input } from '../primitives/input.js';
-import { Skeleton } from '../primitives/skeleton.js';
-import { Stack } from '../primitives/stack.js';
-import { Typography } from '../primitives/typography.js';
-
 /**
  * @interlace/ui — NewsletterForm
  *
@@ -35,9 +25,10 @@ import { Typography } from '../primitives/typography.js';
  *     │   └─ Button type="submit"
  *     └─ <slot for footer>
  *
- * MIN_VIEWPORT — 320. Newsletter forms are typically embedded in footers
- * and sidebars on the narrowest viewports; must work on a 320 CSS-px
- * iPhone SE.
+ * ## MIN_VIEWPORT — 320
+ *
+ * Newsletter forms are typically embedded in footers and sidebars on the
+ * narrowest viewports; must work on a 320 CSS-px iPhone SE.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -52,6 +43,16 @@ import { Typography } from '../primitives/typography.js';
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from primitives             | Base UI Field owns label association + aria-describedby     |
  */
+
+import * as React from 'react';
+
+import { Button } from '../primitives/button.js';
+import { Checkbox } from '../primitives/checkbox.js';
+import { Field, FieldControl, FieldError, FieldLabel, Form } from '../primitives/form.js';
+import { Input } from '../primitives/input.js';
+import { Skeleton } from '../primitives/skeleton.js';
+import { Stack } from '../primitives/stack.js';
+import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

@@ -8,7 +8,6 @@ import { Stack } from '@interlace/ui/stack';
 import { Grid, GridItem } from '@interlace/ui/grid';
 import { Box } from '@interlace/ui/box';
 
-import { withDark } from '@/decorators';
 
 /**
  * Colors — semantic-token specimen.
@@ -426,7 +425,7 @@ export const Default: Story = {};
 export const Light: Story = {};
 
 export const Dark: Story = {
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const Variants: Story = {};

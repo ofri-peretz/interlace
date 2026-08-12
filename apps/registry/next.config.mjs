@@ -7,8 +7,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  * Registry-app config.
  *
  * - `output: 'standalone'` is NOT used — Vercel runs Next.js natively.
- * - JSON files in `public/r/*.json` are served as static assets by Next.js
- *   (no rewrite needed; same path becomes URL).
+ * - `public/r/*.json` is NO LONGER served as a static asset. A `beforeFiles`
+ *   rewrite sends `/r/**.json` to `src/app/api/r/[...slug]/route.ts`, which
+ *   substitutes the requesting origin into the `registryDependencies` URLs
+ *   before answering. See that file for why. `beforeFiles` specifically:
+ *   it is the only rewrite phase evaluated BEFORE the filesystem, so it is
+ *   the only one that can override a `public/` file — an `afterFiles`
+ *   rewrite (the shape a bare array compiles to) never fires here, and a
+ *   route handler at `/r/[...slug]` is likewise shadowed by the static file.
+ *   The raw stylesheets under `/r/styles/*.css` stay static: they contain no
+ *   origins, so there is nothing to rewrite and no reason to pay for a
+ *   function invocation.
  * - `turbopack.root` set to the workspace root because `next` is hoisted to
  *   the monorepo root's node_modules in npm workspaces — Turbopack's package
  *   resolver needs to know to walk up.
@@ -30,21 +39,41 @@ const config = {
   // PostHog reverse proxy (ANALYTICS_PHILOSOPHY principle 2). Same-origin
   // ingest survives ad-blockers and keeps third-party hosts out of CSP.
   skipTrailingSlashRedirect: true,
+  // `readFile(process.cwd() + '/public/r/…')` in the registry route is not
+  // statically analysable, so Next's tracer has no reason to bundle those
+  // files into the serverless function. Without this the route 404s in
+  // production while working perfectly in `next dev` — the exact shape of
+  // failure this whole route exists to eliminate.
+  outputFileTracingIncludes: {
+    '/api/r/[...slug]': ['./public/r/**/*.json'],
+  },
   async rewrites() {
-    return [
-      {
-        source: '/ingest/static/:path*',
-        destination: 'https://us-assets.i.posthog.com/static/:path*',
-      },
-      {
-        source: '/ingest/:path*',
-        destination: 'https://us.i.posthog.com/:path*',
-      },
-      {
-        source: '/ingest/decide',
-        destination: 'https://us.i.posthog.com/decide',
-      },
-    ];
+    return {
+      // Evaluated before the filesystem — this is what lets a dynamic handler
+      // answer for a path that also exists under `public/`.
+      beforeFiles: [
+        {
+          source: '/r/:path*.json',
+          destination: '/api/r/:path*.json',
+        },
+      ],
+      // PostHog reverse proxy — no filesystem conflict, so the default phase
+      // is correct for these.
+      afterFiles: [
+        {
+          source: '/ingest/static/:path*',
+          destination: 'https://us-assets.i.posthog.com/static/:path*',
+        },
+        {
+          source: '/ingest/:path*',
+          destination: 'https://us.i.posthog.com/:path*',
+        },
+        {
+          source: '/ingest/decide',
+          destination: 'https://us.i.posthog.com/decide',
+        },
+      ],
+    };
   },
   async headers() {
     return [

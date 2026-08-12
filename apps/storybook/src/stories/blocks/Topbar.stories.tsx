@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Topbar } from '@interlace/ui/patterns/topbar';
 import { Button } from '@interlace/ui/button';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Topbar> = {
   title: 'Blocks/Topbar',
@@ -106,5 +106,5 @@ export const NoActions: Story = {
   },
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };

@@ -1,5 +1,57 @@
 "use client";
 
+/**
+ * @interlace/ui — Particles
+ *
+ * An ambient `<canvas>` particle field for hero and section backdrops:
+ * `quantity` dots (100 by default) drifting on their own velocities, fading in
+ * near the middle and out near the edges, respawned whenever one leaves the box.
+ *
+ * Decorative by contract — `aria-hidden` and `pointer-events-none`, so it never
+ * reaches assistive tech and never intercepts a click.
+ *
+ * ## Provenance
+ *
+ * Our reimplementation of the Magic UI `Particles`. What is ours: colour comes
+ * from the element's resolved `currentColor` (`getComputedStyle(el).color`,
+ * read at mount) rather than a hex `color` prop, so you retint with
+ * `className="text-primary"`; the pointer listener is local and opt-out rather
+ * than a global `window` handler; and the reduced-motion frame below.
+ *
+ * ## Anatomy
+ *
+ *   Particles                        (div — data-slot="particles", aria-hidden,
+ *                                     pointer-events-none, text-foreground)
+ *     └─ canvas                      (size-full, sized to the wrapper × dpr)
+ *
+ * One `useEffect` owns the whole canvas lifecycle — sizing, seeding, the
+ * animation loop, pointer tracking and a 200ms-debounced resize — and
+ * `ParticlesHandle.refresh()` reseeds the field imperatively without a
+ * re-render.
+ *
+ * ## Motion
+ *
+ * JS-driven: a `requestAnimationFrame` loop repainting a canvas, which no CSS
+ * `prefers-reduced-motion` rule can touch. It is gated in JS. Under `reduce`
+ * the effect calls `resize()` (which seeds the field), then paints every
+ * circle once at its full `targetAlpha` and never calls `tick()`, so the
+ * texture is present and completely still. The pointer listener is skipped as
+ * well: `trackPointer = interactive && !reducedMotion`.
+ *
+ * ## Two things to know before you rely on it
+ *
+ * - The field is `Math.random()`-seeded on every mount — position, size,
+ *   alpha, velocity and magnetism. Two renders never match, so it cannot be
+ *   snapshot-tested and there is no seed prop.
+ * - `interactive` listens on the wrapper's PARENT, not on the wrapper. The
+ *   wrapper is `pointer-events-none` by contract, which also makes it a
+ *   non-hit-target, so a listener there could never fire — `interactive`,
+ *   `staticity` and `ease` were all inert. Drop the field into the positioned
+ *   container it is meant to cover (`<div className="relative">`) and that
+ *   container is what tracks the pointer; with no parent element it falls back
+ *   to `window`.
+ */
+
 import {
   forwardRef,
   useCallback,
@@ -10,34 +62,6 @@ import {
 
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
-
-/**
- * ## API parity
- *
- * Re-authored from the MagicUI `Particles` (https://magicui.design/docs/components/particles).
- * Deviations from upstream, each deliberate:
- *
- * 1. **Token-driven color.** Upstream defaults `color="#ffffff"` and converts
- *    hex → rgb at runtime. Raw hex literals fork the design system (R19), so
- *    this version paints in the element's resolved `currentColor`: the wrapper
- *    carries a Tailwind text token (default `text-foreground`) and the
- *    canvas reads `getComputedStyle(el).color` at mount. Consumers retint by
- *    passing `className="text-primary"` — no color prop, no literal.
- * 2. **Reduced-motion contract.** Upstream animates unconditionally. This
- *    version reads `useReducedMotion()` and paints a single static frame
- *    instead of running `requestAnimationFrame`, honoring WCAG 2.3.3 / the
- *    Interlace motion budget.
- * 3. **Consumer-agnostic root.** Extends `React.ComponentPropsWithoutRef<"div">`,
- *    forwards `ref` to the wrapper, spreads `...props`, and merges `className`
- *    via `cn` — same shape as `Marquee`. No app/next/blog imports.
- * 4. **Pointer tracking is local + opt-out.** Upstream attaches a global
- *    `window` mousemove listener even when `staticity` makes it a no-op. This
- *    version listens on the wrapper itself (pointermove, passive) and skips the
- *    listener entirely when `interactive={false}`.
- *
- * The component is purely decorative chrome: it renders `aria-hidden` and
- * `pointer-events-none`, so it never enters the a11y tree or steals clicks.
- */
 
 /** Imperative handle for forcing a fresh particle field (e.g. on route change). */
 export interface ParticlesHandle {
@@ -326,6 +350,22 @@ export const Particles = forwardRef<ParticlesHandle, ParticlesProps>(
         }
       };
 
+      // The wrapper is `pointer-events-none` — by contract, so the field never
+      // eats a click — which also means it is never a hit target and a
+      // `pointermove` listener on it can never fire. Listen on the positioned
+      // parent the field was dropped into instead: still local (not a global
+      // `window` handler), still scoped to the surface the particles cover.
+      // `window` is the fallback for a field mounted with no parent element.
+      //
+      // The coordinate maths is unaffected — it is computed from the CANVAS's
+      // own `getBoundingClientRect()`, not from the element that heard the
+      // event, and the in-bounds check below already discards anything outside
+      // the field.
+      const pointerTarget: Pick<
+        HTMLElement,
+        "addEventListener" | "removeEventListener"
+      > = container.parentElement ?? window;
+
       let resizeTimer: ReturnType<typeof setTimeout> | null = null;
       const onResize = () => {
         if (resizeTimer) clearTimeout(resizeTimer);
@@ -334,7 +374,7 @@ export const Particles = forwardRef<ParticlesHandle, ParticlesProps>(
 
       const trackPointer = interactive && !reducedMotion;
       if (trackPointer) {
-        container.addEventListener("pointermove", onPointerMove, {
+        pointerTarget.addEventListener("pointermove", onPointerMove, {
           passive: true,
         });
       }
@@ -344,7 +384,7 @@ export const Particles = forwardRef<ParticlesHandle, ParticlesProps>(
         if (rafId.current != null) window.cancelAnimationFrame(rafId.current);
         if (resizeTimer) clearTimeout(resizeTimer);
         if (trackPointer) {
-          container.removeEventListener("pointermove", onPointerMove);
+          pointerTarget.removeEventListener("pointermove", onPointerMove);
         }
         window.removeEventListener("resize", onResize);
       };

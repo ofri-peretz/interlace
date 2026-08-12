@@ -1,10 +1,3 @@
-import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-
-import { cn } from '../lib/cn.js';
-import { Skeleton } from '../primitives/skeleton.js';
-import { Typography } from '../primitives/typography.js';
-
 /**
  * @interlace/ui — StatCard
  *
@@ -27,8 +20,9 @@ import { Typography } from '../primitives/typography.js';
  *     ├─ {delta}                     (optional — "+12.3% · 30d" — tone-tinted)
  *     └─ {footnote}                  (optional smaller meta — "since launch")
  *
- * MIN_VIEWPORT — 320. Dashboards must work on phones; this is the smallest
- * widget on the canvas.
+ * ## MIN_VIEWPORT — 320
+ *
+ * Dashboards must work on phones; this is the smallest widget on the canvas.
  *
  * ## Contrast — delta text on `--background` (measured in-browser)
  *
@@ -55,6 +49,13 @@ import { Typography } from '../primitives/typography.js';
  * | R20  | AAA contrast                     | table above — every tone measured in both schemes           |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  */
+
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+
+import { cn } from '../lib/cn.js';
+import { Skeleton } from '../primitives/skeleton.js';
+import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 

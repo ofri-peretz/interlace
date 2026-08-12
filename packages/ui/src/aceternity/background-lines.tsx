@@ -1,4 +1,54 @@
 "use client";
+
+/**
+ * @interlace/ui — BackgroundLines
+ *
+ * A full-bleed backdrop of twelve long, sweeping SVG curves that draw
+ * themselves in and fade out on a loop, each staggered by a fixed delay so the
+ * field never pulses in unison.
+ *
+ * Your children render above it on a `z-10` layer; the container is
+ * `h-[20rem] md:h-screen`.
+ *
+ * Our reimplementation of the Aceternity UI effect of the same name. What is
+ * ours: the path count is cut to twelve, the per-path delays are a fixed
+ * lookup table rather than `Math.random()` (so server and client agree and the
+ * field is reproducible), and both the wrapper and the SVG are `memo`'d behind
+ * an `IntersectionObserver` that unmounts the whole layer off-screen.
+ *
+ * ## Anatomy
+ *
+ *   BackgroundLines                  (div — bg-white dark:bg-black, isolate,
+ *                                     contain: layout style paint)
+ *     ├─ div.absolute.inset-0
+ *     │   └─ SVG                     (motion.svg, viewBox 0 0 1440 900,
+ *     │       └─ motion.path ×12      opacity 0.4, aria-hidden,
+ *     │                               pointer-events-none)
+ *     └─ div.z-10                    (your children)
+ *
+ * Each path animates `strokeDashoffset 800 → 0` with the dash pattern
+ * tightening from `"50 800"` to `"20 800"` and opacity running `[0, 1, 1, 0]`,
+ * so the stroke reads as a comet drawing along the curve.
+ *
+ * ## Motion
+ *
+ * JS-driven — `motion/react` variants on twelve paths, `repeat: Infinity`. The
+ * CSS reset in `styles/preflight.css` cannot reach motion's inline styles, so
+ * the gate is in JS and it is total: the layer renders only under
+ * `{isVisible && !reduceMotion && <SVG …/>}`, so under
+ * `prefers-reduced-motion: reduce` no SVG mounts at all and the surface is a
+ * plain white (or black) box behind your content.
+ *
+ * ## What it does not give you
+ *
+ * - The twelve stroke colours are a hard-coded hex array in this file and are
+ *   not props. Neither are the paths. `svgOptions.duration` (default 10s) is
+ *   the only knob.
+ * - The surface is `bg-white dark:bg-black`, not a background token.
+ * - `paths.slice(0, 12)` is a no-op: the array holds exactly twelve entries.
+ *   The adjacent "reduced from 42" comment describes an edit already made.
+ */
+
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
 import { motion } from "motion/react";
@@ -99,6 +149,10 @@ const SVG = memo(({
 
   return (
     <motion.svg
+      // Purely decorative — twelve unlabelled curves carrying no information.
+      // `pointer-events-none` keeps it out of the pointer's way; this keeps it
+      // out of the a11y tree, matching every other `aceternity/` backdrop.
+      aria-hidden="true"
       viewBox="0 0 1440 900"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

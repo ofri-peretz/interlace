@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { FocusRing, MIN_VIEWPORT } from '@interlace/ui/focus-ring';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/FocusRing',
@@ -80,7 +80,7 @@ const ringThickness = (el: HTMLElement): number => {
 export const Default: Story = {
   args: { offset: 'md', className: 'block' },
   render: (args) => (
-    <div className="w-[420px] max-w-full">
+    <div className="w-full max-w-float">
       <FocusRing {...args}>
         <FocusableCard>
           Tab here to see the ring. Change `offset` to move it, or set
@@ -107,7 +107,7 @@ export const Default: Story = {
 export const KeyboardFlow: Story = {
   args: { offset: 'md', className: 'block' },
   render: (args) => (
-    <div className="flex w-[420px] max-w-full flex-col gap-3">
+    <div className="flex w-full max-w-float flex-col gap-3">
       <FocusRing {...args}>
         <FocusableCard>Tab here to paint the ring.</FocusableCard>
       </FocusRing>
@@ -202,7 +202,7 @@ export const CustomSurface: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

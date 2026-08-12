@@ -1,6 +1,7 @@
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { RelatedPosts, type RelatedPost } from '@interlace/ui/patterns/related-posts';
-import { withDark, withRtl } from '@/decorators';
+import { DataState } from '@interlace/ui/data-state';
+import { withRtl } from '@/decorators';
 
 const samplePosts: RelatedPost[] = [
   {
@@ -156,8 +157,65 @@ export const Loading: Story = {
   decorators: framed,
 };
 
+/**
+ * No recommendations — and the block renders NOTHING.
+ *
+ * `RelatedPosts` returns `null` for an empty list, and that is the right call
+ * for this block specifically: "here are some other articles" is an offer, and
+ * an offer with nothing behind it is worse than no offer. A "no related posts"
+ * panel at the foot of an article is noise the reader did not ask for.
+ *
+ * The story exists so that decision is VISIBLE and deliberate rather than
+ * discovered later by someone debugging a missing section. The left column is
+ * the component as it ships; the right shows what the same absence looks like
+ * when it IS worth stating, via `DataState` — which is the choice a surface
+ * with a filter (where the reader caused the emptiness) should make instead.
+ */
+export const Empty: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'An empty `posts` array renders nothing at all — an unfulfillable offer is worse than no offer. Contrasted with the `DataState` treatment, which is what to reach for when the reader caused the emptiness and needs to know they did.',
+      },
+    },
+  },
+  render: () => (
+    <div className="bg-background mx-auto flex max-w-wide flex-col gap-2xl p-lg">
+      <section aria-label="Silent absence">
+        <p className="text-muted-foreground font-body text-ui-sm mb-sm">
+          As it ships — nothing renders below this line:
+        </p>
+        <RelatedPosts
+          data-testid="story-related-posts-silent"
+          title="Related posts"
+          posts={[]}
+        />
+      </section>
+
+      <section aria-label="Stated absence">
+        <p className="text-muted-foreground font-body text-ui-sm mb-sm">
+          The same absence, stated — for a filtered surface:
+        </p>
+        <DataState<RelatedPost[]> empty data={[]} announce={{ noun: 'related posts' }}>
+          {(posts) => (
+            <RelatedPosts
+              data-testid="story-related-posts-stated"
+              title="Related posts"
+              posts={posts}
+            />
+          )}
+        </DataState>
+      </section>
+    </div>
+  ),
+};
+
+export const EmptyDark: Story = { ...Empty, globals: { theme: 'dark' } };
+
 export const Dark: Story = {
-  decorators: [withDark, ...framed],
+  globals: { theme: 'dark' },
+  decorators: [...framed],
 };
 
 export const RTL: Story = {
@@ -172,7 +230,7 @@ export const RTL: Story = {
  */
 export const BelowMinViewport: Story = {
   render: (args) => (
-    <div className="w-[400px] max-w-full border border-dashed border-fd-border p-sm">
+    <div className="w-[400px] max-w-full border border-dashed border-border p-sm">
       <RelatedPosts {...args} />
     </div>
   ),

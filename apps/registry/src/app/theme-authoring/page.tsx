@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { THEMES, THEME_TOKENS } from '@interlace/ui/theme-tokens';
 
 import { SiteNav } from '@/components/site-nav';
+import { TokenNamespaceReference } from '@/components/token-namespace';
 
 export const metadata: Metadata = {
   title: 'Theme Authoring',
@@ -577,6 +578,14 @@ import { ThemeSwitcher } from '@interlace/ui/theme-switcher';
             </li>
           </ul>
         </Section>
+
+        {/* The collision surface. Lives here rather than on /css-contract
+            because this is the page someone opens the moment they decide to
+            override a token — which is the moment the `@theme inline` rule
+            (override `--accent`, never `--color-accent`) starts costing them
+            time. Linked from /getting-started and from the `theme` item's
+            post-install output. */}
+        <TokenNamespaceReference />
       </main>
     </div>
   );

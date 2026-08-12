@@ -1,3 +1,50 @@
+/**
+ * @interlace/ui — Pagination
+ *
+ * The page-navigation bar: a `<nav aria-label="pagination">` of anchor links
+ * with previous / next / ellipsis parts. It is presentation only — it computes
+ * no page numbers and knows no total.
+ *
+ * The caller renders the items and marks one with `active`, which emits
+ * `aria-current="page"` and the outline face.
+ *
+ * ## Anatomy
+ *
+ *   Pagination                       (nav — aria-label=pagination, data-min-viewport=320)
+ *     └─ PaginationContent           (ul — flex-wrap)
+ *          └─ PaginationItem         (li)
+ *               ├─ PaginationLink        (a — buttonVariants, active ⇒ outline + aria-current)
+ *               ├─ PaginationPrevious    (a — chevron + label, label hidden below sm)
+ *               ├─ PaginationNext        (a — label + chevron, label hidden below sm)
+ *               └─ PaginationEllipsis    (span — aria-hidden icon + sr-only "More pages")
+ *
+ * Links, not buttons: every part renders an `<a>`, so there is no disabled
+ * state. A "previous" on page one has to be omitted by the caller rather than
+ * disabled, and an anchor with no `href` is not keyboard-focusable.
+ *
+ * `PaginationLink` also accepts a deprecated `isActive` alias for `active`,
+ * kept only so shadcn-shaped call sites keep working; `active` wins when both
+ * are passed.
+ *
+ * ## MIN_VIEWPORT — 320
+ *
+ * Prev/Next collapse to icon-only below `sm` (`hidden sm:block` on the
+ * labels), and the list is `flex-wrap` — without the wrap a nine-page bar
+ * measured 444px inside a 375px viewport and pushed the page sideways.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends native el                | `React.ComponentProps<'nav' | 'ul' | 'li' | 'a' | 'span'>`  |
+ * | R6   | data-slot per part               | pagination / -content / -item / -link / -ellipsis           |
+ * | R7   | cn + ...rest                     | `cn(buttonVariants({…}), className)` + `{...props}`         |
+ * | R8   | No `isXxx`                       | `active`; `isActive` survives only as a deprecated alias    |
+ * | R12  | Reuse over wrap                  | the link face is `buttonVariants`, not a second class list  |
+ * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
+ * | R19  | Tokens only                      | all colour arrives via `buttonVariants`                     |
+ * | R25  | Server component                 | No hooks → no `'use client'`                                |
+ * | R26  | A11y                             | `aria-current="page"`; the ellipsis hides its ICON, not its wrapper, so the sr-only text survives |
+ */
+
 import * as React from 'react';
 import { type VariantProps } from 'class-variance-authority';
 import {

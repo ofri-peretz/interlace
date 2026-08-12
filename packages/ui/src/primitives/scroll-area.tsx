@@ -2,6 +2,47 @@
 // Upstream: https://base-ui.com/react/components/scroll-area
 'use client';
 
+/**
+ * @interlace/ui — ScrollArea
+ *
+ * A scrollable region with a styled overlay scrollbar in place of the platform
+ * one. Wraps @base-ui/react/scroll-area: Base UI owns overflow detection and
+ * thumb geometry; we own the track, the thumb colour and the focus ring.
+ *
+ * The root renders a VERTICAL scrollbar only. `ScrollBar` is exported and
+ * takes `orientation="horizontal"`, but a horizontally scrolling area has to
+ * be composed from the Base UI parts — `<ScrollArea>` will not grow one.
+ *
+ * The root is size-agnostic (`relative`, nothing else): it scrolls when its
+ * PARENT constrains it. Dropped into an unconstrained column it simply grows.
+ *
+ * ## Anatomy
+ *
+ *   ScrollArea                       (ScrollArea.Root — relative, data-min-viewport=320)
+ *     ├─ ScrollArea.Viewport         (focus ring lives here — the scrollable box)
+ *     │    └─ ScrollArea.Content     (children)
+ *     ├─ ScrollBar                   (Scrollbar → Thumb — vertical by default)
+ *     └─ ScrollArea.Corner
+ *
+ * ## MIN_VIEWPORT — 320
+ *
+ * The root is sized by its parent and the scrollbar track is an overlay
+ * (`p-px` + `w-2.5`, positioned by Base UI), so it costs no horizontal layout
+ * space at the 320 floor.
+ *
+ * | Rule | Concept                          | Where in this file                                          |
+ * | ---- | -------------------------------- | ----------------------------------------------------------- |
+ * | R4   | Extends Base UI part props       | `React.ComponentProps<typeof BaseScrollArea.Root/Scrollbar>` |
+ * | R6   | data-slot per part               | scroll-area / -viewport / -scrollbar / -thumb               |
+ * | R7   | cn + ...rest                     | `cn('relative', className)` + `{...props}`                  |
+ * | R8   | Enum for axis                    | `orientation = horizontal | vertical` on `ScrollBar`        |
+ * | R12  | Reuse over wrap                  | Base UI owns overflow detection and thumb geometry          |
+ * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
+ * | R19  | Tokens only                      | `bg-border` thumb, `ring-ring/50` viewport ring             |
+ * | R25  | Client component                 | Required — Base UI ScrollArea ships client hooks            |
+ * | R26  | A11y                             | the VIEWPORT takes focus and shows a ring, so a scrollable region is keyboard-reachable (axe `scrollable-region-focusable`); arrow-key scrolling is asserted by `ScrollArea.stories.tsx` |
+ */
+
 import * as React from 'react';
 import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
 

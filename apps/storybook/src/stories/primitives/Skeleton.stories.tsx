@@ -4,7 +4,7 @@ import {
   SKELETON_VARIANTS,
   type SkeletonVariant,
 } from '@interlace/ui/skeleton';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 const meta: Meta<typeof Skeleton> = {
   title: 'Primitives/Skeleton',
@@ -83,7 +83,7 @@ function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
       <code className="text-muted-foreground font-mono text-ui-sm pt-2 sm:w-44 sm:shrink-0">
         variant=&quot;{variant}&quot;
       </code>
-      <div className="w-[420px] max-w-full">
+      <div className="w-full max-w-float">
         <Skeleton variant={variant} />
       </div>
     </div>
@@ -109,6 +109,10 @@ export const Count: Story = {
  * pattern (image surface + title lines + description + author row).
  */
 export const ArticleCardSkeleton: Story = {
+  // The registry's thumbnail for this component — see the preview policy in
+  // apps/registry/scripts/build-story-map.mjs. Default renders too small to
+  // read at thumbnail size.
+  tags: ['preview'],
   args: { variant: 'article-card' },
   render: (args) => (
     <div className="w-[360px] max-w-full">
@@ -118,8 +122,8 @@ export const ArticleCardSkeleton: Story = {
 };
 
 export const Dark: Story = {
-  ...Catalogue,
-  decorators: [withDark],
+  ...ArticleCardSkeleton,
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

@@ -12,7 +12,7 @@ import {
   MIN_VIEWPORT,
 } from '@interlace/ui/alert-dialog';
 import { Button } from '@interlace/ui/button';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta = {
   title: 'Primitives/AlertDialog',
@@ -204,7 +204,7 @@ export const KeyboardFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

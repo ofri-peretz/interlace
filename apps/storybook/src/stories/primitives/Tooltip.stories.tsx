@@ -9,7 +9,7 @@ import {
 } from '@interlace/ui/tooltip';
 import { Button } from '@interlace/ui/button';
 import { ArrowUpDown, Download, Filter } from 'lucide-react';
-import { withDark, withReducedMotion, withRtl } from '@/decorators';
+import { withReducedMotion, withRtl } from '@/decorators';
 
 const meta: Meta<typeof Tooltip> = {
   title: 'Primitives/Tooltip',
@@ -195,7 +195,7 @@ export const KeyboardFlow: Story = {
 
 export const Dark: Story = {
   ...Default,
-  decorators: [withDark],
+  globals: { theme: 'dark' },
 };
 
 export const RTL: Story = {

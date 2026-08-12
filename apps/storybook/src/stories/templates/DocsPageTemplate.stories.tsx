@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DocsPageTemplate } from '@interlace/ui/templates/docs-page-template';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof DocsPageTemplate> = {
   title: 'Templates/DocsPageTemplate',
@@ -98,7 +98,7 @@ export const NoSidebar: Story = {
   args: { ...Default.args, sidebar: undefined },
 };
 
-export const Dark: Story = { ...Default, decorators: [withDark] };
+export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
 
 /**

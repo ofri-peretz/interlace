@@ -3,7 +3,7 @@ import { SettingsTemplate } from '@interlace/ui/templates/settings-template';
 import { Button } from '@interlace/ui/button';
 import { Field, FieldControl, FieldLabel } from '@interlace/ui/form';
 import { Input } from '@interlace/ui/input';
-import { withDark, withRtl } from '@/decorators';
+import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof SettingsTemplate> = {
   title: 'Templates/SettingsTemplate',
@@ -73,7 +73,7 @@ export const Profile: Story = {
   },
 };
 
-export const Dark: Story = { ...Profile, decorators: [withDark] };
+export const Dark: Story = { ...Profile, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Profile, decorators: [withRtl] };
 
 /**

@@ -1,12 +1,14 @@
 /**
  * @interlace/ui — AspectRatio
  *
- * Anatomy: a single block-level wrapper that reserves space by ratio (CSS
+ * A single block-level wrapper that reserves space by ratio (CSS
  * `aspect-ratio`) and stretches to the parent's width. Use it as the *frame*
- * for media that arrives async (images, video, embeds, charts) so the
- * surrounding layout never shifts (DESIGN_PRINCIPLES #7 "CLS = 0 from
- * layout"). Children fill the frame absolutely or with `object-cover` on
- * `<img>` / `<video>`.
+ * for media that arrives async — images, video, embeds, charts — so the
+ * surrounding layout never shifts (DESIGN_PRINCIPLES #7, "CLS = 0 from
+ * layout").
+ *
+ * Anatomy: one `div`. Children fill the frame absolutely, or with
+ * `object-cover` on `<img>` / `<video>`.
  *
  * | Rule | Concept                          | Where in this file                                   |
  * | ---- | -------------------------------- | ---------------------------------------------------- |

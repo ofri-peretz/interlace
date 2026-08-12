@@ -114,11 +114,22 @@ const preview: Preview = {
           'Foundations',
           'Tokens',
           ['Color Contrast'],
+          // The non-component registry items. `Utilities` is the `registry:lib`
+          // tier (cn, the two hooks, the theme manifest and bootstrap);
+          // `Contracts` is the pure `.ts` modules that a component spends but
+          // that render nothing themselves (variant catalogues, the absence
+          // vocabulary, the meter arithmetic). Both sit here — after the
+          // vocabulary, before the components — because that is what they are:
+          // shared language, not parts.
+          'Utilities',
+          'Contracts',
           'Primitives',
           'Blocks',
           'Charts',
           'Templates',
           'Pages',
+          // Meta-installs, so they come after everything they pull in.
+          'Starters',
           'Fumadocs',
           'MagicUI',
         ],
@@ -131,12 +142,34 @@ const preview: Preview = {
    * default (`manual: false`), so the practical effect is nil, but stating it
    * here keeps the intent explicit and survives an upstream default flip.
    *
-   * Unrelated known behaviour, so nobody re-files it as a bug: on a HARD page
-   * load the panel can sit on "Preparing accessibility scan…". The panel only
-   * leaves that state on a `STORY_FINISHED` it is mounted to receive, so a
-   * scan that completed before the panel mounted is never back-filled. Any
-   * story navigation or a "Reload story" click scans immediately. This is
-   * upstream panel behaviour, NOT a misconfiguration here.
+   * FIXED — see the back-fill block in `.storybook/manager.ts`. This note is
+   * kept because the diagnosis it records is right and the conclusion it drew
+   * was wrong; the wrong conclusion is what kept the panel broken.
+   *
+   * The behaviour was: on a HARD page load the panel sat on "Preparing
+   * accessibility scan…" permanently — not just for the first story, for every
+   * story, because the panel never subscribes until its tab is activated and
+   * nothing re-delivers what it missed. It was written off below as upstream
+   * panel behaviour that is merely cosmetic. It was not cosmetic: it meant NO
+   * story was ever axe-scanned in the dev UI while this file advertises a
+   * strict WCAG 2.2 AA + ACT gate, which is a false claim about the product.
+   * The scan itself always ran correctly — the result was simply dropped on
+   * the floor of the manager channel, and `channel.last(STORY_FINISHED)` had
+   * it the whole time.
+   *
+   * The original note read: "on a HARD page load the panel can sit on
+   * 'Preparing accessibility scan…'. The panel only leaves that state on a
+   * `STORY_FINISHED` it is mounted to receive, so a scan that completed before
+   * the panel mounted is never back-filled. Any story navigation or a 'Reload
+   * story' click scans immediately. This is upstream panel behaviour, NOT a
+   * misconfiguration here."
+   *
+   * Every mechanical sentence there is accurate. "Upstream, therefore ours to
+   * live with" is the part that was wrong: upstream drops the result, but the
+   * channel retains it, so the manager can hand it back. It is also why "any
+   * story navigation scans immediately" was reassuring and shouldn't have
+   * been — navigation works precisely because the panel is subscribed BY then,
+   * which is the tell that the first story was never scanned at all.
    */
   initialGlobals: {
     // Run on story visit rather than on a button press. `manual` moved from

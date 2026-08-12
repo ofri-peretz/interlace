@@ -92,7 +92,14 @@ describe('deriveVersions', () => {
     tags: [],
     packageVersion: '1.0.0',
   });
-  const byName = Object.fromEntries(derived.map((d) => [d.name, d]));
+  // `deriveVersions` comes from an untyped .mjs, so name the row shape here.
+  const byName: Record<string, { name: string; version: string; since: string; updated: string | null }> =
+    Object.fromEntries(
+      (derived as Array<{ name: string; version: string; since: string; updated: string | null }>).map((d) => [
+        d.name,
+        d,
+      ]),
+    );
 
   it('starts a shipped component at 1.0.0, never 0.x', () => {
     expect(byName.badge.version).toBe('1.0.0');

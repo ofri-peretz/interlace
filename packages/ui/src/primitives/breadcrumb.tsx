@@ -1,14 +1,11 @@
-// Breadcrumb — server-rendered, semantically-tagged trail of ancestor links.
-// Compositional API (Breadcrumb / BreadcrumbList / BreadcrumbItem /
-// BreadcrumbLink / BreadcrumbSeparator / BreadcrumbPage / BreadcrumbEllipsis)
-// mirrors the shadcn surface so consumers swap drop-in. BreadcrumbLink keeps a
-// server-safe `asChild` seam (React.cloneElement, NOT Base UI useRender) so the
-// whole tree stays an RSC — composes with `next/link` without forcing a client
-// boundary. MIN_VIEWPORT=480 because long trails overflow on <480 phones; below
-// it, consumers should collapse with BreadcrumbEllipsis.
-
 /**
  * @interlace/ui — Breadcrumb
+ *
+ * A server-rendered, semantically-tagged trail of ancestor links. The
+ * compositional API mirrors the shadcn surface so consumers swap drop-in, and
+ * `BreadcrumbLink` keeps a server-safe `asChild` seam (`React.cloneElement`,
+ * NOT Base UI `useRender`) so the whole tree stays an RSC and composes with
+ * `next/link` without forcing a client boundary.
  *
  * Anatomy:
  *   Breadcrumb (nav[aria-label="breadcrumb"], data-min-viewport)
