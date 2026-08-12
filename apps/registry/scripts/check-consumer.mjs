@@ -54,13 +54,37 @@ import path from 'node:path';
 import { HOMEPAGE } from '../registry.config.mjs';
 
 const args = process.argv.slice(2);
-const flag = (name) => {
-  const i = args.indexOf(`--${name}`);
-  return i === -1 ? null : (args[i + 1] ?? true);
-};
-const consumerDir = args.find((a) => !a.startsWith('--') && args[args.indexOf(a) - 1] !== '--registry' && args[args.indexOf(a) - 1] !== '--diff');
-const asJson = args.includes('--json');
-const diffItem = flag('diff');
+
+/**
+ * A single positional scan, because the previous version used
+ * `args.indexOf(a)` to ask "is the token before me a flag?" — and `indexOf`
+ * returns the FIRST occurrence, not the current one. So
+ * `check-consumer.mjs http://foo --registry http://foo` looked up position 0
+ * for the second `http://foo`, decided its predecessor was not a flag, and
+ * accepted the SAME string as both the consumer directory and the registry
+ * URL. Any argument whose value repeats elsewhere on the line was parsed
+ * against the wrong position.
+ *
+ * Walking once and consuming each flag's value as we pass it has no such
+ * ambiguity, and it is shorter.
+ */
+const VALUE_FLAGS = new Set(['--registry', '--diff']);
+const opts = { registry: null, diff: null, json: false };
+let consumerDir = null;
+for (let i = 0; i < args.length; i += 1) {
+  const arg = args[i];
+  if (VALUE_FLAGS.has(arg)) {
+    opts[arg.slice(2)] = args[i + 1] ?? null;
+    i += 1;
+  } else if (arg === '--json') {
+    opts.json = true;
+  } else if (!arg.startsWith('--') && consumerDir === null) {
+    consumerDir = arg;
+  }
+}
+const flag = (name) => opts[name];
+const asJson = opts.json;
+const diffItem = opts.diff;
 
 if (!consumerDir) {
   console.error('usage: check-consumer.mjs <path-to-consumer> [--registry <url>] [--diff <item>] [--json]');

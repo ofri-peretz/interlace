@@ -355,3 +355,28 @@ describe('the parser can fail', () => {
     expect(Number(box![1])).toBeLessThan(6);
   });
 });
+
+/**
+ * Both affordances dock at `end-1` inside `ComboboxControl`, so rendering both
+ * — which the compositional API permits — stacked them invisibly. The fix is a
+ * `:has(~ …)` rule on `ComboboxClear`, and this locks it because the failure
+ * mode is silent: no error, no warning, one button simply covering another.
+ */
+describe('Combobox affordances do not stack', () => {
+  const source = readFileSync(
+    join(__dirname, '../src/primitives/combobox.tsx'),
+    'utf-8',
+  );
+  const stripped = source
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/(^|\s)\/\/.*$/gm, '$1');
+
+  it('offsets Clear when a Trigger follows it', () => {
+    expect(stripped).toContain('[&:has(~[data-slot=combobox-trigger])]:end-9');
+  });
+
+  it('still docks both at end-1 by default, so a lone affordance is flush', () => {
+    const docked = stripped.match(/absolute end-1/g) ?? [];
+    expect(docked.length).toBe(2);
+  });
+});

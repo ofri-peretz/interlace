@@ -264,6 +264,14 @@ function ComboboxClear({
       data-slot="combobox-clear"
       className={cn(
         'text-muted-foreground hover:text-foreground absolute end-1 flex size-7 items-center justify-center rounded-sm transition-colors outline-none',
+        // Step aside when a trigger follows. Both affordances dock at
+        // `end-1`, so a call site that renders BOTH — which the
+        // compositional API permits and `ComboboxCompose` happens never
+        // to do — stacked them invisibly on top of each other. No error,
+        // no console warning, just one button covering another.
+        // `:has(~ …)` keeps the fix in CSS and out of the public API:
+        // neither part needs to know whether the other was rendered.
+        '[&:has(~[data-slot=combobox-trigger])]:end-9',
         'focus-visible:ring-ring/60 focus-visible:ring-[3px]',
         'disabled:pointer-events-none disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
