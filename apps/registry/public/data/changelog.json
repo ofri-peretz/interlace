@@ -21,6 +21,18 @@
           "source": ".changeset/absence-is-a-first-class-value.md"
         },
         {
+          "summary": "New `Combobox` and `CommandPalette`.\n\n`Combobox` mirrors `Select` part-for-part, plus one part that is ours rather\nthan Base UI's: `ComboboxControl`, a `relative` row. Base UI has no concept of\n\"the input plus the affordances docked inside its border\", and without it\n`ComboboxClear` and `ComboboxTrigger` sit beside the field instead of in it.\nThe root is aliased rather than wrapped so the `<Value, Multiple>` generics\nsurvive at the call site.\n\n`CommandPalette` is a composition, not a new primitive: `DialogContent`\nsupplies the portal, backdrop, focus trap, Escape and focus restore, wrapped\naround `Combobox.Root` in **`inline`** mode. That flag is load-bearing —\nwithout it the combobox handles Escape for a popup that is not open and the\ndialog never closes, a WCAG 2.1.2 keyboard trap. `closeOnSelect` closes by\nclicking a hidden `DialogClose` rather than calling `setOpen`, so it routes\nthrough Base UI's own close path: `onOpenChange` fires with a real reason,\nfocus restores exactly as for Escape, and the uncontrolled case works.\n\nThe ⌘K binding is a separate opt-in hook. A design system should not seize a\nglobal chord on mount from every app that installs it.\n\nThree rows of the keyboard contract differ from `Select` and are the ones\ncallers get wrong: Home/End move the text caret rather than the highlight;\nEscape on a *closed* popup clears the input and the selection; focus never\nenters the list — it is virtual focus via `aria-activedescendant`.",
+          "components": [
+            "combobox",
+            "command-palette"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/combobox-and-command-palette.md"
+        },
+        {
           "summary": "New `DataTable` pattern — a real `<table>` with column definitions, sorting,\nrow selection, pagination, and designed loading / empty / error states.\n\nSort and selection are the caller's state (`sort` / `onSortChange`,\n`selected` / `onSelectionChange`), so the whole view can live in the query\nstring and a sorted, paged, partly-selected table can be linked to a\ncolleague. Selection is keyed by row id, so it survives sorting and paging.\nSemantics are the point: `<caption>`, `<th scope=\"col\">`, one\n`<th scope=\"row\">` per row, `aria-sort` on sortable headers, and a selection\ncheckbox whose accessible name identifies the row. Pure logic (sort cycle,\ncomparators, page-window, selection maths) ships alongside as\n`data-table-model` and is exported for callers wiring their own URL state.\n\nSkeleton gains a `data-table` variant — a header row plus body rows, so the\nloading state reserves the real silhouette instead of collapsing to a spinner.\n\nNot included, deliberately: filtering UI, column resize/reorder,\nvirtualization, grouping.",
           "components": [
             "data-table",
@@ -33,6 +45,23 @@
           "source": ".changeset/data-table-pattern.md"
         },
         {
+          "summary": "New `Distribution` chart — a quantity spread over a fixed set of named bins,\nread against a reference distribution.\n\nIt is a new component rather than an extension of `TimeSeries` because three of\nthat component's properties are chronological and cannot be parameterised out:\nits axis keys are sorted (`['Thu','Fri','Sat']` sorts into a week that does not\nexist), a line asserts the metric passed through every value between two\nsamples when between two hourly aggregates there is nothing to pass through,\nand `delta()` first-to-last is arithmetic performed on a circle.\n\nAn unmeasured bin **hatches**. Everywhere else a `null` can simply be dropped,\nbut for bars a height of zero and a bar never drawn are the same picture — this\nis `null ≠ zero` at its hardest case. `bin.note` prints a second axis reading\nunder the first, replacing the timezone toggle a caller would otherwise build;\na toggle hides half the truth and is missing from every screenshot.\n\nAlso: `error` states on every chart that fetches — `TimeSeries`, `Sparkline`,\n`MetricTable`, `NetworkGraph`, `Distribution` — resolved through\n`resolveDataState` so the precedence is the array in `data-state-model` rather\nthan five hand-rolled ladders. In a dashboard \"the fetch failed\" and \"there is\nno data\" are different statements. `Delta` and `SeriesTable` get none: neither\nhas a fetch lifecycle.\n\n`StatItem` gains `tone`, carried by three signals rather than a hue alone — the\nrail, the value colour, and an `sr-only` judgement.",
+          "components": [
+            "distribution",
+            "time-series",
+            "sparkline",
+            "metric-table",
+            "network-graph",
+            "stat-strip",
+            "series-table"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/distribution-and-chart-error-states.md"
+        },
+        {
           "summary": "`TimeSeries` can plot more than one metric, and it finally draws an x axis.\n\n`compare` takes further series — `{ points, label, unit }` — drawn against the\nsame axes. It is purely additive: `points` is still the required single-series\nprop it always was, so nothing that already calls this component changes. Each\nline gets a `--chart-N` hue **and** a distinct dash pattern, and the new legend\nswatch repeats the dash, so two lines stay two lines in a greyscale print and\nto a red-green colour-blind reader. Five series are drawn (the size of the\npalette); any beyond that stay in the data table and the legend says how many.\n\nAll series share one y domain, and that is not configurable. A second y axis\nlets an author slide two unrelated metrics until they appear to cross wherever\nthe argument needs them to; a series two orders of magnitude smaller will render\nas flat here, which is the true statement about it.\n\nThe x axis is a baseline, a tick per labelled slot, and up to five HTML labels\nbelow the plot — HTML because SVG text scales with the `viewBox`, and at a 320\nviewport this plot is 288px wide against a 900-unit box, so `text-xs` inside it\npaints at 4px. Below `sm` the middle labels drop and the two ends stay.\n\nThe crosshair readout now names and values every series at the cursor, from the\none `aria-live` `<output>` that the arrow keys already fed. There is deliberately\nno second, hover-only tooltip to fall out of step with it.",
           "components": [
             "time-series"
@@ -42,6 +71,29 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/time-series-multi-series-and-x-axis.md"
+        },
+        {
+          "summary": "Six defects found by upgrading a real consumer, plus five found by reading the\ncomponents closely enough to document them.\n\n**`Meteors`' glow never painted.** It read `var(--color-meteor-glow)` while its\n`cssVars` declare `--meteor-glow`; `--color-*` is the Tailwind `@theme`\nnamespace and only `cssVars.theme` populates it, so the whole `box-shadow` was\ninvalid at computed-value time. **This was broken only for registry consumers**\n— our own docs site hand-declares the `--color-` form.\n\n**`ArticleCard` cropped 28% off every cover.** `h-44` is 176px; at a ~302px\ntile that is a 1.72:1 box against a 2.381:1 image. Now `aspect-[1000/420]` —\nthe ratio the card already declared on its `<img>`. It also gains a\n`renderImage` slot, because every Next.js consumer was re-patching the same\nline to use `next/image` and the design system cannot depend on it.\n\n**`BorderBeam` and `StarsBackground` had no `aria-hidden` at all** — six purely\ndecorative nodes a screen reader walked. **`CloudParticles` defaulted\n`bodyColor` to `currentColor`**, painting volumetric clouds in the inherited\ntext colour. **`NumberTicker` gains `notation`**, because six-figure metrics\noverflow a tile at 320px.\n\nAlso: `SheetCompose` and `DialogCompose` each mounted a second backdrop, so a\ncomposed dialog dimmed the page twice as much as the hand-composed tree the\ndocs show; `Accordion` dropped `className` on the animated Panel; `Tooltip`\naccepted `delay` and discarded it; `PopoverAnchor` was a second trigger.\n\n**`useReducedMotion` was one frame late.** The canonical `useState(false)` plus\neffect returns `false` on the first render, so every gated component painted\none frame of exactly the motion the user turned off. `useSyncExternalStore`\nreads during render and closes that on client renders; on hydration the server\ncannot know the preference, which is what the stylesheet reset is for.\n\n`Badge` drops `'use client'` — verified with a real server-component build.",
+          "components": [
+            "meteors",
+            "article-card",
+            "border-beam",
+            "stars-background",
+            "cloud-particles",
+            "number-ticker",
+            "sheet",
+            "dialog",
+            "accordion",
+            "tooltip",
+            "popover",
+            "badge",
+            "use-reduced-motion"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/defects-a-real-consumer-found.md"
         },
         {
           "summary": "The fourteen `blocks/*` re-export aliases now name the release they disappear\nin. They previously said \"removal scheduled for one release cycle after the\narchitecture PR lands\", which is not a date anyone can plan around — so the\naliases were, in practice, permanent. They are now `@deprecated since 1.0.0 —\nremoved in 2.0.0`, and removal will land as a breaking change with a migration\nnote.",
@@ -66,6 +118,15 @@
           "bump": "patch",
           "migration": "Nothing changes today — `@interlace/ui/blocks/<name>` still\nresolves. Before 2.0.0, change those imports to\n`@interlace/ui/patterns/<name>`; the exported names are identical.",
           "source": ".changeset/deprecated-blocks-name-their-removal.md"
+        },
+        {
+          "summary": "Every component now describes itself, and 59 gained a file header.\n\n`description` said `\"@interlace/ui — accordion (shadcn-compatible).\"` for 128\nof 137 items — the item's own name, restated. That field is what `shadcn add`\nprints in your terminal, what the shadcn directory lists us under, what every\ncard on the storefront shows, what `<meta name=\"description\">` and OG carry,\nand what an agent reads to choose between two components. All of it said\nnothing.\n\nThe sentence already existed in each component's header and was already being\nextracted — into `agent-index.json`, the one surface an adopter never looks at.\nIt is now derived once and published everywhere. Boilerplate descriptions went\n128 → 0 and empty `topics` 72 → 19.\n\nWhat reaches your tree: the 59 components that gained a file header now carry\nthat header in the installed copy. It is a comment block — no behaviour, no\nclass names and no exports change. Everything else here is registry metadata\nthat never leaves our side.",
+          "components": [],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/every-component-describes-itself.md"
         },
         {
           "summary": "The three entry animations in `styles/theme.css` now run at 200ms with no\ndelay, and the reduced-motion class list in `styles/tokens.css` covers\n`.animate-pulse`.\n\n`.animate-fade-in-up` was 0.5s, `.animate-slide-in-left` 0.5s behind a 0.3s\ndelay, and `.animate-scale-in` 0.4s behind a 0.2s delay — up to 800ms before\nthe reader saw anything, against the 200ms entry ceiling\n`MOTION_PHILOSOPHY.md` has always set. All three are now\n`0.2s ease-out both`. The delays were the worse half: an entry animation is\nalready laid out at `opacity: 0`, so a delay is time spent looking at nothing.\n\nSeparately, `.animate-pulse` — the animation `Skeleton` renders on every\nloading state — was missing from the `tokens.css` reduced-motion list, along\nwith `.animate-meteor` and `.animate-meteor-effect`. The universal clamp in\n`styles/preflight.css` was already covering all three, so apps importing\n`styles/index.css` were never affected; apps that import `tokens.css` and\n`theme.css` à la carte and skip `preflight.css` were. All three are now\nlisted.\n\nBoth are held by `packages/ui/__tests__/motion-contract-lock.test.ts`, which\nreads the ceiling out of `MOTION_PHILOSOPHY.md` rather than repeating it, and\nfails if any bare `animate-*` utility in `packages/ui/src` is missing from the\nlist.",
