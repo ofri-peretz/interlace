@@ -2,7 +2,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { createMDX } from "fumadocs-mdx/next";
-import { withPostHogConfig } from "@posthog/nextjs-config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const monorepoRoot = path.resolve(__dirname, "../..");
@@ -105,10 +104,14 @@ const config = {
  * Inert unless both env vars are set, so local builds and forks stay
  * byte-identical to today and no build can fail for want of a token.
  */
-function withSourcemapUpload(nextConfig) {
+async function withSourcemapUpload(nextConfig) {
   const personalApiKey = process.env.POSTHOG_PERSONAL_API_KEY?.trim();
   const projectId = process.env.POSTHOG_PROJECT_ID?.trim();
   if (!personalApiKey || !projectId) return nextConfig;
+  // Imported here rather than at module scope: the package is a
+  // devDependency, and a top-level import would make this config
+  // unloadable in an --omit=dev install even with the gate off.
+  const { withPostHogConfig } = await import('@posthog/nextjs-config');
   return withPostHogConfig(nextConfig, {
     personalApiKey,
     projectId,
@@ -116,4 +119,4 @@ function withSourcemapUpload(nextConfig) {
   });
 }
 
-export default withSourcemapUpload(withMDX(config));
+export default await withSourcemapUpload(withMDX(config));
