@@ -106,6 +106,15 @@ const config = {
             value:
               "camera=(), microphone=(), geolocation=(), browsing-topics=()",
           },
+          // Sent here too, not just on the apex. The apex's includeSubDomains
+          // only covers this host for a browser that already has the apex
+          // entry cached — someone landing on ds. first, via a direct link or
+          // a `shadcn add` reference, would get no HSTS on that first
+          // response. Belt and braces.
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains",
+          },
         ],
       },
     ];
