@@ -2,6 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { createMDX } from "fumadocs-mdx/next";
+import { withPostHogConfig } from "@posthog/nextjs-config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const monorepoRoot = path.resolve(__dirname, "../..");
@@ -93,4 +94,26 @@ const config = {
   ],
 };
 
-export default withMDX(config);
+/**
+ * Source maps for PostHog Error Tracking — generated, uploaded, then deleted.
+ *
+ * `deleteAfterUpload` is the load-bearing option, not a default we inherit:
+ * the .map files are produced inside the build, handed to PostHog, and removed
+ * from the output before anything is served. Symbolication lives in PostHog,
+ * behind auth; the deployment ships the same minified bundle it always did.
+ *
+ * Inert unless both env vars are set, so local builds and forks stay
+ * byte-identical to today and no build can fail for want of a token.
+ */
+function withSourcemapUpload(nextConfig) {
+  const personalApiKey = process.env.POSTHOG_PERSONAL_API_KEY?.trim();
+  const projectId = process.env.POSTHOG_PROJECT_ID?.trim();
+  if (!personalApiKey || !projectId) return nextConfig;
+  return withPostHogConfig(nextConfig, {
+    personalApiKey,
+    projectId,
+    sourcemaps: { enabled: true, deleteAfterUpload: true },
+  });
+}
+
+export default withSourcemapUpload(withMDX(config));

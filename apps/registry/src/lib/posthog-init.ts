@@ -128,6 +128,12 @@ export function initPostHog(): void {
     capture_pageleave: true,
     capture_performance: true,
     capture_exceptions: true,
+    // Heatmaps + scrollmaps: `$heatmap` events power the toolbar overlay.
+    // Requires Heatmaps enabled in the PostHog project settings to render.
+    capture_heatmaps: true,
+    // Dead clicks: a click on something that looks interactive and does
+    // nothing — the highest-signal UX defect on a component registry.
+    capture_dead_clicks: true,
     autocapture: true,
     cross_subdomain_cookie: true,
     disable_session_recording: disableReplay,
