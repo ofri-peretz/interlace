@@ -1,5 +1,5 @@
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -34,7 +34,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const config = {
   reactStrictMode: true,
   turbopack: {
-    root: resolve(__dirname, '../..'),
+    root: resolve(__dirname, "../.."),
   },
   // PostHog reverse proxy (ANALYTICS_PHILOSOPHY principle 2). Same-origin
   // ingest survives ad-blockers and keeps third-party hosts out of CSP.
@@ -45,7 +45,7 @@ const config = {
   // production while working perfectly in `next dev` — the exact shape of
   // failure this whole route exists to eliminate.
   outputFileTracingIncludes: {
-    '/api/r/[...slug]': ['./public/r/**/*.json'],
+    "/api/r/[...slug]": ["./public/r/**/*.json"],
   },
   async rewrites() {
     return {
@@ -53,24 +53,24 @@ const config = {
       // answer for a path that also exists under `public/`.
       beforeFiles: [
         {
-          source: '/r/:path*.json',
-          destination: '/api/r/:path*.json',
+          source: "/r/:path*.json",
+          destination: "/api/r/:path*.json",
         },
       ],
       // PostHog reverse proxy — no filesystem conflict, so the default phase
       // is correct for these.
       afterFiles: [
         {
-          source: '/ingest/static/:path*',
-          destination: 'https://us-assets.i.posthog.com/static/:path*',
+          source: "/ingest/static/:path*",
+          destination: "https://us-assets.i.posthog.com/static/:path*",
         },
         {
-          source: '/ingest/:path*',
-          destination: 'https://us.i.posthog.com/:path*',
+          source: "/ingest/:path*",
+          destination: "https://us.i.posthog.com/:path*",
         },
         {
-          source: '/ingest/decide',
-          destination: 'https://us.i.posthog.com/decide',
+          source: "/ingest/decide",
+          destination: "https://us.i.posthog.com/decide",
         },
       ],
     };
@@ -78,21 +78,34 @@ const config = {
   async headers() {
     return [
       {
-        source: '/r/:path*.json',
+        source: "/r/:path*.json",
         headers: [
-          { key: 'Content-Type', value: 'application/json; charset=utf-8' },
+          { key: "Content-Type", value: "application/json; charset=utf-8" },
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400',
+            key: "Cache-Control",
+            value:
+              "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
           },
-          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: "Access-Control-Allow-Origin", value: "*" },
         ],
       },
       {
-        source: '/:path*',
+        source: "/:path*",
         headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // This site shipped no framing header at all, so any page could be
+          // iframed and clickjacked. DENY rather than SAMEORIGIN: the
+          // registry renders no iframes of its own. Note this does not
+          // restrict /r/*.json — that route is a public registry endpoint
+          // with Access-Control-Allow-Origin: *, and CORS is a separate
+          // mechanism from framing.
+          { key: "X-Frame-Options", value: "DENY" },
+          {
+            key: "Permissions-Policy",
+            value:
+              "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+          },
         ],
       },
     ];
@@ -117,7 +130,7 @@ async function withSourcemapUpload(nextConfig) {
   // Imported here rather than at module scope: the package is a
   // devDependency, and a top-level import would make this config
   // unloadable in an --omit=dev install even with the gate off.
-  const { withPostHogConfig } = await import('@posthog/nextjs-config');
+  const { withPostHogConfig } = await import("@posthog/nextjs-config");
   return withPostHogConfig(nextConfig, {
     personalApiKey,
     projectId,

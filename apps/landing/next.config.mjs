@@ -74,6 +74,21 @@ const config = {
         { key: "X-Content-Type-Options", value: "nosniff" },
         { key: "X-Frame-Options", value: "DENY" },
         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        {
+          key: "Permissions-Policy",
+          value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+        },
+        // The apex is the only host whose HSTS can cover the siblings —
+        // ds., storybook., eslint., serverless.interlace.tools. Vercel's
+        // default header omits includeSubDomains, so each subdomain was
+        // protected only after its own first HTTPS response. All of them are
+        // HTTPS-only on Vercel, so asserting it here is safe. `preload` is
+        // deliberately omitted: it is baked into browser binaries and is very
+        // hard to unwind if a subdomain ever needs plain HTTP.
+        {
+          key: "Strict-Transport-Security",
+          value: "max-age=63072000; includeSubDomains",
+        },
       ],
     },
     {
@@ -111,7 +126,7 @@ async function withSourcemapUpload(nextConfig) {
   // Imported here rather than at module scope: the package is a
   // devDependency, and a top-level import would make this config
   // unloadable in an --omit=dev install even with the gate off.
-  const { withPostHogConfig } = await import('@posthog/nextjs-config');
+  const { withPostHogConfig } = await import("@posthog/nextjs-config");
   return withPostHogConfig(nextConfig, {
     personalApiKey,
     projectId,
