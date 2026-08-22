@@ -93,4 +93,30 @@ const config = {
   ],
 };
 
-export default withMDX(config);
+/**
+ * Source maps for PostHog Error Tracking — generated, uploaded, then deleted.
+ *
+ * `deleteAfterUpload` is the load-bearing option, not a default we inherit:
+ * the .map files are produced inside the build, handed to PostHog, and removed
+ * from the output before anything is served. Symbolication lives in PostHog,
+ * behind auth; the deployment ships the same minified bundle it always did.
+ *
+ * Inert unless both env vars are set, so local builds and forks stay
+ * byte-identical to today and no build can fail for want of a token.
+ */
+async function withSourcemapUpload(nextConfig) {
+  const personalApiKey = process.env.POSTHOG_PERSONAL_API_KEY?.trim();
+  const projectId = process.env.POSTHOG_PROJECT_ID?.trim();
+  if (!personalApiKey || !projectId) return nextConfig;
+  // Imported here rather than at module scope: the package is a
+  // devDependency, and a top-level import would make this config
+  // unloadable in an --omit=dev install even with the gate off.
+  const { withPostHogConfig } = await import('@posthog/nextjs-config');
+  return withPostHogConfig(nextConfig, {
+    personalApiKey,
+    projectId,
+    sourcemaps: { enabled: true, deleteAfterUpload: true },
+  });
+}
+
+export default await withSourcemapUpload(withMDX(config));
