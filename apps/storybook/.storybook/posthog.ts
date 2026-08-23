@@ -42,12 +42,37 @@ function isLocalOptIn(): boolean {
   }
 }
 
+/**
+ * True when the page is being driven by automation — Playwright, Puppeteer,
+ * Selenium, and the headless Chrome our own CI uses all set
+ * `navigator.webdriver`.
+ *
+ * This is not a nicety. Automated visits were the single largest source of
+ * Storybook traffic: 119 of ~140 pageviews in one 12-hour window came from one
+ * headless Chrome, always landing on `/`, never navigating, and — because each
+ * run starts with fresh storage — counting as a brand new person every time.
+ * That is what made Storybook read 1,051 pageviews across 1,045 "people".
+ *
+ * PostHog cannot catch these itself: the user agent is a plain Chrome string,
+ * so its bot classifier correctly calls them Regular traffic. `webdriver` is
+ * the signal that actually distinguishes them.
+ */
+function isAutomatedBrowser(): boolean {
+  try {
+    return navigator.webdriver === true;
+  } catch {
+    return false;
+  }
+}
+
 function isTrackingAllowed(): boolean {
   if (typeof window === 'undefined') return false;
   if (typeof navigator === 'undefined') return false;
   // Local dev short-circuit. Storybook dev server runs on localhost:6006,
   // so without this every story-flip would pollute production cohorts.
   if (isLocalEnvironment() && !isLocalOptIn()) return false;
+  // CI and scripted browsers are not visitors.
+  if (isAutomatedBrowser()) return false;
   const dnt = navigator.doNotTrack;
   if (dnt === '1' || dnt === 'yes') return false;
   const gpc = (
