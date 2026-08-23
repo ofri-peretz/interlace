@@ -12,31 +12,31 @@
  * Silent no-op when env key is missing, DNT/GPC, or running in a
  * non-browser context (e.g. Vitest CI build of the manager bundle).
  */
-import posthog, { type PostHogConfig } from 'posthog-js';
+import posthog, { type PostHogConfig } from "posthog-js";
 
-const APP_ID = 'ds_storybook' as const;
+const APP_ID = "ds_storybook" as const;
 // `cross_subdomain_cookie: true` makes posthog set the cookie on
 // `.interlace.tools` automatically (the page's eTLD+1).
-const COOKIE_DOMAIN = '.interlace.tools';
+const COOKIE_DOMAIN = ".interlace.tools";
 void COOKIE_DOMAIN;
 
 function isLocalEnvironment(): boolean {
-  if (typeof window === 'undefined') return false;
+  if (typeof window === "undefined") return false;
   const host = window.location.hostname.toLowerCase();
   return (
-    host === 'localhost' ||
-    host === '127.0.0.1' ||
-    host === '0.0.0.0' ||
-    host === '::1' ||
-    host.endsWith('.local') ||
-    host.endsWith('.localhost')
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host === "0.0.0.0" ||
+    host === "::1" ||
+    host.endsWith(".local") ||
+    host.endsWith(".localhost")
   );
 }
 
 function isLocalOptIn(): boolean {
-  if (typeof localStorage === 'undefined') return false;
+  if (typeof localStorage === "undefined") return false;
   try {
-    return localStorage.getItem('interlace_local_analytics') === '1';
+    return localStorage.getItem("interlace_local_analytics") === "1";
   } catch {
     return false;
   }
@@ -66,18 +66,17 @@ function isAutomatedBrowser(): boolean {
 }
 
 function isTrackingAllowed(): boolean {
-  if (typeof window === 'undefined') return false;
-  if (typeof navigator === 'undefined') return false;
+  if (typeof window === "undefined") return false;
+  if (typeof navigator === "undefined") return false;
   // Local dev short-circuit. Storybook dev server runs on localhost:6006,
   // so without this every story-flip would pollute production cohorts.
   if (isLocalEnvironment() && !isLocalOptIn()) return false;
   // CI and scripted browsers are not visitors.
   if (isAutomatedBrowser()) return false;
   const dnt = navigator.doNotTrack;
-  if (dnt === '1' || dnt === 'yes') return false;
-  const gpc = (
-    navigator as Navigator & { globalPrivacyControl?: boolean }
-  ).globalPrivacyControl;
+  if (dnt === "1" || dnt === "yes") return false;
+  const gpc = (navigator as Navigator & { globalPrivacyControl?: boolean })
+    .globalPrivacyControl;
   if (gpc === true) return false;
   return true;
 }
@@ -110,7 +109,7 @@ function isTrackingAllowed(): boolean {
 function getKey(): string | null {
   try {
     const defined = process.env.STORYBOOK_POSTHOG_KEY;
-    if (typeof defined === 'string' && defined.trim()) return defined.trim();
+    if (typeof defined === "string" && defined.trim()) return defined.trim();
 
     const m = (
       import.meta as ImportMeta & {
@@ -137,15 +136,15 @@ export function initStorybookPostHog(): typeof posthog | null {
     // is exactly how this surface went unmeasured. Say so in the console.
     if (import.meta.env?.DEV) {
       console.debug(
-        '[posthog] VITE_POSTHOG_KEY is empty — Storybook analytics disabled',
+        "[posthog] VITE_POSTHOG_KEY is empty — Storybook analytics disabled",
       );
     }
     return null;
   }
   const config: Partial<PostHogConfig> = {
-    api_host: '/ingest',
-    ui_host: 'https://us.posthog.com',
-    person_profiles: 'identified_only',
+    api_host: "/ingest",
+    ui_host: "https://us.posthog.com",
+    person_profiles: "identified_only",
     capture_pageview: false,
     capture_pageleave: true,
     // Web vitals OFF for the manager, deliberately.
@@ -182,9 +181,51 @@ export function initStorybookPostHog(): typeof posthog | null {
   try {
     posthog.init(key, config);
     initialised = true;
+    attachCspViolationReporter();
     return posthog;
   } catch {
     return null;
+  }
+}
+
+/**
+ * Reports CSP violations as PostHog events.
+ *
+ * Every other Interlace property points `report-uri` at
+ * `/ingest/report/?token=<key>` and lets PostHog's endpoint collect
+ * violations. This one cannot: its policy is served from a static
+ * `vercel.json`, which has no way to read `STORYBOOK_POSTHOG_KEY` at deploy
+ * time, and the key is deliberately not committed. A `report-uri` needs it.
+ *
+ * So the report path is inverted. The browser fires
+ * `securitypolicyviolation` on the document, and we forward it with the key
+ * already loaded here at runtime — same PostHog project, same
+ * `$csp_violation` event name, no key in the header.
+ *
+ * Scope caveat, stated rather than discovered later: this listener lives in
+ * the *manager* document. Violations inside the preview iframe fire on that
+ * document and are not seen here. Manager coverage is most of the surface and
+ * is worth having; whole-surface coverage would need the same listener in the
+ * preview bundle.
+ */
+function attachCspViolationReporter(): void {
+  if (typeof document === "undefined") return;
+  try {
+    document.addEventListener("securitypolicyviolation", (event) => {
+      trackManagerEvent("$csp_violation", {
+        // Field names mirror the CSP report body so this lands alongside the
+        // reports the other properties send through report-uri.
+        document_url: event.documentURI,
+        violated_directive: event.violatedDirective,
+        effective_directive: event.effectiveDirective,
+        blocked_url: event.blockedURI,
+        source_file: event.sourceFile,
+        line_number: event.lineNumber,
+        disposition: event.disposition,
+      });
+    });
+  } catch {
+    // never throw out of analytics setup
   }
 }
 
@@ -203,9 +244,9 @@ export function trackManagerEvent(
 export function trackManagerPageview(extra?: Record<string, unknown>): void {
   if (!initialised) return;
   try {
-    posthog.capture('$pageview', {
+    posthog.capture("$pageview", {
       $current_url:
-        typeof window !== 'undefined' ? window.location.href : undefined,
+        typeof window !== "undefined" ? window.location.href : undefined,
       ...extra,
     });
   } catch {
