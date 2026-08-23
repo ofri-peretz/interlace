@@ -8,7 +8,53 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  *
  * - `output: 'standalone'` is NOT used — Vercel runs Next.js natively.
  * - `public/r/*.json` is NO LONGER served as a static asset. A `beforeFiles`
- *   rewrite sends `/r/**.json` to `src/app/api/r/[...slug]/route.ts`, which
+ *   rewrite sends `/r/**
+ * Content-Security-Policy in *report-only* mode, reported to PostHog's CSP
+ * endpoint through the same same-origin `/ingest` proxy as the rest of
+ * analytics.
+ *
+ * Report-only by design: this policy is a hypothesis, not a contract. The
+ * browser evaluates it, reports what would have been blocked, and blocks
+ * nothing — so a wrong rule costs a PostHog event, never a broken page. It is
+ * also the only way to learn what an enforcing policy would need to allow.
+ * Once the violation stream is quiet the header can be promoted to the
+ * enforcing `Content-Security-Policy` name.
+ *
+ * Omitted entirely when the PostHog key is absent — a report-only policy with
+ * nowhere to report is console noise, not telemetry.
+ */
+function cspReportOnlyHeaders() {
+  const token = process.env.NEXT_PUBLIC_POSTHOG_KEY?.trim();
+  if (!token) return [];
+  const policy = [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+    // Matches the X-Frame-Options: DENY this site already sends. Modern
+    // browsers prefer frame-ancestors; the older header covers the rest.
+    "frame-ancestors 'none'",
+    "form-action 'self'",
+    // Next ships inline bootstrap scripts and styles.
+    // TODO(csp-promotion): do NOT carry 'unsafe-eval' into the enforcing
+    // header — it re-enables eval()/new Function() and undermines the XSS
+    // mitigation this policy exists for (CWE-749). It is here only so the
+    // report-only stream is not drowned by it; the violation data will say
+    // whether anything actually needs it.
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https:",
+    "font-src 'self' data:",
+    // Same-origin covers /ingest (PostHog) and /_vercel (Vercel Analytics).
+    // posthog-js still reaches some endpoints directly rather than through the
+    // proxy — remote config, surveys, the toolbar — and session replay opens a
+    // WebSocket, so those origins are named explicitly.
+    "connect-src 'self' https://us.i.posthog.com https://us-assets.i.posthog.com wss://us.i.posthog.com",
+    `report-uri /ingest/report/?token=${token}`,
+  ].join("; ");
+  return [{ key: "Content-Security-Policy-Report-Only", value: policy }];
+}
+
+/**.json` to `src/app/api/r/[...slug]/route.ts`, which
  *   substitutes the requesting origin into the `registryDependencies` URLs
  *   before answering. See that file for why. `beforeFiles` specifically:
  *   it is the only rewrite phase evaluated BEFORE the filesystem, so it is
@@ -94,6 +140,7 @@ const config = {
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          ...cspReportOnlyHeaders(),
           // This site shipped no framing header at all, so any page could be
           // iframed and clickjacked. DENY rather than SAMEORIGIN: the
           // registry renders no iframes of its own. Note this does not
