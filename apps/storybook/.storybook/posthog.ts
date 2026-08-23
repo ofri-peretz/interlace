@@ -213,14 +213,18 @@ function attachCspViolationReporter(): void {
   try {
     document.addEventListener("securitypolicyviolation", (event) => {
       trackManagerEvent("$csp_violation", {
-        // Field names mirror the CSP report body so this lands alongside the
-        // reports the other properties send through report-uri.
-        document_url: event.documentURI,
+        // Field names mirror the W3C CSP report body (document-uri,
+        // blocked-uri, …) with hyphens as underscores, so these land on the
+        // same keys as the reports the other four properties send through
+        // report-uri and a cross-property query needs one field name, not two.
+        document_uri: event.documentURI,
+        referrer: event.referrer,
         violated_directive: event.violatedDirective,
         effective_directive: event.effectiveDirective,
-        blocked_url: event.blockedURI,
+        blocked_uri: event.blockedURI,
         source_file: event.sourceFile,
         line_number: event.lineNumber,
+        column_number: event.columnNumber,
         disposition: event.disposition,
       });
     });
