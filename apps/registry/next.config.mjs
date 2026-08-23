@@ -4,11 +4,6 @@ import { dirname, resolve } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
- * Registry-app config.
- *
- * - `output: 'standalone'` is NOT used — Vercel runs Next.js natively.
- * - `public/r/*.json` is NO LONGER served as a static asset. A `beforeFiles`
- *   rewrite sends `/r/**
  * Content-Security-Policy in *report-only* mode, reported to PostHog's CSP
  * endpoint through the same same-origin `/ingest` proxy as the rest of
  * analytics.
@@ -25,7 +20,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  */
 function cspReportOnlyHeaders() {
   const token = process.env.NEXT_PUBLIC_POSTHOG_KEY?.trim();
-  if (!token) return [];
+  // Validated, not just trimmed. This value is interpolated into a response
+  // header: a `;` would silently restructure the policy by truncating or
+  // reordering directives, and a CR/LF would split the response entirely
+  // (CWE-113). PostHog project keys are `phc_` followed by URL-safe
+  // characters, so the shape is both a correctness check and the injection
+  // guard. A malformed value drops the header rather than emitting a
+  // corrupted one.
+  if (!token || !/^[\w-]+$/.test(token)) return [];
   const policy = [
     "default-src 'self'",
     "base-uri 'self'",
@@ -57,7 +59,12 @@ function cspReportOnlyHeaders() {
   return [{ key: "Content-Security-Policy-Report-Only", value: policy }];
 }
 
-/**.json` to `src/app/api/r/[...slug]/route.ts`, which
+/**
+ * Registry-app config.
+ *
+ * - `output: 'standalone'` is NOT used — Vercel runs Next.js natively.
+ * - `public/r/*.json` is NO LONGER served as a static asset. A `beforeFiles`
+ *   rewrite sends `/r/**.json` to `src/app/api/r/[...slug]/route.ts`, which
  *   substitutes the requesting origin into the `registryDependencies` URLs
  *   before answering. See that file for why. `beforeFiles` specifically:
  *   it is the only rewrite phase evaluated BEFORE the filesystem, so it is
