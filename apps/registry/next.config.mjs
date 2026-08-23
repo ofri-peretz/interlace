@@ -115,6 +115,12 @@ const config = {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains",
           },
+          // Severs the window.opener relationship with cross-origin openers.
+          // Safe here: nothing in this app calls window.open.
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
         ],
       },
     ];
