@@ -123,7 +123,25 @@ export function initStorybookPostHog(): typeof posthog | null {
     person_profiles: 'identified_only',
     capture_pageview: false,
     capture_pageleave: true,
-    capture_performance: true,
+    // Web vitals OFF for the manager, deliberately.
+    //
+    // The Storybook manager is a long-lived SPA: it boots once and then swaps
+    // stories without navigating. posthog-js measures web vitals against the
+    // original navigation, so what it reports on story #40 is minutes of a
+    // developer's browsing session, not a page load.
+    //
+    // Left on, it produced ~300 samples a quarter reporting FCP p50 8.6s and
+    // p75 13.5s — by far the worst numbers of any Interlace property, and
+    // fiction. A Chrome performance trace of the same page measures LCP 533ms
+    // and CLS 0.01, and the single story in that data that also carried a real
+    // LCP reported FCP 737ms / LCP 1446ms. Every other row has an FCP with a
+    // null LCP: the signature of a metric attributed to a navigation that
+    // never happened.
+    //
+    // This is worse than noise. It made Storybook look 9x slower than every
+    // real site and would have sent someone optimising a page that is fast.
+    // Better no number than a false one.
+    capture_performance: false,
     capture_exceptions: true,
     autocapture: false,
     cross_subdomain_cookie: true,
