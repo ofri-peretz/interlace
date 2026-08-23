@@ -40,7 +40,9 @@ function cspReportOnlyHeaders() {
     // mitigation this policy exists for (CWE-749). It is here only so the
     // report-only stream is not drowned by it; the violation data will say
     // whether anything actually needs it.
+    // eslint-disable-next-line browser-security/no-unsafe-inline-csp, browser-security/no-unsafe-eval-csp -- Both rules are right, and this is the one place they do not apply: the header below is Content-Security-Policy-REPORT-ONLY, which instructs the browser to report and block nothing. These two tokens exist so Next's inline bootstrap does not drown the violation stream in noise that hides the findings we actually want. The TODO above is the contract: neither token may survive promotion to the enforcing header, and at that point these suppressions must be deleted rather than moved.
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+    // eslint-disable-next-line browser-security/no-unsafe-inline-csp -- Same reasoning as script-src: report-only, and Next inlines critical CSS.
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
@@ -49,6 +51,7 @@ function cspReportOnlyHeaders() {
     // proxy — remote config, surveys, the toolbar — and session replay opens a
     // WebSocket, so those origins are named explicitly.
     "connect-src 'self' https://us.i.posthog.com https://us-assets.i.posthog.com wss://us.i.posthog.com",
+    // eslint-disable-next-line browser-security/no-credentials-in-query-params -- Not a credential. `NEXT_PUBLIC_POSTHOG_KEY` is PostHog's *publishable* project key: it ships in the client bundle by design, identifies a project rather than authorising anything, and is already visible in this very header to anyone who runs `curl -I`. PostHog's CSP report endpoint takes it as a query parameter and offers no header-based alternative.
     `report-uri /ingest/report/?token=${token}`,
   ].join("; ");
   return [{ key: "Content-Security-Policy-Report-Only", value: policy }];
