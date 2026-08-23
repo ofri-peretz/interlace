@@ -76,7 +76,7 @@ function isAutomatedBrowser(): boolean {
  * A synthetic check sets this key before navigating:
  *
  *   await page.addInitScript(() =>
- *     localStorage.setItem('interlace_synthetic_check', '1'))
+ *     localStorage.setItem("interlace_synthetic_check", "1"))
  *
  * Events then flow, but carry `is_synthetic: true`, so they are filterable
  * rather than quietly mixed into real traffic. Allowing synthetic events
@@ -87,7 +87,7 @@ function isAutomatedBrowser(): boolean {
  */
 function isSyntheticCheck(): boolean {
   try {
-    return localStorage.getItem('interlace_synthetic_check') === '1';
+    return localStorage.getItem("interlace_synthetic_check") === "1";
   } catch {
     return false;
   }

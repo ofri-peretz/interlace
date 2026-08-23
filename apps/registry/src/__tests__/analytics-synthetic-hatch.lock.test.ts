@@ -38,8 +38,10 @@ describe('analytics: synthetic-monitoring hatch', () => {
 
   it('defines the synthetic-check hatch', () => {
     expect(src).toMatch(/^function isSyntheticCheck\(\): boolean \{$/m);
+    // Quote-agnostic: the invariant is the key and the comparison, not the
+    // repo's local string style (registry uses ', storybook uses ").
     expect(src).toMatch(
-      /localStorage\.getItem\('interlace_synthetic_check'\) === '1'/,
+      /localStorage\.getItem\(['"]interlace_synthetic_check['"]\) === ['"]1['"]/,
     );
   });
 
