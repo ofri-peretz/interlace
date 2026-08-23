@@ -120,6 +120,21 @@ const config = {
           source: "/ingest/static/:path*",
           destination: "https://us-assets.i.posthog.com/static/:path*",
         },
+        // MUST precede the catch-all below, and MUST keep the trailing slash on
+        // the destination. PostHog's CSP endpoint is `/report/` and answers 404
+        // for `/report` — while `:path*` drops a trailing slash, so the catch-all
+        // rewrote `/ingest/report/` to `https://us.i.posthog.com/report` and every
+        // violation report 404'd. Silently: a failing report-uri reports nothing
+        // about itself, and an empty event stream reads exactly like a clean
+        // policy. Verified: `/report/` → 204, `/report` → 404.
+        {
+          source: "/ingest/report",
+          destination: "https://us.i.posthog.com/report/",
+        },
+        {
+          source: "/ingest/report/",
+          destination: "https://us.i.posthog.com/report/",
+        },
         {
           source: "/ingest/:path*",
           destination: "https://us.i.posthog.com/:path*",
