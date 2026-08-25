@@ -11,6 +11,7 @@ import { describe, expect, it } from 'vitest';
 import {
   TimelineMap,
   computeTimelineLayout,
+  computeTracePath,
   type TimelineMapItem,
 } from '../src/patterns/timeline-map.js';
 
@@ -87,6 +88,70 @@ describe('computeTimelineLayout', () => {
   it('traversal order is chronological', () => {
     const { order } = computeTimelineLayout(ITEMS, 'Other');
     expect(order.map((i) => i.id)).toEqual(['a', 'b', 'c', 'd']);
+  });
+});
+
+describe('the reader\'s thread (trace)', () => {
+  it('threads visited dots in order, skipping unknowns and repeats', () => {
+    const { lanes } = computeTimelineLayout(ITEMS, 'Other');
+    const t = computeTracePath(lanes, ['a', 'ghost', 'b', 'b', 'd'])!;
+    expect(t.points).toBe(3);
+    // Starts exactly on the first visited dot, in lane-stack coords.
+    const flat = lanes.flatMap((l, li) =>
+      l.dots.map((d) => ({ id: d.item.id, x: d.cx, y: li * 44 + d.cy })),
+    );
+    const a = flat.find((d) => d.id === 'a')!;
+    expect(t.d.startsWith(`M ${a.x} ${a.y}`)).toBe(true);
+    // Speaks the corpus threads' curve grammar, never straight lines.
+    expect(t.d).toMatch(/[QC]/);
+  });
+
+  it('a single visited dot is a beginning, not yet a thread', () => {
+    const { lanes } = computeTimelineLayout(ITEMS, 'Other');
+    expect(computeTracePath(lanes, ['a'])).toBeNull();
+    expect(computeTracePath(lanes, ['ghost', 'nope'])).toBeNull();
+  });
+
+  it('a filtered-out lane drops its dots from the thread', () => {
+    // Pre-fix, the hidden Delta dot still counted as a waypoint: with
+    // only one visible trace point the overlay must not render at all —
+    // a thread through invisible territory is a lie about the map.
+    const filtered = renderToStaticMarkup(
+      <TimelineMap
+        items={ITEMS}
+        filter={['Guides']}
+        trace={{ ids: ['a', 'd'], label: 'Your thread: 2 read.' }}
+        data-testid="map"
+      >
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(filtered).not.toContain('timeline-map-trace');
+    expect(filtered).not.toContain('Your thread');
+  });
+
+  it('renders warm over the cool web: strand-a, drawn, decorative, spoken', () => {
+    const html = renderToStaticMarkup(
+      <TimelineMap
+        items={ITEMS}
+        trace={{ ids: ['a', 'd'], label: 'Your thread: 2 of 4 read.' }}
+        data-testid="map"
+      >
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(html).toMatch(/timeline-map-trace"[^>]*aria-hidden/);
+    expect(html).toMatch(/timeline-map-trace"[^>]*class="[^"]*text-strand-a/);
+    expect(html).toContain('animate-strand-draw');
+    expect(html).toContain('Your thread: 2 of 4 read.');
+    // No trace prop → no overlay, no orphaned label (the SSR/crawler view).
+    const bare = renderToStaticMarkup(
+      <TimelineMap items={ITEMS} data-testid="map">
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(bare).not.toContain('timeline-map-trace');
+    expect(bare).not.toContain('Your thread');
   });
 });
 
