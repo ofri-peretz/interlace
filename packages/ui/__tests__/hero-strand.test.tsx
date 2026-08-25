@@ -21,6 +21,9 @@ describe('decorative contract', () => {
   it('a consumer cannot un-hide the decoration through ...rest', () => {
     // aria-hidden sits AFTER the spread (review): always-decorative,
     // full stop.
+    // No @ts-expect-error here on purpose: TS accepts aria-* JSX
+    // attributes even against the Omit (verified empirically), which is
+    // exactly why the RUNTIME guard is the enforced layer this pins.
     const overridden = renderToStaticMarkup(
       <HeroStrand data-testid="hs" aria-hidden={false} />,
     );
