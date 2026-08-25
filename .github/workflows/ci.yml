@@ -235,6 +235,59 @@ jobs:
       - name: Run axe against every story
         run: npm run test-storybook:ci --workspace=@interlace/storybook
 
+  # ─── Visual baselines for the woven signature kit ─────────────────────
+  # Every real bug the kit shipped (dash-sign inversion, screen-space
+  # dashes, preflight svg sizing, the 735-thread hairball) was invisible
+  # in code and caught only by rendering — this job turns "found only by
+  # rendering" into a gate. Screenshots run under reducedMotion: reduce,
+  # where the kit's own contract completes every draw instantly, so
+  # baselines are the finished gesture and the run is deterministic.
+  #
+  # Baselines are platform-suffixed (`-darwin` committed from dev,
+  # `-linux` from here). BOOTSTRAP: while no linux baselines are
+  # committed the job generates them, uploads the artifact, and warns —
+  # commit the artifact to arm enforcement. NO `continue-on-error` once
+  # armed: a pixel regression fails the PR; an intentional design change
+  # updates baselines via `npm run visual:update` and reviews as one.
+  storybook-visual:
+    name: storybook (visual)
+    needs: storybook-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Restore storybook static build
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/storybook/storybook-static
+      - name: Enforce baselines (or bootstrap the linux set)
+        run: |
+          if ls apps/storybook/visual/kit.spec.ts-snapshots/*-linux.png >/dev/null 2>&1; then
+            npm run visual --workspace=@interlace/storybook
+          else
+            echo "::warning title=visual baselines bootstrap::No linux baselines committed yet — generating them now. Download the kit-visual-snapshots artifact and commit it to arm enforcement."
+            npm run visual:update --workspace=@interlace/storybook
+          fi
+      - name: Upload snapshots (bootstrap pickup / diff inspection)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kit-visual-snapshots
+          path: apps/storybook/visual/kit.spec.ts-snapshots
+      - name: Upload failure diffs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kit-visual-diffs
+          path: apps/storybook/test-results
+
   # ─── Publish to Chromatic (main only, publish-only) ───────────────────
   # Why this exists: the Storybook Showcase (storybook.js.org/showcase) is a
   # CRAWLER over Chromatic-published Storybooks, not a submission form. There
