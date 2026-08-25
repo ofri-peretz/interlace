@@ -14,6 +14,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/woven-signature-kit.md"
+        },
+        {
+          "summary": "The link weave budgets its rest ink by density: a sparse web keeps each\nthread readable (0.25), while a heavily cross-cited corpus (the blog's\n735 threads) recedes into texture (>48 edges → 0.10, >160 → 0.04) so the\ndots stay primary. The illuminated selection keeps full strength at any\ndensity.",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/link-weave-ink-budget.md"
         }
       ]
     },

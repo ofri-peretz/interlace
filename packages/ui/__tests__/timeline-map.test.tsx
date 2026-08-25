@@ -184,6 +184,17 @@ describe('link-weave ink budget', () => {
     expect(dense).toContain('opacity-[0.04]');
     expect(dense).not.toContain('opacity-25');
 
+    // 80 edges: the middle tier (review — a typo in that branch of
+    // restInk was invisible to the two extremes alone).
+    const mid = renderToStaticMarkup(
+      <TimelineMap items={many(80)} data-testid="m">
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(mid).toContain('opacity-10');
+    expect(mid).not.toContain('opacity-25');
+    expect(mid).not.toContain('opacity-[0.04]');
+
     const sparse = renderToStaticMarkup(
       <TimelineMap items={many(3)} data-testid="m">
         <TimelineMap.Chart />
