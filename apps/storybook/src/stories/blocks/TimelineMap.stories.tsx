@@ -147,6 +147,33 @@ export const WovenThreads: Story = {
 };
 
 /** Controlled filter: only the named lanes render, chips reflect state. */
+export const ReaderTrace: Story = {
+  args: {
+    items,
+    trace: {
+      ids: ['r1', 'r4', 'r2', 'r6'],
+      label: 'Your thread: 4 of 9 read.',
+    },
+    'data-testid': 'timeline-map-trace-story',
+  },
+  render: renderCompound,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // The reader's own path draws warm over the cool corpus web: one
+    // continuous strand-a path, decorative, with the spoken summary
+    // carrying the semantic.
+    const overlay = canvasElement.querySelector(
+      '[data-slot="timeline-map-trace"]',
+    )!;
+    expect(overlay.getAttribute('aria-hidden')).toBeTruthy();
+    expect(overlay.classList.contains('text-strand-a')).toBe(true);
+    const path = overlay.querySelector('path')!;
+    expect(path.getAttribute('pathLength')).toBe('100');
+    expect(path.classList.contains('animate-strand-draw')).toBe(true);
+    expect(canvas.getByText('Your thread: 4 of 9 read.')).toBeTruthy();
+  },
+};
+
 export const FilteredLanes: Story = {
   args: {
     items,

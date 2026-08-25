@@ -36,6 +36,17 @@
           "source": ".changeset/timeline-map-number-axis.md"
         },
         {
+          "summary": "TimelineMap: the reader's thread (`trace`)\n\nA new `trace` prop draws the reader's own path through the corpus —\nordered visited ids threaded dot-to-dot in warm strand-a over the cool\nstrand-b corpus web, with the draw verb (pathLength-normalized onto the\nshared `strand-draw` keyframe; instantly complete under reduced\nmotion). The overlay is decorative and `trace.label` speaks the\nsummary (\"Your thread: 7 of 82 read\"). Unknown and filtered-out ids\nskip, consecutive repeats collapse, and fewer than two visible points\ndraws nothing — a single visited dot is a beginning, not yet a thread.\nSSR without the prop renders no trace: the honest crawler view, since\nreading history is client-only.",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/timeline-map-trace.md"
+        },
+        {
           "summary": "The woven signature kit and the brand strand tokens.\n\nNew: `TimelineMap` (patterns) — dated entities as dots on category lanes\nwith fit-all width, a roving-tabindex keyboard composite, and the link\nweave (`item.links` draws the corpus's internal reference graph as\nstrand-b threads with select-to-illuminate interaction); `InterlaceWeave`\nand `DecodeText` (effects/, new export subpath). New brand tokens\n`--interlace-strand-a` / `--interlace-strand-b` in both themes, with the\nWCAG 1.4.11 floor measured by the theme-contract lock.\n\nFixed: the preflight applied `height: auto` to svg/canvas, defeating\nexplicit sizing utilities on every viewBox'd svg — now photographic\nmedia only, matching Tailwind's own preflight.",
           "components": [
             "timeline-map"

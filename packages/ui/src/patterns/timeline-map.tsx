@@ -175,7 +175,28 @@ export interface TimelineMapProps
   onItemClick?: (item: TimelineMapItem) => void;
   /** Framework link injected for dot anchors (R10). @default "a" */
   linkComponent?: React.ElementType;
+  /**
+   * The reader's own path through the corpus — see TimelineMapTrace.
+   * Client-only data (a reading history) belongs here AFTER hydration:
+   * SSR without it renders no trace, which is the honest crawler view.
+   */
+  trace?: TimelineMapTrace;
   children: React.ReactNode;
+}
+
+export interface TimelineMapTrace {
+  /**
+   * Ordered item ids — the path, drawn dot-to-dot in this order with
+   * the strand-a draw verb. Unknown and filtered-out ids are skipped;
+   * consecutive repeats collapse. Fewer than two visible points draws
+   * nothing.
+   */
+  ids: readonly string[];
+  /**
+   * Spoken summary of the trace for screen readers (the drawn overlay
+   * itself is decorative) — e.g. "Your thread: 7 of 82 articles read."
+   */
+  label: string;
 }
 
 const STRIP_W = 560; // floor width, rendered 1:1 — viewBox units ARE pixels
@@ -411,6 +432,7 @@ interface TimelineMapContextValue {
   onItemClick?: (item: TimelineMapItem) => void;
   LinkComponent: React.ElementType;
   testId: string;
+  trace?: TimelineMapTrace;
 }
 
 // One context for the whole pattern (R15) — value memoized below.
@@ -436,6 +458,7 @@ export function TimelineMap({
   onItemPreview,
   onItemClick,
   linkComponent = 'a',
+  trace,
   className,
   children,
   ...rest
@@ -521,6 +544,7 @@ export function TimelineMap({
       onItemClick,
       LinkComponent: linkComponent,
       testId,
+      trace,
     };
   }, [
     layout,
@@ -537,6 +561,7 @@ export function TimelineMap({
     onItemClick,
     linkComponent,
     testId,
+    trace,
   ]);
 
   return (
@@ -612,8 +637,17 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
     LinkComponent,
     testId,
     meta,
+    trace,
   } = useTimelineMap('Chart');
   const scrollerRef = React.useRef<HTMLDivElement | null>(null);
+
+  // The reader's thread — recomputed with the layout so it survives
+  // filtering and fit-all width changes (hidden dots drop out of the
+  // path rather than pinning stale coordinates).
+  const tracePath = React.useMemo(
+    () => (trace ? computeTracePath(layout.lanes, trace.ids) : null),
+    [layout, trace],
+  );
 
   // The link weave (engage-grammar): the last-touched dot's threads stay
   // lit; everything unrelated recedes. Selection = `previewed` (hover and
@@ -840,6 +874,27 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
             })}
           </svg>
         )}
+        {tracePath && trace && (
+          <svg
+            data-slot="timeline-map-trace"
+            aria-hidden
+            width={stripWidth}
+            height={layout.lanes.length * LANE_H}
+            className="pointer-events-none absolute left-40 top-5 text-strand-a"
+          >
+            {/* The reader's own thread: warm strand-a over the cool
+                corpus web, drawn — never faded — with the draw verb
+                (pathLength normalizes any geometry onto the shared
+                strand-draw keyframe; instantly complete under reduce).
+                The visual is decorative; `trace.label` below speaks it. */}
+            <path
+              d={tracePath.d}
+              pathLength={100}
+              className="animate-strand-draw fill-none stroke-current stroke-[1.5] opacity-80 [stroke-dasharray:100] [stroke-dashoffset:100]"
+            />
+          </svg>
+        )}
+        {tracePath && trace && <span className="sr-only">{trace.label}</span>}
       </div>
     </div>
   );
@@ -866,13 +921,51 @@ function dimInk(edgeCount: number): string {
  * Thread geometry: cross-lane links take a smooth S (horizontal-tangent
  * cubic); same-lane links bow upward so they don't hide inside the lane.
  */
-function edgePath(e: Edge): string {
+function curveTo(e: Edge): string {
   if (e.y1 === e.y2) {
     const bow = Math.min(18, Math.abs(e.x2 - e.x1) / 8 + 8);
-    return `M ${e.x1} ${e.y1} Q ${(e.x1 + e.x2) / 2} ${e.y1 - bow} ${e.x2} ${e.y2}`;
+    return `Q ${(e.x1 + e.x2) / 2} ${e.y1 - bow} ${e.x2} ${e.y2}`;
   }
   const mx = (e.x1 + e.x2) / 2;
-  return `M ${e.x1} ${e.y1} C ${mx} ${e.y1} ${mx} ${e.y2} ${e.x2} ${e.y2}`;
+  return `C ${mx} ${e.y1} ${mx} ${e.y2} ${e.x2} ${e.y2}`;
+}
+
+function edgePath(e: Edge): string {
+  return `M ${e.x1} ${e.y1} ${curveTo(e)}`;
+}
+
+/**
+ * The reader's thread: one continuous path through the given dots in
+ * order, speaking the same curve grammar as the corpus threads. Pure
+ * over the laid-out lanes so it is testable without a DOM; exported for
+ * the locks. Returns null below two visible points — a single visited
+ * dot is a beginning, not yet a thread.
+ */
+export function computeTracePath(
+  lanes: Layout['lanes'],
+  ids: readonly string[],
+): { d: string; points: number } | null {
+  const pos = new Map<string, { x: number; y: number }>();
+  lanes.forEach((lane, li) => {
+    for (const d of lane.dots)
+      pos.set(d.item.id, { x: d.cx, y: li * LANE_H + d.cy });
+  });
+  const path: { x: number; y: number }[] = [];
+  for (const id of ids) {
+    const p = pos.get(id);
+    if (!p) continue; // unknown or filtered out
+    const last = path[path.length - 1];
+    if (last && last.x === p.x && last.y === p.y) continue; // consecutive repeat
+    path.push(p);
+  }
+  if (path.length < 2) return null;
+  let d = `M ${path[0].x} ${path[0].y}`;
+  for (let i = 1; i < path.length; i++) {
+    const a = path[i - 1];
+    const b = path[i];
+    d += ` ${curveTo({ from: '', to: '', x1: a.x, y1: a.y, x2: b.x, y2: b.y })}`;
+  }
+  return { d, points: path.length };
 }
 
 /**
