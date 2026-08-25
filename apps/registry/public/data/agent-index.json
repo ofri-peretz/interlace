@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 142
+    "itemCount": 143
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 65,
+      "primitive": 66,
       "pattern": 31,
       "effect": 17,
       "template": 13,
@@ -39,7 +39,7 @@
       "theme": 1
     },
     "category": {
-      "primitive": 65,
+      "primitive": 66,
       "pattern": 31,
       "blog": 22,
       "decorative": 21,
@@ -49,7 +49,7 @@
       "form": 16,
       "template": 13,
       "feedback": 12,
-      "navigation": 9,
+      "navigation": 10,
       "overlay": 9,
       "marketing": 9,
       "chart": 7,
@@ -59,22 +59,22 @@
       "theme": 1
     },
     "rendering": {
-      "server": 79,
+      "server": 80,
       "client": 63
     },
     "keyboard": {
-      "none": 107,
+      "none": 108,
       "handled": 35
     },
     "loading": {
-      "none": 111,
+      "none": 112,
       "built-in": 31
     },
     "minViewport": {
       "320": 82,
       "480": 7,
       "768": 1,
-      "inherited": 52
+      "inherited": 53
     }
   },
   "items": [
@@ -5605,6 +5605,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/section-header.json",
       "item": "https://ds.interlace.tools/r/section-header.json",
       "docs": "https://ds.interlace.tools/c/section-header"
+    },
+    {
+      "name": "section-index",
+      "title": "Section Index",
+      "type": "registry:ui",
+      "summary": "SectionIndex — the numbered eyebrow: a zero-padded mono numeral in the AAA brand orange beside an uppercase tracked label. The page's sections become a legible sequence (\"01 THE AGENDA … 04 THE PROOF\"), telling readers there is an order and where they…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "SectionIndex"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/section-index.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/section-index.json",
+      "item": "https://ds.interlace.tools/r/section-index.json",
+      "docs": "https://ds.interlace.tools/c/section-index"
     },
     {
       "name": "section",

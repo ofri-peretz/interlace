@@ -25,6 +25,17 @@
           "source": ".changeset/reading-strand.md"
         },
         {
+          "summary": "SectionIndex — the numbered eyebrow\n\nA zero-padded mono numeral in the AAA brand orange (`text-primary`) beside an uppercase tracked\nlabel, making the page's sections a legible sequence (\"01 THE AGENDA …\n04 THE PROOF\"). The numeral counts the way a terminal counts (tabular\nfigures, monospace) and is the view's meaning-point accent; screen\nreaders hear \"Section 2: The Agenda\", never \"zero two\". No motion of\nits own — pass `<DecodeText>` as the label for the decode gesture.\nDrops straight into SectionHeader's `eyebrow` slot.",
+          "components": [
+            "section-index"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/section-index.md"
+        },
+        {
           "summary": "TimelineMap: number-axis mode — the lanes × axis landscape over any continuous measure\n\nNew `axis` prop (`{ kind: \"number\", format }`) positions dots by\n`item.value` instead of `item.date` — reading minutes, bundle KB, any\nquantity a corpus is actually navigated by. Nice-step ticks (1/2/5×10ⁿ)\nrender through the consumer's `format`; aria-labels and the Detail\nstrip speak the formatted value through one shared voice, so the two\ncan never disagree. The date axis, the weave, and every interaction are\nunchanged; `date` is now optional at the type level (number-axis items\ndon't need one).",
           "components": [
             "timeline-map"

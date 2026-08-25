@@ -958,6 +958,24 @@
       }
     },
     {
+      "name": "section-index",
+      "type": "registry:ui",
+      "title": "Section Index",
+      "description": "SectionIndex — the numbered eyebrow: a zero-padded mono numeral in the AAA brand orange beside an uppercase tracked label. The page's sections become a legible sequence (\"01 THE AGENDA … 04 THE PROOF\"), telling readers there is an order and where they…",
+      "categories": [
+        "navigation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
