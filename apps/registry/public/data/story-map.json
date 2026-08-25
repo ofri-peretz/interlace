@@ -638,6 +638,16 @@
     "previewDark": "blocks-datatable--dark",
     "skeleton": "blocks-datatable--loading"
   },
+  "decode-text": {
+    "title": "Effects/DecodeText",
+    "storyIds": [
+      "effects-decodetext--eyebrow",
+      "effects-decodetext--on-hover"
+    ],
+    "preview": "effects-decodetext--eyebrow",
+    "previewDark": null,
+    "skeleton": null
+  },
   "delta": {
     "title": "Charts/Delta",
     "storyIds": [
@@ -982,6 +992,15 @@
       "blocks-interactivegridpattern--higher-contrast"
     ],
     "preview": "blocks-interactivegridpattern--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "interlace-weave": {
+    "title": "Effects/InterlaceWeave",
+    "storyIds": [
+      "effects-interlaceweave--on-ac-ard"
+    ],
+    "preview": "effects-interlaceweave--on-ac-ard",
     "previewDark": null,
     "skeleton": null
   },
@@ -1967,6 +1986,18 @@
     "preview": "charts-timeseries--default",
     "previewDark": "charts-timeseries--dark",
     "skeleton": "charts-timeseries--loading"
+  },
+  "timeline-map": {
+    "title": "Blocks/TimelineMap",
+    "storyIds": [
+      "blocks-timelinemap--default",
+      "blocks-timelinemap--keyboard-traversal",
+      "blocks-timelinemap--woven-threads",
+      "blocks-timelinemap--filtered-lanes"
+    ],
+    "preview": "blocks-timelinemap--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "toast": {
     "title": "Primitives/Toast",

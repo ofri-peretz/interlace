@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 140
+    "itemCount": 141
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 64,
-      "pattern": 30,
+      "pattern": 31,
       "effect": 17,
       "template": 13,
       "chart": 7,
@@ -40,11 +40,11 @@
     },
     "category": {
       "primitive": 64,
-      "pattern": 30,
+      "pattern": 31,
       "blog": 22,
       "decorative": 21,
       "foundation": 20,
-      "data": 19,
+      "data": 20,
       "effect": 17,
       "form": 16,
       "template": 13,
@@ -60,21 +60,21 @@
     },
     "rendering": {
       "server": 79,
-      "client": 61
+      "client": 62
     },
     "keyboard": {
       "none": 106,
-      "handled": 34
+      "handled": 35
     },
     "loading": {
-      "none": 109,
+      "none": 110,
       "built-in": 31
     },
     "minViewport": {
       "320": 82,
       "480": 7,
       "768": 1,
-      "inherited": 50
+      "inherited": 51
     }
   },
   "items": [
@@ -7376,6 +7376,8 @@
             "window-control-close",
             "window-control-minimize",
             "window-control-zoom",
+            "strand-a",
+            "strand-b",
             "chart-1",
             "chart-2",
             "chart-3",
@@ -7422,7 +7424,7 @@
         "THEMES",
         "THEME_TOKENS"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -7568,6 +7570,65 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/time-series.json",
       "item": "https://ds.interlace.tools/r/time-series.json",
       "docs": "https://ds.interlace.tools/c/time-series"
+    },
+    {
+      "name": "timeline-map",
+      "title": "Timeline Map",
+      "type": "registry:ui",
+      "summary": "TimelineMap — dated entities as linked dots on a shared time axis, one labeled strip per category lane.",
+      "topics": [],
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowLeft",
+          "ArrowRight",
+          "End",
+          "Home"
+        ],
+        "ownHandler": true
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "TimelineMap"
+      ],
+      "version": "1.1.1",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/patterns/timeline-map.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/timeline-map.json",
+      "item": "https://ds.interlace.tools/r/timeline-map.json",
+      "docs": "https://ds.interlace.tools/c/timeline-map"
     },
     {
       "name": "toast",

@@ -125,7 +125,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": "1.0.0"
       }
     },
@@ -2143,6 +2143,24 @@
         "loading": true,
         "version": "1.1.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "timeline-map",
+      "type": "registry:ui",
+      "title": "Timeline Map",
+      "description": "TimelineMap — dated entities as linked dots on a shared time axis, one labeled strip per category lane.",
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.1.1",
+        "since": null
       }
     },
     {

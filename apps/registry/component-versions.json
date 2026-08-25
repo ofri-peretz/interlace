@@ -762,7 +762,7 @@
       "name": "theme",
       "version": "1.8.0",
       "since": "1.0.0",
-      "updated": "2026-08-10"
+      "updated": "2026-08-24"
     },
     {
       "name": "theme-script",
@@ -778,15 +778,21 @@
     },
     {
       "name": "theme-tokens",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-10"
+      "updated": "2026-08-24"
     },
     {
       "name": "time-series",
       "version": "1.2.0",
       "since": "1.0.0",
       "updated": "2026-08-11"
+    },
+    {
+      "name": "timeline-map",
+      "version": "1.1.1",
+      "since": null,
+      "updated": "2026-08-24"
     },
     {
       "name": "toast",

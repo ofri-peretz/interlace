@@ -84,6 +84,8 @@ export const THEME_TOKENS = [
   'window-control-close',
   'window-control-minimize',
   'window-control-zoom',
+  'strand-a',
+  'strand-b',
   'chart-1',
   'chart-2',
   'chart-3',

@@ -408,6 +408,10 @@
       "types": "./dist/aceternity/*.d.ts",
       "default": "./dist/aceternity/*.js"
     },
+    "./effects/*": {
+      "types": "./dist/effects/*.d.ts",
+      "default": "./dist/effects/*.js"
+    },
     "./patterns/*": {
       "types": "./dist/patterns/*.d.ts",
       "default": "./dist/patterns/*.js"
