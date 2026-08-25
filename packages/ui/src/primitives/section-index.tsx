@@ -4,15 +4,17 @@ import { cn } from '../lib/cn.js';
 
 /**
  * SectionIndex — the numbered eyebrow: a zero-padded mono numeral in
- * strand-a beside an uppercase tracked label. The page's sections
+ * the AAA brand orange beside an uppercase tracked label. The page's sections
  * become a legible sequence ("01 THE AGENDA … 04 THE PROOF"), telling
  * readers there is an order and where they stand in it.
  *
  * One reference law (BRAND_PHILOSOPHY §4): numbered section indices,
  * refracted through the terminal-decode voice — the numeral is
  * monospaced with tabular figures, the way a terminal counts, not a
- * display face. The numeral is the view's meaning-point accent
- * (strand-a); the label stays muted. No motion: consumers who want the
+ * display face. The numeral is the view's meaning-point accent in
+ * `text-primary` — the 7:1 AAA-cleared brand orange, because at 14px
+ * the numeral is TEXT, and the strand pair is scoped to woven gestures
+ * (both caught by the storybook AAA gate). The label stays muted. No motion: consumers who want the
  * decode gesture pass `<DecodeText>` as the label — composition, not
  * coupling (R16).
  *
@@ -65,7 +67,7 @@ export function SectionIndex({
       <span
         data-slot="section-index-numeral"
         aria-hidden="true"
-        className="font-mono text-strand-a [font-variant-numeric:tabular-nums]"
+        className="font-mono text-primary [font-variant-numeric:tabular-nums]"
       >
         {String(value).padStart(2, '0')}
       </span>

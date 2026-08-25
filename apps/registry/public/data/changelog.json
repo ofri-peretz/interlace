@@ -25,7 +25,7 @@
           "source": ".changeset/reading-strand.md"
         },
         {
-          "summary": "SectionIndex — the numbered eyebrow\n\nA zero-padded mono numeral in strand-a beside an uppercase tracked\nlabel, making the page's sections a legible sequence (\"01 THE AGENDA …\n04 THE PROOF\"). The numeral counts the way a terminal counts (tabular\nfigures, monospace) and is the view's meaning-point accent; screen\nreaders hear \"Section 2: The Agenda\", never \"zero two\". No motion of\nits own — pass `<DecodeText>` as the label for the decode gesture.\nDrops straight into SectionHeader's `eyebrow` slot.",
+          "summary": "SectionIndex — the numbered eyebrow\n\nA zero-padded mono numeral in the AAA brand orange (`text-primary`) beside an uppercase tracked\nlabel, making the page's sections a legible sequence (\"01 THE AGENDA …\n04 THE PROOF\"). The numeral counts the way a terminal counts (tabular\nfigures, monospace) and is the view's meaning-point accent; screen\nreaders hear \"Section 2: The Agenda\", never \"zero two\". No motion of\nits own — pass `<DecodeText>` as the label for the decode gesture.\nDrops straight into SectionHeader's `eyebrow` slot.",
           "components": [
             "section-index"
           ],

@@ -6,7 +6,7 @@ SectionIndex — the numbered eyebrow
 
 Components: section-index
 
-A zero-padded mono numeral in strand-a beside an uppercase tracked
+A zero-padded mono numeral in the AAA brand orange (`text-primary`) beside an uppercase tracked
 label, making the page's sections a legible sequence ("01 THE AGENDA …
 04 THE PROOF"). The numeral counts the way a terminal counts (tabular
 figures, monospace) and is the view's meaning-point accent; screen

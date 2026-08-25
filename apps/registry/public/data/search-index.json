@@ -261,7 +261,7 @@
     "12px": 11,
     "130vw": 1,
     "140px": 2,
-    "14px": 1,
+    "14px": 2,
     "15rem": 1,
     "15vh": 1,
     "160px": 1,
@@ -315,7 +315,7 @@
     "9e00ff": 1,
     "a11y": 81,
     "a84c17": 1,
-    "aaa": 3,
+    "aaa": 4,
     "absenc": 11,
     "absent": 5,
     "absolut": 21,
@@ -662,6 +662,7 @@
     "carv": 8,
     "cascad": 4,
     "category": 11,
+    "caught": 10,
     "caution": 3,
     "cell": 15,
     "center": 9,
@@ -699,7 +700,7 @@
     "classic": 1,
     "clean": 7,
     "cleanest": 1,
-    "clear": 39,
+    "clear": 40,
     "click": 16,
     "clickabl": 2,
     "client": 100,
@@ -1291,7 +1292,7 @@
     "gambl": 1,
     "gap": 34,
     "garnish": 1,
-    "gate": 18,
+    "gate": 19,
     "gaussian": 1,
     "gave": 2,
     "generat": 2,
@@ -1854,7 +1855,7 @@
     "optimiz": 2,
     "option": 5,
     "optional": 53,
-    "orang": 5,
+    "orang": 6,
     "orbit": 1,
     "order": 25,
     "ordinary": 1,
@@ -1900,7 +1901,7 @@
     "paginationnext": 1,
     "paginationprevious": 1,
     "paint": 46,
-    "pair": 32,
+    "pair": 33,
     "palett": 15,
     "pane": 1,
     "panel": 9,
@@ -2024,7 +2025,7 @@
     "pricingcard": 1,
     "pricingtabl": 2,
     "pricingtier": 1,
-    "primary": 38,
+    "primary": 39,
     "primitiv": 86,
     "principl": 22,
     "print": 7,
@@ -2277,6 +2278,7 @@
     "schedul": 3,
     "schem": 7,
     "schemepreferenc": 2,
+    "scop": 14,
     "scor": 6,
     "scorecard": 4,
     "scorecardrow": 1,
@@ -2526,7 +2528,7 @@
     "storag": 2,
     "storm": 1,
     "story": 22,
-    "storybook": 2,
+    "storybook": 3,
     "str": 84,
     "straight": 7,
     "strand": 4,
@@ -2630,7 +2632,7 @@
     "testid": 13,
     "testimonial": 3,
     "testimonialgrid": 2,
-    "text": 89,
+    "text": 90,
     "textarea": 4,
     "textareavariant": 1,
     "textcontent": 1,
@@ -2894,6 +2896,7 @@
     "work": 32,
     "wors": 15,
     "worst": 1,
+    "woven": 1,
     "wrap": 52,
     "wrapp": 22,
     "wrapper": 31,
@@ -3211,7 +3214,7 @@
         "primitive",
         "data"
       ],
-      "terms": "avatar data primitiv client load skeleton keyboard base fallback imag size machin avatarfallback circular face decid error initial baseavatar idiomatic involv overridden avatarimag participat show surfac mut wrap full swap round aspect constraint footprint clipp given normal root circl stat squar break object absenc decision yet layout entry url win render miss part centr project replac shift surviv plac silhouett overflow upstream text caller"
+      "terms": "avatar data primitiv client load skeleton keyboard base fallback imag size machin avatarfallback circular face decid error initial baseavatar idiomatic involv overridden avatarimag participat show surfac mut wrap full swap round aspect constraint footprint clipp given normal root circl stat squar break object absenc decision yet layout entry url win render miss part centr project replac shift surviv plac silhouett overflow upstream caller text"
     },
     {
       "name": "background-beams-with-collision",
@@ -3282,7 +3285,7 @@
         "primitive",
         "feedback"
       ],
-      "terms": "badg feedback primitiv server rsc load skeleton keyboard base render userender variant directiv los client hook userenderel ghost boundary opaqu given pill composit usestat reason secondary badgevariant chunk clsx died ear harness likewis pay prerender tag tolerat unnotic link primary measur build small data whatever conditional discard factor payload cva destructiv path status surfac shap lock tree record sat usemergedref anchor order plus every"
+      "terms": "badg feedback primitiv server rsc load skeleton keyboard base render userender variant directiv los client hook userenderel ghost boundary opaqu given pill composit usestat reason secondary badgevariant chunk clsx died ear harness likewis pay prerender tag tolerat unnotic link measur primary build small data whatever conditional discard factor payload cva destructiv path status surfac shap lock tree record sat usemergedref anchor order plus every"
     },
     {
       "name": "blog-home-template",
@@ -3354,7 +3357,7 @@
         "pattern",
         "foundation"
       ],
-      "terms": "brand logo foundation pattern server rsc lockup bar mark wordmark lowercas eslint tool monospac svg favicon geometry var site nav defin lock identical fill 0a6b47 0d9460 a84c17 bend brandlogo brandmark f4794a monorepo upper copi 100 follow plus height attr beyond pair orang high public rotat product top decorativ header ship alon center green every size automatical lower packag viewbox outsid instead width custom href"
+      "terms": "brand logo foundation pattern server rsc lockup bar mark wordmark lowercas eslint tool monospac svg favicon geometry var site nav defin lock identical fill 0a6b47 0d9460 a84c17 bend brandlogo brandmark f4794a monorepo upper copi 100 follow plus height attr beyond pair high orang public rotat product top decorativ header ship alon center green every size automatical lower packag viewbox outsid instead width custom href"
     },
     {
       "name": "breadcrumb",
@@ -3374,7 +3377,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "breadcrumb navigation primitiv server rsc responsiv min viewport 480 breadcrumblink aschild cloneel breadcrumbellipsis breadcrumbitem chevronright els morehorizontal userender semantical tagg trail safe link child compositional ancestor 32ch 480px breadcrumblist breadcrumbpag breadcrumbseparator seg mirror base current nav clon lineclamp slot collaps tree rational seam swap compos expect onto drop foreground part api next shadcn item aria expos presentation data lucid useful keep text list every"
+      "terms": "breadcrumb navigation primitiv server rsc responsiv min viewport 480 breadcrumblink aschild cloneel breadcrumbellipsis breadcrumbitem chevronright els morehorizontal userender semantical tagg trail safe link child compositional ancestor 32ch 480px breadcrumblist breadcrumbpag breadcrumbseparator seg mirror base current nav clon lineclamp slot collaps tree rational seam swap compos expect onto drop foreground part api next shadcn item aria expos presentation data lucid useful keep list text every"
     },
     {
       "name": "button-variants",
@@ -3392,7 +3395,7 @@
         "primitive",
         "form"
       ],
-      "terms": "button variant form primitiv server rsc buttonvariant size apis cva composit icon modul primary measur contrast client brandabl checkabl folklor destructiv plain noth lock record else ghost repo map outlin ring opaqu section pure pagination link consum enum str every nest produc secondary styl backdrop half rather com dropp side direct six failur four safe separat path surfac system tree text accent exact onto"
+      "terms": "button variant form primitiv server rsc buttonvariant size apis cva composit icon modul measur primary contrast client brandabl checkabl folklor destructiv plain noth lock record else ghost repo map outlin ring opaqu section pure pagination link consum enum str every nest produc secondary styl backdrop half rather com dropp side direct six failur four safe separat path surfac system tree text accent exact onto"
     },
     {
       "name": "button",
@@ -3411,7 +3414,7 @@
         "primitive",
         "form"
       ],
-      "terms": "button form primitiv client keyboard base render buttonvariant variant dialog exercis size compound counterpart polymorphism userender passthrough composit icon primary minimal nativ onclick submit surfac contrast secondary ele legacy mybutton portal reactel testid focus link modul variantprop measur event replac apis brandabl checkabl folklor skill cva destructiv slot lock aschild record server ghost repo outlin ring pair opaqu section equivalent pagination live shadcn token"
+      "terms": "button form primitiv client keyboard base render buttonvariant variant dialog exercis size compound counterpart polymorphism userender passthrough composit icon minimal primary nativ onclick submit surfac contrast secondary ele legacy mybutton portal reactel testid focus link modul variantprop measur event replac apis brandabl checkabl folklor skill cva destructiv slot lock aschild record server ghost repo outlin ring opaqu pair section equivalent pagination live shadcn token"
     },
     {
       "name": "callout",
@@ -3472,7 +3475,7 @@
         "primitive",
         "form"
       ],
-      "terms": "checkbox form primitiv client responsiv min viewport 320 keyboard base check indeterminat uncheck mix tri radius oncheckedchang background 24px 8px activation primary spac role aria basecheckbox checkboxindicator glyph incl lean squircl uncontroll controll defaultcheck unchang parity ref composit exception intersect target built round ring boolean box pair enforc ful pseudo control 4px interfac measur scal 16px deviation grow neighbour carv circl exempt hit indicator"
+      "terms": "checkbox form primitiv client responsiv min viewport 320 keyboard base check indeterminat uncheck mix tri radius oncheckedchang background 24px 8px activation primary spac role aria basecheckbox checkboxindicator glyph incl lean squircl uncontroll controll defaultcheck unchang parity ref composit exception intersect target built round ring boolean box enforc ful pseudo control pair 4px interfac measur scal 16px deviation grow neighbour carv circl exempt hit indicator"
     },
     {
       "name": "cloud-particles",
@@ -3597,7 +3600,7 @@
         "primitive",
         "form"
       ],
-      "terms": "combobox form primitiv client responsiv min viewport 320 keyboard base filter input item select comboboxlist popup multipl focus list comboboxitem listbox field chip virtual empty comboboxempty typ polit activedescendant ring text clear query region never tab 24px onvaluechang clos open 28px child chromium collator comboboxchip comboboxclear comboboxinput comboboxtrigger keepmount usefilter unmount live highlight activeel dock interaction keystrok mere popover move aria rail selection part"
+      "terms": "combobox form primitiv client responsiv min viewport 320 keyboard base filter input item select comboboxlist popup multipl focus list comboboxitem listbox field chip virtual empty comboboxempty typ polit activedescendant ring text query clear region never tab 24px onvaluechang clos open 28px child chromium collator comboboxchip comboboxclear comboboxinput comboboxtrigger keepmount usefilter unmount live highlight activeel dock interaction keystrok mere popover move aria rail selection part"
     },
     {
       "name": "command-palette",
@@ -3686,7 +3689,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "cta section market pattern server rsc load skeleton responsiv min viewport 320 stat subtl primary neutral action tint trial typography description ctasection titl ready stick centr surfac button labelledby brand data land start stack page ful slot card column call ship reach center shap variant container read align foreground reactnod plain tone typical text utility every accent placeholder long scal spac true r10 seam"
+      "terms": "cta section market pattern server rsc load skeleton responsiv min viewport 320 stat subtl primary neutral action tint trial typography description ctasection titl ready stick centr surfac button labelledby brand data land start stack page ful slot card column call ship reach center shap variant container read align foreground reactnod plain tone typical utility text every accent placeholder long scal spac true r10 seam"
     },
     {
       "name": "dashboard-template",
@@ -3954,7 +3957,7 @@
         "pattern",
         "feedback"
       ],
-      "terms": "empty stat feedback pattern server rsc responsiv min viewport 320 emptystat adjust afterthought icon filter creat act search wherever lucid action yet optional flag emptystateprop factual variant first link typography zero slot philosophy describ often devic usabl tabl item surfac block data list noth cluster button load result usual bug headlin quiet row cta support failur phon description typical text short copy outlin alway"
+      "terms": "empty stat feedback pattern server rsc responsiv min viewport 320 emptystat adjust afterthought icon filter creat act search wherever lucid action yet optional flag emptystateprop factual variant first link typography zero slot philosophy describ often devic usabl tabl item surfac block data list noth cluster button load result usual bug headlin quiet row cta support failur phon description typical short text copy outlin alway"
     },
     {
       "name": "error-template",
@@ -4234,7 +4237,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "hero market pattern server rsc responsiv min viewport 320 media headlin typography eyebrow confident cta technical section secondary primary calm voic support fold enforc variant cluster optional february heroprop pros slot column subhead safe max button labelledby land copy visual big video action stack right reflow 900 data 2026 reach weight paragraph anywher window landmark display small page phon tone imag svg typical vertical"
+      "terms": "hero market pattern server rsc responsiv min viewport 320 media headlin typography eyebrow confident cta technical section secondary calm voic primary support fold enforc variant cluster optional february heroprop pros slot column subhead safe max button labelledby land copy visual big video action stack right reflow 900 data 2026 reach weight paragraph anywher window landmark display small page phon tone imag svg typical vertical"
     },
     {
       "name": "hover-card",
@@ -4311,7 +4314,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "label foundation primitiv server rsc responsiv min viewport 320 control form awar canon dep association headless wir lower peer shadcn data htmlfor disabl ref field ramp base machinery level mirror nativ interfac inherit carv exempt text floor bespok inactiv wrap http past flow variant slot com well forward opacity overflow smallest group r12 raw reus viabl gap token scal light user background dark rather"
+      "terms": "label foundation primitiv server rsc responsiv min viewport 320 control form awar canon dep association headless wir lower peer shadcn data htmlfor disabl ref field ramp base machinery level mirror nativ interfac inherit carv exempt floor text bespok inactiv wrap http past flow variant slot com well forward opacity overflow smallest group r12 raw reus viabl gap token scal light user background dark rather"
     },
     {
       "name": "landing-template",
@@ -4593,7 +4596,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "page header navigation pattern server rsc load skeleton responsiv min viewport 480 pageheader breadcrumb optional titl action meta admin landmark align right sett typography description typical menu cluster crowd cta mini pageheaderprop simpler tag band strip date portrait status justify row expect stack narrower slot column primary render clean carry top data reader button screen iphon flex phon fit primitiv vertical placeholder body left"
+      "terms": "page header navigation pattern server rsc load skeleton responsiv min viewport 480 pageheader breadcrumb optional titl action meta admin landmark align right sett typography description typical menu cluster crowd cta mini pageheaderprop simpler tag band strip date portrait status justify row expect stack narrower slot column render primary clean carry top data reader button screen iphon flex phon fit primitiv vertical placeholder body left"
     },
     {
       "name": "pagination",
@@ -4784,7 +4787,7 @@
         "primitive",
         "form"
       ],
-      "terms": "radio group form primitiv client responsiv min viewport 320 keyboard base radiogroup readon rov select tabindex item option radiogroupitem rootprop role aria dot defaultvalu mutual exclusiv onvaluechang ring arrow indicator background allow conformant enlarg overlapp radioroot uncontroll controll check navigation critical pitch ref border composit upstream wrap trust uncheck target built 24px attr blind unconditional input fill key part pair pseudo control 8px drill"
+      "terms": "radio group form primitiv client responsiv min viewport 320 keyboard base radiogroup readon rov select tabindex item option radiogroupitem rootprop role aria dot defaultvalu mutual exclusiv onvaluechang ring arrow indicator background allow conformant enlarg overlapp radioroot uncontroll controll check navigation critical pitch ref border composit upstream wrap trust uncheck target built 24px attr blind unconditional input fill key part pseudo control pair 8px drill"
     },
     {
       "name": "reading-strand",
@@ -4822,7 +4825,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "read time blog primitiv server rsc load skeleton responsiv min viewport 320 readingtim minut showicon badg impos metadata icon clock text articl row lucid render compact data 14px english fixtur localisation presenc readingtimeprop scraper tag date label header besid analytic builder estimat validat sit hidden true altitud json short utility index arrival downstream higher pars footprint gap devic translat card aria emitt inert machin"
+      "terms": "read time blog primitiv server rsc load skeleton responsiv min viewport 320 readingtim minut showicon badg impos metadata icon clock text articl row lucid render compact data english fixtur localisation presenc readingtimeprop scraper tag date label header besid 14px analytic builder estimat validat sit hidden true altitud json short utility index arrival downstream higher pars footprint gap devic translat card aria emitt inert machin"
     },
     {
       "name": "registry-item-template",
@@ -4968,7 +4971,7 @@
     {
       "name": "section-index",
       "title": "Section Index",
-      "blurb": "SectionIndex — the numbered eyebrow: a zero-padded mono numeral in strand-a beside an uppercase tracked label. The page's sections become a legible sequence (\"01 THE AGENDA … 04 THE PROOF\"), telling readers there is an order and where they stand in it.",
+      "blurb": "SectionIndex — the numbered eyebrow: a zero-padded mono numeral in the AAA brand orange beside an uppercase tracked label. The page's sections become a legible sequence (\"01 THE AGENDA … 04 THE PROOF\"), telling readers there is an order and where they…",
       "tier": "primitive",
       "categories": [
         "navigation",
@@ -4981,7 +4984,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "section index navigation primitiv server rsc sectionindex numeral agenda eyebrow decodetext sequenc terminal strand proof padd decod gestur mono stand uppercas label legibl tell aloud law refract number besid r16 sectionheader becom track zero reader bas voic order face monospac page coupl nois tabular indic spoken figur hidden testid slot view display e2e provid data direct hear fit aria str referenc brand selector mean"
+      "terms": "section index navigation primitiv server rsc sectionindex numeral agenda eyebrow decodetext aaa sequenc terminal gestur proof orang padd decod mono brand uppercas label legibl tell aloud law refract woven number besid 14px r16 sectionheader becom track zero reader bas stand storybook voic order face monospac strand page coupl nois tabular indic spoken figur hidden caught testid slot scop view display e2e provid data direct"
     },
     {
       "name": "section",
@@ -5020,7 +5023,7 @@
         "primitive",
         "form"
       ],
-      "terms": "select form primitiv client responsiv min viewport 320 keyboard base listbox typeahead popup trigger combobox item home portall popover onvaluechang highlight focus end positioner role clos selectcontent selectgroup selectgrouplabel selectitem selectscrolldownbutton selectscrollupbutton selectseparator selecttrigger selectvalu uncontroll foreground arrow controll part navigation commit composit chevron defaultvalu esc anchor text built accent throughout ring pair option drill interfac provider primary grow data carv exempt background enter"
+      "terms": "select form primitiv client responsiv min viewport 320 keyboard base listbox typeahead popup trigger combobox item home portall popover onvaluechang highlight focus end positioner role clos selectcontent selectgroup selectgrouplabel selectitem selectscrolldownbutton selectscrollupbutton selectseparator selecttrigger selectvalu uncontroll foreground arrow controll part navigation commit composit chevron defaultvalu esc anchor text built accent throughout ring option pair drill interfac provider primary grow data carv exempt background enter"
     },
     {
       "name": "separator",
@@ -5306,7 +5309,7 @@
         "primitive",
         "a11y"
       ],
-      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl corner tab moment user tabindex anchor target lett keyboard focusabl past satisfy content emulator encounter hash jump physical skiplinkprop nav step move aaa utility scroll ele wcag action ring pair work position nativ left activation devic earn block top data header mous whether whichever interactiv href first browser"
+      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl corner tab moment user tabindex anchor target lett keyboard focusabl past satisfy content emulator encounter hash jump physical skiplinkprop nav step move utility scroll ele wcag aaa action ring work pair position nativ left activation devic earn block top data header mous whether whichever interactiv href first browser"
     },
     {
       "name": "slider",
@@ -5327,7 +5330,7 @@
         "primitive",
         "form"
       ],
-      "terms": "slider form primitiv client responsiv min viewport 320 keyboard base rail thumb track rang fill indicator knob pageup picker compositional primary home background drag 069 308 baseslider draggabl lighten pagedown propagat reinforc reintroduc slidercontrol sliderindicator sliderthumb slidertrack understand arrow handl invisibl label portion tupl border mutual readout supplementary without end stat row constraint exclusiv fixe valuenow ring input wrapper mode orang pseudo api usabl"
+      "terms": "slider form primitiv client responsiv min viewport 320 keyboard base rail thumb track rang fill indicator knob pageup picker compositional primary home background drag 069 308 baseslider draggabl lighten pagedown propagat reinforc reintroduc slidercontrol sliderindicator sliderthumb slidertrack understand arrow handl invisibl label portion tupl border mutual readout supplementary without end stat row constraint exclusiv fixe valuenow ring input wrapper mode pseudo api orang usabl"
     },
     {
       "name": "sparkline",
@@ -5431,7 +5434,7 @@
         "pattern",
         "data"
       ],
-      "terms": "stat card data pattern server rsc load skeleton responsiv min viewport 320 statcard delta tone aaa icon tabular optional num success 30d launch warn dashboard color danger footnot sinc 600 scorecard label lucid semantic result emerald rose statcardvariant variant variantprop measur contrast build metric typography enhanc numeral widget four trend row accent key articl pair enforc font tabl render meta schem smaller block inherit"
+      "terms": "stat card data pattern server rsc load skeleton responsiv min viewport 320 statcard delta tone aaa icon tabular optional num success 30d launch warn dashboard color danger footnot sinc 600 scorecard label lucid semantic result emerald rose statcardvariant variant variantprop measur contrast build metric typography enhanc numeral widget four trend row accent key articl enforc pair font tabl render meta schem smaller block inherit"
     },
     {
       "name": "stat-group",
@@ -5612,7 +5615,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "tag blog primitiv server rsc load skeleton responsiv min viewport 320 taglist chip taxonomy cluster tiny reinvent topic tone item anchor plugin list semantic flex almost activation destination link wrapp brand border nativ mut category data alway tagvariant unorder variantprop primary render foreground canonical radius accidental appear surfac wrap assum low hook drop articl emphasis lift idle focus pill prod inlin enum rhythm ship"
+      "terms": "tag blog primitiv server rsc load skeleton responsiv min viewport 320 taglist chip taxonomy cluster tiny reinvent topic tone item anchor plugin list semantic flex almost activation destination link wrapp brand border nativ mut category data alway tagvariant unorder variantprop render primary foreground canonical radius accidental appear surfac wrap assum low hook drop articl emphasis lift idle focus pill prod inlin enum rhythm ship"
     },
     {
       "name": "testimonial",
@@ -5672,7 +5675,7 @@
         "util",
         "foundation"
       ],
-      "terms": "script flash bootstrap foundation util server rsc schem storag key localstorag head stor writ page absent suppresshydrationwarn html user host half chos scrollbar paint whit chosen attribut system dark app silent preferenc already authoritativ decorator fast futur henc hydrat iife minifi polyfill synchronous throw vite writabl color next read wrong light hold bundler connection correctness corrupt dangerouslysetinnerhtml detection mak mutat privat safari storybook validat"
+      "terms": "script flash bootstrap foundation util server rsc schem storag key localstorag head stor writ page absent suppresshydrationwarn html user host half chos scrollbar paint whit chosen attribut system dark app silent preferenc already authoritativ decorator fast futur henc hydrat iife minifi polyfill synchronous throw vite writabl color next read wrong light hold bundler connection correctness corrupt dangerouslysetinnerhtml detection mak mutat privat safari validat docu"
     },
     {
       "name": "theme-switcher",

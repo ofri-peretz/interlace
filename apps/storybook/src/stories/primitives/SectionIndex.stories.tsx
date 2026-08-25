@@ -13,7 +13,7 @@ const meta: Meta<typeof SectionIndex> = {
     docs: {
       description: {
         component:
-          'The numbered eyebrow: a zero-padded mono numeral in strand-a beside an uppercase ' +
+          'The numbered eyebrow: a zero-padded mono numeral in the AAA brand orange beside an uppercase ' +
           'tracked label, making the page\'s sections a legible sequence ("01 THE AGENDA … ' +
           '04 THE PROOF"). The numeral counts the way a terminal counts — monospaced, tabular ' +
           'figures — and is the view\'s meaning-point accent; the label stays muted. Screen ' +

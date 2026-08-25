@@ -14,11 +14,11 @@ const html = renderToStaticMarkup(
 );
 
 describe('the terminal numeral', () => {
-  it('zero-pads to the terminal form, mono + tabular, strand-a accent', () => {
+  it('zero-pads to the terminal form, mono + tabular, AAA primary accent', () => {
     expect(html).toContain('>02<');
     expect(html).toContain('font-mono');
     expect(html).toContain('[font-variant-numeric:tabular-nums]');
-    expect(html).toContain('text-strand-a');
+    expect(html).toContain('text-primary');
   });
 
   it('a three-digit sequence keeps its width honestly', () => {
