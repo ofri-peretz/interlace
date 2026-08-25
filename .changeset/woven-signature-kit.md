@@ -15,3 +15,5 @@ WCAG 1.4.11 floor measured by the theme-contract lock.
 Fixed: the preflight applied `height: auto` to svg/canvas, defeating
 explicit sizing utilities on every viewBox'd svg — now photographic
 media only, matching Tailwind's own preflight.
+
+Components: timeline-map

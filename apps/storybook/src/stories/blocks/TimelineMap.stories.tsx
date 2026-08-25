@@ -111,10 +111,12 @@ export const KeyboardTraversal: Story = {
     const dots = canvas.getAllByRole('link');
     // Exactly one dot is in the tab order at rest.
     expect(dots.filter((d) => d.tabIndex === 0)).toHaveLength(1);
-    const first = dots.find((d) => d.tabIndex === 0)!;
-    first.focus();
-    await userEvent.keyboard('{ArrowRight}');
-    expect(document.activeElement).not.toBe(first);
+    // The resting tab stop is the LAST chronological dot (recent end), so
+    // ArrowRight clamps there — traverse backward to see the focus move.
+    const start = dots.find((d) => d.tabIndex === 0)!;
+    start.focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(document.activeElement).not.toBe(start);
     // The roving tabindex moved WITH focus — still exactly one tab stop.
     expect(dots.filter((d) => d.tabIndex === 0)).toHaveLength(1);
     expect(document.activeElement?.getAttribute('tabindex')).toBe('0');
