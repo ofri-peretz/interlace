@@ -31,7 +31,13 @@ import { cn } from '../lib/cn.js';
  */
 
 export interface HeroStrandProps
-  extends Omit<React.ComponentPropsWithoutRef<'svg'>, 'children'> {
+  // aria-hidden omitted at the TYPE level too (review, blog#181): the
+  // strand is always-decorative. Measured honestly: TS checks JSX
+  // aria-* attributes leniently (verified — `<HeroStrand aria-hidden>`
+  // still compiles), so this strips autocomplete and rejects
+  // object-literal construction; the runtime guard below is the layer
+  // that actually enforces the contract, and the test pins it.
+  extends Omit<React.ComponentPropsWithoutRef<'svg'>, 'children' | 'aria-hidden'> {
   /** Stable selector for E2E tests; consumer provides — no default (R5). */
   'data-testid': string;
   /**
