@@ -644,10 +644,18 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
   // The reader's thread — recomputed with the layout so it survives
   // filtering and fit-all width changes (hidden dots drop out of the
   // path rather than pinning stale coordinates).
-  const tracePath = React.useMemo(
-    () => (trace ? computeTracePath(layout.lanes, trace.ids) : null),
-    [layout, trace],
-  );
+  const tracePath = React.useMemo(() => {
+    if (!trace) return null;
+    // Filtered-out dots drop from the path (review — lane ROWS always
+    // render, so indices stay stable; only the dots hide). The label
+    // rides along so the render needs one narrowing, not two.
+    const visibleLanes = layout.lanes.map((l) => ({
+      ...l,
+      dots: l.dots.filter((d) => visible(d.item)),
+    }));
+    const p = computeTracePath(visibleLanes, trace.ids);
+    return p ? { ...p, label: trace.label } : null;
+  }, [layout, trace, visible]);
 
   // The link weave (engage-grammar): the last-touched dot's threads stay
   // lit; everything unrelated recedes. Selection = `previewed` (hover and
@@ -874,7 +882,7 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
             })}
           </svg>
         )}
-        {tracePath && trace && (
+        {tracePath && (
           <svg
             data-slot="timeline-map-trace"
             aria-hidden
@@ -894,7 +902,7 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
             />
           </svg>
         )}
-        {tracePath && trace && <span className="sr-only">{trace.label}</span>}
+        {tracePath && <span className="sr-only">{tracePath.label}</span>}
       </div>
     </div>
   );
@@ -921,7 +929,7 @@ function dimInk(edgeCount: number): string {
  * Thread geometry: cross-lane links take a smooth S (horizontal-tangent
  * cubic); same-lane links bow upward so they don't hide inside the lane.
  */
-function curveTo(e: Edge): string {
+function curveTo(e: Pick<Edge, 'x1' | 'y1' | 'x2' | 'y2'>): string {
   if (e.y1 === e.y2) {
     const bow = Math.min(18, Math.abs(e.x2 - e.x1) / 8 + 8);
     return `Q ${(e.x1 + e.x2) / 2} ${e.y1 - bow} ${e.x2} ${e.y2}`;
@@ -963,7 +971,7 @@ export function computeTracePath(
   for (let i = 1; i < path.length; i++) {
     const a = path[i - 1];
     const b = path[i];
-    d += ` ${curveTo({ from: '', to: '', x1: a.x, y1: a.y, x2: b.x, y2: b.y })}`;
+    d += ` ${curveTo({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })}`;
   }
   return { d, points: path.length };
 }

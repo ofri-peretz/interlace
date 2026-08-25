@@ -112,6 +112,24 @@ describe('the reader\'s thread (trace)', () => {
     expect(computeTracePath(lanes, ['ghost', 'nope'])).toBeNull();
   });
 
+  it('a filtered-out lane drops its dots from the thread', () => {
+    // Pre-fix, the hidden Delta dot still counted as a waypoint: with
+    // only one visible trace point the overlay must not render at all —
+    // a thread through invisible territory is a lie about the map.
+    const filtered = renderToStaticMarkup(
+      <TimelineMap
+        items={ITEMS}
+        filter={['Guides']}
+        trace={{ ids: ['a', 'd'], label: 'Your thread: 2 read.' }}
+        data-testid="map"
+      >
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(filtered).not.toContain('timeline-map-trace');
+    expect(filtered).not.toContain('Your thread');
+  });
+
   it('renders warm over the cool web: strand-a, drawn, decorative, spoken', () => {
     const html = renderToStaticMarkup(
       <TimelineMap
