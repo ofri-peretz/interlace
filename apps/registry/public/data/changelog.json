@@ -5,6 +5,17 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "TimelineMap: number-axis mode — the lanes × axis landscape over any continuous measure\n\nNew `axis` prop (`{ kind: \"number\", format }`) positions dots by\n`item.value` instead of `item.date` — reading minutes, bundle KB, any\nquantity a corpus is actually navigated by. Nice-step ticks (1/2/5×10ⁿ)\nrender through the consumer's `format`; aria-labels and the Detail\nstrip speak the formatted value through one shared voice, so the two\ncan never disagree. The date axis, the weave, and every interaction are\nunchanged; `date` is now optional at the type level (number-axis items\ndon't need one).",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/timeline-map-number-axis.md"
+        },
+        {
           "summary": "The woven signature kit and the brand strand tokens.\n\nNew: `TimelineMap` (patterns) — dated entities as dots on category lanes\nwith fit-all width, a roving-tabindex keyboard composite, and the link\nweave (`item.links` draws the corpus's internal reference graph as\nstrand-b threads with select-to-illuminate interaction); `InterlaceWeave`\nand `DecodeText` (effects/, new export subpath). New brand tokens\n`--interlace-strand-a` / `--interlace-strand-b` in both themes, with the\nWCAG 1.4.11 floor measured by the theme-contract lock.\n\nFixed: the preflight applied `height: auto` to svg/canvas, defeating\nexplicit sizing utilities on every viewBox'd svg — now photographic\nmedia only, matching Tailwind's own preflight.",
           "components": [
             "timeline-map"

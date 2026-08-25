@@ -161,3 +161,35 @@ export const FilteredLanes: Story = {
     expect(canvas.getByRole('button', { name: /^Performance/ })).toHaveAttribute('aria-pressed', 'false');
   },
 };
+
+/**
+ * The number axis: the same lanes × axis landscape over any continuous
+ * measure — here reading minutes, so the map answers "pick a topic,
+ * pick your time budget" instead of "when was this published".
+ */
+export const ReadingTimeLandscape: Story = {
+  args: {
+    items: [
+      { id: 'n1', href: '#quick', label: 'Quickstart', category: 'Guides', value: 3 },
+      { id: 'n2', href: '#config', label: 'Config deep-dive', category: 'Guides', value: 9 },
+      { id: 'n3', href: '#cwe', label: 'CWE taxonomy', category: 'Security', value: 12, links: ['n2'] },
+      { id: 'n4', href: '#crypto', label: 'Crypto at four layers', category: 'Security', value: 12 },
+      { id: 'n5', href: '#bench', label: 'Benchmark methodology', category: 'Security', value: 21 },
+    ],
+    'data-testid': 'timeline-map-minutes',
+    axis: { kind: 'number', format: (v: number) => `${v} min` },
+  },
+  render: renderCompound,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Ticks step in round values through the format — never raw dates.
+    expect(canvas.getAllByText(/^\d+ min$/).length).toBeGreaterThan(1);
+    // The dot's accessible name speaks the formatted value.
+    expect(
+      canvas.getByRole('link', { name: 'Benchmark methodology — Security · 21 min' }),
+    ).toBeInTheDocument();
+    // Same-(lane,value) twins (12 min) fan instead of stacking.
+    const twelve = canvas.getAllByRole('link', { name: /12 min/ });
+    expect(twelve).toHaveLength(2);
+  },
+};
