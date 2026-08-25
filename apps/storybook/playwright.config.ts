@@ -21,8 +21,9 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:6007',
     // The determinism contract: reduce completes every draw instantly.
     reducedMotion: 'reduce',
-    viewport: { width: 1280, height: 800 },
-    deviceScaleFactor: 1,
+    // Canvas is Desktop Chrome's 1280×720 @1x (the project spread below
+    // supplies it — a top-level viewport here would be dead config, as
+    // project-level `use` wins). Baselines are cut at that size.
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {

@@ -46,15 +46,18 @@ for (const theme of THEMES) {
       // if any, run after mount; the settle wait below covers them).
       const root = page.locator('#storybook-root');
       await expect(root.locator(':scope > *').first()).toBeVisible();
-      // Fonts + any play-function interaction settle. Reduced motion
-      // means no animation is in flight to race against.
+      // Fonts settle explicitly; play-function side-effects settle via
+      // toHaveScreenshot's own stabilization (it polls until two
+      // consecutive frames match) — no hard wait needed (review).
       await page.evaluate(() => document.fonts.ready);
-      await page.waitForTimeout(400);
       await expect(page).toHaveScreenshot(`${id}--${theme}.png`, {
         animations: 'disabled',
         fullPage: true,
-        // Antialiasing wiggle across GPU/OS rasterizers, nothing more.
-        maxDiffPixelRatio: 0.01,
+        // Absolute cap, not a ratio (review): 1% of a full-page shot is
+        // ~9,000 free pixels — enough to hide a recolored strand, whose
+        // entire 300px run is ~300 pixels. 400px covers antialiasing
+        // wiggle and nothing structural.
+        maxDiffPixels: 400,
       });
     });
   }
