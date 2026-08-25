@@ -25,6 +25,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/link-weave-ink-budget.md"
+        },
+        {
+          "summary": "TimelineMap: filtering out the focused dot's lane no longer traps the\nkeyboard — a focus id outside the visible order falls back to the recent\nend, so the composite always keeps exactly one tab stop.",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/roving-focus-filter-trap.md"
         }
       ]
     },

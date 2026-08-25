@@ -1,7 +1,10 @@
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderToStaticMarkup } from 'react-dom/server';
 /**
- * TimelineMap locks (R26) — geometry via the exported pure layout, and
- * SSR honesty via renderToStaticMarkup (the crawler/no-JS view).
+ * TimelineMap locks (R26) — geometry via the exported pure layout, SSR
+ * honesty via renderToStaticMarkup (the crawler/no-JS view), and the
+ * stateful keyboard contract via a mounted interaction test.
  */
 import { describe, expect, it } from 'vitest';
 
@@ -202,5 +205,47 @@ describe('link-weave ink budget', () => {
     );
     expect(sparse).toContain('opacity-25');
     expect(sparse).not.toContain('opacity-[0.04]');
+  });
+});
+
+describe('roving focus under filtering', () => {
+  it('hiding the FOCUSED lane never traps the keyboard (stale focusedId)', async () => {
+    // The real regression path (review round 2 — a static render starts
+    // from focusedId=null and takes the same branch fixed or not): arrow
+    // to a dot so focusedId is a non-null state, THEN hide that dot's
+    // lane. Pre-fix, the stale id left every dot at tabIndex=-1 and the
+    // chart fell out of the tab order.
+    const user = userEvent.setup();
+    const { container, unmount } = render(
+      <TimelineMap
+        items={[
+          { id: 'a1', href: '/a1', label: 'A1', category: 'A', date: '2026-01-01' },
+          { id: 'a2', href: '/a2', label: 'A2', category: 'A', date: '2026-02-01' },
+          { id: 'b1', href: '/b1', label: 'B1', category: 'B', date: '2026-03-01' },
+        ]}
+        data-testid="m"
+      >
+        <TimelineMap.Filter />
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    // Resting tab stop = the newest dot (b1). ArrowLeft moves the roving
+    // focus to a2 — lane A, and focusedId is now non-null state.
+    const b1 = container.querySelector<HTMLElement>('[data-item-id="b1"]')!;
+    b1.focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(document.activeElement?.getAttribute('data-item-id')).toBe('a2');
+    // Hide lane A — the lane holding the focused dot.
+    const chipA = [...container.querySelectorAll('button')].find((b) =>
+      b.textContent?.startsWith('A') && b.getAttribute('aria-pressed') === 'true',
+    )!;
+    await user.click(chipA);
+    // The trap: zero tab stops. The fix: exactly one, on a VISIBLE dot.
+    const stops = [...container.querySelectorAll('[tabindex="0"]')].filter(
+      (el) => el.hasAttribute('data-item-id'),
+    );
+    expect(stops).toHaveLength(1);
+    expect(stops[0].getAttribute('data-item-id')).toBe('b1');
+    unmount();
   });
 });

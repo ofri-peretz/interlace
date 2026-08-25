@@ -392,7 +392,14 @@ export function TimelineMap({
         setPreviewed(item);
         onItemPreview?.(item);
       },
-      focusedId: focusedId ?? visibleOrder.at(-1)?.id ?? null,
+      // Not a bare ??: when the focused item's lane gets filtered OUT, a
+      // stale focusedId would leave every dot at tabIndex=-1 and the chart
+      // unreachable by keyboard (a focus trap, caught in blog review).
+      // Any focus id outside visibleOrder falls back to the recent end.
+      focusedId:
+        focusedId !== null && visibleOrder.some((i) => i.id === focusedId)
+          ? focusedId
+          : (visibleOrder.at(-1)?.id ?? null),
       moveFocus: (from, delta) => {
         if (visibleOrder.length === 0) return;
         const at = visibleOrder.findIndex((i) => i.id === from);
@@ -571,9 +578,13 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
   const focusRef = React.useRef<string | null>(null);
   React.useEffect(() => {
     if (focusedId && focusRef.current !== null && focusRef.current !== focusedId) {
-      const el = scrollerRef.current?.querySelector<HTMLElement>(
-        `[data-item-id="${CSS.escape(focusedId)}"]`,
-      );
+      // Dataset comparison, not selector interpolation: consumer-supplied
+      // ids need no escaping this way, and it drops the dependency on the
+      // CSS.escape global (absent in jsdom — surfaced by the mounted
+      // keyboard test).
+      const el = [
+        ...(scrollerRef.current?.querySelectorAll<HTMLElement>('[data-item-id]') ?? []),
+      ].find((e) => e.dataset.itemId === focusedId);
       el?.focus();
     }
     focusRef.current = focusedId;
