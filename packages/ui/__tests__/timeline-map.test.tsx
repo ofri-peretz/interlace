@@ -204,3 +204,35 @@ describe('link-weave ink budget', () => {
     expect(sparse).not.toContain('opacity-[0.04]');
   });
 });
+
+describe('roving focus under filtering', () => {
+  it('a filter never leaves the chart without a tab stop', () => {
+    // Controlled filter shows only lane B; the resting tab stop must be
+    // a VISIBLE dot (the recent end of lane B), keeping exactly one
+    // tabindex=0 in the composite. A stale/foreign focus id must never
+    // zero out the tab order (the keyboard trap caught in blog review).
+    const html = renderToStaticMarkup(
+      <TimelineMap
+        items={[
+          { id: 'a1', href: '/a1', label: 'A1', category: 'A', date: '2026-01-01' },
+          { id: 'b1', href: '/b1', label: 'B1', category: 'B', date: '2026-02-01' },
+          { id: 'a2', href: '/a2', label: 'A2', category: 'A', date: '2026-03-01' },
+        ]}
+        data-testid="m"
+        filter={['B']}
+      >
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(html.match(/tabindex="0"/gi)?.length ?? 0).toBe(1);
+    // Guard the mechanism at the source level too: the fallback must
+    // check membership, not just null (a bare ?? reintroduces the trap).
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const src = fs.readFileSync(
+      path.resolve(__dirname, '../src/patterns/timeline-map.tsx'),
+      'utf-8',
+    );
+    expect(src).toMatch(/visibleOrder\.some\(\(i\) => i\.id === focusedId\)/);
+  });
+});
