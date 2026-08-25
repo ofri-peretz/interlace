@@ -939,6 +939,16 @@
     "previewDark": null,
     "skeleton": null
   },
+  "hero-strand": {
+    "title": "Effects/HeroStrand",
+    "storyIds": [
+      "effects-herostrand--default",
+      "effects-herostrand--woven-crossing"
+    ],
+    "preview": "effects-herostrand--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "hover-card": {
     "title": "Primitives/HoverCard",
     "storyIds": [

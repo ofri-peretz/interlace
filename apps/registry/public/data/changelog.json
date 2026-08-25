@@ -5,6 +5,15 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "HeroStrand — the thread at page scale\n\nOne strand-a ribbon drawn across a hero section, optionally crossed by\nthe strand-b counter — the fourth and final scale of \"One thread,\nevery scale\". A server component with zero client JS: the draw is the\nnew `strand-draw` motion token (tokens.css, 600ms — the doctrine's\nceiling), so the preflight reduced-motion clamp reaches it and\nreduced-motion users see the strand instantly drawn. Paths normalize\nwith `pathLength=100`; `vector-effect` is deliberately absent (the\nChromium screen-space-dash lesson from the first production weave).\nShips under `effects/` (not a registry item yet, like the rest of the\nsignature kit).",
+          "components": [],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/hero-strand.md"
+        },
+        {
           "summary": "ReadingStrand — reading progress as the brand's draw verb\n\nA single strand-a line pinned to the viewport top that draws itself as\nthe reader moves through the piece. Progress is state coupled to the\nreader's own scroll (nothing animates on its own — no reduced-motion\nvariant to gate). Real `role=\"progressbar\"` 0–100; measures at most\nonce per frame via a passive listener; the fill moves with\ncompositor-only `transform: scaleX`. `target` names the article element\nby id so server pages need no client seam; falls back to the whole\ndocument. SSR renders scaleX(0) — zero CLS.",
           "components": [
             "reading-strand"

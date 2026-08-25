@@ -89,6 +89,17 @@ The hard bans. Not "discouraged" — forbidden, enforced in review.
   the hero blocks comprehension for the duration. First paint
   belongs to content, not theatre. Max 200ms on entry, or no
   entry animation at all.
+  - _Exception — the brand draw gesture._ A `stroke-dashoffset` draw
+    on `aria-hidden` decoration (BRAND_PHILOSOPHY's draw verb —
+    HeroStrand's ribbon) occludes nothing: content is fully painted
+    at frame 0 and the ceiling's rationale does not reach it.
+    Max 600ms on a draw gesture, and the exception is exactly as wide
+    as the evidence — a keyframe qualifies only if it animates
+    `stroke-dashoffset` and nothing else. Anything touching opacity
+    or transform is an entry animation and keeps the 200ms ceiling.
+    Under `prefers-reduced-motion` a draw completes instantly (the
+    drawn end state) rather than vanishing — removing the motion must
+    never remove the ink.
 - **JS-driven scroll-position animations.** `scrollTo({ behavior:
   'smooth' })` is fine for anchor jumps; per-frame scroll-position
   manipulation is not.
