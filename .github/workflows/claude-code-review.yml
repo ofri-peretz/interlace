@@ -30,7 +30,11 @@ permissions:
 jobs:
   review:
     # Skip draft PRs -- review once a PR is opened or marked ready for review.
-    if: github.event.pull_request.draft == false
+    # Skip bot-authored PRs (changesets' Version Packages, dependabot): the
+    # action hard-fails on non-human actors unless they're allowlisted, which
+    # painted a permanent red X on every release PR -- and reviewing
+    # auto-generated version bumps spends credit on nothing.
+    if: github.event.pull_request.draft == false && github.event.pull_request.user.type != 'Bot'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
