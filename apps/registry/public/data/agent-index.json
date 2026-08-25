@@ -44,7 +44,7 @@
       "blog": 22,
       "decorative": 21,
       "foundation": 20,
-      "data": 19,
+      "data": 20,
       "effect": 17,
       "form": 16,
       "template": 13,
@@ -56,8 +56,7 @@
       "util": 5,
       "a11y": 4,
       "starter": 3,
-      "theme": 1,
-      "other": 1
+      "theme": 1
     },
     "rendering": {
       "server": 79,
@@ -7425,7 +7424,7 @@
         "THEMES",
         "THEME_TOKENS"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -7579,7 +7578,7 @@
       "summary": "TimelineMap — dated entities as linked dots on a shared time axis, one labeled strip per category lane.",
       "topics": [],
       "categories": [
-        "other",
+        "data",
         "pattern"
       ],
       "tier": "pattern",
@@ -7617,7 +7616,7 @@
       "exports": [
         "TimelineMap"
       ],
-      "version": null,
+      "version": "1.1.1",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [

@@ -125,7 +125,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": "1.0.0"
       }
     },
@@ -2151,7 +2151,7 @@
       "title": "Timeline Map",
       "description": "TimelineMap — dated entities as linked dots on a shared time axis, one labeled strip per category lane.",
       "categories": [
-        "other",
+        "data",
         "pattern"
       ],
       "meta": {
@@ -2159,7 +2159,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": null,
+        "version": "1.1.1",
         "since": null
       }
     },

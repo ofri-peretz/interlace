@@ -66,7 +66,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `blog` (Blog & long-form) — 22 item(s)
 - category `decorative` (Decorative) — 21 item(s)
 - category `foundation` (Foundation) — 20 item(s)
-- category `data` (Data display) — 19 item(s)
+- category `data` (Data display) — 20 item(s)
 - category `effect` (Effects) — 17 item(s)
 - category `form` (Form & input) — 16 item(s)
 - category `template` (Templates) — 13 item(s)
@@ -79,7 +79,6 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `a11y` (A11y) — 4 item(s)
 - category `starter` (Starters) — 3 item(s)
 - category `theme` (Theme) — 1 item(s)
-- category `other` (Other) — 1 item(s)
 
 ## Items — tier `theme`
 
@@ -373,7 +372,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, loading state, v1.1.0
 - [Timeline Map](https://ds.interlace.tools/c/timeline-map): TimelineMap — dated entities as linked dots on a shared time axis, one labeled strip per category lane.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/timeline-map.json`
-  - contract: client, keys ArrowLeft/ArrowRight/End/Home
+  - contract: client, keys ArrowLeft/ArrowRight/End/Home, v1.1.1
 - [Topbar](https://ds.interlace.tools/c/topbar): Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar.json`
   - contract: server, min 320px, v1.0.0
@@ -520,7 +519,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v1.0.1
 - [Theme token manifest](https://ds.interlace.tools/c/theme-tokens): @interlace/ui — the registry of themes and the list of every `--interlace-*` token a theme must define. A missing token does not throw; it silently inherits the previous theme's value.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-tokens.json`
-  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius-sm|radius-md|radius-lg|brand-mark-bar-o|brand-mark-bar-g, v1.0.0
+  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius-sm|radius-md|radius-lg|brand-mark-bar-o|brand-mark-bar-g, v1.1.0
 - [useReducedMotion hook](https://ds.interlace.tools/c/use-reduced-motion): @interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/use-reduced-motion.json`
   - contract: client, v1.1.0

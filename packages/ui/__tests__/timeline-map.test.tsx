@@ -39,10 +39,12 @@ describe('computeTimelineLayout', () => {
   it('link weave: edge endpoints sit exactly on their dots, lane-offset applied', () => {
     const linked: TimelineMapItem[] = [
       { id: 'p', href: '/p', label: 'P', category: 'A', date: '2026-01-01', links: ['q', 'p', 'ghost'] },
-      { id: 'q', href: '/q', label: 'Q', category: 'B', date: '2026-03-01' },
+      // q links BACK to p: a mutual citation must still be ONE thread —
+      // two overlapping paths double the visual weight (review round 3).
+      { id: 'q', href: '/q', label: 'Q', category: 'B', date: '2026-03-01', links: ['p'] },
     ];
     const { lanes, edges } = computeTimelineLayout(linked, 'Other');
-    // self-link and unknown target dropped; the real edge survives
+    // self-link, unknown target, and the reverse duplicate all dropped
     expect(edges).toHaveLength(1);
     const [e] = edges;
     const flat = lanes.flatMap((l, li) =>

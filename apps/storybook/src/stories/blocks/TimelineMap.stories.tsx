@@ -154,7 +154,8 @@ export const FilteredLanes: Story = {
   render: renderCompound,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByRole('button', { name: 'Security' })).toHaveAttribute('aria-pressed', 'true');
-    expect(canvas.getByRole('button', { name: 'Performance' })).toHaveAttribute('aria-pressed', 'false');
+    // Chip accessible names include the count ("Security 4"), so match by prefix.
+    expect(canvas.getByRole('button', { name: /^Security/ })).toHaveAttribute('aria-pressed', 'true');
+    expect(canvas.getByRole('button', { name: /^Performance/ })).toHaveAttribute('aria-pressed', 'false');
   },
 };

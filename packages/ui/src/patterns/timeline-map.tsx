@@ -178,12 +178,18 @@ function computeEdges(lanes: Layout['lanes']): Edge[] {
       pos.set(d.item.id, { x: d.cx, y: li * LANE_H + d.cy });
   });
   const edges: Edge[] = [];
+  // Mutual citations (a→b AND b→a) must render as ONE thread — two paths
+  // on the same geometry double the visual weight (caught in review).
+  const seen = new Set<string>();
   for (const lane of lanes) {
     for (const d of lane.dots) {
       for (const target of d.item.links ?? []) {
         const from = pos.get(d.item.id);
         const to = pos.get(target);
         if (!from || !to || target === d.item.id) continue;
+        const pairKey = [d.item.id, target].sort().join('→');
+        if (seen.has(pairKey)) continue;
+        seen.add(pairKey);
         edges.push({ from: d.item.id, to: target, x1: from.x, y1: from.y, x2: to.x, y2: to.y });
       }
     }
