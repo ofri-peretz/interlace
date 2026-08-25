@@ -21,13 +21,31 @@ describe('the terminal numeral', () => {
     expect(html).toContain('text-primary');
   });
 
-  it('a three-digit sequence keeps its width honestly', () => {
+  it('a three-digit sequence keeps its width honestly, spoken included', () => {
     const wide = renderToStaticMarkup(
       <SectionIndex value={100} data-testid="si">
         X
       </SectionIndex>,
     );
     expect(wide).toContain('>100<');
+    expect(wide).toContain('Section 100:');
+  });
+
+  it('never announces "Section 0" or a fraction — value coerces (review)', () => {
+    const zero = renderToStaticMarkup(
+      <SectionIndex value={0} data-testid="si">
+        X
+      </SectionIndex>,
+    );
+    expect(zero).toContain('>01<');
+    expect(zero).toContain('Section 1:');
+    const frac = renderToStaticMarkup(
+      <SectionIndex value={1.5} data-testid="si">
+        X
+      </SectionIndex>,
+    );
+    expect(frac).toContain('>02<');
+    expect(frac).toContain('Section 2:');
   });
 
   it('never a raw color', () => {

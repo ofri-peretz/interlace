@@ -41,7 +41,12 @@ export interface SectionIndexProps
   extends Omit<React.ComponentPropsWithoutRef<'p'>, 'children'> {
   /** Stable selector for E2E tests; consumer provides — no default (R5). */
   'data-testid': string;
-  /** 1-based position in the page's sequence; rendered zero-padded. */
+  /**
+   * 1-based position in the page's sequence; rendered zero-padded.
+   * Coerced to a positive integer (rounded, floored at 1): the spoken
+   * "Section N" must never announce "Section 0" or "Section 1.5"
+   * (review) — the a11y contract is the headline feature.
+   */
   value: number;
   /** The eyebrow label — a string, or `<DecodeText>` for the gesture. */
   children: React.ReactNode;
@@ -54,6 +59,7 @@ export function SectionIndex({
   className,
   ...rest
 }: SectionIndexProps) {
+  const n = Math.max(1, Math.round(value));
   return (
     <p
       data-slot="section-index"
@@ -69,9 +75,9 @@ export function SectionIndex({
         aria-hidden="true"
         className="font-mono text-primary [font-variant-numeric:tabular-nums]"
       >
-        {String(value).padStart(2, '0')}
+        {String(n).padStart(2, '0')}
       </span>
-      <span className="sr-only">Section {value}:</span>
+      <span className="sr-only">Section {n}:</span>
       {children}
     </p>
   );
