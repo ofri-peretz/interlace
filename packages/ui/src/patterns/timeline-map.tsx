@@ -707,11 +707,16 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
                     // Engage grammar: rest = faint web; a selection lights
                     // its own threads and collapses the rest. Instant state
                     // changes — the doctrine's motion verbs stay two.
+                    // Rest ink is BUDGETED: a heavily cross-cited corpus
+                    // (the blog rendered 735 threads) at 0.25 each is a
+                    // hairball that buries the dots. Opacity steps down
+                    // with density so the web reads as texture, never as
+                    // noise; the lit thread keeps full strength always.
                     selected === null
-                      ? 'stroke-1 opacity-25'
+                      ? cn('stroke-1', restInk(shownEdges.length))
                       : lit
                         ? 'stroke-[1.5] opacity-90'
-                        : 'stroke-1 opacity-[0.06]',
+                        : cn('stroke-1', dimInk(shownEdges.length)),
                   )}
                 />
               );
@@ -721,6 +726,23 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
       </div>
     </div>
   );
+}
+
+/**
+ * Rest-state ink budget for the link weave. Total rest ink ≈ edges ×
+ * opacity; holding that roughly constant keeps a sparse corpus legible
+ * (each thread readable) and a dense one calm (the web as texture).
+ * Discrete steps because Tailwind classes are discrete.
+ */
+function restInk(edgeCount: number): string {
+  if (edgeCount > 160) return 'opacity-[0.04]';
+  if (edgeCount > 48) return 'opacity-10';
+  return 'opacity-25';
+}
+
+/** Receded threads behind an illuminated selection — near-silent when dense. */
+function dimInk(edgeCount: number): string {
+  return edgeCount > 160 ? 'opacity-[0.02]' : 'opacity-[0.06]';
 }
 
 /**
