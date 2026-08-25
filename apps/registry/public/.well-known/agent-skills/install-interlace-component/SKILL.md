@@ -38,7 +38,7 @@ the consumer's. Each carries a generated banner with its version and a link to
 `https://ds.interlace.tools/c/<name>#history` — leave the banner in place, it is the only
 thing an upgrade diff can read.
 
-132 item(s) declare more than one registry dependency; the CLI
+133 item(s) declare more than one registry dependency; the CLI
 walks that graph transitively, so installing one pattern can write several files.
 
 ## Starter bundles

@@ -5,6 +5,17 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "ReadingStrand — reading progress as the brand's draw verb\n\nA single strand-a line pinned to the viewport top that draws itself as\nthe reader moves through the piece. Progress is state coupled to the\nreader's own scroll (nothing animates on its own — no reduced-motion\nvariant to gate). Real `role=\"progressbar\"` 0–100; measures at most\nonce per frame via a passive listener; the fill moves with\ncompositor-only `transform: scaleX`. `target` names the article element\nby id so server pages need no client seam; falls back to the whole\ndocument. SSR renders scaleX(0) — zero CLS.",
+          "components": [
+            "reading-strand"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/reading-strand.md"
+        },
+        {
           "summary": "TimelineMap: number-axis mode — the lanes × axis landscape over any continuous measure\n\nNew `axis` prop (`{ kind: \"number\", format }`) positions dots by\n`item.value` instead of `item.date` — reading minutes, bundle KB, any\nquantity a corpus is actually navigated by. Nice-step ticks (1/2/5×10ⁿ)\nrender through the consumer's `format`; aria-labels and the Detail\nstrip speak the formatted value through one shared voice, so the two\ncan never disagree. The date axis, the weave, and every interaction are\nunchanged; `date` is now optional at the type level (number-axis items\ndon't need one).",
           "components": [
             "timeline-map"

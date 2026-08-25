@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 141
+    "itemCount": 142
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 64,
+      "primitive": 65,
       "pattern": 31,
       "effect": 17,
       "template": 13,
@@ -39,7 +39,7 @@
       "theme": 1
     },
     "category": {
-      "primitive": 64,
+      "primitive": 65,
       "pattern": 31,
       "blog": 22,
       "decorative": 21,
@@ -48,7 +48,7 @@
       "effect": 17,
       "form": 16,
       "template": 13,
-      "feedback": 11,
+      "feedback": 12,
       "navigation": 9,
       "overlay": 9,
       "marketing": 9,
@@ -60,21 +60,21 @@
     },
     "rendering": {
       "server": 79,
-      "client": 62
+      "client": 63
     },
     "keyboard": {
-      "none": 106,
+      "none": 107,
       "handled": 35
     },
     "loading": {
-      "none": 110,
+      "none": 111,
       "built-in": 31
     },
     "minViewport": {
       "320": 82,
       "480": 7,
       "768": 1,
-      "inherited": 51
+      "inherited": 52
     }
   },
   "items": [
@@ -5119,6 +5119,61 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json",
       "item": "https://ds.interlace.tools/r/radio-group.json",
       "docs": "https://ds.interlace.tools/c/radio-group"
+    },
+    {
+      "name": "reading-strand",
+      "title": "Reading Strand",
+      "type": "registry:ui",
+      "summary": "ReadingStrand — reading progress as the brand's draw verb: a single strand-a line at the top of the viewport that draws itself as the reader moves through the piece. BRAND_PHILOSOPHY: one strand, drawn — never faded.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "progressbar"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-valuemax",
+          "aria-valuemin",
+          "aria-valuenow"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "ReadingStrand"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/reading-strand.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reading-strand.json",
+      "item": "https://ds.interlace.tools/r/reading-strand.json",
+      "docs": "https://ds.interlace.tools/c/reading-strand"
     },
     {
       "name": "reading-time",

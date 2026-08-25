@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "reading-strand",
+  "type": "registry:ui",
+  "title": "Reading Strand",
+  "description": "ReadingStrand — reading progress as the brand's draw verb: a single strand-a line at the top of the viewport that draws itself as the reader moves through the piece. BRAND_PHILOSOPHY: one strand, drawn — never faded.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "feedback",
+    "primitive"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/theme.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/reading-strand.tsx",
+      "target": "components/ui/reading-strand.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/reading-strand v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/reading-strand\n// What changed since: https://ds.interlace.tools/c/reading-strand#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\nimport { cn } from '@/lib/utils';\n\n/**\n * ReadingStrand — reading progress as the brand's draw verb: a single\n * strand-a line at the top of the viewport that draws itself as the\n * reader moves through the piece. BRAND_PHILOSOPHY: one strand, drawn —\n * never faded.\n *\n * ### prefers-reduced-motion — considered, deliberately not gated\n *\n * Progress here is STATE coupled 1:1 to the reader's own scroll\n * position — the reader is the timeline. Nothing moves unless the\n * reader moves the page, exactly like the scrollbar thumb the browser\n * itself shows under `prefers-reduced-motion: reduce`. There are no\n * transitions or easing to clamp (the fill snaps to the measured\n * fraction each frame), so hiding the strand under `reduce` would\n * remove information without removing any self-driven motion. If a\n * transition is ever added to the fill, it must go through CSS so the\n * preflight reduce clamp reaches it.\n *\n * ## RFC (R3)\n *\n * ### Anatomy\n *\n * One fixed track (transparent by default — the page shows through)\n * holding one strand that scales horizontally from the left edge.\n * `transform: scaleX(p)` keeps updates compositor-only: no layout, no\n * paint storms on scroll (R25). SSR renders `scaleX(0)` — zero CLS.\n *\n * ### API parity (R17)\n *\n * No MUI/shadcn equivalent exists; the closest ecosystem shape is a\n * scroll-linked progress bar. Deviations from those: the element is a\n * real `progressbar` (they are usually decorative divs), and the read\n * span is declared by ELEMENT ID rather than a ref so server pages can\n * render it without a client seam just to thread a ref (the blog's RSC\n * boundary lesson, blog#176).\n *\n * ### A11y (R26)\n *\n * `role=\"progressbar\"` + \"Reading progress\" name, `aria-valuenow`\n * 0–100. Value changes never announce unless queried — no live-region\n * spam. The strand is informative but never the ONLY carrier: pages\n * still state reading time in text (COLOR_PHILOSOPHY / size-is-not-\n * the-only-carrier, same contract as TimelineMap weights).\n */\n\nexport interface ReadingStrandProps\n  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {\n  /** Stable selector for E2E tests; consumer provides — no default (R5). */\n  'data-testid': string;\n  /**\n   * id of the element whose vertical span maps to 0→1 (the article\n   * body, not the page chrome). Falls back to the whole document when\n   * omitted or not found.\n   */\n  target?: string;\n  /**\n   * Accessible name of the progressbar.\n   * @default \"Reading progress\"\n   */\n  label?: string;\n}\n\n/**\n * Pure progress math, exported for tests: `top`/`height` from the read\n * span's getBoundingClientRect, `viewport` = window.innerHeight. A span\n * no taller than the viewport is fully on screen — progress 1.\n */\nexport function readingProgress(\n  top: number,\n  height: number,\n  viewport: number,\n): number {\n  const total = height - viewport;\n  if (total <= 0) return 1;\n  return Math.min(1, Math.max(0, -top / total));\n}\n\nexport function ReadingStrand({\n  'data-testid': testId,\n  target,\n  label = 'Reading progress',\n  className,\n  ...rest\n}: ReadingStrandProps) {\n  const [progress, setProgress] = React.useState(0);\n\n  React.useEffect(() => {\n    let frame = 0;\n    const measure = (): void => {\n      frame = 0;\n      const el =\n        (target ? document.getElementById(target) : null) ??\n        document.documentElement;\n      const rect = el.getBoundingClientRect();\n      setProgress(readingProgress(rect.top, rect.height, window.innerHeight));\n    };\n    // rAF-throttled: scroll fires per frame or faster; one measure per\n    // frame is the ceiling. Passive — never blocks the scroll thread.\n    const schedule = (): void => {\n      if (frame === 0) frame = requestAnimationFrame(measure);\n    };\n    measure();\n    window.addEventListener('scroll', schedule, { passive: true });\n    window.addEventListener('resize', schedule, { passive: true });\n    return () => {\n      if (frame !== 0) cancelAnimationFrame(frame);\n      window.removeEventListener('scroll', schedule);\n      window.removeEventListener('resize', schedule);\n    };\n  }, [target]);\n\n  return (\n    <div\n      data-slot=\"reading-strand\"\n      data-testid={testId}\n      role=\"progressbar\"\n      aria-label={label}\n      aria-valuemin={0}\n      aria-valuemax={100}\n      aria-valuenow={Math.round(progress * 100)}\n      className={cn(\n        'pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5',\n        className,\n      )}\n      {...rest}\n    >\n      <div\n        data-slot=\"reading-strand-fill\"\n        className=\"h-full w-full origin-left bg-strand-a\"\n        // The one genuinely dynamic value (R18): compositor-only scale,\n        // no layout work per scroll frame.\n        style={{ transform: `scaleX(${progress})` }}\n      />\n    </div>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/reading-strand\n\nInstalled to `components/ui/reading-strand.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/reading-strand';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/reading-strand\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
+}

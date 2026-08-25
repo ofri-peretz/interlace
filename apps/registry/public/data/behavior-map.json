@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T10:16:11.946Z",
+  "generatedAt": "2026-08-25T15:04:25.135Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -7699,6 +7699,19 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "reading-strand": {
+      "sourcePath": "packages/ui/src/primitives/reading-strand.tsx",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null

@@ -192,6 +192,10 @@
       "types": "./dist/primitives/progress.d.ts",
       "default": "./dist/primitives/progress.js"
     },
+    "./reading-strand": {
+      "types": "./dist/primitives/reading-strand.d.ts",
+      "default": "./dist/primitives/reading-strand.js"
+    },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
       "default": "./dist/primitives/label.js"

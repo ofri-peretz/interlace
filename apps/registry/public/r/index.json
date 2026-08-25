@@ -886,6 +886,24 @@
       }
     },
     {
+      "name": "reading-strand",
+      "type": "registry:ui",
+      "title": "Reading Strand",
+      "description": "ReadingStrand — reading progress as the brand's draw verb: a single strand-a line at the top of the viewport that draws itself as the reader moves through the piece. BRAND_PHILOSOPHY: one strand, drawn — never faded.",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "reading-time",
       "type": "registry:ui",
       "title": "Reading Time",
