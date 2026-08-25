@@ -185,6 +185,36 @@ function parseHex(hex: string): RGB | null {
   ];
 }
 
+/**
+ * oklch() → sRGB, standard OKLab matrices (Björn Ottosson). The strand
+ * tokens are authored in oklch — without this, their contrast floor
+ * could only be claimed in comments, never measured.
+ */
+function parseOklch(value: string): RGB | null {
+  const m = /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*\)$/i.exec(value.trim());
+  if (!m) return null;
+  const [L, C, H] = [parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3])];
+  const hr = (H * Math.PI) / 180;
+  const a = C * Math.cos(hr);
+  const b = C * Math.sin(hr);
+  const l3 = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const m3 = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const s3 = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+  const lin: [number, number, number] = [
+    4.0767416621 * l3 - 3.3077115913 * m3 + 0.2309699292 * s3,
+    -1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3,
+    -0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3,
+  ];
+  return lin.map((c) => {
+    const v = c <= 0.0031308 ? 12.92 * c : 1.055 * Math.max(c, 0) ** (1 / 2.4) - 0.055;
+    return Math.round(Math.min(1, Math.max(0, v)) * 255);
+  }) as RGB;
+}
+
+function parseColor(value: string): RGB | null {
+  return parseHex(value) ?? parseOklch(value);
+}
+
 function luminance([r, g, b]: RGB): number {
   const [rs, gs, bs] = [r, g, b].map((v) => {
     const s = v / 255;
@@ -254,11 +284,18 @@ const NON_TEXT_PAIRS: Pair[] = [
   { fg: 'input', bg: 'card', floor: AA_NON_TEXT, why: 'control border inside a card' },
   { fg: 'viz-axis', bg: 'background', floor: AA_NON_TEXT, why: 'chart axis (SC 1.4.11)' },
   { fg: 'viz-axis', bg: 'card', floor: AA_NON_TEXT, why: 'chart axis inside a card' },
+  // The woven brand gesture (BRAND_PHILOSOPHY.md): strand strokes are
+  // meaningful UI graphics — a hover/focus affordance — so they carry the
+  // SC 1.4.11 floor on every surface they may be drawn over.
+  { fg: 'strand-a', bg: 'background', floor: AA_NON_TEXT, why: 'woven strand (SC 1.4.11)' },
+  { fg: 'strand-a', bg: 'card', floor: AA_NON_TEXT, why: 'woven strand inside a card' },
+  { fg: 'strand-b', bg: 'background', floor: AA_NON_TEXT, why: 'woven counter-strand (SC 1.4.11)' },
+  { fg: 'strand-b', bg: 'card', floor: AA_NON_TEXT, why: 'woven counter-strand inside a card' },
 ];
 
 function measure(palette: Palette, pair: Pair): number | null {
-  const fg = parseHex(resolveValue(pair.fg, palette) ?? '');
-  const bg = parseHex(resolveValue(pair.bg, palette) ?? '');
+  const fg = parseColor(resolveValue(pair.fg, palette) ?? '');
+  const bg = parseColor(resolveValue(pair.bg, palette) ?? '');
   if (!fg || !bg) return null;
   return contrast(fg, bg);
 }

@@ -192,6 +192,12 @@
      * Interlace ladder uses (L 0.55 light), rotated into the cool half of
      * the wheel with one warm outlier so a five-series chart still reads
      * in greyscale by ordering. */
+    /* Strands — harbor inverts the interlace temperatures: strand-a is
+     * the harbour blue itself, strand-b the warm counter (hue 41 — not
+     * amber ~70, which is the warning status hue). */
+    --interlace-strand-a: oklch(0.55 0.15 250);
+    --interlace-strand-b: oklch(0.55 0.14 41);
+
     --interlace-chart-1: oklch(0.55 0.15 250);  /* harbour blue */
     --interlace-chart-2: oklch(0.55 0.12 200);  /* cyan */
     --interlace-chart-3: oklch(0.55 0.14 155);  /* sea green */
@@ -339,6 +345,10 @@
 
     /* Chart palette — same five hues, lifted to L 0.78 so each series stays
      * clear of the dark card, matching the Interlace dark ladder. */
+    /* Strands — lighter tints of the same inverted pair */
+    --interlace-strand-a: oklch(0.78 0.13 250);
+    --interlace-strand-b: oklch(0.78 0.12 41);
+
     --interlace-chart-1: oklch(0.78 0.13 250);  /* harbour blue */
     --interlace-chart-2: oklch(0.78 0.11 200);  /* cyan */
     --interlace-chart-3: oklch(0.78 0.12 155);  /* sea green */
