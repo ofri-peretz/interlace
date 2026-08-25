@@ -1528,6 +1528,17 @@
     "previewDark": null,
     "skeleton": null
   },
+  "section-index": {
+    "title": "Primitives/SectionIndex",
+    "storyIds": [
+      "primitives-sectionindex--default",
+      "primitives-sectionindex--in-as-ection-header",
+      "primitives-sectionindex--with-decode-gesture"
+    ],
+    "preview": "primitives-sectionindex--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "select": {
     "title": "Primitives/Select",
     "storyIds": [

@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 142 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 143 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,16 +43,16 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 79 server, 63 client
-- keyboard: 107 none, 35 handled
-- built-in loading state: 31 of 142
-- declared minViewport: 82 at 320, 7 at 480, 1 at 768, 52 at inherited
+- rendering: 80 server, 63 client
+- keyboard: 108 none, 35 handled
+- built-in loading state: 31 of 143
+- declared minViewport: 82 at 320, 7 at 480, 1 at 768, 53 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 65 item(s)
+- tier `primitive` — 66 item(s)
 - tier `pattern` — 31 item(s)
 - tier `effect` — 17 item(s)
 - tier `template` — 13 item(s)
@@ -61,7 +61,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `starter` — 3 item(s)
 - tier `theme` — 1 item(s)
 
-- category `primitive` (Primitives) — 65 item(s)
+- category `primitive` (Primitives) — 66 item(s)
 - category `pattern` (Patterns) — 31 item(s)
 - category `blog` (Blog & long-form) — 22 item(s)
 - category `decorative` (Decorative) — 21 item(s)
@@ -71,7 +71,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `form` (Form & input) — 16 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `feedback` (Feedback) — 12 item(s)
-- category `navigation` (Navigation) — 9 item(s)
+- category `navigation` (Navigation) — 10 item(s)
 - category `overlay` (Overlay) — 9 item(s)
 - category `marketing` (Marketing) — 9 item(s)
 - category `chart` (Charts) — 7 item(s)
@@ -223,6 +223,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Section Boundary](https://ds.interlace.tools/c/section-boundary): The "stream per section" primitive. Fuses React Suspense + a class-based ErrorBoundary into one component so a template can render section-by-section with per-section skeleton + per-section error fallback. The page paints whatever's ready; slow / failed…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/section-boundary.json`
   - contract: client, min 320px, v1.0.0
+- [Section Index](https://ds.interlace.tools/c/section-index): SectionIndex — the numbered eyebrow: a zero-padded mono numeral in strand-a beside an uppercase tracked label. The page's sections become a legible sequence ("01 THE AGENDA … 04 THE PROOF"), telling readers there is an order and where they stand in it.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/section-index.json`
+  - contract: server, v1.0.0
 - [Select](https://ds.interlace.tools/c/select): Single-select listbox with a portalled popup. Built on @base-ui/react/select: Base UI owns `role="combobox"` / `role="listbox"`, typeahead, arrow + Home/End navigation, focus return on close, and the controlled/uncontrolled pair (`value` + `onValueChange`…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/select.json`
   - contract: client, min 320px, keyboard via Base UI select, v1.1.0

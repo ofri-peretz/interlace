@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "section-index",
+  "type": "registry:ui",
+  "title": "Section Index",
+  "description": "SectionIndex — the numbered eyebrow: a zero-padded mono numeral in strand-a beside an uppercase tracked label. The page's sections become a legible sequence (\"01 THE AGENDA … 04 THE PROOF\"), telling readers there is an order and where they stand in it.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "navigation",
+    "primitive"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/theme.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/section-index.tsx",
+      "target": "components/ui/section-index.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/section-index v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/section-index\n// What changed since: https://ds.interlace.tools/c/section-index#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\nimport { cn } from '@/lib/utils';\n\n/**\n * SectionIndex — the numbered eyebrow: a zero-padded mono numeral in\n * strand-a beside an uppercase tracked label. The page's sections\n * become a legible sequence (\"01 THE AGENDA … 04 THE PROOF\"), telling\n * readers there is an order and where they stand in it.\n *\n * One reference law (BRAND_PHILOSOPHY §4): numbered section indices,\n * refracted through the terminal-decode voice — the numeral is\n * monospaced with tabular figures, the way a terminal counts, not a\n * display face. The numeral is the view's meaning-point accent\n * (strand-a); the label stays muted. No motion: consumers who want the\n * decode gesture pass `<DecodeText>` as the label — composition, not\n * coupling (R16).\n *\n * ## A11y\n *\n * \"02\" spoken aloud is noise (\"zero two\"). The numeral is aria-hidden\n * and an sr-only \"Section 2:\" carries the semantic, so screen readers\n * hear \"Section 2: The Agenda\" while the visual keeps the padded\n * terminal form.\n *\n * ## Anatomy\n *\n *   <SectionIndex value={2} data-testid=\"…\">The Agenda</SectionIndex>\n *\n *   p                (data-slot=\"section-index\" — the eyebrow line)\n *     ├─ span        (data-slot=\"section-index-numeral\", aria-hidden)\n *     ├─ span        (sr-only \"Section N:\")\n *     └─ children    (the label — string or <DecodeText>)\n *\n * Fits SectionHeader's `eyebrow` slot directly.\n */\n\nexport interface SectionIndexProps\n  extends Omit<React.ComponentPropsWithoutRef<'p'>, 'children'> {\n  /** Stable selector for E2E tests; consumer provides — no default (R5). */\n  'data-testid': string;\n  /** 1-based position in the page's sequence; rendered zero-padded. */\n  value: number;\n  /** The eyebrow label — a string, or `<DecodeText>` for the gesture. */\n  children: React.ReactNode;\n}\n\nexport function SectionIndex({\n  'data-testid': testId,\n  value,\n  children,\n  className,\n  ...rest\n}: SectionIndexProps) {\n  return (\n    <p\n      data-slot=\"section-index\"\n      data-testid={testId}\n      className={cn(\n        'flex items-baseline gap-3 text-sm font-medium uppercase tracking-wider text-muted-foreground',\n        className,\n      )}\n      {...rest}\n    >\n      <span\n        data-slot=\"section-index-numeral\"\n        aria-hidden=\"true\"\n        className=\"font-mono text-strand-a [font-variant-numeric:tabular-nums]\"\n      >\n        {String(value).padStart(2, '0')}\n      </span>\n      <span className=\"sr-only\">Section {value}:</span>\n      {children}\n    </p>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": false,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/section-index\n\nInstalled to `components/ui/section-index.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/section-index';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/section-index\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
+}
