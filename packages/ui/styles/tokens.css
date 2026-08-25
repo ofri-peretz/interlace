@@ -32,6 +32,22 @@
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
+  /* Interlace: the draw verb (BRAND_PHILOSOPHY §2) — a strand drawn,
+   * never faded. Paths normalize with pathLength=100 so one keyframe
+   * serves every geometry; 600ms is the doctrine's motion ceiling.
+   * Pure CSS on purpose: it runs with zero client JS and the preflight
+   * reduced-motion clamp reaches it (instantly-drawn end state). */
+  --animate-strand-draw: strand-draw 600ms ease-out forwards;
+
+  @keyframes strand-draw {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
   @keyframes shimmer-slide {
     to {
       transform: translate(calc(100cqw - 100%), 0);
@@ -199,6 +215,15 @@
   .animate-meteor-effect {
     animation: none !important;
     transition: none !important;
+  }
+
+  /* The draw gesture (MOTION_PHILOSOPHY's draw-gesture exception)
+   * completes instantly instead of vanishing: `animation: none` would
+   * hold stroke-dashoffset at 100 — the strand invisible forever —
+   * removing information, not motion. 0.01ms + the shorthand's
+   * `forwards` fill lands the honest drawn end state. */
+  .animate-strand-draw {
+    animation-duration: 0.01ms !important;
   }
 }
 } /* end @layer interlace.primitives */

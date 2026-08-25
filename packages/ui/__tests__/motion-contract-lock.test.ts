@@ -131,7 +131,11 @@ function readReduceBlock(file: string): string {
 /** The class names selected by the tokens.css reduced-motion allowlist. */
 function readAllowlist(): Set<string> {
   const block = readReduceBlock(TOKENS_CSS);
-  const selectors = block.slice(0, block.indexOf('{'));
+  // Selector positions only — strip declaration bodies first so property
+  // text can never read as a class. The block holds MULTIPLE rules now:
+  // `animation: none` for pure decoration, and the draw-gesture rule
+  // (animation-duration clamp) that completes instead of vanishing.
+  const selectors = block.replace(/\{[^{}]*\}/g, ',');
   return new Set(
     [...selectors.matchAll(/\.([a-z][a-z0-9-]*)/g)].map((match) => match[1]),
   );
@@ -226,10 +230,56 @@ function readEntryBudgetMs(): number {
   return Number(match![1]);
 }
 
+/** The draw-gesture ceiling — same doc, same drift contract. */
+function readDrawBudgetMs(): number {
+  const doc = readFileSync(MOTION_DOC, 'utf8');
+  const match = /Max (\d+)ms on a draw gesture/.exec(doc);
+  expect(
+    match,
+    `MOTION_PHILOSOPHY.md no longer states the draw-gesture ceiling as ` +
+      `"Max <n>ms on a draw gesture". Restore the phrasing, or update this ` +
+      `parser in the same change.`,
+  ).not.toBeNull();
+  return Number(match![1]);
+}
+
+/**
+ * Keyframe names qualifying for the draw-gesture exception — exactly as
+ * wide as the doc says: the body animates `stroke-dashoffset` and NOTHING
+ * else. A keyframe that also touches opacity or transform is an entry
+ * animation, whatever it is named.
+ */
+function readDrawKeyframes(): Set<string> {
+  const css = stripCssComments(readFileSync(TOKENS_CSS, 'utf8'));
+  const out = new Set<string>();
+  // Segment by @keyframes header; each segment runs to the next header (or
+  // EOF), which over-captures trailing CSS after the LAST keyframe — safe
+  // here because over-captured declarations can only DISQUALIFY, and the
+  // parser pins below fail loudly if the file's structure stops matching.
+  const segments = css.split(/@keyframes\s+/).slice(1);
+  for (const segment of segments) {
+    const name = /^([a-z0-9-]+)/.exec(segment)?.[1];
+    if (!name) continue;
+    const properties = [...segment.matchAll(/([a-z-]+)\s*:\s*[^;{}]+;/g)].map(
+      (m) => m[1],
+    );
+    if (properties.length > 0 && properties.every((p) => p === 'stroke-dashoffset'))
+      out.add(name);
+  }
+  return out;
+}
+
+/** First ident of an animation shorthand = its keyframe name. */
+function keyframeNameOf(value: string): string {
+  return /^\s*([a-z][a-z0-9-]*)/.exec(value)?.[1] ?? '';
+}
+
 const ALLOWLIST = readAllowlist();
 const EMITTED = readEmittedUtilities();
 const ANIMATIONS = readAnimations();
 const ENTRY_BUDGET_MS = readEntryBudgetMs();
+const DRAW_BUDGET_MS = readDrawBudgetMs();
+const DRAW_KEYFRAMES = readDrawKeyframes();
 
 // ── the lock ────────────────────────────────────────────────────────────
 
@@ -276,6 +326,28 @@ describe('motion contract lock', () => {
     expect(ANIMATIONS.length).toBeGreaterThan(10);
     expect(EMITTED.size).toBeGreaterThan(5);
     expect(ENTRY_BUDGET_MS).toBeGreaterThan(0);
+  });
+
+  it('classifies draw gestures from keyframe evidence, not from a name', () => {
+    // The exception is exactly as wide as the doc: stroke-dashoffset-only.
+    // strand-draw qualifies; every content-moving keyframe must not —
+    // renaming `fade-in-up` to `hero-draw` buys it nothing.
+    expect(DRAW_KEYFRAMES.has('strand-draw')).toBe(true);
+    expect(DRAW_KEYFRAMES.has('shimmer-slide')).toBe(false);
+    expect(DRAW_KEYFRAMES.has('fade-in-up')).toBe(false);
+    expect(DRAW_BUDGET_MS).toBeGreaterThan(ENTRY_BUDGET_MS);
+    // The multi-rule allowlist parser sees selectors in EVERY rule of the
+    // reduce block — the draw rule's class must be reachable.
+    expect(ALLOWLIST.has('animate-strand-draw')).toBe(true);
+  });
+
+  it('would flag an over-budget draw and a draw-named content entry (negative control)', () => {
+    // A 700ms draw exceeds even the draw ceiling…
+    expect(700 > DRAW_BUDGET_MS).toBe(true);
+    // …and a 600ms animation whose keyframe moves content is judged by the
+    // ENTRY ceiling regardless of what it is called.
+    expect(DRAW_KEYFRAMES.has('scale-in')).toBe(false);
+    expect(600 > ENTRY_BUDGET_MS).toBe(true);
   });
 
   // ── 1. the primary guarantee: preflight's wildcard ───────────────────
@@ -394,15 +466,25 @@ describe('motion contract lock', () => {
     });
 
     it('keeps every entry animation inside the ceiling', () => {
+      // Draw gestures (stroke-dashoffset-only keyframes, per the doc's
+      // exception) get the draw ceiling; everything else — anything that
+      // moves content — keeps the entry ceiling.
+      const budgetFor = (a: Animation): number =>
+        DRAW_KEYFRAMES.has(keyframeNameOf(a.value))
+          ? DRAW_BUDGET_MS
+          : ENTRY_BUDGET_MS;
       const over = finite
-        .filter((animation) => (animation.times[0] ?? 0) > ENTRY_BUDGET_MS)
-        .map((a) => `  ${a.name} (${a.where}) — ${a.times[0]}ms: ${a.value}`);
+        .filter((animation) => (animation.times[0] ?? 0) > budgetFor(animation))
+        .map(
+          (a) =>
+            `  ${a.name} (${a.where}) — ${a.times[0]}ms > ${budgetFor(a)}ms: ${a.value}`,
+        );
       expect(
         over,
-        `${over.length} entry animation(s) exceed the ${ENTRY_BUDGET_MS}ms ` +
-          `ceiling MOTION_PHILOSOPHY.md sets. First paint belongs to content, ` +
-          `not theatre: the reader is looking at opacity 0 for the whole ` +
-          `duration.\n\n${over.join('\n')}`,
+        `${over.length} animation(s) exceed their MOTION_PHILOSOPHY.md ` +
+          `ceiling (${ENTRY_BUDGET_MS}ms entry; ${DRAW_BUDGET_MS}ms for ` +
+          `non-occluding draw gestures). First paint belongs to content, not ` +
+          `theatre.\n\n${over.join('\n')}`,
       ).toEqual([]);
     });
 
