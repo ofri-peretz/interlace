@@ -18,6 +18,16 @@ describe('decorative contract', () => {
     expect(html).toContain('pointer-events-none');
   });
 
+  it('a consumer cannot un-hide the decoration through ...rest', () => {
+    // aria-hidden sits AFTER the spread (review): always-decorative,
+    // full stop.
+    const overridden = renderToStaticMarkup(
+      <HeroStrand data-testid="hs" aria-hidden={false} />,
+    );
+    expect(overridden).toMatch(/aria-hidden="true"/);
+    expect(overridden).not.toMatch(/aria-hidden="false"/);
+  });
+
   it('lead strand always; counter only when asked', () => {
     expect(html).toContain('data-slot="hero-strand-lead"');
     expect(html).not.toContain('hero-strand-counter');

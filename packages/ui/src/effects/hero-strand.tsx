@@ -48,11 +48,13 @@ export function HeroStrand({
   className,
   ...rest
 }: HeroStrandProps) {
+  // aria-hidden sits AFTER the rest spread on purpose: the strand is
+  // always-decorative — full stop — so a consumer's aria-hidden={false}
+  // must not win (review). The test contract pins this.
   return (
     <svg
       viewBox="0 0 1200 160"
       preserveAspectRatio="none"
-      aria-hidden="true"
       data-slot="hero-strand"
       data-testid={testId}
       className={cn(
@@ -60,6 +62,7 @@ export function HeroStrand({
         className,
       )}
       {...rest}
+      aria-hidden="true"
     >
       <path
         data-slot="hero-strand-lead"
