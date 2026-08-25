@@ -2146,6 +2146,24 @@
       }
     },
     {
+      "name": "timeline-map",
+      "type": "registry:ui",
+      "title": "Timeline Map",
+      "description": "TimelineMap — dated entities as linked dots on a shared time axis, one labeled strip per category lane.",
+      "categories": [
+        "other",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": null,
+        "since": null
+      }
+    },
+    {
       "name": "topbar",
       "type": "registry:ui",
       "title": "Topbar",

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+
 import { cn } from '../lib/cn.js';
 
 /**
@@ -61,8 +62,28 @@ import { cn } from '../lib/cn.js';
  *
  * Static markup is SSR-honest: every item renders as a real anchor with
  * its accessible name; no floating tooltip (the Detail strip reserves its
- * height). Initial scroll rests at the recent end (state, not motion —
- * reduced-motion safe).
+ * height).
+ *
+ * ### Fit-all width
+ *
+ * The strip stretches to fill the container (ResizeObserver), so the
+ * WHOLE territory — every item — is visible at once whenever space
+ * allows. 560px is the floor: below it the strip keeps its size and
+ * scrolls internally, resting at the recent end (state, not motion —
+ * reduced-motion safe). SSR renders honestly at the floor.
+ *
+ * ### The link weave
+ *
+ * `item.links` declares the corpus's internal reference graph, drawn as
+ * strand-b threads between dots — the map shows not just WHEN and WHERE
+ * things were published but how they weave into each other (the division
+ * has an agenda; the threads make it legible). Interaction grammar from
+ * the engage network graph: at rest the web is faint; touching a dot
+ * (hover or keyboard focus — both set `previewed`) lights ITS threads
+ * and recedes everything unrelated. State changes are instant — the
+ * motion vocabulary stays draw/decode. The overlay is aria-hidden; the
+ * Detail strip speaks the same links ("weaves into …") for screen
+ * readers and crawlers.
  */
 
 export interface TimelineMapItem {
@@ -86,6 +107,12 @@ export interface TimelineMapItem {
    * @default 0
    */
   weight?: number;
+  /**
+   * Ids of items this one references — the corpus's internal link graph,
+   * drawn as strand-b threads between dots (see "The link weave" above).
+   * Unknown and self ids are ignored.
+   */
+  links?: readonly string[];
 }
 
 export interface TimelineMapProps
@@ -113,7 +140,8 @@ export interface TimelineMapProps
   children: React.ReactNode;
 }
 
-const STRIP_W = 560; // rendered 1:1 — viewBox units ARE pixels
+const STRIP_W = 560; // floor width, rendered 1:1 — viewBox units ARE pixels
+const LABEL_W = 160; // the 10rem sticky label column (grid-cols below)
 const LANE_H = 44;
 const DOT_ROWS = [0, -13, 13] as const; // center-first beeswarm fan
 
@@ -124,11 +152,43 @@ interface Dot {
   r: number;
 }
 
+interface Edge {
+  from: string;
+  to: string;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
 interface Layout {
   lanes: { name: string; count: number; dots: Dot[] }[];
   ticks: { x: number; label: string }[];
   /** All visible dots in chronological order — the traversal order. */
   order: TimelineMapItem[];
+  /** Internal link graph in overlay coordinates (y spans the lane stack). */
+  edges: Edge[];
+}
+
+/** Threads between dots, in lane-stack coordinates. Unknown/self targets drop. */
+function computeEdges(lanes: Layout['lanes']): Edge[] {
+  const pos = new Map<string, { x: number; y: number }>();
+  lanes.forEach((lane, li) => {
+    for (const d of lane.dots)
+      pos.set(d.item.id, { x: d.cx, y: li * LANE_H + d.cy });
+  });
+  const edges: Edge[] = [];
+  for (const lane of lanes) {
+    for (const d of lane.dots) {
+      for (const target of d.item.links ?? []) {
+        const from = pos.get(d.item.id);
+        const to = pos.get(target);
+        if (!from || !to || target === d.item.id) continue;
+        edges.push({ from: d.item.id, to: target, x1: from.x, y1: from.y, x2: to.x, y2: to.y });
+      }
+    }
+  }
+  return edges;
 }
 
 /**
@@ -139,18 +199,21 @@ interface Layout {
 export function computeTimelineLayout(
   items: readonly TimelineMapItem[],
   uncategorizedLabel: string,
+  stripWidth: number = STRIP_W,
 ): Layout {
   const dated = items
     .filter((i) => /^\d{4}-\d{2}-\d{2}/.test(i.date))
     .map((i) => ({ item: i, t: Date.parse(`${i.date.slice(0, 10)}T00:00:00Z`) }))
     .filter((e) => Number.isFinite(e.t))
     .sort((a, b) => a.t - b.t || a.item.id.localeCompare(b.item.id));
-  if (dated.length === 0) return { lanes: [], ticks: [], order: [] };
+  if (dated.length === 0) return { lanes: [], ticks: [], order: [], edges: [] };
 
   const min = dated[0].t;
+  // Not .at(-1): its `T | undefined` forces a non-null assertion even
+  // though the empty case returned above. Length-index keeps tsc honest.
   const max = dated[dated.length - 1].t;
   const span = Math.max(max - min, 1);
-  const x = (t: number): number => 14 + ((t - min) / span) * (STRIP_W - 46);
+  const x = (t: number): number => 14 + ((t - min) / span) * (stripWidth - 46);
 
   const laneNames = new Map<string, number>();
   for (const { item } of dated) {
@@ -221,11 +284,20 @@ export function computeTimelineLayout(
     );
   }
 
-  return { lanes: ordered, ticks, order: dated.map((d) => d.item) };
+  return {
+    lanes: ordered,
+    ticks,
+    order: dated.map((d) => d.item),
+    edges: computeEdges(ordered),
+  };
 }
 
 interface TimelineMapContextValue {
   layout: Layout;
+  /** Current strip width in px — 560 floor, stretched to the container. */
+  stripWidth: number;
+  /** Chart reports its measured container width here (fit-all). */
+  setStripWidth: (w: number) => void;
   visible: (item: TimelineMapItem) => boolean;
   categories: { name: string; count: number }[];
   activeFilter: readonly string[];
@@ -265,9 +337,13 @@ export function TimelineMap({
   children,
   ...rest
 }: TimelineMapProps) {
+  // Fit-all: the Chart measures its container and widens the strip so the
+  // WHOLE territory is visible when space allows; 560 is the floor below
+  // which the strip scrolls instead (dots need room to stay legible).
+  const [stripWidth, setStripWidth] = React.useState(STRIP_W);
   const layout = React.useMemo(
-    () => computeTimelineLayout(items, uncategorizedLabel),
-    [items, uncategorizedLabel],
+    () => computeTimelineLayout(items, uncategorizedLabel, stripWidth),
+    [items, uncategorizedLabel, stripWidth],
   );
   const categories = React.useMemo(
     () => layout.lanes.map(({ name, count }) => ({ name, count })),
@@ -293,6 +369,8 @@ export function TimelineMap({
     const visibleOrder = layout.order.filter(visible);
     return {
       layout,
+      stripWidth,
+      setStripWidth,
       visible,
       categories,
       activeFilter,
@@ -308,7 +386,7 @@ export function TimelineMap({
         setPreviewed(item);
         onItemPreview?.(item);
       },
-      focusedId: focusedId ?? visibleOrder[visibleOrder.length - 1]?.id ?? null,
+      focusedId: focusedId ?? visibleOrder.at(-1)?.id ?? null,
       moveFocus: (from, delta) => {
         if (visibleOrder.length === 0) return;
         const at = visibleOrder.findIndex((i) => i.id === from);
@@ -329,6 +407,7 @@ export function TimelineMap({
     };
   }, [
     layout,
+    stripWidth,
     categories,
     activeFilter,
     uncategorizedLabel,
@@ -404,8 +483,11 @@ export interface TimelineMapChartProps
 function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
   const {
     layout,
+    stripWidth,
+    setStripWidth,
     visible,
     preview,
+    previewed,
     focusedId,
     moveFocus,
     onItemClick,
@@ -414,8 +496,50 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
   } = useTimelineMap('Chart');
   const scrollerRef = React.useRef<HTMLDivElement | null>(null);
 
-  // Rest at the recent end: the left edge of a timeline is its sparsest
-  // region. Initial state, not motion — reduced-motion safe.
+  // The link weave (engage-grammar): the last-touched dot's threads stay
+  // lit; everything unrelated recedes. Selection = `previewed` (hover and
+  // keyboard focus both set it), and it only takes hold when that item
+  // actually participates in a visible thread — a hover over a threadless
+  // dot must not dim the map.
+  const byId = React.useMemo(
+    () => new Map(layout.order.map((i) => [i.id, i])),
+    [layout],
+  );
+  const shownEdges = layout.edges.filter((e) => {
+    const a = byId.get(e.from);
+    const b = byId.get(e.to);
+    return a !== undefined && b !== undefined && visible(a) && visible(b);
+  });
+  const selected =
+    previewed && shownEdges.some((e) => e.from === previewed.id || e.to === previewed.id)
+      ? previewed.id
+      : null;
+  const related = new Set<string>();
+  if (selected) {
+    for (const e of shownEdges) {
+      if (e.from === selected) related.add(e.to);
+      if (e.to === selected) related.add(e.from);
+    }
+  }
+
+  // Fit-all: stretch the strip to the container so the ENTIRE territory
+  // is visible when space allows. Below the 560px floor the strip keeps
+  // its size and scrolls instead. (Guarded: jsdom has no ResizeObserver,
+  // and static SSR markup renders honestly at the floor.)
+  React.useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const measure = () =>
+      setStripWidth(Math.max(STRIP_W, Math.floor(el.clientWidth) - LABEL_W));
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [setStripWidth]);
+
+  // Rest at the recent end when the strip does overflow: the left edge
+  // of a timeline is its sparsest region. Initial state, not motion —
+  // reduced-motion safe. (A fit-all strip has nothing to scroll.)
   React.useEffect(() => {
     const el = scrollerRef.current;
     if (el) el.scrollLeft = el.scrollWidth;
@@ -457,15 +581,15 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
       className={cn('overflow-x-auto', className)}
       {...rest}
     >
-      <div className="grid w-max grid-cols-[10rem_560px]">
+      <div className="relative grid w-max grid-cols-[10rem_max-content]">
         <div className="sticky left-0 z-10 border-b border-border bg-card" />
         <svg
           data-slot="timeline-map-axis"
-          viewBox={`0 0 ${STRIP_W} 20`}
-          width={STRIP_W}
+          viewBox={`0 0 ${stripWidth} 20`}
+          width={stripWidth}
           height={20}
           aria-hidden
-          className="h-5 w-[560px] border-b border-border"
+          className="h-5 border-b border-border"
         >
           <g className="text-muted-foreground">
             {layout.ticks.map((t) => (
@@ -501,13 +625,13 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
               <span className="text-muted-foreground">{lane.count}</span>
             </div>
             <svg
-              viewBox={`0 0 ${STRIP_W} ${LANE_H}`}
-              width={STRIP_W}
+              viewBox={`0 0 ${stripWidth} ${LANE_H}`}
+              width={stripWidth}
               height={LANE_H}
               role="group"
               aria-label={`${lane.name} items`}
               className={cn(
-                'h-11 w-[560px] border-b border-border/60',
+                'h-11 border-b border-border/60',
                 laneIdx % 2 === 1 && 'bg-muted/40',
               )}
             >
@@ -542,7 +666,14 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
                       cx={d.cx}
                       cy={d.cy}
                       r={d.r}
-                      className="fill-current stroke-card stroke-2 opacity-80 transition-opacity hover:opacity-100"
+                      className={cn(
+                        'fill-current stroke-card stroke-2 transition-opacity',
+                        selected !== null &&
+                          d.item.id !== selected &&
+                          !related.has(d.item.id)
+                          ? 'opacity-30'
+                          : 'opacity-80 hover:opacity-100',
+                      )}
                     />
                   </LinkComponent>
                 ))}
@@ -550,9 +681,53 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
             </svg>
           </React.Fragment>
         ))}
+        {shownEdges.length > 0 && (
+          <svg
+            data-slot="timeline-map-links"
+            aria-hidden
+            width={stripWidth}
+            height={layout.lanes.length * LANE_H}
+            className="pointer-events-none absolute left-40 top-5 text-strand-b"
+          >
+            {shownEdges.map((e) => {
+              const lit =
+                selected !== null && (e.from === selected || e.to === selected);
+              return (
+                <path
+                  key={`${e.from}→${e.to}`}
+                  d={edgePath(e)}
+                  className={cn(
+                    'fill-none stroke-current',
+                    // Engage grammar: rest = faint web; a selection lights
+                    // its own threads and collapses the rest. Instant state
+                    // changes — the doctrine's motion verbs stay two.
+                    selected === null
+                      ? 'stroke-1 opacity-25'
+                      : lit
+                        ? 'stroke-[1.5] opacity-90'
+                        : 'stroke-1 opacity-[0.06]',
+                  )}
+                />
+              );
+            })}
+          </svg>
+        )}
       </div>
     </div>
   );
+}
+
+/**
+ * Thread geometry: cross-lane links take a smooth S (horizontal-tangent
+ * cubic); same-lane links bow upward so they don't hide inside the lane.
+ */
+function edgePath(e: Edge): string {
+  if (e.y1 === e.y2) {
+    const bow = Math.min(18, Math.abs(e.x2 - e.x1) / 8 + 8);
+    return `M ${e.x1} ${e.y1} Q ${(e.x1 + e.x2) / 2} ${e.y1 - bow} ${e.x2} ${e.y2}`;
+  }
+  const mx = (e.x1 + e.x2) / 2;
+  return `M ${e.x1} ${e.y1} C ${mx} ${e.y1} ${mx} ${e.y2} ${e.x2} ${e.y2}`;
 }
 
 /**
@@ -573,7 +748,12 @@ function TimelineMapDetail({
   className,
   ...rest
 }: TimelineMapDetailProps) {
-  const { previewed, testId } = useTimelineMap('Detail');
+  const { previewed, layout, testId } = useTimelineMap('Detail');
+  // The visual threads are aria-hidden decoration; THIS line is where the
+  // link graph reaches screen readers and crawlers.
+  const linkedLabels = (previewed?.links ?? [])
+    .map((id) => layout.order.find((i) => i.id === id)?.label)
+    .filter((l): l is string => l !== undefined);
   return (
     <div
       data-slot="timeline-map-detail"
@@ -596,6 +776,9 @@ function TimelineMapDetail({
             <span className="text-muted-foreground">
               {previewed.category ? `· ${previewed.category} ` : ''}·{' '}
               {previewed.date}
+              {linkedLabels.length > 0 && (
+                <> · weaves into {linkedLabels.join(', ')}</>
+              )}
             </span>
           </span>
         )

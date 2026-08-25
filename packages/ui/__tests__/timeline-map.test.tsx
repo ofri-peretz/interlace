@@ -1,9 +1,10 @@
+import { renderToStaticMarkup } from 'react-dom/server';
 /**
  * TimelineMap locks (R26) — geometry via the exported pure layout, and
  * SSR honesty via renderToStaticMarkup (the crawler/no-JS view).
  */
 import { describe, expect, it } from 'vitest';
-import { renderToStaticMarkup } from 'react-dom/server';
+
 import {
   TimelineMap,
   computeTimelineLayout,
@@ -35,6 +36,38 @@ describe('computeTimelineLayout', () => {
     expect(lanes.map((l) => l.name)).toEqual(['Guides', 'Other']);
   });
 
+  it('link weave: edge endpoints sit exactly on their dots, lane-offset applied', () => {
+    const linked: TimelineMapItem[] = [
+      { id: 'p', href: '/p', label: 'P', category: 'A', date: '2026-01-01', links: ['q', 'p', 'ghost'] },
+      { id: 'q', href: '/q', label: 'Q', category: 'B', date: '2026-03-01' },
+    ];
+    const { lanes, edges } = computeTimelineLayout(linked, 'Other');
+    // self-link and unknown target dropped; the real edge survives
+    expect(edges).toHaveLength(1);
+    const [e] = edges;
+    const flat = lanes.flatMap((l, li) =>
+      l.dots.map((d) => ({ id: d.item.id, x: d.cx, y: li * 44 + d.cy })),
+    );
+    const p = flat.find((d) => d.id === 'p')!;
+    const q = flat.find((d) => d.id === 'q')!;
+    expect([e.x1, e.y1, e.x2, e.y2]).toEqual([p.x, p.y, q.x, q.y]);
+    // the two dots live in different lanes, so the thread crosses lanes
+    expect(e.y1).not.toBe(e.y2);
+  });
+
+  it('fit-all: the layout stretches to the given strip width', () => {
+    // The whole territory rides the wider axis — the latest dot lands
+    // near the right edge of a 1000px strip, not parked at the 560 floor.
+    const maxCx = (w?: number) =>
+      Math.max(
+        ...computeTimelineLayout(ITEMS, 'Other', w).lanes.flatMap((l) =>
+          l.dots.map((d) => d.cx),
+        ),
+      );
+    expect(maxCx(1000)).toBeGreaterThan(900);
+    expect(maxCx()).toBeLessThan(560); // default keeps the floor geometry
+  });
+
   it('the axis is never empty — endpoint fallback inside a single quarter', () => {
     const narrow = computeTimelineLayout(
       [
@@ -60,6 +93,27 @@ describe('static markup (SSR honesty)', () => {
       <TimelineMap.Detail idle="Hover a dot." />
     </TimelineMap>,
   );
+
+  it('link weave: threads render aria-hidden in strand-b, faint at rest', () => {
+    const woven = renderToStaticMarkup(
+      <TimelineMap
+        items={[
+          { id: 'p', href: '/p', label: 'P', category: 'A', date: '2026-01-01', links: ['q'] },
+          { id: 'q', href: '/q', label: 'Q', category: 'B', date: '2026-03-01' },
+        ]}
+        data-testid="map"
+      >
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(woven).toContain('data-slot="timeline-map-links"');
+    expect(woven).toContain('text-strand-b');
+    expect(woven).toContain('opacity-25'); // rest = faint web, no selection
+    // decorative overlay never intercepts the pointer or the AT tree
+    expect(woven).toMatch(/timeline-map-links"[^>]*aria-hidden/);
+    // no links → no overlay at all
+    expect(html).not.toContain('timeline-map-links');
+  });
 
   it('renders every item as a real anchor with an accessible name', () => {
     for (const i of ITEMS) {

@@ -13,10 +13,10 @@ const items = [
   { id: 'r3', href: '#lambda', label: 'lambda-security launch', category: 'Security', date: '2025-03-02', weight: 0.7 },
   { id: 'r4', href: '#mongodb', label: 'mongodb-security launch', category: 'Security', date: '2025-03-02', weight: 0.5 },
   { id: 'r5', href: '#import', label: 'import-next fast tier', category: 'Performance', date: '2025-05-18', weight: 0.8 },
-  { id: 'r6', href: '#oxlint', label: 'Oxlint parity milestone', category: 'Performance', date: '2025-11-07', weight: 1 },
+  { id: 'r6', href: '#oxlint', label: 'Oxlint parity milestone', category: 'Performance', date: '2025-11-07', weight: 1, links: ['r5'] },
   { id: 'r7', href: '#a11y', label: 'react-a11y rewrite', category: 'Quality', date: '2025-08-30', weight: 0.4 },
-  { id: 'r8', href: '#modern', label: 'modernization preset', category: 'Quality', date: '2026-02-14', weight: 0.3 },
-  { id: 'r9', href: '#devkit', label: 'eslint-devkit', date: '2026-04-01', weight: 0.5 },
+  { id: 'r8', href: '#modern', label: 'modernization preset', category: 'Quality', date: '2026-02-14', weight: 0.3, links: ['r7'] },
+  { id: 'r9', href: '#devkit', label: 'eslint-devkit', date: '2026-04-01', weight: 0.5, links: ['r2', 'r6'] },
 ];
 
 const meta: Meta<typeof TimelineMap> = {
@@ -118,6 +118,29 @@ export const KeyboardTraversal: Story = {
     // The roving tabindex moved WITH focus — still exactly one tab stop.
     expect(dots.filter((d) => d.tabIndex === 0)).toHaveLength(1);
     expect(document.activeElement?.getAttribute('tabindex')).toBe('0');
+  },
+};
+
+/**
+ * The link weave: `links` draws the corpus's internal reference graph as
+ * strand-b threads. Touch a dot and ITS thread lights; the rest recedes
+ * (the engage-graph grammar). The Detail strip speaks the same links.
+ */
+export const WovenThreads: Story = {
+  args: { items, 'data-testid': 'timeline-map-woven' },
+  render: renderCompound,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const overlay = canvasElement.querySelector('[data-slot="timeline-map-links"]')!;
+    // 4 authored links, all resolvable → 4 threads, faint at rest.
+    expect(overlay.querySelectorAll('path')).toHaveLength(4);
+    expect(overlay.querySelectorAll('path.opacity-25')).toHaveLength(4);
+    // Hover the devkit dot: its two threads light, the other two recede.
+    await userEvent.hover(canvas.getByRole('link', { name: /eslint-devkit/ }));
+    expect(overlay.querySelectorAll('path.opacity-90')).toHaveLength(2);
+    expect(overlay.querySelectorAll('path[class*="opacity-[0.06]"]')).toHaveLength(2);
+    // …and the Detail strip speaks the thread for AT users.
+    expect(canvas.getByText(/weaves into/)).toBeTruthy();
   },
 };
 
