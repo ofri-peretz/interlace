@@ -396,10 +396,6 @@ export function TimelineMap({
       // stale focusedId would leave every dot at tabIndex=-1 and the chart
       // unreachable by keyboard (a focus trap, caught in blog review).
       // Any focus id outside visibleOrder falls back to the recent end.
-      // Not a bare ??: when the focused item's lane gets filtered OUT, a
-      // stale focusedId would leave every dot at tabIndex=-1 and the chart
-      // unreachable by keyboard (a focus trap, caught in blog review).
-      // Any focus id outside visibleOrder falls back to the recent end.
       focusedId:
         focusedId !== null && visibleOrder.some((i) => i.id === focusedId)
           ? focusedId
