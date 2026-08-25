@@ -1,7 +1,10 @@
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderToStaticMarkup } from 'react-dom/server';
 /**
- * TimelineMap locks (R26) — geometry via the exported pure layout, and
- * SSR honesty via renderToStaticMarkup (the crawler/no-JS view).
+ * TimelineMap locks (R26) — geometry via the exported pure layout, SSR
+ * honesty via renderToStaticMarkup (the crawler/no-JS view), and the
+ * stateful keyboard contract via a mounted interaction test.
  */
 import { describe, expect, it } from 'vitest';
 
@@ -206,33 +209,43 @@ describe('link-weave ink budget', () => {
 });
 
 describe('roving focus under filtering', () => {
-  it('a filter never leaves the chart without a tab stop', () => {
-    // Controlled filter shows only lane B; the resting tab stop must be
-    // a VISIBLE dot (the recent end of lane B), keeping exactly one
-    // tabindex=0 in the composite. A stale/foreign focus id must never
-    // zero out the tab order (the keyboard trap caught in blog review).
-    const html = renderToStaticMarkup(
+  it('hiding the FOCUSED lane never traps the keyboard (stale focusedId)', async () => {
+    // The real regression path (review round 2 — a static render starts
+    // from focusedId=null and takes the same branch fixed or not): arrow
+    // to a dot so focusedId is a non-null state, THEN hide that dot's
+    // lane. Pre-fix, the stale id left every dot at tabIndex=-1 and the
+    // chart fell out of the tab order.
+    const user = userEvent.setup();
+    const { container, unmount } = render(
       <TimelineMap
         items={[
           { id: 'a1', href: '/a1', label: 'A1', category: 'A', date: '2026-01-01' },
-          { id: 'b1', href: '/b1', label: 'B1', category: 'B', date: '2026-02-01' },
-          { id: 'a2', href: '/a2', label: 'A2', category: 'A', date: '2026-03-01' },
+          { id: 'a2', href: '/a2', label: 'A2', category: 'A', date: '2026-02-01' },
+          { id: 'b1', href: '/b1', label: 'B1', category: 'B', date: '2026-03-01' },
         ]}
         data-testid="m"
-        filter={['B']}
       >
+        <TimelineMap.Filter />
         <TimelineMap.Chart />
       </TimelineMap>,
     );
-    expect(html.match(/tabindex="0"/gi)?.length ?? 0).toBe(1);
-    // Guard the mechanism at the source level too: the fallback must
-    // check membership, not just null (a bare ?? reintroduces the trap).
-    const fs = require('node:fs');
-    const path = require('node:path');
-    const src = fs.readFileSync(
-      path.resolve(__dirname, '../src/patterns/timeline-map.tsx'),
-      'utf-8',
+    // Resting tab stop = the newest dot (b1). ArrowLeft moves the roving
+    // focus to a2 — lane A, and focusedId is now non-null state.
+    const b1 = container.querySelector<HTMLElement>('[data-item-id="b1"]')!;
+    b1.focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(document.activeElement?.getAttribute('data-item-id')).toBe('a2');
+    // Hide lane A — the lane holding the focused dot.
+    const chipA = [...container.querySelectorAll('button')].find((b) =>
+      b.textContent?.startsWith('A') && b.getAttribute('aria-pressed') === 'true',
+    )!;
+    await user.click(chipA);
+    // The trap: zero tab stops. The fix: exactly one, on a VISIBLE dot.
+    const stops = [...container.querySelectorAll('[tabindex="0"]')].filter(
+      (el) => el.hasAttribute('data-item-id'),
     );
-    expect(src).toMatch(/visibleOrder\.some\(\(i\) => i\.id === focusedId\)/);
+    expect(stops).toHaveLength(1);
+    expect(stops[0].getAttribute('data-item-id')).toBe('b1');
+    unmount();
   });
 });
