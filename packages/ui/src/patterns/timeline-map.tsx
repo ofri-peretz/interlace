@@ -133,16 +133,19 @@ export interface TimelineMapItem {
  * only the x scale, the ticks, and how an item's position is spoken
  * (aria-label, Detail strip) change.
  */
-export interface TimelineMapAxis {
-  /** "date" (default): `item.date` drives x. "number": `item.value`. */
-  kind: 'date' | 'number';
-  /**
-   * number kind only: renders a value for ticks, aria names, and the
-   * Detail strip — e.g. `(v) => `${v} min``.
-   * @default String
-   */
-  format?: (value: number) => string;
-}
+export type TimelineMapAxis =
+  /** The default: `item.date` drives x. */
+  | { kind: 'date' }
+  | {
+      /** `item.value` drives x. */
+      kind: 'number';
+      /**
+       * Renders a value for ticks, aria names, and the Detail strip —
+       * e.g. `(v) => `${v} min``.
+       * @default String
+       */
+      format?: (value: number) => string;
+    };
 
 export interface TimelineMapProps
   extends Omit<React.ComponentPropsWithoutRef<'figure'>, 'onClick'> {
@@ -368,7 +371,7 @@ function numberTicks(
   if (max === min) return [{ x: x(min), label: format(min) }];
   const raw = (max - min) / 5;
   const pow = 10 ** Math.floor(Math.log10(raw));
-  const step = [1, 2, 5, 10].map((m) => m * pow).find((s) => s >= raw)!;
+  const step = [1, 2, 5, 10].map((m) => m * pow).find((s) => s >= raw)!; // last = 10×pow > raw always
   const ticks: Layout['ticks'] = [];
   for (
     let v = Math.ceil(min / step) * step;
