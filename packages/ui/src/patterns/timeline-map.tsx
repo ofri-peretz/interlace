@@ -654,7 +654,7 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
                     key={d.item.id}
                     href={d.item.href}
                     data-item-id={d.item.id}
-                    aria-label={`${d.item.label} — ${d.item.category ?? ''} ${d.item.date}`.trim()}
+                    aria-label={`${d.item.label} — ${[d.item.category, d.item.date].filter(Boolean).join(' · ')}`}
                     tabIndex={focusedId === d.item.id ? 0 : -1}
                     onMouseEnter={() => preview(d.item)}
                     onFocus={() => preview(d.item)}

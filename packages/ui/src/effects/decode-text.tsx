@@ -60,6 +60,14 @@ export function DecodeText({
   const playing = React.useRef(false);
   const reduceMotion = useReducedMotion();
 
+  // Re-arm when the text changes: React updates the DOM text itself, but
+  // without this a post-decode `children` change would leave `playing`
+  // latched and a later hover-trigger play() dead. (For `visible` the
+  // observer has already disconnected, so old text never re-decodes.)
+  React.useEffect(() => {
+    playing.current = false;
+  }, [children]);
+
   const play = React.useCallback(() => {
     const el = ref.current;
     if (!el || playing.current || reduceMotion) return;

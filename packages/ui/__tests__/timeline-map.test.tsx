@@ -118,8 +118,12 @@ describe('static markup (SSR honesty)', () => {
   it('renders every item as a real anchor with an accessible name', () => {
     for (const i of ITEMS) {
       expect(html).toContain(`href="${i.href}"`);
-      expect(html).toContain(`${i.label} —`);
     }
+    // Exact names — `toContain('label —')` passed even with the audible
+    // double-space an absent category used to leave (caught in review).
+    expect(html).toContain('aria-label="Alpha — Guides · 2026-01-10"');
+    expect(html).toContain('aria-label="Delta — 2026-06-15"');
+    expect(html).not.toContain('—  ');
   });
 
   it('exactly one dot is the roving tab stop', () => {
