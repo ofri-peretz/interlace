@@ -157,3 +157,39 @@ describe('static markup (SSR honesty)', () => {
     expect(empty).not.toContain('<circle');
   });
 });
+
+describe('link-weave ink budget', () => {
+  const many = (n: number): TimelineMapItem[] => {
+    const items: TimelineMapItem[] = [];
+    for (let i = 0; i < n + 1; i++) {
+      items.push({
+        id: `n${i}`,
+        href: `/n${i}`,
+        label: `N${i}`,
+        category: i % 2 ? 'A' : 'B',
+        date: `2026-01-${String((i % 28) + 1).padStart(2, '0')}`,
+        links: i > 0 ? [`n${i - 1}`] : [],
+      });
+    }
+    return items;
+  };
+
+  it('a dense web rests as texture, a sparse one as readable threads', () => {
+    const dense = renderToStaticMarkup(
+      <TimelineMap items={many(200)} data-testid="m">
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    // 200 edges: the budgeted rest ink, never the sparse 0.25.
+    expect(dense).toContain('opacity-[0.04]');
+    expect(dense).not.toContain('opacity-25');
+
+    const sparse = renderToStaticMarkup(
+      <TimelineMap items={many(3)} data-testid="m">
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(sparse).toContain('opacity-25');
+    expect(sparse).not.toContain('opacity-[0.04]');
+  });
+});
