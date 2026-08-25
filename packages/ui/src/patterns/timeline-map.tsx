@@ -50,7 +50,10 @@ import { cn } from '../lib/cn.js';
  *
  * ### Encoding contract
  *
- * x = date (left → right), row = category, dot diameter = optional
+ * x = the shared continuous axis — dates by default, or any numeric
+ * measure via `axis={{ kind: "number", format }}` (reading minutes,
+ * bundle KB): a landscape of category × whatever quantity the corpus
+ * is actually navigated by. Row = category, dot diameter = optional
  * `weight` (0..1 → 10–16px; the Detail strip must spell the value out —
  * size is never the only carrier). Marks are single-hue `strand-a` (R19
  * token): identity is carried spatially by labeled lanes, so no
@@ -98,8 +101,17 @@ export interface TimelineMapItem {
    * `uncategorizedLabel` lane.
    */
   category?: string | null;
-  /** ISO `yyyy-mm-dd`. Items without a parseable date are not rendered. */
-  date: string;
+  /**
+   * ISO `yyyy-mm-dd` — drives x in the default date axis. Items without
+   * a parseable date are not rendered there. Ignored by a number axis.
+   */
+  date?: string;
+  /**
+   * Numeric position for `axis={{ kind: "number" }}` (reading minutes,
+   * bundle KB, …). Items without a finite value are not rendered there.
+   * Ignored by the date axis.
+   */
+  value?: number;
   /**
    * Optional normalized magnitude (0..1) encoded as dot diameter
    * (10–16px). The Detail strip should restate it — size is never the
@@ -115,11 +127,34 @@ export interface TimelineMapItem {
   links?: readonly string[];
 }
 
+/**
+ * Which continuous quantity the shared axis encodes. The lanes × axis
+ * geometry, the weave, and every interaction are identical either way —
+ * only the x scale, the ticks, and how an item's position is spoken
+ * (aria-label, Detail strip) change.
+ */
+export interface TimelineMapAxis {
+  /** "date" (default): `item.date` drives x. "number": `item.value`. */
+  kind: 'date' | 'number';
+  /**
+   * number kind only: renders a value for ticks, aria names, and the
+   * Detail strip — e.g. `(v) => `${v} min``.
+   * @default String
+   */
+  format?: (value: number) => string;
+}
+
 export interface TimelineMapProps
   extends Omit<React.ComponentPropsWithoutRef<'figure'>, 'onClick'> {
   items: readonly TimelineMapItem[];
   /** Stable selector for E2E tests; consumer provides — no default (R5). */
   'data-testid': string;
+  /**
+   * Axis semantics — see TimelineMapAxis. Pass a stable object (module
+   * constant or memo): the layout recomputes when its identity changes.
+   * @default { kind: "date" }
+   */
+  axis?: TimelineMapAxis;
   /**
    * Lane label for items without a category.
    * @default "Other"
@@ -206,10 +241,18 @@ export function computeTimelineLayout(
   items: readonly TimelineMapItem[],
   uncategorizedLabel: string,
   stripWidth: number = STRIP_W,
+  axis: TimelineMapAxis = { kind: 'date' },
 ): Layout {
-  const dated = items
-    .filter((i) => /^\d{4}-\d{2}-\d{2}/.test(i.date))
-    .map((i) => ({ item: i, t: Date.parse(`${i.date.slice(0, 10)}T00:00:00Z`) }))
+  const dated = (
+    axis.kind === 'number'
+      ? items.map((i) => ({ item: i, t: i.value ?? NaN }))
+      : items
+          .filter((i) => /^\d{4}-\d{2}-\d{2}/.test(i.date ?? ''))
+          .map((i) => ({
+            item: i,
+            t: Date.parse(`${i.date!.slice(0, 10)}T00:00:00Z`),
+          }))
+  )
     .filter((e) => Number.isFinite(e.t))
     .sort((a, b) => a.t - b.t || a.item.id.localeCompare(b.item.id));
   if (dated.length === 0) return { lanes: [], ticks: [], order: [], edges: [] };
@@ -240,7 +283,10 @@ export function computeTimelineLayout(
   const bursts = new Map<string, number>();
   for (const { item, t } of dated) {
     const laneName = item.category ?? uncategorizedLabel;
-    const key = `${laneName}|${item.date.slice(0, 10)}`;
+    // Same-(lane, position) collisions fan into the beeswarm. On the date
+    // axis position = day; on a number axis = the exact value (integer
+    // minutes/KB collide constantly — the fan is what keeps them legible).
+    const key = `${laneName}|${t}`;
     const n = bursts.get(key) ?? 0;
     bursts.set(key, n + 1);
     const dy = DOT_ROWS[n % 3];
@@ -251,6 +297,15 @@ export function computeTimelineLayout(
       cy: LANE_H / 2 + dy,
       r: dy === 0 ? rBase : Math.min(rBase, 6),
     });
+  }
+
+  if (axis.kind === 'number') {
+    return {
+      lanes: ordered,
+      ticks: numberTicks(min, max, x, axis.format ?? String),
+      order: dated.map((d) => d.item),
+      edges: computeEdges(ordered),
+    };
   }
 
   // Quarter-start ticks; a span too narrow for one falls back to labeled
@@ -298,6 +353,38 @@ export function computeTimelineLayout(
   };
 }
 
+/**
+ * Nice-step ticks for a number axis: a 1/2/5×10ⁿ step sized for ~5
+ * ticks, snapped to multiples so labels read as round values. Degenerate
+ * spans (all items share one value) fall back to that single labeled
+ * point so the axis is never empty.
+ */
+function numberTicks(
+  min: number,
+  max: number,
+  x: (v: number) => number,
+  format: (v: number) => string,
+): Layout['ticks'] {
+  if (max === min) return [{ x: x(min), label: format(min) }];
+  const raw = (max - min) / 5;
+  const pow = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 5, 10].map((m) => m * pow).find((s) => s >= raw)!;
+  const ticks: Layout['ticks'] = [];
+  for (
+    let v = Math.ceil(min / step) * step;
+    v <= max;
+    v = Math.round((v + step) * 1e9) / 1e9 // float-drift guard
+  ) {
+    ticks.push({ x: x(v), label: format(v) });
+  }
+  return ticks.length > 0
+    ? ticks
+    : [
+        { x: x(min), label: format(min) },
+        { x: x(max), label: format(max) },
+      ];
+}
+
 interface TimelineMapContextValue {
   layout: Layout;
   /** Current strip width in px — 560 floor, stretched to the container. */
@@ -310,6 +397,12 @@ interface TimelineMapContextValue {
   toggleCategory: (name: string) => void;
   previewed: TimelineMapItem | null;
   preview: (item: TimelineMapItem) => void;
+  /**
+   * How an item's axis position is spoken — the date, or the formatted
+   * value on a number axis. One voice for aria-labels and the Detail
+   * strip, so the two can never disagree.
+   */
+  meta: (item: TimelineMapItem) => string | undefined;
   focusedId: string | null;
   moveFocus: (from: string, delta: 'next' | 'prev' | 'first' | 'last') => void;
   onItemClick?: (item: TimelineMapItem) => void;
@@ -333,6 +426,7 @@ export function TimelineMap({
   items,
   'data-testid': testId,
   uncategorizedLabel = 'Other',
+  axis,
   filter,
   defaultFilter,
   onFilterChange,
@@ -348,8 +442,8 @@ export function TimelineMap({
   // which the strip scrolls instead (dots need room to stay legible).
   const [stripWidth, setStripWidth] = React.useState(STRIP_W);
   const layout = React.useMemo(
-    () => computeTimelineLayout(items, uncategorizedLabel, stripWidth),
-    [items, uncategorizedLabel, stripWidth],
+    () => computeTimelineLayout(items, uncategorizedLabel, stripWidth, axis),
+    [items, uncategorizedLabel, stripWidth, axis],
   );
   const categories = React.useMemo(
     () => layout.lanes.map(({ name, count }) => ({ name, count })),
@@ -392,6 +486,13 @@ export function TimelineMap({
         setPreviewed(item);
         onItemPreview?.(item);
       },
+      // Every item reaching meta came out of the layout, which already
+      // filtered non-finite values (number) / unparseable dates (date) —
+      // the assertion documents that invariant instead of dead-branching.
+      meta: (item) =>
+        axis?.kind === 'number'
+          ? (axis.format ?? String)(item.value!)
+          : item.date,
       // Not a bare ??: when the focused item's lane gets filtered OUT, a
       // stale focusedId would leave every dot at tabIndex=-1 and the chart
       // unreachable by keyboard (a focus trap, caught in blog review).
@@ -424,6 +525,7 @@ export function TimelineMap({
     categories,
     activeFilter,
     uncategorizedLabel,
+    axis,
     filter,
     onFilterChange,
     previewed,
@@ -506,6 +608,7 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
     onItemClick,
     LinkComponent,
     testId,
+    meta,
   } = useTimelineMap('Chart');
   const scrollerRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -671,7 +774,7 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
                     key={d.item.id}
                     href={d.item.href}
                     data-item-id={d.item.id}
-                    aria-label={`${d.item.label} — ${[d.item.category, d.item.date].filter(Boolean).join(' · ')}`}
+                    aria-label={`${d.item.label} — ${[d.item.category, meta(d.item)].filter(Boolean).join(' · ')}`}
                     tabIndex={focusedId === d.item.id ? 0 : -1}
                     onMouseEnter={() => preview(d.item)}
                     onFocus={() => preview(d.item)}
@@ -787,7 +890,7 @@ function TimelineMapDetail({
   className,
   ...rest
 }: TimelineMapDetailProps) {
-  const { previewed, layout, testId } = useTimelineMap('Detail');
+  const { previewed, layout, testId, meta } = useTimelineMap('Detail');
   // The visual threads are aria-hidden decoration; THIS line is where the
   // link graph reaches screen readers and crawlers.
   const linkedLabels = (previewed?.links ?? [])
@@ -814,7 +917,7 @@ function TimelineMapDetail({
             </span>{' '}
             <span className="text-muted-foreground">
               {previewed.category ? `· ${previewed.category} ` : ''}·{' '}
-              {previewed.date}
+              {meta(previewed)}
               {linkedLabels.length > 0 && (
                 <> · weaves into {linkedLabels.join(', ')}</>
               )}

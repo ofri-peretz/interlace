@@ -161,6 +161,84 @@ describe('static markup (SSR honesty)', () => {
   });
 });
 
+describe('number axis', () => {
+  const MINUTES: TimelineMapItem[] = [
+    { id: 'q', href: '/q', label: 'Quick', category: 'Guides', value: 3 },
+    { id: 'm', href: '/m', label: 'Mid', category: 'Guides', value: 8 },
+    { id: 'm2', href: '/m2', label: 'Mid Twin', category: 'Guides', value: 8 },
+    { id: 'd', href: '/d', label: 'Deep', category: 'Deep dives', value: 21 },
+  ];
+  const AXIS = { kind: 'number' as const, format: (v: number) => `${v} min` };
+
+  it('positions by value and fans same-(lane,value) collisions', () => {
+    const { lanes, order } = computeTimelineLayout(MINUTES, 'Other', 560, AXIS);
+    const dots = lanes.flatMap((l) => l.dots);
+    const cx = (id: string): number => dots.find((d) => d.item.id === id)!.cx;
+    expect(cx('q')).toBeLessThan(cx('m'));
+    expect(cx('m')).toBeLessThan(cx('d'));
+    // Integer values collide constantly — the beeswarm must fan them.
+    const coords = dots.map((d) => `${d.cx},${d.cy}`);
+    expect(new Set(coords).size).toBe(coords.length);
+    // Traversal order is by value, shortest first.
+    expect(order.map((i) => i.id)).toEqual(['q', 'm', 'm2', 'd']);
+  });
+
+  it('ticks are nice steps rendered through the format', () => {
+    const { ticks } = computeTimelineLayout(MINUTES, 'Other', 560, AXIS);
+    expect(ticks.length).toBeGreaterThan(1);
+    for (const t of ticks) expect(t.label).toMatch(/^\d+(\.\d+)? min$/);
+    // A 3–21 span steps by 5: round labels, not raw data values.
+    expect(ticks.map((t) => t.label)).toContain('5 min');
+    expect(ticks.map((t) => t.label)).toContain('20 min');
+  });
+
+  it('a degenerate span (single shared value) still labels the axis', () => {
+    const { ticks } = computeTimelineLayout(
+      [
+        { id: 'a', href: '/a', label: 'A', category: 'C', value: 7 },
+        { id: 'b', href: '/b', label: 'B', category: 'C', value: 7 },
+      ],
+      'Other',
+      560,
+      AXIS,
+    );
+    expect(ticks).toHaveLength(1);
+    expect(ticks[0].label).toBe('7 min');
+  });
+
+  it('items without a finite value are not rendered; dates are ignored', () => {
+    const { order } = computeTimelineLayout(
+      [
+        { id: 'v', href: '/v', label: 'V', category: 'C', value: 5, date: '2020-01-01' },
+        { id: 'no', href: '/no', label: 'No', category: 'C', date: '2026-01-01' },
+      ],
+      'Other',
+      560,
+      { kind: 'number' },
+    );
+    expect(order.map((i) => i.id)).toEqual(['v']);
+  });
+
+  it('SSR speaks the formatted value, never the date (aria + Detail)', () => {
+    const html = renderToStaticMarkup(
+      <TimelineMap items={MINUTES} axis={AXIS} data-testid="m">
+        <TimelineMap.Chart />
+        <TimelineMap.Detail idle="Hover a dot." />
+      </TimelineMap>,
+    );
+    expect(html).toContain('aria-label="Deep — Deep dives · 21 min"');
+    expect(html).not.toContain('2026-');
+
+    // Without a format, values speak as plain numbers (String default).
+    const bare = renderToStaticMarkup(
+      <TimelineMap items={MINUTES} axis={{ kind: 'number' }} data-testid="m">
+        <TimelineMap.Chart />
+      </TimelineMap>,
+    );
+    expect(bare).toContain('aria-label="Deep — Deep dives · 21"');
+  });
+});
+
 describe('link-weave ink budget', () => {
   const many = (n: number): TimelineMapItem[] => {
     const items: TimelineMapItem[] = [];
