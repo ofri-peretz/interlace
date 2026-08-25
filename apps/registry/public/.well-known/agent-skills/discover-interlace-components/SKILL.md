@@ -17,7 +17,7 @@ will.
 
 `GET https://ds.interlace.tools/data/agent-index.json`
 
-141 items, each with `tier`, `categories`, `summary`, `topics`,
+142 items, each with `tier`, `categories`, `summary`, `topics`,
 `rendering`, `minViewport`, `loadingState`, `keyboard`, `states`, `a11y`,
 `exports`, `version` and `install`. It is a flat array — filter it directly.
 

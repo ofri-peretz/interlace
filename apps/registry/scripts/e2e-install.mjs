@@ -57,6 +57,7 @@ import { createServer, request as httpRequest } from 'node:http';
 import { spawn } from 'node:child_process';
 import { mkdtemp, readdir, readFile, writeFile, rm, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -336,17 +337,40 @@ const main = async () => {
       '--no-eslint',
       '--no-src-dir',
       '--use-npm',
+      '--skip-install',
       '--yes',
     ],
     scratchRoot,
     { quiet: true },
   );
-  results.steps.createNextApp = {
-    ok: create.code === 0,
-    log: tail(create.out),
-  };
   if (create.code !== 0) {
+    results.steps.createNextApp = { ok: false, log: tail(create.out) };
     console.error(create.out);
+    return finish(1);
+  }
+
+  // Pin the scaffold to the next WE ship. create-next-app resolves the
+  // `latest` dist-tag at run time, and npm's tag can point at a version
+  // whose tarball has not propagated yet (observed live 2026-08-25:
+  // next@16.3.3 tagged but unpublished → ETARGET → npm install dies →
+  // 0/142 items land, on a PR that changed nothing about the registry).
+  // The workspace's own next version is proven-published by definition,
+  // and it is the version this registry actually runs against.
+  const nextVersion = createRequire(import.meta.url)(
+    'next/package.json',
+  ).version;
+  const appPkgPath = path.join(app, 'package.json');
+  const appPkg = JSON.parse(await readFile(appPkgPath, 'utf8'));
+  appPkg.dependencies.next = nextVersion;
+  await writeFile(appPkgPath, JSON.stringify(appPkg, null, 2) + '\n');
+  const scaffoldInstall = await run('npm', ['install'], app, { quiet: true });
+  results.steps.createNextApp = {
+    ok: scaffoldInstall.code === 0,
+    pinnedNext: nextVersion,
+    log: tail(create.out + scaffoldInstall.out),
+  };
+  if (scaffoldInstall.code !== 0) {
+    console.error(scaffoldInstall.out);
     return finish(1);
   }
 

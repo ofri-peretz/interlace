@@ -1361,6 +1361,15 @@
     "previewDark": "foundations-radius--dark",
     "skeleton": null
   },
+  "reading-strand": {
+    "title": "Primitives/ReadingStrand",
+    "storyIds": [
+      "primitives-readingstrand--default"
+    ],
+    "preview": "primitives-readingstrand--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "reading-time": {
     "title": "Primitives/ReadingTime",
     "storyIds": [
