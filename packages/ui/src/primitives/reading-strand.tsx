@@ -56,7 +56,9 @@ export interface ReadingStrandProps
   /**
    * id of the element whose vertical span maps to 0→1 (the article
    * body, not the page chrome). Falls back to the whole document when
-   * omitted or not found.
+   * omitted or not found. The target should have measurable height: a
+   * zero-height element (a container that hasn't populated yet) is a
+   * span shorter than the viewport, and reads as fully read.
    */
   target?: string;
   /**

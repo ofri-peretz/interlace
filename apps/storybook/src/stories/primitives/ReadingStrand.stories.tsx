@@ -77,5 +77,10 @@ export const Default: Story = {
     );
     window.scrollTo(0, 0);
     window.dispatchEvent(new Event('scroll'));
+    // The reset is an assertion, not fire-and-forget: the strand must
+    // land back at 0 before play resolves (review).
+    await waitFor(() =>
+      expect(Number(bar.getAttribute('aria-valuenow'))).toBe(0),
+    );
   },
 };
