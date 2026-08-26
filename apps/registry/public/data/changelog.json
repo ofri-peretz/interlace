@@ -5,6 +5,17 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "CodeBlock — onCopied seam + honest copy affordance\n\n`onCopied?(text)` fires after a SUCCESSFUL clipboard write with the\nexact copied text — the measurement seam a receipts-honest consumer\nneeds. Past-tense name is a documented R17 deviation: native `onCopy`\nalready reaches the figure via `...props` and fires on selection-copy.\nHonesty fix riding along: with no clipboard API available the button\nused to flip \"Copied!\" without writing anything; it now stays quiet —\nno success is claimed that didn't happen.",
+          "components": [
+            "code-block"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/code-block-oncopied.md"
+        },
+        {
           "summary": "HeroStrand — the thread at page scale\n\nOne strand-a ribbon drawn across a hero section, optionally crossed by\nthe strand-b counter — the fourth and final scale of \"One thread,\nevery scale\". A server component with zero client JS: the draw is the\nnew `strand-draw` motion token (tokens.css, 600ms — the doctrine's\nceiling), so the preflight reduced-motion clamp reaches it and\nreduced-motion users see the strand instantly drawn. Paths normalize\nwith `pathLength=100`; `vector-effect` is deliberately absent (the\nChromium screen-space-dash lesson from the first production weave).\nShips under `effects/` (not a registry item yet, like the rest of the\nsignature kit).",
           "components": [],
           "componentsDeclared": true,

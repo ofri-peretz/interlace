@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T18:40:49.415Z",
+  "generatedAt": "2026-08-26T02:58:29.668Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -8038,6 +8038,96 @@
         "inGate": false
       }
     },
+    "section-index": {
+      "sourcePath": "packages/ui/src/primitives/section-index.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint on the page surface",
+          "ratios": [
+            8.8,
+            11.79,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "section": {
       "sourcePath": "packages/ui/src/primitives/section.tsx",
       "keyboard": null,
@@ -10695,8 +10785,8 @@
         }
       ],
       "textAlternative": {
-        "kind": null,
-        "detail": null
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {
