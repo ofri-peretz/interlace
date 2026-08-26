@@ -846,11 +846,14 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
                         hard to tap. The transparent circle carries the
                         pointer geometry; the painted one stays the
                         map's visual scale. pointer-events on the link
-                        make both circles hit-testable. */}
+                        make both circles hit-testable. r=13, not 12:
+                        a nominal 24px union measured 23px in the
+                        gate's real-browser audit (sub-pixel rounding),
+                        so the radius carries a 2px margin. */}
                     <circle
                       cx={d.cx}
                       cy={d.cy}
-                      r={12}
+                      r={13}
                       fill="transparent"
                       stroke="none"
                     />
