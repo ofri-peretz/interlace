@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 import { RadialWeave } from '@interlace/ui/charts/radial-weave';
 
 import { COMPARING, FLAT, RISING, WITH_GAPS } from './fixtures';
@@ -88,10 +88,12 @@ export const WovenPair: Story = {
     compare: [{ points: COMPARING, label: 'Docs visits' }],
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    // Both series wrap the one dial, each with its legend identity.
-    await expect(canvas.getByText('Downloads')).toBeInTheDocument();
-    await expect(canvas.getByText('Docs visits')).toBeInTheDocument();
+    // Both series wrap the one dial, each with its legend identity. The
+    // names deliberately ALSO appear in the figcaption and the data
+    // table (the lossless surfaces), so the query scopes to the legend.
+    const legend = canvasElement.querySelector('[data-slot="radial-weave-legend"]');
+    await expect(legend?.textContent).toContain('Downloads');
+    await expect(legend?.textContent).toContain('Docs visits');
   },
 };
 
