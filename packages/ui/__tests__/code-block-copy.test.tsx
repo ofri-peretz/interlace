@@ -3,7 +3,7 @@
  * with the exact copied text, and the "Copied!" affordance never claims
  * a success that didn't happen.
  */
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { CodeBlock } from '../src/primitives/code-block.js';
@@ -63,8 +63,12 @@ describe('honesty — no clipboard, no "Copied!"', () => {
         {'const a = 1;'}
       </CodeBlock>,
     );
-    fireEvent.click(copyButton(container));
-    await Promise.resolve();
+    // act drains the full async queue before returning — no counting of
+    // microtask ticks that a future extra `await` would silently exceed
+    // (review).
+    await act(async () => {
+      fireEvent.click(copyButton(container));
+    });
 
     expect(queryByText('Copied!')).toBeNull();
     expect(onCopied).not.toHaveBeenCalled();
@@ -80,9 +84,9 @@ describe('honesty — no clipboard, no "Copied!"', () => {
         {'const a = 1;'}
       </CodeBlock>,
     );
-    fireEvent.click(copyButton(container));
-    await Promise.resolve();
-    await Promise.resolve();
+    await act(async () => {
+      fireEvent.click(copyButton(container));
+    });
 
     expect(queryByText('Copied!')).toBeNull();
     expect(onCopied).not.toHaveBeenCalled();
