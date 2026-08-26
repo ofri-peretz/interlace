@@ -5,6 +5,17 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "CodeBlock — Shiki notation contract: highlighted + diff lines\n\nLines a highlighter marks `highlighted`, `diff add`, or `diff remove`\n(Shiki's `transformerNotationHighlight` / `transformerNotationDiff`, or\nanything emitting the same classes) are now styled by the block itself:\ntoken-backed washes that hold in both themes, edge-to-edge bleed through\nthe pre's padding, and a `+` / `-` gutter marker so a diff is never\ncolor-alone. Copying a diff yields the post-diff code — `.diff.remove`\nlines are skipped by the copy button and `select-none` for manual\nselection, so nobody pastes the line they were told to delete.",
+          "components": [
+            "code-block"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/code-block-notation.md"
+        },
+        {
           "summary": "CodeBlock — onCopied seam + honest copy affordance\n\n`onCopied?(text)` fires after a SUCCESSFUL clipboard write with the\nexact copied text — the measurement seam a receipts-honest consumer\nneeds. Past-tense name is a documented R17 deviation: native `onCopy`\nalready reaches the figure via `...props` and fires on selection-copy.\nHonesty fix riding along: with no clipboard API available the button\nused to flip \"Copied!\" without writing anything; it now stays quiet —\nno success is claimed that didn't happen.",
           "components": [
             "code-block"
