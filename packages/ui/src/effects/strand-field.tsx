@@ -150,7 +150,13 @@ export function StrandField({
               key={strand.id}
               data-slot="strand-field-plane"
               className={cn(
-                'absolute inset-0 transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none',
+                // `top-6 bottom-6`, not `inset-0`: the container clips in
+                // SCREEN space, and a plane at translateZ under the stage's
+                // rotateX projects its top edge ~sin(26°)·46px ≈ 20px above
+                // the box — a strand whose line (or label) ends high was
+                // losing its top half to overflow-hidden. Measured at 375
+                // and 320; the 24px band covers the full tilt range.
+                'absolute inset-x-0 top-6 bottom-6 transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none',
                 present ? 'opacity-100' : 'opacity-40',
               )}
               style={{ transform: `translateZ(${z}px)` }}

@@ -113,6 +113,17 @@ describe('the depth model', () => {
     expect(planes[1].className).toContain('opacity-100');
   });
 
+  it('planes keep a vertical safe band — 3D projection clips in screen space', () => {
+    // A plane at translateZ under the stage's rotateX projects beyond its
+    // own box; inset-0 planes lost their top strand/label to the
+    // container's overflow-hidden (found at 375/320 in the blog).
+    const { container } = render(<StrandField data-testid="f" series={THREADS} />);
+    const plane = container.querySelector('[data-slot="strand-field-plane"]');
+    expect(plane?.className).toContain('top-6');
+    expect(plane?.className).toContain('bottom-6');
+    expect(plane?.className).not.toContain('inset-0');
+  });
+
   it('labels each strand at its line’s end height', () => {
     const { container } = render(<StrandField data-testid="f" series={THREADS} />);
     const labels = [...container.querySelectorAll<HTMLElement>('[data-slot="strand-field-label"]')];
