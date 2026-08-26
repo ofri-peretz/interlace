@@ -42,9 +42,11 @@
  * bleed through the pre's padding. Any highlighter emitting the same
  * classes gets the same treatment — the contract is the class names.
  *
- * Removed lines are the OLD code: the copy button and manual selection
- * both yield the post-diff state (`.diff.remove` is skipped on copy and
- * `select-none`), so nobody pastes the vulnerable line by accident.
+ * Removed lines are the OLD code: the copy button yields the post-diff
+ * state (`.diff.remove` is skipped), and `select-none` nudges
+ * drag-selection the same way. The button is the guarantee — CSS
+ * `user-select` is a hint engines apply unevenly (Ctrl+A still selects
+ * everything), not a clipboard barrier.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -78,6 +80,8 @@ const COPIED_RESET_MS = 1500;
  * tracks the `--spacing-md` token so a padding change cannot desync it.
  * Diff markers sit absolutely in the bled padding gutter, so code
  * alignment across marked and unmarked lines is untouched.
+ * `select-none` on removed lines is best-effort UX for drag-selection —
+ * see the header note; the copy button is the reliable post-diff path.
  */
 const NOTATION_LINES = cn(
   '[&_.line.highlighted]:relative [&_.line.highlighted]:inline-block [&_.line.highlighted]:-mx-md [&_.line.highlighted]:px-md [&_.line.highlighted]:w-[calc(100%_+_var(--spacing-md)*2)]',
@@ -93,9 +97,14 @@ const NOTATION_LINES = cn(
 /**
  * textContent minus `.diff.remove` lines — copying a diff must yield the
  * post-diff (fixed) code, never the removed line someone is being told to
- * delete. Each removed span's trailing newline (a sibling text node in
- * Shiki's output) goes with it, so removals don't leave blank lines in
- * the pasted result.
+ * delete.
+ *
+ * Newline handling is shape-tolerant, not Shiki-specific: Shiki emits the
+ * line's newline as a SIBLING text node after the span, so when that shape
+ * is present the leading `\n` is trimmed off the sibling and no blank line
+ * survives the removal. A highlighter that instead embeds the newline
+ * inside the line span needs no cleanup — removing the span removes its
+ * newline — and the guard simply never fires.
  */
 function copyableText(code: HTMLElement | null): string {
   if (!code) return '';

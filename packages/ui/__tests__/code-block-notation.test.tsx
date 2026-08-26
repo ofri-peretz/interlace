@@ -48,6 +48,30 @@ describe('diff copy — post-diff state only', () => {
     expect(onCopied).toHaveBeenCalledWith(copied);
   });
 
+  it('consecutive removed lines all drop, newlines included', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', { clipboard: { writeText } });
+
+    const { container, findByText } = render(
+      <CodeBlock language="ts" data-testid="cb">
+        <span className="line">{'keep();'}</span>
+        {'\n'}
+        <span className="line diff remove">{'old1();'}</span>
+        {'\n'}
+        <span className="line diff remove">{'old2();'}</span>
+        {'\n'}
+        <span className="line">{'alsoKeep();'}</span>
+        {'\n'}
+      </CodeBlock>,
+    );
+    fireEvent.click(
+      container.querySelector('[data-slot="code-block-copy"]') as HTMLElement,
+    );
+
+    await findByText('Copied!');
+    expect(writeText).toHaveBeenCalledWith('keep();\nalsoKeep();\n');
+  });
+
   it('a block without diff lines copies its full textContent unchanged', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     vi.stubGlobal('navigator', { clipboard: { writeText } });

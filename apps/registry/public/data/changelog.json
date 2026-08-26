@@ -5,7 +5,7 @@
       "unreleased": true,
       "entries": [
         {
-          "summary": "CodeBlock — Shiki notation contract: highlighted + diff lines\n\nLines a highlighter marks `highlighted`, `diff add`, or `diff remove`\n(Shiki's `transformerNotationHighlight` / `transformerNotationDiff`, or\nanything emitting the same classes) are now styled by the block itself:\ntoken-backed washes that hold in both themes, edge-to-edge bleed through\nthe pre's padding, and a `+` / `-` gutter marker so a diff is never\ncolor-alone. Copying a diff yields the post-diff code — `.diff.remove`\nlines are skipped by the copy button and `select-none` for manual\nselection, so nobody pastes the line they were told to delete.",
+          "summary": "CodeBlock — Shiki notation contract: highlighted + diff lines\n\nLines a highlighter marks `highlighted`, `diff add`, or `diff remove`\n(Shiki's `transformerNotationHighlight` / `transformerNotationDiff`, or\nanything emitting the same classes) are now styled by the block itself:\ntoken-backed washes that hold in both themes, edge-to-edge bleed through\nthe pre's padding, and a `+` / `-` gutter marker so a diff is never\ncolor-alone. The copy button yields the post-diff code — `.diff.remove`\nlines are skipped — so nobody pastes the line they were told to delete;\n`select-none` nudges drag-selection the same way (a hint engines apply\nunevenly, not a clipboard barrier — the button is the guarantee).",
           "components": [
             "code-block"
           ],
