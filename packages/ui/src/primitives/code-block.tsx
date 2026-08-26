@@ -32,6 +32,20 @@
  * `overflow-x-auto` instead, so a narrow viewport gets a horizontally
  * scrollable block rather than mangled syntax.
  *
+ * ## Notation contract (highlighted / diff lines)
+ *
+ * Shiki's `transformerNotationHighlight` / `transformerNotationDiff` mark
+ * line spans with `highlighted`, `diff add`, `diff remove`. The block does
+ * no highlighting itself (unchanged), but it OWNS how those marks look:
+ * token-backed washes that hold in both themes, a `+` / `-` gutter marker
+ * so a diff is never color-alone (COLOR_PHILOSOPHY), and edge-to-edge
+ * bleed through the pre's padding. Any highlighter emitting the same
+ * classes gets the same treatment — the contract is the class names.
+ *
+ * Removed lines are the OLD code: the copy button and manual selection
+ * both yield the post-diff state (`.diff.remove` is skipped on copy and
+ * `select-none`), so nobody pastes the vulnerable line by accident.
+ *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R4   | Extends native el                | `React.ComponentProps<'figure'> & CodeBlockProps`           |
@@ -56,6 +70,49 @@ import { Skeleton } from './skeleton.js';
 export const MIN_VIEWPORT = 320 as const;
 
 const COPIED_RESET_MS = 1500;
+
+/**
+ * Notation line styles — see "Notation contract" in the header. Decorated
+ * lines bleed through the pre's `p-md` padding via the inline-block +
+ * negative-margin recipe (the same one VitePress ships); the bleed width
+ * tracks the `--spacing-md` token so a padding change cannot desync it.
+ * Diff markers sit absolutely in the bled padding gutter, so code
+ * alignment across marked and unmarked lines is untouched.
+ */
+const NOTATION_LINES = cn(
+  '[&_.line.highlighted]:relative [&_.line.highlighted]:inline-block [&_.line.highlighted]:-mx-md [&_.line.highlighted]:px-md [&_.line.highlighted]:w-[calc(100%_+_var(--spacing-md)*2)]',
+  '[&_.line.diff]:relative [&_.line.diff]:inline-block [&_.line.diff]:-mx-md [&_.line.diff]:px-md [&_.line.diff]:w-[calc(100%_+_var(--spacing-md)*2)]',
+  '[&_.line.highlighted]:bg-accent',
+  '[&_.line.diff.add]:bg-success/15',
+  '[&_.line.diff.remove]:bg-destructive/10 [&_.line.diff.remove]:select-none',
+  '[&_.line.diff]:before:absolute [&_.line.diff]:before:left-xs',
+  "[&_.line.diff.add]:before:content-['+'] [&_.line.diff.add]:before:text-success",
+  "[&_.line.diff.remove]:before:content-['-'] [&_.line.diff.remove]:before:text-destructive",
+);
+
+/**
+ * textContent minus `.diff.remove` lines — copying a diff must yield the
+ * post-diff (fixed) code, never the removed line someone is being told to
+ * delete. Each removed span's trailing newline (a sibling text node in
+ * Shiki's output) goes with it, so removals don't leave blank lines in
+ * the pasted result.
+ */
+function copyableText(code: HTMLElement | null): string {
+  if (!code) return '';
+  if (!code.querySelector('.line.diff.remove')) return code.textContent ?? '';
+  const clone = code.cloneNode(true) as HTMLElement;
+  for (const line of clone.querySelectorAll('.line.diff.remove')) {
+    const next = line.nextSibling;
+    if (
+      next?.nodeType === Node.TEXT_NODE &&
+      next.textContent?.startsWith('\n')
+    ) {
+      next.textContent = next.textContent.slice(1);
+    }
+    line.remove();
+  }
+  return clone.textContent ?? '';
+}
 
 type CodeBlockProps = Omit<React.ComponentProps<'figure'>, 'title' | 'children'> & {
   /** Optional header title — usually a filename like `eslint.config.mjs`. */
@@ -107,9 +164,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
       // we fall back to the textContent of the rendered <code>. We capture
       // it lazily here so a pre-highlighted JSX child still copies cleanly.
       const text =
-        typeof children === 'string'
-          ? children
-          : (codeRef.current?.textContent ?? '');
+        typeof children === 'string' ? children : copyableText(codeRef.current);
 
       try {
         // No clipboard API (insecure context, sandboxed iframe): do NOT
@@ -213,6 +268,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
             'overflow-x-auto p-md',
             'text-code font-mono text-foreground',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset',
+            NOTATION_LINES,
           )}
         >
           <code
