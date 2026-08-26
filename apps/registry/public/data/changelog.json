@@ -58,6 +58,18 @@
           "source": ".changeset/section-index.md"
         },
         {
+          "summary": "The Living Weave — motion, the radial poster form, and the strand field\n\n**TimeSeries draws itself.** The plotted series and their annotations are\nrevealed by a clip rect that scales open left→right — the new\n`--animate-weave-reveal` token, the draw verb's second mechanism for a chart\nwhose dash patterns ARE series identity (MOTION_PHILOSOPHY's draw-gesture\nexception gains the clip-reveal clause, and the motion lock verifies the\nutility only ever lands on a `clipPath` child). Pure CSS, SSR-drawn,\nfrom-only — with no animation at all, nothing is ever hidden. The reveal\nreplays when the drawn geometry changes BY VALUE, never by array identity;\nthe same change resets the crosshair during render. The crosshair now glides\nbetween slots on a transform transition (150ms, motion-reduce clamped) while\nthe readout still snaps.\n\n**RadialWeave** — the same series wrapped around a dial: the POSTER form.\n300° sweep with the gap at the bottom (a closed circle claims the newest\nobservation meets the oldest), the exact dash+hue identity table TimeSeries\nuses, nulls breaking the arc, an HTML centre value, and deliberately no\ncrosshair — the aria-label sentence, the min/max readout and the lossless\n`SeriesTable` carry inspection. Server component; dial math lives in\n`scale.ts` (`dialAngle`/`dialRadius`/`dialPoint`/`dialPath`/`dialRing`).\n\n**StrandField** — real series lifted into depth: each thread on its own\nplane in a CSS-3D perspective stage (zero dependencies — `perspective` +\n`translateZ`, never WebGL), fanned apart or collapsed flat via `woven`,\ntilting inside its own bounds with the pointer (never under\n`prefers-reduced-motion`), strands entering by the strand-draw verb with a\nCSS-variable stagger the reduce clamp can zero. `aria-hidden` theatre with\nno focusable element; `onStrandSelect` is a pointer shortcut for a selection\nsurface the consumer renders accessibly.",
+          "components": [
+            "time-series",
+            "radial-weave"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/time-series-weave-reveal.md"
+        },
+        {
           "summary": "TimelineMap: number-axis mode — the lanes × axis landscape over any continuous measure\n\nNew `axis` prop (`{ kind: \"number\", format }`) positions dots by\n`item.value` instead of `item.date` — reading minutes, bundle KB, any\nquantity a corpus is actually navigated by. Nice-step ticks (1/2/5×10ⁿ)\nrender through the consumer's `format`; aria-labels and the Detail\nstrip speak the formatted value through one shared voice, so the two\ncan never disagree. The date axis, the weave, and every interaction are\nunchanged; `date` is now optional at the type level (number-axis items\ndon't need one).",
           "components": [
             "timeline-map"

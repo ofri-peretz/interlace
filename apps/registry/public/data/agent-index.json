@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 143
+    "itemCount": 144
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -33,7 +33,7 @@
       "pattern": 31,
       "effect": 17,
       "template": 13,
-      "chart": 7,
+      "chart": 8,
       "util": 5,
       "starter": 3,
       "theme": 1
@@ -43,8 +43,8 @@
       "pattern": 31,
       "blog": 22,
       "decorative": 21,
+      "data": 21,
       "foundation": 20,
-      "data": 20,
       "effect": 17,
       "form": 16,
       "template": 13,
@@ -52,29 +52,29 @@
       "navigation": 10,
       "overlay": 9,
       "marketing": 9,
-      "chart": 7,
+      "chart": 8,
       "util": 5,
       "a11y": 4,
       "starter": 3,
       "theme": 1
     },
     "rendering": {
-      "server": 80,
+      "server": 81,
       "client": 63
     },
     "keyboard": {
-      "none": 108,
+      "none": 109,
       "handled": 35
     },
     "loading": {
       "none": 112,
-      "built-in": 31
+      "built-in": 32
     },
     "minViewport": {
       "320": 82,
       "480": 7,
       "768": 1,
-      "inherited": 53
+      "inherited": 54
     }
   },
   "items": [
@@ -1773,7 +1773,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "1.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -5064,6 +5064,82 @@
       "docs": "https://ds.interlace.tools/c/published-date"
     },
     {
+      "name": "radial-weave",
+      "title": "Radial Weave",
+      "type": "registry:ui",
+      "summary": "The same series `TimeSeries` plots, wrapped around a dial — the POSTER form: identity and shape, composed to be looked at and shared.",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": true,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ANNOTATION_KINDS",
+          "values": [
+            "publish",
+            "release",
+            "action"
+          ]
+        },
+        {
+          "name": "Direction",
+          "values": [
+            "up",
+            "down",
+            "flat"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "alert",
+          "img"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "ANNOTATION_KINDS",
+        "RadialWeave"
+      ],
+      "version": "1.1.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "data-state",
+        "series-table",
+        "skeleton",
+        "theme",
+        "time-series"
+      ],
+      "installsTo": [
+        "components/ui/charts/radial-weave.tsx",
+        "components/ui/charts/scale.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/radial-weave.json",
+      "item": "https://ds.interlace.tools/r/radial-weave.json",
+      "docs": "https://ds.interlace.tools/c/radial-weave"
+    },
+    {
       "name": "radio-group",
       "title": "Radio Group",
       "type": "registry:ui",
@@ -7574,7 +7650,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "1.8.0",
+      "version": "1.9.0",
       "since": "1.0.0",
       "npmDependencies": [
         "tw-animate-css"
@@ -7647,8 +7723,8 @@
           "aria-live"
         ],
         "motion": {
-          "driver": "none",
-          "declaresPreference": false,
+          "driver": "css",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true
@@ -7656,6 +7732,7 @@
       "exports": [
         "ANNOTATION_KINDS",
         "MIN_VIEWPORT",
+        "SERIES_STYLE",
         "TimeSeries"
       ],
       "version": "1.2.0",
@@ -7720,7 +7797,7 @@
       "exports": [
         "TimelineMap"
       ],
-      "version": "1.1.1",
+      "version": "1.3.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7886,7 +7963,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T06:10:01.423Z",
+  "generatedAt": "2026-08-26T22:29:08.760Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -2538,6 +2538,63 @@
       "keyboard": null,
       "contrast": [
         {
+          "fg": "success",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "success tint on the page surface",
+          "ratios": [
+            7.68,
+            10.3,
+            7.28,
+            9.86
+          ],
+          "worst": 7.28,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint on the page surface",
+          "ratios": [
+            8.31,
+            10.43,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "success",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "success tint inside a card",
+          "ratios": [
+            7.68,
+            9.54,
+            7.68,
+            8.95
+          ],
+          "worst": 7.68,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
           "fg": "muted-foreground",
           "bg": "background",
           "kind": "text",
@@ -2550,6 +2607,25 @@
             9.52
           ],
           "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint inside a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
@@ -7542,6 +7618,125 @@
         "inGate": true
       }
     },
+    "radial-weave": {
+      "sourcePath": "packages/ui/src/charts/radial-weave.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint on the page surface",
+          "ratios": [
+            8.31,
+            10.43,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "destructive tint inside a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "series-table-consumer",
+        "detail": "Renders <SeriesTable> alongside the graphic: every plotted value is available as a real table row, sr-only by default."
+      },
+      "states": [
+        "loading",
+        "error",
+        "not-applicable",
+        "not-counted",
+        "empty",
+        "partial",
+        "truncated",
+        "first-measurement",
+        "idle"
+      ],
+      "coverage": {
+        "inGate": true
+      }
+    },
     "radio-group": {
       "sourcePath": "packages/ui/src/primitives/radio-group.tsx",
       "keyboard": null,
@@ -11261,6 +11456,25 @@
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
           },
           "passes": true
         }

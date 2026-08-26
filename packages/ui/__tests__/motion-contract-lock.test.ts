@@ -269,6 +269,47 @@ function readDrawKeyframes(): Set<string> {
   return out;
 }
 
+/**
+ * Keyframe names qualifying for the draw exception's SECOND mechanism
+ * (MOTION_PHILOSOPHY's clip-reveal clause): the body animates `transform`
+ * and NOTHING else, and every element `packages/ui/src` puts the utility on
+ * sits inside a `<clipPath>` — the transform moves a clip edge, never
+ * content. Usage is the evidence, so a transform-only keyframe whose
+ * utility ever rides actual content (shimmer-slide) stays an entry
+ * animation whatever it is named, and a keyframe with no source usage at
+ * all cannot qualify — unverifiable is not exempt.
+ */
+function readClipRevealKeyframes(): Set<string> {
+  const css = stripCssComments(readFileSync(TOKENS_CSS, 'utf8'));
+  const out = new Set<string>();
+  const segments = css.split(/@keyframes\s+/).slice(1);
+  for (const segment of segments) {
+    const name = /^([a-z0-9-]+)/.exec(segment)?.[1];
+    if (!name) continue;
+    const properties = [...segment.matchAll(/([a-z-]+)\s*:\s*[^;{}]+;/g)].map(
+      (m) => m[1],
+    );
+    if (properties.length === 0 || !properties.every((p) => p === 'transform'))
+      continue;
+    const utility = new RegExp(`(?<![-:\\w])animate-${name}(?![a-z0-9-])`, 'g');
+    const uses: boolean[] = [];
+    for (const file of walkSync(SRC)) {
+      if (!/\.tsx?$/.test(file)) continue;
+      const source = stripJsComments(readFileSync(file, 'utf8'));
+      for (const match of source.matchAll(utility)) {
+        // Enclosure in text: the nearest `<clipPath` before this use is
+        // still open. Crude on purpose — a false negative fails the
+        // budget loudly; a false positive would need a `</clipPath>`
+        // deliberately written before its own opening tag.
+        const before = source.slice(0, match.index);
+        uses.push(before.lastIndexOf('<clipPath') > before.lastIndexOf('</clipPath>'));
+      }
+    }
+    if (uses.length > 0 && uses.every(Boolean)) out.add(name);
+  }
+  return out;
+}
+
 /** First ident of an animation shorthand = its keyframe name. */
 function keyframeNameOf(value: string): string {
   return /^\s*([a-z][a-z0-9-]*)/.exec(value)?.[1] ?? '';
@@ -280,6 +321,7 @@ const ANIMATIONS = readAnimations();
 const ENTRY_BUDGET_MS = readEntryBudgetMs();
 const DRAW_BUDGET_MS = readDrawBudgetMs();
 const DRAW_KEYFRAMES = readDrawKeyframes();
+const CLIP_REVEAL_KEYFRAMES = readClipRevealKeyframes();
 
 // ── the lock ────────────────────────────────────────────────────────────
 
@@ -335,6 +377,14 @@ describe('motion contract lock', () => {
     expect(DRAW_KEYFRAMES.has('strand-draw')).toBe(true);
     expect(DRAW_KEYFRAMES.has('shimmer-slide')).toBe(false);
     expect(DRAW_KEYFRAMES.has('fade-in-up')).toBe(false);
+
+    // The clip-reveal mechanism: transform-only AND only ever applied to a
+    // clipPath child. shimmer-slide is transform-only but rides content —
+    // the usage evidence, not the property list, is what keeps it out.
+    expect(CLIP_REVEAL_KEYFRAMES.has('weave-reveal')).toBe(true);
+    expect(CLIP_REVEAL_KEYFRAMES.has('shimmer-slide')).toBe(false);
+    expect(CLIP_REVEAL_KEYFRAMES.has('strand-draw')).toBe(false);
+    expect(ALLOWLIST.has('animate-weave-reveal')).toBe(true);
     expect(DRAW_BUDGET_MS).toBeGreaterThan(ENTRY_BUDGET_MS);
     // The multi-rule allowlist parser sees selectors in EVERY rule of the
     // reduce block — the draw rule's class must be reachable.
@@ -466,11 +516,12 @@ describe('motion contract lock', () => {
     });
 
     it('keeps every entry animation inside the ceiling', () => {
-      // Draw gestures (stroke-dashoffset-only keyframes, per the doc's
-      // exception) get the draw ceiling; everything else — anything that
-      // moves content — keeps the entry ceiling.
+      // Draw gestures (stroke-dashoffset-only keyframes, plus the doc's
+      // clip-reveal clause) get the draw ceiling; everything else —
+      // anything that moves content — keeps the entry ceiling.
       const budgetFor = (a: Animation): number =>
-        DRAW_KEYFRAMES.has(keyframeNameOf(a.value))
+        DRAW_KEYFRAMES.has(keyframeNameOf(a.value)) ||
+        CLIP_REVEAL_KEYFRAMES.has(keyframeNameOf(a.value))
           ? DRAW_BUDGET_MS
           : ENTRY_BUDGET_MS;
       const over = finite
