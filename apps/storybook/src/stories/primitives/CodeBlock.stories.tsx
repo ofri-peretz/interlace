@@ -139,6 +139,35 @@ export const Variants: Story = {
   ),
 };
 
+/**
+ * The Shiki notation contract: lines a highlighter marks `highlighted`,
+ * `diff add`, or `diff remove` get token-backed washes, edge-to-edge bleed,
+ * and a `+` / `-` gutter marker so the diff is never color-alone. The spans
+ * here are hand-authored — the block styles the CLASSES, not any particular
+ * highlighter's output. Copying (button or selection) yields the post-diff
+ * code: removed lines are skipped on copy and `select-none`.
+ */
+export const Notation: Story = {
+  render: () => (
+    <CodeBlock
+      title="validate.ts"
+      language="ts"
+      className="w-[640px] max-w-full"
+    >
+      <span className="line">{'export function validate(input: string) {'}</span>
+      {'\n'}
+      <span className="line diff remove">{'  return eval(input);'}</span>
+      {'\n'}
+      <span className="line diff add">{'  return schema.parse(input);'}</span>
+      {'\n'}
+      <span className="line highlighted">{'  // marked line — reviewer attention here'}</span>
+      {'\n'}
+      <span className="line">{'}'}</span>
+      {'\n'}
+    </CodeBlock>
+  ),
+};
+
 export const Dark: Story = {
   ...Default,
   globals: { theme: 'dark' },
