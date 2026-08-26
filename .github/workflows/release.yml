@@ -34,6 +34,10 @@ concurrency:
 permissions:
   contents: write
   pull-requests: write
+  # npm provenance for `interlace-ui` — the CLI is the one package here that is
+  # actually published, and provenance is what lets a consumer verify the
+  # tarball they `npx` came from this repo and this workflow.
+  id-token: write
 
 env:
   TURBO_TELEMETRY_DISABLED: 1
@@ -53,6 +57,8 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+          # Writes the .npmrc `interlace-ui` publishes through.
+          registry-url: https://registry.npmjs.org
       - run: npm ci --no-audit --no-fund
 
       - name: Configure git identity for the version commit
@@ -66,11 +72,13 @@ jobs:
           # Applies the pending changesets, re-derives component versions and
           # rebuilds the registry — see the `version-packages` script.
           version: npm run version-packages
-          # Not `npm publish`: the package is private by design. This tags the
-          # release so the registry deploy for it is identifiable and
-          # `since` can be resolved for future components.
+          # Two packages, two contracts — see the `release` script:
+          #   @interlace/ui  tagged, never published (private by design)
+          #   interlace-ui   published to npm (the CLI is a tool, not a second
+          #                  copy of the components — VERSIONING_PHILOSOPHY § 2)
           publish: npm run release
           commit: 'chore(release): version packages'
           title: 'chore(release): version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
