@@ -120,6 +120,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/roving-focus-filter-trap.md"
+        },
+        {
+          "summary": "TimelineMap — filter pills clear the SC 2.5.8 and AA floors\n\nThe category filter pills rendered 22px tall (under the 24px target\nfloor of WCAG 2.2 SC 2.5.8) and hardcoded the count span to\nmuted-foreground, which measured 4.37:1 on the active pill's\nstrand-a/10 tint — under the 4.5 AA floor. Pills are now inline-flex\nmin-h-6; the count inherits the pill's state colour. Caught by the\nblog's real-layout audit across every viewport.",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/timeline-map-filter-a11y.md"
         }
       ]
     },
