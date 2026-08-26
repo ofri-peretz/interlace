@@ -72,10 +72,21 @@ type CodeBlockProps = Omit<React.ComponentProps<'figure'>, 'title' | 'children'>
    * highlight or fetch resolves.
    */
   loading?: boolean;
+  /**
+   * Fired after a SUCCESSFUL clipboard write, with the exact text that
+   * was copied — the measurement seam for consumers (a copy affordance
+   * that can't be measured contradicts the receipts doctrine).
+   *
+   * Named `onCopied` (past tense), not `onCopy` (R17 — documented
+   * deviation): the native `onCopy` clipboard event already reaches the
+   * root `<figure>` via `...props` and fires on selection-copy too;
+   * this seam reports only the button's completed write.
+   */
+  onCopied?: (text: string) => void;
 };
 
 const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
-  ({ className, title, language, children, loading, ...props }, ref) => {
+  ({ className, title, language, children, loading, onCopied, ...props }, ref) => {
     // Hooks must run unconditionally per React rules — the loading
     // early-return goes AFTER hook declarations so the call order is
     // stable across renders when `loading` flips.
@@ -100,17 +111,21 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
           : (codeRef.current?.textContent ?? '');
 
       try {
-        if (navigator?.clipboard?.writeText) {
-          await navigator.clipboard.writeText(text);
-        }
+        // No clipboard API (insecure context, sandboxed iframe): do NOT
+        // flip "Copied!". An affordance that claims success without a
+        // write happening is a lie — the snippet stays selectable and
+        // manual copy still works.
+        if (!navigator?.clipboard?.writeText) return;
+        await navigator.clipboard.writeText(text);
         setCopied(true);
+        onCopied?.(text);
         if (timerRef.current) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => setCopied(false), COPIED_RESET_MS);
       } catch {
         // Clipboard can reject in insecure contexts / sandboxed iframes. We
         // intentionally swallow — the snippet is still visible and selectable.
       }
-    }, [children]);
+    }, [children, onCopied]);
 
     const codeRef = React.useRef<HTMLElement>(null);
 
