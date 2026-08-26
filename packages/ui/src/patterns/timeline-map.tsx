@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Toggle } from '../primitives/toggle.js';
 
 /**
  * TimelineMap — dated entities as linked dots on a shared time axis, one
@@ -598,29 +599,28 @@ function TimelineMapFilter({ className, ...rest }: TimelineMapFilterProps) {
       className={cn('mb-3 flex flex-wrap gap-1.5', className)}
       {...rest}
     >
+      {/* The pill styling lives on Toggle's `pill` variant, not here —
+          this Filter is where the look was born (min-h-6 = the 24px
+          SC 2.5.8 floor, caught by the blog's real-layout audit), and
+          extracting it to the primitive is what keeps every later
+          chip surface from forking the classes. Base UI owns
+          aria-pressed. */}
       {categories.map(({ name, count }) => (
-        <button
+        <Toggle
           key={name}
-          type="button"
-          aria-pressed={active.has(name)}
-          onClick={() => toggleCategory(name)}
-          className={cn(
-            // min-h-6 + inline-flex: px-2.5/py-0.5 alone rendered a
-            // 22px-tall pill, under the 24px floor of WCAG 2.2 SC 2.5.8
-            // (caught by the blog's real-layout audit, every viewport).
-            'inline-flex min-h-6 items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors',
-            active.has(name)
-              ? 'border-strand-a/50 bg-strand-a/10 text-foreground'
-              : 'border-border text-muted-foreground hover:text-foreground',
-          )}
+          variant="pill"
+          size="xs"
+          pressed={active.has(name)}
+          onPressedChange={() => toggleCategory(name)}
         >
           {name}
           {/* The count INHERITS the pill's text colour: a hardcoded
               muted-foreground measured 4.37:1 on the ACTIVE pill's
               strand-a/10 tint — under the 4.5 AA floor. Inactive pills
-              are muted anyway, so nothing changes visually there. */}
-          <span className="ml-1">{count}</span>
-        </button>
+              are muted anyway, so nothing changes visually there.
+              No ml-1: the pill variant's gap-1 owns the 4px. */}
+          <span>{count}</span>
+        </Toggle>
       ))}
     </div>
   );

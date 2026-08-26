@@ -7708,8 +7708,7 @@
         ],
         "aria": [
           "aria-label",
-          "aria-live",
-          "aria-pressed"
+          "aria-live"
         ],
         "motion": {
           "driver": "css",
@@ -7726,7 +7725,8 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "theme",
+        "toggle"
       ],
       "installsTo": [
         "components/ui/patterns/timeline-map.tsx"

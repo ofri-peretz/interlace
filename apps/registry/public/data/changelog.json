@@ -80,6 +80,18 @@
           "source": ".changeset/timeline-map-trace.md"
         },
         {
+          "summary": "Toggle — `pill` variant + `xs` size; TimelineMap.Filter consumes it\n\nThe filter pill (rounded-full chip, strand-a pressed tint, greyscale-safe\nborder identity) is now a Toggle variant instead of classes open-coded\ninside TimelineMap.Filter — every \"which categories/threads are active\"\nsurface styles from one home. `xs` is its native size: `min-h-6` sits\nexactly on the WCAG 2.2 SC 2.5.8 24×24 target floor (min-height, so a\nwrapped label grows the pill rather than clipping). TimelineMap.Filter\nnow renders these Toggles — Base UI carries `aria-pressed` — with no\nvisual change.",
+          "components": [
+            "toggle",
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/toggle-pill-variant.md"
+        },
+        {
           "summary": "The woven signature kit and the brand strand tokens.\n\nNew: `TimelineMap` (patterns) — dated entities as dots on category lanes\nwith fit-all width, a roving-tabindex keyboard composite, and the link\nweave (`item.links` draws the corpus's internal reference graph as\nstrand-b threads with select-to-illuminate interaction); `InterlaceWeave`\nand `DecodeText` (effects/, new export subpath). New brand tokens\n`--interlace-strand-a` / `--interlace-strand-b` in both themes, with the\nWCAG 1.4.11 floor measured by the theme-contract lock.\n\nFixed: the preflight applied `height: auto` to svg/canvas, defeating\nexplicit sizing utilities on every viewBox'd svg — now photographic\nmedia only, matching Tailwind's own preflight.",
           "components": [
             "timeline-map"

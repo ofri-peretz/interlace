@@ -19,23 +19,23 @@ const meta: Meta<typeof Toggle> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'outline'],
+      options: ['default', 'outline', 'pill'],
       description:
-        'Resting appearance. `default` is transparent until hovered or pressed — right inside a toolbar where the group already reads as one unit; `outline` gives a lone toggle its own edge.',
+        'Resting appearance. `default` is transparent until hovered or pressed — right inside a toolbar where the group already reads as one unit; `outline` gives a lone toggle its own edge; `pill` is the filter chip (rounded-full, strand-a pressed tint) for "which categories are active" surfaces.',
       table: {
         category: 'Appearance',
-        type: { summary: "'default' | 'outline'" },
+        type: { summary: "'default' | 'outline' | 'pill'" },
         defaultValue: { summary: "'default'" },
       },
     },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['xs', 'sm', 'md', 'lg'],
       description:
-        'Height and padding: sm 32px · md 36px · lg 40px. Even `sm` clears the WCAG 2.5.5 24×24 target floor.',
+        'Height and padding: xs min-24px · sm 32px · md 36px · lg 40px. Every size meets the WCAG 2.2 SC 2.5.8 24×24 target floor — `xs` (the pill’s native size) sits exactly on it.',
       table: {
         category: 'Appearance',
-        type: { summary: "'sm' | 'md' | 'lg'" },
+        type: { summary: "'xs' | 'sm' | 'md' | 'lg'" },
         defaultValue: { summary: "'md'" },
       },
     },
@@ -143,7 +143,7 @@ export const Sizes: Story = {
   // read at thumbnail size.
   tags: ['preview'],
   parameters: {
-    docs: { description: { story: 'Three sizes match the WCAG 2.5.5 target-size floor at sm.' } },
+    docs: { description: { story: 'The icon sizes — sm 32px and up, well clear of the WCAG 2.2 SC 2.5.8 24px target floor.' } },
   },
   render: () => (
     <div className="flex items-center gap-3">
@@ -176,6 +176,33 @@ export const Group: Story = {
         <Underline className="size-4" aria-hidden />
       </Toggle>
     </ToggleGroup>
+  ),
+};
+
+export const Pill: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The filter pill — the chip-shaped toggle extracted from TimelineMap.Filter, for "which categories/threads are active" surfaces. Pressed is the strand-a tint; identity survives greyscale via the border change. `xs` sits exactly on the WCAG 2.2 SC 2.5.8 24px target floor.',
+      },
+    },
+  },
+  render: () => (
+    <div role="group" aria-label="Filter by category" className="flex flex-wrap gap-1.5">
+      <Toggle variant="pill" size="xs" defaultPressed>
+        Guides
+        <span>12</span>
+      </Toggle>
+      <Toggle variant="pill" size="xs">
+        Deep dives
+        <span>7</span>
+      </Toggle>
+      <Toggle variant="pill" size="xs">
+        Benchmarks
+        <span>4</span>
+      </Toggle>
+    </div>
   ),
 };
 
