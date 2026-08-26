@@ -60,8 +60,16 @@ const MAX_STRANDS = 7;
 const W = 600;
 const H = 160;
 
-/** Depth between fanned planes, px. */
-const SPREAD = 46;
+/**
+ * The fan's whole depth ENVELOPE, ±px — not a per-plane step. More
+ * strands pack more densely inside the same bound, so the outermost
+ * plane's screen-space projection is capped at sin(26°)·46 ≈ 20px at
+ * every strand count, which is what the planes' top-6/bottom-6 safe
+ * band is sized against (review: a per-plane step of 46 put the
+ * 7-strand front plane at z=138 — ~60px of projection, more than
+ * double the band).
+ */
+const MAX_Z = 46;
 
 const BASE_RX = 18;
 const BASE_RY = -12;
@@ -143,7 +151,8 @@ export function StrandField({
       >
         {drawn.map((strand, index) => {
           const present = active.size === 0 || active.has(strand.id);
-          const z = woven ? 0 : ((drawn.length - 1) / 2 - index) * SPREAD;
+          const half = (drawn.length - 1) / 2;
+          const z = woven || half === 0 ? 0 : ((half - index) / half) * MAX_Z;
           const lastPoint = strand.scales.points[strand.scales.points.length - 1];
           return (
             <div
@@ -152,10 +161,11 @@ export function StrandField({
               className={cn(
                 // `top-6 bottom-6`, not `inset-0`: the container clips in
                 // SCREEN space, and a plane at translateZ under the stage's
-                // rotateX projects its top edge ~sin(26°)·46px ≈ 20px above
-                // the box — a strand whose line (or label) ends high was
-                // losing its top half to overflow-hidden. Measured at 375
-                // and 320; the 24px band covers the full tilt range.
+                // rotateX projects beyond its own box — a strand whose line
+                // (or label) ended high was losing its top half to
+                // overflow-hidden (found at 375/320). The band is sized
+                // against MAX_Z: the depth ENVELOPE caps the worst-case
+                // projection at sin(26°)·46 ≈ 20px at every strand count.
                 'absolute inset-x-0 top-6 bottom-6 transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none',
                 present ? 'opacity-100' : 'opacity-40',
               )}

@@ -92,6 +92,22 @@ describe('the depth model', () => {
     expect(field(container).hasAttribute('data-woven')).toBe(true);
   });
 
+  it('the fan is a bounded ENVELOPE — more strands pack denser, never deeper', () => {
+    // The safe band is sized against MAX_Z=46; a per-plane step would put
+    // the 7-strand front plane at z=138 and ~60px of projection (review).
+    const seven = Array.from({ length: 7 }, (_, i) => ({
+      id: `s${i}`,
+      label: `s${i}`,
+      points: series(1, 2, 3),
+    }));
+    const { container } = render(<StrandField data-testid="f" series={seven} />);
+    const zs = [...container.querySelectorAll<HTMLElement>('[data-slot="strand-field-plane"]')]
+      .map((p) => Number(/translateZ\((-?[\d.]+)px\)/.exec(p.style.transform)?.[1]));
+    expect(Math.max(...zs)).toBe(46);
+    expect(Math.min(...zs)).toBe(-46);
+    expect(zs.every((z) => Math.abs(z) <= 46)).toBe(true);
+  });
+
   it('drops strands with fewer than two numeric points, and caps at seven', () => {
     const many = Array.from({ length: 10 }, (_, i) => ({
       id: `s${i}`,
