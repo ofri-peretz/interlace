@@ -605,14 +605,21 @@ function TimelineMapFilter({ className, ...rest }: TimelineMapFilterProps) {
           aria-pressed={active.has(name)}
           onClick={() => toggleCategory(name)}
           className={cn(
-            'rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors',
+            // min-h-6 + inline-flex: px-2.5/py-0.5 alone rendered a
+            // 22px-tall pill, under the 24px floor of WCAG 2.2 SC 2.5.8
+            // (caught by the blog's real-layout audit, every viewport).
+            'inline-flex min-h-6 items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors',
             active.has(name)
               ? 'border-strand-a/50 bg-strand-a/10 text-foreground'
               : 'border-border text-muted-foreground hover:text-foreground',
           )}
         >
           {name}
-          <span className="ml-1 text-muted-foreground">{count}</span>
+          {/* The count INHERITS the pill's text colour: a hardcoded
+              muted-foreground measured 4.37:1 on the ACTIVE pill's
+              strand-a/10 tint — under the 4.5 AA floor. Inactive pills
+              are muted anyway, so nothing changes visually there. */}
+          <span className="ml-1">{count}</span>
         </button>
       ))}
     </div>
