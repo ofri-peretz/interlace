@@ -168,6 +168,15 @@
           "source": ".changeset/roving-focus-filter-trap.md"
         },
         {
+          "summary": "StrandField planes keep a vertical safe band\n\nPlanes sit at `inset-x-0 top-6 bottom-6` instead of `inset-0`: the field\nclips in screen space, and a plane at `translateZ` under the stage's\n`rotateX` projects its top edge ~20px above its own box — a strand whose\nline or label ended high was losing its top half to `overflow-hidden`\n(found walking the blog's `/loom` at 375 and 320).\n\nThe fan is now a bounded depth ENVELOPE (±46px) rather than a 46px\nper-plane step: more strands pack denser, never deeper, so the band's\nguarantee holds at every strand count — a per-plane step put the\n7-strand front plane at z=138px and ~60px of projection, more than\ndouble the band.",
+          "components": [],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/strand-field-safe-band.md"
+        },
+        {
           "summary": "TimelineMap — dot links get a 24px hit area\n\nThe visible dots can be as small as 10px — under the 24px target\nfloor of WCAG 2.2 SC 2.5.8, and genuinely hard to tap. Each dot link\nnow carries a transparent r=12 hit circle behind the painted dot:\npointer geometry grows to 24px, the visual stays the map's scale.\nCaught by the blog's layout audit at every viewport.",
           "components": [
             "timeline-map"

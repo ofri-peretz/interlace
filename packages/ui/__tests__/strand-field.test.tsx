@@ -92,6 +92,22 @@ describe('the depth model', () => {
     expect(field(container).hasAttribute('data-woven')).toBe(true);
   });
 
+  it('the fan is a bounded ENVELOPE — more strands pack denser, never deeper', () => {
+    // The safe band is sized against MAX_Z=46; a per-plane step would put
+    // the 7-strand front plane at z=138 and ~60px of projection (review).
+    const seven = Array.from({ length: 7 }, (_, i) => ({
+      id: `s${i}`,
+      label: `s${i}`,
+      points: series(1, 2, 3),
+    }));
+    const { container } = render(<StrandField data-testid="f" series={seven} />);
+    const zs = [...container.querySelectorAll<HTMLElement>('[data-slot="strand-field-plane"]')]
+      .map((p) => Number(/translateZ\((-?[\d.]+)px\)/.exec(p.style.transform)?.[1]));
+    expect(Math.max(...zs)).toBe(46);
+    expect(Math.min(...zs)).toBe(-46);
+    expect(zs.every((z) => Math.abs(z) <= 46)).toBe(true);
+  });
+
   it('drops strands with fewer than two numeric points, and caps at seven', () => {
     const many = Array.from({ length: 10 }, (_, i) => ({
       id: `s${i}`,
@@ -111,6 +127,17 @@ describe('the depth model', () => {
     const planes = [...container.querySelectorAll<HTMLElement>('[data-slot="strand-field-plane"]')];
     expect(planes[0].className).toContain('opacity-40');
     expect(planes[1].className).toContain('opacity-100');
+  });
+
+  it('planes keep a vertical safe band — 3D projection clips in screen space', () => {
+    // A plane at translateZ under the stage's rotateX projects beyond its
+    // own box; inset-0 planes lost their top strand/label to the
+    // container's overflow-hidden (found at 375/320 in the blog).
+    const { container } = render(<StrandField data-testid="f" series={THREADS} />);
+    const plane = container.querySelector('[data-slot="strand-field-plane"]');
+    expect(plane?.className).toContain('top-6');
+    expect(plane?.className).toContain('bottom-6');
+    expect(plane?.className).not.toContain('inset-0');
   });
 
   it('labels each strand at its line’s end height', () => {
