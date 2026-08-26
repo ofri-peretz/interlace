@@ -834,6 +834,21 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
                     onClick={() => onItemClick?.(d.item)}
                     className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
                   >
+                    {/* SVG hit-slop: the visible dot can be as small as
+                        10px, under the 24px target floor of WCAG 2.2
+                        SC 2.5.8 (caught by the blog's layout audit at
+                        every viewport) — and a 10px dot is genuinely
+                        hard to tap. The transparent circle carries the
+                        pointer geometry; the painted one stays the
+                        map's visual scale. pointer-events on the link
+                        make both circles hit-testable. */}
+                    <circle
+                      cx={d.cx}
+                      cy={d.cy}
+                      r={12}
+                      fill="transparent"
+                      stroke="none"
+                    />
                     <circle
                       cx={d.cx}
                       cy={d.cy}
