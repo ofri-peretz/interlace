@@ -7647,8 +7647,8 @@
           "aria-live"
         ],
         "motion": {
-          "driver": "none",
-          "declaresPreference": false,
+          "driver": "css",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true

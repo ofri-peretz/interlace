@@ -58,6 +58,17 @@
           "source": ".changeset/section-index.md"
         },
         {
+          "summary": "TimeSeries draws itself — the weave-reveal motion contract\n\nThe plotted series (and the annotations riding them) are now revealed by a\nclip rect that scales open left→right on mount — the shuttle pass — via the\nnew `--animate-weave-reveal` token: the draw verb's second mechanism, for a\nchart whose dash patterns ARE series identity and cannot take the\nstroke-dashoffset trick (MOTION_PHILOSOPHY's draw-gesture exception, amended\nwith the clip-reveal clause; the motion lock verifies the utility only ever\nlands on a `clipPath` child). Pure CSS, so an SSR'd chart draws before\nhydration; from-only keyframe, so with no animation at all — reduced motion,\njsdom, old engines — nothing is ever hidden.\n\nThe reveal replays when the drawn GEOMETRY genuinely changes: a value\ncomparison (composition, key range, y domain), never array identity, so a\nparent re-rendering with fresh literals does not replay the draw. The same\nchange resets the crosshair during render — an old slot index would pair the\naria-live readout with the wrong date. And the crosshair now glides between\nslots on a transform transition (150ms, `motion-reduce:transition-none`);\nthe readout still snaps — the readout is the record, the glide is the\ngesture.",
+          "components": [
+            "time-series"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/time-series-weave-reveal.md"
+        },
+        {
           "summary": "TimelineMap: number-axis mode — the lanes × axis landscape over any continuous measure\n\nNew `axis` prop (`{ kind: \"number\", format }`) positions dots by\n`item.value` instead of `item.date` — reading minutes, bundle KB, any\nquantity a corpus is actually navigated by. Nice-step ticks (1/2/5×10ⁿ)\nrender through the consumer's `format`; aria-labels and the Detail\nstrip speak the formatted value through one shared voice, so the two\ncan never disagree. The date axis, the weave, and every interaction are\nunchanged; `date` is now optional at the type level (number-axis items\ndon't need one).",
           "components": [
             "timeline-map"

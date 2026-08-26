@@ -24,6 +24,25 @@
  * The pointer path and the keyboard path both resolve through `nearestSlot`,
  * so the two can never disagree about which point is under the crosshair.
  *
+ * ## The weave draws itself — and never hides
+ *
+ * The plotted series (and the annotations that ride them) are clipped by a
+ * rect that scales open left→right — the shuttle pass — on mount and again
+ * whenever the drawn GEOMETRY genuinely changes. The draw verb's usual
+ * mechanism (`animate-strand-draw`, stroke-dashoffset) is unavailable here:
+ * this chart's dash patterns ARE series identity, and the dashoffset trick
+ * would overwrite them. The reveal is pure CSS (`--animate-weave-reveal`),
+ * so an SSR'd chart draws before hydration, and its keyframe is from-only:
+ * the rect RESTS fully open, so under reduced motion, in jsdom, or in a
+ * browser that cannot animate clip contents, nothing is ever hidden — the
+ * failure mode is a chart that appears, never one that doesn't.
+ *
+ * "Genuinely changes" is a VALUE comparison (`geometry` below), not object
+ * identity — a parent re-rendering with fresh array literals, the normal
+ * React case, must not replay the draw. The same string resets the
+ * crosshair, because a slot index into the previous geometry's keys would
+ * pair the readout with the wrong date.
+ *
  * ## There is no floating tooltip, and that is the design
  *
  * A tooltip that follows the pointer is a *second* inspection surface: it has
@@ -285,6 +304,36 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     [last],
   );
 
+  // `useId` may contain `:` (React 18) or `«»` (React 19), which break
+  // inside a `url(#…)` reference — keep the alphanumeric core.
+  const clipId = `ts-reveal-${React.useId().replace(/[^a-zA-Z0-9-]/g, '')}`;
+
+  /**
+   * The drawn geometry, named by VALUE — composition, key range, y domain.
+   * Keys the reveal rect (a change remounts it, replaying the draw) and
+   * resets the crosshair (an old slot index pairs the readout with the
+   * wrong date). See "The weave draws itself" in the header.
+   */
+  const geometry = [
+    drawn.map((s) => named(s.label)).join(','),
+    plot.keys[0] ?? '',
+    plot.keys[last] ?? '',
+    plot.keys.length,
+    plot.min,
+    plot.max,
+  ].join('|');
+
+  // Reset DURING render, not in an effect: an effect fires after the new
+  // geometry has already painted a frame with the stale cursor, and that
+  // frame's readout — an `aria-live` region — would announce old-slot ×
+  // new-keys. The render-phase state adjustment re-renders before commit,
+  // so the mismatched frame never exists.
+  const [drawnGeometry, setDrawnGeometry] = React.useState(geometry);
+  if (drawnGeometry !== geometry) {
+    setDrawnGeometry(geometry);
+    setCursor(null);
+  }
+
   const onKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     const current = cursor ?? 0;
     switch (event.key) {
@@ -495,8 +544,27 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         onPointerLeave={() => setCursor(null)}
         onBlur={() => setCursor(null)}
       >
+        {/* The reveal clip. The rect is keyed by `geometry`, so a genuine
+            change of shape remounts it and the CSS animation runs again —
+            no JS drives it. `origin-left` + `fill-box` anchor the scale to
+            the rect's own left edge, wherever the referencing group sits. */}
+        <defs>
+          <clipPath id={clipId}>
+            <rect
+              key={geometry}
+              x={0}
+              y={0}
+              width={W}
+              height={height}
+              className="animate-weave-reveal origin-left [transform-box:fill-box]"
+            />
+          </clipPath>
+        </defs>
+
         {/* Grid + axis. Decorative weight for the lines, real contrast for the
-            labels — the label is what tells you where zero is. */}
+            labels — the label is what tells you where zero is. Deliberately
+            OUTSIDE the reveal clip: the scale is the stage, the series is
+            the performance. */}
         {axisTicks.map((value) => {
           const y = plot.y(value);
           return (
@@ -565,7 +633,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
             crosshair — positions with `px()`, which adds the same offset.
             Two ways to say "left edge" in one file is how coordinate bugs
             start; this is the seam between them. */}
-        <g transform={`translate(${PAD_LEFT} 0)`}>
+        <g transform={`translate(${PAD_LEFT} 0)`} clipPath={`url(#${clipId})`}>
           {/* The area fill is a one-series affordance. Two translucent fills
               overlap into a third colour that belongs to neither series and
               reads as a value. */}
@@ -590,6 +658,9 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
           ))}
         </g>
 
+        {/* Annotations share the reveal clip, so a mark sweeps in with the
+            line it explains rather than floating over a not-yet-drawn one. */}
+        <g clipPath={`url(#${clipId})`}>
         {annotations.map((annotation) => {
           const index = slotByDay.get(day(annotation.t));
           if (index == null) return null;
@@ -616,13 +687,24 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
             </g>
           );
         })}
+        </g>
 
+        {/* The crosshair GLIDES between slots: the group carries the x
+            position as one transform, which CSS transitions between steps
+            (a `line` x1/x2 is not a transitionable property; a transform
+            is). 150ms trails the readout, which snaps — the readout is the
+            record, the glide is the gesture, and the dot always LANDS on
+            the true value. `motion-reduce` snaps the glyph too. */}
         {cursor !== null && (
-          <g aria-hidden>
+          <g
+            aria-hidden
+            transform={`translate(${px(cursor)} 0)`}
+            className="transition-transform duration-150 ease-out motion-reduce:transition-none"
+          >
             <line
-              x1={px(cursor)}
+              x1={0}
               y1={PAD_TOP}
-              x2={px(cursor)}
+              x2={0}
               y2={height}
               className="stroke-viz-crosshair opacity-50"
               strokeWidth={1}
@@ -635,10 +717,13 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
               return value === null ? null : (
                 <circle
                   key={`dot-${named(drawn[index].label)}`}
-                  cx={px(cursor)}
+                  cx={0}
                   cy={plot.y(value)}
                   r={4}
-                  className={cn('stroke-background', SERIES_STYLE[index].fill)}
+                  className={cn(
+                    'stroke-background transition-[cy] duration-150 ease-out motion-reduce:transition-none',
+                    SERIES_STYLE[index].fill,
+                  )}
                   strokeWidth={2}
                 />
               );

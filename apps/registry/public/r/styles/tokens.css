@@ -39,12 +39,33 @@
    * reduced-motion clamp reaches it (instantly-drawn end state). */
   --animate-strand-draw: strand-draw 600ms ease-out forwards;
 
+  /* The draw verb's second mechanism, for a chart whose dash pattern IS
+   * series identity (TimeSeries): stroke-dashoffset would overwrite the
+   * dashes, so the true paths are progressively REVEALED by a clip rect
+   * that scales open left→right — the shuttle pass. The transform moves
+   * a CLIP EDGE, never content (the motion lock verifies the utility
+   * only ever lands on a clipPath child). From-only keyframe on
+   * purpose: the rect RESTS fully open, so with no animation at all
+   * (reduced motion, jsdom, an engine that cannot animate clip
+   * contents) nothing is ever hidden. Same 600ms draw ceiling.
+   *
+   * Declared ABOVE the keyframes bodies: the motion lock's segmenter
+   * runs each @keyframes to the next header, and a declaration sitting
+   * between two bodies would be over-captured into the first one. */
+  --animate-weave-reveal: weave-reveal 600ms ease-out;
+
   @keyframes strand-draw {
     from {
       stroke-dashoffset: 100;
     }
     to {
       stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes weave-reveal {
+    from {
+      transform: scaleX(0);
     }
   }
 
@@ -212,7 +233,11 @@
   .animate-scale-in,
   .animate-pulse,
   .animate-meteor,
-  .animate-meteor-effect {
+  .animate-meteor-effect,
+  /* weave-reveal belongs in THIS list, unlike strand-draw below: its
+   * keyframe is from-only, so `animation: none` rests at the fully
+   * revealed end state — nothing to clamp, nothing hidden. */
+  .animate-weave-reveal {
     animation: none !important;
     transition: none !important;
   }

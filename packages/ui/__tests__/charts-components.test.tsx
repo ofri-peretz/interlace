@@ -342,6 +342,55 @@ describe('TimeSeries', () => {
     expect(container.querySelector('output')?.textContent).toBe('');
   });
 
+  it('draws in through a clip whose resting state is fully revealed', () => {
+    const { container } = render(<TimeSeries points={series(1, 2, 3)} />);
+    const rect = container.querySelector('clipPath rect');
+    // The reveal is the from-only `weave-reveal` keyframe: no animation at
+    // all (this very jsdom run, reduced motion) rests at the open state.
+    expect(rect?.getAttribute('class')).toContain('animate-weave-reveal');
+    expect(rect?.getAttribute('class')).toContain('origin-left');
+    // The plotted series is clipped by THAT rect's clipPath, not by luck.
+    const id = container.querySelector('clipPath')?.getAttribute('id');
+    expect(container.querySelector(`[clip-path="url(#${id})"] path`)).not.toBeNull();
+  });
+
+  it('replays the reveal by geometry VALUE, never by array identity', () => {
+    const { container, rerender } = render(<TimeSeries points={series(1, 2, 3)} />);
+    const before = container.querySelector('clipPath rect');
+    // Same values in a fresh array — the normal parent re-render. The rect
+    // must keep its DOM node, or every unrelated state change replays the draw.
+    rerender(<TimeSeries points={series(1, 2, 3)} />);
+    expect(container.querySelector('clipPath rect')).toBe(before);
+    // A different y domain is a different weave: the rect remounts, which is
+    // what restarts the CSS animation.
+    rerender(<TimeSeries points={series(4, 5, 6)} />);
+    expect(container.querySelector('clipPath rect')).not.toBe(before);
+  });
+
+  it('resets the crosshair when the geometry changes — old slots pair with old dates', async () => {
+    const user = userEvent.setup();
+    const { container, rerender } = render(<TimeSeries points={series(10, 20, 30)} />);
+    screen.getByRole('img').focus();
+    await user.keyboard('{End}');
+    expect(container.querySelector('output')?.textContent).toBe('2026-08-03 · 30');
+    // One point fewer: slot 2 now names a date that does not exist. The
+    // readout must empty rather than announce a stale pairing.
+    rerender(<TimeSeries points={series(10, 20)} />);
+    expect(container.querySelector('output')?.textContent).toBe('');
+  });
+
+  it('the crosshair glides on a transform transition, clamped for reduced motion', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<TimeSeries points={series(10, 20, 30)} />);
+    screen.getByRole('img').focus();
+    await user.keyboard('{ArrowRight}');
+    const crosshair = container.querySelector(
+      'g[transform^="translate("][class*="transition-transform"]',
+    );
+    expect(crosshair).not.toBeNull();
+    expect(crosshair?.getAttribute('class')).toContain('motion-reduce:transition-none');
+  });
+
   it('leaves unrelated keys to the page — a focused chart is not a keyboard trap', async () => {
     const user = userEvent.setup();
     const { container } = render(<TimeSeries points={series(10, 20)} />);

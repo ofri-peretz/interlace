@@ -94,8 +94,16 @@ The hard bans. Not "discouraged" — forbidden, enforced in review.
     HeroStrand's ribbon) occludes nothing: content is fully painted
     at frame 0 and the ceiling's rationale does not reach it.
     Max 600ms on a draw gesture, and the exception is exactly as wide
-    as the evidence — a keyframe qualifies only if it animates
-    `stroke-dashoffset` and nothing else. Anything touching opacity
+    as the evidence — a keyframe qualifies if it animates
+    `stroke-dashoffset` and nothing else, or (the clip-reveal
+    mechanism, for a chart whose dash patterns ARE series identity
+    and cannot take the dashoffset trick) if it animates `transform`
+    and nothing else while its utility only ever lands on a
+    `<clipPath>` child: that transform moves a clip edge, never
+    content. A chart revealed left→right is the draw verb applied to
+    data — time enters in reading order, and the scale, axis, readout
+    and data table are painted at frame 0, so no accessible surface
+    waits on the sweep. Any other keyframe touching opacity
     or transform is an entry animation and keeps the 200ms ceiling.
     Under `prefers-reduced-motion` a draw completes instantly (the
     drawn end state) rather than vanishing — removing the motion must
