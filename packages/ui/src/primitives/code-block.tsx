@@ -10,14 +10,15 @@
  * a `<pre><code class="language-{lang}">`, ready for any downstream syntax
  * highlighter (Shiki, Prism, hand-rolled — we don't care).
  *
- * The header is omitted entirely when neither `title` nor `language` are
- * provided AND copy is disabled, so the primitive degrades to a clean
- * `<figure><pre><code/></pre></figure>` for inline snippets.
+ * The header ALWAYS renders — the copy button needs a home even when
+ * `title` and `language` are both absent. A snippet too small to deserve
+ * the header bar is a snippet that should be a plain inline `<code>`,
+ * not a CodeBlock.
  *
  * ## Anatomy
  *
  *   CodeBlock                          (figure — data-min-viewport=320)
- *     ├─ figcaption                    (header bar; rendered only when needed)
+ *     ├─ figcaption                    (header bar; always rendered)
  *     │   ├─ {title}                   (left)
  *     │   ├─ {language tag}            (right)
  *     │   └─ <button> "Copy" / "Copied!" (right; client-only)
@@ -142,7 +143,6 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
       );
     }
 
-    const showHeader = Boolean(title) || Boolean(language) || true; // always show — copy button needs a home
     const langClass = language ? `language-${language}` : undefined;
 
     return (
@@ -157,51 +157,51 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
         )}
         {...props}
       >
-        {showHeader ? (
-          <figcaption
-            data-slot="code-block-header"
-            className={cn(
-              'border-border flex items-center justify-between gap-sm border-b px-md py-xs',
-              'text-ui-sm text-muted-foreground',
-            )}
+        {/* Always rendered — the copy button needs a home (see the
+            header docs above). */}
+        <figcaption
+          data-slot="code-block-header"
+          className={cn(
+            'border-border flex items-center justify-between gap-sm border-b px-md py-xs',
+            'text-ui-sm text-muted-foreground',
+          )}
+        >
+          <span
+            data-slot="code-block-title"
+            className="min-w-0 truncate font-medium text-foreground"
           >
-            <span
-              data-slot="code-block-title"
-              className="min-w-0 truncate font-medium text-foreground"
-            >
-              {title}
-            </span>
-            <div className="flex items-center gap-sm">
-              {language ? (
-                <span
-                  data-slot="code-block-language"
-                  className="font-mono uppercase tracking-wide"
-                >
-                  {language}
-                </span>
-              ) : null}
-              <button
-                type="button"
-                data-slot="code-block-copy"
-                onClick={handleCopy}
-                aria-label={copied ? 'Copied to clipboard' : 'Copy code to clipboard'}
-                className={cn(
-                  'inline-flex items-center gap-xs rounded-md px-xs py-xs',
-                  'text-ui-sm text-muted-foreground hover:text-foreground',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-                  'transition-colors',
-                )}
+            {title}
+          </span>
+          <div className="flex items-center gap-sm">
+            {language ? (
+              <span
+                data-slot="code-block-language"
+                className="font-mono uppercase tracking-wide"
               >
-                {copied ? (
-                  <Check aria-hidden className="size-4" />
-                ) : (
-                  <Copy aria-hidden className="size-4" />
-                )}
-                <span aria-live="polite">{copied ? 'Copied!' : 'Copy'}</span>
-              </button>
-            </div>
-          </figcaption>
-        ) : null}
+                {language}
+              </span>
+            ) : null}
+            <button
+              type="button"
+              data-slot="code-block-copy"
+              onClick={handleCopy}
+              aria-label={copied ? 'Copied to clipboard' : 'Copy code to clipboard'}
+              className={cn(
+                'inline-flex items-center gap-xs rounded-md px-xs py-xs',
+                'text-ui-sm text-muted-foreground hover:text-foreground',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                'transition-colors',
+              )}
+            >
+              {copied ? (
+                <Check aria-hidden className="size-4" />
+              ) : (
+                <Copy aria-hidden className="size-4" />
+              )}
+              <span aria-live="polite">{copied ? 'Copied!' : 'Copy'}</span>
+            </button>
+          </div>
+        </figcaption>
         <pre
           data-slot="code-block-pre"
           // tabIndex=0 keeps overflow scroll keyboard-reachable per axe

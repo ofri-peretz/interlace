@@ -80,6 +80,17 @@
           "source": ".changeset/woven-signature-kit.md"
         },
         {
+          "summary": "CodeBlock — dead header conditional removed, docs match behavior\n\n`Boolean(title) || Boolean(language) || true` never evaluated its left\nside and the file docs still described a header that could be omitted.\nThe header ALWAYS renders (the copy button needs a home); the code and\nboth doc blocks now say exactly that. No runtime change.",
+          "components": [
+            "code-block"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/code-block-header-doc.md"
+        },
+        {
           "summary": "HeroStrand: aria-hidden omitted from the props type\n\nThe always-decorative contract gains its type layer: `aria-hidden` is\nOmit-ed from HeroStrandProps (strips autocomplete, rejects\nobject-literal construction). Measured honestly: TS checks aria-* JSX\nattributes leniently, so the runtime override guard remains the\nenforced layer — the source comment says exactly that.",
           "components": [],
           "componentsDeclared": true,
