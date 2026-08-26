@@ -71,7 +71,11 @@ const toggleVariants = cva(
          * later utility wins.
          */
         pill: cn(
-          'rounded-full border border-border text-muted-foreground',
+          // gap-1, not the base's gap-2: a pill's adjunct (the count in
+          // TimelineMap.Filter) sits 4px off the label — the spacing the
+          // original chip shipped with, now owned by the container
+          // instead of an ml-1 on every child.
+          'gap-1 rounded-full border border-border text-muted-foreground',
           'hover:bg-transparent hover:text-foreground',
           'data-[pressed]:border-strand-a/50 data-[pressed]:bg-strand-a/10 data-[pressed]:text-foreground',
         ),

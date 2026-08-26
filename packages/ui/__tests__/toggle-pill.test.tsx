@@ -37,6 +37,14 @@ describe('toggleVariants pill/xs', () => {
     expect(classes).not.toContain('hover:bg-muted');
   });
 
+  it('owns its adjunct spacing: gap-1 beats the base gap-2', () => {
+    // 4px label↔count — the spacing TimelineMap.Filter shipped with
+    // (was ml-1 per child); the visual baseline pins it in pixels.
+    const tokens = classes.split(/\s+/);
+    expect(tokens).toContain('gap-1');
+    expect(tokens).not.toContain('gap-2');
+  });
+
   it('is a bordered, rounded-full pill — identity survives greyscale', () => {
     expect(classes).toContain('rounded-full');
     expect(classes).toContain('border-border');

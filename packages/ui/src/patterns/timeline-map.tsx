@@ -617,8 +617,9 @@ function TimelineMapFilter({ className, ...rest }: TimelineMapFilterProps) {
           {/* The count INHERITS the pill's text colour: a hardcoded
               muted-foreground measured 4.37:1 on the ACTIVE pill's
               strand-a/10 tint — under the 4.5 AA floor. Inactive pills
-              are muted anyway, so nothing changes visually there. */}
-          <span className="ml-1">{count}</span>
+              are muted anyway, so nothing changes visually there.
+              No ml-1: the pill variant's gap-1 owns the 4px. */}
+          <span>{count}</span>
         </Toggle>
       ))}
     </div>

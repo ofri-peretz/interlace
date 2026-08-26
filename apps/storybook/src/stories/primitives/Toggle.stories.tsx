@@ -143,7 +143,7 @@ export const Sizes: Story = {
   // read at thumbnail size.
   tags: ['preview'],
   parameters: {
-    docs: { description: { story: 'Three sizes match the WCAG 2.5.5 target-size floor at sm.' } },
+    docs: { description: { story: 'The icon sizes — sm 32px and up, well clear of the WCAG 2.2 SC 2.5.8 24px target floor.' } },
   },
   render: () => (
     <div className="flex items-center gap-3">
@@ -192,15 +192,15 @@ export const Pill: Story = {
     <div role="group" aria-label="Filter by category" className="flex flex-wrap gap-1.5">
       <Toggle variant="pill" size="xs" defaultPressed>
         Guides
-        <span className="ml-1">12</span>
+        <span>12</span>
       </Toggle>
       <Toggle variant="pill" size="xs">
         Deep dives
-        <span className="ml-1">7</span>
+        <span>7</span>
       </Toggle>
       <Toggle variant="pill" size="xs">
         Benchmarks
-        <span className="ml-1">4</span>
+        <span>4</span>
       </Toggle>
     </div>
   ),
