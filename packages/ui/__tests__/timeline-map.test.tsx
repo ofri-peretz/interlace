@@ -197,8 +197,13 @@ describe('static markup (SSR honesty)', () => {
   });
 
   it('exactly one dot is the roving tab stop', () => {
-    expect(html.match(/tabindex="0"/gi)?.length ?? 0).toBe(1);
-    expect(html.match(/tabindex="-1"/gi)?.length ?? 0).toBe(ITEMS.length - 1);
+    // Scoped to anchors — the dots. The Filter's Base UI toggles also
+    // SSR an (explicit, redundant-on-a-button) tabindex="0", which a
+    // global count would drag into this roving-tabindex lock.
+    expect(html.match(/<a[^>]*tabindex="0"/gi)?.length ?? 0).toBe(1);
+    expect(html.match(/<a[^>]*tabindex="-1"/gi)?.length ?? 0).toBe(
+      ITEMS.length - 1,
+    );
   });
 
   it('filter chips render pressed with counts', () => {

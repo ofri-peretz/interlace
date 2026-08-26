@@ -20,15 +20,16 @@
  *
  * ## MIN_VIEWPORT — 320
  *
- * Toggles must reach the WCAG 2.5.5 target-size floor (24×24 CSS px). The
- * `sm` size below renders at 32×32, the smallest in the size enum.
+ * Toggles must reach the WCAG 2.2 SC 2.5.8 target-size floor (24×24 CSS
+ * px, AA). `xs` — the pill's native size — sits exactly on that floor
+ * (min-h-6); `sm` and up clear it with room.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R4   | Extends Base UI part props       | wrappers extend `React.ComponentProps<typeof BaseToggle/etc>` |
  * | R6   | data-slot per part               | toggle / toggle-group / toggle-group-item                   |
  * | R7   | cva + cn + ...rest               | `cn(toggleVariants({size,variant}), className)` + `{...props}` |
- * | R8   | Enums for size / variant         | size = sm|md|lg; variant = default|outline                  |
+ * | R8   | Enums for size / variant         | size = xs|sm|md|lg; variant = default|outline|pill          |
  * | R12  | Reuse over wrap                  | Base UI owns pressed state + ARIA                           |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R19  | Tokens only                      | bg-muted, bg-accent, text-foreground — semantic tokens      |
@@ -58,8 +59,32 @@ const toggleVariants = cva(
       variant: {
         default: 'bg-transparent',
         outline: 'border-border bg-transparent border shadow-sm hover:bg-accent hover:text-accent-foreground',
+        /**
+         * The filter pill — the DS's one chip-shaped toggle, extracted
+         * from TimelineMap.Filter so every "which threads/categories
+         * are active" surface styles from a single home. Pressed state
+         * is the strand-a tint (the brand-accent rule: strand color on
+         * interactive surfaces only); identity survives greyscale via
+         * the border-weight change, not hue alone. Overrides of the
+         * base's hover/pressed washes resolve through tailwind-merge —
+         * variant classes come after base in the cva output, so the
+         * later utility wins.
+         */
+        pill: cn(
+          'rounded-full border border-border text-muted-foreground',
+          'hover:bg-transparent hover:text-foreground',
+          'data-[pressed]:border-strand-a/50 data-[pressed]:bg-strand-a/10 data-[pressed]:text-foreground',
+        ),
       },
       size: {
+        /**
+         * The pill's native size: min-h-6 is the 24px WCAG 2.2 SC 2.5.8
+         * (AA) target floor — the same floor the TimelineMap chips were
+         * audited against at every viewport (a bare px-2.5/py-0.5 pill
+         * rendered 22px tall). min-height, not height, so a wrapped
+         * label grows the pill instead of clipping.
+         */
+        xs: 'min-h-6 px-2.5 py-0.5 text-xs',
         sm: 'h-8 px-2',
         md: 'h-9 px-3',
         lg: 'h-10 px-4',
