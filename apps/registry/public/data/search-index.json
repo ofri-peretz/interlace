@@ -554,7 +554,7 @@
     "bespok": 9,
     "best": 1,
     "better": 3,
-    "beyond": 4,
+    "beyond": 11,
     "bga": 1,
     "bgcolor": 1,
     "big": 4,
@@ -761,7 +761,7 @@
     "comet": 1,
     "comfortab": 1,
     "comfortabl": 1,
-    "command": 11,
+    "command": 4,
     "commanddialog": 1,
     "commandpalett": 1,
     "commit": 2,
@@ -1278,7 +1278,7 @@
     "fram": 15,
     "framer": 3,
     "framework": 7,
-    "free": 12,
+    "free": 5,
     "frequent": 1,
     "friend": 5,
     "frontmatter": 1,
@@ -1718,7 +1718,6 @@
     "minimal": 3,
     "minimiz": 2,
     "minimum": 26,
-    "minor": 1,
     "minus": 12,
     "minut": 4,
     "mirror": 34,
@@ -2326,7 +2325,7 @@
     "self": 6,
     "semantic": 46,
     "semantical": 2,
-    "semi": 1,
+    "semi": 8,
     "semibold": 1,
     "send": 2,
     "sens": 1,
@@ -3015,7 +3014,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "animat gradient text decorativ effect server rsc animatedgradienttext spe stop var fill faster frag keyfram colorfrom ffaa40 solid clip linear transparent sinc constraint eyebrow primary animation token loop paragraph larger glyph headlin slid admissibl graphical mind reduc badg colour activ duration whatever 9c40ff colorto multiplier precis size back system 01m bind far though built short whos read fall beam beyond distanc tun styl 300"
+      "terms": "animat gradient text decorativ effect server rsc animatedgradienttext spe stop var fill faster frag keyfram colorfrom ffaa40 solid clip linear transparent sinc constraint eyebrow primary animation token loop paragraph larger glyph headlin slid admissibl graphical mind reduc badg colour activ duration whatever 9c40ff colorto multiplier precis size back system 01m bind far though built short whos read fall beam distanc tun styl 300 eight"
     },
     {
       "name": "animated-grid-pattern",
@@ -3068,7 +3067,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "articl card blog pattern client load skeleton stat stack overlay articlecard featuredarticlecard cover tile 420 renderimag imag scrim 1000 utc alt titl chip aspect grid tag 105 adapter hover object motion date author deprecat reserv bag ratio meta crop deprecation minor reaction variant ble img shown gradient featur dev r11 hero framework sit view byte old zoom render height carry bylin box spread testid"
+      "terms": "articl card blog pattern client load skeleton stat stack overlay articlecard featuredarticlecard cover tile 420 renderimag imag scrim 1000 utc alt titl chip aspect grid tag 105 adapter hover object motion date author deprecat reserv bag ratio meta crop deprecation reaction variant ble img shown gradient featur dev r11 hero framework sit view byte old zoom render height carry bylin box spread testid warn"
     },
     {
       "name": "article-list-grid",
@@ -3361,7 +3360,7 @@
         "pattern",
         "foundation"
       ],
-      "terms": "brand logo foundation pattern server rsc lockup bar mark wordmark lowercas eslint tool monospac favicon svg var site geometry nav defin lock identical fill 0a6b47 0d9460 a84c17 bend brandlogo brandmark f4794a monorepo upper copi 100 follow plus attr beyond height pair high orang public rotat product top decorativ header ship center green every size automatical lower alon outsid packag viewbox instead width custom href"
+      "terms": "brand logo foundation pattern server rsc lockup bar mark wordmark lowercas eslint tool monospac favicon svg var site geometry nav defin lock identical fill 0a6b47 0d9460 a84c17 bend brandlogo brandmark f4794a monorepo upper copi 100 follow plus attr height pair high orang public rotat product top decorativ header ship center green every size automatical lower alon beyond outsid packag viewbox instead width custom href"
     },
     {
       "name": "breadcrumb",
@@ -3583,7 +3582,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "collapsibl navigation primitiv client responsiv min viewport 320 keyboard base trigger panel expand disclosur machin aria preflight part radix wir enter surfac control motion basecollapsibl collapsiblepanel collapsibletrigger renderabl reduc uncontroll controll singl dev constrain root open 01m honour medium content tim outlin alia friend renam clos mode focus font offer prod inherit data stat semantic bespok spac every global siz affordanc free wrap interactiv"
+      "terms": "collapsibl navigation primitiv client responsiv min viewport 320 keyboard base trigger panel expand disclosur machin aria preflight part radix wir enter surfac control motion basecollapsibl collapsiblepanel collapsibletrigger renderabl reduc uncontroll controll singl dev constrain root open 01m honour medium content tim outlin alia free friend renam clos mode focus font offer prod inherit data stat semantic bespok spac every global siz affordanc wrap interactiv"
     },
     {
       "name": "combobox",
@@ -3835,7 +3834,7 @@
         "chart",
         "data"
       ],
-      "terms": "delta data chart server rsc responsiv min viewport 320 stat publish releas action normal invers flat annotation kind sery bin axis domain day bar distribution band unit plot rather svg slot centr arc across several last end every tick null point direction degre observation scal observ label measur good much peak seriestabl path user sentenc never zero shar sweep round reader sort key polarity"
+      "terms": "delta data chart server rsc responsiv min viewport 320 stat publish releas action normal invers flat annotation kind sery bin axis domain day bar distribution band unit plot rather svg slot centr across several sweep last end every tick null point direction arc degre observation scal observ label measur good much peak seriestabl path user sentenc never zero shar round reader sort key polarity"
     },
     {
       "name": "dialog",
@@ -3884,7 +3883,7 @@
         "chart",
         "data"
       ],
-      "terms": "distribution data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind bin sery axis bar day domain plot referenc label svg timesery slot unit across readout band peak reader every shar drawn sort hour seriestabl week rather sentenc point user last centr arc awak scal measur end gap read answer observ zero tabl null never quantity several"
+      "terms": "distribution data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind bin sery axis bar day domain plot referenc label svg timesery slot unit across readout band peak reader every shar drawn sort hour seriestabl week rather sentenc point user last centr awak scal measur end gap read answer observ zero tabl null never quantity several sweep"
     },
     {
       "name": "docs-page-template",
@@ -3941,7 +3940,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "dropdown menu overlay primitiv client responsiv min viewport 320 keyboard base popup dropdownmenu item grouplabel onselect typeahead trigger positioner 160px dropdownmenucontent dropdownmenugroup dropdownmenuitem dropdownmenulabel dropdownmenuseparator shorthand submenus separator compos array availabl radio destructiv open node checkbox plus command capp wrap entry portal basemenu dropdownmenucheckboxitem dropdownmenucompos dropdownmenuradiogroup dropdownmenushortcut dropdownmenusub independenc radioitem sideoffset subcontent submenuroot subtrigger tied position focus view dom part dropdownmenutrigger semantical shift tone"
+      "terms": "dropdown menu overlay primitiv client responsiv min viewport 320 keyboard base popup dropdownmenu item grouplabel onselect typeahead trigger positioner 160px dropdownmenucontent dropdownmenugroup dropdownmenuitem dropdownmenulabel dropdownmenuseparator shorthand submenus separator compos array availabl command radio destructiv open node checkbox plus capp wrap entry portal basemenu dropdownmenucheckboxitem dropdownmenucompos dropdownmenuradiogroup dropdownmenushortcut dropdownmenusub independenc radioitem sideoffset subcontent submenuroot subtrigger tied position focus view dom part dropdownmenutrigger semantical shift tone"
     },
     {
       "name": "empty-state",
@@ -4498,7 +4497,7 @@
         "chart",
         "data"
       ],
-      "terms": "metric tabl data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind metrictabl sery bin axis domain day row bar distribution plot across band date several rather svg slot centr arc every reader select measur unit end roic tick never null point degre observation scal observ key peak seriestabl last path user empty zero caller shar label"
+      "terms": "metric tabl data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind metrictabl sery bin axis domain day row bar distribution plot across band date several rather svg slot centr every reader select sweep measur unit end roic tick never null point arc degre observation scal observ key peak seriestabl last path user empty zero caller shar"
     },
     {
       "name": "network-graph",
@@ -4797,7 +4796,7 @@
         "chart",
         "data"
       ],
-      "terms": "radial weav data chart server rsc load skeleton stat publish releas action flat annotation kind radialweav sery bin axis domain plot day dial timesery bar distribution centr band scal shar svg arc observation seriestabl slot rather across every sentenc several sweep unit label end gap tick draw null point degre observ measur reader key sit peak box inspection last path user drawn empty never"
+      "terms": "radial weav data chart server rsc load skeleton stat publish releas action flat annotation kind radialweav sery bin axis domain plot day dial timesery bar distribution centr band scal shar sweep svg observation seriestabl slot rather across every sentenc several unit label end gap tick draw null point arc degre observ measur reader key sit peak box inspection last path user drawn empty never"
     },
     {
       "name": "radio-group",
@@ -4876,7 +4875,7 @@
         "template",
         "blog"
       ],
-      "terms": "registry item templat blog server rsc responsiv min viewport 320 sectionboundary relat matrix name diagram codeblock registryitemtemplat install page description snippet articl documentation cta header variant anatomy back tool compos command full delegat 1024 bash dog eat fluid food section layout container grid reactnod data issu languag cva surfac slot content region singl often api dep extra mapp stream trail skeleton shown load hard"
+      "terms": "registry item templat blog server rsc responsiv min viewport 320 sectionboundary relat matrix name diagram codeblock registryitemtemplat install page description snippet articl documentation cta header variant command anatomy back tool compos full delegat 1024 bash dog eat fluid food section layout container grid reactnod data issu languag cva surfac slot content region singl often api dep extra mapp stream trail skeleton shown load hard"
     },
     {
       "name": "related-posts",
@@ -5102,7 +5101,7 @@
         "chart",
         "data"
       ],
-      "terms": "sery tabl data chart server rsc responsiv min viewport 320 stat publish releas action flat annotation kind seriestabl bin axis day domain bar distribution sort band svg plot pictur slot centr arc never every rather across several key path measur unit reader end order tick null point number degre observation scal answer observ label peak axe last user zero shar sweep read index round"
+      "terms": "sery tabl data chart server rsc responsiv min viewport 320 stat publish releas action flat annotation kind seriestabl bin axis day domain bar distribution sort band svg plot pictur slot centr never every rather across several sweep key path measur unit reader end order tick null point number arc degre observation scal answer observ label peak axe last user zero shar read index round"
     },
     {
       "name": "settings-template",
@@ -5390,7 +5389,7 @@
         "chart",
         "data"
       ],
-      "terms": "sparklin data chart server rsc load skeleton responsiv min viewport 320 stat publish releas action flat annotation kind sery bin axis domain day bar distribution svg band plot unit trend slot centr arc metrictabl row end rather across label never every several read packag tick null point degre observation seriesscal scal observ measur cell peak seriestabl last path user empty zero shar metric sweep"
+      "terms": "sparklin data chart server rsc load skeleton responsiv min viewport 320 stat publish releas action flat annotation kind sery bin axis domain day bar distribution svg band plot unit trend slot centr metrictabl row end rather across label never every several sweep read packag tick null point arc degre observation seriesscal scal observ measur cell peak seriestabl last path user empty zero shar metric"
     },
     {
       "name": "spotlight",
@@ -5850,7 +5849,7 @@
         "chart",
         "data"
       ],
-      "terms": "time sery data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind styl timesery bin axis readout plot domain crosshair svg day draw drawn scal unit point bar distribution seriestabl key label every band user reader metric slot rather across end pad path identity tick centr arc never shar percentag several legend tooltip measur box name empty"
+      "terms": "time sery data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind styl timesery bin axis readout plot domain crosshair svg day draw drawn scal unit point bar distribution seriestabl key label every band user reader metric slot rather across end pad path identity tick centr never shar percentag several sweep legend tooltip measur box name empty"
     },
     {
       "name": "timeline-map",
@@ -5968,7 +5967,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "topbar navigation pattern server rsc responsiv min viewport 320 logo nav link cluster action href semi blur right sticky backdrop 768 wide primary dashboard external header transparent visib middl 768px navlink themetoggl slot 1024px enabl hamburger spa wordmark plain 1280px beneath drawer platform row scroll data content site land decid narrower sheet horizontal next agnostic left receiv router blank framework surfac children top menu"
+      "terms": "topbar navigation pattern server rsc responsiv min viewport 320 logo nav link cluster action href blur right sticky backdrop 768 wide primary dashboard external semi header transparent visib middl 768px navlink themetoggl slot 1024px enabl hamburger spa wordmark plain 1280px beneath drawer platform row scroll data content site land decid narrower sheet horizontal next agnostic left receiv router blank framework surfac children top menu"
     },
     {
       "name": "typography",

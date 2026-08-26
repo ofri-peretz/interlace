@@ -1713,6 +1713,17 @@ describe('RadialWeave', () => {
     expect(container.querySelector('svg[data-slot="radial-weave-plot"] text')).toBeNull();
   });
 
+  it('replays the reveal by geometry VALUE, never by array identity — same contract as TimeSeries', () => {
+    const { container, rerender } = render(<RadialWeave points={series(1, 2, 3)} />);
+    const before = container.querySelector('clipPath rect');
+    // Fresh array, same values: the normal parent re-render keeps the node.
+    rerender(<RadialWeave points={series(1, 2, 3)} />);
+    expect(container.querySelector('clipPath rect')).toBe(before);
+    // A different y domain is a different dial: the rect remounts.
+    rerender(<RadialWeave points={series(4, 5, 6)} />);
+    expect(container.querySelector('clipPath rect')).not.toBe(before);
+  });
+
   it('draws grid rings outside the reveal clip, series inside it', () => {
     const { container } = render(<RadialWeave points={series(10, 20, 30)} />);
     const rect = container.querySelector('clipPath rect');

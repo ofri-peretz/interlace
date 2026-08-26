@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { StrandField } from '@interlace/ui/effects/strand-field';
 import { expect, within } from 'storybook/test';

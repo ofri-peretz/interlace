@@ -613,9 +613,10 @@ export function dialPath(
 
 /**
  * A grid ring: one constant-radius arc across the whole sweep. Two `A`
- * segments rather than one with a large-arc flag — a single arc command
- * cannot span exactly 180° ambiguity-free, and splitting at the midpoint
- * is correct for every sweep without a case split.
+ * segments rather than one: a sweep beyond 180° needs `large-arc-flag=1`
+ * (and exactly 180° is ambiguous between the two semi-circles), so
+ * splitting at the midpoint keeps every segment unambiguously minor —
+ * correct for any sweep up to 360° without a case split.
  */
 export function dialRing(radius: number, geometry: DialGeometry): string {
   const start = dialPoint(geometry.startAngle, radius, geometry);
