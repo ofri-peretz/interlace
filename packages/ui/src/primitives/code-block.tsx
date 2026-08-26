@@ -150,6 +150,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
     // stable across renders when `loading` flips.
     const [copied, setCopied] = React.useState(false);
     const timerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+    const codeRef = React.useRef<HTMLElement>(null);
 
     // Clear the pending reset timer on unmount so we don't setState on a
     // detached node (R25 — client component must clean up its own side-effects).
@@ -182,8 +183,6 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
         // intentionally swallow — the snippet is still visible and selectable.
       }
     }, [children, onCopied]);
-
-    const codeRef = React.useRef<HTMLElement>(null);
 
     // Loading early-return AFTER all hooks (useState, useEffect,
     // useCallback, useRef) so hook order stays stable across renders.
