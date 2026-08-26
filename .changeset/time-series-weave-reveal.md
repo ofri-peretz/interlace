@@ -2,25 +2,35 @@
 '@interlace/ui': minor
 ---
 
-TimeSeries draws itself — the weave-reveal motion contract
+The Living Weave — motion, the radial poster form, and the strand field
 
-Components: time-series
+Components: time-series, radial-weave
 
-The plotted series (and the annotations riding them) are now revealed by a
-clip rect that scales open left→right on mount — the shuttle pass — via the
-new `--animate-weave-reveal` token: the draw verb's second mechanism, for a
-chart whose dash patterns ARE series identity and cannot take the
-stroke-dashoffset trick (MOTION_PHILOSOPHY's draw-gesture exception, amended
-with the clip-reveal clause; the motion lock verifies the utility only ever
-lands on a `clipPath` child). Pure CSS, so an SSR'd chart draws before
-hydration; from-only keyframe, so with no animation at all — reduced motion,
-jsdom, old engines — nothing is ever hidden.
+**TimeSeries draws itself.** The plotted series and their annotations are
+revealed by a clip rect that scales open left→right — the new
+`--animate-weave-reveal` token, the draw verb's second mechanism for a chart
+whose dash patterns ARE series identity (MOTION_PHILOSOPHY's draw-gesture
+exception gains the clip-reveal clause, and the motion lock verifies the
+utility only ever lands on a `clipPath` child). Pure CSS, SSR-drawn,
+from-only — with no animation at all, nothing is ever hidden. The reveal
+replays when the drawn geometry changes BY VALUE, never by array identity;
+the same change resets the crosshair during render. The crosshair now glides
+between slots on a transform transition (150ms, motion-reduce clamped) while
+the readout still snaps.
 
-The reveal replays when the drawn GEOMETRY genuinely changes: a value
-comparison (composition, key range, y domain), never array identity, so a
-parent re-rendering with fresh literals does not replay the draw. The same
-change resets the crosshair during render — an old slot index would pair the
-aria-live readout with the wrong date. And the crosshair now glides between
-slots on a transform transition (150ms, `motion-reduce:transition-none`);
-the readout still snaps — the readout is the record, the glide is the
-gesture.
+**RadialWeave** — the same series wrapped around a dial: the POSTER form.
+300° sweep with the gap at the bottom (a closed circle claims the newest
+observation meets the oldest), the exact dash+hue identity table TimeSeries
+uses, nulls breaking the arc, an HTML centre value, and deliberately no
+crosshair — the aria-label sentence, the min/max readout and the lossless
+`SeriesTable` carry inspection. Server component; dial math lives in
+`scale.ts` (`dialAngle`/`dialRadius`/`dialPoint`/`dialPath`/`dialRing`).
+
+**StrandField** — real series lifted into depth: each thread on its own
+plane in a CSS-3D perspective stage (zero dependencies — `perspective` +
+`translateZ`, never WebGL), fanned apart or collapsed flat via `woven`,
+tilting inside its own bounds with the pointer (never under
+`prefers-reduced-motion`), strands entering by the strand-draw verb with a
+CSS-variable stagger the reduce clamp can zero. `aria-hidden` theatre with
+no focusable element; `onStrandSelect` is a pointer shortcut for a selection
+surface the consumer renders accessibly.

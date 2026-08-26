@@ -142,8 +142,12 @@ const MAX_PLOTTED_SERIES = 5;
  * annotation marks follow, for the same reason. Two lines separated only by
  * `--chart-1` vs `--chart-2` are one line in a greyscale print, in a screenshot
  * pasted into Slack, and to a red-green colour-blind reader.
+ *
+ * Exported: `RadialWeave` draws the SAME series in another form, and series
+ * three keeping its dash across forms is what makes the two charts one
+ * instrument rather than two charts.
  */
-const SERIES_STYLE: readonly { stroke: string; fill: string; dash?: string }[] = [
+export const SERIES_STYLE: readonly { stroke: string; fill: string; dash?: string }[] = [
   { stroke: 'stroke-chart-1', fill: 'fill-chart-1' },
   { stroke: 'stroke-chart-2', fill: 'fill-chart-2', dash: '12 6' },
   { stroke: 'stroke-chart-3', fill: 'fill-chart-3', dash: '2 6' },

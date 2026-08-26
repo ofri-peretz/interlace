@@ -526,6 +526,106 @@ export function nearestIndex(scales: Scales, xPosition: number, width: number): 
   return nearestSlot(scales.points.length, xPosition, width);
 }
 
+// ── The dial: time wrapped around an arc, for the radial (poster) form ──────
+
+/**
+ * Geometry of a dial plot. The sweep is deliberately LESS than 360°: a
+ * closed circle claims the last observation meets the first — that August
+ * touches last December — and the gap is the honest statement that time
+ * does not wrap. The gap sits at the bottom (the speedometer convention,
+ * the most-practised radial read there is): time starts bottom-left and
+ * proceeds clockwise over the top.
+ */
+export interface DialGeometry {
+  cx: number;
+  cy: number;
+  /** Radius where `min` sits — the centre hole keeps the middle legible. */
+  inner: number;
+  /** Radius where `max` sits. */
+  outer: number;
+  /** Degrees, SVG convention (0° = +x, clockwise positive). */
+  startAngle: number;
+  /** Degrees of arc the time axis occupies. */
+  sweep: number;
+}
+
+/** Slot → degrees. A single-slot axis sits mid-sweep, not at the start. */
+export function dialAngle(slot: number, count: number, geometry: DialGeometry): number {
+  return (
+    geometry.startAngle +
+    (count > 1 ? (slot / (count - 1)) * geometry.sweep : geometry.sweep / 2)
+  );
+}
+
+/** Value → radius. A zero span centres between the rings (`seriesScales`' rule). */
+export function dialRadius(
+  value: number,
+  min: number,
+  max: number,
+  geometry: DialGeometry,
+): number {
+  const span = max - min;
+  return span === 0
+    ? (geometry.inner + geometry.outer) / 2
+    : geometry.inner + ((value - min) / span) * (geometry.outer - geometry.inner);
+}
+
+/** Degrees + radius → cartesian, around the dial's centre. */
+export function dialPoint(
+  angleDeg: number,
+  radius: number,
+  geometry: DialGeometry,
+): { x: number; y: number } {
+  const rad = (angleDeg * Math.PI) / 180;
+  return { x: geometry.cx + radius * Math.cos(rad), y: geometry.cy + radius * Math.sin(rad) };
+}
+
+/**
+ * A series wrapped around the dial. Straight segments between observed
+ * slots — a curve through polar space would smooth in values nobody
+ * measured — and a `null` BREAKS the path (`numeric()`'s rule): an arc
+ * bridging a gap is a drawn value with no observation under it.
+ */
+export function dialPath(
+  values: readonly (number | null)[],
+  min: number,
+  max: number,
+  geometry: DialGeometry,
+): string {
+  let d = '';
+  let open = false;
+  for (let slot = 0; slot < values.length; slot += 1) {
+    const value = values[slot];
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+      open = false;
+      continue;
+    }
+    const point = dialPoint(
+      dialAngle(slot, values.length, geometry),
+      dialRadius(value, min, max, geometry),
+      geometry,
+    );
+    d += `${open ? 'L' : 'M'}${point.x.toFixed(2)},${point.y.toFixed(2)}`;
+    open = true;
+  }
+  return d;
+}
+
+/**
+ * A grid ring: one constant-radius arc across the whole sweep. Two `A`
+ * segments rather than one with a large-arc flag — a single arc command
+ * cannot span exactly 180° ambiguity-free, and splitting at the midpoint
+ * is correct for every sweep without a case split.
+ */
+export function dialRing(radius: number, geometry: DialGeometry): string {
+  const start = dialPoint(geometry.startAngle, radius, geometry);
+  const mid = dialPoint(geometry.startAngle + geometry.sweep / 2, radius, geometry);
+  const end = dialPoint(geometry.startAngle + geometry.sweep, radius, geometry);
+  const arc = (to: { x: number; y: number }): string =>
+    `A${radius},${radius} 0 0 1 ${to.x.toFixed(2)},${to.y.toFixed(2)}`;
+  return `M${start.x.toFixed(2)},${start.y.toFixed(2)}${arc(mid)}${arc(end)}`;
+}
+
 /** Compact number formatting for dense rows — 12.4k, 3.1M. */
 export function compact(value: number): string {
   const abs = Math.abs(value);

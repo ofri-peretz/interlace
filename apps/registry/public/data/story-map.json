@@ -1343,6 +1343,22 @@
     "previewDark": "primitives-publisheddate--dark",
     "skeleton": "primitives-publisheddate--loading"
   },
+  "radial-weave": {
+    "title": "Charts/RadialWeave",
+    "storyIds": [
+      "charts-radialweave--default",
+      "charts-radialweave--woven-pair",
+      "charts-radialweave--with-gaps",
+      "charts-radialweave--flat-series",
+      "charts-radialweave--not-enough-data",
+      "charts-radialweave--loading",
+      "charts-radialweave--fetch-failed",
+      "charts-radialweave--visible-table"
+    ],
+    "preview": "charts-radialweave--default",
+    "previewDark": null,
+    "skeleton": "charts-radialweave--loading"
+  },
   "radio-group": {
     "title": "Primitives/RadioGroup",
     "storyIds": [
@@ -1842,6 +1858,17 @@
     "preview": "templates-statstemplate--default",
     "previewDark": "templates-statstemplate--dark",
     "skeleton": "templates-statstemplate--page-skeleton"
+  },
+  "strand-field": {
+    "title": "Effects/StrandField",
+    "storyIds": [
+      "effects-strandfield--default",
+      "effects-strandfield--woven",
+      "effects-strandfield--with-active"
+    ],
+    "preview": "effects-strandfield--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "sunny-background": {
     "title": "Aceternity/SunnyBackground",

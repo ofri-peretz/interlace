@@ -19,6 +19,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Delta, toneFor } from '../src/charts/delta.js';
 import { Distribution, type DistributionBin } from '../src/charts/distribution.js';
 import { MetricTable } from '../src/charts/metric-table.js';
+import { RadialWeave } from '../src/charts/radial-weave.js';
 import { SeriesTable } from '../src/charts/series-table.js';
 import { Sparkline } from '../src/charts/sparkline.js';
 import { TimeSeries } from '../src/charts/time-series.js';
@@ -1612,5 +1613,130 @@ describe('Distribution — the x axis', () => {
       container.querySelector('[data-slot="distribution-readout"]')?.textContent,
     ).toContain('0');
     expect(container.querySelector('[data-slot="distribution-baseline"]')).not.toBeNull();
+  });
+});
+
+/* ── RadialWeave ────────────────────────────────────────────────────────── */
+
+describe('RadialWeave', () => {
+  it('explains why it cannot plot rather than rendering an empty dial', () => {
+    render(<RadialWeave points={[]} />);
+    expect(screen.getByText(/No data yet/)).toBeTruthy();
+  });
+
+  it('says how many points it has when there is one', () => {
+    const { container } = render(<RadialWeave points={series(5)} className="mb-4" />);
+    expect(screen.getByText(/Only 1 point so far/)).toBeTruthy();
+    expect(container.querySelector('[data-slot="radial-weave-empty"]')?.className).toContain(
+      'mb-4',
+    );
+  });
+
+  it('reserves its box while loading', () => {
+    const { container } = render(<RadialWeave points={[]} loading />);
+    expect(container.querySelector('[data-slot="radial-weave"]')).not.toBeNull();
+    expect(container.querySelector('[role="img"]')).toBeNull();
+  });
+
+  it('announces a failed fetch as unknown history, not an empty series', () => {
+    render(<RadialWeave points={[]} error={new Error('boom')} />);
+    expect(screen.getByRole('alert').textContent).toContain('not an empty series');
+  });
+
+  it('speaks the series in the accessible name and ships the lossless table', () => {
+    render(<RadialWeave points={series(10, 20, 30)} label="Views" unit="views" />);
+    expect(screen.getByRole('img').getAttribute('aria-label')).toContain('Views');
+    expect(screen.getByRole('table')).toBeTruthy();
+    expect(screen.getByText('Views — full data (views)')).toBeTruthy();
+  });
+
+  it('draws each series with the SAME dash identity TimeSeries uses', () => {
+    const { container } = render(
+      <RadialWeave
+        points={series(10, 20, 30)}
+        label="A"
+        compare={[{ points: series(5, 15, 25), label: 'B' }]}
+      />,
+    );
+    const arcs = container.querySelectorAll('g[clip-path] path');
+    expect(arcs).toHaveLength(2);
+    expect(arcs[0].getAttribute('stroke-dasharray')).toBeNull();
+    expect(arcs[1].getAttribute('stroke-dasharray')).toBe('12 6');
+  });
+
+  it('caps drawn series at the palette and says so in the legend', () => {
+    const compare = ['B', 'C', 'D', 'E', 'F'].map((label) => ({
+      points: series(1, 2, 3),
+      label,
+    }));
+    const { container } = render(
+      <RadialWeave points={series(4, 5, 6)} label="A" compare={compare} />,
+    );
+    expect(container.querySelectorAll('g[clip-path] path')).toHaveLength(5);
+    expect(screen.getByText('1 more not plotted — see the data table')).toBeTruthy();
+    // The table stays lossless past the drawing cap.
+    expect(within(screen.getByRole('table')).getByText('F')).toBeTruthy();
+  });
+
+  it('renders no legend for a single series — the figcaption already names it', () => {
+    const { container } = render(<RadialWeave points={series(1, 2)} label="Solo" />);
+    expect(container.querySelector('[data-slot="radial-weave-legend"]')).toBeNull();
+    expect(container.querySelector('figcaption')?.textContent).toContain('Solo');
+  });
+
+  it('renders no caption when unlabelled', () => {
+    const { container } = render(<RadialWeave points={series(1, 2)} />);
+    expect(container.querySelector('figcaption')).toBeNull();
+  });
+
+  it('prints the latest value in the HTML centre, with its unit', () => {
+    const { container } = render(
+      <RadialWeave points={series(10, 20, 12_400)} label="Downloads" unit="downloads" />,
+    );
+    const centre = container.querySelector('[data-slot="radial-weave-centre"]');
+    expect(centre?.textContent).toContain('12.4k');
+    expect(centre?.textContent).toContain('downloads');
+  });
+
+  it('omits the centre unit line when there is none', () => {
+    const { container } = render(<RadialWeave points={series(1, 2)} />);
+    const centre = container.querySelector('[data-slot="radial-weave-centre"]');
+    expect(centre?.querySelectorAll('span')).toHaveLength(1);
+  });
+
+  it('prints min, range and max in real HTML — never SVG text', () => {
+    const { container } = render(<RadialWeave points={series(10, 20, 30)} />);
+    const readout = container.querySelector('[data-slot="radial-weave-readout"]');
+    expect(readout?.textContent).toContain('10');
+    expect(readout?.textContent).toContain('30');
+    expect(readout?.textContent).toContain('2026-08-01 → 2026-08-03');
+    expect(container.querySelector('svg[data-slot="radial-weave-plot"] text')).toBeNull();
+  });
+
+  it('draws grid rings outside the reveal clip, series inside it', () => {
+    const { container } = render(<RadialWeave points={series(10, 20, 30)} />);
+    const rect = container.querySelector('clipPath rect');
+    expect(rect?.getAttribute('class')).toContain('animate-weave-reveal');
+    const id = container.querySelector('clipPath')?.getAttribute('id');
+    expect(container.querySelector(`[clip-path="url(#${id})"] path`)).not.toBeNull();
+    // Rings are the stage: present, and not clipped.
+    const rings = container.querySelectorAll('svg > path[class*="stroke-viz-grid"]');
+    expect(rings.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('can show the data table visibly', () => {
+    const { container } = render(<RadialWeave points={series(1, 2)} showTable />);
+    expect(container.querySelector('[data-slot="series-table"]')?.className).not.toContain(
+      'sr-only',
+    );
+  });
+
+  it('forwards a ref and merges className on the drawn form', () => {
+    const ref = { current: null as HTMLElement | null };
+    const { container } = render(
+      <RadialWeave ref={ref} points={series(1, 2)} className="mt-8" />,
+    );
+    expect(ref.current?.getAttribute('data-slot')).toBe('radial-weave');
+    expect(container.querySelector('[data-slot="radial-weave"]')?.className).toContain('mt-8');
   });
 });
