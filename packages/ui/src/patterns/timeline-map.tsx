@@ -803,7 +803,12 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
               role="group"
               aria-label={`${lane.name} items`}
               className={cn(
-                'h-11 border-b border-border/60',
+                // overflow-visible: the hit circles on top/bottom-row
+                // dots extend 3px past the lane box, and the UA's
+                // svg overflow:hidden shaved them to ~21px (review).
+                // Nothing PAINTS outside — dots + strokes stay in
+                // bounds — so only pointer geometry escapes.
+                'h-11 overflow-visible border-b border-border/60',
                 laneIdx % 2 === 1 && 'bg-muted/40',
               )}
             >
