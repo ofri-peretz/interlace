@@ -18,6 +18,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { trimTrailingSlashes } from './plan.js';
+
 export type AliasResult =
   | { status: 'added'; alias: string }
   | { status: 'already-present' }
@@ -55,7 +57,7 @@ export const ensureRegistryAlias = async (
 
   if (config.registries?.[ALIAS]) return { status: 'already-present' };
 
-  const alias = `${registry.replace(/\/+$/, '')}/r/{name}.json`;
+  const alias = `${trimTrailingSlashes(registry)}/r/{name}.json`;
   config.registries = { ...config.registries, [ALIAS]: alias };
   // Match shadcn's own formatting (2-space, trailing newline).
   await writeFile(file, `${JSON.stringify(config, null, 2)}\n`);

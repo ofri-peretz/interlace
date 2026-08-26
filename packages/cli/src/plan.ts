@@ -64,10 +64,25 @@ export const isOurs = (token: string): boolean => {
   return true;
 };
 
+/**
+ * Strip trailing slashes without a regular expression.
+ *
+ * `s.replace(/\/+$/, '')` is the obvious spelling and it is a polynomial-ReDoS
+ * (CodeQL js/polynomial-redos): the origin comes from `--registry`, so an
+ * argument of many thousands of slashes makes the engine backtrack over every
+ * suffix. This scan is linear and cannot backtrack. It is the only place a
+ * caller-supplied string is normalised, so it is the only place that mattered.
+ */
+export const trimTrailingSlashes = (value: string): string => {
+  let end = value.length;
+  while (end > 0 && value[end - 1] === '/') end -= 1;
+  return value.slice(0, end);
+};
+
 /** Absolute registry-item URL for a bare or `@interlace/`-prefixed name. */
 export const itemUrl = (registry: string, token: string): string => {
   const name = token.startsWith('@interlace/') ? token.slice('@interlace/'.length) : token;
-  return `${registry.replace(/\/+$/, '')}/r/${name}.json`;
+  return `${trimTrailingSlashes(registry)}/r/${name}.json`;
 };
 
 /**

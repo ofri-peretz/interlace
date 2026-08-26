@@ -43,5 +43,11 @@
     "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
     "test": "npm run build && vitest run",
     "clean": "rm -rf dist tsconfig.lib.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.10"
   }
 }

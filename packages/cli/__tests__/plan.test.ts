@@ -6,6 +6,7 @@ import {
   itemUrl,
   planFromArgv,
   resolveToken,
+  trimTrailingSlashes,
 } from '../src/plan.js';
 
 const R = DEFAULT_REGISTRY;
@@ -24,6 +25,32 @@ describe('isOurs — which names this CLI claims', () => {
     'https://ui.example.com/r/button.json',
     'http://localhost:3000/r/button.json',
   ])('does not claim %s', (token) => expect(isOurs(token)).toBe(false));
+});
+
+describe('trimTrailingSlashes', () => {
+  it.each([
+    ['https://x.dev', 'https://x.dev'],
+    ['https://x.dev/', 'https://x.dev'],
+    ['https://x.dev///', 'https://x.dev'],
+    ['', ''],
+    ['/', ''],
+    ['////', ''],
+  ])('%s → %s', (input, expected) => {
+    expect(trimTrailingSlashes(input)).toBe(expected);
+  });
+
+  /**
+   * The reason this is a hand-written scan and not `/\/+$/`: that regex is a
+   * polynomial ReDoS on exactly this input, and the string comes from the
+   * user's `--registry`. A linear scan returns immediately; a backtracking one
+   * would not, so the timing IS the assertion.
+   */
+  it('is linear on a pathological run of slashes', () => {
+    const evil = `https://x.dev${'/'.repeat(200_000)}`;
+    const started = performance.now();
+    expect(trimTrailingSlashes(evil)).toBe('https://x.dev');
+    expect(performance.now() - started).toBeLessThan(1_000);
+  });
 });
 
 describe('itemUrl', () => {
