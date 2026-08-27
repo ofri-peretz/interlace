@@ -45,6 +45,12 @@ import { CodeEditor, type CodeEditorDiagnostic } from '../primitives/code-editor
 /** One finding, line-anchored. `message` is the full human sentence. */
 export interface PlaygroundDiagnostic {
   line: number;
+  /**
+   * Kept on the type for analyzers that report it, but deliberately NOT
+   * rendered (review): the editor bar already gives position at line
+   * granularity, and a column number in prose is noise a reader cannot
+   * act on in a plain textarea. Consumers needing it render their own list.
+   */
   column?: number;
   /** Analyzer's rule id, or null for parse-level failures. */
   ruleId: string | null;
@@ -60,7 +66,12 @@ export interface LintPlaygroundProps
   label: string;
   /** The code the exhibit opens on — usually a vulnerable-by-design sample. */
   initialCode: string;
-  /** The analyzer. Rejections render the failed state, never an empty list. */
+  /**
+   * The analyzer. Rejections render the failed state, never an empty
+   * list. Identity changes do NOT re-trigger analysis (the newest
+   * function is simply used on the next run) — an inline arrow in JSX
+   * is safe and will not flash "Analyzing…" on unrelated re-renders.
+   */
   lint: (code: string) => Promise<readonly PlaygroundDiagnostic[]>;
   /**
    * Quiet time after the last keystroke before analyzing.
@@ -89,11 +100,21 @@ export const LintPlayground = React.forwardRef<HTMLElement, LintPlaygroundProps>
     const [findings, setFindings] = React.useState<readonly PlaygroundDiagnostic[]>([]);
     const seq = React.useRef(0);
 
+    // The latest-ref pattern (review): an unstable `lint` reference — an
+    // inline arrow recreated every parent render — must not re-run the
+    // effect below, or every unrelated re-render flashes "Analyzing…"
+    // and resets state. The effect depends on the CODE; the ref always
+    // holds the newest analyzer.
+    const lintRef = React.useRef(lint);
+    React.useEffect(() => {
+      lintRef.current = lint;
+    });
+
     React.useEffect(() => {
       const mine = ++seq.current;
       setStatus('linting');
       const timer = window.setTimeout(() => {
-        lint(code).then(
+        lintRef.current(code).then(
           (result) => {
             if (seq.current !== mine) return; // stale — newer code exists
             setFindings(result);
@@ -107,7 +128,7 @@ export const LintPlayground = React.forwardRef<HTMLElement, LintPlaygroundProps>
         );
       }, debounceMs);
       return () => window.clearTimeout(timer);
-    }, [code, lint, debounceMs]);
+    }, [code, debounceMs]);
 
     const bars: CodeEditorDiagnostic[] = findings.map((f) => ({
       line: f.line,

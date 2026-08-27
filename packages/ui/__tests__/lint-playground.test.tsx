@@ -98,6 +98,32 @@ describe('the lint loop', () => {
     expect(queryByText('No findings.')).toBeTruthy();
   });
 
+  it('an unstable lint reference does not re-analyze — inline arrows are safe', async () => {
+    // The latest-ref pattern (review): a parent recreating `lint` every
+    // render must not flash "Analyzing…" or reset state; the newest
+    // function is simply used on the NEXT run.
+    const first = vi.fn().mockResolvedValue([FINDING]);
+    const second = vi.fn().mockResolvedValue([]);
+    const { container, rerender, getByText } = render(
+      <LintPlayground data-testid="pg" label="Try it" initialCode={'a\nb'} lint={first} />,
+    );
+    await settle();
+    expect(getByText('1 finding.')).toBeTruthy();
+
+    rerender(
+      <LintPlayground data-testid="pg" label="Try it" initialCode={'a\nb'} lint={second} />,
+    );
+    // No re-run, no flash: still ready, findings intact, new fn unused.
+    expect(container.querySelector('[data-slot="lint-playground"]')?.getAttribute('data-status')).toBe('ready');
+    expect(second).not.toHaveBeenCalled();
+
+    // The next keystroke uses the NEWEST analyzer.
+    fireEvent.change(editorInput(container), { target: { value: 'edited' } });
+    await settle();
+    expect(second).toHaveBeenCalledExactlyOnceWith('edited');
+    expect(first).toHaveBeenCalledTimes(1);
+  });
+
   it('a stale REJECTION is discarded too — old failures cannot smear new code', async () => {
     let rejectOld: (e: Error) => void = () => {};
     const lint = vi
