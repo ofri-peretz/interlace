@@ -444,6 +444,17 @@
     "previewDark": "primitives-codeblock--dark",
     "skeleton": "primitives-codeblock--loading"
   },
+  "code-editor": {
+    "title": "Primitives/CodeEditor",
+    "storyIds": [
+      "primitives-codeeditor--default",
+      "primitives-codeeditor--with-findings",
+      "primitives-codeeditor--empty-invites-typing"
+    ],
+    "preview": "primitives-codeeditor--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "code-window": {
     "title": "Blocks/CodeWindow",
     "storyIds": [
@@ -1051,6 +1062,17 @@
     ],
     "preview": "starters-layout-starter--default",
     "previewDark": "starters-layout-starter--dark",
+    "skeleton": null
+  },
+  "lint-playground": {
+    "title": "Blocks/LintPlayground",
+    "storyIds": [
+      "blocks-lintplayground--default",
+      "blocks-lintplayground--clean-code",
+      "blocks-lintplayground--analyzer-down"
+    ],
+    "preview": "blocks-lintplayground--default",
+    "previewDark": null,
     "skeleton": null
   },
   "marquee": {

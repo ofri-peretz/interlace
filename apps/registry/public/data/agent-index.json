@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 144
+    "itemCount": 146
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,8 +29,8 @@
   },
   "facets": {
     "tier": {
-      "primitive": 66,
-      "pattern": 31,
+      "primitive": 67,
+      "pattern": 32,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -39,9 +39,9 @@
       "theme": 1
     },
     "category": {
-      "primitive": 66,
-      "pattern": 31,
-      "blog": 22,
+      "primitive": 67,
+      "pattern": 32,
+      "blog": 24,
       "decorative": 21,
       "data": 21,
       "foundation": 20,
@@ -60,21 +60,21 @@
     },
     "rendering": {
       "server": 81,
-      "client": 63
+      "client": 65
     },
     "keyboard": {
-      "none": 109,
+      "none": 111,
       "handled": 35
     },
     "loading": {
-      "none": 112,
+      "none": 114,
       "built-in": 32
     },
     "minViewport": {
       "320": 82,
       "480": 7,
       "768": 1,
-      "inherited": 54
+      "inherited": 56
     }
   },
   "items": [
@@ -1791,6 +1791,58 @@
       "docs": "https://ds.interlace.tools/c/code-block"
     },
     {
+      "name": "code-editor",
+      "title": "Code Editor",
+      "type": "registry:ui",
+      "summary": "CodeEditor — an editable code surface whose visual layer is DIAGNOSTICS, not syntax colour.",
+      "topics": [],
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "CodeEditor",
+        "LINE_HEIGHT_PX",
+        "PAD_Y_PX"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/code-editor.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/code-editor.json",
+      "item": "https://ds.interlace.tools/r/code-editor.json",
+      "docs": "https://ds.interlace.tools/c/code-editor"
+    },
+    {
       "name": "code-window",
       "title": "Code Window",
       "type": "registry:ui",
@@ -2529,7 +2581,7 @@
         "Delta",
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -2660,7 +2712,7 @@
         "Distribution",
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3949,6 +4001,68 @@
       "docs": "https://ds.interlace.tools/c/layout-starter"
     },
     {
+      "name": "lint-playground",
+      "title": "Lint Playground",
+      "type": "registry:ui",
+      "summary": "LintPlayground — paste code, watch analysis light it up.",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "Status",
+          "values": [
+            "linting",
+            "ready",
+            "failed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "LintPlayground"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "code-editor",
+        "theme"
+      ],
+      "installsTo": [
+        "components/ui/patterns/lint-playground.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json",
+      "item": "https://ds.interlace.tools/r/lint-playground.json",
+      "docs": "https://ds.interlace.tools/c/lint-playground"
+    },
+    {
       "name": "marquee",
       "title": "Marquee",
       "type": "registry:ui",
@@ -5120,7 +5234,7 @@
         "ANNOTATION_KINDS",
         "RadialWeave"
       ],
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -5938,7 +6052,7 @@
         "MIN_VIEWPORT",
         "SeriesTable"
       ],
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [

@@ -332,6 +332,10 @@
       "types": "./dist/primitives/code-block.d.ts",
       "default": "./dist/primitives/code-block.js"
     },
+    "./code-editor": {
+      "types": "./dist/primitives/code-editor.d.ts",
+      "default": "./dist/primitives/code-editor.js"
+    },
     "./tag": {
       "types": "./dist/primitives/tag.d.ts",
       "default": "./dist/primitives/tag.js"

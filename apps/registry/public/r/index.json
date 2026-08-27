@@ -418,6 +418,24 @@
       }
     },
     {
+      "name": "code-editor",
+      "type": "registry:ui",
+      "title": "Code Editor",
+      "description": "CodeEditor — an editable code surface whose visual layer is DIAGNOSTICS, not syntax colour.",
+      "categories": [
+        "blog",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "collapsible",
       "type": "registry:ui",
       "title": "Collapsible",
@@ -1966,6 +1984,24 @@
       }
     },
     {
+      "name": "lint-playground",
+      "type": "registry:ui",
+      "title": "Lint Playground",
+      "description": "LintPlayground — paste code, watch analysis light it up.",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "newsletter-form",
       "type": "registry:ui",
       "title": "Newsletter Form",
@@ -2231,7 +2267,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -2249,7 +2285,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.1.0",
+        "version": "1.2.0",
         "since": "1.1.0"
       }
     },
@@ -2303,7 +2339,7 @@
         "client": false,
         "minViewport": null,
         "loading": true,
-        "version": "1.1.0",
+        "version": "1.2.0",
         "since": null
       }
     },
@@ -2321,7 +2357,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },

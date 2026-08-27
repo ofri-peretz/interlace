@@ -116,8 +116,11 @@ export default defineConfig({
         'src/lib/**/*.{ts,tsx}',
         // The four pure variant/model modules.
         'src/primitives/{button-variants,data-state-model,meter-scale,skeleton-variants}.ts',
-        // The 31 components with real render coverage. See the ledger above.
-        'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,container,data-state,focus-ring,grade-badge,grid,input,label,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,stack,stat-strip,tag,textarea,typography,visually-hidden}.tsx',
+        // The 32 components with real render coverage. See the ledger above.
+        'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,label,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,stack,stat-strip,tag,textarea,typography,visually-hidden}.tsx',
+        // Patterns with full render coverage — the same ledger rule: a
+        // file is in at 100 or it is out, and joining is a one-line diff.
+        'src/patterns/lint-playground.tsx',
       ],
       exclude: ['**/*.stories.tsx', '**/*.meta.json'],
       thresholds: { lines: 100, statements: 100, functions: 100, branches: 100 },

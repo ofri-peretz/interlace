@@ -36,6 +36,18 @@
           "source": ".changeset/hero-strand.md"
         },
         {
+          "summary": "CodeEditor + LintPlayground — paste code, watch analysis light it up\n\n**CodeEditor** (primitive): an editable code surface whose visual layer is\nDIAGNOSTICS, not syntax colour — the other half of the CodeBlock pair. The\nzero-sync layout trick: the textarea auto-grows (`rows` = line count) with\nsoft wrap off, so a highlight bar for line N sits at a fixed offset computed\nfrom the line-height — no scroll listeners, nothing to drift; the\n`leading-6`/`py-4` classes and the exported `LINE_HEIGHT_PX`/`PAD_Y_PX`\nconstants are one test-pinned contract. Bars are `aria-hidden` position,\nnever information, and severities differ by border, not hue alone.\n\n**LintPlayground** (pattern): editor + findings list + status around an\nINJECTED `lint: (code) => Promise<PlaygroundDiagnostic[]>` — the DS owns the\nsurface and ships no linting dependency; the app brings a web worker\nbundling the real analyzer. Honesty rules, all test-locked: findings render\nas text first; stale results never paint (sequence-numbered, resolutions\nAND rejections); a failed analysis says \"unknown, not clean\" instead of an\nempty list; and the footer prints the privacy fact that makes pasting real\ncode reasonable — analysis runs entirely in the reader's browser.\n\nBoth join the coverage ledger at 100/100/100/100.",
+          "components": [
+            "code-editor",
+            "lint-playground"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/lint-playground.md"
+        },
+        {
           "summary": "ReadingStrand — reading progress as the brand's draw verb\n\nA single strand-a line pinned to the viewport top that draws itself as\nthe reader moves through the piece. Progress is state coupled to the\nreader's own scroll (nothing animates on its own — no reduced-motion\nvariant to gate). Real `role=\"progressbar\"` 0–100; measures at most\nonce per frame via a passive listener; the fill moves with\ncompositor-only `transform: scaleX`. `target` names the article element\nby id so server pages need no client seam; falls back to the whole\ndocument. SSR renders scaleX(0) — zero CLS.",
           "components": [
             "reading-strand"
