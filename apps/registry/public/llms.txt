@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 144 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 146 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,17 +43,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 81 server, 63 client
-- keyboard: 109 none, 35 handled
-- built-in loading state: 32 of 144
-- declared minViewport: 82 at 320, 7 at 480, 1 at 768, 54 at inherited
+- rendering: 81 server, 65 client
+- keyboard: 111 none, 35 handled
+- built-in loading state: 32 of 146
+- declared minViewport: 82 at 320, 7 at 480, 1 at 768, 56 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 66 item(s)
-- tier `pattern` — 31 item(s)
+- tier `primitive` — 67 item(s)
+- tier `pattern` — 32 item(s)
 - tier `effect` — 17 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
@@ -61,9 +61,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `starter` — 3 item(s)
 - tier `theme` — 1 item(s)
 
-- category `primitive` (Primitives) — 66 item(s)
-- category `pattern` (Patterns) — 31 item(s)
-- category `blog` (Blog & long-form) — 22 item(s)
+- category `primitive` (Primitives) — 67 item(s)
+- category `pattern` (Patterns) — 32 item(s)
+- category `blog` (Blog & long-form) — 24 item(s)
 - category `decorative` (Decorative) — 21 item(s)
 - category `data` (Data display) — 21 item(s)
 - category `foundation` (Foundation) — 20 item(s)
@@ -130,6 +130,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Code Block](https://ds.interlace.tools/c/code-block): Fenced code block with a title bar (title left, language tag + copy button right). The copy action shells out to `navigator.clipboard.writeText` and flips an inline "Copied!" affordance for 1.5s — the only piece of state this primitive owns. Everything…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/code-block.json`
   - contract: client, min 320px, loading state, v1.3.0
+- [Code Editor](https://ds.interlace.tools/c/code-editor): CodeEditor — an editable code surface whose visual layer is DIAGNOSTICS, not syntax colour.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/code-editor.json`
+  - contract: client, v1.0.0
 - [Collapsible](https://ds.interlace.tools/c/collapsible): A single open/close disclosure surface. Wraps Base UI's `Collapsible.Root`, `Collapsible.Trigger`, `Collapsible.Panel` so consumers get the controlled / uncontrolled state machine, ARIA wiring (`aria-controls`, `aria-expanded`, `id`), keyboard semantics…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/collapsible.json`
   - contract: client, min 320px, keyboard via Base UI collapsible, v1.0.0
@@ -340,6 +343,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Interactive Grid Pattern](https://ds.interlace.tools/c/interactive-grid-pattern): A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className="text-border"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interactive-grid-pattern.json`
   - contract: client, v1.2.0
+- [Lint Playground](https://ds.interlace.tools/c/lint-playground): LintPlayground — paste code, watch analysis light it up.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json`
+  - contract: client, states linting|ready|failed, v1.0.0
 - [Newsletter Form](https://ds.interlace.tools/c/newsletter-form): Canonical email-signup pattern: title + (optional) description + email field + consent checkbox + submit. Composition of the auth primitive set (Form / Field / Input / Button + Checkbox + Typography). The block owns *structure*; consumers wire `action` and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/newsletter-form.json`
   - contract: server, min 320px, loading state, v1.2.0
@@ -429,10 +435,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [Delta](https://ds.interlace.tools/c/delta): "It moved, this much, this way." The smallest complete unit of analysis and the most-repeated element in a dense view, so it is worth getting exactly right once.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/delta.json`
-  - contract: server, min 320px, states publish|release|action, v1.1.0
+  - contract: server, min 320px, states publish|release|action, v1.2.0
 - [Distribution](https://ds.interlace.tools/c/distribution): One quantity spread across a fixed set of bins — hours of the day, days of the week, cohorts, buckets — with an optional REFERENCE distribution drawn over it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/distribution.json`
-  - contract: client, min 320px, loading state, keys ArrowLeft/ArrowRight/End/Escape/Home, states publish|release|action, v1.1.0
+  - contract: client, min 320px, loading state, keys ArrowLeft/ArrowRight/End/Escape/Home, states publish|release|action, v1.2.0
 - [Metric Table](https://ds.interlace.tools/c/metric-table): The roic.ai row: metric name, values across time, sparkline, delta. Click a row to promote it into whatever chart the caller renders above.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/metric-table.json`
   - contract: client, min 320px, loading state, states publish|release|action, v1.2.0
@@ -441,10 +447,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, loading state, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Enter/Escape/Home/Space, v1.1.2
 - [Radial Weave](https://ds.interlace.tools/c/radial-weave): The same series `TimeSeries` plots, wrapped around a dial — the POSTER form: identity and shape, composed to be looked at and shared.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/radial-weave.json`
-  - contract: server, loading state, states publish|release|action, v1.1.0
+  - contract: server, loading state, states publish|release|action, v1.2.0
 - [Series Table](https://ds.interlace.tools/c/series-table): The data behind a chart, as a real `<table>`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/series-table.json`
-  - contract: server, min 320px, states publish|release|action, v1.1.0
+  - contract: server, min 320px, states publish|release|action, v1.2.0
 - [Sparkline](https://ds.interlace.tools/c/sparkline): A trend in the width of a table cell. The densest thing in the package: it exists so a `MetricTable` row can show *shape* without spending a chart's worth of pixels, which is the whole roic.ai lesson — one row that reads a decade beats one chart that reads…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/sparkline.json`
   - contract: server, min 320px, loading state, states publish|release|action, v1.2.0

@@ -195,6 +195,12 @@
       "updated": "2026-08-26"
     },
     {
+      "name": "code-editor",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
       "name": "code-window",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -262,9 +268,9 @@
     },
     {
       "name": "delta",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-11"
+      "updated": "2026-08-26"
     },
     {
       "name": "dialog",
@@ -274,9 +280,9 @@
     },
     {
       "name": "distribution",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.1.0",
-      "updated": "2026-08-11"
+      "updated": "2026-08-26"
     },
     {
       "name": "docs-page-template",
@@ -423,6 +429,12 @@
       "updated": "2026-08-11"
     },
     {
+      "name": "lint-playground",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
       "name": "marquee",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -456,7 +468,7 @@
       "name": "metric-table",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-11"
+      "updated": "2026-08-26"
     },
     {
       "name": "network-graph",
@@ -538,9 +550,9 @@
     },
     {
       "name": "radial-weave",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": null,
-      "updated": "2026-08-11"
+      "updated": "2026-08-26"
     },
     {
       "name": "radio-group",
@@ -628,9 +640,9 @@
     },
     {
       "name": "series-table",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-11"
+      "updated": "2026-08-26"
     },
     {
       "name": "settings-template",
@@ -690,7 +702,7 @@
       "name": "sparkline",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-11"
+      "updated": "2026-08-26"
     },
     {
       "name": "spotlight",
