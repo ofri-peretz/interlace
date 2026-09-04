@@ -7800,13 +7800,7 @@
       "keyboard": {
         "handled": true,
         "baseUi": null,
-        "keys": [
-          "ArrowLeft",
-          "ArrowRight",
-          "End",
-          "Escape",
-          "Home"
-        ],
+        "keys": [],
         "ownHandler": true
       },
       "states": [
@@ -7855,6 +7849,7 @@
       "registryDependencies": [
         "cn",
         "data-state",
+        "delta",
         "series-table",
         "skeleton",
         "theme"

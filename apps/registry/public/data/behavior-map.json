@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T03:13:29.227Z",
+  "generatedAt": "2026-09-04T15:26:01.652Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -10953,29 +10953,40 @@
     "time-series": {
       "sourcePath": "packages/ui/src/charts/time-series.tsx",
       "keyboard": {
-        "storyId": "charts-timeseries--keyboard-crosshair",
-        "storyExport": "KeyboardCrosshair",
+        "storyId": "charts-timeseries--range-comparison",
+        "storyExport": "RangeComparison",
         "storyFile": "apps/storybook/src/stories/charts/TimeSeries.stories.tsx",
         "steps": [
           {
-            "title": "the plot is reachable by keyboard at all",
+            "title": "marking one point does not yet claim a change",
+            "keys": [
+              "Home",
+              "Enter"
+            ]
+          },
+          {
+            "title": "a second point turns the readout into a delta",
+            "keys": [
+              "End",
+              "Enter"
+            ]
+          },
+          {
+            "title": "the direction is exposed as data, not only as colour",
             "keys": []
           },
           {
-            "title": "ArrowRight reads out a specific value",
+            "title": "a third selection starts a new range",
             "keys": [
-              "ArrowRight"
+              "Home",
+              "Enter"
             ]
           },
           {
-            "title": "End jumps to the last observation",
+            "title": "Escape clears the selection as well as the crosshair",
             "keys": [
-              "End"
-            ]
-          },
-          {
-            "title": "Escape clears the crosshair (WCAG 2.1.2)",
-            "keys": [
+              "End",
+              "Enter",
               "Escape"
             ]
           }

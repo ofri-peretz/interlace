@@ -70,6 +70,17 @@
           "source": ".changeset/section-index.md"
         },
         {
+          "summary": "TimeSeries — mark two points, read the change between them\n\nMarking a point (click, or Enter from the keyboard) sets an anchor; marking a\nsecond turns the readout into a comparison — `2026-06-01 → 2026-08-01` with the\nabsolute change, the percentage and the direction — and shades the span between\nthem on the plot. A third mark starts a new range; Escape clears.\n\nThe gesture most charts implement as a pointer drag, which no keyboard user can\nperform. Here both paths resolve through one `select()`, so they cannot disagree\nabout what is selected.\n\nThe delta is rendered by `Delta` rather than recomputed, so the sign, the\npercentage, the tone token and the WCAG 1.4.1 accessible name all come from one\nplace. A point compared with itself clears the selection instead of reporting\n0%, and a range with a gap at either end shows nothing rather than bridging it.",
+          "components": [
+            "time-series"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/time-series-range-compare.md"
+        },
+        {
           "summary": "The Living Weave — motion, the radial poster form, and the strand field\n\n**TimeSeries draws itself.** The plotted series and their annotations are\nrevealed by a clip rect that scales open left→right — the new\n`--animate-weave-reveal` token, the draw verb's second mechanism for a chart\nwhose dash patterns ARE series identity (MOTION_PHILOSOPHY's draw-gesture\nexception gains the clip-reveal clause, and the motion lock verifies the\nutility only ever lands on a `clipPath` child). Pure CSS, SSR-drawn,\nfrom-only — with no animation at all, nothing is ever hidden. The reveal\nreplays when the drawn geometry changes BY VALUE, never by array identity;\nthe same change resets the crosshair during render. The crosshair now glides\nbetween slots on a transform transition (150ms, motion-reduce clamped) while\nthe readout still snaps.\n\n**RadialWeave** — the same series wrapped around a dial: the POSTER form.\n300° sweep with the gap at the bottom (a closed circle claims the newest\nobservation meets the oldest), the exact dash+hue identity table TimeSeries\nuses, nulls breaking the arc, an HTML centre value, and deliberately no\ncrosshair — the aria-label sentence, the min/max readout and the lossless\n`SeriesTable` carry inspection. Server component; dial math lives in\n`scale.ts` (`dialAngle`/`dialRadius`/`dialPoint`/`dialPath`/`dialRing`).\n\n**StrandField** — real series lifted into depth: each thread on its own\nplane in a CSS-3D perspective stage (zero dependencies — `perspective` +\n`translateZ`, never WebGL), fanned apart or collapsed flat via `woven`,\ntilting inside its own bounds with the pointer (never under\n`prefers-reduced-motion`), strands entering by the strand-draw verb with a\nCSS-variable stagger the reduce clamp can zero. `aria-hidden` theatre with\nno focusable element; `onStrandSelect` is a pointer shortcut for a selection\nsurface the consumer renders accessibly.",
           "components": [
             "time-series",

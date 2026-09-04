@@ -497,6 +497,36 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(
       select(slot);
     };
 
+    // These two live ABOVE the loading / error / empty branches because
+    // `comparison` is a hook, and a hook after an early return is called
+    // conditionally — React's cardinal rule, and the lint caught it here rather
+    // than a user hitting a "rendered fewer hooks than expected" crash the first
+    // time this chart went from loading to loaded with a range selected.
+    // The second edge of the band: the committed point when there is one, the
+    // live cursor while the reader is still choosing.
+    const rangeEnd = fixed ?? cursor;
+
+    /**
+     * The two points being compared, on the PRIMARY series, ordered by time so
+     * the delta reads left-to-right regardless of which end was marked first.
+     *
+     * `null` whenever a comparison cannot honestly be shown: no committed range,
+     * both ends on the same day, or a gap in the data at either end. A gap is
+     * the interesting one — bridging it would invent a value and report a change
+     * that never happened.
+     */
+    const comparison = React.useMemo((): readonly [Point, Point] | null => {
+      if (anchor === null || fixed === null || anchor === fixed) return null;
+      const [from, to] = anchor < fixed ? [anchor, fixed] : [fixed, anchor];
+      const a = plot.at(0, from);
+      const b = plot.at(0, to);
+      if (a === null || b === null) return null;
+      return [
+        { t: plot.keys[from], v: a },
+        { t: plot.keys[to], v: b },
+      ];
+    }, [anchor, fixed, plot]);
+
     // Loading and error are both checked BEFORE the not-enough-data branch: data
     // still in flight, and data that failed to arrive, are each a different claim
     // from "this metric has no history" — and telling a reader the last one while
@@ -584,31 +614,6 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(
      * single line the figcaption already names it, and prefixing every readout
      * with a name the reader can see two lines up is noise in a live region.
      */
-    // The second edge of the band: the committed point when there is one, the
-    // live cursor while the reader is still choosing.
-    const rangeEnd = fixed ?? cursor;
-
-    /**
-     * The two points being compared, on the PRIMARY series, ordered by time so
-     * the delta reads left-to-right regardless of which end was marked first.
-     *
-     * `null` whenever a comparison cannot honestly be shown: no committed range,
-     * both ends on the same day, or a gap in the data at either end. A gap is
-     * the interesting one — bridging it would invent a value and report a change
-     * that never happened.
-     */
-    const comparison = React.useMemo((): readonly [Point, Point] | null => {
-      if (anchor === null || fixed === null || anchor === fixed) return null;
-      const [from, to] = anchor < fixed ? [anchor, fixed] : [fixed, anchor];
-      const a = plot.at(0, from);
-      const b = plot.at(0, to);
-      if (a === null || b === null) return null;
-      return [
-        { t: plot.keys[from], v: a },
-        { t: plot.keys[to], v: b },
-      ];
-    }, [anchor, fixed, plot]);
-
     const readout =
       cursor === null
         ? ""
