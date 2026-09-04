@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
     source: docs/philosophies/VERSIONING_PHILOSOPHY.md
-    hash: a3693883635a */}
+    hash: c2a43e8e0ddc */}
 
 # Versioning philosophy
 
@@ -68,6 +68,32 @@ each component.
 
 Consequence to accept honestly: **the version is only as real as the release
 notes**, because nothing else enforces it. Hence § 5.
+
+### The one package that IS published
+
+`interlace-ui` (`packages/cli`) ships to npm so that `npx interlace-ui` works.
+That is not a hole in the rule above — it is the rule applied:
+
+- It is a **tool, not components.** It installs FROM the registry; it does not
+  contain a copy of anything the registry serves, so it creates no second
+  version of `Button` and no second upgrade model. Deleting it changes nothing
+  about a consumer's tree.
+- It **strengthens** the registry as the product surface instead of bypassing
+  it. Every path it offers goes through `ds.interlace.tools`, and its `init`
+  writes the `@interlace` alias so plain `shadcn add @interlace/button` keeps
+  working without it.
+
+Two packages, two release actions, one `npm run release`:
+
+| Package | Public? | Release action |
+| --- | --- | --- |
+| `@interlace/ui` | no | `scripts/release-tag.mjs` — tag `@interlace/ui@<version>` |
+| `interlace-ui` | yes | `scripts/release-cli.mjs` — `npm publish` (idempotent) |
+
+The boundary is asserted, not just written down:
+`packages/cli/__tests__/package-contract.test.ts` fails if `@interlace/ui`
+ever stops being `private`, and if the release script stops covering either
+half.
 
 ## 3. What counts as BREAKING
 

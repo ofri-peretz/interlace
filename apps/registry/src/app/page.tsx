@@ -12,6 +12,14 @@ import { loadIndex } from '@/lib/registry';
 const PRIMARY_INSTALL =
   'npx shadcn@latest add https://ds.interlace.tools/r/button.json';
 const ALIAS_INSTALL = 'npx shadcn@latest add @interlace/button';
+/**
+ * The CLI is listed SECOND, not first. `PRIMARY_INSTALL` is the command the
+ * install proof below actually measures, and a hero whose headline command is
+ * not the one the receipt covers is a hero that overstates itself. The CLI is
+ * also the only line here that asks the reader to trust a package of ours
+ * rather than shadcn's — earning that is the registry's job, not the hero's.
+ */
+const CLI_INSTALL = 'npx interlace-ui add button';
 
 const STYLE_INSTALL =
   'npx shadcn@latest add https://ds.interlace.tools/r/theme.json';
@@ -70,13 +78,17 @@ export default async function HomePage() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <CodeBlock label="Install a primitive" code={PRIMARY_INSTALL} />
+            <CodeBlock label="Or with our CLI" code={CLI_INSTALL} />
           </div>
 
           <p className="text-muted-foreground mt-4 text-sm">
             Or, after configuring this registry as{' '}
             <code className="font-mono">@interlace</code> in your{' '}
             <code className="font-mono">components.json</code>:{' '}
-            <code className="font-mono text-foreground">{ALIAS_INSTALL}</code>
+            <code className="font-mono text-foreground">{ALIAS_INSTALL}</code>{' '}
+            — which is what{' '}
+            <code className="font-mono">npx interlace-ui init</code> configures
+            for you.
           </p>
 
           {/*

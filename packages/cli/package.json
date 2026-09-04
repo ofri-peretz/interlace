@@ -1,0 +1,53 @@
+{
+  "name": "interlace-ui",
+  "version": "0.1.0",
+  "description": "Install components from the Interlace design system registry (ds.interlace.tools).",
+  "keywords": [
+    "shadcn",
+    "registry",
+    "design-system",
+    "react",
+    "tailwind",
+    "cli"
+  ],
+  "homepage": "https://ds.interlace.tools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ofri-peretz/interlace.git",
+    "directory": "packages/cli"
+  },
+  "license": "MIT",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "type": "module",
+  "bin": {
+    "interlace-ui": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "prebuild": "test -d dist || rm -f tsconfig.lib.tsbuildinfo",
+    "build": "tsc -b tsconfig.lib.json && node scripts/chmod-bin.mjs",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "npm run lint:eslint && npm run lint:oxlint",
+    "lint:eslint": "eslint .",
+    "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
+    "test": "npm run build && vitest run",
+    "clean": "rm -rf dist tsconfig.lib.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.10"
+  }
+}
