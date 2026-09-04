@@ -30,7 +30,7 @@ jq '.items[] | select(.rendering=="server" and .loadingState) | .name' agent-ind
 
 # owns its own key handling (not just inherited from Base UI)
 jq '.items[] | select(.keyboard.keys | length > 0) | {name, keys: .keyboard.keys}' agent-index.json
-# → context-menu, distribution, network-graph, timeline-map
+# → context-menu, distribution, network-graph, time-series
 
 # models an explicit state union — i.e. absence is a value, not a null check
 jq '.items[] | select(.states | length > 0) | {name, states: [.states[].name]}' agent-index.json

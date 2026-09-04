@@ -7800,7 +7800,15 @@
       "keyboard": {
         "handled": true,
         "baseUi": null,
-        "keys": [],
+        "keys": [
+          "ArrowLeft",
+          "ArrowRight",
+          "End",
+          "Enter",
+          "Escape",
+          "Home",
+          "Space"
+        ],
         "ownHandler": true
       },
       "states": [

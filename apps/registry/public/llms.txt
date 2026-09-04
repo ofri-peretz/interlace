@@ -456,7 +456,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, loading state, states publish|release|action, v1.2.0
 - [Time Series](https://ds.interlace.tools/c/time-series): One metric over time, with the actions that moved it drawn ON the curve.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/time-series.json`
-  - contract: client, min 320px, loading state, states publish|release|action, v1.2.0
+  - contract: client, min 320px, loading state, keys ArrowLeft/ArrowRight/End/Enter/Escape/Home/Space, states publish|release|action, v1.2.0
 
 ## Items — tier `effect`
 
