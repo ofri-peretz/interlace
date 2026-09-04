@@ -188,6 +188,38 @@ describe('TimeSeries range comparison', () => {
     expect(readout()).toBe('');
   });
 
+  it('keeps the anchor visible after the pointer leaves', () => {
+    // The touch case. Tap once, the pointer leaves, `cursor` goes null — and
+    // before this the whole marker vanished with it, so a touch user had no
+    // sign their first tap had registered. The state was always kept; the
+    // evidence was not.
+    const { container } = render(
+      <TimeSeries points={RISING} label="npm downloads" unit="downloads" />,
+    );
+    cursorTo(0);
+    mark();
+    fireEvent.pointerLeave(plot());
+    const band = container.querySelector('[data-slot="time-series-range"]');
+    expect(band).not.toBeNull();
+    // Exactly one edge: the anchor. A second would be an invented endpoint.
+    expect(band?.querySelectorAll('line')).toHaveLength(1);
+    expect(band?.querySelector('rect')).toBeNull();
+  });
+
+  it('Space marks a point, as the instructions now say', () => {
+    render(<TimeSeries points={RISING} label="npm downloads" unit="downloads" />);
+    const svg = plot();
+    svg.focus();
+    fireEvent.keyDown(svg, { key: 'Home' });
+    fireEvent.keyDown(svg, { key: ' ' });
+    fireEvent.keyDown(svg, { key: 'End' });
+    fireEvent.keyDown(svg, { key: ' ' });
+    expect(readout()).toContain('→');
+    // The label has to name it, or the key exists for nobody who has not
+    // guessed it.
+    expect(svg.getAttribute('aria-label')).toContain('Enter or Space');
+  });
+
   it('draws the band only once a range exists', () => {
     const { container } = render(
       <TimeSeries points={RISING} label="npm downloads" unit="downloads" />,

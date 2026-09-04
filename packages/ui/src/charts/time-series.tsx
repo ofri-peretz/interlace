@@ -679,7 +679,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         role="img"
         aria-label={`${drawn
           .map((series) => describeSeries(series.points, series.label))
-          .join(' ')} Focus this chart and use the left and right arrow keys to read individual values. Press Enter to mark a point, then Enter again on a second point to compare the two.`}
+          .join(' ')} Focus this chart and use the left and right arrow keys to read individual values. Press Enter or Space to mark a point, then again on a second point to compare the two.`}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onPointerMove={onPointerMove}
@@ -842,16 +842,24 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
             stays readable on top of it, and `aria-hidden` because the readout
             below states the range in words — a shaded rectangle is not
             information a screen reader can use. */}
-        {anchor !== null && rangeEnd !== null && (
+        {anchor !== null && (
           <g data-slot="time-series-range" aria-hidden>
-            <rect
-              x={Math.min(px(anchor), px(rangeEnd))}
-              y={PAD_TOP}
-              width={Math.abs(px(rangeEnd) - px(anchor))}
-              height={height - PAD_TOP}
-              className="fill-viz-crosshair opacity-10"
-            />
-            {[anchor, rangeEnd].map((slot, index) => (
+            {/* The band only exists once there is a second edge. The ANCHOR
+                line is drawn regardless, and that is the point: a touch user
+                taps once, the pointer leaves, `cursor` goes null — and
+                without this the mark they just made would vanish with it,
+                leaving no sign the first tap registered. The state was always
+                kept; only the evidence was missing. */}
+            {rangeEnd !== null && (
+              <rect
+                x={Math.min(px(anchor), px(rangeEnd))}
+                y={PAD_TOP}
+                width={Math.abs(px(rangeEnd) - px(anchor))}
+                height={height - PAD_TOP}
+                className="fill-viz-crosshair opacity-10"
+              />
+            )}
+            {(rangeEnd === null ? [anchor] : [anchor, rangeEnd]).map((slot, index) => (
               <line
                 key={`edge-${index === 0 ? 'anchor' : 'end'}`}
                 x1={px(slot)}

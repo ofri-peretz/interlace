@@ -200,6 +200,17 @@
           "source": ".changeset/strand-field-safe-band.md"
         },
         {
+          "summary": "TimeSeries — the first mark stays visible, and Space is documented\n\nTwo review findings from the consumer side.\n\nTapping once left no visible trace: the pointer leaves, `cursor` goes null, and\nthe whole marker disappeared with it. For touch that is the normal state\nbetween the first tap and the second, so a touch user had no sign their mark\nhad registered. The selection was always kept in state; only the evidence was\nmissing. The anchor edge is now drawn whether or not a second edge exists.\n\nThe accessible name promised Enter but Space has always worked too, so the key\nexisted for anyone who guessed it and nobody else.",
+          "components": [
+            "time-series"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/time-series-anchor-feedback.md"
+        },
+        {
           "summary": "TimelineMap — dot links get a 24px hit area\n\nThe visible dots can be as small as 10px — under the 24px target\nfloor of WCAG 2.2 SC 2.5.8, and genuinely hard to tap. Each dot link\nnow carries a transparent r=12 hit circle behind the painted dot:\npointer geometry grows to 24px, the visual stays the map's scale.\nCaught by the blog's layout audit at every viewport.",
           "components": [
             "timeline-map"
