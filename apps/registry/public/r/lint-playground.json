@@ -29,7 +29,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.0.0",
-    "since": null
+    "since": "1.2.0"
   },
   "docs": "## @interlace/lint-playground\n\nInstalled to `components/ui/patterns/lint-playground.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/lint-playground';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/lint-playground\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }

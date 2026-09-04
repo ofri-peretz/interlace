@@ -1,5 +1,302 @@
 # @interlace/ui
 
+## 1.2.0
+
+### Minor Changes
+
+- b20d1c4: CodeBlock — Shiki notation contract: highlighted + diff lines
+
+  Components: code-block
+
+  Lines a highlighter marks `highlighted`, `diff add`, or `diff remove`
+  (Shiki's `transformerNotationHighlight` / `transformerNotationDiff`, or
+  anything emitting the same classes) are now styled by the block itself:
+  token-backed washes that hold in both themes, edge-to-edge bleed through
+  the pre's padding, and a `+` / `-` gutter marker so a diff is never
+  color-alone. The copy button yields the post-diff code — `.diff.remove`
+  lines are skipped — so nobody pastes the line they were told to delete;
+  `select-none` nudges drag-selection the same way (a hint engines apply
+  unevenly, not a clipboard barrier — the button is the guarantee).
+
+- cfb2d96: CodeBlock — onCopied seam + honest copy affordance
+
+  Components: code-block
+
+  `onCopied?(text)` fires after a SUCCESSFUL clipboard write with the
+  exact copied text — the measurement seam a receipts-honest consumer
+  needs. Past-tense name is a documented R17 deviation: native `onCopy`
+  already reaches the figure via `...props` and fires on selection-copy.
+  Honesty fix riding along: with no clipboard API available the button
+  used to flip "Copied!" without writing anything; it now stays quiet —
+  no success is claimed that didn't happen.
+
+- fe37d49: HeroStrand — the thread at page scale
+
+  Components: none
+
+  One strand-a ribbon drawn across a hero section, optionally crossed by
+  the strand-b counter — the fourth and final scale of "One thread,
+  every scale". A server component with zero client JS: the draw is the
+  new `strand-draw` motion token (tokens.css, 600ms — the doctrine's
+  ceiling), so the preflight reduced-motion clamp reaches it and
+  reduced-motion users see the strand instantly drawn. Paths normalize
+  with `pathLength=100`; `vector-effect` is deliberately absent (the
+  Chromium screen-space-dash lesson from the first production weave).
+  Ships under `effects/` (not a registry item yet, like the rest of the
+  signature kit).
+
+- 443ea96: CodeEditor + LintPlayground — paste code, watch analysis light it up
+
+  Components: code-editor, lint-playground
+
+  **CodeEditor** (primitive): an editable code surface whose visual layer is
+  DIAGNOSTICS, not syntax colour — the other half of the CodeBlock pair. The
+  zero-sync layout trick: the textarea auto-grows (`rows` = line count) with
+  soft wrap off, so a highlight bar for line N sits at a fixed offset computed
+  from the line-height — no scroll listeners, nothing to drift; the
+  `leading-6`/`py-4` classes and the exported `LINE_HEIGHT_PX`/`PAD_Y_PX`
+  constants are one test-pinned contract. Bars are `aria-hidden` position,
+  never information, and severities differ by border, not hue alone.
+
+  **LintPlayground** (pattern): editor + findings list + status around an
+  INJECTED `lint: (code) => Promise<PlaygroundDiagnostic[]>` — the DS owns the
+  surface and ships no linting dependency; the app brings a web worker
+  bundling the real analyzer. Honesty rules, all test-locked: findings render
+  as text first; stale results never paint (sequence-numbered, resolutions
+  AND rejections); a failed analysis says "unknown, not clean" instead of an
+  empty list; and the footer prints the privacy fact that makes pasting real
+  code reasonable — analysis runs entirely in the reader's browser.
+
+  Both join the coverage ledger at 100/100/100/100.
+
+- b79603d: ReadingStrand — reading progress as the brand's draw verb
+
+  Components: reading-strand
+
+  A single strand-a line pinned to the viewport top that draws itself as
+  the reader moves through the piece. Progress is state coupled to the
+  reader's own scroll (nothing animates on its own — no reduced-motion
+  variant to gate). Real `role="progressbar"` 0–100; measures at most
+  once per frame via a passive listener; the fill moves with
+  compositor-only `transform: scaleX`. `target` names the article element
+  by id so server pages need no client seam; falls back to the whole
+  document. SSR renders scaleX(0) — zero CLS.
+
+- fc36ffa: SectionIndex — the numbered eyebrow
+
+  Components: section-index
+
+  A zero-padded mono numeral in the AAA brand orange (`text-primary`) beside an uppercase tracked
+  label, making the page's sections a legible sequence ("01 THE AGENDA …
+  04 THE PROOF"). The numeral counts the way a terminal counts (tabular
+  figures, monospace) and is the view's meaning-point accent; screen
+  readers hear "Section 2: The Agenda", never "zero two". No motion of
+  its own — pass `<DecodeText>` as the label for the decode gesture.
+  Drops straight into SectionHeader's `eyebrow` slot.
+
+- 2218102: TimeSeries — mark two points, read the change between them
+
+  Components: time-series
+
+  Marking a point (click, or Enter from the keyboard) sets an anchor; marking a
+  second turns the readout into a comparison — `2026-06-01 → 2026-08-01` with the
+  absolute change, the percentage and the direction — and shades the span between
+  them on the plot. A third mark starts a new range; Escape clears.
+
+  The gesture most charts implement as a pointer drag, which no keyboard user can
+  perform. Here both paths resolve through one `select()`, so they cannot disagree
+  about what is selected.
+
+  The delta is rendered by `Delta` rather than recomputed, so the sign, the
+  percentage, the tone token and the WCAG 1.4.1 accessible name all come from one
+  place. A point compared with itself clears the selection instead of reporting
+  0%, and a range with a gap at either end shows nothing rather than bridging it.
+
+- 12684a6: The Living Weave — motion, the radial poster form, and the strand field
+
+  Components: time-series, radial-weave
+
+  **TimeSeries draws itself.** The plotted series and their annotations are
+  revealed by a clip rect that scales open left→right — the new
+  `--animate-weave-reveal` token, the draw verb's second mechanism for a chart
+  whose dash patterns ARE series identity (MOTION_PHILOSOPHY's draw-gesture
+  exception gains the clip-reveal clause, and the motion lock verifies the
+  utility only ever lands on a `clipPath` child). Pure CSS, SSR-drawn,
+  from-only — with no animation at all, nothing is ever hidden. The reveal
+  replays when the drawn geometry changes BY VALUE, never by array identity;
+  the same change resets the crosshair during render. The crosshair now glides
+  between slots on a transform transition (150ms, motion-reduce clamped) while
+  the readout still snaps.
+
+  **RadialWeave** — the same series wrapped around a dial: the POSTER form.
+  300° sweep with the gap at the bottom (a closed circle claims the newest
+  observation meets the oldest), the exact dash+hue identity table TimeSeries
+  uses, nulls breaking the arc, an HTML centre value, and deliberately no
+  crosshair — the aria-label sentence, the min/max readout and the lossless
+  `SeriesTable` carry inspection. Server component; dial math lives in
+  `scale.ts` (`dialAngle`/`dialRadius`/`dialPoint`/`dialPath`/`dialRing`).
+
+  **StrandField** — real series lifted into depth: each thread on its own
+  plane in a CSS-3D perspective stage (zero dependencies — `perspective` +
+  `translateZ`, never WebGL), fanned apart or collapsed flat via `woven`,
+  tilting inside its own bounds with the pointer (never under
+  `prefers-reduced-motion`), strands entering by the strand-draw verb with a
+  CSS-variable stagger the reduce clamp can zero. `aria-hidden` theatre with
+  no focusable element; `onStrandSelect` is a pointer shortcut for a selection
+  surface the consumer renders accessibly.
+
+- 87bf160: TimelineMap: number-axis mode — the lanes × axis landscape over any continuous measure
+
+  Components: timeline-map
+
+  New `axis` prop (`{ kind: "number", format }`) positions dots by
+  `item.value` instead of `item.date` — reading minutes, bundle KB, any
+  quantity a corpus is actually navigated by. Nice-step ticks (1/2/5×10ⁿ)
+  render through the consumer's `format`; aria-labels and the Detail
+  strip speak the formatted value through one shared voice, so the two
+  can never disagree. The date axis, the weave, and every interaction are
+  unchanged; `date` is now optional at the type level (number-axis items
+  don't need one).
+
+- ecb89a5: TimelineMap: the reader's thread (`trace`)
+
+  Components: timeline-map
+
+  A new `trace` prop draws the reader's own path through the corpus —
+  ordered visited ids threaded dot-to-dot in warm strand-a over the cool
+  strand-b corpus web, with the draw verb (pathLength-normalized onto the
+  shared `strand-draw` keyframe; instantly complete under reduced
+  motion). The overlay is decorative and `trace.label` speaks the
+  summary ("Your thread: 7 of 82 read"). Unknown and filtered-out ids
+  skip, consecutive repeats collapse, and fewer than two visible points
+  draws nothing — a single visited dot is a beginning, not yet a thread.
+  SSR without the prop renders no trace: the honest crawler view, since
+  reading history is client-only.
+
+- 4239054: Toggle — `pill` variant + `xs` size; TimelineMap.Filter consumes it
+
+  Components: toggle, timeline-map
+
+  The filter pill (rounded-full chip, strand-a pressed tint, greyscale-safe
+  border identity) is now a Toggle variant instead of classes open-coded
+  inside TimelineMap.Filter — every "which categories/threads are active"
+  surface styles from one home. `xs` is its native size: `min-h-6` sits
+  exactly on the WCAG 2.2 SC 2.5.8 24×24 target floor (min-height, so a
+  wrapped label grows the pill rather than clipping). TimelineMap.Filter
+  now renders these Toggles — Base UI carries `aria-pressed` — with no
+  visual change.
+
+- 3fcd87e: The woven signature kit and the brand strand tokens.
+
+  New: `TimelineMap` (patterns) — dated entities as dots on category lanes
+  with fit-all width, a roving-tabindex keyboard composite, and the link
+  weave (`item.links` draws the corpus's internal reference graph as
+  strand-b threads with select-to-illuminate interaction); `InterlaceWeave`
+  and `DecodeText` (effects/, new export subpath). New brand tokens
+  `--interlace-strand-a` / `--interlace-strand-b` in both themes, with the
+  WCAG 1.4.11 floor measured by the theme-contract lock.
+
+  Fixed: the preflight applied `height: auto` to svg/canvas, defeating
+  explicit sizing utilities on every viewBox'd svg — now photographic
+  media only, matching Tailwind's own preflight.
+
+  Components: timeline-map
+
+### Patch Changes
+
+- d8f1baa: CodeBlock — dead header conditional removed, docs match behavior
+
+  Components: code-block
+
+  `Boolean(title) || Boolean(language) || true` never evaluated its left
+  side and the file docs still described a header that could be omitted.
+  The header ALWAYS renders (the copy button needs a home); the code and
+  both doc blocks now say exactly that. No runtime change.
+
+- 0393578: TimelineMap — dot hit radius 12 → 13
+
+  Components: timeline-map
+
+  The nominal 24px hit union measured 23px in a real browser
+  (sub-pixel rounding), one under the SC 2.5.8 floor. r=13 carries a
+  2px margin; still paints nothing.
+
+- fa421aa: HeroStrand: aria-hidden omitted from the props type
+
+  Components: none
+
+  The always-decorative contract gains its type layer: `aria-hidden` is
+  Omit-ed from HeroStrandProps (strips autocomplete, rejects
+  object-literal construction). Measured honestly: TS checks aria-\* JSX
+  attributes leniently, so the runtime override guard remains the
+  enforced layer — the source comment says exactly that.
+
+- f0dcf94: The link weave budgets its rest ink by density: a sparse web keeps each
+  thread readable (0.25), while a heavily cross-cited corpus (the blog's
+  735 threads) recedes into texture (>48 edges → 0.10, >160 → 0.04) so the
+  dots stay primary. The illuminated selection keeps full strength at any
+  density.
+
+  Components: timeline-map
+
+- 45b8c48: TimelineMap: filtering out the focused dot's lane no longer traps the
+  keyboard — a focus id outside the visible order falls back to the recent
+  end, so the composite always keeps exactly one tab stop.
+
+  Components: timeline-map
+
+- cccd144: StrandField planes keep a vertical safe band
+
+  Components: none
+
+  Planes sit at `inset-x-0 top-6 bottom-6` instead of `inset-0`: the field
+  clips in screen space, and a plane at `translateZ` under the stage's
+  `rotateX` projects its top edge ~20px above its own box — a strand whose
+  line or label ended high was losing its top half to `overflow-hidden`
+  (found walking the blog's `/loom` at 375 and 320).
+
+  The fan is now a bounded depth ENVELOPE (±46px) rather than a 46px
+  per-plane step: more strands pack denser, never deeper, so the band's
+  guarantee holds at every strand count — a per-plane step put the
+  7-strand front plane at z=138px and ~60px of projection, more than
+  double the band.
+
+- 101553c: TimeSeries — the first mark stays visible, and Space is documented
+
+  Components: time-series
+
+  Two review findings from the consumer side.
+
+  Tapping once left no visible trace: the pointer leaves, `cursor` goes null, and
+  the whole marker disappeared with it. For touch that is the normal state
+  between the first tap and the second, so a touch user had no sign their mark
+  had registered. The selection was always kept in state; only the evidence was
+  missing. The anchor edge is now drawn whether or not a second edge exists.
+
+  The accessible name promised Enter but Space has always worked too, so the key
+  existed for anyone who guessed it and nobody else.
+
+- cf93e42: TimelineMap — dot links get a 24px hit area
+
+  Components: timeline-map
+
+  The visible dots can be as small as 10px — under the 24px target
+  floor of WCAG 2.2 SC 2.5.8, and genuinely hard to tap. Each dot link
+  now carries a transparent r=12 hit circle behind the painted dot:
+  pointer geometry grows to 24px, the visual stays the map's scale.
+  Caught by the blog's layout audit at every viewport.
+
+- c2a198d: TimelineMap — filter pills clear the SC 2.5.8 and AA floors
+
+  Components: timeline-map
+
+  The category filter pills rendered 22px tall (under the 24px target
+  floor of WCAG 2.2 SC 2.5.8) and hardcoded the count span to
+  muted-foreground, which measured 4.37:1 on the active pill's
+  strand-a/10 tint — under the 4.5 AA floor. Pills are now inline-flex
+  min-h-6; the count inherits the pill's state colour. Caught by the
+  blog's real-layout audit across every viewport.
+
 <!--
   Changesets prepends each new `## x.y.z` section directly under this title, so
   the paragraphs below get pushed under the newest release on every version
