@@ -43,6 +43,26 @@
  * crosshair, because a slot index into the previous geometry's keys would
  * pair the readout with the wrong date.
  *
+ * ## Two points make a comparison, and the gesture is the same on both paths
+ *
+ * Marking a point (click, or Enter) sets an anchor; marking a second turns the
+ * readout into a delta — absolute change, percentage, direction — and shades
+ * the span between them. A third mark starts over. It is the gesture every
+ * stock chart has, and the reason to state it here is that most of them
+ * implement it as a pointer DRAG, which no keyboard user can perform. Both
+ * paths run through one `select()`, for the same reason both crosshair paths
+ * run through `nearestSlot`.
+ *
+ * The delta is rendered by `Delta`, not computed here, so the sign, the
+ * percentage, the tone token and the WCAG 1.4.1 accessible name all come from
+ * one place. `polarity` is forwarded because a chart of error rate or latency
+ * means the opposite of a chart of downloads by a rise.
+ *
+ * Two refusals are deliberate. A point compared with itself clears the
+ * selection rather than reporting a confident 0%, and a range with a gap at
+ * either end shows nothing — bridging it would report a change that never
+ * happened.
+ *
  * ## There is no floating tooltip, and that is the design
  *
  * A tooltip that follows the pointer is a *second* inspection surface: it has
@@ -75,7 +95,7 @@
  *
  * | Rule | Concept                    | Where in this file                                       |
  * | ---- | -------------------------- | -------------------------------------------------------- |
- * | R6   | data-slot on every part    | `"time-series" / "-plot" / "-axis" / "-legend" / "-readout"` |
+ * | R6   | data-slot on every part    | `"time-series" / "-plot" / "-axis" / "-legend" / "-readout" / "-range" / "-comparison"` |
  * | R7   | className merged + ...rest | `cn(...)` + `{...props}`                                  |
  * | R8   | No `isXxx`; enums          | `polarity`; annotation `kind`                             |
  * | R13  | Ecosystem first            | no charting dep — `plotScales` + SVG is the engine        |
@@ -98,6 +118,7 @@ import {
   type AnnouncementOptions,
 } from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
+import { Delta, type Polarity } from './delta.js';
 import { SeriesTable } from './series-table.js';
 import {
   areaPath,
@@ -200,6 +221,15 @@ export interface ComparisonSeries {
 const NO_COMPARE: readonly ComparisonSeries[] = [];
 
 export interface TimeSeriesProps extends Omit<React.ComponentProps<'figure'>, 'children'> {
+  /**
+   * Which direction counts as good, for the two-point comparison.
+   *
+   * `normal` (the default) colours a rise as positive. A chart of error rate,
+   * latency, cost or bounce rate wants `inverse` — without it a 50% regression
+   * is drawn in the same green as a 50% improvement, which is worse than not
+   * colouring it at all.
+   */
+  polarity?: Polarity;
   points: readonly Point[];
   /**
    * Further series drawn against the same axes.
@@ -262,6 +292,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     label,
     unit,
     showTable = false,
+    polarity = 'normal',
     loading = false,
     error,
     announce,
@@ -271,6 +302,12 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
   ref,
 ) {
   const [cursor, setCursor] = React.useState<number | null>(null);
+  // Range comparison. `anchor` is the point the reader marked; `fixed` is the
+  // second one, once they have committed it. While `fixed` is null the live
+  // cursor previews the range, which is what makes the gesture feel like a
+  // drag without being one — a drag would be unavailable to the keyboard.
+  const [anchor, setAnchor] = React.useState<number | null>(null);
+  const [fixed, setFixed] = React.useState<number | null>(null);
   const svgRef = React.useRef<SVGSVGElement>(null);
 
   // The primary series is series 0. Everything below indexes off this list, so
@@ -336,7 +373,47 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
   if (drawnGeometry !== geometry) {
     setDrawnGeometry(geometry);
     setCursor(null);
+    // A selection is a pair of SLOT INDICES. New keys make those indices point
+    // at different dates, so a surviving range would silently re-label itself
+    // — the same class of bug the cursor reset above exists to prevent.
+    setAnchor(null);
+    setFixed(null);
   }
+
+  /**
+   * Mark a point, or complete / restart a range.
+   *
+   * One function for both input paths, for the same reason `nearestSlot` is:
+   * two selection code paths eventually disagree about which point is
+   * selected, and the readout can only be right about one of them.
+   */
+  const select = React.useCallback(
+    (slot: number) => {
+      if (anchor === null) {
+        setAnchor(slot);
+        setFixed(null);
+        return;
+      }
+      if (fixed === null) {
+        // Re-selecting the anchor clears it. Without this, a mis-click leaves
+        // a mark the reader can only remove by completing a range they did
+        // not want.
+        if (slot === anchor) setAnchor(null);
+        else setFixed(slot);
+        return;
+      }
+      // A complete range is replaced, not extended — the third mark starts
+      // over, which is what every stock chart does and what a reader expects.
+      setAnchor(slot);
+      setFixed(null);
+    },
+    [anchor, fixed],
+  );
+
+  const clearSelection = React.useCallback(() => {
+    setAnchor(null);
+    setFixed(null);
+  }, []);
 
   const onKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     const current = cursor ?? 0;
@@ -353,8 +430,16 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
       case 'End':
         move(last);
         break;
+      case 'Enter':
+      case ' ':
+        // The whole point of routing selection through the keyboard: a
+        // comparison a mouse user can make and a keyboard user cannot is a
+        // feature that does not exist for half its audience.
+        select(cursor ?? 0);
+        break;
       case 'Escape':
         setCursor(null);
+        clearSelection();
         return; // no preventDefault — Escape may close an enclosing overlay
       default:
         return;
@@ -363,12 +448,65 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     event.preventDefault();
   };
 
-  const onPointerMove = (event: React.PointerEvent<SVGSVGElement>) => {
+  /** Slot under a pointer event, or null when it cannot be determined. */
+  const slotFrom = (event: React.PointerEvent<SVGSVGElement>): number | null => {
     const box = svgRef.current?.getBoundingClientRect();
-    if (!box || box.width === 0) return;
+    if (!box || box.width === 0) return null;
     const userX = ((event.clientX - box.left) / box.width) * W - PAD_LEFT;
-    move(nearestSlot(plot.keys.length, userX, W - PAD_LEFT));
+    // `nearestSlot` clamps a number but propagates a non-number, and a NaN
+    // slot renders as NaN in every x attribute it touches. This function
+    // promises a slot OR null; returning NaN would break that promise at
+    // every call site instead of here.
+    if (!Number.isFinite(userX)) return null;
+    return nearestSlot(plot.keys.length, userX, W - PAD_LEFT);
   };
+
+  const onPointerMove = (event: React.PointerEvent<SVGSVGElement>) => {
+    const slot = slotFrom(event);
+    if (slot !== null) move(slot);
+  };
+
+  // `pointerup`, not `click`: the plot is `touch-pan-y`, so a touch that
+  // scrolls the page still ends in a click on some browsers. Pointer events
+  // also carry `pointerType`, which is how the touch path knows to place the
+  // crosshair before selecting — a finger never hovered first.
+  const onPointerUp = (event: React.PointerEvent<SVGSVGElement>) => {
+    const slot = slotFrom(event);
+    if (slot === null) return;
+    if (event.pointerType !== 'mouse') move(slot);
+    select(slot);
+  };
+
+  // These live ABOVE the loading / error / empty branches because `comparison`
+  // is a hook, and a hook after an early return is called conditionally —
+  // React's cardinal rule. Lint caught it here rather than a user hitting
+  // "rendered fewer hooks than expected" the first time a chart went from
+  // loading to loaded with a range selected.
+  //
+  // The second edge of the band: the committed point when there is one, the
+  // live cursor while the reader is still choosing.
+  const rangeEnd = fixed ?? cursor;
+
+  /**
+   * The two points being compared, on the PRIMARY series, ordered by time so
+   * the delta reads left-to-right regardless of which end was marked first.
+   *
+   * `null` whenever a comparison cannot honestly be shown: no committed range,
+   * both ends on the same day, or a gap in the data at either end. The gap is
+   * the interesting one — bridging it would invent a value and report a change
+   * that never happened.
+   */
+  const comparison = React.useMemo((): readonly [Point, Point] | null => {
+    if (anchor === null || fixed === null || anchor === fixed) return null;
+    const [from, to] = anchor < fixed ? [anchor, fixed] : [fixed, anchor];
+    const a = plot.at(0, from);
+    const b = plot.at(0, to);
+    if (a === null || b === null) return null;
+    return [
+      { t: plot.keys[from], v: a },
+      { t: plot.keys[to], v: b },
+    ];
+  }, [anchor, fixed, plot]);
 
   // Loading and error are both checked BEFORE the not-enough-data branch: data
   // still in flight, and data that failed to arrive, are each a different claim
@@ -541,10 +679,11 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         role="img"
         aria-label={`${drawn
           .map((series) => describeSeries(series.points, series.label))
-          .join(' ')} Focus this chart and use the left and right arrow keys to read individual values.`}
+          .join(' ')} Focus this chart and use the left and right arrow keys to read individual values. Press Enter to mark a point, then Enter again on a second point to compare the two.`}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
         onPointerLeave={() => setCursor(null)}
         onBlur={() => setCursor(null)}
       >
@@ -699,6 +838,37 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
             is). 150ms trails the readout, which snaps — the readout is the
             record, the glide is the gesture, and the dot always LANDS on
             the true value. `motion-reduce` snaps the glyph too. */}
+        {/* The comparison band. Drawn BEFORE the crosshair so the crosshair
+            stays readable on top of it, and `aria-hidden` because the readout
+            below states the range in words — a shaded rectangle is not
+            information a screen reader can use. */}
+        {anchor !== null && rangeEnd !== null && (
+          <g data-slot="time-series-range" aria-hidden>
+            <rect
+              x={Math.min(px(anchor), px(rangeEnd))}
+              y={PAD_TOP}
+              width={Math.abs(px(rangeEnd) - px(anchor))}
+              height={height - PAD_TOP}
+              className="fill-viz-crosshair opacity-10"
+            />
+            {[anchor, rangeEnd].map((slot, index) => (
+              <line
+                key={`edge-${index === 0 ? 'anchor' : 'end'}`}
+                x1={px(slot)}
+                y1={PAD_TOP}
+                x2={px(slot)}
+                y2={height}
+                className="stroke-viz-crosshair opacity-60"
+                strokeWidth={1}
+                // The committed end is solid; a live preview is dashed, so a
+                // reader can tell a finished comparison from one in progress
+                // without reading the text.
+                strokeDasharray={index === 1 && fixed === null ? '3 3' : undefined}
+              />
+            ))}
+          </g>
+        )}
+
         {cursor !== null && (
           <g
             aria-hidden
@@ -768,7 +938,32 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
       >
         <span aria-hidden>{plot.min.toLocaleString()}</span>
         <output aria-live="polite" className="font-medium text-foreground">
-          {readout}
+          {comparison ? (
+            <span
+              data-slot="time-series-comparison"
+              className="flex flex-wrap items-baseline gap-x-2"
+            >
+              <span>
+                {comparison[0].t} → {comparison[1].t}
+              </span>
+              {/* Delta owns the sign, the percentage, the tone token and the
+                  screen-reader phrasing. Re-deriving any of that here would
+                  give this chart its own opinion about what "up" looks like,
+                  which is what a design system exists to prevent. */}
+              <Delta points={comparison} unit={unit} percent polarity={polarity} />
+              {/* The crosshair reading, kept ALONGSIDE the locked range.
+                  Without it this live region freezes the moment a comparison
+                  completes: its content stops changing, so every later arrow
+                  key announces nothing and a screen-reader user cannot tell
+                  the keys still work. It is also what a reader wants — the
+                  range, and the point they are on. */}
+              {readout ? (
+                <span className="font-normal text-muted-foreground">{readout}</span>
+              ) : null}
+            </span>
+          ) : (
+            readout
+          )}
         </output>
         <span aria-hidden>{plot.max.toLocaleString()}</span>
       </div>

@@ -7804,8 +7804,10 @@
           "ArrowLeft",
           "ArrowRight",
           "End",
+          "Enter",
           "Escape",
-          "Home"
+          "Home",
+          "Space"
         ],
         "ownHandler": true
       },
@@ -7855,6 +7857,7 @@
       "registryDependencies": [
         "cn",
         "data-state",
+        "delta",
         "series-table",
         "skeleton",
         "theme"
