@@ -176,7 +176,14 @@ function Skeleton({
       aria-busy="true"
       aria-live="polite"
       className={cn(
-        'animate-pulse bg-muted',
+        // `max-w-full` because every width utility a caller reaches for is in
+        // REM, and rem scales with the root font-size. At text 200% a
+        // `w-48` skeleton is 384px on a 320px viewport and scrolls the whole
+        // document — WCAG 1.4.10. There are `w-96` and `w-80` skeletons in
+        // use too, which would be 768px and 640px there, so this belongs on
+        // the base rather than at each call site. `className` still wins if a
+        // caller genuinely needs to exceed its container.
+        'max-w-full animate-pulse bg-muted',
         SKELETON_VARIANT_CLASSES[variant],
         className,
       )}
@@ -213,7 +220,14 @@ function CompositeSkeleton({
       aria-busy="true"
       aria-live="polite"
       className={cn(
-        'animate-pulse bg-muted',
+        // `max-w-full` because every width utility a caller reaches for is in
+        // REM, and rem scales with the root font-size. At text 200% a
+        // `w-48` skeleton is 384px on a 320px viewport and scrolls the whole
+        // document — WCAG 1.4.10. There are `w-96` and `w-80` skeletons in
+        // use too, which would be 768px and 640px there, so this belongs on
+        // the base rather than at each call site. `className` still wins if a
+        // caller genuinely needs to exceed its container.
+        'max-w-full animate-pulse bg-muted',
         SKELETON_VARIANT_CLASSES[variant],
         'flex flex-col',
         className,
