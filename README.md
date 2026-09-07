@@ -44,10 +44,16 @@ npm run build -w packages/ui      # build the primitives for publish
 The DS ships as a [shadcn registry](https://ui.shadcn.com/docs/registry). Pick the URL from [ds.interlace.tools](https://ds.interlace.tools) or use the `@interlace` alias:
 
 ```bash
+npx interlace-ui add button
+# or with the shadcn CLI, by alias or by URL
 npx shadcn@latest add @interlace/button
-# or, by URL
 npx shadcn@latest add https://ds.interlace.tools/r/button.json
 ```
+
+[`interlace-ui`](./packages/cli) is a thin front door over the shadcn CLI — it
+delegates every install, and adds `list` / `info`, which the shadcn CLI has no
+command for. `npx interlace-ui init` registers the `@interlace` alias so the
+plain shadcn commands above keep working with or without it.
 
 The file lands in your repo (`src/components/ui/button.tsx`) — own it, mod it, blame it. No bundle, no black box.
 
