@@ -28,7 +28,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.0.0",
-    "since": null
+    "since": "1.2.0"
   },
   "docs": "## @interlace/reading-strand\n\nInstalled to `components/ui/reading-strand.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/reading-strand';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/reading-strand\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }
