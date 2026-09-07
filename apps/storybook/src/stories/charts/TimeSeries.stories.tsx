@@ -15,7 +15,7 @@ const meta: Meta<typeof TimeSeries> = {
         component:
           'One metric over time, with the actions that moved it drawn ON the curve.\n\n' +
           '**The annotation is the point.** A line going up is a fact; a line going up with a publish marker at the inflection is an argument. Grid, axis and crosshair are chrome that exists so the annotation can be read against a scale.\n\n' +
-          '**The crosshair works from the keyboard** — ←/→ step, Home/End jump, Escape clears, and the readout is `aria-live="polite"`. This is the part charting libraries almost universally get wrong: hover-only inspection means the values exist for mouse users and nobody else. The pointer path and the keyboard path resolve through the same `nearestIndex` call, so they can never disagree.\n\n' +
+          '**The crosshair works from the keyboard** — ←/→ step, Home/End jump, Escape clears, and the readout is `aria-live="polite"`. This is the part charting libraries almost universally get wrong: hover-only inspection means the values exist for mouse users and nobody else. The pointer path and the keyboard path resolve through the same `nearestSlot` call, so they can never disagree.\n\n' +
           '**Every chart ships an `sr-only` data table.** Axe reads an SVG as one opaque node and will score a labelled chart green whether or not the values are reachable.\n\n' +
           '**Two metrics, one y domain.** `compare` adds series against the same axes; the domain is the union of every value, because a second y axis lets an author slide two unrelated series until they appear to cross wherever the argument needs them to.\n\n' +
           '**The x labels are HTML, not SVG text.** At a 320 viewport the plot is 288px wide against a 900-unit `viewBox`, so `text-xs` inside the SVG paints at 4px. Measured in Chrome, not reasoned about.',
@@ -147,6 +147,63 @@ export const KeyboardCrosshair: Story = {
     await step('Escape clears the crosshair (WCAG 2.1.2)', async () => {
       await userEvent.keyboard('{Escape}');
       await waitFor(() => expect(canvasElement.querySelector('output')?.textContent).toBe(''));
+    });
+  },
+};
+
+export const RangeComparison: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Mark two points and the readout becomes a comparison — absolute change, percentage, and a tone token saying which way it went. The same gesture on both input paths: click twice with a pointer, or press Enter twice with the keyboard. A third mark starts over.\n\n' +
+          'The delta is rendered by `Delta`, not re-derived here, so this chart cannot develop its own opinion about what "up" looks like. `polarity` is forwarded for the charts where a rise is bad.',
+      },
+    },
+  },
+  args: { points: RISING, label: 'npm downloads', unit: 'downloads' },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const plot = canvas.getByRole('img');
+    const output = () => canvasElement.querySelector('output');
+
+    await step('marking one point does not yet claim a change', async () => {
+      plot.focus();
+      await userEvent.keyboard('{Home}');
+      await userEvent.keyboard('{Enter}');
+      // One point is a reading, not a comparison. Asserting the absence
+      // matters: an off-by-one here would compare a point with itself and
+      // proudly report 0%.
+      await waitFor(() => expect(output()?.textContent).not.toMatch(/→/));
+    });
+
+    await step('a second point turns the readout into a delta', async () => {
+      await userEvent.keyboard('{End}');
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(output()?.textContent).toMatch(/→/));
+      await expect(output()?.textContent).toMatch(/%/);
+    });
+
+    await step('the direction is exposed as data, not only as colour', async () => {
+      // WCAG 1.4.1: colour cannot be the only carrier. `Delta` states the
+      // direction in its accessible name and in `data-direction`.
+      const delta = canvasElement.querySelector('[data-direction]');
+      await expect(delta).not.toBeNull();
+      await expect(delta?.getAttribute('data-direction')).toBe('up');
+    });
+
+    await step('the live region keeps announcing after the range is locked', async () => {
+      // The failure this guards: once `fixed` is set the output could freeze,
+      // and every later arrow key would announce nothing at all.
+      const before = output()?.textContent;
+      await userEvent.keyboard('{ArrowLeft}');
+      await waitFor(() => expect(output()?.textContent).not.toBe(before));
+    });
+
+    await step('a third mark starts a new range', async () => {
+      await userEvent.keyboard('{Home}');
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(output()?.textContent).not.toMatch(/→/));
     });
   },
 };

@@ -435,6 +435,7 @@
       "primitives-codeblock--default",
       "primitives-codeblock--loading",
       "primitives-codeblock--variants",
+      "primitives-codeblock--notation",
       "primitives-codeblock--dark",
       "primitives-codeblock--rtl",
       "primitives-codeblock--below-min-viewport"
@@ -442,6 +443,17 @@
     "preview": "primitives-codeblock--default",
     "previewDark": "primitives-codeblock--dark",
     "skeleton": "primitives-codeblock--loading"
+  },
+  "code-editor": {
+    "title": "Primitives/CodeEditor",
+    "storyIds": [
+      "primitives-codeeditor--default",
+      "primitives-codeeditor--with-findings",
+      "primitives-codeeditor--empty-invites-typing"
+    ],
+    "preview": "primitives-codeeditor--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "code-window": {
     "title": "Blocks/CodeWindow",
@@ -1052,6 +1064,17 @@
     "previewDark": "starters-layout-starter--dark",
     "skeleton": null
   },
+  "lint-playground": {
+    "title": "Blocks/LintPlayground",
+    "storyIds": [
+      "blocks-lintplayground--default",
+      "blocks-lintplayground--clean-code",
+      "blocks-lintplayground--analyzer-down"
+    ],
+    "preview": "blocks-lintplayground--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "marquee": {
     "title": "MagicUI/Marquee",
     "storyIds": [
@@ -1341,6 +1364,22 @@
     "preview": "primitives-publisheddate--variants",
     "previewDark": "primitives-publisheddate--dark",
     "skeleton": "primitives-publisheddate--loading"
+  },
+  "radial-weave": {
+    "title": "Charts/RadialWeave",
+    "storyIds": [
+      "charts-radialweave--default",
+      "charts-radialweave--woven-pair",
+      "charts-radialweave--with-gaps",
+      "charts-radialweave--flat-series",
+      "charts-radialweave--not-enough-data",
+      "charts-radialweave--loading",
+      "charts-radialweave--fetch-failed",
+      "charts-radialweave--visible-table"
+    ],
+    "preview": "charts-radialweave--default",
+    "previewDark": null,
+    "skeleton": "charts-radialweave--loading"
   },
   "radio-group": {
     "title": "Primitives/RadioGroup",
@@ -1842,6 +1881,17 @@
     "previewDark": "templates-statstemplate--dark",
     "skeleton": "templates-statstemplate--page-skeleton"
   },
+  "strand-field": {
+    "title": "Effects/StrandField",
+    "storyIds": [
+      "effects-strandfield--default",
+      "effects-strandfield--woven",
+      "effects-strandfield--with-active"
+    ],
+    "preview": "effects-strandfield--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "sunny-background": {
     "title": "Aceternity/SunnyBackground",
     "storyIds": [
@@ -1996,6 +2046,7 @@
       "charts-timeseries--default",
       "charts-timeseries--with-annotations",
       "charts-timeseries--keyboard-crosshair",
+      "charts-timeseries--range-comparison",
       "charts-timeseries--two-series",
       "charts-timeseries--two-series-crosshair",
       "charts-timeseries--ragged-dates",
@@ -2067,6 +2118,7 @@
       "primitives-toggle--outline",
       "primitives-toggle--sizes",
       "primitives-toggle--group",
+      "primitives-toggle--pill",
       "primitives-toggle--dark"
     ],
     "preview": "primitives-toggle--sizes",

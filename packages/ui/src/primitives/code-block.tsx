@@ -32,6 +32,22 @@
  * `overflow-x-auto` instead, so a narrow viewport gets a horizontally
  * scrollable block rather than mangled syntax.
  *
+ * ## Notation contract (highlighted / diff lines)
+ *
+ * Shiki's `transformerNotationHighlight` / `transformerNotationDiff` mark
+ * line spans with `highlighted`, `diff add`, `diff remove`. The block does
+ * no highlighting itself (unchanged), but it OWNS how those marks look:
+ * token-backed washes that hold in both themes, a `+` / `-` gutter marker
+ * so a diff is never color-alone (COLOR_PHILOSOPHY), and edge-to-edge
+ * bleed through the pre's padding. Any highlighter emitting the same
+ * classes gets the same treatment — the contract is the class names.
+ *
+ * Removed lines are the OLD code: the copy button yields the post-diff
+ * state (`.diff.remove` is skipped), and `select-none` nudges
+ * drag-selection the same way. The button is the guarantee — CSS
+ * `user-select` is a hint engines apply unevenly (Ctrl+A still selects
+ * everything), not a clipboard barrier.
+ *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R4   | Extends native el                | `React.ComponentProps<'figure'> & CodeBlockProps`           |
@@ -56,6 +72,56 @@ import { Skeleton } from './skeleton.js';
 export const MIN_VIEWPORT = 320 as const;
 
 const COPIED_RESET_MS = 1500;
+
+/**
+ * Notation line styles — see "Notation contract" in the header. Decorated
+ * lines bleed through the pre's `p-md` padding via the inline-block +
+ * negative-margin recipe (the same one VitePress ships); the bleed width
+ * tracks the `--spacing-md` token so a padding change cannot desync it.
+ * Diff markers sit absolutely in the bled padding gutter, so code
+ * alignment across marked and unmarked lines is untouched.
+ * `select-none` on removed lines is best-effort UX for drag-selection —
+ * see the header note; the copy button is the reliable post-diff path.
+ */
+const NOTATION_LINES = cn(
+  '[&_.line.highlighted]:relative [&_.line.highlighted]:inline-block [&_.line.highlighted]:-mx-md [&_.line.highlighted]:px-md [&_.line.highlighted]:w-[calc(100%_+_var(--spacing-md)*2)]',
+  '[&_.line.diff]:relative [&_.line.diff]:inline-block [&_.line.diff]:-mx-md [&_.line.diff]:px-md [&_.line.diff]:w-[calc(100%_+_var(--spacing-md)*2)]',
+  '[&_.line.highlighted]:bg-accent',
+  '[&_.line.diff.add]:bg-success/15',
+  '[&_.line.diff.remove]:bg-destructive/10 [&_.line.diff.remove]:select-none',
+  '[&_.line.diff]:before:absolute [&_.line.diff]:before:left-xs',
+  "[&_.line.diff.add]:before:content-['+'] [&_.line.diff.add]:before:text-success",
+  "[&_.line.diff.remove]:before:content-['-'] [&_.line.diff.remove]:before:text-destructive",
+);
+
+/**
+ * textContent minus `.diff.remove` lines — copying a diff must yield the
+ * post-diff (fixed) code, never the removed line someone is being told to
+ * delete.
+ *
+ * Newline handling is shape-tolerant, not Shiki-specific: Shiki emits the
+ * line's newline as a SIBLING text node after the span, so when that shape
+ * is present the leading `\n` is trimmed off the sibling and no blank line
+ * survives the removal. A highlighter that instead embeds the newline
+ * inside the line span needs no cleanup — removing the span removes its
+ * newline — and the guard simply never fires.
+ */
+function copyableText(code: HTMLElement | null): string {
+  if (!code) return '';
+  if (!code.querySelector('.line.diff.remove')) return code.textContent ?? '';
+  const clone = code.cloneNode(true) as HTMLElement;
+  for (const line of clone.querySelectorAll('.line.diff.remove')) {
+    const next = line.nextSibling;
+    if (
+      next?.nodeType === Node.TEXT_NODE &&
+      next.textContent?.startsWith('\n')
+    ) {
+      next.textContent = next.textContent.slice(1);
+    }
+    line.remove();
+  }
+  return clone.textContent ?? '';
+}
 
 type CodeBlockProps = Omit<React.ComponentProps<'figure'>, 'title' | 'children'> & {
   /** Optional header title — usually a filename like `eslint.config.mjs`. */
@@ -93,6 +159,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
     // stable across renders when `loading` flips.
     const [copied, setCopied] = React.useState(false);
     const timerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+    const codeRef = React.useRef<HTMLElement>(null);
 
     // Clear the pending reset timer on unmount so we don't setState on a
     // detached node (R25 — client component must clean up its own side-effects).
@@ -107,9 +174,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
       // we fall back to the textContent of the rendered <code>. We capture
       // it lazily here so a pre-highlighted JSX child still copies cleanly.
       const text =
-        typeof children === 'string'
-          ? children
-          : (codeRef.current?.textContent ?? '');
+        typeof children === 'string' ? children : copyableText(codeRef.current);
 
       try {
         // No clipboard API (insecure context, sandboxed iframe): do NOT
@@ -127,8 +192,6 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
         // intentionally swallow — the snippet is still visible and selectable.
       }
     }, [children, onCopied]);
-
-    const codeRef = React.useRef<HTMLElement>(null);
 
     // Loading early-return AFTER all hooks (useState, useEffect,
     // useCallback, useRef) so hook order stays stable across renders.
@@ -213,6 +276,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
             'overflow-x-auto p-md',
             'text-code font-mono text-foreground',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset',
+            NOTATION_LINES,
           )}
         >
           <code
