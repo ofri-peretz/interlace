@@ -14,7 +14,7 @@ import { pathToFileURL } from 'node:url';
 
 import { ensureRegistryAlias } from './components-json.js';
 
-import { planFromArgv, SHADCN_SPEC, type Plan } from './plan.js';
+import { itemUrl, planFromArgv, SHADCN_SPEC, type Plan } from './plan.js';
 import {
   renderHelp,
   renderInfo,
@@ -91,9 +91,16 @@ export const run = async (argv: readonly string[]): Promise<number> => {
     }
 
     case 'info': {
-      const item = (await getJson(
-        `${plan.registry}/r/${plan.name}.json`,
-      )) as RegistryItem;
+      /*
+       * `itemUrl`, not a template literal.
+       *
+       * Building the URL here by hand is what made `info @interlace/button`
+       * request `/r/@interlace/button.json` and 404: `add` routes through
+       * `itemUrl`, which strips the `@interlace/` alias, and this path did
+       * not. One rule, two implementations, and only one of them knew about
+       * the alias the CLI's whole premise rests on.
+       */
+      const item = (await getJson(itemUrl(plan.registry, plan.name))) as RegistryItem;
       process.stdout.write(`${renderInfo(item, plan.registry)}\n`);
       return 0;
     }

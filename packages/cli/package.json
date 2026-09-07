@@ -34,7 +34,7 @@
     "provenance": true
   },
   "scripts": {
-    "prebuild": "test -d dist || rm -f tsconfig.lib.tsbuildinfo",
+    "prebuild": "node scripts/prebuild.mjs",
     "build": "tsc -b tsconfig.lib.json && node scripts/chmod-bin.mjs",
     "prepack": "npm run build",
     "typecheck": "tsc --noEmit",
@@ -42,7 +42,7 @@
     "lint:eslint": "eslint .",
     "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
     "test": "npm run build && vitest run",
-    "clean": "rm -rf dist tsconfig.lib.tsbuildinfo"
+    "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true});fs.rmSync('tsconfig.lib.tsbuildinfo',{force:true})\""
   },
   "devDependencies": {
     "@types/node": "^26.0.0",
