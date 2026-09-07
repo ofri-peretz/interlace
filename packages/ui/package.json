@@ -332,6 +332,10 @@
       "types": "./dist/primitives/code-block.d.ts",
       "default": "./dist/primitives/code-block.js"
     },
+    "./code-editor": {
+      "types": "./dist/primitives/code-editor.d.ts",
+      "default": "./dist/primitives/code-editor.js"
+    },
     "./tag": {
       "types": "./dist/primitives/tag.d.ts",
       "default": "./dist/primitives/tag.js"
@@ -375,6 +379,10 @@
     "./charts/time-series": {
       "types": "./dist/charts/time-series.d.ts",
       "default": "./dist/charts/time-series.js"
+    },
+    "./charts/radial-weave": {
+      "types": "./dist/charts/radial-weave.d.ts",
+      "default": "./dist/charts/radial-weave.js"
     },
     "./charts/metric-table": {
       "types": "./dist/charts/metric-table.d.ts",

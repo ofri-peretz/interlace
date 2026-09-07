@@ -5,6 +5,17 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "CodeBlock — Shiki notation contract: highlighted + diff lines\n\nLines a highlighter marks `highlighted`, `diff add`, or `diff remove`\n(Shiki's `transformerNotationHighlight` / `transformerNotationDiff`, or\nanything emitting the same classes) are now styled by the block itself:\ntoken-backed washes that hold in both themes, edge-to-edge bleed through\nthe pre's padding, and a `+` / `-` gutter marker so a diff is never\ncolor-alone. The copy button yields the post-diff code — `.diff.remove`\nlines are skipped — so nobody pastes the line they were told to delete;\n`select-none` nudges drag-selection the same way (a hint engines apply\nunevenly, not a clipboard barrier — the button is the guarantee).",
+          "components": [
+            "code-block"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/code-block-notation.md"
+        },
+        {
           "summary": "CodeBlock — onCopied seam + honest copy affordance\n\n`onCopied?(text)` fires after a SUCCESSFUL clipboard write with the\nexact copied text — the measurement seam a receipts-honest consumer\nneeds. Past-tense name is a documented R17 deviation: native `onCopy`\nalready reaches the figure via `...props` and fires on selection-copy.\nHonesty fix riding along: with no clipboard API available the button\nused to flip \"Copied!\" without writing anything; it now stays quiet —\nno success is claimed that didn't happen.",
           "components": [
             "code-block"
@@ -23,6 +34,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/hero-strand.md"
+        },
+        {
+          "summary": "CodeEditor + LintPlayground — paste code, watch analysis light it up\n\n**CodeEditor** (primitive): an editable code surface whose visual layer is\nDIAGNOSTICS, not syntax colour — the other half of the CodeBlock pair. The\nzero-sync layout trick: the textarea auto-grows (`rows` = line count) with\nsoft wrap off, so a highlight bar for line N sits at a fixed offset computed\nfrom the line-height — no scroll listeners, nothing to drift; the\n`leading-6`/`py-4` classes and the exported `LINE_HEIGHT_PX`/`PAD_Y_PX`\nconstants are one test-pinned contract. Bars are `aria-hidden` position,\nnever information, and severities differ by border, not hue alone.\n\n**LintPlayground** (pattern): editor + findings list + status around an\nINJECTED `lint: (code) => Promise<PlaygroundDiagnostic[]>` — the DS owns the\nsurface and ships no linting dependency; the app brings a web worker\nbundling the real analyzer. Honesty rules, all test-locked: findings render\nas text first; stale results never paint (sequence-numbered, resolutions\nAND rejections); a failed analysis says \"unknown, not clean\" instead of an\nempty list; and the footer prints the privacy fact that makes pasting real\ncode reasonable — analysis runs entirely in the reader's browser.\n\nBoth join the coverage ledger at 100/100/100/100.",
+          "components": [
+            "code-editor",
+            "lint-playground"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/lint-playground.md"
         },
         {
           "summary": "ReadingStrand — reading progress as the brand's draw verb\n\nA single strand-a line pinned to the viewport top that draws itself as\nthe reader moves through the piece. Progress is state coupled to the\nreader's own scroll (nothing animates on its own — no reduced-motion\nvariant to gate). Real `role=\"progressbar\"` 0–100; measures at most\nonce per frame via a passive listener; the fill moves with\ncompositor-only `transform: scaleX`. `target` names the article element\nby id so server pages need no client seam; falls back to the whole\ndocument. SSR renders scaleX(0) — zero CLS.",
@@ -47,6 +70,29 @@
           "source": ".changeset/section-index.md"
         },
         {
+          "summary": "TimeSeries — mark two points, read the change between them\n\nMarking a point (click, or Enter from the keyboard) sets an anchor; marking a\nsecond turns the readout into a comparison — `2026-06-01 → 2026-08-01` with the\nabsolute change, the percentage and the direction — and shades the span between\nthem on the plot. A third mark starts a new range; Escape clears.\n\nThe gesture most charts implement as a pointer drag, which no keyboard user can\nperform. Here both paths resolve through one `select()`, so they cannot disagree\nabout what is selected.\n\nThe delta is rendered by `Delta` rather than recomputed, so the sign, the\npercentage, the tone token and the WCAG 1.4.1 accessible name all come from one\nplace. A point compared with itself clears the selection instead of reporting\n0%, and a range with a gap at either end shows nothing rather than bridging it.",
+          "components": [
+            "time-series"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/time-series-range-compare.md"
+        },
+        {
+          "summary": "The Living Weave — motion, the radial poster form, and the strand field\n\n**TimeSeries draws itself.** The plotted series and their annotations are\nrevealed by a clip rect that scales open left→right — the new\n`--animate-weave-reveal` token, the draw verb's second mechanism for a chart\nwhose dash patterns ARE series identity (MOTION_PHILOSOPHY's draw-gesture\nexception gains the clip-reveal clause, and the motion lock verifies the\nutility only ever lands on a `clipPath` child). Pure CSS, SSR-drawn,\nfrom-only — with no animation at all, nothing is ever hidden. The reveal\nreplays when the drawn geometry changes BY VALUE, never by array identity;\nthe same change resets the crosshair during render. The crosshair now glides\nbetween slots on a transform transition (150ms, motion-reduce clamped) while\nthe readout still snaps.\n\n**RadialWeave** — the same series wrapped around a dial: the POSTER form.\n300° sweep with the gap at the bottom (a closed circle claims the newest\nobservation meets the oldest), the exact dash+hue identity table TimeSeries\nuses, nulls breaking the arc, an HTML centre value, and deliberately no\ncrosshair — the aria-label sentence, the min/max readout and the lossless\n`SeriesTable` carry inspection. Server component; dial math lives in\n`scale.ts` (`dialAngle`/`dialRadius`/`dialPoint`/`dialPath`/`dialRing`).\n\n**StrandField** — real series lifted into depth: each thread on its own\nplane in a CSS-3D perspective stage (zero dependencies — `perspective` +\n`translateZ`, never WebGL), fanned apart or collapsed flat via `woven`,\ntilting inside its own bounds with the pointer (never under\n`prefers-reduced-motion`), strands entering by the strand-draw verb with a\nCSS-variable stagger the reduce clamp can zero. `aria-hidden` theatre with\nno focusable element; `onStrandSelect` is a pointer shortcut for a selection\nsurface the consumer renders accessibly.",
+          "components": [
+            "time-series",
+            "radial-weave"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/time-series-weave-reveal.md"
+        },
+        {
           "summary": "TimelineMap: number-axis mode — the lanes × axis landscape over any continuous measure\n\nNew `axis` prop (`{ kind: \"number\", format }`) positions dots by\n`item.value` instead of `item.date` — reading minutes, bundle KB, any\nquantity a corpus is actually navigated by. Nice-step ticks (1/2/5×10ⁿ)\nrender through the consumer's `format`; aria-labels and the Detail\nstrip speak the formatted value through one shared voice, so the two\ncan never disagree. The date axis, the weave, and every interaction are\nunchanged; `date` is now optional at the type level (number-axis items\ndon't need one).",
           "components": [
             "timeline-map"
@@ -69,6 +115,18 @@
           "source": ".changeset/timeline-map-trace.md"
         },
         {
+          "summary": "Toggle — `pill` variant + `xs` size; TimelineMap.Filter consumes it\n\nThe filter pill (rounded-full chip, strand-a pressed tint, greyscale-safe\nborder identity) is now a Toggle variant instead of classes open-coded\ninside TimelineMap.Filter — every \"which categories/threads are active\"\nsurface styles from one home. `xs` is its native size: `min-h-6` sits\nexactly on the WCAG 2.2 SC 2.5.8 24×24 target floor (min-height, so a\nwrapped label grows the pill rather than clipping). TimelineMap.Filter\nnow renders these Toggles — Base UI carries `aria-pressed` — with no\nvisual change.",
+          "components": [
+            "toggle",
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/toggle-pill-variant.md"
+        },
+        {
           "summary": "The woven signature kit and the brand strand tokens.\n\nNew: `TimelineMap` (patterns) — dated entities as dots on category lanes\nwith fit-all width, a roving-tabindex keyboard composite, and the link\nweave (`item.links` draws the corpus's internal reference graph as\nstrand-b threads with select-to-illuminate interaction); `InterlaceWeave`\nand `DecodeText` (effects/, new export subpath). New brand tokens\n`--interlace-strand-a` / `--interlace-strand-b` in both themes, with the\nWCAG 1.4.11 floor measured by the theme-contract lock.\n\nFixed: the preflight applied `height: auto` to svg/canvas, defeating\nexplicit sizing utilities on every viewBox'd svg — now photographic\nmedia only, matching Tailwind's own preflight.",
           "components": [
             "timeline-map"
@@ -89,6 +147,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/code-block-header-doc.md"
+        },
+        {
+          "summary": "TimelineMap — dot hit radius 12 → 13\n\nThe nominal 24px hit union measured 23px in a real browser\n(sub-pixel rounding), one under the SC 2.5.8 floor. r=13 carries a\n2px margin; still paints nothing.",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/dot-hit-radius-13.md"
         },
         {
           "summary": "HeroStrand: aria-hidden omitted from the props type\n\nThe always-decorative contract gains its type layer: `aria-hidden` is\nOmit-ed from HeroStrandProps (strips autocomplete, rejects\nobject-literal construction). Measured honestly: TS checks aria-* JSX\nattributes leniently, so the runtime override guard remains the\nenforced layer — the source comment says exactly that.",
@@ -120,6 +189,48 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/roving-focus-filter-trap.md"
+        },
+        {
+          "summary": "StrandField planes keep a vertical safe band\n\nPlanes sit at `inset-x-0 top-6 bottom-6` instead of `inset-0`: the field\nclips in screen space, and a plane at `translateZ` under the stage's\n`rotateX` projects its top edge ~20px above its own box — a strand whose\nline or label ended high was losing its top half to `overflow-hidden`\n(found walking the blog's `/loom` at 375 and 320).\n\nThe fan is now a bounded depth ENVELOPE (±46px) rather than a 46px\nper-plane step: more strands pack denser, never deeper, so the band's\nguarantee holds at every strand count — a per-plane step put the\n7-strand front plane at z=138px and ~60px of projection, more than\ndouble the band.",
+          "components": [],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/strand-field-safe-band.md"
+        },
+        {
+          "summary": "TimeSeries — the first mark stays visible, and Space is documented\n\nTwo review findings from the consumer side.\n\nTapping once left no visible trace: the pointer leaves, `cursor` goes null, and\nthe whole marker disappeared with it. For touch that is the normal state\nbetween the first tap and the second, so a touch user had no sign their mark\nhad registered. The selection was always kept in state; only the evidence was\nmissing. The anchor edge is now drawn whether or not a second edge exists.\n\nThe accessible name promised Enter but Space has always worked too, so the key\nexisted for anyone who guessed it and nobody else.",
+          "components": [
+            "time-series"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/time-series-anchor-feedback.md"
+        },
+        {
+          "summary": "TimelineMap — dot links get a 24px hit area\n\nThe visible dots can be as small as 10px — under the 24px target\nfloor of WCAG 2.2 SC 2.5.8, and genuinely hard to tap. Each dot link\nnow carries a transparent r=12 hit circle behind the painted dot:\npointer geometry grows to 24px, the visual stays the map's scale.\nCaught by the blog's layout audit at every viewport.",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/timeline-map-dot-hit-area.md"
+        },
+        {
+          "summary": "TimelineMap — filter pills clear the SC 2.5.8 and AA floors\n\nThe category filter pills rendered 22px tall (under the 24px target\nfloor of WCAG 2.2 SC 2.5.8) and hardcoded the count span to\nmuted-foreground, which measured 4.37:1 on the active pill's\nstrand-a/10 tint — under the 4.5 AA floor. Pills are now inline-flex\nmin-h-6; the count inherits the pill's state colour. Caught by the\nblog's real-layout audit across every viewport.",
+          "components": [
+            "timeline-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/timeline-map-filter-a11y.md"
         }
       ]
     },

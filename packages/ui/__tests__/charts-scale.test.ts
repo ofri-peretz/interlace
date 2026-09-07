@@ -19,6 +19,11 @@ import {
   delta,
   describeDistribution,
   describeSeries,
+  dialAngle,
+  dialPath,
+  dialPoint,
+  dialRadius,
+  dialRing,
   keepAtNarrow,
   linePath,
   nearestIndex,
@@ -619,5 +624,87 @@ describe('describeDistribution — the sentence that replaces the picture', () =
     expect(describeDistribution(bins(1, 2), 'Reading')).toBe(
       'Reading: 2 bins, 3 in total, highest in b1 at 2.',
     );
+  });
+});
+
+/* ── The dial: polar projection for the radial (poster) form ───────────── */
+
+describe('dialAngle', () => {
+  const geometry = { cx: 0, cy: 0, inner: 10, outer: 100, startAngle: 120, sweep: 300 };
+
+  it('spreads slots across the sweep, first at the start, last at the end', () => {
+    expect(dialAngle(0, 4, geometry)).toBe(120);
+    expect(dialAngle(3, 4, geometry)).toBe(420);
+  });
+
+  it('parks a single-slot axis mid-sweep rather than at the start', () => {
+    // Pinned to the start it reads as the beginning of an arc that never
+    // drew — the same reasoning as seriesScales centring a single point.
+    expect(dialAngle(0, 1, geometry)).toBe(270);
+  });
+});
+
+describe('dialRadius', () => {
+  const geometry = { cx: 0, cy: 0, inner: 10, outer: 110, startAngle: 120, sweep: 300 };
+
+  it('maps min to the inner ring and max to the outer', () => {
+    expect(dialRadius(0, 0, 50, geometry)).toBe(10);
+    expect(dialRadius(50, 0, 50, geometry)).toBe(110);
+    expect(dialRadius(25, 0, 50, geometry)).toBe(60);
+  });
+
+  it('centres a zero span between the rings — never pinned to either', () => {
+    expect(dialRadius(7, 7, 7, geometry)).toBe(60);
+  });
+});
+
+describe('dialPoint', () => {
+  const geometry = { cx: 100, cy: 100, inner: 10, outer: 110, startAngle: 0, sweep: 300 };
+
+  it('projects degrees + radius around the centre, SVG-clockwise', () => {
+    const east = dialPoint(0, 50, geometry);
+    expect(east.x).toBeCloseTo(150);
+    expect(east.y).toBeCloseTo(100);
+    const south = dialPoint(90, 50, geometry);
+    expect(south.x).toBeCloseTo(100);
+    expect(south.y).toBeCloseTo(150);
+  });
+});
+
+describe('dialPath', () => {
+  const geometry = { cx: 100, cy: 100, inner: 10, outer: 110, startAngle: 120, sweep: 300 };
+
+  it('draws straight segments between observed slots', () => {
+    const d = dialPath([0, 25, 50], 0, 50, geometry);
+    expect(d.match(/M/g)).toHaveLength(1);
+    expect(d.match(/L/g)).toHaveLength(2);
+  });
+
+  it('BREAKS at a null rather than arcing over the gap', () => {
+    const d = dialPath([0, null, 50, 50], 0, 50, geometry);
+    expect(d.match(/M/g)).toHaveLength(2);
+    expect(d.match(/L/g)).toHaveLength(1);
+  });
+
+  it('treats a non-finite reading exactly like a gap', () => {
+    expect(dialPath([0, Number.NaN, 50], 0, 50, geometry)).toBe(
+      dialPath([0, null, 50], 0, 50, geometry),
+    );
+  });
+
+  it('returns an empty path for an all-gap series', () => {
+    expect(dialPath([null, null], 0, 50, geometry)).toBe('');
+  });
+});
+
+describe('dialRing', () => {
+  const geometry = { cx: 100, cy: 100, inner: 10, outer: 110, startAngle: 120, sweep: 300 };
+
+  it('spans the sweep in two arc segments — no large-arc ambiguity', () => {
+    const d = dialRing(60, geometry);
+    expect(d.match(/A/g)).toHaveLength(2);
+    expect(d.startsWith('M')).toBe(true);
+    // Both arc segments carry the constant radius.
+    expect(d).toContain('A60,60');
   });
 });

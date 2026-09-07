@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { Toggle } from '../primitives/toggle.js';
 
 /**
  * TimelineMap — dated entities as linked dots on a shared time axis, one
@@ -598,22 +599,28 @@ function TimelineMapFilter({ className, ...rest }: TimelineMapFilterProps) {
       className={cn('mb-3 flex flex-wrap gap-1.5', className)}
       {...rest}
     >
+      {/* The pill styling lives on Toggle's `pill` variant, not here —
+          this Filter is where the look was born (min-h-6 = the 24px
+          SC 2.5.8 floor, caught by the blog's real-layout audit), and
+          extracting it to the primitive is what keeps every later
+          chip surface from forking the classes. Base UI owns
+          aria-pressed. */}
       {categories.map(({ name, count }) => (
-        <button
+        <Toggle
           key={name}
-          type="button"
-          aria-pressed={active.has(name)}
-          onClick={() => toggleCategory(name)}
-          className={cn(
-            'rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors',
-            active.has(name)
-              ? 'border-strand-a/50 bg-strand-a/10 text-foreground'
-              : 'border-border text-muted-foreground hover:text-foreground',
-          )}
+          variant="pill"
+          size="xs"
+          pressed={active.has(name)}
+          onPressedChange={() => toggleCategory(name)}
         >
           {name}
-          <span className="ml-1 text-muted-foreground">{count}</span>
-        </button>
+          {/* The count INHERITS the pill's text colour: a hardcoded
+              muted-foreground measured 4.37:1 on the ACTIVE pill's
+              strand-a/10 tint — under the 4.5 AA floor. Inactive pills
+              are muted anyway, so nothing changes visually there.
+              No ml-1: the pill variant's gap-1 owns the 4px. */}
+          <span>{count}</span>
+        </Toggle>
       ))}
     </div>
   );
@@ -796,7 +803,12 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
               role="group"
               aria-label={`${lane.name} items`}
               className={cn(
-                'h-11 border-b border-border/60',
+                // overflow-visible: the hit circles on top/bottom-row
+                // dots extend 3px past the lane box, and the UA's
+                // svg overflow:hidden shaved them to ~21px (review).
+                // Nothing PAINTS outside — dots + strokes stay in
+                // bounds — so only pointer geometry escapes.
+                'h-11 overflow-visible border-b border-border/60',
                 laneIdx % 2 === 1 && 'bg-muted/40',
               )}
             >
@@ -827,6 +839,24 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
                     onClick={() => onItemClick?.(d.item)}
                     className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
                   >
+                    {/* SVG hit-slop: the visible dot can be as small as
+                        10px, under the 24px target floor of WCAG 2.2
+                        SC 2.5.8 (caught by the blog's layout audit at
+                        every viewport) — and a 10px dot is genuinely
+                        hard to tap. The transparent circle carries the
+                        pointer geometry; the painted one stays the
+                        map's visual scale. pointer-events on the link
+                        make both circles hit-testable. r=13, not 12:
+                        a nominal 24px union measured 23px in the
+                        gate's real-browser audit (sub-pixel rounding),
+                        so the radius carries a 2px margin. */}
+                    <circle
+                      cx={d.cx}
+                      cy={d.cy}
+                      r={13}
+                      fill="transparent"
+                      stroke="none"
+                    />
                     <circle
                       cx={d.cx}
                       cy={d.cy}
