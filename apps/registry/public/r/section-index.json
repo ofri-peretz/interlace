@@ -28,7 +28,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.0.0",
-    "since": null
+    "since": "1.2.0"
   },
   "docs": "## @interlace/section-index\n\nInstalled to `components/ui/section-index.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/section-index';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/section-index\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
 }
