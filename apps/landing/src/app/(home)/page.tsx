@@ -6,6 +6,7 @@ import {
   Gauge,
   Layers,
   Palette,
+  Terminal,
 } from "lucide-react";
 import { LandingHero } from "@/components/home/landing-hero";
 import { ProductCard } from "@/components/home/product-card";
@@ -65,7 +66,7 @@ export default function HomePage() {
             experience.
           </p>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2">
             {/* Names are the real npm identifiers. The ESLint plugins are
                 UNSCOPED (`eslint-plugin-*`) — ESLint's own resolution
                 convention — so prefixing them with the org scope would send
@@ -97,6 +98,19 @@ export default function HomePage() {
               icon={<Palette className="size-5" />}
               tags={["React", "Tailwind", "shadcn", "a11y"]}
               status="shipping"
+            />
+            {/* Published to npm 2026-09-07 and the repo is public, but the API
+                is not settled and there is no subdomain yet — "Coming soon"
+                is the honest status, and the badge points at the repo rather
+                than a burgee.interlace.tools that does not resolve. */}
+            <ProductCard
+              name="burgee"
+              badge="github.com/ofri-peretz/burgee"
+              tagline="An agent-native CLI framework, drop-in compatible with commander and yargs. Declare a command once and help, --json, --schema, --mcp and shell completions are all projected from that single declaration — so the CLI a human reads is the same one an agent can call."
+              href="https://github.com/ofri-peretz/burgee"
+              icon={<Terminal className="size-5" />}
+              tags={["CLI", "Agents", "MCP", "TypeScript"]}
+              status="planned"
             />
           </div>
         </div>

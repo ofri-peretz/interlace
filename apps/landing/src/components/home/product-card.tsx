@@ -16,7 +16,7 @@ export interface ProductCardProps {
 const statusLabel: Record<ProductCardProps["status"], string> = {
   shipping: "Shipping",
   beta: "Beta",
-  planned: "Planned",
+  planned: "Coming soon",
 };
 
 const statusClasses: Record<ProductCardProps["status"], string> = {
