@@ -129,7 +129,7 @@ A fixed grammar makes events findable in the catalog three months later.
 | -------- | ----------------------------------------------------------------------------------------------------- |
 | Category | Surface or feature (`articles`, `homepage`, `rule_page`, `signup_flow`)                               |
 | Object   | The thing that was acted on (`card`, `search`, `subscribe_button`)                                    |
-| Action   | A verb from the fixed list: click, submit, view, add, remove, start, end, generate, send, cancel, fail |
+| Action   | A verb from the fixed list: click, submit, view, add, remove, start, end, generate, send, cancel, fail, create, delete, update, invite, copy |
 
 `articles:card_clicked`, `homepage:hero_cta_clicked`, `rule_page:viewed`.
 
