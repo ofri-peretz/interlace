@@ -1,17 +1,19 @@
 # Commands
 
-- `npm run ci:local` — mirrors the entire pre-push gate (`lefthook run pre-push --all-files`).
-  Run this instead of the individual steps; it is the only check that matches CI exactly.
+- `npm run ci:local` — runs the full pre-push gate (`typecheck` + `test` + `build` via turbo).
+  Run this before pushing. **Lint is not included**: `lint:oxlint` and `lint:eslint` are a
+  separate CI job, so run `npm run lint` independently.
 - `npm test` / `npm run lint` / `npm run typecheck` — all turbo-scoped across the workspace.
 
 # Workflow
 
 - Branch `<type>/<slug>`. Commit `<type>(<scope>): <subject>` — commitlint enforces the scope.
-- `git commit` and `git push` run lefthook and can take **3–4 minutes**. That is not a hang.
-  If one is killed mid-flight, check `git log origin/<branch> -1` before retrying — a timed-out
-  push may still have landed.
+- `git commit` is fast (only commitlint runs on the message). **`git push` is the slow one** —
+  it runs the `pre-push` suite (typecheck + test + build) and can take **3–4 minutes**. That is
+  not a hang. If a push is killed mid-flight, check `git log origin/<branch> -1` before retrying;
+  a timed-out push may still have landed.
 - IMPORTANT: never `--no-verify`. The hooks are the gate.
-- Waiting on CI? Use `pr-blockers watch`. Never hand-roll `until … gh pr view … sleep` —
+- Waiting on CI? `gh pr checks <PR> --watch`. Never hand-roll `until … gh pr view … sleep` —
   those loops get killed by the harness timeout and end knowing nothing.
 
 # Gotchas
