@@ -4,6 +4,22 @@ import { dirname, resolve } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
+ * The origin the story previews load from. Same source and fallback as
+ * `STORYBOOK_URL` in src/components/story-preview.tsx, so a local override
+ * (`NEXT_PUBLIC_STORYBOOK_URL=http://localhost:6006`) is allowed too.
+ * Reduced to `URL.origin` because this value goes into a header: the parse
+ * drops any path or query, and a value that does not parse falls back.
+ */
+function storybookOrigin() {
+  const fallback = "https://storybook.interlace.tools";
+  try {
+    return new URL(process.env.NEXT_PUBLIC_STORYBOOK_URL || fallback).origin;
+  } catch {
+    return fallback;
+  }
+}
+
+/**
  * Content-Security-Policy in *report-only* mode, reported to PostHog's CSP
  * endpoint through the same same-origin `/ingest` proxy as the rest of
  * analytics.
@@ -36,6 +52,10 @@ function cspReportOnlyHeaders() {
     // browsers prefer frame-ancestors; the older header covers the rest.
     "frame-ancestors 'none'",
     "form-action 'self'",
+    // Component pages embed live renders from the deployed Storybook
+    // (src/components/story-preview.tsx). Without this, frame-src falls back
+    // to default-src 'self' and every preview reports a violation.
+    `frame-src 'self' ${storybookOrigin()}`,
     // Next ships inline bootstrap scripts and styles.
     // TODO(csp-promotion): do NOT carry 'unsafe-eval' into the enforcing
     // header — it re-enables eval()/new Function() and undermines the XSS
@@ -167,8 +187,10 @@ const config = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           ...cspReportOnlyHeaders(),
           // This site shipped no framing header at all, so any page could be
-          // iframed and clickjacked. DENY rather than SAMEORIGIN: the
-          // registry renders no iframes of its own. Note this does not
+          // iframed and clickjacked. DENY rather than SAMEORIGIN: nothing
+          // frames the registry, not even itself (the story previews it
+          // renders are frames of Storybook, which frame-src governs, not
+          // this header). Note this does not
           // restrict /r/*.json — that route is a public registry endpoint
           // with Access-Control-Allow-Origin: *, and CORS is a separate
           // mechanism from framing.
