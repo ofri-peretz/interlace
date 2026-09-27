@@ -188,9 +188,8 @@ const config = {
           ...cspReportOnlyHeaders(),
           // This site shipped no framing header at all, so any page could be
           // iframed and clickjacked. DENY rather than SAMEORIGIN: nothing
-          // frames the registry, not even itself (the story previews it
-          // renders are frames of Storybook, which frame-src governs, not
-          // this header). Note this does not
+          // frames the registry (its story previews are frames OF Storybook,
+          // which frame-src governs). Note this does not
           // restrict /r/*.json — that route is a public registry endpoint
           // with Access-Control-Allow-Origin: *, and CORS is a separate
           // mechanism from framing.
