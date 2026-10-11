@@ -21,6 +21,9 @@ const hero = readFileSync(
   "utf-8",
 );
 
+// Each card is read up to its `status` prop, so `name`, `badge` and `href`
+// must come before `status` in the JSX (they do today). A card missing
+// `status` would not be matched at all, and the "lists burgee" check would fail.
 const cards = [...page.matchAll(/<ProductCard\s([\s\S]*?status="[^"]*")/g)].map((m) => m[1]);
 const prop = (card: string, key: string) =>
   card.match(new RegExp(`${key}="([^"]*)"`))?.[1];

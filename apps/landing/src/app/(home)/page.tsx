@@ -127,7 +127,7 @@ export default async function HomePage() {
               <ArrowRight className="size-4" />
             </a>
             <a
-              href="https://github.com/ofri-peretz"
+              href="https://github.com/ofri-peretz?utm_source=interlace&utm_medium=about"
               className="inline-flex items-center gap-2 rounded-lg border border-fd-border bg-fd-card px-6 py-3 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
             >
               GitHub
