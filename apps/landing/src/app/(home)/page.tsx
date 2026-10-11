@@ -11,45 +11,45 @@ import {
 import { LandingHero } from "@/components/home/landing-hero";
 import { ProductCard } from "@/components/home/product-card";
 import numbers from "@/data/interlace-numbers.json";
+import { getDownloadsMilestone } from "@/lib/downloads";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const downloads = await getDownloadsMilestone();
+
   // Fumadocs `HomeLayout` already wraps children in `<main id="nd-home-layout">`,
   // so this page must NOT add its own `<main>` — duplicate landmarks fail
   // axe's `landmark-no-duplicate-main` and `landmark-main-is-top-level`.
   // Use a plain `<div>` for layout flow.
   return (
     <div className="flex min-h-screen flex-col">
-      <LandingHero />
+      <LandingHero downloads={downloads} />
 
       {/* Principles. Full-opacity bg only — `/50` darkens the composite
           surface enough that `text-fd-muted-foreground` drops below AA in
           dark mode (verified by the live-page axe sweep). */}
       <section className="border-t border-fd-border bg-fd-card px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-4 text-center text-3xl font-bold">
-            What every Interlace tool gets right
+          <h2 className="mb-12 text-center text-3xl font-bold">
+            Three rules every tool follows
           </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-center text-fd-muted-foreground">
-            Three rules that apply to every product in the family.
-          </p>
 
           <div className="grid gap-6 md:grid-cols-3">
             <PrincipleCard
               icon={<Gauge className="size-5" />}
-              title="Every claim is measured"
-              description="No 'blazingly fast' without a benchmark file. Every comparative claim cites a versioned result you can reproduce."
+              title="Numbers you can check"
+              description="Every claim on our sites comes from a test or a benchmark you can run yourself."
               href="/docs/concepts/evidence-philosophy"
             />
             <PrincipleCard
               icon={<Layers className="size-5" />}
-              title="Same baseline everywhere"
-              description="One docs theme, one navigation, one set of components — synced across every product site so they cannot drift."
+              title="One way to read the docs"
+              description="Every product site looks and works the same, so once you know one, you know them all."
               href="/docs/concepts/ecosystem-map"
             />
             <PrincipleCard
               icon={<ShieldCheck className="size-5" />}
-              title="Zero ghost dependencies"
-              description="Every runtime dep is one we can defend. TypeScript-native, no lodash micro-packages, no prototype pollution."
+              title="Few dependencies"
+              description="We add a dependency only when we can explain why. Less to install, less to audit."
               href="/docs/concepts/what-is-interlace"
             />
           </div>
@@ -59,12 +59,7 @@ export default function HomePage() {
       {/* Products directory */}
       <section id="products" className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-4 text-center text-3xl font-bold">The products</h2>
-          <p className="mx-auto mb-12 max-w-2xl text-center text-fd-muted-foreground">
-            Each product has its own subdomain, its own release cadence, and its
-            own evidence files — but they all share this brand and this docs
-            experience.
-          </p>
+          <h2 className="mb-12 text-center text-3xl font-bold">What we build</h2>
 
           <div className="grid gap-6 md:grid-cols-2">
             {/* Names are the real npm identifiers. The ESLint plugins are
@@ -75,17 +70,28 @@ export default function HomePage() {
             <ProductCard
               name="eslint-plugin-*"
               badge="eslint.interlace.tools"
-              tagline={`A suite of ${numbers.plugins.total} ESLint plugins for security, accessibility, and modern framework correctness — each with a measured corpus and explicit comparison set.`}
-              href="https://eslint.interlace.tools"
+              tagline={`${numbers.plugins.total} ESLint plugins that find security bugs and mistakes in JavaScript and TypeScript, including code written by AI.`}
+              href="https://eslint.interlace.tools/?utm_source=interlace&utm_medium=card"
               icon={<ShieldCheck className="size-5" />}
               tags={["ESLint", "Security", "a11y", "TypeScript"]}
+              status="shipping"
+            />
+            {/* The pitch is burgee's canonical one, locked in its own repo by
+                scripts/pitch-lock.test.ts — say it the same way here. */}
+            <ProductCard
+              name="burgee"
+              badge="burgee.interlace.tools"
+              tagline="A CLI framework for Node.js. Everything a CLI needs that isn't your CLI. Written once, served to humans and agents alike."
+              href="https://burgee.interlace.tools/?utm_source=interlace&utm_medium=card"
+              icon={<Terminal className="size-5" />}
+              tags={["CLI", "Node.js", "Agents", "MCP"]}
               status="shipping"
             />
             <ProductCard
               name="@interlace/serverless-*"
               badge="serverless.interlace.tools"
-              tagline="TypeScript-native replacements for community Serverless Framework plugins. Cleanup on removal, CLI commands, no ghost billing."
-              href="https://serverless.interlace.tools"
+              tagline="Plugins for the Serverless Framework on AWS: API Gateway caching and per-function IAM roles, cleaned up when you remove them."
+              href="https://serverless.interlace.tools/?utm_source=interlace&utm_medium=card"
               icon={<Server className="size-5" />}
               tags={["Serverless", "AWS", "API Gateway", "TypeScript"]}
               status="shipping"
@@ -93,53 +99,39 @@ export default function HomePage() {
             <ProductCard
               name="@interlace/ui"
               badge="ds.interlace.tools"
-              tagline="The design system behind every Interlace site — primitives, blocks, and the token baseline, installable with the shadcn CLI. Every story runs axe, dark mode, and RTL in CI."
-              href="https://ds.interlace.tools"
+              tagline="The design system these sites are built with. React components you install with the shadcn CLI."
+              href="https://ds.interlace.tools/?utm_source=interlace&utm_medium=card"
               icon={<Palette className="size-5" />}
               tags={["React", "Tailwind", "shadcn", "a11y"]}
               status="shipping"
-            />
-            {/* Published to npm 2026-09-07 and the repo is public, but the API
-                is not settled and there is no subdomain yet — "Coming soon"
-                is the honest status, and the badge points at the repo rather
-                than a burgee.interlace.tools that does not resolve. */}
-            <ProductCard
-              name="burgee"
-              badge="github.com/ofri-peretz/burgee"
-              tagline="An agent-native CLI framework, drop-in compatible with commander and yargs. Declare a command once and help, --json, --schema, --mcp and shell completions are all projected from that single declaration — so the CLI a human reads is the same one an agent can call."
-              href="https://github.com/ofri-peretz/burgee"
-              icon={<Terminal className="size-5" />}
-              tags={["CLI", "Agents", "MCP", "TypeScript"]}
-              status="planned"
             />
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Who builds this: a person behind the tools reads as more
+          trustworthy than a brand name alone. */}
       <section className="border-t border-fd-border px-6 py-20">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-          <h2 className="text-3xl font-bold">Read the philosophy</h2>
+          <h2 className="text-3xl font-bold">Who builds this</h2>
           <p className="max-w-xl text-fd-muted-foreground">
-            The shortest path to understanding why Interlace exists is the
-            concepts section. Five minutes for the topology, the evidence
-            contract, and the rubric.
+            I&apos;m Ofri Peretz, an engineering manager. I build these tools in
+            the open and write about what they find.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/docs/concepts/what-is-interlace"
+            <a
+              href="https://ofriperetz.dev/?utm_source=interlace&utm_medium=about"
               className="inline-flex items-center gap-2 rounded-lg bg-fd-primary px-6 py-3 text-sm font-medium text-fd-primary-foreground transition-all hover:bg-fd-primary/90 hover:shadow-lg hover:shadow-fd-primary/25"
             >
-              Read the concepts
+              Read the blog
               <ArrowRight className="size-4" />
-            </Link>
-            <Link
-              href="#products"
+            </a>
+            <a
+              href="https://github.com/ofri-peretz"
               className="inline-flex items-center gap-2 rounded-lg border border-fd-border bg-fd-card px-6 py-3 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
             >
-              <Layers className="size-4" />
-              Browse the products
-            </Link>
+              GitHub
+            </a>
           </div>
         </div>
       </section>

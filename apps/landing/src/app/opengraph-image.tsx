@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Interlace — TypeScript-native developer tools";
+export const alt = "Interlace — open-source tools for JavaScript developers";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -47,9 +47,9 @@ export default async function OpengraphImage() {
           marginBottom: "24px",
         }}
       >
-        TypeScript-native
+        Open-source tools for
         <br />
-        <span style={{ color: "#f4794a" }}>developer tools.</span>
+        <span style={{ color: "#f4794a" }}>JavaScript developers.</span>
       </div>
       <div
         style={{
@@ -59,7 +59,7 @@ export default async function OpengraphImage() {
           lineHeight: 1.3,
         }}
       >
-        ESLint plugins · Serverless plugins · Every claim measured.
+        ESLint plugins · burgee CLI framework · Serverless plugins
       </div>
     </div>,
     { ...size },

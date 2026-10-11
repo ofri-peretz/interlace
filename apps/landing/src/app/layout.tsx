@@ -11,15 +11,17 @@ export const metadata = {
   // ponytail: manifest isn't in RootMetadataConfig; spread here instead of widening the baseline
   manifest: "/manifest.json",
   ...createRootMetadata({
-  title: "Interlace — TypeScript-native developer tools",
+  title: "Interlace — open-source tools for JavaScript developers",
   titleTemplate: "%s | Interlace",
   description:
-    "A family of TypeScript-native, evidence-backed developer tools — ESLint plugins, Serverless Framework plugins, and more. Zero ghost dependencies. Every claim measured.",
+    "Open-source tools for JavaScript developers: ESLint plugins that find bugs in AI-written code, burgee (a CLI framework for Node.js), and Serverless Framework plugins.",
   keywords: [
     "Interlace",
     "TypeScript",
     "ESLint",
     "Serverless Framework",
+    "burgee",
+    "Node.js CLI framework",
     "AWS",
     "developer tools",
     "open source",
