@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "source": "https://github.com/ofri-peretz/eslint — apps/docs/scripts/sync-plugin-stats.ts",
   "plugins": {
-    "total": 30,
-    "security": 21,
-    "quality": 7,
+    "total": 32,
+    "security": 22,
+    "quality": 8,
     "react": 2
   },
   "rules": {
-    "total": 466,
-    "security": 261,
-    "quality": 107,
+    "total": 486,
+    "security": 277,
+    "quality": 111,
     "react": 98
   },
-  "generatedAt": "2026-08-07"
+  "generatedAt": "2026-09-24"
 }
