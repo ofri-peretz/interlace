@@ -325,11 +325,18 @@ const main = async () => {
   // 1. Scaffold a real Next.js app. NOT followed by `shadcn init` — see the
   //    header. This is a plain app that has never met our registry.
   console.log('\n▸ scaffolding Next.js app …');
+  // create-next-app ships in lockstep with next, so scaffold with the version
+  // we pin below. `@latest` emits config the pinned next rejects (observed
+  // 2026-10-11: create-next-app 16.4.0 writes `partialPrefetching`, which
+  // next 16.2.9's NextConfig type lacks → the build fails type-checking).
+  const nextVersion = createRequire(import.meta.url)(
+    'next/package.json',
+  ).version;
   const create = await run(
     'npx',
     [
       '--yes',
-      'create-next-app@latest',
+      `create-next-app@${nextVersion}`,
       'app',
       '--ts',
       '--tailwind',
@@ -356,9 +363,6 @@ const main = async () => {
   // 0/142 items land, on a PR that changed nothing about the registry).
   // The workspace's own next version is proven-published by definition,
   // and it is the version this registry actually runs against.
-  const nextVersion = createRequire(import.meta.url)(
-    'next/package.json',
-  ).version;
   const appPkgPath = path.join(app, 'package.json');
   const appPkg = JSON.parse(await readFile(appPkgPath, 'utf8'));
   appPkg.dependencies.next = nextVersion;
