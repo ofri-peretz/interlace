@@ -33,6 +33,13 @@ describe("product cards", () => {
     expect(cards.map((c) => prop(c, "name"))).toContain("burgee");
   });
 
+  // The front-page rule (intent: landing-gateway): one install command per
+  // product, so a visitor can start without leaving the page.
+  it("every card carries an install command", () => {
+    const installs = page.match(/install="(?:npm i|npx) [^"]+"/g) ?? [];
+    expect(installs).toHaveLength(cards.length);
+  });
+
   for (const card of cards) {
     const name = prop(card, "name");
     it(`${name} links to its own interlace.tools site and is shipping`, () => {
