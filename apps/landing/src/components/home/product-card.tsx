@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
-import { BorderBeam } from "#interlace/components/ui/border-beam";
+
+import { CopyButton } from "./copy-button";
 
 export interface ProductCardProps {
   name: string;
@@ -9,103 +9,80 @@ export interface ProductCardProps {
   href: string;
   badge: string;
   icon: ReactNode;
-  tags: string[];
   status: "shipping" | "beta" | "planned";
+  /** The one command that gets a reader started — a real, published package. */
+  install: string;
+  github: string;
 }
 
-const statusLabel: Record<ProductCardProps["status"], string> = {
-  shipping: "Shipping",
-  beta: "Beta",
-  planned: "Coming soon",
-};
-
-const statusClasses: Record<ProductCardProps["status"], string> = {
-  shipping:
-    "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-  beta: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
-  planned: "bg-fd-muted text-fd-muted-foreground border-fd-border",
-};
-
+// Not a whole-card link: the card carries two actions (site + GitHub) and a
+// selectable install command, which cannot live inside one <a>.
 export function ProductCard({
   name,
   tagline,
   href,
   badge,
   icon,
-  tags,
   status,
+  install,
+  github,
 }: ProductCardProps) {
-  const isExternal = href.startsWith("http");
-  const Wrapper = ({ children }: { children: ReactNode }) =>
-    isExternal ? (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        className="group relative block overflow-hidden rounded-xl border border-fd-border bg-fd-card p-6 transition-all duration-300 hover:border-fd-primary/40 hover:shadow-xl hover:shadow-fd-primary/10"
-      >
-        {children}
-      </a>
-    ) : (
-      <Link
-        href={href}
-        className="group relative block overflow-hidden rounded-xl border border-fd-border bg-fd-card p-6 transition-all duration-300 hover:border-fd-primary/40 hover:shadow-xl hover:shadow-fd-primary/10"
-      >
-        {children}
-      </Link>
-    );
+  // Every card on the gateway is shipping, so a "Shipping" pill on all of
+  // them is noise; only a card that is NOT shipping says so.
+  const label =
+    status === "beta" ? "Beta" : status === "planned" ? "Coming soon" : null;
 
   return (
-    <Wrapper>
-      <div className="mb-4 flex items-start justify-between gap-4">
-        <div className="inline-flex size-10 items-center justify-center rounded-lg bg-fd-primary/10 text-fd-primary transition-transform duration-300 group-hover:scale-110">
+    <article className="flex min-w-0 flex-col rounded-xl border border-fd-border bg-fd-card p-6 transition-colors hover:border-fd-primary/40">
+      <div className="mb-4 flex items-center gap-3">
+        <div className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-fd-primary/10 text-fd-primary">
           {icon}
         </div>
-        <span
-          className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${statusClasses[status]}`}
-        >
-          {statusLabel[status]}
-        </span>
-      </div>
-
-      <div className="mb-2 flex items-center gap-2">
-        <h3 className="font-mono text-lg font-semibold text-fd-foreground transition-colors group-hover:text-fd-primary">
-          {name}
-        </h3>
-        {isExternal && (
-          <ExternalLink className="size-3.5 text-fd-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        <div className="min-w-0">
+          <h3 className="text-lg font-semibold text-fd-foreground">{name}</h3>
+          <p className="font-mono text-xs text-fd-muted-foreground">{badge}</p>
+        </div>
+        {label && (
+          <span className="ml-auto rounded-full border border-fd-border px-2.5 py-0.5 text-xs text-fd-muted-foreground">
+            {label}
+          </span>
         )}
       </div>
 
-      <p className="mb-3 text-xs uppercase tracking-wider text-fd-muted-foreground">
-        {badge}
-      </p>
-
-      <p className="mb-4 text-sm leading-relaxed text-fd-muted-foreground">
+      <p className="mb-5 text-sm leading-relaxed text-fd-muted-foreground">
         {tagline}
       </p>
 
-      <div className="flex flex-wrap gap-1.5">
-        {tags.map((tag) => (
+      <div className="mb-5 flex items-center gap-2 rounded-lg border border-fd-border bg-fd-background py-1 pr-1 pl-3">
+        <pre className="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-xs text-fd-foreground">
           <span
-            key={tag}
-            className="rounded-md bg-fd-accent px-2 py-0.5 text-xs text-fd-muted-foreground"
+            aria-hidden="true"
+            className="select-none text-fd-muted-foreground"
           >
-            {tag}
+            ${" "}
           </span>
-        ))}
+          {install}
+        </pre>
+        <CopyButton text={install} />
       </div>
 
-      {status !== "planned" && (
-        <BorderBeam
-          size={60}
-          duration={10}
-          colorFrom="var(--color-beam-from)"
-          colorTo="var(--color-beam-to)"
-          borderWidth={1}
-          delay={Math.random() * 5}
-        />
-      )}
-    </Wrapper>
+      <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
+        <a
+          href={href}
+          className="inline-flex items-center gap-1.5 text-fd-primary hover:underline"
+        >
+          Go to {name}
+          <ArrowRight className="size-4" />
+        </a>
+        <a
+          href={github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-fd-muted-foreground hover:text-fd-foreground"
+        >
+          GitHub
+        </a>
+      </div>
+    </article>
   );
 }
