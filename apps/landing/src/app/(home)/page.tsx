@@ -117,11 +117,11 @@ export default async function HomePage() {
 
       {/* Products directory — straight under the hero, so a visitor sees
           where to go on the first screen. */}
-      <section id="products" className="px-6 pt-12 pb-16 md:pt-16 md:pb-20">
+      <section id="products" className="px-6 pt-10 pb-16 md:pt-16 md:pb-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10 text-center">
+          <div className="mb-8 text-center md:mb-10">
             <h2 className="text-3xl font-bold">Pick your tool</h2>
-            <p className="mt-3 text-fd-muted-foreground">
+            <p className="mt-3 hidden text-fd-muted-foreground md:block">
               Each one has its own site, docs and release schedule. All free and
               MIT-licensed.
             </p>

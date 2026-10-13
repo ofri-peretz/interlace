@@ -19,12 +19,12 @@ export function LandingHero({ downloads }: { downloads: string | null }) {
   ].filter(Boolean);
 
   return (
-    <section className="relative overflow-hidden border-b border-fd-border px-6 pt-16 pb-14 md:pt-24 md:pb-16">
+    <section className="relative overflow-hidden border-b border-fd-border px-6 pt-12 pb-12 md:pt-24 md:pb-16">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-radial-[at_50%_0%] from-fd-primary/15 to-transparent to-70%"
       />
-      <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
+      <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-5 text-center md:gap-6">
         <p className="font-mono text-xs uppercase tracking-widest text-fd-muted-foreground">
           Open source · by Ofri Peretz
         </p>
@@ -35,12 +35,12 @@ export function LandingHero({ downloads }: { downloads: string | null }) {
         </h1>
 
         <p className="max-w-2xl text-lg text-pretty text-fd-muted-foreground md:text-xl">
-          ESLint plugins that catch security bugs, including the ones AI
-          assistants write. burgee, a framework for building Node.js CLIs.
-          Plugins that keep Serverless Framework projects clean on AWS.
+          ESLint plugins that catch security bugs, even in AI-written code.
+          burgee for building Node.js CLIs. Serverless plugins that clean up
+          after themselves.
         </p>
 
-        <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-sm text-fd-foreground">
+        <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-mono text-xs text-fd-foreground md:gap-x-6 md:text-sm">
           {proof.map((item) => (
             <li key={item}>{item}</li>
           ))}
