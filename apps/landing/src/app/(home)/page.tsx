@@ -14,6 +14,48 @@ import { ProductCard } from "@/components/home/product-card";
 import numbers from "@/data/interlace-numbers.json";
 import { getDownloadsMilestone } from "@/lib/downloads";
 
+// Structured data so search engines connect the brand, its author and the
+// product sites (Google sent 0 visits in the 30 days to 2026-10-11). Static
+// constants only, so JSON.stringify output is safe to inline.
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://interlace.tools/#org",
+      name: "Interlace",
+      url: "https://interlace.tools",
+      logo: "https://interlace.tools/icon-512.png",
+      founder: { "@id": "https://ofriperetz.dev/#person" },
+      sameAs: ["https://github.com/ofri-peretz"],
+    },
+    {
+      "@type": "Person",
+      "@id": "https://ofriperetz.dev/#person",
+      name: "Ofri Peretz",
+      url: "https://ofriperetz.dev",
+      sameAs: [
+        "https://github.com/ofri-peretz",
+        "https://www.linkedin.com/in/ofri-peretz",
+      ],
+    },
+    ...[
+      ["Interlace ESLint plugins", "https://eslint.interlace.tools"],
+      ["burgee", "https://burgee.interlace.tools"],
+      ["Interlace Serverless plugins", "https://serverless.interlace.tools"],
+      ["Interlace UI", "https://ds.interlace.tools"],
+    ].map(([name, url]) => ({
+      "@type": "SoftwareSourceCode",
+      name,
+      url,
+      license: "https://opensource.org/licenses/MIT",
+      programmingLanguage: "TypeScript",
+      author: { "@id": "https://ofriperetz.dev/#person" },
+      publisher: { "@id": "https://interlace.tools/#org" },
+    })),
+  ],
+};
+
 export default async function HomePage() {
   const downloads = await getDownloadsMilestone();
 
@@ -23,6 +65,11 @@ export default async function HomePage() {
   // Use a plain `<div>` for layout flow.
   return (
     <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react-features/no-danger -- static constants, see JSON_LD
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+      />
       <LandingHero downloads={downloads} />
 
       {/* Products directory — straight under the hero, so a visitor sees
@@ -32,8 +79,8 @@ export default async function HomePage() {
           <div className="mb-10 text-center">
             <h2 className="text-3xl font-bold">Pick your tool</h2>
             <p className="mt-3 text-fd-muted-foreground">
-              Each one has its own site, docs and release schedule. All free,
-              all on npm.
+              Each one has its own site, docs and release schedule. All free
+              and MIT-licensed.
             </p>
           </div>
 
