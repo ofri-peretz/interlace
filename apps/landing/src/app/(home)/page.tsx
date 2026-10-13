@@ -74,8 +74,10 @@ export default async function HomePage() {
               install="npm i -D @interlace/serverless-api-gateway-caching"
               github="https://github.com/ofri-peretz/serverless?utm_source=interlace&utm_medium=card"
             />
-            {/* Not on npm: components install through the shadcn CLI, the
-                command ds.interlace.tools documents. */}
+            {/* Not on npm: components install through the shadcn CLI. The
+                URL form, because `@interlace` is not in shadcn's public
+                registry index, so `add @interlace/button` fails on a fresh
+                project. */}
             <ProductCard
               name="Interlace UI"
               badge="ds.interlace.tools"
@@ -83,7 +85,7 @@ export default async function HomePage() {
               href="https://ds.interlace.tools/?utm_source=interlace&utm_medium=card"
               icon={<Palette className="size-5" />}
               status="shipping"
-              install="npx shadcn@latest add @interlace/button"
+              install="npx shadcn@latest add https://ds.interlace.tools/r/button.json"
               github="https://github.com/ofri-peretz/interlace?utm_source=interlace&utm_medium=card"
             />
           </div>

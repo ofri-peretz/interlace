@@ -1,24 +1,23 @@
 ---
 title: Welcome to Interlace
-description: A family of TypeScript-native, evidence-backed developer tools — ESLint plugins, Serverless Framework plugins, and more.
+description: Open-source tools for JavaScript developers — ESLint plugins, burgee (a CLI framework for Node.js), Serverless Framework plugins, and the design system behind these sites.
 ---
 
-Interlace is a family of TypeScript-native developer tools. Every plugin we ship is **measured against alternatives**, every claim is backed by a versioned benchmark, and every dependency we add is one we can defend.
-
-## Where to go next
-
-- **[What is Interlace](/docs/concepts/what-is-interlace)** — the philosophy and what the label guarantees.
-- **[Ecosystem map](/docs/concepts/ecosystem-map)** — every product in the family today and what each one solves.
-- **[How we measure](/docs/concepts/how-we-measure)** — the rubric behind every "X is faster than Y" claim.
+Interlace is a set of free, MIT-licensed tools for JavaScript and TypeScript developers, built in the open by Ofri Peretz. Every claim on these sites comes from a test or a benchmark you can run yourself.
 
 ## The products
 
-| Product                   | Where to read                | Subdomain                                                        |
-| ------------------------- | ---------------------------- | ---------------------------------------------------------------- |
-| `eslint-plugin-*`         | ESLint plugin suite          | [eslint.interlace.tools](https://eslint.interlace.tools)         |
-| `@interlace/serverless-*` | Serverless Framework plugins | [serverless.interlace.tools](https://serverless.interlace.tools) |
-| `@interlace/ui`           | Design system + registry     | [ds.interlace.tools](https://ds.interlace.tools)                 |
+| Product                | What it does                                                        | Site                                                             |
+| ---------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| ESLint plugins         | Find security bugs and mistakes, including in AI-written code       | [eslint.interlace.tools](https://eslint.interlace.tools)         |
+| burgee                 | A CLI framework for Node.js, for humans and agents alike            | [burgee.interlace.tools](https://burgee.interlace.tools)         |
+| Serverless plugins     | API Gateway caching and per-function IAM roles that clean up after themselves | [serverless.interlace.tools](https://serverless.interlace.tools) |
+| Interlace UI           | The React design system these sites are built with                  | [ds.interlace.tools](https://ds.interlace.tools)                 |
 
-The ESLint plugins are **unscoped** — you install `eslint-plugin-jwt`, with no `@interlace/` prefix — because ESLint resolves plugins by that name convention. The only scoped ESLint package is `@interlace/eslint-devkit`, the authoring toolkit.
+The ESLint plugins are **unscoped**: you install `eslint-plugin-jwt`, with no `@interlace/` prefix, because ESLint finds plugins by that name. The only scoped ESLint package is `@interlace/eslint-devkit`, the toolkit the plugins are written with.
 
-More on the way.
+## Where to go next
+
+- **[What is Interlace](/docs/concepts/what-is-interlace)**: what the name promises across every product.
+- **[Ecosystem map](/docs/concepts/ecosystem-map)**: each product, what it solves, and how to install it.
+- **[How we measure](/docs/concepts/how-we-measure)**: the rules behind every "X is faster than Y" claim.

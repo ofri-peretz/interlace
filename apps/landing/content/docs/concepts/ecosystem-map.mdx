@@ -3,31 +3,44 @@ title: Ecosystem map
 description: The products in the Interlace family today, where each one lives, and what each one solves.
 ---
 
-Each Interlace product is a separate package suite with its own subdomain, its own release cadence, and its own evidence files. They share a brand and a docs experience so they feel like the same product line — but each one is independently installable and independently versioned.
+Each Interlace product has its own site, its own release schedule and its own evidence files. They share a look and a docs layout, but you install and upgrade each one on its own.
 
 ## The products today
 
-### `eslint-plugin-*`
+### ESLint plugins (`eslint-plugin-*`)
 
-A suite of ESLint plugins for security, accessibility, and modern framework correctness. Each plugin ships with a measured corpus and an explicit comparison set against the existing alternatives in its category.
+ESLint plugins that find security bugs, accessibility problems and framework mistakes in JavaScript and TypeScript, including code written by AI assistants. Each plugin is tested against a set of real code samples and compared with the existing plugins in its category.
 
 These are **unscoped** packages — ESLint resolves plugins by the `eslint-plugin-<name>` convention, so putting them behind the `@interlace/` prefix would break config resolution. The one scoped ESLint package is `@interlace/eslint-devkit`, the toolkit we author the plugins with.
 
 - **Read:** [eslint.interlace.tools](https://eslint.interlace.tools)
 - **Sample plugins:** `eslint-plugin-jwt`, `eslint-plugin-mongodb-security`, `eslint-plugin-react-a11y`, `eslint-plugin-vercel-ai-security`
 
-### `@interlace/serverless-*`
+### burgee
 
-TypeScript-native replacements for community Serverless Framework plugins. Cleanup on removal, CLI commands, no ghost billing — fixing the real problems that cost teams money and deploy time.
+A CLI framework for Node.js. Everything a CLI needs that isn't your CLI. Written once, served to humans and agents alike.
+
+You declare a command once, and burgee builds its help text, `--json` output, `--schema`, an MCP server, shell completions and TypeScript types from that one declaration. Coming from commander or yargs, `npx burgee migrate` rewrites the imports for you.
+
+```bash
+npm install burgee
+```
+
+- **Read:** [burgee.interlace.tools](https://burgee.interlace.tools)
+- **Source:** [github.com/ofri-peretz/burgee](https://github.com/ofri-peretz/burgee)
+
+### Serverless plugins (`@interlace/serverless-*`)
+
+Plugins for the Serverless Framework on AWS, written in TypeScript as replacements for popular community plugins. Remove one and it deletes what it created, so nothing keeps billing you.
 
 - **Read:** [serverless.interlace.tools](https://serverless.interlace.tools)
 - **Sample plugins:** `@interlace/serverless-api-gateway-caching`, `@interlace/serverless-iam-roles-per-function`, `@interlace/serverless-devkit`
 
-### `@interlace/ui`
+### Interlace UI (`@interlace/ui`)
 
-The design system every Interlace site is built from — primitives, blocks, layout templates, and the token baseline (colour, type, spacing, radius, breakpoints) that keeps all of them looking like one product line.
+The React design system every Interlace site is built with: components, page blocks, layout templates, and the design tokens (colour, type, spacing) that keep the sites looking alike.
 
-It ships as a [shadcn-compatible registry](https://ui.shadcn.com/docs/registry) rather than an npm dependency, so you copy components into your own repo and own them outright — no version lock, no runtime dep on us:
+It ships as a [shadcn-compatible registry](https://ui.shadcn.com/docs/registry), not an npm package. You copy components into your own repo and own them, with no version lock and no runtime dependency on us:
 
 ```bash
 npx shadcn@latest add https://ds.interlace.tools/r/button.json
@@ -40,13 +53,13 @@ Every component carries the same floor: axe-clean, dark mode, RTL, and keyboard 
 
 ## How they relate
 
-Every product in the family agrees to the same **shared baseline**:
+Every product follows the same three rules:
 
-- **Same docs experience** — same theme, same navigation, same components, same brand tokens.
-- **Same evidence contract** — every comparative claim cites a versioned, reproducible benchmark.
-- **Same primitives** — TypeScript-first config, zero ghost runtime dependencies, full IntelliSense everywhere.
+- **Numbers you can check** — every comparison cites a versioned benchmark you can rerun.
+- **One way to read the docs** — same theme, navigation and components on every site.
+- **Few dependencies** — each one is there for a reason we can state.
 
-That's what "Interlace" guarantees as a label. The npm name follows whatever the ecosystem expects — unscoped for ESLint plugins, `@interlace/` for everything else — but the guarantees are the same either way.
+That is what the Interlace name promises. The npm name follows whatever the ecosystem expects — unscoped for ESLint plugins, `@interlace/` for everything else — but the guarantees are the same either way.
 
 ## Adding new products
 
