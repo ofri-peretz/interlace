@@ -60,10 +60,22 @@ const FOOTER: { heading: string; links: [string, string][] }[] = [
   {
     heading: "Products",
     links: [
-      ["ESLint plugins", "https://eslint.interlace.tools/?utm_source=interlace&utm_medium=footer"],
-      ["burgee", "https://burgee.interlace.tools/?utm_source=interlace&utm_medium=footer"],
-      ["Serverless plugins", "https://serverless.interlace.tools/?utm_source=interlace&utm_medium=footer"],
-      ["Interlace UI", "https://ds.interlace.tools/?utm_source=interlace&utm_medium=footer"],
+      [
+        "ESLint plugins",
+        "https://eslint.interlace.tools/?utm_source=interlace&utm_medium=footer",
+      ],
+      [
+        "burgee",
+        "https://burgee.interlace.tools/?utm_source=interlace&utm_medium=footer",
+      ],
+      [
+        "Serverless plugins",
+        "https://serverless.interlace.tools/?utm_source=interlace&utm_medium=footer",
+      ],
+      [
+        "Interlace UI",
+        "https://ds.interlace.tools/?utm_source=interlace&utm_medium=footer",
+      ],
     ],
   },
   {
@@ -77,7 +89,10 @@ const FOOTER: { heading: string; links: [string, string][] }[] = [
   {
     heading: "Connect",
     links: [
-      ["Blog", "https://ofriperetz.dev/?utm_source=interlace&utm_medium=footer"],
+      [
+        "Blog",
+        "https://ofriperetz.dev/?utm_source=interlace&utm_medium=footer",
+      ],
       ["GitHub", "https://github.com/ofri-peretz"],
       ["LinkedIn", "https://www.linkedin.com/in/ofri-peretz"],
     ],
@@ -107,8 +122,8 @@ export default async function HomePage() {
           <div className="mb-10 text-center">
             <h2 className="text-3xl font-bold">Pick your tool</h2>
             <p className="mt-3 text-fd-muted-foreground">
-              Each one has its own site, docs and release schedule. All free
-              and MIT-licensed.
+              Each one has its own site, docs and release schedule. All free and
+              MIT-licensed.
             </p>
           </div>
 

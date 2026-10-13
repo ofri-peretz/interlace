@@ -55,7 +55,10 @@ export function ProductCard({
 
       <div className="mb-5 flex items-center gap-2 rounded-lg border border-fd-border bg-fd-background py-1 pr-1 pl-3">
         <pre className="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-xs text-fd-foreground">
-          <span aria-hidden="true" className="select-none text-fd-muted-foreground">
+          <span
+            aria-hidden="true"
+            className="select-none text-fd-muted-foreground"
+          >
             ${" "}
           </span>
           {install}

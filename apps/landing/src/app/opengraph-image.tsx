@@ -35,7 +35,9 @@ export default async function OpengraphImage() {
             <rect x="28" y="54" width="62" height="28" rx="14" fill="#0d9460" />
           </g>
         </svg>
-        <div style={{ fontSize: "32px", fontFamily: "monospace", fontWeight: 600 }}>
+        <div
+          style={{ fontSize: "32px", fontFamily: "monospace", fontWeight: 600 }}
+        >
           interlace.tools
         </div>
       </div>
