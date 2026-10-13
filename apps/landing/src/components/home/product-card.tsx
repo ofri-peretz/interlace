@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { CopyButton } from "./copy-button";
+
 export interface ProductCardProps {
   name: string;
   tagline: string;
@@ -51,12 +53,15 @@ export function ProductCard({
         {tagline}
       </p>
 
-      <pre className="mb-5 overflow-x-auto rounded-lg border border-fd-border bg-fd-background px-3 py-2 font-mono text-xs text-fd-foreground">
-        <span aria-hidden="true" className="select-none text-fd-muted-foreground">
-          ${" "}
-        </span>
-        {install}
-      </pre>
+      <div className="mb-5 flex items-center gap-2 rounded-lg border border-fd-border bg-fd-background py-1 pr-1 pl-3">
+        <pre className="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-xs text-fd-foreground">
+          <span aria-hidden="true" className="select-none text-fd-muted-foreground">
+            ${" "}
+          </span>
+          {install}
+        </pre>
+        <CopyButton text={install} />
+      </div>
 
       <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
         <a
@@ -68,6 +73,8 @@ export function ProductCard({
         </a>
         <a
           href={github}
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-fd-muted-foreground hover:text-fd-foreground"
         >
           GitHub

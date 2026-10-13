@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -125,6 +126,13 @@ export default async function HomePage() {
           trustworthy than a brand name alone. */}
       <section className="border-t border-fd-border px-6 py-20">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+          <Image
+            src="/ofri-profile.webp"
+            alt="Ofri Peretz"
+            width={96}
+            height={96}
+            className="size-24 rounded-full border border-fd-border object-cover"
+          />
           <h2 className="text-3xl font-bold">Who builds this</h2>
           <p className="max-w-xl text-fd-muted-foreground">
             I&apos;m Ofri Peretz, an engineering manager. I build these tools in
@@ -138,6 +146,12 @@ export default async function HomePage() {
             >
               Read the blog
               <ArrowRight className="size-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ofri-peretz"
+              className="inline-flex items-center gap-2 rounded-lg border border-fd-border bg-fd-card px-6 py-3 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
+            >
+              LinkedIn
             </a>
             <a
               href="https://github.com/ofri-peretz?utm_source=interlace&utm_medium=about"
