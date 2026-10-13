@@ -56,6 +56,34 @@ const JSON_LD = {
   ],
 };
 
+const FOOTER: { heading: string; links: [string, string][] }[] = [
+  {
+    heading: "Products",
+    links: [
+      ["ESLint plugins", "https://eslint.interlace.tools/?utm_source=interlace&utm_medium=footer"],
+      ["burgee", "https://burgee.interlace.tools/?utm_source=interlace&utm_medium=footer"],
+      ["Serverless plugins", "https://serverless.interlace.tools/?utm_source=interlace&utm_medium=footer"],
+      ["Interlace UI", "https://ds.interlace.tools/?utm_source=interlace&utm_medium=footer"],
+    ],
+  },
+  {
+    heading: "Learn",
+    links: [
+      ["What is Interlace", "/docs/concepts/what-is-interlace"],
+      ["Ecosystem map", "/docs/concepts/ecosystem-map"],
+      ["How we measure", "/docs/concepts/how-we-measure"],
+    ],
+  },
+  {
+    heading: "Connect",
+    links: [
+      ["Blog", "https://ofriperetz.dev/?utm_source=interlace&utm_medium=footer"],
+      ["GitHub", "https://github.com/ofri-peretz"],
+      ["LinkedIn", "https://www.linkedin.com/in/ofri-peretz"],
+    ],
+  },
+];
+
 export default async function HomePage() {
   const downloads = await getDownloadsMilestone();
 
@@ -212,19 +240,36 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto border-t border-fd-border px-6 py-8">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 text-sm text-fd-muted-foreground md:flex-row">
-          <span>
-            Built by{" "}
-            <a
-              href="https://ofriperetz.dev"
-              className="font-medium text-fd-foreground hover:text-fd-primary"
-            >
-              Ofri Peretz
-            </a>
-          </span>
-          <span>MIT License · Independent · Built in the open</span>
+      {/* Footer: every page a visitor can go next, in one place. */}
+      <footer className="mt-auto border-t border-fd-border px-6 pt-12 pb-8">
+        <div className="mx-auto max-w-5xl">
+          <nav
+            aria-label="Footer"
+            className="grid grid-cols-2 gap-8 text-sm md:grid-cols-3"
+          >
+            {FOOTER.map(({ heading, links }) => (
+              <div key={heading}>
+                <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-fd-muted-foreground">
+                  {heading}
+                </h2>
+                <ul className="space-y-2">
+                  {links.map(([label, href]) => (
+                    <li key={href}>
+                      <a
+                        href={href}
+                        className="text-fd-foreground hover:text-fd-primary"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+          <p className="mt-10 border-t border-fd-border pt-6 text-sm text-fd-muted-foreground">
+            Built in the open by Ofri Peretz · MIT License · Independent
+          </p>
         </div>
       </footer>
     </div>
