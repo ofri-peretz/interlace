@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
 import numbers from "@/data/interlace-numbers.json";
+import messages from "@/data/brand-messages.json";
 
 export const runtime = "edge";
-export const alt =
-  "Interlace — ship JavaScript with fewer bugs and less busywork. Open-source ESLint plugins, burgee CLI framework, Serverless plugins.";
+export const alt = `Interlace — ${messages.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -51,7 +51,7 @@ export default async function OpengraphImage() {
             letterSpacing: "-0.025em",
           }}
         >
-          Ship JavaScript with
+          Check what your
         </div>
         <div
           style={{
@@ -62,7 +62,7 @@ export default async function OpengraphImage() {
             color: "#fbb99a",
           }}
         >
-          fewer bugs and less busywork.
+          coding agents ship.
         </div>
       </div>
 
@@ -74,7 +74,7 @@ export default async function OpengraphImage() {
           color: "rgba(250, 250, 249, 0.72)",
         }}
       >
-        <span>ESLint plugins · burgee · Serverless plugins</span>
+        <span>ESLint plugins · oxmutate · burgee</span>
         <span style={{ fontFamily: "monospace" }}>
           {`${numbers.plugins.total} plugins · ${numbers.rules.total} rules · MIT`}
         </span>

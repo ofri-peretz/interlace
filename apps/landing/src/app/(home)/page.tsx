@@ -8,11 +8,24 @@ import {
   Layers,
   Palette,
   Terminal,
+  FlaskConical,
 } from "lucide-react";
 import { LandingHero } from "@/components/home/landing-hero";
 import { ProductCard } from "@/components/home/product-card";
-import numbers from "@/data/interlace-numbers.json";
 import { getDownloadsMilestone } from "@/lib/downloads";
+import messages from "@/data/brand-messages.json";
+import { renderBrand } from "@/lib/brand";
+
+const ICONS: Record<string, React.ReactNode> = {
+  eslint: <ShieldCheck className="size-5" />,
+  oxmutate: <FlaskConical className="size-5" />,
+  burgee: <Terminal className="size-5" />,
+  serverless: <Server className="size-5" />,
+  ui: <Palette className="size-5" />,
+};
+
+const utm = (url: string, medium: string) =>
+  `${url}${url.includes("?") ? "&" : "?"}utm_source=interlace&utm_medium=${medium}`;
 
 // Structured data so search engines connect the brand, its author and the
 // product sites (Google sent 0 visits in the 30 days to 2026-10-11). Static
@@ -27,7 +40,7 @@ const JSON_LD = {
       url: "https://interlace.tools",
       logo: "https://interlace.tools/icon-512.png",
       founder: { "@id": "https://ofriperetz.dev/#person" },
-      sameAs: ["https://github.com/ofri-peretz"],
+      sameAs: [messages.links.github, messages.links.linkedin],
     },
     {
       "@type": "Person",
@@ -39,15 +52,11 @@ const JSON_LD = {
         "https://www.linkedin.com/in/ofri-peretz",
       ],
     },
-    ...[
-      ["Interlace ESLint plugins", "https://eslint.interlace.tools"],
-      ["burgee", "https://burgee.interlace.tools"],
-      ["Interlace Serverless plugins", "https://serverless.interlace.tools"],
-      ["Interlace UI", "https://ds.interlace.tools"],
-    ].map(([name, url]) => ({
+    ...messages.products.map((product) => ({
       "@type": "SoftwareSourceCode",
-      name,
-      url,
+      name: product.name,
+      url: `https://${product.site}`,
+      codeRepository: product.github,
       license: "https://opensource.org/licenses/MIT",
       programmingLanguage: "TypeScript",
       author: { "@id": "https://ofriperetz.dev/#person" },
@@ -59,24 +68,10 @@ const JSON_LD = {
 const FOOTER: { heading: string; links: [string, string][] }[] = [
   {
     heading: "Products",
-    links: [
-      [
-        "ESLint plugins",
-        "https://eslint.interlace.tools/?utm_source=interlace&utm_medium=footer",
-      ],
-      [
-        "burgee",
-        "https://burgee.interlace.tools/?utm_source=interlace&utm_medium=footer",
-      ],
-      [
-        "Serverless plugins",
-        "https://serverless.interlace.tools/?utm_source=interlace&utm_medium=footer",
-      ],
-      [
-        "Interlace UI",
-        "https://ds.interlace.tools/?utm_source=interlace&utm_medium=footer",
-      ],
-    ],
+    links: messages.products.map((p) => [
+      p.name,
+      utm(`https://${p.site}/`, "footer"),
+    ]),
   },
   {
     heading: "Learn",
@@ -87,20 +82,21 @@ const FOOTER: { heading: string; links: [string, string][] }[] = [
     ],
   },
   {
-    heading: "Connect",
+    heading: "Follow",
     links: [
-      [
-        "Blog",
-        "https://ofriperetz.dev/?utm_source=interlace&utm_medium=footer",
-      ],
-      ["GitHub", "https://github.com/ofri-peretz"],
-      ["LinkedIn", "https://www.linkedin.com/in/ofri-peretz"],
+      [messages.ctas.star, messages.links.github],
+      [messages.ctas.followDevto, messages.links.devto],
+      [messages.ctas.followLinkedin, messages.links.linkedin],
+      ["Blog", utm(`${messages.links.author}/`, "footer")],
     ],
   },
 ];
 
 export default async function HomePage() {
   const downloads = await getDownloadsMilestone();
+  const brand = renderBrand(downloads);
+  const core = brand.products.filter((p) => p.tier === "core");
+  const also = brand.products.filter((p) => p.tier === "also");
 
   // Fumadocs `HomeLayout` already wraps children in `<main id="nd-home-layout">`,
   // so this page must NOT add its own `<main>` — duplicate landmarks fail
@@ -113,7 +109,7 @@ export default async function HomePage() {
         // eslint-disable-next-line react-features/no-danger -- static constants, see JSON_LD
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
-      <LandingHero downloads={downloads} />
+      <LandingHero downloads={downloads} brand={brand} />
 
       {/* Products directory — straight under the hero, so a visitor sees
           where to go on the first screen. */}
@@ -122,62 +118,59 @@ export default async function HomePage() {
           <div className="mb-8 text-center md:mb-10">
             <h2 className="text-3xl font-bold">Pick your tool</h2>
             <p className="mt-3 hidden text-fd-muted-foreground md:block">
-              Each one has its own site, docs and release schedule. All free and
+              Each one answers one question about AI-written code. All free and
               MIT-licensed.
             </p>
           </div>
 
+          {/* Install commands name real published packages; the ESLint
+              plugins are UNSCOPED (`eslint-plugin-*`), locked by
+              src/__tests__/package-naming-lock.test.ts. Copy lives in
+              src/data/brand-messages.json. */}
+          <div className="grid gap-6 md:grid-cols-3">
+            {core.map((p) => (
+              <ProductCard
+                key={p.id}
+                name={p.name}
+                badge={p.site}
+                question={p.question}
+                tagline={p.line}
+                proof={p.proof}
+                href={utm(`https://${p.site}/`, "card")}
+                icon={ICONS[p.id]}
+                status="shipping"
+                install={p.install}
+                github={utm(p.github, "card")}
+                ctas={brand.ctas}
+              />
+            ))}
+          </div>
+
+          <p className="mt-6 text-center text-sm text-fd-muted-foreground">
+            <span className="font-semibold text-fd-foreground">
+              Coming next: {brand.next.name}.
+            </span>{" "}
+            {brand.next.question} {brand.next.line}
+          </p>
+
+          <h2 className="mt-14 mb-6 text-center font-mono text-xs uppercase tracking-widest text-fd-muted-foreground">
+            Also from Interlace
+          </h2>
           <div className="grid gap-6 md:grid-cols-2">
-            {/* Install commands name real published packages. The ESLint
-                plugins are UNSCOPED (`eslint-plugin-*`), ESLint's own
-                resolution convention; locked by
-                src/__tests__/package-naming-lock.test.ts. */}
-            <ProductCard
-              name="ESLint plugins"
-              badge="eslint.interlace.tools"
-              tagline={`${numbers.plugins.total} ESLint plugins and ${numbers.rules.total} rules that find security bugs and mistakes in JavaScript and TypeScript, including code written by AI. Error messages tell you how to fix the problem.`}
-              href="https://eslint.interlace.tools/?utm_source=interlace&utm_medium=card"
-              icon={<ShieldCheck className="size-5" />}
-              status="shipping"
-              install="npm i -D eslint-plugin-secure-coding"
-              github="https://github.com/ofri-peretz/eslint?utm_source=interlace&utm_medium=card"
-            />
-            {/* The pitch is burgee's canonical one, locked in its own repo by
-                scripts/pitch-lock.test.ts — say it the same way here. */}
-            <ProductCard
-              name="burgee"
-              badge="burgee.interlace.tools"
-              tagline="A CLI framework for Node.js. Everything a CLI needs that isn't your CLI. Written once, served to humans and agents alike."
-              href="https://burgee.interlace.tools/?utm_source=interlace&utm_medium=card"
-              icon={<Terminal className="size-5" />}
-              status="shipping"
-              install="npm i burgee"
-              github="https://github.com/ofri-peretz/burgee?utm_source=interlace&utm_medium=card"
-            />
-            <ProductCard
-              name="Serverless plugins"
-              badge="serverless.interlace.tools"
-              tagline="Plugins for the Serverless Framework on AWS: API Gateway caching and per-function IAM roles. Remove a plugin and it cleans up what it created, so nothing keeps billing you."
-              href="https://serverless.interlace.tools/?utm_source=interlace&utm_medium=card"
-              icon={<Server className="size-5" />}
-              status="shipping"
-              install="npm i -D @interlace/serverless-api-gateway-caching"
-              github="https://github.com/ofri-peretz/serverless?utm_source=interlace&utm_medium=card"
-            />
-            {/* Not on npm: components install through the shadcn CLI. The
-                URL form, because `@interlace` is not in shadcn's public
-                registry index, so `add @interlace/button` fails on a fresh
-                project. */}
-            <ProductCard
-              name="Interlace UI"
-              badge="ds.interlace.tools"
-              tagline="The design system these sites are built with. Accessible React components, tested in dark mode and right-to-left, that you copy into your app."
-              href="https://ds.interlace.tools/?utm_source=interlace&utm_medium=card"
-              icon={<Palette className="size-5" />}
-              status="shipping"
-              install="npx shadcn@latest add https://ds.interlace.tools/r/button.json"
-              github="https://github.com/ofri-peretz/interlace?utm_source=interlace&utm_medium=card"
-            />
+            {also.map((p) => (
+              <ProductCard
+                key={p.id}
+                name={p.name}
+                badge={p.site}
+                tagline={p.line}
+                href={utm(`https://${p.site}/`, "card")}
+                icon={ICONS[p.id]}
+                status="shipping"
+                install={p.install}
+                github={utm(p.github, "card")}
+                ctas={brand.ctas}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -227,7 +220,7 @@ export default async function HomePage() {
           />
           <h2 className="text-3xl font-bold">Who builds this</h2>
           <p className="max-w-xl text-fd-muted-foreground">
-            I&apos;m Ofri Peretz, an engineering manager. I build these tools in
+            I&apos;m Ofri Peretz, an engineering leader. I build these tools in
             the open, measure what they catch, and write about it, so you can
             check the work before you trust it.
           </p>
@@ -283,7 +276,7 @@ export default async function HomePage() {
             ))}
           </nav>
           <p className="mt-10 border-t border-fd-border pt-6 text-sm text-fd-muted-foreground">
-            Built in the open by Ofri Peretz · MIT License · Independent
+            {brand.footer}
           </p>
         </div>
       </footer>

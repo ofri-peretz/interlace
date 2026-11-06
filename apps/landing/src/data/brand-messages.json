@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "name": "Interlace",
+  "platformNames": {
+    "linkedin": "Interlace OSS"
+  },
+  "headline": "Check what your coding agents ship.",
+  "subhead": "Open-source tools that verify AI-written JavaScript: security lint, mutation testing and agent-ready CLIs. Every claim is a number you can re-run.",
+  "tagline": "Open-source tools that check what your coding agents ship: security lint, mutation testing and agent-ready CLIs.",
+  "footer": "Built in the open by Ofri Peretz · MIT License · Independent",
+  "ctas": {
+    "start": "Get started",
+    "star": "Star on GitHub",
+    "followDevto": "Follow on dev.to",
+    "followLinkedin": "Follow on LinkedIn"
+  },
+  "links": {
+    "hub": "https://interlace.tools",
+    "github": "https://github.com/ofri-peretz",
+    "devto": "https://dev.to/ofri-peretz",
+    "linkedin": "https://www.linkedin.com/company/interlace-tools",
+    "author": "https://ofriperetz.dev"
+  },
+  "products": [
+    {
+      "id": "eslint",
+      "tier": "core",
+      "name": "ESLint plugins",
+      "question": "Is the code safe?",
+      "line": "{rules.total} rules in {plugins.total} plugins catch the security bugs AI coding tools write. Every rule maps to a CWE. Runs on ESLint 8–10 and Oxlint.",
+      "proof": {
+        "text": "{rules.security} security rules",
+        "url": "https://eslint.interlace.tools/stats"
+      },
+      "site": "eslint.interlace.tools",
+      "install": "npm i -D eslint-plugin-secure-coding",
+      "github": "https://github.com/ofri-peretz/eslint"
+    },
+    {
+      "id": "oxmutate",
+      "tier": "core",
+      "name": "oxmutate",
+      "question": "Do the tests check anything?",
+      "line": "Mutation testing for JavaScript and TypeScript. It agrees with Stryker on 99.9% of mutants and hands an agent 326 bytes per surviving mutant instead of 4,094.",
+      "proof": {
+        "text": "99.9% agreement with Stryker",
+        "url": "https://github.com/ofri-peretz/burgee/blob/main/.sdlc/intents/oxmutate/m1-results.md"
+      },
+      "site": "oxmutate.interlace.tools",
+      "install": "npm i -D oxmutate",
+      "github": "https://github.com/ofri-peretz/burgee"
+    },
+    {
+      "id": "burgee",
+      "tier": "core",
+      "name": "burgee",
+      "question": "Can an agent drive the CLI?",
+      "line": "Everything a CLI needs that isn't your CLI. One declaration gives help, --json, --schema, MCP and completions; exit codes were right on 100% of agent tasks, against 40% for commander and yargs.",
+      "proof": {
+        "text": "100% correct exit codes",
+        "url": "https://github.com/ofri-peretz/burgee#readme"
+      },
+      "site": "burgee.interlace.tools",
+      "install": "npm i burgee",
+      "github": "https://github.com/ofri-peretz/burgee"
+    },
+    {
+      "id": "serverless",
+      "tier": "also",
+      "name": "Serverless plugins",
+      "question": null,
+      "line": "TypeScript-native Serverless Framework plugins for AWS: API Gateway caching and per-function IAM roles. Remove one and it cleans up what it created.",
+      "proof": null,
+      "site": "serverless.interlace.tools",
+      "install": "npm i -D @interlace/serverless-api-gateway-caching",
+      "github": "https://github.com/ofri-peretz/serverless"
+    },
+    {
+      "id": "ui",
+      "tier": "also",
+      "name": "Interlace UI",
+      "question": null,
+      "line": "The design system these sites are built with: accessible React components for shadcn, tested in dark mode and right-to-left.",
+      "proof": null,
+      "site": "ds.interlace.tools",
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/button.json",
+      "github": "https://github.com/ofri-peretz/interlace"
+    }
+  ],
+  "next": {
+    "name": "API contracts",
+    "question": "Does it match the contract?",
+    "line": "Spec diff and checks for OpenAPI, JSON Schema, MCP and AsyncAPI. In development."
+  },
+  "bios": {
+    "github": "Building Interlace: open-source tools that check what coding agents ship. ESLint security rules, mutation testing, agent-ready CLIs. interlace.tools",
+    "devto": "Creator of Interlace (interlace.tools): open-source tools that check what coding agents ship. {rules.total} ESLint rules, {downloads} npm downloads. Engineering leader at Snappy.",
+    "linkedinHeadline": "Engineering Leader at Snappy · Creator of Interlace: open-source tools that check what coding agents ship ({rules.total} ESLint rules, {downloads} npm downloads)",
+    "repos": {
+      "interlace": "Interlace hub, design system and Storybook: open-source tools that check what your coding agents ship.",
+      "burgee": "Everything a CLI needs that isn't your CLI: one declaration gives help, --json, --schema, MCP and completions. Drop-in for commander, yargs and meow. An Interlace project.",
+      "serverless": "TypeScript-native Serverless Framework plugins for AWS. Zero dependencies. An Interlace project."
+    }
+  }
+}

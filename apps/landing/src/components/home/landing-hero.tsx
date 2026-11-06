@@ -1,6 +1,7 @@
-import { ArrowRight, Terminal } from "lucide-react";
+import { ArrowRight, Gauge } from "lucide-react";
 
 import numbers from "@/data/interlace-numbers.json";
+import type { BrandMessages } from "@/lib/brand";
 
 // Plain words only: what it is, one measured number, where to go next. The
 // slogan hero ("Tools that interlock") told a visitor nothing — 85% bounced
@@ -10,7 +11,13 @@ import numbers from "@/data/interlace-numbers.json";
 // product below the fold, animated outside the brand's two verbs (draw /
 // decode, BRAND_PHILOSOPHY §2) and used the green status hue as decoration
 // (§3). Theme tokens carry contrast in both modes, so no client theme hook.
-export function LandingHero({ downloads }: { downloads: string | null }) {
+export function LandingHero({
+  downloads,
+  brand,
+}: {
+  downloads: string | null;
+  brand: BrandMessages;
+}) {
   const proof = [
     downloads && `${downloads} npm downloads`,
     `${numbers.plugins.total} ESLint plugins`,
@@ -30,14 +37,11 @@ export function LandingHero({ downloads }: { downloads: string | null }) {
         </p>
 
         <h1 className="text-4xl font-bold tracking-tight text-balance md:text-6xl">
-          Ship JavaScript with{" "}
-          <span className="text-fd-primary">fewer bugs and less busywork</span>
+          {brand.headline}
         </h1>
 
         <p className="max-w-2xl text-lg text-pretty text-fd-muted-foreground md:text-xl">
-          ESLint plugins that catch security bugs, even in AI-written code.
-          burgee for building Node.js CLIs. Serverless plugins that clean up
-          after themselves.
+          {brand.subhead}
         </p>
 
         <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-mono text-xs text-fd-foreground md:gap-x-6 md:text-sm">
@@ -48,18 +52,18 @@ export function LandingHero({ downloads }: { downloads: string | null }) {
 
         <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="https://eslint.interlace.tools/?utm_source=interlace&utm_medium=hero"
+            href="#products"
             className="inline-flex items-center gap-2 rounded-lg bg-fd-primary px-6 py-3 text-sm font-semibold text-fd-primary-foreground transition-colors hover:bg-fd-primary/90"
           >
-            Explore the ESLint plugins
+            {brand.ctas.start}
             <ArrowRight className="size-4" />
           </a>
           <a
-            href="https://burgee.interlace.tools/?utm_source=interlace&utm_medium=hero"
+            href="/docs/concepts/how-we-measure"
             className="inline-flex items-center gap-2 rounded-lg border border-fd-border bg-fd-card px-6 py-3 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
           >
-            <Terminal className="size-4" />
-            Explore burgee
+            <Gauge className="size-4" />
+            How we measure
           </a>
         </div>
       </div>
