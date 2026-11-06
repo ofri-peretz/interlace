@@ -59,6 +59,17 @@ describe("brand messages", () => {
     expect(hero).toContain("{brand.subhead}");
   });
 
+  // The banner, tagline, hero, OG card and bios all say what Interlace is in
+  // the same words; a reworded copy is drift.
+  it("every surface that describes Interlace uses the one descriptor", () => {
+    const d = messages.descriptor.toLowerCase();
+    for (const text of [messages.tagline, messages.subhead, messages.bios.github]) {
+      expect(text.toLowerCase(), text).toContain(d);
+    }
+    const og = readFileSync(join(PROJECT_ROOT, "src/app/opengraph-image.tsx"), "utf-8");
+    expect(og).toContain("messages.descriptor");
+  });
+
   it("the LinkedIn tagline fits LinkedIn's 120-character limit", () => {
     expect(messages.tagline.length).toBeLessThanOrEqual(120);
   });

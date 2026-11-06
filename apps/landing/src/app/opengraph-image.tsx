@@ -74,7 +74,7 @@ export default async function OpengraphImage() {
           color: "rgba(250, 250, 249, 0.72)",
         }}
       >
-        <span>ESLint plugins · oxmutate · burgee</span>
+        <span>{`Open-source ${messages.descriptor}.`}</span>
         <span style={{ fontFamily: "monospace" }}>
           {`${numbers.plugins.total} plugins · ${numbers.rules.total} rules · MIT`}
         </span>
