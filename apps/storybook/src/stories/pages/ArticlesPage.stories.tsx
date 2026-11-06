@@ -206,7 +206,7 @@ function Toolbar({ resultCount = articleFixtures.length }: { resultCount?: numbe
             <Badge
               key={tag}
               variant="outline"
-              className="cursor-pointer text-xs font-medium"
+              className="cursor-pointer"
             >
               #{tag}
               <span className="bg-muted text-muted-foreground ml-1 rounded-full px-1.5 py-0.5 text-[10px]">

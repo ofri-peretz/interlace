@@ -40,13 +40,27 @@ type ButtonProps = React.ComponentProps<'button'> &
      * Pass a `ReactElement` (e.g. `<Link href="...">`) or a render function.
      */
     render?: useRender.RenderProp;
+    /**
+     * Stretch to the width of the container (form actions, mobile CTAs).
+     * Prefer this over `className="w-full"`.
+     * @default false
+     */
+    fullWidth?: boolean;
+    /**
+     * Native button type. Unlike a bare `<button>`, Button does NOT submit by
+     * default: pass `type="submit"` for the form's submit action.
+     * @default 'button' (no default when `render` replaces the element)
+     */
+    type?: 'button' | 'submit' | 'reset';
   };
 
 function Button({
   className,
   variant = 'default',
   size = 'default',
+  fullWidth = false,
   render,
+  type,
   ...props
 }: ButtonProps) {
   const element = useRender({
@@ -55,7 +69,12 @@ function Button({
       'data-slot': 'button',
       'data-variant': variant ?? undefined,
       'data-size': size ?? undefined,
-      className: cn(buttonVariants({ variant, size, className })),
+      className: cn(buttonVariants({ variant, size, fullWidth, className })),
+      // A native <button> defaults to type="submit", so a Cancel inside a form
+      // submitted it. Default to "button" (MUI ButtonBase, Chakra, Primer do the
+      // same); submitting is now an explicit `type="submit"`. A `render`ed
+      // element (an <a>, a router Link) gets no type unless one is passed.
+      type: type ?? (render ? undefined : 'button'),
       ...props,
     },
   });

@@ -63,8 +63,13 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: ['button', 'submit', 'reset'],
       description:
-        'Native button type. Inside a `<form>` the browser default is `submit` — set it explicitly when the button must not submit.',
-      table: { category: 'State', type: { summary: "'button' | 'submit' | 'reset'" } },
+        'Native button type. Button defaults to `button`, so it never submits a form by accident; pass `submit` for the form\'s submit action.',
+      table: { category: 'State', type: { summary: "'button' | 'submit' | 'reset'" }, defaultValue: { summary: 'button' } },
+    },
+    fullWidth: {
+      control: 'boolean',
+      description: 'Stretch to the container width (form actions, mobile CTAs). Use this, not `className="w-full"`.',
+      table: { category: 'Layout', defaultValue: { summary: 'false' } },
     },
     children: {
       control: 'text',
@@ -139,6 +144,14 @@ export const Sizes: Story = {
   ),
 };
 export const Disabled: Story = { args: { children: 'Disabled', disabled: true } };
+export const FullWidth: Story = {
+  render: () => (
+    <form className="flex max-w-96 flex-col gap-2" onSubmit={(e) => e.preventDefault()}>
+      <Button type="submit" fullWidth>Create account</Button>
+      <Button variant="outline" fullWidth>Cancel</Button>
+    </form>
+  ),
+};
 export const Dark: Story = {
   ...Variants,
   globals: { theme: 'dark' },

@@ -766,7 +766,7 @@ function StackBody({
               <Badge
                 key={tag}
                 variant="secondary"
-                className="px-2 py-0.5 text-caption font-medium tracking-normal whitespace-nowrap"
+                size="sm"
               >
                 #{tag}
               </Badge>
@@ -774,7 +774,8 @@ function StackBody({
             {overflowTags > 0 ? (
               <Badge
                 variant="outline"
-                className="px-1.5 py-0.5 text-caption font-medium whitespace-nowrap"
+                size="sm"
+                className="px-1.5"
               >
                 +{overflowTags}
               </Badge>
@@ -853,16 +854,18 @@ function OverlayBody({
             {visibleTags.map((tag) => (
               <Badge
                 key={tag}
-                variant="secondary"
-                className="bg-scrim-foreground/15 text-scrim-foreground border border-scrim-foreground/30 backdrop-blur-sm px-2.5 py-0.5 text-caption font-medium tracking-normal whitespace-nowrap hover:bg-scrim-foreground/25"
+                variant="scrim"
+                size="sm"
+                className="px-2.5"
               >
                 #{tag}
               </Badge>
             ))}
             {overflowTags > 0 ? (
               <Badge
-                variant="outline"
-                className="bg-scrim-foreground/10 text-scrim-foreground border-scrim-foreground/30 backdrop-blur-sm px-1.5 py-0.5 text-caption font-medium whitespace-nowrap"
+                variant="scrim"
+                size="sm"
+                className="px-1.5"
               >
                 +{overflowTags}
               </Badge>

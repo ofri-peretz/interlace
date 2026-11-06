@@ -114,7 +114,7 @@ export function SignInForm({
             <FieldError />
           </Field>
 
-          <Button type="submit" className="mt-2 w-full">
+          <Button type="submit" fullWidth className="mt-2">
             {submitLabel}
           </Button>
 

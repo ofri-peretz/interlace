@@ -65,7 +65,7 @@ export const Profile: Story = {
           <FieldControl render={<Input placeholder="Engineer @ Interlace" />} />
         </Field>
         <div className="flex gap-sm">
-          <Button>Save</Button>
+          <Button type="submit">Save</Button>
           <Button variant="outline">Cancel</Button>
         </div>
       </form>
