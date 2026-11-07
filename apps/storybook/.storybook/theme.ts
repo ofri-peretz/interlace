@@ -27,7 +27,7 @@ const theme = create({
   base: 'dark',
 
   brandTitle: 'interlace',
-  brandUrl: 'https://eslint.interlace.tools',
+  brandUrl: 'https://ds.interlace.tools',
   brandImage: './interlace-mark.svg',
   brandTarget: '_self',
 
