@@ -93,10 +93,21 @@
     "question": "Does it match the contract?",
     "line": "Spec diff and checks for OpenAPI, JSON Schema, MCP and AsyncAPI. In development."
   },
+  "author": {
+    "name": "Ofri Peretz",
+    "role": "Engineering Manager at Snappy",
+    "lead": "Engineering leader. JavaScript at scale.",
+    "facts": [
+      "Engineering Manager at Snappy · 5 years",
+      "10+ years building software",
+      "Tel Aviv → U.S., building the first U.S. team",
+      "8 engineers, 5 time zones"
+    ]
+  },
   "bios": {
     "github": "Building Interlace: open-source tools that check what coding agents ship. Security lint, mutation testing and agent-ready CLIs. interlace.tools",
-    "devto": "Creator of Interlace (interlace.tools): open-source tools that check what coding agents ship. {rules.total} ESLint rules, {downloads} npm downloads. Engineering leader at Snappy.",
-    "linkedinHeadline": "Engineering Leader at Snappy · Creator of Interlace: open-source tools that check what coding agents ship ({rules.total} ESLint rules, {downloads} npm downloads)",
+    "devto": "Creator of Interlace (interlace.tools): open-source tools that check what coding agents ship. {rules.total} ESLint rules, {downloads} npm downloads. Engineering Manager at Snappy.",
+    "linkedinHeadline": "Engineering Manager at Snappy · Creator of Interlace: open-source tools that check what coding agents ship ({rules.total} ESLint rules, {downloads} npm downloads)",
     "repos": {
       "interlace": "Interlace hub, design system and Storybook: open-source tools that check what your coding agents ship.",
       "burgee": "Everything a CLI needs that isn't your CLI: one declaration gives help, --json, --schema, MCP and completions. Drop-in for commander, yargs and meow. An Interlace project.",

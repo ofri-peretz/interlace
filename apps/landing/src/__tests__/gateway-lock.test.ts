@@ -72,6 +72,13 @@ describe("brand messages", () => {
     expect(og).not.toContain("coding agents ship");
   });
 
+  it("every bio names the author's role the same way", () => {
+    for (const bio of [messages.bios.devto, messages.bios.linkedinHeadline]) {
+      expect(bio).toContain(messages.author.role);
+    }
+    expect(messages.author.facts[0]).toContain(messages.author.role);
+  });
+
   it("the LinkedIn tagline fits LinkedIn's 120-character limit", () => {
     expect(messages.tagline.length).toBeLessThanOrEqual(120);
   });
