@@ -13,11 +13,12 @@ export const metadata: Metadata = {
     template: '%s — Interlace DS',
   },
   description:
-    'Shadcn-compatible component registry for @interlace/ui. Production-grade React primitives, drop-in via the shadcn CLI.',
+    'The design system the Interlace sites are built with: accessible React components for shadcn, tested in dark mode and right-to-left.',
   metadataBase: new URL('https://ds.interlace.tools'),
+  icons: { icon: '/favicon.svg' },
   openGraph: {
     title: 'Interlace Design System Registry',
-    description: 'Production-grade React primitives, shadcn-compatible.',
+    description: 'The design system the Interlace sites are built with: accessible React components for shadcn, tested in dark mode and right-to-left.',
     url: 'https://ds.interlace.tools',
     siteName: 'Interlace DS',
     type: 'website',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Interlace Design System Registry',
-    description: 'Production-grade React primitives, shadcn-compatible.',
+    description: 'The design system the Interlace sites are built with: accessible React components for shadcn, tested in dark mode and right-to-left.',
   },
 };
 
