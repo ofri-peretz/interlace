@@ -12,9 +12,8 @@ import {
 } from "lucide-react";
 import { LandingHero } from "@/components/home/landing-hero";
 import { ProductCard } from "@/components/home/product-card";
-import { getDownloadsMilestone } from "@/lib/downloads";
 import messages from "@/data/brand-messages.json";
-import { renderBrand } from "@/lib/brand";
+import { getBrand } from "@/lib/brand";
 
 const ICONS: Record<string, React.ReactNode> = {
   eslint: <ShieldCheck className="size-5" />,
@@ -93,8 +92,7 @@ const FOOTER: { heading: string; links: [string, string][] }[] = [
 ];
 
 export default async function HomePage() {
-  const downloads = await getDownloadsMilestone();
-  const brand = renderBrand(downloads);
+  const brand = await getBrand();
   const core = brand.products.filter((p) => p.tier === "core");
   const also = brand.products.filter((p) => p.tier === "also");
 
@@ -109,7 +107,7 @@ export default async function HomePage() {
         // eslint-disable-next-line react-features/no-danger -- static constants, see JSON_LD
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
-      <LandingHero downloads={downloads} brand={brand} />
+      <LandingHero brand={brand} />
 
       {/* Products directory — straight under the hero, so a visitor sees
           where to go on the first screen. */}

@@ -7,6 +7,12 @@
   "headline": "Check what your coding agents ship.",
   "descriptor": "security lint, mutation testing and agent-ready CLIs",
   "subhead": "Open-source tools that verify AI-written JavaScript: security lint, mutation testing and agent-ready CLIs. Every claim is a number you can re-run.",
+  "proof": [
+    "{downloads} npm downloads",
+    "{packages.total} npm packages",
+    "{rules.total} ESLint rules",
+    "MIT licensed"
+  ],
   "tagline": "Open-source tools that check what your coding agents ship: security lint, mutation testing and agent-ready CLIs.",
   "footer": "Built in the open by Ofri Peretz · MIT License · Independent",
   "ctas": {
@@ -56,7 +62,7 @@
       "tier": "core",
       "name": "burgee",
       "question": "Can an agent drive the CLI?",
-      "line": "Everything a CLI needs that isn't your CLI. One declaration gives help, --json, --schema, MCP and completions; exit codes were right on 100% of agent tasks, against 40% for commander and yargs.",
+      "line": "Everything a CLI needs that isn't your CLI: {packages.burgee} packages, no outside dependencies. One declaration gives help, --json, --schema, MCP and completions; exit codes were right on 100% of agent tasks, against 40% for commander and yargs.",
       "proof": {
         "text": "100% correct exit codes",
         "url": "https://github.com/ofri-peretz/burgee#readme"
@@ -100,14 +106,14 @@
     "facts": [
       "Engineering Manager at Snappy · 5 years",
       "10+ years building software",
-      "Tel Aviv → U.S., building the first U.S. team",
-      "8 engineers, 5 time zones"
+      "Relocated to the U.S. to build the first U.S. team: 8 engineers, 5 time zones",
+      "Creator and maintainer of Interlace: {packages.total} open-source packages, {downloads} npm downloads"
     ]
   },
   "bios": {
     "github": "Building Interlace: open-source tools that check what coding agents ship. Security lint, mutation testing and agent-ready CLIs. interlace.tools",
-    "devto": "Creator of Interlace (interlace.tools): open-source tools that check what coding agents ship. {rules.total} ESLint rules, {downloads} npm downloads. Engineering Manager at Snappy.",
-    "linkedinHeadline": "Engineering Manager at Snappy · Creator of Interlace: open-source tools that check what coding agents ship ({rules.total} ESLint rules, {downloads} npm downloads)",
+    "devto": "Creator and maintainer of Interlace (interlace.tools): open-source tools that check what coding agents ship. {packages.total} packages, {downloads} npm downloads. Engineering Manager at Snappy.",
+    "linkedinHeadline": "Engineering Manager at Snappy · Creator and maintainer of Interlace: open-source tools that check what coding agents ship ({packages.total} packages, {downloads} npm downloads)",
     "repos": {
       "interlace": "Interlace hub, design system and Storybook: open-source tools that check what your coding agents ship.",
       "burgee": "Everything a CLI needs that isn't your CLI: one declaration gives help, --json, --schema, MCP and completions. Drop-in for commander, yargs and meow. An Interlace project.",

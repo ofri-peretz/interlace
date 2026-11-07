@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import numbers from "@/data/interlace-numbers.json";
+import { getLiveNumbers } from "@/lib/live-numbers";
 import messages from "@/data/brand-messages.json";
 
 export const runtime = "edge";
@@ -17,6 +17,7 @@ export const contentType = "image/png";
 // what the hero says. Brand palette only (BRAND_PHILOSOPHY §3): warm
 // near-black, burnt orange hue 41 — the old purple card was off-brand.
 export default async function OpengraphImage() {
+  const numbers = await getLiveNumbers();
   return new ImageResponse(
     <div
       style={{
@@ -82,7 +83,7 @@ export default async function OpengraphImage() {
       >
         <span>{`Open-source ${messages.descriptor}.`}</span>
         <span style={{ fontFamily: "monospace" }}>
-          {`${numbers.plugins.total} plugins · ${numbers.rules.total} rules · MIT`}
+          {`${numbers.packages.total} packages · ${numbers.rules.total} rules · MIT`}
         </span>
       </div>
     </div>,

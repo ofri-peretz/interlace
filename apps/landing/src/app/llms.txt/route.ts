@@ -1,13 +1,13 @@
 import { source } from "#interlace/lib/source";
-import { renderBrand } from "@/lib/brand";
+import { getBrand } from "@/lib/brand";
 
-export const revalidate = false;
+export const revalidate = 86400;
 
 // llms.txt format (https://llmstxt.org): H1, a one-line summary, then link
 // lists. An assistant asked "what is interlace.tools?" should get the product
 // list first, not only the concept pages. Copy comes from brand-messages.json.
 export async function GET() {
-  const brand = renderBrand(null);
+  const brand = await getBrand();
   const lines = [
     "# Interlace",
     "",

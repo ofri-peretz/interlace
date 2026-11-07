@@ -1,6 +1,5 @@
 import { ArrowRight, Gauge } from "lucide-react";
 
-import numbers from "@/data/interlace-numbers.json";
 import type { BrandMessages } from "@/lib/brand";
 
 // Plain words only: what it is, one measured number, where to go next. The
@@ -11,19 +10,8 @@ import type { BrandMessages } from "@/lib/brand";
 // product below the fold, animated outside the brand's two verbs (draw /
 // decode, BRAND_PHILOSOPHY §2) and used the green status hue as decoration
 // (§3). Theme tokens carry contrast in both modes, so no client theme hook.
-export function LandingHero({
-  downloads,
-  brand,
-}: {
-  downloads: string | null;
-  brand: BrandMessages;
-}) {
-  const proof = [
-    downloads && `${downloads} npm downloads`,
-    `${numbers.plugins.total} ESLint plugins`,
-    `${numbers.rules.total} rules`,
-    "MIT licensed",
-  ].filter(Boolean);
+export function LandingHero({ brand }: { brand: BrandMessages }) {
+  const proof = brand.proof;
 
   return (
     <section className="relative overflow-hidden border-b border-fd-border px-6 pt-12 pb-12 md:pt-24 md:pb-16">
