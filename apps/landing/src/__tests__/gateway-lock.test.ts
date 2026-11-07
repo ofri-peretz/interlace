@@ -68,6 +68,8 @@ describe("brand messages", () => {
     }
     const og = readFileSync(join(PROJECT_ROOT, "src/app/opengraph-image.tsx"), "utf-8");
     expect(og).toContain("messages.descriptor");
+    expect(og).toContain("messages.headline");
+    expect(og).not.toContain("coding agents ship");
   });
 
   it("the LinkedIn tagline fits LinkedIn's 120-character limit", () => {

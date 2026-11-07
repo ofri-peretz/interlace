@@ -4,6 +4,12 @@ import messages from "@/data/brand-messages.json";
 
 export const runtime = "edge";
 export const alt = `Interlace — ${messages.tagline}`;
+
+// The card sets the headline on two lines; split it at the middle word.
+const headlineWords = messages.headline.split(" ");
+const headlineSplit = Math.ceil(headlineWords.length / 2);
+const headlineLead = headlineWords.slice(0, headlineSplit).join(" ");
+const headlineTail = headlineWords.slice(headlineSplit).join(" ");
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -51,7 +57,7 @@ export default async function OpengraphImage() {
             letterSpacing: "-0.025em",
           }}
         >
-          Check what your
+          {headlineLead}
         </div>
         <div
           style={{
@@ -62,7 +68,7 @@ export default async function OpengraphImage() {
             color: "#fbb99a",
           }}
         >
-          coding agents ship.
+          {headlineTail}
         </div>
       </div>
 
