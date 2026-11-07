@@ -13,6 +13,12 @@ export interface ProductCardProps {
   /** The one command that gets a reader started — a real, published package. */
   install: string;
   github: string;
+  /** The question this tool answers about AI-written code. */
+  question?: string | null;
+  /** One measured number, linked to where it was measured. */
+  proof?: { text: string; url: string } | null;
+  /** Button verbs, from brand-messages.json. */
+  ctas: { start: string; star: string };
 }
 
 // Not a whole-card link: the card carries two actions (site + GitHub) and a
@@ -26,6 +32,9 @@ export function ProductCard({
   status,
   install,
   github,
+  question,
+  proof,
+  ctas,
 }: ProductCardProps) {
   // Every card on the gateway is shipping, so a "Shipping" pill on all of
   // them is noise; only a card that is NOT shipping says so.
@@ -49,9 +58,20 @@ export function ProductCard({
         )}
       </div>
 
-      <p className="mb-5 text-sm leading-relaxed text-fd-muted-foreground">
+      {question && (
+        <p className="mb-2 font-semibold text-fd-foreground">{question}</p>
+      )}
+      <p className="mb-3 text-sm leading-relaxed text-fd-muted-foreground">
         {tagline}
       </p>
+      {proof && (
+        <a
+          href={proof.url}
+          className="mb-5 self-start font-mono text-xs text-fd-primary hover:underline"
+        >
+          {proof.text} →
+        </a>
+      )}
 
       <div className="mb-5 flex items-center gap-2 rounded-lg border border-fd-border bg-fd-background py-1 pr-1 pl-3">
         <pre className="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-xs text-fd-foreground">
@@ -71,7 +91,7 @@ export function ProductCard({
           href={href}
           className="inline-flex items-center gap-1.5 text-fd-primary hover:underline"
         >
-          Go to {name}
+          {ctas.start}
           <ArrowRight className="size-4" />
         </a>
         <a
@@ -80,7 +100,7 @@ export function ProductCard({
           rel="noopener noreferrer"
           className="text-fd-muted-foreground hover:text-fd-foreground"
         >
-          GitHub
+          {ctas.star}
         </a>
       </div>
     </article>

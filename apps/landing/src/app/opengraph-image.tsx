@@ -1,9 +1,15 @@
 import { ImageResponse } from "next/og";
-import numbers from "@/data/interlace-numbers.json";
+import { getLiveNumbers } from "@/lib/live-numbers";
+import messages from "@/data/brand-messages.json";
 
 export const runtime = "edge";
-export const alt =
-  "Interlace — ship JavaScript with fewer bugs and less busywork. Open-source ESLint plugins, burgee CLI framework, Serverless plugins.";
+export const alt = `Interlace — ${messages.tagline}`;
+
+// The card sets the headline on two lines; split it at the middle word.
+const headlineWords = messages.headline.split(" ");
+const headlineSplit = Math.ceil(headlineWords.length / 2);
+const headlineLead = headlineWords.slice(0, headlineSplit).join(" ");
+const headlineTail = headlineWords.slice(headlineSplit).join(" ");
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -11,6 +17,7 @@ export const contentType = "image/png";
 // what the hero says. Brand palette only (BRAND_PHILOSOPHY §3): warm
 // near-black, burnt orange hue 41 — the old purple card was off-brand.
 export default async function OpengraphImage() {
+  const numbers = await getLiveNumbers();
   return new ImageResponse(
     <div
       style={{
@@ -51,7 +58,7 @@ export default async function OpengraphImage() {
             letterSpacing: "-0.025em",
           }}
         >
-          Ship JavaScript with
+          {headlineLead}
         </div>
         <div
           style={{
@@ -62,7 +69,7 @@ export default async function OpengraphImage() {
             color: "#fbb99a",
           }}
         >
-          fewer bugs and less busywork.
+          {headlineTail}
         </div>
       </div>
 
@@ -74,9 +81,9 @@ export default async function OpengraphImage() {
           color: "rgba(250, 250, 249, 0.72)",
         }}
       >
-        <span>ESLint plugins · burgee · Serverless plugins</span>
+        <span>{`Open-source ${messages.descriptor}.`}</span>
         <span style={{ fontFamily: "monospace" }}>
-          {`${numbers.plugins.total} plugins · ${numbers.rules.total} rules · MIT`}
+          {`${numbers.packages.total} packages · ${numbers.rules.total} rules · MIT`}
         </span>
       </div>
     </div>,

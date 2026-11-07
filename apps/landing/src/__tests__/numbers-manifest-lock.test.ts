@@ -55,12 +55,13 @@ describe("no hand-typed plugin/rule counts on landing surfaces", () => {
     });
   }
 
-  it("the home page renders counts from the manifest", () => {
+  it("product copy renders counts from the manifest", () => {
     const content = readFileSync(
-      join(PROJECT_ROOT, "src/app/(home)/page.tsx"),
+      join(PROJECT_ROOT, "src/data/brand-messages.json"),
       "utf-8",
     );
-    expect(content).toMatch(/from "@\/data\/interlace-numbers\.json"/);
-    expect(content).toContain("numbers.plugins.total");
+    expect(content).toContain("{plugins.total}");
+    expect(content).toContain("{rules.total}");
+    expect(content.match(HAND_TYPED_COUNT) ?? []).toEqual([]);
   });
 });
