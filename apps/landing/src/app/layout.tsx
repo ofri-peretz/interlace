@@ -7,20 +7,24 @@ import {
   DocsRootLayout,
 } from "#interlace/layouts/root-layout";
 
+import messages from "@/data/brand-messages.json";
+
 export const metadata = {
   // ponytail: manifest isn't in RootMetadataConfig; spread here instead of widening the baseline
   manifest: "/manifest.json",
   ...createRootMetadata({
-  title: "Interlace — open-source tools for JavaScript developers",
+  title: `Interlace — ${messages.headline.replace(/\.$/, "")}`,
   titleTemplate: "%s | Interlace",
-  description:
-    "Open-source tools for JavaScript developers: ESLint plugins that find bugs in AI-written code, burgee (a CLI framework for Node.js), and Serverless Framework plugins.",
+  description: messages.tagline,
   keywords: [
     "Interlace",
     "TypeScript",
     "ESLint",
     "Serverless Framework",
     "burgee",
+    "oxmutate",
+    "mutation testing",
+    "AI-written code",
     "Node.js CLI framework",
     "AWS",
     "developer tools",

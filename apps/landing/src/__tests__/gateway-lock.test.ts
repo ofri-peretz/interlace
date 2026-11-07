@@ -6,6 +6,9 @@
  * "Coming soon" and linked to the GitHub repo. Every product card must link
  * to its own site, and the downloads line must come from the profile README
  * token, never a hand-typed number. See docs/intents/landing-gateway.
+ *
+ * Product copy now lives in src/data/brand-messages.json (published at
+ * /brand.json), so the card rules are checked there.
  */
 
 import { describe, it, expect } from "vitest";
@@ -13,42 +16,76 @@ import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { parseDownloads } from "../lib/downloads";
+import messages from "../data/brand-messages.json";
+import { renderBrand } from "../lib/brand";
 
 const PROJECT_ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
-const page = readFileSync(join(PROJECT_ROOT, "src/app/(home)/page.tsx"), "utf-8");
 const hero = readFileSync(
   join(PROJECT_ROOT, "src/components/home/landing-hero.tsx"),
   "utf-8",
 );
 
-// Each card is read up to its `status` prop, so `name`, `badge` and `href`
-// must come before `status` in the JSX (they do today). A card missing
-// `status` would not be matched at all, and the "lists burgee" check would fail.
-const cards = [...page.matchAll(/<ProductCard\s([\s\S]*?status="[^"]*")/g)].map((m) => m[1]);
-const prop = (card: string, key: string) =>
-  card.match(new RegExp(`${key}="([^"]*)"`))?.[1];
-
 describe("product cards", () => {
-  it("lists burgee", () => {
-    expect(cards.map((c) => prop(c, "name"))).toContain("burgee");
+  const ids = messages.products.map((p) => p.id);
+
+  it("lists every shipping product, oxmutate and burgee included", () => {
+    expect(ids).toEqual(expect.arrayContaining(["eslint", "oxmutate", "burgee", "serverless", "ui"]));
   });
 
   // The front-page rule (intent: landing-gateway): one install command per
   // product, so a visitor can start without leaving the page.
-  it("every card carries an install command", () => {
-    const installs = page.match(/install="(?:npm i|npx) [^"]+"/g) ?? [];
-    expect(installs).toHaveLength(cards.length);
-  });
-
-  for (const card of cards) {
-    const name = prop(card, "name");
-    it(`${name} links to its own interlace.tools site and is shipping`, () => {
-      const badge = prop(card, "badge");
-      expect(badge).toMatch(/^[a-z]+\.interlace\.tools$/);
-      expect(prop(card, "href")).toMatch(new RegExp(`^https://${badge}/`));
-      expect(prop(card, "status")).toBe("shipping");
+  for (const product of messages.products) {
+    it(`${product.id} has an install command and its own interlace.tools site`, () => {
+      expect(product.install).toMatch(/^(?:npm i|npx) \S+/);
+      expect(product.site).toMatch(/^[a-z]+\.interlace\.tools$/);
     });
   }
+
+  it("core products each answer a question with a linked proof", () => {
+    for (const p of messages.products.filter((p) => p.tier === "core")) {
+      expect(p.question, p.id).toMatch(/\?$/);
+      expect(p.proof?.url, p.id).toMatch(/^https:\/\//);
+    }
+  });
+});
+
+describe("brand messages", () => {
+  it("fills every placeholder", () => {
+    expect(JSON.stringify(renderBrand("1M+"))).not.toMatch(/\{[\w.]+\}/);
+  });
+
+  it("the hero renders the brand headline, not hand-typed copy", () => {
+    expect(hero).toContain("{brand.headline}");
+    expect(hero).toContain("{brand.subhead}");
+  });
+
+  // The banner, tagline, hero, OG card and bios all say what Interlace is in
+  // the same words; a reworded copy is drift.
+  it("every surface that describes Interlace uses the one descriptor", () => {
+    const d = messages.descriptor.toLowerCase();
+    for (const text of [messages.tagline, messages.subhead, messages.bios.github]) {
+      expect(text.toLowerCase(), text).toContain(d);
+    }
+    const og = readFileSync(join(PROJECT_ROOT, "src/app/opengraph-image.tsx"), "utf-8");
+    expect(og).toContain("messages.descriptor");
+    expect(og).toContain("messages.headline");
+    expect(og).not.toContain("coding agents ship");
+  });
+
+  it("every bio names the author's role the same way", () => {
+    for (const bio of [messages.bios.devto, messages.bios.linkedinHeadline]) {
+      expect(bio).toContain(messages.author.role);
+    }
+    expect(messages.author.facts[0]).toContain(messages.author.role);
+  });
+
+  it("the LinkedIn tagline fits LinkedIn's 120-character limit", () => {
+    expect(messages.tagline.length).toBeLessThanOrEqual(120);
+  });
+
+  it("the GitHub bio fits GitHub's 160-character limit", () => {
+    expect(messages.bios.github.length).toBeLessThanOrEqual(160);
+  });
 });
 
 describe("downloads line", () => {
