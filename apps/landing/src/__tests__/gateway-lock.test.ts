@@ -75,7 +75,6 @@ describe("brand messages", () => {
   it("every bio names the author's role the same way", () => {
     for (const bio of [messages.bios.github, messages.bios.devto, messages.bios.devtoWork, messages.bios.linkedinHeadline]) {
       expect(bio.startsWith(messages.author.role), bio).toBe(true);
-      expect(bio).toContain(messages.author.role);
     }
     expect(messages.author.facts[0]).toContain(messages.author.role);
   });
