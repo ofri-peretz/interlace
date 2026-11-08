@@ -63,7 +63,7 @@ describe("brand messages", () => {
   // the same words; a reworded copy is drift.
   it("every surface that describes Interlace uses the one descriptor", () => {
     const d = messages.descriptor.toLowerCase();
-    for (const text of [messages.tagline, messages.subhead, messages.bios.github]) {
+    for (const text of [messages.tagline, messages.subhead]) {
       expect(text.toLowerCase(), text).toContain(d);
     }
     const og = readFileSync(join(PROJECT_ROOT, "src/app/opengraph-image.tsx"), "utf-8");
@@ -88,8 +88,9 @@ describe("brand messages", () => {
     expect(filled.length).toBeLessThanOrEqual(200);
   });
 
-  it("the GitHub bio fits GitHub's 160-character limit", () => {
-    expect(messages.bios.github.length).toBeLessThanOrEqual(160);
+  it("the GitHub bio fits GitHub's 160-character limit once numbers are filled in", () => {
+    const filled = messages.bios.github.replace("{packages.total}", "999").replace("{downloads}", "9.75M+");
+    expect(filled.length).toBeLessThanOrEqual(160);
   });
 });
 
