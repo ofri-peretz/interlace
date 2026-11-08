@@ -7,16 +7,17 @@ const pkg = (name: string, version: string, repo: string) => ({
 });
 
 describe("countPackages", () => {
-  it("counts shipped packages per Interlace repo, skipping name reservations and other repos", () => {
+  it("counts shipped packages per Interlace repo, including 0.x releases but not 0.0.x name reservations or other repos", () => {
     const counts = countPackages([
       pkg("eslint-plugin-jwt", "2.1.0", "eslint"),
       pkg("burgee", "1.10.1", "burgee"),
       pkg("roundel", "1.3.1", "burgee"),
+      pkg("@interlace/eslint-formatter", "0.2.1", "eslint"),
       pkg("pennon", "0.0.1", "burgee"),
       pkg("oxmutate", "1.5.0", "burgee"),
       pkg("@interlace/serverless-devkit", "1.0.0", "serverless"),
       pkg("@forge-js/cli", "2.5.2", "forge-js"),
     ]);
-    expect(counts).toEqual({ total: 5, eslint: 1, burgee: 2, serverless: 1 });
+    expect(counts).toEqual({ total: 6, eslint: 2, burgee: 2, serverless: 1 });
   });
 });

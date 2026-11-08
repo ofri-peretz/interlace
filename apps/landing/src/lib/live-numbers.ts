@@ -17,20 +17,20 @@ export type PackageCounts = Record<Repo | "total", number>;
 // oxmutate ships from the burgee repo but is its own product, so it isn't a burgee package.
 const OWN_PRODUCTS = new Set(["oxmutate"]);
 
-// ponytail: what npm reported on 2026-11-07; only used when npm is unreachable.
-export const PACKAGES_FALLBACK: PackageCounts = { total: 77, eslint: 63, burgee: 10, serverless: 3 };
+// ponytail: what npm reported on 2026-11-08; only used when npm is unreachable.
+export const PACKAGES_FALLBACK: PackageCounts = { total: 79, eslint: 65, burgee: 10, serverless: 3 };
 
 interface NpmObject {
   package: { name: string; version: string; links?: { repository?: string } };
 }
 
-/** Shipped packages per Interlace repo. 0.x versions are name reservations, not products. */
+/** Shipped packages per Interlace repo. 0.0.x versions are name reservations, not products. */
 export function countPackages(objects: NpmObject[]): PackageCounts {
   const counts: PackageCounts = { total: 0, eslint: 0, burgee: 0, serverless: 0 };
   for (const { package: p } of objects) {
     const repoUrl = (p.links?.repository ?? "").toLowerCase();
     const repo = REPOS.find((r) => repoUrl.includes(`ofri-peretz/${r}`));
-    if (!repo || Number(p.version.split(".")[0]) < 1) continue;
+    if (!repo || p.version.startsWith("0.0.")) continue;
     counts.total++;
     if (!(repo === "burgee" && OWN_PRODUCTS.has(p.name))) counts[repo]++;
   }
