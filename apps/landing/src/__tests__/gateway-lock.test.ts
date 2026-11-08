@@ -73,7 +73,8 @@ describe("brand messages", () => {
   });
 
   it("every bio names the author's role the same way", () => {
-    for (const bio of [messages.bios.devto, messages.bios.linkedinHeadline]) {
+    for (const bio of [messages.bios.github, messages.bios.devto, messages.bios.devtoWork, messages.bios.linkedinHeadline]) {
+      expect(bio.startsWith(messages.author.role), bio).toBe(true);
       expect(bio).toContain(messages.author.role);
     }
     expect(messages.author.facts[0]).toContain(messages.author.role);
@@ -81,6 +82,11 @@ describe("brand messages", () => {
 
   it("the LinkedIn tagline fits LinkedIn's 120-character limit", () => {
     expect(messages.tagline.length).toBeLessThanOrEqual(120);
+  });
+
+  it("the dev.to bio fits dev.to's 200-character limit once numbers are filled in", () => {
+    const filled = messages.bios.devto.replace("{packages.total}", "999").replace("{downloads}", "9.75M+");
+    expect(filled.length).toBeLessThanOrEqual(200);
   });
 
   it("the GitHub bio fits GitHub's 160-character limit", () => {
