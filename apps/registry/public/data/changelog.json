@@ -1,6 +1,60 @@
 {
   "releases": [
     {
+      "version": "Unreleased",
+      "unreleased": true,
+      "entries": [
+        {
+          "summary": "feat(ui): Button no longer submits a form by default. A bare `<button>` is `type=\"submit\"`, so a Cancel or \"Show more\" Button inside a `<form>` submitted it; the Settings template shipped exactly that bug. Button now defaults to `type=\"button\"` (as MUI, Chakra and Primer do) and a submit action says so with `type=\"submit\"`. A Button rendered through `render` (a link) gets no `type` unless you pass one.",
+          "components": [
+            "button"
+          ],
+          "componentsDeclared": true,
+          "kind": "Breaking",
+          "bump": "minor",
+          "migration": "in your copy of `button.tsx`, take `type` out of the props and pass `type: type ?? (render ? undefined : 'button')` to `useRender`. Then search your app for Buttons inside a `<form>` that submit it without a `type` and add `type=\"submit\"` to each (e.g. `<Button>Save</Button>` → `<Button type=\"submit\">Save</Button>`). Buttons that should not submit need no change.",
+          "source": ".changeset/button-type-button-default.md"
+        },
+        {
+          "summary": "feat(ui): Badge gets `size=\"sm\"` (the caption step for dense tag lists and counts) and `variant=\"scrim\"` (a translucent face for badges over images and video). One in three Badges in the DS was re-sizing itself with `text-caption tracking-normal …`, and article-card hand-built the over-cover look with a seven-class chain; both now use the props.",
+          "components": [
+            "badge",
+            "article-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/badge-size-and-scrim.md"
+        },
+        {
+          "summary": "feat(ui): `Button fullWidth` stretches to its container. It replaces `className=\"w-full\"`, which sign-in-form, newsletter-form and consumers were passing by hand — the component API carries the intent, not a utility class.",
+          "components": [
+            "button",
+            "sign-in-form",
+            "newsletter-form"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/button-full-width.md"
+        },
+        {
+          "summary": "fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).",
+          "components": [
+            "card",
+            "badge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/loading-keeps-identity.md"
+        }
+      ]
+    },
+    {
       "version": "1.2.0",
       "unreleased": false,
       "entries": [

@@ -421,7 +421,7 @@ describe('GridItem', () => {
 /* ── Badge / Button ─────────────────────────────────────────────────────── */
 
 describe('Badge', () => {
-  it.each(['default', 'secondary', 'destructive', 'outline', 'ghost', 'link'] as const)(
+  it.each(['default', 'secondary', 'destructive', 'outline', 'ghost', 'link', 'scrim'] as const)(
     'renders variant=%s and records it on data-variant',
     (variant) => {
       const { container } = render(<Badge variant={variant}>x</Badge>);
@@ -429,9 +429,35 @@ describe('Badge', () => {
     },
   );
 
-  it('drops data-variant when the variant is explicitly null', () => {
-    const { container } = render(<Badge variant={null}>x</Badge>);
+  it('drops data-variant and data-size when they are explicitly null', () => {
+    const { container } = render(<Badge variant={null} size={null}>x</Badge>);
     expect(slot(container, 'badge')!.hasAttribute('data-variant')).toBe(false);
+    expect(slot(container, 'badge')!.hasAttribute('data-size')).toBe(false);
+  });
+
+  it('takes the dense caption size from `size="sm"`, not from className', () => {
+    const { container } = render(<Badge size="sm">#tag</Badge>);
+    const el = slot(container, 'badge')!;
+    expect(el.getAttribute('data-size')).toBe('sm');
+    expect(el.className).toContain('text-caption');
+    expect(el.className).toContain('tracking-normal');
+  });
+
+  it('paints the scrim face for badges over media', () => {
+    const { container } = render(<Badge variant="scrim">#cover</Badge>);
+    const el = slot(container, 'badge')!;
+    expect(el.className).toContain('text-scrim-foreground');
+    expect(el.className).toContain('backdrop-blur-sm');
+  });
+
+  it('keeps its test id and ARIA while loading, and only those', () => {
+    const { container } = render(
+      <Badge loading data-testid="tag" aria-label="Loading tag" title="dropped" />,
+    );
+    const el = slot(container, 'badge')!;
+    expect(el.getAttribute('data-testid')).toBe('tag');
+    expect(el.getAttribute('aria-label')).toBe('Loading tag');
+    expect(el.hasAttribute('title')).toBe(false);
   });
 
   it('swaps to a badge-shaped skeleton while loading, not a spinner in the layout', () => {
@@ -450,6 +476,35 @@ describe('Badge', () => {
 });
 
 describe('Button', () => {
+  it('does not submit a form by default: type="button" unless told otherwise', () => {
+    let submitted = 0;
+    const { container } = render(
+      <form onSubmit={(e) => { e.preventDefault(); submitted++; }}>
+        <Button>Cancel</Button>
+        <Button type="submit">Save</Button>
+      </form>,
+    );
+    const [cancel, save] = [...container.querySelectorAll('button')];
+    expect(cancel.getAttribute('type')).toBe('button');
+    cancel.click();
+    expect(submitted).toBe(0);
+    expect(save.getAttribute('type')).toBe('submit');
+    save.click();
+    expect(submitted).toBe(1);
+  });
+
+  it('adds no type to an element it renders through (a link is not a button)', () => {
+    const { container } = render(<Button render={<a href="/x" />}>link</Button>);
+    expect(slot(container, 'button')!.hasAttribute('type')).toBe(false);
+  });
+
+  it('stretches with `fullWidth`, and only then', () => {
+    const { container } = render(<><Button fullWidth>wide</Button><Button>auto</Button></>);
+    const [wide, auto] = [...container.querySelectorAll('button')];
+    expect(wide.className).toContain('w-full');
+    expect(auto.className).not.toContain('w-full');
+  });
+
   it('records variant and size on data attributes for downstream styling hooks', () => {
     const { container } = render(<Button variant="outline" size="sm">go</Button>);
     const el = slot(container, 'button')!;
@@ -583,6 +638,13 @@ describe('PublishedDate', () => {
 /* ── Card ───────────────────────────────────────────────────────────────── */
 
 describe('Card', () => {
+  it('keeps its test id and ARIA while loading', () => {
+    const { container } = render(<Card loading data-testid="article" aria-label="Loading article" />);
+    const el = slot(container, 'card')!;
+    expect(el.getAttribute('data-testid')).toBe('article');
+    expect(el.getAttribute('aria-label')).toBe('Loading article');
+  });
+
   it('composes its parts without prop-drilling a single one of them', () => {
     const { container } = render(
       <Card>

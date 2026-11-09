@@ -60,7 +60,10 @@ type CardProps = React.ComponentProps<'div'> & {
 function Card({ className, loading, ...props }: CardProps) {
   if (loading) {
     return (
+      // `...props` too: a loading card keeps its data-testid and ARIA, so a
+      // test or a screen reader can still find it while it loads.
       <Skeleton
+        {...props}
         variant="card"
         data-slot="card"
         className={className}
