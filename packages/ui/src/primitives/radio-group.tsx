@@ -114,9 +114,11 @@ const RadioGroupItem = React.forwardRef<
     >
       <Radio.Indicator
         data-slot="radio-group-indicator"
-        className="relative flex items-center justify-center"
+        // Fills the 16px root so the dot sits at its centre. A size-less indicator put the dot on
+        // the root's top-left corner.
+        className="absolute inset-0 flex items-center justify-center"
       >
-        <CircleIcon className="fill-primary absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2" />
+        <CircleIcon className="fill-primary size-2" />
       </Radio.Indicator>
     </Radio.Root>
   );
