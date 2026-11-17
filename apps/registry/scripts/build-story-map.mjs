@@ -324,12 +324,6 @@ const tierRank = (title) => {
 const walk = async (dir) => {
   const out = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
-    /*
-     * no-zip-slip flags any `path.join(dir, <name>)` — but these names come
-     * from `readdir` on a repo-local directory, not from an archive, and the
-     * containment assertion below is the check the rule asks for.
-     */
-    // eslint-disable-next-line node-security/no-zip-slip
     const full = path.join(dir, entry.name);
     if (!full.startsWith(STORIES_DIR + path.sep)) continue;
     if (entry.isDirectory()) out.push(...(await walk(full)));

@@ -203,18 +203,31 @@ export default [
   {
     rules: {
       'import-next/no-unresolved': 'warn',
-      'import-next/no-duplicates': 'warn',
-      'import-next/no-self-import': 'warn',
+      'import-next/no-duplicates': 'error',
+      'import-next/no-self-import': 'error',
       'modularity/no-external-api-calls-in-utils': 'warn',
-      'browser-security/detect-mixed-content': 'warn',
-      'browser-security/no-http-urls': 'warn',
+      'browser-security/detect-mixed-content': 'error',
+      'browser-security/no-http-urls': 'error',
       'browser-security/no-clickjacking': 'warn',
-      'secure-coding/no-hardcoded-credentials': 'warn',
-      'secure-coding/no-improper-sanitization': 'warn',
-      'secure-coding/no-xpath-injection': 'warn',
-      'node-security/no-math-random-crypto': 'warn',
-      'node-security/no-ssrf': 'warn',
+      'secure-coding/no-hardcoded-credentials': 'error',
+      'secure-coding/no-improper-sanitization': 'error',
+      'secure-coding/no-xpath-injection': 'error',
+      'node-security/no-math-random-crypto': 'error',
+      'node-security/no-ssrf': 'error',
       'reliability/require-network-timeout': 'warn',
+      // Raised to error by the 2026-11-17 majors' presets; pre-existing, so baselined here.
+      // Polynomial (not exponential) backtracking in build scripts and metadata parsers
+      // that read repo-owned Markdown — true positives on trusted input. 18 sites.
+      'secure-coding/no-redos-vulnerable-regex': 'warn',
+      // New conventions rules, true positives: 6 raw cross-property hrefs that should go
+      // through buildUtmHref, and 2 `utm_medium=about` outside the taxonomy.
+      'conventions/no-raw-cross-property-href': 'warn',
+      'conventions/utm-taxonomy': 'warn',
+      // Every one of the 21 empty catches carries a comment saying why it is safe to
+      // swallow (storage blocked, clipboard rejected, analytics pre-init), but
+      // allowWithComment only accepts 15 magic words, so 18 still report
+      // (FP ofri-peretz/eslint#1554). Back to error once that ships.
+      'reliability/no-silent-errors': ['warn', { allowWithComment: true }],
     },
   },
   // Lock tests read repo-relative paths built from `__dirname` plus a listing
@@ -231,43 +244,16 @@ export default [
       'node-security/no-arbitrary-file-access': 'off',
     },
   },
-  // `secure-coding/no-xxe-injection` and `no-ldap-injection` fire on code that
-  // parses JSON and code that regex-matches a string — measured, with a minimal
-  // repro: `JSON.parse(body)` trips XXE at CVSS 9.1 while `JSON.parse(payload)`
-  // is silent. The rules are keying on the IDENTIFIER NAME, not on an XML
-  // parser or an LDAP query, neither of which exists anywhere in this repo.
-  //
-  // Both are OURS — `eslint-plugin-secure-coding`, which we publish. So this is
-  // a workaround with a deadline, not a decision: the rules are fixed upstream
-  // and this block comes out when the fixed version ships. It is scoped to the
-  // registry's build scripts and tests rather than turned off globally,
-  // because a real XXE or LDAP sink in app code must still be an error.
-  //
-  // The cost of leaving it: a security rule that cries wolf at CVSS 9.1 on
-  // `JSON.parse` is a rule whose whole plugin gets disabled by the first
-  // adopter who hits it. That is worse than the finding it was meant to catch.
-  {
-    files: [
-      'apps/registry/scripts/**/*.mjs',
-      'apps/registry/src/__tests__/**/*.{ts,tsx}',
-      'apps/registry/src/app/api/**/*.ts',
-    ],
-    rules: {
-      'secure-coding/no-xxe-injection': 'off',
-      'secure-coding/no-ldap-injection': 'off',
-    },
-  },
-
   // TSX-scoped baseline (react-a11y + react-features ERRORs → warn).
   {
     files: TSX_FILES,
     rules: {
       'react-features/jsx-key': 'warn',
       'react-features/jsx-no-target-blank': 'warn',
-      'react-a11y/role-supports-aria-props': 'warn',
+      'react-a11y/role-supports-aria-props': 'error',
       'react-a11y/click-events-have-key-events': 'warn',
-      'react-a11y/interactive-supports-focus': 'warn',
-      'react-a11y/alt-text': 'warn',
+      'react-a11y/interactive-supports-focus': 'error',
+      'react-a11y/alt-text': 'error',
       'react-a11y/anchor-has-content': 'warn',
       'react-a11y/heading-has-content': 'warn',
     },

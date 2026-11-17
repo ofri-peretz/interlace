@@ -281,7 +281,6 @@ export const buildConcepts = async () => {
 
   const pages = [];
   for (const file of files) {
-    // eslint-disable-next-line node-security/no-zip-slip
     const full = path.join(CONCEPTS_DIR, file);
     const raw = await readFile(full, 'utf8');
 
