@@ -217,7 +217,11 @@ jobs:
   storybook-a11y:
     name: storybook (a11y)
     needs: storybook-build
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04, which Playwright's chromium does
+    # not support yet ("Playwright does not support chromium on ubuntu26.04-x64").
+    # 24.04 is also what the visual baselines were captured on. Back to
+    # ubuntu-latest once Playwright ships 26.04 support.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -252,7 +256,11 @@ jobs:
   storybook-visual:
     name: storybook (visual)
     needs: storybook-build
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04, which Playwright's chromium does
+    # not support yet ("Playwright does not support chromium on ubuntu26.04-x64").
+    # 24.04 is also what the visual baselines were captured on. Back to
+    # ubuntu-latest once Playwright ships 26.04 support.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
