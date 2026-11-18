@@ -504,7 +504,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v1.1.0
 - [Spotlight](https://ds.interlace.tools/c/spotlight): The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/spotlight.json`
-  - contract: client, v1.2.0
+  - contract: client, v1.2.1
 - [Stars Background](https://ds.interlace.tools/c/stars-background): Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stars-background.json`
   - contract: client, v1.1.0
