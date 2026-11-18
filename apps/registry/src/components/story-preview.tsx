@@ -104,13 +104,6 @@ export function StoryPreview({
   return (
     <figure className="border-border bg-card/40 overflow-hidden rounded-lg border">
       {mounted ? (
-        /*
-         * The title IS set — from the per-preview `label` prop, unique per
-         * frame ("live render", "loading state", one per example story). The
-         * rule only recognises a string literal, so it can't see through the
-         * JSX expression container.
-         */
-        // eslint-disable-next-line react-a11y/iframe-has-title
         <iframe
           // Keyed on the resolved pair so a theme or scheme change REPLACES
           // the frame rather than mutating `src` on the existing one. Same
