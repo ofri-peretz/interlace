@@ -68,7 +68,7 @@ const BLUR_DEVIATION = 151;
 // =========================================
 
 /**
- * Native `<svg>` props minus the four animation/drag handlers whose DOM
+ * Native `<svg>` props minus the five animation/drag handlers whose DOM
  * signatures collide with `motion`'s own (it overloads them for gesture +
  * animation lifecycle callbacks). Omitting them lets us extend the native
  * element — per the floor — without a type conflict. `fx` too: motion 14 made it a
