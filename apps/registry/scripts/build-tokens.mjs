@@ -73,7 +73,7 @@ const readBlock = (css, selector, file) => {
   return fail(`unbalanced braces after \`${selector}\` in ${file}`);
 };
 
-const toLinear = (c) => (c <= 0.0031308 ? 12.92 * c : 1.055 * Math.max(c, 0) ** (1 / 2.4) - 0.055);
+const toGamma = (c) => (c <= 0.0031308 ? 12.92 * c : 1.055 * Math.max(c, 0) ** (1 / 2.4) - 0.055);
 
 /** oklch → sRGB hex, the conversion a browser makes when it paints. */
 const oklchToHex = (L, C, H) => {
@@ -89,7 +89,7 @@ const oklchToHex = (L, C, H) => {
     -0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3,
   ]
     .map((c) =>
-      Math.round(Math.min(1, Math.max(0, toLinear(c))) * 255)
+      Math.round(Math.min(1, Math.max(0, toGamma(c))) * 255)
         .toString(16)
         .padStart(2, '0'),
     )

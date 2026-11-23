@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T04:46:31.611Z",
+  "generatedAt": "2026-11-23T05:00:56.736Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -320,9 +320,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -377,9 +377,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -415,9 +415,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -453,9 +453,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -524,9 +524,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -562,9 +562,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -690,9 +690,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -728,9 +728,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -876,9 +876,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -895,9 +895,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -1097,9 +1097,9 @@
         {
           "fg": "info",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "info tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-info on the page",
           "ratios": [
             8.72,
             10.98,
@@ -1135,9 +1135,9 @@
         {
           "fg": "info",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "info tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-info in a card",
           "ratios": [
             8.72,
             10.17,
@@ -1154,9 +1154,9 @@
         {
           "fg": "success",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success on the page",
           "ratios": [
             7.68,
             10.3,
@@ -1173,9 +1173,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -1211,9 +1211,9 @@
         {
           "fg": "success",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success in a card",
           "ratios": [
             7.68,
             9.54,
@@ -1249,9 +1249,9 @@
         {
           "fg": "warning",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning in a card",
           "ratios": [
             9.07,
             8.54,
@@ -1287,9 +1287,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -1325,9 +1325,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -1344,9 +1344,9 @@
         {
           "fg": "warning",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning on the page",
           "ratios": [
             9.07,
             9.22,
@@ -1401,9 +1401,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -1491,9 +1491,9 @@
         {
           "fg": "info",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "info tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-info on the page",
           "ratios": [
             8.72,
             10.98,
@@ -1529,9 +1529,9 @@
         {
           "fg": "info",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "info tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-info in a card",
           "ratios": [
             8.72,
             10.17,
@@ -1548,9 +1548,9 @@
         {
           "fg": "success",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success on the page",
           "ratios": [
             7.68,
             10.3,
@@ -1586,9 +1586,9 @@
         {
           "fg": "success",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success in a card",
           "ratios": [
             7.68,
             9.54,
@@ -1624,9 +1624,9 @@
         {
           "fg": "warning",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning in a card",
           "ratios": [
             9.07,
             8.54,
@@ -1662,9 +1662,9 @@
         {
           "fg": "warning",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning on the page",
           "ratios": [
             9.07,
             9.22,
@@ -2018,9 +2018,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -2056,9 +2056,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -2094,9 +2094,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -2151,9 +2151,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -2279,9 +2279,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -2317,9 +2317,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -2355,9 +2355,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -2412,9 +2412,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -2502,9 +2502,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -2521,9 +2521,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -2540,9 +2540,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -2559,9 +2559,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -2701,9 +2701,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -2720,9 +2720,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -2758,9 +2758,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -2815,9 +2815,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -2886,9 +2886,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -2905,9 +2905,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -2995,9 +2995,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -3014,9 +3014,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -3079,9 +3079,9 @@
         {
           "fg": "success",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success on the page",
           "ratios": [
             7.68,
             10.3,
@@ -3098,9 +3098,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -3117,9 +3117,9 @@
         {
           "fg": "success",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success in a card",
           "ratios": [
             7.68,
             9.54,
@@ -3155,9 +3155,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -3264,9 +3264,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -3283,9 +3283,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -3563,9 +3563,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -3601,9 +3601,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -3658,9 +3658,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -3715,9 +3715,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -3911,9 +3911,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -3949,9 +3949,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -4063,9 +4063,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -4101,9 +4101,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -4204,9 +4204,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -4242,9 +4242,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -4346,9 +4346,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -4384,9 +4384,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -4422,9 +4422,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -4441,9 +4441,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -4484,9 +4484,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -4522,9 +4522,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -4560,9 +4560,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -4579,9 +4579,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -4666,9 +4666,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -4704,9 +4704,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -5117,9 +5117,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -5155,9 +5155,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -5299,9 +5299,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -5337,9 +5337,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -5492,9 +5492,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -5511,9 +5511,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -5557,9 +5557,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -5576,9 +5576,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -5916,9 +5916,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -5954,9 +5954,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -6006,9 +6006,9 @@
         {
           "fg": "success",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success on the page",
           "ratios": [
             7.68,
             10.3,
@@ -6025,9 +6025,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -6063,9 +6063,9 @@
         {
           "fg": "success",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success in a card",
           "ratios": [
             7.68,
             9.54,
@@ -6101,9 +6101,9 @@
         {
           "fg": "warning",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning in a card",
           "ratios": [
             9.07,
             8.54,
@@ -6139,9 +6139,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -6158,9 +6158,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -6177,9 +6177,9 @@
         {
           "fg": "warning",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning on the page",
           "ratios": [
             9.07,
             9.22,
@@ -6215,9 +6215,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -6234,9 +6234,9 @@
         {
           "fg": "caution",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "caution tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-caution on the page",
           "ratios": [
             9.37,
             11.74,
@@ -6272,9 +6272,9 @@
         {
           "fg": "caution",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "caution tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-caution in a card",
           "ratios": [
             9.37,
             10.87,
@@ -6344,9 +6344,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -6363,9 +6363,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -6606,9 +6606,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -6644,9 +6644,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -6701,9 +6701,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -6758,9 +6758,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -7017,9 +7017,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -7055,9 +7055,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -7152,9 +7152,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -7190,9 +7190,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -7228,9 +7228,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -7247,9 +7247,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -7326,9 +7326,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -7364,9 +7364,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -7488,9 +7488,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -7526,9 +7526,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -7583,9 +7583,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -7640,9 +7640,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -8028,9 +8028,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -8066,9 +8066,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -8118,9 +8118,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -8156,9 +8156,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -8208,9 +8208,9 @@
         {
           "fg": "success",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success on the page",
           "ratios": [
             7.68,
             10.3,
@@ -8227,9 +8227,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -8246,9 +8246,9 @@
         {
           "fg": "success",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success in a card",
           "ratios": [
             7.68,
             9.54,
@@ -8284,9 +8284,9 @@
         {
           "fg": "warning",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning in a card",
           "ratios": [
             9.07,
             8.54,
@@ -8303,9 +8303,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -8341,9 +8341,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -8360,9 +8360,9 @@
         {
           "fg": "warning",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning on the page",
           "ratios": [
             9.07,
             9.22,
@@ -8379,9 +8379,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -8507,9 +8507,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -8545,9 +8545,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -8649,9 +8649,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -8687,9 +8687,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -8806,9 +8806,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -8825,9 +8825,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -8863,9 +8863,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -8901,9 +8901,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -9283,9 +9283,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -9302,9 +9302,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -9425,9 +9425,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -9444,9 +9444,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -9615,9 +9615,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -9672,9 +9672,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -10365,9 +10365,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -10403,9 +10403,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -10550,9 +10550,9 @@
         {
           "fg": "success",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success on the page",
           "ratios": [
             7.68,
             10.3,
@@ -10569,9 +10569,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -10588,9 +10588,9 @@
         {
           "fg": "success",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "success tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success in a card",
           "ratios": [
             7.68,
             9.54,
@@ -10626,9 +10626,9 @@
         {
           "fg": "warning",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning in a card",
           "ratios": [
             9.07,
             8.54,
@@ -10645,9 +10645,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -10683,9 +10683,9 @@
         {
           "fg": "warning",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "warning tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-warning on the page",
           "ratios": [
             9.07,
             9.22,
@@ -10748,9 +10748,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -10786,9 +10786,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -10824,9 +10824,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -10843,9 +10843,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -10993,9 +10993,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -11050,9 +11050,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -11392,9 +11392,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -11430,9 +11430,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -11610,9 +11610,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -11648,9 +11648,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -12015,9 +12015,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -12053,9 +12053,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -12300,9 +12300,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -12338,9 +12338,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -12395,9 +12395,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -12433,9 +12433,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -12855,9 +12855,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -12893,9 +12893,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,
@@ -13087,9 +13087,9 @@
         {
           "fg": "destructive",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
           "ratios": [
             8.31,
             10.43,
@@ -13125,9 +13125,9 @@
         {
           "fg": "destructive",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "destructive tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
           "ratios": [
             8.31,
             9.66,
@@ -13163,9 +13163,9 @@
         {
           "fg": "primary",
           "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
           "ratios": [
             8.8,
             11.79,
@@ -13182,9 +13182,9 @@
         {
           "fg": "primary",
           "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
           "ratios": [
             8.8,
             10.92,

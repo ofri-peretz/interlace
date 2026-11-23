@@ -501,16 +501,16 @@ const readPairTable = async () => {
     {
       fg: tone,
       bg: 'background',
-      floor: floors.AA_NON_TEXT,
-      why: `${tone} tint on the page surface`,
-      kind: 'non-text',
+      floor: floors.AA_TEXT,
+      why: `text-${tone} on the page`,
+      kind: 'text',
     },
     {
       fg: tone,
       bg: 'card',
-      floor: floors.AA_NON_TEXT,
-      why: `${tone} tint inside a card`,
-      kind: 'non-text',
+      floor: floors.AA_TEXT,
+      why: `text-${tone} in a card`,
+      kind: 'text',
     },
   ]);
 
