@@ -187,6 +187,17 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"Yale Avalon\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
+          "components": [
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/citation-chip.md"
+        },
+        {
           "summary": "New `Citation` pattern: an inline source marker for a sentence that makes a claim. A footnote number (or a dotted underline on the phrase itself) opens a popover listing every source behind the claim, with the publisher linked, the kind of source, and the quote as a blockquote. Several sources stack in one popover. Only `https:` URLs become links. Keyboard and touch work out of the box, Escape closes it, and the claim text is in the server HTML. An optional `status` shows \"Enough sources\" or a warning \"Short of sources\".",
           "components": [
             "citation"

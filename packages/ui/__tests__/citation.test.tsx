@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
  */
 import { describe, expect, it } from 'vitest';
 
-import { Citation, safeHref } from '../src/patterns/citation.js';
+import { Citation, chipText, safeHref } from '../src/patterns/citation.js';
 
 const SOURCES = [
   {
@@ -78,6 +78,39 @@ describe('Citation', () => {
 
     await user.keyboard('{Escape}');
     await waitFor(() => expect(screen.queryByText('A second quote.')).toBeNull());
+  });
+
+  it('puts a pill naming the source after the text for marker="chip"', async () => {
+    const user = userEvent.setup();
+    render(
+      <p>
+        <Citation sources={SOURCES} marker="chip">
+          The claim.
+        </Citation>
+      </p>,
+    );
+    expect(screen.getByText('The claim.')).toBeTruthy();
+    // Visible text first, so a voice user can say what they see (WCAG 2.5.3).
+    const trigger = screen.getByRole('button', { name: /^Reuters · Bad data ?, Sources \(2\)$/ });
+    expect(trigger.tagName).toBe('BUTTON');
+    expect(trigger.closest('sup')).toBeNull();
+    await user.click(trigger);
+    await screen.findByText('The exact words from the page.');
+  });
+
+  it('lets chipLabel shorten the pill', () => {
+    render(
+      <Citation sources={SOURCES} marker="chip" chipLabel="Reuters">
+        The claim.
+      </Citation>,
+    );
+    expect(screen.getByRole('button', { name: /^Reuters ?, Sources \(2\)$/ })).toBeTruthy();
+  });
+
+  it('names each publisher once in the default pill text', () => {
+    expect(chipText([{ publisher: 'JVL' }, { publisher: 'JTA' }, { publisher: 'JVL' }])).toBe(
+      'JVL · JTA',
+    );
   });
 
   it('makes the text itself the trigger for marker="underline"', async () => {
