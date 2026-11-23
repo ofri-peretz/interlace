@@ -18,7 +18,9 @@ import { ArticleListGrid } from '../src/patterns/article-list-grid.js';
 import { FeatureGrid } from '../src/patterns/feature-grid.js';
 import { PricingTable } from '../src/patterns/pricing-table.js';
 import { RelatedPosts } from '../src/patterns/related-posts.js';
+import { FocusGrid } from '../src/patterns/focus-grid.js';
 import { StatGroup } from '../src/patterns/stat-group.js';
+import { TestimonialGrid } from '../src/patterns/testimonial.js';
 
 afterEach(cleanup);
 
@@ -28,6 +30,7 @@ const COLLECTIONS: Array<[string, React.ReactElement]> = [
   ['ArticleListGrid', <ArticleListGrid key="a" cols={4} loading />],
   ['PricingTable', <PricingTable key="p" cols={4} loading />],
   ['RelatedPosts', <RelatedPosts key="r" data-testid="related-posts" loading />],
+  ['TestimonialGrid', <TestimonialGrid key="t" cols={3} loading />],
 ];
 
 describe('collections size to their container, not the viewport', () => {
@@ -38,5 +41,18 @@ describe('collections size to their container, not the viewport', () => {
     expect(grid!.closest('.\\@container')).not.toBeNull();
     expect(grid!.className).toMatch(/(^|\s)@[a-z0-9]+:grid-cols-\d/);
     expect(grid!.className).not.toMatch(/(^|\s)(xs|sm|md|lg|xl|2xl):grid-cols-/);
+  });
+});
+
+// FocusGrid has no container ancestor to query: it is the grid. Its tracks are
+// intrinsic instead (auto-fill with a floor), so the count follows its own
+// width with no breakpoint at all, and `columns` only caps it.
+describe('FocusGrid tracks are intrinsic, capped by `columns`', () => {
+  it.each([2, 3, 4] as const)('columns=%s', (columns) => {
+    render(<FocusGrid columns={columns} />);
+    const grid = document.querySelector<HTMLElement>('[data-slot="focus-grid"]')!;
+    expect(grid.className).toContain('grid-cols-[repeat(auto-fill,minmax(min(100%,max(');
+    expect(grid.className).toContain(`)/${columns}))`);
+    expect(grid.className).not.toMatch(/(^|\s)@?(xs|sm|md|lg|xl|2xl):grid-cols-/);
   });
 });

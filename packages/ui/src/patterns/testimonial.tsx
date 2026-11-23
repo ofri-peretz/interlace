@@ -126,13 +126,15 @@ interface TestimonialGridProps extends Omit<React.ComponentProps<'section'>, 'ti
 }
 
 /**
- * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
+ * Track counts per `cols`, read from the content column's own width (the
+ * `@container` on the Stack), not the viewport: the same grid fits a
+ * sidebar or a card. Written out statically because Tailwind cannot scan a
+ * runtime-built `@md:grid-cols-${n}`.
  */
 const TESTIMONIAL_GRID_COLS: Record<1 | 2 | 3, string> = {
   1: 'grid-cols-1',
-  2: 'grid-cols-1 xs:grid-cols-2',
-  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
+  2: 'grid-cols-1 @md:grid-cols-2',
+  3: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-3',
 };
 
 function TestimonialGrid({
@@ -154,7 +156,7 @@ function TestimonialGrid({
       {...props}
     >
       <Container size="content">
-        <Stack gap="lg">
+        <Stack gap="lg" className="@container">
           {(title || lead) && (
             <Stack gap="sm" align="center" className="text-center">
               {title ? (
