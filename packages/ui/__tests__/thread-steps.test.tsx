@@ -175,6 +175,18 @@ describe('ThreadSteps', () => {
     expect(observed).toHaveLength(0);
   });
 
+  it('leaves the last step alone: its strand is not shown', () => {
+    render(
+      <ThreadSteps>
+        <ThreadStep title="First" />
+        <ThreadStep title="Last" />
+      </ThreadSteps>,
+    );
+    const [first, last] = screen.getAllByRole('listitem');
+    expect(observed).toEqual([first]);
+    expect(strandBox(last!).style.clipPath).toBe('');
+  });
+
   it('cancels the draw and restores the strands on unmount', () => {
     const { unmount } = render(<Tracker />);
     const box = strandBox(screen.getAllByRole('listitem')[0]!);

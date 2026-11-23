@@ -125,6 +125,9 @@ function ThreadStep({ title, state, className, children, ...props }: ThreadStepP
     const step = ref.current;
     if (!step || !woven || reduced) return;
     if (typeof IntersectionObserver === 'undefined') return;
+    // The last step has no strand on screen (`group-last/step:hidden`). Leave
+    // it alone, so a step appended later shows its strand drawn, not clipped.
+    if (step.matches(':last-child')) return;
     const strand = step.querySelector<HTMLElement>('[data-slot="thread-step-strand"]')!;
     if (typeof strand.animate !== 'function') return;
     strand.style.clipPath = HIDDEN;
