@@ -42,7 +42,7 @@
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R8   | Enums, not booleans              | `mediaRole = content\|decorative`                           |
  * | R19  | Tokens only                      | `py-section-comfortable`; typography from primitives        |
- * | R25  | Server component                 | No hooks → no `'use client'`                                |
+ * | R25  | Server component                 | No state or effects (only `useId`) → no `'use client'`      |
  * | R26  | A11y landmark                    | `<section aria-labelledby>` is the rendered element         |
  */
 
@@ -84,8 +84,11 @@ export function Hero({
   mediaRole = "content",
   ...props
 }: HeroProps) {
+  // useId is allowed in a server component: it holds no state.
+  const headlineId = React.useId();
   return (
     <section
+      aria-labelledby={headlineId}
       data-slot="hero"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
@@ -105,7 +108,7 @@ export function Hero({
             {eyebrow}
           </Typography>
         ) : null}
-        <Typography as="h1" variant="h1">
+        <Typography id={headlineId} as="h1" variant="h1">
           {headline}
         </Typography>
         {body ? (
