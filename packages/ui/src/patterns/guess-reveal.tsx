@@ -119,8 +119,18 @@ function GuessReveal({
     ...labels,
   };
 
+  // Closes the door on the first pick at once. `answered` only flips when the
+  // answer renders, and a controlled parent that sets it after an await
+  // would otherwise let a second click through and call onAnswer twice.
+  const pickedRef = React.useRef(answered);
+  React.useEffect(() => {
+    // A parent that clears the answer (a retry) opens the door again.
+    if (!answered) pickedRef.current = false;
+  }, [answered]);
+
   const pick = (option: GuessRevealOption) => {
-    if (answered) return;
+    if (answered || pickedRef.current) return;
+    pickedRef.current = true;
     animateOn.current = option.id;
     if (answerProp === undefined) setUncontrolled(option.id);
     onAnswer?.(option.id, option.correct === true);
@@ -194,7 +204,9 @@ function GuessReveal({
               data-picked={option.id === answer ? "" : undefined}
               aria-disabled={answered || undefined}
               aria-describedby={
-                answered && result !== "none" ? explanationId : undefined
+                answered && result !== "none" && explanation
+                  ? explanationId
+                  : undefined
               }
               onClick={() => pick(option)}
               className={cn(
