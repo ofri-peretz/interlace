@@ -336,6 +336,17 @@
           "source": ".changeset/featured-icon.md"
         },
         {
+          "summary": "FlipCard: a card with a front that asks and a back that answers, turned over in 3D by a tap, a click or Enter. Both faces stay in the DOM and the card is as tall as its taller face, so a grid stays aligned. The turned-away face is inert and focus follows the turn; without JavaScript both faces show, and under reduced motion the faces cross-fade.",
+          "components": [
+            "flip-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/flip-card.md"
+        },
+        {
           "summary": "Section padding and the h2 and h3 sizes are now fluid. They grow on one smooth curve from a 360px phone to a 1024px laptop, instead of jumping at the `md` and `lg` breakpoints.\n\n- **New tokens:** `--spacing-section-tight`, `--spacing-section-comfortable` and `--spacing-section-spacious`. They generate `py-section-*`, which `Section`'s `spacing` prop now uses.\n- tight: 48px to 80px\n- comfortable: 64px to 96px\n- spacious: 80px to 128px\n- Each step still clears the layout floors: 40px or more on a phone, and 64px or more by 768px.\n- A brand retunes the rhythm by re-pointing one variable, such as `:root { --spacing-section-comfortable: 5rem; }`.\n- **Headings:**\n- `--text-h2` runs from 24px to 30px. It was a fixed 30px.\n- `--text-h3` runs from 22px to 24px, so it stays above h4 on a phone.\n- h4 and smaller, and body text, stay fixed.\n- Every clamp keeps a rem term, so sizes still scale with zoom and the user's font size.\n- **Overlap:** the `overlap` variants on `Section` need a single `pt-0` now, not one per breakpoint.",
           "components": [
             "section",
@@ -346,6 +357,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/fluid-rhythm.md"
+        },
+        {
+          "summary": "GuessReveal: a one-question quiz. Two to four answers as buttons; the pick is marked right or wrong in words and with a short movement, the right answer is always shown, and an explanation opens. `onAnswer` lets the consumer record the pick. The status is a polite live region, the options stay focusable after the pick, and without JavaScript a details element holds the answer.",
+          "components": [
+            "guess-reveal"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/guess-reveal.md"
         },
         {
           "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
@@ -703,6 +725,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/featured-icon-neutral-ring.md"
+        },
+        {
+          "summary": "FlipCard: focus follows a turn only when the card lands on the side the press asked for. A controlled parent that refuses a turn and later changes `flipped` on its own no longer pulls focus. The card also fills its grid cell (`h-full`), so a row of cards with different amounts of text lines up.",
+          "components": [
+            "flip-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/flip-card-focus.md"
         },
         {
           "summary": "Hero: the section is named by its headline (`aria-labelledby` on the h1), so it is announced as a region with that name.",

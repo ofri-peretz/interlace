@@ -845,6 +845,19 @@
     "previewDark": "blocks-figure--dark",
     "skeleton": null
   },
+  "flip-card": {
+    "title": "Blocks/FlipCard",
+    "storyIds": [
+      "blocks-flipcard--default",
+      "blocks-flipcard--grid",
+      "blocks-flipcard--starts-flipped",
+      "blocks-flipcard--dark",
+      "blocks-flipcard--rtl"
+    ],
+    "preview": "blocks-flipcard--default",
+    "previewDark": "blocks-flipcard--dark",
+    "skeleton": null
+  },
   "focus-grid": {
     "title": "Blocks/FocusGrid",
     "storyIds": [
@@ -946,6 +959,19 @@
     ],
     "preview": "effects-gridfield--default",
     "previewDark": null,
+    "skeleton": null
+  },
+  "guess-reveal": {
+    "title": "Blocks/GuessReveal",
+    "storyIds": [
+      "blocks-guessreveal--default",
+      "blocks-guessreveal--answered-right",
+      "blocks-guessreveal--true-or-false",
+      "blocks-guessreveal--dark",
+      "blocks-guessreveal--rtl"
+    ],
+    "preview": "blocks-guessreveal--default",
+    "previewDark": "blocks-guessreveal--dark",
     "skeleton": null
   },
   "hero": {

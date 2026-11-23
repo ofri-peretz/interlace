@@ -2146,6 +2146,24 @@
       }
     },
     {
+      "name": "flip-card",
+      "type": "registry:ui",
+      "title": "Flip Card",
+      "description": "A card with two faces: a front that asks (a claim, a question) and a back that answers (with any children, such as source links). Pressing the card turns it over in 3D. It makes the reader commit to a guess before the answer arrives, which is what turns a…",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.1",
+        "since": null
+      }
+    },
+    {
       "name": "focus-grid",
       "type": "registry:ui",
       "title": "Focus Grid",
@@ -2179,6 +2197,24 @@
         "loading": false,
         "version": "2.0.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "guess-reveal",
+      "type": "registry:ui",
+      "title": "Guess Reveal",
+      "description": "A one-question quiz: a question, two to four answers as buttons, and an explanation that opens once the reader picks. The pick is marked right or wrong with a short movement, the right answer is always shown, and the consumer hears about it through…",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
