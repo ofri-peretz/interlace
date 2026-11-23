@@ -10,7 +10,7 @@
  * ## Anatomy
  *
  *   Tabs                             (Tabs.Root — flex-col gap-2, data-min-viewport=320)
- *     ├─ TabsList                    (Tabs.List — bg-muted pill, h-9, w-fit)
+ *     ├─ TabsList                    (Tabs.List — bg-muted pill, h-control, w-fit)
  *     │    └─ TabsTrigger            (Tabs.Tab — flex-1, raised on data-[selected])
  *     └─ TabsContent                 (Tabs.Panel)
  *
@@ -76,7 +76,7 @@ function TabsList({
     <BaseTabs.List
       data-slot="tabs-list"
       className={cn(
-        'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-xl p-[3px]',
+        'bg-muted text-muted-foreground inline-flex h-control w-fit items-center justify-center rounded-xl p-[3px]',
         className,
       )}
       {...props}

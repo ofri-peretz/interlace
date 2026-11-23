@@ -275,3 +275,97 @@
   --color-viz-annotation-release: var(--viz-annotation-release);
   --color-viz-annotation-action: var(--viz-annotation-action);
 }
+
+/*
+ * ── More contrast, an AAA reading mode on top of any theme.
+ *
+ * Interlace's floor is WCAG 2.2 AA in every theme. This mode is for readers
+ * who find that hard to read. It turns on in two ways:
+ *
+ *   - by itself, when the reader's system asks for it
+ *     (`prefers-contrast: more`), unless the page sets data-contrast="normal";
+ *   - when the page asks for it, with data-contrast="more" on <html> or on
+ *     any region, for example from a reading-settings toggle.
+ *
+ * What it does, all by re-pointing the semantic tokens the components
+ * already read, so it works on every theme and in both schemes:
+ *
+ *   1. Every text colour becomes the theme's own foreground, which clears
+ *      7:1 (AAA) on its background. Secondary text stops being grey.
+ *   2. Surfaces (muted, accent, secondary) become a faint 6% tint of the
+ *      foreground, so text on them stays at AAA.
+ *   3. Primary becomes foreground on background: the strongest pair the
+ *      theme has. A brand that wants its own colour here re-points
+ *      `--primary` inside [data-contrast='more'] with a pair it has measured
+ *      at 7:1.
+ *   4. Status colours mix toward the foreground until their text clears 7:1,
+ *      as text on the page and as a filled chip.
+ *   5. Borders and inputs darken to a clear line, and the ring becomes the
+ *      foreground colour. With `data-contrast="more"`, the focus indicator
+ *      also becomes a 3px outline 2px outside the element. The system
+ *      preference path only upgrades the ring colour; see structure/focus.css.
+ *   Highlight is left alone: it is only used as highlight-foreground on
+ *   highlight, which every brand already sets at 11:1 or more.
+ *
+ * contrast-more-lock recomputes every pair for every theme in both schemes.
+ * The tokens live in @layer interlace.semantics, after the bindings, so an
+ * app's own unlayered rule still wins. The focus outline is a property, not
+ * a token, so it lives in structure/focus.css.
+ */
+@layer interlace.semantics {
+  [data-contrast='more'],
+  [data-contrast='more'] :is(.dark, [data-scheme], [data-theme]) {
+    --card-foreground: var(--foreground);
+    --popover-foreground: var(--foreground);
+    --muted: color-mix(in srgb, var(--foreground) 6%, var(--background));
+    --muted-foreground: var(--foreground);
+    --accent: color-mix(in srgb, var(--foreground) 6%, var(--background));
+    --accent-foreground: var(--foreground);
+    --secondary: color-mix(in srgb, var(--foreground) 6%, var(--background));
+    --secondary-foreground: var(--foreground);
+    --primary: var(--foreground);
+    --primary-foreground: var(--background);
+    --border: color-mix(in srgb, var(--foreground) 55%, var(--background));
+    --input: color-mix(in srgb, var(--foreground) 55%, var(--background));
+    --ring: var(--foreground);
+    --destructive: color-mix(in srgb, var(--interlace-destructive) 45%, var(--foreground));
+    --destructive-foreground: var(--background);
+    --success: color-mix(in srgb, var(--interlace-success) 45%, var(--foreground));
+    --success-foreground: var(--background);
+    --warning: color-mix(in srgb, var(--interlace-warning) 45%, var(--foreground));
+    --warning-foreground: var(--background);
+    --info: color-mix(in srgb, var(--interlace-info) 45%, var(--foreground));
+    --info-foreground: var(--background);
+    --caution: color-mix(in srgb, var(--interlace-caution) 45%, var(--foreground));
+    --caution-foreground: var(--background);
+  }
+
+  @media (prefers-contrast: more) {
+    :root:not([data-contrast='normal']),
+    :root:not([data-contrast='normal']) :is(.dark, [data-scheme], [data-theme]) {
+      --card-foreground: var(--foreground);
+      --popover-foreground: var(--foreground);
+      --muted: color-mix(in srgb, var(--foreground) 6%, var(--background));
+      --muted-foreground: var(--foreground);
+      --accent: color-mix(in srgb, var(--foreground) 6%, var(--background));
+      --accent-foreground: var(--foreground);
+      --secondary: color-mix(in srgb, var(--foreground) 6%, var(--background));
+      --secondary-foreground: var(--foreground);
+      --primary: var(--foreground);
+      --primary-foreground: var(--background);
+      --border: color-mix(in srgb, var(--foreground) 55%, var(--background));
+      --input: color-mix(in srgb, var(--foreground) 55%, var(--background));
+      --ring: var(--foreground);
+      --destructive: color-mix(in srgb, var(--interlace-destructive) 45%, var(--foreground));
+      --destructive-foreground: var(--background);
+      --success: color-mix(in srgb, var(--interlace-success) 45%, var(--foreground));
+      --success-foreground: var(--background);
+      --warning: color-mix(in srgb, var(--interlace-warning) 45%, var(--foreground));
+      --warning-foreground: var(--background);
+      --info: color-mix(in srgb, var(--interlace-info) 45%, var(--foreground));
+      --info-foreground: var(--background);
+      --caution: color-mix(in srgb, var(--interlace-caution) 45%, var(--foreground));
+      --caution-foreground: var(--background);
+    }
+  }
+}

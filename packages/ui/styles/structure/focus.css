@@ -1,0 +1,19 @@
+/*
+ * @interlace/ui: STRUCTURE / focus. The focus indicator under more contrast.
+ *
+ * Components draw focus as a ring (box-shadow) in --ring. More contrast
+ * (see the end of semantics.css) turns --ring into the foreground, whether
+ * the system asked for it or the page did. When the page sets
+ * data-contrast="more", the ring also becomes a 3px outline 2px outside the
+ * element, so it never sits on the text. (Structure may style only its own
+ * attributes, never :root, so the system-preference path keeps the ring.)
+ */
+@layer base {
+  /* The focus indicator: a 3px outline, 2px outside the element, in the
+   * foreground. !important because components hide the outline in favour of
+   * a ring, and this mode's whole job is to override that. */
+  [data-contrast='more'] :focus-visible {
+    outline: 3px solid var(--foreground) !important;
+    outline-offset: 2px !important;
+  }
+}

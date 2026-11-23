@@ -270,6 +270,38 @@
           "source": ".changeset/content-patterns.md"
         },
         {
+          "summary": "More contrast: an AAA reading mode on top of every theme.\n\nInterlace is AA in every theme. For readers who find that hard to read, the base CSS now carries a more-contrast mode, which lifts every text pair to 7:1 and every line to 3:1, on any theme and in both schemes. It turns on by itself when the reader's system asks for more contrast (`prefers-contrast: more`), or when the page sets `data-contrast=\"more\"` on `<html>` or on any region. `data-contrast=\"normal\"` opts a page out of the automatic switch.\n\n- Secondary text takes the full foreground.\n- Muted, accent and secondary surfaces become a faint tint of the foreground.\n- Primary becomes foreground on background. To keep a brand colour, re-point `--primary` inside `[data-contrast='more']` with a pair measured at 7:1.\n- Status colours deepen until their text clears 7:1, both as text and as a filled chip.\n- Borders and inputs darken, and the focus ring takes the foreground. With `data-contrast=\"more\"` it becomes a 3px outline, 2px outside the element.\n\nA new lock, `contrast-more-lock`, recomputes every pair for every theme.",
+          "components": [
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/contrast-more.md"
+        },
+        {
+          "summary": "Control heights are tokens now, with an opt-in comfortable density.\n\nButton, Input, Select, Combobox, Toggle, Tabs, NumberField and ThemeSwitcher take their height from `--spacing-control-xs`, `-sm`, `--spacing-control` and `-lg`, through the new `h-control` and `size-control` utilities. The defaults are unchanged: 24, 32, 36 and 40px. Put `data-density=\"comfortable\"` on `<html>` or on any region, and they become 32, 40, 44 and 48px, so the default control meets the 44px touch target. A brand can also re-point a single token, for example `:root { --spacing-control: 2.5rem; }`.",
+          "components": [
+            "button",
+            "input",
+            "select",
+            "combobox",
+            "toggle",
+            "tabs",
+            "number-field",
+            "theme-switcher",
+            "toolbar",
+            "pagination",
+            "skeleton"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/control-height.md"
+        },
+        {
           "summary": "CTASection gets `variant=\"card\"` (a contained rounded card inside the content width), `align=\"start\"`, a decorative `background` slot clipped to the surface, and `children` under the actions for a search box or a form. The title moves to the fluid `text-section` size and the padding to `py-section-comfortable`.",
           "components": [
             "cta-section"
@@ -279,6 +311,22 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/cta-section-card.md"
+        },
+        {
+          "summary": "Comfortable density now reaches the patterns too.\n\nThe Topbar row items, DialogueStepper's Back / Show the whole conversation / Start over, and Dialogue and DialogueStepper choices take their minimum height from `--spacing-control`, so they stay 36px by default and grow to 44px under `data-density=\"comfortable\"`. Citation's number and chip markers keep their size in the line, and an invisible pad of the new `--spacing-target` token takes the tap: 24px by default (WCAG 2.5.8), 44px when comfortable. The underline marker is the phrase itself, inside a sentence, so it is unchanged.",
+          "components": [
+            "topbar",
+            "topbar-nav",
+            "dialogue",
+            "dialogue-stepper",
+            "citation",
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/density-patterns.md"
         },
         {
           "summary": "New `DialogueStepper`: a `Dialogue` the reader steps through, one step of turns at a time. Each `DialogueStepper.Step` ends in `DialogueStepper.Choices`; a `Choice` reveals the step its `next` names, so a talk can branch, and choosing a step already on the path goes back to it. Back, \"Show the whole conversation\" and \"Start over\" sit below, with `labels` for another language. After a choice, focus moves to the new step's first choice (or to Back at the end) and the new turns are read out once through a polite live region; the step enters with a short fade behind `motion-safe:`. The server renders every step, and without JavaScript a `<noscript>` style shows the whole conversation with no controls.",
@@ -631,6 +679,20 @@
           "source": ".changeset/toolbar.md"
         },
         {
+          "summary": "`Topbar` takes link groups, a quiet edge and a full-screen phone menu.\n\n- **Link groups.** An entry of `links` can be `{ label, items }`, where each item is a link with an optional `description` and `icon`. From `collapseBelow` up, a group is a button that opens a panel of its items, built on Base UI NavigationMenu: arrow keys move between triggers, Enter opens a panel and focuses its first item, Escape closes it and returns focus, hover opens it after a short delay and the panel slides between groups. Following a link closes it. Below `collapseBelow`, each group is a labelled section of the menu, and `mobileNav=\"wrap\"` opens groups out into the row. Plain links work as before.\n- **`edge=\"scroll\"`.** The bar sits clear over the top of the page, with no surface or border, and fades them in once the page scrolls under it. The default, `edge=\"always\"`, is unchanged.\n- **`menuSide=\"full\"`.** The small-screen menu covers the whole screen, dropping from the top, with larger links.\n\nNew parts, installed with Topbar: `TopbarNav` (the wide row with groups) and `TopbarScrollEdge` (marks the header `data-scrolled`).",
+          "components": [
+            "topbar",
+            "topbar-menu",
+            "topbar-nav",
+            "topbar-scroll-edge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/topbar-groups.md"
+        },
+        {
           "summary": "TopbarMenu now opens its links in a Drawer instead of a Sheet: on a phone a finger drags the panel back toward its edge to close it, and the panel follows the finger. Focus trap, Escape, press-outside and close-on-navigate are unchanged. A new `side` prop (`right`, `left`, `bottom`; default `right`) picks the edge, and `Topbar` passes it through as `menuSide` (an RTL page passes `left`).",
           "components": [
             "topbar-menu",
@@ -641,6 +703,20 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/topbar-menu-drawer.md"
+        },
+        {
+          "summary": "`Topbar` motion and focus polish.\n\n- **Hover pill.** A soft pill slides under whichever row item the pointer is over, and rests under an open group's trigger.\n- **Panels slide between groups.** Moving from one group to the next, the panel resizes and its content slides in the direction of travel. The items cascade in, 20ms apart, inside the 150ms stagger window.\n- **`hideOnScroll`.** The bar slides away while the reader scrolls down and returns on the first scroll up. It stays put while focus or an open panel is inside it.\n- **Menu cascade.** The small-screen menu's links fade in a quick cascade.\n- **Focus ring.** Every row item is now a padded box, so the focus ring sits 2px outside it on the page colour and never touches the words. Rows of plain links now render through `TopbarNav` too, so they get the same pill and ring.\n\nEverything that moves is behind `motion-safe`. Under reduced motion the pill and panels still appear, without moving.",
+          "components": [
+            "topbar",
+            "topbar-nav",
+            "topbar-menu",
+            "topbar-scroll-edge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/topbar-motion.md"
         },
         {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",

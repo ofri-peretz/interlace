@@ -287,7 +287,8 @@
       "primitives-button--dark",
       "primitives-button--loading",
       "primitives-button--loading-flow",
-      "primitives-button--rtl"
+      "primitives-button--rtl",
+      "primitives-button--comfortable-density"
     ],
     "preview": "primitives-button--variants",
     "previewDark": "primitives-button--dark",
@@ -526,6 +527,16 @@
     "preview": "primitives-contextmenu--default",
     "previewDark": "primitives-contextmenu--dark",
     "skeleton": "primitives-contextmenu--loading"
+  },
+  "contrast": {
+    "title": "Foundations/More contrast",
+    "storyIds": [
+      "foundations-more-contrast--side-by-side",
+      "foundations-more-contrast--side-by-side-dark"
+    ],
+    "preview": "foundations-more-contrast--side-by-side",
+    "previewDark": "foundations-more-contrast--side-by-side-dark",
+    "skeleton": null
   },
   "count-up": {
     "title": "Effects/CountUp",
@@ -2356,7 +2367,13 @@
       "blocks-topbar--mobile-menu",
       "blocks-topbar--mobile-wrap",
       "blocks-topbar--many-links",
-      "blocks-topbar--rtl-mobile-menu"
+      "blocks-topbar--rtl-mobile-menu",
+      "blocks-topbar--link-groups",
+      "blocks-topbar--link-groups-mobile",
+      "blocks-topbar--link-groups-dark",
+      "blocks-topbar--clear-until-scroll",
+      "blocks-topbar--full-screen-menu",
+      "blocks-topbar--hide-on-scroll"
     ],
     "preview": "blocks-topbar--default",
     "previewDark": "blocks-topbar--dark",
@@ -2368,9 +2385,28 @@
       "blocks-topbarmenu--default",
       "blocks-topbarmenu--keyboard",
       "blocks-topbarmenu--closes-on-navigate",
-      "blocks-topbarmenu--from-the-bottom"
+      "blocks-topbarmenu--from-the-bottom",
+      "blocks-topbarmenu--full-screen"
     ],
     "preview": "blocks-topbarmenu--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "topbar-nav": {
+    "title": "Blocks/TopbarNav",
+    "storyIds": [
+      "blocks-topbarnav--default"
+    ],
+    "preview": "blocks-topbarnav--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "topbar-scroll-edge": {
+    "title": "Blocks/TopbarScrollEdge",
+    "storyIds": [
+      "blocks-topbarscrolledge--default"
+    ],
+    "preview": "blocks-topbarscrolledge--default",
     "previewDark": null,
     "skeleton": null
   },

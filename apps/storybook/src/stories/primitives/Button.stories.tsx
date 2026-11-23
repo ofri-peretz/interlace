@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { Button } from '@interlace/ui/button';
+import { Input } from '@interlace/ui/input';
 import { ArrowRight } from 'lucide-react';
 import { withRtl } from '@/decorators';
 
@@ -226,4 +227,36 @@ export const LoadingFlow: Story = {
 export const RTL: Story = {
   args: { children: 'ابدأ الآن' },
   decorators: [withRtl],
+};
+
+/**
+ * `data-density="comfortable"` on any ancestor re-points the control-height
+ * tokens, so every Button, Input, Select and Toggle inside grows to a touch
+ * size: the default control is 44px. Put it on `<html>` for a whole site.
+ */
+export const ComfortableDensity: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6">
+      {(['compact', 'comfortable'] as const).map((density) => (
+        <div
+          key={density}
+          data-density={density === 'comfortable' ? 'comfortable' : undefined}
+          className="flex flex-wrap items-center gap-3"
+        >
+          <span className="text-muted-foreground w-28 text-sm">{density}</span>
+          <Button size="sm">Small</Button>
+          <Button>Default</Button>
+          <Button size="lg">Large</Button>
+          <Input aria-label={`${density} field`} placeholder="Search" className="w-48" />
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const [compact, comfortable] = within(canvasElement).getAllByRole('button', {
+      name: 'Default',
+    });
+    await expect(compact!.getBoundingClientRect().height).toBe(36);
+    await expect(comfortable!.getBoundingClientRect().height).toBe(44);
+  },
 };
