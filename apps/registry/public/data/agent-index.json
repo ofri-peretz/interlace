@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 153
+    "itemCount": 154
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 66,
       "pattern": 39,
-      "effect": 16,
+      "effect": 17,
       "template": 13,
       "chart": 8,
       "util": 5,
@@ -44,9 +44,9 @@
       "blog": 31,
       "foundation": 22,
       "data": 22,
+      "effect": 17,
       "form": 16,
-      "effect": 16,
-      "decorative": 14,
+      "decorative": 15,
       "feedback": 13,
       "template": 13,
       "navigation": 11,
@@ -59,22 +59,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 90,
+      "server": 91,
       "client": 63
     },
     "keyboard": {
-      "none": 118,
+      "none": 119,
       "handled": 35
     },
     "loading": {
-      "none": 121,
+      "none": 122,
       "built-in": 32
     },
     "minViewport": {
       "320": 91,
       "480": 7,
       "768": 1,
-      "inherited": 54
+      "inherited": 55
     }
   },
   "items": [
@@ -8773,6 +8773,54 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/visually-hidden.json",
       "item": "https://ds.interlace.tools/r/visually-hidden.json",
       "docs": "https://ds.interlace.tools/c/visually-hidden"
+    },
+    {
+      "name": "weave-texture",
+      "title": "Weave Texture",
+      "type": "registry:ui",
+      "summary": "A quiet woven cloth behind a section: warp threads in `--strand-a` and weft threads in `--strand-b`, passing over and under each other in a plain weave. It is texture, not glow: nothing moves, nothing shines, and at the default strength it sits just above…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "WeaveTexture"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/effects/weave-texture.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/weave-texture.json",
+      "item": "https://ds.interlace.tools/r/weave-texture.json",
+      "docs": "https://ds.interlace.tools/c/weave-texture"
     }
   ]
 }

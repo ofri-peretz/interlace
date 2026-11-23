@@ -2182,5 +2182,17 @@
     "preview": "primitives-visuallyhidden--default",
     "previewDark": "primitives-visuallyhidden--dark",
     "skeleton": null
+  },
+  "weave-texture": {
+    "title": "Effects/WeaveTexture",
+    "storyIds": [
+      "effects-weavetexture--default",
+      "effects-weavetexture--fine",
+      "effects-weavetexture--coarse",
+      "effects-weavetexture--fade-to-bottom"
+    ],
+    "preview": "effects-weavetexture--default",
+    "previewDark": null,
+    "skeleton": null
   }
 }
