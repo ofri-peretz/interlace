@@ -156,7 +156,7 @@ function TooltipContent({
           id={describedById}
           role="tooltip"
           className={cn(
-            'bg-primary text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[closed]:animate-out data-[closed]:fade-out-0 data-[closed]:zoom-out-95 z-50 w-fit origin-(--transform-origin) rounded-lg px-3 py-1.5 text-xs text-balance',
+            'bg-primary text-primary-foreground animate-in ease-enter duration-(--duration-base) fade-in-0 zoom-in-95 data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[closed]:zoom-out-95 z-50 w-fit origin-(--transform-origin) rounded-lg px-3 py-1.5 text-xs text-balance',
             className,
           )}
           {...props}

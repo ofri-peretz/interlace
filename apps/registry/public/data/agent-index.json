@@ -1143,8 +1143,8 @@
           "aria-invalid"
         ],
         "motion": {
-          "driver": "css",
-          "declaresPreference": false,
+          "driver": "none",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true
@@ -1192,8 +1192,8 @@
           "aria-invalid"
         ],
         "motion": {
-          "driver": "css",
-          "declaresPreference": false,
+          "driver": "none",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true
@@ -3571,7 +3571,7 @@
         "roles": [],
         "aria": [],
         "motion": {
-          "driver": "css",
+          "driver": "none",
           "declaresPreference": true,
           "stylesheetCannotReach": false
         },
@@ -8699,8 +8699,8 @@
           "aria-orientation"
         ],
         "motion": {
-          "driver": "css",
-          "declaresPreference": false,
+          "driver": "none",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true

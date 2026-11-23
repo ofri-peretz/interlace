@@ -208,6 +208,31 @@ html {
   }
 }
 
+/* View transitions (`document.startViewTransition`, React <ViewTransition>,
+ * cross-document `@view-transition`). The browser's default crossfade is
+ * retimed to the motion tokens, so a page swap moves like the rest of the
+ * system; a site's own `::view-transition-*(name)` rules are more specific
+ * and win. Under reduced motion every view-transition animation is removed:
+ * the `*` clamp above does not match these pseudo-elements. They are global
+ * rules, so they live here in the page layer, not in base.css. */
+::view-transition-group(*) {
+  animation-duration: var(--duration-medium);
+  animation-timing-function: var(--ease-move);
+}
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: var(--duration-medium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-image-pair(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────
  * 7. Tabular numerals for data
  *    Vertically-scanned number lists / tables / live-changing counters get

@@ -78,7 +78,7 @@
  * | Effect                  | Class                                  | Under `reduce`          |
  * | ----------------------- | -------------------------------------- | ----------------------- |
  * | cover zoom              | `motion-safe:group-hover:scale-105`    | not applied at all      |
- * | card surface / border   | `transition-all duration-300`          | preflight duration clamp |
+ * | card surface / border   | `transition-[border-color,box-shadow]` | preflight duration clamp |
  * | hover `ExternalLink`    | `transition-opacity`                   | preflight duration clamp |
  *
  * The cover zoom is the one that carries its own gate. `motion-safe:` compiles
@@ -297,7 +297,7 @@ function CardShell({
       {/* `py-0 gap-0` overrides Card's default `py-6 gap-6`. */}
       <Card
         className={cn(
-          'flex h-full flex-col overflow-hidden gap-0 py-0 transition-all duration-300',
+          'flex h-full flex-col overflow-hidden gap-0 py-0 transition-[border-color,box-shadow] duration-(--duration-medium) ease-enter',
           'hover:border-primary/50 hover:shadow-primary/5 hover:shadow-xl',
           'group-focus-visible:border-primary/50',
           surfaceClassName,

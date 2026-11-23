@@ -208,7 +208,7 @@
     "105": 1,
     "120": 2,
     "176": 1,
-    "300": 3,
+    "300": 2,
     "308": 1,
     "320": 100,
     "390": 1,
@@ -728,7 +728,7 @@
     "collect": 1,
     "collection": 4,
     "collid": 1,
-    "color": 26,
+    "color": 27,
     "colorschem": 1,
     "colour": 51,
     "column": 44,
@@ -2339,7 +2339,7 @@
     "several": 11,
     "shad": 2,
     "shadcn": 37,
-    "shadow": 6,
+    "shadow": 7,
     "shap": 53,
     "shar": 25,
     "sharebutton": 2,
@@ -2990,7 +2990,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "articl card blog pattern client load skeleton stat stack overlay articlecard featuredarticlecard cover tile imag renderimag 1000 scrim 420 alt utc aspect titl motion chip tag grid object 105 adapter hover author reserv date deprecat bag meta gradient ratio ble variant crop deprecation reaction hero img dev featur r11 framework byte render shown zoom spread testid height duration old tree sit view bylin com"
+      "terms": "articl card blog pattern client load skeleton stat stack overlay articlecard featuredarticlecard cover tile imag renderimag 1000 scrim 420 alt utc aspect titl motion chip tag grid object 105 adapter hover author reserv date deprecat bag meta gradient ratio ble variant crop deprecation reaction hero img dev featur r11 framework byte render shown zoom box spread testid height old tree sit view bylin com"
     },
     {
       "name": "article-list-grid",
@@ -3589,7 +3589,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "container foundation primitiv server rsc keyboard base render size width userender max directiv four full padd ble mapp wide 42rem accumulat containervariant hoc namespac pros section band 1024px flagg heavy oversight plus retir safe contract lock spac edge layout 1280px 2xl 65ch codebas usemergedref userenderel horizontal nam fail philosophy data fix call broken zero breakpoint chosen defin guard shadow tailwind rather scal skip gutter"
+      "terms": "container foundation primitiv server rsc keyboard base render size width userender max directiv four full padd ble mapp wide 42rem accumulat containervariant hoc namespac pros section band 1024px flagg heavy oversight plus retir safe contract lock spac edge layout 1280px 2xl 65ch codebas usemergedref userenderel horizontal nam fail philosophy data fix call broken zero breakpoint chosen defin guard tailwind shadow rather scal skip gutter"
     },
     {
       "name": "context-menu",
@@ -4283,7 +4283,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "hover card overlay primitiv client responsiv min viewport 768 keyboard base preview hovercard previewcard popup tooltip trigger rich tap popover open interactiv distinct disclosur repo trad radix modal shadow content touch focus non desktop dismissal link driven android basepreviewcard conflict emulat exce hang hovercardpopup hovercardportal hovercardpositioner hovercardtrigger ios logical menus respect tablet unfriend short wrap author handl pointer dev surfac fall hood playwright surpris"
+      "terms": "hover card overlay primitiv client responsiv min viewport 768 keyboard base preview hovercard previewcard popup tooltip trigger rich tap popover open interactiv distinct disclosur repo trad radix modal content touch shadow focus non desktop dismissal link driven android basepreviewcard conflict emulat exce hang hovercardpopup hovercardportal hovercardpositioner hovercardtrigger ios logical menus respect tablet unfriend short wrap author handl pointer dev surfac fall hood playwright surpris"
     },
     {
       "name": "input",
@@ -4321,7 +4321,7 @@
         "theme",
         "foundation"
       ],
-      "terms": "base foundation server rsc oklch radius additiv breakpoint host schem baselin deriv layer color follow app brand motion control match already chang dark token scal semantic colour container noth width styl nativ every"
+      "terms": "base foundation server rsc oklch radius additiv breakpoint host schem baselin deriv layer follow app color brand motion control match already chang dark token scal semantic colour container noth width styl nativ every"
     },
     {
       "name": "interlace-foundation",
@@ -4477,7 +4477,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "lint playground blog pattern client stat ready fail lintplayground analyzer find analysis analyz editor bring linter product messag inject newest keystrok past answer list plugin async status testid watch position fact render advanc conclusion debounc demo exhibit inversion licens mock reasonabl rejection vulnerabl wasm codeeditor diagnostic enumerat granularity honesty privacy worker footer anchor bar 300 formatter r16 r24 empty never eslint flash human old"
+      "terms": "lint playground blog pattern client stat ready fail lintplayground analyzer find analysis analyz editor bring linter product messag inject newest keystrok past answer list plugin async status testid watch position fact render advanc conclusion debounc demo exhibit inversion licens mock reasonabl rejection vulnerabl wasm 300 codeeditor diagnostic enumerat granularity honesty privacy worker footer anchor bar formatter r16 r24 empty never eslint flash human old"
     },
     {
       "name": "list",
@@ -5291,7 +5291,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "sheen decorativ effect client band parent button second cross soft sweep primary press smudg pointer light hidden isolat insid dim drop never buttonvariant low strength reduc motion foreground bright corner card relativ var colour clip inert paus web variant rest pass event name click layer surfac look label minus aria animation context repeat page prefer color index like none else browser accessibl every run"
+      "terms": "sheen decorativ effect client band parent button second cross soft sweep primary press smudg pointer light hidden isolat insid dim drop never buttonvariant low strength reduc motion foreground bright corner card relativ var colour clip inert paus web variant rest pass event name click layer surfac look label minus aria animation context repeat page prefer index like color none else browser accessibl every run"
     },
     {
       "name": "sheet",
@@ -5645,7 +5645,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "starfield decorativ effect client star meteor sky canva shoot breath hero colour fram var night occasional rgb loop callback oklch shortest resiz pixel slow animation paint shar longest second cost everyth turn driven singl burn fastest getcomputedstyl modern resolvecolor sleep srgb layer 0002 back particl spe alpha slowest color move read cascad behind reduc motion mean cycl mix dom appli devic idle whol hidden"
+      "terms": "starfield decorativ effect client star meteor sky canva shoot breath hero colour fram var night occasional rgb loop callback oklch shortest resiz pixel slow animation paint shar longest second cost everyth turn driven singl burn fastest getcomputedstyl modern resolvecolor sleep srgb layer 0002 back particl spe alpha slowest move color read cascad behind reduc motion mean cycl mix dom appli devic idle whol hidden"
     },
     {
       "name": "stat-card",
@@ -5915,7 +5915,7 @@
         "util",
         "foundation"
       ],
-      "terms": "script flash bootstrap foundation util server rsc schem storag key localstorag stor head writ whit user suppresshydrationwarn absent page html paint chos attribut half scrollbar system chosen host dark silent preferenc color app throw authoritativ decorator express futur henc iife minifi mutat polyfill synchronous vite writabl already read wrong next docu selector light bundler byte connection consol correctness corrupt dangerouslysetinnerhtml detection hydrat mak privat"
+      "terms": "script flash bootstrap foundation util server rsc schem storag key localstorag stor head writ whit user suppresshydrationwarn absent page html paint chos attribut half scrollbar system chosen host dark silent preferenc app color throw authoritativ decorator express futur henc iife minifi mutat polyfill synchronous vite writabl already read wrong next docu selector light bundler byte connection consol correctness corrupt dangerouslysetinnerhtml detection hydrat mak privat"
     },
     {
       "name": "theme-switcher",

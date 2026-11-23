@@ -7,6 +7,26 @@
  * adds utilities without replacing any.
  */
 
+/* Motion tokens. `@theme` (not inline) so a brand can override any of them
+ * on :root and every utility follows. The eases become Tailwind utilities
+ * (`ease-enter`, `ease-exit`, `ease-move`); the durations are used as
+ * `duration-(--duration-fast)`. Bands and use: MOTION_PHILOSOPHY.md. */
+@theme {
+  /* Appear: fast out of the gate, a long soft landing (expo-out family). */
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Leave: starts slow, gets out of the way (quart-in family). */
+  --ease-exit: cubic-bezier(0.5, 0, 0.75, 0);
+  /* Move between two resting places, both ends eased. */
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:root {
+  --duration-fast: 100ms;
+  --duration-base: 150ms;
+  --duration-medium: 250ms;
+  --duration-slow: 400ms;
+}
+
 @theme inline {
   /* Primitives: accordion — `animate-accordion-down/up` come from
      tw-animate-css, which the base item depends on. Declaring them here

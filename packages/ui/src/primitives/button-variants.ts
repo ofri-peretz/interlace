@@ -48,7 +48,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-  "relative isolate inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "relative isolate inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[color,background-color,border-color,box-shadow,text-decoration-color,scale] duration-(--duration-fast) ease-enter motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -117,7 +117,8 @@ const buttonVariants = cva(
         // already renders links. `decoration-from-font` is Prose's too; hover
         // thickens the rule instead of shifting the hue, because any hue we
         // could shift to reintroduces the bug.
-        link: 'underline underline-offset-4 decoration-from-font hover:decoration-2',
+        // A link does not press like a button: it keeps its size.
+        link: 'underline underline-offset-4 decoration-from-font hover:decoration-2 motion-safe:active:scale-100',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
