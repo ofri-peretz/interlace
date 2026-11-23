@@ -816,6 +816,18 @@
     "previewDark": "blocks-featuregrid--dark",
     "skeleton": "blocks-featuregrid--loading"
   },
+  "featured-icon": {
+    "title": "Primitives/FeaturedIcon",
+    "storyIds": [
+      "primitives-featuredicon--default",
+      "primitives-featuredicon--matrix",
+      "primitives-featuredicon--in-feature-cards",
+      "primitives-featuredicon--dark"
+    ],
+    "preview": "primitives-featuredicon--default",
+    "previewDark": "primitives-featuredicon--dark",
+    "skeleton": null
+  },
   "figure": {
     "title": "Blocks/Figure",
     "storyIds": [

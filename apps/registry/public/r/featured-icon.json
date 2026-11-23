@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "featured-icon",
+  "type": "registry:ui",
+  "title": "Featured Icon",
+  "description": "An icon set in a tinted rounded square or circle, with a soft outer ring: the mark at the head of a feature card, a step, or a section. It gives a row of features one shared shape, so the icons read as a set rather than as loose glyphs of different weights.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "data",
+    "primitive"
+  ],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/featured-icon.tsx",
+      "target": "components/ui/featured-icon.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from \"react\";\n\n// @interlace/featured-icon v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/featured-icon\n// What changed since: https://ds.interlace.tools/c/featured-icon#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — FeaturedIcon\n *\n * An icon set in a tinted rounded square or circle, with a soft outer ring:\n * the mark at the head of a feature card, a step, or a section. It gives a\n * row of features one shared shape, so the icons read as a set rather than\n * as loose glyphs of different weights.\n *\n * ## Anatomy\n *\n *   FeaturedIcon                     (span — data-slot=\"featured-icon\", data-size / -tone / -shape)\n *     └─ children                    (the icon; any svg inside is sized for you)\n *\n * ## Tones\n *\n * | `tone`      | Surface                          | Icon                    |\n * | ----------- | -------------------------------- | ----------------------- |\n * | `primary`   | 12% primary mixed into background | `text-primary`          |\n * | `highlight` | `bg-highlight`                   | `text-highlight-foreground` |\n * | `neutral`   | `bg-muted` with a border         | `text-foreground`       |\n * | `inverse`   | `bg-foreground`                  | `text-background`       |\n *\n * Every surface is opaque (the tint is a `color-mix` into `--background`, not\n * an alpha), so the icon keeps its contrast on whatever the card sits on. The\n * ring is the same mix at half the strength, drawn with `ring-*`, so it takes\n * no layout space and a grid of them stays aligned.\n *\n * ## Decorative by default\n *\n * The icon repeats what the heading beside it says, so the whole mark is\n * `aria-hidden`. Pass `label` when the icon stands alone and carries meaning:\n * it becomes `role=\"img\"` with that name.\n *\n * ## MIN_VIEWPORT — 320\n *\n * A fixed square from 2rem to 3.5rem; it fits any column.\n *\n * | Rule | Concept                 | Where in this file                                     |\n * | ---- | ----------------------- | ------------------------------------------------------ |\n * | R4   | Extends native el       | `React.ComponentProps<'span'>`                         |\n * | R6   | data-slot + data-*      | `data-slot=\"featured-icon\"` + size / tone / shape      |\n * | R7   | cva + cn + ...rest      | `cn(featuredIconVariants(…), className)` + `{...props}` |\n * | R8   | Enums, not booleans     | `size`, `tone`, `shape`                                |\n * | R14  | Declares min viewport   | `data-min-viewport` + exported const                   |\n * | R18  | Tailwind only           | zero inline `style`                                    |\n * | R19  | Tokens only             | `--primary`, `--highlight`, `--muted`, `--foreground`  |\n * | R25  | Server component        | no hooks, no `'use client'`                            |\n * | R26  | A11y                    | `aria-hidden` unless `label` makes it `role=\"img\"`      |\n */\n\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport const MIN_VIEWPORT = 320 as const;\n\nconst featuredIconVariants = cva(\n  \"inline-flex shrink-0 items-center justify-center [&_svg]:shrink-0\",\n  {\n    variants: {\n      size: {\n        sm: \"size-8 ring-4 [&_svg]:size-4\",\n        md: \"size-10 ring-[6px] [&_svg]:size-5\",\n        lg: \"size-12 ring-8 [&_svg]:size-6\",\n        xl: \"size-14 ring-[10px] [&_svg]:size-7\",\n      },\n      tone: {\n        primary:\n          \"text-primary bg-[color-mix(in_oklab,var(--primary)_12%,var(--background))] ring-[color-mix(in_oklab,var(--primary)_6%,var(--background))]\",\n        highlight:\n          \"bg-highlight text-highlight-foreground ring-[color-mix(in_oklab,var(--highlight)_25%,var(--background))]\",\n        neutral: \"bg-muted text-foreground border-border ring-muted/60 border\",\n        inverse:\n          \"bg-foreground text-background ring-[color-mix(in_oklab,var(--foreground)_10%,var(--background))]\",\n      },\n      shape: {\n        square: \"rounded-lg\",\n        circle: \"rounded-full\",\n      },\n    },\n    compoundVariants: [\n      { shape: \"square\", size: \"lg\", className: \"rounded-xl\" },\n      { shape: \"square\", size: \"xl\", className: \"rounded-xl\" },\n    ],\n    defaultVariants: {\n      size: \"md\",\n      tone: \"primary\",\n      shape: \"square\",\n    },\n  },\n);\n\ntype FeaturedIconProps = React.ComponentProps<\"span\"> &\n  VariantProps<typeof featuredIconVariants> & {\n    /** A name for an icon that stands alone and means something. Without it the icon is decorative. */\n    label?: string;\n  };\n\nfunction FeaturedIcon({\n  size,\n  tone,\n  shape,\n  label,\n  className,\n  children,\n  ...props\n}: FeaturedIconProps) {\n  return (\n    <span\n      data-slot=\"featured-icon\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      data-size={size ?? \"md\"}\n      data-tone={tone ?? \"primary\"}\n      data-shape={shape ?? \"square\"}\n      {...(label\n        ? { role: \"img\", \"aria-label\": label }\n        : { \"aria-hidden\": true })}\n      className={cn(featuredIconVariants({ size, tone, shape }), className)}\n      {...props}\n    >\n      {children}\n    </span>\n  );\n}\n\nexport { FeaturedIcon, featuredIconVariants };\nexport type { FeaturedIconProps };\n"
+    }
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": false,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/featured-icon\n\nInstalled to `components/ui/featured-icon.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/featured-icon';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/featured-icon\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}
