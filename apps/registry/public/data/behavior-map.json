@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T16:10:03.338Z",
+  "generatedAt": "2026-11-23T16:26:48.467Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -5480,6 +5480,138 @@
       "textAlternative": {
         "kind": null,
         "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "drawer": {
+      "sourcePath": "packages/ui/src/primitives/drawer.tsx",
+      "keyboard": {
+        "storyId": "primitives-drawer--keyboard-flow",
+        "storyExport": "KeyboardFlow",
+        "storyFile": "apps/storybook/src/stories/primitives/Drawer.stories.tsx",
+        "steps": [
+          {
+            "title": "Enter on the focused trigger opens the drawer",
+            "keys": [
+              "Enter"
+            ]
+          },
+          {
+            "title": "The panel is named and holds focus",
+            "keys": []
+          },
+          {
+            "title": "Escape closes and restores focus to the trigger",
+            "keys": [
+              "Escape"
+            ]
+          }
+        ],
+        "escapeLocked": true
+      },
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {

@@ -103,6 +103,7 @@ const PRIMITIVES = [
   // Accordion, Pagination, ScrollArea) own a real root element and use it.
   { name: 'dialog', viewport: 320, tier: 'client' },
   { name: 'sheet', viewport: 320, tier: 'client' },
+  { name: 'drawer', viewport: 320, tier: 'client' },
   { name: 'popover', viewport: 320, tier: 'client' },
   // 320, not 768 like HoverCard: a tooltip is a short `w-fit` label that
   // Base UI also opens on keyboard focus, so it survives a touch screen.

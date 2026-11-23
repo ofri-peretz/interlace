@@ -616,6 +616,24 @@
       }
     },
     {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A panel that slides in from an edge and follows the finger: drag it back toward its edge and it goes, let go early and it settles back. The bottom sheet of a phone app, on the web. Base UI's Drawer owns the gesture, the open state, the focus trap, page…",
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown Menu",

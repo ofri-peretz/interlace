@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 162
+    "itemCount": 163
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 69,
+      "primitive": 70,
       "pattern": 44,
       "effect": 17,
       "template": 13,
@@ -39,7 +39,7 @@
       "theme": 3
     },
     "category": {
-      "primitive": 69,
+      "primitive": 70,
       "pattern": 44,
       "blog": 35,
       "foundation": 25,
@@ -51,7 +51,7 @@
       "template": 13,
       "navigation": 11,
       "marketing": 11,
-      "overlay": 9,
+      "overlay": 10,
       "chart": 8,
       "util": 5,
       "a11y": 4,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 98,
-      "client": 64
+      "client": 65
     },
     "keyboard": {
       "none": 127,
-      "handled": 35
+      "handled": 36
     },
     "loading": {
-      "none": 130,
+      "none": 131,
       "built-in": 32
     },
     "minViewport": {
-      "320": 98,
+      "320": 99,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -2835,6 +2835,67 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/docs-page-template.json",
       "item": "https://ds.interlace.tools/r/docs-page-template.json",
       "docs": "https://ds.interlace.tools/c/docs-page-template"
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer",
+      "type": "registry:ui",
+      "summary": "A panel that slides in from an edge and follows the finger: drag it back toward its edge and it goes, let go early and it settles back. The bottom sheet of a phone app, on the web. Base UI's Drawer owns the gesture, the open state, the focus trap, page…",
+      "topics": [],
+      "categories": [
+        "overlay",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "drawer",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DrawerDirection",
+          "values": [
+            "top",
+            "right",
+            "bottom",
+            "left"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/drawer.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/drawer.json",
+      "item": "https://ds.interlace.tools/r/drawer.json",
+      "docs": "https://ds.interlace.tools/c/drawer"
     },
     {
       "name": "dropdown-menu",

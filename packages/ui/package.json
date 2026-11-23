@@ -228,6 +228,10 @@
       "types": "./dist/primitives/radio-group.d.ts",
       "default": "./dist/primitives/radio-group.js"
     },
+    "./drawer": {
+      "types": "./dist/primitives/drawer.d.ts",
+      "default": "./dist/primitives/drawer.js"
+    },
     "./sheet": {
       "types": "./dist/primitives/sheet.d.ts",
       "default": "./dist/primitives/sheet.js"
