@@ -79,7 +79,7 @@ const NumberFieldGroup = React.forwardRef<
     ref={ref}
     data-slot="number-field-group"
     className={cn(
-      'border-input bg-background flex items-stretch overflow-hidden rounded-lg border shadow-sm',
+      'border-input bg-background text-foreground flex items-stretch overflow-hidden rounded-lg border shadow-sm',
       'focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
       className,
     )}

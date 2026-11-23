@@ -27,7 +27,7 @@ describe('field surfaces are opaque', () => {
     },
   );
 
-  it.each(['input', 'textarea', 'combobox'])('%s sets its own text colour on the field', (name) => {
+  it.each(['input', 'textarea', 'combobox', 'number-field'])('%s sets its own text colour on the field', (name) => {
     const text = src(name);
     expect(text).toMatch(/bg-background text-foreground/);
   });
