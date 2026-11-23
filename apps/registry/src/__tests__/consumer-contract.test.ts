@@ -282,6 +282,16 @@ describe('token-namespace parser', () => {
     ]);
   });
 
+  it('ignores a declaration quoted inside a comment', () => {
+    const css = `
+      @theme {
+        /* Opt in with \`--font-heading: var(--font-serif)\`. */
+        --font-serif: Georgia, serif;
+      }
+    `;
+    expect(parseThemeKeys(css).map((k) => k.name)).toEqual(['--font-serif']);
+  });
+
   it('records whether the block was inline', () => {
     expect(parseThemeKeys('@theme { --radius-sm: 1px; }')[0].inline).toBe(false);
     expect(parseThemeKeys('@theme inline { --color-x: red; }')[0].inline).toBe(true);
