@@ -279,7 +279,10 @@
             "toggle",
             "tabs",
             "number-field",
-            "theme-switcher"
+            "theme-switcher",
+            "toolbar",
+            "pagination",
+            "skeleton"
           ],
           "componentsDeclared": true,
           "kind": "Added",

@@ -21,6 +21,8 @@ const CONTROLS = [
   'src/primitives/tabs.tsx',
   'src/primitives/number-field.tsx',
   'src/primitives/theme-switcher.tsx',
+  'src/primitives/toolbar.tsx',
+  'src/primitives/pagination.tsx',
 ];
 
 /**

@@ -195,7 +195,7 @@ function ToolbarInput({ className, ...props }: React.ComponentProps<typeof BaseT
     <BaseToolbar.Input
       data-slot="toolbar-input"
       className={cn(
-        'border-input bg-background text-foreground placeholder:text-muted-foreground h-8 min-w-0 rounded-lg border px-2.5 text-sm shadow-xs outline-none',
+        'border-input bg-background text-foreground placeholder:text-muted-foreground h-control-sm min-w-0 rounded-lg border px-2.5 text-sm shadow-xs outline-none',
         'focus-visible:border-ring focus-visible:ring-ring/60 focus-visible:ring-[3px]',
         'disabled:cursor-not-allowed disabled:opacity-50',
         className,

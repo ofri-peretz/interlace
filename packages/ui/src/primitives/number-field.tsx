@@ -21,8 +21,8 @@
  *
  * ## Target size (SC 2.5.8, AA)
  *
- * The increment / decrement buttons are `w-9` (36px) against the input's
- * `h-9` (36px) — 36×36, comfortably past the 24×24 floor with no
+ * The increment / decrement buttons are `w-control` against the input's
+ * `h-control` (36px, or 44px when comfortable) — square, comfortably past the 24×24 floor with no
  * pseudo-element hit area needed. Native keyboard (Up/Down arrows)
  * inherited from Base UI.
  *
@@ -113,7 +113,7 @@ const NumberFieldIncrement = React.forwardRef<
     ref={ref}
     data-slot="number-field-increment"
     className={cn(
-      'border-input hover:bg-muted active:bg-accent flex w-9 cursor-pointer items-center justify-center border-l text-sm transition-colors',
+      'border-input hover:bg-muted active:bg-accent flex w-control cursor-pointer items-center justify-center border-l text-sm transition-colors',
       'disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}
@@ -130,7 +130,7 @@ const NumberFieldDecrement = React.forwardRef<
     ref={ref}
     data-slot="number-field-decrement"
     className={cn(
-      'border-input hover:bg-muted active:bg-accent flex w-9 cursor-pointer items-center justify-center border-r text-sm transition-colors',
+      'border-input hover:bg-muted active:bg-accent flex w-control cursor-pointer items-center justify-center border-r text-sm transition-colors',
       'disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}

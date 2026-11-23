@@ -10,7 +10,7 @@
  * ## Anatomy
  *
  *   Tabs                             (Tabs.Root — flex-col gap-2, data-min-viewport=320)
- *     ├─ TabsList                    (Tabs.List — bg-muted pill, h-9, w-fit)
+ *     ├─ TabsList                    (Tabs.List — bg-muted pill, h-control, w-fit)
  *     │    └─ TabsTrigger            (Tabs.Tab — flex-1, raised on data-[selected])
  *     └─ TabsContent                 (Tabs.Panel)
  *
