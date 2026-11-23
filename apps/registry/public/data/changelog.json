@@ -473,6 +473,17 @@
           "source": ".changeset/wordmark.md"
         },
         {
+          "summary": "`Button` no longer lists `text-decoration-color` in its transition: no variant changes it, so the entry did nothing.",
+          "components": [
+            "button"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/button-transition-trim.md"
+        },
+        {
           "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
           "components": [
             "claim-card"
