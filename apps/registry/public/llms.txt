@@ -17,6 +17,17 @@ npx shadcn@latest add https://ds.interlace.tools/r/theme.json
 
 The `@interlace/<name>` short form also works, but only after the namespace is registered in the consumer's `components.json`. Prefer the absolute URL in generated instructions.
 
+## Craft: how to compose and brand it
+
+Before writing UI with these components, read [https://ds.interlace.tools/.well-known/agent-skills/interlace-craft/SKILL.md](https://ds.interlace.tools/.well-known/agent-skills/interlace-craft/SKILL.md): tokens and theming, the editorial look, layout and fluid rhythm, type, container-query responsiveness, the motion budget and which effect fits which intent, accessibility, and do/don't examples. [https://ds.interlace.tools/llms-full.txt](https://ds.interlace.tools/llms-full.txt) is that guide followed by this file, in one fetch.
+
+To keep it in a repo for Claude Code and other agents that read `.claude/skills/`:
+
+```bash
+mkdir -p .claude/skills/interlace-craft
+curl -sfL https://ds.interlace.tools/.well-known/agent-skills/interlace-craft/SKILL.md -o .claude/skills/interlace-craft/SKILL.md
+```
+
 ## Machine-readable index
 
 - [https://ds.interlace.tools/data/agent-index.json](https://ds.interlace.tools/data/agent-index.json): every item with its full contract — tier, rendering boundary, minViewport, keyboard evidence, state unions, ARIA, exports, versions, dependency graph and install command. Start here; it is the only file that lets you FILTER.

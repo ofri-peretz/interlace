@@ -1,0 +1,48 @@
+# Interlace: agent guide
+
+Interlace is an open-source shadcn registry (ds.interlace.tools): React components on Base UI and
+Tailwind CSS v4, copied into the consumer's tree. Whatever we ship runs in someone else's app, so
+every change is judged there.
+
+## The craft
+
+The craft skill holds the design rules for building with Interlace: tokens and theming, the
+editorial look, layout and fluid rhythm, type, container-query responsiveness, the motion budget,
+accessibility, and do/don't examples. Read
+[.claude/skills/interlace-craft/SKILL.md](.claude/skills/interlace-craft/SKILL.md) before any UI
+work here. It is also published to consumers as
+`/.well-known/agent-skills/interlace-craft/SKILL.md` and leads `/llms-full.txt`; the agent-surface
+test holds its token and component names to the code.
+
+## Standing rules
+
+- Interlace stays brand-neutral. No consumer's product name, copy, colours, fonts or scripts go
+  into a component, story default or token. A consumer brands through cssVars and props.
+- Benchmark against the best teams (Linear, Vercel, Stripe, Apple, Anthropic, Radix, shadcn,
+  Magic UI, Untitled UI) for the level of care. Take inspiration, never copy a look, asset or
+  layout.
+- Prefer props, variants and compound parts over asking consumers for a class. A consumer who
+  needs a class to get a reasonable case has found a gap in the component.
+- Motion is a first-class part of the system, and it is earned: it explains a change, keeps the
+  content in the server HTML, and does nothing under reduced motion.
+- AA contrast is the floor the locks enforce; aim for AAA on body text.
+
+## Where the rules live
+
+| Need | Read |
+| --- | --- |
+| How to compose, brand and animate | the craft skill above |
+| The principles behind Interlace's own surfaces | [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md), [BRAND_PHILOSOPHY.md](BRAND_PHILOSOPHY.md) |
+| One area in depth (motion, layout, colour, a11y, i18n) | [docs/philosophies/](docs/philosophies/) |
+| Component API shape and naming | [packages/ui/CONVENTIONS.md](packages/ui/CONVENTIONS.md) |
+| The five layers and the CSS import order | [packages/ui/DESIGN_SYSTEM_LAYERS.md](packages/ui/DESIGN_SYSTEM_LAYERS.md) |
+| What a new component PR contains | [CONTRIBUTING.md](CONTRIBUTING.md) |
+
+DESIGN_PRINCIPLES and BRAND_PHILOSOPHY describe the Interlace house brand (burnt orange, the
+thread). They govern interlace.tools surfaces, not what a consumer's site must look like.
+
+## Checks
+
+Most design rules are lock tests in `packages/ui/__tests__/` (motion, contrast, container scale,
+breakpoints, theme contract, effects). When one fails, fix the component or the token, not the
+test. Generated registry files change only through `npm run registry:build`.

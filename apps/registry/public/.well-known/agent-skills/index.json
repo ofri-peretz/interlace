@@ -11,6 +11,13 @@
   "registry": "https://ds.interlace.tools/r/registry.json",
   "skills": [
     {
+      "id": "interlace-craft",
+      "name": "interlace-craft",
+      "description": "Build or review UI with the Interlace design system in its craft style (tokens, layout, type, motion, responsiveness, accessibility, theming). Use before writing any page, section or component that uses Interlace, and when reviewing one.",
+      "url": "https://ds.interlace.tools/.well-known/agent-skills/interlace-craft/SKILL.md",
+      "path": ".well-known/agent-skills/interlace-craft/SKILL.md"
+    },
+    {
       "id": "discover-interlace-components",
       "name": "discover-interlace-components",
       "description": "Find a component in the Interlace design system by what it must DO — server-safe, keyboard-operable, has a loading state, models an absence — rather than by name. Use before writing any UI against this registry.",
@@ -35,6 +42,7 @@
   "capabilities": [
     "discover items by contract (rendering boundary, minViewport, keyboard, state union, loading state)",
     "read one item’s full contract, props and source before generating code",
-    "install an item with the shadcn CLI, including its transitive registry dependencies"
+    "install an item with the shadcn CLI, including its transitive registry dependencies",
+    "compose, brand and animate items in the Interlace craft: tokens, layout, type, motion, responsiveness, accessibility"
   ]
 }
