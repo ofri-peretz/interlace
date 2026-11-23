@@ -983,6 +983,24 @@
           "source": ".changeset/spotlight-motion-fx.md"
         },
         {
+          "summary": "Text alignment follows the writing direction everywhere.\n\nTypography's `align`, Accordion triggers, the Dialog header, Prose table headers, PrevNextPost cards, SeriesTable and MetricTable used `text-left` and `text-right`, which put text against the wrong edge in a right-to-left page. They now use `text-start` and `text-end`, so the same markup is correct in English, Hebrew and Arabic. Left-to-right pages render exactly as before. A new lock keeps physical alignment out of the components.",
+          "components": [
+            "typography",
+            "accordion",
+            "dialog",
+            "prose",
+            "prev-next-post",
+            "series-table",
+            "metric-table",
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/text-align-logical.md"
+        },
+        {
           "summary": "TocPopover works on a narrow screen with a long outline.\n\n- The popover's height is capped at the room the screen has left (`--available-height`), and the list scrolls inside it. Before, an outline of 18 headings ran 906px tall and the later links fell off the bottom of a phone screen.\n- Picking a link closes the popover, so it no longer covers the text it just scrolled to. Focus stays on the heading.\n- `Toc` gives a heading `tabindex=\"-1\"` before focusing it, unless the heading already has a tabindex. Before, the focus call did nothing on a plain heading. `Toc` also takes a new `onNavigate(id)` callback.",
           "components": [
             "toc"

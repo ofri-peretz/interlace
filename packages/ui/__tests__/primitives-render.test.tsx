@@ -415,9 +415,9 @@ describe("Typography", () => {
     (align) => {
       const { container } = render(<Typography align={align}>x</Typography>);
       const expected = {
-        start: "text-left",
+        start: "text-start",
         center: "text-center",
-        end: "text-right",
+        end: "text-end",
       }[align];
       expect(slot(container, "typography")!.getAttribute("class")).toContain(
         expected,

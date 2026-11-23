@@ -33,7 +33,7 @@
  *
  * ## `align` reaches the eyebrow too
  *
- * The eyebrow row is a flex container, and `text-center` / `text-left` on the
+ * The eyebrow row is a flex container, and `text-center` / `text-start` on the
  * root does not place a flex child on its main axis — so the row carries its
  * own `justify-center` / `justify-start`, keyed off the same variant
  * (`sectionHeaderEyebrowVariants`). It used to be a hard-coded

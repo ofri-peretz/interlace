@@ -121,17 +121,17 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
         {...props}
       >
         <table className="w-full border-collapse text-sm tabular-nums">
-          <caption className="mb-2 text-left text-xs text-muted-foreground">{caption}</caption>
+          <caption className="mb-2 text-start text-xs text-muted-foreground">{caption}</caption>
           <thead>
             <tr>
-              <th scope="col" className="border-b border-border px-3 py-2 text-left font-medium">
+              <th scope="col" className="border-b border-border px-3 py-2 text-start font-medium">
                 {keyLabel}
               </th>
               {series.map((s) => (
                 <th
                   key={s.label}
                   scope="col"
-                  className="border-b border-border px-3 py-2 text-right font-medium"
+                  className="border-b border-border px-3 py-2 text-end font-medium"
                 >
                   {s.label}
                 </th>
@@ -143,7 +143,7 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
               <tr key={key}>
                 <th
                   scope="row"
-                  className="border-b border-border px-3 py-1.5 text-left font-normal"
+                  className="border-b border-border px-3 py-1.5 text-start font-normal"
                 >
                   {key}
                 </th>
@@ -152,7 +152,7 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
                   return (
                     <td
                       key={series[i].label}
-                      className="border-b border-border px-3 py-1.5 text-right"
+                      className="border-b border-border px-3 py-1.5 text-end"
                     >
                       {/* "No data" spelled out, not an em dash — a screen
                           reader announces "—" as nothing at all. */}
