@@ -131,7 +131,12 @@ function FlipCard({
       data-slot="flip-card"
       data-min-viewport={String(MIN_VIEWPORT)}
       data-flipped={flipped ? "" : undefined}
-      className={cn("group/flip min-w-0 perspective-[1600px]", className)}
+      // h-full: in a grid row the card fills its cell, so cards with
+      // different amounts of text line up. Outside a sized parent it is auto.
+      className={cn(
+        "group/flip h-full min-w-0 perspective-[1600px]",
+        className,
+      )}
       {...props}
     >
       <div

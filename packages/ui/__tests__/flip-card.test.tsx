@@ -129,6 +129,14 @@ describe("FlipCard", () => {
     expect(document.activeElement).toBe(document.body);
   });
 
+  it("fills its grid cell, so a row of cards with different text lines up", () => {
+    const html = renderToStaticMarkup(card());
+    const root = html.match(/<div[^>]*data-slot="flip-card"[^>]*>/)![0];
+    expect(root).toMatch(/class="[^"]*\bh-full\b/);
+    const inner = html.match(/<div[^>]*data-slot="flip-card-inner"[^>]*>/)![0];
+    expect(inner).toMatch(/class="[^"]*\bh-full\b/);
+  });
+
   it("rotates only when motion is allowed and cross-fades otherwise", () => {
     const html = renderToStaticMarkup(card());
     expect(html).toContain("motion-safe:group-data-flipped/flip:rotate-y-180");
