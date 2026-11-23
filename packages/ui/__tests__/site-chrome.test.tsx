@@ -10,6 +10,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
@@ -290,6 +291,116 @@ describe("Topbar edge and full-screen menu", () => {
     expect(
       within(dialog).getByRole("navigation", { name: "Primary" }).className,
     ).toContain("text-lg");
+  });
+});
+
+describe("Topbar motion", () => {
+  // Arrow keys between triggers need layout, which jsdom lacks: the
+  // LinkGroups story's play function covers them in a real browser.
+  it("opens a panel with Enter and closes it with Escape from the keyboard", async () => {
+    const user = userEvent.setup();
+    render(<Topbar logo="Site" links={GROUPED} />);
+    const products = screen.getByRole("button", { name: "Products" });
+    products.focus();
+    await user.keyboard("{Enter}");
+    await waitFor(() =>
+      expect(products.getAttribute("aria-expanded")).toBe("true"),
+    );
+    await user.keyboard("{Escape}");
+    await waitFor(() =>
+      expect(products.getAttribute("aria-expanded")).toBe("false"),
+    );
+    expect(document.activeElement).toBe(products);
+  });
+
+  const scrollTo = (y: number) => {
+    Object.defineProperty(window, "scrollY", { value: y, configurable: true });
+    fireEvent.scroll(window);
+  };
+
+  it("slides a pill under the hovered row item and lets it go on leave", () => {
+    const { container } = render(<Topbar logo="Site" links={GROUPED} />);
+    const pill = container.querySelector<HTMLElement>(
+      '[data-slot="topbar-nav-pill"]',
+    )!;
+    expect(pill.getAttribute("aria-hidden")).toBe("true");
+    const about = within(container.querySelector("nav")!).getByRole("link", {
+      name: "About",
+    });
+    fireEvent.pointerOver(about);
+    expect(pill.hasAttribute("data-visible")).toBe(true);
+    expect(pill.hasAttribute("data-instant")).toBe(true);
+    expect(pill.style.getPropertyValue("--pill-w")).toMatch(/px$/);
+    fireEvent.pointerOver(screen.getByRole("button", { name: "Products" }));
+    expect(pill.hasAttribute("data-instant")).toBe(false);
+    fireEvent.pointerOver(pill.parentElement!);
+    fireEvent.pointerLeave(pill.parentElement!);
+    expect(pill.hasAttribute("data-visible")).toBe(false);
+  });
+
+  it("rests the pill under an open trigger", async () => {
+    const { container } = render(<Topbar logo="Site" links={GROUPED} />);
+    const pill = container.querySelector<HTMLElement>(
+      '[data-slot="topbar-nav-pill"]',
+    )!;
+    fireEvent.click(screen.getByRole("button", { name: "Products" }));
+    await waitFor(() => expect(pill.hasAttribute("data-visible")).toBe(true));
+  });
+
+  it("gives plain-link rows the same padded items, pill and ring", () => {
+    const { container } = render(<Topbar logo="Site" links={LINKS} />);
+    expect(
+      container.querySelector('[data-slot="topbar-nav-pill"]'),
+    ).not.toBeNull();
+    const home = within(container.querySelector("nav")!).getByRole("link", {
+      name: "Home",
+    });
+    expect(home.className).toContain("px-2.5");
+    expect(home.className).toContain("focus-visible:ring-offset-2");
+  });
+
+  it("hideOnScroll hides the bar on the way down and returns it on the way up", () => {
+    scrollTo(0);
+    const { container, unmount } = render(
+      <Topbar logo="Site" links={LINKS} hideOnScroll />,
+    );
+    const header = container.querySelector("header")!;
+    Object.defineProperty(header, "offsetHeight", {
+      value: 56,
+      configurable: true,
+    });
+    scrollTo(400);
+    expect(header.hasAttribute("data-hidden")).toBe(true);
+    scrollTo(396);
+    expect(header.hasAttribute("data-hidden")).toBe(true);
+    scrollTo(300);
+    expect(header.hasAttribute("data-hidden")).toBe(false);
+    const first = within(header).getAllByRole("link")[0]!;
+    first.focus();
+    scrollTo(800);
+    expect(header.hasAttribute("data-hidden")).toBe(false);
+    unmount();
+    scrollTo(0);
+  });
+
+  it("keeps the bar in place without hideOnScroll", () => {
+    scrollTo(0);
+    const { container } = render(
+      <Topbar logo="Site" links={LINKS} edge="scroll" />,
+    );
+    const header = container.querySelector("header")!;
+    scrollTo(900);
+    expect(header.hasAttribute("data-hidden")).toBe(false);
+    scrollTo(0);
+  });
+
+  it("cascades the menu links in", async () => {
+    render(<Topbar logo="Site" links={LINKS} />);
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    const dialog = await screen.findByRole("dialog");
+    expect(within(dialog).getByRole("navigation").className).toContain(
+      "[&>*:nth-child(n+8)]:delay-140",
+    );
   });
 });
 

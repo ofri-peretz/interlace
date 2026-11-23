@@ -43,7 +43,9 @@
  *
  * `edge="scroll"` leaves the bar clear at the top of the page and brings in
  * its surface and border once content scrolls under it (`TopbarScrollEdge`).
- * `menuSide="full"` makes the small-screen menu cover the screen.
+ * `hideOnScroll` slides the bar away while the reader scrolls down and brings
+ * it back on the first scroll up. `menuSide="full"` makes the small-screen
+ * menu cover the screen.
  *
  * ## Current page
  *
@@ -70,7 +72,11 @@ import * as React from "react";
 
 import { cn } from "../lib/cn.js";
 import { TopbarMenu } from "./topbar-menu.js";
-import { TopbarNav, type TopbarNavEntry } from "./topbar-nav.js";
+import {
+  TOPBAR_ROW_ITEM,
+  TopbarNav,
+  type TopbarNavEntry,
+} from "./topbar-nav.js";
 import { TopbarScrollEdge } from "./topbar-scroll-edge.js";
 
 export const MIN_VIEWPORT = 320 as const;
@@ -160,9 +166,16 @@ interface TopbarProps extends React.ComponentProps<"header"> {
    * When the bar shows its surface and bottom border. `always` keeps them on.
    * `scroll` leaves the bar clear over the top of the page, so it sits on a
    * hero like part of it, and fades the surface, blur and border in once the
-   * page scrolls under it. @default 'always'
+   * page scrolls under it, after 4px. Compose `TopbarScrollEdge` yourself
+   * for another threshold. @default 'always'
    */
   edge?: "always" | "scroll";
+  /**
+   * Slide the bar away while the reader scrolls down, and back on the first
+   * scroll up. It stays while focus or an open panel is inside it.
+   * @default false
+   */
+  hideOnScroll?: boolean;
   /**
    * Render-prop slot for internal links. Defaults to a plain `<a>`. A
    * Next.js consumer passes `({ href, className, children, ...rest }) =>
@@ -193,16 +206,37 @@ const CONTAINER_CLASSES = {
 
 /** Link styles per place. Current = foreground + underline, never colour alone. */
 const LINK = {
-  row: "whitespace-nowrap text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[1.15rem] transition-colors",
+  row: cn(
+    TOPBAR_ROW_ITEM,
+    "aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[1.15rem]",
+  ),
   wrap: "text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-4 inline-flex min-h-11 items-center transition-colors",
   menu: "text-foreground hover:bg-muted aria-[current=page]:bg-muted flex min-h-11 items-center rounded-md px-3 font-medium aria-[current=page]:font-semibold",
   /** An item in a group's panel: icon, label and description in one target. */
   panel:
-    "hover:bg-muted focus-visible:bg-muted aria-[current=page]:bg-muted focus-visible:ring-ring flex gap-3 rounded-lg p-3 text-start transition-colors focus-visible:ring-[3px] focus-visible:outline-hidden",
+    "hover:bg-muted focus-visible:bg-muted aria-[current=page]:bg-muted focus-visible:ring-ring flex gap-3 rounded-lg p-3 text-start transition-colors focus-visible:ring-2 focus-visible:outline-hidden",
   /** An item in a group's section of the small-screen menu. */
   section:
     "text-foreground hover:bg-muted aria-[current=page]:bg-muted flex min-h-11 gap-3 rounded-md px-3 py-2 aria-[current=page]:font-semibold",
 } as const;
+
+/**
+ * A panel's items arrive in a quick cascade: each one fades and rises 4px,
+ * 20ms after the one before, so eight items finish inside the 150ms stagger
+ * window MOTION_PHILOSOPHY allows. Spelled out so Tailwind sees each class.
+ */
+const CASCADE = [
+  "delay-0",
+  "delay-20",
+  "delay-40",
+  "delay-60",
+  "delay-80",
+  "delay-100",
+  "delay-120",
+  "delay-140",
+] as const;
+const CASCADE_ITEM =
+  "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-1 motion-safe:fill-mode-both motion-safe:duration-(--duration-base) motion-safe:ease-enter";
 
 /** Each breakpoint spelled out, so Tailwind sees every class it needs. */
 const COLLAPSE = {
@@ -387,7 +421,15 @@ function navEntries(
         >
           {renderLinks(entry.items, "panel", currentHref, renderLink).map(
             (node, i) => (
-              <li key={entry.items[i]!.href}>{node}</li>
+              <li
+                key={entry.items[i]!.href}
+                className={cn(
+                  CASCADE_ITEM,
+                  CASCADE[Math.min(i, CASCADE.length - 1)],
+                )}
+              >
+                {node}
+              </li>
             ),
           )}
         </ul>
@@ -407,12 +449,12 @@ function Topbar({
   menuSide = "right",
   collapseBelow = "md",
   edge = "always",
+  hideOnScroll = false,
   renderLink = defaultRenderLink,
   className,
   ...props
 }: TopbarProps) {
   const hasLinks = links.length > 0;
-  const hasGroups = links.some(isGroup);
   const at = COLLAPSE[collapseBelow];
   return (
     <header
@@ -420,15 +462,18 @@ function Topbar({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-edge={edge}
       className={cn(
-        "sticky top-0 z-10 border-b",
+        "sticky top-0 z-10 border-b data-hidden:-translate-y-full",
+        "motion-safe:transition-[background-color,border-color,translate] motion-safe:duration-(--duration-medium) motion-safe:ease-move",
         edge === "always"
           ? "border-border bg-background/80 supports-backdrop-filter:bg-background/60 backdrop-blur"
-          : "data-scrolled:border-border data-scrolled:bg-background/80 supports-backdrop-filter:data-scrolled:bg-background/60 border-transparent bg-transparent data-scrolled:backdrop-blur motion-safe:transition-[background-color,border-color] motion-safe:duration-(--duration-base)",
+          : "data-scrolled:border-border data-scrolled:bg-background/80 supports-backdrop-filter:data-scrolled:bg-background/60 border-transparent bg-transparent data-scrolled:backdrop-blur",
         className,
       )}
       {...props}
     >
-      {edge === "scroll" ? <TopbarScrollEdge /> : null}
+      {edge === "scroll" || hideOnScroll ? (
+        <TopbarScrollEdge hide={hideOnScroll} />
+      ) : null}
       <div
         className={cn(
           "mx-auto flex min-h-14 items-center justify-between gap-4 px-6 py-2",
@@ -436,20 +481,13 @@ function Topbar({
         )}
       >
         <div className="flex items-center gap-4">{logo}</div>
-        {hasLinks && hasGroups ? (
+        {hasLinks ? (
           <div className={cn("hidden items-center", at.row)}>
             <TopbarNav
               entries={navEntries(links, currentHref, renderLink)}
               className="text-sm"
             />
           </div>
-        ) : hasLinks ? (
-          <nav
-            aria-label="Primary"
-            className={cn("hidden items-center gap-6 text-sm", at.row)}
-          >
-            {renderLinks(flatten(links), "row", currentHref, renderLink)}
-          </nav>
         ) : null}
         {actions || (hasLinks && mobileNav === "menu") ? (
           <div className={cn("flex items-center gap-2", at.actions)}>

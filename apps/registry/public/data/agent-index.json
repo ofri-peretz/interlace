@@ -9268,8 +9268,8 @@
           "aria-label"
         ],
         "motion": {
-          "driver": "none",
-          "declaresPreference": false,
+          "driver": "css",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true
@@ -9330,6 +9330,7 @@
         "focusRing": true
       },
       "exports": [
+        "TOPBAR_ROW_ITEM",
         "TopbarNav"
       ],
       "version": "1.0.0",
@@ -9353,7 +9354,7 @@
       "name": "topbar-scroll-edge",
       "title": "Topbar Scroll Edge",
       "type": "registry:ui",
-      "summary": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. Topbar renders it for you; it…",
+      "summary": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…",
       "topics": [],
       "categories": [
         "navigation",

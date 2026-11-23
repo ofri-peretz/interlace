@@ -2318,7 +2318,8 @@
       "blocks-topbar--link-groups-mobile",
       "blocks-topbar--link-groups-dark",
       "blocks-topbar--clear-until-scroll",
-      "blocks-topbar--full-screen-menu"
+      "blocks-topbar--full-screen-menu",
+      "blocks-topbar--hide-on-scroll"
     ],
     "preview": "blocks-topbar--default",
     "previewDark": "blocks-topbar--dark",

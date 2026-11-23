@@ -634,6 +634,20 @@
           "source": ".changeset/topbar-menu-drawer.md"
         },
         {
+          "summary": "`Topbar` motion and focus polish.\n\n- **Hover pill.** A soft pill slides under whichever row item the pointer is over, and rests under an open group's trigger.\n- **Panels slide between groups.** Moving from one group to the next, the panel resizes and its content slides in the direction of travel. The items cascade in, 20ms apart, inside the 150ms stagger window.\n- **`hideOnScroll`.** The bar slides away while the reader scrolls down and returns on the first scroll up. It stays put while focus or an open panel is inside it.\n- **Menu cascade.** The small-screen menu's links fade in a quick cascade.\n- **Focus ring.** Every row item is now a padded box, so the focus ring sits 2px outside it on the page colour and never touches the words. Rows of plain links now render through `TopbarNav` too, so they get the same pill and ring.\n\nEverything that moves is behind `motion-safe`. Under reduced motion the pill and panels still appear, without moving.",
+          "components": [
+            "topbar",
+            "topbar-nav",
+            "topbar-menu",
+            "topbar-scroll-edge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/topbar-motion.md"
+        },
+        {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
           "components": [
             "weave-texture"

@@ -81,6 +81,16 @@ const meta: Meta<typeof Topbar> = {
         category: "Appearance",
       },
     },
+    hideOnScroll: {
+      control: "boolean",
+      description:
+        "Slide the bar away while the reader scrolls down, and back on the first scroll up. It stays while focus or an open panel is inside it.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Appearance",
+      },
+    },
     edge: {
       control: "inline-radio",
       options: ["always", "scroll"],
@@ -312,6 +322,10 @@ export const LinkGroups: Story = {
     await waitFor(() =>
       expect(canvasElement.ownerDocument.activeElement).toBe(trigger),
     );
+    await userEvent.keyboard("{ArrowRight}");
+    await expect(canvasElement.ownerDocument.activeElement).toBe(
+      canvas.getByRole("button", { name: "Company" }),
+    );
   },
 };
 
@@ -384,5 +398,16 @@ export const FullScreenMenu: Story = {
   args: { ...ClearUntilScroll.args, menuSide: "full" },
   decorators: [withPage],
   parameters: { viewport: { defaultViewport: "mobile1" } },
+  play: undefined,
+};
+
+/**
+ * `hideOnScroll`: the bar slides away while you read down the page and comes
+ * back the moment you scroll up. Hover the row to see the pill follow the
+ * pointer; open Products, then move to Company to see the panel slide.
+ */
+export const HideOnScroll: Story = {
+  args: { ...ClearUntilScroll.args, hideOnScroll: true },
+  decorators: [withPage],
   play: undefined,
 };

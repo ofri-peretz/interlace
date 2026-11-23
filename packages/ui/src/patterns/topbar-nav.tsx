@@ -35,6 +35,13 @@
  * | R19  | Tokens only             | `bg-popover` / `border-border` / `text-muted-foreground` |
  * | R25  | Client component        | which panel is open                                   |
  * | R26  | A11y                    | `<nav>` landmark, `<button aria-expanded>` triggers   |
+ *
+ * ## Motion
+ *
+ * A pill slides under whichever item the pointer is over and rests under an
+ * open trigger. Between groups the panel resizes and its content slides in
+ * the direction of travel. Under reduced motion the pill and panel still
+ * appear, without moving.
  */
 
 import { NavigationMenu } from "@base-ui/react/navigation-menu";
@@ -65,8 +72,39 @@ export interface TopbarNavProps {
   className?: string;
 }
 
-const TRIGGER =
-  "text-muted-foreground hover:text-foreground data-popup-open:text-foreground data-current:text-foreground focus-visible:ring-ring inline-flex items-center gap-1 rounded-md py-1 text-sm whitespace-nowrap transition-colors focus-visible:ring-[3px] focus-visible:outline-hidden";
+/**
+ * Every row item, link or trigger, is the same padded box, so the hover pill
+ * and the focus ring both frame the words with room to spare and never touch
+ * them. The ring sits 2px outside the box on the page colour.
+ */
+export const TOPBAR_ROW_ITEM =
+  "relative inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-sm whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+
+const TRIGGER = cn(
+  TOPBAR_ROW_ITEM,
+  "data-popup-open:text-foreground data-current:text-foreground",
+);
+
+/** Moves the hover pill under `target`, or hides it. */
+function placePill(
+  pill: HTMLElement | null,
+  list: HTMLElement | null,
+  target: HTMLElement | null,
+) {
+  if (!pill || !list) return;
+  if (!target) {
+    pill.removeAttribute("data-visible");
+    return;
+  }
+  const from = list.getBoundingClientRect();
+  const box = target.getBoundingClientRect();
+  // The first placement after hiding jumps without sliding in from the last spot.
+  if (!pill.hasAttribute("data-visible")) pill.setAttribute("data-instant", "");
+  else pill.removeAttribute("data-instant");
+  pill.style.setProperty("--pill-x", `${box.left - from.left}px`);
+  pill.style.setProperty("--pill-w", `${box.width}px`);
+  pill.setAttribute("data-visible", "");
+}
 
 export function TopbarNav({
   entries,
@@ -74,51 +112,94 @@ export function TopbarNav({
   className,
 }: TopbarNavProps) {
   const [value, setValue] = React.useState<string | null>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const pillRef = React.useRef<HTMLSpanElement>(null);
+  const rowItem = (event: React.SyntheticEvent) =>
+    (event.target as HTMLElement).closest<HTMLElement>(
+      "[data-slot=topbar-nav-trigger], [data-slot=topbar-nav-link] > a",
+    );
+  // With a panel open, the pill rests under its trigger; otherwise it leaves.
+  const restPill = () =>
+    placePill(
+      pillRef.current,
+      listRef.current,
+      listRef.current?.querySelector<HTMLElement>(
+        "[data-slot=topbar-nav-trigger][data-popup-open]",
+      ) ?? null,
+    );
+  React.useEffect(restPill, [value]);
   return (
     <NavigationMenu.Root
       data-slot="topbar-nav"
       aria-label={label}
       value={value}
-      onValueChange={(next) => setValue((next as string | null) ?? null)}
+      onValueChange={(next) => setValue(typeof next === "string" ? next : null)}
       className={className}
     >
-      <NavigationMenu.List className="flex items-center gap-6">
-        {entries.map((entry) =>
-          entry.kind === "link" ? (
-            <NavigationMenu.Item key={entry.key} className="flex">
-              {entry.node}
-            </NavigationMenu.Item>
-          ) : (
-            <NavigationMenu.Item key={entry.key} value={entry.key}>
-              <NavigationMenu.Trigger
-                data-slot="topbar-nav-trigger"
-                data-current={entry.current ? "" : undefined}
-                className={TRIGGER}
-              >
-                {entry.label}
-                <NavigationMenu.Icon className="motion-safe:transition-transform motion-safe:duration-(--duration-fast) data-popup-open:rotate-180">
-                  <ChevronDownIcon aria-hidden className="size-4" />
-                </NavigationMenu.Icon>
-              </NavigationMenu.Trigger>
-              <NavigationMenu.Content
-                data-slot="topbar-nav-panel"
-                className={cn(
-                  "p-2",
-                  entry.wide
-                    ? "w-[min(36rem,calc(100vw-2rem))]"
-                    : "w-[min(22rem,calc(100vw-2rem))]",
-                )}
-                onClick={(event) => {
-                  if ((event.target as HTMLElement).closest("a"))
-                    setValue(null);
-                }}
+      {/* The pill is a sibling of the list, not inside it: a list holds only items. */}
+      <div
+        ref={listRef}
+        className="relative isolate"
+        onPointerOver={(event) => {
+          const item = rowItem(event);
+          if (item) placePill(pillRef.current, listRef.current, item);
+        }}
+        onPointerLeave={restPill}
+      >
+        <span
+          ref={pillRef}
+          aria-hidden
+          data-slot="topbar-nav-pill"
+          className="bg-foreground/6 pointer-events-none absolute inset-y-0 left-0 -z-10 w-(--pill-w) translate-x-(--pill-x) rounded-md opacity-0 data-visible:opacity-100 motion-safe:transition-[translate,width,opacity] motion-safe:duration-(--duration-medium) motion-safe:ease-move motion-safe:data-instant:transition-opacity"
+        />
+        <NavigationMenu.List className="flex items-center gap-1">
+          {entries.map((entry) =>
+            entry.kind === "link" ? (
+              <NavigationMenu.Item
+                key={entry.key}
+                data-slot="topbar-nav-link"
+                className="flex"
               >
                 {entry.node}
-              </NavigationMenu.Content>
-            </NavigationMenu.Item>
-          ),
-        )}
-      </NavigationMenu.List>
+              </NavigationMenu.Item>
+            ) : (
+              <NavigationMenu.Item key={entry.key} value={entry.key}>
+                <NavigationMenu.Trigger
+                  data-slot="topbar-nav-trigger"
+                  data-current={entry.current ? "" : undefined}
+                  className={TRIGGER}
+                >
+                  {entry.label}
+                  <NavigationMenu.Icon className="motion-safe:transition-transform motion-safe:duration-(--duration-fast) data-popup-open:rotate-180">
+                    <ChevronDownIcon aria-hidden className="size-4" />
+                  </NavigationMenu.Icon>
+                </NavigationMenu.Trigger>
+                <NavigationMenu.Content
+                  data-slot="topbar-nav-panel"
+                  className={cn(
+                    "p-2",
+                    // Moving between groups, the old panel slides out the way the
+                    // pointer went and the new one slides in after it.
+                    "motion-safe:transition-[opacity,translate] motion-safe:duration-(--duration-medium) motion-safe:ease-enter",
+                    "data-starting-style:opacity-0 data-ending-style:opacity-0",
+                    "motion-safe:data-starting-style:data-[activation-direction=left]:-translate-x-1/4 motion-safe:data-starting-style:data-[activation-direction=right]:translate-x-1/4",
+                    "motion-safe:data-ending-style:data-[activation-direction=left]:translate-x-1/4 motion-safe:data-ending-style:data-[activation-direction=right]:-translate-x-1/4",
+                    entry.wide
+                      ? "w-[min(36rem,calc(100vw-2rem))]"
+                      : "w-[min(22rem,calc(100vw-2rem))]",
+                  )}
+                  onClick={(event) => {
+                    if ((event.target as HTMLElement).closest("a"))
+                      setValue(null);
+                  }}
+                >
+                  {entry.node}
+                </NavigationMenu.Content>
+              </NavigationMenu.Item>
+            ),
+          )}
+        </NavigationMenu.List>
+      </div>
       <NavigationMenu.Portal>
         <NavigationMenu.Positioner
           sideOffset={12}

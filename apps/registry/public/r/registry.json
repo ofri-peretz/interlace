@@ -2653,7 +2653,7 @@
       "name": "topbar-scroll-edge",
       "type": "registry:ui",
       "title": "Topbar Scroll Edge",
-      "description": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. Topbar renders it for you; it…",
+      "description": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…",
       "categories": [
         "navigation",
         "pattern"

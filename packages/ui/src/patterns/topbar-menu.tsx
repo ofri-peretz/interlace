@@ -89,6 +89,9 @@ export function TopbarMenu({
           data-slot="topbar-menu-nav"
           className={cn(
             "flex flex-col px-2 pb-6 text-base",
+            // The links arrive in a quick cascade, inside the 150ms stagger window.
+            "motion-safe:[&>*]:animate-in motion-safe:[&>*]:fade-in-0 motion-safe:[&>*]:slide-in-from-top-1 motion-safe:[&>*]:fill-mode-both motion-safe:[&>*]:duration-(--duration-base) motion-safe:[&>*]:ease-enter",
+            "[&>*:nth-child(2)]:delay-20 [&>*:nth-child(3)]:delay-40 [&>*:nth-child(4)]:delay-60 [&>*:nth-child(5)]:delay-80 [&>*:nth-child(6)]:delay-100 [&>*:nth-child(7)]:delay-120 [&>*:nth-child(n+8)]:delay-140",
             side === "full" && "px-4 text-lg",
           )}
           onClick={(event) => {
