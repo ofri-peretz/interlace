@@ -8,13 +8,24 @@
  * A page is N of these, so the page file says what is IN each band and never
  * what the band looks like.
  *
- * ## The four axes
+ * ## The five axes
  *
  *   - `spacing`  → vertical padding, responsive at each step
  *                  (tight / comfortable / spacious / none; default comfortable)
- *   - `tone`     → background (default / muted / inset — `inset` also blurs)
+ *   - `tone`     → background (default / muted / inset — `inset` also blurs —
+ *                  / brand, the full-bleed brand band with its foreground)
  *   - `divider`  → border at the transition (none / top / bottom / both)
+ *   - `overlap`  → ride up over the band above (none / sm / md / lg)
  *   - `container`→ which `<Container>` size wraps the children (default `content`)
+ *
+ * ## Overlap
+ *
+ * A card that straddles the edge of a brand band is two Sections: the band,
+ * then a Section with `overlap`. The overlapping one drops its own top
+ * padding, pulls up by the depth, and stacks above the band, so its first
+ * child sits across the band's bottom padding. Keep the depth below that
+ * padding (every `spacing` step but `none` clears `lg`), or the card covers
+ * the band's last line.
  *
  * Every `spacing` step clears the philosophy's floors — `py-10` mobile,
  * `py-16` desktop — at the matching breakpoint; `none` is the deliberate
@@ -22,7 +33,7 @@
  *
  * ## Anatomy
  *
- *   Section                          (section by default — data-spacing / -tone / -divider)
+ *   Section                          (section by default — data-spacing / -tone / -divider / -overlap)
  *     └─ Container                   (always present, size from `container`)
  *          └─ children
  *
@@ -36,9 +47,9 @@
  * | R4   | Extends native el                | `Omit<React.ComponentProps<'section'>, 'children'>`         |
  * | R6   | data-slot + data-* on root       | `data-slot="section"` + spacing / tone / divider            |
  * | R7   | cva + cn + ...rest               | `cn(sectionVariants({…}), className)` + `{...props}`        |
- * | R8   | Enums, no booleans               | four closed enums; no `isMuted`, no `hasDivider`            |
+ * | R8   | Enums, no booleans               | five closed enums; no `isMuted`, no `hasDivider`            |
  * | R12  | Reuse over wrap                  | width and gutters come from `Container`, not from here      |
- * | R19  | Tokens only                      | `bg-card/30`, `bg-card/50`, `border-border`                 |
+ * | R19  | Tokens only                      | `bg-card/30`, `bg-card/50`, `bg-primary`, `border-border`   |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  */
 
@@ -64,6 +75,7 @@ const sectionVariants = cva('relative', {
       default: '',
       muted: 'bg-card/30',
       inset: 'bg-card/50 backdrop-blur-sm',
+      brand: 'bg-primary text-primary-foreground',
     },
     divider: {
       none: '',
@@ -71,11 +83,20 @@ const sectionVariants = cva('relative', {
       bottom: 'border-b border-border',
       both: 'border-y border-border',
     },
+    // pt-0 at every step beats the matching `spacing` py-*, so the pull is
+    // exactly the depth and not the depth minus this band's own padding.
+    overlap: {
+      none: '',
+      sm: 'z-10 -mt-6 pt-0 md:pt-0 lg:pt-0',
+      md: 'z-10 -mt-8 pt-0 md:-mt-10 md:pt-0 lg:pt-0',
+      lg: 'z-10 -mt-12 pt-0 md:-mt-16 md:pt-0 lg:pt-0',
+    },
   },
   defaultVariants: {
     spacing: 'comfortable',
     tone: 'default',
     divider: 'none',
+    overlap: 'none',
   },
 });
 
@@ -94,6 +115,7 @@ function Section({
   spacing,
   tone,
   divider,
+  overlap,
   container = 'content',
   as = 'section',
   children,
@@ -106,7 +128,8 @@ function Section({
       data-spacing={spacing ?? undefined}
       data-tone={tone ?? undefined}
       data-divider={divider ?? undefined}
-      className={cn(sectionVariants({ spacing, tone, divider }), className)}
+      data-overlap={overlap ?? undefined}
+      className={cn(sectionVariants({ spacing, tone, divider, overlap }), className)}
       {...props}
     >
       <Container size={container}>{children}</Container>

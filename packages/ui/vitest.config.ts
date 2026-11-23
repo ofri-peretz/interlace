@@ -42,7 +42,7 @@ export default defineConfig({
      * deliverable; lowering the numbers is not an option the next session gets.
      *
      * In scope: `src/charts/**`, `src/lib/**`, and — as of the primitives wave
-     * — 35 of the 62 files in `src/primitives/`. All run in jsdom without a
+     * — 39 of the 69 files in `src/primitives/`. All run in jsdom without a
      * browser, and `charts/scale.ts` / `charts/graph.ts` / the primitives'
      * variant maps are pure arithmetic and lookup — so 100% here is real, not
      * a number propped up by ignore pragmas. There is not one `v8 ignore` in
@@ -116,8 +116,8 @@ export default defineConfig({
         'src/lib/**/*.{ts,tsx}',
         // The four pure variant/model modules.
         'src/primitives/{button-variants,data-state-model,meter-scale,skeleton-variants}.ts',
-        // The 34 components with real render coverage. See the ledger above.
-        'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx',
+        // The 35 components with real render coverage. See the ledger above.
+        'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx',
         // Patterns with full render coverage — the same ledger rule: a
         // file is in at 100 or it is out, and joining is a one-line diff.
         'src/patterns/{lint-playground,thread-steps}.tsx',

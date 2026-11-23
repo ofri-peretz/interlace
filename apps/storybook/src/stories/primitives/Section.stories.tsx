@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Card, CardContent, CardHeader, CardTitle } from '@interlace/ui/card';
 import { Section } from '@interlace/ui/section';
 import { withRtl } from '@/decorators';
 
@@ -28,11 +29,11 @@ const meta: Meta<typeof Section> = {
     },
     tone: {
       control: 'select',
-      options: ['default', 'muted', 'inset'],
+      options: ['default', 'muted', 'inset', 'brand'],
       description:
-        'Background. `default` is transparent; `muted` (`bg-card/30`) separates adjacent bands without a rule; `inset` adds a backdrop blur for a strip that should read as a raised surface.',
+        'Background. `default` is transparent; `muted` (`bg-card/30`) separates adjacent bands without a rule; `inset` adds a backdrop blur for a strip that should read as a raised surface; `brand` is the full-bleed brand band (`bg-primary` with `text-primary-foreground`).',
       table: {
-        type: { summary: "'default' | 'muted' | 'inset'" },
+        type: { summary: "'default' | 'muted' | 'inset' | 'brand'" },
         defaultValue: { summary: 'default' },
         category: 'Appearance',
       },
@@ -46,6 +47,17 @@ const meta: Meta<typeof Section> = {
         type: { summary: "'none' | 'top' | 'bottom' | 'both'" },
         defaultValue: { summary: 'none' },
         category: 'Appearance',
+      },
+    },
+    overlap: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg'],
+      description:
+        'Ride up over the band above by this depth: the section drops its own top padding, pulls up, and stacks above. Use it for a card that straddles the edge of a `brand` band. Keep the depth below the band\'s bottom padding.',
+      table: {
+        type: { summary: "'none' | 'sm' | 'md' | 'lg'" },
+        defaultValue: { summary: 'none' },
+        category: 'Layout',
       },
     },
     container: {
@@ -154,6 +166,29 @@ export const ToneVariants: Story = {
       </Section>
       <Section spacing="comfortable" tone="inset" divider="bottom">
         <SectionBody label='tone="inset" — bg-card/50 with backdrop-blur' />
+      </Section>
+    </div>
+  ),
+};
+
+/** A brand band with a card riding over its bottom edge: two Sections, the second with `overlap`. */
+export const BrandBandWithOverlap: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <div>
+      <Section as="header" tone="brand" spacing="tight">
+        <p className="text-sm font-semibold tracking-widest uppercase">Your kid heard</p>
+        <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-tight">
+          &quot;The bridge was closed for months.&quot;
+        </h1>
+      </Section>
+      <Section overlap="md" spacing="tight">
+        <Card>
+          <CardHeader>
+            <CardTitle>Say it straight</CardTitle>
+          </CardHeader>
+          <CardContent>It was six weeks, from 3 March to 14 April. It felt longer because the detour was slow.</CardContent>
+        </Card>
       </Section>
     </div>
   ),

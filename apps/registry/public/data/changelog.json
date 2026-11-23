@@ -187,6 +187,28 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "`Callout` gets a sixth tone, `highlight`, for the one line a page wants remembered: a highlighter wash behind the body and a highlighter rule on the left, with the body still in `text-foreground`. A new `kicker` slot puts a word or two in bold where the icon was (\"In short\", or a word in another script with its own `lang`). The kicker is text, so it is read before the body.",
+          "components": [
+            "callout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/callout-highlight.md"
+        },
+        {
+          "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"Yale Avalon\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
+          "components": [
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/citation-chip.md"
+        },
+        {
           "summary": "New `Citation` pattern: an inline source marker for a sentence that makes a claim. A footnote number (or a dotted underline on the phrase itself) opens a popover listing every source behind the claim, with the publisher linked, the kind of source, and the quote as a blockquote. Several sources stack in one popover. Only `https:` URLs become links. Keyboard and touch work out of the box, Escape closes it, and the claim text is in the server HTML. An optional `status` shows \"Enough sources\" or a warning \"Short of sources\".",
           "components": [
             "citation"
@@ -235,6 +257,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/content-patterns.md"
+        },
+        {
+          "summary": "`Dialogue` reads as a chat transcript when you want it to. `speakers=\"inside\"` sets each speaker's name as the first line of its bubble (one element, read once, in order). A turn's `tone` picks its bubble: `muted` and `accent` stay the defaults by side, and `inverse` is a high-contrast bubble in which a `Citation` chip flips to a light pill. New `Dialogue.Suggestions` and `Dialogue.Suggestion` give the row of follow-up pills under a transcript: a link with `href`, a button without, or your own element with `asChild`.",
+          "components": [
+            "dialogue"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/dialogue-transcript.md"
         },
         {
           "summary": "The editorial look is one line: `@theme { --font-heading: var(--font-serif); }` gives serif headings over the sans body. `CardTitle` now reads `font-heading` like every other heading in the kit, so card titles follow too; with the default `--font-heading` (your body face) nothing changes. `interlace-foundation` names a serif stack (Source Serif 4, then the system serifs) for `--font-serif`. A new Storybook story, Foundations/Typography/Editorial Headings, shows it.",
@@ -288,6 +321,17 @@
           "source": ".changeset/light-subtree.md"
         },
         {
+          "summary": "New `List` primitive with markers that carry the voice of the page: `bullet`, `number` (a real `ol`, numbered by the browser in a filled circle), `check` and `cross`. Markers are drawn in CSS, so they centre on the first line whatever the item holds (rich text, inline `Citation` chips) and are never read aloud; `start` and `reversed` work as on any ordered list. `density` sets the space between items.",
+          "components": [
+            "list"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/list-markers.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"
@@ -297,6 +341,17 @@
           "bump": "minor",
           "migration": "None. If your own code parsed `--interlace-*` values as hex, parse `oklch()` as well; the hex each value paints is in the token file.",
           "source": ".changeset/oklch-tokens.md"
+        },
+        {
+          "summary": "`Section` gets a `brand` tone, the full-bleed brand band (`bg-primary` with `text-primary-foreground`), and a new `overlap` axis (`none`, `sm`, `md`, `lg`). A Section with `overlap` drops its own top padding, pulls up by that depth and stacks above the band before it, so a card can straddle the edge of a brand band with no custom class: two Sections, the second with `overlap=\"md\"`.",
+          "components": [
+            "section"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/section-brand-overlap.md"
         },
         {
           "summary": "Site chrome that needs no custom classes:\n\n- `Topbar` keeps its links on small screens. By default they move behind a Menu button that opens a side sheet (new `TopbarMenu`); `mobileNav=\"wrap\"` shows them as a second row. `currentHref` marks the current page with `aria-current=\"page\"` and a visible style, and `renderLink` now receives `aria-current` to forward.\n- New `Banner`: a thin full-width bar for a site-wide message, in muted, info, success, warning and highlight tones, with an optional action and close button.\n- `Prose` headings now use `--font-heading` (they used `--font-body` before), like Typography. If you set the two to different faces, Prose headings change to the heading face. New `width=\"fill\"` drops the 65ch cap for prose inside a card or panel.\n- `StatCard` and `StatGroup` take `layout=\"value-first\"` (the number, then what it counts) next to the default label-first.\n- `Footer` takes a `tagline` shown under the brand.",
@@ -314,6 +369,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/site-chrome.md"
+        },
+        {
+          "summary": "New `StatusPills`: short facts about a page (\"9 facts\", \"38 sources quoted\") as a wrapping row of pills, made to sit on a brand band under a title. A default pill is an outline in the text colour around it, with no fill so its text keeps the band's contrast, so the same component reads on a dark band and on the page. `tone=\"ok\"` is a solid pill with a check in the success colour, for a passed check.",
+          "components": [
+            "status-pills"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/status-pills.md"
         },
         {
           "summary": "`ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.",
@@ -338,6 +404,17 @@
           "source": ".changeset/thread-steps.md"
         },
         {
+          "summary": "New `Timeline`: a short record in date order, where each event has a date, a title, what was said and where it comes from. Once the timeline itself is 48rem wide the events sit in one row on a single rule; below that they stack down a vertical rule. The switch keys on the timeline's own width, not the viewport. `orientation=\"vertical\"` always stacks, and `marker=\"accent\"` fills one event's dot in the highlight colour.",
+          "components": [
+            "timeline"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/timeline.md"
+        },
+        {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
           "components": [
             "weave-texture"
@@ -347,6 +424,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/weave-texture.md"
+        },
+        {
+          "summary": "New `Wordmark`: a name set in more than one script, stacked, with each `Wordmark.Line` carrying its own `lang` and `dir`. `variant=\"sign\"` is a street-sign plate with an inset rule; `plain` is the lines alone in the text colour. With `href` the whole lockup is one link named by `label`; without, it is an image of text. A line in Arabic uses `--font-arabic` when the site defines it; loading the font stays with the site. `Topbar`'s row is now at least 3.5rem and grows to fit a taller logo instead of clipping it.",
+          "components": [
+            "wordmark",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/wordmark.md"
         },
         {
           "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",

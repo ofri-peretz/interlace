@@ -32,7 +32,8 @@ const meta = {
           'the marker and a popover lists every source behind it: the publisher (linked, https ' +
           'only), the kind of source, and the exact words quoted. Several sources stack in one ' +
           'popover. `marker="number"` adds a footnote number after the text; `marker="underline"` ' +
-          'makes the phrase itself the trigger. `status` shows whether the claim meets your ' +
+          'makes the phrase itself the trigger; `marker="chip"` puts a pill naming the source after ' +
+          'the text. `status` shows whether the claim meets your ' +
           'sourcing bar.',
       },
     },
@@ -46,12 +47,12 @@ const meta = {
     },
     marker: {
       control: 'inline-radio',
-      options: ['number', 'underline'],
+      options: ['number', 'underline', 'chip'],
       description:
-        '`number` keeps the sentence plain and adds a superscript `[n]`. `underline` puts a dotted underline on the phrase and makes it the trigger.',
+        '`number` keeps the sentence plain and adds a superscript `[n]`. `underline` puts a dotted underline on the phrase and makes it the trigger. `chip` adds a pill that names the source.',
       table: {
         category: 'Appearance',
-        type: { summary: "'number' | 'underline'" },
+        type: { summary: "'number' | 'underline' | 'chip'" },
         defaultValue: { summary: 'number' },
       },
     },
@@ -59,6 +60,12 @@ const meta = {
       control: { type: 'number', min: 1 },
       description: 'The footnote number shown for `marker="number"`.',
       table: { category: 'Appearance', type: { summary: 'number' }, defaultValue: { summary: '1' } },
+    },
+    chipLabel: {
+      control: 'text',
+      description:
+        'The pill text for `marker="chip"`. Defaults to the publishers, each once, joined with " · ".',
+      table: { category: 'Content', type: { summary: 'string' } },
     },
     status: {
       control: 'inline-radio',
@@ -99,6 +106,25 @@ export const Default: Story = {};
 
 export const Underline: Story = {
   args: { marker: 'underline', children: 'the bridge reopened to traffic on Monday morning' },
+};
+
+/** A pill names the source, so the reader sees who backs the line before opening it. */
+export const Chip: Story = {
+  args: { marker: 'chip' },
+};
+
+/** Several chips in one paragraph, each with its own short label. */
+export const ChipsInProse: Story = {
+  render: () => (
+    <p className="max-w-prose text-base">
+      <Citation marker="chip" chipLabel="Gazette" sources={SOURCES.slice(0, 1)}>
+        The bridge reopened on Monday;
+      </Citation>{' '}
+      <Citation marker="chip" sources={SOURCES.slice(1)}>
+        the city says traffic will be back to normal by Friday.
+      </Citation>
+    </p>
+  ),
 };
 
 export const EnoughSources: Story = {

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-pills",
+  "type": "registry:ui",
+  "title": "Status Pills",
+  "description": "A row of short facts about the page, set as pills: \"Checked by a second reader\", \"9 facts\", \"38 sources quoted\", \"About 1 minute out loud\". Built to sit on a brand band (`<Section tone=\"brand\">`) under a title, and just as readable on the page background.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "blog",
+    "pattern"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/status-pills.tsx",
+      "target": "components/ui/patterns/status-pills.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/status-pills v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/status-pills\n// What changed since: https://ds.interlace.tools/c/status-pills#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — StatusPills\n *\n * A row of short facts about the page, set as pills: \"Checked by a second\n * reader\", \"9 facts\", \"38 sources quoted\", \"About 1 minute out loud\". Built\n * to sit on a brand band (`<Section tone=\"brand\">`) under a title, and just\n * as readable on the page background.\n *\n * ## Tones\n *\n * | `tone`    | Pill                                                         |\n * | --------- | ------------------------------------------------------------ |\n * | `default` | An outline in the surrounding text colour, text inherited    |\n * | `ok`      | A solid page-background pill, bold, with a check in success  |\n *\n * `default` takes its colour from the band it sits on (`currentColor`), so\n * one component serves a dark band and a light page without a prop. It has\n * no fill: its text sits on the band itself, so it keeps the band's own\n * contrast (a 12% tint cost a brand band its AAA 7:1). `ok` is\n * the one that should be seen first: a passed check. Its check mark is\n * decoration; the words say what passed.\n *\n * ## Anatomy\n *\n *   StatusPills                (ul — data-slot=\"status-pills\", a wrapping row)\n *     └─ StatusPill × n        (li — data-tone)\n *         ├─ check             (svg, aria-hidden — `ok` only)\n *         └─ children\n *\n * ## MIN_VIEWPORT — 320\n *\n * Pills wrap onto as many lines as they need.\n *\n * | Rule | Concept                 | Where in this file                                       |\n * | ---- | ----------------------- | -------------------------------------------------------- |\n * | R4   | Extends native el       | `ul` / `li` props                                        |\n * | R6   | data-slot per part      | status-pills / status-pill / status-pill-check          |\n * | R7   | cn + ...rest            | `cn(…, className)` + `{...props}`                        |\n * | R8   | Enums, not booleans     | `tone`                                                   |\n * | R14  | Declares min viewport   | `data-min-viewport` on the root + exported const         |\n * | R19  | Tokens only             | `ring-current/40`, `bg-background`, `text-success`       |\n * | R25  | Server component        | No hooks → no `'use client'`                             |\n * | R26  | A11y from native el     | A list; the check is hidden, the words carry the meaning |\n */\n\nimport { Check } from 'lucide-react';\n\nimport { cn } from '@/lib/utils';\n\nexport const MIN_VIEWPORT = 320 as const;\n\nexport type StatusPillTone = 'default' | 'ok';\n\ntype StatusPillsProps = React.ComponentProps<'ul'>;\n\nfunction StatusPills({ className, ...props }: StatusPillsProps) {\n  return (\n    <ul\n      data-slot=\"status-pills\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('flex list-none flex-wrap items-center gap-2.5 ps-0', className)}\n      {...props}\n    />\n  );\n}\n\nconst TONE: Record<StatusPillTone, string> = {\n  default: 'ring-1 ring-current/40 ring-inset font-medium',\n  ok: 'bg-background text-foreground font-bold',\n};\n\ntype StatusPillProps = React.ComponentProps<'li'> & {\n  /** `ok` marks a passed check. @default 'default' */\n  tone?: StatusPillTone;\n};\n\nfunction StatusPill({ tone = 'default', className, children, ...props }: StatusPillProps) {\n  return (\n    <li\n      data-slot=\"status-pill\"\n      data-tone={tone}\n      className={cn('inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm leading-none', TONE[tone], className)}\n      {...props}\n    >\n      {tone === 'ok' ? (\n        <Check aria-hidden data-slot=\"status-pill-check\" className=\"text-success size-4 shrink-0\" strokeWidth={3} />\n      ) : null}\n      {children}\n    </li>\n  );\n}\n\nconst StatusPillsWithItem = Object.assign(StatusPills, { Item: StatusPill });\n\nexport { StatusPillsWithItem as StatusPills, StatusPill };\nexport type { StatusPillsProps, StatusPillProps };\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": false,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/status-pills\n\nInstalled to `components/ui/patterns/status-pills.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/status-pills';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/status-pills\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

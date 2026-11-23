@@ -68,6 +68,58 @@ describe('Dialogue', () => {
     expect(screen.getByText('Child')).toBeTruthy();
     expect(container.querySelector('[data-side="end"]')?.textContent).toContain('Parent');
   });
+
+  it('defaults the tone by side and takes inverse', () => {
+    const { container } = render(
+      <Dialogue>
+        <Dialogue.Turn speaker="Kid">Why?</Dialogue.Turn>
+        <Dialogue.Turn speaker="You" side="end">
+          Because.
+        </Dialogue.Turn>
+        <Dialogue.Turn speaker="You" side="end" tone="inverse">
+          Straight answer.
+        </Dialogue.Turn>
+      </Dialogue>,
+    );
+    const tones = [...container.querySelectorAll('[data-slot="dialogue-turn"]')].map((li) =>
+      li.getAttribute('data-tone'),
+    );
+    expect(tones).toEqual(['muted', 'accent', 'inverse']);
+  });
+
+  it('names each speaker once, before the turn, in either placement', () => {
+    for (const speakers of ['above', 'inside'] as const) {
+      const { container, unmount } = render(
+        <Dialogue speakers={speakers}>
+          <Dialogue.Turn speaker="Kid">Why?</Dialogue.Turn>
+        </Dialogue>,
+      );
+      expect(container.querySelector('ol')?.getAttribute('data-speakers')).toBe(speakers);
+      expect(screen.getAllByText('Kid')).toHaveLength(1);
+      expect(container.querySelector('li')?.textContent).toBe('KidWhy?');
+      unmount();
+    }
+  });
+
+  it('renders suggestions as a link, a button, or the caller\'s element', () => {
+    render(
+      <Dialogue.Suggestions>
+        <Dialogue.Suggestion href="/q/next">Next question</Dialogue.Suggestion>
+        <Dialogue.Suggestion>Show sources</Dialogue.Suggestion>
+        <Dialogue.Suggestion asChild>
+          <a href="/all" className="custom">
+            All
+          </a>
+        </Dialogue.Suggestion>
+      </Dialogue.Suggestions>,
+    );
+    expect(screen.getByRole('link', { name: 'Next question' }).getAttribute('href')).toBe('/q/next');
+    expect(screen.getByRole('button', { name: 'Show sources' }).getAttribute('type')).toBe('button');
+    const all = screen.getByRole('link', { name: 'All' });
+    expect(all.getAttribute('data-slot')).toBe('dialogue-suggestion');
+    expect(all.className).toContain('custom');
+    expect(all.className).toContain('rounded-full');
+  });
 });
 
 describe('AudioPlayer', () => {

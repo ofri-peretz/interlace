@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 156
+    "itemCount": 160
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,8 +29,8 @@
   },
   "facets": {
     "tier": {
-      "primitive": 68,
-      "pattern": 39,
+      "primitive": 69,
+      "pattern": 42,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -39,10 +39,10 @@
       "theme": 3
     },
     "category": {
-      "primitive": 68,
-      "pattern": 39,
-      "blog": 31,
-      "foundation": 23,
+      "primitive": 69,
+      "pattern": 42,
+      "blog": 33,
+      "foundation": 25,
       "data": 22,
       "effect": 17,
       "form": 16,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 93,
+      "server": 97,
       "client": 63
     },
     "keyboard": {
-      "none": 121,
+      "none": 125,
       "handled": 35
     },
     "loading": {
-      "none": 124,
+      "none": 128,
       "built-in": 32
     },
     "minViewport": {
-      "320": 92,
+      "320": 96,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -2584,16 +2584,25 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "DialogueTone",
+          "values": [
+            "muted",
+            "accent",
+            "inverse"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [],
         "motion": {
-          "driver": "none",
+          "driver": "css",
           "declaresPreference": false,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT"
@@ -4269,6 +4278,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json",
       "item": "https://ds.interlace.tools/r/lint-playground.json",
       "docs": "https://ds.interlace.tools/c/lint-playground"
+    },
+    {
+      "name": "list",
+      "title": "List",
+      "type": "registry:ui",
+      "summary": "A list whose markers carry the voice of the page: numbered claims, a row of checks, a \"what we're not saying\" list of crosses. The marker sits on the first line of each item, whatever the item holds: a sentence, rich text with inline `Citation` chips, a…",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ListMarker",
+          "values": [
+            "bullet",
+            "number",
+            "check",
+            "cross"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/list.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/list.json",
+      "item": "https://ds.interlace.tools/r/list.json",
+      "docs": "https://ds.interlace.tools/c/list"
     },
     {
       "name": "mdx-starter",
@@ -7459,6 +7526,64 @@
       "docs": "https://ds.interlace.tools/c/stats-template"
     },
     {
+      "name": "status-pills",
+      "title": "Status Pills",
+      "type": "registry:ui",
+      "summary": "A row of short facts about the page, set as pills: \"Checked by a second reader\", \"9 facts\", \"38 sources quoted\", \"About 1 minute out loud\". Built to sit on a brand band (`<Section tone=\"brand\">`) under a title, and just as readable on the page background.",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "StatusPillTone",
+          "values": [
+            "default",
+            "ok"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/status-pills.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/status-pills.json",
+      "item": "https://ds.interlace.tools/r/status-pills.json",
+      "docs": "https://ds.interlace.tools/c/status-pills"
+    },
+    {
       "name": "switch",
       "title": "Switch",
       "type": "registry:ui",
@@ -8370,6 +8495,69 @@
       "docs": "https://ds.interlace.tools/c/timeline-map"
     },
     {
+      "name": "timeline",
+      "title": "Timeline",
+      "type": "registry:ui",
+      "summary": "A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on one horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TimelineOrientation",
+          "values": [
+            "responsive",
+            "vertical"
+          ]
+        },
+        {
+          "name": "TimelineMarker",
+          "values": [
+            "default",
+            "accent"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/timeline.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/timeline.json",
+      "item": "https://ds.interlace.tools/r/timeline.json",
+      "docs": "https://ds.interlace.tools/c/timeline"
+    },
+    {
       "name": "toast",
       "title": "Toast",
       "type": "registry:ui",
@@ -8929,6 +9117,66 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/weave-texture.json",
       "item": "https://ds.interlace.tools/r/weave-texture.json",
       "docs": "https://ds.interlace.tools/c/weave-texture"
+    },
+    {
+      "name": "wordmark",
+      "title": "Wordmark",
+      "type": "registry:ui",
+      "summary": "A name set in more than one script, stacked: \"למה ככה\" over \"ليش هيك\" over \"WHYLIKEDIS\". Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the browser's font fallback all know…",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "WordmarkVariant",
+          "values": [
+            "sign",
+            "plain"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/wordmark.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/wordmark.json",
+      "item": "https://ds.interlace.tools/r/wordmark.json",
+      "docs": "https://ds.interlace.tools/c/wordmark"
     }
   ]
 }

@@ -16,7 +16,7 @@
  *   Citation                          (span — data-slot="citation")
  *     ├─ {children}                   (the claim text; inside the trigger for `marker="underline"`)
  *     └─ Popover
- *         ├─ PopoverTrigger           (sup > button for `number`, the underlined text for `underline`)
+ *         ├─ PopoverTrigger           (sup > button for `number`, the underlined text for `underline`, a pill button for `chip`)
  *         └─ PopoverContent           (data-min-viewport=320)
  *             ├─ status Badge         (optional: enough / short of sources)
  *             └─ ol > CitationSource  (publisher link, kind, blockquote)
@@ -27,6 +27,10 @@
  *   number follows it, like a footnote. Use it in dense prose.
  * - `underline`: the text itself is the trigger, with a dotted underline.
  *   Use it when the whole phrase is the claim.
+ * - `chip`: a small pill after the text names the source ("UN", "Yale
+ *   Avalon"), so the reader sees who backs the line before opening anything.
+ *   Use it when the publisher's name is itself the evidence. The pill text
+ *   defaults to the publishers, joined with " · "; set `chipLabel` to shorten.
  *
  * ## Safety
  *
@@ -56,6 +60,7 @@
  * | R19  | Tokens only                      | `text-primary`, `border-border`, Badge tones                |
  * | R25  | Client component                 | Required — Popover ships client hooks                       |
  * | R26  | Keyboard + touch                 | Native button trigger: Enter/Space/tap open, Escape closes  |
+ * |      | Label in name (WCAG 2.5.3)       | The chip's visible text starts its accessible name          |
  */
 
 import * as React from 'react';
@@ -101,8 +106,14 @@ export type CitationProps = Omit<React.ComponentProps<'span'>, 'children'> & {
   children: React.ReactNode;
   /** One or more sources. They stack in the popover in this order. */
   sources: CitationSourceData[];
-  /** `number` puts a footnote number after the text; `underline` makes the text the trigger. @default 'number' */
-  marker?: 'number' | 'underline';
+  /**
+   * `number` puts a footnote number after the text; `underline` makes the text
+   * the trigger; `chip` puts a pill naming the source after the text.
+   * @default 'number'
+   */
+  marker?: 'number' | 'underline' | 'chip';
+  /** The pill text for `marker="chip"`. @default the publishers, joined with " · " */
+  chipLabel?: string;
   /** The footnote number for `marker="number"`. @default 1 */
   number?: number;
   /** Whether the claim meets your sourcing bar. `short` shows a warning badge. */
@@ -112,6 +123,10 @@ export type CitationProps = Omit<React.ComponentProps<'span'>, 'children'> & {
   /** Accessible name of the trigger. @default "Sources (n)" */
   triggerLabel?: string;
 };
+
+/** The default pill text: each publisher once, in order. */
+export const chipText = (sources: CitationSourceData[]): string =>
+  [...new Set(sources.map((s) => s.publisher))].join(' · ');
 
 function CitationSource({ source }: { source: CitationSourceData }) {
   const href = safeHref(source.url);
@@ -147,12 +162,22 @@ function Citation({
   sources,
   marker = 'number',
   number = 1,
+  chipLabel,
   status,
   statusLabel,
   triggerLabel,
   className,
   ...props
 }: CitationProps) {
+  // No sources, no marker: an empty chip or "Sources (0)" would claim a
+  // backing the line does not have. The words render as plain text.
+  if (sources.length === 0) {
+    return (
+      <span data-slot="citation" data-marker="none" className={cn('inline', className)} {...props}>
+        {children}
+      </span>
+    );
+  }
   const label = triggerLabel ?? `Sources (${sources.length})`;
   const content = (
     <PopoverContent
@@ -189,6 +214,19 @@ function Citation({
             {children}
             <span className="sr-only">, {label}</span>
           </PopoverTrigger>
+        ) : marker === 'chip' ? (
+          <>
+            {children}{' '}
+            {/* The pill is 16px tall so it sits in the line; the ::after
+                pad grows its hit area to 24px (WCAG 2.5.8) without moving text. */}
+            <PopoverTrigger
+              data-slot="citation-trigger"
+              className="bg-primary/10 text-primary hover:bg-primary/15 relative inline-flex items-center rounded-md px-1.5 py-0.5 align-baseline text-xs leading-none font-semibold whitespace-nowrap after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+            >
+              {chipLabel ?? chipText(sources)}
+              <span className="sr-only">, {label}</span>
+            </PopoverTrigger>
+          </>
         ) : (
           <>
             {children}

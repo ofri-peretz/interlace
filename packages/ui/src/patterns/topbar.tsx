@@ -26,6 +26,11 @@
  * them as a second, wrapping row instead, which suits sites with three or
  * four short links. Above 768, the nav row is visible.
  *
+ * ## Logo height
+ *
+ * The row is at least 3.5rem tall and grows to fit a taller logo, such as a
+ * stacked multi-script `Wordmark`, so the logo slot never clips.
+ *
  * ## Current page
  *
  * Pass `currentHref` and the matching link gets `aria-current="page"` and a
@@ -181,7 +186,7 @@ function Topbar({
     >
       <div
         className={cn(
-          'mx-auto flex h-14 items-center justify-between gap-4 px-6',
+          'mx-auto flex min-h-14 items-center justify-between gap-4 px-6 py-2',
           CONTAINER_CLASSES[containerSize],
         )}
       >

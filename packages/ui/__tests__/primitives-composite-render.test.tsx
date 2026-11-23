@@ -126,7 +126,7 @@ describe('Avatar', () => {
 /* ── Callout ────────────────────────────────────────────────────────────── */
 
 describe('Callout', () => {
-  it.each(['info', 'note', 'success', 'warn', 'danger'] as const)(
+  it.each(['info', 'note', 'success', 'warn', 'danger', 'highlight'] as const)(
     'gives tone=%s its own icon, so the tone survives greyscale',
     (tone) => {
       const { container } = render(<Callout tone={tone}>body</Callout>);
@@ -137,14 +137,29 @@ describe('Callout', () => {
     },
   );
 
-  it('renders five visually distinct icons across the five tones', () => {
-    const shapes = (['info', 'note', 'success', 'warn', 'danger'] as const).map((tone) => {
+  it('renders six visually distinct icons across the six tones', () => {
+    const shapes = (['info', 'note', 'success', 'warn', 'danger', 'highlight'] as const).map((tone) => {
       const { container } = render(<Callout tone={tone}>x</Callout>);
       const d = container.querySelector('[data-slot="callout-icon"] path')?.getAttribute('d');
       cleanup();
       return d;
     });
-    expect(new Set(shapes).size).toBe(5);
+    expect(new Set(shapes).size).toBe(6);
+  });
+
+  it('puts a kicker, read as text, in place of the icon', () => {
+    const { container } = render(
+      <Callout tone="highlight" kicker={<span lang="he">דוגרי</span>}>
+        body
+      </Callout>,
+    );
+    const kicker = slot(container, 'callout-kicker')!;
+    expect(kicker.textContent).toBe('דוגרי');
+    expect(kicker.getAttribute('aria-hidden')).toBeNull();
+    expect(slot(container, 'callout-icon')).toBeNull();
+    // The highlight tone is the one that tints the surface.
+    expect(slot(container, 'callout')!.className).toContain('bg-highlight/15');
+    expect(slot(container, 'callout')!.className).not.toContain('bg-card/40');
   });
 
   it('falls back to the info tone when none is given', () => {
