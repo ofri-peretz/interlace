@@ -558,7 +558,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, states top-left|top-right|none, v1.0.0
 - [Split Text](https://ds.interlace.tools/c/split-text): A headline or short line that arrives a word, or a letter, at a time the first time it scrolls into view. It gives one line on a page a moment of attention; use it once or twice per page, on text short enough to read while it arrives.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/split-text.json`
-  - contract: client, states h1|h2|h3|h4|p|span, v1.0.0
+  - contract: client, v1.0.0
 - [Stagger List](https://ds.interlace.tools/c/stagger-list): A list whose items arrive one after another the first time it scrolls into view: steps of a process, recent updates, the points of an argument. The arrival gives the eye an order to read in; the list itself is ordinary.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stagger-list.json`
   - contract: client, v1.0.0

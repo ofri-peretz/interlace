@@ -7312,19 +7312,7 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [
-        {
-          "name": "SplitTextElement",
-          "values": [
-            "h1",
-            "h2",
-            "h3",
-            "h4",
-            "p",
-            "span"
-          ]
-        }
-      ],
+      "states": [],
       "a11y": {
         "roles": [],
         "aria": [
