@@ -151,6 +151,20 @@
           "source": ".changeset/claim-card.md"
         },
         {
+          "summary": "Four patterns for writing that shows its work, all server components:\n\n- `StanceList`: who holds which position, each with a toned badge and a sentence. The label is text; the page picks the tone.\n- `SideBySide`: two or three accounts next to each other (\"what you hear\" / \"what the record shows\"), stacking below `md`; each column is a labelled region.\n- `Dialogue`: a written conversation with named speakers on opposite edges.\n- `AudioPlayer`: a titled clip on the browser's own `<audio controls>`, with a transcript in a native `<details>`.",
+          "components": [
+            "stance-list",
+            "side-by-side",
+            "dialogue",
+            "audio-player"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/content-patterns.md"
+        },
+        {
           "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
           "components": [
             "button",

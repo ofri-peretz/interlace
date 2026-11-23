@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 150
+    "itemCount": 154
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 67,
-      "pattern": 34,
+      "pattern": 38,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 67,
-      "pattern": 34,
-      "blog": 26,
+      "pattern": 38,
+      "blog": 30,
       "foundation": 22,
       "decorative": 21,
       "data": 21,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 84,
+      "server": 88,
       "client": 66
     },
     "keyboard": {
-      "none": 115,
+      "none": 119,
       "handled": 35
     },
     "loading": {
-      "none": 118,
+      "none": 122,
       "built-in": 32
     },
     "minViewport": {
-      "320": 84,
+      "320": 88,
       "480": 7,
       "768": 1,
       "inherited": 58
@@ -661,6 +661,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/aspect-ratio.json",
       "item": "https://ds.interlace.tools/r/aspect-ratio.json",
       "docs": "https://ds.interlace.tools/c/aspect-ratio"
+    },
+    {
+      "name": "audio-player",
+      "title": "Audio Player",
+      "type": "registry:ui",
+      "summary": "A titled audio clip with its transcript. The player is the browser's own `<audio controls>`: it is keyboard- and screen-reader-operable on every platform, honours the OS media keys, and needs no JavaScript from us. What this pattern adds is the frame…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/audio-player.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/audio-player.json",
+      "item": "https://ds.interlace.tools/r/audio-player.json",
+      "docs": "https://ds.interlace.tools/c/audio-player"
     },
     {
       "name": "auth-template",
@@ -2760,6 +2810,54 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dialog.json",
       "item": "https://ds.interlace.tools/r/dialog.json",
       "docs": "https://ds.interlace.tools/c/dialog"
+    },
+    {
+      "name": "dialogue",
+      "title": "Dialogue",
+      "type": "registry:ui",
+      "summary": "A written conversation: a script of turns, each with a speaker. Use it for a sample exchange (\"what to say when your child asks…\"), an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/dialogue.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dialogue.json",
+      "item": "https://ds.interlace.tools/r/dialogue.json",
+      "docs": "https://ds.interlace.tools/c/dialogue"
     },
     {
       "name": "distribution",
@@ -6510,6 +6608,68 @@
       "docs": "https://ds.interlace.tools/c/shimmer-button"
     },
     {
+      "name": "side-by-side",
+      "title": "Side By Side",
+      "type": "registry:ui",
+      "summary": "Two (or three) accounts of the same thing, set next to each other so the reader compares them line by line: what is said and what the record shows, before and after, one source and another. Columns stack on narrow screens, in source order, so the…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "SideBySideTone",
+          "values": [
+            "neutral",
+            "success",
+            "warning",
+            "info",
+            "destructive",
+            "highlight"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/side-by-side.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/side-by-side.json",
+      "item": "https://ds.interlace.tools/r/side-by-side.json",
+      "docs": "https://ds.interlace.tools/c/side-by-side"
+    },
+    {
       "name": "sign-in-form",
       "title": "Sign In Form",
       "type": "registry:ui",
@@ -7030,6 +7190,67 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/stack.json",
       "item": "https://ds.interlace.tools/r/stack.json",
       "docs": "https://ds.interlace.tools/c/stack"
+    },
+    {
+      "name": "stance-list",
+      "title": "Stance List",
+      "type": "registry:ui",
+      "summary": "Who holds which position on a question. Each row names a holder (a person, a group, a school of thought), labels their position with a toned badge, and says it in a sentence or two, optionally with a source.",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "StanceTone",
+          "values": [
+            "neutral",
+            "success",
+            "warning",
+            "info",
+            "destructive",
+            "highlight"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "badge",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/stance-list.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/stance-list.json",
+      "item": "https://ds.interlace.tools/r/stance-list.json",
+      "docs": "https://ds.interlace.tools/c/stance-list"
     },
     {
       "name": "stars-background",

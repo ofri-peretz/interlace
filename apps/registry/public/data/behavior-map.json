@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T01:29:27.736Z",
+  "generatedAt": "2026-11-23T01:33:45.564Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -927,6 +927,115 @@
       "states": [],
       "coverage": {
         "inGate": true
+      }
+    },
+    "audio-player": {
+      "sourcePath": "packages/ui/src/patterns/audio-player.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint on the page surface",
+          "ratios": [
+            8.8,
+            11.79,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "primary tint inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "auth-template": {
@@ -4751,6 +4860,115 @@
       "textAlternative": {
         "kind": "sr-only-copy",
         "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "dialogue": {
+      "sourcePath": "packages/ui/src/patterns/dialogue.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "muted",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a muted surface",
+          "ratios": [
+            8.81,
+            10.48,
+            7.34,
+            8.64
+          ],
+          "worst": 7.34,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "accent-foreground",
+          "bg": "accent",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "hover/highlight face",
+          "ratios": [
+            8.98,
+            10.46,
+            8.95,
+            9.65
+          ],
+          "worst": 8.95,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
       },
       "states": [],
       "coverage": {
@@ -9580,6 +9798,39 @@
         "inGate": false
       }
     },
+    "side-by-side": {
+      "sourcePath": "packages/ui/src/patterns/side-by-side.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "sign-in-form": {
       "sourcePath": "packages/ui/src/patterns/sign-in-form.tsx",
       "keyboard": null,
@@ -9948,6 +10199,58 @@
       "states": [],
       "coverage": {
         "inGate": true
+      }
+    },
+    "stance-list": {
+      "sourcePath": "packages/ui/src/patterns/stance-list.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "stars-background": {

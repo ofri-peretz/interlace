@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "audio-player",
+  "type": "registry:ui",
+  "title": "Audio Player",
+  "description": "A titled audio clip with its transcript. The player is the browser's own `<audio controls>`: it is keyboard- and screen-reader-operable on every platform, honours the OS media keys, and needs no JavaScript from us. What this pattern adds is the frame…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "blog",
+    "pattern"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/audio-player.tsx",
+      "target": "components/ui/patterns/audio-player.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/audio-player v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/audio-player\n// What changed since: https://ds.interlace.tools/c/audio-player#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — AudioPlayer\n *\n * A titled audio clip with its transcript. The player is the browser's own\n * `<audio controls>`: it is keyboard- and screen-reader-operable on every\n * platform, honours the OS media keys, and needs no JavaScript from us. What\n * this pattern adds is the frame around it: a title, a line of detail (length,\n * speaker), and a transcript in a native `<details>`, because audio without a\n * transcript fails WCAG 1.2.1 and leaves out everyone who cannot listen\n * right now.\n *\n * ## Anatomy\n *\n *   AudioPlayer                       (figure — data-min-viewport=320)\n *     ├─ figcaption                   (title + detail)\n *     ├─ audio[controls]              (preload=\"metadata\" by default)\n *     └─ details > summary + transcript   (when `transcript` is given)\n *\n * ## MIN_VIEWPORT — 320\n *\n * The native control stretches to the figure's width.\n *\n * | Rule | Concept                          | Where in this file                                          |\n * | ---- | -------------------------------- | ----------------------------------------------------------- |\n * | R4   | Extends native el                | `figure` props; `audioProps` reach the `<audio>`            |\n * | R6   | data-slot per part               | audio-player / -audio / -transcript                         |\n * | R7   | cn + ...rest                     | `cn(…, className)` + `{...props}`                           |\n * | R12  | Reuse over wrap                  | The browser owns playback, seeking, volume and media keys   |\n * | R14  | Declares min viewport            | `data-min-viewport` on the root + exported const            |\n * | R19  | Tokens only                      | `bg-card`, `border-border`, `text-muted-foreground`         |\n * | R25  | Server component                 | No hooks → no `'use client'`                                |\n * | R26  | A11y from native el              | `<audio controls>`, `<figcaption>`, transcript in `<details>` |\n */\n\nimport { cn } from '@/lib/utils';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ntype AudioPlayerProps = Omit<React.ComponentProps<'figure'>, 'title' | 'children'> & {\n  /** The audio file URL. */\n  src: string;\n  /** What the clip is. Also names the audio element for assistive tech. */\n  title: string;\n  /** A short line under the title: length, speaker, date. */\n  detail?: React.ReactNode;\n  /** The words spoken. Strongly recommended (WCAG 1.2.1). */\n  transcript?: React.ReactNode;\n  /** Summary text of the transcript toggle. @default 'Transcript' */\n  transcriptLabel?: React.ReactNode;\n  /** Passed to the `<audio>` element (`preload`, `onPlay`, …). */\n  audioProps?: Omit<React.ComponentProps<'audio'>, 'src' | 'controls'>;\n};\n\nfunction AudioPlayer({\n  src,\n  title,\n  detail,\n  transcript,\n  transcriptLabel = 'Transcript',\n  audioProps,\n  className,\n  ...props\n}: AudioPlayerProps) {\n  return (\n    <figure\n      data-slot=\"audio-player\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('bg-card text-card-foreground border-border space-y-3 rounded-xl border p-4', className)}\n      {...props}\n    >\n      <figcaption>\n        <p className=\"font-medium\">{title}</p>\n        {detail ? <p className=\"text-muted-foreground text-sm\">{detail}</p> : null}\n      </figcaption>\n      <audio\n        data-slot=\"audio-player-audio\"\n        src={src}\n        controls\n        preload=\"metadata\"\n        aria-label={title}\n        className=\"w-full\"\n        {...audioProps}\n      />\n      {transcript ? (\n        <details data-slot=\"audio-player-transcript\" className=\"text-sm\">\n          <summary className=\"hover:text-primary cursor-pointer rounded-sm font-medium\">\n            {transcriptLabel}\n          </summary>\n          <div className=\"text-muted-foreground space-y-2 pt-2 leading-relaxed\">{transcript}</div>\n        </details>\n      ) : null}\n    </figure>\n  );\n}\n\nexport { AudioPlayer };\nexport type { AudioPlayerProps };\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": false,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/audio-player\n\nInstalled to `components/ui/patterns/audio-player.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/audio-player';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/audio-player\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

@@ -171,6 +171,16 @@
     "previewDark": "primitives-aspectratio--dark",
     "skeleton": null
   },
+  "audio-player": {
+    "title": "Blocks/AudioPlayer",
+    "storyIds": [
+      "blocks-audioplayer--default",
+      "blocks-audioplayer--without-transcript"
+    ],
+    "preview": "blocks-audioplayer--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "auth-template": {
     "title": "Templates/AuthTemplate",
     "storyIds": [
@@ -712,6 +722,15 @@
     ],
     "preview": "primitives-dialog--default",
     "previewDark": "primitives-dialog--dark",
+    "skeleton": null
+  },
+  "dialogue": {
+    "title": "Blocks/Dialogue",
+    "storyIds": [
+      "blocks-dialogue--default"
+    ],
+    "preview": "blocks-dialogue--default",
+    "previewDark": null,
     "skeleton": null
   },
   "distribution": {
@@ -1705,6 +1724,16 @@
     "previewDark": null,
     "skeleton": null
   },
+  "side-by-side": {
+    "title": "Blocks/SideBySide",
+    "storyIds": [
+      "blocks-sidebyside--default",
+      "blocks-sidebyside--three-columns"
+    ],
+    "preview": "blocks-sidebyside--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "sign-in-form": {
     "title": "Blocks/SignInForm",
     "storyIds": [
@@ -1830,6 +1859,15 @@
     ],
     "preview": "primitives-stack--vertical",
     "previewDark": "primitives-stack--dark",
+    "skeleton": null
+  },
+  "stance-list": {
+    "title": "Blocks/StanceList",
+    "storyIds": [
+      "blocks-stancelist--default"
+    ],
+    "preview": "blocks-stancelist--default",
+    "previewDark": null,
     "skeleton": null
   },
   "stars-background": {

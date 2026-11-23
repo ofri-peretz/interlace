@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stance-list",
+  "type": "registry:ui",
+  "title": "Stance List",
+  "description": "Who holds which position on a question. Each row names a holder (a person, a group, a school of thought), labels their position with a toned badge, and says it in a sentence or two, optionally with a source.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "blog",
+    "pattern"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/badge.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/stance-list.tsx",
+      "target": "components/ui/patterns/stance-list.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/stance-list v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/stance-list\n// What changed since: https://ds.interlace.tools/c/stance-list#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — StanceList\n *\n * Who holds which position on a question. Each row names a holder (a person,\n * a group, a school of thought), labels their position with a toned badge,\n * and says it in a sentence or two, optionally with a source.\n *\n * Built for writing that has to be fair to every side: a debate summary, a\n * \"where people stand\" box, the positions in a policy review. The tone of a\n * badge is the page's choice, so the list itself takes no side.\n *\n * ## Anatomy\n *\n *   StanceList                        (ul — data-min-viewport=320)\n *     └─ StanceItem × n               (li)\n *         ├─ holder                   (p — font-medium)\n *         ├─ Badge                    (position label, toned)\n *         └─ children                 (div — the position in words; may hold Citation)\n *\n * ## MIN_VIEWPORT — 320\n *\n * Text rows; the holder and badge wrap onto two lines when space runs out.\n *\n * | Rule | Concept                          | Where in this file                                          |\n * | ---- | -------------------------------- | ----------------------------------------------------------- |\n * | R4   | Extends native el                | `ul` / `li` props                                           |\n * | R6   | data-slot per part               | stance-list / stance-item                                   |\n * | R7   | cn + ...rest                     | `cn(…, className)` + `{...props}`                           |\n * | R8   | Enums, not booleans              | `tone`                                                      |\n * | R14  | Declares min viewport            | `data-min-viewport` on the root + exported const            |\n * | R19  | Tokens only                      | Badge tones, `border-border`, `text-muted-foreground`       |\n * | R25  | Server component                 | No hooks → no `'use client'`                                |\n * | R26  | A11y from native el              | A real list; the label is text, not colour alone            |\n */\n\nimport { cn } from '@/lib/utils';\nimport { Badge } from '@/components/ui/badge';\n\nexport const MIN_VIEWPORT = 320 as const;\n\nexport type StanceTone = 'neutral' | 'success' | 'warning' | 'info' | 'destructive' | 'highlight';\n\nconst TONE_TO_VARIANT = {\n  neutral: 'outline',\n  success: 'success',\n  warning: 'warning',\n  info: 'info',\n  destructive: 'destructive',\n  highlight: 'highlight',\n} as const satisfies Record<StanceTone, React.ComponentProps<typeof Badge>['variant']>;\n\nfunction StanceList({ className, ...props }: React.ComponentProps<'ul'>) {\n  return (\n    <ul\n      data-slot=\"stance-list\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('divide-border border-border divide-y rounded-xl border', className)}\n      {...props}\n    />\n  );\n}\n\ntype StanceItemProps = React.ComponentProps<'li'> & {\n  /** Who holds the position. */\n  holder: React.ReactNode;\n  /** The position in a word or two: \"Supports\", \"Opposes\", \"Mixed\". The text carries the meaning; the tone only reinforces it. */\n  stance: React.ReactNode;\n  /** Badge colour for the position. @default 'neutral' */\n  tone?: StanceTone;\n};\n\nfunction StanceItem({ holder, stance, tone = 'neutral', className, children, ...props }: StanceItemProps) {\n  return (\n    <li data-slot=\"stance-item\" className={cn('space-y-2 p-4', className)} {...props}>\n      <div className=\"flex flex-wrap items-center gap-x-3 gap-y-1\">\n        <p className=\"font-medium\">{holder}</p>\n        <Badge variant={TONE_TO_VARIANT[tone]}>{stance}</Badge>\n      </div>\n      {children ? <div className=\"text-muted-foreground text-sm leading-relaxed\">{children}</div> : null}\n    </li>\n  );\n}\n\nconst StanceListWithDot = Object.assign(StanceList, { Item: StanceItem });\n\nexport { StanceListWithDot as StanceList, StanceItem };\nexport type { StanceItemProps };\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": false,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/stance-list\n\nInstalled to `components/ui/patterns/stance-list.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/stance-list';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/stance-list\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

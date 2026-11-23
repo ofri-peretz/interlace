@@ -1750,6 +1750,24 @@
       }
     },
     {
+      "name": "audio-player",
+      "type": "registry:ui",
+      "title": "Audio Player",
+      "description": "A titled audio clip with its transcript. The player is the browser's own `<audio controls>`: it is keyboard- and screen-reader-operable on every platform, honours the OS media keys, and needs no JavaScript from us. What this pattern adds is the frame…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "author-byline",
       "type": "registry:ui",
       "title": "Author Byline",
@@ -1873,6 +1891,24 @@
         "loading": true,
         "version": "2.0.0",
         "since": "1.1.0"
+      }
+    },
+    {
+      "name": "dialogue",
+      "type": "registry:ui",
+      "title": "Dialogue",
+      "description": "A written conversation: a script of turns, each with a speaker. Use it for a sample exchange (\"what to say when your child asks…\"), an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -2218,6 +2254,24 @@
       }
     },
     {
+      "name": "side-by-side",
+      "type": "registry:ui",
+      "title": "Side By Side",
+      "description": "Two (or three) accounts of the same thing, set next to each other so the reader compares them line by line: what is said and what the record shows, before and after, one source and another. Columns stack on narrow screens, in source order, so the…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "sign-in-form",
       "type": "registry:ui",
       "title": "Sign In Form",
@@ -2233,6 +2287,24 @@
         "loading": false,
         "version": "1.2.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "stance-list",
+      "type": "registry:ui",
+      "title": "Stance List",
+      "description": "Who holds which position on a question. Each row names a holder (a person, a group, a school of thought), labels their position with a toned badge, and says it in a sentence or two, optionally with a source.",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
