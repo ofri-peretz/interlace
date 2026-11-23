@@ -2362,6 +2362,24 @@
       }
     },
     {
+      "name": "status-pills",
+      "type": "registry:ui",
+      "title": "Status Pills",
+      "description": "A row of short facts about the page, set as pills: \"Checked by a second reader\", \"9 facts\", \"38 sources quoted\", \"About 1 minute out loud\". Built to sit on a brand band (`<Section tone=\"brand\">`) under a title, and just as readable on the page background.",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "testimonial",
       "type": "registry:ui",
       "title": "Testimonial",

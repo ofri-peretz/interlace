@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 158
+    "itemCount": 159
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 69,
-      "pattern": 40,
+      "pattern": 41,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 69,
-      "pattern": 40,
-      "blog": 32,
+      "pattern": 41,
+      "blog": 33,
       "foundation": 24,
       "data": 22,
       "effect": 17,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 95,
+      "server": 96,
       "client": 63
     },
     "keyboard": {
-      "none": 123,
+      "none": 124,
       "handled": 35
     },
     "loading": {
-      "none": 126,
+      "none": 127,
       "built-in": 32
     },
     "minViewport": {
-      "320": 94,
+      "320": 95,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -7524,6 +7524,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/stats-template.json",
       "item": "https://ds.interlace.tools/r/stats-template.json",
       "docs": "https://ds.interlace.tools/c/stats-template"
+    },
+    {
+      "name": "status-pills",
+      "title": "Status Pills",
+      "type": "registry:ui",
+      "summary": "A row of short facts about the page, set as pills: \"Checked by a second reader\", \"9 facts\", \"38 sources quoted\", \"About 1 minute out loud\". Built to sit on a brand band (`<Section tone=\"brand\">`) under a title, and just as readable on the page background.",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "StatusPillTone",
+          "values": [
+            "default",
+            "ok"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/status-pills.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/status-pills.json",
+      "item": "https://ds.interlace.tools/r/status-pills.json",
+      "docs": "https://ds.interlace.tools/c/status-pills"
     },
     {
       "name": "switch",

@@ -1875,6 +1875,16 @@
     "previewDark": "templates-statstemplate--dark",
     "skeleton": "templates-statstemplate--page-skeleton"
   },
+  "status-pills": {
+    "title": "Blocks/StatusPills",
+    "storyIds": [
+      "blocks-statuspills--default",
+      "blocks-statuspills--on-ab-rand-band"
+    ],
+    "preview": "blocks-statuspills--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "strand-field": {
     "title": "Effects/StrandField",
     "storyIds": [

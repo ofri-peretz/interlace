@@ -371,6 +371,17 @@
           "source": ".changeset/site-chrome.md"
         },
         {
+          "summary": "New `StatusPills`: short facts about a page (\"9 facts\", \"38 sources quoted\") as a wrapping row of pills, made to sit on a brand band under a title. A default pill is a tint of the text colour around it, so the same component reads on a dark band and on the page. `tone=\"ok\"` is a solid pill with a check in the success colour, for a passed check.",
+          "components": [
+            "status-pills"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/status-pills.md"
+        },
+        {
           "summary": "`ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.",
           "components": [
             "thread-mark"
