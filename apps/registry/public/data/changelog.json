@@ -672,6 +672,28 @@
           "source": ".changeset/effects-review-fixes.md"
         },
         {
+          "summary": "FeaturedIcon: the neutral ring is an opaque mix with the background, like the other tones, so it looks the same on a tinted band.",
+          "components": [
+            "featured-icon"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/featured-icon-neutral-ring.md"
+        },
+        {
+          "summary": "Hero no longer hides its media slot from screen readers. It used to set `aria-hidden` on any non-string media, which hid an interactive panel or a form while leaving it focusable. The media is now read by default; pass `mediaRole=\"decorative\"` for ornament. The vertical padding moves to `py-section-comfortable`, the same fluid curve as Section.",
+          "components": [
+            "hero"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/hero-media-readable.md"
+        },
+        {
           "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",
           "components": [
             "grid",

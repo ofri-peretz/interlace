@@ -372,7 +372,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v2.0.0
 - [Hero](https://ds.interlace.tools/c/hero): The above-the-fold section every landing page reaches for: eyebrow, headline, supporting copy, primary + secondary CTAs, optional media slot. Server-component-safe; the calm-confident-technical voice is enforced by Typography variants (no h1 with…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero.json`
-  - contract: server, min 320px, v2.0.0
+  - contract: server, min 320px, v2.0.1
 - [Hero Cosmic](https://ds.interlace.tools/c/hero-cosmic): The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero-cosmic.json`
   - contract: client, min 320px, v3.1.0
