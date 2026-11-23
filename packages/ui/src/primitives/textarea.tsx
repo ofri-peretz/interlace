@@ -63,7 +63,7 @@ export const MIN_VIEWPORT = 320 as const;
 const textareaVariants = cva(
   // Base — surface, border, radius, focus + invalid rings, disabled.
   [
-    'block w-full min-w-0 border border-input bg-transparent',
+    'block w-full min-w-0 border border-input bg-background text-foreground',
     'rounded-lg shadow-xs outline-none transition-[color,box-shadow]',
     'placeholder:text-muted-foreground',
     // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
@@ -71,7 +71,6 @@ const textareaVariants = cva(
     'focus-visible:border-ring focus-visible:ring-ring/60 focus-visible:ring-[3px]',
     'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
     'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
-    'dark:bg-input/30',
   ].join(' '),
   {
     variants: {

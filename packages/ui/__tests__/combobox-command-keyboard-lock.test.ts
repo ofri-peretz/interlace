@@ -224,9 +224,9 @@ describe('every named part carries a data-slot', () => {
   const NO_ELEMENT = new Set([
     // Delegates entirely to the parts above it.
     'ComboboxCompose',
-    // A hook — returns void.
-    'useCommandPaletteHotkey',
   ]);
+  /** A hook (`useX`) renders nothing, so it has no part to name. */
+  const isHook = (name: string) => /^use[A-Z]/.test(name);
 
   for (const [file, source] of [
     ['combobox.tsx', COMBOBOX],
@@ -234,7 +234,7 @@ describe('every named part carries a data-slot', () => {
   ] as const) {
     it(`${file}`, () => {
       const missing = chunks(source)
-        .filter(({ name }) => !NO_ELEMENT.has(name))
+        .filter(({ name }) => !NO_ELEMENT.has(name) && !isHook(name))
         .filter(({ text }) => !text.includes('data-slot='))
         .map(({ name }) => name);
       expect(
