@@ -47,7 +47,7 @@
  * | R19  | Tokens only                      | `bg-primary-subtle` / `text-foreground` / spacing scale     |
  * | R20  | AA contrast                      | accent foreground on tinted surface                         |
  * | R25  | Server component                 | No hooks                                                    |
- * | R26  | A11y                             | `<section>` with `aria-labelledby` when title is text       |
+ * | R26  | A11y                             | `<section aria-labelledby>` the title when there is one     |
  */
 
 import * as React from "react";
@@ -109,6 +109,8 @@ function CTASection({
   className,
   ...props
 }: CTASectionProps) {
+  // useId holds no state, so this stays a server component.
+  const titleId = React.useId();
   if (loading) {
     return (
       <Skeleton
@@ -128,6 +130,7 @@ function CTASection({
       data-tone={tone}
       data-variant={variant}
       data-align={align}
+      aria-labelledby={title ? titleId : undefined}
       className={cn(
         "py-section-comfortable",
         // A band paints the whole width; a card leaves the page behind it.
@@ -167,6 +170,7 @@ function CTASection({
           >
             {title ? (
               <Typography
+                id={titleId}
                 variant="h2"
                 as="h2"
                 className="text-section text-balance"

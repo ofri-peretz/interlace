@@ -2032,7 +2032,9 @@
       "states": [],
       "a11y": {
         "roles": [],
-        "aria": [],
+        "aria": [
+          "aria-labelledby"
+        ],
         "motion": {
           "driver": "none",
           "declaresPreference": false,

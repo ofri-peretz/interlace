@@ -60,4 +60,16 @@ describe("CTASection variants", () => {
   it("sets the title on the section size of the fluid scale", () => {
     expect(r(<CTASection title="Go" />)).toContain("text-section");
   });
+
+  it("names the section by its title, and leaves it unnamed without one", () => {
+    const html = renderToStaticMarkup(<CTASection title="Book a session" />);
+    const id = html.match(/<section[^>]*aria-labelledby="([^"]+)"/)?.[1];
+    expect(id).toBeTruthy();
+    expect(html).toMatch(
+      new RegExp(`<h2[^>]*id="${id}"[^>]*>Book a session</h2>`),
+    );
+    expect(renderToStaticMarkup(<CTASection />)).not.toContain(
+      "aria-labelledby",
+    );
+  });
 });
