@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 159
+    "itemCount": 160
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 69,
-      "pattern": 41,
+      "pattern": 42,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,9 +40,9 @@
     },
     "category": {
       "primitive": 69,
-      "pattern": 41,
+      "pattern": 42,
       "blog": 33,
-      "foundation": 24,
+      "foundation": 25,
       "data": 22,
       "effect": 17,
       "form": 16,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 96,
+      "server": 97,
       "client": 63
     },
     "keyboard": {
-      "none": 124,
+      "none": 125,
       "handled": 35
     },
     "loading": {
-      "none": 127,
+      "none": 128,
       "built-in": 32
     },
     "minViewport": {
-      "320": 95,
+      "320": 96,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -9117,6 +9117,66 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/weave-texture.json",
       "item": "https://ds.interlace.tools/r/weave-texture.json",
       "docs": "https://ds.interlace.tools/c/weave-texture"
+    },
+    {
+      "name": "wordmark",
+      "title": "Wordmark",
+      "type": "registry:ui",
+      "summary": "A name set in more than one script, stacked: \"למה ככה\" over \"ليش هيك\" over \"WHYLIKEDIS\". Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the browser's font fallback all know…",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "WordmarkVariant",
+          "values": [
+            "sign",
+            "plain"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/wordmark.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/wordmark.json",
+      "item": "https://ds.interlace.tools/r/wordmark.json",
+      "docs": "https://ds.interlace.tools/c/wordmark"
     }
   ]
 }

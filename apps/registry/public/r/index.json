@@ -2488,6 +2488,24 @@
       }
     },
     {
+      "name": "wordmark",
+      "type": "registry:ui",
+      "title": "Wordmark",
+      "description": "A name set in more than one script, stacked: \"למה ככה\" over \"ليش هيك\" over \"WHYLIKEDIS\". Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the browser's font fallback all know…",
+      "categories": [
+        "foundation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "delta",
       "type": "registry:ui",
       "title": "Delta",

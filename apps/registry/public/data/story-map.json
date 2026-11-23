@@ -2262,5 +2262,16 @@
     "preview": "effects-weavetexture--default",
     "previewDark": null,
     "skeleton": null
+  },
+  "wordmark": {
+    "title": "Blocks/Wordmark",
+    "storyIds": [
+      "blocks-wordmark--default",
+      "blocks-wordmark--on-ab-rand-band",
+      "blocks-wordmark--in-the-topbar"
+    ],
+    "preview": "blocks-wordmark--default",
+    "previewDark": null,
+    "skeleton": null
   }
 }
