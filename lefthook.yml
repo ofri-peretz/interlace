@@ -14,7 +14,7 @@ pre-commit:
   parallel: true
   commands:
     commitlint:
-      run: 'true'
+      run: "true"
 
 pre-push:
   parallel: true
@@ -25,3 +25,5 @@ pre-push:
       run: npx --no turbo run test --output-logs=errors-only
     build:
       run: npx --no turbo run build --output-logs=errors-only
+    guidance:
+      run: npm run lint:guidance

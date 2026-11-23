@@ -64,3 +64,5 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: eslint (turbo --affected)
         run: npx --no turbo run lint:eslint --affected --output-logs=new-only
+      - name: eslint (agent guidance)
+        run: npm run lint:guidance
