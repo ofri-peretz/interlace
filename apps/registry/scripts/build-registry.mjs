@@ -489,10 +489,11 @@ const STYLE_ITEMS = [
       'structure/layout.css',
       'structure/radius.css',
       'structure/motion.css',
+      'structure/scheme.css',
     ],
     requires: [],
     description:
-      '@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, and layered brand + semantic colour tokens. Changes nothing the host app already styles.',
+      '@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.',
   },
   {
     name: FOUNDATION_ITEM,

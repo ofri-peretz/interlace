@@ -20,7 +20,7 @@ contrast contract at the bottom.
 ## The cascade
 
 ```
-  layer 1   --interlace-primary: #7d350c        ← the only hex literals
+  layer 1   --interlace-primary: oklch(0.422 0.1117 45.2)  ← the only colour literals
      │
      │      brand/interlace.css, @layer interlace.brand
      ▼
@@ -175,21 +175,21 @@ no repaint between them'`).
 ## Forking the brand
 
 The entire override surface is `@layer interlace.brand`: the `--interlace-*`
-literals, in both schemes. A theme file contains hex values and nothing
-else — no semantic alias, no `@theme` block, no component CSS.
+literals, in both schemes. A theme file contains colour values (OKLCH) and
+nothing else — no semantic alias, no `@theme` block, no component CSS.
 
 ```css
 @layer interlace.brand {
   [data-theme='harbor'] {
-    --interlace-primary: #0f4c81;
-    --interlace-background: #f7f9fb;
+    --interlace-primary: oklch(0.409 0.1065 250.2);
+    --interlace-background: oklch(0.981 0.0034 247.9);
     /* …the other 52… */
   }
 
   [data-theme='harbor'].dark,
   [data-theme='harbor'][data-scheme='dark'] {
-    --interlace-primary: #8dc2f0;
-    --interlace-background: #06111f;
+    --interlace-primary: oklch(0.794 0.086 245.4);
+    --interlace-background: oklch(0.175 0.0338 254.1);
     /* … */
   }
 }

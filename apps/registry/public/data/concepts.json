@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T03:38:55.101Z",
+  "generatedAt": "2026-11-23T04:50:33.217Z",
   "source": "apps/storybook/src/stories/concepts",
   "pages": [
     {
@@ -756,7 +756,7 @@
         {
           "type": "code",
           "lang": null,
-          "code": "  layer 1   --interlace-primary: #7d350c        ← the only hex literals\n     │\n     │      brand/interlace.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      brand/interlace.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
+          "code": "  layer 1   --interlace-primary: oklch(0.422 0.1117 45.2)  ← the only colour literals\n     │\n     │      brand/interlace.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      brand/interlace.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
         },
         {
           "type": "paragraph",
@@ -941,12 +941,12 @@
         },
         {
           "type": "paragraph",
-          "text": "The entire override surface is `@layer interlace.brand`: the `--interlace-*` literals, in both schemes. A theme file contains hex values and nothing else — no semantic alias, no `@theme` block, no component CSS."
+          "text": "The entire override surface is `@layer interlace.brand`: the `--interlace-*` literals, in both schemes. A theme file contains colour values (OKLCH) and nothing else — no semantic alias, no `@theme` block, no component CSS."
         },
         {
           "type": "code",
           "lang": "css",
-          "code": "@layer interlace.brand {\n  [data-theme='harbor'] {\n    --interlace-primary: #0f4c81;\n    --interlace-background: #f7f9fb;\n    /* …the other 52… */\n  }\n\n  [data-theme='harbor'].dark,\n  [data-theme='harbor'][data-scheme='dark'] {\n    --interlace-primary: #8dc2f0;\n    --interlace-background: #06111f;\n    /* … */\n  }\n}"
+          "code": "@layer interlace.brand {\n  [data-theme='harbor'] {\n    --interlace-primary: oklch(0.409 0.1065 250.2);\n    --interlace-background: oklch(0.981 0.0034 247.9);\n    /* …the other 52… */\n  }\n\n  [data-theme='harbor'].dark,\n  [data-theme='harbor'][data-scheme='dark'] {\n    --interlace-primary: oklch(0.794 0.086 245.4);\n    --interlace-background: oklch(0.175 0.0338 254.1);\n    /* … */\n  }\n}"
         },
         {
           "type": "paragraph",

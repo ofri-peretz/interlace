@@ -34,6 +34,8 @@ import { render } from '@testing-library/react';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
+import { COLOR_LITERAL, contrast, parseColor, parseHex, type RGB } from './color-math.js';
+
 // ── the reduced-motion seam ─────────────────────────────────────────────
 //
 // Mocked rather than driven through `window.matchMedia`, and the reason is
@@ -200,39 +202,6 @@ describe('ArticleCard — dates are pinned to UTC', () => {
 // / 1.4.11 by token maths rather than by axe (see composite-contrast-lock), so
 // the check is arithmetic, on the same theme file.
 
-type RGB = [number, number, number];
-
-function parseHex(hex: string): RGB | null {
-  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
-  if (!m) return null;
-  const h =
-    m[1].length === 3
-      ? m[1]
-          .split('')
-          .map((c) => c + c)
-          .join('')
-      : m[1];
-  return [
-    parseInt(h.slice(0, 2), 16),
-    parseInt(h.slice(2, 4), 16),
-    parseInt(h.slice(4, 6), 16),
-  ];
-}
-
-function luminance([r, g, b]: RGB): number {
-  const [rs, gs, bs] = [r, g, b].map((v) => {
-    const s = v / 255;
-    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
-
-function contrast(a: RGB, b: RGB): number {
-  const [la, lb] = [luminance(a), luminance(b)];
-  const [hi, lo] = la > lb ? [la, lb] : [lb, la];
-  return (hi + 0.05) / (lo + 0.05);
-}
-
 // The palette (brand) and the names bound to it (semantics), read as one.
 const THEME_CSS = ['brand/interlace.css', 'semantics.css'].map((f) =>
   resolve(__dirname, '../styles', f),
@@ -261,10 +230,10 @@ function readTheme(): Record<'light' | 'dark', Map<string, RGB>> {
   >;
   const sections = { light: css.slice(0, darkAt), dark: css.slice(darkAt) };
   for (const mode of ['light', 'dark'] as const) {
-    const re = /--interlace-([a-z0-9-]+):\s*(#[0-9a-fA-F]{3,8})\s*;/g;
+    const re = new RegExp(String.raw`--interlace-([a-z0-9-]+):\s*(${COLOR_LITERAL})\s*;`, 'g');
     let m: RegExpExecArray | null;
     while ((m = re.exec(sections[mode])) !== null) {
-      const rgb = parseHex(m[2]);
+      const rgb = parseColor(m[2]);
       if (rgb) out[mode].set(m[1], rgb);
     }
   }

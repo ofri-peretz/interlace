@@ -40,6 +40,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
+import { contrast, parseColor, toHex, type RGB } from './color-math.js';
 import {
   SCHEMES,
   THEMES,
@@ -163,70 +164,7 @@ const PALETTES: Record<string, Record<Scheme, Palette>> = Object.fromEntries(
   ]),
 );
 
-// ── colour maths (same implementation as composite-contrast-lock) ───────
-
-type RGB = [number, number, number];
-
-function parseHex(hex: string): RGB | null {
-  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
-  if (!m) return null;
-  const h =
-    m[1].length === 3
-      ? m[1]
-          .split('')
-          .map((c) => c + c)
-          .join('')
-      : m[1];
-  return [
-    parseInt(h.slice(0, 2), 16),
-    parseInt(h.slice(2, 4), 16),
-    parseInt(h.slice(4, 6), 16),
-  ];
-}
-
-/**
- * oklch() → sRGB, standard OKLab matrices (Björn Ottosson). The strand
- * tokens are authored in oklch — without this, their contrast floor
- * could only be claimed in comments, never measured.
- */
-function parseOklch(value: string): RGB | null {
-  const m = /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*\)$/i.exec(value.trim());
-  if (!m) return null;
-  const [L, C, H] = [parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3])];
-  const hr = (H * Math.PI) / 180;
-  const a = C * Math.cos(hr);
-  const b = C * Math.sin(hr);
-  const l3 = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
-  const m3 = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
-  const s3 = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
-  const lin: [number, number, number] = [
-    4.0767416621 * l3 - 3.3077115913 * m3 + 0.2309699292 * s3,
-    -1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3,
-    -0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3,
-  ];
-  return lin.map((c) => {
-    const v = c <= 0.0031308 ? 12.92 * c : 1.055 * Math.max(c, 0) ** (1 / 2.4) - 0.055;
-    return Math.round(Math.min(1, Math.max(0, v)) * 255);
-  }) as RGB;
-}
-
-function parseColor(value: string): RGB | null {
-  return parseHex(value) ?? parseOklch(value);
-}
-
-function luminance([r, g, b]: RGB): number {
-  const [rs, gs, bs] = [r, g, b].map((v) => {
-    const s = v / 255;
-    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
-
-function contrast(a: RGB, b: RGB): number {
-  const [la, lb] = [luminance(a), luminance(b)];
-  const [hi, lo] = la > lb ? [la, lb] : [lb, la];
-  return (hi + 0.05) / (lo + 0.05);
-}
+// ── colour maths (shared with the other contrast locks: ./color-math.ts) ─
 
 /** Lay `fg` over `bg` at `alpha` (0–1). Straight source-over compositing. */
 function composite(fg: RGB, bg: RGB, alpha: number): RGB {
@@ -310,12 +248,27 @@ describe('theme contract lock', () => {
   it('reads a block by exact selector and ignores prose inside comments', () => {
     const block = readBlock(INTERLACE_CSS, ':root');
     const declarations = readDeclarations(block);
-    expect(declarations.get('primary')).toBe('#7d350c');
-    expect(declarations.get('background')).toBe('#ffffff');
+    expect(declarations.get('primary')).toBe('oklch(0.422 0.1117 45.2)');
+    expect(declarations.get('background')).toBe('oklch(1 0 0)');
     // The `:root` block's comments name other tokens in prose (`--border`,
     // `--input`, `bg-primary/10`). None of them may parse as a declaration.
     expect(declarations.has('border')).toBe(true); // really declared
     expect(declarations.has('color-fd-muted-foreground')).toBe(false); // semantics layer
+  });
+
+  it('parses the palette exactly as Chromium paints it', () => {
+    // The palette moved from hex to oklch with every value chosen to paint
+    // the same 8-bit sRGB pixel it did before, so no ratio moved. These
+    // pairs were read back from a Chromium canvas; if the conversion here
+    // drifts from the browser's, the contrast the locks claim is fiction.
+    const painted: Array<[string, string]> = [
+      ['oklch(0.422 0.1117 45.2)', '#7d350c'], // interlace · light · primary
+      ['oklch(0.839 0.0877 46.2)', '#fbb99a'], // interlace · dark · primary
+      ['oklch(0.151 0.0055 67.8)', '#0d0b09'], // interlace · light · foreground
+      ['oklch(0.444 0.1613 26.9)', '#991b1b'], // interlace · light · destructive
+      ['oklch(1 0 0)', '#ffffff'],
+    ];
+    for (const [oklch, hex] of painted) expect(toHex(parseColor(oklch)!), oklch).toBe(hex);
   });
 
   it('resolves var() aliases, and does not hang on a cycle', () => {
@@ -445,7 +398,7 @@ describe('theme contract lock', () => {
             expect(
               ratio,
               `Could not measure ${pair.fg} on ${pair.bg} — one of them is not a ` +
-                `hex value in ${theme.name} · ${scheme}.`,
+                `colour literal in ${theme.name} · ${scheme}.`,
             ).not.toBeNull();
             checked.push(`${pair.fg} on ${pair.bg}`);
             if (ratio! < pair.floor) {
@@ -493,8 +446,8 @@ describe('theme contract lock', () => {
           // The binding constraint on the Interlace palette, documented in its
           // own header — and the pair most likely to be forgotten by a new
           // theme, because it is a colour nobody ever picked.
-          const primary = parseHex(resolveValue('primary', palette) ?? '')!;
-          const background = parseHex(resolveValue('background', palette) ?? '')!;
+          const primary = parseColor(resolveValue('primary', palette) ?? '')!;
+          const background = parseColor(resolveValue('background', palette) ?? '')!;
           const ratio = contrast(primary, composite(primary, background, 0.1));
           expect(
             ratio,

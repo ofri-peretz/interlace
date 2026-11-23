@@ -37,6 +37,8 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { resolve, join, relative } from 'path';
 
+import { COLOR_LITERAL, contrast, parseColor, type RGB } from './color-math.js';
+
 import { buttonVariants } from '../src/primitives/button-variants.js';
 import { badgeVariants } from '../src/primitives/badge.js';
 import { tagVariants } from '../src/primitives/tag.js';
@@ -79,45 +81,11 @@ const EXEMPT: Record<string, string> = {
 
 // ── colour maths ────────────────────────────────────────────────────────
 
-type RGB = [number, number, number];
-
-function parseHex(hex: string): RGB | null {
-  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
-  if (!m) return null;
-  const h =
-    m[1].length === 3
-      ? m[1]
-          .split('')
-          .map((c) => c + c)
-          .join('')
-      : m[1];
-  return [
-    parseInt(h.slice(0, 2), 16),
-    parseInt(h.slice(2, 4), 16),
-    parseInt(h.slice(4, 6), 16),
-  ];
-}
-
 /** Lay `fg` over `bg` at `alpha` (0–1). Straight source-over compositing. */
 function composite(fg: RGB, bg: RGB, alpha: number): RGB {
   return [0, 1, 2].map((i) =>
     Math.round(fg[i] * alpha + bg[i] * (1 - alpha)),
   ) as RGB;
-}
-
-/** WCAG 2.x relative luminance. */
-function luminance([r, g, b]: RGB): number {
-  const [rs, gs, bs] = [r, g, b].map((v) => {
-    const s = v / 255;
-    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
-
-function contrast(a: RGB, b: RGB): number {
-  const [la, lb] = [luminance(a), luminance(b)];
-  const [hi, lo] = la > lb ? [la, lb] : [lb, la];
-  return (hi + 0.05) / (lo + 0.05);
 }
 
 // ── theme parsing ───────────────────────────────────────────────────────
@@ -158,10 +126,10 @@ function readThemeTokens(): Record<Mode, Map<string, RGB>> {
     Map<string, RGB>
   >;
   for (const mode of ['light', 'dark'] as const) {
-    const re = /--interlace-([a-z0-9-]+):\s*(#[0-9a-fA-F]{3,8})\s*;/g;
+    const re = new RegExp(String.raw`--interlace-([a-z0-9-]+):\s*(${COLOR_LITERAL})\s*;`, 'g');
     let m: RegExpExecArray | null;
     while ((m = re.exec(sections[mode])) !== null) {
-      const rgb = parseHex(m[2]);
+      const rgb = parseColor(m[2]);
       if (rgb) out[mode].set(m[1], rgb);
     }
   }

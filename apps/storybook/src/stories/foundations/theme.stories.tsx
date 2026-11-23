@@ -388,7 +388,7 @@ export const Default: Story = {
         .querySelector('[data-probe="--interlace-background"]')
         ?.textContent?.trim()
         .toLowerCase();
-      expect(background).toBe(dark ? '#0a0a0a' : '#fff');
+      expect(background).toBe(dark ? 'oklch(0.145 0 0)' : 'oklch(1 0 0)');
     });
   },
 };

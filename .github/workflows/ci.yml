@@ -87,6 +87,8 @@ jobs:
         run: node apps/registry/scripts/build-registry.mjs --check
       - name: Validate items against the official shadcn schemas
         run: node apps/registry/scripts/validate-registry.mjs
+      - name: Check the design-token file matches the brand CSS
+        run: node apps/registry/scripts/build-tokens.mjs --check
       # Completeness, NOT recomputation. The versions themselves are derived
       # from git and committed to `component-versions.json`; re-deriving them
       # here would make the answer depend on HEAD and put this gate in a fight
