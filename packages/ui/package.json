@@ -164,6 +164,10 @@
       "types": "./dist/primitives/featured-icon.d.ts",
       "default": "./dist/primitives/featured-icon.js"
     },
+    "./otp-field": {
+      "types": "./dist/primitives/otp-field.d.ts",
+      "default": "./dist/primitives/otp-field.js"
+    },
     "./grade-badge": {
       "types": "./dist/primitives/grade-badge.d.ts",
       "default": "./dist/primitives/grade-badge.js"

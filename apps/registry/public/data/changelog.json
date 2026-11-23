@@ -525,6 +525,18 @@
           "source": ".changeset/section-brand-overlap.md"
         },
         {
+          "summary": "OtpField: a one-time code typed into a row of boxes, on Base UI's OTP field. Paste the whole code into any box or let the phone fill it from a message; `groupSize` adds a dash between groups, `invalid` marks every box.\n\nSignInMethods: an account page's list of ways to sign in, each with Connect or Disconnect. Disconnecting asks once more in place, and the last connected method is locked with the reason beside it, so nobody locks themselves out. Built-in providers take their name and mark from SocialSignIn.",
+          "components": [
+            "otp-field",
+            "sign-in-methods"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/sign-in-methods.md"
+        },
+        {
           "summary": "Site chrome that needs no custom classes:\n\n- `Topbar` keeps its links on small screens. By default they move behind a Menu button that opens a side sheet (new `TopbarMenu`); `mobileNav=\"wrap\"` shows them as a second row. `currentHref` marks the current page with `aria-current=\"page\"` and a visible style, and `renderLink` now receives `aria-current` to forward.\n- New `Banner`: a thin full-width bar for a site-wide message, in muted, info, success, warning and highlight tones, with an optional action and close button.\n- `Prose` headings now use `--font-heading` (they used `--font-body` before), like Typography. If you set the two to different faces, Prose headings change to the heading face. New `width=\"fill\"` drops the 65ch cap for prose inside a card or panel.\n- `StatCard` and `StatGroup` take `layout=\"value-first\"` (the number, then what it counts) next to the default label-first.\n- `Footer` takes a `tagline` shown under the brand.",
           "components": [
             "topbar",

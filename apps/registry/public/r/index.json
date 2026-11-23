@@ -886,6 +886,24 @@
       }
     },
     {
+      "name": "otp-field",
+      "type": "registry:ui",
+      "title": "Otp Field",
+      "description": "A one-time code typed into a row of boxes, one character each: the \"enter the 6-digit code we emailed you\" field. Built on Base UI's OTPField, which owns the hard parts: paste of the whole code into any box, the phone's \"from Messages\" autofill…",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
@@ -2159,7 +2177,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.1",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2467,6 +2485,24 @@
         "loading": false,
         "version": "1.2.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "sign-in-methods",
+      "type": "registry:ui",
+      "title": "Sign In Methods",
+      "description": "The \"ways you can sign in\" list on an account page: one row per method (Google, Apple, email…), each with its mark, what it is linked to, and a Connect or Disconnect button. Disconnecting asks once more in place (\"Disconnect\" → \"Yes, disconnect\" /…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
