@@ -64,6 +64,21 @@ describe('control height lock', () => {
     expect(citation.match(/after:min-h-target after:min-w-target/g)).toHaveLength(2);
   });
 
+  it.each([
+    ['src/primitives/tag.tsx', 'after:min-h-target after:min-w-target'],
+    ['src/primitives/breadcrumb.tsx', 'after:min-h-target after:min-w-target'],
+    ['src/patterns/footer.tsx', 'flex min-h-target w-fit'],
+    ['src/patterns/claim-card.tsx', '<summary className="hover:text-primary flex min-h-target'],
+  ])('%s grows its small link to the target', (path, marker) => {
+    expect(read(path)).toContain(marker);
+  });
+
+  it('lets a CardLink make the whole card the target', () => {
+    const card = read('src/primitives/card.tsx');
+    expect(card).toContain("after:absolute after:inset-0");
+    expect(card).toContain('has-[[data-slot=card-link]:focus-visible]:ring-2');
+  });
+
   it.each(CONTROLS)('%s sizes its controls from the tokens', (path) => {
     const src = read(path);
     expect(src).toMatch(/(?:h|size)-control/);

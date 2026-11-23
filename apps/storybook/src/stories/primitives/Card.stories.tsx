@@ -6,6 +6,7 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
+  CardLink,
 } from '@interlace/ui/card';
 import { Button } from '@interlace/ui/button';
 import { withRtl } from '@/decorators';
@@ -67,6 +68,37 @@ export const Default: Story = {
         <Button>Read docs</Button>
       </CardFooter>
     </Card>
+  ),
+};
+
+/**
+ * A whole-card link. `CardLink` wraps the title text; its stretched `::after`
+ * makes the card the target, the focus ring and a border lift move to the
+ * card, and a screen reader hears one link named by the title. Tab to a card
+ * to see the ring.
+ */
+export const Linked: Story = {
+  args: { loading: false },
+  render: (args) => (
+    <ul className="grid max-w-content gap-4 sm:grid-cols-2">
+      {[
+        ['Getting started', 'Install the registry and add the first component.'],
+        ['Theming', 'Brand it with the shadcn cssVars, in both schemes.'],
+      ].map(([title, body]) => (
+        <li key={title}>
+          <Card {...args} className="h-full">
+            <CardHeader>
+              <CardTitle>
+                <h3>
+                  <CardLink href="#">{title}</CardLink>
+                </h3>
+              </CardTitle>
+              <CardDescription>{body}</CardDescription>
+            </CardHeader>
+          </Card>
+        </li>
+      ))}
+    </ul>
   ),
 };
 

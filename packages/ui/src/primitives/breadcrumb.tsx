@@ -122,7 +122,9 @@ type BreadcrumbLinkProps = React.ComponentProps<'a'> & {
 const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
   ({ asChild, className, children, ...props }, ref) => {
     const baseClass = cn(
-      'hover:text-foreground transition-colors',
+      // The link stays text-sized; an invisible pad takes the tap, at least
+      // --spacing-target (24px, or 44px under data-density="comfortable").
+      "hover:text-foreground relative transition-colors after:absolute after:top-1/2 after:left-1/2 after:min-h-target after:min-w-target after:size-full after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']",
       className,
     );
 

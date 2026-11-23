@@ -85,6 +85,14 @@ const defaultRenderLink: NonNullable<FooterProps['renderLink']> = ({
   </a>
 );
 
+/**
+ * A footer link is a row at least --spacing-target tall (24px, or 44px under
+ * data-density="comfortable"). With the list's 4px gap the default rhythm is
+ * the same 28px it was with 20px text and an 8px gap.
+ */
+const FOOTER_LINK =
+  'text-muted-foreground hover:text-foreground flex min-h-target w-fit items-center transition-colors';
+
 const CONTAINER_CLASSES = {
   wide: 'max-w-(--container-wide)',
   content: 'max-w-(--container-content)',
@@ -143,7 +151,7 @@ function Footer({
                 <h2 className="font-body text-ui font-semibold mb-4">
                   {group.title}
                 </h2>
-                <ul className="flex flex-col gap-2 text-sm">
+                <ul className="flex flex-col gap-1 text-sm">
                   {group.links.map((link) => (
                     <li key={link.href}>
                       {link.external ? (
@@ -151,7 +159,7 @@ function Footer({
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground transition-colors"
+                          className={FOOTER_LINK}
                         >
                           {link.label} ↗
                         </a>
@@ -159,7 +167,7 @@ function Footer({
                         renderLink({
                           href: link.href,
                           className:
-                            'text-muted-foreground hover:text-foreground transition-colors',
+                            FOOTER_LINK,
                           children: link.label,
                         })
                       )}

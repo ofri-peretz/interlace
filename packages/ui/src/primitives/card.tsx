@@ -18,6 +18,17 @@
  *     ├─ CardContent                 (px-6)
  *     └─ CardFooter                  (flex, px-6)
  *
+ *   CardLink                         (a — anywhere inside, usually in the title)
+ *
+ * ## A whole-card link
+ *
+ * Put one `CardLink` around the card's title text. Its invisible `::after`
+ * stretches over the whole card, so the card is the target while the link
+ * keeps one accessible name (the title) and screen readers hear one link,
+ * not a card of text. The focus ring and a quiet border lift move to the
+ * card itself. Another control inside a linked card (a button, a second
+ * link) needs `relative z-10` to sit above the stretched link.
+ *
  * The header is a one-column grid until a `CardAction` is present:
  * `has-data-[slot=card-action]` switches it to `[1fr_auto]`, so the action
  * column is created by the child that needs it rather than by a prop.
@@ -32,7 +43,7 @@
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R4   | Extends native el                | `React.ComponentProps<'div'>` on every part                 |
- * | R6   | data-slot per part               | card / -header / -title / -description / -action / -content / -footer |
+ * | R6   | data-slot per part               | card / -header / -title / -description / -action / -content / -footer / -link |
  * | R7   | cn + ...rest                     | `cn('px-6', className)` + `{...props}` on each part         |
  * | R10  | Composition seam                 | header layout keys off the `card-action` slot, not a prop   |
  * | R12  | Reuse over wrap                  | `Box` owns surface + radius + border; `Skeleton` owns loading |
@@ -73,7 +84,15 @@ function Card({ className, loading, ...props }: CardProps) {
       surface="card"
       radius="lg"
       border
-      className={cn('relative flex flex-col gap-6 py-6 shadow-sm', className)}
+      className={cn(
+        'relative flex flex-col gap-6 py-6 shadow-sm',
+        // A CardLink inside makes the whole card its target: the ring and
+        // a border lift belong to the card, not to the title text.
+        'has-data-[slot=card-link]:transition-colors',
+        'has-[[data-slot=card-link]:hover]:border-foreground/30',
+        'has-[[data-slot=card-link]:focus-visible]:ring-ring has-[[data-slot=card-link]:focus-visible]:ring-offset-background has-[[data-slot=card-link]:focus-visible]:ring-2 has-[[data-slot=card-link]:focus-visible]:ring-offset-2',
+        className,
+      )}
       {...props}
     />
   );
@@ -148,8 +167,37 @@ function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/**
+ * The card's one link. Wrap the title text in it and the whole card becomes
+ * the target, through a stretched `::after`. Takes every `<a>` prop. For a
+ * router link: `<CardLink asChild><Link href="/x">Title</Link></CardLink>`.
+ */
+type CardLinkProps = React.ComponentProps<'a'> & {
+  /** Merge onto the single child element (a router link) instead of rendering an `<a>`. */
+  asChild?: boolean;
+};
+
+const CARD_LINK =
+  "hover:underline underline-offset-4 focus-visible:outline-none after:absolute after:inset-0 after:rounded-[inherit] after:content-['']";
+
+function CardLink({ asChild, className, children, ...props }: CardLinkProps) {
+  if (asChild && React.isValidElement(children)) {
+    const child = children as React.ReactElement<{ className?: string; 'data-slot'?: string }>;
+    return React.cloneElement(child, {
+      'data-slot': 'card-link',
+      className: cn(CARD_LINK, child.props.className, className),
+    });
+  }
+  return (
+    <a data-slot="card-link" className={cn(CARD_LINK, className)} {...props}>
+      {children}
+    </a>
+  );
+}
+
 export {
   Card,
+  CardLink,
   CardHeader,
   CardFooter,
   CardTitle,
