@@ -68,6 +68,10 @@ function CodeWindow({
       data-slot="code-window"
       className={cn(
         'overflow-hidden rounded-xl border border-border bg-card shadow-sm',
+        // The frame clips, so a focusable body (a <pre tabIndex=0>) cannot show
+        // its own ring. The frame shows it instead, 2px outside. Direct
+        // children only: a nested editor draws its own.
+        'ring-offset-background has-[>:focus-visible]:ring-2 has-[>:focus-visible]:ring-ring has-[>:focus-visible]:ring-offset-2',
         className,
       )}
       {...props}

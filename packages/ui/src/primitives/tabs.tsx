@@ -107,7 +107,11 @@ function TabsContent({
   return (
     <BaseTabs.Panel
       data-slot="tabs-content"
-      className={cn('flex-1 outline-none', className)}
+      className={cn(
+        // The panel takes focus (Tab from the list lands here), so it shows it.
+        'flex-1 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+        className,
+      )}
       {...props}
     />
   );

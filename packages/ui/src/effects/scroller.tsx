@@ -199,7 +199,8 @@ export function Scroller({
       <div
         data-slot="scroller-viewport"
         className={cn(
-          'min-w-0 flex-1',
+          // -m-1 p-1: a scroll container clips, so give focus rings room.
+          '-m-1 min-w-0 flex-1 p-1',
           moving ? 'overflow-hidden' : vertical ? 'overflow-y-auto' : 'overflow-x-auto',
           edges === 'fade' && FADE[axis],
         )}

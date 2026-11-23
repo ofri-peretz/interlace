@@ -263,7 +263,7 @@ export const BelowMinViewport: Story = {
   // of the viewport and the whole page scrolls sideways at 375px.
   parameters: { layout: 'padded' },
   render: () => (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto p-1">
       {/* overflow-x-auto: this frame is pinned to a fixed pixel width to trip the
         min-viewport contract, so without an inner scroller it pushes the whole
         page sideways on a 375px phone. */}

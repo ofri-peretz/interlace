@@ -258,7 +258,7 @@ function GuessReveal({
         >
           <div
             id={explanationId}
-            className="text-muted-foreground min-h-0 overflow-hidden text-sm leading-relaxed"
+            className="text-muted-foreground -m-1 min-h-0 overflow-hidden p-1 text-sm leading-relaxed"
           >
             {explanation}
           </div>

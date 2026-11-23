@@ -264,7 +264,7 @@ export const RTL: Story = {
  */
 export const BelowMinViewport: Story = {
   render: () => (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto p-1">
       {/* overflow-x-auto: this frame is pinned to a fixed pixel width to trip the
         min-viewport contract, so without an inner scroller it pushes the whole
         page sideways on a 375px phone. */}
