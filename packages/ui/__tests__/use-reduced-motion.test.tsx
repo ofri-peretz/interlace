@@ -75,8 +75,8 @@ describe('useReducedMotion', () => {
     // The defect this pins: `useState(false)` + `useEffect` — the canonical
     // shape, shipped by MUI, Vercel, Linear and Stripe — returns `false` on
     // render 1 and the truth on render 2. Everything downstream therefore
-    // paints one frame of exactly the motion the user turned off: AnimatedList's
-    // `scale: 0`, FlipWords' 8px blur, Spotlight's `opacity: 0`.
+    // paints one frame of exactly the motion the user turned off: an entry
+    // animation's `opacity: 0`, or a transform mid-flight.
     //
     // Recording every render (not just the committed DOM) is what makes that
     // observable — the assertion above passes under BOTH implementations,

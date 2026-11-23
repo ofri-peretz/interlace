@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "edge-glow",
+  "type": "registry:ui",
+  "title": "Edge Glow",
+  "description": "A light that runs around the edge of its parent: the plan you recommend, the card that is live right now. Drop it inside a positioned element:",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json",
+    "https://ds.interlace.tools/r/use-reduced-motion.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/effects/edge-glow.tsx",
+      "target": "components/ui/effects/edge-glow.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/edge-glow v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/edge-glow\n// What changed since: https://ds.interlace.tools/c/edge-glow#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — EdgeGlow\n *\n * A light that runs around the edge of its parent: the plan you recommend,\n * the card that is live right now. Drop it inside a positioned element:\n *\n *   <Card className=\"relative\">\n *     <EdgeGlow />\n *     …\n *   </Card>\n *\n * The parent keeps its own border. EdgeGlow draws a thin ring just inside it,\n * following the parent's corner radius, and a bright arc travels around that\n * ring.\n *\n * ## How it is drawn\n *\n * A ring is cut out of a full-size layer with two mask layers (`content-box`\n * excluded from `border-box`), so only a `width`-wide band at the edge shows.\n * Inside it, a square much larger than the parent carries a conic gradient\n * (one bright arc, the rest transparent) and turns. Where the arc crosses the\n * ring, the edge lights up. Turning a square is a plain `transform`, the\n * cheapest thing a browser can animate.\n *\n * ## Out of the way\n *\n * The root is `aria-hidden` and `pointer-events-none`, and a caller cannot\n * turn either off. Colours default to `--primary` and `--chart-2`; the arc is\n * decoration inside a container that draws its own boundary, so a 3:1 chart\n * token is admissible here where it would not be for text.\n *\n * ## Motion\n *\n * Web Animations API, paused off screen. Under `prefers-reduced-motion:\n * reduce` the arc holds still at the top-left corner, so the highlight still\n * marks the card.\n *\n * | Rule | Concept                 | Where in this file                                   |\n * | ---- | ----------------------- | ---------------------------------------------------- |\n * | R4   | Extends native el       | `span` props (minus aria-hidden)                      |\n * | R6   | data-slot per part      | edge-glow / -arc                                      |\n * | R7   | cn + ...rest            | `cn(…, className)` + `{...props}`                     |\n * | R19  | Tokens only             | `--primary`, `--chart-2` defaults                     |\n * | R25  | Client component        | the turn runs in the browser                          |\n * | R26  | A11y                    | hidden, inert to the pointer                          |\n */\n\nimport { cn } from '@/lib/utils';\nimport { useReducedMotion } from '@/hooks/use-reduced-motion';\n\nexport interface EdgeGlowProps extends Omit<React.ComponentPropsWithoutRef<'span'>, 'aria-hidden' | 'children'> {\n  /** Leading colour of the arc. @default 'var(--primary)' */\n  from?: string;\n  /** Trailing colour of the arc. @default 'var(--chart-2)' */\n  to?: string;\n  /** Width of the ring, in pixels. @default 1.5 */\n  width?: number;\n  /** Share of the edge the arc covers, 0 to 1. @default 0.2 */\n  length?: number;\n  /** Seconds for one lap. @default 8 */\n  duration?: number;\n  /** Lap direction. @default 'clockwise' */\n  direction?: 'clockwise' | 'counterclockwise';\n}\n\nexport function EdgeGlow({\n  from = 'var(--primary)',\n  to = 'var(--chart-2)',\n  width = 1.5,\n  length = 0.2,\n  duration = 8,\n  direction = 'clockwise',\n  className,\n  style,\n  ...props\n}: EdgeGlowProps) {\n  const arcRef = React.useRef<HTMLSpanElement>(null);\n  const reduced = useReducedMotion();\n  const arc = Math.min(Math.max(length, 0.02), 1) * 360;\n\n  React.useEffect(() => {\n    const el = arcRef.current;\n    if (!el || reduced || typeof el.animate !== 'function') return;\n    const turn = direction === 'clockwise' ? 360 : -360;\n    const animation = el.animate(\n      [\n        { transform: 'translate(-50%, -50%) rotate(0deg)' },\n        { transform: `translate(-50%, -50%) rotate(${turn}deg)` },\n      ],\n      { duration: duration * 1000, iterations: Infinity },\n    );\n    const io =\n      typeof IntersectionObserver === 'undefined'\n        ? null\n        : new IntersectionObserver(([entry]) => {\n            if (entry?.isIntersecting) animation.play();\n            else animation.pause();\n          });\n    io?.observe(el.parentElement ?? el);\n    return () => {\n      io?.disconnect();\n      animation.cancel();\n    };\n  }, [reduced, duration, direction]);\n\n  return (\n    <span\n      data-slot=\"edge-glow\"\n      className={cn('pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]', className)}\n      style={{\n        padding: `${width}px`,\n        mask: 'linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)',\n        WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',\n        WebkitMaskComposite: 'xor',\n        ...style,\n      }}\n      {...props}\n      aria-hidden\n    >\n      <span\n        ref={arcRef}\n        data-slot=\"edge-glow-arc\"\n        className=\"absolute top-1/2 left-1/2 aspect-square min-h-[300%] w-[300%]\"\n        style={{\n          transform: 'translate(-50%, -50%) rotate(0deg)',\n          background: `conic-gradient(from 270deg, transparent 0deg, ${to} ${arc * 0.4}deg, ${from} ${arc}deg, transparent ${arc}deg)`,\n        }}\n      />\n    </span>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/edge-glow\n\nInstalled to `components/ui/effects/edge-glow.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/edge-glow';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/edge-glow\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

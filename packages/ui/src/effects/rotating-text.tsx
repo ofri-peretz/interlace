@@ -42,7 +42,7 @@ export interface RotatingTextProps
   extends Omit<React.ComponentPropsWithoutRef<'span'>, 'children'> {
   /** The words to cycle through, in order. */
   words: readonly string[];
-  /** Milliseconds each word stays. @default 2800 */
+  /** Milliseconds each word stays, at least 1000 so every word can be read. @default 2800 */
   interval?: number;
   /** What assistive tech reads instead of the moving words. @default the words, joined with "or" */
   label?: string;

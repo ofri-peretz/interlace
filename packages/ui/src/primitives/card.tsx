@@ -73,7 +73,7 @@ function Card({ className, loading, ...props }: CardProps) {
       surface="card"
       radius="lg"
       border
-      className={cn('flex flex-col gap-6 py-6 shadow-sm', className)}
+      className={cn('relative flex flex-col gap-6 py-6 shadow-sm', className)}
       {...props}
     />
   );

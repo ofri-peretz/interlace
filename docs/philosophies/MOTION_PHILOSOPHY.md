@@ -210,8 +210,8 @@ GIF/video for genuinely hand-authored animation), per-frame
 
 **These are budget bands, not CSS custom properties.** The DS ships no
 `--duration-*` and no `--ease-*` tokens — `grep -rE '\-\-duration|\-\-ease'
-packages/ui/styles/` returns nothing but `--duration`/`--speed`, which
-are *per-instance knobs* a Marquee/ShimmerButton call site sets, not a
+packages/ui/styles/` returns nothing. Durations a component lets you
+change (`Scroller duration`, `Sheen rest`) are *per-instance props*, not a
 scale. Every shipped duration is a literal inside an `--animate-*`
 shorthand in `packages/ui/styles/structure/motion.css`
 (`--animate-accordion-down: accordion-down 0.2s ease-out`), and the
@@ -229,11 +229,11 @@ a keyframe animation to `structure/motion.css`.
 | base | 150-200ms | Default for visible UI state transitions (`--animate-accordion-*` is 0.2s) |
 | medium | 250-300ms | Sheets, modals, accordions |
 | slow | 400-500ms | Hero / continuity / cross-route transitions |
-| forbidden | > 600ms | Almost never. Requires justification in code comment. Ambient decorative loops (`--animate-first` 30s, `--animate-gradient` 8s) are the carve-out: they are infinite background motion, never entry. |
+| forbidden | > 600ms | Almost never. Requires justification in code comment. Ambient decorative loops (GradientMesh's 20-30s drift, SheenText's 6s pass) are the carve-out: they are infinite background motion, never entry. |
 
 | Easing | What ships | Use for |
 | --- | --- | --- |
-| `linear` | `linear` | Loading shimmer, marquee |
+| `linear` | `linear` | Loading shimmer, the Scroller loop |
 | `ease-out` | the CSS keyword — **not** a custom bezier | Default for entry / appear; what every `--animate-*` in `structure/motion.css` uses |
 | `ease-in` | Tailwind `ease-in` | Exit / dismiss |
 | `ease-in-out` | Tailwind `ease-in-out` | Movement that returns |

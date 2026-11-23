@@ -1390,30 +1390,12 @@
       }
     },
     {
-      "name": "animated-gradient-text",
+      "name": "count-up",
       "type": "registry:ui",
-      "title": "Animated Gradient Text",
-      "description": "Gradient-filled text: a `bg-clip-text text-transparent` span whose three-stop linear gradient slides horizontally on a loop. Built for a short eyebrow, badge or headline fragment — never a paragraph, since the text has no solid fill to fall back to.",
+      "title": "Count Up",
+      "description": "A number that counts to its value the first time it scrolls into view: \"120 sources\", \"4.8k readers\", \"98%\". The figure is the content, so the component is built around reading it, not around the motion.",
       "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": false,
-        "minViewport": null,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "animated-grid-pattern",
-      "type": "registry:ui",
-      "title": "Animated Grid Pattern",
-      "description": "A tiled SVG grid where a handful of cells softly pulse in and out, then teleport to a new random cell on each cycle — a \"breathing\" graph-paper backdrop for heroes and section bands. Re-authored from the MagicUI pattern to the Interlace component floor.",
-      "categories": [
-        "decorative",
+        "data",
         "effect"
       ],
       "meta": {
@@ -1421,116 +1403,8 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.1.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "animated-list",
-      "type": "registry:ui",
-      "title": "Animated List",
-      "description": "A feed that reveals its children one at a time, newest on top, each entry springing in from `scale: 0`. One more appears every `delay` ms (1000 by default) until the list is full, then it stops — or restarts, with `loop`.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "border-beam",
-      "type": "registry:ui",
-      "title": "Border Beam",
-      "description": "A single gradient square that travels around the inside edge of its parent, drawn with `offset-path` and a two-layer CSS mask so only the border ring shows. Drop it inside any `relative`, rounded container to give that container a moving outline.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "marquee",
-      "type": "registry:ui",
-      "title": "Marquee",
-      "description": "An infinitely scrolling strip: it renders its children `repeat` times side by side (or stacked, with `vertical`) inside an `overflow-hidden` track and translates each copy by its own width plus the gap, so the row reads as continuous.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "number-ticker",
-      "type": "registry:ui",
-      "title": "Number Ticker",
-      "description": "A count-up number that starts when it scrolls into view and eases to `value`. It does nothing by default: `startValue` defaults to `value`, so you get an honest static number — and an honest SSR render — until you pass a lower one to opt into the count.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "particles",
-      "type": "registry:ui",
-      "title": "Particles",
-      "description": "An ambient `<canvas>` particle field for hero and section backdrops: `quantity` dots (100 by default) drifting on their own velocities, fading in near the middle and out near the edges, respawned whenever one leaves the box.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "1.2.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "shimmer-button",
-      "type": "registry:ui",
-      "title": "Shimmer Button",
-      "description": "A dark pill CTA with a conic-gradient spark that sweeps around its edge: a rotating cone inside a sliding container, masked by an inset panel that redraws the fill and leaves only the rim glowing.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": false,
-        "minViewport": null,
-        "loading": false,
-        "version": "3.0.0",
-        "since": "1.0.0"
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -1552,10 +1426,46 @@
       }
     },
     {
+      "name": "edge-glow",
+      "type": "registry:ui",
+      "title": "Edge Glow",
+      "description": "A light that runs around the edge of its parent: the plan you recommend, the card that is live right now. Drop it inside a positioned element:",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "gradient-mesh",
       "type": "registry:ui",
       "title": "Gradient Mesh",
       "description": "A soft, slowly shifting field of colour for a hero or a feature band. A few large blurred glows, each a theme colour, drift on long loops over a base surface, so the band feels alive without anything a reader has to watch. Content goes in `children` and…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "grid-field",
+      "type": "registry:ui",
+      "title": "Grid Field",
+      "description": "Graph-paper lines (or a dot grid) behind a section, with a few cells that slowly light up and fade, like squares being filled in on a worksheet. It says \"careful, measured work\" without saying anything.",
       "categories": [
         "decorative",
         "effect"
@@ -1642,10 +1552,82 @@
       }
     },
     {
+      "name": "scroller",
+      "type": "registry:ui",
+      "title": "Scroller",
+      "description": "A row (or column) of items that glides past on a loop: logos of the organisations you work with, short quotes, headlines. The items are real content, so the component treats them that way first and as motion second.",
+      "categories": [
+        "marketing",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "sheen-text",
+      "type": "registry:ui",
+      "title": "Sheen Text",
+      "description": "A word or short phrase painted with a slow, travelling gradient: the one word of a headline that carries the promise. Use it once per view, on a few words, never on body text.",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "sheen",
+      "type": "registry:ui",
+      "title": "Sheen",
+      "description": "A soft band of light that crosses its parent every few seconds. Drop it inside the one button or card a page most wants pressed:",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "sky-backdrop",
       "type": "registry:ui",
       "title": "Sky Backdrop",
       "description": "A calm daytime sky for a friendly hero: a soft gradient, a warm sun glow in one corner, and a few clouds drifting across. It suits pages that want warmth rather than drama, the light counterpart to `Starfield`.",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "stagger-list",
+      "type": "registry:ui",
+      "title": "Stagger List",
+      "description": "A list whose items arrive one after another the first time it scrolls into view: steps of a process, recent updates, the points of an argument. The arrival gives the eye an order to read in; the list itself is ordinary.",
       "categories": [
         "decorative",
         "effect"
@@ -1912,24 +1894,6 @@
       }
     },
     {
-      "name": "dot-pattern",
-      "type": "registry:ui",
-      "title": "Dot Pattern",
-      "description": "A resolution-independent dotted-grid background that fills its positioned container. Two render modes share one tiled SVG `<pattern>`:",
-      "categories": [
-        "decorative",
-        "pattern"
-      ],
-      "meta": {
-        "tier": "pattern",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "1.1.0",
-        "since": "1.0.0"
-      }
-    },
-    {
       "name": "empty-state",
       "type": "registry:ui",
       "title": "Empty State",
@@ -2038,24 +2002,6 @@
       }
     },
     {
-      "name": "grid-pattern",
-      "type": "registry:ui",
-      "title": "Grid Pattern",
-      "description": "A decorative SVG line grid that fills its positioned parent, with optional accent cells (`squares`, addressed as `[column, row]`) that can pulse. Colour comes from `currentColor`, so a text-colour class on `className` sets the tone.",
-      "categories": [
-        "decorative",
-        "pattern"
-      ],
-      "meta": {
-        "tier": "pattern",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
       "name": "hero-cosmic",
       "type": "registry:ui",
       "title": "Hero Cosmic",
@@ -2086,24 +2032,6 @@
         "tier": "pattern",
         "client": false,
         "minViewport": 320,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "interactive-grid-pattern",
-      "type": "registry:ui",
-      "title": "Interactive Grid Pattern",
-      "description": "A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className=\"text-border\"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.",
-      "categories": [
-        "decorative",
-        "pattern"
-      ],
-      "meta": {
-        "tier": "pattern",
-        "client": true,
-        "minViewport": null,
         "loading": false,
         "version": "2.0.0",
         "since": "1.0.0"

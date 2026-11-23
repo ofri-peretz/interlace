@@ -92,10 +92,8 @@
    * Adding a new decorative primitive? Register its accent here so consumers
    * can re-theme it without forking the component.
    *
-   * Reach for these from primitives like `border-beam`, `meteors`,
-   * `particles`, `shimmer-button`, `animated-gradient-text`,
-   * `background-lines`, `background-gradient-animation`,
-   * `background-beams-with-collision`, `stars-background`.
+   * Reach for these from effects like `starfield`, `edge-glow`,
+   * `sheen`, `sheen-text`, `gradient-mesh` and `thread-lines`.
    *
    * Each color resolves to the legacy literal in light mode; `.dark`
    * overrides below preserve the original dark-mode visuals where the

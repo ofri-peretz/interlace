@@ -150,7 +150,6 @@ Five source tiers ship, each landing in its own subdirectory of the consumer's
 | `packages/ui/src/primitives/*.tsx` | `components/ui/<name>.tsx` | `registry:ui` |
 | `packages/ui/src/patterns/*.tsx` | `components/ui/patterns/<name>.tsx` | `registry:ui` |
 | `packages/ui/src/templates/*.tsx` | `components/ui/templates/<name>.tsx` | `registry:block` |
-| `packages/ui/src/magicui/*.tsx` | `components/ui/magicui/<name>.tsx` | `registry:ui` |
 | `packages/ui/src/effects/*.tsx` | `components/ui/effects/<name>.tsx` | `registry:ui` |
 
 `packages/ui/src/blocks/` is intentionally NOT scanned — those paths are
