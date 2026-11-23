@@ -57,6 +57,13 @@ interface FeatureGridProps extends Omit<React.ComponentProps<'section'>, 'title'
    * the Grid primitive's closed enum). Mobile is always 1 column.
    */
   cols?: 2 | 3 | 4;
+  /**
+   * How much air the collection has: the gap between cards, the section's
+   * padding and each card's padding.
+   * `compact` for dashboards and sidebars, `relaxed` for a landing page.
+   * @default 'default'
+   */
+  density?: 'compact' | 'default' | 'relaxed';
   /** When true, render a placeholder grid of card skeletons. */
   loading?: boolean;
   /** Skeleton count when loading. Defaults to `cols`. */
@@ -80,11 +87,19 @@ const FEATURE_GRID_COLS: Record<2 | 3 | 4, string> = {
   4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
 
+/** Card gap per `density`, on the Grid primitive's closed gap scale. */
+const DENSITY_GAP = { compact: 'sm', default: 'md', relaxed: 'lg' } as const;
+/** Section padding per `density`. */
+const DENSITY_SECTION = { compact: 'py-10', default: 'py-16', relaxed: 'py-24' } as const;
+/** Card padding per `density`. */
+const DENSITY_CARD = { compact: 'p-4', default: 'p-6', relaxed: 'p-8' } as const;
+
 function FeatureGrid({
   title,
   lead,
   features = [],
   cols = 3,
+  density = 'default',
   loading,
   loadingCount,
   className,
@@ -95,7 +110,8 @@ function FeatureGrid({
     <section
       data-slot="feature-grid"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('@container py-16', className)}
+      data-density={density}
+      className={cn('@container', DENSITY_SECTION[density], className)}
       {...props}
     >
       <Container size="content">
@@ -115,18 +131,21 @@ function FeatureGrid({
             </Stack>
           )}
           {loading ? (
-            <Grid cols={cols} gap="md" className={FEATURE_GRID_COLS[cols]}>
+            <Grid cols={cols} gap={DENSITY_GAP[density]} className={FEATURE_GRID_COLS[cols]}>
               {Array.from({ length: skeletonCount }).map((_, i) => (
                 <Skeleton key={i} variant="card" label={null} />
               ))}
             </Grid>
           ) : features.length > 0 ? (
-            <Grid cols={cols} gap="md" className={FEATURE_GRID_COLS[cols]}>
+            <Grid cols={cols} gap={DENSITY_GAP[density]} className={FEATURE_GRID_COLS[cols]}>
               {features.map((f, i) => (
                 <article
                   key={i}
                   data-slot="feature"
-                  className="border-border bg-card text-card-foreground flex flex-col gap-4 rounded-xl border p-6"
+                  className={cn(
+                    'border-border bg-card text-card-foreground flex flex-col gap-4 rounded-xl border',
+                    DENSITY_CARD[density],
+                  )}
                 >
                   {f.icon ? (
                     <div className="text-primary" aria-hidden>

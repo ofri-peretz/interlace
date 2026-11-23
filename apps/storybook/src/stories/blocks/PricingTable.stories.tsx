@@ -38,6 +38,17 @@ const meta: Meta<typeof PricingTable> = {
         'The plans, in display order: `{ name, price, pricePer?, description?, features?, cta?, featured? }`. `cta` and every text field are ReactNode, so the JSON control edits the strings but the CTA elements are opaque here.',
       table: { type: { summary: 'PricingTier[]' }, category: 'Data' },
     },
+    density: {
+      control: 'inline-radio',
+      options: ['compact', 'default', 'relaxed'],
+      description:
+        "How much air the collection has. Sets the gap between items, the section padding and each card's padding together, so a page tightens or opens up without a className.",
+      table: {
+        category: 'Appearance',
+        type: { summary: "'compact' | 'default' | 'relaxed'" },
+        defaultValue: { summary: "'default'" },
+      },
+    },
     cols: {
       control: 'select',
       options: [2, 3, 4],
@@ -84,12 +95,7 @@ const sampleTiers = [
     price: '$29',
     pricePer: '/ month',
     description: 'Teams shipping production.',
-    features: [
-      'Everything in Hobby',
-      'Priority issues',
-      'Private design tokens',
-      'Slack support',
-    ],
+    features: ['Everything in Hobby', 'Priority issues', 'Private design tokens', 'Slack support'],
     cta: <Button>Get Pro</Button>,
     featured: true,
   },
@@ -116,6 +122,9 @@ export const Default: Story = {
     loading: false,
   },
 };
+
+export const Compact: Story = { args: { ...Default.args, density: 'compact' } };
+export const Relaxed: Story = { args: { ...Default.args, density: 'relaxed' } };
 
 export const Loading: Story = { args: { loading: true, cols: 3 } };
 

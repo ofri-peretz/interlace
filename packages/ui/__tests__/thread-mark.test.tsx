@@ -46,6 +46,7 @@ describe('ThreadMark', () => {
     const classes = strokes(svgOf(<ThreadMark state="drawing" />));
     expect(classes).toHaveLength(2);
     for (const c of classes) expect(c).toContain('animate-strand-loop');
+    expect(svgOf(<ThreadMark state="drawing" />).querySelectorAll('circle')).toHaveLength(2);
   });
 
   it.each(['loose', 'cut'] as const)(
