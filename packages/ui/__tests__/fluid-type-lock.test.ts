@@ -3,11 +3,14 @@
  * width, each level must stay larger than the next, or a phone shows two
  * levels at one size and the outline flattens.
  */
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { describe, expect, it } from "vitest";
 
-const css = readFileSync(resolve(__dirname, '../styles/structure/type.css'), 'utf8');
+const css = readFileSync(
+  resolve(__dirname, "../styles/structure/type.css"),
+  "utf8",
+);
 
 /** The size in px at a viewport width, for a rem value or a clamp(min, a + b·vw, max). */
 function size(level: string, width: number): number {
@@ -24,17 +27,40 @@ function size(level: string, width: number): number {
   return Math.min(max * 16, Math.max(min * 16, a * 16 + (b / 100) * width));
 }
 
-describe('fluid heading scale', () => {
-  it.each([320, 360, 480, 768, 1024, 1440])('every level is larger than the next at %ipx', (width) => {
-    const levels = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-    for (let i = 0; i < levels.length - 1; i++) {
-      expect(size(levels[i]!, width), `${levels[i]} > ${levels[i + 1]}`).toBeGreaterThan(size(levels[i + 1]!, width));
-    }
-  });
+describe("fluid heading scale", () => {
+  it.each([320, 360, 480, 768, 1024, 1440])(
+    "every level is larger than the next at %ipx",
+    (width) => {
+      const levels = ["h1", "h2", "h3", "h4", "h5", "h6"];
+      for (let i = 0; i < levels.length - 1; i++) {
+        expect(
+          size(levels[i]!, width),
+          `${levels[i]} > ${levels[i + 1]}`,
+        ).toBeGreaterThan(size(levels[i + 1]!, width));
+      }
+    },
+  );
 
-  it('body text never scales with the viewport', () => {
-    for (const level of ['body', 'long', 'ui', 'ui-sm', 'code', 'caption']) {
-      expect(css.match(new RegExp(`--text-${level}: ([^;]+);`))![1]).not.toMatch(/vw|clamp/);
+  it.each([320, 360, 480, 768, 1024, 1440])(
+    "the display tiers sit around h1 at %ipx",
+    (width) => {
+      expect(size("display", width), "display > h1").toBeGreaterThan(
+        size("h1", width),
+      );
+      expect(size("h1", width), "h1 > section").toBeGreaterThan(
+        size("section", width),
+      );
+      expect(size("section", width), "section > h2").toBeGreaterThan(
+        size("h2", width),
+      );
+    },
+  );
+
+  it("body text never scales with the viewport", () => {
+    for (const level of ["body", "long", "ui", "ui-sm", "code", "caption"]) {
+      expect(
+        css.match(new RegExp(`--text-${level}: ([^;]+);`))![1],
+      ).not.toMatch(/vw|clamp/);
     }
   });
 });

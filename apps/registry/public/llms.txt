@@ -399,7 +399,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, loading state, v2.0.0
 - [Section Header](https://ds.interlace.tools/c/section-header): The "section intro" block — optional eyebrow, a heading, and a `max-w-prose` tagline — with the bottom margin, the alignment and the type rhythm owned in one place instead of being re-typed as `text-center mb-12` on every section.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/section-header.json`
-  - contract: server, v1.2.0
+  - contract: server, v1.3.0
 - [Share Buttons](https://ds.interlace.tools/c/share-buttons): A compact "share this page" cluster: one ghost icon-button per social network plus a copy-link affordance. Each share button opens its network's prefilled share URL in a new tab; the copy button writes the URL to the clipboard and flips its icon +…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-buttons.json`
   - contract: client, min 320px, states twitter|bluesky|linkedin|copy, v1.1.0
@@ -588,7 +588,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [cn — class-name merge utility](https://ds.interlace.tools/c/cn): @interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/cn.json`
-  - contract: server, states h1|h2|h3|h4|h5|h6|body|long|ui|ui-sm|caption|code, v2.0.0
+  - contract: server, v2.0.0
 - [No-flash theme bootstrap script](https://ds.interlace.tools/c/theme-script): @interlace/ui — the inline `<head>` script that applies the stored theme before first paint. Without it every page load flashes the default theme.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-script.json`
   - contract: server, v1.0.1

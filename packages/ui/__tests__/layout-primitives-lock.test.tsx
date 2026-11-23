@@ -411,18 +411,39 @@ describe("SectionHeader: structure (LAYOUT §1)", () => {
     expect(html).toContain("[&amp;_p]:mx-auto");
   });
 
-  it('align="start" produces text-left (no implicit mx-auto on the <p>)', () => {
+  it('align="start" produces text-start, so it follows the writing direction (no implicit mx-auto on the <p>)', () => {
     const html = render(<SectionHeader title="t" align="start" />);
-    expect(html).toContain("text-left");
+    expect(html).toContain("text-start");
     expect(html).not.toContain("text-center");
   });
 
-  it('defaults to spacing="lg" (mb-16)', () => {
-    expect(render(<SectionHeader title="t" />)).toContain("mb-16");
+  it('defaults to spacing="lg", a fraction of the comfortable section rhythm', () => {
+    expect(render(<SectionHeader title="t" />)).toContain(
+      "mb-[calc(var(--spacing-section-comfortable)*0.75)]",
+    );
   });
 
-  it('spacing="md" produces mb-12', () => {
-    expect(render(<SectionHeader title="t" spacing="md" />)).toContain("mb-12");
+  it('spacing="md" follows the tight section rhythm', () => {
+    expect(render(<SectionHeader title="t" spacing="md" />)).toContain(
+      "mb-[calc(var(--spacing-section-tight)*0.8)]",
+    );
+  });
+
+  it('sets the title on the fluid scale: text-section by default, text-display for size="display"', () => {
+    expect(render(<SectionHeader title="t" />)).toContain("text-section");
+    const display = render(<SectionHeader title="t" size="display" />);
+    expect(display).toContain("text-display");
+    expect(display).toContain('data-size="display"');
+    expect(display).not.toMatch(/text-[345]xl/);
+  });
+
+  it('eyebrowStyle="pill" wraps the eyebrow in a rounded chip; plain does not', () => {
+    expect(
+      render(<SectionHeader title="t" eyebrow="New" eyebrowStyle="pill" />),
+    ).toMatch(/<span class="[^"]*rounded-full[^"]*">New<\/span>/);
+    expect(render(<SectionHeader title="t" eyebrow="New" />)).not.toContain(
+      "rounded-full",
+    );
   });
 });
 

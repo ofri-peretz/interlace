@@ -11,11 +11,11 @@
  *   <header data-slot="topbar" data-min-viewport="320">
  *     <div className="container">
  *       <div className="logo">{logo}</div>
- *       <nav>{links.map(...)} </nav>          (md and up)
+ *       <nav>{links.map(...)} </nav>          (collapseBelow and up)
  *       <div className="actions">{actions}</div>
- *       <TopbarMenu>{links}</TopbarMenu>      (below md, mobileNav="menu")
+ *       <TopbarMenu>{links}</TopbarMenu>      (below collapseBelow, mobileNav="menu")
  *     </div>
- *     <nav>{links}</nav>                      (below md, mobileNav="wrap")
+ *     <nav>{links}</nav>                      (below collapseBelow, mobileNav="wrap")
  *     </div>
  *   </header>
  *
