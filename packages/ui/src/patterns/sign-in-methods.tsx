@@ -160,7 +160,7 @@ function SignInMethods({
                     loading={isBusy}
                     disabled={busy !== null && !isBusy}
                     aria-label={`${connectLabel} ${name}`}
-                    onClick={() => onConnect && run(m.id, onConnect(m.id))}
+                    onClick={() => run(m.id, onConnect?.(m.id))}
                   >
                     {connectLabel}
                   </Button>
@@ -174,7 +174,7 @@ function SignInMethods({
                       type="button"
                       size="sm"
                       variant="destructive"
-                      onClick={() => onDisconnect && run(m.id, onDisconnect(m.id))}
+                      onClick={() => run(m.id, onDisconnect?.(m.id))}
                     >
                       {confirmLabel}
                     </Button>

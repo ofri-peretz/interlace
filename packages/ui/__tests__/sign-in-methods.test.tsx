@@ -100,4 +100,24 @@ describe("SignInMethods", () => {
     await act(async () => resolve());
     expect(b.hasAttribute("data-loading")).toBe(false);
   });
+
+  it("absorbs a rejected onDisconnect and clears the busy state", async () => {
+    const onDisconnect = vi.fn(() => Promise.reject(new Error("auth failed")));
+    render(<SignInMethods methods={methods} onDisconnect={onDisconnect} />);
+    fireEvent.click(screen.getByRole("button", { name: "Disconnect Google" }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Yes, disconnect" }));
+    });
+    expect(onDisconnect).toHaveBeenCalledWith("google");
+    expect(
+      screen.getByRole("button", { name: "Disconnect Google" }).hasAttribute("data-loading"),
+    ).toBe(false);
+  });
+
+  it("closes the confirmation even when no onDisconnect is given", () => {
+    render(<SignInMethods methods={methods} />);
+    fireEvent.click(screen.getByRole("button", { name: "Disconnect Google" }));
+    fireEvent.click(screen.getByRole("button", { name: "Yes, disconnect" }));
+    expect(screen.queryByRole("button", { name: "Yes, disconnect" })).toBeNull();
+  });
 });
