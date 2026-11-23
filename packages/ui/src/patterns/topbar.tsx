@@ -22,7 +22,7 @@
  * ## MIN_VIEWPORT — 320
  *
  * Below 768 the links never disappear. By default they move into a "Menu"
- * button that opens a side sheet (`TopbarMenu`); `mobileNav="wrap"` shows
+ * button that opens a swipeable side panel (`TopbarMenu`); `mobileNav="wrap"` shows
  * them as a second, wrapping row instead, which suits sites with three or
  * four short links. Above 768, the nav row is visible.
  *
@@ -52,10 +52,10 @@
  * | R26  | A11y from native el              | `<header>` landmark, `<nav>` for the link cluster           |
  */
 
-import * as React from 'react';
+import * as React from "react";
 
-import { cn } from '../lib/cn.js';
-import { TopbarMenu } from './topbar-menu.js';
+import { cn } from "../lib/cn.js";
+import { TopbarMenu } from "./topbar-menu.js";
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -69,10 +69,10 @@ interface TopbarLinkRenderProps {
   href: string;
   className: string;
   children: React.ReactNode;
-  'aria-current'?: 'page';
+  "aria-current"?: "page";
 }
 
-interface TopbarProps extends React.ComponentProps<'header'> {
+interface TopbarProps extends React.ComponentProps<"header"> {
   /**
    * Logo / wordmark. Receives a `<a href="/">…</a>` or a framework-
    * specific Link (Next.js Link, React Router NavLink, etc.) — the DS
@@ -87,7 +87,7 @@ interface TopbarProps extends React.ComponentProps<'header'> {
    * Container max-width. Defaults to `'wide'` (1280px). Set to
    * `'content'` (1024px) for narrower docs surfaces.
    */
-  containerSize?: 'wide' | 'content' | 'prose';
+  containerSize?: "wide" | "content" | "prose";
   /**
    * The current page's href. The link with this exact href is marked
    * `aria-current="page"` and styled as current.
@@ -95,10 +95,10 @@ interface TopbarProps extends React.ComponentProps<'header'> {
   currentHref?: string;
   /**
    * What the links do below md: `menu` puts them behind a Menu button in a
-   * side sheet, `wrap` shows them as a second row, `none` hides them (only
+   * swipeable side panel, `wrap` shows them as a second row, `none` hides them (only
    * when the page offers another way to reach them). @default 'menu'
    */
-  mobileNav?: 'menu' | 'wrap' | 'none';
+  mobileNav?: "menu" | "wrap" | "none";
   /** Label of the small-screen menu button. @default 'Menu' */
   menuLabel?: string;
   /**
@@ -112,36 +112,47 @@ interface TopbarProps extends React.ComponentProps<'header'> {
   renderLink?: (props: TopbarLinkRenderProps) => React.ReactElement;
 }
 
-const defaultRenderLink: NonNullable<TopbarProps['renderLink']> = ({ href, className, children, ...rest }) => (
+const defaultRenderLink: NonNullable<TopbarProps["renderLink"]> = ({
+  href,
+  className,
+  children,
+  ...rest
+}) => (
   <a href={href} className={className} {...rest}>
     {children}
   </a>
 );
 
 const CONTAINER_CLASSES = {
-  wide: 'max-w-(--container-wide)',
-  content: 'max-w-(--container-content)',
-  prose: 'max-w-(--container-prose)',
+  wide: "max-w-(--container-wide)",
+  content: "max-w-(--container-content)",
+  prose: "max-w-(--container-prose)",
 } as const;
 
 /** Link styles per place. Current = foreground + underline, never colour alone. */
 const LINK = {
-  row: 'text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[1.15rem] transition-colors',
-  wrap: 'text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-4 inline-flex min-h-11 items-center transition-colors',
-  menu: 'text-foreground hover:bg-muted aria-[current=page]:bg-muted flex min-h-11 items-center rounded-md px-3 font-medium aria-[current=page]:font-semibold',
+  row: "text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[1.15rem] transition-colors",
+  wrap: "text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-4 inline-flex min-h-11 items-center transition-colors",
+  menu: "text-foreground hover:bg-muted aria-[current=page]:bg-muted flex min-h-11 items-center rounded-md px-3 font-medium aria-[current=page]:font-semibold",
 } as const;
 
 function renderLinks(
   links: TopbarLink[],
   place: keyof typeof LINK,
   currentHref: string | undefined,
-  renderLink: NonNullable<TopbarProps['renderLink']>,
+  renderLink: NonNullable<TopbarProps["renderLink"]>,
 ) {
   return links.map((link) => {
     const className = LINK[place];
     if (link.external) {
       return (
-        <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
+        <a
+          key={link.href}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={className}
+        >
           {link.label} <span aria-hidden>↗</span>
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
@@ -154,7 +165,7 @@ function renderLinks(
           href: link.href,
           className,
           children: link.label,
-          ...(current ? { 'aria-current': 'page' as const } : {}),
+          ...(current ? { "aria-current": "page" as const } : {}),
         })}
       </React.Fragment>
     );
@@ -165,10 +176,10 @@ function Topbar({
   logo,
   links = [],
   actions,
-  containerSize = 'wide',
+  containerSize = "wide",
   currentHref,
-  mobileNav = 'menu',
-  menuLabel = 'Menu',
+  mobileNav = "menu",
+  menuLabel = "Menu",
   renderLink = defaultRenderLink,
   className,
   ...props
@@ -179,47 +190,52 @@ function Topbar({
       data-slot="topbar"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'border-border bg-background/80 supports-backdrop-filter:bg-background/60 sticky top-0 z-10 border-b backdrop-blur',
+        "border-border bg-background/80 supports-backdrop-filter:bg-background/60 sticky top-0 z-10 border-b backdrop-blur",
         className,
       )}
       {...props}
     >
       <div
         className={cn(
-          'mx-auto flex min-h-14 items-center justify-between gap-4 px-6 py-2',
+          "mx-auto flex min-h-14 items-center justify-between gap-4 px-6 py-2",
           CONTAINER_CLASSES[containerSize],
         )}
       >
         <div className="flex items-center gap-4">{logo}</div>
         {hasLinks ? (
-          <nav aria-label="Primary" className="hidden items-center gap-6 text-sm md:flex">
-            {renderLinks(links, 'row', currentHref, renderLink)}
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-6 text-sm md:flex"
+          >
+            {renderLinks(links, "row", currentHref, renderLink)}
           </nav>
         ) : null}
-        {actions || (hasLinks && mobileNav === 'menu') ? (
+        {actions || (hasLinks && mobileNav === "menu") ? (
           <div className="flex items-center gap-2 md:gap-4">
             {actions}
-            {hasLinks && mobileNav === 'menu' ? (
+            {hasLinks && mobileNav === "menu" ? (
               <div className="md:hidden">
-                <TopbarMenu label={menuLabel}>{renderLinks(links, 'menu', currentHref, renderLink)}</TopbarMenu>
+                <TopbarMenu label={menuLabel}>
+                  {renderLinks(links, "menu", currentHref, renderLink)}
+                </TopbarMenu>
               </div>
             ) : null}
           </div>
         ) : null}
       </div>
-      {hasLinks && mobileNav === 'wrap' ? (
+      {hasLinks && mobileNav === "wrap" ? (
         <nav
           aria-label="Primary"
           data-slot="topbar-wrap-nav"
           className="flex flex-wrap items-center gap-x-5 px-6 pb-1 text-sm md:hidden"
         >
-          {renderLinks(links, 'wrap', currentHref, renderLink)}
+          {renderLinks(links, "wrap", currentHref, renderLink)}
         </nav>
       ) : null}
     </header>
   );
 }
-Topbar.displayName = 'Topbar';
+Topbar.displayName = "Topbar";
 
 export { Topbar };
 export type { TopbarProps, TopbarLink, TopbarLinkRenderProps };

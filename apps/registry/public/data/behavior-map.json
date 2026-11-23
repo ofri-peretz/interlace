@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T16:39:13.128Z",
+  "generatedAt": "2026-11-23T18:10:39.175Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -13939,6 +13939,8 @@
               "End",
               "ArrowRight",
               "ArrowLeft",
+              "Home",
+              "ArrowRight",
               "Home"
             ]
           },

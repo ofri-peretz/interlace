@@ -1,20 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Topbar } from '@interlace/ui/patterns/topbar';
-import { Button } from '@interlace/ui/button';
-import { withRtl } from '@/decorators';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Topbar } from "@interlace/ui/patterns/topbar";
+import { Button } from "@interlace/ui/button";
+import { withRtl } from "@/decorators";
 
 const meta: Meta<typeof Topbar> = {
-  title: 'Blocks/Topbar',
+  title: "Blocks/Topbar",
   component: Topbar,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component:
-          'The one row every landing, docs and dashboard surface starts with: logo left, primary nav centre-right, action cluster right. Sticky with a translucent backdrop blur, so content scrolls visibly underneath without a colour seam.\n\n' +
+          "The one row every landing, docs and dashboard surface starts with: logo left, primary nav centre-right, action cluster right. Sticky with a translucent backdrop blur, so content scrolls visibly underneath without a colour seam.\n\n" +
           'It is framework-agnostic on purpose. `logo` is a slot rather than an `href`, and `renderLink` is the seam a Next.js or React Router consumer passes its own `<Link>` through — the DS never imports a router. External links opt out of that seam entirely and always render a plain `<a target="_blank">` with a trailing ↗.\n\n' +
-          'Below 768px the links never disappear. By default they move behind a Menu button that opens a side sheet (`mobileNav="menu"`); `mobileNav="wrap"` shows them as a second row instead. Pass `currentHref` and the current link gets `aria-current="page"` and an underline, in the row and in the menu.',
+          'Below 768px the links never disappear. By default they move behind a Menu button that opens a side panel that a finger can drag closed (`mobileNav="menu"`); `mobileNav="wrap"` shows them as a second row instead. Pass `currentHref` and the current link gets `aria-current="page"` and an underline, in the row and in the menu.',
       },
     },
   },
@@ -22,60 +22,77 @@ const meta: Meta<typeof Topbar> = {
     logo: {
       control: false,
       description:
-        'Wordmark or logo, wrapped by the caller in whatever link component it uses. A slot rather than an `href` prop because the DS cannot know which router is in the app.',
-      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+        "Wordmark or logo, wrapped by the caller in whatever link component it uses. A slot rather than an `href` prop because the DS cannot know which router is in the app.",
+      table: { type: { summary: "ReactNode" }, category: "Slots" },
     },
     links: {
-      control: 'object',
+      control: "object",
       description:
         'Primary nav: `{ href, label, external? }`. `external: true` forces a plain `<a target="_blank" rel="noopener noreferrer">` with a ↗ affix and bypasses `renderLink`. Below 768px, see `mobileNav`.',
-      table: { type: { summary: 'TopbarLink[]' }, defaultValue: { summary: '[]' }, category: 'Data' },
+      table: {
+        type: { summary: "TopbarLink[]" },
+        defaultValue: { summary: "[]" },
+        category: "Data",
+      },
     },
     actions: {
       control: false,
       description:
-        'Right-aligned cluster — sign-in, a primary CTA, a theme toggle. Stays visible at every width, unlike `links`, so anything a phone user genuinely needs belongs here.',
-      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+        "Right-aligned cluster — sign-in, a primary CTA, a theme toggle. Stays visible at every width, unlike `links`, so anything a phone user genuinely needs belongs here.",
+      table: { type: { summary: "ReactNode" }, category: "Slots" },
     },
     currentHref: {
-      control: 'text',
-      description: 'The current page. The link with this exact href gets `aria-current="page"` and the current style.',
-      table: { type: { summary: 'string' }, category: 'State' },
+      control: "text",
+      description:
+        'The current page. The link with this exact href gets `aria-current="page"` and the current style.',
+      table: { type: { summary: "string" }, category: "State" },
     },
     mobileNav: {
-      control: 'inline-radio',
-      options: ['menu', 'wrap', 'none'],
+      control: "inline-radio",
+      options: ["menu", "wrap", "none"],
       description:
-        'What the links do below 768px. `menu`: a Menu button opening a side sheet. `wrap`: a second, wrapping row. `none`: hidden, only when the page offers another route to them.',
-      table: { type: { summary: "'menu' | 'wrap' | 'none'" }, defaultValue: { summary: 'menu' }, category: 'Appearance' },
+        "What the links do below 768px. `menu`: a Menu button opening a swipeable side panel. `wrap`: a second, wrapping row. `none`: hidden, only when the page offers another route to them.",
+      table: {
+        type: { summary: "'menu' | 'wrap' | 'none'" },
+        defaultValue: { summary: "menu" },
+        category: "Appearance",
+      },
     },
     menuLabel: {
-      control: 'text',
-      description: 'Label of the small-screen menu button and title of the sheet.',
-      table: { type: { summary: 'string' }, defaultValue: { summary: 'Menu' }, category: 'Content' },
+      control: "text",
+      description:
+        "Label of the small-screen menu button and title of the panel.",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "Menu" },
+        category: "Content",
+      },
     },
     containerSize: {
-      control: 'inline-radio',
-      options: ['wide', 'content', 'prose'],
+      control: "inline-radio",
+      options: ["wide", "content", "prose"],
       description:
-        'Max-width of the inner row. Match it to the page beneath — a `wide` bar over a `prose` article leaves the logo floating away from the text it belongs to.',
+        "Max-width of the inner row. Match it to the page beneath — a `wide` bar over a `prose` article leaves the logo floating away from the text it belongs to.",
       table: {
         type: { summary: "'wide' | 'content' | 'prose'" },
-        defaultValue: { summary: 'wide' },
-        category: 'Appearance',
+        defaultValue: { summary: "wide" },
+        category: "Appearance",
       },
     },
     renderLink: {
       control: false,
       description:
-        'Render prop for internal links — `({ href, className, children, ...rest }) => ReactElement`. Defaults to a plain `<a>`, which is a full page load; pass your framework\'s Link to get SPA navigation. Forward `className` (the DS link styling) and `rest` (it carries `aria-current`).',
-      table: { type: { summary: '(props) => ReactElement' }, category: 'Slots' },
+        "Render prop for internal links — `({ href, className, children, ...rest }) => ReactElement`. Defaults to a plain `<a>`, which is a full page load; pass your framework's Link to get SPA navigation. Forward `className` (the DS link styling) and `rest` (it carries `aria-current`).",
+      table: {
+        type: { summary: "(props) => ReactElement" },
+        category: "Slots",
+      },
     },
     className: {
-      control: 'text',
+      control: "text",
       description:
-        'Merged onto the `<header>`. This is where `sticky top-0 z-10` lives — raise the z-index here if the page has an overlay that must sit under the bar.',
-      table: { type: { summary: 'string' }, category: 'Appearance' },
+        "Merged onto the `<header>`. This is where `sticky top-0 z-10` lives — raise the z-index here if the page has an overlay that must sit under the bar.",
+      table: { type: { summary: "string" }, category: "Appearance" },
     },
   },
 };
@@ -94,17 +111,17 @@ const sampleLogo = (
 );
 
 const sampleLinks = [
-  { href: '/docs', label: 'Docs' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/blog', label: 'Blog' },
-  { href: 'https://github.com', label: 'GitHub', external: true },
+  { href: "/docs", label: "Docs" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/blog", label: "Blog" },
+  { href: "https://github.com", label: "GitHub", external: true },
 ];
 
 export const Default: Story = {
   args: {
     logo: sampleLogo,
     links: sampleLinks,
-    containerSize: 'wide',
+    containerSize: "wide",
     actions: (
       <>
         <Button variant="ghost" size="sm">
@@ -123,7 +140,7 @@ export const NoActions: Story = {
   },
 };
 
-export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
+export const Dark: Story = { ...Default, globals: { theme: "dark" } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
 
 /** The current page is marked in the row and in the menu. */
@@ -131,14 +148,18 @@ export const CurrentPage: Story = {
   args: { ...Default.args, currentHref: sampleLinks[0]?.href },
 };
 
-/** Below 768px: a Menu button opens the links in a side sheet. */
+/** Below 768px: a Menu button opens the links in a swipeable side panel. */
 export const MobileMenu: Story = {
   args: { ...Default.args, currentHref: sampleLinks[0]?.href },
-  parameters: { viewport: { defaultViewport: 'mobile1' } },
+  parameters: { viewport: { defaultViewport: "mobile1" } },
 };
 
 /** Below 768px: the links wrap into a second row instead. */
 export const MobileWrap: Story = {
-  args: { ...Default.args, mobileNav: 'wrap', currentHref: sampleLinks[0]?.href },
-  parameters: { viewport: { defaultViewport: 'mobile1' } },
+  args: {
+    ...Default.args,
+    mobileNav: "wrap",
+    currentHref: sampleLinks[0]?.href,
+  },
+  parameters: { viewport: { defaultViewport: "mobile1" } },
 };

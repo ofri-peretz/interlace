@@ -2527,7 +2527,7 @@
       "name": "topbar-menu",
       "type": "registry:ui",
       "title": "Topbar Menu",
-      "description": "The small-screen half of `Topbar`: a \"Menu\" button that opens the site's links in a side sheet. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.",
+      "description": "The small-screen half of `Topbar`: a \"Menu\" button that opens the site's links in a panel at the edge of the screen. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.",
       "categories": [
         "navigation",
         "pattern"
