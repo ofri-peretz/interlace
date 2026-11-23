@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 154
+    "itemCount": 155
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 66,
+      "primitive": 67,
       "pattern": 39,
       "effect": 17,
       "template": 13,
@@ -39,7 +39,7 @@
       "theme": 3
     },
     "category": {
-      "primitive": 66,
+      "primitive": 67,
       "pattern": 39,
       "blog": 31,
       "foundation": 22,
@@ -47,7 +47,7 @@
       "effect": 17,
       "form": 16,
       "decorative": 15,
-      "feedback": 13,
+      "feedback": 14,
       "template": 13,
       "navigation": 11,
       "marketing": 11,
@@ -59,22 +59,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 91,
+      "server": 92,
       "client": 63
     },
     "keyboard": {
-      "none": 119,
+      "none": 120,
       "handled": 35
     },
     "loading": {
-      "none": 122,
+      "none": 123,
       "built-in": 32
     },
     "minViewport": {
       "320": 91,
       "480": 7,
       "768": 1,
-      "inherited": 55
+      "inherited": 56
     }
   },
   "items": [
@@ -8054,6 +8054,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/thread-lines.json",
       "item": "https://ds.interlace.tools/r/thread-lines.json",
       "docs": "https://ds.interlace.tools/c/thread-lines"
+    },
+    {
+      "name": "thread-mark",
+      "title": "Thread Mark",
+      "type": "registry:ui",
+      "summary": "Interlace's thread, drawn as a state. Where a generic kit reaches for a spinner, an empty-box icon and a red warning triangle, Interlace says the same things with its one motif:",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ThreadMarkState",
+          "values": [
+            "woven",
+            "drawing",
+            "loose",
+            "cut"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "ThreadMark"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/thread-mark.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/thread-mark.json",
+      "item": "https://ds.interlace.tools/r/thread-mark.json",
+      "docs": "https://ds.interlace.tools/c/thread-mark"
     },
     {
       "name": "thread-steps",

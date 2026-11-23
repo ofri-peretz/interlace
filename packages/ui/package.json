@@ -200,6 +200,10 @@
       "types": "./dist/primitives/reading-strand.d.ts",
       "default": "./dist/primitives/reading-strand.js"
     },
+    "./thread-mark": {
+      "types": "./dist/primitives/thread-mark.d.ts",
+      "default": "./dist/primitives/thread-mark.js"
+    },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
       "default": "./dist/primitives/label.js"

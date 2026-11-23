@@ -1997,6 +1997,19 @@
     "previewDark": "effects-threadlines--dark",
     "skeleton": null
   },
+  "thread-mark": {
+    "title": "Primitives/ThreadMark",
+    "storyIds": [
+      "primitives-threadmark--default",
+      "primitives-threadmark--all-states",
+      "primitives-threadmark--loading",
+      "primitives-threadmark--in-an-empty-state",
+      "primitives-threadmark--in-an-error-state"
+    ],
+    "preview": "primitives-threadmark--default",
+    "previewDark": null,
+    "skeleton": "primitives-threadmark--loading"
+  },
   "thread-steps": {
     "title": "Blocks/ThreadSteps",
     "storyIds": [

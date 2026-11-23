@@ -1282,6 +1282,24 @@
       }
     },
     {
+      "name": "thread-mark",
+      "type": "registry:ui",
+      "title": "Thread Mark",
+      "description": "Interlace's thread, drawn as a state. Where a generic kit reaches for a spinner, an empty-box icon and a red warning triangle, Interlace says the same things with its one motif:",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
