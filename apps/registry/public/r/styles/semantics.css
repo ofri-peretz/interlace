@@ -42,6 +42,7 @@
   :root,
   .dark,
   [data-scheme='dark'],
+  [data-scheme='light'],
   [data-theme] {
     --primary: var(--interlace-primary);
     --primary-foreground: var(--interlace-primary-foreground);

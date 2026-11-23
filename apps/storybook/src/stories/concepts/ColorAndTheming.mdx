@@ -110,7 +110,7 @@ declared.
 
 | Selector | Means |
 | --- | --- |
-| `:root` | interlace · light — the default |
+| `:root`, `[data-scheme='light']` | interlace · light — the default |
 | `.dark`, `[data-scheme='dark']` | interlace · dark |
 | `[data-theme='X']` | theme X · light |
 | `[data-theme='X'].dark` | theme X · dark |
@@ -118,6 +118,11 @@ declared.
 Scheme is keyed on the `.dark` class, matching the shadcn / `next-themes`
 convention, so the system drops into an existing app without a migration.
 Theme is keyed on `data-theme`.
+
+Either scheme can be forced on a subtree. `<div class="dark">` makes a dark
+panel on a light page, and `<div data-scheme="light">` makes a light panel
+on a dark page. The palette, the semantic names and `color-scheme` all
+switch together, so the panel's scrollbars and form controls match it.
 
 `[data-theme='dark']` deliberately no longer means "the dark scheme". It now
 reads as "the theme named `dark`", which is not a registered theme, so it

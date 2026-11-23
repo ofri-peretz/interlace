@@ -152,7 +152,7 @@ const harborCss = readLines(resolve(UI_STYLES, 'brand/harbor.css'));
 const COMBOS: Record<string, Record<string, string>> = {
   'interlace · light': parseBrandBlock(interlaceCss, findBlock(interlaceCss, ':root')),
   'interlace · dark': parseBrandBlock(interlaceCss, findBlock(interlaceCss, '.dark,')),
-  'harbor · light': parseBrandBlock(harborCss, findBlock(harborCss, "[data-theme='harbor'] {")),
+  'harbor · light': parseBrandBlock(harborCss, findBlock(harborCss, "[data-theme='harbor'],")),
   'harbor · dark': parseBrandBlock(harborCss, findBlock(harborCss, "[data-theme='harbor'].dark,")),
 };
 

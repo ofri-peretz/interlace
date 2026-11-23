@@ -92,7 +92,8 @@
   /* ─────────────────────────────────────────────────────────────────
    *  HARBOR · LIGHT
    * ──────────────────────────────────────────────────────────────── */
-  [data-theme='harbor'] {
+  [data-theme='harbor'],
+  [data-theme='harbor'] [data-scheme='light'] {
     /* Brand — harbour blue. #0f4c81 is 8.39:1 on the page and 8.86:1 on a
      * card; the binding constraint is the same one Interlace documents,
      * `bg-primary/10 text-primary` (the stock shadcn tinted-chip pattern),

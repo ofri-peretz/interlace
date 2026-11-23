@@ -51,6 +51,7 @@ import {
 const STYLES = resolve(__dirname, '../styles');
 const INTERLACE_CSS = resolve(STYLES, 'brand/interlace.css');
 const HARBOR_CSS = resolve(STYLES, 'brand/harbor.css');
+const INTERLACE_LIGHT = ":root,\n  [data-scheme='light']";
 
 /** WCAG 2.2 AA floors. */
 const AA_TEXT = 4.5;
@@ -63,9 +64,9 @@ const AA_NON_TEXT = 3;
  * This table IS the selector matrix from `styles/brand/interlace.css`, in
  * executable form:
  *
- *   :root                                        interlace · light
+ *   :root, [data-scheme='light']                 interlace · light
  *   .dark, [data-scheme='dark']                  interlace · dark
- *   [data-theme='X']                             theme X · light
+ *   [data-theme='X'], …[data-scheme='light']     theme X · light
  *   [data-theme='X'].dark, …[data-scheme='dark'] theme X · dark
  *
  * The selector strings are matched EXACTLY against the stylesheet, so a
@@ -74,11 +75,11 @@ const AA_NON_TEXT = 3;
  */
 const THEME_SELECTORS: Record<string, Record<Scheme, { file: string; selector: string }>> = {
   interlace: {
-    light: { file: INTERLACE_CSS, selector: ':root' },
+    light: { file: INTERLACE_CSS, selector: ":root,\n  [data-scheme='light']" },
     dark: { file: INTERLACE_CSS, selector: ".dark,\n  [data-scheme='dark']" },
   },
   harbor: {
-    light: { file: HARBOR_CSS, selector: "[data-theme='harbor']" },
+    light: { file: HARBOR_CSS, selector: "[data-theme='harbor'],\n  [data-theme='harbor'] [data-scheme='light']" },
     dark: {
       file: HARBOR_CSS,
       selector:
@@ -246,7 +247,7 @@ describe('theme contract lock', () => {
   // so pin its behaviour — including its ability to FAIL — first.
 
   it('reads a block by exact selector and ignores prose inside comments', () => {
-    const block = readBlock(INTERLACE_CSS, ':root');
+    const block = readBlock(INTERLACE_CSS, INTERLACE_LIGHT);
     const declarations = readDeclarations(block);
     expect(declarations.get('primary')).toBe('oklch(0.422 0.1117 45.2)');
     expect(declarations.get('background')).toBe('oklch(1 0 0)');
@@ -305,7 +306,7 @@ describe('theme contract lock', () => {
   // ── 1. provenance: the manifest IS the :root block ───────────────────
 
   it('THEME_TOKENS matches the :root block it is derived from, in order', () => {
-    const derived = [...readDeclarations(readBlock(INTERLACE_CSS, ':root')).keys()];
+    const derived = [...readDeclarations(readBlock(INTERLACE_CSS, INTERLACE_LIGHT)).keys()];
     expect(
       derived,
       'THEME_TOKENS was derived from the `:root` block of brand/interlace.css ' +
@@ -511,6 +512,17 @@ describe('theme contract lock', () => {
       expect(stripComments(harbor)).not.toContain("[data-theme='dark']");
     });
 
+    it('lets a subtree force light as well as dark', () => {
+      // `[data-scheme='light']` is the mirror of `[data-scheme='dark']`: a
+      // light panel inside a dark page. The palette, the semantic re-binding
+      // and `color-scheme` must all switch on it, or the panel paints light
+      // brand colours over dark native controls (or the reverse).
+      const scheme = readFileSync(resolve(STYLES, 'structure/scheme.css'), 'utf8');
+      expect(stripComments(interlace)).toContain(INTERLACE_LIGHT + ' {');
+      expect(stripComments(harbor)).toContain("[data-theme='harbor'] [data-scheme='light'] {");
+      expect(stripComments(scheme)).toContain(INTERLACE_LIGHT + ' {\n    color-scheme: light;');
+    });
+
     it('re-binds the semantics layer on every brand-override selector', () => {
       // A `var()`-valued custom property is substituted on the element that
       // DECLARES it. If `--primary: var(--interlace-primary)` is bound only on
@@ -518,7 +530,7 @@ describe('theme contract lock', () => {
       // is exactly what a side-by-side theme preview renders) changes the
       // brand token and nothing repaints.
       const semantics = readFileSync(resolve(STYLES, 'semantics.css'), 'utf8');
-      expect(semantics).toContain(':root,\n  .dark,\n  [data-scheme=\'dark\'],\n  [data-theme]');
+      expect(semantics).toContain(":root,\n  .dark,\n  [data-scheme='dark'],\n  [data-scheme='light'],\n  [data-theme]");
     });
 
     it('every theme file overrides ONLY the brand layer', () => {

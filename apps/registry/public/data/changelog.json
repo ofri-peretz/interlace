@@ -241,6 +241,17 @@
           "source": ".changeset/highlight-heading-tones.md"
         },
         {
+          "summary": "Any element can now force the light scheme with `data-scheme=\"light\"`, the mirror of `class=\"dark\"`. A light panel inside a dark page gets the light palette, the light semantic colours and `color-scheme: light`, so its scrollbars and form controls match. This works for every theme, Harbor included.",
+          "components": [
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/light-subtree.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"

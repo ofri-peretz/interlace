@@ -41,11 +41,11 @@ const fail = (message) => {
 /** The theme × scheme matrix, spelled exactly as the brand files spell it. */
 const THEME_SELECTORS = {
   interlace: {
-    light: { file: 'interlace.css', selector: ':root' },
+    light: { file: 'interlace.css', selector: ":root,\n  [data-scheme='light']" },
     dark: { file: 'interlace.css', selector: ".dark,\n  [data-scheme='dark']" },
   },
   harbor: {
-    light: { file: 'harbor.css', selector: "[data-theme='harbor']" },
+    light: { file: 'harbor.css', selector: "[data-theme='harbor'],\n  [data-theme='harbor'] [data-scheme='light']" },
     dark: {
       file: 'harbor.css',
       selector:
