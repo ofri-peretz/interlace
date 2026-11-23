@@ -118,6 +118,11 @@ export const KeyboardFlow: Story = {
       expect(name()).toBe('Insert link');
       await userEvent.keyboard('{Home}');
       expect(name()).toBe('Undo');
+      // Home from the disabled Redo too: Base UI blocks every key there but Tab.
+      await userEvent.keyboard('{ArrowRight}');
+      expect(name()).toBe('Redo');
+      await userEvent.keyboard('{Home}');
+      expect(name()).toBe('Undo');
     });
 
     await step('One more Tab leaves the whole toolbar', async () => {
@@ -158,6 +163,32 @@ export const WithInputAndLink: Story = {
       <ToolbarInput aria-label="Filter rows" placeholder="Filter rows" />
     </Toolbar>
   ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole('textbox', { name: 'Filter rows' }) as HTMLInputElement;
+    const name = () => document.activeElement?.getAttribute('aria-label') ?? document.activeElement?.textContent;
+
+    await step('End reaches the field from a button', async () => {
+      canvas.getByRole('button', { name: 'Export' }).focus();
+      await userEvent.keyboard('{End}');
+      expect(document.activeElement).toBe(input);
+    });
+
+    await step('Inside the text, the arrows and Home move the caret, not focus', async () => {
+      await userEvent.type(input, 'ab');
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(document.activeElement).toBe(input);
+      expect(input.selectionStart).toBe(1);
+      await userEvent.keyboard('{Home}');
+      expect(document.activeElement).toBe(input);
+      expect(input.selectionStart).toBe(0);
+    });
+
+    await step('At the start of the text, Left leaves for the link', async () => {
+      await userEvent.keyboard('{ArrowLeft}');
+      await waitFor(() => expect(name()).toBe('Edited 5 minutes ago'));
+    });
+  },
 };
 
 /** Arrow keys follow the reading direction: in RTL, Left moves forward. */

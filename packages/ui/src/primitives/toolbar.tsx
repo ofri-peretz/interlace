@@ -81,6 +81,7 @@ function jumpToEnd(event: React.KeyboardEvent<HTMLDivElement>) {
   if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
   if (event.target instanceof HTMLInputElement) return;
   const items = Array.from(
+    // Any `tabindex`, -1 included: the roving model gives every item one.
     event.currentTarget.querySelectorAll<HTMLElement>(':is(button, a, input)[tabindex]'),
   );
   const target = event.key === 'Home' ? items[0] : items[items.length - 1];
@@ -123,8 +124,9 @@ function ToolbarButton({ className, variant = 'ghost', size = 'icon-sm', ...prop
   return (
     <BaseToolbar.Button
       data-slot="toolbar-button"
-      // A disabled toolbar button stays focusable (Base UI's default), so it
-      // dims without `pointer-events-none`: hovering it can still show why.
+      // A disabled toolbar button stays focusable (Base UI's default): it gets
+      // `aria-disabled` and `data-disabled`, not `disabled`, so it dims without
+      // `pointer-events-none` and hovering it can still show why.
       className={cn(
         buttonVariants({ variant, size }),
         // An icon button is a square with no padding. Said outright so a
