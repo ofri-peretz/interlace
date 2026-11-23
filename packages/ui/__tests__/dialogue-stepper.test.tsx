@@ -48,6 +48,11 @@ describe('DialogueStepper', () => {
     for (const text of ['closed?', 'bearings', 'abroad', 'April']) expect(html).toContain(text);
     expect(html).toContain('<noscript>');
     expect(html).toMatch(/dialogue-step"\]\{display:flex!important\}/);
+    // Every rule is scoped to the stepper, so no-JS never hides anything else.
+    const css = html.match(/<noscript><style>(.*?)<\/style>/)![1]!;
+    for (const selector of css.split(/[{}]/).filter((_, i) => i % 2 === 0 && _).flatMap((s) => s.split(','))) {
+      expect(selector.startsWith('[data-slot="dialogue-stepper"] ')).toBe(true);
+    }
     expect(html).toContain('data-min-viewport="320"');
     expect(MIN_VIEWPORT).toBe(320);
   });

@@ -230,7 +230,7 @@ function DialogueStepper({
           {announcement}
         </div>
         <noscript>
-          <style>{`[data-slot="dialogue-stepper"] [data-slot="dialogue-step"]{display:flex!important}[data-slot="dialogue-stepper"] [data-slot="dialogue-choices"],[data-slot="dialogue-stepper-controls"]{display:none!important}`}</style>
+          <style>{`[data-slot="dialogue-stepper"] [data-slot="dialogue-step"]{display:flex!important}[data-slot="dialogue-stepper"] [data-slot="dialogue-choices"],[data-slot="dialogue-stepper"] [data-slot="dialogue-stepper-controls"]{display:none!important}`}</style>
         </noscript>
       </div>
     </StepperContext.Provider>
