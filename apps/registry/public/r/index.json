@@ -493,7 +493,7 @@
       "name": "container",
       "type": "registry:ui",
       "title": "Container",
-      "description": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8` (§5).",
+      "description": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).",
       "categories": [
         "foundation",
         "primitive"

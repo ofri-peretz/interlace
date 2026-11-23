@@ -198,9 +198,9 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="grid grid-cols-1 gap-xl lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
       <section>
-        <h3 className="mb-sm text-ui-sm font-mono uppercase text-muted-foreground">
+        <h3 className="mb-4 text-ui-sm font-mono uppercase text-muted-foreground">
           variant="default"
         </h3>
         <Prose variant="default">
@@ -216,7 +216,7 @@ export const Variants: Story = {
         </Prose>
       </section>
       <section>
-        <h3 className="mb-sm text-ui-sm font-mono uppercase text-muted-foreground">
+        <h3 className="mb-4 text-ui-sm font-mono uppercase text-muted-foreground">
           variant="long"
         </h3>
         <Prose variant="long">

@@ -81,12 +81,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const PanelBody = () => (
-  <div className="space-y-sm p-md text-ui-sm text-muted-foreground">
+  <div className="space-y-4 p-6 text-ui-sm text-muted-foreground">
     <p>
       <span className="text-foreground font-medium">eslint-plugin-jwt</span>{' '}
       surfaces three classes of token-handling defects:
     </p>
-    <ul className="list-disc space-y-xs pl-md">
+    <ul className="list-disc space-y-2 pl-6">
       <li>Hardcoded JWT secrets committed to source.</li>
       <li>
         Weak algorithms — <code className="font-mono">none</code> and{' '}
@@ -108,13 +108,13 @@ export const Default: Story = {
   args: {
     defaultOpen: true,
     disabled: false,
-    className: 'w-full max-w-float rounded-md border',
+    className: 'w-full max-w-float rounded-lg border',
   },
   render: (args) => (
     <Collapsible {...args}>
       {/* `block`, not `flex`: the label is three inline nodes, and flex would
           turn each into an item and space them apart. */}
-      <CollapsibleTrigger className="block w-full px-md py-sm text-left text-ui-sm font-medium">
+      <CollapsibleTrigger className="block w-full px-6 py-4 text-left text-ui-sm font-medium">
         What does <span className="font-mono">eslint-plugin-jwt</span> detect?
       </CollapsibleTrigger>
       <CollapsiblePanel>
@@ -137,7 +137,7 @@ export const Disabled: Story = {
   },
   render: (args) => (
     <Collapsible {...args}>
-      <CollapsibleTrigger className="flex w-full items-center justify-between px-md py-sm text-left text-ui-sm font-medium">
+      <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-4 text-left text-ui-sm font-medium">
         Show advanced settings
       </CollapsibleTrigger>
       <CollapsiblePanel>
@@ -154,13 +154,13 @@ export const Disabled: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="grid w-[880px] max-w-full grid-cols-1 gap-lg md:grid-cols-2">
-      <section className="flex flex-col gap-xs">
+    <div className="grid w-[880px] max-w-full grid-cols-1 gap-10 md:grid-cols-2">
+      <section className="flex flex-col gap-2">
         <div className="text-ui-sm font-mono uppercase text-muted-foreground">
           open
         </div>
-        <Collapsible defaultOpen className="rounded-md border">
-          <CollapsibleTrigger className="block w-full px-md py-sm text-left text-ui-sm font-medium">
+        <Collapsible defaultOpen className="rounded-lg border">
+          <CollapsibleTrigger className="block w-full px-6 py-4 text-left text-ui-sm font-medium">
             What does <span className="font-mono">eslint-plugin-jwt</span> detect?
           </CollapsibleTrigger>
           <CollapsiblePanel>
@@ -169,12 +169,12 @@ export const Variants: Story = {
         </Collapsible>
       </section>
 
-      <section className="flex flex-col gap-xs">
+      <section className="flex flex-col gap-2">
         <div className="text-ui-sm font-mono uppercase text-muted-foreground">
           closed
         </div>
-        <Collapsible className="rounded-md border">
-          <CollapsibleTrigger className="block w-full px-md py-sm text-left text-ui-sm font-medium">
+        <Collapsible className="rounded-lg border">
+          <CollapsibleTrigger className="block w-full px-6 py-4 text-left text-ui-sm font-medium">
             What does <span className="font-mono">eslint-plugin-jwt</span> detect?
           </CollapsibleTrigger>
           <CollapsiblePanel>
@@ -192,8 +192,8 @@ export const Variants: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <Collapsible className="w-full max-w-float rounded-md border">
-      <CollapsibleTrigger className="text-ui-sm flex w-full items-center justify-between px-md py-sm text-left font-medium">
+    <Collapsible className="w-full max-w-float rounded-lg border">
+      <CollapsibleTrigger className="text-ui-sm flex w-full items-center justify-between px-6 py-4 text-left font-medium">
         Show advanced settings
       </CollapsibleTrigger>
       <CollapsiblePanel>
@@ -253,12 +253,12 @@ export const RTL: Story = {
 export const BelowMinViewport: Story = {
   render: () => (
     <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
-      <Collapsible defaultOpen className="rounded-md border">
-        <CollapsibleTrigger className="flex w-full items-center justify-between px-md py-sm text-left text-ui-sm font-medium">
+      <Collapsible defaultOpen className="rounded-lg border">
+        <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-4 text-left text-ui-sm font-medium">
           {`< ${MIN_VIEWPORT}px — dev outline`}
         </CollapsibleTrigger>
         <CollapsiblePanel>
-          <div className="p-md text-ui-sm text-muted-foreground">
+          <div className="p-6 text-ui-sm text-muted-foreground">
             Panel content remains operable below the minimum viewport; the
             dashed warning outline is a development-mode signal only.
           </div>

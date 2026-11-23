@@ -81,7 +81,7 @@ export const Variants: Story = {
     };
 
     return (
-      <div className="flex w-[640px] max-w-full flex-col gap-md">
+      <div className="flex w-[640px] max-w-full flex-col gap-6">
         {tones.map((tone) => (
           <Callout
             key={`${tone}-titled`}

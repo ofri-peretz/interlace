@@ -156,7 +156,7 @@ export const SettingsRows: Story = {
   // read at thumbnail size.
   tags: ['preview'],
   render: () => (
-    <div className="w-full max-w-float divide-y divide-border rounded-md border border-border">
+    <div className="w-full max-w-float divide-y divide-border rounded-lg border border-border">
       {[
         {
           label: 'Respect reduced motion',
@@ -176,9 +176,9 @@ export const SettingsRows: Story = {
       ].map((row) => (
         <label
           key={row.label}
-          className="flex cursor-pointer items-center justify-between gap-md p-md"
+          className="flex cursor-pointer items-center justify-between gap-6 p-6"
         >
-          <span className="flex flex-col gap-xs">
+          <span className="flex flex-col gap-2">
             <span className="text-ui font-medium">{row.label}</span>
             <span className="text-ui-sm text-muted-foreground">{row.hint}</span>
           </span>

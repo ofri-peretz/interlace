@@ -69,7 +69,7 @@ function StatsTemplate({
 
       <main>
         <Container size="content">
-          <Stack gap="xl" className="py-xl">
+          <Stack gap="xl" className="py-16">
             <SectionBoundary name="stats-header" skeletonVariant="page-header">
               <Stack gap="sm">
                 <Typography variant="h1" as="h1" className="text-balance">
@@ -114,7 +114,7 @@ function StatsTemplate({
                 name="stats-methodology"
                 skeletonVariant="text"
               >
-                <div className="border-border border-t pt-md">
+                <div className="border-border border-t pt-6">
                   <Typography variant="ui-sm" tone="muted">
                     {methodology}
                   </Typography>
@@ -161,7 +161,7 @@ function StatsTemplateSkeleton({
         label={null}
       />
       <Container size="content">
-        <Stack gap="xl" className="py-xl">
+        <Stack gap="xl" className="py-16">
           <Skeleton variant="page-header" label={null} />
           <Skeleton variant="stat-card" count={3} label={null} />
           <Skeleton variant="card" label={null} />

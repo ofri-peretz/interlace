@@ -94,9 +94,7 @@ export const THEME_TOKENS = [
   'viz-grid',
   'viz-axis',
   'viz-edge',
-  'radius-sm',
-  'radius-md',
-  'radius-lg',
+  'radius',
   'brand-mark-bar-o',
   'brand-mark-bar-g',
 ] as const;

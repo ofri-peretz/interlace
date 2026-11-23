@@ -19,7 +19,7 @@ const ACTIONS = {
   'primary button': <Button>Create the first one</Button>,
   'quiet button': <Button variant="outline">Clear filters</Button>,
   'button + link': (
-    <div className="flex flex-wrap items-center justify-center gap-sm">
+    <div className="flex flex-wrap items-center justify-center gap-4">
       <Button>Create the first one</Button>
       <Button variant="ghost">Read the docs</Button>
     </div>

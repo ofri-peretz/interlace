@@ -88,7 +88,7 @@ export default meta;
 type Story = StoryObj<typeof Section>;
 
 const SectionBody = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
+  <div className="rounded-lg border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
     {label}
   </div>
 );

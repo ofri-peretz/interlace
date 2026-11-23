@@ -71,9 +71,9 @@ const gradeBadgeVariants = cva(
         fail:      'bg-destructive text-destructive-foreground',
       },
       size: {
-        sm: 'h-5 min-w-8 px-xs text-xs',
-        md: 'h-7 min-w-10 px-sm text-sm',
-        lg: 'h-12 min-w-16 px-md text-xl',
+        sm: 'h-5 min-w-8 px-2 text-xs',
+        md: 'h-7 min-w-10 px-4 text-sm',
+        lg: 'h-12 min-w-16 px-6 text-xl',
       },
     },
     defaultVariants: {

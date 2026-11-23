@@ -65,7 +65,7 @@ export function EmptyState({
       data-slot="empty-state"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'border-border bg-card/40 flex flex-col items-center justify-center rounded-lg border border-dashed px-6 py-12 text-center',
+        'border-border bg-card/40 flex flex-col items-center justify-center rounded-xl border border-dashed px-6 py-12 text-center',
         className,
       )}
       {...props}

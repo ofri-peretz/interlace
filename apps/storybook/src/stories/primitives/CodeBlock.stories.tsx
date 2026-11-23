@@ -108,8 +108,8 @@ export const Loading: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="w-[720px] max-w-full space-y-lg">
-      <div className="space-y-xs">
+    <div className="w-[720px] max-w-full space-y-10">
+      <div className="space-y-2">
         <div className="text-ui-sm font-mono text-muted-foreground">
           title + language
         </div>
@@ -117,19 +117,19 @@ export const Variants: Story = {
           {SAMPLE_BASH}
         </CodeBlock>
       </div>
-      <div className="space-y-xs">
+      <div className="space-y-2">
         <div className="text-ui-sm font-mono text-muted-foreground">
           language only
         </div>
         <CodeBlock language="json">{SAMPLE_JSON}</CodeBlock>
       </div>
-      <div className="space-y-xs">
+      <div className="space-y-2">
         <div className="text-ui-sm font-mono text-muted-foreground">
           title only
         </div>
         <CodeBlock title="notes.txt">{`Plain text — no language tag.\nCopy still works.`}</CodeBlock>
       </div>
-      <div className="space-y-xs">
+      <div className="space-y-2">
         <div className="text-ui-sm font-mono text-muted-foreground">
           neither (copy still available)
         </div>

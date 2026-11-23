@@ -92,7 +92,7 @@ export default async function ConceptPage({ params }: PageProps) {
         {page.headings.length > 2 ? (
           <nav
             aria-label="On this page"
-            className="border-border bg-card/40 mt-8 rounded-lg border p-5"
+            className="border-border bg-card/40 mt-8 rounded-xl border p-5"
           >
             <h2 className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               On this page
@@ -118,12 +118,12 @@ export default async function ConceptPage({ params }: PageProps) {
 
         <nav
           aria-label="More concepts"
-          className="border-border mt-16 grid gap-4 border-t pt-8 sm:grid-cols-2"
+          className="border-border mt-16 grid gap-4 border-t pt-8 xs:grid-cols-2"
         >
           {previous ? (
             <Link
               href={`/concepts/${previous.slug}`}
-              className="border-border hover:border-primary/60 rounded-lg border p-4 transition-colors"
+              className="border-border hover:border-primary/60 rounded-xl border p-4 transition-colors"
             >
               <span className="text-muted-foreground text-xs">← Previous</span>
               <span className="mt-1 block font-semibold">{previous.title}</span>
@@ -134,7 +134,7 @@ export default async function ConceptPage({ params }: PageProps) {
           {next ? (
             <Link
               href={`/concepts/${next.slug}`}
-              className="border-border hover:border-primary/60 rounded-lg border p-4 text-right transition-colors sm:col-start-2"
+              className="border-border hover:border-primary/60 rounded-xl border p-4 text-right transition-colors xs:col-start-2"
             >
               <span className="text-muted-foreground text-xs">Next →</span>
               <span className="mt-1 block font-semibold">{next.title}</span>

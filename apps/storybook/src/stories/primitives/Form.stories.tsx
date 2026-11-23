@@ -114,7 +114,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-    className: 'flex w-[360px] max-w-full flex-col gap-md',
+    className: 'flex w-[360px] max-w-full flex-col gap-6',
     method: 'post',
     noValidate: false,
     autoComplete: 'on',
@@ -122,7 +122,7 @@ export const Default: Story = {
   },
   render: (args) => (
     <Form {...args}>
-      <Field name="email" className="flex flex-col gap-xs">
+      <Field name="email" className="flex flex-col gap-2">
         <FieldLabel>Email</FieldLabel>
         <FieldControl
           render={
@@ -136,7 +136,7 @@ export const Default: Story = {
         />
         <FieldDescription>We never share your address.</FieldDescription>
       </Field>
-      <Field name="password" className="flex flex-col gap-xs">
+      <Field name="password" className="flex flex-col gap-2">
         <FieldLabel>Password</FieldLabel>
         <FieldControl
           render={
@@ -167,9 +167,9 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="grid w-[720px] max-w-full grid-cols-1 gap-md md:grid-cols-2">
+    <div className="grid w-[720px] max-w-full grid-cols-1 gap-6 md:grid-cols-2">
       <Form>
-        <div className="mb-sm text-ui-sm font-mono uppercase text-muted-foreground">
+        <div className="mb-4 text-ui-sm font-mono uppercase text-muted-foreground">
           valid
         </div>
         <Field name="email-valid">
@@ -187,7 +187,7 @@ export const Variants: Story = {
         </Field>
       </Form>
       <Form>
-        <div className="mb-sm text-ui-sm font-mono uppercase text-muted-foreground">
+        <div className="mb-4 text-ui-sm font-mono uppercase text-muted-foreground">
           invalid
         </div>
         <Field name="email-invalid" invalid>

@@ -11,14 +11,14 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
  */
 
 const Frame = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative h-[280px] w-full overflow-hidden rounded-lg border border-border">
+  <div className="relative h-[280px] w-full overflow-hidden rounded-xl border border-border">
     {children}
   </div>
 );
 
 const Caption = ({ children }: { children: React.ReactNode }) => (
   <div className="relative z-10 flex h-full items-center justify-center p-6">
-    <span className="rounded-md bg-background px-4 py-2 text-sm font-medium text-foreground">
+    <span className="rounded-lg bg-background px-4 py-2 text-sm font-medium text-foreground">
       {children}
     </span>
   </div>

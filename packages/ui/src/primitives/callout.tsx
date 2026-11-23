@@ -38,7 +38,7 @@
  * | R10  | Composition seam                 | `title` slot + `children`                                   |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | zero inline `style`; cva classes + Lucide via className     |
- * | R19  | Tokens only                      | `p-md` / `rounded-md` / `border-l-*` widths via spacing + radius tokens; colors via semantic tokens |
+ * | R19  | Tokens only                      | `p-6` / `rounded-lg` / `border-l-*` widths via spacing + radius tokens; colors via semantic tokens |
  * | R20  | AA contrast                      | tones map to AA-cleared semantic tokens (primary/destructive/foreground/muted-foreground) + neutral surface |
  * | R25  | Server component                 | no hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `role="note"` on the div; lucide icon marked `aria-hidden`  |
@@ -66,11 +66,11 @@ export const MIN_VIEWPORT = 320 as const;
 
 const calloutVariants = cva(
   // Base — flex row, icon left, text column right; 4px left border via
-  // `border-l-4`; padding from the spacing scale; rounded-md from radius
+  // `border-l-4`; padding from the spacing scale; rounded-lg from radius
   // tokens. Card-tint surface so the callout reads as a block in prose.
   [
-    'flex items-start gap-sm',
-    'rounded-md border border-border border-l-4 bg-card/40 p-md',
+    'flex items-start gap-4',
+    'rounded-lg border border-border border-l-4 bg-card/40 p-6',
     '[&_[data-slot=callout-icon]]:size-5 [&_[data-slot=callout-icon]]:shrink-0',
   ].join(' '),
   {

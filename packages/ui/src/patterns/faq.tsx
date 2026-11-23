@@ -79,7 +79,7 @@ function FAQ({
     <section
       data-slot="faq"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="prose">

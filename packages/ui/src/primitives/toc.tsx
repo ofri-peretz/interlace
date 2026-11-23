@@ -51,7 +51,7 @@
  * | R10  | Composition seam                 | `TocPopover` wraps `Toc` via `<Popover>` parts                      |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const         |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes + cva                          |
- * | R19  | Tokens only                      | `pl-md` / `pl-lg` spacing, semantic color tokens                    |
+ * | R19  | Tokens only                      | `pl-6` / `pl-10` spacing, semantic color tokens                    |
  * | R20  | AA contrast                      | `text-muted-foreground` / active `text-foreground`                  |
  * | R25  | Client component                 | Hooks (`useEffect`, `useState`) + `useReducedMotion` → `'use client'` |
  * | R26  | A11y from native el              | `<nav aria-label>` landmark + `<ol>/<a>` semantics                  |
@@ -96,8 +96,8 @@ type TocProps = Omit<React.ComponentProps<'nav'>, 'children'> & {
 
 const LEVEL_INDENT: Record<TocItem['level'], string> = {
   2: '',
-  3: 'pl-md',
-  4: 'pl-lg',
+  3: 'pl-6',
+  4: 'pl-10',
 };
 
 const TocComponent = React.forwardRef<HTMLElement, TocProps>(
@@ -191,7 +191,7 @@ const TocComponent = React.forwardRef<HTMLElement, TocProps>(
         className={cn('text-ui-sm', className)}
         {...rest}
       >
-        <ol data-slot="toc-list" className="flex flex-col gap-xs">
+        <ol data-slot="toc-list" className="flex flex-col gap-2">
           {items.map((item) => {
             const isActive = item.id === activeId;
             return (
@@ -208,7 +208,7 @@ const TocComponent = React.forwardRef<HTMLElement, TocProps>(
                   aria-current={isActive ? 'location' : undefined}
                   onClick={(event) => handleClick(event, item.id)}
                   className={cn(
-                    'block rounded-sm py-xs transition-colors',
+                    'block rounded-sm py-2 transition-colors',
                     'text-muted-foreground hover:text-foreground',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                     'data-[active]:text-foreground data-[active]:font-medium',
@@ -257,7 +257,7 @@ export function TocPopover({
         data-slot="toc-popover-trigger"
         data-min-viewport={String(MIN_VIEWPORT)}
         className={cn(
-          'inline-flex items-center gap-xs rounded-md border border-border bg-background px-sm py-xs text-ui-sm',
+          'inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-ui-sm',
           'text-foreground hover:bg-accent hover:text-accent-foreground',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
           triggerClassName,
@@ -268,7 +268,7 @@ export function TocPopover({
       <PopoverContent
         data-slot="toc-popover-content"
         align="start"
-        className="w-72 p-sm"
+        className="w-72 p-4"
       >
         <Toc
           items={items}

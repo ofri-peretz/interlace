@@ -60,7 +60,7 @@ import { Typography } from '../primitives/typography.js';
 export const MIN_VIEWPORT = 320 as const;
 
 const statCardVariants = cva(
-  'border-border bg-card text-card-foreground rounded-lg border p-5 flex flex-col gap-2',
+  'border-border bg-card text-card-foreground rounded-xl border p-5 flex flex-col gap-2',
   {
     variants: {
       tone: {

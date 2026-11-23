@@ -169,7 +169,7 @@ export const Placement: Story = {
   tags: ['preview'],
   parameters: { layout: 'padded' },
   render: () => (
-    <div className="grid grid-cols-1 gap-2xl p-2xl md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-24 p-24 md:grid-cols-2">
       {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
         <div key={side} className="flex items-center justify-center">
           <Popover>

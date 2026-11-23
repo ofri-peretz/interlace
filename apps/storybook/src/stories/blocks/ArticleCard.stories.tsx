@@ -506,7 +506,7 @@ export const RenderImageSlot: Story = {
   args: { ...lockArgs },
   decorators: [(Story) => <div className="w-[380px] max-w-full"><Story /></div>],
   render: (args) => (
-    <div className="flex flex-wrap gap-md">
+    <div className="flex flex-wrap gap-6">
       <div className="w-[380px] max-w-full">
         <ArticleCard
           {...args}
@@ -574,7 +574,7 @@ export const CoverRatioAcrossWidths: Story = {
   name: 'Cover box — same crop at 302 / 380 / 560px',
   args: { ...lockArgs },
   render: (args) => (
-    <div className="flex flex-wrap items-start gap-md">
+    <div className="flex flex-wrap items-start gap-6">
       {[302, 380, 560].map((w) => (
         <div key={w} style={{ width: w, maxWidth: '100%' }}>
           <ArticleCard {...args} data-testid={`ratio-card-${w}`} />

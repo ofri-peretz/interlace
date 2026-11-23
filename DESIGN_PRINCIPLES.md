@@ -69,31 +69,34 @@ selected card) — never a chromatic flood. Full contract:
 ## 4. Token-only — no raw values
 
 Every color / spacing / radius / type / shadow value in source resolves to a
-token (`--text-h1`, `--spacing-md`, `--color-primary`, `--radius-md`). **Raw
+token, and every token is a CSS variable a team can retune (`--text-h1`,
+`--spacing`, `--primary`, `--radius`). **Raw
 hex / oklch / rgba are banned** in source (R19). **Arbitrary pixel classes**
 (`rounded-[12px]`, `px-[18px]`) are banned when a token exists. The 3-layer
 token cascade is `--interlace-*` (brand primitives) → shadcn-bare semantic
 (`--primary`, `--foreground`) → `@theme inline --color-*` (Tailwind utility).
-A brand fork swaps the primitive layer; the rest doesn't move. See
+A brand fork swaps the primitive layer; the rest doesn't move. Interlace
+adds keys to the host app's Tailwind theme and never redefines one the host
+already relies on. See
 `packages/ui/styles/foundation.css` + `interlace-theme.css`.
 
 ## 5. Generous whitespace, fixed rhythm
 
 Spacing comes from a **six-step scale**: 8 / 16 / 24 / 40 / 64 / 96 px
-(`--spacing-xs`…`-2xl`). Container widths come from **four sizes**:
+(`2 / 4 / 6 / 10 / 16 / 24` on Tailwind's numeric scale, which follows
+`--spacing`). Container widths come from **four sizes**:
 `prose` 65ch · `content` 1024px · `wide` 1280px · `full`. Open-coding
 `container mx-auto px-4` or `max-w-3xl` is forbidden — reach for
 `<Container>` / `<Section>`. Mobile-first density: base classes describe the
 smallest viewport; breakpoints *add* breathing room, never take it away
 (`lg:hidden md:flex` is a smell). Full contract: `LAYOUT_PHILOSOPHY.md`.
 
-> **The named-scale trap:** because the six-step spacing scale registers
-> `--spacing-xs…2xl` in `@theme`, Tailwind v4 resolves `max-w-sm` /
-> `max-w-2xl` etc. against the SPACING namespace — you silently get 16px /
-> 96px containers, not 24rem / 42rem. This is not theoretical (96px hero
-> paragraphs, 40px dialogs shipped). Numeric widths (`max-w-96`) and
-> arbitrary token values (`max-w-(--container-prose)`) stay safe. Enforced
-> by `packages/ui/__tests__/container-scale-lock.test.ts`.
+> **Why numeric, not named:** Interlace 1.x registered `--spacing-xs…2xl`
+> to get `gap-md`. Tailwind v4 also resolves `max-w-sm` / `max-w-2xl`
+> against that namespace, so every host app silently got 16px / 96px
+> containers. 2.0 uses the numeric scale; named spacing is banned by
+> `spacing-token-shadowing-lock` and named `max-w-*` widths by
+> `container-scale-lock`.
 
 ## 6. Flat surfaces, borders > shadows
 

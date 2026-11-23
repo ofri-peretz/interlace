@@ -37,7 +37,7 @@
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R17  | API parity with Base UI + shadcn | Re-exports mirror Base UI part names with Interlace prefix  |
  * | R18  | Tailwind only                    | Zero inline `style`; cva + static animation classes only    |
- * | R19  | Tokens only                      | `bg-card` / `text-card-foreground` / `border-border` / `rounded-md` / `shadow-lg` / padding from `--spacing-md` |
+ * | R19  | Tokens only                      | `bg-card` / `text-card-foreground` / `border-border` / `rounded-lg` / `shadow-lg` / padding from `--spacing-md` |
  * | R20  | AA contrast                      | card + card-foreground are AA-cleared in light + dark; tone strip is a non-text channel |
  * | R23  | CLS=0                            | Animations are transform/opacity only; viewport portals out of the layout flow |
  * | R26  | A11y from headless primitive     | role / aria-live / focus-trap inherited from Base UI Root   |
@@ -73,10 +73,10 @@ export const MIN_VIEWPORT = 320 as const;
 // ─────────────────────────────────────────────────────────────────
 const toastVariants = cva(
   [
-    'pointer-events-auto relative flex w-full items-start gap-sm overflow-hidden',
+    'pointer-events-auto relative flex w-full items-start gap-4 overflow-hidden',
     'border border-border bg-card text-card-foreground',
-    'rounded-md shadow-lg',
-    'p-md pl-[calc(var(--spacing-md)+0.25rem)]',
+    'rounded-lg shadow-lg',
+    'p-6 pl-7',
     'before:absolute before:left-0 before:top-0 before:h-full before:w-1',
     'before:content-[""]',
   ].join(' '),
@@ -135,8 +135,8 @@ const ToastViewport = React.forwardRef<HTMLDivElement, ToastViewportProps>(
           data-slot="toast-viewport"
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'fixed inset-x-0 bottom-0 z-50 flex w-full flex-col gap-sm p-md',
-            'sm:inset-x-auto sm:right-0 sm:bottom-0 sm:max-w-float',
+            'fixed inset-x-0 bottom-0 z-50 flex w-full flex-col gap-4 p-6',
+            'xs:inset-x-auto xs:right-0 xs:bottom-0 xs:max-w-float',
             'outline-none',
             className,
           )}

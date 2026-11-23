@@ -58,12 +58,12 @@ interface PricingTableProps extends Omit<React.ComponentProps<'section'>, 'title
 
 /**
  * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `sm:grid-cols-${n}`.
+ * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
  */
 const TIER_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 sm:grid-cols-2',
-  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 xs:grid-cols-2',
+  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
 };
 
 function PricingTable({
@@ -79,7 +79,7 @@ function PricingTable({
     <section
       data-slot="pricing-table"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="content">
@@ -112,19 +112,19 @@ function PricingTable({
                     data-slot="pricing-tier"
                     data-featured={tier.featured ? '' : undefined}
                     className={cn(
-                      'border-border bg-card text-card-foreground relative flex flex-col gap-md rounded-lg border p-md',
+                      'border-border bg-card text-card-foreground relative flex flex-col gap-6 rounded-xl border p-6',
                       tier.featured && 'border-primary ring-primary/40 ring-2',
                     )}
                   >
                     {tier.featured ? (
-                      <span className="bg-primary text-primary-foreground absolute -top-3 right-md rounded-full px-sm py-xs text-xs font-semibold">
+                      <span className="bg-primary text-primary-foreground absolute -top-3 right-6 rounded-full px-4 py-2 text-xs font-semibold">
                         Most popular
                       </span>
                     ) : null}
                     <Typography variant="h4" as="h3">
                       {tier.name}
                     </Typography>
-                    <div className="flex items-baseline gap-xs">
+                    <div className="flex items-baseline gap-2">
                       <Typography variant="h2" as="span" className="leading-none">
                         {tier.price}
                       </Typography>
@@ -140,9 +140,9 @@ function PricingTable({
                       </Typography>
                     ) : null}
                     {tier.features && tier.features.length > 0 ? (
-                      <ul className="flex flex-col gap-xs text-sm">
+                      <ul className="flex flex-col gap-2 text-sm">
                         {tier.features.map((feature, fi) => (
-                          <li key={fi} className="flex items-start gap-xs">
+                          <li key={fi} className="flex items-start gap-2">
                             <Check
                               aria-hidden
                               className="text-primary mt-1 size-4 shrink-0"
@@ -152,7 +152,7 @@ function PricingTable({
                         ))}
                       </ul>
                     ) : null}
-                    {tier.cta ? <div className="mt-auto pt-md">{tier.cta}</div> : null}
+                    {tier.cta ? <div className="mt-auto pt-6">{tier.cta}</div> : null}
                   </article>
                 ))}
           </Grid>

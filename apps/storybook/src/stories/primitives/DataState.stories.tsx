@@ -153,7 +153,7 @@ const sample: Item[] = [
 
 function List({ items }: { items: Item[] }) {
   return (
-    <ul className="border-border flex flex-col gap-xs rounded-md border p-md">
+    <ul className="border-border flex flex-col gap-2 rounded-lg border p-6">
       {items.map((item) => (
         <li key={item.id} className="text-foreground text-ui">
           {item.title}
@@ -194,7 +194,7 @@ export const Idle: Story = {
  */
 export const AllStates: Story = {
   render: () => (
-    <div className="grid w-[880px] max-w-full grid-cols-1 gap-lg sm:grid-cols-2">
+    <div className="grid w-[880px] max-w-full grid-cols-1 gap-10 xs:grid-cols-2">
       {(
         [
           ['idle', { data: sample }],
@@ -207,7 +207,7 @@ export const AllStates: Story = {
           ],
         ] as const
       ).map(([label, gates]) => (
-        <section key={label} className="flex flex-col gap-xs">
+        <section key={label} className="flex flex-col gap-2">
           <div className="text-ui-sm font-mono uppercase text-muted-foreground">
             {label}
           </div>
@@ -273,11 +273,11 @@ export const ErrorState: Story = {
  */
 export const CustomStates: Story = {
   render: () => (
-    <div className="flex w-[360px] max-w-full flex-col gap-md">
+    <div className="flex w-[360px] max-w-full flex-col gap-6">
       <DataState<Item[]>
         loading
         skeleton={
-          <div className="bg-muted h-24 w-full animate-pulse rounded-md" />
+          <div className="bg-muted h-24 w-full animate-pulse rounded-lg" />
         }
       >
         {(items) => <List items={items} />}
@@ -286,7 +286,7 @@ export const CustomStates: Story = {
         empty
         data={[]}
         emptyState={
-          <div className="border-border text-muted-foreground rounded-md border border-dashed p-md text-center">
+          <div className="border-border text-muted-foreground rounded-lg border border-dashed p-6 text-center">
             No articles yet. Publish your first one to get started.
           </div>
         }
@@ -304,7 +304,7 @@ export const CustomStates: Story = {
  */
 export const AbsenceVocabulary: Story = {
   render: () => (
-    <div className="grid w-[880px] max-w-full grid-cols-1 gap-lg sm:grid-cols-2">
+    <div className="grid w-[880px] max-w-full grid-cols-1 gap-10 xs:grid-cols-2">
       {(
         [
           [
@@ -339,7 +339,7 @@ export const AbsenceVocabulary: Story = {
           ],
         ] as const
       ).map(([label, flags, announce]) => (
-        <section key={label} className="flex flex-col gap-xs">
+        <section key={label} className="flex flex-col gap-2">
           <div className="text-ui-sm font-mono uppercase text-muted-foreground">
             {label}
           </div>
@@ -359,7 +359,7 @@ export const AbsenceVocabulary: Story = {
  */
 export const Precedence: Story = {
   render: () => (
-    <div className="flex w-[520px] max-w-full flex-col gap-md">
+    <div className="flex w-[520px] max-w-full flex-col gap-6">
       {(
         [
           ['truncated', { truncated: true }],
@@ -374,7 +374,7 @@ export const Precedence: Story = {
           ],
         ] as const
       ).map(([label, flags]) => (
-        <section key={label} className="flex flex-col gap-xs">
+        <section key={label} className="flex flex-col gap-2">
           <div className="text-ui-sm font-mono uppercase text-muted-foreground">
             {label}
           </div>

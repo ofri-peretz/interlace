@@ -1,0 +1,22 @@
+name: Component request
+description: Ask for a component or a variant that Interlace does not ship yet.
+labels: [component-request]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Component
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: What you are building
+      description: The screen or flow it is for. This decides the API more than anything else.
+    validations:
+      required: true
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art
+      description: Links to the same component in shadcn/ui or another registry, if any.

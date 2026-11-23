@@ -63,7 +63,7 @@ export function RemoteSourceCallout({
     <div
       data-slot="remote-source-callout"
       className={cn(
-        'border-info/30 bg-info/10 mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border p-3 text-sm',
+        'border-info/30 bg-info/10 mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border p-3 text-sm',
         className,
       )}
     >

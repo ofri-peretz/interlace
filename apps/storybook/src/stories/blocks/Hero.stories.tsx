@@ -102,7 +102,7 @@ export const TwoColumn: Story = {
       </>
     ),
     media: (
-      <div className="bg-card text-card-foreground border-border rounded-lg border p-6 font-mono text-xs">
+      <div className="bg-card text-card-foreground border-border rounded-xl border p-6 font-mono text-xs">
         <div className="text-muted-foreground">
           $ npx shadcn@latest add @interlace/button
         </div>

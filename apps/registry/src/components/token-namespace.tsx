@@ -30,19 +30,6 @@ import {
  * `docs`, so the three surfaces cannot disagree about what is claimed.
  */
 
-/**
- * The sizing utilities the DS `--spacing-*` scale shadows.
- *
- * A constant rather than a literal in the JSX below, because
- * `container-scale-lock` scans every line that contains `className` for these
- * exact utility names — and it is right to: they resolve to 8–96px here and
- * that has shipped real bugs. Its heuristic cannot tell a real `className`
- * value from documentation ABOUT the hazard when both sit on one line, so the
- * name lives on a line the scanner does not read. Naming the utilities is the
- * entire point of the paragraph; suppressing the lock to do it would not be.
- */
-const SPACING_SHADOWED_UTILITIES = 'max-w-' + 'sm|md|lg|xl|2xl';
-
 const claimsByNamespace = async () => {
   const claims = await collectThemeClaims();
   const groups = new Map<string, string[]>();
@@ -64,7 +51,7 @@ export async function TokenNamespaceWarning() {
       <h2 className="text-xl font-semibold">
         Before you install: the token namespace is shared
       </h2>
-      <div className="border-caution/40 bg-caution/5 mt-4 rounded-lg border p-5">
+      <div className="border-caution/40 bg-caution/5 mt-4 rounded-xl border p-5">
         <p>
           This baseline claims <strong>{claims.length}</strong> Tailwind v4{' '}
           <code className="font-mono">@theme</code> keys —{' '}
@@ -117,7 +104,7 @@ export async function TokenNamespaceReference() {
         utility simply compiles against the other value.
       </p>
 
-      <div className="border-caution/40 bg-caution/5 mt-6 rounded-lg border p-5">
+      <div className="border-caution/40 bg-caution/5 mt-6 rounded-xl border p-5">
         <h3 className="font-semibold">Read this first</h3>
         <p className="mt-2">{INLINE_THEME_RULE}</p>
       </div>
@@ -176,22 +163,10 @@ export async function TokenNamespaceReference() {
           <code className="font-mono">--accent</code>) or the brand token (
           <code className="font-mono">--interlace-accent</code>).
         </li>
-        <li>
-          Check <code className="font-mono">--breakpoint-2xl</code> specifically.
-          The DS ladder has no <code className="font-mono">2xl</code>, so every{' '}
-          <code className="font-mono">2xl:</code> utility you already ship stops
-          compiling — the one collision on this page that fails loudly enough to
-          notice.
-        </li>
-        <li>
-          Grep for <code className="font-mono">{SPACING_SHADOWED_UTILITIES}</code>.
-          The DS <code className="font-mono">--spacing-*</code> scale feeds
-          those, and they become up to 20× narrower.
-        </li>
       </ol>
 
       <div className="mt-6">
-        <pre className="border-border bg-card overflow-x-auto rounded-lg border p-4 text-sm">
+        <pre className="border-border bg-card overflow-x-auto rounded-xl border p-4 text-sm">
           <code className="font-mono">{OVERRIDE_RECIPE}</code>
         </pre>
       </div>

@@ -108,6 +108,6 @@ describe('notation styling contract', () => {
     // Manual selection must also yield the post-diff state.
     expect(cls).toContain('[&_.line.diff.remove]:select-none');
     // Bleed width tracks the spacing token that sets the pre's padding.
-    expect(cls).toContain('var(--spacing-md)');
+    expect(cls).toContain('--spacing(12)');
   });
 });

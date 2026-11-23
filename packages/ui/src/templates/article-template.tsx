@@ -131,12 +131,12 @@ function ArticleTemplate({
     <article
       data-slot="article-template"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="prose">
         <SectionBoundary name="article-header" skeletonVariant="page-header">
-          <header className="flex flex-col gap-md">
+          <header className="flex flex-col gap-6">
             <Typography variant="h1" as="h1" className="text-balance">
               {title}
             </Typography>
@@ -145,7 +145,7 @@ function ArticleTemplate({
         </SectionBoundary>
 
         <SectionBoundary name="article-body" skeletonVariant="prose">
-          <div className="mt-xl">
+          <div className="mt-16">
             <Prose>{body}</Prose>
           </div>
         </SectionBoundary>
@@ -154,7 +154,7 @@ function ArticleTemplate({
           <SectionBoundary
             name="article-share"
             skeletonVariant="card"
-            className="mt-xl"
+            className="mt-16"
           >
             <ShareButtons {...share} />
           </SectionBoundary>
@@ -164,7 +164,7 @@ function ArticleTemplate({
           <SectionBoundary
             name="article-prev-next"
             skeletonVariant="card"
-            className="mt-xl"
+            className="mt-16"
           >
             <PrevNextPost {...prevNext} />
           </SectionBoundary>
@@ -174,7 +174,7 @@ function ArticleTemplate({
           <SectionBoundary
             name="article-related"
             skeletonVariant="article-card"
-            className="mt-xl"
+            className="mt-16"
           >
             <RelatedPosts {...related} />
           </SectionBoundary>
@@ -206,7 +206,7 @@ function ArticleTemplateSkeleton({
       role="status"
       aria-busy="true"
       aria-label="Loading article…"
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="prose">

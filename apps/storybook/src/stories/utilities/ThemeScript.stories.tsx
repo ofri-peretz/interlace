@@ -71,12 +71,12 @@ function MiniPage({
 }) {
   return (
     <div data-theme={theme ?? undefined} data-slot="mini-page-root">
-      <div className="rounded-md border border-border bg-background p-md text-foreground">
+      <div className="rounded-lg border border-border bg-background p-6 text-foreground">
         <Stack gap="sm">
-          <div className="flex items-center gap-sm">
+          <div className="flex items-center gap-4">
             <span
               aria-hidden
-              className="block size-6 rounded-md bg-primary"
+              className="block size-6 rounded-lg bg-primary"
               data-slot="mini-page-swatch"
             />
             <Typography variant="ui" className="font-semibold">
@@ -142,7 +142,7 @@ function FlashModel() {
           </Typography>
         </Stack>
 
-        <div className="grid gap-md md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           <Stack gap="xs">
             <Typography variant="ui" className="font-semibold">
               Without <code className="font-mono">THEME_SCRIPT</code>
@@ -239,7 +239,7 @@ function InputsPanel() {
             renders half-default and half-nothing.
           </Typography>
         </Stack>
-        <dl className="grid gap-xs">
+        <dl className="grid gap-2">
           {[
             [THEME_STORAGE_KEY, inputs?.storedTheme ?? '(absent)'],
             [SCHEME_STORAGE_KEY, inputs?.storedScheme ?? '(absent)'],
@@ -250,7 +250,7 @@ function InputsPanel() {
           ].map(([key, value]) => (
             <div
               key={key}
-              className="flex flex-wrap items-baseline justify-between gap-xs border-b border-border py-2 last:border-b-0"
+              className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border py-2 last:border-b-0"
             >
               <dt>
                 <Typography
@@ -319,7 +319,7 @@ function BytesPanel() {
             default theme.
           </Typography>
         </Stack>
-        <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code whitespace-pre-wrap break-all">
             {THEME_SCRIPT}
           </code>
@@ -328,7 +328,7 @@ function BytesPanel() {
         <Typography variant="h4" as="h3">
           Where it goes
         </Typography>
-        <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code">{INSTALL_SNIPPET}</code>
         </pre>
         <Typography variant="ui-sm" tone="muted" className="max-w-prose">

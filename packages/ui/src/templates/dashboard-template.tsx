@@ -61,12 +61,12 @@ function DashboardTemplate({
           </SectionBoundary>
         </aside>
 
-        <main className="flex-1 px-lg py-lg">
+        <main className="flex-1 px-10 py-10">
           {header ? (
             <SectionBoundary
               name="dashboard-header"
               skeletonVariant="page-header"
-              className="mb-lg"
+              className="mb-10"
             >
               {header}
             </SectionBoundary>
@@ -114,10 +114,10 @@ function DashboardTemplateSkeleton({
         label={null}
       />
       <div className="flex flex-1">
-        <div className="border-border hidden w-60 shrink-0 border-r p-md md:block">
+        <div className="border-border hidden w-60 shrink-0 border-r p-6 md:block">
           <Skeleton variant="text" count={6} label={null} />
         </div>
-        <div className="flex-1 px-lg py-lg">
+        <div className="flex-1 px-10 py-10">
           <Stack gap="lg">
             <Skeleton variant="page-header" label={null} />
             <Skeleton variant="card" count={2} label={null} />

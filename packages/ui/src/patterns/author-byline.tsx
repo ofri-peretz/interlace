@@ -44,7 +44,7 @@
  * | R10  | Composition over primitives      | Avatar + Typography + (PublishedDate + ReadingTime inline)  |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes only                   |
- * | R19  | Tokens only                      | `gap-md`/`gap-xs` from `--spacing-*`; type tokens via Typography; semantic colors |
+ * | R19  | Tokens only                      | `gap-6`/`gap-2` from `--spacing-*`; type tokens via Typography; semantic colors |
  * | R20  | AA contrast                      | Muted tone resolves to `--muted-foreground` (AA-cleared)    |
  * | R25  | Server component                 | No hooks → no `'use client'` (Avatar is the client boundary) |
  * | R26  | A11y from native el              | `<time dateTime>` for the date; reading-time chip has visible text |
@@ -135,7 +135,7 @@ export function AuthorByline({
     <div
       data-slot="author-byline"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('flex flex-row items-center gap-md', className)}
+      className={cn('flex flex-row items-center gap-6', className)}
       {...props}
     >
       <Avatar
@@ -148,7 +148,7 @@ export function AuthorByline({
 
       <div
         data-slot="author-byline-body"
-        className="flex min-w-0 flex-col gap-xs"
+        className="flex min-w-0 flex-col gap-2"
       >
         <Typography
           data-slot="author-byline-name"

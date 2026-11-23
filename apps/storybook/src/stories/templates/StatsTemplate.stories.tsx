@@ -33,7 +33,7 @@ const logo = (
   <a href="/" className="flex items-center gap-2 font-semibold">
     <span
       aria-hidden
-      className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-chart-2"
+      className="inline-block size-6 rounded-lg bg-linear-to-br from-primary to-chart-2"
     />
     <span>Interlace</span>
   </a>
@@ -51,7 +51,7 @@ export const Default: Story = {
       { label: 'Rules shipped', value: '124' },
     ],
     children: (
-      <div className="border-border bg-card rounded-lg border p-md">
+      <div className="border-border bg-card rounded-xl border p-6">
         <p className="text-muted-foreground text-sm">
           (Charts and detail tables go here — consumer-supplied)
         </p>

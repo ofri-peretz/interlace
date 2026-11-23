@@ -186,7 +186,7 @@ function ComboboxInput({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-size={size}
       className={cn(
-        'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
+        'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 w-full min-w-0 rounded-lg border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
         'data-[size=default]:h-9 data-[size=sm]:h-8',
         // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
         // under the 3:1 focus-indicator floor (SC 2.4.13). 3px > the 2px
@@ -310,7 +310,7 @@ function ComboboxContent({
           data-slot="combobox-popup"
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'border-border bg-popover text-popover-foreground max-h-(--available-height) min-w-(--anchor-width) overflow-x-hidden overflow-y-auto rounded-xl border p-1 shadow-lg',
+            'border-border bg-popover text-popover-foreground max-h-(--available-height) min-w-(--anchor-width) overflow-x-hidden overflow-y-auto rounded-lg border p-1 shadow-lg',
             'origin-(--transform-origin)',
             'data-starting-style:scale-95 data-starting-style:opacity-0',
             'data-ending-style:scale-95 data-ending-style:opacity-0',
@@ -349,7 +349,7 @@ function ComboboxItem({
       className={cn(
         // 36px tall (py-2 + text-sm line box) — over the 24px floor of
         // SC 2.5.8 at the 320px viewport.
-        'text-popover-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-lg py-2 pr-8 pl-3 text-sm transition-colors duration-150 outline-hidden select-none',
+        'text-popover-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2 pr-8 pl-3 text-sm transition-colors duration-150 outline-hidden select-none',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-selected:bg-primary data-selected:text-primary-foreground data-selected:font-medium',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
@@ -484,7 +484,7 @@ function ComboboxChips({
     <BaseCombobox.Chips
       data-slot="combobox-chips"
       className={cn(
-        'border-input dark:bg-input/30 flex w-full flex-wrap items-center gap-1.5 rounded-md border bg-transparent p-1.5 shadow-xs',
+        'border-input dark:bg-input/30 flex w-full flex-wrap items-center gap-1.5 rounded-lg border bg-transparent p-1.5 shadow-xs',
         'focus-within:border-ring',
         className,
       )}
@@ -501,7 +501,7 @@ function ComboboxChip({
     <BaseCombobox.Chip
       data-slot="combobox-chip"
       className={cn(
-        'bg-secondary text-secondary-foreground flex h-7 items-center gap-1 rounded-md pr-1 pl-2 text-sm outline-none',
+        'bg-secondary text-secondary-foreground flex h-7 items-center gap-1 rounded-lg pr-1 pl-2 text-sm outline-none',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         className,
       )}

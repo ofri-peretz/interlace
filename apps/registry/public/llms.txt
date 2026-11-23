@@ -142,7 +142,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Command Palette](https://ds.interlace.tools/c/command-palette): ⌘K. A modal surface holding one filterable list of actions.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/command-palette.json`
   - contract: client, min 320px, keyboard via Base UI combobox, v1.0.0
-- [Container](https://ds.interlace.tools/c/container): The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8` (§5).
+- [Container](https://ds.interlace.tools/c/container): The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/container.json`
   - contract: server, keyboard via Base UI use-render, v1.1.0
 - [Context Menu](https://ds.interlace.tools/c/context-menu): Right-click / long-press menu. Wraps `@base-ui/react/context-menu` (same Menu compositional API as DropdownMenu, just with a Root that handles right-click / long-press / Shift+F10 as the open gesture).
@@ -534,7 +534,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v1.0.1
 - [Theme token manifest](https://ds.interlace.tools/c/theme-tokens): @interlace/ui — the registry of themes and the list of every `--interlace-*` token a theme must define. A missing token does not throw; it silently inherits the previous theme's value.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-tokens.json`
-  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius-sm|radius-md|radius-lg|brand-mark-bar-o|brand-mark-bar-g, v1.1.0
+  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius|brand-mark-bar-o|brand-mark-bar-g, v1.1.0
 - [useReducedMotion hook](https://ds.interlace.tools/c/use-reduced-motion): @interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/use-reduced-motion.json`
   - contract: client, v1.1.0

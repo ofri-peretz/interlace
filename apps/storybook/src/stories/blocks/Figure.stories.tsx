@@ -56,7 +56,7 @@ const meta = {
     className: {
       control: 'text',
       description:
-        'Merged onto the `<figure>`, which already carries `my-lg`. The block has no width of its own — it fills its parent — so width belongs on a wrapper, not here.',
+        'Merged onto the `<figure>`, which already carries `my-10`. The block has no width of its own — it fills its parent — so width belongs on a wrapper, not here.',
       table: { category: 'Appearance', type: { summary: 'string' } },
     },
   },
@@ -90,7 +90,7 @@ export const Default: Story = {
 export const Variants: StoryObj<typeof Figure> = {
   parameters: { layout: 'fullscreen' },
   render: () => (
-    <div className="space-y-lg p-8">
+    <div className="space-y-10 p-8">
       <div className="w-[480px] max-w-full">
         <Figure
           src={SAMPLE_SRC}
@@ -122,7 +122,7 @@ export const Variants: StoryObj<typeof Figure> = {
       </div>
       <div className="w-[480px] max-w-full">
         <Figure alt="Composed child overriding the default img.">
-          <div className="absolute inset-0 flex items-center justify-center rounded-md bg-muted text-muted-foreground">
+          <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-muted text-muted-foreground">
             Custom child (SVG / video / next-image)
           </div>
         </Figure>

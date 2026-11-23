@@ -3,7 +3,7 @@
  *
  * The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each
  * mapped to one fixed max-width, plus the responsive horizontal padding scale
- * `px-4 sm:px-6 lg:px-8` (§5).
+ * `px-4 xs:px-6 lg:px-8` (§5).
  *
  * It is what every page section is measured by — the ad-hoc widths that would
  * otherwise accumulate in app code are the thing it exists to retire.
@@ -60,13 +60,13 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../lib/cn.js';
 
-const containerVariants = cva('mx-auto w-full px-4 sm:px-6 lg:px-8', {
+const containerVariants = cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {
   variants: {
     size: {
       prose: 'max-w-[65ch]',
       content: 'max-w-[1024px]',
       wide: 'max-w-[1280px]',
-      full: 'max-w-none px-0 sm:px-0 lg:px-0',
+      full: 'max-w-none px-0 xs:px-0 lg:px-0',
     },
   },
   defaultVariants: {

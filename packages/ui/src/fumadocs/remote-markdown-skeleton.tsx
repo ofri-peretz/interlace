@@ -35,7 +35,7 @@ export function RemoteMarkdownSkeleton({
       aria-hidden
     >
       {withSourceCallout ? (
-        <Skeleton className="h-10 w-full rounded-lg" />
+        <Skeleton className="h-10 w-full rounded-xl" />
       ) : null}
       {withHeading ? <Skeleton className="h-8 w-2/3" /> : null}
       <div className="space-y-2">

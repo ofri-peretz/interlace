@@ -33,12 +33,12 @@ interface StatGroupProps extends React.ComponentProps<'section'> {
 
 /**
  * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `sm:grid-cols-${n}`.
+ * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
  */
 const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 sm:grid-cols-2',
-  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 xs:grid-cols-2',
+  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
 };
 
 function StatGroup({

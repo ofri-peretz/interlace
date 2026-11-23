@@ -39,7 +39,7 @@ export function RuntimeContractSection({
         </>
       }
     >
-      <dl className="border-border grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-3">
+      <dl className="border-border grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border xs:grid-cols-3">
         <div className="bg-card p-4">
           <dt className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
             Render boundary

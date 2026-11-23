@@ -118,7 +118,7 @@ export const CodeEditor = React.forwardRef<HTMLTextAreaElement, CodeEditorProps>
         data-slot="code-editor"
         data-testid={testId}
         className={cn(
-          'relative overflow-hidden rounded-lg border border-border bg-card',
+          'relative overflow-hidden rounded-xl border border-border bg-card',
           className,
         )}
       >

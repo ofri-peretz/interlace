@@ -56,7 +56,7 @@ export const Default: Story = {
   // Shown in the row it was built for — a chip alone in the canvas hides the
   // one thing that matters, that the colour is legible next to real copy.
   render: (args) => (
-    <div className="flex w-full max-w-float items-center justify-between rounded-md border border-border px-4 py-3">
+    <div className="flex w-full max-w-float items-center justify-between rounded-lg border border-border px-4 py-3">
       <div className="flex flex-col">
         <span className="text-sm font-medium">eslint-plugin-jwt</span>
         <span className="text-xs text-muted-foreground">Security scorecard</span>
@@ -68,7 +68,7 @@ export const Default: Story = {
 
 export const Ladder: Story = {
   render: () => (
-    <div className="flex flex-wrap gap-sm">
+    <div className="flex flex-wrap gap-4">
       {GRADE_VALUES.map((grade) => (
         <GradeBadge key={grade} grade={grade} />
       ))}
@@ -78,7 +78,7 @@ export const Ladder: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-end gap-sm">
+    <div className="flex items-end gap-4">
       <GradeBadge grade="A+" size="sm" />
       <GradeBadge grade="A+" size="md" />
       <GradeBadge grade="A+" size="lg" />

@@ -62,19 +62,19 @@ function SettingsTemplate({
     >
       <Topbar {...topbar} />
 
-      <main className="flex-1 py-xl">
+      <main className="flex-1 py-16">
         <Container size="content">
           <Stack gap="lg">
             <Typography variant="h2" as="h1" className="text-balance">
               {title}
             </Typography>
 
-            <div className="flex flex-col gap-lg md:flex-row">
+            <div className="flex flex-col gap-10 md:flex-row">
               <nav
                 aria-label="Settings sections"
                 className="md:w-56 md:shrink-0"
               >
-                <ul className="flex gap-xs overflow-x-auto md:flex-col md:gap-xs">
+                <ul className="flex gap-2 overflow-x-auto md:flex-col md:gap-2">
                   {sections.map((section) => (
                     <li key={section.id}>
                       <a
@@ -83,7 +83,7 @@ function SettingsTemplate({
                           activeSection === section.id ? 'page' : undefined
                         }
                         className={cn(
-                          'text-muted-foreground hover:text-foreground hover:bg-muted block rounded-md px-sm py-xs text-sm transition-colors',
+                          'text-muted-foreground hover:text-foreground hover:bg-muted block rounded-lg px-4 py-2 text-sm transition-colors',
                           activeSection === section.id &&
                             'bg-muted text-foreground font-semibold',
                         )}
@@ -145,9 +145,9 @@ function SettingsTemplateSkeleton({
         label={null}
       />
       <Container size="content">
-        <Stack gap="lg" className="py-xl">
+        <Stack gap="lg" className="py-16">
           <Skeleton variant="page-header" label={null} />
-          <div className="flex flex-col gap-lg md:flex-row">
+          <div className="flex flex-col gap-10 md:flex-row">
             <div className="md:w-56 md:shrink-0">
               <Skeleton variant="text" count={5} label={null} />
             </div>

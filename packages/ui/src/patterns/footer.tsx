@@ -111,14 +111,14 @@ function Footer({
     >
       <div
         className={cn(
-          'mx-auto px-md py-xl',
+          'mx-auto px-6 py-16',
           CONTAINER_CLASSES[containerSize],
         )}
       >
         {brand || groups.length > 0 ? (
           <div
             className={cn(
-              'grid gap-lg',
+              'grid gap-10',
               groups.length === 1 && 'md:grid-cols-[1fr_1fr]',
               groups.length === 2 && 'md:grid-cols-[1fr_1fr_1fr]',
               groups.length === 3 && 'md:grid-cols-[1.5fr_1fr_1fr_1fr]',
@@ -128,10 +128,10 @@ function Footer({
             {brand ? <div>{brand}</div> : null}
             {groups.map((group, i) => (
               <nav key={i} aria-label={group.title}>
-                <h2 className="font-body text-ui font-semibold mb-sm">
+                <h2 className="font-body text-ui font-semibold mb-4">
                   {group.title}
                 </h2>
-                <ul className="flex flex-col gap-xs text-sm">
+                <ul className="flex flex-col gap-2 text-sm">
                   {group.links.map((link) => (
                     <li key={link.href}>
                       {link.external ? (
@@ -159,11 +159,11 @@ function Footer({
           </div>
         ) : null}
         {(copyright || social) ? (
-          <div className="border-border mt-lg flex flex-col items-center justify-between gap-sm border-t pt-md md:flex-row">
+          <div className="border-border mt-10 flex flex-col items-center justify-between gap-4 border-t pt-6 md:flex-row">
             {copyright ? (
               <div className="text-muted-foreground text-sm">{copyright}</div>
             ) : null}
-            {social ? <div className="flex items-center gap-sm">{social}</div> : null}
+            {social ? <div className="flex items-center gap-4">{social}</div> : null}
           </div>
         ) : null}
       </div>

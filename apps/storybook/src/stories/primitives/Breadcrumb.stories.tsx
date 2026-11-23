@@ -95,8 +95,8 @@ export const Variants: Story = {
   // read at thumbnail size.
   tags: ['preview'],
   render: () => (
-    <div className="flex flex-col gap-lg">
-      <section className="flex flex-col gap-xs">
+    <div className="flex flex-col gap-10">
+      <section className="flex flex-col gap-2">
         <div className="text-ui-sm text-muted-foreground">Full trail (4 segments)</div>
         <Breadcrumb aria-label="Breadcrumb — full trail">
           <BreadcrumbList>
@@ -119,7 +119,7 @@ export const Variants: Story = {
         </Breadcrumb>
       </section>
 
-      <section className="flex flex-col gap-xs">
+      <section className="flex flex-col gap-2">
         <div className="text-ui-sm text-muted-foreground">Collapsed (ellipsis)</div>
         <Breadcrumb aria-label="Breadcrumb — collapsed">
           <BreadcrumbList>
@@ -142,7 +142,7 @@ export const Variants: Story = {
         </Breadcrumb>
       </section>
 
-      <section className="flex flex-col gap-xs">
+      <section className="flex flex-col gap-2">
         <div className="text-ui-sm text-muted-foreground">
           Long trail — wraps via flex-wrap (constrained to 360px)
         </div>

@@ -571,7 +571,7 @@ export function TimelineMap({
         data-slot="timeline-map"
         data-testid={testId}
         className={cn(
-          'rounded-lg border border-border bg-card p-4',
+          'rounded-xl border border-border bg-card p-4',
           className,
         )}
         {...rest}
@@ -1036,7 +1036,7 @@ function TimelineMapDetail({
       data-testid={`${testId}-detail`}
       aria-live="polite"
       className={cn(
-        'mt-3 flex min-h-12 items-center rounded-md bg-muted/40 px-4 text-sm',
+        'mt-3 flex min-h-12 items-center rounded-lg bg-muted/40 px-4 text-sm',
         className,
       )}
       {...rest}

@@ -76,10 +76,10 @@ export const Default: Story = {
     count: 3,
   },
   render: (args) => (
-    <div className="relative h-[260px] w-full overflow-hidden rounded-lg border border-border">
+    <div className="relative h-[260px] w-full overflow-hidden rounded-xl border border-border">
       <CloudParticles {...args} />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <div className="rounded-md bg-background px-4 py-2 text-sm text-foreground">
+        <div className="rounded-lg bg-background px-4 py-2 text-sm text-foreground">
           Drifting cloud backdrop
         </div>
       </div>
@@ -135,7 +135,7 @@ export const BodyColorOnLightAndDarkHeroes: Story = {
       bodyColor?: string;
     }) => (
       <div
-        className={`relative h-[220px] w-full overflow-hidden rounded-lg border border-border ${surface}`}
+        className={`relative h-[220px] w-full overflow-hidden rounded-xl border border-border ${surface}`}
       >
         <CloudParticles
           data-testid={`clouds-${label}`}
@@ -149,7 +149,7 @@ export const BodyColorOnLightAndDarkHeroes: Story = {
     );
 
     return (
-      <div className="grid grid-cols-1 gap-md md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Hero label="light hero · default" surface="bg-sky-100" text="text-slate-700" />
         <Hero
           label="light hero · currentColor (the old default)"

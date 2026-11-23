@@ -43,12 +43,12 @@
  *
  *   | token  | px  | class      | use                          |
  *   | ------ | --- | ---------- | ---------------------------- |
- *   | `xs`   |  8  | `gap-xs`   | Inline chips                 |
- *   | `sm`   | 16  | `gap-sm`   | Cards, mobile padding        |
- *   | `md`   | 24  | `gap-md`   | Card-grid gaps, header→grid  |
- *   | `lg`   | 40  | `gap-lg`   | Mobile section gaps          |
- *   | `xl`   | 64  | `gap-xl`   | Desktop section gaps         |
- *   | `2xl`  | 96  | `gap-2xl`  | Hero / CTA breathing room    |
+ *   | `xs`   |  8  | `gap-2`   | Inline chips                 |
+ *   | `sm`   | 16  | `gap-4`   | Cards, mobile padding        |
+ *   | `md`   | 24  | `gap-6`   | Card-grid gaps, header→grid  |
+ *   | `lg`   | 40  | `gap-10`   | Mobile section gaps          |
+ *   | `xl`   | 64  | `gap-16`   | Desktop section gaps         |
+ *   | `2xl`  | 96  | `gap-24`  | Hero / CTA breathing room    |
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -58,7 +58,7 @@
  * | R8   | Enums, no booleans               | gap / align / justify / direction are closed enums          |
  * | R10  | Composition seam                 | `render` — Base UI's `useRender`, not an `as` prop          |
  * | R18  | Tailwind only                    | gap is a utility, never an inline `style`                   |
- * | R19  | Tokens only                      | `gap-xs…gap-2xl` resolve to the DS `--spacing-*` tokens     |
+ * | R19  | Tokens only                      | `gap-2…gap-24` resolve to the DS `--spacing-*` tokens     |
  */
 
 import * as React from 'react';
@@ -74,12 +74,12 @@ const stackVariants = cva('flex', {
       horizontal: 'flex-row flex-wrap',
     },
     gap: {
-      xs: 'gap-xs',
-      sm: 'gap-sm',
-      md: 'gap-md',
-      lg: 'gap-lg',
-      xl: 'gap-xl',
-      '2xl': 'gap-2xl',
+      xs: 'gap-2',
+      sm: 'gap-4',
+      md: 'gap-6',
+      lg: 'gap-10',
+      xl: 'gap-16',
+      '2xl': 'gap-24',
     },
     align: {
       start: 'items-start',

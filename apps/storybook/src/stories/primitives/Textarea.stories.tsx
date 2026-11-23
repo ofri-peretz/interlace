@@ -143,7 +143,7 @@ export const Default: Story = {
   // label association and the helper spacing are half of what this primitive
   // has to get right.
   render: (args) => (
-    <div className="flex w-[480px] max-w-full flex-col gap-xs">
+    <div className="flex w-[480px] max-w-full flex-col gap-2">
       <label htmlFor="tx-default" className="text-ui-sm font-medium">
         Feedback
       </label>
@@ -166,16 +166,16 @@ export const Variants: Story = {
     const resizes = ['y', 'none'] as const;
 
     return (
-      <div className="w-[960px] max-w-full space-y-lg">
+      <div className="w-[960px] max-w-full space-y-10">
         {resizes.map((resize) => (
-          <section key={resize} className="space-y-sm">
+          <section key={resize} className="space-y-4">
             <h3 className="text-ui-sm font-mono uppercase text-muted-foreground">
               resize=&quot;{resize}&quot;
             </h3>
-            <div className="grid grid-cols-1 gap-md md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {sizes.map((size) =>
                 tones.map((tone) => (
-                  <div key={`${size}-${tone}`} className="space-y-xs">
+                  <div key={`${size}-${tone}`} className="space-y-2">
                     <div className="text-ui-sm font-mono text-muted-foreground">
                       size=&quot;{size}&quot; · tone=&quot;{tone}&quot;
                     </div>

@@ -117,7 +117,7 @@ export const Default: Story = {
         {/* An icon toolbar — the situation a tooltip exists for. Only the
             first button is args-driven; the other two show the resting
             state of the same pattern. */}
-        <div className="flex items-center gap-xs rounded-md border border-border p-xs">
+        <div className="flex items-center gap-2 rounded-lg border border-border p-2">
           <Tooltip
             {...args}
             onOpenChange={(open, details) => {

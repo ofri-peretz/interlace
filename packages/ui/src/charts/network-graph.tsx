@@ -196,7 +196,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
           data-state="error"
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'w-full rounded-lg border border-destructive/40 p-6',
+            'w-full rounded-xl border border-destructive/40 p-6',
             className,
           )}
           {...props}
@@ -215,7 +215,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
           ref={ref}
           data-slot="network-graph-empty"
           data-min-viewport={String(MIN_VIEWPORT)}
-          className={cn('w-full rounded-lg border border-border p-6', className)}
+          className={cn('w-full rounded-xl border border-border p-6', className)}
           {...props}
         >
           <p className="text-sm text-muted-foreground">
@@ -235,7 +235,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
         data-min-viewport={String(MIN_VIEWPORT)}
         // See the note in time-series.tsx: the plot is viewBox-sized, so a
         // container that collapses paints nothing.
-        className={cn('w-full overflow-hidden rounded-lg border border-border bg-card', className)}
+        className={cn('w-full overflow-hidden rounded-xl border border-border bg-card', className)}
         {...props}
       >
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-2.5 text-xs text-muted-foreground">

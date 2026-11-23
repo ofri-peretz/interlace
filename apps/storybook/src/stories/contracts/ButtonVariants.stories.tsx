@@ -134,7 +134,7 @@ function Matrix() {
             <Typography variant="code" as="code" className="font-semibold">
               variant=&quot;{variant}&quot;
             </Typography>
-            <div className="flex flex-wrap items-center gap-sm">
+            <div className="flex flex-wrap items-center gap-4">
               {SIZES.map((size) => (
                 <Cell key={String(size)} variant={variant} size={size} />
               ))}
@@ -169,12 +169,12 @@ function LinkPanel() {
           a <code className="font-mono">next/link</code>, or a form submit as
           a button without shipping any component JS for it.
         </Typography>
-        <div className="flex flex-wrap items-center gap-sm">
+        <div className="flex flex-wrap items-center gap-4">
           <a href="#button-variants" className={className}>
             An anchor that looks like a button
           </a>
         </div>
-        <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
           <code
             className="font-mono text-code whitespace-pre-wrap break-all"
             data-slot="button-variants-classes"
@@ -220,8 +220,8 @@ function TintedPanel() {
           </Typography>
         </Stack>
 
-        <div className="rounded-md bg-primary p-md text-primary-foreground">
-          <div className="flex flex-wrap items-center gap-sm">
+        <div className="rounded-lg bg-primary p-6 text-primary-foreground">
+          <div className="flex flex-wrap items-center gap-4">
             <span className="text-ui-sm">Ready to install?</span>
             <a
               href="#button-variants"
@@ -342,7 +342,7 @@ function Specimen({ variant, size }: ButtonVariantsArgs) {
               {isIconSize(size) ? <PlusIcon aria-hidden /> : 'The picked combo'}
             </button>
           </div>
-          <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+          <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
             <code className="font-mono text-code whitespace-pre-wrap break-all">
               {picked}
             </code>

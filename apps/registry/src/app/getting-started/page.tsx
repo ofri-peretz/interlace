@@ -192,7 +192,7 @@ export default async function GettingStartedPage() {
           <h2 className="text-xl font-semibold">
             What the three commands give you
           </h2>
-          <dl className="border-border mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
+          <dl className="border-border mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border xs:grid-cols-2">
             <Cell title="Focus ring (WCAG 2.2 SC 2.4.13)">
               2 px solid, 2 px offset, ≥3:1 contrast against the adjacent
               surface — on every interactive element, in both light and dark.
@@ -247,7 +247,7 @@ export default async function GettingStartedPage() {
           <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
             <Link
               href="/"
-              className="border-border bg-card hover:border-primary/60 inline-flex items-center gap-2 rounded-md border px-4 py-2 font-medium transition-colors"
+              className="border-border bg-card hover:border-primary/60 inline-flex items-center gap-2 rounded-lg border px-4 py-2 font-medium transition-colors"
             >
               ← Browse all components
             </Link>
@@ -326,7 +326,7 @@ function Step({
 
 function CodeBlock({ label, code }: { label: string; code: string }) {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-lg border">
+    <div className="border-border bg-card overflow-hidden rounded-xl border">
       <div className="text-muted-foreground border-border border-b px-4 py-2 text-xs font-medium">
         {label}
       </div>

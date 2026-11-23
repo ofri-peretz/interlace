@@ -215,12 +215,9 @@
     --interlace-viz-axis: #788593;
     --interlace-viz-edge: #dde4ec;
 
-    /* Radii — structural, not brand. Harbor keeps the 8/12/16 scale: a
-     * theme that also moves the geometry is two changes wearing one name,
-     * and radius lives in foundation.css for every consumer anyway. */
-    --interlace-radius-sm: 0.5rem;   /*  8px */
-    --interlace-radius-md: 0.75rem;  /* 12px */
-    --interlace-radius-lg: 1rem;     /* 16px */
+    /* Radius — structural, not brand. Harbor keeps Interlace's base: a
+     * theme that also moves the geometry is two changes wearing one name. */
+    --interlace-radius: 0.75rem;
 
     /* Brand mark — the two bars of the mark. Decorative fills, so they
      * track the theme's identity pair rather than the AAA text ramp. */
@@ -335,9 +332,7 @@
     --interlace-hero-surface-deep: #000000;
     --interlace-hero-foreground: #e6eef7;    /* 15.76:1 on the surface (AAA) */
 
-    --interlace-radius-sm: 0.5rem;   /*  8px */
-    --interlace-radius-md: 0.75rem;  /* 12px */
-    --interlace-radius-lg: 1rem;     /* 16px */
+    --interlace-radius: 0.75rem;
 
     --interlace-window-control-close: #ff5f57;
     --interlace-window-control-minimize: #febc2e;

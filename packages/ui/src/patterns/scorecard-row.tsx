@@ -62,13 +62,13 @@ function ScorecardRow({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-grade={grade}
       className={cn(
-        'border-border bg-card text-card-foreground flex flex-col gap-md rounded-lg border p-md',
+        'border-border bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-6',
         className,
       )}
       {...props}
     >
-      <header className="flex items-center justify-between gap-sm">
-        <div className="flex flex-col gap-xs">
+      <header className="flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-2">
           <Typography variant="h4" as="h2">
             {name}
           </Typography>
@@ -78,7 +78,7 @@ function ScorecardRow({
             </Typography>
           ) : null}
         </div>
-        <div className="flex items-center gap-sm">
+        <div className="flex items-center gap-4">
           <span className="font-body text-h3 font-bold tabular-nums leading-none">
             {score}
           </span>

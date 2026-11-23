@@ -104,10 +104,10 @@ export const Default: Story = {
     repeatDelay: 0.5,
   },
   render: (args) => (
-    <div className="relative h-[220px] w-full overflow-hidden rounded-lg border border-border bg-background">
+    <div className="relative h-[220px] w-full overflow-hidden rounded-xl border border-border bg-background">
       <AnimatedGridPattern {...args} />
       <div className="relative flex h-full items-center justify-center p-6">
-        <div className="rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground">
+        <div className="rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium text-foreground">
           Hero band backdrop
         </div>
       </div>

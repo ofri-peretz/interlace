@@ -129,7 +129,7 @@ export function NewsletterForm({
             <FieldError />
           </Field>
 
-          <label className="flex items-start gap-sm text-ui-sm">
+          <label className="flex items-start gap-4 text-ui-sm">
             <Checkbox name="consent" required className="mt-0.5" />
             <span className="text-muted-foreground">{consentLabel}</span>
           </label>

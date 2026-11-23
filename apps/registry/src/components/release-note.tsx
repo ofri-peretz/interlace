@@ -61,7 +61,7 @@ interface ReleaseNoteProps {
 export function ReleaseNote({ entry, omitComponent }: ReleaseNoteProps) {
   const components = entry.components.filter((c) => c !== omitComponent);
   return (
-    <li className="border-border bg-card rounded-lg border p-5">
+    <li className="border-border bg-card rounded-xl border p-5">
       <div className="flex flex-wrap items-center gap-2">
         <KindPill kind={entry.kind} />
         <span className="text-muted-foreground font-mono text-xs">
@@ -83,7 +83,7 @@ export function ReleaseNote({ entry, omitComponent }: ReleaseNoteProps) {
               <li key={name}>
                 <Link
                   href={`/c/${name}`}
-                  className="bg-background border-border hover:border-primary/60 rounded-md border px-2 py-0.5 font-mono text-xs transition-colors"
+                  className="bg-background border-border hover:border-primary/60 rounded-lg border px-2 py-0.5 font-mono text-xs transition-colors"
                 >
                   @interlace/{name}
                 </Link>

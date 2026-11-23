@@ -30,10 +30,10 @@ const meta = {
     className: {
       control: 'text',
       description:
-        'Merged onto the wrapper span, which is `inline-block rounded-md` by default. **Wrapping a block-level child? You must pass `block` here.** An `inline-block` wrapper around an auto-width block child is a circular width dependency that Chrome resolves to zero — the wrapper measures 0px and the content renders one word per line. Set the control to `inline-block` to see it happen.',
+        'Merged onto the wrapper span, which is `inline-block rounded-lg` by default. **Wrapping a block-level child? You must pass `block` here.** An `inline-block` wrapper around an auto-width block child is a circular width dependency that Chrome resolves to zero — the wrapper measures 0px and the content renders one word per line. Set the control to `inline-block` to see it happen.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: "'inline-block rounded-md'" },
+        defaultValue: { summary: "'inline-block rounded-lg'" },
         category: 'Appearance',
       },
     },
@@ -52,7 +52,7 @@ type Story = StoryObj<typeof meta>;
 const FocusableCard = ({ children }: { children: React.ReactNode }) => (
   <a
     href="#"
-    className="block rounded-md border border-border bg-card px-4 py-3 text-sm text-card-foreground hover:border-primary/60 hover:bg-card/80 focus:outline-none"
+    className="block rounded-lg border border-border bg-card px-4 py-3 text-sm text-card-foreground hover:border-primary/60 hover:bg-card/80 focus:outline-none"
   >
     {children}
   </a>
@@ -186,7 +186,7 @@ export const CustomSurface: Story = {
     },
   },
   render: () => (
-    <ul className="max-w-96 divide-y divide-border rounded-md border border-border">
+    <ul className="max-w-96 divide-y divide-border rounded-lg border border-border">
       {['Alpha', 'Bravo', 'Charlie'].map((label) => (
         <li key={label}>
           <FocusRing offset="none" className="block rounded-none">

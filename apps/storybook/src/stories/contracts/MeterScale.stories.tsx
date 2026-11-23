@@ -100,12 +100,12 @@ function Bar({
 
   return (
     <div
-      className="grid gap-xs"
+      className="grid gap-2"
       data-slot="meter-row"
       data-label={row.label}
       data-fraction={fraction === null ? 'null' : fraction.toFixed(4)}
     >
-      <div className="flex flex-wrap items-baseline justify-between gap-xs">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
         <Typography variant="ui-sm">{row.label}</Typography>
         <Typography
           variant="code"
@@ -249,7 +249,7 @@ function Specimen({ kind }: MeterScaleArgs) {
         </Stack>
       </Box>
 
-      <div className="grid gap-md lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         <ScalePanel
           kind="linear"
           rows={ranked}
@@ -277,7 +277,7 @@ function Specimen({ kind }: MeterScaleArgs) {
           <Typography variant="h4" as="h3">
             The rules that are not obvious
           </Typography>
-          <dl className="grid gap-sm">
+          <dl className="grid gap-4">
             {[
               [
                 'meterFraction(null, max)  →  null',

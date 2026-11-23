@@ -105,7 +105,7 @@ export const Default: Story = {
     disablePointerDismissal: false,
   },
   render: (args) => (
-    <div className="border-border bg-card w-[420px] max-w-full rounded-lg border p-6">
+    <div className="border-border bg-card w-[420px] max-w-full rounded-xl border p-6">
       <div className="text-muted-foreground mb-4 text-xs font-mono uppercase tracking-wide">
         Notifications
       </div>

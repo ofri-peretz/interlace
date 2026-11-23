@@ -54,12 +54,12 @@ interface ArticleListGridProps extends Omit<React.ComponentProps<'section'>, 'ti
 
 /**
  * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `sm:grid-cols-${n}`.
+ * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
  */
 const ARTICLE_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 sm:grid-cols-2',
-  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 xs:grid-cols-2',
+  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
 };
 
 function ArticleListGrid({
@@ -80,7 +80,7 @@ function ArticleListGrid({
     <section
       data-slot="article-list-grid"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="content">

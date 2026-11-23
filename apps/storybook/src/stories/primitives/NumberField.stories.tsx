@@ -176,7 +176,7 @@ export const Bounded: Story = {
  */
 export const Formatted: Story = {
   render: () => (
-    <div className="flex flex-wrap items-end gap-lg">
+    <div className="flex flex-wrap items-end gap-10">
       <div className="flex flex-col gap-2">
         <span className="text-sm font-medium">Price</span>
         <NumberField

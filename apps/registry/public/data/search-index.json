@@ -282,7 +282,7 @@
     "2eb9df": 1,
     "2px": 5,
     "2rem": 2,
-    "2xl": 4,
+    "2xl": 3,
     "3000m": 1,
     "300px": 2,
     "30d": 1,
@@ -3520,7 +3520,7 @@
         "primitive",
         "form"
       ],
-      "terms": "checkbox form primitiv client responsiv min viewport 320 keyboard base check indeterminat uncheck mix tri oncheckedchang radius background 24px 8px activation primary spac role aria glyph basecheckbox checkboxindicator incl lean squircl uncontroll controll defaultcheck parity ref composit target exception intersect unchang built round enforc pseudo control boolean box pair ring 4px ful interfac scal measur 16px carv deviation exempt hit indicator neighbour grow inactiv"
+      "terms": "checkbox form primitiv client responsiv min viewport 320 keyboard base check indeterminat uncheck mix tri oncheckedchang radius background 24px 4px 8px activation primary spac role round aria glyph basecheckbox checkboxindicator incl lean squircl uncontroll controll defaultcheck parity ref composit target exception intersect unchang built enforc pseudo control boolean box pair ring ful interfac scal measur 16px carv deviation exempt hit indicator neighbour grow inactiv"
     },
     {
       "name": "cloud-particles",
@@ -3687,7 +3687,7 @@
     {
       "name": "container",
       "title": "Container",
-      "blurb": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8` (§5).",
+      "blurb": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).",
       "tier": "primitive",
       "categories": [
         "foundation",
@@ -3703,7 +3703,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "container foundation primitiv server rsc keyboard base render size width userender max directiv padd wide four full mapp ble section 42rem accumulat containervariant hoc pros band 1024px 65ch flagg heavy namespac oversight retir spac safe lock edge 1280px codebas usemergedref userenderel plus data contract layout 2xl nam fail philosophy fix horizontal breakpoint broken chosen call zero defin guard scal gutter tailwind shadow skip client"
+      "terms": "container foundation primitiv server rsc keyboard base render size width userender max directiv padd wide four full mapp ble section 42rem accumulat containervariant hoc pros band 1024px 65ch flagg heavy namespac oversight retir spac safe lock edge 1280px 2xl codebas usemergedref userenderel plus data contract layout nam fail philosophy fix horizontal breakpoint broken chosen call zero defin guard scal gutter tailwind shadow skip client"
     },
     {
       "name": "context-menu",
@@ -5504,7 +5504,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "stack foundation primitiv server rsc keyboard base render gap cluster direction justify horizontal align flex 2xl userender chip row tag directiv call layout scal spac wrap mobil consistent distinguishabl stackvariant sugar grid children enum six breath flagg oversight safe step button nowrap usemergedref userenderel come vertical data site whos wrapp philosophy clos section card token guard number rhythm form center desktop skip client hatch"
+      "terms": "stack foundation primitiv server rsc keyboard base render gap cluster direction justify horizontal align flex userender chip row tag directiv call layout scal spac wrap mobil consistent distinguishabl stackvariant sugar grid children enum six breath flagg oversight safe step button 2xl nowrap usemergedref userenderel come vertical data site whos wrapp philosophy clos section card token guard number rhythm form center desktop skip client hatch"
     },
     {
       "name": "stars-background",
@@ -5765,7 +5765,7 @@
         "primitive",
         "form"
       ],
-      "terms": "textarea form primitiv server rsc responsiv min viewport 320 onchang size tone nativ ime redo undo 64px invalid machinery multi input resiz behaviour structur data selection doubl ground textareavariant text variantprop controll padd background 96px onfocus border composit target calc radius 2xl contact density wrapp pure ring already focus association font interfac token add preflight stay prod search scal aria surfac enum carv degrad"
+      "terms": "textarea form primitiv server rsc responsiv min viewport 320 onchang size tone nativ ime redo undo 64px invalid machinery multi input resiz behaviour structur data selection doubl ground textareavariant text variantprop controll padd background 96px onfocus border composit target 2xl calc radius contact density wrapp pure ring already focus association font interfac token add preflight stay prod search scal aria surfac enum carv degrad"
     },
     {
       "name": "theme-script",
@@ -5869,9 +5869,7 @@
         "viz-grid",
         "viz-axis",
         "viz-edge",
-        "radius-sm",
-        "radius-md",
-        "radius-lg",
+        "radius",
         "brand-mark-bar-o",
         "brand-mark-bar-g",
         "light",

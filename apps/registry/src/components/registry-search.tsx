@@ -223,7 +223,7 @@ export function RegistrySearch({ items, tiers }: Props) {
 
   return (
     <div>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-3 xs:flex-row xs:items-center">
         <div className="relative flex-1">
           <label htmlFor="registry-search" className="sr-only">
             Search components
@@ -241,7 +241,7 @@ export function RegistrySearch({ items, tiers }: Props) {
             onKeyDown={onFieldKeyDown}
             aria-describedby="registry-search-hint"
             placeholder={`Search ${items.length} components — try “a metric that was never measured”`}
-            className="border-border bg-card/40 focus-visible:border-primary/60 w-full rounded-lg border py-2.5 pl-4 pr-16 text-sm outline-none"
+            className="border-border bg-card/40 focus-visible:border-primary/60 w-full rounded-xl border py-2.5 pl-4 pr-16 text-sm outline-none"
           />
           <kbd
             aria-hidden
@@ -292,7 +292,7 @@ export function RegistrySearch({ items, tiers }: Props) {
           </p>
           <ul
             ref={resultsRef}
-            className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-4 grid gap-3 xs:grid-cols-2 lg:grid-cols-3"
           >
             {rows.map((row, position) => (
               <li key={row.name}>
@@ -300,7 +300,7 @@ export function RegistrySearch({ items, tiers }: Props) {
                   href={`/c/${row.name}`}
                   data-search-result=""
                   onKeyDown={onResultKeyDown(position)}
-                  className="border-border hover:border-primary/60 hover:bg-card focus-visible:border-primary/60 flex h-full flex-col justify-between gap-3 rounded-lg border bg-card/40 p-4 transition-all"
+                  className="border-border hover:border-primary/60 hover:bg-card focus-visible:border-primary/60 flex h-full flex-col justify-between gap-3 rounded-xl border bg-card/40 p-4 transition-all"
                 >
                   <div>
                     <h3 className="font-semibold">{row.title}</h3>
@@ -331,7 +331,7 @@ export function RegistrySearch({ items, tiers }: Props) {
             ))}
           </ul>
           {rows.length === 0 ? (
-            <p className="text-muted-foreground border-border mt-4 rounded-lg border border-dashed p-8 text-center text-sm">
+            <p className="text-muted-foreground border-border mt-4 rounded-xl border border-dashed p-8 text-center text-sm">
               Nothing matches “{query}”
               {tier ? ' in that layer' : ''}. Describe what the component has to
               do — “keyboard menu”, “empty list”, “render on the server” — or try

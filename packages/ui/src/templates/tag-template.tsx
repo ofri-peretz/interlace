@@ -60,7 +60,7 @@ function TagTemplate({
 
       <main>
         <Container size="content">
-          <Stack gap="xl" className="py-xl">
+          <Stack gap="xl" className="py-16">
             <SectionBoundary name="tag-header" skeletonVariant="page-header">
               <Stack gap="sm">
                 <Typography variant="h1" as="h1" className="text-balance">
@@ -137,7 +137,7 @@ function TagTemplateSkeleton({
         label={null}
       />
       <Container size="content">
-        <Stack gap="xl" className="py-xl">
+        <Stack gap="xl" className="py-16">
           <Skeleton variant="page-header" label={null} />
           <Skeleton variant="article-card" count={3} label={null} />
           <Skeleton variant="tag" count={2} label={null} />

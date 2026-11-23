@@ -43,7 +43,7 @@ export default function CSSContractPage() {
           <p className="text-muted-foreground mt-2">
             One import gives you the entire DS contract:
           </p>
-          <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-md p-md font-mono text-sm">
+          <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
             <code>{`@import "tailwindcss";
 @import "@interlace/ui/styles/index.css";`}</code>
           </pre>
@@ -62,7 +62,7 @@ export default function CSSContractPage() {
             `index.css` declares the layer order up front, so the cascade
             is self-documenting:
           </p>
-          <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-md p-md font-mono text-sm">
+          <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
             <code>{`@layer interlace.primitives, interlace.foundation, interlace.preflight,
        interlace.bridge, interlace.brand, interlace.semantics;
 
@@ -77,13 +77,13 @@ export default function CSSContractPage() {
           <table className="border-border w-full border-collapse border">
             <thead className="bg-muted">
               <tr>
-                <th className="border-border border p-sm text-left font-semibold">
+                <th className="border-border border p-4 text-left font-semibold">
                   Layer
                 </th>
-                <th className="border-border border p-sm text-left font-semibold">
+                <th className="border-border border p-4 text-left font-semibold">
                   Owns
                 </th>
-                <th className="border-border border p-sm text-left font-semibold">
+                <th className="border-border border p-4 text-left font-semibold">
                   File
                 </th>
               </tr>
@@ -91,13 +91,13 @@ export default function CSSContractPage() {
             <tbody>
               {LAYERS.map((row) => (
                 <tr key={row.layer} className="even:bg-muted/40">
-                  <td className="border-border border p-sm font-mono text-sm">
+                  <td className="border-border border p-4 font-mono text-sm">
                     {row.layer}
                   </td>
-                  <td className="border-border border p-sm text-sm">
+                  <td className="border-border border p-4 text-sm">
                     {row.owns}
                   </td>
-                  <td className="border-border border p-sm font-mono text-sm">
+                  <td className="border-border border p-4 font-mono text-sm">
                     {row.file}
                   </td>
                 </tr>
@@ -129,7 +129,7 @@ export default function CSSContractPage() {
             specificity. Without cascade layers, brand override is
             source-order roulette.
           </p>
-          <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-md p-md font-mono text-sm">
+          <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
             <code>{`/* consumer's global.css */
 @import "tailwindcss";
 @import "@interlace/ui/styles/index.css";
@@ -177,7 +177,7 @@ export default function CSSContractPage() {
             <code className="font-mono">interlace.brand</code> are
             internal and may change without notice:
           </p>
-          <ul className="mt-3 ml-md list-disc space-y-2 text-sm">
+          <ul className="mt-3 ml-6 list-disc space-y-2 text-sm">
             <li>
               <code className="font-mono">interlace.preflight</code> —
               overriding this loses the WCAG 2.2 SC 2.4.13 focus ring,
@@ -205,7 +205,7 @@ export default function CSSContractPage() {
           <h2 className="text-2xl font-semibold tracking-tight">
             References
           </h2>
-          <ul className="mt-3 ml-md list-disc space-y-2 text-sm">
+          <ul className="mt-3 ml-6 list-disc space-y-2 text-sm">
             <li>
               <a
                 href="https://github.com/ofri-peretz/interlace/blob/main/packages/ui/DESIGN_SYSTEM_LAYERS.md"
