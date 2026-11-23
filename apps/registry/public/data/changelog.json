@@ -280,6 +280,17 @@
           "source": ".changeset/site-chrome.md"
         },
         {
+          "summary": "`ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.",
+          "components": [
+            "thread-mark"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/thread-mark.md"
+        },
+        {
           "summary": "`ThreadSteps`: an ordered sequence held together by Interlace's woven thread. Each step has a knot, and two strands cross to the next knot, drawing in as the reader reaches the step. Use it plain for \"how it works\" or \"how we checked this\". Set `state` (`complete`, `current`, `upcoming`) to make it a progress tracker: complete steps are woven, the current knot is ringed and marked `aria-current=\"step\"`, and the thread ahead is a loose dotted strand. Every state is also in words for assistive tech. The server HTML is fully drawn; reduced motion keeps it that way.",
           "components": [
             "thread-steps"

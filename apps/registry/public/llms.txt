@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 154 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 155 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,16 +43,16 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 91 server, 63 client
-- keyboard: 119 none, 35 handled
-- built-in loading state: 32 of 154
-- declared minViewport: 91 at 320, 7 at 480, 1 at 768, 55 at inherited
+- rendering: 92 server, 63 client
+- keyboard: 120 none, 35 handled
+- built-in loading state: 32 of 155
+- declared minViewport: 91 at 320, 7 at 480, 1 at 768, 56 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 66 item(s)
+- tier `primitive` — 67 item(s)
 - tier `pattern` — 39 item(s)
 - tier `effect` — 17 item(s)
 - tier `template` — 13 item(s)
@@ -61,7 +61,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
-- category `primitive` (Primitives) — 66 item(s)
+- category `primitive` (Primitives) — 67 item(s)
 - category `pattern` (Patterns) — 39 item(s)
 - category `blog` (Blog & long-form) — 31 item(s)
 - category `foundation` (Foundation) — 22 item(s)
@@ -69,7 +69,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `effect` (Effects) — 17 item(s)
 - category `form` (Form & input) — 16 item(s)
 - category `decorative` (Decorative) — 15 item(s)
-- category `feedback` (Feedback) — 13 item(s)
+- category `feedback` (Feedback) — 14 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `navigation` (Navigation) — 11 item(s)
 - category `marketing` (Marketing) — 11 item(s)
@@ -274,6 +274,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Theme Switcher](https://ds.interlace.tools/c/theme-switcher): The UI half of the two-axis theme contract (`styles/index.css`, `src/lib/use-theme.ts`). Two controls, because the two axes are genuinely different questions and a single control that tries to serve both ends up as a four-item list called "Light / Dark /…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-switcher.json`
   - contract: client, min 320px, v2.0.0
+- [Thread Mark](https://ds.interlace.tools/c/thread-mark): Interlace's thread, drawn as a state. Where a generic kit reaches for a spinner, an empty-box icon and a red warning triangle, Interlace says the same things with its one motif:
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/thread-mark.json`
+  - contract: server, states woven|drawing|loose|cut, v1.0.0
 - [Toast](https://ds.interlace.tools/c/toast): Transient, portal-mounted notification. Wraps `@base-ui/react/toast` (Provider, Portal, Viewport, Root, Title, Description, Close) and overlays the Interlace tone system on top — four semantic tones (`info`, `success`, `warning`, `danger`) that each render…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/toast.json`
   - contract: client, min 320px, keyboard via Base UI toast, v2.0.0

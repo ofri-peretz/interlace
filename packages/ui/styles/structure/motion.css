@@ -35,12 +35,31 @@
    * between two bodies would be over-captured into the first one. */
   --animate-weave-reveal: weave-reveal 600ms ease-out;
 
+  /* The draw verb as a loading state (ThreadMark `drawing`): the woven
+   * pair draws in, then draws out ahead of itself, and starts again. An
+   * ambient loop, so it is exempt from the draw ceiling and named in the
+   * reduced-motion list below, where `animation: none` rests it at the
+   * element's own dashoffset (0): fully woven and still. */
+  --animate-strand-loop: strand-loop 1.6s ease-in-out infinite;
+
   @keyframes strand-draw {
     from {
       stroke-dashoffset: 100;
     }
     to {
       stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes strand-loop {
+    0% {
+      stroke-dashoffset: 100;
+    }
+    50% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -100;
     }
   }
 
@@ -151,7 +170,10 @@
   /* weave-reveal belongs in THIS list, unlike strand-draw below: its
    * keyframe is from-only, so `animation: none` rests at the fully
    * revealed end state — nothing to clamp, nothing hidden. */
-  .animate-weave-reveal {
+  .animate-weave-reveal,
+  /* strand-loop rests at the element's own dashoffset, 0: the pair is
+   * fully woven and still. */
+  .animate-strand-loop {
     animation: none !important;
     transition: none !important;
   }
