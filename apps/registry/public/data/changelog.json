@@ -129,6 +129,17 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "New `Citation` pattern: an inline source marker for a sentence that makes a claim. A footnote number (or a dotted underline on the phrase itself) opens a popover listing every source behind the claim, with the publisher linked, the kind of source, and the quote as a blockquote. Several sources stack in one popover. Only `https:` URLs become links. Keyboard and touch work out of the box, Escape closes it, and the claim text is in the server HTML. An optional `status` shows \"Enough sources\" or a warning \"Short of sources\".",
+          "components": [
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/citation.md"
+        },
+        {
           "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
           "components": [
             "button",

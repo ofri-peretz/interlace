@@ -17,7 +17,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": null
       }
     },
@@ -53,7 +53,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.0.0",
+        "version": "3.1.0",
         "since": null
       }
     },
@@ -161,7 +161,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.0.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },
@@ -359,7 +359,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -377,7 +377,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1385,7 +1385,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1786,6 +1786,24 @@
       }
     },
     {
+      "name": "citation",
+      "type": "registry:ui",
+      "title": "Citation",
+      "description": "An inline source marker for a sentence that makes a claim. The reader taps or tabs to the marker and a popover lists every source behind the claim: who published it, what kind of source it is, and the exact words quoted from it. Several sources stack in…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "code-window",
       "type": "registry:ui",
       "title": "Code Window",
@@ -1979,7 +1997,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.0.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },

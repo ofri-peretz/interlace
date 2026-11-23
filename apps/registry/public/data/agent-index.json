@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 148
+    "itemCount": 149
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 67,
-      "pattern": 32,
+      "pattern": 33,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 67,
-      "pattern": 32,
-      "blog": 24,
+      "pattern": 33,
+      "blog": 25,
       "foundation": 22,
       "decorative": 21,
       "data": 21,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 83,
-      "client": 65
+      "client": 66
     },
     "keyboard": {
-      "none": 113,
+      "none": 114,
       "handled": 35
     },
     "loading": {
-      "none": 116,
+      "none": 117,
       "built-in": 32
     },
     "minViewport": {
-      "320": 82,
+      "320": 83,
       "480": 7,
       "768": 1,
       "inherited": 58
@@ -1396,7 +1396,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -1445,7 +1445,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1620,6 +1620,68 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/checkbox.json",
       "item": "https://ds.interlace.tools/r/checkbox.json",
       "docs": "https://ds.interlace.tools/c/checkbox"
+    },
+    {
+      "name": "citation",
+      "title": "Citation",
+      "type": "registry:ui",
+      "summary": "An inline source marker for a sentence that makes a claim. The reader taps or tabs to the marker and a popover lists every source behind the claim: who published it, what kind of source it is, and the exact words quoted from it. Several sources stack in…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CitationStatus",
+          "values": [
+            "enough",
+            "short"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "button"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "badge",
+        "cn",
+        "interlace-base",
+        "popover"
+      ],
+      "installsTo": [
+        "components/ui/patterns/citation.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/citation.json",
+      "item": "https://ds.interlace.tools/r/citation.json",
+      "docs": "https://ds.interlace.tools/c/citation"
     },
     {
       "name": "cloud-particles",
@@ -3620,7 +3682,7 @@
         "HeroCosmic",
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3874,7 +3936,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": null,
       "npmDependencies": [
         "tw-animate-css"
@@ -3928,7 +3990,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7822,7 +7884,7 @@
         "THEMES",
         "THEME_TOKENS"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -8326,7 +8388,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"

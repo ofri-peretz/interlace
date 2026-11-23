@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 148 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 149 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,17 +43,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 83 server, 65 client
-- keyboard: 113 none, 35 handled
-- built-in loading state: 32 of 148
-- declared minViewport: 82 at 320, 7 at 480, 1 at 768, 58 at inherited
+- rendering: 83 server, 66 client
+- keyboard: 114 none, 35 handled
+- built-in loading state: 32 of 149
+- declared minViewport: 83 at 320, 7 at 480, 1 at 768, 58 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 67 item(s)
-- tier `pattern` — 32 item(s)
+- tier `pattern` — 33 item(s)
 - tier `effect` — 17 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
@@ -62,8 +62,8 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 67 item(s)
-- category `pattern` (Patterns) — 32 item(s)
-- category `blog` (Blog & long-form) — 24 item(s)
+- category `pattern` (Patterns) — 33 item(s)
+- category `blog` (Blog & long-form) — 25 item(s)
 - category `foundation` (Foundation) — 22 item(s)
 - category `decorative` (Decorative) — 21 item(s)
 - category `data` (Data display) — 21 item(s)
@@ -84,10 +84,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [Interlace Base](https://ds.interlace.tools/c/interlace-base): @interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, and layered brand + semantic colour tokens. Changes nothing the host app already styles.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json`
-  - contract: server, v2.0.0
+  - contract: server, v2.1.0
 - [Interlace Foundation](https://ds.interlace.tools/c/interlace-foundation): @interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-foundation.json`
-  - contract: server, v3.0.0
+  - contract: server, v3.1.0
 - [Interlace Theme](https://ds.interlace.tools/c/theme): @interlace/ui — the Interlace look as shadcn cssVars: points your --primary, --background, --radius and the rest at Interlace's burnt-orange brand tokens (light + dark, AAA). Opt-in; components work without it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme.json`
   - contract: server, v2.0.0
@@ -120,10 +120,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 480px, v2.0.0
 - [Button](https://ds.interlace.tools/c/button): The minimal-surface counterpart to [dialog.tsx](./dialog.tsx). Where Dialog exercises compound composition + portal + focus, Button exercises the variant + render-prop polymorphism + native-event passthrough surface.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button.json`
-  - contract: client, keyboard via Base UI use-render, v2.0.0
+  - contract: client, keyboard via Base UI use-render, v2.1.0
 - [Button Variants](https://ds.interlace.tools/c/button-variants): The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button-variants.json`
-  - contract: server, v2.0.0
+  - contract: server, v2.1.0
 - [Callout](https://ds.interlace.tools/c/callout): Inline-prose annotation. The "stop and read this" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner ("your save failed"), Callout is an in-band authored aside ("note: this rule is…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/callout.json`
   - contract: server, min 320px, v2.0.0
@@ -291,7 +291,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI tooltip, v2.0.0
 - [Typography](https://ds.interlace.tools/c/typography): One component renders every row of the type scale (h1–h6, body, long-form, UI, caption, code) through a single `variant`, plus an orthogonal semantic `tone`. The reading-vs-UI distinction (TYPOGRAPHY_PHILOSOPHY "Reading mode vs UI mode") is encoded in the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/typography.json`
-  - contract: server, v2.0.0
+  - contract: server, v2.1.0
 - [Visually Hidden](https://ds.interlace.tools/c/visually-hidden): A `<span>` that is invisible on screen but still read by assistive tech — the component form of the `sr-only` utility.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/visually-hidden.json`
   - contract: server, min 320px, v1.1.0
@@ -310,6 +310,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Brand Logo](https://ds.interlace.tools/c/brand-logo): The locked two-bar Interlace mark plus the lowercase monospace wordmark "interlace". This is the SAME lockup eslint.interlace.tools ships in its top nav — one component so every *.interlace.tools site renders an identical brand header instead of…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/brand-logo.json`
   - contract: server, v2.0.0
+- [Citation](https://ds.interlace.tools/c/citation): An inline source marker for a sentence that makes a claim. The reader taps or tabs to the marker and a popover lists every source behind the claim: who published it, what kind of source it is, and the exact words quoted from it. Several sources stack in…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/citation.json`
+  - contract: client, min 320px, states enough|short, v1.0.0
 - [Code Window](https://ds.interlace.tools/c/code-window): macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/code-window.json`
   - contract: client, v2.0.0
@@ -345,7 +348,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v2.0.0
 - [Hero Cosmic](https://ds.interlace.tools/c/hero-cosmic): The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero-cosmic.json`
-  - contract: client, min 320px, v3.0.0
+  - contract: client, min 320px, v3.1.0
 - [Interactive Grid Pattern](https://ds.interlace.tools/c/interactive-grid-pattern): A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className="text-border"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interactive-grid-pattern.json`
   - contract: client, v2.0.0
@@ -540,7 +543,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v1.0.1
 - [Theme token manifest](https://ds.interlace.tools/c/theme-tokens): @interlace/ui — the registry of themes and the list of every `--interlace-*` token a theme must define. A missing token does not throw; it silently inherits the previous theme's value.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-tokens.json`
-  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|highlight|highlight-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius|brand-mark-bar-o|brand-mark-bar-g, v3.0.0
+  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|highlight|highlight-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius|brand-mark-bar-o|brand-mark-bar-g, v3.1.0
 - [useReducedMotion hook](https://ds.interlace.tools/c/use-reduced-motion): @interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/use-reduced-motion.json`
   - contract: client, v2.0.0
