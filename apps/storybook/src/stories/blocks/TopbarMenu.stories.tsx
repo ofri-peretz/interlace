@@ -92,4 +92,18 @@ export const ClosesOnNavigate: Story = {
 /** The panel can come from the left, or up from the bottom as a sheet with a handle. */
 export const FromTheBottom: Story = {
   args: { side: "bottom" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole("button", { name: "Menu" }));
+    const body = within(canvasElement.ownerDocument.body);
+    const dialog = await body.findByRole("dialog");
+    await expect(dialog).toHaveAttribute("data-direction", "bottom");
+    await expect(
+      dialog.querySelector('[data-slot="drawer-handle"]'),
+    ).not.toBeNull();
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() =>
+      expect(body.queryByRole("dialog")).not.toBeInTheDocument(),
+    );
+  },
 };
