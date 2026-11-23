@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T06:56:00.406Z",
+  "generatedAt": "2026-11-23T07:15:31.580Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -13430,6 +13430,19 @@
       "states": [],
       "coverage": {
         "inGate": true
+      }
+    },
+    "weave-texture": {
+      "sourcePath": "packages/ui/src/effects/weave-texture.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     }
   }

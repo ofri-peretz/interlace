@@ -35,6 +35,7 @@ const { Sheen } = await import('../src/effects/sheen.js');
 const { EdgeGlow } = await import('../src/effects/edge-glow.js');
 const { GridField, gridFieldCells } = await import('../src/effects/grid-field.js');
 const { HeroCosmic } = await import('../src/patterns/hero-cosmic.js');
+const { WeaveTexture } = await import('../src/effects/weave-texture.js');
 
 const observed: Element[] = [];
 
@@ -99,6 +100,7 @@ describe('every effect is hidden from assistive tech and the pointer', () => {
     ['Sheen', () => <Sheen />, '[data-slot="sheen"]'],
     ['EdgeGlow', () => <EdgeGlow />, '[data-slot="edge-glow"]'],
     ['GridField', () => <GridField />, '[data-slot="grid-field"]'],
+    ['WeaveTexture', () => <WeaveTexture />, '[data-slot="weave-texture"]'],
   ] as const)('%s', (_name, make, selector) => {
     stubCanvas();
     const { container } = render(make());

@@ -1678,6 +1678,24 @@
       }
     },
     {
+      "name": "weave-texture",
+      "type": "registry:ui",
+      "title": "Weave Texture",
+      "description": "A quiet woven cloth behind a section: warp threads in `--strand-a` and weft threads in `--strand-b`, passing over and under each other in a plain weave. It is texture, not glow: nothing moves, nothing shines, and at the default strength it sits just above…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "article-card",
       "type": "registry:ui",
       "title": "Article Card",
