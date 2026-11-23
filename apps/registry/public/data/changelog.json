@@ -259,6 +259,17 @@
           "source": ".changeset/content-patterns.md"
         },
         {
+          "summary": "New `DialogueStepper`: a `Dialogue` the reader steps through, one step of turns at a time. Each `DialogueStepper.Step` ends in `DialogueStepper.Choices`; a `Choice` reveals the step its `next` names, so a talk can branch, and choosing a step already on the path goes back to it. Back, \"Show the whole conversation\" and \"Start over\" sit below, with `labels` for another language. After a choice, focus moves to the new step's first choice (or to Back at the end) and the new turns are read out once through a polite live region; the step enters with a short fade behind `motion-safe:`. The server renders every step, and without JavaScript a `<noscript>` style shows the whole conversation with no controls.",
+          "components": [
+            "dialogue-stepper"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/dialogue-stepper.md"
+        },
+        {
           "summary": "`Dialogue` reads as a chat transcript when you want it to. `speakers=\"inside\"` sets each speaker's name as the first line of its bubble (one element, read once, in order). A turn's `tone` picks its bubble: `muted` and `accent` stay the defaults by side, and `inverse` is a high-contrast bubble in which a `Citation` chip flips to a light pill. New `Dialogue.Suggestions` and `Dialogue.Suggestion` give the row of follow-up pills under a transcript: a link with `href`, a button without, or your own element with `asChild`.",
           "components": [
             "dialogue"

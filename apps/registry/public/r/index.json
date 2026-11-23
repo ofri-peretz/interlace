@@ -1948,6 +1948,24 @@
       }
     },
     {
+      "name": "dialogue-stepper",
+      "type": "registry:ui",
+      "title": "Dialogue Stepper",
+      "description": "A `Dialogue` the reader steps through: one step of turns at a time, each revealed by a choice (\"What do I say?\", \"They might ask…\"). A choice can branch to any step, the reader can go back, reset, or show the whole conversation at once. Use it for a…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "dialogue",
       "type": "registry:ui",
       "title": "Dialogue",
