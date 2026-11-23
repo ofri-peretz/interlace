@@ -14,6 +14,20 @@
      --spacing-xs…2xl keys: they shadowed max-w-sm/md/lg in every consumer
      app. LAYOUT #3's six steps are 2 / 4 / 6 / 10 / 16 / 24. */
 
+  /* ── Section rhythm: fluid, not stepped ────────────────────────────
+     A band's vertical padding grows on one curve from a 360px phone to a
+     1024px laptop, instead of jumping at md and lg. The rem term keeps it
+     scaling with zoom and the user's font size (WCAG 1.4.4); the vw term
+     is the glide. Generates py-section-tight / -comfortable / -spacious,
+     which `Section`'s `spacing` prop uses. A brand retunes the rhythm by
+     re-pointing one variable: :root { --spacing-section-comfortable: 5rem; }
+       tight        48 → 80px  (68 at 768)
+       comfortable  64 → 96px  (84 at 768)
+       spacious     80 → 128px (110 at 768) */
+  --spacing-section-tight: clamp(3rem, 1.9157rem + 4.8193vw, 5rem);
+  --spacing-section-comfortable: clamp(4rem, 2.9157rem + 4.8193vw, 6rem);
+  --spacing-section-spacious: clamp(5rem, 3.3735rem + 7.2289vw, 8rem);
+
   /* ── Container widths (LAYOUT #2 — four sizes only) ─────────────────
      Generates max-w-prose / max-w-content / max-w-wide. `full` = no max-width
      (omit the utility). ad-hoc max-w-3xl/4xl/5xl/6xl are forbidden by R21. */

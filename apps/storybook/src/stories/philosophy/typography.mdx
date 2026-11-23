@@ -75,8 +75,8 @@ content is mis-structured, not that the scale is too small.
 | Level | Size (rem) | Weight | Tracking | Use |
 | --- | --- | --- | --- | --- |
 | `h1` | `2.5rem` (40px), fluid up to `3.5rem` (56px) | 700 | `-0.02em` | Page title; one per page |
-| `h2` | `1.875rem` (30px) | 700 | `-0.015em` | Major section |
-| `h3` | `1.5rem` (24px) | 600 | `-0.01em` | Subsection |
+| `h2` | `1.5rem` (24px), fluid up to `1.875rem` (30px) | 700 | `-0.015em` | Major section |
+| `h3` | `1.375rem` (22px), fluid up to `1.5rem` (24px) | 600 | `-0.01em` | Subsection |
 | `h4` | `1.25rem` (20px) | 600 | `0` | Minor heading; rare in docs |
 | `h5` | `1.0625rem` (17px) | 600 | `0` | Avoid — restructure instead |
 | `h6` | `1rem` (16px) | 600 | `0` | Avoid |
@@ -296,8 +296,8 @@ equivalent):
   --tracking-heading: -0.01em;
 
   --text-h1: clamp(2.5rem, 4vw + 1rem, 3.5rem);
-  --text-h2: 1.875rem;
-  --text-h3: 1.5rem;
+  --text-h2: clamp(1.5rem, 1.2967rem + 0.9036vw, 1.875rem);
+  --text-h3: clamp(1.375rem, 1.3072rem + 0.3012vw, 1.5rem);
   --text-body: 1rem;
   --text-long: 1.0625rem;
   --text-code: 0.875rem;
