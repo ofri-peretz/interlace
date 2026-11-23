@@ -28,7 +28,7 @@ const COLLECTIONS: Array<[string, string, (d?: Density) => React.ReactElement, b
   ['StatGroup', 'stat-group', (d) => <StatGroup density={d} loading />, false],
 ];
 
-const GAP = { compact: 'gap-4', default: 'gap-6', relaxed: 'gap-10' } as const;
+const GAP = { compact: 'gap-4', default: 'gap-6', relaxed: 'md:gap-x-10' } as const;
 const SECTION = { compact: 'py-10', default: 'py-16', relaxed: 'py-24' } as const;
 
 describe('collections take a density', () => {

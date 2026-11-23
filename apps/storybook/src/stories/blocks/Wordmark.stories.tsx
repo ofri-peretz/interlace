@@ -3,16 +3,20 @@ import { Section } from '@interlace/ui/section';
 import { Topbar } from '@interlace/ui/patterns/topbar';
 import { Wordmark } from '@interlace/ui/patterns/wordmark';
 
-// Placeholder name: "hello" in Hebrew, Arabic and English.
-const LINES = (
+// Placeholder brand "Acme": a name over its tagline, and one name in three scripts.
+const TAGLINE = (
   <>
-    <Wordmark.Line lang="he" dir="rtl">
-      שלום
-    </Wordmark.Line>
+    <Wordmark.Line lang="en">ACME</Wordmark.Line>
+    <Wordmark.Line lang="en">Field notes</Wordmark.Line>
+  </>
+);
+const SCRIPTS = (
+  <>
+    <Wordmark.Line lang="en">ACME</Wordmark.Line>
+    <Wordmark.Line lang="ja">アクメ</Wordmark.Line>
     <Wordmark.Line lang="ar" dir="rtl">
-      مرحبا
+      أكمي
     </Wordmark.Line>
-    <Wordmark.Line lang="en">HELLO</Wordmark.Line>
   </>
 );
 
@@ -24,19 +28,20 @@ const meta = {
     docs: {
       description: {
         component:
-          'A name in more than one script, stacked, each line with its own `lang` and `dir`. ' +
-          '`variant="sign"` is a street-sign plate; `plain` is the lines alone in the text colour. ' +
-          'With `href` it is one link named by `label`; without, an image of text. Arabic lines use ' +
-          '`--font-arabic` when the site defines it. It fits `Topbar`’s `logo` slot, which grows to hold it.',
+          'A text logo of stacked lines: a name over its tagline, or one name in several scripts, each line ' +
+          'with its own `lang` and `dir`. `variant="framed"` is a plate with an inset rule in the brand colour; ' +
+          '`plain` is the lines alone in the text colour. With `href` it is one link named by `label`; without, ' +
+          'an image of text. Lines use `--font-heading`: add a font for another script to that stack and the ' +
+          'browser picks one per glyph. It fits `Topbar`’s `logo` slot, which grows to hold it.',
       },
     },
   },
-  args: { label: 'Hello, home', href: '#', children: LINES },
+  args: { label: 'Acme, home', href: '#', children: TAGLINE },
   argTypes: {
     variant: {
       control: 'inline-radio',
-      options: ['sign', 'plain'],
-      table: { category: 'Appearance', defaultValue: { summary: 'sign' } },
+      options: ['framed', 'plain'],
+      table: { category: 'Appearance', defaultValue: { summary: 'framed' } },
     },
     children: { control: false },
   },
@@ -46,6 +51,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+/** One name in three scripts, each line with its own `lang`; the Arabic line is `dir="rtl"`. */
+export const SeveralScripts: Story = { args: { children: SCRIPTS } };
 
 /** Both variants on a brand band: the plain lockup takes the band's text colour. */
 export const OnABrandBand: Story = {

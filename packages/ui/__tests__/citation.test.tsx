@@ -107,9 +107,23 @@ describe('Citation', () => {
     expect(screen.getByRole('button', { name: /^Reuters ?, Sources \(2\)$/ })).toBeTruthy();
   });
 
+  it('caps a long pill and truncates it, keeping the whole text in its name', () => {
+    const long = 'A Very Long Commission Name of Some International Body, and 3 more';
+    render(
+      <Citation sources={SOURCES} marker="chip" chipLabel={long}>
+        The claim.
+      </Citation>,
+    );
+    const button = screen.getByRole('button', { name: new RegExp(`^${long} ?, Sources`) });
+    expect(button.className).toContain('max-w-[min(24ch,100%)]');
+    const label = button.querySelector('[data-slot="citation-chip-label"]')!;
+    expect(label.className).toContain('truncate');
+    expect(label.textContent).toBe(long);
+  });
+
   it('names each publisher once in the default pill text', () => {
-    expect(chipText([{ publisher: 'JVL' }, { publisher: 'JTA' }, { publisher: 'JVL' }])).toBe(
-      'JVL · JTA',
+    expect(chipText([{ publisher: 'AP' }, { publisher: 'AFP' }, { publisher: 'AP' }])).toBe(
+      'AP · AFP',
     );
   });
 

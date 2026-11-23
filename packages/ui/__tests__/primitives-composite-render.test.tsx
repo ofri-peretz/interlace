@@ -149,17 +149,28 @@ describe('Callout', () => {
 
   it('puts a kicker, read as text, in place of the icon', () => {
     const { container } = render(
-      <Callout tone="highlight" kicker={<span lang="he">דוגרי</span>}>
+      <Callout tone="highlight" kicker={<span lang="fr">Bref</span>}>
         body
       </Callout>,
     );
     const kicker = slot(container, 'callout-kicker')!;
-    expect(kicker.textContent).toBe('דוגרי');
+    expect(kicker.textContent).toBe('Bref');
     expect(kicker.getAttribute('aria-hidden')).toBeNull();
     expect(slot(container, 'callout-icon')).toBeNull();
     // The highlight tone is the one that tints the surface.
-    expect(slot(container, 'callout')!.className).toContain('bg-highlight/15');
-    expect(slot(container, 'callout')!.className).not.toContain('bg-card/40');
+    expect(slot(container, 'callout')!.className).toContain('from-highlight/15');
+    expect(slot(container, 'callout')!.className).not.toContain('from-card/40');
+  });
+
+  it('has an opaque surface and its own text colour, so it reads on a brand band', () => {
+    for (const tone of ['info', 'highlight'] as const) {
+      const { container } = render(<Callout tone={tone}>body</Callout>);
+      const cls = slot(container, 'callout')!.className;
+      expect(cls).toContain('bg-background');
+      expect(cls).toContain('text-foreground');
+      // No translucent fill: the tint is a gradient image over the solid colour.
+      expect(cls).not.toMatch(/\bbg-(card|highlight)\//);
+    }
   });
 
   it('falls back to the info tone when none is given', () => {

@@ -37,12 +37,12 @@ const meta = {
   render: (args) => (
     <div className="max-w-prose">
       <Dialogue {...args}>
-        <Dialogue.Turn speaker="Child">Why was the bridge closed for so long?</Dialogue.Turn>
-        <Dialogue.Turn speaker="Parent" side="end">
-          It was six weeks. Let&apos;s look at the notice from the city together.
+        <Dialogue.Turn speaker="Resident">Why was the bridge closed for so long?</Dialogue.Turn>
+        <Dialogue.Turn speaker="City office" side="end">
+          It was six weeks. Here is the notice we published.
         </Dialogue.Turn>
-        <Dialogue.Turn speaker="Child">My friend said it was months.</Dialogue.Turn>
-        <Dialogue.Turn speaker="Parent" side="end">
+        <Dialogue.Turn speaker="Resident">My neighbour said it was months.</Dialogue.Turn>
+        <Dialogue.Turn speaker="City office" side="end">
           It felt like months. Here is the date it closed and the date it opened.
         </Dialogue.Turn>
       </Dialogue>
@@ -61,14 +61,14 @@ export const Transcript: Story = {
   render: (args) => (
     <div className="max-w-prose space-y-4">
       <Dialogue {...args}>
-        <Dialogue.Turn speaker="Your kid">Why was the bridge closed for so long?</Dialogue.Turn>
+        <Dialogue.Turn speaker="Neighbour">Why was the bridge closed for so long?</Dialogue.Turn>
         <Dialogue.Turn speaker="You" side="end" tone="inverse">
           <Citation marker="chip" sources={SOURCE}>
             Six weeks, from March to April.
           </Citation>{' '}
           It felt longer because the detour was slow.
         </Dialogue.Turn>
-        <Dialogue.Turn speaker="Your kid">So who&apos;s right?</Dialogue.Turn>
+        <Dialogue.Turn speaker="Neighbour">So who&apos;s right?</Dialogue.Turn>
         <Dialogue.Turn speaker="You" side="end" tone="inverse">
           The dates are on the notice. How it felt is still argued.
         </Dialogue.Turn>

@@ -12,8 +12,8 @@ describe('Timeline', () => {
   it('is an ordered list of events with date, title, body and source as text', () => {
     const { container } = render(
       <Timeline aria-label="The record">
-        <Timeline.Item date="1968" title="PLO charter" source="Yale, Avalon Project">
-          <q>An indivisible territorial unit.</q>
+        <Timeline.Item date="1968" title="Council vote" source="City archive, minutes">
+          <q>The bridge will be built.</q>
         </Timeline.Item>
         <Timeline.Item date="1993" title="Letter" />
       </Timeline>,

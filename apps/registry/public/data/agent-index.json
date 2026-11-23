@@ -2568,7 +2568,7 @@
       "name": "dialogue",
       "title": "Dialogue",
       "type": "registry:ui",
-      "summary": "A written conversation: a script of turns, each with a speaker. Use it for a sample exchange (\"what to say when your child asks…\"), an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the…",
+      "summary": "A written conversation: a script of turns, each with a speaker. Use it for a sample support chat, an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the back-and-forth reads at a glance, and…",
       "topics": [],
       "categories": [
         "blog",
@@ -7529,7 +7529,7 @@
       "name": "status-pills",
       "title": "Status Pills",
       "type": "registry:ui",
-      "summary": "A row of short facts about the page, set as pills: \"Checked by a second reader\", \"9 facts\", \"38 sources quoted\", \"About 1 minute out loud\". Built to sit on a brand band (`<Section tone=\"brand\">`) under a title, and just as readable on the page background.",
+      "summary": "A row of short facts about the page, set as pills: \"Reviewed\", \"9 facts\", \"38 sources\", \"4 min read\". Built to sit on a brand band (`<Section tone=\"brand\">`) under a title, and just as readable on the page background.",
       "topics": [],
       "categories": [
         "blog",
@@ -9122,7 +9122,7 @@
       "name": "wordmark",
       "title": "Wordmark",
       "type": "registry:ui",
-      "summary": "A name set in more than one script, stacked: \"למה ככה\" over \"ليش هيك\" over \"WHYLIKEDIS\". Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the browser's font fallback all know…",
+      "summary": "A text logo of one or more stacked lines: a name over its tagline, or the same name in several languages or scripts. Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the…",
       "topics": [],
       "categories": [
         "foundation",
@@ -9142,7 +9142,7 @@
         {
           "name": "WordmarkVariant",
           "values": [
-            "sign",
+            "framed",
             "plain"
           ]
         }

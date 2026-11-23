@@ -177,7 +177,7 @@ export const BrandBandWithOverlap: Story = {
   render: () => (
     <div>
       <Section as="header" tone="brand" spacing="tight">
-        <p className="text-sm font-semibold tracking-widest uppercase">Your kid heard</p>
+        <p className="text-sm font-semibold tracking-widest uppercase">The claim</p>
         <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-tight">
           &quot;The bridge was closed for months.&quot;
         </h1>

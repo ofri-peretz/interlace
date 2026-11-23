@@ -18,10 +18,10 @@ const meta = {
   },
   render: (args) => (
     <StatusPills aria-label="About this answer" {...args}>
-      <StatusPills.Item tone="ok">Checked by a second reader</StatusPills.Item>
+      <StatusPills.Item tone="ok">Reviewed</StatusPills.Item>
       <StatusPills.Item>9 facts</StatusPills.Item>
-      <StatusPills.Item>38 sources quoted</StatusPills.Item>
-      <StatusPills.Item>About 1 minute out loud</StatusPills.Item>
+      <StatusPills.Item>38 sources</StatusPills.Item>
+      <StatusPills.Item>4 min read</StatusPills.Item>
     </StatusPills>
   ),
 } satisfies Meta<typeof StatusPills>;
@@ -41,10 +41,10 @@ export const OnABrandBand: Story = {
         &quot;The bridge was closed for months.&quot;
       </h1>
       <StatusPills aria-label="About this answer" {...args}>
-        <StatusPills.Item tone="ok">Checked by a second reader</StatusPills.Item>
+        <StatusPills.Item tone="ok">Reviewed</StatusPills.Item>
         <StatusPills.Item>9 facts</StatusPills.Item>
-        <StatusPills.Item>38 sources quoted</StatusPills.Item>
-        <StatusPills.Item>About 1 minute out loud</StatusPills.Item>
+        <StatusPills.Item>38 sources</StatusPills.Item>
+        <StatusPills.Item>4 min read</StatusPills.Item>
       </StatusPills>
     </Section>
   ),

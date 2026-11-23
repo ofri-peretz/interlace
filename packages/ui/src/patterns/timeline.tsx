@@ -102,9 +102,9 @@ const DOT: Record<TimelineMarker, string> = {
 type TimelineItemProps = Omit<React.ComponentProps<'li'>, 'title'> & {
   /** When it happened: "1968", or a `<time>`. Always shown. */
   date: React.ReactNode;
-  /** Who or what: "PLO charter". */
+  /** Who or what: "Council vote". */
   title?: React.ReactNode;
-  /** Where the words come from: "Yale, Avalon Project". */
+  /** Where the words come from: "City archive, minutes". */
   source?: React.ReactNode;
   /** The dot. `accent` marks the one event the page is about. @default 'default' */
   marker?: TimelineMarker;

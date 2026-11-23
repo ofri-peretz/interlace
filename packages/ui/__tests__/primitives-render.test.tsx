@@ -375,8 +375,14 @@ describe('Grid', () => {
     'maps gap=%s onto the spacing token',
     (gap) => {
       const { container } = render(<Grid gap={gap} />);
-      const expected = gap === 'none' ? 'gap-0' : `gap-${SPACING_STEP[gap]}`;
-      expect(slot(container, 'grid')!.getAttribute('class')).toContain(expected);
+      // lg and up keep the full step for rows and, from md, for columns; below
+      // md their column gap is capped so twelve tracks fit a phone.
+      const cls = slot(container, 'grid')!.getAttribute('class')!;
+      if (gap === 'none') expect(cls).toContain('gap-0');
+      else if (gap === 'lg' || gap === 'xl' || gap === '2xl') {
+        expect(cls).toContain(`gap-y-${SPACING_STEP[gap]}`);
+        expect(cls).toContain(`md:gap-x-${SPACING_STEP[gap]}`);
+      } else expect(cls).toContain(`gap-${SPACING_STEP[gap]}`);
     },
   );
 

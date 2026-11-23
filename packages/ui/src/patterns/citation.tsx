@@ -27,8 +27,8 @@
  *   number follows it, like a footnote. Use it in dense prose.
  * - `underline`: the text itself is the trigger, with a dotted underline.
  *   Use it when the whole phrase is the claim.
- * - `chip`: a small pill after the text names the source ("UN", "Yale
- *   Avalon"), so the reader sees who backs the line before opening anything.
+ * - `chip`: a small pill after the text names the source ("UN", "City
+ *   archive"), so the reader sees who backs the line before opening anything.
  *   Use it when the publisher's name is itself the evidence. The pill text
  *   defaults to the publishers, joined with " · "; set `chipLabel` to shorten.
  *
@@ -72,7 +72,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../primitives/popover.j
 export const MIN_VIEWPORT = 320 as const;
 
 export interface CitationSourceData {
-  /** Who published it: "Reuters", "UN OCHA", "The Times of Israel". */
+  /** Who published it: "Reuters", "UN OCHA", "Le Monde". */
   publisher: string;
   /** Link to the page the quote comes from. Only `https:` URLs render as links. */
   url?: string;
@@ -221,9 +221,13 @@ function Citation({
                 pad grows its hit area to 24px (WCAG 2.5.8) without moving text. */}
             <PopoverTrigger
               data-slot="citation-trigger"
-              className="bg-primary/10 text-primary hover:bg-primary/15 relative inline-flex items-center rounded-md px-1.5 py-0.5 align-baseline text-xs leading-none font-semibold whitespace-nowrap after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+              className="bg-primary/10 text-primary hover:bg-primary/15 relative inline-flex max-w-[min(24ch,100%)] items-center rounded-md px-1.5 py-0.5 align-baseline text-xs leading-none font-semibold whitespace-nowrap after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
             >
-              {chipLabel ?? chipText(sources)}
+              {/* A long publisher list ends in an ellipsis instead of widening
+                  the page; the whole text stays in the name and the popover. */}
+              <span data-slot="citation-chip-label" className="truncate">
+                {chipLabel ?? chipText(sources)}
+              </span>
               <span className="sr-only">, {label}</span>
             </PopoverTrigger>
           </>

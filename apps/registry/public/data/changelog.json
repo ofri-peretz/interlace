@@ -198,7 +198,7 @@
           "source": ".changeset/callout-highlight.md"
         },
         {
-          "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"Yale Avalon\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
+          "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"City archive\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
           "components": [
             "citation"
           ],
@@ -426,7 +426,7 @@
           "source": ".changeset/weave-texture.md"
         },
         {
-          "summary": "New `Wordmark`: a name set in more than one script, stacked, with each `Wordmark.Line` carrying its own `lang` and `dir`. `variant=\"sign\"` is a street-sign plate with an inset rule; `plain` is the lines alone in the text colour. With `href` the whole lockup is one link named by `label`; without, it is an image of text. A line in Arabic uses `--font-arabic` when the site defines it; loading the font stays with the site. `Topbar`'s row is now at least 3.5rem and grows to fit a taller logo instead of clipping it.",
+          "summary": "New `Wordmark`: a text logo of stacked lines (a name over its tagline, or one name in several scripts), with each `Wordmark.Line` carrying its own `lang` and `dir`. `variant=\"framed\"` is a page-coloured plate with an inset rule in the brand colour; `plain` is the lines alone in the text colour. With `href` the whole lockup is one link named by `label`; without, it is an image of text. Lines use `--font-heading`; for another script, add its font to that stack and the browser picks per glyph. `Topbar`'s row is now at least 3.5rem and grows to fit a taller logo instead of clipping it.",
           "components": [
             "wordmark",
             "topbar"
@@ -476,6 +476,19 @@
           "bump": "patch",
           "migration": "none.",
           "source": ".changeset/effects-review-fixes.md"
+        },
+        {
+          "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",
+          "components": [
+            "grid",
+            "callout",
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/neutral-fixes.md"
         },
         {
           "summary": "`PricingTable`: the space inside a tier (between its sections, and above its CTA) now follows `density` too, so a `compact` tier's inside never breathes more than its 16px shell. `default` renders exactly as before.",

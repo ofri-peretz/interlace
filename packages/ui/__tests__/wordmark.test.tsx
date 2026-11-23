@@ -1,7 +1,7 @@
 /**
- * Wordmark: a name in several scripts, stacked. These lock one accessible
- * name for the whole lockup, a `lang` on every line, and the Arabic font
- * seam that names no font.
+ * Wordmark: a text logo of stacked lines, here one name in three scripts.
+ * These lock one accessible name for the whole lockup, a `lang` on every
+ * line, and a font seam that names no font and no language.
  */
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
@@ -11,13 +11,11 @@ import { MIN_VIEWPORT, Wordmark } from '../src/patterns/wordmark.js';
 
 const lines = (
   <>
-    <Wordmark.Line lang="he" dir="rtl">
-      שלום
-    </Wordmark.Line>
+    <Wordmark.Line lang="en">ACME</Wordmark.Line>
+    <Wordmark.Line lang="ja">アクメ</Wordmark.Line>
     <Wordmark.Line lang="ar" dir="rtl">
-      مرحبا
+      أكمي
     </Wordmark.Line>
-    <Wordmark.Line lang="en">HELLO</Wordmark.Line>
   </>
 );
 
@@ -30,7 +28,7 @@ describe('Wordmark', () => {
     );
     const link = screen.getByRole('link', { name: 'Hello, home' });
     expect(link.getAttribute('href')).toBe('/');
-    expect(link.getAttribute('data-variant')).toBe('sign');
+    expect(link.getAttribute('data-variant')).toBe('framed');
     expect(link.getAttribute('data-min-viewport')).toBe(String(MIN_VIEWPORT));
     expect(link.className).toContain('focus-visible:ring-[3px]');
     expect(link.className).not.toContain('outline-none');
@@ -39,9 +37,9 @@ describe('Wordmark', () => {
       l.getAttribute('dir'),
     ]);
     expect(langs).toEqual([
-      ['he', 'rtl'],
-      ['ar', 'rtl'],
       ['en', null],
+      ['ja', null],
+      ['ar', 'rtl'],
     ]);
   });
 
@@ -67,11 +65,12 @@ describe('Wordmark', () => {
     expect(screen.getByRole('link').className).toContain('outline-none');
   });
 
-  it('sends Arabic lines to --font-arabic and names no font', () => {
+  it('uses the heading font stack and special-cases no language', () => {
     render(<Wordmark label="Hello">{lines}</Wordmark>);
     const cls = screen.getByRole('img').className;
-    expect(cls).toContain('font-(family-name:--font-arabic)');
     expect(cls).toContain('font-heading');
+    expect(cls).not.toContain(':lang(');
+    expect(cls).not.toMatch(/--font-(arabic|hebrew)/);
   });
 
   it('fits the Topbar logo slot: the row grows instead of clipping', () => {

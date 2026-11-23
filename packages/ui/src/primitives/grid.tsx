@@ -47,9 +47,12 @@ const gridVariants = cva('grid', {
       xs: 'gap-2',
       sm: 'gap-4',
       md: 'gap-6',
-      lg: 'gap-10',
-      xl: 'gap-16',
-      '2xl': 'gap-24',
+      // The large steps keep their row gap but cap the column gap below
+      // md: twelve tracks need eleven gaps, and 11 × 40px is wider than a
+      // 390px phone. Capped, a 12-column grid fits the 320px minimum.
+      lg: 'gap-y-10 gap-x-4 md:gap-x-10',
+      xl: 'gap-y-16 gap-x-6 md:gap-x-16',
+      '2xl': 'gap-y-24 gap-x-6 md:gap-x-24',
     },
   },
   defaultVariants: { cols: 12, gap: 'md' },

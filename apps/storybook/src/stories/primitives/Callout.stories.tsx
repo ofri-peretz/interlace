@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Callout, MIN_VIEWPORT } from '@interlace/ui/callout';
+import { Section } from '@interlace/ui/section';
 import { withRtl } from '@/decorators';
 
 const meta = {
@@ -112,10 +113,10 @@ export const Kicker: Story = {
       <Callout
         tone="highlight"
         kicker={
-          <span lang="he" dir="rtl">
-            דוגרי
+          <span lang="ar" dir="rtl">
+            ملاحظة
           </span>
-          /* Hebrew for "straight talk" */
+          /* Arabic for "note" */
         }
       >
         Line 4 is about the city&apos;s own mistake. Say it before someone else does.
@@ -124,6 +125,27 @@ export const Kicker: Story = {
         The bridge reopened on Monday, and traffic should be normal by Friday.
       </Callout>
     </div>
+  ),
+};
+
+/**
+ * On a brand band. The surface is opaque and the callout sets its own text
+ * colour, so nothing of the band shows through and the kicker keeps the
+ * page's contrast.
+ */
+export const OnABrandBand: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <Section tone="brand" spacing="tight">
+      <div className="flex max-w-prose flex-col gap-6">
+        <Callout tone="highlight" kicker="In short">
+          The bridge reopened on Monday, and traffic should be normal by Friday.
+        </Callout>
+        <Callout tone="info" title="Detour">
+          Until then, take the north crossing.
+        </Callout>
+      </div>
+    </Section>
   ),
 };
 

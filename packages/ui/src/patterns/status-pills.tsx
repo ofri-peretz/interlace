@@ -1,8 +1,8 @@
 /**
  * @interlace/ui — StatusPills
  *
- * A row of short facts about the page, set as pills: "Checked by a second
- * reader", "9 facts", "38 sources quoted", "About 1 minute out loud". Built
+ * A row of short facts about the page, set as pills: "Reviewed", "9 facts",
+ * "38 sources", "4 min read". Built
  * to sit on a brand band (`<Section tone="brand">`) under a title, and just
  * as readable on the page background.
  *
