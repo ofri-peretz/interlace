@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "A key the reader presses: `⌘`, `Esc`, `Ctrl` `K`. The shadcn core `kbd` item, drawn in Interlace tokens. `KbdGroup` sets a chord (`⌘ + K`) or a sequence (`G` then `I`) as one inline run, so the gap between keys is owned by the container, not by a margin on…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "foundation",
+    "primitive"
+  ],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/kbd.tsx",
+      "target": "components/ui/kbd.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/kbd v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/kbd\n// What changed since: https://ds.interlace.tools/c/kbd#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — Kbd + KbdGroup\n *\n * A key the reader presses: `⌘`, `Esc`, `Ctrl` `K`. The shadcn core `kbd`\n * item, drawn in Interlace tokens. `KbdGroup` sets a chord (`⌘ + K`) or a\n * sequence (`G` then `I`) as one inline run, so the gap between keys is\n * owned by the container, not by a margin on each key.\n *\n * Server component — native `<kbd>`, nothing to hydrate.\n *\n * ## Anatomy\n *\n *   KbdGroup                         (kbd — data-min-viewport=320)\n *     ├─ Kbd                         (kbd — data-min-viewport=320)\n *     └─ Kbd\n *\n * A group is itself a `<kbd>`: HTML nests `<kbd>` inside `<kbd>` to mean\n * \"this input is made of these keys\", which is exactly a chord.\n *\n * ## MIN_VIEWPORT — 320\n *\n * A key is a few characters wide and never wraps (`whitespace-nowrap`), so\n * it holds at the narrowest viewport.\n *\n * | Rule | Concept                 | Where in this file                                |\n * | ---- | ----------------------- | ------------------------------------------------- |\n * | R4   | Extends native el       | `React.ComponentProps<'kbd'> & VariantProps`      |\n * | R6   | data-slot per part      | `kbd` / `kbd-group`                               |\n * | R7   | cva + cn + ...rest      | `cn(kbdVariants({ size }), className)`            |\n * | R8   | Enums, not booleans     | `size` = sm | md                                  |\n * | R14  | Declares min viewport   | `data-min-viewport` + exported const              |\n * | R19  | Tokens only             | bg-muted, text-foreground, border-border          |\n * | R25  | Server component        | no hooks → no `'use client'`                      |\n * | R26  | A11y from native el     | `<kbd>` is read as its text; a symbol key should  |\n * |      |                         | carry `aria-label` (e.g. `⌘` → \"Command\")         |\n */\n\nimport { cva, type VariantProps } from 'class-variance-authority';\n\nimport { cn } from '@/lib/utils';\n\n/** Minimum viable viewport (CSS px) for this primitive. */\nexport const MIN_VIEWPORT = 320 as const;\n\nconst kbdVariants = cva(\n  cn(\n    'inline-flex items-center justify-center gap-1 whitespace-nowrap select-none',\n    // text-foreground, not muted-foreground: a key is read at text-xs, and\n    // muted-on-muted would miss the AAA bar the storybook gate holds.\n    // border-b-2 is the key's depth, so it reads as a key, not a tag.\n    'rounded-sm border border-b-2 border-border bg-muted font-sans font-medium text-foreground',\n    // An icon inside a key follows the key's size.\n    \"[&_svg:not([class*='size-'])]:size-3\",\n  ),\n  {\n    variants: {\n      size: {\n        sm: 'h-5 min-w-5 px-1 text-xs',\n        md: 'h-6 min-w-6 px-1.5 text-sm',\n      },\n    },\n    defaultVariants: { size: 'sm' },\n  },\n);\n\ntype KbdProps = React.ComponentProps<'kbd'> & VariantProps<typeof kbdVariants>;\n\nfunction Kbd({ className, size, ...props }: KbdProps) {\n  return (\n    <kbd\n      data-slot=\"kbd\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn(kbdVariants({ size }), className)}\n      {...props}\n    />\n  );\n}\n\nfunction KbdGroup({ className, ...props }: React.ComponentProps<'kbd'>) {\n  return (\n    <kbd\n      data-slot=\"kbd-group\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('inline-flex items-center gap-1 font-sans', className)}\n      {...props}\n    />\n  );\n}\n\nexport { Kbd, KbdGroup, kbdVariants };\nexport type { KbdProps };\n"
+    }
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": false,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/kbd\n\nInstalled to `components/ui/kbd.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/kbd';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/kbd\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}
