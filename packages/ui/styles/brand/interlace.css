@@ -56,7 +56,7 @@
  *
  * Source palette: the Interlace mark — burnt orange (see render-cover.sh).
  *   Light primary: #7d350c → 8.80:1 on white (AAA)
- *   Dark primary:  #fbb99a → 11.79:1 on near-black (AAA)
+ *   Dark primary:  #fbb99a → 11.63:1 on the dark page #0e0c0a (AAA)
  *
  * Replaced the Tailwind-violet palette this system shipped with. Every pair
  * below was re-measured after the swap; none regressed.
@@ -297,8 +297,8 @@
   .dark,
   [data-scheme='dark'] {
     /* Brand — inverted weight: a light tint of the same burnt orange, so
-     * both directions clear AAA. text-primary on near-black is 11.79:1, and
-     * bg-primary with text-primary-foreground (#0a0a0a) is the same 11.79:1.
+     * both directions clear AAA. text-primary on the dark page is 11.63:1,
+     * and bg-primary with text-primary-foreground (#0a0a0a) is 11.79:1.
      * The cover orange #f4794a is only 7.24:1 here, too dark to carry the
      * bidirectional pair, hence the lighter tint. */
     --interlace-primary: oklch(0.839 0.0877 46.2);            /* 11.63:1 on dark bg #0e0c0a (AAA) */
