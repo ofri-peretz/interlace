@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T04:50:33.217Z",
+  "generatedAt": "2026-11-23T05:34:35.157Z",
   "source": "apps/storybook/src/stories/concepts",
   "pages": [
     {
@@ -854,7 +854,7 @@
           ],
           "rows": [
             [
-              "`:root`",
+              "`:root`, `[data-scheme='light']`",
               "interlace · light — the default"
             ],
             [
@@ -874,6 +874,10 @@
         {
           "type": "paragraph",
           "text": "Scheme is keyed on the `.dark` class, matching the shadcn / `next-themes` convention, so the system drops into an existing app without a migration. Theme is keyed on `data-theme`."
+        },
+        {
+          "type": "paragraph",
+          "text": "Either scheme can be forced on a subtree. `<div class=\"dark\">` makes a dark panel on a light page, and `<div data-scheme=\"light\">` makes a light panel on a dark page. The palette, the semantic names and `color-scheme` all switch together, so the panel's scrollbars and form controls match it."
         },
         {
           "type": "paragraph",

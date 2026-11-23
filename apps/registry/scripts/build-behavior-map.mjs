@@ -419,11 +419,11 @@ const contrast = (a, b) => {
 /** The selector matrix from `styles/brand/interlace.css`, in executable form. */
 const THEME_SELECTORS = {
   interlace: {
-    light: { file: INTERLACE_CSS, selector: ':root' },
+    light: { file: INTERLACE_CSS, selector: ":root,\n  [data-scheme='light']" },
     dark: { file: INTERLACE_CSS, selector: ".dark,\n  [data-scheme='dark']" },
   },
   harbor: {
-    light: { file: HARBOR_CSS, selector: "[data-theme='harbor']" },
+    light: { file: HARBOR_CSS, selector: "[data-theme='harbor'],\n  [data-theme='harbor'] [data-scheme='light']" },
     dark: {
       file: HARBOR_CSS,
       selector:
