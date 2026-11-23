@@ -436,7 +436,7 @@
     "asc": 1,
     "ascend": 1,
     "aschild": 4,
-    "asid": 4,
+    "asid": 3,
     "ask": 17,
     "aspect": 4,
     "aspectratio": 3,
@@ -1544,7 +1544,7 @@
     "kpi": 1,
     "kpis": 2,
     "label": 82,
-    "labell": 18,
+    "labell": 17,
     "labelledby": 2,
     "lack": 2,
     "ladder": 8,
@@ -1748,7 +1748,7 @@
     "mybutton": 1,
     "mystery": 1,
     "naiv": 4,
-    "nam": 29,
+    "nam": 30,
     "name": 73,
     "namespac": 1,
     "narrativ": 1,
@@ -3353,7 +3353,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "callout blog primitiv server rsc responsiv min viewport 320 icon kicker tone lucid alert pros bold lang punctuat readm save tint band annotation banner body read word dir highlighter asid distinct author awar medium tooltip mdx titl info surfac another neutral script font 50m attention calloutvariant circlecheck fight lightbulb narrativ octagonalert rtl trianglealert runtim variantprop text typography form replac inlin warn adjacent aloud parallel"
+      "terms": "callout blog primitiv server rsc responsiv min viewport 320 icon kicker tone lucid alert pros bold lang punctuat readm save tint band annotation banner body read word asid dir highlighter distinct author awar medium tooltip mdx titl info surfac another neutral script font 50m attention calloutvariant circlecheck fight lightbulb narrativ octagonalert rtl trianglealert runtim variantprop text typography form replac inlin warn adjacent aloud parallel"
     },
     {
       "name": "card",
@@ -4755,7 +4755,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "pagination navigation primitiv server rsc responsiv min viewport 320 ellipsis activ buttonvariant deprecat page isactiv paginationlink label current link nav aria icon chevron next bar previous hidden alia face prev presentation anchor outlin total 444px major paginationcontent paginationellipsis paginationitem paginationnext paginationprevious violat know disabl flex wrap comput item kept surviv 375px nine part sideway caller collaps nam site block call mark number shadcn push"
+      "terms": "pagination navigation primitiv server rsc responsiv min viewport 320 ellipsis activ buttonvariant deprecat page isactiv paginationlink label current link nav aria icon chevron next bar previous hidden alia face prev presentation anchor outlin total 444px major paginationcontent paginationellipsis paginationitem paginationnext paginationprevious violat know disabl flex wrap comput item kept surviv 375px nine part sideway caller collaps site nam block call mark number shadcn push"
     },
     {
       "name": "popover",
@@ -4957,7 +4957,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "read layout blog pattern server rsc responsiv min viewport 320 rail bar toc 4xl sticky content stick tocpopover fold readinglayout query column offset narrow scroll asid view container button tabl header data besid page head taller slot text 56rem margin long stay absent media narrowest sidebar main window variabl border split width landmark reader shown jump switch labell alon nav appear phon wide empty"
+      "terms": "read layout blog pattern server rsc responsiv min viewport 320 rail bar toc 4xl sticky content stick tocpopover fold readinglayout query column offset narrow scroll view container button tabl header data besid page head taller slot text 56rem margin long stay absent media narrowest sidebar main window variabl border split width landmark reader shown jump switch alon nav appear phon wide empty hold height"
     },
     {
       "name": "reading-strand",
@@ -5204,7 +5204,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "section foundation primitiv server rsc band divider container padd overlap comfortabl children none tone transition depth vertical spac ble card step rhythm inset philosophy brand five abut hasdivider ismut pull sectionvariant spacious straddl unit escap background footer size bottom full border page overlapp tight asid blur ride wrap except alway breakpoint chosen measur clear mobil header top desktop data another gutter hatch omit cover"
+      "terms": "section foundation primitiv server rsc band divider container padd overlap comfortabl children none tone transition depth vertical spac ble card step rhythm inset philosophy brand five abut hasdivider ismut pull sectionvariant spacious straddl unit escap background footer size bottom full border page asid overlapp tight blur ride wrap except alway breakpoint chosen measur clear mobil header top desktop data another gutter hatch omit cover"
     },
     {
       "name": "select",

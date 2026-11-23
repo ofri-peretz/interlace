@@ -43,6 +43,9 @@ describe('ReadingLayout', () => {
     const rail = container.querySelector('[data-slot="reading-layout-rail"]')!;
     const bar = container.querySelector('[data-slot="reading-layout-bar"]')!;
     expect(rail.className).toMatch(/\bhidden\b.*@4xl\/reading:block/);
+    // The Toc's named nav is the landmark; the rail adds no unnamed one.
+    expect(rail.tagName).toBe('DIV');
+    expect(screen.queryByRole('complementary')).toBeNull();
     expect(bar.className).toContain('@4xl/reading:hidden');
     // A container query, never a viewport breakpoint.
     expect(container.innerHTML).not.toMatch(/\b(md|lg|xl):(block|hidden|grid-cols)/);

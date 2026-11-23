@@ -27,7 +27,7 @@
  *         ├─ bar                    (div — data-slot="reading-layout-bar", sticky; hidden at @4xl)
  *         │   └─ TocPopover
  *         ├─ content                (div — data-slot="reading-layout-content", min-w-0)
- *         └─ rail                   (aside — data-slot="reading-layout-rail", shown at @4xl)
+ *         └─ rail                   (div — data-slot="reading-layout-rail", shown at @4xl)
  *             └─ div sticky         (scrolls on its own when taller than the screen)
  *                 └─ Toc
  *
@@ -46,7 +46,7 @@
  * | R14  | Declares min viewport   | `data-min-viewport` on the root + exported const         |
  * | R18  | Tailwind only           | Container query variants; the offset is a CSS variable   |
  * | R19  | Tokens only             | `bg-background`, `border-border`                         |
- * | R26  | A11y                    | Toc's `<nav>` landmark; `aside` labelled by it           |
+ * | R26  | A11y                    | Toc's named `<nav>` is the one landmark; the rail is a div |
  */
 
 import * as React from 'react';
@@ -100,13 +100,15 @@ function ReadingLayout({
           {children}
         </div>
         {hasToc ? (
-          <aside data-slot="reading-layout-rail" className="hidden @4xl/reading:block">
+          // A div, not an aside: the Toc's named <nav> is already the
+          // landmark, and an unnamed complementary one around it is noise.
+          <div data-slot="reading-layout-rail" className="hidden @4xl/reading:block">
             <div
               className="sticky top-[calc(var(--reading-offset,0px)+1.5rem)] max-h-[calc(100dvh-var(--reading-offset,0px)-3rem)] overflow-y-auto overscroll-contain"
             >
               <Toc items={toc} label={tocLabel} />
             </div>
-          </aside>
+          </div>
         ) : null}
       </div>
     </div>
