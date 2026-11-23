@@ -44,6 +44,25 @@ Four patterns. Each has a defined trigger and a defined ceiling.
 The defaults: **skeleton first, progressive second, spinner only when
 the reader pressed a button and is waiting on their own action.**
 
+### The busy button
+
+That last case is `<Button loading>`. The button keeps its place, its
+size and its focus while the action runs:
+
+- The label keeps its space but stops painting, and a spinner sits over
+  the middle in the label's colour. Nothing beside the button moves, and
+  the button does not shrink to a spinner.
+- It takes `aria-busy` and `aria-disabled`, never `disabled`: a focused
+  button that turns `disabled` drops focus to the page, and a keyboard
+  reader loses their place exactly when they are waiting.
+- Clicks are ignored while it loads, a form submit included, so a double
+  press cannot send twice.
+- Under reduced motion the spinner stands still. A still spinner still
+  reads as "working".
+
+Announce the outcome, not the wait: the result (a toast, an inline
+message, the next screen) is what a screen reader needs to hear.
+
 ---
 
 ## Skeleton rules

@@ -376,7 +376,7 @@
         "tier": "primitive",
         "client": true,
         "minViewport": null,
-        "loading": false,
+        "loading": true,
         "version": "2.1.0",
         "since": "1.0.0"
       }

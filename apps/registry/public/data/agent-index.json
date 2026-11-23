@@ -67,8 +67,8 @@
       "handled": 37
     },
     "loading": {
-      "none": 132,
-      "built-in": 32
+      "none": 131,
+      "built-in": 33
     },
     "minViewport": {
       "320": 100,
@@ -1178,7 +1178,7 @@
       "tier": "primitive",
       "rendering": "client",
       "minViewport": null,
-      "loadingState": false,
+      "loadingState": true,
       "keyboard": {
         "handled": true,
         "baseUi": "use-render",
@@ -1192,7 +1192,7 @@
           "aria-invalid"
         ],
         "motion": {
-          "driver": "none",
+          "driver": "css",
           "declaresPreference": true,
           "stylesheetCannotReach": false
         },
@@ -1203,7 +1203,8 @@
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
-        "class-variance-authority"
+        "class-variance-authority",
+        "lucide-react"
       ],
       "registryDependencies": [
         "cn",

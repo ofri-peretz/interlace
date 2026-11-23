@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T16:34:11.397Z",
+  "generatedAt": "2026-11-23T16:39:13.128Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -2237,7 +2237,28 @@
     },
     "button": {
       "sourcePath": "packages/ui/src/primitives/button.tsx",
-      "keyboard": null,
+      "keyboard": {
+        "storyId": "primitives-button--loading-flow",
+        "storyExport": "LoadingFlow",
+        "storyFile": "apps/storybook/src/stories/primitives/Button.stories.tsx",
+        "steps": [
+          {
+            "title": "Enter starts the save",
+            "keys": [
+              "Enter"
+            ]
+          },
+          {
+            "title": "Busy, same width, still focused",
+            "keys": []
+          },
+          {
+            "title": "A second press does nothing",
+            "keys": []
+          }
+        ],
+        "escapeLocked": false
+      },
       "contrast": [
         {
           "fg": "input",

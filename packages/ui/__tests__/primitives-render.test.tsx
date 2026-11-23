@@ -30,8 +30,8 @@
  */
 
 import * as React from 'react';
-import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { Alert, AlertDescription, AlertTitle } from '../src/primitives/alert.js';
 import { AspectRatio } from '../src/primitives/aspect-ratio.js';
@@ -480,6 +480,52 @@ describe('Button', () => {
   it('renders through a consumer element when given `render`', () => {
     const { container } = render(<Button render={<a href="/x" />}>link</Button>);
     expect(slot(container, 'button')!.tagName).toBe('A');
+  });
+
+  it('while loading: busy, still focusable, keeps its label, swallows clicks', () => {
+    const onClick = vi.fn();
+    const onSubmit = vi.fn((e: React.FormEvent) => e.preventDefault());
+    const { container } = render(
+      <form onSubmit={onSubmit}>
+        <Button type="submit" loading onClick={onClick}>
+          Save
+        </Button>
+      </form>,
+    );
+    const el = slot(container, 'button')!;
+    expect(el.getAttribute('aria-busy')).toBe('true');
+    expect(el.getAttribute('aria-disabled')).toBe('true');
+    expect(el.hasAttribute('disabled')).toBe(false);
+    expect(el.hasAttribute('data-loading')).toBe(true);
+    expect(el.textContent).toBe('Save');
+    expect(el.querySelector('[data-slot="button-spinner"]')!.getAttribute('aria-hidden')).toBe('true');
+    expect(el.className).toContain('[-webkit-text-fill-color:transparent]');
+    fireEvent.click(el);
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('loading with a render element: keeps the element and its href, adds the spinner', () => {
+    const { container } = render(
+      <Button render={<a href="/next" />} loading>
+        Go
+      </Button>,
+    );
+    const el = slot(container, 'button')!;
+    expect(el.tagName).toBe('A');
+    expect(el.getAttribute('href')).toBe('/next');
+    expect(el.getAttribute('aria-busy')).toBe('true');
+    expect(el.querySelector('[data-slot="button-spinner"]')).not.toBeNull();
+  });
+
+  it('not loading: no spinner, clicks pass through', () => {
+    const onClick = vi.fn();
+    const { container } = render(<Button onClick={onClick}>Save</Button>);
+    const el = slot(container, 'button')!;
+    expect(el.hasAttribute('aria-busy')).toBe(false);
+    expect(el.querySelector('[data-slot="button-spinner"]')).toBeNull();
+    fireEvent.click(el);
+    expect(onClick).toHaveBeenCalledOnce();
   });
 });
 

@@ -1,6 +1,8 @@
+import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { Button } from '@interlace/ui/button';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Button> = {
@@ -56,7 +58,7 @@ const meta: Meta<typeof Button> = {
     disabled: {
       control: 'boolean',
       description:
-        'Blocks pointer events and drops to 50% opacity. There is no `loading` variant — see the Loading story for the canon.',
+        'Blocks pointer events and drops to 50% opacity. For work in progress use `loading` instead, which keeps focus and size: see the Loading story.',
       table: { category: 'State', defaultValue: { summary: 'false' } },
     },
     type: {
@@ -83,6 +85,12 @@ const meta: Meta<typeof Button> = {
       description:
         "Replace the rendered element (Base UI render prop; shadcn's `asChild` equivalent). Pass `<Link href=\"…\" />` to keep the styling and get real link semantics.",
       table: { category: 'Slots', type: { summary: 'ReactElement | function' } },
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Busy: a spinner over the label, the same size and focus, `aria-busy` and `aria-disabled`, and clicks ignored until it is false again. Use it for the reader\'s own action (a submit, a save), per `LOADING_PHILOSOPHY.md`.',
+      table: { category: 'State', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
     },
     className: {
       control: 'text',
@@ -148,18 +156,71 @@ export const Dark: Story = {
 };
 
 /**
- * Composition pattern — Button has no `loading` variant; the canon is
- * `disabled + spinner child + accessible busy label`. The aria-live
- * region announces state change to screen readers per
- * `LOADING_PHILOSOPHY.md`.
+ * `loading` keeps the button's size and focus and says it is busy. Every
+ * variant keeps its own colours: the spinner takes the label's colour.
  */
 export const Loading: Story = {
   render: () => (
-    <Button disabled aria-busy="true" aria-live="polite">
-      <Loader2 className="animate-spin" aria-hidden />
-      <span>Installing…</span>
-    </Button>
+    <div className="flex flex-wrap items-center gap-3">
+      <Button loading>Saving changes</Button>
+      <Button variant="highlight" loading>
+        Highlight
+      </Button>
+      <Button variant="outline" loading>
+        <ArrowRight /> Outline
+      </Button>
+      <Button variant="secondary" size="sm" loading>
+        Small
+      </Button>
+      <Button size="icon" aria-label="Continue" loading>
+        <ArrowRight />
+      </Button>
+    </div>
   ),
+};
+
+/**
+ * Press Save: the button goes busy without moving, keeps keyboard focus,
+ * and ignores a second press until the work is done.
+ */
+export const LoadingFlow: Story = {
+  args: { onClick: fn() },
+  render: function Render({ onClick }) {
+    const [saving, setSaving] = React.useState(false);
+    return (
+      <Button
+        loading={saving}
+        onClick={(event) => {
+          onClick?.(event);
+          setSaving(true);
+        }}
+      >
+        Save
+      </Button>
+    );
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const button = within(canvasElement).getByRole('button', { name: 'Save' });
+    const width = button.getBoundingClientRect().width;
+
+    await step('Enter starts the save', async () => {
+      button.focus();
+      await userEvent.keyboard('{Enter}');
+      expect(args.onClick).toHaveBeenCalledOnce();
+    });
+
+    await step('Busy, same width, still focused', async () => {
+      expect(button.getAttribute('aria-busy')).toBe('true');
+      expect(button.getAttribute('aria-disabled')).toBe('true');
+      expect(button.getBoundingClientRect().width).toBe(width);
+      expect(document.activeElement).toBe(button);
+    });
+
+    await step('A second press does nothing', async () => {
+      await userEvent.click(button);
+      expect(args.onClick).toHaveBeenCalledOnce();
+    });
+  },
 };
 
 export const RTL: Story = {
