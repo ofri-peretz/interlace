@@ -2159,7 +2159,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.0.1",
         "since": null
       }
     },
@@ -2197,6 +2197,24 @@
         "loading": false,
         "version": "2.1.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "guess-reveal",
+      "type": "registry:ui",
+      "title": "Guess Reveal",
+      "description": "A one-question quiz: a question, two to four answers as buttons, and an explanation that opens once the reader picks. The pick is marked right or wrong with a short movement, the right answer is always shown, and the consumer hears about it through…",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -2465,7 +2483,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.0.1",
         "since": null
       }
     },

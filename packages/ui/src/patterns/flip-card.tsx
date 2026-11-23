@@ -101,18 +101,26 @@ function FlipCard({
   const backId = React.useId();
   const frontButton = React.useRef<HTMLButtonElement>(null);
   const backButton = React.useRef<HTMLButtonElement>(null);
-  const moveFocus = React.useRef(false);
+  // The side a press asked for, kept only for the render that press causes.
+  // A controlled parent that refuses the turn and later changes `flipped` for
+  // its own reasons must not pull focus, so the request expires once the
+  // press has been handled.
+  const pendingFocus = React.useRef<boolean | null>(null);
 
   const turn = (next: boolean) => {
-    moveFocus.current = true;
+    pendingFocus.current = next;
     if (flippedProp === undefined) setUncontrolled(next);
     onFlippedChange?.(next);
+    setTimeout(() => {
+      pendingFocus.current = null;
+    }, 0);
   };
 
   // After a turn, focus follows to the face now showing.
   React.useEffect(() => {
-    if (!moveFocus.current) return;
-    moveFocus.current = false;
+    const asked = pendingFocus.current;
+    pendingFocus.current = null;
+    if (asked !== flipped) return;
     (flipped ? backButton : frontButton).current?.focus({
       preventScroll: true,
     });
@@ -123,7 +131,12 @@ function FlipCard({
       data-slot="flip-card"
       data-min-viewport={String(MIN_VIEWPORT)}
       data-flipped={flipped ? "" : undefined}
-      className={cn("group/flip min-w-0 perspective-[1600px]", className)}
+      // h-full: in a grid row the card fills its cell, so cards with
+      // different amounts of text line up. Outside a sized parent it is auto.
+      className={cn(
+        "group/flip h-full min-w-0 perspective-[1600px]",
+        className,
+      )}
       {...props}
     >
       <div
