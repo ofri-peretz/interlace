@@ -70,7 +70,8 @@ const featuredIconVariants = cva(
           "text-primary bg-[color-mix(in_oklab,var(--primary)_12%,var(--background))] ring-[color-mix(in_oklab,var(--primary)_6%,var(--background))]",
         highlight:
           "bg-highlight text-highlight-foreground ring-[color-mix(in_oklab,var(--highlight)_25%,var(--background))]",
-        neutral: "bg-muted text-foreground border-border ring-muted/60 border",
+        neutral:
+          "bg-muted text-foreground border-border ring-[color-mix(in_oklab,var(--muted)_60%,var(--background))] border",
         inverse:
           "bg-foreground text-background ring-[color-mix(in_oklab,var(--foreground)_10%,var(--background))]",
       },
