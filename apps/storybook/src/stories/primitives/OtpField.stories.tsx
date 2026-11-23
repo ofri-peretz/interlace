@@ -49,7 +49,7 @@ export const Default: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     await step("typing moves through the boxes", async () => {
-      await userEvent.click(canvas.getByLabelText("Sign-in code"));
+      await userEvent.click(canvas.getByRole("textbox", { name: "Sign-in code" }));
       await userEvent.keyboard("4821");
       await expect(canvas.getByLabelText("Character 5 of 6")).toHaveFocus();
     });
