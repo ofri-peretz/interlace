@@ -1367,6 +1367,18 @@
     "previewDark": "foundations-radius--dark",
     "skeleton": null
   },
+  "reading-layout": {
+    "title": "Blocks/ReadingLayout",
+    "storyIds": [
+      "blocks-readinglayout--default",
+      "blocks-readinglayout--narrow-column",
+      "blocks-readinglayout--below-sticky-header",
+      "blocks-readinglayout--without-contents"
+    ],
+    "preview": "blocks-readinglayout--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "reading-strand": {
     "title": "Primitives/ReadingStrand",
     "storyIds": [
