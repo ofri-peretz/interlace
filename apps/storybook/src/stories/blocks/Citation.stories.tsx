@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { Citation } from '@interlace/ui/patterns/citation';
 
 // Placeholder sources: the publishers are fictional and every URL points at
@@ -127,6 +127,11 @@ export const Keyboard: Story = {
     const body = within(canvasElement.ownerDocument.body);
     await expect(await body.findByText('The Example Gazette')).toBeInTheDocument();
     await userEvent.keyboard('{Escape}');
-    await expect(trigger).toHaveFocus();
+    // Wait for the popup to unmount: while it is open, Base UI keeps focus
+    // guards beside the trigger, and the axe pass runs after this function.
+    await waitFor(() =>
+      expect(canvasElement.ownerDocument.querySelector('[data-slot="citation-content"]')).toBeNull(),
+    );
+    await waitFor(() => expect(trigger).toHaveFocus());
   },
 };
