@@ -2203,6 +2203,20 @@
     "previewDark": "primitives-toggle--dark",
     "skeleton": null
   },
+  "toolbar": {
+    "title": "Primitives/Toolbar",
+    "storyIds": [
+      "primitives-toolbar--default",
+      "primitives-toolbar--keyboard-flow",
+      "primitives-toolbar--vertical",
+      "primitives-toolbar--with-input-and-link",
+      "primitives-toolbar--rtl",
+      "primitives-toolbar--dark"
+    ],
+    "preview": "primitives-toolbar--default",
+    "previewDark": "primitives-toolbar--dark",
+    "skeleton": null
+  },
   "tooltip": {
     "title": "Primitives/Tooltip",
     "storyIds": [

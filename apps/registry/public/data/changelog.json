@@ -507,6 +507,17 @@
           "source": ".changeset/timeline.md"
         },
         {
+          "summary": "New Toolbar: a row of controls that is one stop in the Tab order. Tab enters on the control used last and the next Tab leaves the whole bar; inside, the arrow keys move between controls, Home and End jump to the ends, and focus wraps, so a keyboard user no longer Tabs through every button of a formatting bar or a table's bulk actions. Built on Base UI's Toolbar: buttons take Button's `variant` and `size` (ghost, icon-sm by default), any trigger joins through `render` (`<ToolbarButton render={<Toggle />} />`), a disabled button stays reachable so its label can be read, and the bar wraps at 320px. Parts: Toolbar, ToolbarButton, ToolbarLink, ToolbarGroup, ToolbarSeparator, ToolbarInput.",
+          "components": [
+            "toolbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/toolbar.md"
+        },
+        {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
           "components": [
             "weave-texture"

@@ -1408,6 +1408,24 @@
       }
     },
     {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "title": "Toolbar",
+      "description": "A row of controls that acts as ONE stop in the Tab order: Tab enters the toolbar on its last-focused control and leaves it on the next Tab, and the arrow keys move between the controls inside, Home and End jump to the ends, and focus wraps. A formatting…",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
