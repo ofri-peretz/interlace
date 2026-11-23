@@ -13,35 +13,24 @@
  *   HeroCosmic                       (div — data-slot="hero-cosmic", min-viewport 320)
  *     └─ div                         (min-h-screen gradient, text-hero-foreground)
  *         ├─ div aria-hidden         (data-slot="hero-cosmic-effects")
- *         │   ├─ StarsBackground     (canvas)
- *         │   ├─ ShootingStars       (svg)
- *         │   └─ Meteors             (CSS-animated spans)
+ *         │   └─ Starfield           (one canvas: stars, shooting stars, meteors)
  *         └─ Container size=content  (data-slot="hero-cosmic-body")
  *             ├─ eyebrow / h1 / tagline
  *             ├─ actions             (primaryCta + secondaryCta)
  *             └─ footer
  *
- * ## The effect layer can legitimately never appear
+ * ## Colours
  *
- * `useEffectColors` reads `--hero-star`, `--hero-trail` and `--hero-meteor`
- * off `document.documentElement` on mount and returns `null` until all three
- * resolve non-empty. While it is `null` no decorative layer renders at all —
- * which also means a consumer who imports this component but not
- * `styles/brand/interlace.css` gets the gradient and the copy and no stars,
- * silently and permanently. That is deliberate: the components concatenate an
- * alpha suffix onto the colour (`${meteorColor}80`) and paint to `<canvas>`,
- * neither of which can consume a `var()` reference, and painting an arbitrary
- * fallback colour over someone's brand is the worse failure.
+ * The sky paints with the `--hero-star` and `--hero-meteor` brand tokens.
+ * `Starfield` resolves them through the cascade itself, so a theme or a
+ * forked palette changes the stars with no prop here.
  *
  * ## Motion
  *
- * This file contains no `useReducedMotion` call — the contract is delegated to
- * the three children in `aceternity/stars-background.tsx`, each of which reads
- * the preference itself. Under `prefers-reduced-motion: reduce` the starfield
- * paints one static frame (no twinkle loop) and `ShootingStars` and `Meteors`
- * both `return null`. So a reduced-motion reader sees a still starfield on the
- * gradient and nothing moving. All three are JS-gated; the CSS reset in
- * `styles/page/preflight.css` reaches only the meteor keyframe.
+ * This file contains no `useReducedMotion` call: `Starfield` reads the
+ * preference itself. Under `prefers-reduced-motion: reduce` it paints the
+ * stars once, with no twinkle, shooting stars or meteors, and requests no
+ * animation frame.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -56,67 +45,20 @@
  * | R6   | data-slot on every part     | `hero-cosmic` / `-effects` / `-headline` / `-cta` / …  |
  * | R7   | className + rest + ref      | `cn(...)`, `{...props}`, `ref` on the root             |
  * | R10  | Composition seam            | `HeroCosmicCTA.render` clones any element as the button |
- * | R19  | Tokens only                 | effect colours resolve from `--hero-*` — no hex here   |
+ * | R19  | Tokens only                 | Starfield paints `--hero-star` / `--hero-meteor`        |
  * | R21  | Layout primitive            | `<Container size="content">`, not open-coded `mx-auto` |
  * | R23  | CLS=0                       | effects are `absolute` + `aria-hidden`; copy never moves |
- * | R25  | Client component            | canvas + `getComputedStyle` need the DOM               |
+ * | R25  | Client component            | Starfield's canvas needs the DOM                       |
  */
 
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { Container } from '../primitives/container.js';
-import {
-  StarsBackground,
-  ShootingStars,
-  Meteors,
-} from '../aceternity/stars-background.js';
+import { Starfield } from '../effects/starfield.js';
 
 /** Smallest viewport this pattern is laid out for. */
 export const MIN_VIEWPORT = 320 as const;
-
-/**
- * Brand tokens the decorative layer paints with, in `--custom-property`
- * form. See `styles/brand/interlace.css` (`@layer interlace.brand`).
- *
- * These are read at runtime instead of passed as `var(--hero-star)`
- * because the vendored effect components concatenate an alpha suffix onto
- * the value (`${meteorColor}80`) before handing it to `<canvas>` /
- * `linear-gradient()`. A `var()` reference can't carry that suffix, and
- * canvas ignores the cascade entirely — so the component resolves the
- * computed value once and passes concrete colours down. Keeping the hex
- * exclusively in CSS is what lets a consumer fork the hero's palette
- * without patching this file (R19).
- */
-const EFFECT_TOKENS = ['--hero-star', '--hero-trail', '--hero-meteor'] as const;
-
-type EffectColors = { star: string; trail: string; meteor: string };
-
-/**
- * Resolve the three effect tokens against the mounted DOM.
- *
- * Returns `null` until resolution completes. Callers render no decorative
- * layer while it is null — that is deliberate rather than a flash-guard
- * hack: the effects are `<canvas>` + animation that cannot paint during
- * SSR anyway, so gating them on the tokens costs nothing visually and
- * removes any need for a hard-coded fallback colour in this file.
- */
-function useEffectColors(): EffectColors | null {
-  const [colors, setColors] = React.useState<EffectColors | null>(null);
-
-  React.useEffect(() => {
-    const computed = getComputedStyle(document.documentElement);
-    const [star, trail, meteor] = EFFECT_TOKENS.map((token) =>
-      computed.getPropertyValue(token).trim(),
-    );
-    // A consumer that imported the components but not the stylesheet gets
-    // empty strings. Skip the decorative layer rather than painting an
-    // arbitrary colour on top of their brand.
-    if (star && trail && meteor) setColors({ star, trail, meteor });
-  }, []);
-
-  return colors;
-}
 
 export interface HeroCosmicCTA {
   label: React.ReactNode;
@@ -129,26 +71,14 @@ export interface HeroCosmicCTA {
 export interface HeroCosmicEffects {
   /** Stars per square pixel. @default 0.0002 */
   starDensity?: number;
-  /** Share of stars that twinkle, 0–1. @default 0.8 */
+  /** Share of stars that twinkle, 0 to 1. @default 0.8 */
   twinkleProbability?: number;
-  /** Slowest twinkle cycle, seconds. @default 0.4 */
-  minTwinkleSpeed?: number;
-  /** Fastest twinkle cycle, seconds. @default 1.2 */
-  maxTwinkleSpeed?: number;
-  /** Slowest shooting-star travel speed. @default 10 */
-  shootingMinSpeed?: number;
-  /** Fastest shooting-star travel speed. @default 35 */
-  shootingMaxSpeed?: number;
-  /** Shortest gap between shooting stars, ms. @default 600 */
-  shootingMinDelay?: number;
-  /** Longest gap between shooting stars, ms. @default 2500 */
-  shootingMaxDelay?: number;
-  /** Meteors on screen at once. @default 3 */
+  /** Seconds between shooting stars (shortest, longest), or `false`. @default [2, 6] */
+  shootingStars?: readonly [number, number] | false;
+  /** Meteors in the sky at once. @default 3 */
   meteorCount?: number;
-  /** Shortest meteor traversal, seconds. @default 12 */
-  meteorMinDuration?: number;
-  /** Longest meteor traversal, seconds. @default 30 */
-  meteorMaxDuration?: number;
+  /** Seconds a meteor takes to cross (shortest, longest). @default [12, 30] */
+  meteorDuration?: readonly [number, number];
 }
 
 export interface HeroCosmicProps
@@ -197,15 +127,9 @@ function renderCta(cta: HeroCosmicCTA | undefined) {
 const EFFECT_DEFAULTS: Required<HeroCosmicEffects> = {
   starDensity: 0.0002,
   twinkleProbability: 0.8,
-  minTwinkleSpeed: 0.4,
-  maxTwinkleSpeed: 1.2,
-  shootingMinSpeed: 10,
-  shootingMaxSpeed: 35,
-  shootingMinDelay: 600,
-  shootingMaxDelay: 2500,
+  shootingStars: [2, 6],
   meteorCount: 3,
-  meteorMinDuration: 12,
-  meteorMaxDuration: 30,
+  meteorDuration: [12, 30],
 };
 
 /**
@@ -229,7 +153,6 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
     ref,
   ) {
     const e = { ...EFFECT_DEFAULTS, ...effects };
-    const colors = useEffectColors();
 
     return (
       <div
@@ -250,38 +173,22 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
             don't invert. `text-hero-foreground` here is what every nested
             slot inherits, so the copy stays 16.4:1 in light mode too. */}
         <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-primary/20 via-hero-surface to-hero-surface-deep text-hero-foreground">
-          {colors ? (
-            <div
-              aria-hidden
-              data-slot="hero-cosmic-effects"
-              data-testid={`${testId}-effects`}
-              className="pointer-events-none absolute inset-0"
-            >
-              <StarsBackground
-                starDensity={e.starDensity}
-                allStarsTwinkle
-                twinkleProbability={e.twinkleProbability}
-                minTwinkleSpeed={e.minTwinkleSpeed}
-                maxTwinkleSpeed={e.maxTwinkleSpeed}
-              />
-              <ShootingStars
-                minSpeed={e.shootingMinSpeed}
-                maxSpeed={e.shootingMaxSpeed}
-                minDelay={e.shootingMinDelay}
-                maxDelay={e.shootingMaxDelay}
-                starColor={colors.star}
-                trailColor={colors.trail}
-                starWidth={10}
-                starHeight={1}
-              />
-              <Meteors
-                number={e.meteorCount}
-                meteorColor={colors.meteor}
-                minDuration={e.meteorMinDuration}
-                maxDuration={e.meteorMaxDuration}
-              />
-            </div>
-          ) : null}
+          <div
+            aria-hidden
+            data-slot="hero-cosmic-effects"
+            data-testid={`${testId}-effects`}
+            className="pointer-events-none absolute inset-0"
+          >
+            <Starfield
+              density={e.starDensity}
+              twinkle={e.twinkleProbability}
+              shootingStars={e.shootingStars}
+              meteors={e.meteorCount}
+              meteorDuration={e.meteorDuration}
+              starColor="var(--hero-star)"
+              streakColor="var(--hero-meteor)"
+            />
+          </div>
 
           <Container
             size="content"

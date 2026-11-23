@@ -29,8 +29,8 @@
   },
   "facets": {
     "tier": {
-      "primitive": 67,
-      "pattern": 40,
+      "primitive": 66,
+      "pattern": 41,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -39,19 +39,19 @@
       "theme": 3
     },
     "category": {
-      "primitive": 67,
-      "pattern": 40,
+      "primitive": 66,
+      "pattern": 41,
       "blog": 30,
       "foundation": 22,
-      "decorative": 21,
       "data": 21,
+      "decorative": 20,
       "effect": 17,
       "form": 16,
       "feedback": 13,
       "template": 13,
       "navigation": 11,
+      "marketing": 10,
       "overlay": 9,
-      "marketing": 9,
       "chart": 8,
       "util": 5,
       "a11y": 4,
@@ -59,8 +59,8 @@
       "theme": 3
     },
     "rendering": {
-      "server": 88,
-      "client": 68
+      "server": 92,
+      "client": 64
     },
     "keyboard": {
       "none": 121,
@@ -71,10 +71,10 @@
       "built-in": 32
     },
     "minViewport": {
-      "320": 89,
+      "320": 90,
       "480": 7,
       "768": 1,
-      "inherited": 59
+      "inherited": 58
     }
   },
   "items": [
@@ -943,161 +943,6 @@
       "docs": "https://ds.interlace.tools/c/avatar"
     },
     {
-      "name": "background-beams-with-collision",
-      "title": "Background Beams With Collision",
-      "type": "registry:ui",
-      "summary": "A hero surface where thin vertical beams fall from the top and burst into a ten-particle explosion when they reach the strip along the bottom. Your children render above them on a `z-10` layer.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "BackgroundBeamsWithCollision"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/aceternity/background-beams-with-collision.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/background-beams-with-collision.json",
-      "item": "https://ds.interlace.tools/r/background-beams-with-collision.json",
-      "docs": "https://ds.interlace.tools/c/background-beams-with-collision"
-    },
-    {
-      "name": "background-gradient-animation",
-      "title": "Background Gradient Animation",
-      "type": "registry:ui",
-      "summary": "The \"lava lamp\" surface: five radial-gradient blobs orbiting behind an SVG goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth blob that eases toward the pointer.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "BackgroundGradientAnimation"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/aceternity/background-gradient-animation.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/background-gradient-animation.json",
-      "item": "https://ds.interlace.tools/r/background-gradient-animation.json",
-      "docs": "https://ds.interlace.tools/c/background-gradient-animation"
-    },
-    {
-      "name": "background-lines",
-      "title": "Background Lines",
-      "type": "registry:ui",
-      "summary": "A full-bleed backdrop of twelve long, sweeping SVG curves that draw themselves in and fade out on a loop, each staggered by a fixed delay so the field never pulses in unison.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "BackgroundLines"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/aceternity/background-lines.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/background-lines.json",
-      "item": "https://ds.interlace.tools/r/background-lines.json",
-      "docs": "https://ds.interlace.tools/c/background-lines"
-    },
-    {
       "name": "badge",
       "title": "Badge",
       "type": "registry:ui",
@@ -1850,55 +1695,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json",
       "item": "https://ds.interlace.tools/r/claim-card.json",
       "docs": "https://ds.interlace.tools/c/claim-card"
-    },
-    {
-      "name": "cloud-particles",
-      "title": "Cloud Particles",
-      "type": "registry:ui",
-      "summary": "Volumetric drifting clouds as a decorative backdrop. Each cloud is a radial-gradient ellipse pushed through a five-pass SVG turbulence filter — body, cool underside, soft shadow, deep shadow — and translated across `130vw`.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "CloudParticles"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/aceternity/cloud-particles.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/cloud-particles.json",
-      "item": "https://ds.interlace.tools/r/cloud-particles.json",
-      "docs": "https://ds.interlace.tools/c/cloud-particles"
     },
     {
       "name": "cn",
@@ -2750,6 +2546,55 @@
       "docs": "https://ds.interlace.tools/c/data-table"
     },
     {
+      "name": "decode-text",
+      "title": "Decode Text",
+      "type": "registry:ui",
+      "summary": "DecodeText — micro-labels resolve from glyph noise into their text.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DecodeText"
+      ],
+      "version": "2.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/decode-text.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/decode-text.json",
+      "item": "https://ds.interlace.tools/r/decode-text.json",
+      "docs": "https://ds.interlace.tools/c/decode-text"
+    },
+    {
       "name": "delta",
       "title": "Delta",
       "type": "registry:ui",
@@ -3437,72 +3282,18 @@
       "docs": "https://ds.interlace.tools/c/figure"
     },
     {
-      "name": "flip-words",
-      "title": "Flip Words",
+      "name": "focus-grid",
+      "title": "Focus Grid",
       "type": "registry:ui",
-      "summary": "A headline word that flips through a list. Each replacement enters letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs and scales away.",
+      "summary": "A grid of picture cards where the one you point at or tab to stays bright and the others step back. It helps a reader compare a few visual options (destinations, case studies, chapters) without the grid feeling busy.",
       "topics": [],
       "categories": [
-        "decorative",
-        "effect"
+        "marketing",
+        "pattern"
       ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "FlipWords"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/aceternity/flip-words.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/flip-words.json",
-      "item": "https://ds.interlace.tools/r/flip-words.json",
-      "docs": "https://ds.interlace.tools/c/flip-words"
-    },
-    {
-      "name": "focus-cards",
-      "title": "Focus Cards",
-      "type": "registry:ui",
-      "summary": "A grid that spotlights one card at a time: pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs. Real list semantics — `ul` › `li` › `article` — and a controlled or uncontrolled active index.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
       "loadingState": false,
       "keyboard": {
         "handled": false,
@@ -3522,23 +3313,21 @@
         "focusRing": false
       },
       "exports": [
-        "FocusCard",
-        "FocusCards"
+        "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
-      "since": "1.0.0",
+      "version": "1.0.0",
+      "since": null,
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "interlace-base",
-        "use-reduced-motion"
+        "interlace-base"
       ],
       "installsTo": [
-        "components/ui/aceternity/focus-cards.tsx"
+        "components/ui/patterns/focus-grid.tsx"
       ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/focus-cards.json",
-      "item": "https://ds.interlace.tools/r/focus-cards.json",
-      "docs": "https://ds.interlace.tools/c/focus-cards"
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/focus-grid.json",
+      "item": "https://ds.interlace.tools/r/focus-grid.json",
+      "docs": "https://ds.interlace.tools/c/focus-grid"
     },
     {
       "name": "focus-ring",
@@ -3763,6 +3552,55 @@
       "docs": "https://ds.interlace.tools/c/grade-badge"
     },
     {
+      "name": "gradient-mesh",
+      "title": "Gradient Mesh",
+      "type": "registry:ui",
+      "summary": "A soft, slowly shifting field of colour for a hero or a feature band. A few large blurred glows, each a theme colour, drift on long loops over a base surface, so the band feels alive without anything a reader has to watch. Content goes in `children` and…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "GradientMesh"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/gradient-mesh.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/gradient-mesh.json",
+      "item": "https://ds.interlace.tools/r/gradient-mesh.json",
+      "docs": "https://ds.interlace.tools/c/gradient-mesh"
+    },
+    {
       "name": "grid-pattern",
       "title": "Grid Pattern",
       "type": "registry:ui",
@@ -3905,7 +3743,7 @@
         "cn",
         "container",
         "interlace-base",
-        "stars-background"
+        "starfield"
       ],
       "installsTo": [
         "components/ui/patterns/hero-cosmic.tsx"
@@ -3913,6 +3751,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/hero-cosmic.json",
       "item": "https://ds.interlace.tools/r/hero-cosmic.json",
       "docs": "https://ds.interlace.tools/c/hero-cosmic"
+    },
+    {
+      "name": "hero-strand",
+      "title": "Hero Strand",
+      "type": "registry:ui",
+      "summary": "HeroStrand — the thread at page scale: one strand-a ribbon drawn across a hero section, optionally crossed by the strand-b counter. Completes the four scales of \"One thread, every scale\" (micro: DecodeText, component: InterlaceWeave, page: TimelineMap…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "HeroStrand"
+      ],
+      "version": "2.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/effects/hero-strand.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/hero-strand.json",
+      "item": "https://ds.interlace.tools/r/hero-strand.json",
+      "docs": "https://ds.interlace.tools/c/hero-strand"
     },
     {
       "name": "hero",
@@ -4224,6 +4112,54 @@
       "docs": "https://ds.interlace.tools/c/interlace-foundation"
     },
     {
+      "name": "interlace-weave",
+      "title": "Interlace Weave",
+      "type": "registry:ui",
+      "summary": "InterlaceWeave — the brand gesture as an interaction signature.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "InterlaceWeave"
+      ],
+      "version": "2.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/effects/interlace-weave.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-weave.json",
+      "item": "https://ds.interlace.tools/r/interlace-weave.json",
+      "docs": "https://ds.interlace.tools/c/interlace-weave"
+    },
+    {
       "name": "label",
       "title": "Label",
       "type": "registry:ui",
@@ -4380,6 +4316,63 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json",
       "item": "https://ds.interlace.tools/r/layout-starter.json",
       "docs": "https://ds.interlace.tools/c/layout-starter"
+    },
+    {
+      "name": "light-beam",
+      "title": "Light Beam",
+      "type": "registry:ui",
+      "summary": "A soft cone of light falling into a dark section from an edge, the way a stage light picks out a speaker. It draws the eye to the headline under it and gives a flat surface depth. It does not move: the light is part of the set, not an event.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "LightBeamOrigin",
+          "values": [
+            "top-left",
+            "top",
+            "top-right"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "LightBeam"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/effects/light-beam.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/light-beam.json",
+      "item": "https://ds.interlace.tools/r/light-beam.json",
+      "docs": "https://ds.interlace.tools/c/light-beam"
     },
     {
       "name": "lint-playground",
@@ -4547,52 +4540,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/mdx-starter.json",
       "item": "https://ds.interlace.tools/r/mdx-starter.json",
       "docs": "https://ds.interlace.tools/c/mdx-starter"
-    },
-    {
-      "name": "meteors",
-      "title": "Meteors",
-      "type": "registry:ui",
-      "summary": "Aceternity-style falling-meteor effect with per-meteor variety: viewport- distributed origins (some above the fold), trail lengths randomized between 50–140px, opacities 0.45–1.0, durations 3–9s. The variety is the difference between \"meteors\" and \"looks…",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "primitive"
-      ],
-      "tier": "primitive",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [],
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/meteors.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/meteors.json",
-      "item": "https://ds.interlace.tools/r/meteors.json",
-      "docs": "https://ds.interlace.tools/c/meteors"
     },
     {
       "name": "meter-scale",
@@ -5913,6 +5860,55 @@
       "docs": "https://ds.interlace.tools/c/related-posts"
     },
     {
+      "name": "rotating-text",
+      "title": "Rotating Text",
+      "type": "registry:ui",
+      "summary": "One word in a headline that changes every few seconds (\"Build for [teams / founders / students]\"). It is a familiar pattern done carefully: the line never jumps, a screen reader hears the sentence once, and the reader can stop it.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "RotatingText"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/rotating-text.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/rotating-text.json",
+      "item": "https://ds.interlace.tools/r/rotating-text.json",
+      "docs": "https://ds.interlace.tools/c/rotating-text"
+    },
+    {
       "name": "scorecard-row",
       "title": "Scorecard Row",
       "type": "registry:ui",
@@ -7030,6 +7026,64 @@
       "docs": "https://ds.interlace.tools/c/skip-link"
     },
     {
+      "name": "sky-backdrop",
+      "title": "Sky Backdrop",
+      "type": "registry:ui",
+      "summary": "A calm daytime sky for a friendly hero: a soft gradient, a warm sun glow in one corner, and a few clouds drifting across. It suits pages that want warmth rather than drama, the light counterpart to `Starfield`.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "SkySun",
+          "values": [
+            "top-left",
+            "top-right",
+            "none"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "SkyBackdrop"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/sky-backdrop.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/sky-backdrop.json",
+      "item": "https://ds.interlace.tools/r/sky-backdrop.json",
+      "docs": "https://ds.interlace.tools/c/sky-backdrop"
+    },
+    {
       "name": "slider",
       "title": "Slider",
       "type": "registry:ui",
@@ -7156,59 +7210,6 @@
       "docs": "https://ds.interlace.tools/c/sparkline"
     },
     {
-      "name": "spotlight",
-      "title": "Spotlight",
-      "type": "registry:ui",
-      "summary": "The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "Spotlight"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/aceternity/spotlight.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/spotlight.json",
-      "item": "https://ds.interlace.tools/r/spotlight.json",
-      "docs": "https://ds.interlace.tools/c/spotlight"
-    },
-    {
       "name": "stack",
       "title": "Stack",
       "type": "registry:ui",
@@ -7319,10 +7320,10 @@
       "docs": "https://ds.interlace.tools/c/stance-list"
     },
     {
-      "name": "stars-background",
-      "title": "Stars Background",
+      "name": "starfield",
+      "title": "Starfield",
       "type": "registry:ui",
-      "summary": "Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.",
+      "summary": "A night sky behind a hero: still stars, a share of them breathing, an occasional shooting star and a few slow meteors. Everything is painted on ONE `<canvas>` driven by ONE animation frame loop, so the whole sky costs a single layer and a single callback…",
       "topics": [],
       "categories": [
         "decorative",
@@ -7341,23 +7342,19 @@
       "states": [],
       "a11y": {
         "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
+        "aria": [],
         "motion": {
-          "driver": "both",
+          "driver": "js",
           "declaresPreference": true,
           "stylesheetCannotReach": true
         },
         "focusRing": false
       },
       "exports": [
-        "Meteors",
-        "ShootingStars",
-        "StarsBackground"
+        "Starfield"
       ],
-      "version": "2.0.0",
-      "since": "1.0.0",
+      "version": "1.0.0",
+      "since": null,
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -7365,11 +7362,11 @@
         "use-reduced-motion"
       ],
       "installsTo": [
-        "components/ui/aceternity/stars-background.tsx"
+        "components/ui/effects/starfield.tsx"
       ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/stars-background.json",
-      "item": "https://ds.interlace.tools/r/stars-background.json",
-      "docs": "https://ds.interlace.tools/c/stars-background"
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/starfield.json",
+      "item": "https://ds.interlace.tools/r/starfield.json",
+      "docs": "https://ds.interlace.tools/c/starfield"
     },
     {
       "name": "stat-card",
@@ -7627,57 +7624,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/stats-template.json",
       "item": "https://ds.interlace.tools/r/stats-template.json",
       "docs": "https://ds.interlace.tools/c/stats-template"
-    },
-    {
-      "name": "sunny-background",
-      "title": "Sunny Background",
-      "type": "registry:ui",
-      "summary": "A daylight sky you drop behind hero or section content: a two-stop sky gradient with a haze wash, a sun disc (corona → glow → overexposed core → slowly rotating conic rays → four lens flares), a golden-hour horizon band and a depth vignette.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "SunnyBackground"
-      ],
-      "version": "3.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/aceternity/sunny-background.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/sunny-background.json",
-      "item": "https://ds.interlace.tools/r/sunny-background.json",
-      "docs": "https://ds.interlace.tools/c/sunny-background"
     },
     {
       "name": "switch",
@@ -8276,6 +8222,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/theme.json",
       "item": "https://ds.interlace.tools/r/theme.json",
       "docs": "https://ds.interlace.tools/c/theme"
+    },
+    {
+      "name": "thread-lines",
+      "title": "Thread Lines",
+      "type": "registry:ui",
+      "summary": "Interlace's own backdrop: a loose bundle of threads running across a section, crossing and parting the way strands do in a weave, with a small glint of light travelling along each one. It is the brand mark (two strands, interlaced) at the scale of a page.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "ThreadLines"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/thread-lines.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/thread-lines.json",
+      "item": "https://ds.interlace.tools/r/thread-lines.json",
+      "docs": "https://ds.interlace.tools/c/thread-lines"
     },
     {
       "name": "time-series",

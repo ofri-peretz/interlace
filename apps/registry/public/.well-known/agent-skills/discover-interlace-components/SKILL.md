@@ -34,7 +34,7 @@ jq '.items[] | select(.keyboard.keys | length > 0) | {name, keys: .keyboard.keys
 
 # models an explicit state union — i.e. absence is a value, not a null check
 jq '.items[] | select(.states | length > 0) | {name, states: [.states[].name]}' agent-index.json
-# → 30 item(s)
+# → 32 item(s)
 
 # safe down to a 320px viewport
 jq '.items[] | select(.minViewport == null or .minViewport <= 320) | .name' agent-index.json

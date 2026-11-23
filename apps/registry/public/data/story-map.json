@@ -234,42 +234,6 @@
     "previewDark": "primitives-avatar--dark",
     "skeleton": "primitives-avatar--loading"
   },
-  "background-beams-with-collision": {
-    "title": "Aceternity/BackgroundBeamsWithCollision",
-    "storyIds": [
-      "aceternity-backgroundbeamswithcollision--default",
-      "aceternity-backgroundbeamswithcollision--hidden-collision-surface",
-      "aceternity-backgroundbeamswithcollision--custom-beams",
-      "aceternity-backgroundbeamswithcollision--dark"
-    ],
-    "preview": "aceternity-backgroundbeamswithcollision--default",
-    "previewDark": "aceternity-backgroundbeamswithcollision--dark",
-    "skeleton": null
-  },
-  "background-gradient-animation": {
-    "title": "Aceternity/BackgroundGradientAnimation",
-    "storyIds": [
-      "aceternity-backgroundgradientanimation--default",
-      "aceternity-backgroundgradientanimation--calm-surface",
-      "aceternity-backgroundgradientanimation--custom-palette",
-      "aceternity-backgroundgradientanimation--dark"
-    ],
-    "preview": "aceternity-backgroundgradientanimation--default",
-    "previewDark": "aceternity-backgroundgradientanimation--dark",
-    "skeleton": null
-  },
-  "background-lines": {
-    "title": "Aceternity/BackgroundLines",
-    "storyIds": [
-      "aceternity-backgroundlines--default",
-      "aceternity-backgroundlines--slow-loop",
-      "aceternity-backgroundlines--fast-loop",
-      "aceternity-backgroundlines--dark"
-    ],
-    "preview": "aceternity-backgroundlines--default",
-    "previewDark": "aceternity-backgroundlines--dark",
-    "skeleton": null
-  },
   "badge": {
     "title": "Primitives/Badge",
     "storyIds": [
@@ -450,19 +414,6 @@
     ],
     "preview": "blocks-claimcard--default",
     "previewDark": null,
-    "skeleton": null
-  },
-  "cloud-particles": {
-    "title": "Aceternity/CloudParticles",
-    "storyIds": [
-      "aceternity-cloudparticles--default",
-      "aceternity-cloudparticles--dark",
-      "aceternity-cloudparticles--dense-and-slow",
-      "aceternity-cloudparticles--sparse",
-      "aceternity-cloudparticles--body-color-on-light-and-dark-heroes"
-    ],
-    "preview": "aceternity-cloudparticles--default",
-    "previewDark": "aceternity-cloudparticles--dark",
     "skeleton": null
   },
   "cn": {
@@ -882,29 +833,15 @@
     "previewDark": "blocks-figure--dark",
     "skeleton": null
   },
-  "flip-words": {
-    "title": "Aceternity/FlipWords",
+  "focus-grid": {
+    "title": "Blocks/FocusGrid",
     "storyIds": [
-      "aceternity-flipwords--default",
-      "aceternity-flipwords--headline",
-      "aceternity-flipwords--dark",
-      "aceternity-flipwords--long-dwell",
-      "aceternity-flipwords--pause-on-hover"
+      "blocks-focusgrid--default",
+      "blocks-focusgrid--dark",
+      "blocks-focusgrid--rtl"
     ],
-    "preview": "aceternity-flipwords--headline",
-    "previewDark": "aceternity-flipwords--dark",
-    "skeleton": null
-  },
-  "focus-cards": {
-    "title": "Aceternity/FocusCards",
-    "storyIds": [
-      "aceternity-focuscards--default",
-      "aceternity-focuscards--dark",
-      "aceternity-focuscards--two-columns",
-      "aceternity-focuscards--preselected-active"
-    ],
-    "preview": "aceternity-focuscards--default",
-    "previewDark": "aceternity-focuscards--dark",
+    "preview": "blocks-focusgrid--default",
+    "previewDark": "blocks-focusgrid--dark",
     "skeleton": null
   },
   "focus-ring": {
@@ -959,6 +896,17 @@
     ],
     "preview": "primitives-gradebadge--default",
     "previewDark": "primitives-gradebadge--dark",
+    "skeleton": null
+  },
+  "gradient-mesh": {
+    "title": "Effects/GradientMesh",
+    "storyIds": [
+      "effects-gradientmesh--default",
+      "effects-gradientmesh--subtle",
+      "effects-gradientmesh--dark"
+    ],
+    "preview": "effects-gradientmesh--default",
+    "previewDark": "effects-gradientmesh--dark",
     "skeleton": null
   },
   "grid": {
@@ -1122,6 +1070,16 @@
     "previewDark": "starters-layout-starter--dark",
     "skeleton": null
   },
+  "light-beam": {
+    "title": "Effects/LightBeam",
+    "storyIds": [
+      "effects-lightbeam--default",
+      "effects-lightbeam--from-the-left"
+    ],
+    "preview": "effects-lightbeam--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "lint-playground": {
     "title": "Blocks/LintPlayground",
     "storyIds": [
@@ -1155,21 +1113,6 @@
     ],
     "preview": "starters-mdx-starter--default",
     "previewDark": "starters-mdx-starter--dark",
-    "skeleton": null
-  },
-  "meteors": {
-    "title": "Primitives/Meteors",
-    "storyIds": [
-      "primitives-meteors--default",
-      "primitives-meteors--light-surface",
-      "primitives-meteors--sparse",
-      "primitives-meteors--density",
-      "primitives-meteors--dark",
-      "primitives-meteors--rtl",
-      "primitives-meteors--reduced-motion"
-    ],
-    "preview": "primitives-meteors--default",
-    "previewDark": "primitives-meteors--dark",
     "skeleton": null
   },
   "meter": {
@@ -1545,6 +1488,16 @@
     "previewDark": null,
     "skeleton": null
   },
+  "rotating-text": {
+    "title": "Effects/RotatingText",
+    "storyIds": [
+      "effects-rotatingtext--default",
+      "effects-rotatingtext--slow"
+    ],
+    "preview": "effects-rotatingtext--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "scorecard-row": {
     "title": "Blocks/ScorecardRow",
     "storyIds": [
@@ -1803,6 +1756,17 @@
     "previewDark": "primitives-skiplink--dark",
     "skeleton": null
   },
+  "sky-backdrop": {
+    "title": "Effects/SkyBackdrop",
+    "storyIds": [
+      "effects-skybackdrop--default",
+      "effects-skybackdrop--sun-left",
+      "effects-skybackdrop--dusk"
+    ],
+    "preview": "effects-skybackdrop--default",
+    "previewDark": "effects-skybackdrop--dusk",
+    "skeleton": null
+  },
   "slider": {
     "title": "Primitives/Slider",
     "storyIds": [
@@ -1850,19 +1814,6 @@
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
   },
-  "spotlight": {
-    "title": "Aceternity/Spotlight",
-    "storyIds": [
-      "aceternity-spotlight--default",
-      "aceternity-spotlight--high-opacity",
-      "aceternity-spotlight--slow-reveal",
-      "aceternity-spotlight--repositioned",
-      "aceternity-spotlight--dark"
-    ],
-    "preview": "aceternity-spotlight--default",
-    "previewDark": "aceternity-spotlight--dark",
-    "skeleton": null
-  },
   "stack": {
     "title": "Primitives/Stack",
     "storyIds": [
@@ -1886,17 +1837,15 @@
     "previewDark": null,
     "skeleton": null
   },
-  "stars-background": {
-    "title": "Aceternity/StarsBackground",
+  "starfield": {
+    "title": "Effects/Starfield",
     "storyIds": [
-      "aceternity-starsbackground--default",
-      "aceternity-starsbackground--dense",
-      "aceternity-starsbackground--slow-twinkle",
-      "aceternity-starsbackground--with-shooting-stars",
-      "aceternity-starsbackground--dark"
+      "effects-starfield--default",
+      "effects-starfield--calm",
+      "effects-starfield--busy"
     ],
-    "preview": "aceternity-starsbackground--default",
-    "previewDark": "aceternity-starsbackground--dark",
+    "preview": "effects-starfield--default",
+    "previewDark": null,
     "skeleton": null
   },
   "stat-card": {
@@ -1969,19 +1918,6 @@
     ],
     "preview": "effects-strandfield--default",
     "previewDark": null,
-    "skeleton": null
-  },
-  "sunny-background": {
-    "title": "Aceternity/SunnyBackground",
-    "storyIds": [
-      "aceternity-sunnybackground--default",
-      "aceternity-sunnybackground--top-left",
-      "aceternity-sunnybackground--custom-palette",
-      "aceternity-sunnybackground--static",
-      "aceternity-sunnybackground--dark"
-    ],
-    "preview": "aceternity-sunnybackground--default",
-    "previewDark": "aceternity-sunnybackground--dark",
     "skeleton": null
   },
   "switch": {
@@ -2117,6 +2053,17 @@
     ],
     "preview": "tokens-theme-tokens--default",
     "previewDark": "tokens-theme-tokens--dark",
+    "skeleton": null
+  },
+  "thread-lines": {
+    "title": "Effects/ThreadLines",
+    "storyIds": [
+      "effects-threadlines--default",
+      "effects-threadlines--dense",
+      "effects-threadlines--dark"
+    ],
+    "preview": "effects-threadlines--default",
+    "previewDark": "effects-threadlines--dark",
     "skeleton": null
   },
   "time-series": {

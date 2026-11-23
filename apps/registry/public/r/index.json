@@ -760,24 +760,6 @@
       }
     },
     {
-      "name": "meteors",
-      "type": "registry:ui",
-      "title": "Meteors",
-      "description": "Aceternity-style falling-meteor effect with per-meteor variety: viewport- distributed origins (some above the fold), trail lengths randomized between 50–140px, opacities 0.45–1.0, durations 3–9s. The variety is the difference between \"meteors\" and \"looks…",
-      "categories": [
-        "decorative",
-        "primitive"
-      ],
-      "meta": {
-        "tier": "primitive",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "1.2.0",
-        "since": "1.0.0"
-      }
-    },
-    {
       "name": "meter-scale",
       "type": "registry:ui",
       "title": "Meter Scale",
@@ -1552,10 +1534,10 @@
       }
     },
     {
-      "name": "background-beams-with-collision",
+      "name": "decode-text",
       "type": "registry:ui",
-      "title": "Background Beams With Collision",
-      "description": "A hero surface where thin vertical beams fall from the top and burst into a ten-particle explosion when they reach the strip along the bottom. Your children render above them on a `z-10` layer.",
+      "title": "Decode Text",
+      "description": "DecodeText — micro-labels resolve from glyph noise into their text.",
       "categories": [
         "decorative",
         "effect"
@@ -1566,14 +1548,14 @@
         "minViewport": null,
         "loading": false,
         "version": "2.0.0",
-        "since": "1.0.0"
+        "since": null
       }
     },
     {
-      "name": "background-gradient-animation",
+      "name": "gradient-mesh",
       "type": "registry:ui",
-      "title": "Background Gradient Animation",
-      "description": "The \"lava lamp\" surface: five radial-gradient blobs orbiting behind an SVG goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth blob that eases toward the pointer.",
+      "title": "Gradient Mesh",
+      "description": "A soft, slowly shifting field of colour for a hero or a feature band. A few large blurred glows, each a theme colour, drift on long loops over a base surface, so the band feels alive without anything a reader has to watch. Content goes in `children` and…",
       "categories": [
         "decorative",
         "effect"
@@ -1581,35 +1563,71 @@
       "meta": {
         "tier": "effect",
         "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "hero-strand",
+      "type": "registry:ui",
+      "title": "Hero Strand",
+      "description": "HeroStrand — the thread at page scale: one strand-a ribbon drawn across a hero section, optionally crossed by the strand-b counter. Completes the four scales of \"One thread, every scale\" (micro: DecodeText, component: InterlaceWeave, page: TimelineMap…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": false,
         "minViewport": null,
         "loading": false,
         "version": "2.0.0",
-        "since": "1.0.0"
+        "since": null
       }
     },
     {
-      "name": "background-lines",
+      "name": "interlace-weave",
       "type": "registry:ui",
-      "title": "Background Lines",
-      "description": "A full-bleed backdrop of twelve long, sweeping SVG curves that draw themselves in and fade out on a loop, each staggered by a fixed delay so the field never pulses in unison.",
+      "title": "Interlace Weave",
+      "description": "InterlaceWeave — the brand gesture as an interaction signature.",
       "categories": [
         "decorative",
         "effect"
       ],
       "meta": {
         "tier": "effect",
-        "client": true,
+        "client": false,
         "minViewport": null,
         "loading": false,
         "version": "2.0.0",
-        "since": "1.0.0"
+        "since": null
       }
     },
     {
-      "name": "cloud-particles",
+      "name": "light-beam",
       "type": "registry:ui",
-      "title": "Cloud Particles",
-      "description": "Volumetric drifting clouds as a decorative backdrop. Each cloud is a radial-gradient ellipse pushed through a five-pass SVG turbulence filter — body, cool underside, soft shadow, deep shadow — and translated across `130vw`.",
+      "title": "Light Beam",
+      "description": "A soft cone of light falling into a dark section from an edge, the way a stage light picks out a speaker. It draws the eye to the headline under it and gives a flat surface depth. It does not move: the light is part of the set, not an event.",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "rotating-text",
+      "type": "registry:ui",
+      "title": "Rotating Text",
+      "description": "One word in a headline that changes every few seconds (\"Build for [teams / founders / students]\"). It is a familiar pattern done carefully: the line never jumps, a screen reader hears the sentence once, and the reader can stop it.",
       "categories": [
         "decorative",
         "effect"
@@ -1619,15 +1637,15 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
-      "name": "flip-words",
+      "name": "sky-backdrop",
       "type": "registry:ui",
-      "title": "Flip Words",
-      "description": "A headline word that flips through a list. Each replacement enters letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs and scales away.",
+      "title": "Sky Backdrop",
+      "description": "A calm daytime sky for a friendly hero: a soft gradient, a warm sun glow in one corner, and a few clouds drifting across. It suits pages that want warmth rather than drama, the light counterpart to `Starfield`.",
       "categories": [
         "decorative",
         "effect"
@@ -1637,15 +1655,15 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
-      "name": "focus-cards",
+      "name": "starfield",
       "type": "registry:ui",
-      "title": "Focus Cards",
-      "description": "A grid that spotlights one card at a time: pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs. Real list semantics — `ul` › `li` › `article` — and a controlled or uncontrolled active index.",
+      "title": "Starfield",
+      "description": "A night sky behind a hero: still stars, a share of them breathing, an occasional shooting star and a few slow meteors. Everything is painted on ONE `<canvas>` driven by ONE animation frame loop, so the whole sky costs a single layer and a single callback…",
       "categories": [
         "decorative",
         "effect"
@@ -1655,15 +1673,15 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
-      "name": "spotlight",
+      "name": "thread-lines",
       "type": "registry:ui",
-      "title": "Spotlight",
-      "description": "The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.",
+      "title": "Thread Lines",
+      "description": "Interlace's own backdrop: a loose bundle of threads running across a section, crossing and parting the way strands do in a weave, with a small glint of light travelling along each one. It is the brand mark (two strands, interlaced) at the scale of a page.",
       "categories": [
         "decorative",
         "effect"
@@ -1673,44 +1691,8 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "stars-background",
-      "type": "registry:ui",
-      "title": "Stars Background",
-      "description": "Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "2.0.0",
-        "since": "1.0.0"
-      }
-    },
-    {
-      "name": "sunny-background",
-      "type": "registry:ui",
-      "title": "Sunny Background",
-      "description": "A daylight sky you drop behind hero or section content: a two-stop sky gradient with a haze wash, a sun disc (corona → glow → overexposed core → slowly rotating conic rays → four lens flares), a golden-hour horizon band and a depth vignette.",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "3.0.0",
-        "since": "1.0.0"
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -2017,6 +1999,24 @@
         "loading": false,
         "version": "2.0.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "focus-grid",
+      "type": "registry:ui",
+      "title": "Focus Grid",
+      "description": "A grid of picture cards where the one you point at or tab to stays bright and the others step back. It helps a reader compare a few visual options (destinations, case studies, chapters) without the grid feeling busy.",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {

@@ -81,7 +81,7 @@
     {
       "id": "effect",
       "title": "Effects",
-      "description": "Vendored magicui / aceternity motion components, promoted under the @interlace namespace."
+      "description": "Decorative motion and backdrops. Token-coloured, reduced-motion-safe, and self-contained: no keyframes to add to your stylesheet."
     },
     {
       "id": "util",
@@ -104,8 +104,8 @@
     "patterns": "pattern",
     "templates": "template",
     "magicui": "effect",
-    "aceternity": "effect",
-    "charts": "chart"
+    "charts": "chart",
+    "effects": "effect"
   },
   "tierDefaultCategory": {
     "primitive": "other",
@@ -169,6 +169,7 @@
     "faq": "marketing",
     "feature-grid": "marketing",
     "figure": "blog",
+    "focus-grid": "marketing",
     "focus-ring": "a11y",
     "footer": "navigation",
     "form": "form",
@@ -187,7 +188,6 @@
     "layout-starter": "foundation",
     "lint-playground": "blog",
     "mdx-starter": "blog",
-    "meteors": "decorative",
     "meter": "data",
     "meter-scale": "data",
     "metric-table": "data",

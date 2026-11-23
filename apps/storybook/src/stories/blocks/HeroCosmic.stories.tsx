@@ -63,7 +63,7 @@ const meta: Meta<typeof HeroCosmic> = {
     effects: {
       control: 'object',
       description:
-        'Starfield tuning: `starDensity` (stars/px², ~0.0001–0.0005), `twinkleProbability` (0–1), `minTwinkleSpeed` / `maxTwinkleSpeed` (s), `shootingMinSpeed` / `shootingMaxSpeed`, `shootingMinDelay` / `shootingMaxDelay` (ms), `meteorCount`, `meteorMinDuration` / `meteorMaxDuration` (s). Colours are deliberately absent — they come from the `--hero-*` tokens.',
+        'Starfield tuning: `starDensity` (stars/px², ~0.0001–0.0005), `twinkleProbability` (0–1), `shootingStars` (seconds between them as `[min, max]`, or `false`), `meteorCount`, `meteorDuration` (`[min, max]` seconds). Colours are deliberately absent — they come from the `--hero-*` tokens.',
       table: {
         type: { summary: 'HeroCosmicEffects' },
         defaultValue: { summary: '{}' },
@@ -160,8 +160,7 @@ export const QuietEffects: Story = {
       starDensity: 0.0001,
       twinkleProbability: 0.3,
       meteorCount: 1,
-      shootingMinDelay: 3000,
-      shootingMaxDelay: 8000,
+      shootingStars: [3, 8],
     },
   },
 };

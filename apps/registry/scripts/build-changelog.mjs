@@ -256,7 +256,14 @@ export const buildChangelog = async () => {
 const loadItemNames = async () => {
   try {
     const index = JSON.parse(await readFile(INDEX_JSON, 'utf8'));
-    return new Set(index.items.map((i) => i.name));
+    const names = new Set(index.items.map((i) => i.name));
+    // Removed items stay valid names in history: a released entry that
+    // named one was true when it shipped.
+    const retired = JSON.parse(
+      await readFile(new URL('../retired-items.json', import.meta.url), 'utf8'),
+    );
+    for (const { name } of retired.items) names.add(name);
+    return names;
   } catch {
     return null;
   }

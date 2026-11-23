@@ -58,8 +58,8 @@ const STYLES_DIR = path.join(REPO_ROOT, 'packages/ui/styles');
  * three tiers stay distinguishable in the consumer's tree.
  *
  * Why these are ours, not external: we own the source under
- * `packages/ui/src/{magicui,aceternity,patterns}/`. The `components.json`
- * registries map used to include `@magicui` / `@aceternity` aliases pointing
+ * `packages/ui/src/{magicui,effects,patterns}/`. The `components.json`
+ * registries map used to include upstream registry aliases pointing
  * at upstream registries — but every component we use was already vendored
  * into our package. Pointing the registry map at our own surface promotes
  * @interlace as the single canonical install surface (per the user's
@@ -67,7 +67,14 @@ const STYLES_DIR = path.join(REPO_ROOT, 'packages/ui/styles');
  */
 const DECORATIVE_DIRS = [
   { name: 'magicui', dir: path.join(REPO_ROOT, 'packages/ui/src/magicui') },
-  { name: 'aceternity', dir: path.join(REPO_ROOT, 'packages/ui/src/aceternity') },
+  // Interlace's own decorative motion and backdrops (Starfield, GradientMesh, …).
+  // `strand-field` is skipped: it is a showcase built on the charts' private
+  // `scale` core, which is a companion file, not an installable item.
+  {
+    name: 'effects',
+    dir: path.join(REPO_ROOT, 'packages/ui/src/effects'),
+    skip: new Set(['strand-field.tsx']),
+  },
   { name: 'patterns', dir: path.join(REPO_ROOT, 'packages/ui/src/patterns') },
   // Charts — the visualisation layer. Only the `.tsx` components become items;
   // their pure cores (`scale.ts`, `graph.ts`) ride along as COMPANIONS via
@@ -689,7 +696,7 @@ const TIER_SUBDIR = {
   charts: 'charts/',
   templates: 'templates/',
   magicui: 'magicui/',
-  aceternity: 'aceternity/',
+  effects: 'effects/',
 };
 
 /**
@@ -901,7 +908,7 @@ const buildItem = async (filePath, fileName, tier = null) => {
   const meta = await readOptionalMeta(filePath);
   const sourceDir = path.dirname(filePath);
   const { deps, companions } = await splitRelativeImports(source, sourceDir);
-  // Decorative tiers (magicui / aceternity / patterns) nest under their
+  // Decorative tiers (magicui / effects / patterns) nest under their
   // subdir in the consumer tree to preserve provenance. Primitives stay flat.
   const subdir = TIER_SUBDIR[tier ?? 'primitives'] ?? '';
   const tierLabel = tier ? ` (${tier})` : '';
@@ -1376,13 +1383,15 @@ export const buildAll = async () => {
     items.push(await buildItem(path.join(PRIMITIVES_DIR, file), file));
   }
 
-  // Decorative tiers (magicui / aceternity / patterns / templates) — our own
+  // Decorative tiers (magicui / effects / patterns / templates) — our own
   // surface, promoted under the @interlace namespace.
   let decorativeCount = 0;
-  for (const { name: tier, dir } of DECORATIVE_DIRS) {
+  for (const { name: tier, dir, skip } of DECORATIVE_DIRS) {
     let dirFiles = [];
     try {
-      dirFiles = (await readdir(dir)).filter((f) => f.endsWith('.tsx')).sort();
+      dirFiles = (await readdir(dir))
+        .filter((f) => f.endsWith('.tsx') && !skip?.has(f))
+        .sort();
     } catch {
       continue; // tier dir not yet created — fine
     }

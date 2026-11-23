@@ -10,7 +10,7 @@
  * The links are rendered by the caller (Topbar renders them on the server)
  * and passed in as `children`, so this file holds only the open state. The
  * sheet comes from `Sheet` (Base UI Dialog): focus moves into it, the page
- * behind is inert, and Escape or a press outside closes it. Following a link
+ * behind is inert, and Escape or a press outside closes it. Following an `<a>`
  * inside also closes it, so a client-side route change never leaves the menu
  * open over the new page.
  *

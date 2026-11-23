@@ -43,17 +43,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 88 server, 68 client
+- rendering: 92 server, 64 client
 - keyboard: 121 none, 35 handled
 - built-in loading state: 32 of 156
-- declared minViewport: 89 at 320, 7 at 480, 1 at 768, 59 at inherited
+- declared minViewport: 90 at 320, 7 at 480, 1 at 768, 58 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 67 item(s)
-- tier `pattern` — 40 item(s)
+- tier `primitive` — 66 item(s)
+- tier `pattern` — 41 item(s)
 - tier `effect` — 17 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
@@ -61,19 +61,19 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
-- category `primitive` (Primitives) — 67 item(s)
-- category `pattern` (Patterns) — 40 item(s)
+- category `primitive` (Primitives) — 66 item(s)
+- category `pattern` (Patterns) — 41 item(s)
 - category `blog` (Blog & long-form) — 30 item(s)
 - category `foundation` (Foundation) — 22 item(s)
-- category `decorative` (Decorative) — 21 item(s)
 - category `data` (Data display) — 21 item(s)
+- category `decorative` (Decorative) — 20 item(s)
 - category `effect` (Effects) — 17 item(s)
 - category `form` (Form & input) — 16 item(s)
 - category `feedback` (Feedback) — 13 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `navigation` (Navigation) — 11 item(s)
+- category `marketing` (Marketing) — 10 item(s)
 - category `overlay` (Overlay) — 9 item(s)
-- category `marketing` (Marketing) — 9 item(s)
 - category `chart` (Charts) — 8 item(s)
 - category `util` (Utilities) — 5 item(s)
 - category `a11y` (A11y) — 4 item(s)
@@ -187,9 +187,6 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Label](https://ds.interlace.tools/c/label): Form-control label. No headless dep — Base UI's `Field.Label` is the forms-aware variant (see `form.tsx`); this is the lower-level shadcn-canon label for controls that own their own id wiring. Server component. Mirrors…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/label.json`
   - contract: server, min 320px, v1.1.0
-- [Meteors](https://ds.interlace.tools/c/meteors): Aceternity-style falling-meteor effect with per-meteor variety: viewport- distributed origins (some above the fold), trail lengths randomized between 50–140px, opacities 0.45–1.0, durations 3–9s. The variety is the difference between "meteors" and "looks…
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/meteors.json`
-  - contract: client, v1.2.0
 - [Meter](https://ds.interlace.tools/c/meter): ONE inline bar, absorbing three that were hand-rolled separately across the phase-10 corpus: an odds bar, a score meter and a reviewer bar. They differed in tone and in what the denominator meant; they did not differ in anything that justified three…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/meter.json`
   - contract: server, min 320px, loading state, states loading|error|not-applicable|not-counted|empty|partial|truncated|first-measurement|idle, v1.0.0
@@ -349,6 +346,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Figure](https://ds.interlace.tools/c/figure): Semantic media block. `<figure>` is the right element for *self-contained* media (image, diagram, code screenshot, chart) with an optional caption that scrolls with it. Composes `AspectRatio` so the layout reserves space before the asset loads — preventing…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/figure.json`
   - contract: server, min 320px, v2.0.0
+- [Focus Grid](https://ds.interlace.tools/c/focus-grid): A grid of picture cards where the one you point at or tab to stays bright and the others step back. It helps a reader compare a few visual options (destinations, case studies, chapters) without the grid feeling busy.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/focus-grid.json`
+  - contract: server, min 320px, v1.0.0
 - [Footer](https://ds.interlace.tools/c/footer): Site footer with grouped link columns + copyright row. Composes with a primary brand mark, 1-4 link groups (each a sub-heading + list of links), and a tail row for copyright + social. Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/footer.json`
   - contract: server, min 320px, v2.0.0
@@ -499,27 +499,24 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Animated List](https://ds.interlace.tools/c/animated-list): A feed that reveals its children one at a time, newest on top, each entry springing in from `scale: 0`. One more appears every `delay` ms (1000 by default) until the list is full, then it stops — or restarts, with `loop`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/animated-list.json`
   - contract: client, v2.0.0
-- [Background Beams With Collision](https://ds.interlace.tools/c/background-beams-with-collision): A hero surface where thin vertical beams fall from the top and burst into a ten-particle explosion when they reach the strip along the bottom. Your children render above them on a `z-10` layer.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/background-beams-with-collision.json`
-  - contract: client, v2.0.0
-- [Background Gradient Animation](https://ds.interlace.tools/c/background-gradient-animation): The "lava lamp" surface: five radial-gradient blobs orbiting behind an SVG goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth blob that eases toward the pointer.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/background-gradient-animation.json`
-  - contract: client, v2.0.0
-- [Background Lines](https://ds.interlace.tools/c/background-lines): A full-bleed backdrop of twelve long, sweeping SVG curves that draw themselves in and fade out on a loop, each staggered by a fixed delay so the field never pulses in unison.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/background-lines.json`
-  - contract: client, v2.0.0
 - [Border Beam](https://ds.interlace.tools/c/border-beam): A single gradient square that travels around the inside edge of its parent, drawn with `offset-path` and a two-layer CSS mask so only the border ring shows. Drop it inside any `relative`, rounded container to give that container a moving outline.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/border-beam.json`
   - contract: client, v2.0.0
-- [Cloud Particles](https://ds.interlace.tools/c/cloud-particles): Volumetric drifting clouds as a decorative backdrop. Each cloud is a radial-gradient ellipse pushed through a five-pass SVG turbulence filter — body, cool underside, soft shadow, deep shadow — and translated across `130vw`.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/cloud-particles.json`
+- [Decode Text](https://ds.interlace.tools/c/decode-text): DecodeText — micro-labels resolve from glyph noise into their text.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/decode-text.json`
   - contract: client, v2.0.0
-- [Flip Words](https://ds.interlace.tools/c/flip-words): A headline word that flips through a list. Each replacement enters letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs and scales away.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/flip-words.json`
-  - contract: client, v2.0.0
-- [Focus Cards](https://ds.interlace.tools/c/focus-cards): A grid that spotlights one card at a time: pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs. Real list semantics — `ul` › `li` › `article` — and a controlled or uncontrolled active index.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/focus-cards.json`
-  - contract: client, v2.0.0
+- [Gradient Mesh](https://ds.interlace.tools/c/gradient-mesh): A soft, slowly shifting field of colour for a hero or a feature band. A few large blurred glows, each a theme colour, drift on long loops over a base surface, so the band feels alive without anything a reader has to watch. Content goes in `children` and…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/gradient-mesh.json`
+  - contract: client, v1.0.0
+- [Hero Strand](https://ds.interlace.tools/c/hero-strand): HeroStrand — the thread at page scale: one strand-a ribbon drawn across a hero section, optionally crossed by the strand-b counter. Completes the four scales of "One thread, every scale" (micro: DecodeText, component: InterlaceWeave, page: TimelineMap…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero-strand.json`
+  - contract: server, v2.0.0
+- [Interlace Weave](https://ds.interlace.tools/c/interlace-weave): InterlaceWeave — the brand gesture as an interaction signature.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-weave.json`
+  - contract: server, v2.0.0
+- [Light Beam](https://ds.interlace.tools/c/light-beam): A soft cone of light falling into a dark section from an edge, the way a stage light picks out a speaker. It draws the eye to the headline under it and gives a flat surface depth. It does not move: the light is part of the set, not an event.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/light-beam.json`
+  - contract: server, states top-left|top|top-right, v1.0.0
 - [Marquee](https://ds.interlace.tools/c/marquee): An infinitely scrolling strip: it renders its children `repeat` times side by side (or stacked, with `vertical`) inside an `overflow-hidden` track and translates each copy by its own width plus the gap, so the row reads as continuous.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/marquee.json`
   - contract: client, v2.0.0
@@ -529,18 +526,21 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Particles](https://ds.interlace.tools/c/particles): An ambient `<canvas>` particle field for hero and section backdrops: `quantity` dots (100 by default) drifting on their own velocities, fading in near the middle and out near the edges, respawned whenever one leaves the box.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/particles.json`
   - contract: client, v1.2.0
+- [Rotating Text](https://ds.interlace.tools/c/rotating-text): One word in a headline that changes every few seconds ("Build for [teams / founders / students]"). It is a familiar pattern done carefully: the line never jumps, a screen reader hears the sentence once, and the reader can stop it.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/rotating-text.json`
+  - contract: client, v1.0.0
 - [Shimmer Button](https://ds.interlace.tools/c/shimmer-button): A dark pill CTA with a conic-gradient spark that sweeps around its edge: a rotating cone inside a sliding container, masked by an inset panel that redraws the fill and leaves only the rim glowing.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/shimmer-button.json`
   - contract: server, v3.0.0
-- [Spotlight](https://ds.interlace.tools/c/spotlight): The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/spotlight.json`
-  - contract: client, v2.0.0
-- [Stars Background](https://ds.interlace.tools/c/stars-background): Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/stars-background.json`
-  - contract: client, v2.0.0
-- [Sunny Background](https://ds.interlace.tools/c/sunny-background): A daylight sky you drop behind hero or section content: a two-stop sky gradient with a haze wash, a sun disc (corona → glow → overexposed core → slowly rotating conic rays → four lens flares), a golden-hour horizon band and a depth vignette.
-  - install: `npx shadcn@latest add https://ds.interlace.tools/r/sunny-background.json`
-  - contract: client, v3.0.0
+- [Sky Backdrop](https://ds.interlace.tools/c/sky-backdrop): A calm daytime sky for a friendly hero: a soft gradient, a warm sun glow in one corner, and a few clouds drifting across. It suits pages that want warmth rather than drama, the light counterpart to `Starfield`.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/sky-backdrop.json`
+  - contract: client, states top-left|top-right|none, v1.0.0
+- [Starfield](https://ds.interlace.tools/c/starfield): A night sky behind a hero: still stars, a share of them breathing, an occasional shooting star and a few slow meteors. Everything is painted on ONE `<canvas>` driven by ONE animation frame loop, so the whole sky costs a single layer and a single callback…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/starfield.json`
+  - contract: client, v1.0.0
+- [Thread Lines](https://ds.interlace.tools/c/thread-lines): Interlace's own backdrop: a loose bundle of threads running across a section, crossing and parting the way strands do in a weave, with a small glint of light travelling along each one. It is the brand mark (two strands, interlaced) at the scale of a page.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/thread-lines.json`
+  - contract: client, v1.0.0
 
 ## Items — tier `starter`
 

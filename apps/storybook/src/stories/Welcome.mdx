@@ -14,13 +14,15 @@ This Storybook is the live component reference. Every primitive here is also ava
 
 **Tokens** — color-contrast swatches: every shipped foreground/background token pair, gated to WCAG 2.2 AA via the Storybook a11y addon.
 
-**Primitives** — 26 shadcn-compatible building blocks: `Button`, `Card`, `Dialog`, `DropdownMenu`, …, `Meteors`. Each ships with a `Default`, `Dark`, and variant stories.
+**Primitives** — 26 shadcn-compatible building blocks: `Button`, `Card`, `Dialog`, `DropdownMenu`, …. Each ships with a `Default`, `Dark`, and variant stories.
 
 **Blocks** — composed surfaces (`ArticleCard`, `SectionHeader`): the next layer up from primitives.
 
 **Pages** — full page-level surfaces (`ArticlesPage` and friends).
 
 **Fumadocs** — bridges between `@interlace/ui` primitives and `fumadocs-ui` docs surfaces.
+
+**Effects** — Interlace's own decorative motion and backdrops (`Starfield`, `GradientMesh`, `ThreadLines`, `SkyBackdrop`, `LightBeam`, `RotatingText`): token-coloured, reduced-motion-safe, and self-contained.
 
 **MagicUI** — animated / decorative primitives (`ShimmerButton`, …) layered on top of the base.
 
@@ -30,7 +32,7 @@ Every primitive is shadcn-add-able from the registry:
 
 ```bash
 npx shadcn@latest add https://ds.interlace.tools/r/button.json
-npx shadcn@latest add https://ds.interlace.tools/r/meteors.json
+npx shadcn@latest add https://ds.interlace.tools/r/starfield.json
 npx shadcn@latest add https://ds.interlace.tools/r/dialog.json
 ```
 

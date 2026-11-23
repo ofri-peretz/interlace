@@ -99,24 +99,6 @@
       "updated": "2026-08-22"
     },
     {
-      "name": "background-beams-with-collision",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
-    },
-    {
-      "name": "background-gradient-animation",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
-    },
-    {
-      "name": "background-lines",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
-    },
-    {
       "name": "badge",
       "version": "1.3.0",
       "since": "1.0.0",
@@ -198,12 +180,6 @@
       "name": "claim-card",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
-    },
-    {
-      "name": "cloud-particles",
-      "version": "2.0.0",
-      "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
@@ -291,6 +267,12 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "decode-text",
+      "version": "2.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "delta",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -363,16 +345,10 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "flip-words",
-      "version": "2.0.0",
-      "since": "1.0.0",
+      "name": "focus-grid",
+      "version": "1.0.0",
+      "since": null,
       "updated": "2026-11-23"
-    },
-    {
-      "name": "focus-cards",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-22"
     },
     {
       "name": "focus-ring",
@@ -399,6 +375,12 @@
       "updated": "2026-11-23"
     },
     {
+      "name": "gradient-mesh",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "grid",
       "version": "2.0.0",
       "since": "1.0.0",
@@ -420,6 +402,12 @@
       "name": "hero-cosmic",
       "version": "3.1.0",
       "since": "1.0.0",
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "hero-strand",
+      "version": "2.0.0",
+      "since": null,
       "updated": "2026-11-23"
     },
     {
@@ -453,6 +441,12 @@
       "updated": "2026-11-23"
     },
     {
+      "name": "interlace-weave",
+      "version": "2.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "label",
       "version": "1.1.0",
       "since": "1.0.0",
@@ -468,6 +462,12 @@
       "name": "layout-starter",
       "version": "3.0.0",
       "since": "1.0.0",
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "light-beam",
+      "version": "1.0.0",
+      "since": null,
       "updated": "2026-11-23"
     },
     {
@@ -487,12 +487,6 @@
       "version": "3.0.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
-    },
-    {
-      "name": "meteors",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
     },
     {
       "name": "meter",
@@ -627,6 +621,12 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "rotating-text",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "scorecard-row",
       "version": "2.0.0",
       "since": "1.0.0",
@@ -741,6 +741,12 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "sky-backdrop",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "slider",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -751,12 +757,6 @@
       "version": "1.2.0",
       "since": "1.0.0",
       "updated": "2026-08-26"
-    },
-    {
-      "name": "spotlight",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
     },
     {
       "name": "stack",
@@ -771,9 +771,9 @@
       "updated": null
     },
     {
-      "name": "stars-background",
-      "version": "2.0.0",
-      "since": "1.0.0",
+      "name": "starfield",
+      "version": "1.0.0",
+      "since": null,
       "updated": "2026-11-23"
     },
     {
@@ -799,12 +799,6 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
-    },
-    {
-      "name": "sunny-background",
-      "version": "3.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
     },
     {
       "name": "switch",
@@ -864,6 +858,12 @@
       "name": "theme-tokens",
       "version": "3.1.0",
       "since": "1.0.0",
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "thread-lines",
+      "version": "1.0.0",
+      "since": null,
       "updated": "2026-11-23"
     },
     {
