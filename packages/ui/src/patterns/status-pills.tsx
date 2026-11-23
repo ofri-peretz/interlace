@@ -10,11 +10,13 @@
  *
  * | `tone`    | Pill                                                         |
  * | --------- | ------------------------------------------------------------ |
- * | `default` | A tint of the surrounding text colour, text inherited        |
+ * | `default` | An outline in the surrounding text colour, text inherited    |
  * | `ok`      | A solid page-background pill, bold, with a check in success  |
  *
  * `default` takes its colour from the band it sits on (`currentColor`), so
- * one component serves a dark band and a light page without a prop. `ok` is
+ * one component serves a dark band and a light page without a prop. It has
+ * no fill: its text sits on the band itself, so it keeps the band's own
+ * contrast (a 12% tint cost a brand band its AAA 7:1). `ok` is
  * the one that should be seen first: a passed check. Its check mark is
  * decoration; the words say what passed.
  *
@@ -36,7 +38,7 @@
  * | R7   | cn + ...rest            | `cn(…, className)` + `{...props}`                        |
  * | R8   | Enums, not booleans     | `tone`                                                   |
  * | R14  | Declares min viewport   | `data-min-viewport` on the root + exported const         |
- * | R19  | Tokens only             | `bg-current/12`, `bg-background`, `text-success`         |
+ * | R19  | Tokens only             | `ring-current/40`, `bg-background`, `text-success`       |
  * | R25  | Server component        | No hooks → no `'use client'`                             |
  * | R26  | A11y from native el     | A list; the check is hidden, the words carry the meaning |
  */
@@ -64,7 +66,7 @@ function StatusPills({ className, ...props }: StatusPillsProps) {
 }
 
 const TONE: Record<StatusPillTone, string> = {
-  default: 'bg-current/12 font-medium',
+  default: 'ring-1 ring-current/40 ring-inset font-medium',
   ok: 'bg-background text-foreground font-bold',
 };
 

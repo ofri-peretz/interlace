@@ -11,7 +11,7 @@ const meta = {
       description: {
         component:
           'Short facts about the page as a row of pills, made to sit on a brand band under a title. ' +
-          'A default pill is a tint of the text colour around it, so it works on a dark band and on the page. ' +
+          'A default pill is an outline in the text colour around it, with no fill, so it works on a dark band and on the page. ' +
           '`tone="ok"` is a solid pill with a check for a passed check; the words say what passed.',
       },
     },
@@ -32,7 +32,7 @@ type Story = StoryObj<typeof meta>;
 /** On the page background. */
 export const Default: Story = {};
 
-/** On a brand band, under the title: the tint follows the band's text colour. */
+/** On a brand band, under the title: the outline follows the band's text colour. */
 export const OnABrandBand: Story = {
   parameters: { layout: 'fullscreen' },
   render: (args) => (

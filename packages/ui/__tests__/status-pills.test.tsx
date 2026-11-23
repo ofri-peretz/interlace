@@ -35,12 +35,14 @@ describe('StatusPills', () => {
     expect(screen.getByRole('listitem').className).toContain('bg-background');
   });
 
-  it('tints the default pill from the surrounding text colour', () => {
+  it('outlines the default pill in the surrounding text colour, with no fill', () => {
     render(
       <StatusPills>
         <StatusPills.Item>38 sources quoted</StatusPills.Item>
       </StatusPills>,
     );
-    expect(screen.getByRole('listitem').className).toContain('bg-current/12');
+    const pill = screen.getByRole('listitem');
+    expect(pill.className).toContain('ring-current/40');
+    expect(pill.className).not.toMatch(/\bbg-/);
   });
 });
