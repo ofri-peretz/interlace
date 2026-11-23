@@ -1,3 +1,5 @@
+@AGENTS.md
+
 # Commands
 
 - `npm run ci:local` mirrors the entire pre-push gate (`lefthook run pre-push --all-files`); it is

@@ -157,3 +157,4 @@ packages/*/src/**/*.d.ts
 .claude/*
 !.claude/settings.json
 !.claude/hooks/
+!.claude/skills/

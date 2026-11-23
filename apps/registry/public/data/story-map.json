@@ -1840,6 +1840,22 @@
     "previewDark": "primitives-slider--dark",
     "skeleton": "primitives-slider--loading"
   },
+  "social-sign-in": {
+    "title": "Blocks/SocialSignIn",
+    "storyIds": [
+      "blocks-socialsignin--default",
+      "blocks-socialsignin--all-providers",
+      "blocks-socialsignin--last-used",
+      "blocks-socialsignin--with-email",
+      "blocks-socialsignin--sent",
+      "blocks-socialsignin--with-error",
+      "blocks-socialsignin--dark",
+      "blocks-socialsignin--rtl"
+    ],
+    "preview": "blocks-socialsignin--default",
+    "previewDark": "blocks-socialsignin--dark",
+    "skeleton": null
+  },
   "spacing": {
     "title": "Foundations/Spacing",
     "storyIds": [
