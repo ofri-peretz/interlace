@@ -31,7 +31,7 @@ Three corollaries:
 
 1. **Never use color alone to signal state.** Red text without an
    icon is invisible to ~8% of male readers (color blindness).
-2. **Tokens, not colour codes.** The value can change once, the role
+2. **Tokens, not hex codes.** The hex value can change once, the role
    stays the same.
 3. **Dark mode is designed, not derived.** Inverting the palette is
    the wrong call ~80% of the time. Each surface is a separate design.
@@ -45,7 +45,7 @@ standing on. There are three, and they are not interchangeable.
 
 | Layer | Spelling | Where | What it is |
 | --- | --- | --- | --- |
-| **Brand** | `--interlace-*` | `packages/ui/styles/brand/interlace.css`, `@layer interlace.brand` | The concrete colour values, written in `oklch()`. **The only layer a theme overrides.** |
+| **Brand** | `--interlace-*` | `packages/ui/styles/brand/interlace.css`, `@layer interlace.brand` | The concrete hex values. **The only layer a theme overrides.** |
 | **Semantics** | `--primary`, `--muted`, `--success`, … | same file, `@layer interlace.semantics` | shadcn-bare aliases, each `var(--interlace-*)`. Re-bound on every brand-override selector so subtree theming repaints. |
 | **Utilities** | `bg-primary`, `text-success`, … | `@theme inline` in the same file | What component code writes. Never a hex, never an `--interlace-*` read. |
 
@@ -78,8 +78,7 @@ previous theme's value and ships a two-brand page.
 The full set, as shipped in `brand/interlace.css`. New tokens get
 added there and here, not invented per-component. Values below are the
 brand layer (`--interlace-*`); write them as the utility
-(`--interlace-card` → `bg-card`). The CSS writes each value in `oklch()`;
-the tables give the sRGB hex it paints, which is the same pixel.
+(`--interlace-card` → `bg-card`).
 
 ### Surface tokens
 
