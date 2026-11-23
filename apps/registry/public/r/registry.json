@@ -742,6 +742,24 @@
       }
     },
     {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "A key the reader presses: `⌘`, `Esc`, `Ctrl` `K`. The shadcn core `kbd` item, drawn in Interlace tokens. `KbdGroup` sets a chord (`⌘ + K`) or a sequence (`G` then `I`) as one inline run, so the gap between keys is owned by the container, not by a margin on…",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",

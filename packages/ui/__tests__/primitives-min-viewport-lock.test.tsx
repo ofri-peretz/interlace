@@ -69,6 +69,7 @@ const PRIMITIVES = [
   { name: 'prose', viewport: 320, tier: 'client' },
   { name: 'code-block', viewport: 320, tier: 'client' },
   { name: 'tag', viewport: 320, tier: 'server' },
+  { name: 'kbd', viewport: 320, tier: 'server' },
   { name: 'toc', viewport: 480, tier: 'client' },
   { name: 'reading-time', viewport: 320, tier: 'server' },
   { name: 'published-date', viewport: 320, tier: 'server' },
