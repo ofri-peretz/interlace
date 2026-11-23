@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T02:32:13.068Z",
+  "generatedAt": "2026-11-23T02:39:38.810Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -1186,84 +1186,6 @@
       "states": [],
       "coverage": {
         "inGate": true
-      }
-    },
-    "background-beams-with-collision": {
-      "sourcePath": "packages/ui/src/aceternity/background-beams-with-collision.tsx",
-      "keyboard": null,
-      "contrast": [
-        {
-          "fg": "primary",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint on the page surface",
-          "ratios": [
-            8.8,
-            11.79,
-            8.39,
-            10.03
-          ],
-          "worst": 8.39,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
-          "fg": "primary",
-          "bg": "card",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "primary tint inside a card",
-          "ratios": [
-            8.8,
-            10.92,
-            8.86,
-            9.1
-          ],
-          "worst": 8.8,
-          "worstAt": {
-            "theme": "interlace",
-            "scheme": "light"
-          },
-          "passes": true
-        }
-      ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "background-gradient-animation": {
-      "sourcePath": "packages/ui/src/aceternity/background-gradient-animation.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "background-lines": {
-      "sourcePath": "packages/ui/src/aceternity/background-lines.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
       }
     },
     "badge": {
@@ -3248,19 +3170,6 @@
         "inGate": false
       }
     },
-    "cloud-particles": {
-      "sourcePath": "packages/ui/src/aceternity/cloud-particles.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
     "cn": {
       "sourcePath": "packages/ui/src/lib/cn.ts",
       "keyboard": null,
@@ -4976,6 +4885,19 @@
         "inGate": false
       }
     },
+    "decode-text": {
+      "sourcePath": "packages/ui/src/effects/decode-text.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "delta": {
       "sourcePath": "packages/ui/src/charts/delta.tsx",
       "keyboard": null,
@@ -5849,21 +5771,8 @@
         "inGate": false
       }
     },
-    "flip-words": {
-      "sourcePath": "packages/ui/src/aceternity/flip-words.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": "sr-only-copy",
-        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "focus-cards": {
-      "sourcePath": "packages/ui/src/aceternity/focus-cards.tsx",
+    "focus-grid": {
+      "sourcePath": "packages/ui/src/patterns/focus-grid.tsx",
       "keyboard": null,
       "contrast": [
         {
@@ -5898,6 +5807,25 @@
             9.1
           ],
           "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "scrim-foreground",
+          "bg": "scrim",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy over an image scrim",
+          "ratios": [
+            21,
+            21,
+            21,
+            21
+          ],
+          "worst": 21,
           "worstAt": {
             "theme": "interlace",
             "scheme": "light"
@@ -6468,6 +6396,19 @@
         "inGate": true
       }
     },
+    "gradient-mesh": {
+      "sourcePath": "packages/ui/src/effects/gradient-mesh.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "grid-pattern": {
       "sourcePath": "packages/ui/src/patterns/grid-pattern.tsx",
       "keyboard": null,
@@ -6556,6 +6497,19 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "hero-strand": {
+      "sourcePath": "packages/ui/src/effects/hero-strand.tsx",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -6909,6 +6863,19 @@
         "inGate": false
       }
     },
+    "interlace-weave": {
+      "sourcePath": "packages/ui/src/effects/interlace-weave.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "label": {
       "sourcePath": "packages/ui/src/primitives/label.tsx",
       "keyboard": null,
@@ -6957,6 +6924,19 @@
     },
     "layout-starter": {
       "sourcePath": null,
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "light-beam": {
+      "sourcePath": "packages/ui/src/effects/light-beam.tsx",
       "keyboard": null,
       "contrast": [],
       "textAlternative": {
@@ -7131,19 +7111,6 @@
     },
     "mdx-starter": {
       "sourcePath": null,
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "meteors": {
-      "sourcePath": "packages/ui/src/primitives/meteors.tsx",
       "keyboard": null,
       "contrast": [],
       "textAlternative": {
@@ -9107,6 +9074,19 @@
         "inGate": false
       }
     },
+    "rotating-text": {
+      "sourcePath": "packages/ui/src/effects/rotating-text.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "scorecard-row": {
       "sourcePath": "packages/ui/src/patterns/scorecard-row.tsx",
       "keyboard": null,
@@ -10266,6 +10246,19 @@
         "inGate": true
       }
     },
+    "sky-backdrop": {
+      "sourcePath": "packages/ui/src/effects/sky-backdrop.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "slider": {
       "sourcePath": "packages/ui/src/primitives/slider.tsx",
       "keyboard": null,
@@ -10417,19 +10410,6 @@
         "inGate": true
       }
     },
-    "spotlight": {
-      "sourcePath": "packages/ui/src/aceternity/spotlight.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
     "stack": {
       "sourcePath": "packages/ui/src/primitives/stack.tsx",
       "keyboard": null,
@@ -10495,8 +10475,8 @@
         "inGate": false
       }
     },
-    "stars-background": {
-      "sourcePath": "packages/ui/src/aceternity/stars-background.tsx",
+    "starfield": {
+      "sourcePath": "packages/ui/src/effects/starfield.tsx",
       "keyboard": null,
       "contrast": [],
       "textAlternative": {
@@ -10868,19 +10848,6 @@
           "passes": true
         }
       ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "sunny-background": {
-      "sourcePath": "packages/ui/src/aceternity/sunny-background.tsx",
-      "keyboard": null,
-      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -11895,6 +11862,19 @@
       "states": [],
       "coverage": {
         "inGate": true
+      }
+    },
+    "thread-lines": {
+      "sourcePath": "packages/ui/src/effects/thread-lines.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "time-series": {

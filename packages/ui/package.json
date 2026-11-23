@@ -260,10 +260,6 @@
       "types": "./dist/primitives/focus-ring.d.ts",
       "default": "./dist/primitives/focus-ring.js"
     },
-    "./meteors": {
-      "types": "./dist/primitives/meteors.d.ts",
-      "default": "./dist/primitives/meteors.js"
-    },
     "./blocks/article-card": {
       "types": "./dist/blocks/article-card.d.ts",
       "default": "./dist/blocks/article-card.js"
@@ -419,10 +415,6 @@
     "./magicui/*": {
       "types": "./dist/magicui/*.d.ts",
       "default": "./dist/magicui/*.js"
-    },
-    "./aceternity/*": {
-      "types": "./dist/aceternity/*.d.ts",
-      "default": "./dist/aceternity/*.js"
     },
     "./effects/*": {
       "types": "./dist/effects/*.d.ts",

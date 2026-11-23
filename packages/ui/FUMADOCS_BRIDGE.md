@@ -72,7 +72,7 @@ is the whole point of the bridge; a component that reaches for `fd-`
 tokens has bypassed the seam and silently hard-coded a host requirement.
 
 *(Phase 1.4 removed 37 such classes from 12 files — `Section`,
-`ArticleCard`, the magicui/aceternity effects. They were invisible bugs:
+`ArticleCard`, the decorative effects. They were invisible bugs:
 correct in `apps/landing`, broken in any non-docs consumer.)*
 
 ### 3. `src/fumadocs/` is the only adapter surface

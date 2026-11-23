@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-strand",
+  "type": "registry:ui",
+  "title": "Hero Strand",
+  "description": "HeroStrand — the thread at page scale: one strand-a ribbon drawn across a hero section, optionally crossed by the strand-b counter. Completes the four scales of \"One thread, every scale\" (micro: DecodeText, component: InterlaceWeave, page: TimelineMap…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/effects/hero-strand.tsx",
+      "target": "components/ui/effects/hero-strand.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/hero-strand v2.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/hero-strand\n// What changed since: https://ds.interlace.tools/c/hero-strand#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\nimport { cn } from '@/lib/utils';\n\n/**\n * HeroStrand — the thread at page scale: one strand-a ribbon drawn\n * across a hero section, optionally crossed by the strand-b counter.\n * Completes the four scales of \"One thread, every scale\" (micro:\n * DecodeText, component: InterlaceWeave, page: TimelineMap, section:\n * THIS). BRAND_PHILOSOPHY §2: drawn, never faded.\n *\n * ### Motion — the draw verb, zero client JS\n *\n * A SERVER component on purpose. The draw is the `strand-draw` CSS\n * keyframe (structure/motion.css, `--animate-strand-draw`): it runs on load with\n * no hydration cost, and because the driver is CSS, the preflight\n * `prefers-reduced-motion` clamp reaches it — reduced-motion users see\n * the strand instantly drawn (the honest end state), never animating.\n * Without JS or animation support the strand simply stays invisible;\n * it is decorative (`aria-hidden`) and never carries meaning alone.\n *\n * ### Dash math (the production-weave lessons, interlace#56/#726)\n *\n * `pathLength={100}` normalizes every path so one keyframe\n * (offset 100 → 0) draws any geometry. NO `vector-effect:\n * non-scaling-stroke` — Chromium computes dashes in screen space under\n * it and discards pathLength, which is exactly the bug that shipped in\n * the first weave. Strokes therefore scale with the viewBox under\n * `preserveAspectRatio=\"none\"`; at hero proportions the thickening is\n * gentle and intended (the ribbon breathes with the section).\n */\n\nexport interface HeroStrandProps\n  // aria-hidden omitted at the TYPE level too (review, blog#181): the\n  // strand is always-decorative. Measured honestly: TS checks JSX\n  // aria-* attributes leniently (verified — `<HeroStrand aria-hidden>`\n  // still compiles), so this strips autocomplete and rejects\n  // object-literal construction; the runtime guard below is the layer\n  // that actually enforces the contract, and the test pins it.\n  extends Omit<React.ComponentPropsWithoutRef<'svg'>, 'children' | 'aria-hidden'> {\n  /** Stable selector for E2E tests; consumer provides — no default (R5). */\n  'data-testid': string;\n  /**\n   * Draw the strand-b counter-crossing too — the weave at section\n   * scale. The counter starts 200ms behind the lead strand.\n   * @default false\n   */\n  counter?: boolean;\n}\n\nexport function HeroStrand({\n  'data-testid': testId,\n  counter = false,\n  className,\n  ...rest\n}: HeroStrandProps) {\n  // aria-hidden sits AFTER the rest spread on purpose: the strand is\n  // always-decorative — full stop — so a consumer's aria-hidden={false}\n  // must not win (review). The test contract pins this.\n  return (\n    <svg\n      viewBox=\"0 0 1200 160\"\n      preserveAspectRatio=\"none\"\n      data-slot=\"hero-strand\"\n      data-testid={testId}\n      className={cn(\n        'pointer-events-none absolute inset-0 h-full w-full',\n        className,\n      )}\n      {...rest}\n      aria-hidden=\"true\"\n    >\n      <path\n        data-slot=\"hero-strand-lead\"\n        d=\"M -20 96 C 200 40, 420 150, 640 88 S 1060 30, 1220 76\"\n        pathLength={100}\n        className=\"animate-strand-draw fill-none stroke-strand-a stroke-2 [stroke-dasharray:100] [stroke-dashoffset:100]\"\n      />\n      {counter && (\n        <path\n          data-slot=\"hero-strand-counter\"\n          d=\"M -20 60 C 240 130, 480 20, 720 100 S 1080 140, 1220 44\"\n          pathLength={100}\n          className=\"animate-strand-draw fill-none stroke-strand-b stroke-1 opacity-60 [animation-delay:200ms] [stroke-dasharray:100] [stroke-dashoffset:100]\"\n        />\n      )}\n    </svg>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": false,
+    "minViewport": null,
+    "loading": false,
+    "version": "2.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/hero-strand\n\nInstalled to `components/ui/effects/hero-strand.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/hero-strand';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/hero-strand\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

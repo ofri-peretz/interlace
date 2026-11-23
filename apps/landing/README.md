@@ -50,13 +50,12 @@ Three things worth knowing before you touch it:
 
 ## Adding components on demand
 
-`components.json` declares multiple shadcn registries — pull marketing/landing components as needed:
+`components.json` points at the Interlace registry — pull components as needed:
 
 ```bash
 npx shadcn@latest add button                       # shadcn official (Base UI variant)
-npx shadcn@latest add @magicui/marquee             # MagicUI
-npx shadcn@latest add @aceternity/spotlight        # Aceternity
-npx shadcn@latest add @originui/feature-grid       # Origin UI
+npx shadcn@latest add @interlace/starfield         # Interlace effects
+npx shadcn@latest add @interlace/focus-grid        # Interlace patterns
 ```
 
 Site-local components land under `src/components/`. The synced shared pool lives at `.interlace/components/`.

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "interlace-weave",
+  "type": "registry:ui",
+  "title": "Interlace Weave",
+  "description": "InterlaceWeave — the brand gesture as an interaction signature.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/effects/interlace-weave.tsx",
+      "target": "components/ui/effects/interlace-weave.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/interlace-weave v2.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/interlace-weave\n// What changed since: https://ds.interlace.tools/c/interlace-weave#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\nimport { cn } from '@/lib/utils';\n\n/**\n * InterlaceWeave — the brand gesture as an interaction signature.\n *\n * ## RFC (R3)\n *\n * Two thin strands — brand orange (`strand-a`) and its cool complement (`strand-b`),\n * the mark's own pair — draw along a surface's border from OPPOSITE\n * corners on hover/focus and overshoot past each other where they meet:\n * the name, enacted. Decorative overlay only; the host surface keeps its\n * own semantics, focus ring, and content.\n *\n * Travel signal (R2): HIGH — designed as a system gesture (cards now;\n * CTAs, inputs, doc panels later). Ship once here, reuse everywhere: a\n * memorable touch only compounds if it is ONE touch.\n *\n * ## Mechanics\n *\n * Pure CSS/SVG — zero JS, zero bundle beyond this file. Each strand is a\n * rounded-rect path normalized with `pathLength={100}` and revealed by a\n * `stroke-dashoffset` transition driven by the host's `group/weave`\n * hover/focus variants. Strand B's path starts at the opposite corner,\n * so the two tips cross at both meeting points (the 5-unit overshoot is\n * the \"weave\" moment).\n *\n * The svg deliberately has NO viewBox: rect geometry is in real pixels\n * (`calc(100% − inset)`), so there is no scale transform. Two earlier\n * shapes failed in rendering: a viewBox + `preserveAspectRatio=\"none\"`\n * needs `vector-effect: non-scaling-stroke` for uniform strokes, and\n * that makes Chromium compute dash patterns in SCREEN space — silently\n * discarding the `pathLength` normalization all the dash math rests on.\n * Unscaled geometry keeps `pathLength` honored, strokes uniform, and the\n * corner radius identical to the host's at every size.\n *\n * ## States\n *\n * - Rest: strands hidden (offset = 100).\n * - Hover: strands draw over 500ms (ease-out).\n * - Focus-within: fully drawn — the signature doubles as the affordance.\n * - Reduced motion: no transition; strands appear drawn at rest-hover\n *   states instantly (`motion-reduce:transition-none`).\n *\n * ## Host contract\n *\n * The host element must carry `group/weave` and `relative`. Example:\n *\n *   <a className=\"group/weave relative …\">\n *     <InterlaceWeave data-testid=\"card-weave\" />\n *     …content…\n *   </a>\n *\n * ## API parity (R17)\n *\n * Mirrors the house decorative-overlay shape (magicui `BorderBeam`):\n * absolutely positioned, `aria-hidden`, `pointer-events-none` (R23\n * decorative-chrome rule). Radius follows the host via a rect `rx` that\n * matches the DS card radius token scale.\n */\nexport interface InterlaceWeaveProps\n  extends React.ComponentPropsWithoutRef<'svg'> {\n  /** Stable selector for E2E tests; consumer provides — no default (R5). */\n  'data-testid': string;\n  /**\n   * Corner radius of the traced border, in px — match the host's radius\n   * (`rounded-lg` = 12).\n   * @default 12\n   */\n  radius?: number;\n}\n\n// Draw 55 of 100 path-units per strand — half the perimeter plus a\n// 5-unit overshoot past each meeting corner; strand B runs on a\n// slightly inset rect so the overlap shows two threads side by side.\nconst DRAWN = 'group-hover/weave:[stroke-dashoffset:0] group-focus-within/weave:[stroke-dashoffset:0]';\n\nexport function InterlaceWeave({\n  'data-testid': testId,\n  radius = 12,\n  className,\n  ...rest\n}: InterlaceWeaveProps) {\n  const strand = cn(\n    // Dash 55, gap 155 → period 210. Rendering at path point s samples\n    // pattern position (s + offset) — ground-truthed in the browser, the\n    // sign trips everyone — so blank-at-rest requires [offset, offset+100]\n    // ⊆ the gap [55, 210): offset ∈ [55, 110]. 55 is the zero-dead-time\n    // end: the dash tip sits exactly at the path start, so the draw\n    // begins the instant the hover transition does, and offset 0 shows\n    // the full 55-unit strand. (Three prior cuts shipped visibly drawn\n    // at rest — a modular 100-period pattern, then two sign-flipped\n    // parks. Every one read plausibly and failed only in rendering.)\n    'fill-none stroke-2 [stroke-dasharray:55_155] [stroke-dashoffset:55]',\n    'transition-[stroke-dashoffset] duration-500 ease-out motion-reduce:transition-none',\n    DRAWN,\n  );\n  return (\n    <svg\n      data-slot=\"interlace-weave\"\n      data-testid={testId}\n      aria-hidden\n      className={cn(\n        'pointer-events-none absolute inset-0 h-full w-full',\n        className,\n      )}\n      {...rest}\n    >\n      {/* Strand A — the mark's orange, from the top-left corner. */}\n      <rect\n        x=\"1\"\n        y=\"1\"\n        rx={radius}\n        pathLength={100}\n        className={cn(\n          strand,\n          'stroke-strand-a',\n          '[width:calc(100%_-_2px)] [height:calc(100%_-_2px)]',\n        )}\n      />\n      {/* Strand B — the cool counter, from the bottom-right corner: the\n          same rect rotated 180° about the svg center starts its dash at\n          the opposite corner, so the tips cross where the strands meet. */}\n      <rect\n        x=\"4\"\n        y=\"4\"\n        rx={Math.max(radius - 3, 2)}\n        pathLength={100}\n        className={cn(\n          strand,\n          'stroke-strand-b',\n          '[width:calc(100%_-_8px)] [height:calc(100%_-_8px)]',\n          'origin-center rotate-180',\n        )}\n      />\n    </svg>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": false,
+    "minViewport": null,
+    "loading": false,
+    "version": "2.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/interlace-weave\n\nInstalled to `components/ui/effects/interlace-weave.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/interlace-weave';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/interlace-weave\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}
