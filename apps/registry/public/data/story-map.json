@@ -845,6 +845,19 @@
     "previewDark": "blocks-figure--dark",
     "skeleton": null
   },
+  "flip-card": {
+    "title": "Blocks/FlipCard",
+    "storyIds": [
+      "blocks-flipcard--default",
+      "blocks-flipcard--grid",
+      "blocks-flipcard--starts-flipped",
+      "blocks-flipcard--dark",
+      "blocks-flipcard--rtl"
+    ],
+    "preview": "blocks-flipcard--default",
+    "previewDark": "blocks-flipcard--dark",
+    "skeleton": null
+  },
   "focus-grid": {
     "title": "Blocks/FocusGrid",
     "storyIds": [
