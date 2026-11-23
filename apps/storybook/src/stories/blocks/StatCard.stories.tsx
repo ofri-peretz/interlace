@@ -153,3 +153,8 @@ export const Tones: Story = {
     </div>
   ),
 };
+
+/** Number first, then what it counts: the layout public pages expect. */
+export const ValueFirst: Story = {
+  args: { ...Default.args, layout: 'value-first', label: 'Sources checked', value: '120', delta: undefined, footnote: undefined },
+};

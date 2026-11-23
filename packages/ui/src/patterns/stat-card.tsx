@@ -102,6 +102,12 @@ type StatCardProps = React.ComponentProps<'article'> &
     icon?: React.ReactNode;
     /** When true, render a `<Skeleton variant="stat-card" />` placeholder. */
     loading?: boolean;
+    /**
+     * Reading order. `label-first` (label, then value) suits dashboards that
+     * are scanned by label; `value-first` (big number, then what it counts)
+     * suits public pages where the number is the headline. @default 'label-first'
+     */
+    layout?: 'label-first' | 'value-first';
   };
 
 export function StatCard({
@@ -113,6 +119,7 @@ export function StatCard({
   footnote,
   icon,
   loading,
+  layout = 'label-first',
   ...props
 }: StatCardProps) {
   if (loading) {
@@ -124,27 +131,45 @@ export function StatCard({
       />
     );
   }
+  const iconNode = icon ? (
+    <span className="text-muted-foreground" aria-hidden>
+      {icon}
+    </span>
+  ) : null;
   return (
     <article
       data-slot="stat-card"
+      data-layout={layout}
       data-tone={tone ?? undefined}
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(statCardVariants({ tone, className }))}
       {...props}
     >
-      <div className="flex items-start justify-between gap-2">
-        <Typography variant="ui-sm" tone="muted">
-          {label}
-        </Typography>
-        {icon ? (
-          <span className="text-muted-foreground" aria-hidden>
-            {icon}
-          </span>
-        ) : null}
-      </div>
-      <Typography as="div" variant="h2" data-tabular-nums>
-        {value}
-      </Typography>
+      {layout === 'value-first' ? (
+        <>
+          <div className="flex items-start justify-between gap-2">
+            <Typography as="div" variant="h2" data-tabular-nums>
+              {value}
+            </Typography>
+            {iconNode}
+          </div>
+          <Typography variant="ui-sm" tone="muted">
+            {label}
+          </Typography>
+        </>
+      ) : (
+        <>
+          <div className="flex items-start justify-between gap-2">
+            <Typography variant="ui-sm" tone="muted">
+              {label}
+            </Typography>
+            {iconNode}
+          </div>
+          <Typography as="div" variant="h2" data-tabular-nums>
+            {value}
+          </Typography>
+        </>
+      )}
       {delta ? (
         <div className={cn('text-sm font-medium', deltaToneClass[tone ?? 'default'])}>
           {delta}

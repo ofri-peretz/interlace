@@ -14,7 +14,7 @@ const meta: Meta<typeof Topbar> = {
         component:
           'The one row every landing, docs and dashboard surface starts with: logo left, primary nav centre-right, action cluster right. Sticky with a translucent backdrop blur, so content scrolls visibly underneath without a colour seam.\n\n' +
           'It is framework-agnostic on purpose. `logo` is a slot rather than an `href`, and `renderLink` is the seam a Next.js or React Router consumer passes its own `<Link>` through — the DS never imports a router. External links opt out of that seam entirely and always render a plain `<a target="_blank">` with a trailing ↗.\n\n' +
-          '**The link cluster is hidden below 768px and nothing replaces it.** That is deliberate — a drawer needs app state and a portal, so the consumer composes Sheet + Drawer for the hamburger. If your only navigation is in `links`, the mobile view has no navigation at all.',
+          'Below 768px the links never disappear. By default they move behind a Menu button that opens a side sheet (`mobileNav="menu"`); `mobileNav="wrap"` shows them as a second row instead. Pass `currentHref` and the current link gets `aria-current="page"` and an underline, in the row and in the menu.',
       },
     },
   },
@@ -28,7 +28,7 @@ const meta: Meta<typeof Topbar> = {
     links: {
       control: 'object',
       description:
-        'Primary nav: `{ href, label, external? }`. `external: true` forces a plain `<a target="_blank" rel="noopener noreferrer">` with a ↗ affix and bypasses `renderLink`. Hidden below 768px.',
+        'Primary nav: `{ href, label, external? }`. `external: true` forces a plain `<a target="_blank" rel="noopener noreferrer">` with a ↗ affix and bypasses `renderLink`. Below 768px, see `mobileNav`.',
       table: { type: { summary: 'TopbarLink[]' }, defaultValue: { summary: '[]' }, category: 'Data' },
     },
     actions: {
@@ -36,6 +36,23 @@ const meta: Meta<typeof Topbar> = {
       description:
         'Right-aligned cluster — sign-in, a primary CTA, a theme toggle. Stays visible at every width, unlike `links`, so anything a phone user genuinely needs belongs here.',
       table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+    },
+    currentHref: {
+      control: 'text',
+      description: 'The current page. The link with this exact href gets `aria-current="page"` and the current style.',
+      table: { type: { summary: 'string' }, category: 'State' },
+    },
+    mobileNav: {
+      control: 'inline-radio',
+      options: ['menu', 'wrap', 'none'],
+      description:
+        'What the links do below 768px. `menu`: a Menu button opening a side sheet. `wrap`: a second, wrapping row. `none`: hidden, only when the page offers another route to them.',
+      table: { type: { summary: "'menu' | 'wrap' | 'none'" }, defaultValue: { summary: 'menu' }, category: 'Appearance' },
+    },
+    menuLabel: {
+      control: 'text',
+      description: 'Label of the small-screen menu button and title of the sheet.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: 'Menu' }, category: 'Content' },
     },
     containerSize: {
       control: 'inline-radio',
@@ -51,7 +68,7 @@ const meta: Meta<typeof Topbar> = {
     renderLink: {
       control: false,
       description:
-        'Render prop for internal links — `({ href, className, children }) => ReactElement`. Defaults to a plain `<a>`, which is a full page load; pass your framework\'s Link to get SPA navigation. The `className` argument carries the DS link styling and must be forwarded.',
+        'Render prop for internal links — `({ href, className, children, ...rest }) => ReactElement`. Defaults to a plain `<a>`, which is a full page load; pass your framework\'s Link to get SPA navigation. Forward `className` (the DS link styling) and `rest` (it carries `aria-current`).',
       table: { type: { summary: '(props) => ReactElement' }, category: 'Slots' },
     },
     className: {
@@ -108,3 +125,20 @@ export const NoActions: Story = {
 
 export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
+
+/** The current page is marked in the row and in the menu. */
+export const CurrentPage: Story = {
+  args: { ...Default.args, currentHref: sampleLinks[0]?.href },
+};
+
+/** Below 768px: a Menu button opens the links in a side sheet. */
+export const MobileMenu: Story = {
+  args: { ...Default.args, currentHref: sampleLinks[0]?.href },
+  parameters: { viewport: { defaultViewport: 'mobile1' } },
+};
+
+/** Below 768px: the links wrap into a second row instead. */
+export const MobileWrap: Story = {
+  args: { ...Default.args, mobileNav: 'wrap', currentHref: sampleLinks[0]?.href },
+  parameters: { viewport: { defaultViewport: 'mobile1' } },
+};

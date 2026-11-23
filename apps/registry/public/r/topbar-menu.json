@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "topbar-menu",
+  "type": "registry:ui",
+  "title": "Topbar Menu",
+  "description": "The small-screen half of `Topbar`: a \"Menu\" button that opens the site's links in a side sheet. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "navigation",
+    "pattern"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json",
+    "https://ds.interlace.tools/r/sheet.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/topbar-menu.tsx",
+      "target": "components/ui/patterns/topbar-menu.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport { MenuIcon } from 'lucide-react';\n\n// @interlace/topbar-menu v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/topbar-menu\n// What changed since: https://ds.interlace.tools/c/topbar-menu#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — TopbarMenu\n *\n * The small-screen half of `Topbar`: a \"Menu\" button that opens the site's\n * links in a side sheet. Topbar renders it for you below `md`; it is exported\n * on its own for headers that compose their own row.\n *\n * The links are rendered by the caller (Topbar renders them on the server)\n * and passed in as `children`, so this file holds only the open state. The\n * sheet comes from `Sheet` (Base UI Dialog): focus moves into it, the page\n * behind is inert, and Escape or a press outside closes it. Following a link\n * inside also closes it, so a client-side route change never leaves the menu\n * open over the new page.\n *\n * | Rule | Concept                 | Where in this file                                   |\n * | ---- | ----------------------- | ---------------------------------------------------- |\n * | R6   | data-slot per part      | topbar-menu-trigger / topbar-menu-nav                 |\n * | R12  | Reuse over wrap         | focus trap, inerting and dismissal come from Sheet    |\n * | R25  | Client component        | open state                                           |\n * | R26  | A11y from native el     | `<button>` with a text label, `<nav>` landmark        |\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';\n\nexport interface TopbarMenuProps {\n  /** The links, already rendered. Usually a list of anchors. */\n  children: React.ReactNode;\n  /** Visible label of the menu button, also the sheet's title. @default 'Menu' */\n  label?: string;\n  /** Accessible name of the navigation inside the sheet. @default 'Primary' */\n  navLabel?: string;\n  /** Extra classes for the trigger button. */\n  className?: string;\n}\n\nexport function TopbarMenu({ children, label = 'Menu', navLabel = 'Primary', className }: TopbarMenuProps) {\n  const [open, setOpen] = React.useState(false);\n  return (\n    <Sheet open={open} onOpenChange={setOpen}>\n      <SheetTrigger\n        data-slot=\"topbar-menu-trigger\"\n        className={cn(\n          'text-foreground hover:bg-muted focus-visible:ring-ring inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-medium focus-visible:ring-[3px] focus-visible:outline-hidden',\n          className,\n        )}\n      >\n        <MenuIcon aria-hidden className=\"size-5\" />\n        {label}\n      </SheetTrigger>\n      <SheetContent side=\"right\">\n        <SheetHeader>\n          <SheetTitle>{label}</SheetTitle>\n        </SheetHeader>\n        <nav\n          aria-label={navLabel}\n          data-slot=\"topbar-menu-nav\"\n          className=\"flex flex-col px-2 pb-6 text-base\"\n          onClick={(event) => {\n            if ((event.target as HTMLElement).closest('a')) setOpen(false);\n          }}\n        >\n          {children}\n        </nav>\n      </SheetContent>\n    </Sheet>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/topbar-menu\n\nInstalled to `components/ui/patterns/topbar-menu.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/topbar-menu';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/topbar-menu\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

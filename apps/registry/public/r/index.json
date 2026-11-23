@@ -1786,6 +1786,24 @@
       }
     },
     {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "A thin, full-width bar above the site header for a message that applies to the whole site: \"This site is still being written\", a scheduled outage, a new release. One line of text, an optional link, and an optional close button.",
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "brand-logo",
       "type": "registry:ui",
       "title": "Brand Logo",
@@ -2377,6 +2395,24 @@
         "loading": false,
         "version": "2.0.0",
         "since": "1.2.0"
+      }
+    },
+    {
+      "name": "topbar-menu",
+      "type": "registry:ui",
+      "title": "Topbar Menu",
+      "description": "The small-screen half of `Topbar`: a \"Menu\" button that opens the site's links in a side sheet. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {

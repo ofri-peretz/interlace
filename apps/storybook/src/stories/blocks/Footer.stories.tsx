@@ -158,3 +158,8 @@ export const Default: Story = {
 
 export const Dark: Story = { ...Default, globals: { theme: 'dark' } };
 export const RTL: Story = { ...Default, decorators: [withRtl] };
+
+/** A one-line tagline under the brand, no layout code needed. */
+export const WithTagline: Story = {
+  args: { ...Default.args, tagline: 'Answers to hard questions, with every source shown.' },
+};

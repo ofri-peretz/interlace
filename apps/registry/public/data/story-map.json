@@ -283,6 +283,20 @@
     "previewDark": "primitives-badge--dark",
     "skeleton": "primitives-badge--loading"
   },
+  "banner": {
+    "title": "Blocks/Banner",
+    "storyIds": [
+      "blocks-banner--default",
+      "blocks-banner--with-link-and-dismiss",
+      "blocks-banner--warning",
+      "blocks-banner--highlight",
+      "blocks-banner--dark",
+      "blocks-banner--rtl"
+    ],
+    "preview": "blocks-banner--default",
+    "previewDark": "blocks-banner--dark",
+    "skeleton": null
+  },
   "blog-home-template": {
     "title": "Templates/BlogHomeTemplate",
     "storyIds": [
@@ -913,7 +927,8 @@
     "storyIds": [
       "blocks-footer--default",
       "blocks-footer--dark",
-      "blocks-footer--rtl"
+      "blocks-footer--rtl",
+      "blocks-footer--with-tagline"
     ],
     "preview": "blocks-footer--default",
     "previewDark": "blocks-footer--dark",
@@ -1386,6 +1401,7 @@
     "storyIds": [
       "primitives-prose--default",
       "primitives-prose--variants",
+      "primitives-prose--fill-width",
       "primitives-prose--dark",
       "primitives-prose--rtl",
       "primitives-prose--below-min-viewport"
@@ -1890,7 +1906,8 @@
       "blocks-statcard--loading",
       "blocks-statcard--with-icon",
       "blocks-statcard--grid",
-      "blocks-statcard--tones"
+      "blocks-statcard--tones",
+      "blocks-statcard--value-first"
     ],
     "preview": "blocks-statcard--default",
     "previewDark": null,
@@ -2206,10 +2223,23 @@
       "blocks-topbar--default",
       "blocks-topbar--no-actions",
       "blocks-topbar--dark",
-      "blocks-topbar--rtl"
+      "blocks-topbar--rtl",
+      "blocks-topbar--current-page",
+      "blocks-topbar--mobile-menu",
+      "blocks-topbar--mobile-wrap"
     ],
     "preview": "blocks-topbar--default",
     "previewDark": "blocks-topbar--dark",
+    "skeleton": null
+  },
+  "topbar-menu": {
+    "title": "Blocks/TopbarMenu",
+    "storyIds": [
+      "blocks-topbarmenu--default",
+      "blocks-topbarmenu--keyboard"
+    ],
+    "preview": "blocks-topbarmenu--default",
+    "previewDark": null,
     "skeleton": null
   },
   "typography": {

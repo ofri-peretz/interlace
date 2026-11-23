@@ -29,6 +29,8 @@ interface StatGroupProps extends React.ComponentProps<'section'> {
   stats?: StatItem[];
   cols?: 2 | 3 | 4;
   loading?: boolean;
+  /** Reading order for every card; a card's own `layout` wins. @default 'label-first' */
+  layout?: StatItem['layout'];
 }
 
 /**
@@ -45,6 +47,7 @@ function StatGroup({
   stats = [],
   cols = 3,
   loading,
+  layout,
   className,
   ...props
 }: StatGroupProps) {
@@ -63,7 +66,7 @@ function StatGroup({
           ? Array.from({ length: cols }).map((_, i) => (
               <Skeleton key={i} variant="stat-card" label={null} />
             ))
-          : stats.map((stat, i) => <StatCard key={i} {...stat} />)}
+          : stats.map((stat, i) => <StatCard key={i} layout={layout} {...stat} />)}
       </Grid>
     </section>
   );

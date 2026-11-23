@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 154
+    "itemCount": 156
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 67,
-      "pattern": 38,
+      "pattern": 40,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,16 +40,16 @@
     },
     "category": {
       "primitive": 67,
-      "pattern": 38,
+      "pattern": 40,
       "blog": 30,
       "foundation": 22,
       "decorative": 21,
       "data": 21,
       "effect": 17,
       "form": 16,
+      "feedback": 13,
       "template": 13,
-      "feedback": 12,
-      "navigation": 10,
+      "navigation": 11,
       "overlay": 9,
       "marketing": 9,
       "chart": 8,
@@ -60,21 +60,21 @@
     },
     "rendering": {
       "server": 88,
-      "client": 66
+      "client": 68
     },
     "keyboard": {
-      "none": 119,
+      "none": 121,
       "handled": 35
     },
     "loading": {
-      "none": 122,
+      "none": 124,
       "built-in": 32
     },
     "minViewport": {
-      "320": 88,
+      "320": 89,
       "480": 7,
       "768": 1,
-      "inherited": 58
+      "inherited": 59
     }
   },
   "items": [
@@ -1148,6 +1148,72 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/badge.json",
       "item": "https://ds.interlace.tools/r/badge.json",
       "docs": "https://ds.interlace.tools/c/badge"
+    },
+    {
+      "name": "banner",
+      "title": "Banner",
+      "type": "registry:ui",
+      "summary": "A thin, full-width bar above the site header for a message that applies to the whole site: \"This site is still being written\", a scheduled outage, a new release. One line of text, an optional link, and an optional close button.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "BannerTone",
+          "values": [
+            "muted",
+            "info",
+            "success",
+            "warning",
+            "highlight"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "region"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "Banner",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/banner.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/banner.json",
+      "item": "https://ds.interlace.tools/r/banner.json",
+      "docs": "https://ds.interlace.tools/c/banner"
     },
     {
       "name": "blog-home-template",
@@ -8580,6 +8646,59 @@
       "docs": "https://ds.interlace.tools/c/tooltip"
     },
     {
+      "name": "topbar-menu",
+      "title": "Topbar Menu",
+      "type": "registry:ui",
+      "summary": "The small-screen half of `Topbar`: a \"Menu\" button that opens the site's links in a side sheet. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "TopbarMenu"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "sheet"
+      ],
+      "installsTo": [
+        "components/ui/patterns/topbar-menu.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json",
+      "item": "https://ds.interlace.tools/r/topbar-menu.json",
+      "docs": "https://ds.interlace.tools/c/topbar-menu"
+    },
+    {
       "name": "topbar",
       "title": "Topbar",
       "type": "registry:ui",
@@ -8603,6 +8722,7 @@
       "a11y": {
         "roles": [],
         "aria": [
+          "aria-current",
           "aria-label"
         ],
         "motion": {
@@ -8620,7 +8740,8 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "interlace-base"
+        "interlace-base",
+        "topbar-menu"
       ],
       "installsTo": [
         "components/ui/patterns/topbar.tsx"

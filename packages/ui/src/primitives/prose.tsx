@@ -18,6 +18,8 @@
  *
  * `variant="long"` switches the body to `--text-long` (17px / 1.7) for
  * extended reading per TYPOGRAPHY_PHILOSOPHY (Reading mode vs UI mode).
+ * `width="fill"` drops the 65ch cap for prose inside a card or panel.
+ * Headings use `font-heading`, like Typography, so one token restyles both.
  *
  * ## Anatomy
  *
@@ -45,7 +47,7 @@
  * | R4   | Extends native el + VariantProps | `React.ComponentProps<'article'> & VariantProps<...>`       |
  * | R6   | data-slot on root                | `data-slot="prose"` + data-variant                          |
  * | R7   | className merged + ...rest + ref | `cn(proseVariants(...), 'prose-interlace', className)`      |
- * | R8   | No `isXxx`; enum for variants    | `variant` is an enum (`default` / `long`)                   |
+ * | R8   | No `isXxx`; enum for variants    | `variant` (`default` / `long`), `width` (`measure` / `fill`) |
  * | R10  | Composition seam (`as` prop)     | `as` accepts `article` / `div` / `main` / `section`         |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; cva + arbitrary-variant utilities      |
@@ -85,12 +87,12 @@ type ProseElement = 'article' | 'div' | 'main' | 'section';
  */
 const PROSE_CASCADE = [
   // Headings — type scale + scroll-margin for deep-link anchors.
-  '[&_h1]:font-body [&_h1]:text-h1 [&_h1]:font-bold [&_h1]:tracking-display [&_h1]:text-balance [&_h1]:scroll-mt-16 [&_h1]:mt-16 [&_h1]:mb-6',
-  '[&_h2]:font-body [&_h2]:text-h2 [&_h2]:font-bold [&_h2]:tracking-heading [&_h2]:text-balance [&_h2]:scroll-mt-16 [&_h2]:mt-10 [&_h2]:mb-4',
-  '[&_h3]:font-body [&_h3]:text-h3 [&_h3]:font-semibold [&_h3]:tracking-heading [&_h3]:scroll-mt-16 [&_h3]:mt-10 [&_h3]:mb-4',
-  '[&_h4]:font-body [&_h4]:text-h4 [&_h4]:font-semibold [&_h4]:scroll-mt-16 [&_h4]:mt-6 [&_h4]:mb-2',
-  '[&_h5]:font-body [&_h5]:text-h5 [&_h5]:font-semibold [&_h5]:scroll-mt-16 [&_h5]:mt-6 [&_h5]:mb-2',
-  '[&_h6]:font-body [&_h6]:text-h6 [&_h6]:font-semibold [&_h6]:scroll-mt-16 [&_h6]:mt-6 [&_h6]:mb-2',
+  '[&_h1]:font-heading [&_h1]:text-h1 [&_h1]:font-bold [&_h1]:tracking-display [&_h1]:text-balance [&_h1]:scroll-mt-16 [&_h1]:mt-16 [&_h1]:mb-6',
+  '[&_h2]:font-heading [&_h2]:text-h2 [&_h2]:font-bold [&_h2]:tracking-heading [&_h2]:text-balance [&_h2]:scroll-mt-16 [&_h2]:mt-10 [&_h2]:mb-4',
+  '[&_h3]:font-heading [&_h3]:text-h3 [&_h3]:font-semibold [&_h3]:tracking-heading [&_h3]:scroll-mt-16 [&_h3]:mt-10 [&_h3]:mb-4',
+  '[&_h4]:font-heading [&_h4]:text-h4 [&_h4]:font-semibold [&_h4]:scroll-mt-16 [&_h4]:mt-6 [&_h4]:mb-2',
+  '[&_h5]:font-heading [&_h5]:text-h5 [&_h5]:font-semibold [&_h5]:scroll-mt-16 [&_h5]:mt-6 [&_h5]:mb-2',
+  '[&_h6]:font-heading [&_h6]:text-h6 [&_h6]:font-semibold [&_h6]:scroll-mt-16 [&_h6]:mt-6 [&_h6]:mb-2',
 
   // Paragraph rhythm.
   '[&_p]:my-4',
@@ -139,7 +141,7 @@ const proseVariants = cva(
   // Base — bound measure to --container-prose (65ch) so every body container
   // clears the "≤75ch" non-negotiable from TYPOGRAPHY_PHILOSOPHY. Token
   // foreground keeps AA in light + dark.
-  ['max-w-(--container-prose) text-foreground', PROSE_CASCADE].join(' '),
+  ['text-foreground', PROSE_CASCADE].join(' '),
   {
     variants: {
       /**
@@ -151,9 +153,20 @@ const proseVariants = cva(
         default: 'text-body leading-body',
         long: 'text-long leading-long',
       },
+      /**
+       * Line length. `measure` caps lines at --container-prose (65ch), the
+       * reading measure for a page column. `fill` takes the width of the
+       * parent, for prose inside a card, panel or table cell whose own width
+       * already sets a readable measure.
+       */
+      width: {
+        measure: 'max-w-(--container-prose)',
+        fill: 'max-w-none',
+      },
     },
     defaultVariants: {
       variant: 'default',
+      width: 'measure',
     },
   },
 );
@@ -179,7 +192,7 @@ interface ProseProps
  * with the measure bounded.
  */
 const Prose = React.forwardRef<HTMLElement, ProseProps>(
-  ({ className, variant, as, children, ...props }, ref) => {
+  ({ className, variant, width, as, children, ...props }, ref) => {
     const Tag = (as ?? 'article') as React.ElementType;
     const localRef = React.useRef<HTMLElement | null>(null);
 
@@ -215,7 +228,8 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
         data-slot="prose"
         data-min-viewport={String(MIN_VIEWPORT)}
         data-variant={variant ?? undefined}
-        className={cn(proseVariants({ variant }), 'prose-interlace', className)}
+        data-width={width ?? undefined}
+        className={cn(proseVariants({ variant, width }), 'prose-interlace', className)}
         {...props}
       >
         {children}
