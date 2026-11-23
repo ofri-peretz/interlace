@@ -101,7 +101,7 @@ function SheetOverlay({
       className={cn(
         // See dialog.tsx — `bg-black/50` is the deliberate scrim colour; a
         // theme-paired token would invert in dark mode.
-        'data-[open]:animate-in data-[open]:ease-enter data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 fixed inset-0 z-50 bg-black/50',
+        'data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 fixed inset-0 z-50 bg-black/50',
         className,
       )}
       {...props}

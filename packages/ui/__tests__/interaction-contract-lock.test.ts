@@ -58,6 +58,10 @@ describe('interaction contract lock', () => {
         expect(chain, `${f.path}: an exit animation without ease-exit`).toMatch(/:ease-exit\b/);
         expect(chain, `${f.path}: an exit with no duration token`).toMatch(/:duration-\(--duration-(fast|base)\)/);
         expect(chain, `${f.path}: an entry without ease-enter`).toMatch(/(^|[\s'])(data-\[?open\]?:)?ease-enter\b/);
+        expect(chain, `${f.path}: an entry with no duration token`).toMatch(
+          /(^|[\s'])(data-\[?open\]?:)?duration-\(--duration-(fast|base|medium)\)/,
+        );
+        expect(chain, `${f.path}: a raw duration a brand cannot retune`).not.toMatch(/(^|[\s'])duration-\d+\b/);
       }
     }
   });
