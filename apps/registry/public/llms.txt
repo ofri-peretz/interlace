@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 165 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 166 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,10 +43,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 98 server, 67 client
-- keyboard: 128 none, 37 handled
-- built-in loading state: 33 of 165
-- declared minViewport: 100 at 320, 7 at 480, 1 at 768, 57 at inherited
+- rendering: 98 server, 68 client
+- keyboard: 129 none, 37 handled
+- built-in loading state: 33 of 166
+- declared minViewport: 100 at 320, 7 at 480, 1 at 768, 58 at inherited
 
 ## Taxonomy
 
@@ -54,7 +54,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - tier `primitive` — 71 item(s)
 - tier `pattern` — 44 item(s)
-- tier `effect` — 18 item(s)
+- tier `effect` — 19 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
 - tier `util` — 5 item(s)
@@ -66,9 +66,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `blog` (Blog & long-form) — 35 item(s)
 - category `foundation` (Foundation) — 25 item(s)
 - category `data` (Data display) — 22 item(s)
-- category `effect` (Effects) — 18 item(s)
+- category `effect` (Effects) — 19 item(s)
 - category `form` (Form & input) — 17 item(s)
-- category `decorative` (Decorative) — 16 item(s)
+- category `decorative` (Decorative) — 17 item(s)
 - category `feedback` (Feedback) — 14 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `navigation` (Navigation) — 11 item(s)
@@ -556,6 +556,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Sky Backdrop](https://ds.interlace.tools/c/sky-backdrop): A calm daytime sky for a friendly hero: a soft gradient, a warm sun glow in one corner, and a few clouds drifting across. It suits pages that want warmth rather than drama, the light counterpart to `Starfield`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/sky-backdrop.json`
   - contract: client, states top-left|top-right|none, v1.0.0
+- [Split Text](https://ds.interlace.tools/c/split-text): A headline or short line that arrives a word, or a letter, at a time the first time it scrolls into view. It gives one line on a page a moment of attention; use it once or twice per page, on text short enough to read while it arrives.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/split-text.json`
+  - contract: client, v1.0.0
 - [Stagger List](https://ds.interlace.tools/c/stagger-list): A list whose items arrive one after another the first time it scrolls into view: steps of a process, recent updates, the points of an argument. The arrival gives the eye an order to read in; the list itself is ordinary.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stagger-list.json`
   - contract: client, v1.0.0

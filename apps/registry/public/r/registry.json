@@ -1732,6 +1732,24 @@
       }
     },
     {
+      "name": "split-text",
+      "type": "registry:ui",
+      "title": "Split Text",
+      "description": "A headline or short line that arrives a word, or a letter, at a time the first time it scrolls into view. It gives one line on a page a moment of attention; use it once or twice per page, on text short enough to read while it arrives.",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "stagger-list",
       "type": "registry:ui",
       "title": "Stagger List",

@@ -32,6 +32,7 @@ const { CountUp } = await import("../src/effects/count-up.js");
 const { Scroller } = await import("../src/effects/scroller.js");
 const { StaggerList } = await import("../src/effects/stagger-list.js");
 const { Reveal } = await import("../src/effects/reveal.js");
+const { SplitText } = await import("../src/effects/split-text.js");
 const { SheenText } = await import("../src/effects/sheen-text.js");
 const { Sheen } = await import("../src/effects/sheen.js");
 const { EdgeGlow } = await import("../src/effects/edge-glow.js");
@@ -561,6 +562,112 @@ describe("Reveal", () => {
     );
     expect(el.style.opacity).toBe("");
     expect(el.dataset.revealed).toBe("true");
+    expect(animateSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe("SplitText", () => {
+  it("arrives piece by piece when it scrolls into view, and only once", () => {
+    let callback!: IntersectionObserverCallback;
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class {
+        constructor(cb: IntersectionObserverCallback) {
+          callback = cb;
+        }
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+        takeRecords() {
+          return [];
+        }
+      },
+    );
+    const { container, rerender } = render(
+      <SplitText delay={100} step={50}>
+        One two three
+      </SplitText>,
+    );
+    const el = container.querySelector<HTMLElement>(
+      '[data-slot="split-text"]',
+    )!;
+    const pieces = () => [
+      ...container.querySelectorAll<HTMLElement>(
+        '[data-slot="split-text-piece"]',
+      ),
+    ];
+    expect(pieces().every((p) => p.style.opacity === "0")).toBe(true);
+    act(() =>
+      callback(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      ),
+    );
+    // One animation per piece, each `step` after the last, after `delay`.
+    expect(animateSpy).toHaveBeenCalledTimes(3);
+    expect(
+      animateSpy.mock.calls.map(
+        ([, o]) => (o as KeyframeAnimationOptions).delay,
+      ),
+    ).toEqual([100, 150, 200]);
+    expect(pieces().every((p) => p.style.opacity === "")).toBe(true);
+    expect(el.dataset.revealed).toBe("true");
+    animateSpy.mockClear();
+    // A prop change after it has played does not hide it or play it again.
+    rerender(
+      <SplitText delay={100} step={50} effect="fade">
+        One two three
+      </SplitText>,
+    );
+    expect(pieces().every((p) => p.style.opacity === "")).toBe(true);
+    expect(el.dataset.revealed).toBe("true");
+    expect(animateSpy).not.toHaveBeenCalled();
+  });
+
+  it("reads the whole line once and hides the pieces from assistive tech", () => {
+    const html = renderToStaticMarkup(
+      <SplitText as="h2">Ask a better question</SplitText>,
+    );
+    expect(html).toContain('<h2 data-slot="split-text" data-by="word"');
+    expect(html).toContain(
+      '<span class="sr-only">Ask a better question</span>',
+    );
+    expect(html).toContain('aria-hidden="true"');
+    expect(html.match(/data-slot="split-text-piece"/g)).toHaveLength(4);
+    expect(html).not.toContain("opacity");
+  });
+
+  it("keeps each word whole when it splits by letter", () => {
+    const { container } = render(<SplitText by="letter">Hi you</SplitText>);
+    const words = container.querySelectorAll(
+      '[data-slot="split-text-visual"] > span',
+    );
+    expect(words).toHaveLength(2);
+    expect(words[0]!.className).toContain("whitespace-nowrap");
+    expect(
+      container.querySelectorAll('[data-slot="split-text-piece"]'),
+    ).toHaveLength(5);
+  });
+
+  it("hides pieces until the line scrolls in when motion is allowed", () => {
+    const { container } = render(<SplitText>One two</SplitText>);
+    const pieces = [
+      ...container.querySelectorAll<HTMLElement>(
+        '[data-slot="split-text-piece"]',
+      ),
+    ];
+    expect(pieces.every((p) => p.style.opacity === "0")).toBe(true);
+  });
+
+  it("is simply there under reduced motion", () => {
+    reduced.value = true;
+    const { container } = render(<SplitText>One two</SplitText>);
+    const pieces = [
+      ...container.querySelectorAll<HTMLElement>(
+        '[data-slot="split-text-piece"]',
+      ),
+    ];
+    expect(pieces.every((p) => p.style.opacity === "")).toBe(true);
     expect(animateSpy).not.toHaveBeenCalled();
   });
 });
