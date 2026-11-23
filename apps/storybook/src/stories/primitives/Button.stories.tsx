@@ -58,7 +58,7 @@ const meta: Meta<typeof Button> = {
     disabled: {
       control: 'boolean',
       description:
-        'Blocks pointer events and drops to 50% opacity. There is no `loading` variant — see the Loading story for the canon.',
+        'Blocks pointer events and drops to 50% opacity. For work in progress use `loading` instead, which keeps focus and size: see the Loading story.',
       table: { category: 'State', defaultValue: { summary: 'false' } },
     },
     type: {

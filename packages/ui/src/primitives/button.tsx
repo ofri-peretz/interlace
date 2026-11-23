@@ -55,7 +55,9 @@ type ButtonProps = React.ComponentProps<'button'> &
     render?: useRender.RenderProp;
     /**
      * Busy: show a spinner over the label, keep the size and focus, and
-     * ignore clicks until it is false again.
+     * ignore clicks until it is false again. The click still bubbles, as it
+     * does for any `aria-disabled` control, so a clickable parent should
+     * check `aria-busy` if it must ignore it too.
      */
     loading?: boolean;
   };

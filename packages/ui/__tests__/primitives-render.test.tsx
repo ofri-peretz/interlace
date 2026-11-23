@@ -505,6 +505,19 @@ describe('Button', () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
+  it('loading with a render element: keeps the element and its href, adds the spinner', () => {
+    const { container } = render(
+      <Button render={<a href="/next" />} loading>
+        Go
+      </Button>,
+    );
+    const el = slot(container, 'button')!;
+    expect(el.tagName).toBe('A');
+    expect(el.getAttribute('href')).toBe('/next');
+    expect(el.getAttribute('aria-busy')).toBe('true');
+    expect(el.querySelector('[data-slot="button-spinner"]')).not.toBeNull();
+  });
+
   it('not loading: no spinner, clicks pass through', () => {
     const onClick = vi.fn();
     const { container } = render(<Button onClick={onClick}>Save</Button>);
