@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T16:10:24.875Z",
+  "generatedAt": "2026-11-23T18:42:28.607Z",
   "source": "apps/storybook/src/stories/concepts",
   "pages": [
     {
@@ -1302,7 +1302,7 @@
         {
           "type": "code",
           "lang": "ts",
-          "code": "cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {\n  variants: {\n    size: {\n      prose:   'max-w-[65ch]',\n      content: 'max-w-[1024px]',   // default\n      wide:    'max-w-[1280px]',\n      full:    'max-w-none px-0 xs:px-0 lg:px-0',\n    },\n  },\n});"
+          "code": "cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {\n  variants: {\n    size: {\n      prose:   'max-w-(--container-prose)',\n      content: 'max-w-(--container-content)',   // default\n      wide:    'max-w-(--container-wide)',\n      full:    'max-w-none px-0 xs:px-0 lg:px-0',\n    },\n  },\n});"
         },
         {
           "type": "paragraph",

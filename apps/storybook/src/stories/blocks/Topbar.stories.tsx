@@ -47,6 +47,17 @@ const meta: Meta<typeof Topbar> = {
         'The current page. The link with this exact href gets `aria-current="page"` and the current style.',
       table: { type: { summary: "string" }, category: "State" },
     },
+    collapseBelow: {
+      control: "inline-radio",
+      options: ["md", "lg", "xl"],
+      description:
+        "The width below which the row of links gives way to the menu. Pick the one at which your links still fit on one line: `md` for three or four short links, `lg` for five or six, `xl` for more.",
+      table: {
+        type: { summary: "'md' | 'lg' | 'xl'" },
+        defaultValue: { summary: "md" },
+        category: "Appearance",
+      },
+    },
     mobileNav: {
       control: "inline-radio",
       options: ["menu", "wrap", "none"],
@@ -172,5 +183,30 @@ export const MobileWrap: Story = {
     mobileNav: "wrap",
     currentHref: sampleLinks[0]?.href,
   },
+  parameters: { viewport: { defaultViewport: "mobile1" } },
+};
+
+const manyLinks = [
+  { href: "/questions", label: "Questions we tested" },
+  { href: "/answers", label: "Answers" },
+  { href: "/sources", label: "Sources" },
+  { href: "/method", label: "How we check" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+
+/**
+ * Six links at 820px: with `collapseBelow="lg"` they sit behind the menu until
+ * there is room for all of them on one line, instead of each wrapping in two.
+ */
+export const ManyLinks: Story = {
+  args: { ...Default.args, links: manyLinks, collapseBelow: "lg" },
+  parameters: { viewport: { defaultViewport: "tablet" } },
+};
+
+/** An RTL page on a phone: the menu opens from the left. */
+export const RTLMobileMenu: Story = {
+  args: { ...Default.args, menuSide: "left" },
+  decorators: [withRtl],
   parameters: { viewport: { defaultViewport: "mobile1" } },
 };

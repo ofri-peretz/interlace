@@ -1877,7 +1877,7 @@
       "name": "container",
       "title": "Container",
       "type": "registry:ui",
-      "summary": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).",
+      "summary": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one layout token, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).",
       "topics": [],
       "categories": [
         "foundation",
@@ -8781,7 +8781,7 @@
       "name": "timeline",
       "title": "Timeline",
       "type": "registry:ui",
-      "summary": "A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on one horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…",
+      "summary": "A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on a horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…",
       "topics": [],
       "categories": [
         "blog",
@@ -8797,22 +8797,7 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [
-        {
-          "name": "TimelineOrientation",
-          "values": [
-            "responsive",
-            "vertical"
-          ]
-        },
-        {
-          "name": "TimelineMarker",
-          "values": [
-            "default",
-            "accent"
-          ]
-        }
-      ],
+      "states": [],
       "a11y": {
         "roles": [],
         "aria": [],

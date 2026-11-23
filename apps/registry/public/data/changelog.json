@@ -391,6 +391,19 @@
           "source": ".changeset/kbd.md"
         },
         {
+          "summary": "Layout fixes found on a real wide-screen page:\n\n- Timeline: in a wide column each event gets at least 13rem. More events than fit wrap onto a second row with its own rule, instead of squeezing into thin strips.\n- Container: `prose`, `content` and `wide` read `--container-prose`, `--container-content` and `--container-wide`, the same tokens as Topbar and Footer, so retuning a token moves every edge together.\n- Topbar: row links never wrap onto two lines, and a new `collapseBelow` prop (`md`, `lg`, `xl`; default `md`) sets the width below which the links move into the menu.",
+          "components": [
+            "timeline",
+            "container",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/layout-fit.md"
+        },
+        {
           "summary": "Any element can now force the light scheme with `data-scheme=\"light\"`, the mirror of `class=\"dark\"`. A light panel inside a dark page gets the light palette, the light semantic colours and `color-scheme: light`, so its scrollbars and form controls match. This works for every theme, Harbor included.",
           "components": [
             "interlace-base"

@@ -21,10 +21,12 @@
  *
  * ## MIN_VIEWPORT — 320
  *
- * Below 768 the links never disappear. By default they move into a "Menu"
- * button that opens a swipeable side panel (`TopbarMenu`); `mobileNav="wrap"` shows
- * them as a second, wrapping row instead, which suits sites with three or
- * four short links. Above 768, the nav row is visible.
+ * Below `collapseBelow` (768 by default) the links never disappear. By
+ * default they move into a "Menu" button that opens a swipeable side panel
+ * (`TopbarMenu`); `mobileNav="wrap"` shows them as a second, wrapping row
+ * instead, which suits sites with three or four short links. Above it, the
+ * nav row is visible, and a link never wraps onto two lines: a site with
+ * more links than fit at 768 sets `collapseBelow="lg"` or `"xl"`.
  *
  * ## Logo height
  *
@@ -94,7 +96,14 @@ interface TopbarProps extends React.ComponentProps<"header"> {
    */
   currentHref?: string;
   /**
-   * What the links do below md: `menu` puts them behind a Menu button in a
+   * The width below which the row of links gives way to `mobileNav`. Pick the
+   * one at which your links still fit on one line: `md` (768px) suits three or
+   * four short links, `lg` (1024px) five or six, `xl` (1280px) more.
+   * @default 'md'
+   */
+  collapseBelow?: "md" | "lg" | "xl";
+  /**
+   * What the links do below `collapseBelow`: `menu` puts them behind a Menu button in a
    * swipeable side panel, `wrap` shows them as a second row, `none` hides them (only
    * when the page offers another way to reach them). @default 'menu'
    */
@@ -137,9 +146,16 @@ const CONTAINER_CLASSES = {
 
 /** Link styles per place. Current = foreground + underline, never colour alone. */
 const LINK = {
-  row: "text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[1.15rem] transition-colors",
+  row: "whitespace-nowrap text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[1.15rem] transition-colors",
   wrap: "text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-4 inline-flex min-h-11 items-center transition-colors",
   menu: "text-foreground hover:bg-muted aria-[current=page]:bg-muted flex min-h-11 items-center rounded-md px-3 font-medium aria-[current=page]:font-semibold",
+} as const;
+
+/** Each breakpoint spelled out, so Tailwind sees every class it needs. */
+const COLLAPSE = {
+  md: { row: "md:flex", actions: "md:gap-4", small: "md:hidden" },
+  lg: { row: "lg:flex", actions: "lg:gap-4", small: "lg:hidden" },
+  xl: { row: "xl:flex", actions: "xl:gap-4", small: "xl:hidden" },
 } as const;
 
 function renderLinks(
@@ -187,11 +203,13 @@ function Topbar({
   mobileNav = "menu",
   menuLabel = "Menu",
   menuSide = "right",
+  collapseBelow = "md",
   renderLink = defaultRenderLink,
   className,
   ...props
 }: TopbarProps) {
   const hasLinks = links.length > 0;
+  const at = COLLAPSE[collapseBelow];
   return (
     <header
       data-slot="topbar"
@@ -212,16 +230,16 @@ function Topbar({
         {hasLinks ? (
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-6 text-sm md:flex"
+            className={cn("hidden items-center gap-6 text-sm", at.row)}
           >
             {renderLinks(links, "row", currentHref, renderLink)}
           </nav>
         ) : null}
         {actions || (hasLinks && mobileNav === "menu") ? (
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className={cn("flex items-center gap-2", at.actions)}>
             {actions}
             {hasLinks && mobileNav === "menu" ? (
-              <div className="md:hidden">
+              <div className={at.small}>
                 <TopbarMenu label={menuLabel} side={menuSide}>
                   {renderLinks(links, "menu", currentHref, renderLink)}
                 </TopbarMenu>
@@ -234,7 +252,10 @@ function Topbar({
         <nav
           aria-label="Primary"
           data-slot="topbar-wrap-nav"
-          className="flex flex-wrap items-center gap-x-5 px-6 pb-1 text-sm md:hidden"
+          className={cn(
+            "flex flex-wrap items-center gap-x-5 px-6 pb-1 text-sm",
+            at.small,
+          )}
         >
           {renderLinks(links, "wrap", currentHref, renderLink)}
         </nav>
