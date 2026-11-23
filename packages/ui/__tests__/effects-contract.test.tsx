@@ -36,8 +36,12 @@ const { EdgeGlow } = await import('../src/effects/edge-glow.js');
 const { GridField, gridFieldCells } = await import('../src/effects/grid-field.js');
 const { HeroCosmic } = await import('../src/patterns/hero-cosmic.js');
 
+const observed: Element[] = [];
+
 class StubObserver {
-  observe() {}
+  observe(target: Element) {
+    observed.push(target);
+  }
   unobserve() {}
   disconnect() {}
   takeRecords() {
@@ -71,6 +75,7 @@ const animateSpy = vi.fn(() => ({ play: vi.fn(), pause: vi.fn(), cancel: vi.fn()
 
 beforeEach(() => {
   reduced.value = false;
+  observed.length = 0;
   vi.stubGlobal('IntersectionObserver', StubObserver);
   vi.stubGlobal('ResizeObserver', StubObserver);
   animateSpy.mockClear();
@@ -403,6 +408,12 @@ describe('Sheen and EdgeGlow', () => {
     expect(container.firstElementChild).toBeNull();
   });
 
+  it('Sheen watches its still layer, not the band that travels past the edges', () => {
+    const { container } = render(<Sheen />);
+    expect(observed).toContain(container.querySelector('[data-slot="sheen"]'));
+    expect(observed).not.toContain(container.querySelector('[data-slot="sheen-band"]'));
+  });
+
   it('EdgeGlow holds its arc still under reduced motion instead of vanishing', () => {
     reduced.value = true;
     const { container } = render(<EdgeGlow />);
@@ -483,5 +494,13 @@ describe('GridField', () => {
     const html = renderToStaticMarkup(<GridField />);
     expect(html).toContain('var(--border)');
     expect(html).toContain('var(--primary)');
+  });
+});
+
+describe('gridFieldCells', () => {
+  it("defaults to GridField's own board, so its cells can reach every column and row", () => {
+    const cells = gridFieldCells(400, 1);
+    expect(Math.max(...cells.map(([c]) => c))).toBe(31);
+    expect(Math.max(...cells.map(([, r]) => r))).toBe(15);
   });
 });

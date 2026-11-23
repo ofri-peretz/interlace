@@ -89,7 +89,8 @@ export function Sheen({
             if (entry?.isIntersecting) animation.play();
             else animation.pause();
           });
-    io?.observe(band);
+    // The band moves past the edges; the layer it sits in never does.
+    io?.observe(band.parentElement ?? band);
     return () => {
       io?.disconnect();
       animation.cancel();

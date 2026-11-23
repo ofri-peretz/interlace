@@ -76,8 +76,12 @@ function seeded(seed: number) {
   };
 }
 
-/** Cell positions (column, row) for `count` lit cells on a `cols × rows` board. */
-export function gridFieldCells(count: number, seed: number, cols = 24, rows = 12) {
+/** The board `GridField` lights cells on: columns and rows of `cell`-sized squares. */
+const COLS = 32;
+const ROWS = 16;
+
+/** Cell positions (column, row) for `count` lit cells, on `GridField`'s board unless you name another. */
+export function gridFieldCells(count: number, seed: number, cols = COLS, rows = ROWS) {
   const next = seeded(seed);
   const taken = new Set<string>();
   const cells: Array<[number, number]> = [];
@@ -118,9 +122,6 @@ export interface GridFieldProps extends Omit<React.ComponentPropsWithoutRef<'div
   interactive?: boolean;
 }
 
-const COLS = 32;
-const ROWS = 16;
-
 export function GridField({
   mark = 'lines',
   cell = 40,
@@ -142,7 +143,7 @@ export function GridField({
   const svgRef = React.useRef<SVGSVGElement>(null);
   const reduced = useReducedMotion();
   const moving = animated && !reduced;
-  const seededCells = React.useMemo(() => gridFieldCells(lit, seed, COLS, ROWS), [lit, seed]);
+  const seededCells = React.useMemo(() => gridFieldCells(lit, seed), [lit, seed]);
   const cells = chosenCells ?? seededCells;
   const peak = Math.min(Math.max(intensity, 0), 1);
 
