@@ -10,10 +10,9 @@
  * It is chrome only — it renders whatever you nest inside it and has no
  * opinion about the content.
  *
- * Modeled on MagicUI's `Terminal` chrome (the dots + bar layout convention)
- * but reduced to the visual primitive — no animation, no terminal-specific
- * line emitter. Reach for MagicUI's `Terminal` when you want the typed-prompt
- * animation; reach for this when you want a window-shaped container.
+ * The three dots and the title bar are the familiar desktop-window
+ * convention, so a reader knows at a glance that the content is "something on
+ * a screen". It is a still container: no typing animation, no prompt.
  *
  * ## Anatomy
  *

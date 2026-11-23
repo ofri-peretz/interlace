@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T02:39:38.810Z",
+  "generatedAt": "2026-11-23T03:38:55.049Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -624,104 +624,6 @@
       "states": [],
       "coverage": {
         "inGate": true
-      }
-    },
-    "animated-gradient-text": {
-      "sourcePath": "packages/ui/src/magicui/animated-gradient-text.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "animated-grid-pattern": {
-      "sourcePath": "packages/ui/src/magicui/animated-grid-pattern.tsx",
-      "keyboard": null,
-      "contrast": [
-        {
-          "fg": "muted-foreground",
-          "bg": "background",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "secondary copy",
-          "ratios": [
-            9.41,
-            11.32,
-            7.82,
-            9.52
-          ],
-          "worst": 7.82,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
-          "fg": "muted-foreground",
-          "bg": "card",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "secondary copy in a card",
-          "ratios": [
-            9.41,
-            10.48,
-            8.25,
-            8.64
-          ],
-          "worst": 8.25,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        }
-      ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "animated-list": {
-      "sourcePath": "packages/ui/src/magicui/animated-list.tsx",
-      "keyboard": null,
-      "contrast": [
-        {
-          "fg": "foreground",
-          "bg": "background",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "body copy",
-          "ratios": [
-            19.65,
-            16.97,
-            17.74,
-            16.19
-          ],
-          "worst": 16.19,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "dark"
-          },
-          "passes": true
-        }
-      ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
       }
     },
     "article-card": {
@@ -1848,19 +1750,6 @@
           "passes": true
         }
       ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "border-beam": {
-      "sourcePath": "packages/ui/src/magicui/border-beam.tsx",
-      "keyboard": null,
-      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -4295,6 +4184,19 @@
         "inGate": false
       }
     },
+    "count-up": {
+      "sourcePath": "packages/ui/src/effects/count-up.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "cta-section": {
       "sourcePath": "packages/ui/src/patterns/cta-section.tsx",
       "keyboard": null,
@@ -5360,19 +5262,6 @@
         "inGate": false
       }
     },
-    "dot-pattern": {
-      "sourcePath": "packages/ui/src/patterns/dot-pattern.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
     "dropdown-menu": {
       "sourcePath": "packages/ui/src/primitives/dropdown-menu.tsx",
       "keyboard": {
@@ -5522,6 +5411,19 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "edge-glow": {
+      "sourcePath": "packages/ui/src/effects/edge-glow.tsx",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -6409,8 +6311,8 @@
         "inGate": false
       }
     },
-    "grid-pattern": {
-      "sourcePath": "packages/ui/src/patterns/grid-pattern.tsx",
+    "grid-field": {
+      "sourcePath": "packages/ui/src/effects/grid-field.tsx",
       "keyboard": null,
       "contrast": [],
       "textAlternative": {
@@ -6824,19 +6726,6 @@
         "inGate": true
       }
     },
-    "interactive-grid-pattern": {
-      "sourcePath": "packages/ui/src/patterns/interactive-grid-pattern.tsx",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
     "interlace-base": {
       "sourcePath": "packages/ui/styles/base.css",
       "keyboard": null,
@@ -7074,39 +6963,6 @@
       "states": [],
       "coverage": {
         "inGate": true
-      }
-    },
-    "marquee": {
-      "sourcePath": "packages/ui/src/magicui/marquee.tsx",
-      "keyboard": null,
-      "contrast": [
-        {
-          "fg": "foreground",
-          "bg": "background",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "body copy",
-          "ratios": [
-            19.65,
-            16.97,
-            17.74,
-            16.19
-          ],
-          "worst": 16.19,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "dark"
-          },
-          "passes": true
-        }
-      ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
       }
     },
     "mdx-starter": {
@@ -7808,39 +7664,6 @@
         "inGate": false
       }
     },
-    "number-ticker": {
-      "sourcePath": "packages/ui/src/magicui/number-ticker.tsx",
-      "keyboard": null,
-      "contrast": [
-        {
-          "fg": "foreground",
-          "bg": "background",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "body copy",
-          "ratios": [
-            19.65,
-            16.97,
-            17.74,
-            16.19
-          ],
-          "worst": 16.19,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "dark"
-          },
-          "passes": true
-        }
-      ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
     "page-header": {
       "sourcePath": "packages/ui/src/patterns/page-header.tsx",
       "keyboard": null,
@@ -7929,39 +7752,6 @@
       "states": [],
       "coverage": {
         "inGate": true
-      }
-    },
-    "particles": {
-      "sourcePath": "packages/ui/src/magicui/particles.tsx",
-      "keyboard": null,
-      "contrast": [
-        {
-          "fg": "foreground",
-          "bg": "background",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "body copy",
-          "ratios": [
-            19.65,
-            16.97,
-            17.74,
-            16.19
-          ],
-          "worst": 16.19,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "dark"
-          },
-          "passes": true
-        }
-      ],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
       }
     },
     "popover": {
@@ -9222,6 +9012,77 @@
         "inGate": false
       }
     },
+    "scroller": {
+      "sourcePath": "packages/ui/src/effects/scroller.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.8,
+            11.79,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.65,
+            16.97,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "section-boundary": {
       "sourcePath": "packages/ui/src/primitives/section-boundary.tsx",
       "keyboard": null,
@@ -9850,6 +9711,32 @@
         "inGate": false
       }
     },
+    "sheen-text": {
+      "sourcePath": "packages/ui/src/effects/sheen-text.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "sheen": {
+      "sourcePath": "packages/ui/src/effects/sheen.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "sheet": {
       "sourcePath": "packages/ui/src/primitives/sheet.tsx",
       "keyboard": {
@@ -9976,44 +9863,6 @@
       "textAlternative": {
         "kind": "sr-only-copy",
         "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
-      }
-    },
-    "shimmer-button": {
-      "sourcePath": "packages/ui/src/magicui/shimmer-button.tsx",
-      "keyboard": {
-        "storyId": "magicui-shimmerbutton--keyboard-activation",
-        "storyExport": "KeyboardActivation",
-        "storyFile": "apps/storybook/src/stories/magicui/ShimmerButton.stories.tsx",
-        "steps": [
-          {
-            "title": "Tab focuses the button",
-            "keys": [
-              "Tab"
-            ]
-          },
-          {
-            "title": "Enter activates the button",
-            "keys": [
-              "Enter"
-            ]
-          },
-          {
-            "title": "Space activates the button",
-            "keys": [
-              "Space"
-            ]
-          }
-        ],
-        "escapeLocked": false
-      },
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
       },
       "states": [],
       "coverage": {
@@ -10421,6 +10270,19 @@
       "states": [],
       "coverage": {
         "inGate": true
+      }
+    },
+    "stagger-list": {
+      "sourcePath": "packages/ui/src/effects/stagger-list.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "stance-list": {

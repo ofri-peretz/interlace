@@ -203,10 +203,10 @@ function Specimen() {
         file="styles/structure/motion.css"
         owns="Structure: keyframes, motion timings, animation utility classes. No semantic meaning — the mechanical primitives everything else spends. Classes sit in Tailwind's components layer, so a call-site utility still wins."
       >
-        <Probe name="--animate-marquee" />
+        <Probe name="--animate-strand-draw" />
         <Typography variant="caption" tone="muted">
           Registered as a Tailwind theme key, so{' '}
-          <code className="font-mono">animate-marquee</code> exists as a
+          <code className="font-mono">animate-strand-draw</code> exists as a
           utility. This layer also enumerates every long-running animation in
           the <code className="font-mono">prefers-reduced-motion</code> clamp.
         </Typography>

@@ -18,6 +18,20 @@ The Interlace community: design system, Storybook, and the **interlace.tools** l
 | [`docs/philosophies/`](./docs/philosophies/) | — | The 27 `*_PHILOSOPHY.md` source-of-truth charters — typography / layout / color / motion / a11y / keyboard / loading / forms / etc. Projected into Storybook by `npm run sync:philosophies`; never edit the generated `apps/storybook/src/stories/philosophy/*.mdx` by hand. |
 | [`DESIGN_PRINCIPLES.md`](./DESIGN_PRINCIPLES.md) | — | The 14-principle look-and-feel charter that governs every surface. |
 
+## What Interlace does differently
+
+Interlace is a shadcn registry, so it starts where shadcn does: you install source, not a package, and the file is yours. What it adds is a set of commitments, each one checked by a test rather than promised in prose.
+
+- **Themed by CSS variables, in four layers.** A brand file sets the palette, a semantics file gives the colours their jobs (`--primary`, `--scrim`, `--highlight`), a structure layer owns type, radius, layout and motion, and a page layer sets the defaults for a document. Each lives in its own cascade layer, so restyling a site means changing a few variables in one file, not overriding classes in many.
+- **No custom classes needed.** Components cover the cases a real site meets through props, variants and composition. A phone menu is `mobileNav`, a full-width prose column is `width="fill"`, an animated button is a `Button` with a `<Sheen />` inside. If you find yourself writing a `className` to get something ordinary, that is a gap in Interlace, and we want to hear about it.
+- **Composition over configuration.** Compound components (`ClaimCard.Claim`, `FocusGrid.Item`) and slots let you arrange the parts yourself, while each part keeps its semantics and its accessibility wiring.
+- **Accessible by construction.** Semantics come from native elements first. Colour contrast is computed from the tokens in both schemes, so a palette change that breaks AA fails a test before anyone sees it. Every story runs through axe in light, dark and right-to-left.
+- **Motion that respects people.** Every animation stops under `prefers-reduced-motion`, decoration is hidden from assistive tech and from the pointer, anything that moves for long has a visible pause control, and animations sleep when they are off screen. The effects need no keyframes in your stylesheet.
+- **Server first.** A component that needs no browser state is a server component. Content that animates still renders in full on the server, so readers without scripts, crawlers and screen readers get the real text and the real numbers.
+- **Patterns for content, not only for apps.** Alongside the usual controls, Interlace ships the pieces that sites built around reading need: claims with their sources, citations, both sides of a question side by side, dialogue, stances, and site chrome that works on a phone.
+- **Readable by agents.** The registry publishes `llms.txt` and a machine-readable index of every component's props, keyboard path, server boundary and minimum viewport, so an assistant can choose a component instead of guessing.
+- **Our own work.** We learn from the wider ecosystem, and we write our own code. Every component in this registry is original to Interlace.
+
 ---
 
 ## Quick start

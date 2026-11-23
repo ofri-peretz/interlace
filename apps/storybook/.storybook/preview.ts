@@ -108,9 +108,9 @@ const preview: Preview = {
           'Philosophy',
           // `Foundations`, `Charts` and `Templates` were all UNLISTED, so they
           // sorted to the bottom in arbitrary order and a reader reached
-          // MagicUI ornaments before the type scale. Vocabulary (foundations,
-          // tokens) precedes the components that spend it; our own layers
-          // precede third-party decoration.
+          // decoration before the type scale. Vocabulary (foundations,
+          // tokens) precedes the components that spend it; components
+          // precede the effects that decorate them.
           'Foundations',
           'Tokens',
           ['Color Contrast'],
@@ -131,7 +131,7 @@ const preview: Preview = {
           // Meta-installs, so they come after everything they pull in.
           'Starters',
           'Fumadocs',
-          'MagicUI',
+          'Effects',
         ],
       },
     },

@@ -37,9 +37,8 @@
 @source "../../.interlace";
 
 /* Shared animation keyframes + utility classes — single source of truth
- * synced from `interlace/docs-baseline/css/animations.css`. Covers
- * shimmer-slide / spin-around (shimmer-button), fade-in-up / slide-in-left /
- * scale-in (entry animations), border-beam and marquee. NEVER hand-roll
+ * synced from `interlace/docs-baseline/css/animations.css`. Covers the
+ * fade-in-up / slide-in-left / scale-in entry animations. NEVER hand-roll
  * keyframes here — add them to the baseline source instead so every
  * consumer + the storybook gets them automatically. */
 @import "../../.interlace/css/animations.css";

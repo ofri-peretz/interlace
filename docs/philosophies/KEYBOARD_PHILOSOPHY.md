@@ -66,10 +66,9 @@ breaks accessibility — so use the natives.
   primitives both render real `<button>` underneath; trust them.
 - **Use real `<a href>` for links** — Next.js `<Link>` renders an `<a>`,
   which is focusable and activatable with Enter for free.
-- **Composite components like `<ShimmerButton as="span">` are only
-  acceptable when wrapped in a focusable parent** (typically `<Link>`).
-  Rendered DOM is `<a><span>` — the `<a>` is the focusable surface; the
-  `<span>` is decorative chrome.
+- **Decorative layers inside a control stay decoration.** `<Sheen />` or
+  `<EdgeGlow />` inside a `Button` or a `<Link>` is a hidden `<span>`; the
+  `<button>` or `<a>` is still the only focusable surface.
 - **Form fields keep their native semantics.** Don't replace
   `<input type="checkbox">` with a styled `<div>` unless you're using
   Base UI / Radix primitives that handle the ARIA + keyboard contract.

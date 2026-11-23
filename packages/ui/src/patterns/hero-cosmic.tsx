@@ -63,7 +63,7 @@ export const MIN_VIEWPORT = 320 as const;
 export interface HeroCosmicCTA {
   label: React.ReactNode;
   href: string;
-  /** Render any element as the button (e.g. `<Link>`, `<ShimmerButton>`). Falls back to a plain anchor. */
+  /** Render any element as the button (e.g. a router `<Link>`). Falls back to a plain anchor. */
   render?: React.ReactElement<Record<string, unknown>>;
 }
 

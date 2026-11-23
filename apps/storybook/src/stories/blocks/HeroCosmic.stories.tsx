@@ -46,7 +46,7 @@ const meta: Meta<typeof HeroCosmic> = {
     primaryCta: {
       control: 'object',
       description:
-        '`{ label, href, render? }`. `render` swaps the element (a router `<Link>`, a `<ShimmerButton>`) while the hero keeps the layout.',
+        '`{ label, href, render? }`. `render` swaps the element (a router `<Link>`) while the hero keeps the layout.',
       table: { type: { summary: 'HeroCosmicCTA' }, category: 'Data' },
     },
     secondaryCta: {

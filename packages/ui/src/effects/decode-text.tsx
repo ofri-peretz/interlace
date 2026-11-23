@@ -19,7 +19,7 @@ import { useReducedMotion } from '../lib/use-reduced-motion.js';
  *
  * Static markup ALWAYS carries the final text — crawlers, reader mode,
  * and JS-off visitors never see noise (the same SSR-honesty rule as
- * NumberTicker). The decode runs client-side only, once, when triggered;
+ * CountUp). The decode runs client-side only, once, when triggered;
  * `prefers-reduced-motion` skips it entirely.
  *
  * ## API parity (R17)

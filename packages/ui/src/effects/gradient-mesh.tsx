@@ -83,8 +83,9 @@ export function GradientMesh({
 
   React.useEffect(() => {
     const root = glowsRef.current;
-    if (!root || !moving || typeof root.animate !== 'function') return;
+    if (!root || !moving) return;
     const glows = Array.from(root.children) as HTMLElement[];
+    if (!glows.every((g) => typeof g.animate === 'function')) return;
     const animations = glows.map((glow, i) => {
       const path = PATHS[i % PATHS.length]!;
       const [dx, dy] = path.drift;
@@ -146,7 +147,7 @@ export function GradientMesh({
           );
         })}
       </div>
-      {children !== undefined ? (
+      {children != null ? (
         <div data-slot="gradient-mesh-content" className="relative">
           {children}
         </div>

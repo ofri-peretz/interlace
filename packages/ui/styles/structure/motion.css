@@ -8,18 +8,6 @@
  */
 
 @theme inline {
-  /* MagicUI: shimmer-button */
-  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite
-    alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
-
-  /* MagicUI: animated-gradient-text */
-  --animate-gradient: gradient 8s linear infinite;
-
-  /* MagicUI: marquee */
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-
   /* Primitives: accordion — `animate-accordion-down/up` come from
      tw-animate-css, which the base item depends on. Declaring them here
      too replaced tw-animate's version in every shadcn app (losing its
@@ -62,48 +50,6 @@
     }
   }
 
-  @keyframes shimmer-slide {
-    to {
-      transform: translate(calc(100cqw - 100%), 0);
-    }
-  }
-  @keyframes spin-around {
-    0% {
-      transform: translateZ(0) rotate(0);
-    }
-    15%,
-    35% {
-      transform: translateZ(0) rotate(90deg);
-    }
-    65%,
-    85% {
-      transform: translateZ(0) rotate(270deg);
-    }
-    100% {
-      transform: translateZ(0) rotate(360deg);
-    }
-  }
-  @keyframes gradient {
-    to {
-      background-position: var(--bg-size, 300%) 0;
-    }
-  }
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes marquee-vertical {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(calc(-100% - var(--gap)));
-    }
-  }
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -164,25 +110,7 @@
 }
 } /* end @layer components */
 
-/* Border Beam — pure CSS animation, used by @interlace/ui/magicui/border-beam.
- * The class sits in Tailwind's `components` layer, BELOW utilities, so a
- * call-site `[animation-duration:2s]` still wins. The reduced-motion rules
- * that must beat utilities do so with `!important`, not with layer rank. */
-@keyframes border-beam {
-  0% {
-    offset-distance: var(--border-beam-initial, 0%);
-  }
-  100% {
-    offset-distance: calc(100% + var(--border-beam-initial, 0%));
-  }
-}
-
 @layer components {
-.animate-border-beam {
-  animation: border-beam var(--border-beam-duration, 6s) linear infinite;
-  animation-direction: var(--border-beam-direction, normal);
-}
-
 /*
  * Accessibility — respect prefers-reduced-motion.
  * Industry-canon practice (MUI, Vercel, Linear, Stripe, GitHub all do this).
@@ -216,12 +144,6 @@
  * Skeleton's life, and the à-la-carte path pulsed for reduce users.
  */
 @media (prefers-reduced-motion: reduce) {
-  .animate-shimmer-slide,
-  .animate-spin-around,
-  .animate-gradient,
-  .animate-marquee,
-  .animate-marquee-vertical,
-  .animate-border-beam,
   .animate-fade-in-up,
   .animate-slide-in-left,
   .animate-scale-in,

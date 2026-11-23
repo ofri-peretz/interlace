@@ -365,9 +365,13 @@ describe('motion contract lock', () => {
   it('reads a non-empty allowlist, animation set and source scan', () => {
     // Each of the three assertions below is a set comparison. An empty set on
     // either side passes every one of them.
-    expect(ALLOWLIST.size).toBeGreaterThan(10);
-    expect(ANIMATIONS.length).toBeGreaterThan(10);
-    expect(EMITTED.size).toBeGreaterThan(5);
+    // The floors are well under today's counts (the reduced-motion list names
+    // every CSS animation; the ambient loops moved to the Web Animations API
+    // in the effects, which gate themselves) and well over zero. The same
+    // holds for the `animate-*` utilities the source emits.
+    expect(ALLOWLIST.size).toBeGreaterThan(4);
+    expect(ANIMATIONS.length).toBeGreaterThan(4);
+    expect(EMITTED.size).toBeGreaterThan(2);
     expect(ENTRY_BUDGET_MS).toBeGreaterThan(0);
   });
 
@@ -511,9 +515,12 @@ describe('motion contract lock', () => {
      */
     const finite = ANIMATIONS.filter((animation) => !animation.infinite);
 
-    it('has finite and ambient animations to tell apart', () => {
+    it('has entry animations to measure', () => {
+      // Ambient loops are no longer CSS: every one lives in an effect that
+      // drives it through the Web Animations API and stops it under reduced
+      // motion (effects-contract.test.tsx). Any that come back to CSS are
+      // still held to the allowlist by the last test in this block.
       expect(finite.length).toBeGreaterThan(0);
-      expect(ANIMATIONS.length - finite.length).toBeGreaterThan(0);
     });
 
     it('keeps every entry animation inside the ceiling', () => {

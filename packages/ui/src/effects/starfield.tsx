@@ -86,18 +86,31 @@ interface Streak {
 
 const between = (min: number, max: number) => min + Math.random() * (max - min);
 
+/**
+ * Any CSS colour (a variable, `oklch()`, `color-mix()`…) as `rgb(r, g, b)`.
+ * Computed styles keep modern colour spaces as written, so the colour is
+ * painted on a one-pixel canvas and read back, which always yields sRGB.
+ */
 function resolveColor(canvas: HTMLCanvasElement, value: string): string {
   canvas.style.color = value;
-  const resolved = getComputedStyle(canvas).color;
+  const computed = getComputedStyle(canvas).color || value;
   canvas.style.color = '';
-  return resolved || value;
+  const probe = document.createElement('canvas');
+  probe.width = 1;
+  probe.height = 1;
+  const ctx = probe.getContext('2d', { willReadFrequently: true });
+  if (typeof ctx?.fillRect !== 'function' || typeof ctx.getImageData !== 'function') return computed;
+  ctx.fillStyle = computed;
+  ctx.fillRect(0, 0, 1, 1);
+  const pixel = ctx.getImageData(0, 0, 1, 1).data;
+  return `rgb(${pixel[0] ?? 0}, ${pixel[1] ?? 0}, ${pixel[2] ?? 0})`;
 }
 
-/** `rgb(1 2 3)` / `rgba(1, 2, 3, 0.5)` → the same colour at `alpha`. */
+/** `rgb(1, 2, 3)` (what `resolveColor` returns) → the same colour at `alpha`. */
 function withAlpha(color: string, alpha: number): string {
-  const nums = color.match(/[\d.]+/g);
-  if (!nums || nums.length < 3) return color;
-  return `rgba(${nums[0]}, ${nums[1]}, ${nums[2]}, ${alpha})`;
+  const [r, g, b] = color.match(/[\d.]+/g) ?? [];
+  if (r === undefined || g === undefined || b === undefined) return color;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 export function Starfield({

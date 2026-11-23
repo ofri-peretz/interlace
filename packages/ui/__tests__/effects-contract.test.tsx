@@ -1,8 +1,10 @@
 /**
  * Interlace effects contract.
  *
- * Every effect in `src/effects/` is decoration: hidden from assistive tech,
- * never in the way of the pointer, coloured from tokens, and still under
+ * An effect in `src/effects/` is either decoration (hidden from assistive
+ * tech, never in the way of the pointer) or content that moves (CountUp,
+ * Scroller, StaggerList, SheenText), which renders in full on the server and
+ * announces once. Either way it is coloured from tokens and still under
  * `prefers-reduced-motion: reduce`. jsdom cannot show that anything looks
  * right; it can show what each component asks the browser for, which is what
  * these tests pin.
@@ -25,10 +27,21 @@ const { ThreadLines, threadPaths } = await import('../src/effects/thread-lines.j
 const { SkyBackdrop } = await import('../src/effects/sky-backdrop.js');
 const { RotatingText } = await import('../src/effects/rotating-text.js');
 const { FocusGrid } = await import('../src/patterns/focus-grid.js');
+const { CountUp } = await import('../src/effects/count-up.js');
+const { Scroller } = await import('../src/effects/scroller.js');
+const { StaggerList } = await import('../src/effects/stagger-list.js');
+const { SheenText } = await import('../src/effects/sheen-text.js');
+const { Sheen } = await import('../src/effects/sheen.js');
+const { EdgeGlow } = await import('../src/effects/edge-glow.js');
+const { GridField, gridFieldCells } = await import('../src/effects/grid-field.js');
 const { HeroCosmic } = await import('../src/patterns/hero-cosmic.js');
 
+const observed: Element[] = [];
+
 class StubObserver {
-  observe() {}
+  observe(target: Element) {
+    observed.push(target);
+  }
   unobserve() {}
   disconnect() {}
   takeRecords() {
@@ -62,6 +75,7 @@ const animateSpy = vi.fn(() => ({ play: vi.fn(), pause: vi.fn(), cancel: vi.fn()
 
 beforeEach(() => {
   reduced.value = false;
+  observed.length = 0;
   vi.stubGlobal('IntersectionObserver', StubObserver);
   vi.stubGlobal('ResizeObserver', StubObserver);
   animateSpy.mockClear();
@@ -82,6 +96,9 @@ describe('every effect is hidden from assistive tech and the pointer', () => {
     ['ThreadLines', () => <ThreadLines />, '[data-slot="thread-lines"]'],
     ['GradientMesh', () => <GradientMesh />, '[data-slot="gradient-mesh-glows"]'],
     ['SkyBackdrop', () => <SkyBackdrop />, '[data-slot="sky-backdrop"] > [aria-hidden]'],
+    ['Sheen', () => <Sheen />, '[data-slot="sheen"]'],
+    ['EdgeGlow', () => <EdgeGlow />, '[data-slot="edge-glow"]'],
+    ['GridField', () => <GridField />, '[data-slot="grid-field"]'],
   ] as const)('%s', (_name, make, selector) => {
     stubCanvas();
     const { container } = render(make());
@@ -95,6 +112,9 @@ describe('every effect is hidden from assistive tech and the pointer', () => {
     // @ts-expect-error aria-hidden is omitted from the props on purpose
     const { container } = render(<LightBeam aria-hidden={false} />);
     expect(container.firstElementChild!.getAttribute('aria-hidden')).toBe('true');
+    // @ts-expect-error aria-hidden is omitted from the props on purpose
+    const edge = render(<EdgeGlow aria-hidden={false} />);
+    expect(edge.container.firstElementChild!.getAttribute('aria-hidden')).toBe('true');
   });
 });
 
@@ -144,6 +164,24 @@ describe('GradientMesh, ThreadLines and SkyBackdrop animate only when allowed', 
     reduced.value = true;
     render(make());
     expect(animateSpy).not.toHaveBeenCalled();
+  });
+
+  it.each([1, 3, 7, 42])('SkyBackdrop rests every cloud inside the sky (seed %i), so the loop wraps unseen', (seed) => {
+    const { container } = render(<SkyBackdrop seed={seed} clouds={8} animated={false} />);
+    const clouds = [...container.querySelectorAll<HTMLElement>('[data-slot="sky-backdrop-cloud"]')];
+    expect(clouds).toHaveLength(8);
+    for (const cloud of clouds) {
+      expect(parseFloat(cloud.style.left) + parseFloat(cloud.style.width)).toBeLessThan(100);
+    }
+  });
+
+  it.each([
+    ['GradientMesh', () => <GradientMesh animated={false}>{null}</GradientMesh>],
+    ['SkyBackdrop', () => <SkyBackdrop animated={false}>{null}</SkyBackdrop>],
+  ] as const)('%s adds no content wrapper for null children', (_name, make) => {
+    const { container } = render(make());
+    const root = container.firstElementChild!;
+    expect([...root.children].every((child) => child.getAttribute('aria-hidden') === 'true')).toBe(true);
   });
 
   it('GradientMesh defaults its glows to theme tokens', () => {
@@ -243,5 +281,236 @@ describe('HeroCosmic', () => {
     const layer = container.querySelector('[data-slot="hero-cosmic-effects"]')!;
     expect(layer.getAttribute('aria-hidden')).toBe('true');
     expect(layer.querySelectorAll('canvas')).toHaveLength(1);
+  });
+});
+
+describe('CountUp', () => {
+  it('renders the final figure on the server, and one stable label', () => {
+    const html = renderToStaticMarkup(<CountUp value={4800} format={{ notation: 'compact' }} locale="en-US" />);
+    expect(html).toContain('4.8K');
+    expect(html.match(/4\.8K/g)!.length).toBe(3);
+    render(<CountUp value={120} locale="en-US" />);
+    expect(screen.getByText('120', { selector: '[data-slot="count-up-label"]' }).className).toContain('sr-only');
+    expect(document.querySelector('[data-slot="count-up-digits"]')!.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('drops to the start value and waits for the viewport when motion is allowed', () => {
+    const raf = vi.spyOn(window, 'requestAnimationFrame');
+    render(<CountUp value={120} locale="en-US" />);
+    expect(document.querySelector('[data-slot="count-up-digits"]')!.textContent).toBe('0');
+    expect(raf).not.toHaveBeenCalled();
+  });
+
+  it('shows the final value at once under reduced motion', () => {
+    reduced.value = true;
+    const raf = vi.spyOn(window, 'requestAnimationFrame');
+    render(<CountUp value={120} locale="en-US" />);
+    expect(document.querySelector('[data-slot="count-up-digits"]')!.textContent).toBe('120');
+    expect(raf).not.toHaveBeenCalled();
+  });
+});
+
+describe('Scroller', () => {
+  const items = ['Alpha', 'Beta', 'Gamma'].map((n) => <a key={n} href={`#${n}`}>{n}</a>);
+
+  it('announces each item once and takes each link once in the tab order', () => {
+    const { container } = render(<Scroller label="Partners">{items}</Scroller>);
+    const lists = container.querySelectorAll('[data-slot="scroller-list"]');
+    expect(lists).toHaveLength(2);
+    expect(lists[0]!.hasAttribute('aria-hidden')).toBe(false);
+    expect(lists[1]!.getAttribute('aria-hidden')).toBe('true');
+    expect(lists[1]!.hasAttribute('inert')).toBe(true);
+    expect(screen.getByRole('region', { name: 'Partners' })).toBeTruthy();
+    expect(animateSpy).toHaveBeenCalled();
+  });
+
+  it('gives a visible pause control that reports its state', () => {
+    render(<Scroller>{items}</Scroller>);
+    const button = screen.getByRole('button', { name: 'Pause' });
+    expect(button.getAttribute('aria-pressed')).toBe('false');
+    act(() => button.click());
+    expect(screen.getByRole('button', { name: 'Play' }).getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('under reduced motion: no clone, no control that controls nothing, and a scrollable row', () => {
+    reduced.value = true;
+    const { container } = render(<Scroller>{items}</Scroller>);
+    expect(container.querySelectorAll('[data-slot="scroller-list"]')).toHaveLength(1);
+    expect(screen.queryByRole('button')).toBeNull();
+    expect(container.querySelector('[data-slot="scroller-viewport"]')!.className).toContain('overflow-x-auto');
+    expect(animateSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe('StaggerList', () => {
+  it('is a real list on the server, every item present', () => {
+    const html = renderToStaticMarkup(
+      <StaggerList as="ol">
+        <span>One</span>
+        <span>Two</span>
+        {null}
+      </StaggerList>,
+    );
+    expect(html).toContain('<ol data-slot="stagger-list"');
+    expect(html.match(/<li /g)).toHaveLength(2);
+    expect(html).not.toContain('opacity');
+  });
+
+  it('hides items until their turn when motion is allowed, and shows focus at once', () => {
+    const { container } = render(
+      <StaggerList>
+        <a href="#a">A</a>
+        <a href="#b">B</a>
+      </StaggerList>,
+    );
+    const items = [...container.querySelectorAll<HTMLElement>('[data-slot="stagger-list-item"]')];
+    expect(items.every((li) => li.style.opacity === '0')).toBe(true);
+    act(() => items[1]!.querySelector('a')!.focus());
+    expect(items[1]!.style.opacity).toBe('');
+    expect(items[0]!.style.opacity).toBe('0');
+  });
+
+  it('leaves every item visible under reduced motion', () => {
+    reduced.value = true;
+    const { container } = render(
+      <StaggerList>
+        <span>A</span>
+      </StaggerList>,
+    );
+    expect((container.querySelector('[data-slot="stagger-list-item"]') as HTMLElement).style.opacity).toBe('');
+  });
+});
+
+describe('SheenText', () => {
+  it('is real text, with a forced-colours fallback', () => {
+    render(<SheenText>matters</SheenText>);
+    const el = screen.getByText('matters');
+    expect(el.className).toContain('forced-colors:bg-none');
+    expect(el.getAttribute('style')).toContain('var(--primary)');
+  });
+
+  it('asks for an animation only when motion is allowed', () => {
+    render(<SheenText>a</SheenText>);
+    expect(animateSpy).toHaveBeenCalled();
+    animateSpy.mockClear();
+    reduced.value = true;
+    render(<SheenText>b</SheenText>);
+    expect(animateSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe('Sheen and EdgeGlow', () => {
+  it('Sheen sits under the label and is gone under reduced motion', () => {
+    const { container, rerender } = render(<Sheen />);
+    expect(container.firstElementChild!.className).toContain('-z-10');
+    reduced.value = true;
+    rerender(<Sheen />);
+    expect(container.firstElementChild).toBeNull();
+  });
+
+  it('Sheen watches its still layer, not the band that travels past the edges', () => {
+    const { container } = render(<Sheen />);
+    expect(observed).toContain(container.querySelector('[data-slot="sheen"]'));
+    expect(observed).not.toContain(container.querySelector('[data-slot="sheen-band"]'));
+  });
+
+  it('EdgeGlow holds its arc still under reduced motion instead of vanishing', () => {
+    reduced.value = true;
+    const { container } = render(<EdgeGlow />);
+    expect(container.querySelector('[data-slot="edge-glow-arc"]')).not.toBeNull();
+    expect(animateSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe('GridField', () => {
+  it('lights the same cells for the same seed, on the server too', () => {
+    expect(gridFieldCells(6, 9)).toEqual(gridFieldCells(6, 9));
+    expect(gridFieldCells(6, 9)).not.toEqual(gridFieldCells(6, 10));
+    const html = renderToStaticMarkup(<GridField lit={3} seed={9} cell={10} />);
+    const [c, r] = gridFieldCells(3, 9, 32, 16)[0]!;
+    expect(html).toContain(`x="${c * 10 + 1}" y="${r * 10 + 1}"`);
+  });
+
+  it('listens on the surface it covers, never on its pointer-events-none root', () => {
+    // A pointer-events-none element is not a hit target, so a listener on the
+    // field itself could never fire. That shipped once, in the component this
+    // replaces: `interactive` was a prop the component accepted and ignored.
+    const calls: Array<{ target: EventTarget; type: string }> = [];
+    const original = Element.prototype.addEventListener;
+    vi.spyOn(Element.prototype, 'addEventListener').mockImplementation(function (
+      this: Element,
+      type: string,
+      ...rest: [EventListenerOrEventListenerObject, (boolean | AddEventListenerOptions)?]
+    ) {
+      calls.push({ target: this, type });
+      return original.call(this, type, ...rest);
+    } as typeof Element.prototype.addEventListener);
+
+    render(
+      <section data-testid="surface">
+        <GridField interactive />
+      </section>,
+    );
+    const root = document.querySelector('[data-slot="grid-field"]')!;
+    const moves = calls.filter((c) => c.type === 'pointermove').map((c) => c.target);
+    expect(moves).toContain(root.parentElement);
+    expect(moves).not.toContain(root);
+    expect(document.querySelector('[data-slot="grid-field-hover"]')).not.toBeNull();
+  });
+
+  it('adds no listener and no highlight when not interactive', () => {
+    // Targets, not just types: React attaches its own delegated pointermove
+    // to the container it renders into, whatever the component does.
+    const targets: EventTarget[] = [];
+    const original = Element.prototype.addEventListener;
+    vi.spyOn(Element.prototype, 'addEventListener').mockImplementation(function (
+      this: Element,
+      type: string,
+      ...rest: [EventListenerOrEventListenerObject, (boolean | AddEventListenerOptions)?]
+    ) {
+      if (type === 'pointermove') targets.push(this);
+      return original.call(this, type, ...rest);
+    } as typeof Element.prototype.addEventListener);
+    render(
+      <section>
+        <GridField />
+      </section>,
+    );
+    const root = document.querySelector('[data-slot="grid-field"]')!;
+    expect(targets).not.toContain(root);
+    expect(targets).not.toContain(root.parentElement);
+    expect(document.querySelector('[data-slot="grid-field-hover"]')).toBeNull();
+  });
+
+  it('draws dots instead of lines, and lights the cells it is given', () => {
+    const html = renderToStaticMarkup(<GridField mark="dots" cell={20} cells={[[2, 3]]} />);
+    expect(html).toContain('<circle');
+    expect(html).not.toContain('<path');
+    expect(html).toContain('x="41" y="61"');
+    expect(html.match(/data-slot="grid-field-cell"/g)).toHaveLength(1);
+  });
+
+  it('draws in theme tokens', () => {
+    const html = renderToStaticMarkup(<GridField />);
+    expect(html).toContain('var(--border)');
+    expect(html).toContain('var(--primary)');
+  });
+});
+
+describe('gridFieldCells', () => {
+  it("defaults to GridField's own board, so its cells can reach every column and row", () => {
+    const cells = gridFieldCells(400, 1);
+    expect(Math.max(...cells.map(([c]) => c))).toBe(31);
+    expect(Math.max(...cells.map(([, r]) => r))).toBe(15);
+  });
+});
+
+describe('GridField with chosen cells', () => {
+  it('does not restart its animations when the same cells arrive as a new array', () => {
+    const { rerender } = render(<GridField cells={[[1, 1], [2, 3]]} />);
+    const calls = animateSpy.mock.calls.length;
+    expect(calls).toBeGreaterThan(0);
+    rerender(<GridField cells={[[1, 1], [2, 3]]} />);
+    expect(animateSpy.mock.calls.length).toBe(calls);
   });
 });

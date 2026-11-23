@@ -47,8 +47,7 @@ const meta: Meta<CodeWindowStoryArgs> = {
           'traffic-light dots are decorative and `aria-hidden` — the title slot carries ' +
           'the accessible name — and they paint from the `--window-control-*` brand ' +
           'tokens rather than raw hex, so a consumer forking the brand restyles the ' +
-          'chrome from CSS. Reach for it when you want a window-shaped container; reach ' +
-          "for MagicUI's `Terminal` when you want an animated terminal prompt.",
+          'chrome from CSS. It is a still container: no typing animation, no prompt.',
       },
     },
   },

@@ -49,44 +49,6 @@
     "previewDark": "primitives-alertdialog--dark",
     "skeleton": null
   },
-  "animated-gradient-text": {
-    "title": "MagicUI/AnimatedGradientText",
-    "storyIds": [
-      "magicui-animatedgradienttext--default",
-      "magicui-animatedgradienttext--dark",
-      "magicui-animatedgradienttext--fast-sweep",
-      "magicui-animatedgradienttext--slow-sweep",
-      "magicui-animatedgradienttext--brand-gradient"
-    ],
-    "preview": "magicui-animatedgradienttext--default",
-    "previewDark": "magicui-animatedgradienttext--dark",
-    "skeleton": null
-  },
-  "animated-grid-pattern": {
-    "title": "MagicUI/AnimatedGridPattern",
-    "storyIds": [
-      "magicui-animatedgridpattern--default",
-      "magicui-animatedgridpattern--dark",
-      "magicui-animatedgridpattern--dense",
-      "magicui-animatedgridpattern--sparse",
-      "magicui-animatedgridpattern--large-dashed-cells"
-    ],
-    "preview": "magicui-animatedgridpattern--default",
-    "previewDark": "magicui-animatedgridpattern--dark",
-    "skeleton": null
-  },
-  "animated-list": {
-    "title": "MagicUI/AnimatedList",
-    "storyIds": [
-      "magicui-animatedlist--default",
-      "magicui-animatedlist--dark",
-      "magicui-animatedlist--pause-on-hover",
-      "magicui-animatedlist--fast-reveal"
-    ],
-    "preview": "magicui-animatedlist--default",
-    "previewDark": "magicui-animatedlist--dark",
-    "skeleton": null
-  },
   "article-card": {
     "title": "Blocks/ArticleCard",
     "storyIds": [
@@ -272,19 +234,6 @@
     "preview": "templates-bloghometemplate--default",
     "previewDark": "templates-bloghometemplate--dark",
     "skeleton": "templates-bloghometemplate--page-skeleton"
-  },
-  "border-beam": {
-    "title": "MagicUI/BorderBeam",
-    "storyIds": [
-      "magicui-borderbeam--default",
-      "magicui-borderbeam--dark",
-      "magicui-borderbeam--reverse",
-      "magicui-borderbeam--thick-and-slow",
-      "magicui-borderbeam--brand-gradient"
-    ],
-    "preview": "magicui-borderbeam--default",
-    "previewDark": "magicui-borderbeam--dark",
-    "skeleton": null
   },
   "box": {
     "title": "Primitives/Box",
@@ -571,6 +520,19 @@
     "previewDark": "primitives-contextmenu--dark",
     "skeleton": "primitives-contextmenu--loading"
   },
+  "count-up": {
+    "title": "Effects/CountUp",
+    "storyIds": [
+      "effects-countup--default",
+      "effects-countup--compact",
+      "effects-countup--percent",
+      "effects-countup--currency",
+      "effects-countup--in-as-entence"
+    ],
+    "preview": "effects-countup--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "cta-section": {
     "title": "Blocks/CTASection",
     "storyIds": [
@@ -732,18 +694,6 @@
     "previewDark": "templates-docspagetemplate--dark",
     "skeleton": "templates-docspagetemplate--page-skeleton"
   },
-  "dot-pattern": {
-    "title": "Blocks/DotPattern",
-    "storyIds": [
-      "blocks-dotpattern--default",
-      "blocks-dotpattern--dense",
-      "blocks-dotpattern--glow",
-      "blocks-dotpattern--behind-content"
-    ],
-    "preview": "blocks-dotpattern--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "dropdown-menu": {
     "title": "Primitives/DropdownMenu",
     "storyIds": [
@@ -757,6 +707,16 @@
     "preview": "primitives-dropdownmenu--default",
     "previewDark": "primitives-dropdownmenu--dark",
     "skeleton": "primitives-dropdownmenu--loading"
+  },
+  "edge-glow": {
+    "title": "Effects/EdgeGlow",
+    "storyIds": [
+      "effects-edgeglow--default",
+      "effects-edgeglow--long-arc"
+    ],
+    "preview": "effects-edgeglow--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "edit-on-git-hub": {
     "title": "Fumadocs/EditOnGitHub",
@@ -922,15 +882,17 @@
     "previewDark": "primitives-grid--dark",
     "skeleton": null
   },
-  "grid-pattern": {
-    "title": "Blocks/GridPattern",
+  "grid-field": {
+    "title": "Effects/GridField",
     "storyIds": [
-      "blocks-gridpattern--default",
-      "blocks-gridpattern--dashed",
-      "blocks-gridpattern--highlighted-squares",
-      "blocks-gridpattern--animated"
+      "effects-gridfield--default",
+      "effects-gridfield--fade-to-bottom",
+      "effects-gridfield--still",
+      "effects-gridfield--follows-the-pointer",
+      "effects-gridfield--dots",
+      "effects-gridfield--chosen-cells"
     ],
-    "preview": "blocks-gridpattern--default",
+    "preview": "effects-gridfield--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1011,18 +973,6 @@
     "previewDark": "primitives-input--dark",
     "skeleton": "primitives-input--loading"
   },
-  "interactive-grid-pattern": {
-    "title": "Blocks/InteractiveGridPattern",
-    "storyIds": [
-      "blocks-interactivegridpattern--default",
-      "blocks-interactivegridpattern--uncontrolled",
-      "blocks-interactivegridpattern--controlled",
-      "blocks-interactivegridpattern--higher-contrast"
-    ],
-    "preview": "blocks-interactivegridpattern--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "interlace-weave": {
     "title": "Effects/InterlaceWeave",
     "storyIds": [
@@ -1089,19 +1039,6 @@
     ],
     "preview": "blocks-lintplayground--default",
     "previewDark": null,
-    "skeleton": null
-  },
-  "marquee": {
-    "title": "MagicUI/Marquee",
-    "storyIds": [
-      "magicui-marquee--default",
-      "magicui-marquee--reverse",
-      "magicui-marquee--pause-on-hover",
-      "magicui-marquee--vertical",
-      "magicui-marquee--dark"
-    ],
-    "preview": "magicui-marquee--default",
-    "previewDark": "magicui-marquee--dark",
     "skeleton": null
   },
   "mdx-starter": {
@@ -1231,21 +1168,6 @@
     "previewDark": "primitives-numberfield--dark",
     "skeleton": "primitives-numberfield--loading"
   },
-  "number-ticker": {
-    "title": "MagicUI/NumberTicker",
-    "storyIds": [
-      "magicui-numberticker--default",
-      "magicui-numberticker--no-animation",
-      "magicui-numberticker--count-down",
-      "magicui-numberticker--decimal-places",
-      "magicui-numberticker--compact",
-      "magicui-numberticker--compact-with-decimal",
-      "magicui-numberticker--dark"
-    ],
-    "preview": "magicui-numberticker--default",
-    "previewDark": "magicui-numberticker--dark",
-    "skeleton": null
-  },
   "page-header": {
     "title": "Blocks/PageHeader",
     "storyIds": [
@@ -1271,19 +1193,6 @@
     "preview": "primitives-pagination--default",
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
-  },
-  "particles": {
-    "title": "MagicUI/Particles",
-    "storyIds": [
-      "magicui-particles--default",
-      "magicui-particles--dense",
-      "magicui-particles--brand-color",
-      "magicui-particles--non-interactive",
-      "magicui-particles--dark"
-    ],
-    "preview": "magicui-particles--default",
-    "previewDark": "magicui-particles--dark",
-    "skeleton": null
   },
   "popover": {
     "title": "Primitives/Popover",
@@ -1536,6 +1445,18 @@
     "previewDark": "primitives-scrollarea--dark",
     "skeleton": null
   },
+  "scroller": {
+    "title": "Effects/Scroller",
+    "storyIds": [
+      "effects-scroller--default",
+      "effects-scroller--right",
+      "effects-scroller--links",
+      "effects-scroller--vertical"
+    ],
+    "preview": "effects-scroller--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "section": {
     "title": "Primitives/Section",
     "storyIds": [
@@ -1659,6 +1580,26 @@
     "previewDark": "blocks-sharebuttons--dark",
     "skeleton": null
   },
+  "sheen": {
+    "title": "Effects/Sheen",
+    "storyIds": [
+      "effects-sheen--on-ap-rimary-button",
+      "effects-sheen--on-highlight"
+    ],
+    "preview": "effects-sheen--on-ap-rimary-button",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "sheen-text": {
+    "title": "Effects/SheenText",
+    "storyIds": [
+      "effects-sheentext--default",
+      "effects-sheentext--still"
+    ],
+    "preview": "effects-sheentext--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "sheet": {
     "title": "Primitives/Sheet",
     "storyIds": [
@@ -1671,26 +1612,6 @@
     ],
     "preview": "primitives-sheet--default",
     "previewDark": "primitives-sheet--dark",
-    "skeleton": null
-  },
-  "shimmer-button": {
-    "title": "MagicUI/ShimmerButton",
-    "storyIds": [
-      "magicui-shimmerbutton--default",
-      "magicui-shimmerbutton--static-pill",
-      "magicui-shimmerbutton--spark-only",
-      "magicui-shimmerbutton--highlight-only",
-      "magicui-shimmerbutton--brand-primary",
-      "magicui-shimmerbutton--gallery",
-      "magicui-shimmerbutton--click-interaction",
-      "magicui-shimmerbutton--keyboard-activation",
-      "magicui-shimmerbutton--shimmer-prop-gates-spark",
-      "magicui-shimmerbutton--highlight-prop-gates-glow",
-      "magicui-shimmerbutton--static-pill-has-no-effects",
-      "magicui-shimmerbutton--disabled-is-not-clickable"
-    ],
-    "preview": "magicui-shimmerbutton--default",
-    "previewDark": null,
     "skeleton": null
   },
   "side-by-side": {
@@ -1826,6 +1747,16 @@
     ],
     "preview": "primitives-stack--vertical",
     "previewDark": "primitives-stack--dark",
+    "skeleton": null
+  },
+  "stagger-list": {
+    "title": "Effects/StaggerList",
+    "storyIds": [
+      "effects-staggerlist--default",
+      "effects-staggerlist--numbered"
+    ],
+    "preview": "effects-staggerlist--default",
+    "previewDark": null,
     "skeleton": null
   },
   "stance-list": {

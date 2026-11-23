@@ -100,13 +100,20 @@ export function SkyBackdrop({
 
   const cloudList = React.useMemo(() => {
     const rand = seeded(seed);
-    return Array.from({ length: Math.min(Math.max(0, Math.round(clouds)), 8) }, () => ({
-      top: 5 + rand() * 45,
-      left: rand() * 100,
-      width: 14 + rand() * 16,
-      seconds: 60 + rand() * 60,
-      opacity: 0.6 + rand() * 0.35,
-    }));
+    return Array.from({ length: Math.min(Math.max(0, Math.round(clouds)), 8) }, () => {
+      const top = 5 + rand() * 45;
+      const place = rand();
+      const width = 14 + rand() * 16;
+      return {
+        top,
+        // Each cloud rests fully inside the sky, so its loop always has an
+        // off-screen moment to wrap in and never jumps where it can be seen.
+        left: place * (100 - width),
+        width,
+        seconds: 60 + rand() * 60,
+        opacity: 0.6 + rand() * 0.35,
+      };
+    });
   }, [clouds, seed]);
 
   React.useEffect(() => {
@@ -185,7 +192,7 @@ export function SkyBackdrop({
           />
         ))}
       </div>
-      {children !== undefined ? (
+      {children != null ? (
         <div data-slot="sky-backdrop-content" className="relative">
           {children}
         </div>

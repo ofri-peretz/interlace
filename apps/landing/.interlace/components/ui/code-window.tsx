@@ -26,10 +26,8 @@ import { cn } from '@/lib/utils';
  * window controls (`#FF5F57` / `#FEBC2E` / `#28C840`) so the chrome reads
  * as "code window" at a glance.
  *
- * Modeled on MagicUI's `Terminal` chrome (the dots + bar layout convention)
- * but reduced to the visual primitive — no animation, no terminal-specific
- * line emitter. Use this when you want a window-shaped container; reach
- * for `Terminal` from MagicUI when you want a terminal-prompt animation.
+ * The dots and the title bar are the familiar desktop-window convention.
+ * It is a still container: no typing animation, no prompt.
  *
  * Example:
  *

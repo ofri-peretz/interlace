@@ -412,10 +412,6 @@
       "types": "./dist/fumadocs/edit-on-github.d.ts",
       "default": "./dist/fumadocs/edit-on-github.js"
     },
-    "./magicui/*": {
-      "types": "./dist/magicui/*.d.ts",
-      "default": "./dist/magicui/*.js"
-    },
     "./effects/*": {
       "types": "./dist/effects/*.d.ts",
       "default": "./dist/effects/*.js"

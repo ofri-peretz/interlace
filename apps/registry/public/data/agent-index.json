@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 156
+    "itemCount": 152
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,8 +30,8 @@
   "facets": {
     "tier": {
       "primitive": 66,
-      "pattern": 41,
-      "effect": 17,
+      "pattern": 38,
+      "effect": 16,
       "template": 13,
       "chart": 8,
       "util": 5,
@@ -40,17 +40,17 @@
     },
     "category": {
       "primitive": 66,
-      "pattern": 41,
+      "pattern": 38,
       "blog": 30,
       "foundation": 22,
-      "data": 21,
-      "decorative": 20,
-      "effect": 17,
+      "data": 22,
       "form": 16,
+      "effect": 16,
+      "decorative": 14,
       "feedback": 13,
       "template": 13,
       "navigation": 11,
-      "marketing": 10,
+      "marketing": 11,
       "overlay": 9,
       "chart": 8,
       "util": 5,
@@ -59,22 +59,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 92,
-      "client": 64
+      "server": 90,
+      "client": 62
     },
     "keyboard": {
-      "none": 121,
+      "none": 117,
       "handled": 35
     },
     "loading": {
-      "none": 124,
+      "none": 120,
       "built-in": 32
     },
     "minViewport": {
       "320": 90,
       "480": 7,
       "768": 1,
-      "inherited": 58
+      "inherited": 54
     }
   },
   "items": [
@@ -277,163 +277,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/alert.json",
       "item": "https://ds.interlace.tools/r/alert.json",
       "docs": "https://ds.interlace.tools/c/alert"
-    },
-    {
-      "name": "animated-gradient-text",
-      "title": "Animated Gradient Text",
-      "type": "registry:ui",
-      "summary": "Gradient-filled text: a `bg-clip-text text-transparent` span whose three-stop linear gradient slides horizontally on a loop. Built for a short eyebrow, badge or headline fragment — never a paragraph, since the text has no solid fill to fall back to.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "server",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "AnimatedGradientText"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/magicui/animated-gradient-text.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/animated-gradient-text.json",
-      "item": "https://ds.interlace.tools/r/animated-gradient-text.json",
-      "docs": "https://ds.interlace.tools/c/animated-gradient-text"
-    },
-    {
-      "name": "animated-grid-pattern",
-      "title": "Animated Grid Pattern",
-      "type": "registry:ui",
-      "summary": "A tiled SVG grid where a handful of cells softly pulse in and out, then teleport to a new random cell on each cycle — a \"breathing\" graph-paper backdrop for heroes and section bands. Re-authored from the MagicUI pattern to the Interlace component floor.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [],
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/magicui/animated-grid-pattern.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/animated-grid-pattern.json",
-      "item": "https://ds.interlace.tools/r/animated-grid-pattern.json",
-      "docs": "https://ds.interlace.tools/c/animated-grid-pattern"
-    },
-    {
-      "name": "animated-list",
-      "title": "Animated List",
-      "type": "registry:ui",
-      "summary": "A feed that reveals its children one at a time, newest on top, each entry springing in from `scale: 0`. One more appears every `delay` ms (1000 by default) until the list is full, then it stops — or restarts, with `loop`.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden",
-          "aria-label",
-          "aria-live",
-          "aria-pressed"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "AnimatedList",
-        "AnimatedListItem"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "lucide-react",
-        "motion"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/magicui/animated-list.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/animated-list.json",
-      "item": "https://ds.interlace.tools/r/animated-list.json",
-      "docs": "https://ds.interlace.tools/c/animated-list"
     },
     {
       "name": "article-card",
@@ -1118,56 +961,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/blog-home-template.json",
       "item": "https://ds.interlace.tools/r/blog-home-template.json",
       "docs": "https://ds.interlace.tools/c/blog-home-template"
-    },
-    {
-      "name": "border-beam",
-      "title": "Border Beam",
-      "type": "registry:ui",
-      "summary": "A single gradient square that travels around the inside edge of its parent, drawn with `offset-path` and a two-layer CSS mask so only the border ring shows. Drop it inside any `relative`, rounded container to give that container a moving outline.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "BorderBeam"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/magicui/border-beam.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/border-beam.json",
-      "item": "https://ds.interlace.tools/r/border-beam.json",
-      "docs": "https://ds.interlace.tools/c/border-beam"
     },
     {
       "name": "box",
@@ -2185,6 +1978,55 @@
       "docs": "https://ds.interlace.tools/c/context-menu"
     },
     {
+      "name": "count-up",
+      "title": "Count Up",
+      "type": "registry:ui",
+      "summary": "A number that counts to its value the first time it scrolls into view: \"120 sources\", \"4.8k readers\", \"98%\". The figure is the content, so the component is built around reading it, not around the motion.",
+      "topics": [],
+      "categories": [
+        "data",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "CountUp"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/count-up.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/count-up.json",
+      "item": "https://ds.interlace.tools/r/count-up.json",
+      "docs": "https://ds.interlace.tools/c/count-up"
+    },
+    {
       "name": "cta-section",
       "title": "Cta Section",
       "type": "registry:ui",
@@ -2914,57 +2756,6 @@
       "docs": "https://ds.interlace.tools/c/docs-page-template"
     },
     {
-      "name": "dot-pattern",
-      "title": "Dot Pattern",
-      "type": "registry:ui",
-      "summary": "A resolution-independent dotted-grid background that fills its positioned container. Two render modes share one tiled SVG `<pattern>`:",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "pattern"
-      ],
-      "tier": "pattern",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [],
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/patterns/dot-pattern.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-pattern.json",
-      "item": "https://ds.interlace.tools/r/dot-pattern.json",
-      "docs": "https://ds.interlace.tools/c/dot-pattern"
-    },
-    {
       "name": "dropdown-menu",
       "title": "Dropdown Menu",
       "type": "registry:ui",
@@ -3016,6 +2807,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dropdown-menu.json",
       "item": "https://ds.interlace.tools/r/dropdown-menu.json",
       "docs": "https://ds.interlace.tools/c/dropdown-menu"
+    },
+    {
+      "name": "edge-glow",
+      "title": "Edge Glow",
+      "type": "registry:ui",
+      "summary": "A light that runs around the edge of its parent: the plan you recommend, the card that is live right now. Drop it inside a positioned element:",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "EdgeGlow"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/edge-glow.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/edge-glow.json",
+      "item": "https://ds.interlace.tools/r/edge-glow.json",
+      "docs": "https://ds.interlace.tools/c/edge-glow"
     },
     {
       "name": "empty-state",
@@ -3601,16 +3441,16 @@
       "docs": "https://ds.interlace.tools/c/gradient-mesh"
     },
     {
-      "name": "grid-pattern",
-      "title": "Grid Pattern",
+      "name": "grid-field",
+      "title": "Grid Field",
       "type": "registry:ui",
-      "summary": "A decorative SVG line grid that fills its positioned parent, with optional accent cells (`squares`, addressed as `[column, row]`) that can pulse. Colour comes from `currentColor`, so a text-colour class on `className` sets the tone.",
+      "summary": "Graph-paper lines (or a dot grid) behind a section, with a few cells that slowly light up and fade, like squares being filled in on a worksheet. It says \"careful, measured work\" without saying anything.",
       "topics": [],
       "categories": [
         "decorative",
-        "pattern"
+        "effect"
       ],
-      "tier": "pattern",
+      "tier": "effect",
       "rendering": "client",
       "minViewport": null,
       "loadingState": false,
@@ -3623,35 +3463,31 @@
       "states": [],
       "a11y": {
         "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
+        "aria": [],
         "motion": {
-          "driver": "js",
+          "driver": "both",
           "declaresPreference": true,
           "stylesheetCannotReach": true
         },
         "focusRing": false
       },
       "exports": [
-        "GridPattern"
+        "GridField"
       ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "motion"
-      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
-        "components/ui/patterns/grid-pattern.tsx"
+        "components/ui/effects/grid-field.tsx"
       ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/grid-pattern.json",
-      "item": "https://ds.interlace.tools/r/grid-pattern.json",
-      "docs": "https://ds.interlace.tools/c/grid-pattern"
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/grid-field.json",
+      "item": "https://ds.interlace.tools/r/grid-field.json",
+      "docs": "https://ds.interlace.tools/c/grid-field"
     },
     {
       "name": "grid",
@@ -3954,59 +3790,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/input.json",
       "item": "https://ds.interlace.tools/r/input.json",
       "docs": "https://ds.interlace.tools/c/input"
-    },
-    {
-      "name": "interactive-grid-pattern",
-      "title": "Interactive Grid Pattern",
-      "type": "registry:ui",
-      "summary": "A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className=\"text-border\"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "pattern"
-      ],
-      "tier": "pattern",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [
-          "presentation"
-        ],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "InteractiveGridPattern"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/patterns/interactive-grid-pattern.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/interactive-grid-pattern.json",
-      "item": "https://ds.interlace.tools/r/interactive-grid-pattern.json",
-      "docs": "https://ds.interlace.tools/c/interactive-grid-pattern"
     },
     {
       "name": "interlace-base",
@@ -4435,61 +4218,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json",
       "item": "https://ds.interlace.tools/r/lint-playground.json",
       "docs": "https://ds.interlace.tools/c/lint-playground"
-    },
-    {
-      "name": "marquee",
-      "title": "Marquee",
-      "type": "registry:ui",
-      "summary": "An infinitely scrolling strip: it renders its children `repeat` times side by side (or stacked, with `vertical`) inside an `overflow-hidden` track and translates each copy by its own width plus the gap, so the row reads as continuous.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden",
-          "aria-label",
-          "aria-pressed"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "Marquee"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/magicui/marquee.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/marquee.json",
-      "item": "https://ds.interlace.tools/r/marquee.json",
-      "docs": "https://ds.interlace.tools/c/marquee"
     },
     {
       "name": "mdx-starter",
@@ -4968,55 +4696,6 @@
       "docs": "https://ds.interlace.tools/c/number-field"
     },
     {
-      "name": "number-ticker",
-      "title": "Number Ticker",
-      "type": "registry:ui",
-      "summary": "A count-up number that starts when it scrolls into view and eases to `value`. It does nothing by default: `startValue` defaults to `value`, so you get an honest static number — and an honest SSR render — until you pass a lower one to opt into the count.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "NumberTicker"
-      ],
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/magicui/number-ticker.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/number-ticker.json",
-      "item": "https://ds.interlace.tools/r/number-ticker.json",
-      "docs": "https://ds.interlace.tools/c/number-ticker"
-    },
-    {
       "name": "page-header",
       "title": "Page Header",
       "type": "registry:ui",
@@ -5122,57 +4801,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/pagination.json",
       "item": "https://ds.interlace.tools/r/pagination.json",
       "docs": "https://ds.interlace.tools/c/pagination"
-    },
-    {
-      "name": "particles",
-      "title": "Particles",
-      "type": "registry:ui",
-      "summary": "An ambient `<canvas>` particle field for hero and section backdrops: `quantity` dots (100 by default) drifting on their own velocities, fading in near the middle and out near the edges, respawned whenever one leaves the box.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "Particles"
-      ],
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/magicui/particles.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/particles.json",
-      "item": "https://ds.interlace.tools/r/particles.json",
-      "docs": "https://ds.interlace.tools/c/particles"
     },
     {
       "name": "popover",
@@ -6072,6 +5700,61 @@
       "docs": "https://ds.interlace.tools/c/scroll-area"
     },
     {
+      "name": "scroller",
+      "title": "Scroller",
+      "type": "registry:ui",
+      "summary": "A row (or column) of items that glides past on a loop: logos of the organisations you work with, short quotes, headlines. The items are real content, so the component treats them that way first and as motion second.",
+      "topics": [],
+      "categories": [
+        "marketing",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden",
+          "aria-label",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "Scroller"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/scroller.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroller.json",
+      "item": "https://ds.interlace.tools/r/scroller.json",
+      "docs": "https://ds.interlace.tools/c/scroller"
+    },
+    {
       "name": "section-boundary",
       "title": "Section Boundary",
       "type": "registry:ui",
@@ -6571,6 +6254,104 @@
       "docs": "https://ds.interlace.tools/c/share-buttons"
     },
     {
+      "name": "sheen-text",
+      "title": "Sheen Text",
+      "type": "registry:ui",
+      "summary": "A word or short phrase painted with a slow, travelling gradient: the one word of a headline that carries the promise. Use it once per view, on a few words, never on body text.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "SheenText"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/sheen-text.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/sheen-text.json",
+      "item": "https://ds.interlace.tools/r/sheen-text.json",
+      "docs": "https://ds.interlace.tools/c/sheen-text"
+    },
+    {
+      "name": "sheen",
+      "title": "Sheen",
+      "type": "registry:ui",
+      "summary": "A soft band of light that crosses its parent every few seconds. Drop it inside the one button or card a page most wants pressed:",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "Sheen"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/sheen.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/sheen.json",
+      "item": "https://ds.interlace.tools/r/sheen.json",
+      "docs": "https://ds.interlace.tools/c/sheen"
+    },
+    {
       "name": "sheet",
       "title": "Sheet",
       "type": "registry:ui",
@@ -6620,54 +6401,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/sheet.json",
       "item": "https://ds.interlace.tools/r/sheet.json",
       "docs": "https://ds.interlace.tools/c/sheet"
-    },
-    {
-      "name": "shimmer-button",
-      "title": "Shimmer Button",
-      "type": "registry:ui",
-      "summary": "A dark pill CTA with a conic-gradient spark that sweeps around its edge: a rotating cone inside a sliding container, masked by an inset panel that redraws the fill and leaves only the rim glowing.",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "server",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "ShimmerButton"
-      ],
-      "version": "3.0.0",
-      "since": "1.0.0",
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/magicui/shimmer-button.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/shimmer-button.json",
-      "item": "https://ds.interlace.tools/r/shimmer-button.json",
-      "docs": "https://ds.interlace.tools/c/shimmer-button"
     },
     {
       "name": "side-by-side",
@@ -7257,6 +6990,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/stack.json",
       "item": "https://ds.interlace.tools/r/stack.json",
       "docs": "https://ds.interlace.tools/c/stack"
+    },
+    {
+      "name": "stagger-list",
+      "title": "Stagger List",
+      "type": "registry:ui",
+      "summary": "A list whose items arrive one after another the first time it scrolls into view: steps of a process, recent updates, the points of an argument. The arrival gives the eye an order to read in; the list itself is ordinary.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "StaggerList"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/stagger-list.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/stagger-list.json",
+      "item": "https://ds.interlace.tools/r/stagger-list.json",
+      "docs": "https://ds.interlace.tools/c/stagger-list"
     },
     {
       "name": "stance-list",

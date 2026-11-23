@@ -54,11 +54,11 @@ const STYLES_DIR = path.join(REPO_ROOT, 'packages/ui/styles');
  * items. Walked the same way as PRIMITIVES_DIR; each .tsx becomes one
  * registry item that consumers install via
  * `npx shadcn add @interlace/<name>`. The target path matches the source
- * shape (consumer gets `components/ui/magicui/<name>.tsx` etc.) so the
- * three tiers stay distinguishable in the consumer's tree.
+ * shape (consumer gets `components/ui/effects/<name>.tsx` etc.) so the
+ * tiers stay distinguishable in the consumer's tree.
  *
  * Why these are ours, not external: we own the source under
- * `packages/ui/src/{magicui,effects,patterns}/`. The `components.json`
+ * `packages/ui/src/{effects,patterns}/`. The `components.json`
  * registries map used to include upstream registry aliases pointing
  * at upstream registries — but every component we use was already vendored
  * into our package. Pointing the registry map at our own surface promotes
@@ -66,7 +66,6 @@ const STYLES_DIR = path.join(REPO_ROOT, 'packages/ui/styles');
  * "promote usage + reusability of our components" directive).
  */
 const DECORATIVE_DIRS = [
-  { name: 'magicui', dir: path.join(REPO_ROOT, 'packages/ui/src/magicui') },
   // Interlace's own decorative motion and backdrops (Starfield, GradientMesh, …).
   // `strand-field` is skipped: it is a showcase built on the charts' private
   // `scale` core, which is a companion file, not an installable item.
@@ -376,9 +375,9 @@ export const relocateDocHeader = (content) => {
   // A leading `'use client'` must stay the first statement, but the comments
   // UNDER it are at the same risk as the ones above: `transformRsc` deletes
   // the directive when `rsc: false`, promoting them into the dropped range.
-  // The semicolon is optional and the magicui tier omits it — `border-beam`
-  // and `number-ticker` open with a bare `"use client"`, and requiring `;`
-  // left both of their headers above the first import to be dropped.
+  // The semicolon is optional: a file may open with a bare `"use client"`,
+  // and requiring `;` once left such headers above the first import to be
+  // dropped.
   const directive = /^['"]use \w+['"];?[ \t]*\r?\n/.exec(content.slice(i));
   const keep = directive ? directive[0] : '';
   if (directive) {
@@ -695,7 +694,6 @@ const TIER_SUBDIR = {
   patterns: 'patterns/',
   charts: 'charts/',
   templates: 'templates/',
-  magicui: 'magicui/',
   effects: 'effects/',
 };
 
@@ -908,7 +906,7 @@ const buildItem = async (filePath, fileName, tier = null) => {
   const meta = await readOptionalMeta(filePath);
   const sourceDir = path.dirname(filePath);
   const { deps, companions } = await splitRelativeImports(source, sourceDir);
-  // Decorative tiers (magicui / effects / patterns) nest under their
+  // Decorative tiers (effects / patterns) nest under their
   // subdir in the consumer tree to preserve provenance. Primitives stay flat.
   const subdir = TIER_SUBDIR[tier ?? 'primitives'] ?? '';
   const tierLabel = tier ? ` (${tier})` : '';
@@ -1383,7 +1381,7 @@ export const buildAll = async () => {
     items.push(await buildItem(path.join(PRIMITIVES_DIR, file), file));
   }
 
-  // Decorative tiers (magicui / effects / patterns / templates) — our own
+  // Decorative tiers (effects / patterns / templates) — our own
   // surface, promoted under the @interlace namespace.
   let decorativeCount = 0;
   for (const { name: tier, dir, skip } of DECORATIVE_DIRS) {

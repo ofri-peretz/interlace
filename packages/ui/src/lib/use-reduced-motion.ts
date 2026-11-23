@@ -19,8 +19,8 @@ const QUERY = '(prefers-reduced-motion: reduce)';
  * only then snaps to the still state.
  *
  * For most gates that is invisible. For the ones this package ships it is not —
- * the frame that gets painted is `AnimatedList`'s `scale: 0`, `FlipWords`' 8px
- * blur, `Spotlight`'s `opacity: 0`. A user who set the preference precisely
+ * the frame that gets painted is an entry animation's `opacity: 0` or a
+ * transform mid-flight. A user who set the preference precisely
  * because motion makes them ill gets one frame of exactly the motion they
  * turned off, on every mount. WCAG 2.3.3 is not satisfied by "briefly".
  *

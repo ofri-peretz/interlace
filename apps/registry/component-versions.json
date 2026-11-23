@@ -27,24 +27,6 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "animated-gradient-text",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
-    },
-    {
-      "name": "animated-grid-pattern",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
-      "name": "animated-list",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
-    },
-    {
       "name": "article-card",
       "version": "3.0.0",
       "since": "1.0.0",
@@ -115,12 +97,6 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
-    },
-    {
-      "name": "border-beam",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
     },
     {
       "name": "box",
@@ -237,6 +213,12 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "count-up",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "cta-section",
       "version": "2.0.0",
       "since": "1.0.0",
@@ -303,16 +285,16 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "dot-pattern",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
       "name": "dropdown-menu",
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
+    },
+    {
+      "name": "edge-glow",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "empty-state",
@@ -387,9 +369,9 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "grid-pattern",
-      "version": "2.0.0",
-      "since": "1.0.0",
+      "name": "grid-field",
+      "version": "1.0.0",
+      "since": null,
       "updated": "2026-11-23"
     },
     {
@@ -421,12 +403,6 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
-    },
-    {
-      "name": "interactive-grid-pattern",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
     },
     {
       "name": "interlace-base",
@@ -477,12 +453,6 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "marquee",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
-    },
-    {
       "name": "mdx-starter",
       "version": "3.0.0",
       "since": "1.0.0",
@@ -525,12 +495,6 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "number-ticker",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
-    },
-    {
       "name": "page-header",
       "version": "2.0.0",
       "since": "1.0.0",
@@ -541,12 +505,6 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
-    },
-    {
-      "name": "particles",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
     },
     {
       "name": "popover",
@@ -645,6 +603,12 @@
       "updated": "2026-08-22"
     },
     {
+      "name": "scroller",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "section",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -699,16 +663,22 @@
       "updated": "2026-08-22"
     },
     {
+      "name": "sheen",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "sheen-text",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "sheet",
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
-    },
-    {
-      "name": "shimmer-button",
-      "version": "3.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-23"
     },
     {
       "name": "side-by-side",
@@ -763,6 +733,12 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
+    },
+    {
+      "name": "stagger-list",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "stance-list",

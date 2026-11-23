@@ -3,7 +3,7 @@
  *
  * WHY THIS LOCK EXISTS
  * --------------------
- * `src/magicui/`, `src/effects/` and the decorative half of `src/patterns/`
+ * `src/effects/` and the decorative half of `src/patterns/`
  * are the DS's least-tested surface, because almost nothing about them is
  * visible to the tools that guard the rest of it:
  *
@@ -50,13 +50,6 @@ vi.mock('../src/lib/use-reduced-motion.js', () => ({
   useReducedMotion: () => reduced.value,
 }));
 
-const { AnimatedList, AnimatedListItem } = await import(
-  '../src/magicui/animated-list.js'
-);
-const { Marquee } = await import('../src/magicui/marquee.js');
-const { Particles } = await import('../src/magicui/particles.js');
-const { BorderBeam } = await import('../src/magicui/border-beam.js');
-const { NumberTicker } = await import('../src/magicui/number-ticker.js');
 const { SectionHeader } = await import('../src/patterns/section-header.js');
 const { ArticleCard, FeaturedArticleCard } = await import(
   '../src/patterns/article-card.js'
@@ -78,23 +71,6 @@ class StubObserver {
   }
 }
 
-/** Enough of a 2D context for the particle field to seed and paint. */
-function stubCanvas() {
-  const ctx = {
-    clearRect: vi.fn(),
-    beginPath: vi.fn(),
-    arc: vi.fn(),
-    fill: vi.fn(),
-    translate: vi.fn(),
-    setTransform: vi.fn(),
-    fillStyle: '',
-  };
-  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(
-    ctx as unknown as CanvasRenderingContext2D,
-  );
-  return ctx;
-}
-
 beforeEach(() => {
   reduced.value = false;
   vi.stubGlobal('IntersectionObserver', StubObserver);
@@ -107,104 +83,9 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
-const styleOf = (el: Element) => el.getAttribute('style') ?? '';
-
 // ════════════════════════════════════════════════════════════════════════
 // A. Reduced motion
 // ════════════════════════════════════════════════════════════════════════
-
-describe('AnimatedList — reduced motion reaches the ITEM, not just the list', () => {
-  // An ARRAY, not a fragment: `AnimatedList` counts its children with
-  // `Children.toArray`, which sees a single Fragment as one child. Wrapping
-  // these in `<>…</>` yields a one-entry feed and quietly weakens every
-  // assertion below.
-  const feed = [
-    <div key="a">A</div>,
-    <div key="b">B</div>,
-    <div key="c">C</div>,
-  ];
-
-  it('mounts every entry settled, with no spring pop-in', () => {
-    // THE DEFECT: the list correctly killed auto-advance and revealed all
-    // three at once, and then every one of them sprang in from `scale: 0`
-    // simultaneously — a bigger movement than the staggered version it
-    // replaced. `AnimatedListItem` passed `initial={{ scale: 0, opacity: 0 }}`
-    // unconditionally. `motion/react` writes inline styles, so neither the
-    // preflight wildcard nor the structure/motion.css allowlist could reach it, and no
-    // `MotionConfig` wrapped the tree.
-    reduced.value = true;
-    render(<AnimatedList data-testid="feed">{feed}</AnimatedList>);
-
-    const items = [
-      ...document.querySelectorAll('[data-slot="animated-list-item"]'),
-    ];
-    expect(items).toHaveLength(3);
-
-    for (const item of items) {
-      expect(
-        styleOf(item),
-        'An entry mounted mid-animation under `reduce`. motion writes the ' +
-          '`initial` keyframe as an inline style, so `scale(0)` here means the ' +
-          'pop-in is still running.',
-      ).not.toContain('scale(0)');
-      expect(styleOf(item)).not.toContain('opacity: 0');
-    }
-  });
-
-  it('still plays the pop-in when motion is allowed (negative control)', () => {
-    // Without this, the assertion above passes just as well against a
-    // component that never animates at all.
-    reduced.value = false;
-    render(<AnimatedList data-testid="feed">{feed}</AnimatedList>);
-
-    const items = [
-      ...document.querySelectorAll('[data-slot="animated-list-item"]'),
-    ];
-    expect(items.length).toBeGreaterThan(0);
-    expect(
-      styleOf(items[0]),
-      'No entry animation at all under no-preference — the gate is stuck on.',
-    ).toContain('scale(0)');
-  });
-
-  it('gates the exported item on its own, not via the list', () => {
-    // `AnimatedListItem` is exported for consumers driving the window
-    // themselves. A gate that lived only in `AnimatedList` would leave them
-    // with the un-gated pop-in.
-    reduced.value = true;
-    render(<AnimatedListItem>solo</AnimatedListItem>);
-    const item = document.querySelector('[data-slot="animated-list-item"]')!;
-    expect(styleOf(item)).not.toContain('scale(0)');
-  });
-});
-
-describe('Marquee — no control that cannot do what it says', () => {
-  it('withdraws the pause button under reduce', () => {
-    // THE DEFECT: `isAnimating = !paused && !reducedMotion`, so under `reduce`
-    // the button rendered in its "Play" state with `aria-pressed=true` — and
-    // clicking it flipped `paused` to false, which changed `isAnimating` not at
-    // all, because reduced motion outranks it. A control announcing "Resume
-    // scrolling content" that can never resume anything.
-    reduced.value = true;
-    render(<Marquee>logos</Marquee>);
-    expect(
-      document.querySelector('button'),
-      'The pause control is still rendered under `reduce`, where it cannot ' +
-        'affect the animation state in either direction.',
-    ).toBeNull();
-  });
-
-  it('still ships the control when motion is allowed (WCAG 2.2.2)', () => {
-    // The other half: withdrawing it under `reduce` must not become
-    // withdrawing it always. A 40s infinite scroll needs a pause affordance.
-    reduced.value = false;
-    render(<Marquee>logos</Marquee>);
-    const button = document.querySelector('button')!;
-    expect(button).not.toBeNull();
-    expect(button.getAttribute('aria-label')).toBe('Pause scrolling content');
-    expect(button.getAttribute('aria-pressed')).toBe('false');
-  });
-});
 
 describe('ArticleCard — the hover zoom carries its own gate', () => {
   it('gates the cover scale with motion-safe:, not with preflight alone', () => {
@@ -241,95 +122,6 @@ describe('ArticleCard — the hover zoom carries its own gate', () => {
 // ════════════════════════════════════════════════════════════════════════
 // B. Props that lie
 // ════════════════════════════════════════════════════════════════════════
-
-describe('Particles — `interactive` listens somewhere it can actually be heard', () => {
-  /**
-   * Record every `addEventListener` call with the element it was made on.
-   *
-   * Spying on ONE element instead would not work, and the way it fails is
-   * instructive: React 19 attaches its delegated handlers — `pointermove`
-   * among ~136 others — to the root container it renders into. A spy on that
-   * container therefore reports `pointermove` whatever the component does, and
-   * the test passes against the broken code. Hence a prototype-level spy that
-   * records the target, plus assertions naming the exact elements, plus a
-   * render tree deep enough that the interesting parent is NOT React's root.
-   */
-  function recordListeners() {
-    const calls: Array<{ target: Element; type: string }> = [];
-    const original = Element.prototype.addEventListener;
-    vi.spyOn(Element.prototype, 'addEventListener').mockImplementation(
-      function (
-        this: Element,
-        type: string,
-        ...rest: [EventListenerOrEventListenerObject, (boolean | AddEventListenerOptions)?]
-      ) {
-        calls.push({ target: this, type });
-        return original.call(this, type, ...rest);
-      } as typeof Element.prototype.addEventListener,
-    );
-    return calls;
-  }
-
-  const targetsFor = (
-    calls: Array<{ target: Element; type: string }>,
-    type: string,
-  ) => calls.filter((call) => call.type === type).map((call) => call.target);
-
-  it('binds pointermove to the parent, never to the pointer-events-none wrapper', () => {
-    // THE DEFECT: the listener was bound to the wrapper, and the wrapper is
-    // `pointer-events-none` by contract (a decorative field must not eat
-    // clicks). An element with `pointer-events: none` is not a hit target, so
-    // the handler could never fire — which made `interactive`, `staticity` and
-    // `ease` three props the component accepted and ignored.
-    stubCanvas();
-    const calls = recordListeners();
-
-    render(
-      <div data-testid="host">
-        <Particles data-testid="field" interactive />
-      </div>,
-    );
-
-    const wrapper = document.querySelector('[data-slot="particles"]')!;
-    const host = wrapper.parentElement!;
-
-    expect(
-      wrapper.className,
-      'The wrapper stopped being pointer-events-none. That would make the ' +
-        'original binding work again — and make the field swallow clicks, ' +
-        'which is the reason it is decorative-only in the first place.',
-    ).toContain('pointer-events-none');
-
-    const listeners = targetsFor(calls, 'pointermove');
-    expect(
-      listeners,
-      'The pointermove listener is still on the field wrapper, which is not a ' +
-        'hit target. It can never fire.',
-    ).not.toContain(wrapper);
-    expect(
-      listeners,
-      'Nothing bound pointermove to the surface the field covers.',
-    ).toContain(host);
-  });
-
-  it('binds nothing when interactive is off', () => {
-    // Pins that the assertion above measures the `interactive` path, and not
-    // some listener the component adds unconditionally.
-    stubCanvas();
-    const calls = recordListeners();
-
-    render(
-      <div data-testid="host">
-        <Particles data-testid="field" interactive={false} />
-      </div>,
-    );
-
-    const wrapper = document.querySelector('[data-slot="particles"]')!;
-    const listeners = targetsFor(calls, 'pointermove');
-    expect(listeners).not.toContain(wrapper);
-    expect(listeners).not.toContain(wrapper.parentElement!);
-  });
-});
 
 describe('SectionHeader — `align` reaches the eyebrow', () => {
   it('left-aligns the eyebrow row under align="start"', () => {
@@ -399,68 +191,10 @@ describe('ArticleCard — dates are pinned to UTC', () => {
 });
 
 // ════════════════════════════════════════════════════════════════════════
-// D. Accessibility
-// ════════════════════════════════════════════════════════════════════════
-
-/**
- * `aria-hidden` on the ROOT of a decorative layer, and the reason the check is
- * "the root, and every node under it is covered by it" rather than "every
- * node carries the attribute": `aria-hidden` prunes a SUBTREE. Asserting it on
- * children too would lock in redundancy, and — worse — would pass just as well
- * against a component that hid a child while leaving the parent group
- * announced. So each test below finds the layer's root and asserts the
- * attribute is there, plus that no OTHER element in the tree is left outside
- * a hidden subtree.
- */
-function assertFullyHidden(roots: Element[], label: string) {
-  expect(roots.length, `${label}: nothing rendered; nothing was asserted.`)
-    .toBeGreaterThan(0);
-  for (const root of roots) {
-    expect(
-      root.getAttribute('aria-hidden'),
-      `${label}: <${root.tagName.toLowerCase()}> is an empty, roleless, ` +
-        `decorative node that a screen reader walks into.`,
-    ).toBe('true');
-  }
-}
-
-describe('BorderBeam — the ring and the beam are out of the a11y tree', () => {
-  it('hides the wrapper, which takes the beam with it', () => {
-    // THE DEFECT: two empty `<div>`s, no role, no text, no `aria-hidden`
-    // anywhere in the file. The effect is decoration drawn inside someone
-    // else's card, so a reader working through that card met two anonymous
-    // group nodes on the way to its content.
-    const { container } = render(<BorderBeam />);
-    const wrapper = container.firstElementChild!;
-    assertFullyHidden([wrapper], 'BorderBeam wrapper');
-
-    // The beam is the wrapper's child, so it inherits the pruning. Pin the
-    // structural fact the inheritance rests on — if the beam is ever hoisted
-    // out of the wrapper, this fails and the `aria-hidden` has to follow it.
-    const beam = container.querySelector('.animate-border-beam')!;
-    expect(beam, 'the beam element is gone').not.toBeNull();
-    expect(
-      wrapper.contains(beam),
-      'The beam is no longer inside the aria-hidden wrapper, so it is back in ' +
-        'the a11y tree on its own.',
-    ).toBe(true);
-  });
-
-  it('does not put aria-hidden anywhere className can reach', () => {
-    // `className` lands on the BEAM by this component's documented API. If the
-    // attribute lived there, a consumer restyling the gradient would be one
-    // prop away from hiding whatever they aimed it at.
-    const { container } = render(<BorderBeam className="custom-beam" />);
-    const beam = container.querySelector('.custom-beam')!;
-    expect(beam.hasAttribute('aria-hidden')).toBe(false);
-  });
-});
-
-// ════════════════════════════════════════════════════════════════════════
 // E. Tokens
 // ════════════════════════════════════════════════════════════════════════
 //
-// R19 is "tokens only", but for these four components the interesting question
+// R19 is "tokens only", but for these components the interesting question
 // is not whether a literal is gone — it is whether what replaced it is
 // ADMISSIBLE, which depends on what the colour is doing. The DS gates SC 1.4.3
 // / 1.4.11 by token maths rather than by axe (see composite-contrast-lock), so
@@ -542,7 +276,7 @@ function defaultsOf(file: string): Record<string, string> {
   const source = readFileSync(resolve(__dirname, '../src', file), 'utf8');
   const out: Record<string, string> = {};
   for (const m of source.matchAll(
-    /^\s{2,6}(\w+) = "([^"]+)",?$/gm,
+    /^\s{2,6}(\w+) = ['"]([^'"]+)['"],?$/gm,
   )) {
     out[m[1]] = m[2];
   }
@@ -565,15 +299,13 @@ describe('token defaults, weighed against what the colour is doing', () => {
     }
   });
 
-  it('AnimatedGradientText: both stops are text-grade in both schemes', () => {
-    // THE DEFECT: `#ffaa40` / `#9c40ff`, raw literals — and the span is
-    // `bg-clip-text text-transparent`, so those literals were not decoration
-    // sitting behind the words, they WERE the words. `#ffaa40` measures ~2:1
-    // on white: an AA failure on text, on the DS's default surface, shipped as
-    // a default.
-    const defaults = defaultsOf('magicui/animated-gradient-text.tsx');
-    expect(defaults.colorFrom).toBe('var(--primary)');
-    expect(defaults.colorTo).toBe('var(--primary-active)');
+  it('SheenText: both stops are text-grade in both schemes', () => {
+    // The gradient is clipped to the glyphs, so its stops are not decoration
+    // behind the words: they ARE the words, and SC 1.4.3 binds at 4.5:1. The
+    // component this one replaced shipped a stop that measured ~2:1 on white.
+    const defaults = defaultsOf('effects/sheen-text.tsx');
+    expect(defaults.from).toBe('var(--primary)');
+    expect(defaults.to).toBe('var(--primary-active)');
 
     for (const mode of ['light', 'dark'] as const) {
       const surface = theme[mode].get('background')!;
@@ -582,8 +314,7 @@ describe('token defaults, weighed against what the colour is doing', () => {
         expect(
           ratio,
           `${mode}: --interlace-${token} measures ${ratio.toFixed(2)}:1 on the ` +
-            `page background. It is a gradient stop on bg-clip-text, so it is ` +
-            `glyph fill and SC 1.4.3 binds at ${AA_NORMAL}:1.`,
+            `page background. It is glyph fill, so it must clear ${AA_NORMAL}:1.`,
         ).toBeGreaterThanOrEqual(AA_NORMAL);
       }
     }
@@ -615,64 +346,32 @@ describe('token defaults, weighed against what the colour is doing', () => {
     }
   });
 
-  it('ShimmerButton: the scrim pair, which does not invert and clears AA', () => {
-    // THE DEFECT: `text-white`, `border-white/10`, `rgba(0, 0, 0, 1)`,
-    // `#ffffff` — four literals for colours the token system already names.
-    // `--scrim` / `--scrim-foreground` are the tokens for "dark by intent, not
-    // by mode": identical in both schemes, which is why moving to them changes
-    // nothing visually and everything about forkability.
-    const defaults = defaultsOf('magicui/shimmer-button.tsx');
-    expect(defaults.background).toBe('var(--scrim)');
-    expect(defaults.shimmerColor).toBe('var(--scrim-foreground)');
-
-    for (const mode of ['light', 'dark'] as const) {
-      const ratio = contrast(
-        theme[mode].get('scrim-foreground')!,
-        theme[mode].get('scrim')!,
-      );
-      expect(
-        ratio,
-        `${mode}: the button's own text pair measures ${ratio.toFixed(2)}:1.`,
-      ).toBeGreaterThanOrEqual(AA_NORMAL);
-    }
-
-    // The pair not inverting is the property the choice rests on. If a fork
-    // makes the scrim theme-dependent, this button silently becomes a
-    // light-on-light CTA in one mode.
-    expect(theme.light.get('scrim')).toEqual(theme.dark.get('scrim'));
-    expect(theme.light.get('scrim-foreground')).toEqual(
-      theme.dark.get('scrim-foreground'),
-    );
+  it('Sheen: light from the primary pair, so it reads on the primary button', () => {
+    // Sheen sits under the label at z-index -1 inside the button, so it never
+    // touches the text pair. Its default is the button's own foreground token.
+    const defaults = defaultsOf('effects/sheen.tsx');
+    expect(defaults.color).toBe('var(--primary-foreground)');
   });
 
-  it('BorderBeam: on tokens, and allowed a 3:1-grade one because it is not text', () => {
-    // THE DEFECT: the same `#ffaa40` / `#9c40ff` pair as the gradient text —
-    // but the admissibility question has a different answer here. The beam is
-    // a decorative overlay inside a container that draws its own border: not
+  it('EdgeGlow: on tokens, and allowed a 3:1-grade one because it is not text', () => {
+    // The arc is decoration inside a container that draws its own border: not
     // text (1.4.3), not the boundary identifying a control (1.4.11). So a
-    // `--chart-*` token, tuned to the 3:1 graphical floor, is fine — where in
-    // AnimatedGradientText it would not be.
-    const defaults = defaultsOf('magicui/border-beam.tsx');
-    expect(defaults.colorFrom).toBe('var(--primary)');
-    expect(defaults.colorTo).toBe('var(--chart-2)');
+    // `--chart-*` token, tuned to the 3:1 graphical floor, is admissible here
+    // where in SheenText it would not be.
+    const defaults = defaultsOf('effects/edge-glow.tsx');
+    expect(defaults.from).toBe('var(--primary)');
+    expect(defaults.to).toBe('var(--chart-2)');
   });
 
-
-
-  it('NumberTicker: text-foreground, not a hand-rolled black/white', () => {
-    // THE DEFECT: `text-black dark:text-white` — an approximation of
-    // `text-foreground` that is wrong under both shipped themes
-    // (`--interlace-foreground` is #0d0b09 / #f0ede9, neither pure).
-    //
-    // Comments are stripped first. The file header NAMES the old classes while
-    // explaining what replaced them, and a scanner that cannot tell a class
-    // from a sentence about a class would fail on the documentation of the fix.
+  it('CountUp: takes the colour of the text around it', () => {
+    // The component it replaced hand-rolled `text-black dark:text-white`, an
+    // approximation of the foreground that was wrong under both themes. A
+    // number in a sentence should simply inherit.
     const code = stripComments(
-      readFileSync(resolve(__dirname, '../src/magicui/number-ticker.tsx'), 'utf8'),
+      readFileSync(resolve(__dirname, '../src/effects/count-up.tsx'), 'utf8'),
     );
-    expect(code).toContain('text-foreground');
-    expect(code).not.toContain('text-black');
-    expect(code).not.toContain('dark:text-white');
+    expect(code).not.toMatch(/text-(black|white)\b/);
+    expect(code).not.toMatch(/['"]#[0-9a-f]{3,8}['"]/i);
   });
 });
 
@@ -684,50 +383,6 @@ describe('token defaults, weighed against what the colour is doing', () => {
 // onto the current registry. The pattern is the same in all three: the DS was
 // not wrong in isolation, it was missing the seam the consumer needed, so the
 // consumer re-patched the component locally and the DS never heard about it.
-
-describe('NumberTicker — `notation` is a prop, not a re-patch', () => {
-  // THE DEFECT: none, strictly — the component was simply missing an option
-  // `Intl.NumberFormat` already supports, and every consumer with a six-figure
-  // metric re-implemented `notation: "compact"` on top of it. `128,400` is
-  // eight tabular glyphs; in a stat tile at the 320px floor it wraps.
-
-  it('formats compact when asked', () => {
-    reduced.value = false;
-    render(<NumberTicker value={128400} notation="compact" />);
-    expect(
-      document.querySelector('span')!.textContent,
-      'notation="compact" did not reach Intl.NumberFormat.',
-    ).toBe('128K');
-  });
-
-  it('keeps decimalPlaces meaningful under compact', () => {
-    reduced.value = false;
-    render(<NumberTicker value={128400} notation="compact" decimalPlaces={1} />);
-    expect(document.querySelector('span')!.textContent).toBe('128.4K');
-  });
-
-  it('changes nothing for a caller that does not pass it', () => {
-    // The half that matters more. `notation` defaults to `"standard"`, which
-    // is Intl's own default, so an existing call site must render the exact
-    // grouped string it rendered before the prop existed.
-    reduced.value = false;
-    render(<NumberTicker value={128400} />);
-    expect(
-      document.querySelector('span')!.textContent,
-      'The default notation changed. Every existing stat just moved.',
-    ).toBe('128,400');
-  });
-
-  it('applies to the reduced-motion write path too', () => {
-    // Under `reduce` a separate effect writes `formatNumber(value)` straight
-    // to the node. It closes over the SAME memoized formatter — a `notation`
-    // left out of that formatter's dep list would make this path disagree
-    // with the render path, and only for users who asked for less motion.
-    reduced.value = true;
-    render(<NumberTicker value={128400} startValue={0} notation="compact" />);
-    expect(document.querySelector('span')!.textContent).toBe('128K');
-  });
-});
 
 describe('ArticleCard — the cover is a slot, and the box is the cover’s ratio', () => {
   const COVER = 'https://example.com/cover.png';
@@ -873,34 +528,3 @@ describe('ArticleCard — the cover is a slot, and the box is the cover’s rati
 // The one defect with no runtime and no type-level symptom
 // ════════════════════════════════════════════════════════════════════════
 
-describe('AnimatedGradientText — props describe the element it renders', () => {
-  it('declares span props for a span root', () => {
-    // `ComponentPropsWithoutRef<"div">` on a component that renders a `<span>`.
-    //
-    // This is asserted STRUCTURALLY, and the reason is worth stating rather
-    // than hiding: the defect has no runtime symptom (the type is erased) AND
-    // no type-level one. React's event handlers are declared through the
-    // `bivarianceHack` indirection, which makes `MouseEventHandler<HTMLDivElement>`
-    // and `MouseEventHandler<HTMLSpanElement>` mutually assignable — so the two
-    // prop types are structurally interchangeable and no `tsc` assertion, and
-    // no `expectTypeOf`, can tell them apart. Reading the source is the only
-    // check that discriminates, so that is the check.
-    const source = readFileSync(
-      resolve(__dirname, '../src/magicui/animated-gradient-text.tsx'),
-      'utf8',
-    );
-
-    const propsExtends = /extends ComponentPropsWithoutRef<"(\w+)">/.exec(source);
-    expect(propsExtends, 'props interface no longer extends a native element')
-      .not.toBeNull();
-
-    const rootTag = /return \(\s*<(\w+)/.exec(source);
-    expect(rootTag, 'could not find the rendered root element').not.toBeNull();
-
-    expect(
-      propsExtends![1],
-      `Props extend <${propsExtends![1]}> while the component renders a ` +
-        `<${rootTag![1]}>. Div-only attributes type-check and then do nothing.`,
-    ).toBe(rootTag![1]);
-  });
-});

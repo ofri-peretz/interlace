@@ -203,7 +203,7 @@ Borders only appear at section *transitions*, never inside content.
 
 ### 9. Decorative chrome is positioned, never displacing
 
-Gradient blobs, `<BorderBeam>`, decorative SVGs, glow rings — all of
+Gradient blobs, `<EdgeGlow>`, decorative SVGs, glow rings — all of
 them are `absolute` (or `fixed`) and never affect document flow. The
 parent is `relative overflow-hidden`. Decorative chrome that nudges
 content even by a pixel is a layout-CLS source.
