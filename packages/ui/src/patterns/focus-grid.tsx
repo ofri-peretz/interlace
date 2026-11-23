@@ -49,10 +49,19 @@ import { cn } from '../lib/cn.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
+/**
+ * Columns follow the grid's own width, not the viewport: the list is the
+ * grid, so it cannot be its own container, and an intrinsic track does the
+ * job instead. `auto-fill` fits as many tracks as the width allows; the
+ * `max(…)` floor keeps a card readable (16 / 14 / 12rem); the `calc(…)` term
+ * caps the count at `columns`; `min(100%, …)` lets one card fill a column
+ * narrower than the floor. Written out because Tailwind cannot scan a
+ * runtime-built class.
+ */
 const COLUMNS = {
-  2: 'sm:grid-cols-2',
-  3: 'sm:grid-cols-2 lg:grid-cols-3',
-  4: 'sm:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-[repeat(auto-fill,minmax(min(100%,max(16rem,calc((100%_-_1rem)/2))),1fr))]',
+  3: 'grid-cols-[repeat(auto-fill,minmax(min(100%,max(14rem,calc((100%_-_2rem)/3))),1fr))]',
+  4: 'grid-cols-[repeat(auto-fill,minmax(min(100%,max(12rem,calc((100%_-_3rem)/4))),1fr))]',
 } as const;
 
 const ASPECT = {
@@ -69,7 +78,10 @@ const DIM_OTHERS = [
 ].join(' ');
 
 export interface FocusGridProps extends React.ComponentProps<'ul'> {
-  /** Columns from `lg` up (two from `sm`, one below). @default 3 */
+  /**
+   * The most columns it shows. Fewer as its own width shrinks, so it fits a
+   * sidebar or a card as well as a page. @default 3
+   */
   columns?: keyof typeof COLUMNS;
 }
 
@@ -78,7 +90,7 @@ function FocusGrid({ columns = 3, className, ...props }: FocusGridProps) {
     <ul
       data-slot="focus-grid"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('grid grid-cols-1 gap-4', COLUMNS[columns], DIM_OTHERS, className)}
+      className={cn('grid gap-4', COLUMNS[columns], DIM_OTHERS, className)}
       {...props}
     />
   );

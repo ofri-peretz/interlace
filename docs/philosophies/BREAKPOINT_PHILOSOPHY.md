@@ -66,7 +66,7 @@ narrower-friendly alternative below 480px.
 ## Collections size to their container
 
 A component that repeats items in a grid (FeatureGrid, StatGroup,
-ArticleListGrid, PricingTable, RelatedPosts, StatStrip) picks its column count
+ArticleListGrid, PricingTable, RelatedPosts, StatStrip, TestimonialGrid) picks its column count
 from its **own width**, not the viewport. Its root is a CSS `@container`, and
 its tracks use Tailwind's container variants:
 
@@ -80,6 +80,13 @@ RelatedPosts is the one exception: it goes to two tracks at 36rem (`@xl`), not
 28rem, because an article card with an image needs more room than a stat or a
 feature tile. On a full-width page it now shows two columns from about a 600px
 screen, where it used to wait for 768px.
+
+FocusGrid cannot query its own width: its root is the grid, and a container
+cannot size its own tracks from itself. Its tracks are intrinsic instead,
+`repeat(auto-fill, minmax(min(100%, max(floor, share)), 1fr))`. The floor
+(16rem for two columns, 14rem for three, 12rem for four) sets when a column
+drops, `share` caps the count at `columns`, and `min(100%, …)` keeps one card
+inside a column narrower than the floor. There is no breakpoint at all.
 
 The viewport cannot tell a full-width section from the same section in a
 sidebar or a dashboard card. Keyed on the viewport, a `cols={4}` grid in a
