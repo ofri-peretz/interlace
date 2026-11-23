@@ -76,6 +76,11 @@ its tracks use Tailwind's container variants:
 | 28rem and up | two (three for StatStrip) |
 | 56rem and up (`@4xl`) | the `cols` the caller asked for |
 
+RelatedPosts is the one exception: it goes to two tracks at 36rem (`@xl`), not
+28rem, because an article card with an image needs more room than a stat or a
+feature tile. On a full-width page it now shows two columns from about a 600px
+screen, where it used to wait for 768px.
+
 The viewport cannot tell a full-width section from the same section in a
 sidebar or a dashboard card. Keyed on the viewport, a `cols={4}` grid in a
 320px column on a 1440px screen holds four 60px tracks. Keyed on its
