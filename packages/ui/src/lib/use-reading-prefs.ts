@@ -67,12 +67,11 @@ export function readStoredContrast(): ContrastPreference {
   return stored === 'more' || stored === 'normal' ? stored : 'system';
 }
 
-/** Project both axes onto `<html>`. The defaults are written as absence. */
+/** Project both axes onto `<html>`. The defaults are written as absence. Client only. */
 export function applyReadingPrefs(
   textSize: TextSize,
   contrast: ContrastPreference,
 ): void {
-  if (typeof document === 'undefined') return;
   const root = document.documentElement;
   if (textSize === 'default') root.removeAttribute('data-text-size');
   else root.setAttribute('data-text-size', textSize);

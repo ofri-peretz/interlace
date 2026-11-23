@@ -7,7 +7,7 @@
  * wrong for the frame before, which only a DOM-level test sees.
  */
 
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, renderHook, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -17,7 +17,11 @@ import {
   TEXT_SIZES,
   THEME_SCRIPT,
 } from '../src/lib/theme-script.js';
-import { readStoredContrast, readStoredTextSize } from '../src/lib/use-reading-prefs.js';
+import {
+  readStoredContrast,
+  readStoredTextSize,
+  useReadingPrefs,
+} from '../src/lib/use-reading-prefs.js';
 import { ContrastToggle, TextSizeControl } from '../src/primitives/reading-settings.js';
 
 const html = () => document.documentElement;
@@ -188,5 +192,76 @@ describe('storage readers', () => {
     expect(readStoredContrast()).toBe('system');
     localStorage.setItem(TEXT_SIZE_STORAGE_KEY, 'huge');
     expect(readStoredTextSize()).toBe('default');
+  });
+});
+
+describe('useReadingPrefs edges', () => {
+  it('reads defaults when storage throws, and still applies the choice', () => {
+    const get = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+    const set = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+    expect(readStoredTextSize()).toBe('default');
+    const { result } = renderHook(() => useReadingPrefs());
+    act(() => result.current.setTextSize('xl'));
+    expect(html().getAttribute('data-text-size')).toBe('xl');
+    get.mockRestore();
+    set.mockRestore();
+  });
+
+  it('holds at the smallest size, and "system" clears the stored contrast', () => {
+    localStorage.setItem(CONTRAST_STORAGE_KEY, 'more');
+    const { result } = renderHook(() => useReadingPrefs());
+    act(() => result.current.stepTextSize(-1));
+    expect(result.current.textSize).toBe('default');
+    expect(localStorage.getItem(TEXT_SIZE_STORAGE_KEY)).toBeNull();
+    act(() => result.current.setContrast('system'));
+    expect(localStorage.getItem(CONTRAST_STORAGE_KEY)).toBeNull();
+    expect(result.current.contrastPreference).toBe('system');
+    expect(html().hasAttribute('data-contrast')).toBe(false);
+  });
+
+  it('follows another tab through the storage event, and ignores other keys', () => {
+    const { result } = renderHook(() => useReadingPrefs());
+    localStorage.setItem(TEXT_SIZE_STORAGE_KEY, 'lg');
+    localStorage.setItem(CONTRAST_STORAGE_KEY, 'normal');
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key: 'unrelated' }));
+    });
+    expect(result.current.textSize).toBe('default');
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key: TEXT_SIZE_STORAGE_KEY }));
+      window.dispatchEvent(new StorageEvent('storage', { key: CONTRAST_STORAGE_KEY }));
+    });
+    expect(result.current.textSize).toBe('lg');
+    expect(result.current.contrastPreference).toBe('normal');
+  });
+
+  it('follows the OS setting as it changes', () => {
+    let listener: ((event: { matches: boolean }) => void) | undefined;
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn((query: string) => ({
+        matches: false,
+        media: query,
+        addEventListener: (_: string, fn: typeof listener) => {
+          listener = fn;
+        },
+        removeEventListener: () => {},
+      })),
+    );
+    const { result } = renderHook(() => useReadingPrefs());
+    expect(result.current.moreContrast).toBe(false);
+    act(() => listener?.({ matches: true }));
+    expect(result.current.moreContrast).toBe(true);
+  });
+
+  it('works where matchMedia does not exist', () => {
+    vi.stubGlobal('matchMedia', undefined);
+    const { result } = renderHook(() => useReadingPrefs());
+    expect(result.current.mounted).toBe(true);
+    expect(result.current.moreContrast).toBe(false);
   });
 });
