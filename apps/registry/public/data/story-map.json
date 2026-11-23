@@ -961,6 +961,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "guess-reveal": {
+    "title": "Blocks/GuessReveal",
+    "storyIds": [
+      "blocks-guessreveal--default",
+      "blocks-guessreveal--answered-right",
+      "blocks-guessreveal--true-or-false",
+      "blocks-guessreveal--dark",
+      "blocks-guessreveal--rtl"
+    ],
+    "preview": "blocks-guessreveal--default",
+    "previewDark": "blocks-guessreveal--dark",
+    "skeleton": null
+  },
   "hero": {
     "title": "Blocks/Hero",
     "storyIds": [
