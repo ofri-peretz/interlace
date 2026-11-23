@@ -48,6 +48,17 @@ const meta: Meta<typeof ArticleListGrid> = {
         defaultValue: { summary: '[]' },
       },
     },
+    density: {
+      control: 'inline-radio',
+      options: ['compact', 'default', 'relaxed'],
+      description:
+        "How much air the collection has. Sets the gap between items, the section padding and each card's padding together, so a page tightens or opens up without a className.",
+      table: {
+        category: 'Appearance',
+        type: { summary: "'compact' | 'default' | 'relaxed'" },
+        defaultValue: { summary: "'default'" },
+      },
+    },
     cols: {
       control: 'select',
       options: [2, 3, 4],
@@ -61,8 +72,13 @@ const meta: Meta<typeof ArticleListGrid> = {
     },
     loading: {
       control: 'boolean',
-      description: 'Render a featured-sized skeleton plus a grid of card skeletons instead of the posts.',
-      table: { category: 'State', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+      description:
+        'Render a featured-sized skeleton plus a grid of card skeletons instead of the posts.',
+      table: {
+        category: 'State',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
     },
     loadingCount: {
       control: { type: 'range', min: 1, max: 12, step: 1 },
@@ -118,6 +134,9 @@ export const Default: Story = {
 export const NoFeatured: Story = {
   args: { ...Default.args, featured: undefined },
 };
+
+export const Compact: Story = { args: { ...Default.args, density: 'compact' } };
+export const Relaxed: Story = { args: { ...Default.args, density: 'relaxed' } };
 
 export const Loading: Story = { args: { loading: true } };
 

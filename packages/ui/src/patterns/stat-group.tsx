@@ -28,6 +28,12 @@ type StatItem = React.ComponentProps<typeof StatCard>;
 interface StatGroupProps extends React.ComponentProps<'section'> {
   stats?: StatItem[];
   cols?: 2 | 3 | 4;
+  /**
+   * How much air the collection has: the gap between cards.
+   * `compact` for dashboards and sidebars, `relaxed` for a landing page.
+   * @default 'default'
+   */
+  density?: 'compact' | 'default' | 'relaxed';
   loading?: boolean;
   /** Reading order for every card; a card's own `layout` wins. @default 'label-first' */
   layout?: StatItem['layout'];
@@ -46,9 +52,13 @@ const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {
   4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
 
+/** Card gap per `density`, on the Grid primitive's closed gap scale. */
+const DENSITY_GAP = { compact: 'sm', default: 'md', relaxed: 'lg' } as const;
+
 function StatGroup({
   stats = [],
   cols = 3,
+  density = 'default',
   loading,
   layout,
   className,
@@ -58,13 +68,14 @@ function StatGroup({
     <section
       data-slot="stat-group"
       data-min-viewport={String(MIN_VIEWPORT)}
+      data-density={density}
       className={cn('@container w-full', className)}
       {...props}
     >
       {/* Responsive collapse: `cols` is a DESKTOP count. Handed to Grid
           unqualified it stays 4 tracks at every width, which on a 375px phone
           is a 68px card whose label and trend icon spill past the viewport. */}
-      <Grid cols={cols} gap="md" className={STAT_GRID_COLS[cols]}>
+      <Grid cols={cols} gap={DENSITY_GAP[density]} className={STAT_GRID_COLS[cols]}>
         {loading
           ? Array.from({ length: cols }).map((_, i) => (
               <Skeleton key={i} variant="stat-card" label={null} />

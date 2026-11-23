@@ -80,6 +80,8 @@
     "storyIds": [
       "blocks-articlelistgrid--default",
       "blocks-articlelistgrid--no-featured",
+      "blocks-articlelistgrid--compact",
+      "blocks-articlelistgrid--relaxed",
       "blocks-articlelistgrid--loading",
       "blocks-articlelistgrid--empty",
       "blocks-articlelistgrid--empty-filtered",
@@ -772,6 +774,8 @@
     "storyIds": [
       "blocks-featuregrid--default",
       "blocks-featuregrid--two-columns",
+      "blocks-featuregrid--compact",
+      "blocks-featuregrid--relaxed",
       "blocks-featuregrid--loading",
       "blocks-featuregrid--dark",
       "blocks-featuregrid--rtl"
@@ -1226,6 +1230,8 @@
     "title": "Blocks/PricingTable",
     "storyIds": [
       "blocks-pricingtable--default",
+      "blocks-pricingtable--compact",
+      "blocks-pricingtable--relaxed",
       "blocks-pricingtable--loading",
       "blocks-pricingtable--dark",
       "blocks-pricingtable--rtl"

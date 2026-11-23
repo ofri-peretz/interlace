@@ -53,6 +53,13 @@ interface PricingTableProps extends Omit<React.ComponentProps<'section'>, 'title
   lead?: React.ReactNode;
   tiers?: PricingTier[];
   cols?: 2 | 3 | 4;
+  /**
+   * How much air the collection has: the gap between cards, the section's
+   * padding and each tier's padding.
+   * `compact` for dashboards and sidebars, `relaxed` for a landing page.
+   * @default 'default'
+   */
+  density?: 'compact' | 'default' | 'relaxed';
   loading?: boolean;
 }
 
@@ -69,11 +76,19 @@ const TIER_GRID_COLS: Record<2 | 3 | 4, string> = {
   4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
 
+/** Card gap per `density`, on the Grid primitive's closed gap scale. */
+const DENSITY_GAP = { compact: 'sm', default: 'md', relaxed: 'lg' } as const;
+/** Section padding per `density`. */
+const DENSITY_SECTION = { compact: 'py-10', default: 'py-16', relaxed: 'py-24' } as const;
+/** Card padding per `density`. */
+const DENSITY_CARD = { compact: 'p-4', default: 'p-6', relaxed: 'p-8' } as const;
+
 function PricingTable({
   title,
   lead,
   tiers = [],
   cols = 3,
+  density = 'default',
   loading,
   className,
   ...props
@@ -82,7 +97,8 @@ function PricingTable({
     <section
       data-slot="pricing-table"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('@container py-16', className)}
+      data-density={density}
+      className={cn('@container', DENSITY_SECTION[density], className)}
       {...props}
     >
       <Container size="content">
@@ -104,7 +120,7 @@ function PricingTable({
           {/* Responsive collapse: `cols` is a DESKTOP count. Left unqualified
               it holds 3 tracks at every width — a 98px tier card on a 375px
               phone, whose price and CTA button overflow the viewport. */}
-          <Grid cols={cols} gap="md" className={TIER_GRID_COLS[cols]}>
+          <Grid cols={cols} gap={DENSITY_GAP[density]} className={TIER_GRID_COLS[cols]}>
             {loading
               ? Array.from({ length: cols }).map((_, i) => (
                   <Skeleton key={i} variant="card" label={null} />
@@ -115,7 +131,8 @@ function PricingTable({
                     data-slot="pricing-tier"
                     data-featured={tier.featured ? '' : undefined}
                     className={cn(
-                      'border-border bg-card text-card-foreground relative flex flex-col gap-6 rounded-xl border p-6',
+                      'border-border bg-card text-card-foreground relative flex flex-col gap-6 rounded-xl border',
+                      DENSITY_CARD[density],
                       tier.featured && 'border-primary ring-primary/40 ring-2',
                     )}
                   >
@@ -146,10 +163,7 @@ function PricingTable({
                       <ul className="flex flex-col gap-2 text-sm">
                         {tier.features.map((feature, fi) => (
                           <li key={fi} className="flex items-start gap-2">
-                            <Check
-                              aria-hidden
-                              className="text-primary mt-1 size-4 shrink-0"
-                            />
+                            <Check aria-hidden className="text-primary mt-1 size-4 shrink-0" />
                             <span>{feature}</span>
                           </li>
                         ))}

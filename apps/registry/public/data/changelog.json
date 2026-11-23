@@ -209,6 +209,20 @@
           "source": ".changeset/claim-card.md"
         },
         {
+          "summary": "`density` on the collections: `FeatureGrid`, `PricingTable`, `ArticleListGrid` and `StatGroup` take `compact`, `default` or `relaxed`. It sets the gap between items, the section's padding and each card's padding together, so a page tightens or opens up without a custom className. `default` renders exactly as before.",
+          "components": [
+            "feature-grid",
+            "pricing-table",
+            "article-list-grid",
+            "stat-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/collection-density.md"
+        },
+        {
           "summary": "Four patterns for writing that shows its work, all server components:\n\n- `StanceList`: who holds which position, each with a toned badge and a sentence. The label is text; the page picks the tone.\n- `SideBySide`: two or three accounts next to each other (\"what you hear\" / \"what the record shows\"), stacking below `md`; each column is a labelled region.\n- `Dialogue`: a written conversation with named speakers on opposite edges.\n- `AudioPlayer`: a titled clip on the browser's own `<audio controls>`, with a transcript in a native `<details>`.",
           "components": [
             "stance-list",
