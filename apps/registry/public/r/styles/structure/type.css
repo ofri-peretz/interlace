@@ -19,6 +19,8 @@
      `font-body`, so an app that never touches them gets its own typeface
      everywhere. Re-point either one to change components only:
        @theme { --font-heading: var(--font-serif); }
+     That one line is the editorial look: serif headings (Typography h1–h6,
+     CardTitle, every pattern title) over the sans body.
      The Interlace typefaces (Inter, JetBrains Mono) are opt-in, in
      page/fonts.css, because they replace the app's `font-sans`. */
   --font-body: var(--font-sans);
