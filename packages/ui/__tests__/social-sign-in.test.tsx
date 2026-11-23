@@ -59,6 +59,28 @@ describe("SocialSignIn", () => {
     ]);
   });
 
+  it("tags the email field when email was used last", () => {
+    render(<SocialSignIn email lastUsed="email" />);
+    const label = document.querySelector('[data-slot="social-sign-in-email"] label')!;
+    expect(label.textContent).toContain("Last used");
+  });
+
+  it("ignores a second press while one runs, and absorbs a rejected callback", async () => {
+    let reject!: (e: Error) => void;
+    const onProviderSelect = vi.fn(() => new Promise<void>((_, r) => (reject = r)));
+    render(<SocialSignIn providers={["google"]} onProviderSelect={onProviderSelect} />);
+    const google = screen.getByRole("button", { name: "Continue with Google" });
+    await act(async () => {
+      fireEvent.click(google);
+    });
+    await act(async () => {
+      fireEvent.submit(google.form!, { submitter: google });
+    });
+    expect(onProviderSelect).toHaveBeenCalledTimes(1);
+    await act(async () => reject(new Error("cancelled")));
+    expect(google.hasAttribute("data-loading")).toBe(false);
+  });
+
   it("takes custom providers by id, name and icon", () => {
     render(
       <SocialSignIn
