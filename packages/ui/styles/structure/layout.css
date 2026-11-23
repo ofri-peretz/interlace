@@ -1,0 +1,40 @@
+/*
+ * @interlace/ui — STRUCTURE / layout: container widths and the xs rung.
+ *
+ * Layer 3 of 4 (brand → semantics → structure → page). Spacing is
+ * Tailwind's own numeric scale and is not redeclared here.
+ *
+ * Source: LAYOUT_PHILOSOPHY.md (#2 container widths, #3 spacing) and
+ * BREAKPOINT_PHILOSOPHY.md.
+ */
+
+@theme {
+  /* ── Spacing: Tailwind's numeric scale (p-4, gap-6), which already
+     follows the `--spacing` variable. Interlace 2.0 dropped the named
+     --spacing-xs…2xl keys: they shadowed max-w-sm/md/lg in every consumer
+     app. LAYOUT #3's six steps are 2 / 4 / 6 / 10 / 16 / 24. */
+
+  /* ── Container widths (LAYOUT #2 — four sizes only) ─────────────────
+     Generates max-w-prose / max-w-content / max-w-wide. `full` = no max-width
+     (omit the utility). ad-hoc max-w-3xl/4xl/5xl/6xl are forbidden by R21. */
+  --container-prose: 65ch; /* long-form text */
+  --container-content: 64rem; /* 1024px — default landing section */
+  --container-wide: 80rem; /* 1280px — card-grid-heavy section */
+
+  /* Floating-surface width. NOT a `Container size` — these three above are
+     the page-layout ladder. This one sizes detached chrome (toast stack,
+     side-anchored panels) that must stay narrower than any section. Lives
+     here rather than as `max-w-[420px]` at the call site so the toast
+     stack and anything else that docks to a viewport edge agree on one
+     number (R19/R21). */
+  --container-float: 26.25rem; /* 420px — edge-docked toast / panel stack */
+
+  /* ── Breakpoints (BREAKPOINT_PHILOSOPHY) ─────────────────────────────
+     Tailwind's own ladder (sm 640 / md 768 / lg 1024 / xl 1280 / 2xl 1536)
+     is left untouched. Interlace ADDS one tier below it:
+
+       xs = 30rem = 480 CSS px → handheld floor (MIN_VIEWPORT=480)
+
+     `rem`-based so user zoom and browser font-size scaling move it too. */
+  --breakpoint-xs: 30rem;
+}

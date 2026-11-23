@@ -84,7 +84,7 @@
  * The cover zoom is the one that carries its own gate. `motion-safe:` compiles
  * to `@media (prefers-reduced-motion: no-preference)` inside the utility
  * itself, so it holds on the à-la-carte import path — a consumer taking
- * `tokens.css` + `theme.css` and skipping `preflight.css` (the path
+ * `structure/motion.css` + `page/fumadocs.css` and skipping `page/preflight.css` (the path
  * `styles/index.css` exists to prevent, and `motion-contract-lock` treats as
  * live). The remaining two are colour and opacity changes rather than
  * movement, so the preflight clamp is the appropriate layer for them.

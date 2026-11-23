@@ -34,7 +34,7 @@ import { withRtl } from '@/decorators';
 type SpacingStep = {
   /** Token suffix as it appears in source (`xs`, `sm`, …, `2xl`). */
   token: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-  /** Literal px value from foundation.css — for labels only. */
+  /** Literal px value from structure/type.css — for labels only. */
   px: number;
   /** Where on the layout this step is the canonical choice. */
   use: string;

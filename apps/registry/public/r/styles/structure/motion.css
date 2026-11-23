@@ -1,11 +1,10 @@
 /*
- * @interlace/ui — animations and motion tokens used by primitives + decorative components.
- * Import once in the consuming app's global stylesheet:
- *   @import "@interlace/ui/styles/tokens.css";
+ * @interlace/ui — STRUCTURE / motion: animation tokens, keyframes, classes,
+ * and the reduced-motion allowlist.
  *
- * Design-system colors are intentionally not defined here — fumadocs sites
- * inherit them from `fumadocs-ui/css/<theme>.css` and overlay brand overrides
- * in their own global.css.
+ * Layer 3 of 4 (brand → semantics → structure → page). No colour. Every
+ * `--animate-*` key is one Tailwind and tw-animate-css do not ship, so it
+ * adds utilities without replacing any.
  */
 
 @theme inline {
@@ -28,9 +27,10 @@
   --animate-fourth: moveHorizontal 40s ease infinite;
   --animate-fifth: moveInCircle 20s ease infinite;
 
-  /* Primitives: accordion */
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
+  /* Primitives: accordion — `animate-accordion-down/up` come from
+     tw-animate-css, which the base item depends on. Declaring them here
+     too replaced tw-animate's version in every shadcn app (losing its
+     duration/ease modifiers) for an identical keyframe. */
 
   /* Interlace: the draw verb (BRAND_PHILOSOPHY §2) — a strand drawn,
    * never faded. Paths normalize with pathLength=100 so one keyframe
@@ -144,29 +144,70 @@
       transform: translateY(-50%);
     }
   }
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+ * Entry animations — fade-in-up / slide-in-left / scale-in.
+ *    Reduced-motion: the allowlist below names all three.
+ *
+ *    All three are ENTRY animations: fill mode `both`, starting from
+ *    `opacity: 0`. Nothing the reader came for is legible until they
+ *    finish, so MOTION_PHILOSOPHY caps them at 200ms and forbids an entry
+ *    delay outright — a delay is dead time where the content is already
+ *    painted at `opacity: 0` and the reader is looking at nothing.
+ *
+ *    They shipped at 0.5s / 0.5s+0.3s / 0.4s+0.2s, i.e. up to 800ms of
+ *    invisible hero. `motion-contract-lock` now recomputes these numbers
+ *    from this file, so the next 0.5s has to argue with a red test rather
+ *    than with a reviewer's memory of the budget.
+ * ──────────────────────────────────────────────────────────────── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
+@layer components {
+.animate-fade-in-up {
+  animation: fade-in-up 0.2s ease-out both;
+}
+.animate-slide-in-left {
+  animation: slide-in-left 0.2s ease-out both;
+}
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out both;
+}
+} /* end @layer components */
+
 /* Border Beam — pure CSS animation, used by @interlace/ui/magicui/border-beam.
- * Wrapped in `@layer interlace.primitives` so the cascade is deterministic.
- * `@keyframes` declarations can live outside a layer (they have a global
- * scope per spec), but the consuming utility class .animate-border-beam goes
- * in the layer for override-friendliness. */
+ * The class sits in Tailwind's `components` layer, BELOW utilities, so a
+ * call-site `[animation-duration:2s]` still wins. The reduced-motion rules
+ * that must beat utilities do so with `!important`, not with layer rank. */
 @keyframes border-beam {
   0% {
     offset-distance: var(--border-beam-initial, 0%);
@@ -176,7 +217,7 @@
   }
 }
 
-@layer interlace.primitives {
+@layer components {
 .animate-border-beam {
   animation: border-beam var(--border-beam-duration, 6s) linear infinite;
   animation-direction: var(--border-beam-direction, normal);
@@ -191,7 +232,7 @@
  *
  * ⚠️ THIS LIST IS THE SECOND LAYER, NOT THE FIRST.
  *
- * The primary reduced-motion guarantee is the wildcard in `preflight.css`
+ * The primary reduced-motion guarantee is the wildcard in `page/preflight.css`
  * (`*, *::before, *::after { animation-duration: 0.01ms !important; … }`),
  * and it is the only thing that reaches the animations no selector here can
  * name: Tailwind's own `animate-pulse` / `animate-bounce`, and the
@@ -207,8 +248,8 @@
  *   1. `animation: none` instead of a 0.01ms clamp — the animation never
  *      runs at all, rather than running one imperceptible cycle.
  *   2. cover for the à-la-carte import path. Every stylesheet here is a
- *      separate `exports` entry, so a consumer can import tokens.css +
- *      theme.css and skip preflight.css; then this list is the ONLY defence.
+ *      separate `exports` entry, so a consumer can import base.css and
+ *      skip page/preflight.css; then this list is the ONLY defence.
  *
  * Rule for adding to it: every bare `animate-*` utility that `packages/ui/src`
  * puts on an element belongs here. `.animate-pulse` did not, for the whole of
@@ -226,8 +267,6 @@
   .animate-fourth,
   .animate-fifth,
   .animate-border-beam,
-  .animate-accordion-down,
-  .animate-accordion-up,
   .animate-fade-in-up,
   .animate-slide-in-left,
   .animate-scale-in,
@@ -251,4 +290,4 @@
     animation-duration: 0.01ms !important;
   }
 }
-} /* end @layer interlace.primitives */
+} /* end @layer components */

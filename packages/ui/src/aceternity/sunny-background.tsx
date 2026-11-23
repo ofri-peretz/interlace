@@ -42,7 +42,7 @@
  * `data-animated="false"`, and the animation rule only matches
  * `[data-animated="true"]`; `SUNNY_CSS` carries its own
  * `@media (prefers-reduced-motion: reduce)` block setting `animation: none
- * !important`; and the wildcard in `styles/preflight.css` would clamp it
+ * !important`; and the wildcard in `styles/page/preflight.css` would clamp it
  * anyway. Reading the preference in JS as well is what makes the rotation
  * never start — including when the user flips the setting mid-session.
  *

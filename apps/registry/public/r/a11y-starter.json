@@ -15,14 +15,14 @@
     "https://ds.interlace.tools/r/visually-hidden.json",
     "https://ds.interlace.tools/r/focus-ring.json",
     "https://ds.interlace.tools/r/use-reduced-motion.json",
-    "https://ds.interlace.tools/r/theme.json"
+    "https://ds.interlace.tools/r/interlace-base.json"
   ],
   "files": [
     {
       "path": "registry/interlace-ui/starters/a11y-starter.md",
       "target": "components/ui/INTERLACE-A11Y-STARTER.md",
       "type": "registry:file",
-      "content": "# @interlace/a11y-starter\n\nInstalled:\n\n- `SkipLink` — focus-visible skip-to-main link.\n- `VisuallyHidden` — screen-reader-only span (component variant).\n- `FocusRing` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- `useReducedMotion` — gates every animation in the DS.\n- `theme` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
+      "content": "# @interlace/a11y-starter\n\nInstalled:\n\n- `SkipLink` — focus-visible skip-to-main link.\n- `VisuallyHidden` — screen-reader-only span (component variant).\n- `FocusRing` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- `useReducedMotion` — gates every animation in the DS.\n- `interlace-base` — the additive CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
     }
   ],
   "meta": {
@@ -30,8 +30,8 @@
     "client": false,
     "minViewport": null,
     "loading": false,
-    "version": "1.7.3",
+    "version": "2.0.0",
     "since": "1.0.0"
   },
-  "docs": "# @interlace/a11y-starter\n\nInstalled:\n\n- `SkipLink` — focus-visible skip-to-main link.\n- `VisuallyHidden` — screen-reader-only span (component variant).\n- `FocusRing` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- `useReducedMotion` — gates every animation in the DS.\n- `theme` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
+  "docs": "# @interlace/a11y-starter\n\nInstalled:\n\n- `SkipLink` — focus-visible skip-to-main link.\n- `VisuallyHidden` — screen-reader-only span (component variant).\n- `FocusRing` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- `useReducedMotion` — gates every animation in the DS.\n- `interlace-base` — the additive CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
 }

@@ -72,7 +72,9 @@ export default async function ComponentPage({ params }: PageProps) {
   if (!item) notFound();
 
   const storybook = storybookPath(item.name, item.type);
-  const file = item.files[0];
+  // A `registry:theme` (the `theme` item) writes cssVars and ships no file.
+  const file = item.files[0] as (typeof item.files)[number] | undefined;
+  const cssVars = (item as { cssVars?: Record<string, Record<string, string>> }).cssVars;
   const meta = item.metadata;
   const contract = item.meta;
   const categoryId = intentCategoryOf(item);
@@ -252,7 +254,7 @@ export default async function ComponentPage({ params }: PageProps) {
             behavior={behavior}
             isClient={contract?.client ?? false}
             minViewport={contract?.minViewport ?? null}
-            sourcePath={sourcePath ?? file.path}
+            sourcePath={sourcePath ?? file?.path ?? ''}
             storybookUrl={STORYBOOK_URL}
           />
         ) : null}
@@ -342,7 +344,7 @@ export default async function ComponentPage({ params }: PageProps) {
             <div className="mt-4">
               <CodeBlock
                 label="Public API"
-                code={`import { ${meta.exports.join(', ')} } from '@/${file.target.replace(/\.tsx?$/, '')}';`}
+                code={`import { ${meta.exports.join(', ')} } from '@/${(file?.target ?? '').replace(/\.tsx?$/, '')}';`}
               />
             </div>
           </section>
@@ -600,7 +602,7 @@ export default async function ComponentPage({ params }: PageProps) {
             <MetaCell label="Focus ring (WCAG 2.2 SC 2.4.13)">
               <span className="text-sm">
                 {meta.a11y.hasFocusRing
-                  ? 'Inherited from the preflight focus contract shipped in @interlace/theme.'
+                  ? 'Drawn by the component\'s own focus-visible classes, so it holds with or without the opt-in preflight.'
                   : 'Not focusable — no focus indicator required.'}
               </span>
             </MetaCell>
@@ -820,18 +822,39 @@ export default async function ComponentPage({ params }: PageProps) {
         </section>
 
         {/* ─── Source ───────────────────────────────────────────── */}
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold">Source</h2>
-          <p className="text-muted-foreground mt-2 text-sm">
-            The full implementation —{' '}
-            <code className="text-foreground font-mono">{file.target}</code>{' '}
-            once installed.
-          </p>
-          <SourceViewer
-            source={file.content}
-            githubUrl={sourcePath ? githubSourceUrl(sourcePath) : undefined}
-          />
-        </section>
+        {file ? (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold">Source</h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              The full implementation —{' '}
+              <code className="text-foreground font-mono">{file.target}</code>{' '}
+              once installed.
+            </p>
+            <SourceViewer
+              source={file.content}
+              githubUrl={sourcePath ? githubSourceUrl(sourcePath) : undefined}
+            />
+          </section>
+        ) : cssVars ? (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold">Variables</h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              What the shadcn CLI writes into your global stylesheet&apos;s{' '}
+              <code className="text-foreground font-mono">:root</code> and{' '}
+              <code className="text-foreground font-mono">.dark</code>.
+            </p>
+            <SourceViewer
+              source={Object.entries(cssVars)
+                .map(
+                  ([mode, vars]) =>
+                    `${mode === 'dark' ? '.dark' : ':root'} {\n${Object.entries(vars)
+                      .map(([k, v]) => `  --${k}: ${v};`)
+                      .join('\n')}\n}`,
+                )
+                .join('\n\n')}
+            />
+          </section>
+        ) : null}
 
         {/* ─── JSON endpoint ─────────────────────────────────────── */}
         <section className="mt-12">

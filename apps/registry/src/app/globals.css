@@ -20,7 +20,7 @@
 @source "../../../../packages/ui/src";
 
 /* The `@theme inline { --color-* }` registration that used to live here is
- * now owned by `@interlace/ui/styles/interlace-theme.css` (re-exported by
+ * now owned by `@interlace/ui/styles/brand/interlace.css` (re-exported by
  * index.css) so every consumer — docs / storybook / registry — gets the
  * same Tailwind v4 utility wiring. Re-declaring it here would shadow the
  * DS-owned values and is no longer necessary. */

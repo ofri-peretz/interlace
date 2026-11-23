@@ -141,8 +141,8 @@ const findBlock = (lines: string[], selector: string): number => {
   throw new Error(`no opening brace after ${selector}`);
 };
 
-const interlaceCss = readLines(resolve(UI_STYLES, 'interlace-theme.css'));
-const harborCss = readLines(resolve(UI_STYLES, 'themes/harbor.css'));
+const interlaceCss = readLines(resolve(UI_STYLES, 'brand/interlace.css'));
+const harborCss = readLines(resolve(UI_STYLES, 'brand/harbor.css'));
 
 /**
  * The four (theme × scheme) combinations the storefront ships. Harbor's dark

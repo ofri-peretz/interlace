@@ -66,7 +66,7 @@ describe('dash math (interlace#56/#726 lessons)', () => {
 
 describe('the draw verb is a named motion token', () => {
   const tokens = readFileSync(
-    path.resolve(__dirname, '..', 'styles', 'tokens.css'),
+    path.resolve(__dirname, '..', 'styles', 'structure/motion.css'),
     'utf-8',
   );
 
@@ -75,7 +75,7 @@ describe('the draw verb is a named motion token', () => {
     expect(woven).not.toContain('[animation:');
   });
 
-  it('tokens.css defines strand-draw: 100→0 inside the 600ms ceiling', () => {
+  it('structure/motion.css defines strand-draw: 100→0 inside the 600ms ceiling', () => {
     expect(tokens).toContain('--animate-strand-draw: strand-draw 600ms');
     expect(tokens).toMatch(
       /@keyframes strand-draw \{\s*from \{\s*stroke-dashoffset: 100;\s*\}\s*to \{\s*stroke-dashoffset: 0;\s*\}/,

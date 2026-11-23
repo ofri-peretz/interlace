@@ -94,7 +94,7 @@ describe("Breakpoint contract (BREAKPOINTS.md)", () => {
     expect(
       offenders,
       // `2xl` is deliberately absent: the DS scale is FOUR tiers
-      // (`--breakpoint-sm/md/lg/xl` in packages/ui/styles/foundation.css,
+      // (`--breakpoint-sm/md/lg/xl` in packages/ui/styles/structure/layout.css,
       // 30/48/64/80rem). Telling a developer to reach for `2xl` sends them to
       // a breakpoint this system does not define, where their variant silently
       // never matches — the exact failure this lock exists to prevent.

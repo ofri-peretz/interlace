@@ -56,8 +56,8 @@ const DATA_STATE_MODEL = path.join(
   'src/primitives/data-state-model.ts',
 );
 const VITEST_CONFIG = path.join(UI_ROOT, 'vitest.config.ts');
-const INTERLACE_CSS = path.join(UI_ROOT, 'styles/interlace-theme.css');
-const HARBOR_CSS = path.join(UI_ROOT, 'styles/themes/harbor.css');
+const INTERLACE_CSS = path.join(UI_ROOT, 'styles/brand/interlace.css');
+const HARBOR_CSS = path.join(UI_ROOT, 'styles/brand/harbor.css');
 const PUBLIC_R = path.join(REGISTRY_ROOT, 'public/r');
 const OUT_FILE = path.join(REGISTRY_ROOT, 'public/data/behavior-map.json');
 
@@ -388,7 +388,7 @@ const contrast = (a, b) => {
   return (hi + 0.05) / (lo + 0.05);
 };
 
-/** The selector matrix from `styles/interlace-theme.css`, in executable form. */
+/** The selector matrix from `styles/brand/interlace.css`, in executable form. */
 const THEME_SELECTORS = {
   interlace: {
     light: { file: INTERLACE_CSS, selector: ':root' },

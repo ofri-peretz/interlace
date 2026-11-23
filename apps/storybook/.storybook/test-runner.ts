@@ -62,7 +62,7 @@ const STRICT_TAGS = [
   'ACT',
 ];
 
-// AAA-level rules. As of the AAA-bump commit (interlace-theme.css token
+// AAA-level rules. As of the AAA-bump commit (brand/interlace.css token
 // ladder), `color-contrast-enhanced` is INTENTIONALLY enforced — brand
 // tokens clear ≥7:1 in both modes. Leave this empty unless a real
 // physics-of-light constraint requires carving out a rule globally;

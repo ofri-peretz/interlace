@@ -235,7 +235,7 @@ function Specimen() {
               ],
               [
                 'theme',
-                'The CSS baseline. preflight.css is where the default focus ring lives — without it every focusable element loses its indicator.',
+                'The CSS baseline. page/preflight.css is where the default focus ring lives — without it every focusable element loses its indicator.',
               ],
             ].map(([name, why]) => (
               <li

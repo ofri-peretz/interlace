@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 146
+    "itemCount": 148
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -36,15 +36,15 @@
       "chart": 8,
       "util": 5,
       "starter": 3,
-      "theme": 1
+      "theme": 3
     },
     "category": {
       "primitive": 67,
       "pattern": 32,
       "blog": 24,
+      "foundation": 22,
       "decorative": 21,
       "data": 21,
-      "foundation": 20,
       "effect": 17,
       "form": 16,
       "template": 13,
@@ -56,25 +56,25 @@
       "util": 5,
       "a11y": 4,
       "starter": 3,
-      "theme": 1
+      "theme": 3
     },
     "rendering": {
-      "server": 81,
+      "server": 83,
       "client": 65
     },
     "keyboard": {
-      "none": 111,
+      "none": 113,
       "handled": 35
     },
     "loading": {
-      "none": 114,
+      "none": 116,
       "built-in": 32
     },
     "minViewport": {
       "320": 82,
       "480": 7,
       "768": 1,
-      "inherited": 56
+      "inherited": 58
     }
   },
   "items": [
@@ -110,13 +110,13 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "focus-ring",
+        "interlace-base",
         "skip-link",
-        "theme",
         "use-reduced-motion",
         "visually-hidden"
       ],
@@ -161,7 +161,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -169,7 +169,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/accordion.tsx"
@@ -212,14 +212,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/alert-dialog.tsx"
@@ -262,14 +262,14 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/alert.tsx"
@@ -317,7 +317,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/magicui/animated-gradient-text.tsx"
@@ -367,7 +367,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -425,7 +425,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -478,7 +478,7 @@
         "ArticleCard",
         "FeaturedArticleCard"
       ],
-      "version": "1.5.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -487,8 +487,8 @@
         "badge",
         "card",
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/patterns/article-card.tsx"
@@ -531,7 +531,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -539,9 +539,9 @@
         "cn",
         "container",
         "grid",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -590,13 +590,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "author-byline",
         "cn",
         "container",
+        "interlace-base",
         "prev-next-post",
         "prose",
         "related-posts",
@@ -604,7 +605,6 @@
         "share-buttons",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -653,7 +653,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/aspect-ratio.tsx"
@@ -711,16 +711,16 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -765,7 +765,7 @@
         "AuthorByline",
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -773,8 +773,8 @@
       "registryDependencies": [
         "avatar",
         "cn",
+        "interlace-base",
         "skeleton",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -823,17 +823,17 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
         "footer",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "topbar"
       ],
       "installsTo": [
@@ -882,8 +882,8 @@
       ],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/avatar.tsx"
@@ -933,7 +933,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -984,7 +984,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1037,7 +1037,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1089,8 +1089,8 @@
       ],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/badge.tsx"
@@ -1138,17 +1138,17 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
         "footer",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "topbar"
       ],
       "installsTo": [
@@ -1199,7 +1199,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/magicui/border-beam.tsx"
@@ -1240,14 +1240,14 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/box.tsx"
@@ -1295,7 +1295,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/patterns/brand-logo.tsx"
@@ -1346,14 +1346,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/breadcrumb.tsx"
@@ -1396,13 +1396,13 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/button-variants.ts"
@@ -1445,7 +1445,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1453,7 +1453,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/button.tsx",
@@ -1499,7 +1499,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -1507,7 +1507,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "typography"
       ],
       "installsTo": [
@@ -1555,8 +1555,8 @@
       "registryDependencies": [
         "box",
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/card.tsx"
@@ -1604,7 +1604,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1612,7 +1612,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/checkbox.tsx"
@@ -1660,7 +1660,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1773,15 +1773,15 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/code-block.tsx"
@@ -1828,12 +1828,12 @@
         "LINE_HEIGHT_PX",
         "PAD_Y_PX"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/code-editor.tsx"
@@ -1874,12 +1874,12 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/patterns/code-window.tsx"
@@ -1929,7 +1929,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/collapsible.tsx"
@@ -1978,7 +1978,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1986,7 +1986,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/combobox.tsx"
@@ -2035,7 +2035,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2044,7 +2044,7 @@
       "registryDependencies": [
         "cn",
         "dialog",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/command-palette.tsx"
@@ -2085,7 +2085,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2093,7 +2093,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/container.tsx"
@@ -2141,7 +2141,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2149,7 +2149,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/context-menu.tsx"
@@ -2201,15 +2201,15 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -2258,15 +2258,15 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "topbar"
       ],
       "installsTo": [
@@ -2343,7 +2343,7 @@
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/data-state-model.ts"
@@ -2427,8 +2427,8 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/data-state.tsx",
@@ -2498,7 +2498,7 @@
         "DataTable",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.1.0",
       "npmDependencies": [
         "lucide-react"
@@ -2507,9 +2507,9 @@
         "button",
         "checkbox",
         "cn",
+        "interlace-base",
         "pagination",
-        "skeleton",
-        "theme"
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/patterns/data-table.tsx",
@@ -2586,7 +2586,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/charts/delta.tsx",
@@ -2630,7 +2630,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.4.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2638,7 +2638,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/dialog.tsx"
@@ -2712,15 +2712,15 @@
         "Distribution",
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "data-state",
+        "interlace-base",
         "series-table",
-        "skeleton",
-        "theme"
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/charts/distribution.tsx",
@@ -2769,18 +2769,18 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
         "footer",
+        "interlace-base",
         "prose",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "topbar"
       ],
       "installsTo": [
@@ -2831,7 +2831,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -2877,7 +2877,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2885,7 +2885,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/dropdown-menu.tsx"
@@ -2929,13 +2929,13 @@
         "EmptyState",
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "interlace-base",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -2984,16 +2984,16 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -3037,16 +3037,16 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "accordion",
         "cn",
         "container",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -3090,16 +3090,16 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
         "grid",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -3143,13 +3143,13 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "aspect-ratio",
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/patterns/figure.tsx"
@@ -3202,7 +3202,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3247,12 +3247,12 @@
         "FocusCard",
         "FocusCards"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3307,12 +3307,12 @@
         "FocusRing",
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/focus-ring.tsx"
@@ -3357,12 +3357,12 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/patterns/footer.tsx"
@@ -3412,7 +3412,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/form.tsx"
@@ -3468,14 +3468,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/grade-badge.tsx"
@@ -3527,7 +3527,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3569,14 +3569,14 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/grid.tsx"
@@ -3620,14 +3620,14 @@
         "HeroCosmic",
         "MIN_VIEWPORT"
       ],
-      "version": "1.4.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
-        "stars-background",
-        "theme"
+        "interlace-base",
+        "stars-background"
       ],
       "installsTo": [
         "components/ui/patterns/hero-cosmic.tsx"
@@ -3673,13 +3673,13 @@
         "Hero",
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "interlace-base",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -3723,14 +3723,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/hover-card.tsx"
@@ -3775,12 +3775,12 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/input.tsx"
@@ -3832,7 +3832,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3841,6 +3841,109 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/interactive-grid-pattern.json",
       "item": "https://ds.interlace.tools/r/interactive-grid-pattern.json",
       "docs": "https://ds.interlace.tools/c/interactive-grid-pattern"
+    },
+    {
+      "name": "interlace-base",
+      "title": "Interlace Base",
+      "type": "registry:style",
+      "summary": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, and layered brand + semantic colour tokens. Changes nothing the host app already styles.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "theme"
+      ],
+      "tier": "theme",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "2.0.0",
+      "since": null,
+      "npmDependencies": [
+        "tw-animate-css"
+      ],
+      "registryDependencies": [],
+      "installsTo": [
+        "styles/interlace/base.css",
+        "styles/interlace/brand/interlace.css",
+        "styles/interlace/brand/harbor.css",
+        "styles/interlace/semantics.css",
+        "styles/interlace/structure/type.css",
+        "styles/interlace/structure/layout.css",
+        "styles/interlace/structure/radius.css",
+        "styles/interlace/structure/motion.css"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json",
+      "item": "https://ds.interlace.tools/r/interlace-base.json",
+      "docs": "https://ds.interlace.tools/c/interlace-base"
+    },
+    {
+      "name": "interlace-foundation",
+      "title": "Interlace Foundation",
+      "type": "registry:style",
+      "summary": "@interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "theme"
+      ],
+      "tier": "theme",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "grid"
+        ],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [],
+      "version": "2.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "styles/interlace/index.css",
+        "styles/interlace/page/fonts.css",
+        "styles/interlace/page/preflight.css",
+        "styles/interlace/page/fumadocs.css",
+        "styles/interlace/page/shiki.css"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-foundation.json",
+      "item": "https://ds.interlace.tools/r/interlace-foundation.json",
+      "docs": "https://ds.interlace.tools/c/interlace-foundation"
     },
     {
       "name": "label",
@@ -3881,7 +3984,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/label.tsx"
@@ -3929,17 +4032,17 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
         "footer",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "topbar"
       ],
       "installsTo": [
@@ -3981,16 +4084,16 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "box",
         "container",
         "grid",
+        "interlace-base",
         "section",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -4047,13 +4150,13 @@
       "exports": [
         "LintPlayground"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "code-editor",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/patterns/lint-playground.tsx"
@@ -4107,7 +4210,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4149,16 +4252,16 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "callout",
         "code-block",
         "figure",
+        "interlace-base",
         "prose",
-        "tag",
-        "theme"
+        "tag"
       ],
       "installsTo": [
         "components/ui/INTERLACE-MDX-STARTER.md"
@@ -4204,7 +4307,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/meteors.tsx"
@@ -4260,7 +4363,7 @@
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/meter-scale.ts"
@@ -4375,8 +4478,8 @@
       "registryDependencies": [
         "cn",
         "data-state",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/meter.tsx",
@@ -4446,16 +4549,16 @@
         "MIN_VIEWPORT",
         "MetricTable"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "data-state",
         "delta",
+        "interlace-base",
         "skeleton",
-        "sparkline",
-        "theme"
+        "sparkline"
       ],
       "installsTo": [
         "components/ui/charts/metric-table.tsx",
@@ -4517,14 +4620,14 @@
         "MIN_VIEWPORT",
         "NetworkGraph"
       ],
-      "version": "1.1.2",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "data-state",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/charts/network-graph.tsx",
@@ -4569,7 +4672,7 @@
         "MIN_VIEWPORT",
         "NewsletterForm"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4577,9 +4680,9 @@
         "checkbox",
         "form",
         "input",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -4623,14 +4726,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/number-field.tsx"
@@ -4678,7 +4781,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4723,14 +4826,14 @@
         "MIN_VIEWPORT",
         "PageHeader"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -4777,7 +4880,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -4786,7 +4889,7 @@
       "registryDependencies": [
         "button",
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/pagination.tsx"
@@ -4836,7 +4939,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4880,14 +4983,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/popover.tsx"
@@ -4934,15 +5037,15 @@
         "MIN_VIEWPORT",
         "PrevNextPost"
       ],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/patterns/prev-next-post.tsx"
@@ -4985,7 +5088,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -4994,9 +5097,9 @@
         "cn",
         "container",
         "grid",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -5050,7 +5153,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -5104,14 +5207,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/prose.tsx"
@@ -5167,8 +5270,8 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/published-date.tsx"
@@ -5234,15 +5337,15 @@
         "ANNOTATION_KINDS",
         "RadialWeave"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "data-state",
+        "interlace-base",
         "series-table",
         "skeleton",
-        "theme",
         "time-series"
       ],
       "installsTo": [
@@ -5301,7 +5404,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/radio-group.tsx"
@@ -5356,7 +5459,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/reading-strand.tsx"
@@ -5407,8 +5510,8 @@
       ],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/reading-time.tsx"
@@ -5456,16 +5559,16 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -5513,15 +5616,15 @@
         "MIN_VIEWPORT",
         "RelatedPosts"
       ],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "article-card",
         "cn",
         "grid",
+        "interlace-base",
         "skeleton",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -5565,14 +5668,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "grade-badge",
+        "interlace-base",
         "skeleton",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -5621,7 +5724,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5629,11 +5732,11 @@
         "container",
         "footer",
         "grade-badge",
+        "interlace-base",
         "scorecard-row",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "topbar",
         "typography"
       ],
@@ -5685,7 +5788,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/scroll-area.tsx"
@@ -5733,13 +5836,13 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/section-boundary.tsx"
@@ -5787,7 +5890,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/patterns/section-header.tsx"
@@ -5837,7 +5940,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/section-index.tsx"
@@ -5886,7 +5989,7 @@
       "registryDependencies": [
         "cn",
         "container",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/section.tsx"
@@ -5932,7 +6035,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -5940,7 +6043,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/select.tsx"
@@ -5988,7 +6091,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/separator.tsx"
@@ -6057,7 +6160,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/charts/series-table.tsx",
@@ -6107,16 +6210,16 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
-        "theme",
         "topbar",
         "typography"
       ],
@@ -6183,8 +6286,8 @@
       "registryDependencies": [
         "button",
         "cn",
-        "stack",
-        "theme"
+        "interlace-base",
+        "stack"
       ],
       "installsTo": [
         "components/ui/patterns/share-buttons.tsx"
@@ -6227,7 +6330,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.4.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -6235,7 +6338,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/sheet.tsx"
@@ -6278,12 +6381,12 @@
       "exports": [
         "ShimmerButton"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/magicui/shimmer-button.tsx"
@@ -6334,8 +6437,8 @@
         "button",
         "form",
         "input",
+        "interlace-base",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -6424,11 +6527,11 @@
         "SKELETON_VARIANTS",
         "SKELETON_VARIANT_CLASSES"
       ],
-      "version": "1.7.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/skeleton-variants.ts"
@@ -6522,12 +6625,12 @@
         "SKELETON_VARIANTS",
         "SKELETON_VARIANT_CLASSES"
       ],
-      "version": "1.8.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/skeleton.tsx",
@@ -6572,12 +6675,12 @@
         "MIN_VIEWPORT",
         "SkipLink"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/skip-link.tsx"
@@ -6630,7 +6733,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/slider.tsx"
@@ -6701,8 +6804,8 @@
         "cn",
         "data-state",
         "delta",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/charts/sparkline.tsx",
@@ -6755,7 +6858,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6797,7 +6900,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -6805,7 +6908,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/stack.tsx"
@@ -6857,7 +6960,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6902,15 +7005,15 @@
         "MIN_VIEWPORT",
         "StatCard"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
         "cn",
+        "interlace-base",
         "skeleton",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -6954,15 +7057,15 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "grid",
+        "interlace-base",
         "skeleton",
-        "stat-card",
-        "theme"
+        "stat-card"
       ],
       "installsTo": [
         "components/ui/patterns/stat-group.tsx"
@@ -7045,14 +7148,14 @@
         "REPLACING_STATES",
         "StatStrip"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "data-state",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/stat-strip.tsx",
@@ -7101,19 +7204,19 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
         "footer",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
         "stat-card",
         "stat-group",
-        "theme",
         "topbar",
         "typography"
       ],
@@ -7160,12 +7263,12 @@
       "exports": [
         "SunnyBackground"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -7218,7 +7321,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/switch.tsx"
@@ -7261,14 +7364,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/tabs.tsx"
@@ -7316,18 +7419,18 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "container",
         "footer",
+        "interlace-base",
         "section-boundary",
         "skeleton",
         "stack",
         "tag",
-        "theme",
         "topbar",
         "typography"
       ],
@@ -7379,8 +7482,8 @@
       ],
       "registryDependencies": [
         "cn",
-        "skeleton",
-        "theme"
+        "interlace-base",
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/tag.tsx"
@@ -7423,7 +7526,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7431,9 +7534,9 @@
         "cn",
         "container",
         "grid",
+        "interlace-base",
         "skeleton",
         "stack",
-        "theme",
         "typography"
       ],
       "installsTo": [
@@ -7479,14 +7582,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/textarea.tsx"
@@ -7584,7 +7687,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -7593,7 +7696,7 @@
       "registryDependencies": [
         "cn",
         "dropdown-menu",
-        "theme",
+        "interlace-base",
         "theme-tokens",
         "toggle",
         "use-theme"
@@ -7717,7 +7820,7 @@
         "THEMES",
         "THEME_TOKENS"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -7731,8 +7834,8 @@
     {
       "name": "theme",
       "title": "Interlace Theme",
-      "type": "registry:style",
-      "summary": "@interlace/ui — full DS CSS baseline: tokens, foundation (type/spacing/radius), preflight (focus ring + min-viewport contract), shadcn↔fumadocs bridge, and brand palette.",
+      "type": "registry:theme",
+      "summary": "@interlace/ui — the Interlace look as shadcn cssVars: points your --primary, --background, --radius and the rest at Interlace's burnt-orange brand tokens (light + dark, AAA). Opt-in; components work without it.",
       "topics": [],
       "categories": [
         "foundation",
@@ -7750,33 +7853,23 @@
       },
       "states": [],
       "a11y": {
-        "roles": [
-          "grid"
-        ],
+        "roles": [],
         "aria": [],
         "motion": {
-          "driver": "css",
-          "declaresPreference": true,
+          "driver": "none",
+          "declaresPreference": false,
           "stylesheetCannotReach": false
         },
-        "focusRing": true
+        "focusRing": false
       },
       "exports": [],
-      "version": "1.9.0",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "npmDependencies": [
-        "tw-animate-css"
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
       ],
-      "registryDependencies": [],
-      "installsTo": [
-        "styles/interlace/index.css",
-        "styles/interlace/tokens.css",
-        "styles/interlace/foundation.css",
-        "styles/interlace/preflight.css",
-        "styles/interlace/theme.css",
-        "styles/interlace/interlace-theme.css",
-        "styles/interlace/themes/harbor.css"
-      ],
+      "installsTo": [],
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/theme.json",
       "item": "https://ds.interlace.tools/r/theme.json",
       "docs": "https://ds.interlace.tools/c/theme"
@@ -7849,16 +7942,16 @@
         "SERIES_STYLE",
         "TimeSeries"
       ],
-      "version": "1.3.1",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "data-state",
         "delta",
+        "interlace-base",
         "series-table",
-        "skeleton",
-        "theme"
+        "skeleton"
       ],
       "installsTo": [
         "components/ui/charts/time-series.tsx",
@@ -7912,12 +8005,12 @@
       "exports": [
         "TimelineMap"
       ],
-      "version": "1.3.0",
+      "version": "2.0.0",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "toggle"
       ],
       "installsTo": [
@@ -7965,7 +8058,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -7974,7 +8067,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme",
+        "interlace-base",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -8023,13 +8116,13 @@
         "Toc",
         "TocPopover"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
+        "interlace-base",
         "popover",
-        "theme",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -8078,7 +8171,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -8086,7 +8179,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/toggle.tsx"
@@ -8133,14 +8226,14 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.4.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/tooltip.tsx"
@@ -8185,12 +8278,12 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/patterns/topbar.tsx"
@@ -8238,7 +8331,7 @@
       ],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/typography.tsx"
@@ -8376,7 +8469,7 @@
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
-        "theme"
+        "interlace-base"
       ],
       "installsTo": [
         "components/ui/visually-hidden.tsx"

@@ -140,7 +140,7 @@ export default function ThemeAuthoringPage() {
                 <Row
                   label="Lives in"
                   a="your app's global.css"
-                  b="packages/ui/styles/themes/<name>.css"
+                  b="packages/ui/styles/brand/<name>.css"
                 />
                 <Row label="Selector" a=":root / .dark" b="[data-theme='<name>']" />
                 <Row label="Switchable at runtime" a="no — it IS your brand" b="yes" />
@@ -238,7 +238,7 @@ export default function ThemeAuthoringPage() {
           <Callout title="Do not skip the last row">
             <p>
               The bare <code className="font-mono">.dark</code> block in{' '}
-              <code className="font-mono">interlace-theme.css</code> is
+              <code className="font-mono">brand/interlace.css</code> is
               unscoped, so what it really means is &ldquo;{DEFAULT.label}{' '}
               dark&rdquo; — it re-declares every{' '}
               <code className="font-mono">--interlace-*</code> literal on
@@ -285,7 +285,7 @@ export default function ThemeAuthoringPage() {
           <p className="text-muted-foreground mt-3 text-sm">
             The list is not maintained by hand: it is derived from the{' '}
             <code className="font-mono">:root</code> block of{' '}
-            <code className="font-mono">interlace-theme.css</code>, and the
+            <code className="font-mono">brand/interlace.css</code>, and the
             lock re-derives it on every run and fails if the two disagree.
           </p>
 
@@ -313,7 +313,7 @@ export default function ThemeAuthoringPage() {
 
         {/* ─── Wiring ─────────────────────────────────────────────── */}
         <Step n={4} title="Wire it up — three edits, all of them checked">
-          <Snippet>{`/* 1. packages/ui/styles/themes/<name>.css */
+          <Snippet>{`/* 1. packages/ui/styles/brand/<name>.css */
 @layer interlace.brand {
   [data-theme='<name>'] { /* … every token, light … */ }
 
@@ -322,11 +322,11 @@ export default function ThemeAuthoringPage() {
   [data-theme='<name>'] .dark,
   [data-theme='<name>'] [data-scheme='dark'] { /* … every token, dark … */ }
 }`}</Snippet>
-          <Snippet>{`/* 2. packages/ui/styles/index.css — AFTER interlace-theme.css.
+          <Snippet>{`/* 2. packages/ui/styles/base.css — AFTER brand/interlace.css.
       Order is load-bearing: [data-theme='X'] and .dark are BOTH (0,1,0),
       so the tie is broken by source order. */
-@import "./interlace-theme.css";
-@import "./themes/<name>.css";`}</Snippet>
+@import "./brand/interlace.css";
+@import "./brand/<name>.css";`}</Snippet>
           <Snippet>{`// 3. packages/ui/src/lib/theme-tokens.ts
 export const THEMES = [
   /* … */
@@ -554,9 +554,10 @@ import { ThemeSwitcher } from '@interlace/ui/theme-switcher';
         <Section title="What you cannot safely override">
           <ul className="text-muted-foreground mt-3 ml-6 list-disc space-y-2 text-sm">
             <li>
-              <code className="font-mono">@layer interlace.preflight</code> —
-              the focus-ring + min-viewport baseline. Overriding it costs WCAG
-              2.2 SC 2.4.13.
+              <code className="font-mono">page/preflight.css</code> — the
+              focus-ring + min-viewport baseline, in Tailwind&apos;s{' '}
+              <code className="font-mono">base</code> layer so any utility
+              still beats it. Removing it costs WCAG 2.2 SC 2.4.13.
             </li>
             <li>
               <code className="font-mono">@layer interlace.bridge</code> —
@@ -564,10 +565,10 @@ import { ThemeSwitcher } from '@interlace/ui/theme-switcher';
               cross-framework primitive resolution.
             </li>
             <li>
-              <code className="font-mono">@layer interlace.foundation</code> —
-              type scale + spacing scale + radius + container widths. These are
-              structural; if you really need a different spacing scale
-              you&apos;re forking the DS, not theming it.
+              <code className="font-mono">structure/</code> — type scale,
+              radius derivation, container widths, motion. Brand-invariant on
+              purpose; if you need a different scale you&apos;re forking the
+              DS, not theming it.
             </li>
             <li>
               <code className="font-mono">@layer interlace.semantics</code> — a

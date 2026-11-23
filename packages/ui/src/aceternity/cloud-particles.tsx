@@ -42,10 +42,10 @@
  * A CSS keyframe, gated three ways. The drift class is written
  * `motion-safe:animate-[var(--cloud-animation)]` and is only added when
  * `!reducedMotion`; the `--cloud-animation` variable itself is set to `none`
- * under `reduce`; and the wildcard in `styles/preflight.css` would clamp it
+ * under `reduce`; and the wildcard in `styles/page/preflight.css` would clamp it
  * regardless. Note that the keyframe is injected by this component under a
  * per-instance name, so it is NOT in the `animation: none` list in
- * `styles/tokens.css` — the `motion-safe` variant is what does the work.
+ * `styles/structure/motion.css` — the `motion-safe` variant is what does the work.
  *
  * Under `reduce` the clouds stay on screen, scaled and still (`transform:
  * scale(...)` replaces the animation), because the atmosphere is the point and

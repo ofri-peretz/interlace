@@ -30,14 +30,14 @@
  * | ShootingStars    | rAF + `setTimeout` spawner   | `return null` — renders nothing     |
  * | Meteors          | injected CSS keyframe        | `return null` — renders nothing     |
  *
- * None of it is reachable by the CSS reset in `styles/preflight.css` — a
+ * None of it is reachable by the CSS reset in `styles/page/preflight.css` — a
  * canvas repaint and a JS-scheduled SVG transform are invisible to it — so all
  * three read `useReducedMotion()` themselves. The stars survive because a
  * still starfield is still a starfield; a shooting star and a meteor are
  * nothing but their motion, so they are removed rather than frozen.
  *
  * `.animate-meteor-effect` is also listed in the `prefers-reduced-motion`
- * block in `styles/tokens.css`, which is belt-and-braces: the component has
+ * block in `styles/structure/motion.css`, which is belt-and-braces: the component has
  * already returned `null` by then.
  *
  * ## Accessibility — all three roots are `aria-hidden`

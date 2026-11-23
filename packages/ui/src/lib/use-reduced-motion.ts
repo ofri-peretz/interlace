@@ -32,7 +32,7 @@ const QUERY = '(prefers-reduced-motion: reduce)';
  * on hydration.** The server genuinely cannot know the preference, so
  * `getServerSnapshot` must return `false` and the hydration frame is
  * unavoidable for any JavaScript hook. The only thing that closes THAT is CSS,
- * which is why `preflight.css` clamps `animation-duration` and
+ * which is why `page/preflight.css` clamps `animation-duration` and
  * `transition-duration` under `reduce` for `*`: that reset is live before the
  * first paint and needs no JavaScript at all.
  *

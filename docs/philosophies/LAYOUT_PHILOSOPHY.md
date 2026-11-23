@@ -99,7 +99,7 @@ component.
 
 Base classes describe the smallest viewport. Breakpoints only *add*
 density and breathing room — they never take it away. Tailwind's own
-ladder governs, untouched; `packages/ui/styles/foundation.css` only
+ladder governs, untouched; `packages/ui/styles/structure/type.css` only
 adds an `xs:` handheld tier at 480px.
 [`BREAKPOINT_PHILOSOPHY.md`](./BREAKPOINT_PHILOSOPHY.md)
 is the source of truth for the ladder and the reasoning; the table

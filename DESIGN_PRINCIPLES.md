@@ -64,7 +64,7 @@ Status colors (success, warning, destructive) are pigments, not narrative —
 reach for them when communicating state, not for decoration. Brand is *one
 high-signal element at a time* (the primary action, the focus ring, the
 selected card) — never a chromatic flood. Full contract:
-`COLOR_PHILOSOPHY.md` + `interlace-theme.css`.
+`COLOR_PHILOSOPHY.md` + `brand/interlace.css`.
 
 ## 4. Token-only — no raw values
 
@@ -78,7 +78,7 @@ token cascade is `--interlace-*` (brand primitives) → shadcn-bare semantic
 A brand fork swaps the primitive layer; the rest doesn't move. Interlace
 adds keys to the host app's Tailwind theme and never redefines one the host
 already relies on. See
-`packages/ui/styles/foundation.css` + `interlace-theme.css`.
+`packages/ui/styles/structure/type.css` + `brand/interlace.css`.
 
 ## 5. Generous whitespace, fixed rhythm
 

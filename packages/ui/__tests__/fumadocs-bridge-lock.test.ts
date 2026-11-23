@@ -5,7 +5,7 @@
  * --------------------
  * The DS ships into two kinds of app: plain React/Next sites, and
  * fumadocs docs sites. Both get the same components. The way that works
- * is `packages/ui/styles/theme.css` (`@layer interlace.bridge`), which
+ * is `packages/ui/styles/page/fumadocs.css` (`@layer interlace.bridge`), which
  * aliases fumadocs' `--color-fd-*` family onto the bare shadcn token
  * names our components are styled against. See FUMADOCS_BRIDGE.md.
  *
@@ -156,13 +156,13 @@ describe('fumadocs coexistence — bridge is the only seam', () => {
 });
 
 describe('fumadocs coexistence — the bridge file itself', () => {
-  const themeCss = readFileSync(resolve(PKG_ROOT, 'styles/theme.css'), 'utf-8');
+  const themeCss = readFileSync(resolve(PKG_ROOT, 'styles/page/fumadocs.css'), 'utf-8');
 
-  it('theme.css wraps the token aliases in `@layer interlace.bridge`', () => {
+  it('page/fumadocs.css wraps the token aliases in `@layer interlace.bridge`', () => {
     expect(themeCss).toMatch(/@layer\s+interlace\.bridge\s*\{/);
   });
 
-  it('theme.css maps the shadcn surface tokens onto `--color-fd-*`', () => {
+  it('page/fumadocs.css maps the shadcn surface tokens onto `--color-fd-*`', () => {
     // The load-bearing subset: if any of these stops being bridged, DS
     // components render unstyled inside a fumadocs app.
     for (const token of [
@@ -176,18 +176,18 @@ describe('fumadocs coexistence — the bridge file itself', () => {
       'border',
       'ring',
     ]) {
-      expect(themeCss, `--${token} is not bridged in theme.css`).toContain(
+      expect(themeCss, `--${token} is not bridged in page/fumadocs.css`).toContain(
         `--${token}: var(--color-fd-${token});`,
       );
     }
   });
 
-  it('theme.css is the only stylesheet that reads `--color-fd-*` values', () => {
-    // interlace-theme.css may WRITE --color-fd-* (pushing brand values
+  it('page/fumadocs.css is the only stylesheet that reads `--color-fd-*` values', () => {
+    // brand/interlace.css may WRITE --color-fd-* (pushing brand values
     // into fumadocs' own surface); reading them is the bridge's job.
     const offenders: string[] = [];
     for (const name of readdirSync(resolve(PKG_ROOT, 'styles'))) {
-      if (!name.endsWith('.css') || name === 'theme.css') continue;
+      if (!name.endsWith('.css') || name === 'page/fumadocs.css') continue;
       // Comments explain the bridge all over these files — strip them so
       // documentation can't trip the lock.
       const css = readFileSync(
@@ -199,7 +199,7 @@ describe('fumadocs coexistence — the bridge file itself', () => {
 
     expect(
       offenders,
-      `Only styles/theme.css may read fumadocs tokens — it IS the bridge.\n` +
+      `Only styles/page/fumadocs.css may read fumadocs tokens — it IS the bridge.\n` +
         offenders.join('\n'),
     ).toEqual([]);
   });
