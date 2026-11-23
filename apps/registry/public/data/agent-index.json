@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 170
+    "itemCount": 172
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 72,
-      "pattern": 47,
+      "pattern": 49,
       "effect": 19,
       "template": 13,
       "chart": 8,
@@ -40,7 +40,7 @@
     },
     "category": {
       "primitive": 72,
-      "pattern": 47,
+      "pattern": 49,
       "blog": 35,
       "foundation": 25,
       "data": 23,
@@ -48,9 +48,9 @@
       "form": 18,
       "decorative": 17,
       "feedback": 14,
+      "navigation": 13,
       "template": 13,
       "marketing": 13,
-      "navigation": 11,
       "overlay": 10,
       "chart": 8,
       "util": 5,
@@ -60,21 +60,21 @@
     },
     "rendering": {
       "server": 99,
-      "client": 71
+      "client": 73
     },
     "keyboard": {
-      "none": 133,
-      "handled": 37
+      "none": 134,
+      "handled": 38
     },
     "loading": {
-      "none": 137,
+      "none": 139,
       "built-in": 33
     },
     "minViewport": {
       "320": 104,
       "480": 7,
       "768": 1,
-      "inherited": 58
+      "inherited": 60
     }
   },
   "items": [
@@ -9327,8 +9327,8 @@
           "aria-label"
         ],
         "motion": {
-          "driver": "none",
-          "declaresPreference": false,
+          "driver": "css",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true
@@ -9352,6 +9352,109 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json",
       "item": "https://ds.interlace.tools/r/topbar-menu.json",
       "docs": "https://ds.interlace.tools/c/topbar-menu"
+    },
+    {
+      "name": "topbar-nav",
+      "title": "Topbar Nav",
+      "type": "registry:ui",
+      "summary": "The wide-screen half of `Topbar` when its links hold groups: a row of plain links and group triggers, where a group opens a panel of its items, each with an optional icon and a one-line description. It is how a site that is a family of products lists them…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "navigation-menu",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "menu"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "TOPBAR_ROW_ITEM",
+        "TopbarNav"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/topbar-nav.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar-nav.json",
+      "item": "https://ds.interlace.tools/r/topbar-nav.json",
+      "docs": "https://ds.interlace.tools/c/topbar-nav"
+    },
+    {
+      "name": "topbar-scroll-edge",
+      "title": "Topbar Scroll Edge",
+      "type": "registry:ui",
+      "summary": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "TopbarScrollEdge"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/topbar-scroll-edge.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar-scroll-edge.json",
+      "item": "https://ds.interlace.tools/r/topbar-scroll-edge.json",
+      "docs": "https://ds.interlace.tools/c/topbar-scroll-edge"
     },
     {
       "name": "topbar",
@@ -9378,14 +9481,15 @@
         "roles": [],
         "aria": [
           "aria-current",
+          "aria-hidden",
           "aria-label"
         ],
         "motion": {
           "driver": "css",
-          "declaresPreference": false,
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT"
@@ -9396,7 +9500,9 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
-        "topbar-menu"
+        "topbar-menu",
+        "topbar-nav",
+        "topbar-scroll-edge"
       ],
       "installsTo": [
         "components/ui/patterns/topbar.tsx"
