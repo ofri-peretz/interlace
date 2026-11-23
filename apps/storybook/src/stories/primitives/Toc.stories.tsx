@@ -31,7 +31,7 @@ const ArticleMock = ({ items }: { items: TocItem[] }) => (
           <Tag
             id={item.id}
             tabIndex={-1}
-            className="scroll-mt-md font-semibold"
+            className="scroll-mt-6 font-semibold"
           >
             {item.label}
           </Tag>

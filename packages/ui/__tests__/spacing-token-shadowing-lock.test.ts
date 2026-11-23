@@ -32,6 +32,13 @@ const SPACING_UTILITIES = [
   'p', 'px', 'py', 'pt', 'pb', 'pl', 'pr', 'ps', 'pe',
   'm', 'mx', 'my', 'mt', 'mb', 'ml', 'mr', 'ms', 'me',
   'gap', 'gap-x', 'gap-y', 'space-x', 'space-y',
+  // The scroll-margin / scroll-padding family is spacing too. `scroll-mt-xl`
+  // survived the 2.0 codemod in Prose and compiled to nothing at all, so
+  // every heading anchor lost its offset under a sticky header.
+  'scroll-m', 'scroll-mx', 'scroll-my', 'scroll-mt', 'scroll-mb', 'scroll-ml', 'scroll-mr', 'scroll-ms', 'scroll-me',
+  'scroll-p', 'scroll-px', 'scroll-py', 'scroll-pt', 'scroll-pb', 'scroll-pl', 'scroll-pr', 'scroll-ps', 'scroll-pe',
+  'inset', 'inset-x', 'inset-y', 'top', 'right', 'bottom', 'left', 'start', 'end',
+  'translate-x', 'translate-y', 'indent', 'border-spacing',
 ];
 
 const sourceFiles = (dir: string = SRC): string[] =>
