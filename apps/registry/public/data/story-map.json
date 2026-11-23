@@ -2082,6 +2082,16 @@
     "previewDark": "charts-timeseries--dark",
     "skeleton": "charts-timeseries--loading"
   },
+  "timeline": {
+    "title": "Blocks/Timeline",
+    "storyIds": [
+      "blocks-timeline--default",
+      "blocks-timeline--in-an-arrow-column"
+    ],
+    "preview": "blocks-timeline--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "timeline-map": {
     "title": "Blocks/TimelineMap",
     "storyIds": [

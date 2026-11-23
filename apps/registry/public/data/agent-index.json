@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 157
+    "itemCount": 158
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 69,
-      "pattern": 39,
+      "pattern": 40,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 69,
-      "pattern": 39,
-      "blog": 31,
+      "pattern": 40,
+      "blog": 32,
       "foundation": 24,
       "data": 22,
       "effect": 17,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 94,
+      "server": 95,
       "client": 63
     },
     "keyboard": {
-      "none": 122,
+      "none": 123,
       "handled": 35
     },
     "loading": {
-      "none": 125,
+      "none": 126,
       "built-in": 32
     },
     "minViewport": {
-      "320": 93,
+      "320": 94,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -8435,6 +8435,69 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/timeline-map.json",
       "item": "https://ds.interlace.tools/r/timeline-map.json",
       "docs": "https://ds.interlace.tools/c/timeline-map"
+    },
+    {
+      "name": "timeline",
+      "title": "Timeline",
+      "type": "registry:ui",
+      "summary": "A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on one horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TimelineOrientation",
+          "values": [
+            "responsive",
+            "vertical"
+          ]
+        },
+        {
+          "name": "TimelineMarker",
+          "values": [
+            "default",
+            "accent"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/timeline.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/timeline.json",
+      "item": "https://ds.interlace.tools/r/timeline.json",
+      "docs": "https://ds.interlace.tools/c/timeline"
     },
     {
       "name": "toast",

@@ -2416,6 +2416,24 @@
       }
     },
     {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on one horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "topbar-menu",
       "type": "registry:ui",
       "title": "Topbar Menu",
