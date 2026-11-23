@@ -220,13 +220,17 @@ describe('interlace-craft skill', () => {
 
   it('names only tokens the styles declare', () => {
     // Example values in the branding snippet are the consumer's to set, so the
-    // check covers the names, not the values. `--x-*` is a family.
+    // check covers the names, not the values. `--x-*` is a family. A hook the
+    // styles read with a fallback, var(--name, ...), is the consumer's to set
+    // and counts as declared.
     const names = new Set([...source.matchAll(/(?<![\w-])--([a-z][a-z0-9-]*[a-z0-9](?:-\*)?)/g)].map(([, n]) => n));
     expect(names.size).toBeGreaterThan(10);
     for (const name of names) {
       const declared = name.endsWith('-*')
         ? styles.includes(`--${name.slice(0, -1)}`)
-        : new RegExp(`--${name}\\s*:`).test(styles) || name === 'font-sans';
+        : new RegExp(`--${name}\\s*:`).test(styles) ||
+          styles.includes(`var(--${name},`) ||
+          name === 'font-sans';
       expect(`--${name} ${declared ? 'declared' : 'missing'}`).toBe(`--${name} declared`);
     }
   });
