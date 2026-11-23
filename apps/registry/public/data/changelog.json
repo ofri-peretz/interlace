@@ -183,6 +183,17 @@
           "source": ".changeset/highlight-heading-tones.md"
         },
         {
+          "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
+          "components": [
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/claim-heading-font.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"
