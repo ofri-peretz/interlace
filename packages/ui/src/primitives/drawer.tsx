@@ -97,6 +97,8 @@ const DirectionContext = React.createContext<DrawerDirection>('bottom');
 type DrawerProps = Omit<React.ComponentProps<typeof BaseDrawer.Root>, 'swipeDirection'> & {
   /** The edge the drawer is attached to; dragging toward it dismisses. @default 'bottom' */
   direction?: DrawerDirection;
+  /** Heights a bottom drawer rests at (fractions of the viewport, px, or rem strings). Bottom drawers only: other directions ignore it. */
+  snapPoints?: React.ComponentProps<typeof BaseDrawer.Root>['snapPoints'];
 };
 
 function Drawer({ direction = 'bottom', ...props }: DrawerProps) {
@@ -183,7 +185,12 @@ const POPUP: Record<DrawerDirection, string> = {
   ),
 };
 
-/** The body pads its far edge so a snapped or bottom drawer's last line stays reachable. */
+/**
+ * The body pads its far edge so a snapped or bottom drawer's last line stays reachable.
+ * `--drawer-snap-point-offset` is the positive distance the panel sits below full height, and
+ * `--drawer-swipe-movement-y` is the live drag (down is positive), so their sum is the height
+ * currently off-screen. `max(0px, …)` stops an upward over-drag from going negative.
+ */
 const BODY: Record<DrawerDirection, string> = {
   bottom:
     'pb-[calc(env(safe-area-inset-bottom,0px)+max(0px,var(--drawer-snap-point-offset,0px)+var(--drawer-swipe-movement-y,0px)))]',
