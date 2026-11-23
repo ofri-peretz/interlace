@@ -490,6 +490,7 @@ const STYLE_ITEMS = [
       'structure/radius.css',
       'structure/motion.css',
       'structure/scheme.css',
+      'structure/focus.css',
     ],
     requires: [],
     description:

@@ -528,6 +528,16 @@
     "previewDark": "primitives-contextmenu--dark",
     "skeleton": "primitives-contextmenu--loading"
   },
+  "contrast": {
+    "title": "Foundations/More contrast",
+    "storyIds": [
+      "foundations-more-contrast--side-by-side",
+      "foundations-more-contrast--side-by-side-dark"
+    ],
+    "preview": "foundations-more-contrast--side-by-side",
+    "previewDark": "foundations-more-contrast--side-by-side-dark",
+    "skeleton": null
+  },
   "count-up": {
     "title": "Effects/CountUp",
     "storyIds": [

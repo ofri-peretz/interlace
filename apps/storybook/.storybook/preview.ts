@@ -213,6 +213,14 @@ const preview: Preview = {
       else html.setAttribute('data-theme', theme);
       return Story();
     },
+    /** The reading-comfort axis (`data-contrast`): AAA more contrast on any theme. */
+    (Story, context) => {
+      const level = context.globals.interlaceContrast as string | undefined;
+      const html = document.documentElement;
+      if (level === 'more') html.setAttribute('data-contrast', 'more');
+      else html.removeAttribute('data-contrast');
+      return Story();
+    },
   ],
   globalTypes: {
     interlaceTheme: {
@@ -225,6 +233,19 @@ const preview: Preview = {
         items: [
           { value: 'interlace', title: 'Interlace' },
           { value: 'harbor', title: 'Harbor' },
+        ],
+      },
+    },
+    interlaceContrast: {
+      description: 'More contrast, the AAA reading mode (data-contrast)',
+      defaultValue: 'normal',
+      toolbar: {
+        title: 'Contrast',
+        icon: 'contrast',
+        dynamicTitle: true,
+        items: [
+          { value: 'normal', title: 'Standard (AA)' },
+          { value: 'more', title: 'More contrast (AAA)' },
         ],
       },
     },
