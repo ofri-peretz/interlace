@@ -19,6 +19,10 @@ const meta: Meta<typeof Badge> = {
       control: 'select',
       options: [
         'default',
+        'success',
+        'warning',
+        'info',
+        'highlight',
         'secondary',
         'destructive',
         'outline',
@@ -26,12 +30,12 @@ const meta: Meta<typeof Badge> = {
         'link',
       ],
       description:
-        'Pigment ladder. `default` is the emphatic one — using it everywhere flattens the signal; reach for `secondary` / `outline` for neutral metadata and reserve `destructive` for failure.',
+        'Pigment ladder. `default` is the emphatic one — using it everywhere flattens the signal; reach for `secondary` / `outline` for neutral metadata and reserve `destructive` for failure. `success` / `warning` / `info` are status tones; `highlight` marks the one item to read first.',
       table: {
         category: 'Appearance',
         type: {
           summary:
-            "'default' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link'",
+            "'default' | 'success' | 'warning' | 'info' | 'highlight' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link'",
         },
         defaultValue: { summary: 'default' },
       },
@@ -88,6 +92,10 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-2">
       <Badge>Default</Badge>
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="info">Info</Badge>
+      <Badge variant="highlight">Highlight</Badge>
       <Badge variant="secondary">Secondary</Badge>
       <Badge variant="destructive">Destructive</Badge>
       <Badge variant="outline">Outline</Badge>

@@ -87,7 +87,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v2.0.0
 - [Interlace Foundation](https://ds.interlace.tools/c/interlace-foundation): @interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-foundation.json`
-  - contract: server, v2.0.0
+  - contract: server, v3.0.0
 - [Interlace Theme](https://ds.interlace.tools/c/theme): @interlace/ui — the Interlace look as shadcn cssVars: points your --primary, --background, --radius and the rest at Interlace's burnt-orange brand tokens (light + dark, AAA). Opt-in; components work without it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme.json`
   - contract: server, v2.0.0
@@ -141,16 +141,16 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, v2.0.0
 - [Collapsible](https://ds.interlace.tools/c/collapsible): A single open/close disclosure surface. Wraps Base UI's `Collapsible.Root`, `Collapsible.Trigger`, `Collapsible.Panel` so consumers get the controlled / uncontrolled state machine, ARIA wiring (`aria-controls`, `aria-expanded`, `id`), keyboard semantics…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/collapsible.json`
-  - contract: client, min 320px, keyboard via Base UI collapsible, v1.0.0
+  - contract: client, min 320px, keyboard via Base UI collapsible, v2.0.0
 - [Combobox](https://ds.interlace.tools/c/combobox): A text input that filters a list. Built on `@base-ui/react/combobox`: Base UI owns the filtering (`Intl.Collator`-backed `useFilter`), the combobox/listbox ARIA pairing, VIRTUAL focus (the input keeps DOM focus and `aria-activedescendant` moves), single +…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/combobox.json`
-  - contract: client, min 320px, keyboard via Base UI combobox, v2.0.0
+  - contract: client, min 320px, keyboard via Base UI combobox, v3.0.0
 - [Command Palette](https://ds.interlace.tools/c/command-palette): ⌘K. A modal surface holding one filterable list of actions.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/command-palette.json`
-  - contract: client, min 320px, keyboard via Base UI combobox, v2.0.0
+  - contract: client, min 320px, keyboard via Base UI combobox, v3.0.0
 - [Container](https://ds.interlace.tools/c/container): The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/container.json`
-  - contract: server, keyboard via Base UI use-render, v2.0.0
+  - contract: server, keyboard via Base UI use-render, v3.0.0
 - [Context Menu](https://ds.interlace.tools/c/context-menu): Right-click / long-press menu. Wraps `@base-ui/react/context-menu` (same Menu compositional API as DropdownMenu, just with a Root that handles right-click / long-press / Shift+F10 as the open gesture).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/context-menu.json`
   - contract: client, min 320px, keyboard via Base UI context-menu, v2.0.0
@@ -168,13 +168,13 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI menu, v2.0.0
 - [Focus Ring](https://ds.interlace.tools/c/focus-ring): A `<span>` that paints the DS focus ring when anything inside it takes focus — `focus-within` on the wrapper, not `focus-visible` on the child.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/focus-ring.json`
-  - contract: server, min 320px, states none|sm|md|lg, v2.0.0
+  - contract: server, min 320px, states none|sm|md|lg, v3.0.0
 - [Form](https://ds.interlace.tools/c/form): A composition primitive over `@base-ui/react/field`. The form ecosystem owns a long tail of subtle a11y wiring — label/control association via generated ids, `aria-describedby` for description + error, `aria-invalid` flipping on validity, focus management…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/form.json`
   - contract: server, min 320px, keyboard via Base UI field, v1.1.0
 - [Grade Badge](https://ds.interlace.tools/c/grade-badge): Visual grade pill — A+ / A / A- / B+ / B / … / F. The atomic surface for scorecard pages: a single chip that announces a tier without making the reader compute. Five tones (excellent/good/fair/poor/fail) map onto the 13-grade ladder so the colour story…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/grade-badge.json`
-  - contract: server, min 320px, states excellent|good|fair|poor|fail, v2.0.0
+  - contract: server, min 320px, states excellent|good|fair|poor|fail, v3.0.0
 - [Grid](https://ds.interlace.tools/c/grid): The 2-D sibling of Stack: a thin, token-bound CSS-grid primitive, not a grid framework. `<Grid>` sets the column track and gap on the foundation `--spacing` scale; `<GridItem>` spans columns, responsively. Two FLAT components rather than one with a `kind…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/grid.json`
   - contract: server, v2.0.0
@@ -210,7 +210,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI progress, v1.0.0
 - [Prose](https://ds.interlace.tools/c/prose): The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer. Think MDX-target…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/prose.json`
-  - contract: client, min 320px, states article|div|main|section, v2.0.1
+  - contract: client, min 320px, states article|div|main|section, v3.0.0
 - [Published Date](https://ds.interlace.tools/c/published-date): Article publish-date stamp. A pure surface primitive that renders a semantic `<time dateTime={iso}>` with a human-readable label produced by `Intl.DateTimeFormat` at render time. The native element owns the machine value (the `dateTime` attribute is what…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/published-date.json`
   - contract: server, min 320px, loading state, states long|short, v1.1.0
@@ -273,7 +273,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, loading state, v1.3.0
 - [Textarea](https://ds.interlace.tools/c/textarea): Multi-line text input. A pure surface primitive with no controlled-state machinery: the native `<textarea>` already owns selection, IME, undo/redo, `onChange` etc., so we add structure (size + tone) without wrapping a single native behaviour. Server…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/textarea.json`
-  - contract: server, min 320px, v2.0.0
+  - contract: server, min 320px, v3.0.0
 - [Theme Switcher](https://ds.interlace.tools/c/theme-switcher): The UI half of the two-axis theme contract (`styles/index.css`, `src/lib/use-theme.ts`). Two controls, because the two axes are genuinely different questions and a single control that tries to serve both ends up as a four-item list called "Light / Dark /…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-switcher.json`
   - contract: client, min 320px, v2.0.0
@@ -291,7 +291,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI tooltip, v2.0.0
 - [Typography](https://ds.interlace.tools/c/typography): One component renders every row of the type scale (h1–h6, body, long-form, UI, caption, code) through a single `variant`, plus an orthogonal semantic `tone`. The reading-vs-UI distinction (TYPOGRAPHY_PHILOSOPHY "Reading mode vs UI mode") is encoded in the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/typography.json`
-  - contract: server, v1.0.0
+  - contract: server, v2.0.0
 - [Visually Hidden](https://ds.interlace.tools/c/visually-hidden): A `<span>` that is invisible on screen but still read by assistive tech — the component form of the `sr-only` utility.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/visually-hidden.json`
   - contract: server, min 320px, v1.1.0
@@ -300,7 +300,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [Article Card](https://ds.interlace.tools/c/article-card): Two article tiles that share one focusable-anchor shell: `ArticleCard`, the stacked grid tile with the cover on top, and `FeaturedArticleCard`, the full-bleed hero whose copy sits on a gradient scrim over the image. Both read the same props.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/article-card.json`
-  - contract: client, loading state, states stack|overlay, v2.0.0
+  - contract: client, loading state, states stack|overlay, v3.0.0
 - [Article List Grid](https://ds.interlace.tools/c/article-list-grid): Grid of ArticleCards with an optional featured slot above. The pattern blog index pages reach for: one big featured card (overlay variant) above N tiles. Composes RelatedPosts-style streaming with proper loading + empty states.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/article-list-grid.json`
   - contract: server, min 320px, loading state, v2.0.0
@@ -309,7 +309,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, loading state, v2.0.0
 - [Brand Logo](https://ds.interlace.tools/c/brand-logo): The locked two-bar Interlace mark plus the lowercase monospace wordmark "interlace". This is the SAME lockup eslint.interlace.tools ships in its top nav — one component so every *.interlace.tools site renders an identical brand header instead of…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/brand-logo.json`
-  - contract: server, v1.0.0
+  - contract: server, v2.0.0
 - [Code Window](https://ds.interlace.tools/c/code-window): macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/code-window.json`
   - contract: client, v2.0.0
@@ -339,16 +339,16 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v2.0.0
 - [Grid Pattern](https://ds.interlace.tools/c/grid-pattern): A decorative SVG line grid that fills its positioned parent, with optional accent cells (`squares`, addressed as `[column, row]`) that can pulse. Colour comes from `currentColor`, so a text-colour class on `className` sets the tone.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/grid-pattern.json`
-  - contract: client, v1.2.0
+  - contract: client, v2.0.0
 - [Hero](https://ds.interlace.tools/c/hero): The above-the-fold section every landing page reaches for: eyebrow, headline, supporting copy, primary + secondary CTAs, optional media slot. Server-component-safe; the calm-confident-technical voice is enforced by Typography variants (no h1 with…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero.json`
   - contract: server, min 320px, v2.0.0
 - [Hero Cosmic](https://ds.interlace.tools/c/hero-cosmic): The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero-cosmic.json`
-  - contract: client, min 320px, v2.0.0
+  - contract: client, min 320px, v3.0.0
 - [Interactive Grid Pattern](https://ds.interlace.tools/c/interactive-grid-pattern): A decorative grid of `columns × rows` SVG squares (24 × 24 by default) that fills the cell under the pointer. Cells inherit `currentColor`, so `className="text-border"` sets the hue and `lineOpacity` / `hoverOpacity` tune it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interactive-grid-pattern.json`
-  - contract: client, v1.2.0
+  - contract: client, v2.0.0
 - [Lint Playground](https://ds.interlace.tools/c/lint-playground): LintPlayground — paste code, watch analysis light it up.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json`
   - contract: client, states linting|ready|failed, v2.0.0
@@ -381,7 +381,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v1.2.0
 - [Stat Card](https://ds.interlace.tools/c/stat-card): A single labeled metric — the building block of dashboards, scorecards, and "key results" rows. Renders: label / value / optional delta / optional icon. The `tone` variant pairs the delta accent with one of four semantic colors (default / success / warning…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stat-card.json`
-  - contract: server, min 320px, loading state, v2.0.0
+  - contract: server, min 320px, loading state, v3.0.0
 - [Stat Group](https://ds.interlace.tools/c/stat-group): Horizontal row (or grid) of StatCards. The pattern stat pages reach for: 3-5 hero KPIs at the top of a page, each a labelled big number. Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stat-group.json`
   - contract: server, min 320px, loading state, v2.0.0
@@ -468,82 +468,82 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [Animated Gradient Text](https://ds.interlace.tools/c/animated-gradient-text): Gradient-filled text: a `bg-clip-text text-transparent` span whose three-stop linear gradient slides horizontally on a loop. Built for a short eyebrow, badge or headline fragment — never a paragraph, since the text has no solid fill to fall back to.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/animated-gradient-text.json`
-  - contract: server, v1.1.0
+  - contract: server, v2.0.0
 - [Animated Grid Pattern](https://ds.interlace.tools/c/animated-grid-pattern): A tiled SVG grid where a handful of cells softly pulse in and out, then teleport to a new random cell on each cycle — a "breathing" graph-paper backdrop for heroes and section bands. Re-authored from the MagicUI pattern to the Interlace component floor.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/animated-grid-pattern.json`
   - contract: client, v1.1.0
 - [Animated List](https://ds.interlace.tools/c/animated-list): A feed that reveals its children one at a time, newest on top, each entry springing in from `scale: 0`. One more appears every `delay` ms (1000 by default) until the list is full, then it stops — or restarts, with `loop`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/animated-list.json`
-  - contract: client, v1.2.0
+  - contract: client, v2.0.0
 - [Background Beams With Collision](https://ds.interlace.tools/c/background-beams-with-collision): A hero surface where thin vertical beams fall from the top and burst into a ten-particle explosion when they reach the strip along the bottom. Your children render above them on a `z-10` layer.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/background-beams-with-collision.json`
-  - contract: client, v1.2.0
+  - contract: client, v2.0.0
 - [Background Gradient Animation](https://ds.interlace.tools/c/background-gradient-animation): The "lava lamp" surface: five radial-gradient blobs orbiting behind an SVG goo filter and a 40px blur, over a two-stop gradient backdrop, plus a sixth blob that eases toward the pointer.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/background-gradient-animation.json`
-  - contract: client, v1.2.0
+  - contract: client, v2.0.0
 - [Background Lines](https://ds.interlace.tools/c/background-lines): A full-bleed backdrop of twelve long, sweeping SVG curves that draw themselves in and fade out on a loop, each staggered by a fixed delay so the field never pulses in unison.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/background-lines.json`
-  - contract: client, v1.1.0
+  - contract: client, v2.0.0
 - [Border Beam](https://ds.interlace.tools/c/border-beam): A single gradient square that travels around the inside edge of its parent, drawn with `offset-path` and a two-layer CSS mask so only the border ring shows. Drop it inside any `relative`, rounded container to give that container a moving outline.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/border-beam.json`
-  - contract: client, v1.1.0
+  - contract: client, v2.0.0
 - [Cloud Particles](https://ds.interlace.tools/c/cloud-particles): Volumetric drifting clouds as a decorative backdrop. Each cloud is a radial-gradient ellipse pushed through a five-pass SVG turbulence filter — body, cool underside, soft shadow, deep shadow — and translated across `130vw`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/cloud-particles.json`
-  - contract: client, v1.1.0
+  - contract: client, v2.0.0
 - [Flip Words](https://ds.interlace.tools/c/flip-words): A headline word that flips through a list. Each replacement enters letter-by-letter out of an 8px blur while the outgoing one drifts up, blurs and scales away.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/flip-words.json`
-  - contract: client, v1.1.0
+  - contract: client, v2.0.0
 - [Focus Cards](https://ds.interlace.tools/c/focus-cards): A grid that spotlights one card at a time: pointing at or keyboard-focusing a card keeps it sharp while every sibling dims and blurs. Real list semantics — `ul` › `li` › `article` — and a controlled or uncontrolled active index.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/focus-cards.json`
   - contract: client, v2.0.0
 - [Marquee](https://ds.interlace.tools/c/marquee): An infinitely scrolling strip: it renders its children `repeat` times side by side (or stacked, with `vertical`) inside an `overflow-hidden` track and translates each copy by its own width plus the gap, so the row reads as continuous.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/marquee.json`
-  - contract: client, v1.2.0
+  - contract: client, v2.0.0
 - [Number Ticker](https://ds.interlace.tools/c/number-ticker): A count-up number that starts when it scrolls into view and eases to `value`. It does nothing by default: `startValue` defaults to `value`, so you get an honest static number — and an honest SSR render — until you pass a lower one to opt into the count.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/number-ticker.json`
-  - contract: client, v1.1.0
+  - contract: client, v2.0.0
 - [Particles](https://ds.interlace.tools/c/particles): An ambient `<canvas>` particle field for hero and section backdrops: `quantity` dots (100 by default) drifting on their own velocities, fading in near the middle and out near the edges, respawned whenever one leaves the box.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/particles.json`
   - contract: client, v1.2.0
 - [Shimmer Button](https://ds.interlace.tools/c/shimmer-button): A dark pill CTA with a conic-gradient spark that sweeps around its edge: a rotating cone inside a sliding container, masked by an inset panel that redraws the fill and leaves only the rim glowing.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/shimmer-button.json`
-  - contract: server, v2.0.0
+  - contract: server, v3.0.0
 - [Spotlight](https://ds.interlace.tools/c/spotlight): The soft, angled glow that fades in behind hero copy: one rotated ellipse under a 151-unit Gaussian blur, absolutely positioned and sized as a percentage of its container. `fill` defaults to `currentColor`, so a text-colour class on the parent tints it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/spotlight.json`
-  - contract: client, v1.2.0
+  - contract: client, v2.0.0
 - [Stars Background](https://ds.interlace.tools/c/stars-background): Three night-sky layers you stack behind hero content: `StarsBackground`, a canvas of density-seeded twinkling stars; `ShootingStars`, one SVG streak at a time; and `Meteors`, CSS-animated tails falling at a fixed 215°.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stars-background.json`
-  - contract: client, v1.1.0
+  - contract: client, v2.0.0
 - [Sunny Background](https://ds.interlace.tools/c/sunny-background): A daylight sky you drop behind hero or section content: a two-stop sky gradient with a haze wash, a sun disc (corona → glow → overexposed core → slowly rotating conic rays → four lens flares), a golden-hour horizon band and a depth vignette.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/sunny-background.json`
-  - contract: client, v2.0.0
+  - contract: client, v3.0.0
 
 ## Items — tier `starter`
 
 - [A11y Starter](https://ds.interlace.tools/c/a11y-starter): @interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/a11y-starter.json`
-  - contract: server, v2.0.0
+  - contract: server, v3.0.0
 - [Layout Starter](https://ds.interlace.tools/c/layout-starter): @interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json`
-  - contract: server, v2.0.0
+  - contract: server, v3.0.0
 - [MDX Starter](https://ds.interlace.tools/c/mdx-starter): @interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/mdx-starter.json`
-  - contract: server, v2.0.0
+  - contract: server, v3.0.0
 
 ## Items — tier `util`
 
 - [cn — class-name merge utility](https://ds.interlace.tools/c/cn): @interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/cn.json`
-  - contract: server, states h1|h2|h3|h4|h5|h6|body|long|ui|ui-sm|caption|code, v1.1.0
+  - contract: server, states h1|h2|h3|h4|h5|h6|body|long|ui|ui-sm|caption|code, v2.0.0
 - [No-flash theme bootstrap script](https://ds.interlace.tools/c/theme-script): @interlace/ui — the inline `<head>` script that applies the stored theme before first paint. Without it every page load flashes the default theme.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-script.json`
   - contract: server, v1.0.1
 - [Theme token manifest](https://ds.interlace.tools/c/theme-tokens): @interlace/ui — the registry of themes and the list of every `--interlace-*` token a theme must define. A missing token does not throw; it silently inherits the previous theme's value.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-tokens.json`
-  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius|brand-mark-bar-o|brand-mark-bar-g, v2.0.0
+  - contract: server, states primary|primary-hover|primary-active|primary-foreground|primary-subtle|primary-subtle-foreground|background|foreground|card|card-foreground|popover|popover-foreground|muted|muted-foreground|border|input|ring|accent|accent-foreground|secondary|secondary-foreground|destructive|destructive-foreground|success|success-foreground|warning|warning-foreground|info|info-foreground|caution|caution-foreground|highlight|highlight-foreground|scrim|scrim-foreground|hero-star|hero-trail|hero-meteor|hero-surface|hero-surface-deep|hero-foreground|window-control-close|window-control-minimize|window-control-zoom|strand-a|strand-b|chart-1|chart-2|chart-3|chart-4|chart-5|viz-grid|viz-axis|viz-edge|radius|brand-mark-bar-o|brand-mark-bar-g, v3.0.0
 - [useReducedMotion hook](https://ds.interlace.tools/c/use-reduced-motion): @interlace/ui — the `useReducedMotion` hook every interactive primitive uses to gate animations on the user's OS preference.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/use-reduced-motion.json`
-  - contract: client, v1.1.0
+  - contract: client, v2.0.0
 - [useTheme hook](https://ds.interlace.tools/c/use-theme): @interlace/ui — reads and writes the theme (`data-theme`) and colour scheme (`.dark`) axes, persists to localStorage, and follows the OS when no preference is stored.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/use-theme.json`
   - contract: client, v1.1.0

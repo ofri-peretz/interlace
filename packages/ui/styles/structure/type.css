@@ -13,13 +13,16 @@
 
 @theme {
   /* ── Font families ─────────────────────────────────────────────── */
-  /* `font-body` is additive: a new key, a new utility. Pointing the app's
-     own `font-sans` / `font-mono` at Inter and JetBrains Mono replaces the
-     host's typeface, so those two live in fonts.css, which only the opt-in
-     `interlace-foundation` item ships. */
-  --font-body:
-    'Inter', 'Inter Variable', system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', sans-serif;
+  /* Two new keys, both additive. Components read `font-body` for text and
+     `font-heading` for headings; neither picks a typeface. `font-body`
+     follows the app's own `font-sans`, and `font-heading` follows
+     `font-body`, so an app that never touches them gets its own typeface
+     everywhere. Re-point either one to change components only:
+       @theme { --font-heading: var(--font-serif); }
+     The Interlace typefaces (Inter, JetBrains Mono) are opt-in, in
+     page/fonts.css, because they replace the app's `font-sans`. */
+  --font-body: var(--font-sans);
+  --font-heading: var(--font-body);
 
   /* ── Type scale (font-size + paired line-height) ───────────────────
      SIX heading levels max (TYPOGRAPHY "heading scale"). Display end fluids

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T01:20:47.863Z",
+  "generatedAt": "2026-11-23T01:24:38.702Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -1162,6 +1162,82 @@
       "keyboard": null,
       "contrast": [
         {
+          "fg": "info",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "info tint on the page surface",
+          "ratios": [
+            8.72,
+            10.98,
+            6.89,
+            13.08
+          ],
+          "worst": 6.89,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "info-foreground",
+          "bg": "info",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a info face",
+          "ratios": [
+            8.72,
+            10.98,
+            7.27,
+            13.08
+          ],
+          "worst": 7.27,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "info",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "info tint inside a card",
+          "ratios": [
+            8.72,
+            10.17,
+            7.27,
+            11.86
+          ],
+          "worst": 7.27,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "success",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "success tint on the page surface",
+          "ratios": [
+            7.68,
+            10.3,
+            7.28,
+            9.86
+          ],
+          "worst": 7.28,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
           "fg": "destructive",
           "bg": "background",
           "kind": "non-text",
@@ -1177,6 +1253,82 @@
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "success-foreground",
+          "bg": "success",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a success face",
+          "ratios": [
+            7.68,
+            7.75,
+            7.68,
+            7.75
+          ],
+          "worst": 7.68,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "success",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "success tint inside a card",
+          "ratios": [
+            7.68,
+            9.54,
+            7.68,
+            8.95
+          ],
+          "worst": 7.68,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "warning-foreground",
+          "bg": "warning",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a warning face",
+          "ratios": [
+            9.07,
+            7.81,
+            9.07,
+            8.65
+          ],
+          "worst": 7.81,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "warning",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "warning tint inside a card",
+          "ratios": [
+            9.07,
+            8.54,
+            9.07,
+            8.01
+          ],
+          "worst": 8.01,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
           },
           "passes": true
         },
@@ -1250,6 +1402,25 @@
             10.03
           ],
           "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "warning",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "warning tint on the page surface",
+          "ratios": [
+            9.07,
+            9.22,
+            8.6,
+            8.83
+          ],
+          "worst": 8.6,
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"

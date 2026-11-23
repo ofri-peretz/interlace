@@ -41,12 +41,12 @@ import { cn } from '../lib/cn.js';
 const typographyVariants = cva('', {
   variants: {
     variant: {
-      h1: 'font-body text-h1 font-bold tracking-display text-balance',
-      h2: 'font-body text-h2 font-bold tracking-heading text-balance',
-      h3: 'font-body text-h3 font-semibold tracking-heading',
-      h4: 'font-body text-h4 font-semibold',
-      h5: 'font-body text-h5 font-semibold',
-      h6: 'font-body text-h6 font-semibold',
+      h1: 'font-heading text-h1 font-bold tracking-display text-balance',
+      h2: 'font-heading text-h2 font-bold tracking-heading text-balance',
+      h3: 'font-heading text-h3 font-semibold tracking-heading',
+      h4: 'font-heading text-h4 font-semibold',
+      h5: 'font-heading text-h5 font-semibold',
+      h6: 'font-heading text-h6 font-semibold',
       body: 'font-body text-body font-normal',
       long: 'font-body text-long font-normal',
       ui: 'font-body text-ui font-normal',

@@ -14,8 +14,12 @@
  */
 
 @theme {
-  /* --font-body is declared in structure/type.css (additive). */
-  --font-sans: var(--font-body);
+  /* structure/type.css points `font-body` (and through it `font-heading`)
+     at `font-sans`, so this one line sets the Interlace typeface for
+     components and the app alike. */
+  --font-sans:
+    'Inter', 'Inter Variable', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
   --font-mono:
     'JetBrains Mono', 'JetBrains Mono Variable', 'SF Mono', Menlo, Consolas,
     'Liberation Mono', monospace;

@@ -110,7 +110,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -312,7 +312,7 @@
       "exports": [
         "AnimatedGradientText"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -417,7 +417,7 @@
         "AnimatedList",
         "AnimatedListItem"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react",
@@ -478,7 +478,7 @@
         "ArticleCard",
         "FeaturedArticleCard"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -926,7 +926,7 @@
       "exports": [
         "BackgroundBeamsWithCollision"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -979,7 +979,7 @@
       "exports": [
         "BackgroundGradientAnimation"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1030,7 +1030,7 @@
       "exports": [
         "BackgroundLines"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -1194,7 +1194,7 @@
       "exports": [
         "BorderBeam"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1290,7 +1290,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1655,7 +1655,7 @@
       "exports": [
         "CloudParticles"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1722,7 +1722,7 @@
       "exports": [
         "DS_FONT_SIZES"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "clsx",
@@ -1922,7 +1922,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -1978,7 +1978,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2035,7 +2035,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2085,7 +2085,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -3195,7 +3195,7 @@
       "exports": [
         "FlipWords"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -3307,7 +3307,7 @@
         "FocusRing",
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3468,7 +3468,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -3520,7 +3520,7 @@
       "exports": [
         "GridPattern"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -3620,7 +3620,7 @@
         "HeroCosmic",
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3827,7 +3827,7 @@
       "exports": [
         "InteractiveGridPattern"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3928,7 +3928,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -4084,7 +4084,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4203,7 +4203,7 @@
       "exports": [
         "Marquee"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -4252,7 +4252,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4776,7 +4776,7 @@
       "exports": [
         "NumberTicker"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5207,7 +5207,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.1",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -6381,7 +6381,7 @@
       "exports": [
         "ShimmerButton"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6851,7 +6851,7 @@
       "exports": [
         "Spotlight"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -6955,7 +6955,7 @@
         "ShootingStars",
         "StarsBackground"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7005,7 +7005,7 @@
         "MIN_VIEWPORT",
         "StatCard"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -7263,7 +7263,7 @@
       "exports": [
         "SunnyBackground"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7582,7 +7582,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -7763,6 +7763,8 @@
             "info-foreground",
             "caution",
             "caution-foreground",
+            "highlight",
+            "highlight-foreground",
             "scrim",
             "scrim-foreground",
             "hero-star",
@@ -7820,7 +7822,7 @@
         "THEMES",
         "THEME_TOKENS"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -8324,7 +8326,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -8372,7 +8374,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],

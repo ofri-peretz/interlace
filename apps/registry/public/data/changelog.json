@@ -129,6 +129,24 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
+          "components": [
+            "button",
+            "badge",
+            "typography",
+            "hero",
+            "hero-cosmic",
+            "interlace-base",
+            "interlace-foundation",
+            "theme"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/highlight-heading-tones.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"
