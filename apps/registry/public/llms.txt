@@ -336,7 +336,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, loading state, states asc|desc, v2.0.0
 - [Dialogue](https://ds.interlace.tools/c/dialogue): A written conversation: a script of turns, each with a speaker. Use it for a sample exchange ("what to say when your child asks…"), an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialogue.json`
-  - contract: server, min 320px, v1.0.0
+  - contract: server, min 320px, states muted|accent|inverse, v1.0.0
 - [Empty State](https://ds.interlace.tools/c/empty-state): The "nothing here yet" surface. Used wherever a list, table, or search returns zero rows AND the consumer can act on it (create the first item, adjust filters, link to docs). Empty states are first-class UX, not an afterthought — `LOADING_PHILOSOPHY` flags…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/empty-state.json`
   - contract: server, min 320px, v2.0.0

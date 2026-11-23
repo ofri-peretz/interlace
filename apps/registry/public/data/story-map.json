@@ -659,7 +659,8 @@
   "dialogue": {
     "title": "Blocks/Dialogue",
     "storyIds": [
-      "blocks-dialogue--default"
+      "blocks-dialogue--default",
+      "blocks-dialogue--transcript"
     ],
     "preview": "blocks-dialogue--default",
     "previewDark": null,

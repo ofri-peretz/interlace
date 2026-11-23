@@ -2584,16 +2584,25 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "DialogueTone",
+          "values": [
+            "muted",
+            "accent",
+            "inverse"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [],
         "motion": {
-          "driver": "none",
+          "driver": "css",
           "declaresPreference": false,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT"
