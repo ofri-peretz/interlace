@@ -435,6 +435,17 @@
           "source": ".changeset/reading-layout.md"
         },
         {
+          "summary": "New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.",
+          "components": [
+            "reveal"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/reveal.md"
+        },
+        {
           "summary": "ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says \"there is more\" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade=\"none\"` for hard edges.",
           "components": [
             "scroll-area"

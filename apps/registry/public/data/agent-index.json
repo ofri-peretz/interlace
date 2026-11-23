@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 164
+    "itemCount": 165
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 71,
       "pattern": 44,
-      "effect": 17,
+      "effect": 18,
       "template": 13,
       "chart": 8,
       "util": 5,
@@ -44,9 +44,9 @@
       "blog": 35,
       "foundation": 25,
       "data": 22,
+      "effect": 18,
       "form": 17,
-      "effect": 17,
-      "decorative": 15,
+      "decorative": 16,
       "feedback": 14,
       "template": 13,
       "navigation": 11,
@@ -60,21 +60,21 @@
     },
     "rendering": {
       "server": 98,
-      "client": 66
+      "client": 67
     },
     "keyboard": {
-      "none": 127,
+      "none": 128,
       "handled": 37
     },
     "loading": {
-      "none": 131,
+      "none": 132,
       "built-in": 33
     },
     "minViewport": {
       "320": 100,
       "480": 7,
       "768": 1,
-      "inherited": 56
+      "inherited": 57
     }
   },
   "items": [
@@ -5787,6 +5787,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/related-posts.json",
       "item": "https://ds.interlace.tools/r/related-posts.json",
       "docs": "https://ds.interlace.tools/c/related-posts"
+    },
+    {
+      "name": "reveal",
+      "title": "Reveal",
+      "type": "registry:ui",
+      "summary": "Any block that arrives as it scrolls into view: a section heading, a card, a figure, a quote. It fades in and, depending on `effect`, rises a little, comes into focus or grows to size, once. Use it on the few things a reader should notice arriving, not on…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "Reveal"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/reveal.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reveal.json",
+      "item": "https://ds.interlace.tools/r/reveal.json",
+      "docs": "https://ds.interlace.tools/c/reveal"
     },
     {
       "name": "rotating-text",

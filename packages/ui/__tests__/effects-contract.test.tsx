@@ -30,6 +30,7 @@ const { FocusGrid } = await import('../src/patterns/focus-grid.js');
 const { CountUp } = await import('../src/effects/count-up.js');
 const { Scroller } = await import('../src/effects/scroller.js');
 const { StaggerList } = await import('../src/effects/stagger-list.js');
+const { Reveal } = await import('../src/effects/reveal.js');
 const { SheenText } = await import('../src/effects/sheen-text.js');
 const { Sheen } = await import('../src/effects/sheen.js');
 const { EdgeGlow } = await import('../src/effects/edge-glow.js');
@@ -380,6 +381,42 @@ describe('StaggerList', () => {
       </StaggerList>,
     );
     expect((container.querySelector('[data-slot="stagger-list-item"]') as HTMLElement).style.opacity).toBe('');
+  });
+});
+
+describe('Reveal', () => {
+  it('renders its content fully visible on the server', () => {
+    const html = renderToStaticMarkup(
+      <Reveal effect="blur">
+        <h2>Arrives</h2>
+      </Reveal>,
+    );
+    expect(html).toContain('data-slot="reveal"');
+    expect(html).toContain('data-effect="blur"');
+    expect(html).toContain('<h2>Arrives</h2>');
+    expect(html).not.toContain('opacity');
+  });
+
+  it('hides until it scrolls in, and shows at once when focus lands inside', () => {
+    const { container } = render(
+      <Reveal>
+        <a href="#x">Link</a>
+      </Reveal>,
+    );
+    const el = container.querySelector<HTMLElement>('[data-slot="reveal"]')!;
+    expect(el.style.opacity).toBe('0');
+    act(() => el.querySelector('a')!.focus());
+    expect(el.style.opacity).toBe('');
+    expect(el.dataset.revealed).toBe('true');
+    expect(animateSpy).toHaveBeenCalled();
+  });
+
+  it('is simply there under reduced motion', () => {
+    reduced.value = true;
+    const { container } = render(<Reveal>Still</Reveal>);
+    const el = container.querySelector<HTMLElement>('[data-slot="reveal"]')!;
+    expect(el.style.opacity).toBe('');
+    expect(animateSpy).not.toHaveBeenCalled();
   });
 });
 
