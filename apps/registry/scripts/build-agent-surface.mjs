@@ -28,6 +28,7 @@
  * Outputs
  * -------
  *   public/llms.txt                                  the llms.txt convention
+ *   public/llms-full.txt                             the craft skill, then llms.txt
  *   public/.well-known/agent-skills/index.json        skill manifest
  *   public/.well-known/agent-skills/<id>/SKILL.md     one file per skill
  *   public/data/agent-index.json                      full per-item contract
@@ -54,6 +55,17 @@ const R_DIR = path.join(REGISTRY_ROOT, 'public/r');
 const PUBLIC_DIR = path.join(REGISTRY_ROOT, 'public');
 
 const CHECK_ONLY = process.argv.includes('--check');
+
+/**
+ * The craft skill: how Interlace pieces are composed and branded. Unlike the
+ * three catalogue skills below it is WRITTEN, not generated, because taste is
+ * not derivable from source. It lives where this repo's own agents load it
+ * (`.claude/skills/`) and is published byte for byte, so contributors and
+ * consumers read one text. `agent-surface.test.ts` checks that every token it
+ * names is declared in `packages/ui/styles`.
+ */
+const CRAFT_ID = 'interlace-craft';
+const CRAFT_SOURCE = path.join(REPO_ROOT, '.claude/skills', CRAFT_ID, 'SKILL.md');
 
 /** Neither index payload is an item — same exclusion `src/lib/registry.ts` makes. */
 const INDEX_FILES = new Set(['index.json', 'registry.json']);
@@ -621,6 +633,22 @@ const buildLlmsTxt = (items, agentIndex) => {
   );
   out.push('');
 
+  out.push('## Craft: how to compose and brand it');
+  out.push('');
+  out.push(
+    `Before writing UI with these components, read [${HOMEPAGE}/.well-known/agent-skills/${CRAFT_ID}/SKILL.md](${HOMEPAGE}/.well-known/agent-skills/${CRAFT_ID}/SKILL.md): tokens and theming, the editorial look, layout and fluid rhythm, type, container-query responsiveness, the motion budget and which effect fits which intent, accessibility, and do/don't examples. [${HOMEPAGE}/llms-full.txt](${HOMEPAGE}/llms-full.txt) is that guide followed by this file, in one fetch.`,
+  );
+  out.push('');
+  out.push('To keep it in a repo for Claude Code and other agents that read `.claude/skills/`:');
+  out.push('');
+  out.push('```bash');
+  out.push(`mkdir -p .claude/skills/${CRAFT_ID}`);
+  out.push(
+    `curl -sfL ${HOMEPAGE}/.well-known/agent-skills/${CRAFT_ID}/SKILL.md -o .claude/skills/${CRAFT_ID}/SKILL.md`,
+  );
+  out.push('```');
+  out.push('');
+
   out.push('## Machine-readable index');
   out.push('');
   out.push(
@@ -1000,8 +1028,9 @@ source header. If the contract does not say it, do not claim it.
 `;
 };
 
-const buildSkills = (items, agentIndex) => {
+const buildSkills = (items, agentIndex, craft) => {
   const files = [
+    [CRAFT_ID, craft],
     ['discover-interlace-components', skillDiscover(items, agentIndex)],
     ['install-interlace-component', skillInstall(items, agentIndex)],
     ['read-interlace-contract', skillContract(items)],
@@ -1032,6 +1061,7 @@ const buildSkills = (items, agentIndex) => {
       'discover items by contract (rendering boundary, minViewport, keyboard, state union, loading state)',
       'read one item’s full contract, props and source before generating code',
       'install an item with the shadcn CLI, including its transitive registry dependencies',
+      'compose, brand and animate items in the Interlace craft: tokens, layout, type, motion, responsiveness, accessibility',
     ],
   };
   return { manifest, files };
@@ -1072,10 +1102,16 @@ const main = async () => {
   const termData = buildTerms(items);
   const agentIndex = buildAgentIndex(items);
   const searchIndex = buildSearchIndex(items, termData);
-  const { manifest, files } = buildSkills(items, agentIndex);
+  const craft = await readFile(CRAFT_SOURCE, 'utf8');
+  const { manifest, files } = buildSkills(items, agentIndex, craft);
+  const llmsTxt = buildLlmsTxt(items, agentIndex);
+  // llms-full.txt: the craft guide without its skill front matter, then the
+  // catalogue. One fetch gives an agent both how to build and what to build with.
+  const craftBody = craft.replace(/^---\n[\s\S]*?\n---\n+/, '');
 
   const artefacts = [
-    ['llms.txt', buildLlmsTxt(items, agentIndex)],
+    ['llms.txt', llmsTxt],
+    ['llms-full.txt', `${craftBody.trimEnd()}\n\n---\n\n${llmsTxt}`],
     ['data/agent-index.json', json(agentIndex)],
     ['data/search-index.json', json(searchIndex)],
     ['.well-known/agent-skills/index.json', json(manifest)],
@@ -1090,7 +1126,7 @@ const main = async () => {
 
   const label = CHECK_ONLY ? 'OK —' : 'build-agent-surface:';
   console.log(
-    `${label} ${items.length} items → llms.txt, agent-index.json, search-index.json (${termData.df.size} stems), ${files.length} skills` +
+    `${label} ${items.length} items → llms.txt, llms-full.txt, agent-index.json, search-index.json (${termData.df.size} stems), ${files.length} skills` +
       (CHECK_ONLY ? ' match on-disk.' : ` → ${path.relative(REPO_ROOT, PUBLIC_DIR)}`),
   );
 };
