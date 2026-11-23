@@ -101,21 +101,21 @@ const sectionHeaderVariants = cva("", {
   },
 });
 
-const sectionHeaderTitleVariants = cva(
-  "font-heading tracking-display font-bold text-balance",
-  {
-    variants: {
-      size: {
-        default: "text-section mb-4",
-        display: "text-display mb-5",
-      },
-    },
-    defaultVariants: {
-      size: "default",
+const sectionHeaderTitleVariants = cva("font-heading font-bold text-balance", {
+  variants: {
+    size: {
+      // text-section floors at 28px, under the 32px where tracking-display starts.
+      default: "text-section tracking-heading mb-4",
+      display: "text-display tracking-display mb-5",
     },
   },
-);
+  defaultVariants: {
+    size: "default",
+  },
+});
 
+// The tagline steps at md on purpose: body-sized text stays off the fluid
+// scale (see fluid-type-lock), only headings glide.
 const TAGLINE = {
   default: "text-base md:text-lg",
   display: "text-lg md:text-xl",

@@ -652,6 +652,24 @@
       }
     },
     {
+      "name": "featured-icon",
+      "type": "registry:ui",
+      "title": "Featured Icon",
+      "description": "An icon set in a tinted rounded square or circle, with a soft outer ring: the mark at the head of a feature card, a step, or a section. It gives a row of features one shared shape, so the icons read as a set rather than as loose glyphs of different weights.",
+      "categories": [
+        "data",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "focus-ring",
       "type": "registry:ui",
       "title": "Focus Ring",

@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 166
+    "itemCount": 167
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 71,
+      "primitive": 72,
       "pattern": 44,
       "effect": 19,
       "template": 13,
@@ -39,11 +39,11 @@
       "theme": 3
     },
     "category": {
-      "primitive": 71,
+      "primitive": 72,
       "pattern": 44,
       "blog": 35,
       "foundation": 25,
-      "data": 22,
+      "data": 23,
       "effect": 19,
       "form": 17,
       "decorative": 17,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 98,
+      "server": 99,
       "client": 68
     },
     "keyboard": {
-      "none": 129,
+      "none": 130,
       "handled": 37
     },
     "loading": {
-      "none": 133,
+      "none": 134,
       "built-in": 33
     },
     "minViewport": {
-      "320": 100,
+      "320": 101,
       "480": 7,
       "768": 1,
       "inherited": 58
@@ -3196,6 +3196,58 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/feature-grid.json",
       "item": "https://ds.interlace.tools/r/feature-grid.json",
       "docs": "https://ds.interlace.tools/c/feature-grid"
+    },
+    {
+      "name": "featured-icon",
+      "title": "Featured Icon",
+      "type": "registry:ui",
+      "summary": "An icon set in a tinted rounded square or circle, with a soft outer ring: the mark at the head of a feature card, a step, or a section. It gives a row of features one shared shape, so the icons read as a set rather than as loose glyphs of different weights.",
+      "topics": [],
+      "categories": [
+        "data",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/featured-icon.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/featured-icon.json",
+      "item": "https://ds.interlace.tools/r/featured-icon.json",
+      "docs": "https://ds.interlace.tools/c/featured-icon"
     },
     {
       "name": "figure",

@@ -417,6 +417,21 @@ describe("SectionHeader: structure (LAYOUT §1)", () => {
     expect(html).not.toContain("text-center");
   });
 
+  it('align="start" puts the eyebrow row at the start too, not centred', () => {
+    const html = render(
+      <SectionHeader title="t" eyebrow="label" align="start" />,
+    );
+    expect(html).toContain("justify-start");
+    expect(html).not.toContain("justify-center");
+  });
+
+  it("tracks a section title like a heading and a display title tighter", () => {
+    expect(render(<SectionHeader title="t" />)).toContain("tracking-heading");
+    expect(render(<SectionHeader title="t" size="display" />)).toContain(
+      "tracking-display",
+    );
+  });
+
   it('defaults to spacing="lg", a fraction of the comfortable section rhythm', () => {
     expect(render(<SectionHeader title="t" />)).toContain(
       "mb-[calc(var(--spacing-section-comfortable)*0.75)]",

@@ -160,6 +160,10 @@
       "types": "./dist/primitives/skeleton.d.ts",
       "default": "./dist/primitives/skeleton.js"
     },
+    "./featured-icon": {
+      "types": "./dist/primitives/featured-icon.d.ts",
+      "default": "./dist/primitives/featured-icon.js"
+    },
     "./grade-badge": {
       "types": "./dist/primitives/grade-badge.d.ts",
       "default": "./dist/primitives/grade-badge.js"
