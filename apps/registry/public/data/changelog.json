@@ -129,6 +129,60 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "New `Citation` pattern: an inline source marker for a sentence that makes a claim. A footnote number (or a dotted underline on the phrase itself) opens a popover listing every source behind the claim, with the publisher linked, the kind of source, and the quote as a blockquote. Several sources stack in one popover. Only `https:` URLs become links. Keyboard and touch work out of the box, Escape closes it, and the claim text is in the server HTML. An optional `status` shows \"Enough sources\" or a warning \"Short of sources\".",
+          "components": [
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/citation.md"
+        },
+        {
+          "summary": "New `ClaimCard` pattern: one claim, examined. A status row for badges, the claim quoted in serif, a short answer that can carry `Citation` markers, collapsible sections for the evidence (facts and sources, who says this, where it is contested, what it does not claim, what could not be verified, or any section you name), and a footer. Every part is a slot. Sections are native `<details>`, so the card renders on the server, opens without JavaScript, and its closed sections still show up in find-in-page.",
+          "components": [
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/claim-card.md"
+        },
+        {
+          "summary": "Four patterns for writing that shows its work, all server components:\n\n- `StanceList`: who holds which position, each with a toned badge and a sentence. The label is text; the page picks the tone.\n- `SideBySide`: two or three accounts next to each other (\"what you hear\" / \"what the record shows\"), stacking below `md`; each column is a labelled region.\n- `Dialogue`: a written conversation with named speakers on opposite edges.\n- `AudioPlayer`: a titled clip on the browser's own `<audio controls>`, with a transcript in a native `<details>`.",
+          "components": [
+            "stance-list",
+            "side-by-side",
+            "dialogue",
+            "audio-player"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/content-patterns.md"
+        },
+        {
+          "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
+          "components": [
+            "button",
+            "badge",
+            "typography",
+            "hero",
+            "hero-cosmic",
+            "interlace-base",
+            "interlace-foundation",
+            "theme"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/highlight-heading-tones.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"

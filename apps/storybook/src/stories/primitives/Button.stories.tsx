@@ -18,14 +18,14 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      options: ['default', 'highlight', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
       description:
         'Emphasis ladder. `destructive` is reserved for irreversible actions and should be paired with an `AlertDialog` confirm.',
       table: {
         category: 'Appearance',
         type: {
           summary:
-            "'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'",
+            "'default' | 'highlight' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'",
         },
         defaultValue: { summary: 'default' },
       },
@@ -111,6 +111,7 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
       <Button>Default</Button>
+      <Button variant="highlight">Highlight</Button>
       <Button variant="destructive">Destructive</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="secondary">Secondary</Button>

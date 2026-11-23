@@ -78,6 +78,8 @@
     --info-foreground: var(--interlace-info-foreground);
     --caution: var(--interlace-caution);
     --caution-foreground: var(--interlace-caution-foreground);
+    --highlight: var(--interlace-highlight);
+    --highlight-foreground: var(--interlace-highlight-foreground);
 
     --scrim: var(--interlace-scrim);
     --scrim-foreground: var(--interlace-scrim-foreground);
@@ -215,6 +217,8 @@
   --color-info-foreground: var(--info-foreground);
   --color-caution: var(--caution);
   --color-caution-foreground: var(--caution-foreground);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
 
   /* Scrim — generates bg-scrim/70, text-scrim-foreground,
    * border-scrim-foreground/30 so image-overlay surfaces stop reaching for

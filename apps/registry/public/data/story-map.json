@@ -171,6 +171,16 @@
     "previewDark": "primitives-aspectratio--dark",
     "skeleton": null
   },
+  "audio-player": {
+    "title": "Blocks/AudioPlayer",
+    "storyIds": [
+      "blocks-audioplayer--default",
+      "blocks-audioplayer--without-transcript"
+    ],
+    "preview": "blocks-audioplayer--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "auth-template": {
     "title": "Templates/AuthTemplate",
     "storyIds": [
@@ -403,6 +413,30 @@
     "preview": "primitives-checkbox--default",
     "previewDark": "primitives-checkbox--dark",
     "skeleton": "primitives-checkbox--loading"
+  },
+  "citation": {
+    "title": "Blocks/Citation",
+    "storyIds": [
+      "blocks-citation--default",
+      "blocks-citation--underline",
+      "blocks-citation--enough-sources",
+      "blocks-citation--short-of-sources",
+      "blocks-citation--non-https-link",
+      "blocks-citation--keyboard"
+    ],
+    "preview": "blocks-citation--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "claim-card": {
+    "title": "Blocks/ClaimCard",
+    "storyIds": [
+      "blocks-claimcard--default",
+      "blocks-claimcard--still-being-checked"
+    ],
+    "preview": "blocks-claimcard--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "cloud-particles": {
     "title": "Aceternity/CloudParticles",
@@ -688,6 +722,15 @@
     ],
     "preview": "primitives-dialog--default",
     "previewDark": "primitives-dialog--dark",
+    "skeleton": null
+  },
+  "dialogue": {
+    "title": "Blocks/Dialogue",
+    "storyIds": [
+      "blocks-dialogue--default"
+    ],
+    "preview": "blocks-dialogue--default",
+    "previewDark": null,
     "skeleton": null
   },
   "distribution": {
@@ -1681,6 +1724,16 @@
     "previewDark": null,
     "skeleton": null
   },
+  "side-by-side": {
+    "title": "Blocks/SideBySide",
+    "storyIds": [
+      "blocks-sidebyside--default",
+      "blocks-sidebyside--three-columns"
+    ],
+    "preview": "blocks-sidebyside--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "sign-in-form": {
     "title": "Blocks/SignInForm",
     "storyIds": [
@@ -1806,6 +1859,15 @@
     ],
     "preview": "primitives-stack--vertical",
     "previewDark": "primitives-stack--dark",
+    "skeleton": null
+  },
+  "stance-list": {
+    "title": "Blocks/StanceList",
+    "storyIds": [
+      "blocks-stancelist--default"
+    ],
+    "preview": "blocks-stancelist--default",
+    "previewDark": null,
     "skeleton": null
   },
   "stars-background": {

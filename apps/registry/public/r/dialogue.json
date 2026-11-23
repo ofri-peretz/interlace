@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialogue",
+  "type": "registry:ui",
+  "title": "Dialogue",
+  "description": "A written conversation: a script of turns, each with a speaker. Use it for a sample exchange (\"what to say when your child asks…\"), an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "blog",
+    "pattern"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/dialogue.tsx",
+      "target": "components/ui/patterns/dialogue.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/dialogue v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/dialogue\n// What changed since: https://ds.interlace.tools/c/dialogue#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — Dialogue\n *\n * A written conversation: a script of turns, each with a speaker. Use it for\n * a sample exchange (\"what to say when your child asks…\"), an interview\n * excerpt, or a worked example of a hard conversation. Turns from the two\n * sides sit on opposite edges so the back-and-forth reads at a glance, and\n * every turn names its speaker in text, so nothing depends on position or\n * colour.\n *\n * ## Anatomy\n *\n *   Dialogue                          (ol — data-min-viewport=320)\n *     └─ DialogueTurn × n             (li — data-side=start|end)\n *         ├─ speaker                  (p — small, muted, bold)\n *         └─ children                 (div — the bubble)\n *\n * ## MIN_VIEWPORT — 320\n *\n * Bubbles cap at 85% of the column, so both sides still read at 320px.\n *\n * | Rule | Concept                          | Where in this file                                          |\n * | ---- | -------------------------------- | ----------------------------------------------------------- |\n * | R4   | Extends native el                | `ol` / `li` props                                           |\n * | R6   | data-slot per part               | dialogue / dialogue-turn                                    |\n * | R7   | cn + ...rest                     | `cn(…, className)` + `{...props}`                           |\n * | R8   | Enums, not booleans              | `side`                                                      |\n * | R14  | Declares min viewport            | `data-min-viewport` on the root + exported const            |\n * | R19  | Tokens only                      | `bg-muted`, `bg-accent`, `text-muted-foreground`            |\n * | R25  | Server component                 | No hooks → no `'use client'`                                |\n * | R26  | A11y from native el              | An ordered list of turns; the speaker is text               |\n */\n\nimport { cn } from '@/lib/utils';\n\nexport const MIN_VIEWPORT = 320 as const;\n\nfunction Dialogue({ className, ...props }: React.ComponentProps<'ol'>) {\n  return (\n    <ol\n      data-slot=\"dialogue\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('flex flex-col gap-4', className)}\n      {...props}\n    />\n  );\n}\n\ntype DialogueTurnProps = React.ComponentProps<'li'> & {\n  /** Who is speaking. Always shown. */\n  speaker: React.ReactNode;\n  /** Which edge the turn sits on. Keep one speaker per side. @default 'start' */\n  side?: 'start' | 'end';\n};\n\nfunction DialogueTurn({ speaker, side = 'start', className, children, ...props }: DialogueTurnProps) {\n  const end = side === 'end';\n  return (\n    <li\n      data-slot=\"dialogue-turn\"\n      data-side={side}\n      className={cn('flex max-w-[85%] flex-col gap-1', end ? 'items-end self-end' : 'items-start', className)}\n      {...props}\n    >\n      <p className=\"text-muted-foreground text-xs font-semibold\">{speaker}</p>\n      <div\n        className={cn(\n          'rounded-2xl px-4 py-3 text-base leading-relaxed',\n          end ? 'bg-accent text-accent-foreground rounded-se-sm' : 'bg-muted text-foreground rounded-ss-sm',\n        )}\n      >\n        {children}\n      </div>\n    </li>\n  );\n}\n\nconst DialogueWithDot = Object.assign(Dialogue, { Turn: DialogueTurn });\n\nexport { DialogueWithDot as Dialogue, DialogueTurn };\nexport type { DialogueTurnProps };\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": false,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/dialogue\n\nInstalled to `components/ui/patterns/dialogue.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/dialogue';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/dialogue\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

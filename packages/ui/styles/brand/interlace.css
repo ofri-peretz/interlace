@@ -151,6 +151,14 @@
     --interlace-caution: #7c2d12;
     --interlace-caution-foreground: #ffffff;
 
+    /* Highlight — a warm call-to-action surface that is NOT the brand
+     * primary: the "read this one" chip, the featured card, the second
+     * button on a hero. A highlighter-pen amber (amber-300) so it stays
+     * separable from the burnt-orange primary and the orange-900 caution
+     * rung. Text sits dark on it: #1c1917 on #fcd34d ≈ 12.1:1 (AAA). */
+    --interlace-highlight: #fcd34d;
+    --interlace-highlight-foreground: #1c1917;
+
     /* Scrim — the dark wash laid over an arbitrary image so text on top
      * stays legible (featured article covers, media overlays). Like the
      * hero surface these do NOT invert: the scrim's whole job is to be
@@ -329,6 +337,11 @@
      * both directions like every other status token here. */
     --interlace-caution: #fdba74;
     --interlace-caution-foreground: #0a0a0a;
+
+    /* Highlight (amber-400 — brighter than light mode so the chip still
+     * reads as lit on near-black; #0a0a0a on #fbbf24 ≈ 11.9:1, AAA). */
+    --interlace-highlight: #fbbf24;
+    --interlace-highlight-foreground: #0a0a0a;
 
     /* ── Scheme-invariant tokens, restated ──────────────────────────
      * The nine tokens below plus the three radii hold the SAME value in

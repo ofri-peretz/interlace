@@ -300,7 +300,7 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
             <h1
               data-slot="hero-cosmic-headline"
               data-testid={`${testId}-headline`}
-              className="mb-4 text-4xl font-extrabold tracking-tight xs:text-5xl md:text-6xl lg:text-7xl"
+              className="mb-4 font-heading text-4xl font-extrabold tracking-tight xs:text-5xl md:text-6xl lg:text-7xl"
             >
               {headline}
             </h1>

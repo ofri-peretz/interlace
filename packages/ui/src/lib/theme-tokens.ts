@@ -73,6 +73,8 @@ export const THEME_TOKENS = [
   'info-foreground',
   'caution',
   'caution-foreground',
+  'highlight',
+  'highlight-foreground',
   'scrim',
   'scrim-foreground',
   'hero-star',

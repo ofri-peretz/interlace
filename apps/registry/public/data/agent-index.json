@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 148
+    "itemCount": 154
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 67,
-      "pattern": 32,
+      "pattern": 38,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 67,
-      "pattern": 32,
-      "blog": 24,
+      "pattern": 38,
+      "blog": 30,
       "foundation": 22,
       "decorative": 21,
       "data": 21,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 83,
-      "client": 65
+      "server": 88,
+      "client": 66
     },
     "keyboard": {
-      "none": 113,
+      "none": 119,
       "handled": 35
     },
     "loading": {
-      "none": 116,
+      "none": 122,
       "built-in": 32
     },
     "minViewport": {
-      "320": 82,
+      "320": 88,
       "480": 7,
       "768": 1,
       "inherited": 58
@@ -110,7 +110,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -312,7 +312,7 @@
       "exports": [
         "AnimatedGradientText"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -417,7 +417,7 @@
         "AnimatedList",
         "AnimatedListItem"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react",
@@ -478,7 +478,7 @@
         "ArticleCard",
         "FeaturedArticleCard"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -661,6 +661,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/aspect-ratio.json",
       "item": "https://ds.interlace.tools/r/aspect-ratio.json",
       "docs": "https://ds.interlace.tools/c/aspect-ratio"
+    },
+    {
+      "name": "audio-player",
+      "title": "Audio Player",
+      "type": "registry:ui",
+      "summary": "A titled audio clip with its transcript. The player is the browser's own `<audio controls>`: it is keyboard- and screen-reader-operable on every platform, honours the OS media keys, and needs no JavaScript from us. What this pattern adds is the frame…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/audio-player.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/audio-player.json",
+      "item": "https://ds.interlace.tools/r/audio-player.json",
+      "docs": "https://ds.interlace.tools/c/audio-player"
     },
     {
       "name": "auth-template",
@@ -926,7 +976,7 @@
       "exports": [
         "BackgroundBeamsWithCollision"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -979,7 +1029,7 @@
       "exports": [
         "BackgroundGradientAnimation"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1030,7 +1080,7 @@
       "exports": [
         "BackgroundLines"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -1194,7 +1244,7 @@
       "exports": [
         "BorderBeam"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1290,7 +1340,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1396,7 +1446,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -1445,7 +1495,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1622,6 +1672,120 @@
       "docs": "https://ds.interlace.tools/c/checkbox"
     },
     {
+      "name": "citation",
+      "title": "Citation",
+      "type": "registry:ui",
+      "summary": "An inline source marker for a sentence that makes a claim. The reader taps or tabs to the marker and a popover lists every source behind the claim: who published it, what kind of source it is, and the exact words quoted from it. Several sources stack in…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CitationStatus",
+          "values": [
+            "enough",
+            "short"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "button"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "badge",
+        "cn",
+        "interlace-base",
+        "popover"
+      ],
+      "installsTo": [
+        "components/ui/patterns/citation.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/citation.json",
+      "item": "https://ds.interlace.tools/r/citation.json",
+      "docs": "https://ds.interlace.tools/c/citation"
+    },
+    {
+      "name": "claim-card",
+      "title": "Claim Card",
+      "type": "registry:ui",
+      "summary": "One claim, examined. The card quotes a claim as a reader heard it, gives a short answer, and keeps the evidence one click away in collapsible sections: the facts and their sources, who makes the claim, where the record is contested, what the answer does…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/claim-card.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json",
+      "item": "https://ds.interlace.tools/r/claim-card.json",
+      "docs": "https://ds.interlace.tools/c/claim-card"
+    },
+    {
       "name": "cloud-particles",
       "title": "Cloud Particles",
       "type": "registry:ui",
@@ -1655,7 +1819,7 @@
       "exports": [
         "CloudParticles"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1722,7 +1886,7 @@
       "exports": [
         "DS_FONT_SIZES"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "clsx",
@@ -1922,7 +2086,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -1978,7 +2142,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2035,7 +2199,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2085,7 +2249,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2648,6 +2812,54 @@
       "docs": "https://ds.interlace.tools/c/dialog"
     },
     {
+      "name": "dialogue",
+      "title": "Dialogue",
+      "type": "registry:ui",
+      "summary": "A written conversation: a script of turns, each with a speaker. Use it for a sample exchange (\"what to say when your child asks…\"), an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/dialogue.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dialogue.json",
+      "item": "https://ds.interlace.tools/r/dialogue.json",
+      "docs": "https://ds.interlace.tools/c/dialogue"
+    },
+    {
       "name": "distribution",
       "title": "Distribution",
       "type": "registry:ui",
@@ -3195,7 +3407,7 @@
       "exports": [
         "FlipWords"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -3307,7 +3519,7 @@
         "FocusRing",
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3468,7 +3680,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -3520,7 +3732,7 @@
       "exports": [
         "GridPattern"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -3620,7 +3832,7 @@
         "HeroCosmic",
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3827,7 +4039,7 @@
       "exports": [
         "InteractiveGridPattern"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3874,7 +4086,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": null,
       "npmDependencies": [
         "tw-animate-css"
@@ -3928,7 +4140,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -4084,7 +4296,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4203,7 +4415,7 @@
       "exports": [
         "Marquee"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -4252,7 +4464,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4776,7 +4988,7 @@
       "exports": [
         "NumberTicker"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5207,7 +5419,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.1",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -6381,7 +6593,7 @@
       "exports": [
         "ShimmerButton"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6394,6 +6606,68 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/shimmer-button.json",
       "item": "https://ds.interlace.tools/r/shimmer-button.json",
       "docs": "https://ds.interlace.tools/c/shimmer-button"
+    },
+    {
+      "name": "side-by-side",
+      "title": "Side By Side",
+      "type": "registry:ui",
+      "summary": "Two (or three) accounts of the same thing, set next to each other so the reader compares them line by line: what is said and what the record shows, before and after, one source and another. Columns stack on narrow screens, in source order, so the…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "SideBySideTone",
+          "values": [
+            "neutral",
+            "success",
+            "warning",
+            "info",
+            "destructive",
+            "highlight"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/side-by-side.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/side-by-side.json",
+      "item": "https://ds.interlace.tools/r/side-by-side.json",
+      "docs": "https://ds.interlace.tools/c/side-by-side"
     },
     {
       "name": "sign-in-form",
@@ -6851,7 +7125,7 @@
       "exports": [
         "Spotlight"
       ],
-      "version": "1.2.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "motion"
@@ -6918,6 +7192,67 @@
       "docs": "https://ds.interlace.tools/c/stack"
     },
     {
+      "name": "stance-list",
+      "title": "Stance List",
+      "type": "registry:ui",
+      "summary": "Who holds which position on a question. Each row names a holder (a person, a group, a school of thought), labels their position with a toned badge, and says it in a sentence or two, optionally with a source.",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "StanceTone",
+          "values": [
+            "neutral",
+            "success",
+            "warning",
+            "info",
+            "destructive",
+            "highlight"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "badge",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/stance-list.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/stance-list.json",
+      "item": "https://ds.interlace.tools/r/stance-list.json",
+      "docs": "https://ds.interlace.tools/c/stance-list"
+    },
+    {
       "name": "stars-background",
       "title": "Stars Background",
       "type": "registry:ui",
@@ -6955,7 +7290,7 @@
         "ShootingStars",
         "StarsBackground"
       ],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7005,7 +7340,7 @@
         "MIN_VIEWPORT",
         "StatCard"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -7263,7 +7598,7 @@
       "exports": [
         "SunnyBackground"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7582,7 +7917,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -7763,6 +8098,8 @@
             "info-foreground",
             "caution",
             "caution-foreground",
+            "highlight",
+            "highlight-foreground",
             "scrim",
             "scrim-foreground",
             "hero-star",
@@ -7820,7 +8157,7 @@
         "THEMES",
         "THEME_TOKENS"
       ],
-      "version": "2.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -8324,7 +8661,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -8372,7 +8709,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],

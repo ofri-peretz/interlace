@@ -162,6 +162,11 @@
     --interlace-caution: #7c2d12;
     --interlace-caution-foreground: #ffffff; /* 9.37:1 on caution */
 
+    /* Highlight — amber-300, shared with Interlace: a warm call-to-action
+     * that stands apart from Harbor's blue primary. */
+    --interlace-highlight: #fcd34d;
+    --interlace-highlight-foreground: #1c1917; /* 12.1:1 on highlight */
+
     /* Scrim — sits on a consumer-supplied photo, so it does not invert and
      * it does not take the theme's temperature either. Always used with an
      * alpha modifier (`bg-scrim/70`). */
@@ -313,6 +318,10 @@
     /* Caution — orange-300, the dark rung between warning and destructive. */
     --interlace-caution: #fdba74;            /* 11.24:1 on background (AAA) */
     --interlace-caution-foreground: #06111f;
+
+    /* Highlight — amber-400, the dark twin. */
+    --interlace-highlight: #fbbf24;
+    --interlace-highlight-foreground: #06111f; /* 11.4:1 on highlight */
 
     /* ── Scheme-invariant tokens, restated ──────────────────────────
      * Same values as the light block by design (a scrim is dark because it
