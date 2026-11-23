@@ -288,6 +288,17 @@
           "source": ".changeset/light-subtree.md"
         },
         {
+          "summary": "New `List` primitive with markers that carry the voice of the page: `bullet`, `number` (a real `ol`, numbered by the browser in a filled circle), `check` and `cross`. Markers are drawn in CSS, so they centre on the first line whatever the item holds (rich text, inline `Citation` chips) and are never read aloud; `start` and `reversed` work as on any ordered list. `density` sets the space between items.",
+          "components": [
+            "list"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/list-markers.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"

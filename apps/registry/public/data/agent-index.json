@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 155
+    "itemCount": 156
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 67,
+      "primitive": 68,
       "pattern": 39,
       "effect": 17,
       "template": 13,
@@ -39,10 +39,10 @@
       "theme": 3
     },
     "category": {
-      "primitive": 67,
+      "primitive": 68,
       "pattern": 39,
       "blog": 31,
-      "foundation": 22,
+      "foundation": 23,
       "data": 22,
       "effect": 17,
       "form": 16,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 92,
+      "server": 93,
       "client": 63
     },
     "keyboard": {
-      "none": 120,
+      "none": 121,
       "handled": 35
     },
     "loading": {
-      "none": 123,
+      "none": 124,
       "built-in": 32
     },
     "minViewport": {
-      "320": 91,
+      "320": 92,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -4219,6 +4219,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json",
       "item": "https://ds.interlace.tools/r/lint-playground.json",
       "docs": "https://ds.interlace.tools/c/lint-playground"
+    },
+    {
+      "name": "list",
+      "title": "List",
+      "type": "registry:ui",
+      "summary": "A list whose markers carry the voice of the page: numbered claims, a row of checks, a \"what we're not saying\" list of crosses. The marker sits on the first line of each item, whatever the item holds: a sentence, rich text with inline `Citation` chips, a…",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ListMarker",
+          "values": [
+            "bullet",
+            "number",
+            "check",
+            "cross"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/list.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/list.json",
+      "item": "https://ds.interlace.tools/r/list.json",
+      "docs": "https://ds.interlace.tools/c/list"
     },
     {
       "name": "mdx-starter",

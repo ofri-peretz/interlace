@@ -760,6 +760,24 @@
       }
     },
     {
+      "name": "list",
+      "type": "registry:ui",
+      "title": "List",
+      "description": "A list whose markers carry the voice of the page: numbered claims, a row of checks, a \"what we're not saying\" list of crosses. The marker sits on the first line of each item, whatever the item holds: a sentence, rich text with inline `Citation` chips, a…",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "meter-scale",
       "type": "registry:ui",
       "title": "Meter Scale",

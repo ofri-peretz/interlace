@@ -1047,6 +1047,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "list": {
+    "title": "Primitives/List",
+    "storyIds": [
+      "primitives-list--default",
+      "primitives-list--numbered-claims",
+      "primitives-list--crosses",
+      "primitives-list--checks",
+      "primitives-list--sizes"
+    ],
+    "preview": "primitives-list--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "mdx-starter": {
     "title": "Starters/MDX Starter",
     "storyIds": [
