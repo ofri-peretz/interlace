@@ -325,7 +325,7 @@ function TokenRow({
           */}
           <div
             aria-hidden
-            className={`size-20 rounded-md border border-border ${token.bgClass}`}
+            className={`size-20 rounded-lg border border-border ${token.bgClass}`}
           />
         </GridItem>
 

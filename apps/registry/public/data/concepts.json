@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T21:35:58.927Z",
+  "generatedAt": "2026-11-23T01:20:47.904Z",
   "source": "apps/storybook/src/stories/concepts",
   "pages": [
     {
@@ -357,7 +357,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The document-level ring is declared once, in `preflight.css`:"
+          "text": "The document-level ring is declared once, in `page/preflight.css`:"
         },
         {
           "type": "code",
@@ -628,7 +628,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/src/charts/{series-table,time-series,network-graph,delta}.tsx` · `packages/ui/src/primitives/{skip-link,visually-hidden,focus-ring}.tsx` · `packages/ui/styles/preflight.css` · `packages/ui/vitest.config.ts` · `apps/storybook/.storybook/test-runner.ts` · `docs/philosophies/{A11Y,KEYBOARD,VISUALIZATION}_PHILOSOPHY.md`"
+          "text": "**Sources.** `packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/src/charts/{series-table,time-series,network-graph,delta}.tsx` · `packages/ui/src/primitives/{skip-link,visually-hidden,focus-ring}.tsx` · `packages/ui/styles/page/preflight.css` · `packages/ui/vitest.config.ts` · `apps/storybook/.storybook/test-runner.ts` · `docs/philosophies/{A11Y,KEYBOARD,VISUALIZATION}_PHILOSOPHY.md`"
         }
       ],
       "headings": [
@@ -700,7 +700,7 @@
         {
           "type": "code",
           "lang": null,
-          "code": "  layer 1   --interlace-primary: #7d350c        ← the only hex literals\n     │\n     │      interlace-theme.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      interlace-theme.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
+          "code": "  layer 1   --interlace-primary: #7d350c        ← the only hex literals\n     │\n     │      brand/interlace.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      brand/interlace.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
         },
         {
           "type": "paragraph",
@@ -716,12 +716,12 @@
         },
         {
           "type": "paragraph",
-          "text": "The full stylesheet layer order, from `styles/index.css`:"
+          "text": "The stylesheet tree, from `styles/base.css` and `styles/index.css`:"
         },
         {
           "type": "code",
           "lang": "css",
-          "code": "@layer interlace.primitives, interlace.foundation, interlace.preflight,\n       interlace.bridge, interlace.brand, interlace.semantics;"
+          "code": "@layer interlace.bridge, interlace.brand, interlace.semantics;"
         },
         {
           "type": "table",
@@ -732,34 +732,29 @@
           ],
           "rows": [
             [
-              "`interlace.primitives`",
-              "`tokens.css`",
-              "keyframes, animation utilities"
+              "`interlace.brand`",
+              "`brand/interlace.css`, `brand/harbor.css`",
+              "the `--interlace-*` literals. **The supported override surface**"
             ],
             [
-              "`interlace.foundation`",
-              "`foundation.css`",
-              "type / spacing / radius / container / breakpoint scales"
+              "`interlace.semantics`",
+              "`semantics.css`",
+              "`--background`, `--primary`, `--ring`, … bound to the brand layer"
             ],
             [
-              "`interlace.preflight`",
-              "`preflight.css`",
+              "`@theme` / `components`",
+              "`structure/*.css`",
+              "type, layout, radius and motion scales; same for every brand"
+            ],
+            [
+              "`base`",
+              "`page/preflight.css` (opt-in)",
               "body paint, `::selection`, the focus ring, scrollbar tint"
             ],
             [
               "`interlace.bridge`",
-              "`theme.css`",
+              "`page/fumadocs.css` (opt-in)",
               "the fumadocs ↔ shadcn seam"
-            ],
-            [
-              "`interlace.brand`",
-              "`interlace-theme.css`",
-              "the `--interlace-*` hex literals. **The supported override surface**"
-            ],
-            [
-              "`interlace.semantics`",
-              "`interlace-theme.css`",
-              "`--background`, `--primary`, `--ring`, … bound to the brand layer"
             ]
           ]
         },
@@ -907,7 +902,7 @@
         },
         {
           "type": "paragraph",
-          "text": "What you should not override: `interlace.preflight` (the focus ring, the body paint), `interlace.bridge` (the fumadocs seam), `interlace.foundation` (the scales). Those are the parts that are the same across brands by design."
+          "text": "What you should not override: `page/preflight.css` (the focus ring, the body paint), `interlace.bridge` (the fumadocs seam), `structure/` (the scales). Those are the parts that are the same across brands by design."
         },
         {
           "type": "rule"
@@ -1060,7 +1055,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/styles/index.css` · `packages/ui/styles/interlace-theme.css` · `packages/ui/styles/themes/harbor.css` · `packages/ui/src/lib/{use-theme,theme-script,theme-tokens}.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/__tests__/composite-contrast-lock.test.ts` · `packages/ui/__tests__/use-theme.test.tsx`"
+          "text": "**Sources.** `packages/ui/styles/index.css` · `packages/ui/styles/brand/interlace.css` · `packages/ui/styles/brand/harbor.css` · `packages/ui/src/lib/{use-theme,theme-script,theme-tokens}.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/__tests__/composite-contrast-lock.test.ts` · `packages/ui/__tests__/use-theme.test.tsx`"
         }
       ],
       "headings": [
@@ -1113,20 +1108,58 @@
         },
         {
           "type": "paragraph",
-          "text": "Six tokens, declared once in `packages/ui/styles/foundation.css`:"
+          "text": "Six steps, and they are steps on Tailwind's own numeric scale, so they follow the `--spacing` CSS variable like every other Tailwind utility:"
         },
         {
-          "type": "code",
-          "lang": "css",
-          "code": "--spacing-xs:  0.5rem;  /*  8px — inline chip / badge padding */\n--spacing-sm:  1rem;    /* 16px — card padding, mobile page padding */\n--spacing-md:  1.5rem;  /* 24px — card-grid gaps */\n--spacing-lg:  2.5rem;  /* 40px — mobile section vertical padding */\n--spacing-xl:  4rem;    /* 64px — desktop section vertical padding */\n--spacing-2xl: 6rem;    /* 96px — hero / final-CTA breathing room */"
+          "type": "table",
+          "head": [
+            "Step",
+            "Utility",
+            "px",
+            "Intent"
+          ],
+          "rows": [
+            [
+              "xs",
+              "`p-2` / `gap-2`",
+              "8",
+              "inline chip / badge padding"
+            ],
+            [
+              "sm",
+              "`p-4` / `gap-4`",
+              "16",
+              "card padding, mobile page padding"
+            ],
+            [
+              "md",
+              "`p-6` / `gap-6`",
+              "24",
+              "card-grid gaps"
+            ],
+            [
+              "lg",
+              "`p-10` / `gap-10`",
+              "40",
+              "mobile section vertical padding"
+            ],
+            [
+              "xl",
+              "`p-16` / `gap-16`",
+              "64",
+              "desktop section vertical padding"
+            ],
+            [
+              "2xl",
+              "`p-24` / `gap-24`",
+              "96",
+              "hero / final-CTA breathing room"
+            ]
+          ]
         },
         {
           "type": "paragraph",
-          "text": "These generate `p-xs`, `gap-md`, `py-xl` and friends. They are **additive** — Tailwind's numeric scale (`p-4`, `gap-6`) still works and is not the contract. When a DS component needs spacing it uses the named token, so that \"the gap between cards\" is one decision made once rather than 30 call sites that happen to agree."
-        },
-        {
-          "type": "paragraph",
-          "text": "Note that each token carries its *intent* in the comment, not just its value. `--spacing-lg` is not \"40px\"; it is \"mobile section vertical padding\". When someone asks whether to use `lg` or `xl` for a new section, the comment answers it."
+          "text": "The step *names* survive where they help: the layout primitives take `gap=\"md\"` and `padding=\"sm\"`, and map them onto the table above. The utility in the emitted class is always numeric, so the code you install reads like any other shadcn component."
         },
         {
           "type": "demo",
@@ -1134,7 +1167,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Radius follows the same discipline — three steps, `8 / 12 / 16px`, and they deliberately override Tailwind's defaults (`2 / 6 / 8px`) so `rounded-md` means one thing in every consumer of the system."
+          "text": "Radius is one CSS variable. `rounded-sm`, `-md`, `-lg` and `-xl` derive from `--radius` exactly as shadcn derives them (`− 4px`, `− 2px`, `±0`, `+ 4px`). Interlace sets `--radius: 0.75rem`, which gives the 8 / 12 / 16px rungs as `rounded-sm`, `rounded-lg` and `rounded-xl`. Change `--radius` and every component follows."
         },
         {
           "type": "rule"
@@ -1142,55 +1175,16 @@
         {
           "type": "heading",
           "depth": 2,
-          "text": "The named-scale trap",
-          "id": "the-named-scale-trap"
+          "text": "Why the named scale went away",
+          "id": "why-the-named-scale-went-away"
         },
         {
           "type": "paragraph",
-          "text": "This is the most useful thing on this page, and it is not specific to us. It will happen to any Tailwind v4 design system that names its spacing steps."
+          "text": "Interlace 1.x declared `--spacing-xs … --spacing-2xl` to get `gap-md`. Tailwind v4 generates utilities from theme keys **by namespace**, and the spacing namespace also feeds `w-*`, `h-*`, `size-*` and `max-w-*`. So `--spacing-sm: 1rem` silently **redefined `max-w-sm` from 24rem (384px) to 1rem (16px)** — inside every app that installed a single Interlace component."
         },
         {
           "type": "paragraph",
-          "text": "Tailwind v4 generates utilities from theme keys **by namespace**, and the spacing namespace feeds far more than padding and gap. It also feeds `w-*`, `h-*`, `min-w-*`, `max-w-*`, `size-*`, `basis-*` and `inset-*`."
-        },
-        {
-          "type": "paragraph",
-          "text": "So declaring `--spacing-sm: 1rem` does not only create `p-sm`. It silently **redefines `max-w-sm` from Tailwind's 24rem (384px) to 1rem (16px)**."
-        },
-        {
-          "type": "code",
-          "lang": null,
-          "code": "max-w-sm   → 384px  before        →   16px  after\nmax-w-md   → 448px                →   24px\nmax-w-2xl  → 672px                →   96px"
-        },
-        {
-          "type": "paragraph",
-          "text": "Measured in a live browser against this system: `max-w-sm` computes to `16px`."
-        },
-        {
-          "type": "paragraph",
-          "text": "What shipped before this was understood: **96px hero paragraphs, 40px dialogs, and 16px sheets**, on the public registry site. The failure is brutal to diagnose because nothing is misspelled — devtools shows `max-width: var(--spacing-sm)` resolving correctly to a value you did not intend."
-        },
-        {
-          "type": "paragraph",
-          "text": "Two locks now hold the line:"
-        },
-        {
-          "type": "list",
-          "ordered": false,
-          "items": [
-            {
-              "depth": 0,
-              "text": "`container-scale-lock.test.ts` — no `max-w-*` / `min-w-*` with a named key (`xs`…`7xl`) anywhere in `packages/ui/src`, `apps/registry/src` or `apps/storybook/src`. `xs`…`2xl` are broken; `3xl`…`7xl` work but violate the four-width contract, so both are banned in the same rule."
-            },
-            {
-              "depth": 0,
-              "text": "`spacing-token-shadowing-lock.test.ts` — the same collision, scoped to `max-w` and derived from the *actual* spacing keys rather than a hard-coded list, so adding a seventh spacing token extends the ban automatically."
-            }
-          ]
-        },
-        {
-          "type": "paragraph",
-          "text": "The second lock's scope is itself a small lesson. An earlier, broader version flagged `min-h-2xl` on `Textarea` — which is intentional and correct — and a lock that cries wolf teaches the next reader to distrust it. It was narrowed to the utility family that is genuinely broken."
+          "text": "Interlace 2.0 uses the numeric scale instead. `spacing-token-shadowing-lock` keeps it that way: no t-shirt-named `--spacing-*` key in `structure/type.css`, and no named spacing utility in the DS source. `container-scale-lock` still bans named `max-w-*` widths in favour of the four container tokens."
         },
         {
           "type": "paragraph",
@@ -1248,11 +1242,11 @@
         {
           "type": "code",
           "lang": "ts",
-          "code": "cva('mx-auto w-full px-4 sm:px-6 lg:px-8', {\n  variants: {\n    size: {\n      prose:   'max-w-[65ch]',\n      content: 'max-w-[1024px]',   // default\n      wide:    'max-w-[1280px]',\n      full:    'max-w-none px-0 sm:px-0 lg:px-0',\n    },\n  },\n});"
+          "code": "cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {\n  variants: {\n    size: {\n      prose:   'max-w-[65ch]',\n      content: 'max-w-[1024px]',   // default\n      wide:    'max-w-[1280px]',\n      full:    'max-w-none px-0 xs:px-0 lg:px-0',\n    },\n  },\n});"
         },
         {
           "type": "paragraph",
-          "text": "The base string is the whole contract: centre (`mx-auto`), fill (`w-full`), and a **responsive gutter** of `px-4 sm:px-6 lg:px-8`. Gutters scale with the viewport because 16px of breathing room reads generous on a phone and cramped on a 1280px display."
+          "text": "The base string is the whole contract: centre (`mx-auto`), fill (`w-full`), and a **responsive gutter** of `px-4 xs:px-6 lg:px-8`. Gutters scale with the viewport because 16px of breathing room reads generous on a phone and cramped on a 1280px display."
         },
         {
           "type": "paragraph",
@@ -1317,7 +1311,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The lock asserts `gap=\"md\"` emits `gap-md` and **not** `gap-6` — even though those compute to the same 24px today. The token is the contract; the pixel value is an implementation detail that a theme is allowed to move."
+          "text": "The lock asserts `gap=\"md\"` emits `gap-6` and **not** `gap-md`. A theme moves the pixel value through the `--spacing` variable, never through a renamed key."
         },
         {
           "type": "paragraph",
@@ -1409,13 +1403,13 @@
           "rows": [
             [
               "1",
-              "`styles/tokens.css`, `styles/foundation.css`, `styles/interlace-theme.css` (brand half)",
-              "`interlace.primitives`, `interlace.foundation`, `interlace.brand`"
+              "`styles/brand/*.css`, `styles/semantics.css`, `styles/structure/*.css`",
+              "`interlace.brand`, `interlace.semantics`, `@theme`, `components`"
             ],
             [
               "2",
-              "`styles/theme.css`, `styles/interlace-theme.css` (semantic half)",
-              "`interlace.bridge`, `interlace.semantics`"
+              "`styles/page/*.css` (opt-in)",
+              "`base`, `interlace.bridge`"
             ],
             [
               "3",
@@ -1436,23 +1430,27 @@
         },
         {
           "type": "paragraph",
-          "text": "Declared order, in `styles/index.css`:"
+          "text": "Declared order, in `styles/base.css` and `styles/index.css`:"
         },
         {
           "type": "code",
           "lang": "css",
-          "code": "@layer interlace.primitives, interlace.foundation, interlace.preflight,\n       interlace.bridge, interlace.brand, interlace.semantics;"
+          "code": "@layer interlace.bridge, interlace.brand, interlace.semantics;"
         },
         {
           "type": "paragraph",
-          "text": "Order is load-bearing, and one detail is worth stealing outright: the fumadocs bridge (`theme.css`) is **wrapped in a layer on purpose**. Per the CSS cascade-layers spec, unlayered styles beat every layered style. An unlayered `:root { --background: … }` in the bridge would therefore trump the layered semantic bindings that are supposed to override it — the exact opposite of what \"a bridge\" means. Wrapping it puts it back under the system's control."
+          "text": "These three hold custom properties only. Every rule that styles an element sits in one of Tailwind's own layers (`base`, `components`), so a utility at the call site always beats it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Order is load-bearing, and one detail is worth stealing outright: the fumadocs bridge (`page/fumadocs.css`) is **wrapped in a layer on purpose**. Per the CSS cascade-layers spec, unlayered styles beat every layered style. An unlayered `:root { --background: … }` in the bridge would therefore trump the layered semantic bindings that are supposed to override it — the exact opposite of what \"a bridge\" means. Wrapping it puts it back under the system's control."
         },
         {
           "type": "rule"
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/styles/foundation.css` · `packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` · `packages/ui/src/primitives/{container,section,stack,grid}.tsx` · `packages/ui/__tests__/layout-primitives-lock.test.tsx` · `packages/ui/__tests__/container-scale-lock.test.ts` · `packages/ui/__tests__/spacing-token-shadowing-lock.test.ts`"
+          "text": "**Sources.** `packages/ui/styles/structure/type.css` · `packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` · `packages/ui/src/primitives/{container,section,stack,grid}.tsx` · `packages/ui/__tests__/layout-primitives-lock.test.tsx` · `packages/ui/__tests__/container-scale-lock.test.ts` · `packages/ui/__tests__/spacing-token-shadowing-lock.test.ts`"
         }
       ],
       "headings": [
@@ -1461,8 +1459,8 @@
           "text": "The spacing scale"
         },
         {
-          "id": "the-named-scale-trap",
-          "text": "The named-scale trap"
+          "id": "why-the-named-scale-went-away",
+          "text": "Why the named scale went away"
         },
         {
           "id": "the-four-primitives",
@@ -1660,7 +1658,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**CSS-driven animation** is disabled wholesale under the media query, in `tokens.css`:"
+          "text": "**CSS-driven animation** is disabled wholesale under the media query, in `structure/motion.css`:"
         },
         {
           "type": "code",
@@ -1765,7 +1763,7 @@
             },
             {
               "depth": 0,
-              "text": "**The documented \"max 200ms on entry\" budget is not met by three entry animations** in `theme.css`: `fade-in-up` and `slide-in-left` at 500ms and `scale-in` at 400ms, two of them with additional delays. The accordion, at 200ms, is on budget."
+              "text": "**The documented \"max 200ms on entry\" budget is not met by three entry animations** in `page/fumadocs.css`: `fade-in-up` and `slide-in-left` at 500ms and `scale-in` at 400ms, two of them with additional delays. The accordion, at 200ms, is on budget."
             },
             {
               "depth": 0,
@@ -1782,7 +1780,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/src/primitives/skeleton.tsx` · `packages/ui/src/primitives/skeleton-variants.ts` · `packages/ui/src/primitives/data-state.tsx` · `packages/ui/src/lib/use-reduced-motion.ts` · `packages/ui/styles/tokens.css` · `packages/ui/styles/theme.css` · `packages/ui/__tests__/skeleton-variant-coverage-lock.test.ts` · `packages/ui/__tests__/templates-section-boundary-lock.test.ts` · `packages/ui/__tests__/use-reduced-motion.test.tsx` · `docs/philosophies/{LOADING,MOTION}_PHILOSOPHY.md`"
+          "text": "**Sources.** `packages/ui/src/primitives/skeleton.tsx` · `packages/ui/src/primitives/skeleton-variants.ts` · `packages/ui/src/primitives/data-state.tsx` · `packages/ui/src/lib/use-reduced-motion.ts` · `packages/ui/styles/structure/motion.css` · `packages/ui/styles/page/fumadocs.css` · `packages/ui/__tests__/skeleton-variant-coverage-lock.test.ts` · `packages/ui/__tests__/templates-section-boundary-lock.test.ts` · `packages/ui/__tests__/use-reduced-motion.test.tsx` · `docs/philosophies/{LOADING,MOTION}_PHILOSOPHY.md`"
         }
       ],
       "headings": [
@@ -1834,7 +1832,7 @@
             },
             {
               "depth": 0,
-              "text": "**A locked breakpoint ladder** — four tiers, in `rem`, no `2xl`."
+              "text": "**An additive breakpoint ladder** — Tailwind's tiers plus `xs` at 480px, in `rem`."
             },
             {
               "depth": 0,
@@ -1866,7 +1864,7 @@
         {
           "type": "code",
           "lang": "tsx",
-          "code": "// Reads: one column everywhere, two from 480px, four from 1024px.\n<div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4\" />\n\n// Smell: the base class describes the desktop and the breakpoint retracts it.\n<div className=\"grid grid-cols-4 sm:grid-cols-1\" />"
+          "code": "// Reads: one column everywhere, two from 480px, four from 1024px.\n<div className=\"grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4\" />\n\n// Smell: the base class describes the desktop and the breakpoint retracts it.\n<div className=\"grid grid-cols-4 xs:grid-cols-1\" />"
         },
         {
           "type": "paragraph",
@@ -1884,12 +1882,12 @@
         },
         {
           "type": "paragraph",
-          "text": "Declared once, in `packages/ui/styles/foundation.css`:"
+          "text": "Tailwind's own ladder, untouched, plus one handheld tier that Interlace adds in `packages/ui/styles/structure/type.css`:"
         },
         {
           "type": "code",
           "lang": "css",
-          "code": "--breakpoint-sm: 30rem;   /*  480px — handheld */\n--breakpoint-md: 48rem;   /*  768px — tablet / large phone */\n--breakpoint-lg: 64rem;   /* 1024px — laptop */\n--breakpoint-xl: 80rem;   /* 1280px — desktop */"
+          "code": "--breakpoint-xs: 30rem;   /*  480px — handheld (added) */\n/* sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536 — Tailwind's, not redeclared */"
         },
         {
           "type": "paragraph",
@@ -1897,7 +1895,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Four tiers, not five.** Tailwind v4 ships `640 / 768 / 1024 / 1280 / 1536`. The `2xl` tier fires at ≥1536px, and 1280px is the widest section this system supports (`Container size=\"wide\"`). A `2xl:` variant would therefore have no meaning — every element inside it has already stopped growing. So the tier is removed, and `breakpoints-lock.test.ts` asserts `foundation.css` does **not** declare `--breakpoint-2xl`."
+          "text": "**Add, never replace.** Interlace 1.x replaced Tailwind's ladder (`sm` moved to 480px and `2xl` disappeared). Installed into an existing app, that changed every `sm:` the app already had and stopped every `2xl:` from compiling. A registry's CSS must not rewrite its host, so 2.0 only adds `xs`, a name Tailwind does not use."
         },
         {
           "type": "paragraph",
@@ -1905,7 +1903,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**480, not 640, as the first tier.** It lines up with the `MIN_VIEWPORT` ladder below: a component whose floor is 480 is exactly the `sm:` floor, and 768 is exactly `md:`. One number means one thing in both systems."
+          "text": "**480 as the first tier.** It lines up with the `MIN_VIEWPORT` ladder below: a component whose floor is 480 is exactly the `xs:` floor, and 768 is exactly `md:`. One number means one thing in both systems."
         },
         {
           "type": "table",
@@ -1940,7 +1938,7 @@
             ],
             [
               "**Interlace**",
-              "**480 / 768 / 1024 / 1280**"
+              "**480 + Tailwind's 640 / 768 / 1024 / 1280 / 1536**"
             ]
           ]
         },
@@ -1960,15 +1958,15 @@
           "items": [
             {
               "depth": 0,
-              "text": "each of the four tokens is declared with its exact `rem` value;"
+              "text": "`--breakpoint-xs` is declared as `30rem`;"
             },
             {
               "depth": 0,
-              "text": "`--breakpoint-2xl` is absent;"
+              "text": "none of Tailwind's own tiers (`sm` … `2xl`) is redeclared;"
             },
             {
               "depth": 0,
-              "text": "**no primitive, pattern or template source declares a raw `@media (min-width: …)` / `(max-width: …)` query** — the entire responsive surface goes through the four variants;"
+              "text": "**no primitive, pattern or template source declares a raw `@media (min-width: …)` / `(max-width: …)` query** — the entire responsive surface goes through the variants;"
             },
             {
               "depth": 0,
@@ -2019,7 +2017,7 @@
             [
               "`480`",
               "Below this, use a different surface",
-              "the `sm:` floor"
+              "the `xs:` floor"
             ],
             [
               "`768`",
@@ -2177,7 +2175,7 @@
         {
           "type": "code",
           "lang": "ts",
-          "code": "const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {\n  2: 'grid-cols-1 sm:grid-cols-2',\n  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',\n  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',\n};\n\n<Grid cols={cols} gap=\"md\" className={STAT_GRID_COLS[cols]}>"
+          "code": "const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {\n  2: 'grid-cols-1 xs:grid-cols-2',\n  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',\n  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',\n};\n\n<Grid cols={cols} gap=\"md\" className={STAT_GRID_COLS[cols]}>"
         },
         {
           "type": "paragraph",
@@ -2189,7 +2187,7 @@
           "items": [
             {
               "depth": 0,
-              "text": "**The map is written out statically** because Tailwind scans source text. A runtime-built `` `sm:grid-cols-${n}` `` produces a class that exists in the DOM and in no stylesheet — the most confusing possible failure, since devtools shows the class applied and no rule matching it."
+              "text": "**The map is written out statically** because Tailwind scans source text. A runtime-built `` `xs:grid-cols-${n}` `` produces a class that exists in the DOM and in no stylesheet — the most confusing possible failure, since devtools shows the class applied and no rule matching it."
             },
             {
               "depth": 0,
@@ -2289,7 +2287,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/BREAKPOINT_PHILOSOPHY.md` · `packages/ui/styles/foundation.css` · `packages/ui/styles/preflight.css` · `packages/ui/__tests__/breakpoints-lock.test.ts` · `packages/ui/__tests__/primitives-min-viewport-lock.test.tsx` · `packages/ui/src/primitives/grid.tsx` · `packages/ui/src/patterns/stat-group.tsx` · `packages/ui/src/primitives/pagination.tsx`"
+          "text": "**Sources.** `packages/ui/BREAKPOINT_PHILOSOPHY.md` · `packages/ui/styles/structure/type.css` · `packages/ui/styles/page/preflight.css` · `packages/ui/__tests__/breakpoints-lock.test.ts` · `packages/ui/__tests__/primitives-min-viewport-lock.test.tsx` · `packages/ui/src/primitives/grid.tsx` · `packages/ui/src/patterns/stat-group.tsx` · `packages/ui/src/primitives/pagination.tsx`"
         }
       ],
       "headings": [

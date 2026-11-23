@@ -10,7 +10,7 @@ const meta: Meta<typeof Container> = {
     docs: {
       description: {
         component:
-          'Centres a page section and caps its measure. Wrap every top-level section of a page in one so line length and gutters are decided in one place instead of at each call site — reaching for an ad-hoc `max-w-3xl` / `max-w-5xl` in app code is the thing this primitive exists to prevent (LAYOUT_PHILOSOPHY.md §2). It owns the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8`, so do not add your own gutters on top. It is not a grid or a stack — for column layout and spacing between children, compose `Grid` / `Stack` inside it.',
+          'Centres a page section and caps its measure. Wrap every top-level section of a page in one so line length and gutters are decided in one place instead of at each call site — reaching for an ad-hoc `max-w-3xl` / `max-w-5xl` in app code is the thing this primitive exists to prevent (LAYOUT_PHILOSOPHY.md §2). It owns the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8`, so do not add your own gutters on top. It is not a grid or a stack — for column layout and spacing between children, compose `Grid` / `Stack` inside it.',
       },
     },
   },
@@ -53,7 +53,7 @@ export default meta;
 type Story = StoryObj<typeof Container>;
 
 const Sample = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
+  <div className="rounded-lg border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
     {label} — children fit inside the configured max-width with responsive horizontal padding.
   </div>
 );

@@ -24,7 +24,7 @@
  *
  * JS-driven — an `IntersectionObserver` at `threshold: 0.1` arms it, then a
  * `requestAnimationFrame` loop runs it. Neither is reachable by the CSS
- * `prefers-reduced-motion` reset in `styles/preflight.css`, so the contract is
+ * `prefers-reduced-motion` reset in `styles/page/preflight.css`, so the contract is
  * enforced in JS: `useReducedMotion()` makes one effect write the final
  * formatted value straight to the node, and makes the animation effect return
  * before it ever constructs the observer. Under `reduce` the number is simply

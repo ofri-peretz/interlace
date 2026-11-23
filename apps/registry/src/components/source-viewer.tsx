@@ -41,7 +41,7 @@ export function SourceViewer({ source, githubUrl }: Props) {
   };
 
   return (
-    <div className="border-border bg-card mt-4 overflow-hidden rounded-lg border">
+    <div className="border-border bg-card mt-4 overflow-hidden rounded-xl border">
       <div className="border-border bg-background/60 flex items-center justify-between border-b px-4 py-2">
         <span className="text-muted-foreground font-mono text-xs">
           {total} lines · TypeScript

@@ -62,7 +62,7 @@ const STRICT_TAGS = [
   'ACT',
 ];
 
-// AAA-level rules. As of the AAA-bump commit (interlace-theme.css token
+// AAA-level rules. As of the AAA-bump commit (brand/interlace.css token
 // ladder), `color-contrast-enhanced` is INTENTIONALLY enforced — brand
 // tokens clear ≥7:1 in both modes. Leave this empty unless a real
 // physics-of-light constraint requires carving out a rule globally;
@@ -356,7 +356,7 @@ const config: TestRunnerConfig = {
       // never fail, because that position is an inline style Base UI writes at
       // runtime — it survives a CSS build that emitted nothing. So assert what
       // Tailwind actually owns here: an opaque surface (`bg-popover` /
-      // `bg-primary`) with `rounded-md`. Both vanish if the CSS is missing.
+      // `bg-primary`) with `rounded-lg`. Both vanish if the CSS is missing.
       for (const slot of ['popover-content', 'dropdown-menu-content', 'tooltip-content']) {
         const sel = `[data-slot="${slot}"][data-open], [data-slot="${slot}"][data-state="open"]`;
         for (const el of document.querySelectorAll<HTMLElement>(sel)) {
@@ -365,7 +365,7 @@ const config: TestRunnerConfig = {
             problems.push(`${slot} background-color alpha=0 (expected an opaque surface)`);
           }
           if (Number.parseFloat(cs.borderTopLeftRadius) === 0) {
-            problems.push(`${slot} border-radius=0 (expected rounded-md)`);
+            problems.push(`${slot} border-radius=0 (expected rounded-lg)`);
           }
         }
       }

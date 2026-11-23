@@ -31,22 +31,22 @@ const logo = (
   <a href="/" className="flex items-center gap-2 font-semibold">
     <span
       aria-hidden
-      className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-chart-2"
+      className="inline-block size-6 rounded-lg bg-linear-to-br from-primary to-chart-2"
     />
     <span>Interlace Docs</span>
   </a>
 );
 
 const sampleSidebar = (
-  <nav aria-label="Docs sections" className="p-md text-sm">
-    <h2 className="font-semibold mb-sm">Getting started</h2>
-    <ul className="flex flex-col gap-xs text-muted-foreground">
+  <nav aria-label="Docs sections" className="p-6 text-sm">
+    <h2 className="font-semibold mb-4">Getting started</h2>
+    <ul className="flex flex-col gap-2 text-muted-foreground">
       <li><a href="#intro" className="hover:text-foreground">Introduction</a></li>
       <li><a href="#install" className="hover:text-foreground">Installation</a></li>
       <li><a href="#first" className="hover:text-foreground">Your first page</a></li>
     </ul>
-    <h2 className="font-semibold mt-md mb-sm">Guides</h2>
-    <ul className="flex flex-col gap-xs text-muted-foreground">
+    <h2 className="font-semibold mt-6 mb-4">Guides</h2>
+    <ul className="flex flex-col gap-2 text-muted-foreground">
       <li><a href="#theme" className="hover:text-foreground">Theming</a></li>
       <li><a href="#a11y" className="hover:text-foreground">Accessibility</a></li>
     </ul>
@@ -55,8 +55,8 @@ const sampleSidebar = (
 
 const sampleToc = (
   <nav aria-label="Table of contents" className="text-sm">
-    <h2 className="font-semibold mb-sm">On this page</h2>
-    <ul className="flex flex-col gap-xs text-muted-foreground">
+    <h2 className="font-semibold mb-4">On this page</h2>
+    <ul className="flex flex-col gap-2 text-muted-foreground">
       <li><a href="#a" className="hover:text-foreground">Introduction</a></li>
       <li><a href="#b" className="hover:text-foreground">Why this matters</a></li>
       <li><a href="#c" className="hover:text-foreground">How it works</a></li>

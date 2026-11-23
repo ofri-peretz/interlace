@@ -62,7 +62,7 @@ One hue: the mark's burnt orange (oklch hue 41 — `#7d350c` light /
 never means adding hues; it means going deeper into this one.
 
 **The strand pair** (`--interlace-strand-a` / `--interlace-strand-b` in
-`packages/ui/styles/interlace-theme.css`):
+`packages/ui/styles/brand/interlace.css`):
 
 - `strand-a` — the mark's hue 41, the thread itself.
 - `strand-b` — the temperature complement, a cool steel blue (hue 230).
@@ -125,7 +125,7 @@ pure SVG/CSS — no WebGL) are themselves brand material.
   quality (R1–R26, locked tests, reduced-motion, SSR-honesty), then
   downloaded by apps. App-local authoring needs a written reason.
 - **Tokens only.** No raw color in component source; the strand pair
-  lives in `interlace-theme.css` and nowhere else.
+  lives in `brand/interlace.css` and nowhere else.
 - **Locks.** The weave's test asserts `stroke-strand-a`/`-b` and rejects
   `chart-2`; the map's test asserts `text-strand-a`. New brand elements
   add equivalent locks in the same PR.

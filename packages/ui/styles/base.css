@@ -1,0 +1,58 @@
+/*
+ * @interlace/ui — the additive baseline every component needs.
+ *
+ *   @import "tailwindcss";
+ *   @import "@interlace/ui/styles/base.css";
+ *
+ * This is what `interlace-base` installs, and every registry component
+ * depends on it, so it lands in an adopter's app with their FIRST component.
+ * It therefore adds and never replaces. `apps/registry/src/__tests__/
+ * host-style-safety.test.ts` compiles a stock shadcn globals.css with and
+ * without this file and holds that.
+ *
+ * ─── Four layers, each reading only the one before it ──────────────
+ *
+ *   1. brand/       raw `--interlace-*` values, one file per theme.
+ *   2. semantics    the names components read (shadcn's + Interlace's),
+ *                   bound to brand tokens, registered as Tailwind colours.
+ *   3. structure/   type, layout, radius, motion. Brand-invariant.
+ *   4. page/        opt-in page styling: fonts, preflight, fumadocs, shiki.
+ *                   NOT imported here; index.css adds it.
+ *
+ * `packages/ui/__tests__/css-layer-lock.test.ts` enforces the direction.
+ *
+ * ─── Cascade layers ────────────────────────────────────────────────
+ *
+ * Tailwind declares `theme, base, components, utilities` first. Interlace
+ * rules that style elements go INSIDE those layers (preflight in `base`,
+ * prose and animation classes in `components`), so any utility at the call
+ * site beats them. The three Interlace layers below rank above utilities,
+ * which is safe only because they declare nothing but custom properties on
+ * `:root`, `.dark`, `[data-scheme]` and `[data-theme]`:
+ *
+ *   interlace.bridge     fumadocs → shadcn aliases (page/fumadocs.css)
+ *   interlace.brand      raw brand values. THE override surface: declare
+ *                        `@layer interlace.brand { … }` after this import.
+ *   interlace.semantics  aliases from semantic names to brand values.
+ *
+ * A host app's unlayered `:root { --primary: … }` beats all three.
+ */
+
+@layer interlace.bridge, interlace.brand, interlace.semantics;
+
+/* 1. Brand. ORDER IS LOAD-BEARING: every theme file follows the default
+ * (brand/interlace.css). `[data-theme='X']` and `.dark` tie at (0,1,0), so
+ * theme X's light block must come after Interlace's dark block for
+ * `[data-theme='X'].dark` to sit on a coherent stack. Adding a theme = one
+ * file here + its row in THEMES (src/lib/theme-tokens.ts). */
+@import "./brand/interlace.css";
+@import "./brand/harbor.css";
+
+/* 2. Semantics. */
+@import "./semantics.css";
+
+/* 3. Structure. */
+@import "./structure/type.css";
+@import "./structure/layout.css";
+@import "./structure/radius.css";
+@import "./structure/motion.css";

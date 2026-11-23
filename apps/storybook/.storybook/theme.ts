@@ -2,7 +2,7 @@
  * Interlace-branded Storybook manager theme.
  *
  * Read in `manager.ts` via `addons.setConfig({ theme })`. Colors mirror
- * the dark-mode brand layer from `packages/ui/styles/interlace-theme.css`
+ * the dark-mode brand layer from `packages/ui/styles/brand/interlace.css`
  * — same single source of truth the docs site uses, so the storybook
  * chrome can't drift from the brand palette over time.
  *
@@ -16,7 +16,7 @@ import { create } from 'storybook/theming';
 const brandDark = '#fbb99a'; // light burnt orange, 11.79:1 on near-black
 const brandDarker = '#8a3a10'; // burnt orange, 7.80:1 on white
 
-// Surface tokens — mirror `.dark { --interlace-* }` from interlace-theme.css.
+// Surface tokens — mirror `.dark { --interlace-* }` from brand/interlace.css.
 const bg = '#0a0a0f';
 const contentBg = '#14131c';
 const border = '#1f1d2b';

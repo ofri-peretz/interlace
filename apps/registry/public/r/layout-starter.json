@@ -17,14 +17,14 @@
     "https://ds.interlace.tools/r/grid.json",
     "https://ds.interlace.tools/r/box.json",
     "https://ds.interlace.tools/r/typography.json",
-    "https://ds.interlace.tools/r/theme.json"
+    "https://ds.interlace.tools/r/interlace-base.json"
   ],
   "files": [
     {
       "path": "registry/interlace-ui/starters/layout-starter.md",
       "target": "components/ui/INTERLACE-LAYOUT-STARTER.md",
       "type": "registry:file",
-      "content": "# @interlace/layout-starter\n\nInstalled:\n\n- `Container` — 4 width tiers (prose / content / wide / full).\n- `Section` — vertical-rhythm slabs.\n- `Stack` + `Cluster` — six-step gap scale.\n- `Grid` — responsive grid primitive.\n- `Box` — token-aware surface (background + padding + radius + border).\n- `Typography` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- `theme` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
+      "content": "# @interlace/layout-starter\n\nInstalled:\n\n- `Container` — 4 width tiers (prose / content / wide / full).\n- `Section` — vertical-rhythm slabs.\n- `Stack` + `Cluster` — six-step gap scale.\n- `Grid` — responsive grid primitive.\n- `Box` — token-aware surface (background + padding + radius + border).\n- `Typography` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- `interlace-base` — the additive CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
     }
   ],
   "meta": {
@@ -32,8 +32,8 @@
     "client": false,
     "minViewport": null,
     "loading": false,
-    "version": "1.7.3",
+    "version": "2.0.0",
     "since": "1.0.0"
   },
-  "docs": "# @interlace/layout-starter\n\nInstalled:\n\n- `Container` — 4 width tiers (prose / content / wide / full).\n- `Section` — vertical-rhythm slabs.\n- `Stack` + `Cluster` — six-step gap scale.\n- `Grid` — responsive grid primitive.\n- `Box` — token-aware surface (background + padding + radius + border).\n- `Typography` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- `theme` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
+  "docs": "# @interlace/layout-starter\n\nInstalled:\n\n- `Container` — 4 width tiers (prose / content / wide / full).\n- `Section` — vertical-rhythm slabs.\n- `Stack` + `Cluster` — six-step gap scale.\n- `Grid` — responsive grid primitive.\n- `Box` — token-aware surface (background + padding + radius + border).\n- `Typography` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- `interlace-base` — the additive CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n"
 }

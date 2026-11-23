@@ -64,16 +64,16 @@ const gradeBadgeVariants = cva(
         good:      'bg-primary text-primary-foreground',
         fair:      'bg-warning text-warning-foreground',
         // `poor` is the rung between warning and destructive. It rides the
-        // `caution` semantic token (interlace-theme.css) rather than a raw
+        // `caution` semantic token (brand/interlace.css) rather than a raw
         // palette class — the DS now ships the intermediate orange the
         // five-tone ladder needs. 9.0:1 light / 10.9:1 dark.
         poor:      'bg-caution text-caution-foreground',
         fail:      'bg-destructive text-destructive-foreground',
       },
       size: {
-        sm: 'h-5 min-w-8 px-xs text-xs',
-        md: 'h-7 min-w-10 px-sm text-sm',
-        lg: 'h-12 min-w-16 px-md text-xl',
+        sm: 'h-5 min-w-8 px-2 text-xs',
+        md: 'h-7 min-w-10 px-4 text-sm',
+        lg: 'h-12 min-w-16 px-6 text-xl',
       },
     },
     defaultVariants: {

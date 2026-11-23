@@ -60,6 +60,9 @@ import { Tag, TagList } from '../src/primitives/tag.js';
 import { Typography } from '../src/primitives/typography.js';
 import { VisuallyHidden } from '../src/primitives/visually-hidden.js';
 
+/** LAYOUT §3's six steps on Tailwind's numeric scale (1 step = --spacing). */
+const SPACING_STEP = { xs: 2, sm: 4, md: 6, lg: 10, xl: 16, '2xl': 24 } as const;
+
 afterEach(cleanup);
 
 /** The DS marks every named part with `data-slot`; that is the query of record. */
@@ -268,16 +271,18 @@ describe('Box', () => {
   });
 
   it.each(['xs', 'sm', 'md', 'lg', 'xl'] as const)(
-    'maps padding=%s onto the spacing token, never a raw rem',
+    'maps padding=%s onto its LAYOUT §3 step on the numeric scale',
     (padding) => {
       const { container } = render(<Box padding={padding} />);
-      expect(slot(container, 'box')!.getAttribute('class')).toContain(`p-${padding}`);
+      expect(slot(container, 'box')!.getAttribute('class')).toContain(`p-${SPACING_STEP[padding]}`);
     },
   );
 
   it.each(['none', 'sm', 'md', 'lg'] as const)('maps radius=%s to its rung', (radius) => {
     const { container } = render(<Box radius={radius} />);
-    expect(slot(container, 'box')!.getAttribute('class')).toContain(`rounded-${radius}`);
+    // 8 / 12 / 16px rungs on the --radius-derived scale (sm / lg / xl at 0.75rem).
+    const rung = { none: 'none', sm: 'sm', md: 'lg', lg: 'xl' }[radius];
+    expect(slot(container, 'box')!.getAttribute('class')).toContain(`rounded-${rung}`);
   });
 
   it('draws a border only when asked', () => {
@@ -370,7 +375,7 @@ describe('Grid', () => {
     'maps gap=%s onto the spacing token',
     (gap) => {
       const { container } = render(<Grid gap={gap} />);
-      const expected = gap === 'none' ? 'gap-0' : `gap-${gap}`;
+      const expected = gap === 'none' ? 'gap-0' : `gap-${SPACING_STEP[gap]}`;
       expect(slot(container, 'grid')!.getAttribute('class')).toContain(expected);
     },
   );

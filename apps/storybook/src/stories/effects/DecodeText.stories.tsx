@@ -84,7 +84,7 @@ export const OnHover: Story = {
     trigger: 'hover',
   },
   render: (args) => (
-    <span className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-sm">
+    <span className="rounded-lg border border-border bg-muted px-2 py-1 font-mono text-sm">
       <DecodeText {...args} />
     </span>
   ),

@@ -8,7 +8,7 @@
  * uncontrolled state machine, ARIA wiring (`aria-controls`, `aria-expanded`,
  * `id`), keyboard semantics (Enter / Space on the trigger), and Base UI's
  * built-in panel sizing — for free. Reduced-motion is honoured globally via
- * `preflight.css` (every animation collapses to 0.01ms when
+ * `page/preflight.css` (every animation collapses to 0.01ms when
  * `prefers-reduced-motion: reduce`), so this file owns no motion timing.
  *
  * ## Anatomy
@@ -22,7 +22,7 @@
  * A disclosure is one of the smallest interactive surfaces a page can offer:
  * a single trigger + a single content region. It works down to the 320 CSS-px
  * iPhone SE viewport — the trigger inherits focus-visible / target-size
- * affordances from `preflight.css`, and the panel is width-constrained by its
+ * affordances from `page/preflight.css`, and the panel is width-constrained by its
  * parent, never the viewport. Below 320, preflight's dev-mode outline warns.
  *
  * | Rule | Concept                          | Where in this file                                                  |
@@ -77,7 +77,7 @@ Collapsible.displayName = 'Collapsible';
 
 // ─────────────────────────────────────────────────────────────────
 // CollapsibleTrigger (Base.Trigger) — the button surface.
-// Inherits focus-visible ring + target-size floor from preflight.css.
+// Inherits focus-visible ring + target-size floor from page/preflight.css.
 // ─────────────────────────────────────────────────────────────────
 const CollapsibleTrigger = React.forwardRef<
   React.ElementRef<typeof BaseCollapsible.Trigger>,

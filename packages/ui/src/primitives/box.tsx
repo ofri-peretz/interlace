@@ -40,18 +40,18 @@ const boxVariants = cva('', {
     /** Padding from the foundation --spacing scale (8/16/24/40/64px). */
     padding: {
       none: '',
-      xs: 'p-xs',
-      sm: 'p-sm',
-      md: 'p-md',
-      lg: 'p-lg',
-      xl: 'p-xl',
+      xs: 'p-2',
+      sm: 'p-4',
+      md: 'p-6',
+      lg: 'p-10',
+      xl: 'p-16',
     },
     /** Corner radius from the foundation 3-step scale (8/12/16px). */
     radius: {
       none: 'rounded-none',
       sm: 'rounded-sm',
-      md: 'rounded-md',
-      lg: 'rounded-lg',
+      md: 'rounded-lg',
+      lg: 'rounded-xl',
     },
     /** 1px token border. */
     border: {

@@ -153,7 +153,7 @@ function Toolbar({ resultCount = articleFixtures.length }: { resultCount?: numbe
     <div
       role="search"
       aria-label="Filter articles"
-      className="bg-card border-border rounded-xl border p-4 shadow-sm"
+      className="bg-card border-border rounded-lg border p-4 shadow-sm"
     >
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative min-w-[200px] max-w-112 flex-1">
@@ -168,7 +168,7 @@ function Toolbar({ resultCount = articleFixtures.length }: { resultCount?: numbe
             id="search"
             type="search"
             placeholder="Search articles…"
-            className="border-input bg-background text-foreground placeholder:text-muted-foreground focus:border-ring focus:ring-ring/30 w-full rounded-lg border py-2.5 pr-3 pl-10 transition-colors focus:outline-none focus:ring-2"
+            className="border-input bg-background text-foreground placeholder:text-muted-foreground focus:border-ring focus:ring-ring/30 w-full rounded-xl border py-2.5 pr-3 pl-10 transition-colors focus:outline-none focus:ring-2"
           />
         </div>
         <Select defaultValue="date">
@@ -228,7 +228,7 @@ function FeaturedCard() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Featured: ${f.title}`}
-      className="from-primary/10 via-primary/5 border-primary/30 hover:border-primary/60 focus-visible:ring-ring relative block overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-transparent p-6 transition-all hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:p-10"
+      className="from-primary/10 via-primary/5 border-primary/30 hover:border-primary/60 focus-visible:ring-ring relative block overflow-hidden rounded-xl border-2 bg-gradient-to-br to-transparent p-6 transition-all hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:p-10"
     >
       <span className="bg-primary text-primary-foreground inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider">
         <Sparkles className="size-3" aria-hidden="true" />
@@ -345,7 +345,7 @@ export const EmptyState: Story = {
         <PageHeader />
         <Toolbar resultCount={0} />
         <div
-          className="bg-muted/50 border-border flex flex-col items-center justify-center rounded-2xl border border-dashed py-16 text-center"
+          className="bg-muted/50 border-border flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center"
           role="status"
         >
           <Search

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-07T21:35:58.848Z",
+  "generatedAt": "2026-11-23T01:20:47.863Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
     "contrast": "packages/ui/__tests__/theme-contract-lock.test.ts",
     "themes": [
-      "packages/ui/styles/interlace-theme.css",
-      "packages/ui/styles/themes/harbor.css"
+      "packages/ui/styles/brand/interlace.css",
+      "packages/ui/styles/brand/harbor.css"
     ],
     "dataStates": "packages/ui/src/primitives/data-state-model.ts",
     "coverage": "packages/ui/vitest.config.ts"
@@ -6034,6 +6034,32 @@
         "inGate": false
       }
     },
+    "interlace-base": {
+      "sourcePath": "packages/ui/styles/base.css",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "interlace-foundation": {
+      "sourcePath": "packages/ui/styles/index.css",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "label": {
       "sourcePath": "packages/ui/src/primitives/label.tsx",
       "keyboard": null,
@@ -10935,19 +10961,6 @@
       "states": [],
       "coverage": {
         "inGate": true
-      }
-    },
-    "theme": {
-      "sourcePath": "packages/ui/styles/index.css",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
       }
     },
     "time-series": {

@@ -98,30 +98,25 @@ component.
 ### 4. Mobile-first, progressive enhancement
 
 Base classes describe the smallest viewport. Breakpoints only *add*
-density and breathing room — they never take it away. Tailwind
-defaults do **not** govern: `packages/ui/styles/foundation.css`
-overrides `--breakpoint-*` with a narrower 4-tier ladder, and drops
-`2xl:` entirely. [`BREAKPOINT_PHILOSOPHY.md`](./BREAKPOINT_PHILOSOPHY.md)
+density and breathing room — they never take it away. Tailwind's own
+ladder governs, untouched; `packages/ui/styles/structure/type.css` only
+adds an `xs:` handheld tier at 480px.
+[`BREAKPOINT_PHILOSOPHY.md`](./BREAKPOINT_PHILOSOPHY.md)
 is the source of truth for the ladder and the reasoning; the table
 below is the layout-side summary.
 
 | Breakpoint | Width | What changes here |
 | --- | --- | --- |
 | (base) | 0–479 | Single column, smallest typography, page padding `px-4` |
-| `sm:` | ≥ 480 (`30rem`) | Page padding `px-6`, side-by-side chips |
+| `xs:` | ≥ 480 (`30rem`) | Page padding `px-6`, side-by-side chips |
 | `md:` | ≥ 768 (`48rem`) | Multi-column grids start, headlines scale up |
 | `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding `py-24` |
 | `xl:` | ≥ 1280 (`80rem`) | `wide` containers reach max width |
 
-There is no `2xl:` variant. `Container size="wide"` (1280px) is the
-widest section the DS supports, so a variant that only fires above
-1536px has no DS-side meaning. `packages/ui/__tests__/breakpoints-lock.test.ts`
-asserts both the four values and the absence of `--breakpoint-2xl` —
-adding one is a test failure, not a style choice.
-
-The spacing scale in §3 also has a `2xl` token (96px). It is
-unrelated: that `2xl` is a *gap/padding* step, this `2xl:` would have
-been a *viewport* variant.
+DS components stop growing at `xl:` — `Container size="wide"` (1280px)
+is the widest section the DS supports. Tailwind's `sm:` (640) and `2xl:`
+(1536) stay available to the host app; the DS does not redeclare them,
+and `packages/ui/__tests__/breakpoints-lock.test.ts` fails if it does.
 
 Patterns like `lg:hidden md:flex` (hide on desktop, show on mobile)
 are a smell. The mobile layout is the base; `md:` and up extend it.

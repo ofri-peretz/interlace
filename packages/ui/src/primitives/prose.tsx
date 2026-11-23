@@ -85,15 +85,15 @@ type ProseElement = 'article' | 'div' | 'main' | 'section';
  */
 const PROSE_CASCADE = [
   // Headings — type scale + scroll-margin for deep-link anchors.
-  '[&_h1]:font-body [&_h1]:text-h1 [&_h1]:font-bold [&_h1]:tracking-display [&_h1]:text-balance [&_h1]:scroll-mt-xl [&_h1]:mt-xl [&_h1]:mb-md',
-  '[&_h2]:font-body [&_h2]:text-h2 [&_h2]:font-bold [&_h2]:tracking-heading [&_h2]:text-balance [&_h2]:scroll-mt-xl [&_h2]:mt-lg [&_h2]:mb-sm',
-  '[&_h3]:font-body [&_h3]:text-h3 [&_h3]:font-semibold [&_h3]:tracking-heading [&_h3]:scroll-mt-xl [&_h3]:mt-lg [&_h3]:mb-sm',
-  '[&_h4]:font-body [&_h4]:text-h4 [&_h4]:font-semibold [&_h4]:scroll-mt-xl [&_h4]:mt-md [&_h4]:mb-xs',
-  '[&_h5]:font-body [&_h5]:text-h5 [&_h5]:font-semibold [&_h5]:scroll-mt-xl [&_h5]:mt-md [&_h5]:mb-xs',
-  '[&_h6]:font-body [&_h6]:text-h6 [&_h6]:font-semibold [&_h6]:scroll-mt-xl [&_h6]:mt-md [&_h6]:mb-xs',
+  '[&_h1]:font-body [&_h1]:text-h1 [&_h1]:font-bold [&_h1]:tracking-display [&_h1]:text-balance [&_h1]:scroll-mt-16 [&_h1]:mt-16 [&_h1]:mb-6',
+  '[&_h2]:font-body [&_h2]:text-h2 [&_h2]:font-bold [&_h2]:tracking-heading [&_h2]:text-balance [&_h2]:scroll-mt-16 [&_h2]:mt-10 [&_h2]:mb-4',
+  '[&_h3]:font-body [&_h3]:text-h3 [&_h3]:font-semibold [&_h3]:tracking-heading [&_h3]:scroll-mt-16 [&_h3]:mt-10 [&_h3]:mb-4',
+  '[&_h4]:font-body [&_h4]:text-h4 [&_h4]:font-semibold [&_h4]:scroll-mt-16 [&_h4]:mt-6 [&_h4]:mb-2',
+  '[&_h5]:font-body [&_h5]:text-h5 [&_h5]:font-semibold [&_h5]:scroll-mt-16 [&_h5]:mt-6 [&_h5]:mb-2',
+  '[&_h6]:font-body [&_h6]:text-h6 [&_h6]:font-semibold [&_h6]:scroll-mt-16 [&_h6]:mt-6 [&_h6]:mb-2',
 
   // Paragraph rhythm.
-  '[&_p]:my-sm',
+  '[&_p]:my-4',
 
   // Links — primary color, underline-offset for legibility, focus-ring contract.
   '[&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4 [&_a]:decoration-from-font',
@@ -101,19 +101,19 @@ const PROSE_CASCADE = [
   '[&_a:focus-visible]:outline-none [&_a:focus-visible]:ring-2 [&_a:focus-visible]:ring-ring [&_a:focus-visible]:ring-offset-2 [&_a:focus-visible]:rounded-sm',
 
   // Lists.
-  '[&_ul]:my-sm [&_ul]:pl-md [&_ul]:list-disc',
-  '[&_ol]:my-sm [&_ol]:pl-md [&_ol]:list-decimal',
-  '[&_li]:my-xs [&_li]:pl-xs',
+  '[&_ul]:my-4 [&_ul]:pl-6 [&_ul]:list-disc',
+  '[&_ol]:my-4 [&_ol]:pl-6 [&_ol]:list-decimal',
+  '[&_li]:my-2 [&_li]:pl-2',
 
   // Blockquote — quiet left rule with muted body.
-  '[&_blockquote]:my-md [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-md [&_blockquote]:text-muted-foreground [&_blockquote]:italic',
+  '[&_blockquote]:my-6 [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-6 [&_blockquote]:text-muted-foreground [&_blockquote]:italic',
 
   // Inline code — chip pill on muted surface. The vertical padding is the
   // one arbitrary value in this chain and stays arbitrary on purpose: an
   // inline chip has to grow with the text it sits inside, so the value is
   // `em`-relative. Every --spacing-* token is `rem`, which would freeze the
   // chip's height while the surrounding line scales (R19 exception).
-  '[&_code]:font-mono [&_code]:text-code [&_code]:bg-muted [&_code]:text-foreground [&_code]:rounded-sm [&_code]:px-xs [&_code]:py-[0.125em]',
+  '[&_code]:font-mono [&_code]:text-code [&_code]:bg-muted [&_code]:text-foreground [&_code]:rounded-sm [&_code]:px-2 [&_code]:py-[0.125em]',
   // Code inside pre — clear the chip styles so the block code renders cleanly.
   '[&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:rounded-none',
 
@@ -121,18 +121,18 @@ const PROSE_CASCADE = [
   // Pairs with the focus-visible ring contract: when consumers add the
   // recommended `tabIndex={0}` (see Prose JSDoc "Keyboard access" section),
   // the ring activates on keyboard focus.
-  '[&_pre]:my-md [&_pre]:rounded-md [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-md [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-none [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
+  '[&_pre]:my-6 [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-none [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
 
   // Tables — GFM zebra rows; block + overflow-x for narrow viewports (R14).
   // Same keyboard-focus contract as <pre>.
-  '[&_table]:my-md [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:text-ui [&_table:focus-visible]:outline-none [&_table:focus-visible]:ring-2 [&_table:focus-visible]:ring-ring [&_table:focus-visible]:ring-offset-2',
+  '[&_table]:my-6 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:text-ui [&_table:focus-visible]:outline-none [&_table:focus-visible]:ring-2 [&_table:focus-visible]:ring-ring [&_table:focus-visible]:ring-offset-2',
   '[&_thead]:bg-muted',
-  '[&_th]:border [&_th]:border-border [&_th]:px-sm [&_th]:py-xs [&_th]:font-semibold [&_th]:text-left',
-  '[&_td]:border [&_td]:border-border [&_td]:px-sm [&_td]:py-xs',
+  '[&_th]:border [&_th]:border-border [&_th]:px-4 [&_th]:py-2 [&_th]:font-semibold [&_th]:text-left',
+  '[&_td]:border [&_td]:border-border [&_td]:px-4 [&_td]:py-2',
   '[&_tbody_tr:nth-child(even)]:bg-muted/40',
 
   // Images — block layout + bounded radius + measure-respecting width.
-  '[&_img]:my-md [&_img]:block [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-md',
+  '[&_img]:my-6 [&_img]:block [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg',
 ].join(' ');
 
 const proseVariants = cva(

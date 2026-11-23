@@ -16,7 +16,7 @@ import type { ReactNode } from 'react';
  * subtly wrong in both directions and the corpus contains both failures:
  *
  *   **`cols` is still passed to `Grid`**    → strong wrapping code
- *   `` `sm:grid-cols-${n}` ``               → code containing backticks
+ *   `` `xs:grid-cols-${n}` ``               → code containing backticks
  *
  * Splitting on code first cut the `**` pair into two fragments that could
  * never match each other, and the page rendered a literal `** … **`.

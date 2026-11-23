@@ -61,7 +61,7 @@ export const Default: Story = {
         This sentence has hidden context for screen readers
         <VisuallyHidden {...args} />.
       </p>
-      <div className="rounded-md border border-dashed border-border p-3">
+      <div className="rounded-lg border border-dashed border-border p-3">
         <div className="mb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
           What a screen reader announces
         </div>
@@ -123,7 +123,7 @@ export const AsLabel: Story = {
         id="search"
         type="search"
         placeholder="Search…"
-        className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
       />
     </div>
   ),

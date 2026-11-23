@@ -17,7 +17,7 @@
  *
  * Bar fills read `var(--brand-mark-bar-o)` / `var(--brand-mark-bar-g)` —
  * theme-paired decorative fills defined in
- * `packages/ui/styles/interlace-theme.css` (light #a84c17/#0a6b47, dark
+ * `packages/ui/styles/brand/interlace.css` (light #a84c17/#0a6b47, dark
  * #f4794a/#0d9460). Consumers outside this monorepo (e.g. the eslint docs
  * site) define the same two custom properties and the lockup follows their
  * theme switch automatically.

@@ -91,7 +91,7 @@
     {
       "id": "theme",
       "title": "Theme",
-      "description": "The five-stylesheet CSS baseline — tokens, foundation, preflight, bridge, brand palette."
+      "description": "The CSS baseline: interlace-base (additive, every component needs it), theme (the Interlace look as shadcn cssVars) and interlace-foundation (opt-in fonts and page preflight)."
     },
     {
       "id": "starter",
@@ -175,6 +175,8 @@
     "hover-card": "overlay",
     "input": "form",
     "interactive-grid-pattern": "decorative",
+    "interlace-base": "foundation",
+    "interlace-foundation": "foundation",
     "label": "foundation",
     "landing-template": "marketing",
     "layout-starter": "foundation",
@@ -193,10 +195,10 @@
     "prev-next-post": "blog",
     "pricing-table": "marketing",
     "progress": "feedback",
-    "reading-strand": "feedback",
     "prose": "blog",
     "published-date": "blog",
     "radio-group": "form",
+    "reading-strand": "feedback",
     "reading-time": "blog",
     "registry-item-template": "blog",
     "related-posts": "blog",

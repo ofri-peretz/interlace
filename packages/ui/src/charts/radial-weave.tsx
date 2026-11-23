@@ -152,7 +152,7 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
         data-slot="radial-weave-error"
         data-state="error"
         data-min-viewport={String(MIN_VIEWPORT)}
-        className={cn('m-0 w-full rounded-lg border border-destructive/40 p-6', className)}
+        className={cn('m-0 w-full rounded-xl border border-destructive/40 p-6', className)}
         {...props}
       >
         <p role="alert" className="text-sm text-destructive">
@@ -173,7 +173,7 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
         ref={ref}
         data-slot="radial-weave-empty"
         data-min-viewport={String(MIN_VIEWPORT)}
-        className={cn('m-0 w-full rounded-lg border border-border p-6', className)}
+        className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
         <p className="text-sm text-muted-foreground">

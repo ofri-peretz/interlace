@@ -72,7 +72,9 @@ export default async function ComponentPage({ params }: PageProps) {
   if (!item) notFound();
 
   const storybook = storybookPath(item.name, item.type);
-  const file = item.files[0];
+  // A `registry:theme` (the `theme` item) writes cssVars and ships no file.
+  const file = item.files[0] as (typeof item.files)[number] | undefined;
+  const cssVars = (item as { cssVars?: Record<string, Record<string, string>> }).cssVars;
   const meta = item.metadata;
   const contract = item.meta;
   const categoryId = intentCategoryOf(item);
@@ -164,7 +166,7 @@ export default async function ComponentPage({ params }: PageProps) {
           </div>
 
           {contract?.deprecated ? (
-            <div className="border-destructive/40 bg-destructive/10 text-destructive mt-5 rounded-lg border p-4">
+            <div className="border-destructive/40 bg-destructive/10 text-destructive mt-5 rounded-xl border p-4">
               <div className="text-xs font-semibold tracking-wider uppercase">
                 Deprecated
               </div>
@@ -200,7 +202,7 @@ export default async function ComponentPage({ params }: PageProps) {
         ) : (
           <a
             href={storybook}
-            className="border-border hover:border-primary/60 hover:bg-card group bg-card/40 mt-8 flex items-center justify-between gap-4 rounded-lg border p-5 transition-all"
+            className="border-border hover:border-primary/60 hover:bg-card group bg-card/40 mt-8 flex items-center justify-between gap-4 rounded-xl border p-5 transition-all"
           >
             <div>
               <div className="text-primary text-xs font-semibold uppercase tracking-wider">
@@ -252,7 +254,7 @@ export default async function ComponentPage({ params }: PageProps) {
             behavior={behavior}
             isClient={contract?.client ?? false}
             minViewport={contract?.minViewport ?? null}
-            sourcePath={sourcePath ?? file.path}
+            sourcePath={sourcePath ?? file?.path ?? ''}
             storybookUrl={STORYBOOK_URL}
           />
         ) : null}
@@ -316,7 +318,7 @@ export default async function ComponentPage({ params }: PageProps) {
               ))}
             </div>
           ) : (
-            <p className="border-border bg-card text-muted-foreground mt-4 rounded-lg border p-5 text-sm">
+            <p className="border-border bg-card text-muted-foreground mt-4 rounded-xl border p-5 text-sm">
               No release note names this component yet. It shipped with the
               release above and has not changed since — see the{' '}
               <Link
@@ -342,7 +344,7 @@ export default async function ComponentPage({ params }: PageProps) {
             <div className="mt-4">
               <CodeBlock
                 label="Public API"
-                code={`import { ${meta.exports.join(', ')} } from '@/${file.target.replace(/\.tsx?$/, '')}';`}
+                code={`import { ${meta.exports.join(', ')} } from '@/${(file?.target ?? '').replace(/\.tsx?$/, '')}';`}
               />
             </div>
           </section>
@@ -356,7 +358,7 @@ export default async function ComponentPage({ params }: PageProps) {
               Extracted from the primitive&apos;s JSDoc header. The source is
               the only documentation that can&apos;t drift.
             </p>
-            <pre className="border-border bg-card mt-4 overflow-x-auto rounded-lg border px-5 py-4 text-sm leading-relaxed">
+            <pre className="border-border bg-card mt-4 overflow-x-auto rounded-xl border px-5 py-4 text-sm leading-relaxed">
               {meta.anatomy}
             </pre>
           </section>
@@ -377,7 +379,7 @@ export default async function ComponentPage({ params }: PageProps) {
               </a>
               {' '} for the rendered matrix.
             </p>
-            <ul className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
+            <ul className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border xs:grid-cols-2">
               {meta.variants.map((v) => (
                 <li key={v.name} className="bg-card p-4">
                   <div className="font-mono text-sm font-semibold">{v.name}</div>
@@ -387,8 +389,8 @@ export default async function ComponentPage({ params }: PageProps) {
                         key={opt}
                         className={
                           opt === v.defaultValue
-                            ? 'bg-primary/10 border-primary/40 text-primary rounded-md border px-2 py-0.5 font-mono text-xs'
-                            : 'bg-background border-border text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs'
+                            ? 'bg-primary/10 border-primary/40 text-primary rounded-lg border px-2 py-0.5 font-mono text-xs'
+                            : 'bg-background border-border text-muted-foreground rounded-lg border px-2 py-0.5 font-mono text-xs'
                         }
                       >
                         {opt}
@@ -454,7 +456,7 @@ export default async function ComponentPage({ params }: PageProps) {
                     : null}
                 </p>
                 {table.props.length > 0 ? (
-                  <div className="border-border bg-card mt-3 overflow-x-auto rounded-lg border">
+                  <div className="border-border bg-card mt-3 overflow-x-auto rounded-xl border">
                     <table className="w-full text-sm">
                       <thead className="bg-background/60 text-muted-foreground text-xs uppercase tracking-wider">
                         <tr>
@@ -577,7 +579,7 @@ export default async function ComponentPage({ params }: PageProps) {
             </Link>{' '}
             instead, where the keyboard path is replayed step by step.
           </p>
-          <dl className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
+          <dl className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border xs:grid-cols-2">
             <MetaCell label="Focus + keyboard behaviour">
               {meta.a11y.baseUi ? (
                 <span className="text-sm">
@@ -600,7 +602,7 @@ export default async function ComponentPage({ params }: PageProps) {
             <MetaCell label="Focus ring (WCAG 2.2 SC 2.4.13)">
               <span className="text-sm">
                 {meta.a11y.hasFocusRing
-                  ? 'Inherited from the preflight focus contract shipped in @interlace/theme.'
+                  ? 'Drawn by the component\'s own focus-visible classes, so it holds with or without the opt-in preflight.'
                   : 'Not focusable — no focus indicator required.'}
               </span>
             </MetaCell>
@@ -617,14 +619,14 @@ export default async function ComponentPage({ params }: PageProps) {
                 <ul className="flex flex-wrap gap-1.5">
                   {meta.a11y.roles.map((role) => (
                     <li key={role}>
-                      <code className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs">
+                      <code className="bg-background border-border rounded-lg border px-2 py-0.5 font-mono text-xs">
                         role=&quot;{role}&quot;
                       </code>
                     </li>
                   ))}
                   {meta.a11y.ariaAttributes.map((attr) => (
                     <li key={attr}>
-                      <code className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs">
+                      <code className="bg-background border-border rounded-lg border px-2 py-0.5 font-mono text-xs">
                         {attr}
                       </code>
                     </li>
@@ -674,7 +676,7 @@ export default async function ComponentPage({ params }: PageProps) {
               ESLint preset. The cells below pin exactly where each rule
               applies in this file.
             </p>
-            <div className="border-border bg-card mt-4 overflow-x-auto rounded-lg border">
+            <div className="border-border bg-card mt-4 overflow-x-auto rounded-xl border">
               <table className="w-full text-sm">
                 <thead className="bg-background/60 text-muted-foreground text-xs uppercase tracking-wider">
                   <tr>
@@ -720,7 +722,7 @@ export default async function ComponentPage({ params }: PageProps) {
               narrower than this, the preflight contract draws a dev-mode
               outline so the regression is visible during local development.
             </p>
-            <div className="border-border bg-card mt-4 rounded-lg border p-4">
+            <div className="border-border bg-card mt-4 rounded-xl border p-4">
               <div className="text-xs font-semibold uppercase tracking-wider text-primary">
                 Opt-in to the dev-mode warning
               </div>
@@ -740,7 +742,7 @@ export default async function ComponentPage({ params }: PageProps) {
         {/* ─── Dependencies ──────────────────────────────────────── */}
         <section className="mt-12">
           <h2 className="text-xl font-semibold">Dependencies</h2>
-          <dl className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-2">
+          <dl className="border-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border xs:grid-cols-2">
             <MetaCell label="Base UI primitive">
               {meta.baseUiImport ? (
                 <a
@@ -760,7 +762,7 @@ export default async function ComponentPage({ params }: PageProps) {
                 <ul className="flex flex-wrap gap-1.5">
                   {meta.lucideIcons.map((icon) => (
                     <li key={icon}>
-                      <code className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs">
+                      <code className="bg-background border-border rounded-lg border px-2 py-0.5 font-mono text-xs">
                         {icon}
                       </code>
                     </li>
@@ -775,7 +777,7 @@ export default async function ComponentPage({ params }: PageProps) {
                 <ul className="flex flex-wrap gap-1.5">
                   {item.dependencies.map((d) => (
                     <li key={d}>
-                      <code className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs">
+                      <code className="bg-background border-border rounded-lg border px-2 py-0.5 font-mono text-xs">
                         {d}
                       </code>
                     </li>
@@ -796,14 +798,14 @@ export default async function ComponentPage({ params }: PageProps) {
                         {dep ? (
                           <Link
                             href={`/c/${dep}`}
-                            className="bg-background border-border hover:border-primary/60 rounded-md border px-2 py-0.5 font-mono text-xs"
+                            className="bg-background border-border hover:border-primary/60 rounded-lg border px-2 py-0.5 font-mono text-xs"
                           >
                             @interlace/{dep}
                           </Link>
                         ) : (
                           <a
                             href={ref}
-                            className="bg-background border-border rounded-md border px-2 py-0.5 font-mono text-xs"
+                            className="bg-background border-border rounded-lg border px-2 py-0.5 font-mono text-xs"
                           >
                             {ref}
                           </a>
@@ -820,18 +822,39 @@ export default async function ComponentPage({ params }: PageProps) {
         </section>
 
         {/* ─── Source ───────────────────────────────────────────── */}
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold">Source</h2>
-          <p className="text-muted-foreground mt-2 text-sm">
-            The full implementation —{' '}
-            <code className="text-foreground font-mono">{file.target}</code>{' '}
-            once installed.
-          </p>
-          <SourceViewer
-            source={file.content}
-            githubUrl={sourcePath ? githubSourceUrl(sourcePath) : undefined}
-          />
-        </section>
+        {file ? (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold">Source</h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              The full implementation —{' '}
+              <code className="text-foreground font-mono">{file.target}</code>{' '}
+              once installed.
+            </p>
+            <SourceViewer
+              source={file.content}
+              githubUrl={sourcePath ? githubSourceUrl(sourcePath) : undefined}
+            />
+          </section>
+        ) : cssVars ? (
+          <section className="mt-12">
+            <h2 className="text-xl font-semibold">Variables</h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              What the shadcn CLI writes into your global stylesheet&apos;s{' '}
+              <code className="text-foreground font-mono">:root</code> and{' '}
+              <code className="text-foreground font-mono">.dark</code>.
+            </p>
+            <SourceViewer
+              source={Object.entries(cssVars)
+                .map(
+                  ([mode, vars]) =>
+                    `${mode === 'dark' ? '.dark' : ':root'} {\n${Object.entries(vars)
+                      .map(([k, v]) => `  --${k}: ${v};`)
+                      .join('\n')}\n}`,
+                )
+                .join('\n\n')}
+            />
+          </section>
+        ) : null}
 
         {/* ─── JSON endpoint ─────────────────────────────────────── */}
         <section className="mt-12">
@@ -842,7 +865,7 @@ export default async function ComponentPage({ params }: PageProps) {
           <div className="mt-4">
             <a
               href={`/r/${item.name}.json`}
-              className="border-border bg-card hover:border-primary/60 inline-flex items-center gap-2 rounded-md border px-3 py-2 font-mono text-sm transition-colors"
+              className="border-border bg-card hover:border-primary/60 inline-flex items-center gap-2 rounded-lg border px-3 py-2 font-mono text-sm transition-colors"
             >
               /r/{item.name}.json
               <span aria-hidden>↗</span>
@@ -875,7 +898,7 @@ export default async function ComponentPage({ params }: PageProps) {
 
 function CodeBlock({ label, code }: { label: string; code: string }) {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-lg border">
+    <div className="border-border bg-card overflow-hidden rounded-xl border">
       <div className="text-muted-foreground border-border border-b px-4 py-2 text-xs font-medium">
         {label}
       </div>

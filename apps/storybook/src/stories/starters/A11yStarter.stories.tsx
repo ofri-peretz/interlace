@@ -66,8 +66,8 @@ function StarterPage() {
           link is that it is the FIRST tab stop, not merely present. */}
       <SkipLink href="#a11y-starter-main">Skip to main content</SkipLink>
 
-      <div className="border-b border-border bg-card px-md py-sm">
-        <div className="flex flex-wrap items-center justify-between gap-sm">
+      <div className="border-b border-border bg-card px-6 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <Typography variant="ui" className="font-semibold">
             A page assembled from the bundle
           </Typography>
@@ -79,13 +79,13 @@ function StarterPage() {
 
       <nav
         aria-label="Bundle demo"
-        className="flex flex-wrap gap-sm border-b border-border px-md py-sm"
+        className="flex flex-wrap gap-4 border-b border-border px-6 py-4"
       >
         {['Overview', 'Install', 'Contract'].map((item) => (
           <a
             key={item}
             href="#a11y-starter-main"
-            className="rounded-md px-2 py-1 text-ui-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="rounded-lg px-2 py-1 text-ui-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {item}
           </a>
@@ -95,7 +95,7 @@ function StarterPage() {
       <main
         id="a11y-starter-main"
         tabIndex={-1}
-        className="px-md py-md"
+        className="px-6 py-6"
         data-slot="a11y-starter-main"
       >
         <Stack gap="md">
@@ -111,7 +111,7 @@ function StarterPage() {
             </Typography>
           </Stack>
 
-          <div className="grid gap-md md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             <Box border radius="md" padding="sm" data-slot="part-focus-ring">
               <Stack gap="xs">
                 <Typography variant="code" as="code" className="font-semibold">
@@ -157,7 +157,7 @@ function StarterPage() {
                 <Typography variant="code" as="code" className="font-semibold">
                   useReducedMotion
                 </Typography>
-                <div className="flex items-center gap-xs">
+                <div className="flex items-center gap-2">
                   <span
                     aria-hidden
                     className={
@@ -198,7 +198,7 @@ function Specimen() {
           way the bundle expects — tab through it, and the tab ORDER is the
           demonstration.
         </Typography>
-        <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code">
             npx shadcn add @interlace/a11y-starter
           </code>
@@ -218,7 +218,7 @@ function Specimen() {
           <Typography variant="h4" as="h3">
             What the CLI resolves
           </Typography>
-          <ul className="grid gap-xs pl-0">
+          <ul className="grid gap-2 pl-0">
             {[
               ['skip-link', 'WCAG 2.4.1 — a keyboard path past the chrome.'],
               [
@@ -235,12 +235,12 @@ function Specimen() {
               ],
               [
                 'theme',
-                'The CSS baseline. preflight.css is where the default focus ring lives — without it every focusable element loses its indicator.',
+                'The CSS baseline. page/preflight.css is where the default focus ring lives — without it every focusable element loses its indicator.',
               ],
             ].map(([name, why]) => (
               <li
                 key={name}
-                className="rounded-md border border-border p-sm"
+                className="rounded-lg border border-border p-4"
               >
                 <Typography variant="code" as="code" className="font-semibold">
                   {name}

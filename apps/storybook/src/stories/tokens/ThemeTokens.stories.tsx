@@ -124,7 +124,7 @@ function TokenCell({ name }: { name: string }) {
 
   return (
     <div
-      className="rounded-md border border-border bg-background p-sm"
+      className="rounded-lg border border-border bg-background p-4"
       data-slot="theme-token"
       data-token={name}
     >
@@ -218,14 +218,14 @@ function Specimen() {
           <Typography variant="h4" as="h3">
             The registry — {THEMES.length} themes
           </Typography>
-          <ul className="grid gap-sm pl-0 md:grid-cols-2">
+          <ul className="grid gap-4 pl-0 md:grid-cols-2">
             {THEMES.map((theme) => (
               <li
                 key={theme.name}
-                className="rounded-md border border-border p-sm"
+                className="rounded-lg border border-border p-4"
               >
                 <Stack gap="xs">
-                  <div className="flex flex-wrap items-baseline gap-xs">
+                  <div className="flex flex-wrap items-baseline gap-2">
                     <Typography variant="ui" className="font-semibold">
                       {theme.label}
                     </Typography>
@@ -268,12 +268,12 @@ function Specimen() {
           <Typography variant="ui-sm" tone="muted" className="max-w-prose">
             In source order — the order of the{' '}
             <code className="font-mono">:root</code> block in{' '}
-            <code className="font-mono">styles/interlace-theme.css</code>, from
+            <code className="font-mono">styles/brand/interlace.css</code>, from
             which the list is re-derived by the lock on every run. Switch the
             Theme toolbar to Harbor and every value below changes; the names
             cannot.
           </Typography>
-          <div className="grid gap-sm sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {THEME_TOKENS.map((token) => (
               <TokenCell key={token} name={token} />
             ))}

@@ -22,7 +22,7 @@ const Stat = ({
   caption?: string;
   children: React.ReactNode;
 }) => (
-  <div className="flex w-64 flex-col gap-1 rounded-lg border border-border bg-background p-4">
+  <div className="flex w-64 flex-col gap-1 rounded-xl border border-border bg-background p-4">
     <span className="text-sm font-medium text-muted-foreground">{label}</span>
     <span className="text-3xl font-semibold text-foreground">{children}</span>
     {caption ? <span className="text-xs text-muted-foreground">{caption}</span> : null}
@@ -160,7 +160,7 @@ export const Compact: Story = {
   args: { value: 128400, startValue: 0, notation: 'compact' },
   render: (args) => (
     <div className="flex flex-col gap-4">
-      <div className="w-72 max-w-[288px] rounded-lg border border-border bg-background p-4">
+      <div className="w-72 max-w-[288px] rounded-xl border border-border bg-background p-4">
         <span className="text-sm font-medium text-muted-foreground">
           page views · notation=&quot;compact&quot;
         </span>
@@ -169,7 +169,7 @@ export const Compact: Story = {
         </div>
         <span className="text-xs text-muted-foreground">fits</span>
       </div>
-      <div className="w-72 max-w-[288px] rounded-lg border border-border bg-background p-4">
+      <div className="w-72 max-w-[288px] rounded-xl border border-border bg-background p-4">
         <span className="text-sm font-medium text-muted-foreground">
           page views · notation=&quot;standard&quot; (default)
         </span>

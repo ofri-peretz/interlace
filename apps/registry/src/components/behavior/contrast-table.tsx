@@ -86,7 +86,7 @@ export function ContrastTableSection({
         </>
       }
     >
-      <div className="border-border bg-card overflow-x-auto rounded-lg border">
+      <div className="border-border bg-card overflow-x-auto rounded-xl border">
         <table className="w-full text-sm">
           <caption className="sr-only">
             Measured WCAG contrast ratios per token pair and theme

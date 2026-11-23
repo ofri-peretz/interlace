@@ -24,9 +24,9 @@
  *
  * ## Motion
  *
- * A CSS keyframe (`--animate-marquee` in `styles/tokens.css`) covered three
+ * A CSS keyframe (`--animate-marquee` in `styles/structure/motion.css`) covered three
  * ways under `prefers-reduced-motion: reduce`: the `animation: none` block in
- * `tokens.css` names both marquee classes, the wildcard in `preflight.css`
+ * `structure/motion.css` names both marquee classes, the wildcard in `page/preflight.css`
  * clamps the duration, and this component reads the preference in JS and adds
  * `[animation-play-state:paused]`. Nothing depends on a single layer.
  *

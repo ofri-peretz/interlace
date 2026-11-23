@@ -111,12 +111,12 @@ type Story = StoryObj<HoverCardStoryArgs>;
 // is obvious at a glance.
 // ─────────────────────────────────────────────────────────────────
 const BioCard = () => (
-  <div className="flex gap-md">
+  <div className="flex gap-6">
     <Avatar className="size-12">
       <AvatarImage src="https://github.com/shadcn.png" alt="" />
       <AvatarFallback>OP</AvatarFallback>
     </Avatar>
-    <div className="flex flex-col gap-xs">
+    <div className="flex flex-col gap-2">
       <p className="text-ui-sm font-semibold text-foreground">@ofriperetz</p>
       <p className="text-ui-sm text-muted-foreground">
         Builds the Interlace design system and the ESLint plugin ecosystem
@@ -183,7 +183,7 @@ export const Variants: Story = {
   // read at thumbnail size.
   tags: ['preview'],
   render: () => (
-    <div className="grid grid-cols-1 gap-2xl p-2xl md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-24 p-24 md:grid-cols-2">
       {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
         <div key={side} className="flex items-center justify-center">
           <HoverCard open>

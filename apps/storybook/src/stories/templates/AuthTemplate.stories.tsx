@@ -41,14 +41,14 @@ const sampleLogo = (
   <a href="/" className="flex items-center gap-2 font-semibold">
     <span
       aria-hidden
-      className="inline-block size-8 rounded-md bg-linear-to-br from-primary to-chart-2"
+      className="inline-block size-8 rounded-lg bg-linear-to-br from-primary to-chart-2"
     />
     <span className="text-lg">Interlace</span>
   </a>
 );
 
 const sampleForm = (
-  <form className="flex flex-col gap-md">
+  <form className="flex flex-col gap-6">
     <Field>
       <FieldLabel>Email</FieldLabel>
       {/* `render=`, not children: FieldControl clones the element it is
@@ -66,7 +66,7 @@ const sampleForm = (
         render={<Input type="password" autoComplete="current-password" placeholder="••••••••" />}
       />
     </Field>
-    <Button type="submit" className="mt-sm">
+    <Button type="submit" className="mt-4">
       Sign in
     </Button>
   </form>

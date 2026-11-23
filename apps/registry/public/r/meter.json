@@ -11,7 +11,7 @@
   ],
   "dependencies": [],
   "registryDependencies": [
-    "https://ds.interlace.tools/r/theme.json",
+    "https://ds.interlace.tools/r/interlace-base.json",
     "https://ds.interlace.tools/r/cn.json",
     "https://ds.interlace.tools/r/data-state.json",
     "https://ds.interlace.tools/r/skeleton.json"
@@ -44,5 +44,5 @@
     "version": "1.0.0",
     "since": "1.1.0"
   },
-  "docs": "## @interlace/meter\n\nInstalled to `components/ui/meter.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/meter';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/meter\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
+  "docs": "## @interlace/meter\n\nInstalled to `components/ui/meter.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/meter';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/meter\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
 }

@@ -81,7 +81,7 @@ const CONFLICT_CASES: MergeCase[] = [
     note: 'A size and a colour are orthogonal — BOTH must survive.',
   },
   {
-    input: 'rounded-md rounded-none',
+    input: 'rounded-lg rounded-none',
     note: 'Radius, same rule. Nothing DS-specific about this one.',
   },
 ];
@@ -183,7 +183,7 @@ function RegressionPanel({ input }: { input: string }) {
           </Typography>
         </Stack>
 
-        <div className="grid gap-md md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           <Stack gap="sm">
             <Typography variant="ui" className="font-semibold">
               stock <code className="font-mono">twMerge()</code>
@@ -226,7 +226,7 @@ function RegressionPanel({ input }: { input: string }) {
 // `DS_FONT_SIZES` is the list `extendTailwindMerge` registers. Rendering it
 // from the export (not a copy) means a token added to the scale shows up here
 // on the next reload — and `cn-type-scale-lock.test.ts` is what stops the
-// list drifting from `foundation.css` in the first place.
+// list drifting from `structure/type.css` in the first place.
 
 function ScalePanel() {
   return (
@@ -247,17 +247,17 @@ function ScalePanel() {
             Read from the <code className="font-mono">DS_FONT_SIZES</code>{' '}
             export, not copied. Each is declared as{' '}
             <code className="font-mono">--text-*</code> in{' '}
-            <code className="font-mono">styles/foundation.css</code>; a token
+            <code className="font-mono">styles/structure/type.css</code>; a token
             added there and forgotten here does not error, it silently loses
             its size at the first <code className="font-mono">cn()</code> that
             also sets a colour.
           </Typography>
         </Stack>
-        <ul className="flex flex-wrap gap-xs pl-0">
+        <ul className="flex flex-wrap gap-2 pl-0">
           {DS_FONT_SIZES.map((size) => (
             <li
               key={size}
-              className="rounded-md border border-border px-2 py-1 font-mono text-caption text-muted-foreground"
+              className="rounded-lg border border-border px-2 py-1 font-mono text-caption text-muted-foreground"
             >
               text-{size}
             </li>
@@ -305,7 +305,7 @@ function Specimen({ input }: CnArgs) {
           <Typography variant="h4" as="h3">
             Conflict resolution
           </Typography>
-          <div className="grid gap-sm md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             {CONFLICT_CASES.map((item) => (
               <MergeRow
                 key={item.input}

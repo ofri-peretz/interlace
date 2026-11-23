@@ -179,7 +179,7 @@ export const ErrorState: Story = {
       error={new Error('content API unreachable')}
       data={undefined}
       announce={{ noun: 'articles' }}
-      className="p-lg"
+      className="p-10"
     >
       {(posts) => <ArticleListGrid title="Latest articles" posts={posts} />}
     </DataState>

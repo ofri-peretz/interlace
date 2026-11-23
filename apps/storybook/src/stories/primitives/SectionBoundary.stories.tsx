@@ -69,7 +69,7 @@ export const Idle: Story = {
   render: (args) => (
     <div className="w-full max-w-float">
       <SectionBoundary {...args}>
-        <div className="border-border rounded-md border p-md">
+        <div className="border-border rounded-lg border p-6">
           <h3 className="font-body text-h5 font-semibold">Hello, world</h3>
           <p className="text-muted-foreground text-ui">
             Section content rendered idle.
@@ -128,11 +128,11 @@ export const ErrorState: Story = {
  */
 export const CustomFallbacks: Story = {
   render: () => (
-    <div className="flex w-full max-w-float flex-col gap-md">
+    <div className="flex w-full max-w-float flex-col gap-6">
       <SectionBoundary
         name="custom-loading"
         skeleton={
-          <div className="border-border bg-muted/50 flex items-center justify-center rounded-md border border-dashed p-lg">
+          <div className="border-border bg-muted/50 flex items-center justify-center rounded-lg border border-dashed p-10">
             <Skeleton variant="text" count={3} />
           </div>
         }
@@ -144,7 +144,7 @@ export const CustomFallbacks: Story = {
         error={
           <div
             role="alert"
-            className="border-destructive/40 bg-destructive/5 text-destructive rounded-md border p-md"
+            className="border-destructive/40 bg-destructive/5 text-destructive rounded-lg border p-6"
           >
             <strong className="font-body font-semibold">Couldn&apos;t load.</strong>{' '}
             Please refresh the page.
@@ -164,9 +164,9 @@ export const CustomFallbacks: Story = {
  */
 export const ThreeIndependentSections: Story = {
   render: () => (
-    <div className="flex w-full max-w-float flex-col gap-md">
+    <div className="flex w-full max-w-float flex-col gap-6">
       <SectionBoundary name="header" skeletonVariant="page-header">
-        <div className="border-border rounded-md border p-md">
+        <div className="border-border rounded-lg border p-6">
           <h3 className="text-h5 font-semibold">Header (idle)</h3>
         </div>
       </SectionBoundary>

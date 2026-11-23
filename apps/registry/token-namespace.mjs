@@ -57,14 +57,14 @@ const STYLES_DIR = path.resolve(HERE, '../../packages/ui/styles');
  * collision list, which is worse than no list at all.
  */
 const discoverStyleFiles = async () => {
-  const top = (await readdir(STYLES_DIR, { withFileTypes: true }))
-    .filter((e) => e.isFile() && e.name.endsWith('.css') && e.name !== 'index.css')
-    .map((e) => e.name);
-  const themes = await readdir(path.join(STYLES_DIR, 'themes')).catch(() => []);
-  return [
-    ...top.sort(),
-    ...themes.filter((f) => f.endsWith('.css')).sort().map((f) => `themes/${f}`),
-  ];
+  // Every leaf stylesheet in the layered tree (brand/, semantics.css,
+  // structure/, page/). The two barrels only import, so they claim nothing.
+  const entries = await readdir(STYLES_DIR, { withFileTypes: true, recursive: true });
+  return entries
+    .filter((e) => e.isFile() && e.name.endsWith('.css'))
+    .map((e) => path.relative(STYLES_DIR, path.join(e.parentPath ?? e.path, e.name)))
+    .filter((f) => f !== 'index.css' && f !== 'base.css')
+    .sort();
 };
 
 /**
@@ -167,30 +167,12 @@ export const COLLISION_HAZARDS = [
     override: '--border or --interlace-border',
   },
   {
-    token: '--breakpoint-sm … --breakpoint-xl',
-    expected: 'to be additive',
+    token: '--radius-sm … --radius-xl',
+    expected: 'Tailwind’s fixed defaults (4/6/8/12px)',
     actual:
-      'a REPLACEMENT of Tailwind’s default ladder. `sm` moves 640px → 480px, and `2xl` stops existing.',
-    symptom:
-      'Every `2xl:` utility in the consumer’s existing code silently stops compiling.',
-    override:
-      'redeclare the full ladder — including `--breakpoint-2xl` — in your own @theme',
-  },
-  {
-    token: '--spacing-xs … --spacing-2xl',
-    expected: 'to affect padding and margin only',
-    actual:
-      'the `spacing` namespace also feeds `max-w-*` / `w-*` / `h-*` in Tailwind v4.',
-    symptom:
-      '`max-w-sm|md|lg|xl|2xl` resolve to 16/24/40/64/96px instead of 24/28/32/36/42rem — a 20× narrower container, with no error.',
-    override: 'rename your own scale, or redeclare --spacing-* after the import',
-  },
-  {
-    token: '--radius-sm / --radius-md / --radius-lg',
-    expected: 'to be additive',
-    actual: 'overrides Tailwind’s defaults — 2/6/8px becomes 8/12/16px.',
-    symptom: 'Every `rounded-sm|md|lg` in the consumer’s app gets rounder.',
-    override: 'redeclare --radius-* after the import',
+      'shadcn’s derivation from `--radius` (radius − 4px / − 2px / radius / + 4px), with `--radius` at 0.75rem — 8/10/12/16px. In a shadcn app this is the same derivation the app already has.',
+    symptom: 'In a plain Tailwind app, every `rounded-sm…xl` follows `--radius` instead of a fixed value.',
+    override: 'set --radius (one variable moves every step)',
   },
   {
     token: '--font-sans',

@@ -33,9 +33,9 @@
  * ## Motion — two kinds, gated two ways
  *
  * The five orbits are CSS keyframes (`--animate-first`…`--animate-fifth` in
- * `styles/tokens.css`). They are named in that file's
+ * `styles/structure/motion.css`). They are named in that file's
  * `prefers-reduced-motion: reduce` block (`animation: none !important`) and
- * also caught by the wildcard in `styles/preflight.css`, so they need no JS.
+ * also caught by the wildcard in `styles/page/preflight.css`, so they need no JS.
  * The blobs stay on screen, parked.
  *
  * The pointer blob is a `requestAnimationFrame` loop writing

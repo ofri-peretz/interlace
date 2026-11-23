@@ -26,9 +26,9 @@
  * ## Motion
  *
  * Pure CSS, and covered twice: `.animate-border-beam` is named in the
- * `prefers-reduced-motion: reduce` block in `styles/tokens.css`
+ * `prefers-reduced-motion: reduce` block in `styles/structure/motion.css`
  * (`animation: none !important`) and also caught by the `animation-duration`
- * wildcard in `styles/preflight.css`. There is no `useReducedMotion` call and
+ * wildcard in `styles/page/preflight.css`. There is no `useReducedMotion` call and
  * none is needed. Note what `reduce` leaves behind: with the animation off,
  * `offset-distance` sits at its initial `0%`, so the beam parks as a static
  * gradient square at the start of the path rather than disappearing.

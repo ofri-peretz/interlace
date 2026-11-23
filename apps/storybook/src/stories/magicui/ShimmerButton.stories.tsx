@@ -37,7 +37,7 @@ const meta: Meta<typeof ShimmerButton> = {
    */
   decorators: [
     (Story) => (
-      <div className="rounded-lg bg-[#0b0418] p-8">
+      <div className="rounded-xl bg-[#0b0418] p-8">
         <Story />
       </div>
     ),

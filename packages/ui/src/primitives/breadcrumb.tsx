@@ -25,7 +25,7 @@
  * | R10  | Composition seam                 | BreadcrumbLink accepts `asChild` (server-safe slot)  |
  * | R13  | Ecosystem first                  | Lucide icons (ChevronRight / MoreHorizontal)         |
  * | R18  | Tailwind only                    | Zero inline style                                    |
- * | R19  | Tokens only                      | gap-xs / text-ui-sm / text-muted-foreground / size-4 |
+ * | R19  | Tokens only                      | gap-2 / text-ui-sm / text-muted-foreground / size-4 |
  * | R20  | AA contrast                      | foreground vs muted-foreground; AA-cleared tokens    |
  * | R25  | Server component                 | No hooks → no 'use client'                           |
  * | R26  | A11y from native els             | `nav` + ordered list + `aria-current` + role         |
@@ -77,7 +77,7 @@ const BreadcrumbList = React.forwardRef<HTMLOListElement, BreadcrumbListProps>(
         ref={ref}
         data-slot="breadcrumb-list"
         className={cn(
-          'text-muted-foreground flex flex-wrap items-center gap-xs text-ui-sm break-words',
+          'text-muted-foreground flex flex-wrap items-center gap-2 text-ui-sm break-words',
           className,
         )}
         {...props}

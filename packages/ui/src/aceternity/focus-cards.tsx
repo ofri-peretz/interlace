@@ -217,7 +217,7 @@ export function FocusCard({
       data-testid={testId}
       className={cn(
         // Token-backed surface; fixed aspect ratio reserves space (CLS=0).
-        "group/card relative isolate aspect-[4/3] size-full overflow-hidden rounded-xl bg-muted",
+        "group/card relative isolate aspect-[4/3] size-full overflow-hidden rounded-lg bg-muted",
         "ring-1 ring-border",
         // Focus ring for keyboard users landing on a focusable child.
         "focus-within:ring-2 focus-within:ring-ring",
@@ -248,7 +248,7 @@ export function FocusCard({
           data-slot="focus-card-caption"
           data-testid={`${testId}-caption`}
           className={cn(
-            "absolute inset-x-0 bottom-0 flex items-end p-4 text-(--focus-card-caption-color) sm:p-6",
+            "absolute inset-x-0 bottom-0 flex items-end p-4 text-(--focus-card-caption-color) xs:p-6",
             // Caption sits over arbitrary media, so the scrim is intentionally a
             // stable dark layer in BOTH themes (a theme-relative token would
             // flip to light in dark mode and fail contrast against the light

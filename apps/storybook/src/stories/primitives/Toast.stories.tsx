@@ -130,7 +130,7 @@ export const Default: Story = {
       <div className="w-full max-w-float">
         <Toast {...args}>
           <Icon className="size-4" aria-hidden />
-          <div className="flex flex-col gap-xs">
+          <div className="flex flex-col gap-2">
             <ToastTitle>{copy.title}</ToastTitle>
             <ToastDescription>{copy.description}</ToastDescription>
           </div>
@@ -147,11 +147,11 @@ export const Default: Story = {
  */
 export const Tones: Story = {
   render: () => (
-    <div className="flex w-full max-w-float flex-col gap-sm">
+    <div className="flex w-full max-w-float flex-col gap-4">
       {TONES.map(({ tone, Icon, title, description }) => (
         <Toast key={tone} tone={tone}>
           <Icon className="size-4" aria-hidden />
-          <div className="flex flex-col gap-xs">
+          <div className="flex flex-col gap-2">
             <ToastTitle>{title}</ToastTitle>
             <ToastDescription>{description}</ToastDescription>
           </div>
@@ -169,7 +169,7 @@ export const Tones: Story = {
 export const Variants: Story = {
   render: () => (
     <ToastProvider>
-      <div className="flex flex-wrap gap-sm">
+      <div className="flex flex-wrap gap-4">
         {TONES.map(({ tone, title, description }) => (
           <ToastTrigger
             key={tone}
@@ -206,7 +206,7 @@ export const BelowMinViewport: Story = {
     <div data-interlace-dev style={{ width: MIN_VIEWPORT - 1 }}>
       <Toast tone="info">
         <Info className="size-4" aria-hidden />
-        <div className="flex flex-col gap-xs">
+        <div className="flex flex-col gap-2">
           <ToastTitle>{`< ${MIN_VIEWPORT}px — dev outline`}</ToastTitle>
           <ToastDescription>
             Toast still renders below the documented minimum viewport.

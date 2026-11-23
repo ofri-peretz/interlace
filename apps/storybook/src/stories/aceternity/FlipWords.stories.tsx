@@ -75,7 +75,7 @@ export const Headline: Story = {
     words: ['faster', 'safer', 'cleaner', 'smarter'],
   },
   render: (args) => (
-    <div className="rounded-lg border border-border bg-background p-6 text-2xl font-semibold text-foreground">
+    <div className="rounded-xl border border-border bg-background p-6 text-2xl font-semibold text-foreground">
       Ship <FlipWords {...args} /> with the Interlace design system
     </div>
   ),

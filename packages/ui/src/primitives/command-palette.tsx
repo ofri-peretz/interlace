@@ -101,7 +101,7 @@
  *
  * The input adds no ring of its own — it inherits the DS-wide
  * `:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px }`
- * from `styles/preflight.css`. It is deliberately NOT suppressed even
+ * from `styles/page/preflight.css`. It is deliberately NOT suppressed even
  * though the input is the only tab stop and holds focus for the whole life
  * of the panel: SC 2.4.7 asks for a visible indicator on a focusable
  * element, and "there is nowhere else for focus to be" is not one of the
@@ -224,7 +224,7 @@ function CommandPaletteContent<Value>({
       data-slot="command-palette-content"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'top-[12vh] block translate-y-0 gap-0 overflow-hidden p-0 sm:max-w-[40rem]',
+        'top-[12vh] block translate-y-0 gap-0 overflow-hidden p-0 xs:max-w-[40rem]',
         className,
       )}
     >
@@ -316,7 +316,7 @@ function CommandPaletteItem({
       className={cn(
         // 40px tall — over the 24px floor of SC 2.5.8, and comfortable for a
         // surface the user drives at speed.
-        'text-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition-colors duration-150 outline-hidden select-none',
+        'text-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl px-3 py-2.5 text-sm transition-colors duration-150 outline-hidden select-none',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",

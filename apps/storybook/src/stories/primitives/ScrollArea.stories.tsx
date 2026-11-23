@@ -63,7 +63,7 @@ const topics = (count: number) =>
 
 export const Default: Story = {
   args: {
-    className: 'border-border h-72 w-60 rounded-md border p-3',
+    className: 'border-border h-72 w-60 rounded-lg border p-3',
     itemCount: 30,
     overflowEdgeThreshold: 0,
   },
@@ -88,7 +88,7 @@ export const Default: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <ScrollArea className="border-border h-40 w-60 rounded-md border p-3">
+    <ScrollArea className="border-border h-40 w-60 rounded-lg border p-3">
       {topics(30).map((t) => (
         <p key={t} className="text-sm">
           #{t}
@@ -143,7 +143,7 @@ export const KeyboardFlow: Story = {
 export const NoOverflow: Story = {
   ...Default,
   args: {
-    className: 'border-border h-72 w-60 rounded-md border p-3',
+    className: 'border-border h-72 w-60 rounded-lg border p-3',
     itemCount: 4,
   },
 };

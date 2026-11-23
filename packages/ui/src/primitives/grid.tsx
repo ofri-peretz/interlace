@@ -44,12 +44,12 @@ const gridVariants = cva('grid', {
     /** Gap from the foundation --spacing scale (8/16/24/40/64/96px). */
     gap: {
       none: 'gap-0',
-      xs: 'gap-xs',
-      sm: 'gap-sm',
-      md: 'gap-md',
-      lg: 'gap-lg',
-      xl: 'gap-xl',
-      '2xl': 'gap-2xl',
+      xs: 'gap-2',
+      sm: 'gap-4',
+      md: 'gap-6',
+      lg: 'gap-10',
+      xl: 'gap-16',
+      '2xl': 'gap-24',
     },
   },
   defaultVariants: { cols: 12, gap: 'md' },

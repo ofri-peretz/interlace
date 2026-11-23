@@ -58,7 +58,7 @@
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` (Root + Popup)    |
  * | R17  | API parity                       | Surface name `HoverCard` mirrors Radix / shadcn              |
  * | R18  | Tailwind only                    | Zero inline `style`; Tailwind classes only                   |
- * | R19  | Tokens only                      | `rounded-md`, `bg-card`, `text-card-foreground`, `p-(--spacing-md)`, `max-w-80`, `shadow-lg` |
+ * | R19  | Tokens only                      | `rounded-lg`, `bg-card`, `text-card-foreground`, `p-(--spacing-md)`, `max-w-80`, `shadow-lg` |
  * | R20  | AA contrast                      | `bg-card` / `text-card-foreground` is an AA-cleared token pair |
  * | R25  | Client component                 | Required — Base UI's PreviewCard ships client hooks          |
  * | R26  | A11y from upstream               | Base UI handles aria-describedby + focus + dismissal         |
@@ -154,7 +154,7 @@ const HoverCardPopup = React.forwardRef<
       data-slot="hover-card-popup"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'rounded-md border bg-card text-card-foreground p-(--spacing-md) max-w-80 shadow-lg',
+        'rounded-lg border bg-card text-card-foreground p-(--spacing-md) max-w-80 shadow-lg',
         className,
       )}
       {...props}

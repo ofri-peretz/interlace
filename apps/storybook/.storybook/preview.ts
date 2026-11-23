@@ -41,7 +41,7 @@ const preview: Preview = {
         rules: [
           // WCAG 2.2 AAA (color-contrast-enhanced) is now ENFORCED.
           // Brand tokens have been bumped to clear ≥7:1 body / ≥4.5:1
-          // large in both light and dark modes (see interlace-theme.css
+          // large in both light and dark modes (see brand/interlace.css
           // for the colour ladder).
           //
           // Per-story carve-outs (rare; e.g. an intentional anti-pattern

@@ -22,7 +22,7 @@
  * ─── Provenance ──────────────────────────────────────────────────
  *
  * The list is DERIVED, not hand-typed: it is the `--interlace-*`
- * declarations of the `:root` block in `styles/interlace-theme.css`, in
+ * declarations of the `:root` block in `styles/brand/interlace.css`, in
  * source order. The lock re-derives it from that file on every run and
  * fails if the two disagree — so adding a token to the default theme
  * without adding it here (or vice versa) is a red test, not a discovery
@@ -33,7 +33,7 @@
  *   scheme  →  light | dark              (`.dark` / `[data-scheme='dark']`)
  *   theme   →  interlace | harbor | …    (`[data-theme='<name>']`)
  *
- * See the header of `styles/interlace-theme.css` for the selector matrix.
+ * See the header of `styles/brand/interlace.css` for the selector matrix.
  */
 
 /**
@@ -94,9 +94,7 @@ export const THEME_TOKENS = [
   'viz-grid',
   'viz-axis',
   'viz-edge',
-  'radius-sm',
-  'radius-md',
-  'radius-lg',
+  'radius',
   'brand-mark-bar-o',
   'brand-mark-bar-g',
 ] as const;
@@ -120,14 +118,14 @@ export const THEMES = [
   {
     name: 'interlace',
     label: 'Interlace',
-    /** Burnt orange + brand green, warm neutrals. `styles/interlace-theme.css`. */
+    /** Burnt orange + brand green, warm neutrals. `styles/brand/interlace.css`. */
     description: 'Warm burnt orange — the Interlace brand.',
     default: true,
   },
   {
     name: 'harbor',
     label: 'Harbor',
-    /** Deep harbour blue on cool slate. `styles/themes/harbor.css`. */
+    /** Deep harbour blue on cool slate. `styles/brand/harbor.css`. */
     description: 'Deep harbour blue on cool slate.',
     default: false,
   },

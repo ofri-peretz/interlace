@@ -18,27 +18,22 @@ surfaces. Six steps can be memorised in an afternoon and defended in review.
 
 ## The spacing scale
 
-Six tokens, declared once in `packages/ui/styles/foundation.css`:
+Six steps, and they are steps on Tailwind's own numeric scale, so they follow
+the `--spacing` CSS variable like every other Tailwind utility:
 
-```css
---spacing-xs:  0.5rem;  /*  8px — inline chip / badge padding */
---spacing-sm:  1rem;    /* 16px — card padding, mobile page padding */
---spacing-md:  1.5rem;  /* 24px — card-grid gaps */
---spacing-lg:  2.5rem;  /* 40px — mobile section vertical padding */
---spacing-xl:  4rem;    /* 64px — desktop section vertical padding */
---spacing-2xl: 6rem;    /* 96px — hero / final-CTA breathing room */
-```
+| Step | Utility | px | Intent |
+| --- | --- | --- | --- |
+| xs | `p-2` / `gap-2` | 8 | inline chip / badge padding |
+| sm | `p-4` / `gap-4` | 16 | card padding, mobile page padding |
+| md | `p-6` / `gap-6` | 24 | card-grid gaps |
+| lg | `p-10` / `gap-10` | 40 | mobile section vertical padding |
+| xl | `p-16` / `gap-16` | 64 | desktop section vertical padding |
+| 2xl | `p-24` / `gap-24` | 96 | hero / final-CTA breathing room |
 
-These generate `p-xs`, `gap-md`, `py-xl` and friends. They are **additive** —
-Tailwind's numeric scale (`p-4`, `gap-6`) still works and is not the
-contract. When a DS component needs spacing it uses the named token, so that
-"the gap between cards" is one decision made once rather than 30 call sites
-that happen to agree.
-
-Note that each token carries its *intent* in the comment, not just its value.
-`--spacing-lg` is not "40px"; it is "mobile section vertical padding". When
-someone asks whether to use `lg` or `xl` for a new section, the comment
-answers it.
+The step *names* survive where they help: the layout primitives take
+`gap="md"` and `padding="sm"`, and map them onto the table above. The
+utility in the emitted class is always numeric, so the code you install reads
+like any other shadcn component.
 
 <div className="my-6 flex flex-col gap-2">
   {[
@@ -57,53 +52,26 @@ answers it.
   ))}
 </div>
 
-Radius follows the same discipline — three steps, `8 / 12 / 16px`, and they
-deliberately override Tailwind's defaults (`2 / 6 / 8px`) so `rounded-md`
-means one thing in every consumer of the system.
+Radius is one CSS variable. `rounded-sm`, `-md`, `-lg` and `-xl` derive from
+`--radius` exactly as shadcn derives them (`− 4px`, `− 2px`, `±0`, `+ 4px`).
+Interlace sets `--radius: 0.75rem`, which gives the 8 / 12 / 16px rungs as
+`rounded-sm`, `rounded-lg` and `rounded-xl`. Change `--radius` and every
+component follows.
 
 ---
 
-## The named-scale trap
+## Why the named scale went away
 
-This is the most useful thing on this page, and it is not specific to us. It
-will happen to any Tailwind v4 design system that names its spacing steps.
+Interlace 1.x declared `--spacing-xs … --spacing-2xl` to get `gap-md`. Tailwind
+v4 generates utilities from theme keys **by namespace**, and the spacing
+namespace also feeds `w-*`, `h-*`, `size-*` and `max-w-*`. So `--spacing-sm:
+1rem` silently **redefined `max-w-sm` from 24rem (384px) to 1rem (16px)** —
+inside every app that installed a single Interlace component.
 
-Tailwind v4 generates utilities from theme keys **by namespace**, and the
-spacing namespace feeds far more than padding and gap. It also feeds `w-*`,
-`h-*`, `min-w-*`, `max-w-*`, `size-*`, `basis-*` and `inset-*`.
-
-So declaring `--spacing-sm: 1rem` does not only create `p-sm`. It silently
-**redefines `max-w-sm` from Tailwind's 24rem (384px) to 1rem (16px)**.
-
-```
-max-w-sm   → 384px  before        →   16px  after
-max-w-md   → 448px                →   24px
-max-w-2xl  → 672px                →   96px
-```
-
-Measured in a live browser against this system: `max-w-sm` computes to
-`16px`.
-
-What shipped before this was understood: **96px hero paragraphs, 40px
-dialogs, and 16px sheets**, on the public registry site. The failure is
-brutal to diagnose because nothing is misspelled — devtools shows
-`max-width: var(--spacing-sm)` resolving correctly to a value you did not
-intend.
-
-Two locks now hold the line:
-
-- `container-scale-lock.test.ts` — no `max-w-*` / `min-w-*` with a named key
-  (`xs`…`7xl`) anywhere in `packages/ui/src`, `apps/registry/src` or
-  `apps/storybook/src`. `xs`…`2xl` are broken; `3xl`…`7xl` work but violate
-  the four-width contract, so both are banned in the same rule.
-- `spacing-token-shadowing-lock.test.ts` — the same collision, scoped to
-  `max-w` and derived from the *actual* spacing keys rather than a hard-coded
-  list, so adding a seventh spacing token extends the ban automatically.
-
-The second lock's scope is itself a small lesson. An earlier, broader version
-flagged `min-h-2xl` on `Textarea` — which is intentional and correct — and a
-lock that cries wolf teaches the next reader to distrust it. It was narrowed
-to the utility family that is genuinely broken.
+Interlace 2.0 uses the numeric scale instead. `spacing-token-shadowing-lock`
+keeps it that way: no t-shirt-named `--spacing-*` key in `structure/type.css`, and
+no named spacing utility in the DS source. `container-scale-lock` still bans
+named `max-w-*` widths in favour of the four container tokens.
 
 **What stays safe:** numeric widths (`max-w-96` = 24rem) and arbitrary token
 values (`max-w-[65ch]`, `max-w-(--container-prose)`). Which is why the
@@ -128,20 +96,20 @@ elements, not one.
 ### `Container` — four widths, no fifth
 
 ```ts
-cva('mx-auto w-full px-4 sm:px-6 lg:px-8', {
+cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {
   variants: {
     size: {
       prose:   'max-w-[65ch]',
       content: 'max-w-[1024px]',   // default
       wide:    'max-w-[1280px]',
-      full:    'max-w-none px-0 sm:px-0 lg:px-0',
+      full:    'max-w-none px-0 xs:px-0 lg:px-0',
     },
   },
 });
 ```
 
 The base string is the whole contract: centre (`mx-auto`), fill
-(`w-full`), and a **responsive gutter** of `px-4 sm:px-6 lg:px-8`. Gutters
+(`w-full`), and a **responsive gutter** of `px-4 xs:px-6 lg:px-8`. Gutters
 scale with the viewport because 16px of breathing room reads generous on a
 phone and cramped on a 1280px display.
 
@@ -158,13 +126,13 @@ It looks harmless until two pages disagree about the gutter by 4px and nobody
 can find where.
 
 <div className="my-6 space-y-3">
-  <Container size="prose" className="rounded-md border border-border bg-card py-3 text-card-foreground">
+  <Container size="prose" className="rounded-lg border border-border bg-card py-3 text-card-foreground">
     <code className="text-sm">size="prose" — 65ch</code>
   </Container>
-  <Container size="content" className="rounded-md border border-border bg-card py-3 text-card-foreground">
+  <Container size="content" className="rounded-lg border border-border bg-card py-3 text-card-foreground">
     <code className="text-sm">size="content" — 1024px (default)</code>
   </Container>
-  <Container size="wide" className="rounded-md border border-border bg-card py-3 text-card-foreground">
+  <Container size="wide" className="rounded-lg border border-border bg-card py-3 text-card-foreground">
     <code className="text-sm">size="wide" — 1280px</code>
   </Container>
 </div>
@@ -206,22 +174,21 @@ borders.
 wrap, `gap="sm"` and `align="center"` pre-set, because the chip row is the
 case it exists for.
 
-<div className="my-6 rounded-md border border-border p-4">
+<div className="my-6 rounded-lg border border-border p-4">
   <Stack gap="md">
-    <div className="rounded-md border border-border bg-card p-3 text-card-foreground">
-      <code className="text-sm">Stack gap="md" → gap-md → 24px</code>
+    <div className="rounded-lg border border-border bg-card p-3 text-card-foreground">
+      <code className="text-sm">Stack gap="md" → gap-6 → 24px</code>
     </div>
     <Cluster>
       <Badge>cluster</Badge>
-      <Badge variant="secondary">gap-sm</Badge>
+      <Badge variant="secondary">gap-4</Badge>
       <Badge variant="outline">wraps</Badge>
     </Cluster>
   </Stack>
 </div>
 
-The lock asserts `gap="md"` emits `gap-md` and **not** `gap-6` — even though
-those compute to the same 24px today. The token is the contract; the pixel
-value is an implementation detail that a theme is allowed to move.
+The lock asserts `gap="md"` emits `gap-6` and **not** `gap-md`. A theme moves
+the pixel value through the `--spacing` variable, never through a renamed key.
 
 `Cluster` overrides `data-slot` to `"cluster"` rather than inheriting
 `"stack"`, so a `[data-slot="cluster"]` selector in consumer CSS keeps
@@ -268,21 +235,24 @@ Ship the variant on the primitive instead.
 
 | Layer | Files | Cascade layer |
 | --- | --- | --- |
-| 1 | `styles/tokens.css`, `styles/foundation.css`, `styles/interlace-theme.css` (brand half) | `interlace.primitives`, `interlace.foundation`, `interlace.brand` |
-| 2 | `styles/theme.css`, `styles/interlace-theme.css` (semantic half) | `interlace.bridge`, `interlace.semantics` |
+| 1 | `styles/brand/*.css`, `styles/semantics.css`, `styles/structure/*.css` | `interlace.brand`, `interlace.semantics`, `@theme`, `components` |
+| 2 | `styles/page/*.css` (opt-in) | `base`, `interlace.bridge` |
 | 3 | `src/primitives/**` | — |
 | 4 | `src/patterns/**` | — |
 | 5 | `src/templates/**` | — |
 
-Declared order, in `styles/index.css`:
+Declared order, in `styles/base.css` and `styles/index.css`:
 
 ```css
-@layer interlace.primitives, interlace.foundation, interlace.preflight,
-       interlace.bridge, interlace.brand, interlace.semantics;
+@layer interlace.bridge, interlace.brand, interlace.semantics;
 ```
 
+These three hold custom properties only. Every rule that styles an element
+sits in one of Tailwind's own layers (`base`, `components`), so a utility at
+the call site always beats it.
+
 Order is load-bearing, and one detail is worth stealing outright: the
-fumadocs bridge (`theme.css`) is **wrapped in a layer on purpose**. Per the
+fumadocs bridge (`page/fumadocs.css`) is **wrapped in a layer on purpose**. Per the
 CSS cascade-layers spec, unlayered styles beat every layered style. An
 unlayered `:root { --background: … }` in the bridge would therefore trump the
 layered semantic bindings that are supposed to override it — the exact
@@ -291,7 +261,7 @@ system's control.
 
 ---
 
-**Sources.** `packages/ui/styles/foundation.css` ·
+**Sources.** `packages/ui/styles/structure/type.css` ·
 `packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` ·
 `packages/ui/src/primitives/{container,section,stack,grid}.tsx` ·
 `packages/ui/__tests__/layout-primitives-lock.test.tsx` ·

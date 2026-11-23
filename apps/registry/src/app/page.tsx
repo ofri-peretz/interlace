@@ -22,11 +22,11 @@ const ALIAS_INSTALL = 'npx shadcn@latest add @interlace/button';
 const CLI_INSTALL = 'npx interlace-ui add button';
 
 const STYLE_INSTALL =
-  'npx shadcn@latest add https://ds.interlace.tools/r/theme.json';
+  'npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json';
 
 export default async function HomePage() {
   const [index, proof] = await Promise.all([loadIndex(), loadInstallProof()]);
-  const styleItem = index.items.find((i) => i.name === 'theme');
+  const styleItem = index.items.find((i) => i.name === 'interlace-base');
   // Every installable item, not just the primitives — patterns, templates and
   // the vendored effects are 60% of the registry and used to be unbrowsable.
   const components = index.items.filter((i) => i.type !== 'registry:style');
@@ -54,13 +54,13 @@ export default async function HomePage() {
           className="absolute -bottom-32 -left-32 size-112 rounded-full bg-primary/15 blur-3xl"
         />
 
-        <div className="relative mx-auto max-w-wide px-6 py-20 sm:py-28">
+        <div className="relative mx-auto max-w-wide px-6 py-20 xs:py-28">
           <div className="text-muted-foreground inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs">
             <span aria-hidden className="bg-success size-1.5 rounded-full" />
             {components.length} components · 1 theme bundle · WCAG 2.2 AA floor
           </div>
 
-          <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
+          <h1 className="mt-6 text-4xl font-bold tracking-tight xs:text-6xl">
             Production-grade React primitives
             <span className="bg-linear-to-r from-primary to-chart-2 bg-clip-text text-transparent">
               {' '}
@@ -69,14 +69,14 @@ export default async function HomePage() {
             .
           </h1>
 
-          <p className="text-muted-foreground mt-5 max-w-prose text-lg sm:text-xl">
+          <p className="text-muted-foreground mt-5 max-w-prose text-lg xs:text-xl">
             Drop the <code className="font-mono text-foreground">@interlace/ui</code>{' '}
             primitives into any React project with one command. Brand tokens,
             theme bridge, animation keyframes, and a portable 26-rule
             component-modeling floor — installed alongside.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 xs:flex-row">
             <CodeBlock label="Install a primitive" code={PRIMARY_INSTALL} />
             <CodeBlock label="Or with our CLI" code={CLI_INSTALL} />
           </div>
@@ -112,21 +112,21 @@ export default async function HomePage() {
               CSS module export
             </div>
             <h2 className="mt-2 text-3xl font-bold tracking-tight">
-              Theme + tokens, installed alongside.
+              Tokens installed alongside. Your app left alone.
             </h2>
             <p className="text-muted-foreground mt-4">
               Every primitive ships with{' '}
-              <code className="text-foreground font-mono">theme</code> as a
-              registry dependency. The shadcn CLI lands the whole CSS contract
-              in your project —
-              brand palette, shadcn-bare token bridge, animation keyframes,
-              type / spacing / radius scales — behind the one{' '}
-              <code className="text-foreground font-mono">index.css</code>{' '}
-              barrel, so primitives render the moment you import them.
+              <code className="text-foreground font-mono">interlace-base</code>{' '}
+              as a registry dependency: motion tokens, the type scale,
+              container widths and layered colour tokens, behind one{' '}
+              <code className="text-foreground font-mono">base.css</code>{' '}
+              barrel. It only adds, so your fonts, radii, breakpoints and
+              colours compile as they did. The Interlace palette and the page
+              preflight are separate items you add by name.
             </p>
             {styleItem ? (
               <p className="text-muted-foreground mt-3 text-sm">
-                Install separately:{' '}
+                The look, opt-in:{' '}
                 <code className="text-foreground font-mono">
                   npx shadcn@latest add @interlace/theme
                 </code>
@@ -134,25 +134,25 @@ export default async function HomePage() {
             ) : null}
           </div>
           <div className="min-w-0 space-y-3">
-            <CodeBlock label="Install the theme bundle" code={STYLE_INSTALL} />
-            <div className="grid gap-3 sm:grid-cols-3">
+            <CodeBlock label="Install the baseline" code={STYLE_INSTALL} />
+            <div className="grid gap-3 xs:grid-cols-3">
               <StyleFileCard
-                name="tokens.css"
+                name="structure/motion.css"
                 description="Animation + motion tokens (marquee, shimmer, scale-in)."
               />
               <StyleFileCard
-                name="theme.css"
-                description="shadcn-bare ↔ fumadocs token bridge; Shiki AAA boosts."
+                name="structure/type.css"
+                description="Type scale, container widths, the xs breakpoint, radius from --radius."
               />
               <StyleFileCard
-                name="interlace-theme.css"
+                name="brand/interlace.css"
                 description="Brand burnt-orange palette (light + dark), AAA contrast."
               />
             </div>
             <p className="text-muted-foreground text-xs">
               Or fetch raw:{' '}
               <code className="font-mono break-all">
-                /r/styles/&lt;tokens|theme|interlace-theme&gt;.css
+                /r/styles/base.css (imports brand/, semantics.css, structure/)
               </code>
             </p>
           </div>
@@ -162,7 +162,7 @@ export default async function HomePage() {
       {/* ─── Three pillars ────────────────────────────────────────── */}
       <section className="border-y border-border bg-card/30">
         <div className="mx-auto max-w-wide px-6 py-16">
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="grid gap-8 xs:grid-cols-3">
             <Pillar
               title="Portable floor"
               body="26-rule component-modeling floor — Tailwind + tokens, mobile-first, locked invariants, zero axe suppressions."
@@ -247,12 +247,12 @@ export default async function HomePage() {
               <p className="text-muted-foreground mt-1 max-w-prose text-sm">
                 {category.description}
               </p>
-              <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="mt-5 grid gap-3 xs:grid-cols-2 lg:grid-cols-3">
                 {items.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={`/c/${item.name}`}
-                      className="group border-border hover:border-primary/60 hover:bg-card flex h-full flex-col justify-between gap-3 rounded-lg border bg-card/40 p-4 transition-all"
+                      className="group border-border hover:border-primary/60 hover:bg-card flex h-full flex-col justify-between gap-3 rounded-xl border bg-card/40 p-4 transition-all"
                     >
                       <div>
                         <h4 className="font-semibold">{item.title}</h4>
@@ -292,7 +292,7 @@ export default async function HomePage() {
 
       {/* ─── Footer ─────────────────────────────────────────────── */}
       <footer className="border-t border-border">
-        <div className="text-muted-foreground mx-auto flex max-w-wide flex-col gap-2 px-6 py-10 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="text-muted-foreground mx-auto flex max-w-wide flex-col gap-2 px-6 py-10 text-sm xs:flex-row xs:items-center xs:justify-between">
           <div>
             Source of truth:{' '}
             <a
@@ -330,7 +330,7 @@ export default async function HomePage() {
 
 function CodeBlock({ label, code }: { label: string; code: string }) {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-lg border">
+    <div className="border-border bg-card overflow-hidden rounded-xl border">
       <div className="text-muted-foreground border-border border-b px-4 py-2 text-xs font-medium">
         {label}
       </div>
@@ -349,7 +349,7 @@ function StyleFileCard({
   description: string;
 }) {
   return (
-    <div className="border-border bg-background rounded-lg border p-3">
+    <div className="border-border bg-background rounded-xl border p-3">
       <div className="font-mono text-sm font-semibold">{name}</div>
       <p className="text-muted-foreground mt-1 text-xs leading-snug">
         {description}

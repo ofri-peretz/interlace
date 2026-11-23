@@ -72,7 +72,7 @@ const pairs: Pair[] = [
 function Swatch({ pair }: { pair: Pair }) {
   return (
     <div
-      className={`${pair.bgClass} border-border flex flex-col gap-2 rounded-lg border p-6`}
+      className={`${pair.bgClass} border-border flex flex-col gap-2 rounded-xl border p-6`}
     >
       <p className={`${pair.fgClass} text-base font-semibold`}>{pair.name}</p>
       <p className={`${pair.fgClass} text-sm`}>

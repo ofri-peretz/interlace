@@ -22,11 +22,11 @@ contrast contract at the bottom.
 ```
   layer 1   --interlace-primary: #7d350c        ← the only hex literals
      │
-     │      interlace-theme.css, @layer interlace.brand
+     │      brand/interlace.css, @layer interlace.brand
      ▼
   layer 2   --primary: var(--interlace-primary) ← semantic alias
      │
-     │      interlace-theme.css, @layer interlace.semantics
+     │      brand/interlace.css, @layer interlace.semantics
      ▼
   layer 3   @theme inline {
      │        --color-primary: var(--primary);
@@ -44,7 +44,7 @@ Flip the **Theme** and light/dark toolbar controls above and watch the strip
 below repaint. Not one class in it changes — only which brand block is
 winning on `<html>`.
 
-<div className="my-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+<div className="my-6 grid grid-cols-2 gap-3 xs:grid-cols-3">
   {[
     ['bg-background text-foreground border border-border', 'background'],
     ['bg-card text-card-foreground border border-border', 'card'],
@@ -53,28 +53,26 @@ winning on `<html>`.
     ['bg-secondary text-secondary-foreground', 'secondary'],
     ['bg-destructive text-destructive-foreground', 'destructive'],
   ].map(([cls, name]) => (
-    <div key={name} className={`rounded-md p-4 ${cls}`}>
+    <div key={name} className={`rounded-lg p-4 ${cls}`}>
       <p className="text-sm font-medium">{name}</p>
       <p className="text-sm">Body text at this pair.</p>
     </div>
   ))}
 </div>
 
-The full stylesheet layer order, from `styles/index.css`:
+The stylesheet tree, from `styles/base.css` and `styles/index.css`:
 
 ```css
-@layer interlace.primitives, interlace.foundation, interlace.preflight,
-       interlace.bridge, interlace.brand, interlace.semantics;
+@layer interlace.bridge, interlace.brand, interlace.semantics;
 ```
 
 | Layer | File | Owns |
 | --- | --- | --- |
-| `interlace.primitives` | `tokens.css` | keyframes, animation utilities |
-| `interlace.foundation` | `foundation.css` | type / spacing / radius / container / breakpoint scales |
-| `interlace.preflight` | `preflight.css` | body paint, `::selection`, the focus ring, scrollbar tint |
-| `interlace.bridge` | `theme.css` | the fumadocs ↔ shadcn seam |
-| `interlace.brand` | `interlace-theme.css` | the `--interlace-*` hex literals. **The supported override surface** |
-| `interlace.semantics` | `interlace-theme.css` | `--background`, `--primary`, `--ring`, … bound to the brand layer |
+| `interlace.brand` | `brand/interlace.css`, `brand/harbor.css` | the `--interlace-*` literals. **The supported override surface** |
+| `interlace.semantics` | `semantics.css` | `--background`, `--primary`, `--ring`, … bound to the brand layer |
+| `@theme` / `components` | `structure/*.css` | type, layout, radius and motion scales; same for every brand |
+| `base` | `page/preflight.css` (opt-in) | body paint, `::selection`, the focus ring, scrollbar tint |
+| `interlace.bridge` | `page/fumadocs.css` (opt-in) | the fumadocs ↔ shadcn seam |
 
 ### The substitution rule that makes this work
 
@@ -208,8 +206,8 @@ started to fork the system.
 Registering a theme is three edits: the file, one `@import` line, and a row
 in the `THEMES` registry. The contract lock reads all three.
 
-What you should not override: `interlace.preflight` (the focus ring, the body
-paint), `interlace.bridge` (the fumadocs seam), `interlace.foundation` (the
+What you should not override: `page/preflight.css` (the focus ring, the body
+paint), `interlace.bridge` (the fumadocs seam), `structure/` (the
 scales). Those are the parts that are the same across brands by design.
 
 ---
@@ -321,8 +319,8 @@ mid-grey: `#8f857a` (3.62:1) light, `#6b635a` (3.35:1) dark.
 ---
 
 **Sources.** `packages/ui/styles/index.css` ·
-`packages/ui/styles/interlace-theme.css` ·
-`packages/ui/styles/themes/harbor.css` ·
+`packages/ui/styles/brand/interlace.css` ·
+`packages/ui/styles/brand/harbor.css` ·
 `packages/ui/src/lib/{use-theme,theme-script,theme-tokens}.ts` ·
 `packages/ui/__tests__/theme-contract-lock.test.ts` ·
 `packages/ui/__tests__/composite-contrast-lock.test.ts` ·

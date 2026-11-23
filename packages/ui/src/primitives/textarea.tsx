@@ -5,7 +5,7 @@
  * machinery: the native `<textarea>` already owns selection, IME, undo/redo,
  * `onChange` etc., so we add structure (size + tone) without wrapping a
  * single native behaviour. Server component — no hooks, no Base UI client
- * surface required. Inherits the DS font from `preflight.css` (rule #3).
+ * surface required. Inherits the DS font from `page/preflight.css` (rule #3).
  *
  * ## Anatomy
  *
@@ -64,7 +64,7 @@ const textareaVariants = cva(
   // Base — surface, border, radius, focus + invalid rings, disabled.
   [
     'block w-full min-w-0 border border-input bg-transparent',
-    'rounded-md shadow-xs outline-none transition-[color,box-shadow]',
+    'rounded-lg shadow-xs outline-none transition-[color,box-shadow]',
     'placeholder:text-muted-foreground',
     // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
     // under the 3:1 focus-indicator floor (SC 2.4.13).
@@ -81,9 +81,9 @@ const textareaVariants = cva(
        * to stay token-anchored — no raw px literal).
        */
       size: {
-        sm: 'px-sm py-xs text-ui-sm min-h-xl',
-        md: 'px-sm py-xs text-ui min-h-2xl',
-        lg: 'px-md py-sm text-body min-h-[calc(var(--spacing-xl)*2)]',
+        sm: 'px-4 py-2 text-ui-sm min-h-16',
+        md: 'px-4 py-2 text-ui min-h-24',
+        lg: 'px-6 py-4 text-body min-h-32',
       },
       /** Border tone. `invalid` is an explicit prop AND a fallback for `aria-invalid`. */
       tone: {

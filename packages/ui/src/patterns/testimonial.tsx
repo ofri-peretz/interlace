@@ -87,7 +87,7 @@ function Testimonial({
       data-slot="testimonial"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'border-border bg-card text-card-foreground flex flex-col gap-md rounded-lg border p-md',
+        'border-border bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-6',
         className,
       )}
       {...props}
@@ -95,7 +95,7 @@ function Testimonial({
       <blockquote className="text-body leading-body text-foreground">
         “{quote}”
       </blockquote>
-      <figcaption className="flex items-center gap-sm">
+      <figcaption className="flex items-center gap-4">
         <Avatar className="size-9 shrink-0">
           {authorAvatar ? (
             <AvatarImage src={authorAvatar} alt="" />
@@ -127,12 +127,12 @@ interface TestimonialGridProps extends Omit<React.ComponentProps<'section'>, 'ti
 
 /**
  * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `sm:grid-cols-${n}`.
+ * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
  */
 const TESTIMONIAL_GRID_COLS: Record<1 | 2 | 3, string> = {
   1: 'grid-cols-1',
-  2: 'grid-cols-1 sm:grid-cols-2',
-  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  2: 'grid-cols-1 xs:grid-cols-2',
+  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
 };
 
 function TestimonialGrid({
@@ -150,7 +150,7 @@ function TestimonialGrid({
     <section
       data-slot="testimonial-grid"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="content">

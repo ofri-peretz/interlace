@@ -93,7 +93,7 @@ export function Mermaid({
     return (
       <div
         className={cn(
-          'border-destructive/50 bg-destructive/5 text-destructive rounded-md border p-3 text-sm',
+          'border-destructive/50 bg-destructive/5 text-destructive rounded-lg border p-3 text-sm',
           className,
         )}
       >

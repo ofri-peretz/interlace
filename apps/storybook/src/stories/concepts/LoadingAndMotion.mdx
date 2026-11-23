@@ -55,14 +55,14 @@ shapes rather than a single box, because a card's silhouette is a thumbnail
 plus two text lines plus a byline, and a single grey rectangle of the right
 height still makes the eye jump.
 
-<div className="my-6 grid gap-6 sm:grid-cols-2">
-  <div className="rounded-md border border-border p-4">
+<div className="my-6 grid gap-6 xs:grid-cols-2">
+  <div className="rounded-lg border border-border p-4">
     <p className="mb-3 text-sm text-muted-foreground">Loading</p>
     <Skeleton variant="label" label={null} />
     <div className="h-2" />
     <Skeleton variant="input" label={null} />
   </div>
-  <div className="rounded-md border border-border p-4">
+  <div className="rounded-lg border border-border p-4">
     <p className="mb-3 text-sm text-muted-foreground">Resolved</p>
     <Label htmlFor="skeleton-demo">Email</Label>
     <Input id="skeleton-demo" placeholder="you@example.com" className="mt-2 w-full" />
@@ -148,7 +148,7 @@ The posture is opt-*out* of motion at the CSS layer and opt-*in* at the JS
 layer.
 
 **CSS-driven animation** is disabled wholesale under the media query, in
-`tokens.css`:
+`structure/motion.css`:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
@@ -237,7 +237,7 @@ Published for the same reason as the gaps on the
   inside an `--animate-*` shorthand, and shipped easing is the CSS keyword
   `ease-out`, which is a different curve.
 - **The documented "max 200ms on entry" budget is not met by three entry
-  animations** in `theme.css`: `fade-in-up` and `slide-in-left` at 500ms and
+  animations** in `page/fumadocs.css`: `fade-in-up` and `slide-in-left` at 500ms and
   `scale-in` at 400ms, two of them with additional delays. The accordion, at
   200ms, is on budget.
 - **Nothing measures CLS.** Skeleton/component shape parity is by
@@ -252,7 +252,7 @@ Each of those is a real gap, and each is exactly the kind that a page saying
 `packages/ui/src/primitives/skeleton-variants.ts` ·
 `packages/ui/src/primitives/data-state.tsx` ·
 `packages/ui/src/lib/use-reduced-motion.ts` ·
-`packages/ui/styles/tokens.css` · `packages/ui/styles/theme.css` ·
+`packages/ui/styles/structure/motion.css` · `packages/ui/styles/page/fumadocs.css` ·
 `packages/ui/__tests__/skeleton-variant-coverage-lock.test.ts` ·
 `packages/ui/__tests__/templates-section-boundary-lock.test.ts` ·
 `packages/ui/__tests__/use-reduced-motion.test.tsx` ·

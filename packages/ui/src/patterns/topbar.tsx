@@ -114,15 +114,15 @@ function Topbar({
     >
       <div
         className={cn(
-          'mx-auto flex h-14 items-center justify-between px-md',
+          'mx-auto flex h-14 items-center justify-between px-6',
           CONTAINER_CLASSES[containerSize],
         )}
       >
-        <div className="flex items-center gap-sm">{logo}</div>
+        <div className="flex items-center gap-4">{logo}</div>
         {links.length > 0 ? (
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-md text-sm md:flex"
+            className="hidden items-center gap-6 text-sm md:flex"
           >
             {links.map((link) =>
               link.external ? (
@@ -149,7 +149,7 @@ function Topbar({
           </nav>
         ) : null}
         {actions ? (
-          <div className="flex items-center gap-sm">{actions}</div>
+          <div className="flex items-center gap-4">{actions}</div>
         ) : null}
       </div>
     </header>

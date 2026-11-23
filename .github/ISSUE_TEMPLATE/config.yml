@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Component docs
+    url: https://ds.interlace.tools
+    about: Every component's props, accessibility contract and live preview.
+  - name: Report a vulnerability
+    url: https://github.com/ofri-peretz/interlace/blob/main/SECURITY.md
+    about: Please report security issues privately, not as a public issue.

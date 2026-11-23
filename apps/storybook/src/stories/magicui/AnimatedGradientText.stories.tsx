@@ -79,7 +79,7 @@ export const Default: Story = {
     colorTo: '#9c40ff',
   },
   render: (args) => (
-    <div className="rounded-lg border border-border bg-background p-6">
+    <div className="rounded-xl border border-border bg-background p-6">
       <p className="mb-2 text-sm text-muted-foreground">Eyebrow</p>
       <AnimatedGradientText {...args} className="text-xl font-semibold" />
     </div>

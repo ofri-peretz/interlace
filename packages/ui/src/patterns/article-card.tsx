@@ -84,7 +84,7 @@
  * The cover zoom is the one that carries its own gate. `motion-safe:` compiles
  * to `@media (prefers-reduced-motion: no-preference)` inside the utility
  * itself, so it holds on the à-la-carte import path — a consumer taking
- * `tokens.css` + `theme.css` and skipping `preflight.css` (the path
+ * `structure/motion.css` + `page/fumadocs.css` and skipping `page/preflight.css` (the path
  * `styles/index.css` exists to prevent, and `motion-contract-lock` treats as
  * live). The remaining two are colour and opacity changes rather than
  * movement, so the preflight clamp is the appropriate layer for them.
@@ -290,7 +290,7 @@ function CardShell({
       data-slot="article-card"
       data-testid={testId}
       className={cn(
-        'group focus-visible:ring-ring block h-full rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+        'group focus-visible:ring-ring block h-full rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
         className,
       )}
     >
@@ -371,7 +371,7 @@ export function ArticleCard({
       external={external}
       testId={testId}
       className={className}
-      surfaceClassName="pb-sm"
+      surfaceClassName="pb-4"
     >
       <StackBody
         {...rest}
@@ -475,7 +475,7 @@ interface BodyProps extends Omit<ArticleCardBaseProps, 'title' | 'data-testid'> 
  * scale's floor. The old `text-[10px]` was below every readable minimum.
  */
 const OVER_COVER_CHIP =
-  'absolute top-3 z-10 flex items-center gap-1 rounded-md bg-scrim/70 px-2 py-1 text-caption font-bold tracking-wider text-scrim-foreground uppercase backdrop-blur-sm';
+  'absolute top-3 z-10 flex items-center gap-1 rounded-lg bg-scrim/70 px-2 py-1 text-caption font-bold tracking-wider text-scrim-foreground uppercase backdrop-blur-sm';
 
 /** Top-right chip used to attribute the source of the article (e.g., "Dev.to"). */
 function SourceChip({ label, testId }: { label: string; testId: string }) {
@@ -578,7 +578,7 @@ function CoverImage({
     return <>{renderImage(imageProps)}</>;
   }
   return (
-    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/25 via-scrim to-chart-2/25 p-md">
+    <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-primary/25 via-scrim to-chart-2/25 p-6">
       <span
         className={cn(
           'line-clamp-3 text-center leading-snug font-semibold text-scrim-foreground/80',
@@ -843,7 +843,7 @@ function OverlayBody({
       <FeaturedChip testId={testId} />
       {sourceLabel ? <SourceChip label={sourceLabel} testId={testId} /> : null}
 
-      <div className="absolute inset-x-0 bottom-0 z-10 p-md md:p-lg">
+      <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-10">
         {visibleTags.length > 0 ? (
           <div
             data-slot="article-card-tags"
@@ -917,16 +917,16 @@ function OverlayBody({
           ) : null}
           {publishedAt ? (
             <>
-              <span aria-hidden className="hidden sm:inline text-scrim-foreground/40">•</span>
-              <span className="hidden sm:inline whitespace-nowrap text-scrim-foreground/80">
+              <span aria-hidden className="hidden xs:inline text-scrim-foreground/40">•</span>
+              <span className="hidden xs:inline whitespace-nowrap text-scrim-foreground/80">
                 {formatDate(publishedAt)}
               </span>
             </>
           ) : null}
           {meta ? (
             <>
-              <span aria-hidden className="hidden sm:inline text-scrim-foreground/40">•</span>
-              <div className="hidden sm:flex items-center gap-3 md:gap-4">
+              <span aria-hidden className="hidden xs:inline text-scrim-foreground/40">•</span>
+              <div className="hidden xs:flex items-center gap-3 md:gap-4">
                 <MetaChips meta={meta} tone="scrim" testId={testId} />
               </div>
             </>

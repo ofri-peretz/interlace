@@ -1,0 +1,37 @@
+name: Bug report
+description: A component does not behave as documented.
+labels: [bug]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: The registry item name, for example `button` or `data-table`.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Component version
+      description: The version in the banner at the top of the installed file.
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: A minimal repo or StackBlitz link is the fastest way to a fix.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Framework and version, Tailwind version, browser.
+      placeholder: Next.js 16.2, Tailwind 4.1, Chrome 142

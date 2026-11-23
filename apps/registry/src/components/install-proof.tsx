@@ -100,7 +100,7 @@ export function InstallProofPanel({ proof }: { proof: InstallProof }) {
         — this page reads that file, it does not summarise it by hand.
       </p>
 
-      <dl className="border-border mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-border lg:grid-cols-4">
+      <dl className="border-border mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border lg:grid-cols-4">
         <Figure
           value={String(proof.itemCount)}
           label="items installed"
@@ -166,7 +166,7 @@ export function InstallProofPanel({ proof }: { proof: InstallProof }) {
       </p>
 
       {proof.notCovered > 0 ? (
-        <p className="border-border bg-card text-muted-foreground mt-4 rounded-lg border border-dashed p-4 text-sm">
+        <p className="border-border bg-card text-muted-foreground mt-4 rounded-xl border border-dashed p-4 text-sm">
           <span className="text-foreground font-semibold">
             The proof is {proof.notCovered} items behind the catalogue.
           </span>{' '}

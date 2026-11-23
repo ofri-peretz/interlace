@@ -110,7 +110,7 @@ function SelectTrigger({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-size={size}
       className={cn(
-        'flex w-fit items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm whitespace-nowrap shadow-sm transition-[color,box-shadow] outline-none',
+        'flex w-fit items-center justify-between gap-2 rounded-lg border border-input bg-background px-3 py-2 text-sm whitespace-nowrap shadow-sm transition-[color,box-shadow] outline-none',
         'hover:bg-accent hover:text-accent-foreground',
         // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
         // under the 3:1 focus-indicator floor (SC 2.4.13).
@@ -152,7 +152,7 @@ function SelectContent({
         <BaseSelect.Popup
           data-slot="select-popup"
           className={cn(
-            'min-w-(--anchor-width) overflow-x-hidden overflow-y-auto rounded-xl border border-border bg-popover text-popover-foreground shadow-lg',
+            'min-w-(--anchor-width) overflow-x-hidden overflow-y-auto rounded-lg border border-border bg-popover text-popover-foreground shadow-lg',
             'origin-(--transform-origin)',
             'data-starting-style:opacity-0 data-starting-style:scale-95',
             'data-ending-style:opacity-0 data-ending-style:scale-95',
@@ -191,7 +191,7 @@ function SelectItem({
     <BaseSelect.Item
       data-slot="select-item"
       className={cn(
-        'relative flex w-full cursor-pointer items-center gap-2 rounded-lg py-2.5 pr-8 pl-3 text-sm outline-hidden select-none transition-all duration-150',
+        'relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2.5 pr-8 pl-3 text-sm outline-hidden select-none transition-all duration-150',
         'text-popover-foreground',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-selected:bg-primary data-selected:text-primary-foreground data-selected:font-medium',

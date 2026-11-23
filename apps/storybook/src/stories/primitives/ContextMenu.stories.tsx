@@ -146,7 +146,7 @@ export const Default: Story = {
   render: (args) => (
     <div className="flex h-48 w-80 items-center justify-center">
       <ContextMenu {...args}>
-        <ContextMenuTrigger className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-md border border-dashed">
+        <ContextMenuTrigger className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-lg border border-dashed">
           Right-click anywhere here
         </ContextMenuTrigger>
         <ContextMenuContent>
@@ -184,7 +184,7 @@ export const Compose: Story = {
     <div className="flex h-48 w-80 items-center justify-center">
       <ContextMenu.Compose
         trigger={
-          <div className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-md border border-dashed">
+          <div className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-lg border border-dashed">
             Right-click anywhere here
           </div>
         }
@@ -206,7 +206,7 @@ export const KeyboardFlow: Story = {
     <div className="flex h-48 w-80 items-center justify-center">
       <ContextMenu.Compose
         trigger={
-          <div className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-md border border-dashed">
+          <div className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-lg border border-dashed">
             Focus me, then press Shift+F10
           </div>
         }

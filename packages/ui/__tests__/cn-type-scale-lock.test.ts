@@ -10,7 +10,7 @@
  * invisible in review: the class list looks right in the source and is wrong in
  * the browser. So two things are locked here — the behaviour, and the fact that
  * `DS_FONT_SIZES` still matches the stylesheet it mirrors. A token added to
- * `foundation.css` and forgotten in `cn.ts` does not throw; it silently loses its
+ * `structure/type.css` and forgotten in `cn.ts` does not throw; it silently loses its
  * size at the first colour collision.
  */
 
@@ -21,7 +21,7 @@ import { describe, expect, it } from 'vitest';
 
 import { DS_FONT_SIZES, cn } from '../src/lib/cn.js';
 
-const FOUNDATION = resolve(__dirname, '../styles/foundation.css');
+const FOUNDATION = resolve(__dirname, '../styles/structure/type.css');
 
 /** `--text-ui-sm: 0.8125rem;` → `ui-sm`. Ignores the `--line-height` companions. */
 function declaredFontSizes(): string[] {
@@ -34,18 +34,18 @@ function declaredFontSizes(): string[] {
 }
 
 describe('cn() knows the DS type scale', () => {
-  it('registers every --text-* token declared in foundation.css', () => {
+  it('registers every --text-* token declared in structure/type.css', () => {
     const declared = declaredFontSizes();
     const registered = [...DS_FONT_SIZES].sort();
     expect(
       declared.filter((t) => !registered.includes(t)),
-      'These font-size tokens exist in foundation.css but are missing from DS_FONT_SIZES in cn.ts. ' +
+      'These font-size tokens exist in structure/type.css but are missing from DS_FONT_SIZES in cn.ts. ' +
         'Until they are listed, tailwind-merge treats them as COLOUR utilities and silently deletes ' +
         'them whenever a component sets a text colour on the same element.',
     ).toEqual([]);
   });
 
-  it('registers nothing that foundation.css does not declare', () => {
+  it('registers nothing that structure/type.css does not declare', () => {
     const declared = declaredFontSizes();
     expect([...DS_FONT_SIZES].filter((t) => !declared.includes(t))).toEqual([]);
   });

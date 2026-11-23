@@ -433,12 +433,11 @@
       "default": "./dist/patterns/*.js"
     },
     "./styles/index.css": "./styles/index.css",
-    "./styles/tokens.css": "./styles/tokens.css",
-    "./styles/foundation.css": "./styles/foundation.css",
-    "./styles/preflight.css": "./styles/preflight.css",
-    "./styles/theme.css": "./styles/theme.css",
-    "./styles/interlace-theme.css": "./styles/interlace-theme.css",
-    "./styles/themes/harbor.css": "./styles/themes/harbor.css"
+    "./styles/base.css": "./styles/base.css",
+    "./styles/semantics.css": "./styles/semantics.css",
+    "./styles/brand/*": "./styles/brand/*",
+    "./styles/structure/*": "./styles/structure/*",
+    "./styles/page/*": "./styles/page/*"
   },
   "files": [
     "dist",

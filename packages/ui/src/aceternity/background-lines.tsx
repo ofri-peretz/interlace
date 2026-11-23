@@ -33,7 +33,7 @@
  * ## Motion
  *
  * JS-driven — `motion/react` variants on twelve paths, `repeat: Infinity`. The
- * CSS reset in `styles/preflight.css` cannot reach motion's inline styles, so
+ * CSS reset in `styles/page/preflight.css` cannot reach motion's inline styles, so
  * the gate is in JS and it is total: the layer renders only under
  * `{isVisible && !reduceMotion && <SVG …/>}`, so under
  * `prefers-reduced-motion: reduce` no SVG mounts at all and the surface is a

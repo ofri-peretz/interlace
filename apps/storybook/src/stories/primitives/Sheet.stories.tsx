@@ -69,7 +69,7 @@ const meta: Meta<SheetStoryArgs> = {
       control: 'inline-radio',
       options: ['top', 'right', 'bottom', 'left'],
       description:
-        'Edge the panel slides in from — a `SheetContent` prop. Left/right are `w-3/4` capped at `sm:max-w-96`; top/bottom are `h-auto`.',
+        'Edge the panel slides in from — a `SheetContent` prop. Left/right are `w-3/4` capped at `xs:max-w-96`; top/bottom are `h-auto`.',
       table: {
         type: { summary: "'top' | 'right' | 'bottom' | 'left'" },
         defaultValue: { summary: 'right' },
@@ -223,7 +223,7 @@ export const Sides: Story = {
             <SheetHeader>
               <SheetTitle>side=&quot;{side}&quot;</SheetTitle>
               <SheetDescription>
-                Left / right fill 3/4 of the width up to `sm:max-w-96`; top /
+                Left / right fill 3/4 of the width up to `xs:max-w-96`; top /
                 bottom size to their content.
               </SheetDescription>
             </SheetHeader>

@@ -81,7 +81,7 @@ function ErrorTemplate({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-variant={variant}
       className={cn(
-        'bg-background flex min-h-screen items-center justify-center py-xl',
+        'bg-background flex min-h-screen items-center justify-center py-16',
         className,
       )}
       {...props}
@@ -106,7 +106,7 @@ function ErrorTemplate({
               {description ?? fallback.description}
             </Typography>
             {actions ? (
-              <div className="mt-md flex flex-col items-center gap-sm sm:flex-row">
+              <div className="mt-6 flex flex-col items-center gap-4 xs:flex-row">
                 {actions}
               </div>
             ) : null}
@@ -140,7 +140,7 @@ function ErrorTemplateSkeleton({
       aria-busy="true"
       aria-label="Loading…"
       className={cn(
-        'bg-background flex min-h-screen items-center justify-center py-xl',
+        'bg-background flex min-h-screen items-center justify-center py-16',
         className,
       )}
       {...props}

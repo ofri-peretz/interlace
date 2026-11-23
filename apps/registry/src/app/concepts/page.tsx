@@ -40,12 +40,12 @@ export default function ConceptsIndexPage() {
             'What this design system guarantees, and where each guarantee is enforced.'}
         </p>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="mt-10 grid gap-4 xs:grid-cols-2">
           {rest.map((page) => (
             <Link
               key={page.slug}
               href={`/concepts/${page.slug}`}
-              className="border-border hover:border-primary/60 bg-card/40 hover:bg-card group flex flex-col rounded-lg border p-5 transition-colors"
+              className="border-border hover:border-primary/60 bg-card/40 hover:bg-card group flex flex-col rounded-xl border p-5 transition-colors"
             >
               <span className="flex items-baseline justify-between gap-3">
                 <span className="text-lg font-semibold">{page.title}</span>
@@ -79,7 +79,7 @@ export default function ConceptsIndexPage() {
             </p>
             <Link
               href="/concepts/overview"
-              className="border-primary/40 bg-primary/10 text-primary hover:bg-primary/15 mt-4 inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold transition-colors"
+              className="border-primary/40 bg-primary/10 text-primary hover:bg-primary/15 mt-4 inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition-colors"
             >
               Read the overview
               <span aria-hidden>→</span>

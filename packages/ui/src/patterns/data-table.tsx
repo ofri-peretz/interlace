@@ -286,7 +286,7 @@ export function DataTable<Row>({
       {selectable && selected.length > 0 ? (
         <div
           data-slot="data-table-selection"
-          className="flex flex-wrap items-center gap-3 rounded-md border border-border bg-muted px-3 py-2 text-sm"
+          className="flex flex-wrap items-center gap-3 rounded-lg border border-border bg-muted px-3 py-2 text-sm"
         >
           <span className="text-muted-foreground">
             {selectionMessage(selected.length)}
@@ -322,7 +322,7 @@ export function DataTable<Row>({
         // position in column 13 gives the PAGE a 233px horizontal scroll on
         // a 375px phone. The table scrolled correctly the whole time; the
         // thing dragging the page sideways was invisible text.
-        className="relative w-full overflow-x-auto rounded-md border border-border focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        className="relative w-full overflow-x-auto rounded-lg border border-border focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
       >
         <table className="w-full border-collapse text-sm">
           <caption

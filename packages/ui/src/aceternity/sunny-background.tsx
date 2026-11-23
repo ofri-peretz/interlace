@@ -42,7 +42,7 @@
  * `data-animated="false"`, and the animation rule only matches
  * `[data-animated="true"]`; `SUNNY_CSS` carries its own
  * `@media (prefers-reduced-motion: reduce)` block setting `animation: none
- * !important`; and the wildcard in `styles/preflight.css` would clamp it
+ * !important`; and the wildcard in `styles/page/preflight.css` would clamp it
  * anyway. Reading the preference in JS as well is what makes the rotation
  * never start — including when the user flips the setting mid-session.
  *
@@ -389,8 +389,8 @@ export function SunnyBackground({
   );
 
   const sunPosition = cn({
-    "top-8 right-8 sm:top-12 sm:right-16": corner === "top-right",
-    "top-8 left-8 sm:top-12 sm:left-16": corner === "top-left",
+    "top-8 right-8 xs:top-12 xs:right-16": corner === "top-right",
+    "top-8 left-8 xs:top-12 xs:left-16": corner === "top-left",
     "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2": corner === "center",
   });
 

@@ -26,13 +26,12 @@ import { withRtl } from '@/decorators';
  *
  * Before that barrel existed, consumers had to know — and repeat in order —
  * a five-file import chain, and a skipped file silently degraded half the
- * contract (omitting `preflight.css` cost the WCAG 2.2 SC 2.4.13 focus
+ * contract (omitting `page/preflight.css` cost the WCAG 2.2 SC 2.4.13 focus
  * ring). The barrel makes it one line, and CSS Cascade Layers make the order
  * self-documenting:
  *
  * ```css
- * @layer interlace.primitives, interlace.foundation, interlace.preflight,
- *        interlace.bridge, interlace.brand, interlace.semantics;
+ * @layer interlace.bridge, interlace.brand, interlace.semantics;
  * ```
  *
  * Left to right is ascending priority. The whole stack stays under the
@@ -140,9 +139,9 @@ function LayerRow({
     >
       <Stack gap="sm">
         <Stack gap="xs">
-          <div className="flex flex-wrap items-baseline justify-between gap-xs">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
             <Typography variant="code" as="code" className="font-semibold">
-              @layer {layer}
+              {layer}
             </Typography>
             <Typography variant="caption" tone="muted" as="code">
               {file}
@@ -152,7 +151,7 @@ function LayerRow({
             {owns}
           </Typography>
         </Stack>
-        <div className="rounded-md border border-border bg-card/40 p-sm">
+        <div className="rounded-lg border border-border bg-card/40 p-4">
           {children}
         </div>
       </Stack>
@@ -162,7 +161,7 @@ function LayerRow({
 
 function Probe({ name }: { name: string }) {
   return (
-    <div className="flex flex-wrap items-baseline justify-between gap-xs border-b border-border py-1 last:border-b-0">
+    <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border py-1 last:border-b-0">
       <Typography variant="code" as="code" className="text-muted-foreground">
         {name}
       </Typography>
@@ -193,36 +192,35 @@ function Specimen() {
           without it — a live element or a live computed value, never a
           description.
         </Typography>
-        <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code">{`@import "tailwindcss";
 @import "@interlace/ui/styles/index.css";`}</code>
         </pre>
       </Stack>
 
       <LayerRow
-        layer="interlace.primitives"
-        file="styles/tokens.css"
-        owns="Raw values: keyframes, motion timings, animation utility classes. No semantic meaning — the mechanical primitives everything else spends."
+        layer="@layer components"
+        file="styles/structure/motion.css"
+        owns="Structure: keyframes, motion timings, animation utility classes. No semantic meaning — the mechanical primitives everything else spends. Classes sit in Tailwind's components layer, so a call-site utility still wins."
       >
-        <Probe name="--animate-accordion-down" />
+        <Probe name="--animate-marquee" />
         <Typography variant="caption" tone="muted">
           Registered as a Tailwind theme key, so{' '}
-          <code className="font-mono">animate-accordion-down</code> exists as a
+          <code className="font-mono">animate-marquee</code> exists as a
           utility. This layer also enumerates every long-running animation in
           the <code className="font-mono">prefers-reduced-motion</code> clamp.
         </Typography>
       </LayerRow>
 
       <LayerRow
-        layer="interlace.foundation"
-        file="styles/foundation.css"
-        owns="Type scale, spacing scale, radius, container widths, font families — brand-INVARIANT structure, registered as Tailwind theme tokens. Harbor and Interlace share every value in this layer."
+        layer="@theme"
+        file="styles/structure/{type,layout,radius}.css"
+        owns="Type scale, radius steps, container widths, the xs breakpoint — brand-INVARIANT structure, registered as Tailwind theme tokens. Harbor and Interlace share every value in this layer."
       >
         <Stack gap="sm">
           <div>
             <Probe name="--text-body" />
             <Probe name="--text-ui-sm" />
-            <Probe name="--spacing-md" />
             <Probe name="--radius-md" />
             <Probe name="--container-prose" />
           </div>
@@ -244,8 +242,8 @@ function Specimen() {
       </LayerRow>
 
       <LayerRow
-        layer="interlace.preflight"
-        file="styles/preflight.css"
+        layer="@layer base"
+        file="styles/page/preflight.css"
         owns="Token-aware baseline beyond Tailwind's own: body background and foreground, ::selection, the WCAG 2.2 SC 2.4.13 focus ring, scrollbar tint, ::placeholder contrast, and the [data-min-viewport] container contract."
       >
         <Stack gap="sm">
@@ -253,12 +251,12 @@ function Specimen() {
             Tab to the control below. The ring is painted by{' '}
             <code className="font-mono">:focus-visible</code> in this layer —
             not by the Button — which is why dropping{' '}
-            <code className="font-mono">preflight.css</code> silently costs
+            <code className="font-mono">page/preflight.css</code> silently costs
             every focusable element in the app its indicator.
           </Typography>
-          <div className="flex flex-wrap items-end gap-sm">
+          <div className="flex flex-wrap items-end gap-4">
             <Button variant="outline">Focusable</Button>
-            <div className="grid gap-xs">
+            <div className="grid gap-2">
               <Label htmlFor="theme-preflight-input">
                 Placeholder contrast
               </Label>
@@ -272,8 +270,8 @@ function Specimen() {
       </LayerRow>
 
       <LayerRow
-        layer="interlace.bridge"
-        file="styles/theme.css"
+        layer="@layer interlace.bridge"
+        file="styles/page/fumadocs.css"
         owns="The fumadocs ↔ shadcn token bridge. Fumadocs ships the --color-fd-* family and not the unprefixed shadcn names, so an app that uses both would otherwise run two colour stories side by side."
       >
         <pre className="overflow-x-auto">
@@ -293,15 +291,15 @@ function Specimen() {
       </LayerRow>
 
       <LayerRow
-        layer="interlace.brand"
-        file="styles/interlace-theme.css"
+        layer="@layer interlace.brand"
+        file="styles/brand/interlace.css"
         owns="Concrete brand values — the --interlace-* literals, light and dark. THE supported consumer override surface: fork this layer to re-brand and nothing else has to move."
       >
         <Stack gap="sm">
-          <div className="flex flex-wrap items-center gap-sm">
+          <div className="flex flex-wrap items-center gap-4">
             {['primary', 'background', 'foreground', 'muted', 'border'].map(
               (name) => (
-                <div key={name} className="flex items-center gap-xs">
+                <div key={name} className="flex items-center gap-2">
                   <span
                     aria-hidden
                     className="block size-6 rounded-sm border border-border"
@@ -323,8 +321,8 @@ function Specimen() {
       </LayerRow>
 
       <LayerRow
-        layer="interlace.semantics"
-        file="styles/interlace-theme.css"
+        layer="@layer interlace.semantics"
+        file="styles/semantics.css"
         owns="The alias bindings — --background, --foreground, --primary, --ring … mapped onto the --interlace-* brand values — plus the Tailwind v4 @theme inline registration that makes bg-primary and friends resolve at all."
       >
         <Stack gap="sm">
@@ -357,7 +355,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'What `npx shadcn add @interlace/theme` actually installs: six cascade layers, each proved by a live element or a live computed value rather than described. Deliberately NOT a palette — `Foundations/Colors` specimens the semantic tokens with contrast ratios and `Tokens/Theme Tokens` renders the 55-property brand manifest; duplicating either would create a second source of truth for the same picture. What had no picture anywhere was the install contract: which layer owns what, and what stops working when one is missing (drop `preflight.css` and every focusable element in the app silently loses its WCAG 2.2 SC 2.4.13 ring). The last row asserts the alias chain live — `--primary` must resolve to `--interlace-primary`.',
+          'What `npx shadcn add @interlace/theme` actually installs: six cascade layers, each proved by a live element or a live computed value rather than described. Deliberately NOT a palette — `Foundations/Colors` specimens the semantic tokens with contrast ratios and `Tokens/Theme Tokens` renders the 55-property brand manifest; duplicating either would create a second source of truth for the same picture. What had no picture anywhere was the install contract: which layer owns what, and what stops working when one is missing (drop `page/preflight.css` and every focusable element in the app silently loses its WCAG 2.2 SC 2.4.13 ring). The last row asserts the alias chain live — `--primary` must resolve to `--interlace-primary`.',
       },
     },
   },

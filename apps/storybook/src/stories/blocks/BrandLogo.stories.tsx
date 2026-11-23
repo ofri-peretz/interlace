@@ -120,7 +120,7 @@ export const InNavContext: Story = {
     },
   },
   render: () => (
-    <div className="flex w-full max-w-content items-center justify-between rounded-lg border border-border px-4 py-3">
+    <div className="flex w-full max-w-content items-center justify-between rounded-xl border border-border px-4 py-3">
       <BrandLogo />
       <nav aria-label="Example navigation" className="flex gap-4">
         {['Docs', 'Plugins', 'Blog'].map((item) => (

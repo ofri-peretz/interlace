@@ -34,7 +34,7 @@ import { Box } from '@interlace/ui/box';
  *
  * Sources: TYPOGRAPHY_PHILOSOPHY.md (type scale, body/code contracts, fluid
  * type, reading-vs-UI modes) + DESIGN_PRINCIPLES #2 ("Reading-first
- * typography") + foundation.css (the --text-* token table).
+ * typography") + structure/type.css (the --text-* token table).
  */
 
 // ── Variant roster ──────────────────────────────────────────────────────────
@@ -333,9 +333,9 @@ function ReadingVsUISpecimen() {
           </Typography>
         </Stack>
 
-        {/* gap-sm below md: a 12-track grid needs 11 gutters, so gap-lg alone
+        {/* gap-4 below md: a 12-track grid needs 11 gutters, so gap-10 alone
             demands 440px of pure gutter and overflows any phone viewport. */}
-        <Grid cols={12} gap="lg" className="gap-sm md:gap-lg">
+        <Grid cols={12} gap="lg" className="gap-4 md:gap-10">
           <GridItem span={12} mdSpan={8}>
             <Box
               border
@@ -582,7 +582,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Live specimen of every Typography variant. Each row pairs the rendered sample with the underlying --text-* token and the live computed font-size / line-height / max-width, read from the cascade after mount. Client-side by necessity — `getComputedStyle` is a browser-only API. Source: TYPOGRAPHY_PHILOSOPHY.md + foundation.css.',
+          'Live specimen of every Typography variant. Each row pairs the rendered sample with the underlying --text-* token and the live computed font-size / line-height / max-width, read from the cascade after mount. Client-side by necessity — `getComputedStyle` is a browser-only API. Source: TYPOGRAPHY_PHILOSOPHY.md + structure/layout.css.',
       },
     },
   },

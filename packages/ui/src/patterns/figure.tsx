@@ -33,7 +33,7 @@
  * | R10  | Composition seam                 | `children` overrides default `<img>` for diagrams / embeds  |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline style                                           |
- * | R19  | Tokens only                      | `my-lg` / `space-y-sm` / `text-muted-foreground`            |
+ * | R19  | Tokens only                      | `my-10` / `space-y-4` / `text-muted-foreground`            |
  * | R20  | AA contrast                      | Caption uses `--muted-foreground` (clears AA on background) |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `<figure>` + `<figcaption>` + required `alt`                |
@@ -75,7 +75,7 @@ const Figure = React.forwardRef<HTMLElement, FigureProps>(function Figure(
       ref={ref}
       data-slot="figure"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('my-lg space-y-sm', className)}
+      className={cn('my-10 space-y-4', className)}
       {...props}
     >
       <AspectRatio ratio={ratio}>
@@ -83,7 +83,7 @@ const Figure = React.forwardRef<HTMLElement, FigureProps>(function Figure(
           <img
             src={src}
             alt={alt}
-            className="absolute inset-0 size-full rounded-md object-cover"
+            className="absolute inset-0 size-full rounded-lg object-cover"
           />
         )}
       </AspectRatio>

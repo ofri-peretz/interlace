@@ -100,7 +100,7 @@ function RegistryItemTemplate({
     <article
       data-slot="registry-item-template"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="content">
@@ -122,7 +122,7 @@ function RegistryItemTemplate({
                 {description}
               </Typography>
             ) : null}
-            {install ? <div className="mt-md">{install}</div> : null}
+            {install ? <div className="mt-6">{install}</div> : null}
           </Stack>
         </SectionBoundary>
 
@@ -130,7 +130,7 @@ function RegistryItemTemplate({
           <SectionBoundary
             name="registry-item-anatomy"
             skeletonVariant="code-block"
-            className="mt-xl"
+            className="mt-16"
           >
             <Stack gap="md">
               <Typography variant="h2" as="h2">
@@ -145,7 +145,7 @@ function RegistryItemTemplate({
           <SectionBoundary
             name="registry-item-variants"
             skeletonVariant="card"
-            className="mt-xl"
+            className="mt-16"
           >
             <Stack gap="md">
               <Typography variant="h2" as="h2">
@@ -160,7 +160,7 @@ function RegistryItemTemplate({
           <SectionBoundary
             name="registry-item-related"
             skeletonVariant="article-card"
-            className="mt-xl"
+            className="mt-16"
           >
             <Stack gap="md">
               <Typography variant="h2" as="h2">
@@ -175,7 +175,7 @@ function RegistryItemTemplate({
           <SectionBoundary
             name="registry-item-footer"
             skeletonVariant="card"
-            className="mt-xl"
+            className="mt-16"
           >
             {footer}
           </SectionBoundary>
@@ -207,7 +207,7 @@ function RegistryItemTemplateSkeleton({
       role="status"
       aria-busy="true"
       aria-label="Loading component…"
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="content">

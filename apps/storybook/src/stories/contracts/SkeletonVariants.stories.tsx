@@ -154,7 +154,7 @@ function VariantCell({ name }: { name: SkeletonVariant }) {
 
   return (
     <div
-      className="rounded-md border border-border bg-background p-sm"
+      className="rounded-lg border border-border bg-background p-4"
       data-slot="skeleton-variant"
       data-variant={name}
     >
@@ -204,7 +204,7 @@ function Group({
             {note}
           </Typography>
         </Stack>
-        <div className="grid gap-sm sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 xs:grid-cols-2 lg:grid-cols-3">
           {members.map((name) => (
             <VariantCell key={name} name={name as SkeletonVariant} />
           ))}

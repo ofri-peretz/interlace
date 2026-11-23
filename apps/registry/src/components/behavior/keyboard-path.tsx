@@ -25,7 +25,7 @@ function Kbd({ combo }: { combo: string }) {
               +
             </span>
           ) : null}
-          <kbd className="border-border bg-background text-foreground rounded-md border px-1.5 py-0.5 font-mono text-xs shadow-xs">
+          <kbd className="border-border bg-background text-foreground rounded-lg border px-1.5 py-0.5 font-mono text-xs shadow-xs">
             {key}
           </kbd>
         </span>

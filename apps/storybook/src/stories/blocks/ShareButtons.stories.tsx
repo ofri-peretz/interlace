@@ -70,7 +70,7 @@ export const Variants: Story = {
   // read at thumbnail size.
   tags: ['preview'],
   render: (args) => (
-    <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-6">
       <div>
         <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           networks = all (default)

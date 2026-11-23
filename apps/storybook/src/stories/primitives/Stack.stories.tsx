@@ -84,7 +84,7 @@ export default meta;
 type Story = StoryObj<typeof Stack>;
 
 const Pill = ({ label }: { label: string }) => (
-  <div className="rounded-md border border-border bg-card/40 px-4 py-2 text-sm">
+  <div className="rounded-lg border border-border bg-card/40 px-4 py-2 text-sm">
     {label}
   </div>
 );
