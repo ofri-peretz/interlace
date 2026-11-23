@@ -25,12 +25,24 @@
  * Only the last step's choices are live: earlier ones are hidden once the
  * reader has moved on.
  *
+ * ## Server components
+ *
+ * Pass a step's choices through its `choices` prop, and import the named
+ * parts (`DialogueStep`, `DialogueChoices`, `DialogueChoice`) rather than
+ * `DialogueStepper.Step`. A server component holds only a reference to each
+ * client part, so the dot form is undefined there and a `DialogueChoices`
+ * child cannot be told apart from a turn. Choices written as children still
+ * work when the whole tree renders on the client.
+ *
  * ## Focus and announcements
  *
  * After a choice, focus moves to the first choice of the new step (or to
  * Back, when the step ends the talk), so a keyboard reader can keep going
  * without hunting. The new step's words are read out once through a polite
- * live region. The step enters with a short fade and rise, behind
+ * live region. Pending steps are hidden with a class, not the `hidden`
+ * attribute, so the no-JS style can show them: a preflight rule for
+ * `[hidden]` sits in a cascade layer, and its `!important` would beat it.
+ * The step enters with a short fade and rise, behind
  * `motion-safe:`, so reduced motion shows it at once.
  *
  * ## Anatomy
@@ -91,7 +103,9 @@ type Ctx = {
 };
 
 const StepperContext = React.createContext<Ctx | null>(null);
-const StepIdContext = React.createContext<string | null>(null);
+type StepCtx = { id: string; state: StepState };
+type StepState = 'current' | 'past' | 'pending';
+const StepContext = React.createContext<StepCtx | null>(null);
 
 function useStepper(part: string): Ctx {
   const ctx = React.useContext(StepperContext);
@@ -171,6 +185,16 @@ function DialogueStepper({
     (firstChoice ?? backRef.current)?.focus();
   }, [path, mode]);
 
+  React.useEffect(() => {
+    // A DialogueChoices child of a server component cannot be recognised,
+    // so it lands in the step's list of turns.
+    if (rootRef.current?.querySelector('[data-slot="dialogue"] [data-slot="dialogue-choices"]')) {
+      console.warn(
+        '<DialogueChoices> is inside a list of turns. Pass it through <DialogueStep choices={…}> when a server component renders the step.',
+      );
+    }
+  }, []);
+
   const items = React.Children.toArray(children);
   const ordered =
     mode === 'step'
@@ -240,6 +264,11 @@ function DialogueStepper({
 type DialogueStepProps = Omit<React.ComponentProps<'div'>, 'id'> & {
   /** Unique within the stepper; choices point at it with `next`. */
   id: string;
+  /**
+   * The step's `DialogueChoices`. Use this, not a child, when a server
+   * component renders the step.
+   */
+  choices?: React.ReactNode;
   /** An accessible name for the step, read when it is announced as a group. */
   'aria-label'?: string;
 };
@@ -248,23 +277,26 @@ function isChoices(node: React.ReactNode): boolean {
   return React.isValidElement(node) && node.type === DialogueChoices;
 }
 
-function DialogueStep({ id, className, children, ...props }: DialogueStepProps) {
+function DialogueStep({ id, choices, className, children, ...props }: DialogueStepProps) {
   const { mode, path, speakers } = useStepper('DialogueStep');
   const at = path.indexOf(id);
-  const state = mode === 'all' ? 'past' : at === -1 ? 'pending' : at === path.length - 1 ? 'current' : 'past';
+  const state: StepState =
+    mode === 'all' ? 'past' : at === -1 ? 'pending' : at === path.length - 1 ? 'current' : 'past';
   const items = React.Children.toArray(children);
   const turns = items.filter((c) => !isChoices(c));
-  const choices = items.filter(isChoices);
+  const childChoices = items.filter(isChoices);
+  const step = React.useMemo<StepCtx>(() => ({ id, state }), [id, state]);
   return (
-    <StepIdContext.Provider value={id}>
+    <StepContext.Provider value={step}>
       <div
         role="group"
         data-slot="dialogue-step"
         data-step={id}
         data-state={state}
-        hidden={state === 'pending'}
         className={cn(
           'flex flex-col gap-3',
+          // A class, not the hidden attribute: the no-JS style must win.
+          state === 'pending' && 'hidden',
           // A step the reader just revealed fades and rises in; never the first.
           state === 'current' &&
             at > 0 &&
@@ -274,15 +306,19 @@ function DialogueStep({ id, className, children, ...props }: DialogueStepProps) 
         {...props}
       >
         <Dialogue speakers={speakers}>{turns}</Dialogue>
-        {state === 'current' || state === 'pending' ? choices : null}
+        {choices}
+        {childChoices}
       </div>
-    </StepIdContext.Provider>
+    </StepContext.Provider>
   );
 }
 
 type DialogueChoicesProps = React.ComponentProps<'div'>;
 
 function DialogueChoices({ className, ...props }: DialogueChoicesProps) {
+  const step = React.useContext(StepContext);
+  // Only the last step's choices are live; a past step drops them.
+  if (step?.state === 'past') return null;
   return (
     <DialogueSuggestions data-slot="dialogue-choices" className={cn('justify-end', className)} {...props} />
   );
@@ -298,7 +334,7 @@ const CHOICE =
 
 function DialogueChoice({ next, className, onClick, ...props }: DialogueChoiceProps) {
   const { choose } = useStepper('DialogueChoice');
-  const from = React.useContext(StepIdContext);
+  const from = React.useContext(StepContext)?.id;
   return (
     <button
       type="button"
