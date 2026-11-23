@@ -45,7 +45,7 @@ Current distribution across the catalogue:
 
 - rendering: 98 server, 66 client
 - keyboard: 127 none, 37 handled
-- built-in loading state: 32 of 164
+- built-in loading state: 33 of 164
 - declared minViewport: 100 at 320, 7 at 480, 1 at 768, 56 at inherited
 
 ## Taxonomy
@@ -120,7 +120,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 480px, v2.0.0
 - [Button](https://ds.interlace.tools/c/button): The minimal-surface counterpart to [dialog.tsx](./dialog.tsx). Where Dialog exercises compound composition + portal + focus, Button exercises the variant + render-prop polymorphism + native-event passthrough surface.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button.json`
-  - contract: client, keyboard via Base UI use-render, v2.1.0
+  - contract: client, loading state, keyboard via Base UI use-render, v2.1.0
 - [Button Variants](https://ds.interlace.tools/c/button-variants): The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button-variants.json`
   - contract: server, v2.1.0
