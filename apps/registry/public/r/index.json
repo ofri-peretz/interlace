@@ -2627,6 +2627,42 @@
         "client": true,
         "minViewport": null,
         "loading": false,
+        "version": "1.1.0",
+        "since": null
+      }
+    },
+    {
+      "name": "topbar-nav",
+      "type": "registry:ui",
+      "title": "Topbar Nav",
+      "description": "The wide-screen half of `Topbar` when its links hold groups: a row of plain links and group triggers, where a group opens a panel of its items, each with an optional icon and a one-line description. It is how a site that is a family of products lists them…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "topbar-scroll-edge",
+      "type": "registry:ui",
+      "title": "Topbar Scroll Edge",
+      "description": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. Topbar renders it for you; it…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
         "version": "1.0.0",
         "since": null
       }
@@ -2645,7 +2681,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },

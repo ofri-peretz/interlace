@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "topbar-scroll-edge",
+  "type": "registry:ui",
+  "title": "Topbar Scroll Edge",
+  "description": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. Topbar renders it for you; it…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "navigation",
+    "pattern"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/topbar-scroll-edge.tsx",
+      "target": "components/ui/patterns/topbar-scroll-edge.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\n// @interlace/topbar-scroll-edge v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/topbar-scroll-edge\n// What changed since: https://ds.interlace.tools/c/topbar-scroll-edge#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — TopbarScrollEdge\n *\n * The client half of `Topbar edge=\"scroll\"`: it marks the header\n * `data-scrolled` once the page has moved off its top, so the bar can sit\n * clear over a hero and gain its surface and border only when content\n * passes beneath it. Topbar renders it for you; it draws nothing itself.\n *\n * | Rule | Concept           | Where in this file                                  |\n * | ---- | ----------------- | --------------------------------------------------- |\n * | R6   | data-slot         | `topbar-scroll-edge`                                |\n * | R25  | Client component  | one passive scroll listener on `window`             |\n */\n\nexport interface TopbarScrollEdgeProps {\n  /** Pixels of scroll before the header counts as scrolled. @default 4 */\n  threshold?: number;\n}\n\nexport function TopbarScrollEdge({ threshold = 4 }: TopbarScrollEdgeProps) {\n  const ref = React.useRef<HTMLSpanElement>(null);\n  React.useEffect(() => {\n    const header = ref.current?.closest<HTMLElement>('[data-slot=\"topbar\"]');\n    if (!header) return;\n    const update = () => {\n      if (window.scrollY > threshold) header.setAttribute(\"data-scrolled\", \"\");\n      else header.removeAttribute(\"data-scrolled\");\n    };\n    update();\n    window.addEventListener(\"scroll\", update, { passive: true });\n    return () => {\n      window.removeEventListener(\"scroll\", update);\n      header.removeAttribute(\"data-scrolled\");\n    };\n  }, [threshold]);\n  return <span ref={ref} hidden data-slot=\"topbar-scroll-edge\" />;\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/topbar-scroll-edge\n\nInstalled to `components/ui/patterns/topbar-scroll-edge.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/topbar-scroll-edge';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/topbar-scroll-edge\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

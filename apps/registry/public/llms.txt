@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 169 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 171 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,17 +43,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 99 server, 70 client
-- keyboard: 132 none, 37 handled
-- built-in loading state: 33 of 169
-- declared minViewport: 103 at 320, 7 at 480, 1 at 768, 58 at inherited
+- rendering: 99 server, 72 client
+- keyboard: 133 none, 38 handled
+- built-in loading state: 33 of 171
+- declared minViewport: 103 at 320, 7 at 480, 1 at 768, 60 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 72 item(s)
-- tier `pattern` — 46 item(s)
+- tier `pattern` — 48 item(s)
 - tier `effect` — 19 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
@@ -62,7 +62,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 72 item(s)
-- category `pattern` (Patterns) — 46 item(s)
+- category `pattern` (Patterns) — 48 item(s)
 - category `blog` (Blog & long-form) — 35 item(s)
 - category `foundation` (Foundation) — 25 item(s)
 - category `data` (Data display) — 23 item(s)
@@ -70,9 +70,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `form` (Form & input) — 17 item(s)
 - category `decorative` (Decorative) — 17 item(s)
 - category `feedback` (Feedback) — 14 item(s)
+- category `navigation` (Navigation) — 13 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `marketing` (Marketing) — 13 item(s)
-- category `navigation` (Navigation) — 11 item(s)
 - category `overlay` (Overlay) — 10 item(s)
 - category `chart` (Charts) — 8 item(s)
 - category `util` (Utilities) — 5 item(s)
@@ -444,9 +444,15 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, keys ArrowLeft/ArrowRight/End/Home, v2.0.0
 - [Topbar](https://ds.interlace.tools/c/topbar): Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar.json`
-  - contract: server, min 320px, v2.0.0
+  - contract: server, min 320px, v2.1.0
 - [Topbar Menu](https://ds.interlace.tools/c/topbar-menu): The small-screen half of `Topbar`: a "Menu" button that opens the site's links in a panel at the edge of the screen. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json`
+  - contract: client, v1.1.0
+- [Topbar Nav](https://ds.interlace.tools/c/topbar-nav): The wide-screen half of `Topbar` when its links hold groups: a row of plain links and group triggers, where a group opens a panel of its items, each with an optional icon and a one-line description. It is how a site that is a family of products lists them…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-nav.json`
+  - contract: client, keyboard via Base UI navigation-menu, v1.0.0
+- [Topbar Scroll Edge](https://ds.interlace.tools/c/topbar-scroll-edge): The client half of `Topbar edge="scroll"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. Topbar renders it for you; it…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-scroll-edge.json`
   - contract: client, v1.0.0
 - [Wordmark](https://ds.interlace.tools/c/wordmark): A text logo of one or more stacked lines: a name over its tagline, or the same name in several languages or scripts. Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/wordmark.json`

@@ -2313,7 +2313,12 @@
       "blocks-topbar--mobile-menu",
       "blocks-topbar--mobile-wrap",
       "blocks-topbar--many-links",
-      "blocks-topbar--rtl-mobile-menu"
+      "blocks-topbar--rtl-mobile-menu",
+      "blocks-topbar--link-groups",
+      "blocks-topbar--link-groups-mobile",
+      "blocks-topbar--link-groups-dark",
+      "blocks-topbar--clear-until-scroll",
+      "blocks-topbar--full-screen-menu"
     ],
     "preview": "blocks-topbar--default",
     "previewDark": "blocks-topbar--dark",
@@ -2325,9 +2330,28 @@
       "blocks-topbarmenu--default",
       "blocks-topbarmenu--keyboard",
       "blocks-topbarmenu--closes-on-navigate",
-      "blocks-topbarmenu--from-the-bottom"
+      "blocks-topbarmenu--from-the-bottom",
+      "blocks-topbarmenu--full-screen"
     ],
     "preview": "blocks-topbarmenu--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "topbar-nav": {
+    "title": "Blocks/TopbarNav",
+    "storyIds": [
+      "blocks-topbarnav--default"
+    ],
+    "preview": "blocks-topbarnav--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "topbar-scroll-edge": {
+    "title": "Blocks/TopbarScrollEdge",
+    "storyIds": [
+      "blocks-topbarscrolledge--default"
+    ],
+    "preview": "blocks-topbarscrolledge--default",
     "previewDark": null,
     "skeleton": null
   },

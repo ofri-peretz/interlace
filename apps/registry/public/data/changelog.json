@@ -608,6 +608,20 @@
           "source": ".changeset/toolbar.md"
         },
         {
+          "summary": "`Topbar` takes link groups, a quiet edge and a full-screen phone menu.\n\n- **Link groups.** An entry of `links` can be `{ label, items }`, where each item is a link with an optional `description` and `icon`. From `collapseBelow` up, a group is a button that opens a panel of its items, built on Base UI NavigationMenu: arrow keys move between triggers, Enter opens a panel and focuses its first item, Escape closes it and returns focus, hover opens it after a short delay and the panel slides between groups. Following a link closes it. Below `collapseBelow`, each group is a labelled section of the menu, and `mobileNav=\"wrap\"` opens groups out into the row. Plain links work as before.\n- **`edge=\"scroll\"`.** The bar sits clear over the top of the page, with no surface or border, and fades them in once the page scrolls under it. The default, `edge=\"always\"`, is unchanged.\n- **`menuSide=\"full\"`.** The small-screen menu covers the whole screen, dropping from the top, with larger links.\n\nNew parts, installed with Topbar: `TopbarNav` (the wide row with groups) and `TopbarScrollEdge` (marks the header `data-scrolled`).",
+          "components": [
+            "topbar",
+            "topbar-menu",
+            "topbar-nav",
+            "topbar-scroll-edge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/topbar-groups.md"
+        },
+        {
           "summary": "TopbarMenu now opens its links in a Drawer instead of a Sheet: on a phone a finger drags the panel back toward its edge to close it, and the panel follows the finger. Focus trap, Escape, press-outside and close-on-navigate are unchanged. A new `side` prop (`right`, `left`, `bottom`; default `right`) picks the edge, and `Topbar` passes it through as `menuSide` (an RTL page passes `left`).",
           "components": [
             "topbar-menu",

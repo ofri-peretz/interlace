@@ -970,12 +970,24 @@
     },
     {
       "name": "topbar",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "topbar-menu",
+      "version": "1.1.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "topbar-nav",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "topbar-scroll-edge",
       "version": "1.0.0",
       "since": null,
       "updated": "2026-11-23"

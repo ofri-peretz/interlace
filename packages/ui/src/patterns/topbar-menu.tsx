@@ -18,7 +18,7 @@
  * | Rule | Concept                 | Where in this file                                   |
  * | ---- | ----------------------- | ---------------------------------------------------- |
  * | R6   | data-slot per part      | topbar-menu-trigger / topbar-menu-nav                 |
- * | R8   | Enum for edge           | `side = right | left | bottom` (default right)        |
+ * | R8   | Enum for edge           | `side = right | left | bottom | full` (default right) |
  * | R12  | Reuse over wrap         | gesture, focus trap and dismissal come from Drawer    |
  * | R25  | Client component        | open state                                           |
  * | R26  | A11y from native el     | `<button>` with a text label, `<nav>` landmark        |
@@ -44,7 +44,7 @@ export interface TopbarMenuProps {
   /** Accessible name of the navigation inside the panel. @default 'Primary' */
   navLabel?: string;
   /** The edge the panel opens from; a drag back toward it closes it. @default 'right' */
-  side?: "right" | "left" | "bottom";
+  side?: "right" | "left" | "bottom" | "full";
   /** Extra classes for the trigger button. */
   className?: string;
 }
@@ -58,7 +58,11 @@ export function TopbarMenu({
 }: TopbarMenuProps) {
   const [open, setOpen] = React.useState(false);
   return (
-    <Drawer open={open} onOpenChange={setOpen} direction={side}>
+    <Drawer
+      open={open}
+      onOpenChange={setOpen}
+      direction={side === "full" ? "top" : side}
+    >
       <DrawerTrigger
         data-slot="topbar-menu-trigger"
         className={cn(
@@ -69,14 +73,24 @@ export function TopbarMenu({
         <MenuIcon aria-hidden className="size-5" />
         {label}
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent
+        data-full={side === "full" ? "" : undefined}
+        className={
+          side === "full"
+            ? "h-dvh max-h-dvh rounded-none border-b-0"
+            : undefined
+        }
+      >
         <DrawerHeader>
           <DrawerTitle>{label}</DrawerTitle>
         </DrawerHeader>
         <nav
           aria-label={navLabel}
           data-slot="topbar-menu-nav"
-          className="flex flex-col px-2 pb-6 text-base"
+          className={cn(
+            "flex flex-col px-2 pb-6 text-base",
+            side === "full" && "px-4 text-lg",
+          )}
           onClick={(event) => {
             if ((event.target as HTMLElement).closest("a")) setOpen(false);
           }}
