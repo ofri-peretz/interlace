@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 163
+    "itemCount": 164
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 70,
+      "primitive": 71,
       "pattern": 44,
       "effect": 17,
       "template": 13,
@@ -39,13 +39,13 @@
       "theme": 3
     },
     "category": {
-      "primitive": 70,
+      "primitive": 71,
       "pattern": 44,
       "blog": 35,
       "foundation": 25,
       "data": 22,
+      "form": 17,
       "effect": 17,
-      "form": 16,
       "decorative": 15,
       "feedback": 14,
       "template": 13,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 98,
-      "client": 65
+      "client": 66
     },
     "keyboard": {
       "none": 127,
-      "handled": 36
+      "handled": 37
     },
     "loading": {
-      "none": 131,
+      "none": 132,
       "built-in": 32
     },
     "minViewport": {
-      "320": 99,
+      "320": 100,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -8906,6 +8906,65 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/toggle.json",
       "item": "https://ds.interlace.tools/r/toggle.json",
       "docs": "https://ds.interlace.tools/c/toggle"
+    },
+    {
+      "name": "toolbar",
+      "title": "Toolbar",
+      "type": "registry:ui",
+      "summary": "A row of controls that acts as ONE stop in the Tab order: Tab enters the toolbar on its last-focused control and leaves it on the next Tab, and the arrow keys move between the controls inside, Home and End jump to the ends, and focus wraps. A formatting…",
+      "topics": [],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "toolbar",
+        "keys": [
+          "Home"
+        ],
+        "ownHandler": true
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group",
+          "toolbar"
+        ],
+        "aria": [
+          "aria-invalid"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/toolbar.tsx",
+        "components/ui/button-variants.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/toolbar.json",
+      "item": "https://ds.interlace.tools/r/toolbar.json",
+      "docs": "https://ds.interlace.tools/c/toolbar"
     },
     {
       "name": "tooltip",

@@ -108,6 +108,10 @@
       "types": "./dist/primitives/collapsible.d.ts",
       "default": "./dist/primitives/collapsible.js"
     },
+    "./toolbar": {
+      "types": "./dist/primitives/toolbar.d.ts",
+      "default": "./dist/primitives/toolbar.js"
+    },
     "./tooltip": {
       "types": "./dist/primitives/tooltip.d.ts",
       "default": "./dist/primitives/tooltip.js"
