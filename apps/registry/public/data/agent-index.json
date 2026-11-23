@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 160
+    "itemCount": 161
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 69,
-      "pattern": 42,
+      "pattern": 43,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 69,
-      "pattern": 42,
-      "blog": 33,
+      "pattern": 43,
+      "blog": 34,
       "foundation": 25,
       "data": 22,
       "effect": 17,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 97,
-      "client": 63
+      "client": 64
     },
     "keyboard": {
-      "none": 125,
+      "none": 126,
       "handled": 35
     },
     "loading": {
-      "none": 128,
+      "none": 129,
       "built-in": 32
     },
     "minViewport": {
-      "320": 96,
+      "320": 97,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -2563,6 +2563,70 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dialog.json",
       "item": "https://ds.interlace.tools/r/dialog.json",
       "docs": "https://ds.interlace.tools/c/dialog"
+    },
+    {
+      "name": "dialogue-stepper",
+      "title": "Dialogue Stepper",
+      "type": "registry:ui",
+      "summary": "A `Dialogue` the reader steps through: one step of turns at a time, each revealed by a choice (\"What do I say?\", \"They might ask…\"). A choice can branch to any step, the reader can go back, reset, or show the whole conversation at once. Use it for a…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DialogueStepperMode",
+          "values": [
+            "step",
+            "all"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group",
+          "status"
+        ],
+        "aria": [
+          "aria-atomic",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "dialogue",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/dialogue-stepper.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dialogue-stepper.json",
+      "item": "https://ds.interlace.tools/r/dialogue-stepper.json",
+      "docs": "https://ds.interlace.tools/c/dialogue-stepper"
     },
     {
       "name": "dialogue",

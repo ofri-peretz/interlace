@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 160 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 161 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,17 +43,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 97 server, 63 client
-- keyboard: 125 none, 35 handled
-- built-in loading state: 32 of 160
-- declared minViewport: 96 at 320, 7 at 480, 1 at 768, 56 at inherited
+- rendering: 97 server, 64 client
+- keyboard: 126 none, 35 handled
+- built-in loading state: 32 of 161
+- declared minViewport: 97 at 320, 7 at 480, 1 at 768, 56 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 69 item(s)
-- tier `pattern` — 42 item(s)
+- tier `pattern` — 43 item(s)
 - tier `effect` — 17 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
@@ -62,8 +62,8 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 69 item(s)
-- category `pattern` (Patterns) — 42 item(s)
-- category `blog` (Blog & long-form) — 33 item(s)
+- category `pattern` (Patterns) — 43 item(s)
+- category `blog` (Blog & long-form) — 34 item(s)
 - category `foundation` (Foundation) — 25 item(s)
 - category `data` (Data display) — 22 item(s)
 - category `effect` (Effects) — 17 item(s)
@@ -340,6 +340,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Dialogue](https://ds.interlace.tools/c/dialogue): A written conversation: a script of turns, each with a speaker. Use it for a sample support chat, an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the back-and-forth reads at a glance, and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialogue.json`
   - contract: server, min 320px, states muted|accent|inverse, v1.0.0
+- [Dialogue Stepper](https://ds.interlace.tools/c/dialogue-stepper): A `Dialogue` the reader steps through: one step of turns at a time, each revealed by a choice ("What do I say?", "They might ask…"). A choice can branch to any step, the reader can go back, reset, or show the whole conversation at once. Use it for a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialogue-stepper.json`
+  - contract: client, min 320px, states step|all, v1.0.0
 - [Empty State](https://ds.interlace.tools/c/empty-state): The "nothing here yet" surface. Used wherever a list, table, or search returns zero rows AND the consumer can act on it (create the first item, adjust filters, link to docs). Empty states are first-class UX, not an afterthought — `LOADING_PHILOSOPHY` flags…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/empty-state.json`
   - contract: server, min 320px, v2.0.0

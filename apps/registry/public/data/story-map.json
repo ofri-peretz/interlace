@@ -667,6 +667,17 @@
     "previewDark": null,
     "skeleton": null
   },
+  "dialogue-stepper": {
+    "title": "Blocks/DialogueStepper",
+    "storyIds": [
+      "blocks-dialoguestepper--default",
+      "blocks-dialoguestepper--speakers-inside",
+      "blocks-dialoguestepper--whole-conversation"
+    ],
+    "preview": "blocks-dialoguestepper--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "distribution": {
     "title": "Charts/Distribution",
     "storyIds": [
