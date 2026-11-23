@@ -198,6 +198,27 @@ describe('DialogueStepper', () => {
     expect(screen.queryByRole('button', { name: 'Next' })).toBeNull();
   });
 
+  it('the choices prop wins over a DialogueChoices child', () => {
+    render(
+      <DialogueStepper start="a">
+        <DialogueStep
+          id="a"
+          choices={
+            <DialogueChoices>
+              <DialogueChoice next="a">From the prop</DialogueChoice>
+            </DialogueChoices>
+          }
+        >
+          <Dialogue.Turn speaker="A">One</Dialogue.Turn>
+          <DialogueChoices>
+            <DialogueChoice next="a">From a child</DialogueChoice>
+          </DialogueChoices>
+        </DialogueStep>
+      </DialogueStepper>,
+    );
+    expect(screen.getAllByRole('button', { name: /^From/ }).map((b) => b.textContent)).toEqual(['From the prop']);
+  });
+
   it('choices it cannot recognise still hide once past, and warn where they landed', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     // Stands in for a server component's client reference: not DialogueChoices by identity.

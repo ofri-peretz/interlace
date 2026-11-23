@@ -266,7 +266,7 @@ type DialogueStepProps = Omit<React.ComponentProps<'div'>, 'id'> & {
   id: string;
   /**
    * The step's `DialogueChoices`. Use this, not a child, when a server
-   * component renders the step.
+   * component renders the step. Wins over a `DialogueChoices` child.
    */
   choices?: React.ReactNode;
   /** An accessible name for the step, read when it is announced as a group. */
@@ -306,8 +306,8 @@ function DialogueStep({ id, choices, className, children, ...props }: DialogueSt
         {...props}
       >
         <Dialogue speakers={speakers}>{turns}</Dialogue>
-        {choices}
-        {childChoices}
+        {/* The prop wins, so passing both never doubles the buttons. */}
+        {choices ?? childChoices}
       </div>
     </StepContext.Provider>
   );
