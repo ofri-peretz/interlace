@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 169
+    "itemCount": 170
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 72,
-      "pattern": 46,
+      "pattern": 47,
       "effect": 19,
       "template": 13,
       "chart": 8,
@@ -40,12 +40,12 @@
     },
     "category": {
       "primitive": 72,
-      "pattern": 46,
+      "pattern": 47,
       "blog": 35,
       "foundation": 25,
       "data": 23,
       "effect": 19,
-      "form": 17,
+      "form": 18,
       "decorative": 17,
       "feedback": 14,
       "template": 13,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 99,
-      "client": 70
+      "client": 71
     },
     "keyboard": {
-      "none": 132,
+      "none": 133,
       "handled": 37
     },
     "loading": {
-      "none": 136,
+      "none": 137,
       "built-in": 33
     },
     "minViewport": {
-      "320": 103,
+      "320": 104,
       "480": 7,
       "768": 1,
       "inherited": 58
@@ -110,7 +110,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -161,7 +161,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -212,7 +212,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -321,7 +321,7 @@
         "ArticleCard",
         "FeaturedArticleCard"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -374,7 +374,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1150,7 +1150,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "3.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -1199,7 +1199,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "3.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1254,7 +1254,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -1304,7 +1304,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.2.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1359,7 +1359,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1422,7 +1422,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.1",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -1474,7 +1474,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [
         "lucide-react"
@@ -1524,7 +1524,7 @@
       "exports": [
         "DS_FONT_SIZES"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "clsx",
@@ -1676,7 +1676,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1780,7 +1780,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1887,7 +1887,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1943,7 +1943,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2397,7 +2397,7 @@
       "exports": [
         "DecodeText"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -2523,7 +2523,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2597,7 +2597,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -2655,7 +2655,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.1",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -2909,7 +2909,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -3171,7 +3171,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3226,7 +3226,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
       "npmDependencies": [
         "class-variance-authority"
@@ -3376,7 +3376,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -3485,7 +3485,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3646,7 +3646,7 @@
       "exports": [
         "GradientMesh"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -3742,7 +3742,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -3849,7 +3849,7 @@
         "HeroCosmic",
         "MIN_VIEWPORT"
       ],
-      "version": "3.1.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3953,7 +3953,7 @@
         "Hero",
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.1",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4055,7 +4055,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4101,7 +4101,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "4.8.0",
       "since": null,
       "npmDependencies": [
         "tw-animate-css"
@@ -4156,7 +4156,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "3.1.0",
+      "version": "3.3.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -4207,7 +4207,7 @@
       "exports": [
         "InterlaceWeave"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -4410,7 +4410,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4638,7 +4638,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5066,7 +5066,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -5223,7 +5223,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -5328,7 +5328,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.1",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -5447,7 +5447,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -5905,7 +5905,7 @@
         "MIN_VIEWPORT",
         "RelatedPosts"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6006,7 +6006,7 @@
       "exports": [
         "RotatingText"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -6477,7 +6477,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -6870,7 +6870,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -6935,7 +6935,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7286,7 +7286,7 @@
       "exports": [
         "SkyBackdrop"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7353,6 +7353,65 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/slider.json",
       "item": "https://ds.interlace.tools/r/slider.json",
       "docs": "https://ds.interlace.tools/c/slider"
+    },
+    {
+      "name": "social-sign-in",
+      "title": "Social Sign In",
+      "type": "registry:ui",
+      "summary": "\"Continue with Google / Apple / X / …\" plus an optional email link, in one form. Pick the providers and their order; the first `featured` ones get a full-width button with their name, the rest share a row of icon buttons, and the provider the visitor used…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "alert",
+          "status"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "SocialSignIn"
+      ],
+      "version": "1.0.1",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "cn",
+        "input",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/social-sign-in.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/social-sign-in.json",
+      "item": "https://ds.interlace.tools/r/social-sign-in.json",
+      "docs": "https://ds.interlace.tools/c/social-sign-in"
     },
     {
       "name": "sparkline",
@@ -7671,7 +7730,7 @@
       "exports": [
         "Starfield"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7721,7 +7780,7 @@
         "MIN_VIEWPORT",
         "StatCard"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -7773,7 +7832,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.3.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7864,7 +7923,7 @@
         "REPLACING_STATES",
         "StatStrip"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7985,7 +8044,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
       "npmDependencies": [
         "lucide-react"
@@ -8249,7 +8308,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -8305,7 +8364,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -8946,7 +9005,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.2",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -9056,7 +9115,7 @@
         "Toc",
         "TocPopover"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -9111,7 +9170,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -9169,7 +9228,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "3.3.0",
       "since": null,
       "npmDependencies": [
         "@base-ui/react",
@@ -9225,7 +9284,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -9277,7 +9336,7 @@
       "exports": [
         "TopbarMenu"
       ],
-      "version": "1.0.0",
+      "version": "2.1.0",
       "since": null,
       "npmDependencies": [
         "lucide-react"
@@ -9331,7 +9390,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.4.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -9426,7 +9485,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -9626,7 +9685,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [

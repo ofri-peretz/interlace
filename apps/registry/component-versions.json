@@ -4,15 +4,15 @@
   "components": [
     {
       "name": "a11y-starter",
-      "version": "3.0.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "accordion",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "alert",
@@ -22,21 +22,21 @@
     },
     {
       "name": "alert-dialog",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "article-card",
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "article-list-grid",
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "article-template",
@@ -48,13 +48,13 @@
       "name": "aspect-ratio",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "audio-player",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-22"
     },
     {
       "name": "auth-template",
@@ -78,19 +78,19 @@
       "name": "avatar",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "badge",
       "version": "1.3.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "banner",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "blog-home-template",
@@ -108,7 +108,7 @@
       "name": "brand-logo",
       "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "breadcrumb",
@@ -118,49 +118,49 @@
     },
     {
       "name": "button",
-      "version": "2.1.0",
+      "version": "3.3.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "button-variants",
-      "version": "2.1.0",
+      "version": "3.2.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "callout",
-      "version": "2.0.0",
+      "version": "2.1.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "card",
-      "version": "1.2.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "checkbox",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "citation",
-      "version": "1.0.0",
+      "version": "1.1.1",
       "since": null,
       "updated": "2026-11-23"
     },
     {
       "name": "claim-card",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "cn",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -178,7 +178,7 @@
     },
     {
       "name": "code-window",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
     },
@@ -186,11 +186,11 @@
       "name": "collapsible",
       "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "combobox",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.1.0",
       "updated": "2026-11-23"
     },
@@ -198,25 +198,25 @@
       "name": "command-palette",
       "version": "3.0.0",
       "since": "1.1.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "container",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "context-menu",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "count-up",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "cta-section",
@@ -234,13 +234,13 @@
       "name": "data-state",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "data-state-model",
       "version": "1.0.0",
       "since": "1.1.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "data-table",
@@ -250,33 +250,33 @@
     },
     {
       "name": "decode-text",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "delta",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-26"
+      "updated": "2026-11-08"
     },
     {
       "name": "dialog",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "dialogue",
-      "version": "1.0.0",
+      "version": "1.1.1",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "dialogue-stepper",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "distribution",
@@ -294,19 +294,19 @@
       "name": "drawer",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "dropdown-menu",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "edge-glow",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "empty-state",
@@ -328,15 +328,15 @@
     },
     {
       "name": "feature-grid",
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "featured-icon",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "figure",
@@ -352,7 +352,7 @@
     },
     {
       "name": "focus-grid",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -360,11 +360,11 @@
       "name": "focus-ring",
       "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "footer",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
     },
@@ -372,31 +372,31 @@
       "name": "form",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "grade-badge",
       "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "gradient-mesh",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "grid",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "grid-field",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "guess-reveal",
@@ -406,13 +406,13 @@
     },
     {
       "name": "hero",
-      "version": "2.0.1",
+      "version": "2.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "hero-cosmic",
-      "version": "3.1.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -420,7 +420,7 @@
       "name": "hero-strand",
       "version": "2.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "hover-card",
@@ -430,39 +430,39 @@
     },
     {
       "name": "input",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "interlace-base",
-      "version": "2.1.0",
+      "version": "4.8.0",
       "since": null,
       "updated": "2026-11-23"
     },
     {
       "name": "interlace-foundation",
-      "version": "3.1.0",
+      "version": "3.3.0",
       "since": null,
       "updated": "2026-11-23"
     },
     {
       "name": "interlace-weave",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "kbd",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "label",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "landing-template",
@@ -472,7 +472,7 @@
     },
     {
       "name": "layout-starter",
-      "version": "3.0.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -480,7 +480,7 @@
       "name": "light-beam",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "lint-playground",
@@ -492,11 +492,11 @@
       "name": "list",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "mdx-starter",
-      "version": "3.0.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -504,13 +504,13 @@
       "name": "meter",
       "version": "1.0.0",
       "since": "1.1.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "meter-scale",
       "version": "1.0.0",
       "since": "1.1.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "metric-table",
@@ -532,9 +532,9 @@
     },
     {
       "name": "number-field",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "page-header",
@@ -550,9 +550,9 @@
     },
     {
       "name": "popover",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "prev-next-post",
@@ -562,19 +562,19 @@
     },
     {
       "name": "pricing-table",
-      "version": "2.0.0",
+      "version": "2.2.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "progress",
       "version": "1.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "prose",
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
     },
@@ -582,7 +582,7 @@
       "name": "published-date",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "radial-weave",
@@ -594,25 +594,25 @@
       "name": "radio-group",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
-      "name": "reading-strand",
-      "version": "1.0.0",
-      "since": "1.2.0",
-      "updated": "2026-08-25"
+      "updated": "2026-11-23"
     },
     {
       "name": "reading-layout",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "reading-strand",
+      "version": "1.0.0",
+      "since": "1.2.0",
+      "updated": "2026-11-08"
     },
     {
       "name": "reading-time",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "registry-item-template",
@@ -622,21 +622,21 @@
     },
     {
       "name": "related-posts",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "reveal",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "rotating-text",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "scorecard-row",
@@ -654,19 +654,19 @@
       "name": "scroll-area",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "scroller",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "section",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "section-boundary",
@@ -684,25 +684,25 @@
       "name": "section-index",
       "version": "1.0.0",
       "since": "1.2.0",
-      "updated": "2026-08-25"
+      "updated": "2026-11-08"
     },
     {
       "name": "select",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "separator",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "series-table",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-26"
+      "updated": "2026-11-08"
     },
     {
       "name": "settings-template",
@@ -714,37 +714,37 @@
       "name": "share-buttons",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "sheen",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "sheen-text",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
-    },
-    {
-      "name": "sheet",
-      "version": "2.0.0",
-      "since": "1.0.0",
       "updated": "2026-11-22"
     },
     {
+      "name": "sheet",
+      "version": "2.1.0",
+      "since": "1.0.0",
+      "updated": "2026-11-23"
+    },
+    {
       "name": "side-by-side",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-22"
     },
     {
       "name": "sign-in-form",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "skeleton",
@@ -766,27 +766,33 @@
     },
     {
       "name": "sky-backdrop",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "slider",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
+    },
+    {
+      "name": "social-sign-in",
+      "version": "1.0.1",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "sparkline",
       "version": "1.2.0",
       "since": "1.0.0",
-      "updated": "2026-08-26"
+      "updated": "2026-11-08"
     },
     {
       "name": "split-text",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "stack",
@@ -798,37 +804,37 @@
       "name": "stagger-list",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "stance-list",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-22"
     },
     {
       "name": "starfield",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "stat-card",
-      "version": "3.0.0",
+      "version": "3.1.0",
+      "since": "1.0.0",
+      "updated": "2026-11-22"
+    },
+    {
+      "name": "stat-group",
+      "version": "2.3.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
-      "name": "stat-group",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-22"
-    },
-    {
       "name": "stat-strip",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.1.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "stats-template",
@@ -838,15 +844,15 @@
     },
     {
       "name": "status-pills",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "switch",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "tabs",
@@ -858,7 +864,7 @@
       "name": "tag",
       "version": "1.3.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "tag-template",
@@ -868,13 +874,13 @@
     },
     {
       "name": "testimonial",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "textarea",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -888,7 +894,7 @@
       "name": "theme-script",
       "version": "1.0.1",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "theme-switcher",
@@ -900,25 +906,25 @@
       "name": "theme-tokens",
       "version": "3.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "thread-lines",
       "version": "1.0.0",
       "since": null,
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "thread-mark",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "thread-steps",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "time-series",
@@ -928,9 +934,9 @@
     },
     {
       "name": "timeline",
-      "version": "1.0.0",
+      "version": "1.0.2",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "timeline-map",
@@ -946,37 +952,37 @@
     },
     {
       "name": "toc",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "toggle",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "toolbar",
-      "version": "1.0.0",
+      "version": "3.3.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "tooltip",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "topbar",
-      "version": "2.0.0",
+      "version": "2.4.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "topbar-menu",
-      "version": "1.0.0",
+      "version": "2.1.0",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -984,37 +990,37 @@
       "name": "typography",
       "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "use-reduced-motion",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "use-theme",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "visually-hidden",
       "version": "1.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-08"
     },
     {
       "name": "weave-texture",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "wordmark",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     }
   ]
 }
