@@ -95,8 +95,15 @@
     --interlace-primary-subtle: oklch(0.973 0.0143 57.6);     /* warm tint for backgrounds */
     --interlace-primary-subtle-foreground: oklch(0.305 0.0758 44.7);  /* 12.70:1 on subtle (AAA) */
 
-    /* Surface */
-    --interlace-background: oklch(1 0 0);
+    /* Surface
+     *
+     * The page is warm paper (#fdfbf8), not screen white, and cards and
+     * popovers stay white so they lift off it the way a sheet lifts off a
+     * desk. The tone is as warm as it can go while primary holds 8.5:1 on
+     * it (8.52:1) and 7.23:1 on its own 10% tint over it, so the binding
+     * constraint above still clears AAA on the page as well as on a card.
+     * Foreground 19.02:1, muted-foreground 9.11:1, `--input` 3.50:1. */
+    --interlace-background: oklch(0.989 0.0045 78);
     --interlace-foreground: oklch(0.151 0.0055 67.8);         /* near-black, slight warm tint */
     --interlace-card: oklch(1 0 0);
     --interlace-card-foreground: oklch(0.151 0.0055 67.8);
@@ -244,8 +251,9 @@
      * already-AA-verified token, so a brand fork has three numbers to pick,
      * not fifteen. Warm-neutral to sit with the brand, not the cool greys.
      *
-     * Contrast, measured against `--interlace-background` #ffffff (which is
-     * also `--interlace-card` in light mode):
+     * Contrast, measured against `--interlace-card` #ffffff (charts sit on
+     * cards; on the #fdfbf8 page every ratio below falls by about 3%, and the
+     * axis still clears 3:1):
      *   grid  #e0dad2 → 1.39:1  DECORATIVE. Gridlines must never be the sole
      *                           carrier of a value — that is what the axis
      *                           labels and the sr-only table are for. Kept
@@ -301,7 +309,7 @@
     --interlace-primary-subtle-foreground: oklch(0.904 0.0515 48.8);  /* 11.54:1 on subtle (AAA) */
 
     /* Surface */
-    --interlace-background: oklch(0.145 0 0);
+    --interlace-background: oklch(0.155 0.0045 60);           /* warm near-black #0e0c0a, the paper's night side; primary 11.63:1, muted-foreground 11.16:1 */
     --interlace-foreground: oklch(0.947 0.0063 75.4);
     --interlace-card: oklch(0.194 0.0063 56);
     --interlace-card-foreground: oklch(0.947 0.0063 75.4);

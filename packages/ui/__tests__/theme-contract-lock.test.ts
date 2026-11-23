@@ -250,7 +250,8 @@ describe('theme contract lock', () => {
     const block = readBlock(INTERLACE_CSS, INTERLACE_LIGHT);
     const declarations = readDeclarations(block);
     expect(declarations.get('primary')).toBe('oklch(0.422 0.1117 45.2)');
-    expect(declarations.get('background')).toBe('oklch(1 0 0)');
+    expect(declarations.get('background')).toBe('oklch(0.989 0.0045 78)');
+    expect(declarations.get('card')).toBe('oklch(1 0 0)');
     // The `:root` block's comments name other tokens in prose (`--border`,
     // `--input`, `bg-primary/10`). None of them may parse as a declaration.
     expect(declarations.has('border')).toBe(true); // really declared
@@ -289,7 +290,9 @@ describe('theme contract lock', () => {
     // this drifts, either the maths is wrong or the comments are fiction —
     // both worth failing over.
     const interlaceLight = PALETTES.interlace.light;
-    expect(measure(interlaceLight, { fg: 'primary', bg: 'background', floor: 0, why: '' })!).toBeCloseTo(8.8, 1);
+    // "8.80:1 on white": light cards are white; the page is warm paper.
+    expect(measure(interlaceLight, { fg: 'primary', bg: 'card', floor: 0, why: '' })!).toBeCloseTo(8.8, 1);
+    expect(measure(interlaceLight, { fg: 'primary', bg: 'background', floor: 0, why: '' })!).toBeCloseTo(8.52, 1);
     const harborDark = PALETTES.harbor.dark;
     expect(measure(harborDark, { fg: 'primary', bg: 'background', floor: 0, why: '' })!).toBeCloseTo(10.03, 1);
   });

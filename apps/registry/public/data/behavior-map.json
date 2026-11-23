@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T07:45:53.223Z",
+  "generatedAt": "2026-11-23T09:00:19.104Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -212,8 +212,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -250,8 +250,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -325,8 +325,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -344,8 +344,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -420,8 +420,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -496,8 +496,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -529,8 +529,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -548,8 +548,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -638,8 +638,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -676,8 +676,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -695,8 +695,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -752,8 +752,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -843,8 +843,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -881,8 +881,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -952,8 +952,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -1004,8 +1004,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -1056,8 +1056,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -1102,8 +1102,8 @@
           "floor": 4.5,
           "why": "text-info on the page",
           "ratios": [
-            8.72,
-            10.98,
+            8.44,
+            10.83,
             6.89,
             13.08
           ],
@@ -1159,8 +1159,8 @@
           "floor": 4.5,
           "why": "text-success on the page",
           "ratios": [
-            7.68,
-            10.3,
+            7.44,
+            10.16,
             7.28,
             9.86
           ],
@@ -1178,8 +1178,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -1311,8 +1311,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -1330,8 +1330,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -1349,8 +1349,8 @@
           "floor": 4.5,
           "why": "text-warning on the page",
           "ratios": [
-            9.07,
-            9.22,
+            8.78,
+            9.09,
             8.6,
             8.83
           ],
@@ -1463,8 +1463,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -1496,8 +1496,8 @@
           "floor": 4.5,
           "why": "text-info on the page",
           "ratios": [
-            8.72,
-            10.98,
+            8.44,
+            10.83,
             6.89,
             13.08
           ],
@@ -1553,8 +1553,8 @@
           "floor": 4.5,
           "why": "text-success on the page",
           "ratios": [
-            7.68,
-            10.3,
+            7.44,
+            10.16,
             7.28,
             9.86
           ],
@@ -1648,8 +1648,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -1667,8 +1667,8 @@
           "floor": 4.5,
           "why": "text-warning on the page",
           "ratios": [
-            9.07,
-            9.22,
+            8.78,
+            9.09,
             8.6,
             8.83
           ],
@@ -1705,8 +1705,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -1738,8 +1738,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -1790,8 +1790,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -1914,8 +1914,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -1952,8 +1952,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -2004,12 +2004,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -2023,8 +2023,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -2080,8 +2080,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2099,8 +2099,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2213,8 +2213,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -2265,12 +2265,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -2284,8 +2284,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -2341,8 +2341,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2360,8 +2360,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2474,8 +2474,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -2507,8 +2507,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -2545,8 +2545,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2583,8 +2583,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -2616,8 +2616,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -2687,12 +2687,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -2706,8 +2706,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -2744,8 +2744,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2763,8 +2763,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2853,8 +2853,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -2891,8 +2891,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -2929,8 +2929,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -2962,8 +2962,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -3000,8 +3000,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -3084,8 +3084,8 @@
           "floor": 4.5,
           "why": "text-success on the page",
           "ratios": [
-            7.68,
-            10.3,
+            7.44,
+            10.16,
             7.28,
             9.86
           ],
@@ -3103,8 +3103,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -3141,8 +3141,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -3198,8 +3198,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -3236,8 +3236,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -3269,8 +3269,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -3307,8 +3307,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -3345,8 +3345,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -3397,8 +3397,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -3549,12 +3549,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -3568,8 +3568,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -3587,8 +3587,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -3644,8 +3644,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -3663,8 +3663,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -3796,8 +3796,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -3878,8 +3878,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -3916,8 +3916,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -3992,8 +3992,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -4068,8 +4068,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -4087,8 +4087,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -4209,8 +4209,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -4285,8 +4285,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -4318,8 +4318,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -4351,8 +4351,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -4370,8 +4370,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -4427,8 +4427,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -4489,8 +4489,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -4508,8 +4508,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -4565,8 +4565,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -4671,8 +4671,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -4690,8 +4690,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -4766,8 +4766,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -4854,8 +4854,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -4892,8 +4892,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -4963,8 +4963,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -5020,8 +5020,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -5079,6 +5079,25 @@
       "contrast": [
         {
           "fg": "viz-axis",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "chart axis (SC 1.4.11)",
+          "ratios": [
+            3.52,
+            3.77,
+            3.57,
+            4.84
+          ],
+          "worst": 3.52,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "viz-axis",
           "bg": "card",
           "kind": "non-text",
           "floor": 3,
@@ -5097,33 +5116,14 @@
           "passes": true
         },
         {
-          "fg": "viz-axis",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "chart axis (SC 1.4.11)",
-          "ratios": [
-            3.64,
-            3.82,
-            3.57,
-            4.84
-          ],
-          "worst": 3.57,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
           "fg": "destructive",
           "bg": "background",
           "kind": "text",
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -5141,8 +5141,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -5198,8 +5198,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -5241,8 +5241,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -5304,8 +5304,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -5323,8 +5323,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -5445,8 +5445,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -5497,8 +5497,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -5562,8 +5562,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -5633,8 +5633,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -5685,8 +5685,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -5779,8 +5779,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -5831,8 +5831,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -5888,8 +5888,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -5921,8 +5921,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -5940,8 +5940,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -6011,8 +6011,8 @@
           "floor": 4.5,
           "why": "text-success on the page",
           "ratios": [
-            7.68,
-            10.3,
+            7.44,
+            10.16,
             7.28,
             9.86
           ],
@@ -6030,8 +6030,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -6163,8 +6163,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -6182,8 +6182,8 @@
           "floor": 4.5,
           "why": "text-warning on the page",
           "ratios": [
-            9.07,
-            9.22,
+            8.78,
+            9.09,
             8.6,
             8.83
           ],
@@ -6239,8 +6239,8 @@
           "floor": 4.5,
           "why": "text-caution on the page",
           "ratios": [
-            9.37,
-            11.74,
+            9.07,
+            11.58,
             8.88,
             11.24
           ],
@@ -6349,8 +6349,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -6414,39 +6414,39 @@
       "keyboard": null,
       "contrast": [
         {
-          "fg": "strand-a",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "woven strand (SC 1.4.11)",
-          "ratios": [
-            5.19,
-            9.34,
-            4.6,
-            9.44
-          ],
-          "worst": 4.6,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
           "fg": "strand-b",
           "bg": "background",
           "kind": "non-text",
           "floor": 3,
           "why": "woven counter-strand (SC 1.4.11)",
           "ratios": [
-            4.65,
-            10.06,
+            4.5,
+            9.92,
             4.89,
             9.05
           ],
-          "worst": 4.65,
+          "worst": 4.5,
           "worstAt": {
             "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-a",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven strand (SC 1.4.11)",
+          "ratios": [
+            5.02,
+            9.21,
+            4.6,
+            9.44
+          ],
+          "worst": 4.6,
+          "worstAt": {
+            "theme": "harbor",
             "scheme": "light"
           },
           "passes": true
@@ -6592,12 +6592,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -6611,8 +6611,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -6630,8 +6630,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -6687,8 +6687,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -6706,8 +6706,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -6782,8 +6782,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -6835,39 +6835,39 @@
       "keyboard": null,
       "contrast": [
         {
-          "fg": "strand-a",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "woven strand (SC 1.4.11)",
-          "ratios": [
-            5.19,
-            9.34,
-            4.6,
-            9.44
-          ],
-          "worst": 4.6,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
           "fg": "strand-b",
           "bg": "background",
           "kind": "non-text",
           "floor": 3,
           "why": "woven counter-strand (SC 1.4.11)",
           "ratios": [
-            4.65,
-            10.06,
+            4.5,
+            9.92,
             4.89,
             9.05
           ],
-          "worst": 4.65,
+          "worst": 4.5,
           "worstAt": {
             "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-a",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven strand (SC 1.4.11)",
+          "ratios": [
+            5.02,
+            9.21,
+            4.6,
+            9.44
+          ],
+          "worst": 4.6,
+          "worstAt": {
+            "theme": "harbor",
             "scheme": "light"
           },
           "passes": true
@@ -6944,8 +6944,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -7022,8 +7022,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -7041,8 +7041,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -7098,8 +7098,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -7157,8 +7157,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -7176,8 +7176,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -7233,8 +7233,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -7331,8 +7331,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -7350,8 +7350,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -7493,8 +7493,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -7512,8 +7512,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -7569,8 +7569,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -7588,8 +7588,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -7688,8 +7688,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -7759,12 +7759,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -7778,8 +7778,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -7830,8 +7830,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -7976,8 +7976,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -8014,8 +8014,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8033,8 +8033,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8090,8 +8090,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -8123,8 +8123,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8213,8 +8213,8 @@
           "floor": 4.5,
           "why": "text-success on the page",
           "ratios": [
-            7.68,
-            10.3,
+            7.44,
+            10.16,
             7.28,
             9.86
           ],
@@ -8232,8 +8232,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -8270,8 +8270,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -8346,8 +8346,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8365,8 +8365,8 @@
           "floor": 4.5,
           "why": "text-warning on the page",
           "ratios": [
-            9.07,
-            9.22,
+            8.78,
+            9.09,
             8.6,
             8.83
           ],
@@ -8403,8 +8403,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -8455,8 +8455,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -8493,8 +8493,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8512,8 +8512,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8569,8 +8569,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -8602,8 +8602,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -8654,8 +8654,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -8673,8 +8673,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -8730,8 +8730,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -8792,12 +8792,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -8811,8 +8811,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -8849,8 +8849,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8868,8 +8868,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -8939,8 +8939,8 @@
           "floor": 3,
           "why": "woven strand (SC 1.4.11)",
           "ratios": [
-            5.19,
-            9.34,
+            5.02,
+            9.21,
             4.6,
             9.44
           ],
@@ -8991,8 +8991,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -9115,8 +9115,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -9165,8 +9165,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -9217,8 +9217,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -9255,8 +9255,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -9288,8 +9288,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -9340,8 +9340,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -9392,8 +9392,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -9430,8 +9430,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -9544,12 +9544,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -9563,8 +9563,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -9601,8 +9601,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -9620,8 +9620,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -9761,8 +9761,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -9832,8 +9832,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -9870,8 +9870,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -9965,8 +9965,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -10003,8 +10003,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -10041,8 +10041,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -10152,8 +10152,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -10229,8 +10229,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -10267,8 +10267,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -10332,12 +10332,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -10351,8 +10351,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -10370,8 +10370,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -10490,8 +10490,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -10555,8 +10555,8 @@
           "floor": 4.5,
           "why": "text-success on the page",
           "ratios": [
-            7.68,
-            10.3,
+            7.44,
+            10.16,
             7.28,
             9.86
           ],
@@ -10574,8 +10574,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -10612,8 +10612,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -10688,8 +10688,8 @@
           "floor": 4.5,
           "why": "text-warning on the page",
           "ratios": [
-            9.07,
-            9.22,
+            8.78,
+            9.09,
             8.6,
             8.83
           ],
@@ -10753,8 +10753,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -10772,8 +10772,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -10829,8 +10829,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -10891,8 +10891,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -10960,12 +10960,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -10979,8 +10979,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -10998,8 +10998,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -11074,8 +11074,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -11160,12 +11160,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -11198,8 +11198,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -11236,8 +11236,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -11274,8 +11274,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -11307,8 +11307,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -11340,8 +11340,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -11378,8 +11378,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -11397,8 +11397,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -11454,8 +11454,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -11487,8 +11487,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -11544,8 +11544,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -11596,12 +11596,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -11615,8 +11615,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -11634,8 +11634,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -11691,8 +11691,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -11809,12 +11809,12 @@
           "floor": 3,
           "why": "control border (SC 1.4.11)",
           "ratios": [
-            3.62,
-            3.35,
+            3.5,
+            3.31,
             3.43,
             4.25
           ],
-          "worst": 3.35,
+          "worst": 3.31,
           "worstAt": {
             "theme": "interlace",
             "scheme": "dark"
@@ -11828,8 +11828,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -11885,8 +11885,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -11938,39 +11938,39 @@
       "keyboard": null,
       "contrast": [
         {
-          "fg": "strand-a",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "woven strand (SC 1.4.11)",
-          "ratios": [
-            5.19,
-            9.34,
-            4.6,
-            9.44
-          ],
-          "worst": 4.6,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
           "fg": "strand-b",
           "bg": "background",
           "kind": "non-text",
           "floor": 3,
           "why": "woven counter-strand (SC 1.4.11)",
           "ratios": [
-            4.65,
-            10.06,
+            4.5,
+            9.92,
             4.89,
             9.05
           ],
-          "worst": 4.65,
+          "worst": 4.5,
           "worstAt": {
             "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-a",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven strand (SC 1.4.11)",
+          "ratios": [
+            5.02,
+            9.21,
+            4.6,
+            9.44
+          ],
+          "worst": 4.6,
+          "worstAt": {
+            "theme": "harbor",
             "scheme": "light"
           },
           "passes": true
@@ -12020,8 +12020,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -12047,39 +12047,39 @@
       "keyboard": null,
       "contrast": [
         {
-          "fg": "strand-a",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "woven strand (SC 1.4.11)",
-          "ratios": [
-            5.19,
-            9.34,
-            4.6,
-            9.44
-          ],
-          "worst": 4.6,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
           "fg": "strand-b",
           "bg": "background",
           "kind": "non-text",
           "floor": 3,
           "why": "woven counter-strand (SC 1.4.11)",
           "ratios": [
-            4.65,
-            10.06,
+            4.5,
+            9.92,
             4.89,
             9.05
           ],
-          "worst": 4.65,
+          "worst": 4.5,
           "worstAt": {
             "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-a",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven strand (SC 1.4.11)",
+          "ratios": [
+            5.02,
+            9.21,
+            4.6,
+            9.44
+          ],
+          "worst": 4.6,
+          "worstAt": {
+            "theme": "harbor",
             "scheme": "light"
           },
           "passes": true
@@ -12129,8 +12129,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -12167,8 +12167,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -12252,6 +12252,25 @@
       "contrast": [
         {
           "fg": "viz-axis",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "chart axis (SC 1.4.11)",
+          "ratios": [
+            3.52,
+            3.77,
+            3.57,
+            4.84
+          ],
+          "worst": 3.52,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "viz-axis",
           "bg": "card",
           "kind": "non-text",
           "floor": 3,
@@ -12270,33 +12289,14 @@
           "passes": true
         },
         {
-          "fg": "viz-axis",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "chart axis (SC 1.4.11)",
-          "ratios": [
-            3.64,
-            3.82,
-            3.57,
-            4.84
-          ],
-          "worst": 3.57,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
           "fg": "destructive",
           "bg": "background",
           "kind": "text",
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -12314,8 +12314,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -12371,8 +12371,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -12408,39 +12408,39 @@
       "keyboard": null,
       "contrast": [
         {
-          "fg": "strand-a",
-          "bg": "background",
-          "kind": "non-text",
-          "floor": 3,
-          "why": "woven strand (SC 1.4.11)",
-          "ratios": [
-            5.19,
-            9.34,
-            4.6,
-            9.44
-          ],
-          "worst": 4.6,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
           "fg": "strand-b",
           "bg": "background",
           "kind": "non-text",
           "floor": 3,
           "why": "woven counter-strand (SC 1.4.11)",
           "ratios": [
-            4.65,
-            10.06,
+            4.5,
+            9.92,
             4.89,
             9.05
           ],
-          "worst": 4.65,
+          "worst": 4.5,
           "worstAt": {
             "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-a",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven strand (SC 1.4.11)",
+          "ratios": [
+            5.02,
+            9.21,
+            4.6,
+            9.44
+          ],
+          "worst": 4.6,
+          "worstAt": {
+            "theme": "harbor",
             "scheme": "light"
           },
           "passes": true
@@ -12509,8 +12509,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -12547,8 +12547,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -12580,8 +12580,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -12599,8 +12599,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -12656,8 +12656,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -12675,8 +12675,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -12751,8 +12751,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -12805,8 +12805,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -12843,8 +12843,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -12900,8 +12900,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -12933,8 +12933,8 @@
           "floor": 3,
           "why": "woven strand (SC 1.4.11)",
           "ratios": [
-            5.19,
-            9.34,
+            5.02,
+            9.21,
             4.6,
             9.44
           ],
@@ -12990,8 +12990,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -13028,8 +13028,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -13085,8 +13085,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -13135,8 +13135,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -13206,8 +13206,8 @@
           "floor": 3,
           "why": "focus ring (SC 2.4.13)",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -13244,8 +13244,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -13296,8 +13296,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -13334,8 +13334,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
@@ -13367,8 +13367,8 @@
           "floor": 4.5,
           "why": "text-destructive on the page",
           "ratios": [
-            8.31,
-            10.43,
+            8.05,
+            10.29,
             7.6,
             10.03
           ],
@@ -13386,8 +13386,8 @@
           "floor": 4.5,
           "why": "secondary copy",
           "ratios": [
-            9.41,
-            11.32,
+            9.11,
+            11.16,
             7.82,
             9.52
           ],
@@ -13443,8 +13443,8 @@
           "floor": 4.5,
           "why": "text-primary on the page",
           "ratios": [
-            8.8,
-            11.79,
+            8.52,
+            11.63,
             8.39,
             10.03
           ],
@@ -13481,8 +13481,8 @@
           "floor": 4.5,
           "why": "body copy",
           "ratios": [
-            19.65,
-            16.97,
+            19.02,
+            16.73,
             17.74,
             16.19
           ],
