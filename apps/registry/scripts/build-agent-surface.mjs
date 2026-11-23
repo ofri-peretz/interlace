@@ -752,10 +752,11 @@ const buildLlmsTxt = (items, agentIndex) => {
 // ─────────────────────────────────────────────────────────────────────────────
 // /.well-known/agent-skills/
 //
-// Three skills, because there are exactly three things an agent does with a
-// component registry: find the right item, read enough of its contract to be
-// sure, and install it. Each SKILL.md is generated, so the counts, the facet
-// values and the worked examples are the live catalogue and cannot drift.
+// Four skills. Three are the things an agent does with a component registry:
+// find the right item, read enough of its contract to be sure, and install it.
+// Those SKILL.md files are generated, so the counts, the facet values and the
+// worked examples are the live catalogue and cannot drift. The fourth, the
+// craft skill, is hand-written (see CRAFT_SOURCE) and published as is.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const frontmatter = (fields) =>
@@ -1028,6 +1029,17 @@ source header. If the contract does not say it, do not claim it.
 `;
 };
 
+/** One front-matter field, or an error that names the skill and the field. */
+const frontmatterField = (id, body, field, re) => {
+  const match = re.exec(body);
+  if (!match) {
+    throw new Error(
+      `${id}/SKILL.md: front matter has no "${field}" in the expected shape (single-line name, description followed by license).`,
+    );
+  }
+  return match[1];
+};
+
 const buildSkills = (items, agentIndex, craft) => {
   const files = [
     [CRAFT_ID, craft],
@@ -1049,9 +1061,8 @@ const buildSkills = (items, agentIndex, craft) => {
     registry: `${HOMEPAGE}/r/registry.json`,
     skills: files.map(([id, body]) => ({
       id,
-      name: /^name:\s*(.+)$/m.exec(body)[1],
-      description: /^description:\s*([\s\S]*?)\nlicense:/m
-        .exec(body)[1]
+      name: frontmatterField(id, body, 'name', /^name:\s*(.+)$/m),
+      description: frontmatterField(id, body, 'description', /^description:\s*([\s\S]*?)\nlicense:/m)
         .replace(/\s+/g, ' ')
         .trim(),
       url: `${HOMEPAGE}/.well-known/agent-skills/${id}/SKILL.md`,
