@@ -504,3 +504,13 @@ describe('gridFieldCells', () => {
     expect(Math.max(...cells.map(([, r]) => r))).toBe(15);
   });
 });
+
+describe('GridField with chosen cells', () => {
+  it('does not restart its animations when the same cells arrive as a new array', () => {
+    const { rerender } = render(<GridField cells={[[1, 1], [2, 3]]} />);
+    const calls = animateSpy.mock.calls.length;
+    expect(calls).toBeGreaterThan(0);
+    rerender(<GridField cells={[[1, 1], [2, 3]]} />);
+    expect(animateSpy.mock.calls.length).toBe(calls);
+  });
+});

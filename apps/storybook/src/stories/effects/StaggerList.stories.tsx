@@ -1,5 +1,6 @@
 import { StaggerList } from '@interlace/ui/effects/stagger-list';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, waitFor } from 'storybook/test';
 
 const meta: Meta<typeof StaggerList> = {
   title: 'Effects/StaggerList',
@@ -27,6 +28,16 @@ const meta: Meta<typeof StaggerList> = {
       'Quote the other side in its own words.',
       'Say what is still contested.',
     ].map((text) => <span key={text}>{text}</span>),
+  },
+  // Every item arrives, once, and ends fully visible. Waiting for the arrival
+  // also means the accessibility scan reads the list as people will, not a
+  // frame from the middle of a fade.
+  play: async ({ canvasElement }) => {
+    const items = [...canvasElement.querySelectorAll<HTMLElement>('[data-slot="stagger-list-item"]')];
+    await expect(items.length).toBeGreaterThan(0);
+    await waitFor(() => expect(items.every((item) => item.dataset.revealed === 'true')).toBe(true));
+    await Promise.all(items.flatMap((item) => item.getAnimations()).map((a) => a.finished));
+    for (const item of items) await expect(getComputedStyle(item).opacity).toBe('1');
   },
 };
 

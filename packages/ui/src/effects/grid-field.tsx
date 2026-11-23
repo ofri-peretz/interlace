@@ -145,6 +145,8 @@ export function GridField({
   const moving = animated && !reduced;
   const seededCells = React.useMemo(() => gridFieldCells(lit, seed), [lit, seed]);
   const cells = chosenCells ?? seededCells;
+  // Keyed by value, so an inline `cells={[[0, 0]]}` does not restart the breathing each render.
+  const cellsKey = cells.map(([c, r]) => `${c}:${r}`).join(' ');
   const peak = Math.min(Math.max(intensity, 0), 1);
 
   React.useEffect(() => {
@@ -175,7 +177,7 @@ export function GridField({
       io?.disconnect();
       for (const a of animations) a.cancel();
     };
-  }, [moving, cells, seed, peak]);
+  }, [moving, cellsKey, seed, peak]);
 
   React.useEffect(() => {
     const root = rootRef.current;
