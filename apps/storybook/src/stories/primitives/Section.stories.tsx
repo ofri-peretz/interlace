@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Card, CardContent, CardHeader, CardTitle } from '@interlace/ui/card';
+import { Checkbox } from '@interlace/ui/checkbox';
+import { ComboboxCompose } from '@interlace/ui/combobox';
+import { Input } from '@interlace/ui/input';
+import { Label } from '@interlace/ui/label';
 import { Section } from '@interlace/ui/section';
+import { Textarea } from '@interlace/ui/textarea';
 import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Section> = {
@@ -192,6 +197,48 @@ export const BrandBandWithOverlap: Story = {
       </Section>
     </div>
   ),
+};
+
+const TOPICS = [
+  { value: 'roads', label: 'Roads and bridges' },
+  { value: 'parks', label: 'Parks' },
+  { value: 'water', label: 'Water' },
+];
+
+/**
+ * Form fields on a brand band. Every field paints its own opaque face and
+ * text colour, so it reads on the band in both schemes; the labels inherit
+ * the band's foreground.
+ */
+export const FieldsOnBrandBand: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <Section tone="brand" spacing="tight">
+      <form className="grid max-w-prose gap-4" onSubmit={(e) => e.preventDefault()}>
+        <div className="grid gap-2">
+          <Label htmlFor="band-email">Email</Label>
+          <Input id="band-email" type="email" placeholder="you@example.com" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="band-topic">Topic</Label>
+          <ComboboxCompose items={TOPICS} aria-label="Topic" placeholder="Pick a topic" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="band-question">Your question</Label>
+          <Textarea id="band-question" placeholder="Ask anything about the works." />
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox id="band-updates" />
+          <Label htmlFor="band-updates">Send me updates</Label>
+        </div>
+      </form>
+    </Section>
+  ),
+};
+
+export const FieldsOnBrandBandDark: Story = {
+  ...FieldsOnBrandBand,
+  globals: { theme: 'dark' },
 };
 
 export const Dark: Story = {

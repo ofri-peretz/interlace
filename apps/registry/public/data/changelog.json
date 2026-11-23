@@ -537,6 +537,21 @@
           "source": ".changeset/neutral-fixes.md"
         },
         {
+          "summary": "Form fields paint their own opaque face and text colour, so they read on a brand band, an image or a dark hero. `Input`, `Textarea`, `Combobox` (input and chips), `Checkbox` and `RadioGroup` now use `bg-background` in both schemes instead of `bg-transparent` / `dark:bg-input/30`, and the text fields set `text-foreground` rather than inheriting the band's foreground. `ComboboxCompose` now warns once, naming them, when two items share a `value` (each value keys a row, so filtering and selection broke with no error).",
+          "components": [
+            "input",
+            "textarea",
+            "combobox",
+            "checkbox",
+            "radio-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/opaque-fields.md"
+        },
+        {
           "summary": "`PricingTable`: the space inside a tier (between its sections, and above its CTA) now follows `density` too, so a `compact` tier's inside never breathes more than its 16px shell. `default` renders exactly as before.",
           "components": [
             "pricing-table"
