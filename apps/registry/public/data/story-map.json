@@ -1997,6 +1997,16 @@
     "previewDark": "effects-threadlines--dark",
     "skeleton": null
   },
+  "thread-steps": {
+    "title": "Blocks/ThreadSteps",
+    "storyIds": [
+      "blocks-threadsteps--default",
+      "blocks-threadsteps--progress"
+    ],
+    "preview": "blocks-threadsteps--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "time-series": {
     "title": "Charts/TimeSeries",
     "storyIds": [

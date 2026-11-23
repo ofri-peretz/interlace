@@ -2308,6 +2308,24 @@
       }
     },
     {
+      "name": "thread-steps",
+      "type": "registry:ui",
+      "title": "Thread Steps",
+      "description": "An ordered sequence held together by Interlace's woven thread: a knot for each step, and two strands that cross between one knot and the next. The strands draw in as the reader reaches each step, so the motion says one thing only: this leads to that.",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "timeline-map",
       "type": "registry:ui",
       "title": "Timeline Map",
