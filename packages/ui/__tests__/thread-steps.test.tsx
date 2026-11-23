@@ -44,12 +44,12 @@ beforeEach(() => {
   ioCallback = null;
   observed.length = 0;
   vi.stubGlobal('IntersectionObserver', StubObserver);
-  Object.defineProperty(SVGElement.prototype, 'animate', {
+  Object.defineProperty(HTMLElement.prototype, 'animate', {
     value: animate,
     configurable: true,
     writable: true,
   });
-  Object.defineProperty(SVGElement.prototype, 'getAnimations', {
+  Object.defineProperty(HTMLElement.prototype, 'getAnimations', {
     value: () => [{ cancel }],
     configurable: true,
     writable: true,
@@ -62,9 +62,12 @@ afterEach(() => {
   animate.mockClear();
   cancel.mockClear();
   disconnect.mockClear();
-  delete (SVGElement.prototype as { animate?: unknown }).animate;
-  delete (SVGElement.prototype as { getAnimations?: unknown }).getAnimations;
+  delete (HTMLElement.prototype as { animate?: unknown }).animate;
+  delete (HTMLElement.prototype as { getAnimations?: unknown }).getAnimations;
 });
+
+const strandBox = (step: Element) =>
+  step.querySelector<HTMLElement>('[data-slot="thread-step-strand"]')!;
 
 const strandPaths = (step: Element) =>
   Array.from(step.querySelectorAll<SVGPathElement>('[data-slot="thread-step-strand"] path'));
@@ -132,15 +135,16 @@ describe('ThreadSteps', () => {
 
   it('ships the server HTML fully drawn', () => {
     const html = renderToStaticMarkup(<Tracker />);
+    expect(html).not.toContain('clip-path');
     expect(html).not.toContain('stroke-dashoffset');
   });
 
   it('hides the woven strands until the step is reached, then draws them', () => {
     render(<Tracker />);
     const step = screen.getAllByRole('listitem')[0]!;
-    const paths = strandPaths(step);
+    const box = strandBox(step);
     expect(observed).toContain(step);
-    expect(paths.every((p) => p.style.strokeDashoffset === '100')).toBe(true);
+    expect(box.style.clipPath).toBe('inset(0 0 100% 0)');
 
     act(() =>
       ioCallback!(
@@ -156,9 +160,9 @@ describe('ThreadSteps', () => {
         {} as IntersectionObserver,
       ),
     );
-    expect(animate).toHaveBeenCalledTimes(2);
+    expect(animate).toHaveBeenCalledTimes(1);
     expect(disconnect).toHaveBeenCalled();
-    expect(paths.every((p) => p.style.strokeDashoffset === '')).toBe(true);
+    expect(box.style.clipPath).toBe('');
   });
 
   it('never animates a loose strand', () => {
@@ -173,14 +177,14 @@ describe('ThreadSteps', () => {
 
   it('cancels the draw and restores the strands on unmount', () => {
     const { unmount } = render(<Tracker />);
-    const paths = strandPaths(screen.getAllByRole('listitem')[0]!);
+    const box = strandBox(screen.getAllByRole('listitem')[0]!);
     unmount();
     expect(cancel).toHaveBeenCalled();
-    expect(paths.every((p) => p.style.strokeDashoffset === '')).toBe(true);
+    expect(box.style.clipPath).toBe('');
   });
 
   it('cleans up even where getAnimations is missing', () => {
-    delete (SVGElement.prototype as { getAnimations?: unknown }).getAnimations;
+    delete (HTMLElement.prototype as { getAnimations?: unknown }).getAnimations;
     const { unmount } = render(<Tracker />);
     unmount();
     expect(cancel).not.toHaveBeenCalled();
@@ -190,17 +194,17 @@ describe('ThreadSteps', () => {
     reduced.value = true;
     render(<Tracker />);
     expect(observed).toHaveLength(0);
-    expect(strandPaths(screen.getAllByRole('listitem')[0]!)[0]!.style.strokeDashoffset).toBe('');
+    expect(strandBox(screen.getAllByRole('listitem')[0]!).style.clipPath).toBe('');
   });
 
   it('stays drawn without IntersectionObserver', () => {
     vi.stubGlobal('IntersectionObserver', undefined);
     render(<Tracker />);
-    expect(strandPaths(screen.getAllByRole('listitem')[0]!)[0]!.style.strokeDashoffset).toBe('');
+    expect(strandBox(screen.getAllByRole('listitem')[0]!).style.clipPath).toBe('');
   });
 
-  it('stays drawn where SVG cannot animate', () => {
-    delete (SVGElement.prototype as { animate?: unknown }).animate;
+  it('stays drawn where the browser cannot animate', () => {
+    delete (HTMLElement.prototype as { animate?: unknown }).animate;
     render(<Tracker />);
     expect(observed).toHaveLength(0);
   });

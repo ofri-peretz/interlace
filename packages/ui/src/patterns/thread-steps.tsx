@@ -39,11 +39,15 @@
  * ## Motion
  *
  * The woven strands are in the server HTML, fully drawn. On the client,
- * before paint, each one is hidden and then drawn (the draw verb: 600ms,
- * stroke-dashoffset 100 → 0, Web Animations API) when its step scrolls into
- * view. Under `prefers-reduced-motion: reduce`, without IntersectionObserver,
- * or without JavaScript, the strands are simply there. Loose strands never
- * move: there is nothing to explain yet.
+ * before paint, they are hidden and then drawn top to bottom when the step
+ * scrolls into view: the draw verb's clip mechanism (600ms, a `clip-path`
+ * inset opening downward, Web Animations API), as `weave-reveal` does for
+ * TimeSeries. Not stroke-dashoffset: the strand box stretches with the step,
+ * and Chromium measures dashes on a non-scaling stroke in screen pixels,
+ * ignoring `pathLength` (see InterlaceWeave), so a tall step would draw as
+ * dashes. Under `prefers-reduced-motion: reduce`, without
+ * IntersectionObserver, or without JavaScript, the strands are simply there.
+ * Loose strands never move: there is nothing to explain yet.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -86,6 +90,9 @@ const KNOT: Record<ThreadStepState | 'none', string> = {
 /** Two strands that leave a knot together, cross, and meet at the next one. */
 const WOVEN = ['M6 0 C0 33, 12 67, 6 100', 'M6 0 C12 33, 0 67, 6 100'] as const;
 
+const HIDDEN = 'inset(0 0 100% 0)';
+const SHOWN = 'inset(0 0 0 0)';
+
 function ThreadSteps({ className, ...props }: React.ComponentProps<'ol'>) {
   return (
     <ol
@@ -118,24 +125,19 @@ function ThreadStep({ title, state, className, children, ...props }: ThreadStepP
     const step = ref.current;
     if (!step || !woven || reduced) return;
     if (typeof IntersectionObserver === 'undefined') return;
-    const strands = Array.from(
-      step.querySelectorAll<SVGPathElement>('[data-slot="thread-step-strand"] path'),
-    );
-    if (!strands.every((s) => typeof s.animate === 'function')) return;
-    for (const s of strands) s.style.strokeDashoffset = '100';
+    const strand = step.querySelector<HTMLElement>('[data-slot="thread-step-strand"]')!;
+    if (typeof strand.animate !== 'function') return;
+    strand.style.clipPath = HIDDEN;
 
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
-        strands.forEach((s, i) => {
-          s.style.strokeDashoffset = '';
-          s.animate([{ strokeDashoffset: 100 }, { strokeDashoffset: 0 }], {
-            duration: 600,
-            delay: i * 120,
-            easing: 'ease-out',
-            fill: 'backwards',
-          });
+        strand.style.clipPath = '';
+        strand.animate([{ clipPath: HIDDEN }, { clipPath: SHOWN }], {
+          duration: 600,
+          easing: 'ease-out',
+          fill: 'backwards',
         });
       },
       { threshold: 0.4 },
@@ -143,10 +145,8 @@ function ThreadStep({ title, state, className, children, ...props }: ThreadStepP
     io.observe(step);
     return () => {
       io.disconnect();
-      for (const s of strands) {
-        s.style.strokeDashoffset = '';
-        for (const a of s.getAnimations?.() ?? []) a.cancel();
-      }
+      strand.style.clipPath = '';
+      for (const a of strand.getAnimations?.() ?? []) a.cancel();
     };
   }, [woven, reduced]);
 
@@ -171,11 +171,11 @@ function ThreadStep({ title, state, className, children, ...props }: ThreadStepP
       {/* The box sizes the strand: an <svg> is a replaced element, so
           top + bottom alone would leave it at its intrinsic height. */}
       <span
+        data-slot="thread-step-strand"
         aria-hidden
         className="pointer-events-none absolute top-6 bottom-0 left-0 w-6 group-last/step:hidden"
       >
         <svg
-          data-slot="thread-step-strand"
           viewBox="0 0 12 100"
           preserveAspectRatio="none"
           fill="none"
@@ -188,8 +188,6 @@ function ThreadStep({ title, state, className, children, ...props }: ThreadStepP
               <path
                 key={d}
                 d={d}
-                pathLength={100}
-                strokeDasharray={100}
                 strokeWidth={1.5}
                 vectorEffect="non-scaling-stroke"
                 className={i === 0 ? 'stroke-strand-a' : 'stroke-strand-b'}
