@@ -58,17 +58,25 @@ function declarations(body: string, prefix: string): Map<string, string> {
   return out;
 }
 
-const OPT_IN = declarations(
+const IMPORTANT = /\s*!important$/;
+/** The mode's declarations without the !important flag, which is checked on its own. */
+const plain = (decls: Map<string, string>) =>
+  new Map([...decls].map(([k, v]) => [k, v.replace(IMPORTANT, '')]));
+
+const OPT_IN_RAW = declarations(
   block(CSS, "[data-contrast='more'],\n  [data-contrast='more'] :is(.dark, [data-scheme], [data-theme])"),
   '--',
 );
-const AUTOMATIC = declarations(
+const AUTOMATIC_RAW = declarations(
   block(
     CSS,
     ":root:not([data-contrast='normal']),\n    :root:not([data-contrast='normal']) :is(.dark, [data-scheme], [data-theme])",
   ),
   '--',
 );
+
+const OPT_IN = plain(OPT_IN_RAW);
+const AUTOMATIC = plain(AUTOMATIC_RAW);
 
 function brand(theme: string, scheme: Scheme): Map<string, string> {
   const src = SOURCES[theme]![scheme];
@@ -91,6 +99,10 @@ function resolver(theme: string, scheme: Scheme) {
     return rgb;
   };
   const term = (expr: string): RGB => {
+    // A brand hook with a fallback, var(--contrast-primary, var(--foreground)):
+    // no library theme sets the hook, so the fallback is what ships.
+    const hook = /^var\(--contrast-[a-z0-9-]+,\s*(var\([^)]+\))\)$/.exec(expr.trim());
+    if (hook) return term(hook[1]!);
     const v = /^var\(--(interlace-)?([a-z0-9-]+)\)$/.exec(expr.trim());
     if (!v) throw new Error(`unsupported term ${expr}`);
     return v[1] ? brandColor(v[2]!) : color(v[2]!);
@@ -142,6 +154,15 @@ describe('more-contrast lock', () => {
   it('declares the same tokens for the opt-in switch and the system preference', () => {
     expect(OPT_IN.size).toBeGreaterThan(20);
     expect([...AUTOMATIC]).toEqual([...OPT_IN]);
+  });
+
+  // Brands declare their tokens unlayered on :root, which beats any layered
+  // rule. Only a layered !important lets the reader's request win.
+  it('marks every mode declaration !important, so unlayered brand tokens cannot cancel it', () => {
+    const notImportant = [...OPT_IN_RAW, ...AUTOMATIC_RAW]
+      .filter(([, v]) => !IMPORTANT.test(v))
+      .map(([k]) => k);
+    expect(notImportant).toEqual([]);
   });
 
   it('covers every registered theme', () => {
