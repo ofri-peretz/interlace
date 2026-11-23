@@ -147,6 +147,29 @@ describe('Section: tone + divider (LAYOUT §8)', () => {
     expect(html).toContain('backdrop-blur-sm');
   });
 
+  it('tone="brand" is the brand band: bg-primary with its own foreground', () => {
+    const html = render(<Section tone="brand">x</Section>);
+    expect(html).toContain('bg-primary text-primary-foreground');
+    expect(html).toContain('data-tone="brand"');
+  });
+
+  it('overlap pulls up by the depth, drops its own top padding, and stacks above', () => {
+    const none = render(<Section>x</Section>);
+    expect(none).not.toContain('-mt-');
+    for (const [depth, pull] of [
+      ['sm', '-mt-6'],
+      ['md', '-mt-8'],
+      ['lg', '-mt-12'],
+    ] as const) {
+      const html = render(<Section overlap={depth}>x</Section>);
+      expect(html).toContain(pull);
+      expect(html).toContain('z-10');
+      expect(html).toContain('md:pt-0');
+      expect(html).toContain('lg:pt-0');
+      expect(html).toContain(`data-overlap="${depth}"`);
+    }
+  });
+
   it('tone="default" applies NO background class (the only "neutral" tone)', () => {
     const html = render(<Section tone="default">x</Section>);
     expect(html).not.toContain('bg-card');

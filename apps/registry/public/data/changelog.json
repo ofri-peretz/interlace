@@ -343,6 +343,17 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
+          "summary": "`Section` gets a `brand` tone, the full-bleed brand band (`bg-primary` with `text-primary-foreground`), and a new `overlap` axis (`none`, `sm`, `md`, `lg`). A Section with `overlap` drops its own top padding, pulls up by that depth and stacks above the band before it, so a card can straddle the edge of a brand band with no custom class: two Sections, the second with `overlap=\"md\"`.",
+          "components": [
+            "section"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/section-brand-overlap.md"
+        },
+        {
           "summary": "Site chrome that needs no custom classes:\n\n- `Topbar` keeps its links on small screens. By default they move behind a Menu button that opens a side sheet (new `TopbarMenu`); `mobileNav=\"wrap\"` shows them as a second row. `currentHref` marks the current page with `aria-current=\"page\"` and a visible style, and `renderLink` now receives `aria-current` to forward.\n- New `Banner`: a thin full-width bar for a site-wide message, in muted, info, success, warning and highlight tones, with an optional action and close button.\n- `Prose` headings now use `--font-heading` (they used `--font-body` before), like Typography. If you set the two to different faces, Prose headings change to the heading face. New `width=\"fill\"` drops the 65ch cap for prose inside a card or panel.\n- `StatCard` and `StatGroup` take `layout=\"value-first\"` (the number, then what it counts) next to the default label-first.\n- `Footer` takes a `tagline` shown under the brand.",
           "components": [
             "topbar",
@@ -380,6 +391,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/thread-steps.md"
+        },
+        {
+          "summary": "New `Timeline`: a short record in date order, where each event has a date, a title, what was said and where it comes from. Once the timeline itself is 48rem wide the events sit in one row on a single rule; below that they stack down a vertical rule. The switch keys on the timeline's own width, not the viewport. `orientation=\"vertical\"` always stacks, and `marker=\"accent\"` fills one event's dot in the highlight colour.",
+          "components": [
+            "timeline"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/timeline.md"
         },
         {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
