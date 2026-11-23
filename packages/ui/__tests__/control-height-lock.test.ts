@@ -23,6 +23,9 @@ const CONTROLS = [
   'src/primitives/theme-switcher.tsx',
   'src/primitives/toolbar.tsx',
   'src/primitives/pagination.tsx',
+  'src/patterns/topbar-nav.tsx',
+  'src/patterns/dialogue.tsx',
+  'src/patterns/dialogue-stepper.tsx',
 ];
 
 /**
@@ -49,6 +52,16 @@ describe('control height lock', () => {
     const css = read('styles/structure/layout.css');
     const block = css.slice(css.indexOf("[data-density='comfortable']"));
     expect(block).toMatch(/--spacing-control:\s*2\.75rem/);
+  });
+
+  it('gives small inline triggers a 24px target, 44px when comfortable', () => {
+    const css = read('styles/structure/layout.css');
+    expect(css).toMatch(/--spacing-target:\s*1\.5rem/);
+    const block = css.slice(css.indexOf("[data-density='comfortable']"));
+    expect(block).toMatch(/--spacing-target:\s*2\.75rem/);
+    // Both pill-sized citation markers take the tap through the target pad.
+    const citation = read('src/patterns/citation.tsx');
+    expect(citation.match(/after:min-h-target after:min-w-target/g)).toHaveLength(2);
   });
 
   it.each(CONTROLS)('%s sizes its controls from the tokens', (path) => {

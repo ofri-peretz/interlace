@@ -78,7 +78,7 @@ export interface TopbarNavProps {
  * them. The ring sits 2px outside the box on the page colour.
  */
 export const TOPBAR_ROW_ITEM =
-  "relative inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-sm whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "relative inline-flex min-h-control items-center gap-1 rounded-md px-2.5 py-1.5 text-sm whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const TRIGGER = cn(
   TOPBAR_ROW_ITEM,

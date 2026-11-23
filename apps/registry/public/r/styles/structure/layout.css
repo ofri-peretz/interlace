@@ -41,6 +41,13 @@
   --spacing-control: 2.25rem;
   --spacing-control-lg: 2.5rem;
 
+  /* The smallest tap target for a control that LOOKS smaller than a
+     control: an inline citation marker, a chip in running text. Its visual
+     stays put; an invisible ::after pad of this size takes the tap.
+     24px is the WCAG 2.5.8 AA floor; comfortable density raises it to 44px.
+     Generates min-h-target / min-w-target / size-target. */
+  --spacing-target: 1.5rem;
+
   /* ── Container widths (LAYOUT #2 — four sizes only) ─────────────────
      Generates max-w-prose / max-w-content / max-w-wide. `full` = no max-width
      (omit the utility). ad-hoc max-w-3xl/4xl/5xl/6xl are forbidden by R21. */
@@ -75,5 +82,6 @@
     --spacing-control-sm: 2.5rem;
     --spacing-control: 2.75rem;
     --spacing-control-lg: 3rem;
+    --spacing-target: 2.75rem;
   }
 }
