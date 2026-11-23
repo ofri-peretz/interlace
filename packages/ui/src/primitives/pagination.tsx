@@ -28,7 +28,7 @@
  *
  * ## MIN_VIEWPORT — 320
  *
- * Prev/Next collapse to icon-only below `sm` (`hidden sm:block` on the
+ * Prev/Next collapse to icon-only below `sm` (`hidden xs:block` on the
  * labels), and the list is `flex-wrap` — without the wrap a nine-page bar
  * measured 444px inside a 375px viewport and pushed the page sideways.
  *
@@ -58,7 +58,7 @@ import { buttonVariants } from './button.js';
 
 /**
  * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. Prev/Next collapse
- * to icon-only below `sm` (`hidden sm:block` on the labels), so a 5-item bar
+ * to icon-only below `sm` (`hidden xs:block` on the labels), so a 5-item bar
  * fits 320px without wrapping.
  */
 export const MIN_VIEWPORT = 320 as const;
@@ -148,11 +148,11 @@ function PaginationPrevious({
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
-      className={cn('gap-1 px-2.5 sm:pl-2.5', className)}
+      className={cn('gap-1 px-2.5 xs:pl-2.5', className)}
       {...props}
     >
       <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <span className="hidden xs:block">Previous</span>
     </PaginationLink>
   );
 }
@@ -165,10 +165,10 @@ function PaginationNext({
     <PaginationLink
       aria-label="Go to next page"
       size="default"
-      className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
+      className={cn('gap-1 px-2.5 xs:pr-2.5', className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
+      <span className="hidden xs:block">Next</span>
       <ChevronRightIcon />
     </PaginationLink>
   );

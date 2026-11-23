@@ -251,7 +251,7 @@ describe('token-namespace parser', () => {
     expect(files.has('interlace-theme.css')).toBe(true);
     expect(files.has('foundation.css')).toBe(true);
     expect(claims.some((c: { name: string }) => c.name === '--color-accent')).toBe(true);
-    expect(claims.some((c: { name: string }) => c.name === '--breakpoint-sm')).toBe(true);
+    expect(claims.some((c: { name: string }) => c.name === '--breakpoint-xs')).toBe(true);
   });
 
   it('matches the stylesheets on disk, not a copy', async () => {

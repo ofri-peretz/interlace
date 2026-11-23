@@ -41,7 +41,7 @@
  * ## API parity
  *
  * `rounded-[4px]` is an arbitrary radius: the DS radius scale starts at
- * `--interlace-radius-sm` = 8px, which fully rounds a 16px box into a
+ * `rounded-sm` = 8px (`--radius` − 4px), which fully rounds a 16px box into a
  * squircle. Kept for shadcn parity until the scale grows an `xs` step.
  *
  * | Rule | Concept                          | Where in this file                                          |

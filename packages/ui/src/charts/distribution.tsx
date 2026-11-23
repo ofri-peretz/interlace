@@ -319,7 +319,7 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
           data-state="error"
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'm-0 w-full rounded-lg border border-destructive/40 p-6',
+            'm-0 w-full rounded-xl border border-destructive/40 p-6',
             className,
           )}
           {...props}
@@ -342,7 +342,7 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
           ref={ref}
           data-slot="distribution-empty"
           data-min-viewport={String(MIN_VIEWPORT)}
-          className={cn('m-0 w-full rounded-lg border border-border p-6', className)}
+          className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
           {...props}
         >
           <p className="text-sm text-muted-foreground">
@@ -461,7 +461,7 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
           data-slot="distribution-plot"
           viewBox={`0 0 ${W} ${height}`}
           className={cn(
-            'block w-full touch-pan-y rounded-md',
+            'block w-full touch-pan-y rounded-lg',
             'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
           )}
           role="img"
@@ -660,7 +660,7 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
                     className={
                       keepAtNarrow(position, labelSlots.length)
                         ? undefined
-                        : 'hidden sm:inline'
+                        : 'hidden xs:inline'
                     }
                   >
                     {bin.label}

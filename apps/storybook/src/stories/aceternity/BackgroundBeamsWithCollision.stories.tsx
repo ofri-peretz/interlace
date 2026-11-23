@@ -60,8 +60,8 @@ const meta: Meta<typeof BackgroundBeamsWithCollision> = {
 export default meta;
 type Story = StoryObj<typeof BackgroundBeamsWithCollision>;
 
-const CARD = 'rounded-md border border-border bg-background px-4 py-2 text-foreground shadow-sm';
-const BOX = 'h-[280px] md:h-[280px] w-full overflow-hidden rounded-lg border border-border';
+const CARD = 'rounded-lg border border-border bg-background px-4 py-2 text-foreground shadow-sm';
+const BOX = 'h-[280px] md:h-[280px] w-full overflow-hidden rounded-xl border border-border';
 
 export const Default: Story = {
   args: {

@@ -57,7 +57,7 @@
  * | R10  | Composition seam                 | `title` / `language` slots accept ReactNode                 |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes only                   |
- * | R19  | Tokens only                      | `bg-card` / `border-border` / `rounded-md` / `p-md` / `text-code` |
+ * | R19  | Tokens only                      | `bg-card` / `border-border` / `rounded-lg` / `p-6` / `text-code` |
  * | R20  | AA contrast                      | foreground on card surface (semantic tokens, AA-clean)      |
  * | R25  | Client component                 | Owns `useState` for the copy affordance                     |
  * | R26  | A11y                             | Copy button has accessible label + aria-live region for state |
@@ -75,7 +75,7 @@ const COPIED_RESET_MS = 1500;
 
 /**
  * Notation line styles — see "Notation contract" in the header. Decorated
- * lines bleed through the pre's `p-md` padding via the inline-block +
+ * lines bleed through the pre's `p-6` padding via the inline-block +
  * negative-margin recipe (the same one VitePress ships); the bleed width
  * tracks the `--spacing-md` token so a padding change cannot desync it.
  * Diff markers sit absolutely in the bled padding gutter, so code
@@ -84,12 +84,12 @@ const COPIED_RESET_MS = 1500;
  * see the header note; the copy button is the reliable post-diff path.
  */
 const NOTATION_LINES = cn(
-  '[&_.line.highlighted]:relative [&_.line.highlighted]:inline-block [&_.line.highlighted]:-mx-md [&_.line.highlighted]:px-md [&_.line.highlighted]:w-[calc(100%_+_var(--spacing-md)*2)]',
-  '[&_.line.diff]:relative [&_.line.diff]:inline-block [&_.line.diff]:-mx-md [&_.line.diff]:px-md [&_.line.diff]:w-[calc(100%_+_var(--spacing-md)*2)]',
+  '[&_.line.highlighted]:relative [&_.line.highlighted]:inline-block [&_.line.highlighted]:-mx-6 [&_.line.highlighted]:px-6 [&_.line.highlighted]:w-[calc(100%_+_--spacing(12))]',
+  '[&_.line.diff]:relative [&_.line.diff]:inline-block [&_.line.diff]:-mx-6 [&_.line.diff]:px-6 [&_.line.diff]:w-[calc(100%_+_--spacing(12))]',
   '[&_.line.highlighted]:bg-accent',
   '[&_.line.diff.add]:bg-success/15',
   '[&_.line.diff.remove]:bg-destructive/10 [&_.line.diff.remove]:select-none',
-  '[&_.line.diff]:before:absolute [&_.line.diff]:before:left-xs',
+  '[&_.line.diff]:before:absolute [&_.line.diff]:before:left-2',
   "[&_.line.diff.add]:before:content-['+'] [&_.line.diff.add]:before:text-success",
   "[&_.line.diff.remove]:before:content-['-'] [&_.line.diff.remove]:before:text-destructive",
 );
@@ -215,7 +215,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
         data-min-viewport={String(MIN_VIEWPORT)}
         data-language={language ?? undefined}
         className={cn(
-          'bg-card border-border overflow-hidden rounded-md border',
+          'bg-card border-border overflow-hidden rounded-lg border',
           className,
         )}
         {...props}
@@ -225,7 +225,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
         <figcaption
           data-slot="code-block-header"
           className={cn(
-            'border-border flex items-center justify-between gap-sm border-b px-md py-xs',
+            'border-border flex items-center justify-between gap-4 border-b px-6 py-2',
             'text-ui-sm text-muted-foreground',
           )}
         >
@@ -235,7 +235,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
           >
             {title}
           </span>
-          <div className="flex items-center gap-sm">
+          <div className="flex items-center gap-4">
             {language ? (
               <span
                 data-slot="code-block-language"
@@ -250,7 +250,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
               onClick={handleCopy}
               aria-label={copied ? 'Copied to clipboard' : 'Copy code to clipboard'}
               className={cn(
-                'inline-flex items-center gap-xs rounded-md px-xs py-xs',
+                'inline-flex items-center gap-2 rounded-lg px-2 py-2',
                 'text-ui-sm text-muted-foreground hover:text-foreground',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                 'transition-colors',
@@ -273,7 +273,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
           // keys; the focus-visible ring is the standard DS contract.
           tabIndex={0}
           className={cn(
-            'overflow-x-auto p-md',
+            'overflow-x-auto p-6',
             'text-code font-mono text-foreground',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset',
             NOTATION_LINES,

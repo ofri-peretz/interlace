@@ -64,8 +64,8 @@ export function TextEquivalentSection({
       <div
         className={
           strength.strong
-            ? 'border-primary/40 bg-primary/5 rounded-lg border p-4'
-            : 'border-border bg-background rounded-lg border border-dashed p-4'
+            ? 'border-primary/40 bg-primary/5 rounded-xl border p-4'
+            : 'border-border bg-background rounded-xl border border-dashed p-4'
         }
       >
         <div className="flex flex-wrap items-center gap-2">

@@ -150,7 +150,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
           data-state="error"
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'w-full rounded-lg border border-destructive/40 p-6',
+            'w-full rounded-xl border border-destructive/40 p-6',
             className,
           )}
           {...props}

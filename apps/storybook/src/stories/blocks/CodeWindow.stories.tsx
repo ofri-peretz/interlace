@@ -91,7 +91,7 @@ type Story = StoryObj<CodeWindowStoryArgs>;
 const Code = ({ children }: { children: string }) => (
   <pre
     tabIndex={0}
-    className="overflow-x-auto p-md font-mono text-code focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    className="overflow-x-auto p-6 font-mono text-code focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
   >
     <code>{children}</code>
   </pre>

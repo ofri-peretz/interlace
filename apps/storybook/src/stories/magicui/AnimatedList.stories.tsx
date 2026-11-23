@@ -79,10 +79,10 @@ export default meta;
 type Story = StoryObj<typeof AnimatedList>;
 
 const renderFeed = (args: ComponentProps<typeof AnimatedList>) => (
-  <div className="rounded-lg border border-border bg-background p-4">
+  <div className="rounded-xl border border-border bg-background p-4">
     <AnimatedList {...args} className="w-full max-w-[24rem]">
       {notifications.map((n) => (
-        <div key={n.id} className="w-full rounded-lg border border-border bg-background p-3 shadow-sm">
+        <div key={n.id} className="w-full rounded-xl border border-border bg-background p-3 shadow-sm">
           <p className="text-sm font-medium text-foreground">{n.title}</p>
           <p className="text-xs text-muted-foreground">{n.detail}</p>
         </div>

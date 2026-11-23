@@ -110,7 +110,7 @@ function BlogHomeTemplateSkeleton({
         label={null}
       />
       <Container size="content">
-        <Stack gap="xl" className="py-xl">
+        <Stack gap="xl" className="py-16">
           <Skeleton variant="page-header" label={null} />
           <Skeleton variant="article-card" count={3} label={null} />
           <Skeleton variant="newsletter-form" label={null} />

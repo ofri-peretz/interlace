@@ -8,7 +8,7 @@ import { BorderBeam } from '@interlace/ui/magicui/border-beam';
  * `rounded-[inherit]` — it traces the border of whatever positions it, and
  * takes its corner radius from that parent rather than owning one itself.
  * Every story therefore wraps it in a `relative overflow-hidden` card with
- * an explicit height and its own `rounded-lg`, and puts the beam AFTER the
+ * an explicit height and its own `rounded-xl`, and puts the beam AFTER the
  * card content so it paints on top as an overlay rather than under it.
  */
 
@@ -107,7 +107,7 @@ export const Default: Story = {
     colorTo: '#9c40ff',
   },
   render: (args) => (
-    <div className="relative h-[220px] w-full overflow-hidden rounded-lg border border-border bg-background p-6">
+    <div className="relative h-[220px] w-full overflow-hidden rounded-xl border border-border bg-background p-6">
       <p className="text-sm font-medium text-foreground">Card with a border beam</p>
       <p className="mt-2 text-xs text-muted-foreground">
         The beam traces the card border, not the content inside it.

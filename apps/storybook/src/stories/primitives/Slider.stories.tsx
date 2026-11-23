@@ -193,7 +193,7 @@ function ControlledSlider({
 }) {
   const values = (args.value as readonly number[] | undefined) ?? [];
   return (
-    <div className="flex w-72 max-w-full flex-col gap-xs">
+    <div className="flex w-72 max-w-full flex-col gap-2">
       <div className="flex items-baseline justify-between">
         <span className="text-ui-sm font-medium">{label}</span>
         <span className="text-ui-sm font-mono text-muted-foreground">

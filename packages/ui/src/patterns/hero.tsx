@@ -67,7 +67,7 @@ export function Hero({
       data-slot="hero"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'relative isolate w-full py-16 sm:py-24',
+        'relative isolate w-full py-16 xs:py-24',
         media ? 'grid gap-10 lg:grid-cols-2 lg:items-center' : '',
         className,
       )}

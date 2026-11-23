@@ -93,7 +93,7 @@ export const Default: Story = {
 export const Variants: Story = {
   parameters: { layout: 'fullscreen' },
   render: () => (
-    <div className="flex flex-col gap-xl p-lg">
+    <div className="flex flex-col gap-16 p-10">
       <div>
         <div className="mb-2 text-xs font-mono uppercase text-muted-foreground">
           both

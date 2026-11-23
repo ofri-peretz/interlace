@@ -25,9 +25,9 @@
  *
  *   <Skeleton variant="rect"    />               ← default, 1rect placeholder
  *   <Skeleton variant="avatar"  />               ← circular 36×36
- *   <Skeleton variant="button"  />               ← 36×96 rounded-md
+ *   <Skeleton variant="button"  />               ← 36×96 rounded-lg
  *   <Skeleton variant="article-card" />           ← composite: img + title + meta
- *   <Skeleton variant="rect"  count={3}  />       ← N placeholders, gap-sm
+ *   <Skeleton variant="rect"  count={3}  />       ← N placeholders, gap-4
  *   <Skeleton variant="rect"  className="h-12 w-48" />  ← escape hatch
  *
  * ## MIN_VIEWPORT — 320
@@ -43,7 +43,7 @@
  * | R8   | No `isXxx`; enum for variants    | `variant` is the closed `SkeletonVariant` union             |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; SKELETON_VARIANT_CLASSES uses utility classes |
- * | R19  | Tokens only                      | `bg-muted` / `animate-pulse` / `rounded-{sm,md,lg,full}` / `gap-md` — all DS tokens |
+ * | R19  | Tokens only                      | `bg-muted` / `animate-pulse` / `rounded-{sm,md,lg,full}` / `gap-6` — all DS tokens |
  * | R20  | AA contrast (n/a)                | Skeleton is non-text — no contrast requirement              |
  * | R25  | Server component                 | Pure render — no hooks                                      |
  * | R26  | A11y                             | `role="status"` + `aria-busy="true"` + visually-hidden text |
@@ -71,7 +71,7 @@ interface SkeletonProps
    */
   variant?: SkeletonVariant;
   /**
-   * Render N copies, stacked vertically with `gap-sm`. Useful for lists
+   * Render N copies, stacked vertically with `gap-4`. Useful for lists
    * (e.g. `<Skeleton variant="text" count={5} />` for a 5-line paragraph).
    * Defaults to 1.
    */
@@ -143,7 +143,7 @@ function Skeleton({
         role="status"
         aria-busy="true"
         aria-live="polite"
-        className={cn('flex flex-col gap-sm', className)}
+        className={cn('flex flex-col gap-4', className)}
         {...props}
       >
         {Array.from({ length: count }).map((_, i) => (
@@ -246,12 +246,12 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // Image (top) + 3 stacked content lines + meta row.
       return (
         <>
-          <div className="bg-muted-foreground/10 h-40 w-full rounded-t-xl" />
-          <div className="flex flex-col gap-xs p-md">
+          <div className="bg-muted-foreground/10 h-40 w-full rounded-t-lg" />
+          <div className="flex flex-col gap-2 p-6">
             <div className="bg-muted-foreground/10 h-5 w-3/4 rounded-sm" />
             <div className="bg-muted-foreground/10 h-4 w-full rounded-sm" />
             <div className="bg-muted-foreground/10 h-4 w-5/6 rounded-sm" />
-            <div className="mt-xs flex items-center gap-sm">
+            <div className="mt-2 flex items-center gap-4">
               <div className="bg-muted-foreground/10 size-6 rounded-full" />
               <div className="bg-muted-foreground/10 h-3 w-20 rounded-sm" />
             </div>
@@ -260,9 +260,9 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       );
     case 'author-byline':
       return (
-        <div className="flex items-center gap-sm p-xs">
+        <div className="flex items-center gap-4 p-2">
           <div className="bg-muted-foreground/10 size-10 rounded-full" />
-          <div className="flex flex-col gap-xs">
+          <div className="flex flex-col gap-2">
             <div className="bg-muted-foreground/10 h-4 w-24 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-16 rounded-sm" />
           </div>
@@ -270,17 +270,17 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       );
     case 'newsletter-form':
       return (
-        <div className="flex flex-col gap-sm p-md">
+        <div className="flex flex-col gap-4 p-6">
           <div className="bg-muted-foreground/10 h-4 w-1/2 rounded-sm" />
-          <div className="flex gap-sm">
-            <div className="bg-muted-foreground/10 h-9 flex-1 rounded-md" />
-            <div className="bg-muted-foreground/10 h-9 w-24 rounded-md" />
+          <div className="flex gap-4">
+            <div className="bg-muted-foreground/10 h-9 flex-1 rounded-lg" />
+            <div className="bg-muted-foreground/10 h-9 w-24 rounded-lg" />
           </div>
         </div>
       );
     case 'page-header':
       return (
-        <div className="flex flex-col gap-xs p-md">
+        <div className="flex flex-col gap-2 p-6">
           <div className="bg-muted-foreground/10 h-6 w-1/2 rounded-sm" />
           <div className="bg-muted-foreground/10 h-4 w-3/4 rounded-sm" />
         </div>
@@ -290,12 +290,12 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // and the same `grid-cols-1 md:grid-cols-2` cadence the real block
       // uses, so the article footer doesn't reflow when the pair arrives.
       return (
-        <div className="grid grid-cols-1 gap-md md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {['items-start', 'items-end'].map((align) => (
             <div
               key={align}
               className={cn(
-                'flex flex-col gap-1 rounded-lg border border-border p-md',
+                'flex flex-col gap-1 rounded-xl border border-border p-6',
                 align,
               )}
             >
@@ -307,14 +307,14 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       );
     case 'stat-card':
       return (
-        <div className="flex flex-col gap-xs p-md">
+        <div className="flex flex-col gap-2 p-6">
           <div className="bg-muted-foreground/10 h-3 w-16 rounded-sm" />
-          <div className="bg-muted-foreground/10 h-8 w-24 rounded-md" />
+          <div className="bg-muted-foreground/10 h-8 w-24 rounded-lg" />
         </div>
       );
     case 'card':
       return (
-        <div className="flex flex-col gap-sm p-md">
+        <div className="flex flex-col gap-4 p-6">
           <div className="bg-muted-foreground/10 h-5 w-1/3 rounded-sm" />
           <div className="bg-muted-foreground/10 h-4 w-full rounded-sm" />
           <div className="bg-muted-foreground/10 h-4 w-2/3 rounded-sm" />
@@ -325,14 +325,14 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // of <Form><Field>…</Field></Form> so the page doesn't jump when
       // the real fields hydrate.
       return (
-        <div className="flex flex-col gap-md">
+        <div className="flex flex-col gap-6">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="flex flex-col gap-xs">
+            <div key={i} className="flex flex-col gap-2">
               <div className="bg-muted-foreground/10 h-4 w-24 rounded-sm" />
-              <div className="bg-muted-foreground/10 h-9 w-full rounded-md" />
+              <div className="bg-muted-foreground/10 h-9 w-full rounded-lg" />
             </div>
           ))}
-          <div className="bg-muted-foreground/10 h-9 w-24 rounded-md" />
+          <div className="bg-muted-foreground/10 h-9 w-24 rounded-lg" />
         </div>
       );
     case 'radio-group':
@@ -351,7 +351,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
     case 'code-block':
       // 6 monospace lines of varying width.
       return (
-        <div className="flex flex-col gap-xs p-md">
+        <div className="flex flex-col gap-2 p-6">
           {[0.4, 0.7, 0.55, 0.85, 0.6, 0.3].map((w, i) => (
             <div
               key={i}
@@ -364,7 +364,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
     case 'breadcrumb':
       // Trail of crumbs + separators — the resting Breadcrumb silhouette.
       return (
-        <div className="flex items-center gap-sm px-xs">
+        <div className="flex items-center gap-4 px-2">
           <div className="bg-muted-foreground/10 h-3 w-16 rounded-sm" />
           <div className="bg-muted-foreground/10 size-1.5 rounded-full" />
           <div className="bg-muted-foreground/10 h-3 w-20 rounded-sm" />
@@ -375,7 +375,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
     case 'menu':
       // DropdownMenu / ContextMenu popup: 4 item rows + a separator.
       return (
-        <div className="flex flex-col gap-xs p-xs">
+        <div className="flex flex-col gap-2 p-2">
           <div className="bg-muted-foreground/10 h-6 w-full rounded-sm" />
           <div className="bg-muted-foreground/10 h-6 w-full rounded-sm" />
           <div className="bg-muted-foreground/10 h-px w-full" />
@@ -386,22 +386,22 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
     case 'pagination':
       // Prev + 3 page pills + Next, centred like the real nav.
       return (
-        <div className="flex items-center justify-center gap-xs">
-          <div className="bg-muted-foreground/10 h-8 w-20 rounded-md" />
-          <div className="bg-muted-foreground/10 size-8 rounded-md" />
-          <div className="bg-muted-foreground/10 size-8 rounded-md" />
-          <div className="bg-muted-foreground/10 size-8 rounded-md" />
-          <div className="bg-muted-foreground/10 h-8 w-20 rounded-md" />
+        <div className="flex items-center justify-center gap-2">
+          <div className="bg-muted-foreground/10 h-8 w-20 rounded-lg" />
+          <div className="bg-muted-foreground/10 size-8 rounded-lg" />
+          <div className="bg-muted-foreground/10 size-8 rounded-lg" />
+          <div className="bg-muted-foreground/10 size-8 rounded-lg" />
+          <div className="bg-muted-foreground/10 h-8 w-20 rounded-lg" />
         </div>
       );
     case 'tabs':
       // Tab list row + the panel body underneath.
       return (
-        <div className="flex flex-col gap-sm p-xs">
-          <div className="flex gap-xs">
-            <div className="bg-muted-foreground/10 h-8 w-20 rounded-md" />
-            <div className="bg-muted-foreground/10 h-8 w-24 rounded-md" />
-            <div className="bg-muted-foreground/10 h-8 w-16 rounded-md" />
+        <div className="flex flex-col gap-4 p-2">
+          <div className="flex gap-2">
+            <div className="bg-muted-foreground/10 h-8 w-20 rounded-lg" />
+            <div className="bg-muted-foreground/10 h-8 w-24 rounded-lg" />
+            <div className="bg-muted-foreground/10 h-8 w-16 rounded-lg" />
           </div>
           <div className="bg-muted-foreground/10 h-4 w-full rounded-sm" />
           <div className="bg-muted-foreground/10 h-4 w-3/4 rounded-sm" />
@@ -410,12 +410,12 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
     case 'toc':
       // Heading rail: h2 lines flush, h3 lines indented.
       return (
-        <div className="flex flex-col gap-xs p-sm">
+        <div className="flex flex-col gap-2 p-4">
           <div className="bg-muted-foreground/10 h-3 w-3/4 rounded-sm" />
-          <div className="bg-muted-foreground/10 ml-md h-3 w-2/3 rounded-sm" />
-          <div className="bg-muted-foreground/10 ml-md h-3 w-1/2 rounded-sm" />
+          <div className="bg-muted-foreground/10 ml-6 h-3 w-2/3 rounded-sm" />
+          <div className="bg-muted-foreground/10 ml-6 h-3 w-1/2 rounded-sm" />
           <div className="bg-muted-foreground/10 h-3 w-4/5 rounded-sm" />
-          <div className="bg-muted-foreground/10 ml-md h-3 w-3/5 rounded-sm" />
+          <div className="bg-muted-foreground/10 ml-6 h-3 w-3/5 rounded-sm" />
         </div>
       );
     case 'data-table':
@@ -427,8 +427,8 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // pageSize — the variant catalogue is a static class map, so the count
       // cannot be a prop.
       return (
-        <div className="flex flex-col gap-sm p-sm">
-          <div className="flex items-center gap-sm border-b border-border pb-sm">
+        <div className="flex flex-col gap-4 p-4">
+          <div className="flex items-center gap-4 border-b border-border pb-4">
             <div className="bg-muted-foreground/10 size-4 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-1/4 rounded-sm" />
             <div className="bg-muted-foreground/10 ml-auto h-3 w-16 rounded-sm" />
@@ -436,7 +436,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
             <div className="bg-muted-foreground/10 h-3 w-12 rounded-sm" />
           </div>
           {[0, 1, 2, 3, 4].map((row) => (
-            <div key={row} className="flex items-center gap-sm">
+            <div key={row} className="flex items-center gap-4">
               <div className="bg-muted-foreground/10 size-4 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-1/3 rounded-sm" />
               <div className="bg-muted-foreground/10 ml-auto h-4 w-16 rounded-sm" />
@@ -451,15 +451,15 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // for the sparkline and delta columns, so the row width the data will
       // occupy is reserved before it arrives.
       return (
-        <div className="flex flex-col gap-xs p-sm">
-          <div className="flex items-center gap-sm border-b border-border pb-xs">
+        <div className="flex flex-col gap-2 p-4">
+          <div className="flex items-center gap-4 border-b border-border pb-2">
             <div className="bg-muted-foreground/10 h-3 w-1/4 rounded-sm" />
             <div className="bg-muted-foreground/10 ml-auto h-3 w-10 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-10 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-12 rounded-sm" />
           </div>
           {[0, 1, 2, 3].map((row) => (
-            <div key={row} className="flex items-center gap-sm">
+            <div key={row} className="flex items-center gap-4">
               <div className="bg-muted-foreground/10 h-4 w-1/3 rounded-sm" />
               <div className="bg-muted-foreground/10 ml-auto h-4 w-10 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-[90px] rounded-sm" />
@@ -473,7 +473,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // geometry Meter settles into, so the swap is CLS-neutral.
       return (
         <div className="flex flex-col gap-1">
-          <div className="flex items-center justify-between gap-sm">
+          <div className="flex items-center justify-between gap-4">
             <div className="bg-muted-foreground/10 h-3 w-1/3 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-10 rounded-sm" />
           </div>
@@ -484,7 +484,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // Four label/value pairs on the strip's own two-track mobile grid, so
       // the placeholder reflows at exactly the breakpoints the real strip does.
       return (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-5 xs:grid-cols-3 lg:grid-cols-4">
           {[0, 1, 2, 3].map((cell) => (
             <div
               key={cell}

@@ -101,7 +101,7 @@ function AlertDialogPopup({
       data-slot="alert-dialog-popup"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'fixed top-1/2 left-1/2 z-50 grid w-full max-w-(--container-prose) -translate-x-1/2 -translate-y-1/2 gap-md rounded-lg border bg-card p-(--spacing-lg) text-card-foreground shadow-xl outline-hidden data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95',
+        'fixed top-1/2 left-1/2 z-50 grid w-full max-w-(--container-prose) -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl border bg-card p-(--spacing-lg) text-card-foreground shadow-xl outline-hidden data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95',
         className,
       )}
       {...props}
@@ -198,15 +198,15 @@ function AlertDialogCompose({
           {description ? (
             <AlertDialogDescription>{description}</AlertDialogDescription>
           ) : null}
-          <div className="mt-md flex justify-end gap-sm">
+          <div className="mt-6 flex justify-end gap-4">
             <AlertDialogClose>{cancelLabel}</AlertDialogClose>
             <AlertDialogClose
               onClick={onConfirm}
               data-tone={confirmTone}
               className={
                 confirmTone === 'destructive'
-                  ? 'bg-destructive text-destructive-foreground rounded-md px-md py-xs font-medium'
-                  : 'bg-primary text-primary-foreground rounded-md px-md py-xs font-medium'
+                  ? 'bg-destructive text-destructive-foreground rounded-lg px-6 py-2 font-medium'
+                  : 'bg-primary text-primary-foreground rounded-lg px-6 py-2 font-medium'
               }
             >
               {confirmLabel}

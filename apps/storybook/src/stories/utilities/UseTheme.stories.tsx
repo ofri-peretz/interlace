@@ -111,7 +111,7 @@ function Row({
 }) {
   return (
     <div
-      className="flex flex-wrap items-baseline justify-between gap-xs border-b border-border py-2 last:border-b-0"
+      className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border py-2 last:border-b-0"
       data-slot={slot}
     >
       <Typography variant="code" as="code" className="text-muted-foreground">
@@ -150,7 +150,7 @@ function Specimen() {
         </Typography>
       </Stack>
 
-      <div className="grid gap-md md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         <Box
           border
           radius="md"
@@ -246,7 +246,7 @@ function Specimen() {
             shared state, and a module-level subscriber list is what keeps two
             instances in one document from disagreeing.
           </Typography>
-          <div className="flex flex-wrap items-center gap-sm">
+          <div className="flex flex-wrap items-center gap-4">
             <ThemeSwitcher />
             <ThemeSchemeToggle />
           </div>

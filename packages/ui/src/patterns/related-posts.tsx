@@ -40,7 +40,7 @@
  * | R10  | Composition seam                 | `title` slot + `posts` array mapped into ArticleCard        |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes + primitives           |
- * | R19  | Tokens only                      | Spacing via `--spacing-*` (gap-md / mb-md), no raw px       |
+ * | R19  | Tokens only                      | Spacing via `--spacing-*` (gap-6 / mb-6), no raw px       |
  * | R20  | AA contrast                      | Heading + card surfaces use semantic tokens (AA-cleared)    |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `<section>` landmark; heading carries the accessible name   |
@@ -142,7 +142,7 @@ export function RelatedPosts({
         className={cn('w-full', className)}
         {...props}
       >
-        <Typography variant="h3" as="h2" className="mb-md">
+        <Typography variant="h3" as="h2" className="mb-6">
           {title}
         </Typography>
         <Grid cols={3} gap="md">
@@ -164,7 +164,7 @@ export function RelatedPosts({
       className={cn('w-full', className)}
       {...props}
     >
-      <Typography as="h2" variant="h3" className="mb-md">
+      <Typography as="h2" variant="h3" className="mb-6">
         {title}
       </Typography>
       {/*

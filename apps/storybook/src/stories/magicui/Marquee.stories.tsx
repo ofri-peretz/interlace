@@ -20,7 +20,7 @@ const NOTIFICATIONS = [
 ];
 
 const Chip = ({ children }: { children: React.ReactNode }) => (
-  <span className="flex shrink-0 items-center rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium text-foreground">
+  <span className="flex shrink-0 items-center rounded-xl border border-border bg-background px-4 py-2 text-sm font-medium text-foreground">
     {children}
   </span>
 );

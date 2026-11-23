@@ -34,7 +34,7 @@ const logo = (
   <a href="/" className="flex items-center gap-2 font-semibold">
     <span
       aria-hidden
-      className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-chart-2"
+      className="inline-block size-6 rounded-lg bg-linear-to-br from-primary to-chart-2"
     />
     <span>Interlace App</span>
   </a>
@@ -54,7 +54,7 @@ export const Profile: Story = {
     sections: sampleSections,
     activeSection: 'profile',
     children: (
-      <form className="border-border bg-card rounded-lg border p-md flex flex-col gap-md">
+      <form className="border-border bg-card rounded-xl border p-6 flex flex-col gap-6">
         <Field>
           <FieldLabel>Display name</FieldLabel>
           {/* `render=`, not children — see AuthTemplate.stories.tsx. */}
@@ -64,7 +64,7 @@ export const Profile: Story = {
           <FieldLabel>Bio</FieldLabel>
           <FieldControl render={<Input placeholder="Engineer @ Interlace" />} />
         </Field>
-        <div className="flex gap-sm">
+        <div className="flex gap-4">
           <Button>Save</Button>
           <Button variant="outline">Cancel</Button>
         </div>

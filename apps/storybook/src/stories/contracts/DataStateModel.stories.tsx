@@ -166,19 +166,19 @@ function StateTable() {
             </caption>
             <thead>
               <tr className="border-b border-border">
-                <th scope="col" className="py-2 pr-sm text-ui-sm font-semibold">
+                <th scope="col" className="py-2 pr-4 text-ui-sm font-semibold">
                   #
                 </th>
-                <th scope="col" className="py-2 pr-sm text-ui-sm font-semibold">
+                <th scope="col" className="py-2 pr-4 text-ui-sm font-semibold">
                   Mark
                 </th>
-                <th scope="col" className="py-2 pr-sm text-ui-sm font-semibold">
+                <th scope="col" className="py-2 pr-4 text-ui-sm font-semibold">
                   State
                 </th>
-                <th scope="col" className="py-2 pr-sm text-ui-sm font-semibold">
+                <th scope="col" className="py-2 pr-4 text-ui-sm font-semibold">
                   Body
                 </th>
-                <th scope="col" className="py-2 pr-sm text-ui-sm font-semibold">
+                <th scope="col" className="py-2 pr-4 text-ui-sm font-semibold">
                   Emphasis
                 </th>
                 <th scope="col" className="py-2 text-ui-sm font-semibold">
@@ -197,28 +197,28 @@ function StateTable() {
                     data-slot="data-state-row"
                     data-state-name={state}
                   >
-                    <td className="py-2 pr-sm font-mono text-caption text-muted-foreground">
+                    <td className="py-2 pr-4 font-mono text-caption text-muted-foreground">
                       {index + 1}
                     </td>
-                    <td className="py-2 pr-sm">
+                    <td className="py-2 pr-4">
                       <span
-                        className={`inline-flex items-center gap-xs rounded-full border px-2 py-0.5 text-caption ${presentation.chip}`}
+                        className={`inline-flex items-center gap-2 rounded-full border px-2 py-0.5 text-caption ${presentation.chip}`}
                       >
                         <StateMark state={state} />
                         {presentation.short || '—'}
                       </span>
                     </td>
-                    <td className="py-2 pr-sm">
+                    <td className="py-2 pr-4">
                       <code className="font-mono text-code">{state}</code>
                     </td>
-                    <td className="py-2 pr-sm text-ui-sm">
+                    <td className="py-2 pr-4 text-ui-sm">
                       {state === 'idle'
                         ? 'renders (resting)'
                         : replacesBody(state)
                           ? 'replaced'
                           : 'qualified'}
                     </td>
-                    <td className="py-2 pr-sm font-mono text-caption text-muted-foreground">
+                    <td className="py-2 pr-4 font-mono text-caption text-muted-foreground">
                       {presentation.emphasis}
                     </td>
                     <td className="py-2 text-ui-sm text-muted-foreground">
@@ -279,13 +279,13 @@ function Playground({ initial }: { initial: DataStateFlags }) {
           </Typography>
         </Stack>
 
-        <fieldset className="rounded-md border border-border p-sm">
+        <fieldset className="rounded-lg border border-border p-4">
           <legend className="px-1 text-ui-sm font-semibold">Flags</legend>
-          <div className="grid gap-xs sm:grid-cols-2">
+          <div className="grid gap-2 xs:grid-cols-2">
             {FLAG_ROWS.map((row) => (
               <label
                 key={row.key}
-                className="flex items-start gap-xs rounded-md p-1 text-ui-sm"
+                className="flex items-start gap-2 rounded-lg p-1 text-ui-sm"
               >
                 <input
                   type="checkbox"
@@ -311,7 +311,7 @@ function Playground({ initial }: { initial: DataStateFlags }) {
           </div>
         </fieldset>
 
-        <div className="flex flex-wrap gap-sm">
+        <div className="flex flex-wrap gap-4">
           <Button
             variant="outline"
             size="sm"
@@ -331,8 +331,8 @@ function Playground({ initial }: { initial: DataStateFlags }) {
           </Button>
         </div>
 
-        <div className="grid gap-sm md:grid-cols-2">
-          <div className="rounded-md border border-border bg-background p-sm">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-lg border border-border bg-background p-4">
             <Stack gap="xs">
               <Typography variant="caption" tone="muted">
                 resolved
@@ -349,7 +349,7 @@ function Playground({ initial }: { initial: DataStateFlags }) {
             </Stack>
           </div>
 
-          <div className="rounded-md border border-border bg-background p-sm">
+          <div className="rounded-lg border border-border bg-background p-4">
             <Stack gap="xs">
               <Typography variant="caption" tone="muted">
                 announcement — what a screen reader hears

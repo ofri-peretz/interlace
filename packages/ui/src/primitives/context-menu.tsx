@@ -163,7 +163,7 @@ function ContextMenuContent({
         <BaseContextMenu.Popup
           data-slot="context-menu-content"
           className={cn(
-            'bg-popover text-popover-foreground data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 min-w-32 origin-(--transform-origin) overflow-hidden rounded-md border p-1 shadow-md outline-hidden',
+            'bg-popover text-popover-foreground data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 min-w-32 origin-(--transform-origin) overflow-hidden rounded-lg border p-1 shadow-md outline-hidden',
             className,
           )}
           {...props}

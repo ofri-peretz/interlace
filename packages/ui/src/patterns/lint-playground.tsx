@@ -179,7 +179,7 @@ export const LintPlayground = React.forwardRef<HTMLElement, LintPlaygroundProps>
               <li
                 key={`${f.line}-${f.ruleId ?? 'parse'}-${index}`}
                 className={cn(
-                  'rounded-md border-l-2 bg-muted/40 px-3 py-2 text-xs',
+                  'rounded-lg border-l-2 bg-muted/40 px-3 py-2 text-xs',
                   f.severity === 'error' ? 'border-destructive' : 'border-chart-4',
                 )}
               >

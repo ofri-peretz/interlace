@@ -140,7 +140,7 @@ function LayerRow({
     >
       <Stack gap="sm">
         <Stack gap="xs">
-          <div className="flex flex-wrap items-baseline justify-between gap-xs">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
             <Typography variant="code" as="code" className="font-semibold">
               @layer {layer}
             </Typography>
@@ -152,7 +152,7 @@ function LayerRow({
             {owns}
           </Typography>
         </Stack>
-        <div className="rounded-md border border-border bg-card/40 p-sm">
+        <div className="rounded-lg border border-border bg-card/40 p-4">
           {children}
         </div>
       </Stack>
@@ -162,7 +162,7 @@ function LayerRow({
 
 function Probe({ name }: { name: string }) {
   return (
-    <div className="flex flex-wrap items-baseline justify-between gap-xs border-b border-border py-1 last:border-b-0">
+    <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border py-1 last:border-b-0">
       <Typography variant="code" as="code" className="text-muted-foreground">
         {name}
       </Typography>
@@ -193,7 +193,7 @@ function Specimen() {
           without it — a live element or a live computed value, never a
           description.
         </Typography>
-        <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code">{`@import "tailwindcss";
 @import "@interlace/ui/styles/index.css";`}</code>
         </pre>
@@ -256,9 +256,9 @@ function Specimen() {
             <code className="font-mono">preflight.css</code> silently costs
             every focusable element in the app its indicator.
           </Typography>
-          <div className="flex flex-wrap items-end gap-sm">
+          <div className="flex flex-wrap items-end gap-4">
             <Button variant="outline">Focusable</Button>
-            <div className="grid gap-xs">
+            <div className="grid gap-2">
               <Label htmlFor="theme-preflight-input">
                 Placeholder contrast
               </Label>
@@ -298,10 +298,10 @@ function Specimen() {
         owns="Concrete brand values — the --interlace-* literals, light and dark. THE supported consumer override surface: fork this layer to re-brand and nothing else has to move."
       >
         <Stack gap="sm">
-          <div className="flex flex-wrap items-center gap-sm">
+          <div className="flex flex-wrap items-center gap-4">
             {['primary', 'background', 'foreground', 'muted', 'border'].map(
               (name) => (
-                <div key={name} className="flex items-center gap-xs">
+                <div key={name} className="flex items-center gap-2">
                   <span
                     aria-hidden
                     className="block size-6 rounded-sm border border-border"

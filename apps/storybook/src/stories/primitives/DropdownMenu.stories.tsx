@@ -146,7 +146,7 @@ export const Default: Story = {
     closeParentOnEsc: true,
   },
   render: (args) => (
-    <div className="border-border bg-card flex w-[420px] max-w-full items-center justify-between gap-4 rounded-lg border px-4 py-3">
+    <div className="border-border bg-card flex w-[420px] max-w-full items-center justify-between gap-4 rounded-xl border px-4 py-3">
       <div>
         <div className="text-sm font-medium">Articles</div>
         <div className="text-muted-foreground text-sm">128 published</div>

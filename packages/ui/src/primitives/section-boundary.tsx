@@ -116,7 +116,7 @@ function SectionBoundary({
   const errorFallback = error ?? (
     <p
       role="alert"
-      className="text-destructive font-body text-ui p-md"
+      className="text-destructive font-body text-ui p-6"
     >
       Section failed to load.
     </p>

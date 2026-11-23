@@ -91,7 +91,7 @@ function MotionSample({
       onClick={() => setShifted((s) => !s)}
       aria-pressed={shifted}
       aria-label={`${label} — toggle translate`}
-      className="relative block h-16 w-full rounded-md border border-border bg-muted/50 p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      className="relative block h-16 w-full rounded-lg border border-border bg-muted/50 p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       <span
         aria-hidden

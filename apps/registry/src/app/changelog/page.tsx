@@ -74,7 +74,7 @@ export default function ChangelogPage() {
             Every installed file carries a version banner a few lines in. To
             check a whole project against this registry at once:
           </p>
-          <pre className="border-border bg-card mt-4 overflow-x-auto rounded-lg border p-4 font-mono text-sm">
+          <pre className="border-border bg-card mt-4 overflow-x-auto rounded-xl border p-4 font-mono text-sm">
             <code>{`# in your project — every installed file states its own version
 grep -h "^// @interlace/" src/components/ui/*.tsx
 
@@ -102,7 +102,7 @@ curl -s ${HOMEPAGE}/data/agent-index.json | jq -r '.items[] | "\\(.name) \\(.ver
         {/* ─── How to read it ────────────────────────────────────── */}
         <section className="mt-10">
           <h2 className="text-xl font-semibold">How to read an entry</h2>
-          <dl className="border-border bg-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-lg border sm:grid-cols-3">
+          <dl className="border-border bg-border mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-xl border xs:grid-cols-3">
             {KIND_ORDER.map((kind) => (
               <div key={kind} className="bg-card p-4">
                 <dt className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">

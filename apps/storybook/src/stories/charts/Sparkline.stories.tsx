@@ -171,7 +171,7 @@ export const InContext: Story = {
     },
   },
   render: () => (
-    <ul className="flex w-full max-w-content flex-col divide-y divide-border rounded-lg border border-border">
+    <ul className="flex w-full max-w-content flex-col divide-y divide-border rounded-xl border border-border">
       {[
         { label: 'npm downloads', value: '2,205', points: RISING, polarity: 'normal' as const },
         { label: 'Open issues', value: '19', points: FALLING, polarity: 'inverse' as const },
@@ -210,7 +210,7 @@ export const FetchFailed: Story = {
     },
   },
   render: () => (
-    <ul className="flex w-full max-w-content flex-col divide-y divide-border rounded-lg border border-border">
+    <ul className="flex w-full max-w-content flex-col divide-y divide-border rounded-xl border border-border">
       {[
         { label: 'npm downloads', value: '2,205', points: RISING, error: undefined },
         { label: 'GitHub stars', value: '—', points: [], error: 'ECONNRESET' },

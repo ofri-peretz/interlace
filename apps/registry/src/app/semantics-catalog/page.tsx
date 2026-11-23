@@ -139,19 +139,19 @@ function TokenTable({
   }
 
   return (
-    <div className="border-border mt-4 overflow-x-auto rounded-md border">
+    <div className="border-border mt-4 overflow-x-auto rounded-lg border">
       <table className="w-full border-collapse text-sm">
         <thead className="bg-muted">
           <tr>
-            <th className="p-sm text-left font-semibold">Token</th>
-            <th className="p-sm text-left font-semibold">Light</th>
-            <th className="p-sm text-left font-semibold">Dark</th>
+            <th className="p-4 text-left font-semibold">Token</th>
+            <th className="p-4 text-left font-semibold">Light</th>
+            <th className="p-4 text-left font-semibold">Dark</th>
           </tr>
         </thead>
         <tbody>
           {keys.map((key) => (
             <tr key={key} className="border-border border-t">
-              <td className="p-sm font-mono">
+              <td className="p-4 font-mono">
                 <code className="text-foreground">{key}</code>
               </td>
               <ValueCell value={light[key]} kind={kind} />
@@ -172,13 +172,13 @@ function ValueCell({
   kind: 'semantic' | 'brand';
 }) {
   if (!value) {
-    return <td className="p-sm font-mono text-muted-foreground">—</td>;
+    return <td className="p-4 font-mono text-muted-foreground">—</td>;
   }
   const isHex = /^#[0-9a-fA-F]{3,8}$/.test(value);
   const isVar = value.startsWith('var(');
   return (
-    <td className="p-sm font-mono">
-      <span className="inline-flex items-center gap-xs">
+    <td className="p-4 font-mono">
+      <span className="inline-flex items-center gap-2">
         {isHex ? (
           <span
             aria-hidden

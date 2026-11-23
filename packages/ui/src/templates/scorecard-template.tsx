@@ -80,9 +80,9 @@ function ScorecardTemplate({
 
       <main>
         <Container size="content">
-          <Stack gap="xl" className="py-xl">
+          <Stack gap="xl" className="py-16">
             <SectionBoundary name="scorecard-header" skeletonVariant="page-header">
-              <div className="flex flex-col gap-md md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                 <Stack gap="sm">
                   <Typography variant="h1" as="h1" className="text-balance">
                     {title}
@@ -94,8 +94,8 @@ function ScorecardTemplate({
                   ) : null}
                 </Stack>
                 {overall ? (
-                  <div className="flex flex-col items-end gap-xs">
-                    <div className="flex items-baseline gap-sm">
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="flex items-baseline gap-4">
                       <span className="font-body text-h1 font-bold tabular-nums leading-none">
                         {overall.score}
                       </span>
@@ -127,7 +127,7 @@ function ScorecardTemplate({
                 name="scorecard-methodology"
                 skeletonVariant="text"
               >
-                <div className="border-border border-t pt-md">
+                <div className="border-border border-t pt-6">
                   <Typography variant="ui-sm" tone="muted">
                     {methodology}
                   </Typography>
@@ -174,7 +174,7 @@ function ScorecardTemplateSkeleton({
         label={null}
       />
       <Container size="content">
-        <Stack gap="xl" className="py-xl">
+        <Stack gap="xl" className="py-16">
           <Skeleton variant="page-header" label={null} />
           <Skeleton variant="card" count={4} label={null} />
           <Skeleton variant="text" label={null} />

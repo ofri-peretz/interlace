@@ -104,7 +104,7 @@ type Story = StoryObj<typeof meta>;
 
 const framed: Decorator[] = [
   (Story) => (
-    <div className="bg-background mx-auto max-w-wide p-lg">
+    <div className="bg-background mx-auto max-w-wide p-10">
       <Story />
     </div>
   ),
@@ -129,7 +129,7 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="bg-background mx-auto flex max-w-wide flex-col gap-2xl p-lg">
+    <div className="bg-background mx-auto flex max-w-wide flex-col gap-24 p-10">
       <RelatedPosts data-testid="story-related-posts-a" posts={samplePosts} />
 
       <RelatedPosts
@@ -181,9 +181,9 @@ export const Empty: Story = {
     },
   },
   render: () => (
-    <div className="bg-background mx-auto flex max-w-wide flex-col gap-2xl p-lg">
+    <div className="bg-background mx-auto flex max-w-wide flex-col gap-24 p-10">
       <section aria-label="Silent absence">
-        <p className="text-muted-foreground font-body text-ui-sm mb-sm">
+        <p className="text-muted-foreground font-body text-ui-sm mb-4">
           As it ships — nothing renders below this line:
         </p>
         <RelatedPosts
@@ -194,7 +194,7 @@ export const Empty: Story = {
       </section>
 
       <section aria-label="Stated absence">
-        <p className="text-muted-foreground font-body text-ui-sm mb-sm">
+        <p className="text-muted-foreground font-body text-ui-sm mb-4">
           The same absence, stated — for a filtered surface:
         </p>
         <DataState<RelatedPost[]> empty data={[]} announce={{ noun: 'related posts' }}>
@@ -230,7 +230,7 @@ export const RTL: Story = {
  */
 export const BelowMinViewport: Story = {
   render: (args) => (
-    <div className="w-[400px] max-w-full border border-dashed border-border p-sm">
+    <div className="w-[400px] max-w-full border border-dashed border-border p-4">
       <RelatedPosts {...args} />
     </div>
   ),

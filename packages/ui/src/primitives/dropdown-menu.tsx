@@ -120,7 +120,7 @@ function DropdownMenuContent({
           className={cn(
             // `ring-border` (not `ring-black/5`): the raw black ring vanishes
             // on the dark surface, leaving the popup edgeless.
-            'bg-popover text-popover-foreground border-border ring-border data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 max-h-(--available-height) min-w-40 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-lg ring-1',
+            'bg-popover text-popover-foreground border-border ring-border data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 max-h-(--available-height) min-w-40 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg border p-1 shadow-lg ring-1',
             className,
           )}
           {...props}
@@ -316,7 +316,7 @@ function DropdownMenuSubContent({
         <BaseMenu.Popup
           data-slot="dropdown-menu-sub-content"
           className={cn(
-            'bg-popover text-popover-foreground data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 min-w-[8rem] origin-(--transform-origin) overflow-hidden rounded-md border p-1 shadow-lg',
+            'bg-popover text-popover-foreground data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 min-w-[8rem] origin-(--transform-origin) overflow-hidden rounded-lg border p-1 shadow-lg',
             className,
           )}
           {...props}

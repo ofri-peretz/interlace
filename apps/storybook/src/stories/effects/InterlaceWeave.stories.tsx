@@ -18,9 +18,9 @@ import { expect, within } from 'storybook/test';
 const HostCard = ({ children }: { children: React.ReactNode }) => (
   <a
     href="#weave-demo"
-    className="group/weave relative block w-72 rounded-xl border border-border bg-card p-6 text-card-foreground"
+    className="group/weave relative block w-72 rounded-lg border border-border bg-card p-6 text-card-foreground"
   >
-    <InterlaceWeave data-testid="weave-demo" className="z-10 rounded-xl" />
+    <InterlaceWeave data-testid="weave-demo" className="z-10 rounded-lg" />
     {children}
   </a>
 );

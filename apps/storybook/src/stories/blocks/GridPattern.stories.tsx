@@ -91,7 +91,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Stage = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative h-64 w-full max-w-content overflow-hidden rounded-lg border border-border bg-card">
+  <div className="relative h-64 w-full max-w-content overflow-hidden rounded-xl border border-border bg-card">
     {children}
   </div>
 );

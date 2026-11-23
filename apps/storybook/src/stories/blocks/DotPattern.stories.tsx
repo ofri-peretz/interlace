@@ -88,7 +88,7 @@ type Story = StoryObj<typeof meta>;
 
 /** Decorative layers need a sized, positioned parent to be visible at all. */
 const Stage = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative h-64 w-full max-w-content overflow-hidden rounded-lg border border-border bg-card">
+  <div className="relative h-64 w-full max-w-content overflow-hidden rounded-xl border border-border bg-card">
     {children}
   </div>
 );

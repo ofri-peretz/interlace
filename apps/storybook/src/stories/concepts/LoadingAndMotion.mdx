@@ -55,14 +55,14 @@ shapes rather than a single box, because a card's silhouette is a thumbnail
 plus two text lines plus a byline, and a single grey rectangle of the right
 height still makes the eye jump.
 
-<div className="my-6 grid gap-6 sm:grid-cols-2">
-  <div className="rounded-md border border-border p-4">
+<div className="my-6 grid gap-6 xs:grid-cols-2">
+  <div className="rounded-lg border border-border p-4">
     <p className="mb-3 text-sm text-muted-foreground">Loading</p>
     <Skeleton variant="label" label={null} />
     <div className="h-2" />
     <Skeleton variant="input" label={null} />
   </div>
-  <div className="rounded-md border border-border p-4">
+  <div className="rounded-lg border border-border p-4">
     <p className="mb-3 text-sm text-muted-foreground">Resolved</p>
     <Label htmlFor="skeleton-demo">Email</Label>
     <Input id="skeleton-demo" placeholder="you@example.com" className="mt-2 w-full" />

@@ -23,11 +23,11 @@ const ITEMS: TocItem[] = [
 ];
 
 const ArticleMock = ({ items }: { items: TocItem[] }) => (
-  <article className="prose prose-sm max-w-prose px-md py-lg text-foreground">
+  <article className="prose prose-sm max-w-prose px-6 py-10 text-foreground">
     {items.map((item) => {
       const Tag = (`h${item.level}` as 'h2' | 'h3' | 'h4');
       return (
-        <section key={item.id} className="mb-xl">
+        <section key={item.id} className="mb-16">
           <Tag
             id={item.id}
             tabIndex={-1}
@@ -53,10 +53,10 @@ const ArticleMock = ({ items }: { items: TocItem[] }) => (
 );
 
 const PageMock = ({ items = ITEMS, ...tocProps }: Partial<TocProps>) => (
-  <div className="grid min-h-[80vh] grid-cols-1 gap-lg bg-background px-md py-lg text-foreground lg:grid-cols-[1fr_220px]">
+  <div className="grid min-h-[80vh] grid-cols-1 gap-10 bg-background px-6 py-10 text-foreground lg:grid-cols-[1fr_220px]">
     <ArticleMock items={items} />
-    <aside className="sticky top-md self-start">
-      <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
+    <aside className="sticky top-6 self-start">
+      <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
         On this page
       </div>
       <Toc items={items} {...tocProps} />
@@ -100,7 +100,7 @@ const meta = {
     className: {
       control: 'text',
       description:
-        'Merged onto the `<nav>`. Indentation is not configurable — level 3 is `pl-md`, level 4 is `pl-lg`, per LAYOUT_PHILOSOPHY.md.',
+        'Merged onto the `<nav>`. Indentation is not configurable — level 3 is `pl-6`, level 4 is `pl-10`, per LAYOUT_PHILOSOPHY.md.',
       table: { category: 'Appearance', type: { summary: 'string' } },
     },
   },
@@ -122,23 +122,23 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: () => (
-    <div className="flex min-h-[60vh] flex-col gap-xl bg-background px-md py-lg text-foreground">
+    <div className="flex min-h-[60vh] flex-col gap-16 bg-background px-6 py-10 text-foreground">
       <section>
-        <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
           Rail variant — sidebar
         </div>
-        <div className="rounded-md border border-border bg-card/40 p-md">
+        <div className="rounded-lg border border-border bg-card/40 p-6">
           <Toc items={ITEMS} />
         </div>
       </section>
       <section>
-        <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
           Popover variant — narrow viewport
         </div>
         <TocPopover items={ITEMS} />
       </section>
       <section>
-        <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
           Custom landmark label
         </div>
         <Toc items={ITEMS.slice(0, 4)} label="In this article" />
@@ -153,7 +153,7 @@ export const Variants: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <div className="bg-background text-foreground p-md">
+    <div className="bg-background text-foreground p-6">
       <Toc items={ITEMS.slice(0, 4)} />
     </div>
   ),
@@ -186,7 +186,7 @@ export const KeyboardFlow: Story = {
  */
 export const Loading: Story = {
   render: () => (
-    <div className="bg-background p-md">
+    <div className="bg-background p-6">
       <Skeleton variant="toc" className="w-56" />
     </div>
   ),
@@ -211,9 +211,9 @@ export const BelowMinViewport: Story = {
       <div
         data-interlace-dev
         style={{ width: MIN_VIEWPORT - 1 }}
-        className="border-2 border-dashed border-muted bg-background p-md text-foreground"
+        className="border-2 border-dashed border-muted bg-background p-6 text-foreground"
       >
-        <div className="mb-sm text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
           Below {MIN_VIEWPORT}px — consumer should hide the TOC entirely.
         </div>
         <Toc items={ITEMS} />

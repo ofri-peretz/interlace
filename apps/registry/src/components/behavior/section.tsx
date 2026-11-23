@@ -26,7 +26,7 @@ export function BehaviorSubsection({
   children: ReactNode;
 }) {
   return (
-    <section className="border-border bg-card/40 mt-6 rounded-lg border p-5 sm:p-6">
+    <section className="border-border bg-card/40 mt-6 rounded-xl border p-5 xs:p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <h3 className="text-base font-semibold">{title}</h3>
         {sourceHref ? (

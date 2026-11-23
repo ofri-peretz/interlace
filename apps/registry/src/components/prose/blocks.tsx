@@ -54,7 +54,7 @@ function Heading({
 
 function CodeBlock({ lang, code }: { lang: string | null; code: string }) {
   return (
-    <div className="border-border bg-card mt-4 overflow-hidden rounded-lg border">
+    <div className="border-border bg-card mt-4 overflow-hidden rounded-xl border">
       {lang ? (
         <div className="text-muted-foreground border-border border-b px-4 py-1.5 font-mono text-xs">
           {lang}
@@ -69,7 +69,7 @@ function CodeBlock({ lang, code }: { lang: string | null; code: string }) {
 
 function Table({ head, rows }: { head: string[]; rows: string[][] }) {
   return (
-    <div className="border-border bg-card mt-4 overflow-x-auto rounded-lg border">
+    <div className="border-border bg-card mt-4 overflow-x-auto rounded-xl border">
       <table className="w-full text-sm">
         <thead className="bg-background/60 text-muted-foreground text-xs tracking-wider uppercase">
           <tr>
@@ -111,7 +111,7 @@ function Demo({ storybookId }: { storybookId: string }) {
       href={`${STORYBOOK_URL}/?path=/docs/${storybookId}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="border-border hover:border-primary/60 bg-card/40 hover:bg-card group mt-4 flex items-center justify-between gap-4 rounded-lg border border-dashed p-4 transition-colors"
+      className="border-border hover:border-primary/60 bg-card/40 hover:bg-card group mt-4 flex items-center justify-between gap-4 rounded-xl border border-dashed p-4 transition-colors"
     >
       <span>
         <span className="text-primary text-xs font-semibold tracking-wider uppercase">

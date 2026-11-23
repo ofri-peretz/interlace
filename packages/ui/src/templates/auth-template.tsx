@@ -76,7 +76,7 @@ function AuthTemplate({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-variant={variant}
       className={cn(
-        'bg-background flex min-h-screen items-center justify-center py-xl',
+        'bg-background flex min-h-screen items-center justify-center py-16',
         className,
       )}
       {...props}
@@ -102,7 +102,7 @@ function AuthTemplate({
           </SectionBoundary>
 
           <SectionBoundary name="auth-form" skeletonVariant="newsletter-form">
-            <div className="border-border bg-card rounded-lg border p-lg">
+            <div className="border-border bg-card rounded-xl border p-10">
               {form}
             </div>
           </SectionBoundary>
@@ -143,7 +143,7 @@ function AuthTemplateSkeleton({
       aria-busy="true"
       aria-label="Loading…"
       className={cn(
-        'bg-background flex min-h-screen items-center justify-center py-xl',
+        'bg-background flex min-h-screen items-center justify-center py-16',
         className,
       )}
       {...props}

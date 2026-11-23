@@ -46,7 +46,7 @@
  * ## MIN_VIEWPORT — 320
  *
  * The copy column is a `<Container size="content">` on a mobile-first ladder
- * (`py-lg md:py-xl lg:py-2xl`, `text-4xl` → `lg:text-7xl`) and the CTAs stack
+ * (`py-10 md:py-16 lg:py-24`, `text-4xl` → `lg:text-7xl`) and the CTAs stack
  * vertically below `sm`, so the hero reads on the narrowest phone.
  *
  * | Rule | Concept                     | Where in this file                                     |
@@ -187,7 +187,7 @@ function renderCta(cta: HeroCosmicCTA | undefined) {
     <a
       href={cta.href}
       data-slot="hero-cosmic-cta"
-      className="inline-flex items-center gap-2 rounded-lg border-2 border-hero-foreground/20 bg-hero-foreground/10 px-md py-sm font-semibold text-hero-foreground backdrop-blur-sm transition-all hover:border-hero-foreground/30 hover:bg-hero-foreground/20"
+      className="inline-flex items-center gap-2 rounded-xl border-2 border-hero-foreground/20 bg-hero-foreground/10 px-6 py-4 font-semibold text-hero-foreground backdrop-blur-sm transition-all hover:border-hero-foreground/30 hover:bg-hero-foreground/20"
     >
       {cta.label}
     </a>
@@ -286,12 +286,12 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
           <Container
             size="content"
             data-slot="hero-cosmic-body"
-            className="relative z-10 py-lg text-center md:py-xl lg:py-2xl"
+            className="relative z-10 py-10 text-center md:py-16 lg:py-24"
           >
             {eyebrow ? (
               <div
                 data-slot="hero-cosmic-eyebrow"
-                className="mb-md inline-flex"
+                className="mb-6 inline-flex"
               >
                 {eyebrow}
               </div>
@@ -300,7 +300,7 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
             <h1
               data-slot="hero-cosmic-headline"
               data-testid={`${testId}-headline`}
-              className="mb-sm text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+              className="mb-4 text-4xl font-extrabold tracking-tight xs:text-5xl md:text-6xl lg:text-7xl"
             >
               {headline}
             </h1>
@@ -308,7 +308,7 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
             {tagline ? (
               <p
                 data-slot="hero-cosmic-tagline"
-                className="mx-auto mb-xl max-w-prose text-base leading-relaxed text-hero-foreground/90 drop-shadow sm:text-lg md:text-xl"
+                className="mx-auto mb-16 max-w-prose text-base leading-relaxed text-hero-foreground/90 drop-shadow xs:text-lg md:text-xl"
               >
                 {tagline}
               </p>
@@ -317,7 +317,7 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
             {(primaryCta || secondaryCta) && (
               <div
                 data-slot="hero-cosmic-actions"
-                className="flex flex-col items-center justify-center gap-sm sm:flex-row"
+                className="flex flex-col items-center justify-center gap-4 xs:flex-row"
               >
                 {renderCta(primaryCta)}
                 {renderCta(secondaryCta)}
@@ -325,7 +325,7 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
             )}
 
             {footer ? (
-              <div data-slot="hero-cosmic-footer" className="mt-md">
+              <div data-slot="hero-cosmic-footer" className="mt-6">
                 {footer}
               </div>
             ) : null}

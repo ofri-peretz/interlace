@@ -69,7 +69,7 @@ function DocsPageTemplate({
           </aside>
         ) : null}
 
-        <main className="flex-1 px-md py-xl">
+        <main className="flex-1 px-6 py-16">
           <SectionBoundary name="docs-body" skeletonVariant="prose">
             <Container size="prose">
               <Prose>{body}</Prose>
@@ -79,7 +79,7 @@ function DocsPageTemplate({
 
         {toc ? (
           <aside
-            className="hidden w-64 shrink-0 px-md py-xl xl:block"
+            className="hidden w-64 shrink-0 px-6 py-16 xl:block"
             aria-label="Table of contents"
           >
             <SectionBoundary name="docs-toc" skeletonVariant="text">
@@ -142,11 +142,11 @@ function DocsPageTemplateSkeleton({
       />
       <div className="flex flex-1">
         {sidebar ? (
-          <div className="border-border hidden w-64 shrink-0 border-r p-md md:block">
+          <div className="border-border hidden w-64 shrink-0 border-r p-6 md:block">
             <Skeleton variant="text" count={8} label={null} />
           </div>
         ) : null}
-        <div className="flex-1 px-md py-xl">
+        <div className="flex-1 px-6 py-16">
           <Container size="prose">
             <Stack gap="lg">
               <Skeleton variant="page-header" label={null} />
@@ -155,7 +155,7 @@ function DocsPageTemplateSkeleton({
           </Container>
         </div>
         {toc ? (
-          <div className="hidden w-64 shrink-0 px-md py-xl xl:block">
+          <div className="hidden w-64 shrink-0 px-6 py-16 xl:block">
             <Skeleton variant="text" count={5} label={null} />
           </div>
         ) : null}

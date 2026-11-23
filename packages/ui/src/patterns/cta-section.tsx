@@ -89,7 +89,7 @@ function CTASection({
       data-slot="cta-section"
       data-min-viewport={String(MIN_VIEWPORT)}
       data-tone={tone}
-      className={cn('py-2xl', TONE_CLASSES[tone], className)}
+      className={cn('py-24', TONE_CLASSES[tone], className)}
       {...props}
     >
       <Container size="content">
@@ -115,7 +115,7 @@ function CTASection({
             </Typography>
           ) : null}
           {actions ? (
-            <div className="mt-md flex flex-col items-center gap-sm sm:flex-row">
+            <div className="mt-6 flex flex-col items-center gap-4 xs:flex-row">
               {actions}
             </div>
           ) : null}

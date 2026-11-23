@@ -539,7 +539,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         data-state="error"
         data-min-viewport={String(MIN_VIEWPORT)}
         className={cn(
-          'm-0 w-full rounded-lg border border-destructive/40 p-6',
+          'm-0 w-full rounded-xl border border-destructive/40 p-6',
           className,
         )}
         {...props}
@@ -570,7 +570,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         ref={ref}
         data-slot="time-series-empty"
         data-min-viewport={String(MIN_VIEWPORT)}
-        className={cn('m-0 w-full rounded-lg border border-border p-6', className)}
+        className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
         <p className="text-sm text-muted-foreground">
@@ -673,7 +673,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         data-slot="time-series-plot"
         viewBox={`0 0 ${W} ${height}`}
         className={cn(
-          'block w-full touch-pan-y rounded-md',
+          'block w-full touch-pan-y rounded-lg',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
         )}
         role="img"
@@ -928,7 +928,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         {xSlots.map((slot, index) => (
           <span
             key={plot.keys[slot]}
-            className={keepAtNarrow(index, xSlots.length) ? undefined : 'hidden sm:inline'}
+            className={keepAtNarrow(index, xSlots.length) ? undefined : 'hidden xs:inline'}
           >
             {/* MM-DD. The year is in the figcaption and the full ISO date is in
                 the readout and the table; repeating it here is 10 characters

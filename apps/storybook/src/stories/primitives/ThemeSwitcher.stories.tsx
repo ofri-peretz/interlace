@@ -101,19 +101,19 @@ type Story = StoryObj<typeof ThemeSwitcher>;
  */
 export const Default: Story = {
   render: (args) => (
-    <div className="flex w-full max-w-float flex-col gap-md rounded-md border border-border bg-card p-md">
-      <div className="flex items-center justify-between gap-md">
+    <div className="flex w-full max-w-float flex-col gap-6 rounded-lg border border-border bg-card p-6">
+      <div className="flex items-center justify-between gap-6">
         <span className="text-ui-sm text-muted-foreground">Appearance</span>
         <ThemeSwitcher {...args} />
       </div>
-      <div className="flex flex-wrap items-center gap-xs">
-        <span className="rounded-md bg-primary px-3 py-1 text-ui-sm text-primary-foreground">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="rounded-lg bg-primary px-3 py-1 text-ui-sm text-primary-foreground">
           primary
         </span>
-        <span className="rounded-md bg-muted px-3 py-1 text-ui-sm text-muted-foreground">
+        <span className="rounded-lg bg-muted px-3 py-1 text-ui-sm text-muted-foreground">
           muted
         </span>
-        <span className="rounded-md border border-border px-3 py-1 text-ui-sm">
+        <span className="rounded-lg border border-border px-3 py-1 text-ui-sm">
           border
         </span>
       </div>

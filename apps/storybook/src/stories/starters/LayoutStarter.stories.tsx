@@ -65,7 +65,7 @@ function Marker({
   if (!outline) return <>{children}</>;
   return (
     <div
-      className="relative rounded-md outline outline-1 outline-dashed outline-primary/40"
+      className="relative rounded-lg outline outline-1 outline-dashed outline-primary/40"
       data-slot="layout-marker"
       data-primitive={name}
     >
@@ -130,7 +130,7 @@ function Specimen({
           labelled with the primitive that owns it, so the nesting — the only
           thing the individual stories cannot show — is readable at a glance.
         </Typography>
-        <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code">
             npx shadcn add @interlace/layout-starter
           </code>

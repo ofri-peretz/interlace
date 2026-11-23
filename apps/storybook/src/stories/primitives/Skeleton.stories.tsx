@@ -29,7 +29,7 @@ const meta: Meta<typeof Skeleton> = {
     count: {
       control: { type: 'range', min: 1, max: 10, step: 1 },
       description:
-        'Render N copies stacked with `gap-sm` — a 5-line paragraph or a 3-card list without composing in the consumer. The group carries a single `role="status"`; the copies are silent.',
+        'Render N copies stacked with `gap-4` — a 5-line paragraph or a 3-card list without composing in the consumer. The group carries a single `role="status"`; the copies are silent.',
       table: { type: { summary: 'number' }, defaultValue: { summary: '1' }, category: 'Data' },
     },
     label: {
@@ -67,7 +67,7 @@ export const Default: Story = {
 export const Catalogue: Story = {
   parameters: { layout: 'fullscreen' },
   render: () => (
-    <div className="flex flex-col gap-md p-lg">
+    <div className="flex flex-col gap-6 p-10">
       {SKELETON_VARIANTS.map((variant) => (
         <CatalogueRow key={variant} variant={variant} />
       ))}
@@ -79,8 +79,8 @@ function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
   return (
     // flex-col below sm: the 176px `w-44 shrink-0` label plus a specimen leaves
     // under 100px for the specimen on a 375px phone, so the row overflows.
-    <div className="flex flex-col items-start gap-md sm:flex-row">
-      <code className="text-muted-foreground font-mono text-ui-sm pt-2 sm:w-44 sm:shrink-0">
+    <div className="flex flex-col items-start gap-6 xs:flex-row">
+      <code className="text-muted-foreground font-mono text-ui-sm pt-2 xs:w-44 xs:shrink-0">
         variant=&quot;{variant}&quot;
       </code>
       <div className="w-full max-w-float">
@@ -91,7 +91,7 @@ function CatalogueRow({ variant }: { variant: SkeletonVariant }) {
 }
 
 /**
- * `count={n}` stacks N copies with `gap-sm`. Useful for list placeholders
+ * `count={n}` stacks N copies with `gap-4`. Useful for list placeholders
  * (5-line paragraph, 3-card grid, etc.) without composing in the
  * consumer.
  */

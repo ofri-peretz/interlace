@@ -86,7 +86,7 @@ export function PageHeader({
     >
       <Stack gap="md">
         {breadcrumb ? <div>{breadcrumb}</div> : null}
-        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+        <div className="flex flex-col items-start justify-between gap-4 xs:flex-row xs:items-end">
           <div className="min-w-0 flex-1">
             <Typography as="h1" variant="h1">
               {title}

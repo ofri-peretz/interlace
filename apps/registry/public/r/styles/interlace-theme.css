@@ -266,10 +266,9 @@
     --interlace-viz-axis: #8d857a;
     --interlace-viz-edge: #e0dad2;
 
-    /* Radii (8/12/16 — three-step scale) */
-    --interlace-radius-sm: 0.5rem;   /*  8px */
-    --interlace-radius-md: 0.75rem;  /* 12px */
-    --interlace-radius-lg: 1rem;     /* 16px */
+    /* Radius base — every rounded-* step derives from it (see
+     * foundation.css): sm 8px, md 10px, lg 12px, xl 16px at 0.75rem. */
+    --interlace-radius: 0.75rem;
 
     /* Brand mark — bar fills for the two-bar Interlace mark (nav lockups;
      * see packages/ui/src/patterns/brand-logo.tsx). Decorative fills, not
@@ -374,10 +373,9 @@
     --interlace-hero-surface-deep: #000000; /* gradient floor */
     --interlace-hero-foreground: #f0ede9;   /* 16.4:1 on the surface (AAA) */
 
-    /* Radii (8/12/16 — three-step scale) */
-    --interlace-radius-sm: 0.5rem;   /*  8px */
-    --interlace-radius-md: 0.75rem;  /* 12px */
-    --interlace-radius-lg: 1rem;     /* 16px */
+    /* Radius base — every rounded-* step derives from it (see
+     * foundation.css): sm 8px, md 10px, lg 12px, xl 16px at 0.75rem. */
+    --interlace-radius: 0.75rem;
 
     /* Window controls — macOS ships the same traffic-light hues in dark
      * mode, so these do not invert. Declared here anyway so the dark block
@@ -465,6 +463,7 @@
     --ring: var(--interlace-ring);
     --destructive: var(--interlace-destructive);
     --destructive-foreground: var(--interlace-destructive-foreground);
+    --radius: var(--interlace-radius);
 
     /* Status semantics — NEW. Surfaces success / warning / info as
      * shadcn-bare token names so consumers reach for `bg-success`,

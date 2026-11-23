@@ -1,5 +1,5 @@
 /*
- * @interlace/ui — foundation tokens: type scale, spacing scale, radius,
+ * @interlace/ui — foundation tokens: type scale, radius bridge, xs breakpoint,
  * container widths, font families. The brand-INVARIANT structural layer.
  *
  * Import in the consuming app AFTER tokens.css, BEFORE/independent of the
@@ -92,23 +92,10 @@
      --font-weight-* tokens (those would collide with the --font-* family keys
      on the shared `font-<name>` utility namespace). */
 
-  /* ── Spacing scale (LAYOUT #3 — the six-step token table) ──────────
-     Named keys → p-xs / gap-md / m-lg / py-xl utilities, DS-owned (R19).
-     Additive: the numeric Tailwind scale (p-4, gap-6) is untouched. */
-  --spacing-xs: 0.5rem; /*  8px — inline chip / badge padding */
-  --spacing-sm: 1rem; /* 16px — card padding, mobile page padding */
-  --spacing-md: 1.5rem; /* 24px — card-grid gaps */
-  --spacing-lg: 2.5rem; /* 40px — mobile section vertical padding */
-  --spacing-xl: 4rem; /* 64px — desktop section vertical padding */
-  --spacing-2xl: 6rem; /* 96px — hero / final-CTA breathing room */
-
-  /* ── Radius (8/12/16 three-step scale) ─────────────────────────────
-     PROMOTED from apps/registry/globals.css to the shared package so
-     rounded-sm/md/lg are DS-owned in every consumer (docs/storybook too),
-     not the Tailwind defaults (2/6/8px). */
-  --radius-sm: 0.5rem; /*  8px */
-  --radius-md: 0.75rem; /* 12px */
-  --radius-lg: 1rem; /* 16px */
+  /* ── Spacing: Tailwind's numeric scale (p-4, gap-6), which already
+     follows the `--spacing` variable. Interlace 2.0 dropped the named
+     --spacing-xs…2xl keys: they shadowed max-w-sm/md/lg in every consumer
+     app. LAYOUT #3's six steps are 2 / 4 / 6 / 10 / 16 / 24. */
 
   /* ── Container widths (LAYOUT #2 — four sizes only) ─────────────────
      Generates max-w-prose / max-w-content / max-w-wide. `full` = no max-width
@@ -125,28 +112,26 @@
      number (R19/R21). */
   --container-float: 26.25rem; /* 420px — edge-docked toast / panel stack */
 
-  /* ── Breakpoints (BREAKPOINT_PHILOSOPHY — 4-tier system) ─────────────
-     Codified to override Tailwind v4's defaults (640/768/1024/1280/1536)
-     with a tighter 4-tier ladder aligned to our MIN_VIEWPORT floor.
-     `rem`-based so user-zoom + browser font-size scaling respect the
-     breakpoints (accessibility win — px-only breakpoints ignore zoom).
+  /* ── Breakpoints (BREAKPOINT_PHILOSOPHY) ─────────────────────────────
+     Tailwind's own ladder (sm 640 / md 768 / lg 1024 / xl 1280 / 2xl 1536)
+     is left untouched. Interlace ADDS one tier below it:
 
-       sm = 30rem  = 480 CSS px @ 16px root font → handheld floor
-       md = 48rem  = 768 CSS px @ 16px root font → tablet / large phone
-       lg = 64rem  = 1024 CSS px → laptop
-       xl = 80rem  = 1280 CSS px → desktop
+       xs = 30rem = 480 CSS px → handheld floor (MIN_VIEWPORT=480)
 
-     Generates `sm:` / `md:` / `lg:` / `xl:` Tailwind variants. The
-     `2xl` tier is INTENTIONALLY omitted — `Container size="wide"`
-     (1280px) is the largest section width the DS supports, so a
-     `2xl:` variant has no DS-side meaning.
+     `rem`-based so user zoom and browser font-size scaling move it too. */
+  --breakpoint-xs: 30rem;
+}
 
-     Aligned with the MIN_VIEWPORT contract: a primitive declaring
-     `MIN_VIEWPORT=480` is exactly the `sm:` floor; `768` is `md:`. */
-  --breakpoint-sm: 30rem;   /* 480px — handheld */
-  --breakpoint-md: 48rem;   /* 768px — tablet */
-  --breakpoint-lg: 64rem;   /* 1024px — laptop */
-  --breakpoint-xl: 80rem;   /* 1280px — desktop */
+/* ── Radius: derived from the `--radius` CSS variable ───────────────────
+   The same derivation shadcn writes into every app, so in a shadcn app
+   these keys agree with the app's own and `--radius` is the one knob.
+   Interlace sets --radius to 0.75rem (interlace-theme.css):
+   sm 8px · md 10px · lg 12px · xl 16px. */
+@theme inline {
+  --radius-sm: calc(var(--radius, 0.75rem) - 4px);
+  --radius-md: calc(var(--radius, 0.75rem) - 2px);
+  --radius-lg: var(--radius, 0.75rem);
+  --radius-xl: calc(var(--radius, 0.75rem) + 4px);
 }
 
 /* ── Reading-mode vs UI-mode component classes ──────────────────────

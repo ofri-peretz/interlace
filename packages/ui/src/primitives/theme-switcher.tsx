@@ -29,7 +29,7 @@
  * ## MIN_VIEWPORT — 320
  *
  * The trigger collapses to its icon below `sm` (the label is `hidden
- * sm:inline`), so it is a 32–36px square at the 320 floor — clear of the
+ * xs:inline`), so it is a 32–36px square at the 320 floor — clear of the
  * WCAG 2.5.5 target-size minimum. The popup is `min-w-48` and Base UI's
  * positioner shifts it into view, so it fits a 320 column.
  *
@@ -114,7 +114,7 @@ const SCHEME_OPTIONS: ReadonlyArray<{
 
 const themeSwitcherVariants = cva(
   cn(
-    'inline-flex items-center justify-center gap-2 rounded-md border font-medium transition-colors',
+    'inline-flex items-center justify-center gap-2 rounded-lg border font-medium transition-colors',
     'border-input bg-background text-foreground',
     'hover:bg-accent hover:text-accent-foreground',
     // `focus-visible:`, never bare `focus:` — a ring painted on mouse clicks
@@ -186,7 +186,7 @@ const ThemeSwitcher = React.forwardRef<HTMLButtonElement, ThemeSwitcherProps>(
           {...props}
         >
           <TriggerIcon aria-hidden="true" className="size-4" />
-          <span className="hidden sm:inline">
+          <span className="hidden xs:inline">
             {activeTheme ? activeTheme.label : label}
           </span>
         </DropdownMenuTrigger>

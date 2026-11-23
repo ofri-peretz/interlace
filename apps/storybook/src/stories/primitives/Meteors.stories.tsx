@@ -74,7 +74,7 @@ export const Default: Story = {
   render: (args) => (
     <div
       style={GLOW_ON_DARK}
-      className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950"
+      className="relative h-[480px] w-full overflow-hidden rounded-lg bg-slate-950"
     >
       <Meteors key={args.number} {...args} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-100">
@@ -90,7 +90,7 @@ export const LightSurface: Story = {
   render: () => (
     <div
       style={GLOW_ON_LIGHT}
-      className="relative h-[480px] w-full overflow-hidden rounded-xl bg-gradient-to-b from-sky-50 to-sky-200"
+      className="relative h-[480px] w-full overflow-hidden rounded-lg bg-gradient-to-b from-sky-50 to-sky-200"
     >
       <Meteors number={15} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-700">
@@ -106,7 +106,7 @@ export const Sparse: Story = {
   render: () => (
     <div
       style={GLOW_ON_DARK}
-      className="relative h-[480px] w-full overflow-hidden rounded-xl bg-slate-950"
+      className="relative h-[480px] w-full overflow-hidden rounded-lg bg-slate-950"
     >
       <Meteors number={6} />
       <div className="relative z-10 flex h-full items-center justify-center text-slate-100">
@@ -125,12 +125,12 @@ export const Sparse: Story = {
  */
 export const Density: Story = {
   render: () => (
-    <div className="grid grid-cols-1 gap-md md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {[8, 22, 45].map((n) => (
         <div
           key={n}
           style={GLOW_ON_DARK}
-          className="relative h-[360px] overflow-hidden rounded-xl bg-slate-950"
+          className="relative h-[360px] overflow-hidden rounded-lg bg-slate-950"
         >
           <Meteors number={n} />
           <div className="relative z-10 flex h-full items-end justify-center p-4 text-slate-100">

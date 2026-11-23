@@ -28,7 +28,7 @@ const meta = {
     className: {
       control: 'text',
       description:
-        'The frame is `relative w-full`; add `overflow-hidden rounded-md` here when the media should be clipped to the frame.',
+        'The frame is `relative w-full`; add `overflow-hidden rounded-lg` here when the media should be clipped to the frame.',
       table: { category: 'Appearance' },
     },
     children: {
@@ -47,13 +47,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Placeholder = ({ label }: { label: string }) => (
-  <div className="bg-muted text-muted-foreground absolute inset-0 flex items-center justify-center rounded-md text-sm">
+  <div className="bg-muted text-muted-foreground absolute inset-0 flex items-center justify-center rounded-lg text-sm">
     {label}
   </div>
 );
 
 export const Default: Story = {
-  args: { ratio: 16 / 9, className: 'overflow-hidden rounded-md' },
+  args: { ratio: 16 / 9, className: 'overflow-hidden rounded-lg' },
   render: (args) => (
     <div className="w-[480px] max-w-full">
       <AspectRatio {...args}>
@@ -85,7 +85,7 @@ export const Variants: Story = {
 export const WithImage: Story = {
   render: () => (
     <div className="w-[480px] max-w-full">
-      <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
+      <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-lg">
         {/* Placeholder shape — no network — exercises the object-cover seam. */}
         <div className="from-primary/40 to-accent/40 absolute inset-0 bg-gradient-to-br" />
       </AspectRatio>

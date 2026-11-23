@@ -33,7 +33,7 @@ describe('Container: width contract (LAYOUT §2)', () => {
     for (const size of ['prose', 'content', 'wide'] as const) {
       const html = render(<Container size={size}>x</Container>);
       expect(html).toContain('px-4');
-      expect(html).toContain('sm:px-6');
+      expect(html).toContain('xs:px-6');
       expect(html).toContain('lg:px-8');
     }
   });
@@ -68,7 +68,7 @@ describe('Container: width contract (LAYOUT §2)', () => {
     const html = render(<Container size="full">x</Container>);
     expect(html).toContain('max-w-none');
     expect(html).toContain('px-0');
-    expect(html).toContain('sm:px-0');
+    expect(html).toContain('xs:px-0');
     expect(html).toContain('lg:px-0');
   });
 
@@ -181,10 +181,10 @@ describe('Section: container injection (LAYOUT §7)', () => {
     expect(html).toContain('data-slot="container"');
   });
 
-  it('inner Container carries px-4 sm:px-6 lg:px-8 (the responsive padding from §5)', () => {
+  it('inner Container carries px-4 xs:px-6 lg:px-8 (the responsive padding from §5)', () => {
     const html = render(<Section>x</Section>);
     expect(html).toContain('px-4');
-    expect(html).toContain('sm:px-6');
+    expect(html).toContain('xs:px-6');
     expect(html).toContain('lg:px-8');
   });
 
@@ -235,28 +235,28 @@ describe('Section: element + data attrs', () => {
 
 describe('Stack: gap scale (LAYOUT §3)', () => {
   it.each([
-    ['xs', 'gap-xs'],
-    ['sm', 'gap-sm'],
-    ['md', 'gap-md'],
-    ['lg', 'gap-lg'],
-    ['xl', 'gap-xl'],
-    ['2xl', 'gap-2xl'],
+    ['xs', 'gap-2'],
+    ['sm', 'gap-4'],
+    ['md', 'gap-6'],
+    ['lg', 'gap-10'],
+    ['xl', 'gap-16'],
+    ['2xl', 'gap-24'],
   ] as const)('gap="%s" produces DS-token %s', (gap, klass) => {
     expect(render(<Stack gap={gap}>x</Stack>)).toContain(klass);
   });
 
-  it('gap maps to the --spacing tokens, NOT raw Tailwind gap-N', () => {
-    // Regression lock: re-keying to the foundation --spacing scale must not
-    // revert to Tailwind's default numeric scale.
+  it('gap maps to the numeric scale, NOT a named key that shadows max-w-*', () => {
+    // Regression lock: Interlace 2.0 dropped the named --spacing-xs…2xl keys
+    // because they redefined max-w-sm/md/lg in consumer apps.
     const html = render(<Stack gap="md">x</Stack>);
-    expect(html).toContain('gap-md');
-    expect(html).not.toContain('gap-6');
+    expect(html).toContain('gap-6');
+    expect(html).not.toContain('gap-md');
   });
 
-  it('defaults to vertical (flex-col) + gap="md" (gap-md)', () => {
+  it('defaults to vertical (flex-col) + gap="md" (gap-6)', () => {
     const html = render(<Stack>x</Stack>);
     expect(html).toContain('flex-col');
-    expect(html).toContain('gap-md');
+    expect(html).toContain('gap-6');
   });
 
   it('emits data-gap / data-align / data-justify styling hooks', () => {
@@ -284,9 +284,9 @@ describe('Cluster: horizontal sugar (LAYOUT §3)', () => {
     expect(html).toContain('flex-wrap');
   });
 
-  it('defaults to gap="sm" (gap-sm) and align="center" (chip-row preset)', () => {
+  it('defaults to gap="sm" (gap-4) and align="center" (chip-row preset)', () => {
     const html = render(<Cluster>x</Cluster>);
-    expect(html).toContain('gap-sm');
+    expect(html).toContain('gap-4');
     expect(html).toContain('items-center');
   });
 
@@ -394,7 +394,7 @@ describe('Section + Container composition: the stats-bar contract', () => {
     expect(html).toContain('mx-auto');
     expect(html).toContain('w-full');
     expect(html).toContain('px-4');
-    expect(html).toContain('sm:px-6');
+    expect(html).toContain('xs:px-6');
     expect(html).toContain('lg:px-8');
     expect(html).toContain('max-w-[1024px]');
   });

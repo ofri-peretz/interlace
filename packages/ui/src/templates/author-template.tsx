@@ -52,7 +52,7 @@ function AuthorTemplate({
 
       <main>
         <Container size="prose">
-          <Stack gap="xl" className="py-xl">
+          <Stack gap="xl" className="py-16">
             <SectionBoundary name="author-bio" skeletonVariant="author-byline">
               {bio}
             </SectionBoundary>
@@ -103,7 +103,7 @@ function AuthorTemplateSkeleton({
         label={null}
       />
       <Container size="prose">
-        <Stack gap="xl" className="py-xl">
+        <Stack gap="xl" className="py-16">
           <Skeleton variant="author-byline" label={null} />
           <Skeleton variant="article-card" count={3} label={null} />
         </Stack>

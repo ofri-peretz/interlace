@@ -31,19 +31,19 @@ const logo = (
   <a href="/" className="flex items-center gap-2 font-semibold">
     <span
       aria-hidden
-      className="inline-block size-6 rounded-md bg-linear-to-br from-primary to-chart-2"
+      className="inline-block size-6 rounded-lg bg-linear-to-br from-primary to-chart-2"
     />
     <span>Interlace App</span>
   </a>
 );
 
 const sampleSidebar = (
-  <nav className="p-md text-sm">
-    <ul className="flex flex-col gap-xs text-muted-foreground">
-      <li><a href="/" className="hover:text-foreground block rounded-md px-sm py-xs">Overview</a></li>
-      <li><a href="/projects" className="hover:text-foreground block rounded-md px-sm py-xs">Projects</a></li>
-      <li><a href="/team" className="hover:text-foreground block rounded-md px-sm py-xs">Team</a></li>
-      <li><a href="/settings" className="hover:text-foreground block rounded-md px-sm py-xs">Settings</a></li>
+  <nav className="p-6 text-sm">
+    <ul className="flex flex-col gap-2 text-muted-foreground">
+      <li><a href="/" className="hover:text-foreground block rounded-lg px-4 py-2">Overview</a></li>
+      <li><a href="/projects" className="hover:text-foreground block rounded-lg px-4 py-2">Projects</a></li>
+      <li><a href="/team" className="hover:text-foreground block rounded-lg px-4 py-2">Team</a></li>
+      <li><a href="/settings" className="hover:text-foreground block rounded-lg px-4 py-2">Settings</a></li>
     </ul>
   </nav>
 );
@@ -52,7 +52,7 @@ const sampleHeader = (
   <div className="flex items-center justify-between">
     <div>
       <h1 className="text-h2 font-semibold tracking-heading">Overview</h1>
-      <p className="text-muted-foreground text-sm mt-xs">
+      <p className="text-muted-foreground text-sm mt-2">
         What&apos;s happening in your workspace today.
       </p>
     </div>
@@ -66,14 +66,14 @@ export const Default: Story = {
     sidebar: sampleSidebar,
     header: sampleHeader,
     children: (
-      <div className="grid grid-cols-1 gap-md md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {['Active', 'In review', 'Shipped'].map((label) => (
           <div
             key={label}
-            className="border-border bg-card rounded-lg border p-md"
+            className="border-border bg-card rounded-xl border p-6"
           >
             <div className="text-muted-foreground text-sm">{label}</div>
-            <div className="text-h2 font-semibold mt-xs">12</div>
+            <div className="text-h2 font-semibold mt-2">12</div>
           </div>
         ))}
       </div>

@@ -68,7 +68,7 @@ function CodeWindow({
     <div
       data-slot="code-window"
       className={cn(
-        'overflow-hidden rounded-lg border border-border bg-card shadow-sm',
+        'overflow-hidden rounded-xl border border-border bg-card shadow-sm',
         className,
       )}
       {...props}

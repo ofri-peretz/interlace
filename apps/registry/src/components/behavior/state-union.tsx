@@ -49,7 +49,7 @@ export function StateUnionSection({
         </>
       }
     >
-      <div className="border-border bg-card overflow-x-auto rounded-lg border">
+      <div className="border-border bg-card overflow-x-auto rounded-xl border">
         <table className="w-full text-sm">
           <thead className="bg-background/60 text-muted-foreground text-xs tracking-wider uppercase">
             <tr>
@@ -90,7 +90,7 @@ export function StateUnionSection({
                 </td>
                 <td className="px-4 py-2 text-sm">
                   {facet.short ? (
-                    <span className="border-border text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs">
+                    <span className="border-border text-muted-foreground rounded-lg border px-2 py-0.5 font-mono text-xs">
                       {facet.glyph ? `${facet.glyph} ` : ''}
                       {facet.short}
                     </span>
@@ -104,16 +104,16 @@ export function StateUnionSection({
                 <td className="px-4 py-2">
                   <span className="flex flex-wrap gap-1.5">
                     {facet.hatch ? (
-                      <span className="border-border text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs">
+                      <span className="border-border text-muted-foreground rounded-lg border px-2 py-0.5 font-mono text-xs">
                         hatched
                       </span>
                     ) : null}
                     {facet.dashed ? (
-                      <span className="border-border text-muted-foreground rounded-md border border-dashed px-2 py-0.5 font-mono text-xs">
+                      <span className="border-border text-muted-foreground rounded-lg border border-dashed px-2 py-0.5 font-mono text-xs">
                         dashed
                       </span>
                     ) : null}
-                    <span className="border-border text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs">
+                    <span className="border-border text-muted-foreground rounded-lg border px-2 py-0.5 font-mono text-xs">
                       {facet.emphasis}
                     </span>
                   </span>

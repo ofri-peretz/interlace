@@ -64,7 +64,7 @@ export interface InterlaceWeaveProps
   'data-testid': string;
   /**
    * Corner radius of the traced border, in px — match the host's radius
-   * (`rounded-xl` = 12).
+   * (`rounded-lg` = 12).
    * @default 12
    */
   radius?: number;

@@ -2057,7 +2057,7 @@
       "name": "container",
       "title": "Container",
       "type": "registry:ui",
-      "summary": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 sm:px-6 lg:px-8` (§5).",
+      "summary": "The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).",
       "topics": [],
       "categories": [
         "foundation",
@@ -7681,9 +7681,7 @@
             "viz-grid",
             "viz-axis",
             "viz-edge",
-            "radius-sm",
-            "radius-md",
-            "radius-lg",
+            "radius",
             "brand-mark-bar-o",
             "brand-mark-bar-g"
           ]

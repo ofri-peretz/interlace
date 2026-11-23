@@ -69,12 +69,12 @@ interface FeatureGridProps extends Omit<React.ComponentProps<'section'>, 'title'
  * gives each feature card ~98px and its copy overflows the viewport.
  *
  * Written out statically because Tailwind cannot scan a runtime-built
- * `sm:grid-cols-${n}`.
+ * `xs:grid-cols-${n}`.
  */
 const FEATURE_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 sm:grid-cols-2',
-  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 xs:grid-cols-2',
+  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
 };
 
 function FeatureGrid({
@@ -92,7 +92,7 @@ function FeatureGrid({
     <section
       data-slot="feature-grid"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-xl', className)}
+      className={cn('py-16', className)}
       {...props}
     >
       <Container size="content">
@@ -123,7 +123,7 @@ function FeatureGrid({
                 <article
                   key={i}
                   data-slot="feature"
-                  className="border-border bg-card text-card-foreground flex flex-col gap-sm rounded-lg border p-md"
+                  className="border-border bg-card text-card-foreground flex flex-col gap-4 rounded-xl border p-6"
                 >
                   {f.icon ? (
                     <div className="text-primary" aria-hidden>
@@ -138,7 +138,7 @@ function FeatureGrid({
                       {f.description}
                     </Typography>
                   ) : null}
-                  {f.action ? <div className="mt-xs">{f.action}</div> : null}
+                  {f.action ? <div className="mt-2">{f.action}</div> : null}
                 </article>
               ))}
             </Grid>

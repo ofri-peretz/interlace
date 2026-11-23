@@ -102,7 +102,7 @@ export function StoryPreview({
   const shown = scheme === 'dark' && darkStoryId ? darkStoryId : storyId;
 
   return (
-    <figure className="border-border bg-card/40 overflow-hidden rounded-lg border">
+    <figure className="border-border bg-card/40 overflow-hidden rounded-xl border">
       {mounted ? (
         <iframe
           // Keyed on the resolved pair so a theme or scheme change REPLACES

@@ -359,7 +359,7 @@ export const THEMES = [
             Six ways it goes red, each of them a defect that is otherwise
             completely silent:
           </p>
-          <ol className="text-muted-foreground mt-3 ml-md list-decimal space-y-2 text-sm">
+          <ol className="text-muted-foreground mt-3 ml-6 list-decimal space-y-2 text-sm">
             <li>
               <strong className="text-foreground">A missing token.</strong> It
               inherits the previous theme&apos;s value and ships a two-brand
@@ -419,7 +419,7 @@ export const THEMES = [
             border at 1.23:1. Three layers measure instead, and they overlap on
             purpose:
           </p>
-          <ul className="text-muted-foreground mt-3 ml-md list-disc space-y-2 text-sm">
+          <ul className="text-muted-foreground mt-3 ml-6 list-disc space-y-2 text-sm">
             <li>
               <strong className="text-foreground">The palette.</strong>{' '}
               <code className="font-mono">theme-contract-lock</code> recomputes
@@ -552,7 +552,7 @@ import { ThemeSwitcher } from '@interlace/ui/theme-switcher';
         </Section>
 
         <Section title="What you cannot safely override">
-          <ul className="text-muted-foreground mt-3 ml-md list-disc space-y-2 text-sm">
+          <ul className="text-muted-foreground mt-3 ml-6 list-disc space-y-2 text-sm">
             <li>
               <code className="font-mono">@layer interlace.preflight</code> —
               the focus-ring + min-viewport baseline. Overriding it costs WCAG
@@ -627,7 +627,7 @@ function Step({
 
 function Snippet({ children }: { children: React.ReactNode }) {
   return (
-    <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-md p-md font-mono text-sm">
+    <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
       <code>{children}</code>
     </pre>
   );
@@ -641,7 +641,7 @@ function Callout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-border bg-card/40 text-muted-foreground mt-4 rounded-md border p-md text-sm">
+    <div className="border-border bg-card/40 text-muted-foreground mt-4 rounded-lg border p-6 text-sm">
       <p className="text-foreground font-semibold">{title}</p>
       <div className="mt-1">{children}</div>
     </div>

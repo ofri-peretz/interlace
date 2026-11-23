@@ -3,16 +3,17 @@
  *
  * WHY THIS LOCK EXISTS
  * --------------------
- * The Interlace DS overrides Tailwind v4's default 5-tier breakpoint
- * ladder (640/768/1024/1280/1536) with a 4-tier ladder
- * (480/768/1024/1280) codified in `packages/ui/styles/foundation.css`.
- * The override only sticks if:
+ * Interlace 2.0 keeps Tailwind v4's own ladder (640/768/1024/1280/1536)
+ * untouched — overriding it changed every consumer app's `sm:` and
+ * deleted their `2xl:`. Interlace ADDS one handheld tier below it,
+ * `xs` = 30rem (480px), in `packages/ui/styles/foundation.css`.
+ * The contract only holds if:
  *
- *   1. The values literally appear in foundation.css (not somewhere
- *      else that a future refactor could orphan).
+ *   1. foundation.css declares `xs` and redeclares none of Tailwind's
+ *      own tiers.
  *   2. No primitive / pattern / template source file declares an
  *      ad-hoc `@media (...)` query — every responsive surface must
- *      go through the `sm:` / `md:` / `lg:` / `xl:` Tailwind variants
+ *      go through the `xs:` / `sm:` / `md:` / `lg:` / `xl:` Tailwind variants
  *      so the ladder stays auditable.
  *   3. No source file declares its own `--breakpoint-*` token (a
  *      consumer-app override is fine; the DS itself must not
@@ -39,11 +40,11 @@ const SCAN_ROOTS = [
 ];
 
 const EXPECTED_BREAKPOINTS: Record<string, string> = {
-  '--breakpoint-sm': '30rem',
-  '--breakpoint-md': '48rem',
-  '--breakpoint-lg': '64rem',
-  '--breakpoint-xl': '80rem',
+  '--breakpoint-xs': '30rem',
 };
+
+/** Tailwind's own tiers — an Interlace redeclaration would rewrite the consumer's. */
+const TAILWIND_TIERS = ['sm', 'md', 'lg', 'xl', '2xl'];
 
 function walkSync(dir: string, out: string[] = []): string[] {
   let entries: string[];
@@ -84,8 +85,8 @@ describe('Breakpoints lock', () => {
     },
   );
 
-  it('foundation.css does NOT declare a 2xl breakpoint (DS caps at xl)', () => {
-    expect(foundation).not.toMatch(/--breakpoint-2xl\b/);
+  it.each(TAILWIND_TIERS)('foundation.css does NOT redeclare Tailwind\'s %s tier', (tier) => {
+    expect(foundation).not.toMatch(new RegExp(`--breakpoint-${tier}\\s*:`));
   });
 
   it('no primitive / pattern / template source declares a raw @media query', () => {
