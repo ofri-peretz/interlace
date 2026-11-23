@@ -16,6 +16,19 @@
  * The root is size-agnostic (`relative`, nothing else): it scrolls when its
  * PARENT constrains it. Dropped into an unconstrained column it simply grows.
  *
+ * ## Edge fades
+ *
+ * `fade="edges"` (the default) softens the top or bottom edge only while there
+ * is more to scroll that way, so the box says "there is more" before anyone
+ * scrolls, on platforms that hide the scrollbar too. The fade is a mask, not
+ * a colour overlay, so it works on any surface (a card, a brand band, an
+ * image). Its depth follows Base UI's `--scroll-area-overflow-y-start/end`:
+ * it grows from nothing over the first 2rem of travel and shrinks back as an
+ * edge is reached, so it never hides the first or last line at rest. It is
+ * state tied to the reader's own scroll, like the scrollbar thumb, so
+ * reduced motion keeps it. While the viewport has keyboard focus the mask
+ * drops, because a mask would also clip the focus ring.
+ *
  * ## Anatomy
  *
  *   ScrollArea                       (ScrollArea.Root — relative, data-min-viewport=320)
@@ -49,17 +62,32 @@ import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
 import { cn } from '../lib/cn.js';
 
 /**
+ * Edge fades, one static class per value so Tailwind can scan them. The
+ * depth is `min(2rem, distance left to scroll)` on each edge; with no
+ * overflow both are 0 and the mask is fully opaque.
+ */
+const FADE = {
+  none: '',
+  edges:
+    '[mask-image:linear-gradient(to_bottom,transparent,#000_min(2rem,var(--scroll-area-overflow-y-start,0px)),#000_calc(100%_-_min(2rem,var(--scroll-area-overflow-y-end,0px))),transparent)] focus-visible:[mask-image:none]',
+} as const;
+
+/**
  * Minimum viable viewport (CSS px) — DESIGN_PRINCIPLES #14. The root is
  * size-agnostic (`relative`, sized by its parent) and the 10px scrollbar
  * track is an overlay, so it costs no horizontal space at the 320 floor.
  */
 export const MIN_VIEWPORT = 320 as const;
 
-function ScrollArea({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof BaseScrollArea.Root>) {
+interface ScrollAreaProps extends React.ComponentProps<typeof BaseScrollArea.Root> {
+  /**
+   * Fade the top and bottom edges while there is more to scroll that way.
+   * @default 'edges'
+   */
+  fade?: keyof typeof FADE;
+}
+
+function ScrollArea({ className, children, fade = 'edges', ...props }: ScrollAreaProps) {
   return (
     <BaseScrollArea.Root
       data-slot="scroll-area"
@@ -69,7 +97,11 @@ function ScrollArea({
     >
       <BaseScrollArea.Viewport
         data-slot="scroll-area-viewport"
-        className="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1"
+        data-fade={fade}
+        className={cn(
+          'focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1',
+          FADE[fade],
+        )}
       >
         <BaseScrollArea.Content>{children}</BaseScrollArea.Content>
       </BaseScrollArea.Viewport>
@@ -109,3 +141,4 @@ function ScrollBar({
 }
 
 export { ScrollArea, ScrollBar };
+export type { ScrollAreaProps };
