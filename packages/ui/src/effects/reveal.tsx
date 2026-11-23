@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * @interlace/ui — Reveal
@@ -39,29 +39,29 @@
  * | R26  | A11y from native el     | plain content; focus reveals at once                  |
  */
 
-import * as React from 'react';
+import * as React from "react";
 
-import { cn } from '../lib/cn.js';
-import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { cn } from "../lib/cn.js";
+import { useReducedMotion } from "../lib/use-reduced-motion.js";
 
 /** Where each effect starts from. Every one ends at the element's own style. */
 const FROM = {
   fade: { opacity: 0 },
-  rise: { opacity: 0, transform: 'translateY(1rem)' },
-  blur: { opacity: 0, filter: 'blur(0.5rem)' },
-  scale: { opacity: 0, transform: 'scale(0.96)' },
+  rise: { opacity: 0, transform: "translateY(1rem)" },
+  blur: { opacity: 0, filter: "blur(0.5rem)" },
+  scale: { opacity: 0, transform: "scale(0.96)" },
 } as const satisfies Record<string, Keyframe>;
 
 const TO = {
   fade: { opacity: 1 },
-  rise: { opacity: 1, transform: 'none' },
-  blur: { opacity: 1, filter: 'none' },
-  scale: { opacity: 1, transform: 'none' },
+  rise: { opacity: 1, transform: "none" },
+  blur: { opacity: 1, filter: "none" },
+  scale: { opacity: 1, transform: "none" },
 } as const satisfies Record<keyof typeof FROM, Keyframe>;
 
 export type RevealEffect = keyof typeof FROM;
 
-export interface RevealProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface RevealProps extends React.ComponentPropsWithoutRef<"div"> {
   /** How the block arrives. Every effect fades; `rise` also lifts, `blur` sharpens, `scale` grows. @default 'rise' */
   effect?: RevealEffect;
   /** Milliseconds to wait after the block enters the viewport. Use it to sequence a few siblings. @default 0 */
@@ -73,7 +73,7 @@ export interface RevealProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 export function Reveal({
-  effect = 'rise',
+  effect = "rise",
   delay = 0,
   duration = 600,
   amount = 0.2,
@@ -87,25 +87,27 @@ export function Reveal({
   // Before paint: hide the block, so it can arrive instead of flashing.
   React.useLayoutEffect(() => {
     const el = ref.current;
-    if (!el || reduced || typeof el.animate !== 'function') return;
-    if (typeof IntersectionObserver === 'undefined') return;
-    el.style.opacity = '0';
+    if (!el || reduced || typeof el.animate !== "function") return;
+    if (typeof IntersectionObserver === "undefined") return;
+    // Once played, a prop change (or a Fast Refresh) never plays it again.
+    if (el.dataset.revealed) return;
+    el.style.opacity = "0";
 
     let io: IntersectionObserver | undefined;
     const reveal = (wait: number) => {
       if (el.dataset.revealed) return;
-      el.dataset.revealed = 'true';
+      el.dataset.revealed = "true";
       io?.disconnect();
-      el.style.opacity = '';
+      el.style.opacity = "";
       el.animate([FROM[effect], TO[effect]], {
         duration,
         delay: wait,
-        easing: 'cubic-bezier(0.2, 0, 0, 1)',
-        fill: 'backwards',
+        easing: "cubic-bezier(0.2, 0, 0, 1)",
+        fill: "backwards",
       });
     };
     const onFocus = () => reveal(0);
-    el.addEventListener('focusin', onFocus);
+    el.addEventListener("focusin", onFocus);
 
     io = new IntersectionObserver(
       (entries) => {
@@ -117,15 +119,20 @@ export function Reveal({
 
     return () => {
       io?.disconnect();
-      el.removeEventListener('focusin', onFocus);
-      el.style.opacity = '';
-      delete el.dataset.revealed;
+      el.removeEventListener("focusin", onFocus);
+      el.style.opacity = "";
       for (const a of el.getAnimations?.() ?? []) a.cancel();
     };
   }, [reduced, effect, delay, duration, amount]);
 
   return (
-    <div ref={ref} data-slot="reveal" data-effect={effect} className={cn(className)} {...props}>
+    <div
+      ref={ref}
+      data-slot="reveal"
+      data-effect={effect}
+      className={cn(className)}
+      {...props}
+    >
       {children}
     </div>
   );
