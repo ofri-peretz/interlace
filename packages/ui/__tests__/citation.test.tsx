@@ -125,4 +125,15 @@ describe('Citation', () => {
     await user.click(trigger);
     await screen.findByText('The exact words from the page.');
   });
+
+  it('renders plain words, with no marker, when there are no sources', () => {
+    const { container } = render(
+      <Citation marker="chip" sources={[]}>
+        An unsourced line.
+      </Citation>,
+    );
+    expect(screen.queryByRole('button')).toBeNull();
+    expect(container.textContent).toBe('An unsourced line.');
+    expect(container.querySelector('[data-slot="citation"]')?.getAttribute('data-marker')).toBe('none');
+  });
 });

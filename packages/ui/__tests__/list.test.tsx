@@ -70,4 +70,15 @@ describe('List', () => {
     expect(list.className).toContain('space-y-1.5');
     expect(list.className).toContain('mt-4');
   });
+
+  it('accepts ol props only on a numbered list', () => {
+    render(
+      <>
+        <List marker="number" start={4} reversed aria-label="From four" />
+        {/* @ts-expect-error start is an ol prop; a bullet list renders a ul */}
+        <List marker="bullet" start={4} aria-label="Bullets" />
+      </>,
+    );
+    expect(screen.getByRole('list', { name: 'From four' }).getAttribute('start')).toBe('4');
+  });
 });

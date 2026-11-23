@@ -169,6 +169,15 @@ function Citation({
   className,
   ...props
 }: CitationProps) {
+  // No sources, no marker: an empty chip or "Sources (0)" would claim a
+  // backing the line does not have. The words render as plain text.
+  if (sources.length === 0) {
+    return (
+      <span data-slot="citation" data-marker="none" className={cn('inline', className)} {...props}>
+        {children}
+      </span>
+    );
+  }
   const label = triggerLabel ?? `Sources (${sources.length})`;
   const content = (
     <PopoverContent

@@ -81,8 +81,13 @@ type ListOwnProps = {
   density?: keyof typeof DENSITY;
 };
 
-export type ListProps = ListOwnProps &
-  (React.ComponentProps<'ul'> | React.ComponentProps<'ol'>);
+/**
+ * `marker="number"` renders an `ol` and takes its props (`start`,
+ * `reversed`); every other marker renders a `ul`, so those are a type error.
+ */
+export type ListProps =
+  | (ListOwnProps & { marker: 'number' } & React.ComponentProps<'ol'>)
+  | (ListOwnProps & { marker?: Exclude<ListMarker, 'number'> } & React.ComponentProps<'ul'>);
 
 function List({ marker = 'bullet', density = 'default', className, ...props }: ListProps) {
   const shared = {
