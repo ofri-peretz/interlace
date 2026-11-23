@@ -340,7 +340,7 @@ export const Default: Story = {
       // (`oklch(100% 0 0)`), so compare the lightness, not the spelling.
       const lightness = /^oklch\(\s*([\d.]+)(%?)/.exec(background ?? '');
       expect(lightness).not.toBeNull();
-      expect(Number(lightness![1]) / (lightness![2] ? 100 : 1)).toBeCloseTo(dark ? 0.145 : 1, 4);
+      expect(Number(lightness![1]) / (lightness![2] ? 100 : 1)).toBeCloseTo(dark ? 0.155 : 0.989, 4);
     });
   },
 };

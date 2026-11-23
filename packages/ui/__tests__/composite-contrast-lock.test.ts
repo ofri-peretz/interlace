@@ -427,7 +427,8 @@ describe('composite AA contrast lock', () => {
   it('reproduces the documented binding constraint (primary on its own 10% tint)', () => {
     // The theme file's own claim: #7d350c measures 8.80:1 on white and
     // 7.46:1 on `bg-primary/10` over white, and that second number is what
-    // pins the palette. If this drifts, the comment is now fiction — and
+    // pins the palette. The page is warm paper, chosen to keep 8.5:1 and
+    // 7:1 there too (8.52 and 7.23), so this measures against the page. If this drifts, the comment is now fiction — and
     // every badge-style tint in the DS moved with it.
     const primary = theme.light.get('primary')!;
     const background = theme.light.get('background')!;
