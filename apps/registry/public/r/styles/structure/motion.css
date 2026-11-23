@@ -7,26 +7,27 @@
  * adds utilities without replacing any.
  */
 
+/* Motion tokens. `@theme` (not inline) so a brand can override any of them
+ * on :root and every utility follows. The eases become Tailwind utilities
+ * (`ease-enter`, `ease-exit`, `ease-move`); the durations are used as
+ * `duration-(--duration-fast)`. Bands and use: MOTION_PHILOSOPHY.md. */
+@theme {
+  /* Appear: fast out of the gate, a long soft landing (expo-out family). */
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Leave: starts slow, gets out of the way (quart-in family). */
+  --ease-exit: cubic-bezier(0.5, 0, 0.75, 0);
+  /* Move between two resting places, both ends eased. */
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:root {
+  --duration-fast: 100ms;
+  --duration-base: 150ms;
+  --duration-medium: 250ms;
+  --duration-slow: 400ms;
+}
+
 @theme inline {
-  /* MagicUI: shimmer-button */
-  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite
-    alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
-
-  /* MagicUI: animated-gradient-text */
-  --animate-gradient: gradient 8s linear infinite;
-
-  /* MagicUI: marquee */
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-
-  /* Aceternity: background-gradient-animation */
-  --animate-first: moveVertical 30s ease infinite;
-  --animate-second: moveInCircle 20s reverse infinite;
-  --animate-third: moveInCircle 40s linear infinite;
-  --animate-fourth: moveHorizontal 40s ease infinite;
-  --animate-fifth: moveInCircle 20s ease infinite;
-
   /* Primitives: accordion — `animate-accordion-down/up` come from
      tw-animate-css, which the base item depends on. Declaring them here
      too replaced tw-animate's version in every shadcn app (losing its
@@ -54,6 +55,13 @@
    * between two bodies would be over-captured into the first one. */
   --animate-weave-reveal: weave-reveal 600ms ease-out;
 
+  /* The draw verb as a loading state (ThreadMark `drawing`): the woven
+   * pair draws in, then draws out ahead of itself, and starts again. An
+   * ambient loop, so it is exempt from the draw ceiling and named in the
+   * reduced-motion list below, where `animation: none` rests it at the
+   * element's own dashoffset (0): fully woven and still. */
+  --animate-strand-loop: strand-loop 1.6s ease-in-out infinite;
+
   @keyframes strand-draw {
     from {
       stroke-dashoffset: 100;
@@ -63,87 +71,24 @@
     }
   }
 
+  @keyframes strand-loop {
+    0% {
+      stroke-dashoffset: 100;
+    }
+    50% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -100;
+    }
+  }
+
   @keyframes weave-reveal {
     from {
       transform: scaleX(0);
     }
   }
 
-  @keyframes shimmer-slide {
-    to {
-      transform: translate(calc(100cqw - 100%), 0);
-    }
-  }
-  @keyframes spin-around {
-    0% {
-      transform: translateZ(0) rotate(0);
-    }
-    15%,
-    35% {
-      transform: translateZ(0) rotate(90deg);
-    }
-    65%,
-    85% {
-      transform: translateZ(0) rotate(270deg);
-    }
-    100% {
-      transform: translateZ(0) rotate(360deg);
-    }
-  }
-  @keyframes gradient {
-    to {
-      background-position: var(--bg-size, 300%) 0;
-    }
-  }
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes marquee-vertical {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes moveHorizontal {
-    0% {
-      transform: translateX(-50%) translateY(-10%);
-    }
-    50% {
-      transform: translateX(50%) translateY(10%);
-    }
-    100% {
-      transform: translateX(-50%) translateY(-10%);
-    }
-  }
-  @keyframes moveInCircle {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(180deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes moveVertical {
-    0% {
-      transform: translateY(-50%);
-    }
-    50% {
-      transform: translateY(50%);
-    }
-    100% {
-      transform: translateY(-50%);
-    }
-  }
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -204,25 +149,7 @@
 }
 } /* end @layer components */
 
-/* Border Beam — pure CSS animation, used by @interlace/ui/magicui/border-beam.
- * The class sits in Tailwind's `components` layer, BELOW utilities, so a
- * call-site `[animation-duration:2s]` still wins. The reduced-motion rules
- * that must beat utilities do so with `!important`, not with layer rank. */
-@keyframes border-beam {
-  0% {
-    offset-distance: var(--border-beam-initial, 0%);
-  }
-  100% {
-    offset-distance: calc(100% + var(--border-beam-initial, 0%));
-  }
-}
-
 @layer components {
-.animate-border-beam {
-  animation: border-beam var(--border-beam-duration, 6s) linear infinite;
-  animation-direction: var(--border-beam-direction, normal);
-}
-
 /*
  * Accessibility — respect prefers-reduced-motion.
  * Industry-canon practice (MUI, Vercel, Linear, Stripe, GitHub all do this).
@@ -256,27 +183,17 @@
  * Skeleton's life, and the à-la-carte path pulsed for reduce users.
  */
 @media (prefers-reduced-motion: reduce) {
-  .animate-shimmer-slide,
-  .animate-spin-around,
-  .animate-gradient,
-  .animate-marquee,
-  .animate-marquee-vertical,
-  .animate-first,
-  .animate-second,
-  .animate-third,
-  .animate-fourth,
-  .animate-fifth,
-  .animate-border-beam,
   .animate-fade-in-up,
   .animate-slide-in-left,
   .animate-scale-in,
   .animate-pulse,
-  .animate-meteor,
-  .animate-meteor-effect,
   /* weave-reveal belongs in THIS list, unlike strand-draw below: its
    * keyframe is from-only, so `animation: none` rests at the fully
    * revealed end state — nothing to clamp, nothing hidden. */
-  .animate-weave-reveal {
+  .animate-weave-reveal,
+  /* strand-loop rests at the element's own dashoffset, 0: the pair is
+   * fully woven and still. */
+  .animate-strand-loop {
     animation: none !important;
     transition: none !important;
   }

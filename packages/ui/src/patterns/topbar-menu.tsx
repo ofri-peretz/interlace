@@ -1,0 +1,89 @@
+"use client";
+
+/**
+ * @interlace/ui — TopbarMenu
+ *
+ * The small-screen half of `Topbar`: a "Menu" button that opens the site's
+ * links in a panel at the edge of the screen. Topbar renders it for you below
+ * `md`; it is exported on its own for headers that compose their own row.
+ *
+ * The links are rendered by the caller (Topbar renders them on the server)
+ * and passed in as `children`, so this file holds only the open state. The
+ * panel is a `Drawer` (Base UI Drawer): on a phone a finger drags it back
+ * toward its edge to close it, as native menus do, and the panel follows the
+ * finger. Focus moves into it, the page behind is inert, and Escape or a
+ * press outside closes it. Following an `<a>` inside also closes it, so a
+ * client-side route change never leaves the menu open over the new page.
+ *
+ * | Rule | Concept                 | Where in this file                                   |
+ * | ---- | ----------------------- | ---------------------------------------------------- |
+ * | R6   | data-slot per part      | topbar-menu-trigger / topbar-menu-nav                 |
+ * | R8   | Enum for edge           | `side = right | left | bottom` (default right)        |
+ * | R12  | Reuse over wrap         | gesture, focus trap and dismissal come from Drawer    |
+ * | R25  | Client component        | open state                                           |
+ * | R26  | A11y from native el     | `<button>` with a text label, `<nav>` landmark        |
+ */
+
+import { MenuIcon } from "lucide-react";
+import * as React from "react";
+
+import { cn } from "../lib/cn.js";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../primitives/drawer.js";
+
+export interface TopbarMenuProps {
+  /** The links, already rendered. Usually a list of anchors. */
+  children: React.ReactNode;
+  /** Visible label of the menu button, also the panel's title. @default 'Menu' */
+  label?: string;
+  /** Accessible name of the navigation inside the panel. @default 'Primary' */
+  navLabel?: string;
+  /** The edge the panel opens from; a drag back toward it closes it. @default 'right' */
+  side?: "right" | "left" | "bottom";
+  /** Extra classes for the trigger button. */
+  className?: string;
+}
+
+export function TopbarMenu({
+  children,
+  label = "Menu",
+  navLabel = "Primary",
+  side = "right",
+  className,
+}: TopbarMenuProps) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <Drawer open={open} onOpenChange={setOpen} direction={side}>
+      <DrawerTrigger
+        data-slot="topbar-menu-trigger"
+        className={cn(
+          "text-foreground hover:bg-muted focus-visible:ring-ring inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-medium focus-visible:ring-[3px] focus-visible:outline-hidden",
+          className,
+        )}
+      >
+        <MenuIcon aria-hidden className="size-5" />
+        {label}
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>{label}</DrawerTitle>
+        </DrawerHeader>
+        <nav
+          aria-label={navLabel}
+          data-slot="topbar-menu-nav"
+          className="flex flex-col px-2 pb-6 text-base"
+          onClick={(event) => {
+            if ((event.target as HTMLElement).closest("a")) setOpen(false);
+          }}
+        >
+          {children}
+        </nav>
+      </DrawerContent>
+    </Drawer>
+  );
+}

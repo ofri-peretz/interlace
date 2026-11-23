@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T01:20:47.904Z",
+  "generatedAt": "2026-11-23T18:42:28.607Z",
   "source": "apps/storybook/src/stories/concepts",
   "pages": [
     {
@@ -34,6 +34,58 @@
         {
           "type": "paragraph",
           "text": "The package (`@interlace/ui`, v1.0.0) is `\"private\": true` and is not published to npm. That is deliberate, not an oversight: publishing would create a second distribution channel with a *different* upgrade model for the same components."
+        },
+        {
+          "type": "heading",
+          "depth": 2,
+          "text": "What Interlace does differently",
+          "id": "what-interlace-does-differently"
+        },
+        {
+          "type": "paragraph",
+          "text": "Interlace is a shadcn registry, so it starts where shadcn does: you install source, not a package, and the file is yours. What it adds is a set of commitments, each one checked by a test rather than promised in prose."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "items": [
+            {
+              "depth": 0,
+              "text": "**Themed by CSS variables, in four layers.** A brand file sets the palette, a semantics file gives the colours their jobs (`--primary`, `--scrim`, `--highlight`), a structure layer owns type, radius, layout and motion, and a page layer sets the defaults for a document. Each lives in its own cascade layer, so restyling a site means changing a few variables in one file, not overriding classes in many."
+            },
+            {
+              "depth": 0,
+              "text": "**No custom classes needed.** Components cover the cases a real site meets through props, variants and composition. A phone menu is `mobileNav`, a full-width prose column is `width=\"fill\"`, an animated button is a `Button` with a `<Sheen />` inside. If you find yourself writing a `className` to get something ordinary, that is a gap in Interlace, and we want to hear about it."
+            },
+            {
+              "depth": 0,
+              "text": "**Composition over configuration.** Compound components (`ClaimCard.Claim`, `FocusGrid.Item`) and slots let you arrange the parts yourself, while each part keeps its semantics and its accessibility wiring."
+            },
+            {
+              "depth": 0,
+              "text": "**Accessible by construction.** Semantics come from native elements first. Colour contrast is computed from the tokens in both schemes, so a palette change that breaks AA fails a test before anyone sees it. Every story runs through axe in light, dark and right-to-left."
+            },
+            {
+              "depth": 0,
+              "text": "**Motion that respects people.** Every animation stops under `prefers-reduced-motion`, decoration is hidden from assistive tech and from the pointer, anything that moves for long has a visible pause control, and animations sleep when they are off screen. The effects need no keyframes in your stylesheet."
+            },
+            {
+              "depth": 0,
+              "text": "**Server first.** A component that needs no browser state is a server component. Content that animates still renders in full on the server, so readers without scripts, crawlers and screen readers get the real text and the real numbers."
+            },
+            {
+              "depth": 0,
+              "text": "**Patterns for content, not only for apps.** Alongside the usual controls, Interlace ships the pieces that sites built around reading need: claims with their sources, citations, both sides of a question side by side, dialogue, stances, and site chrome that works on a phone."
+            },
+            {
+              "depth": 0,
+              "text": "**Readable by agents.** The registry publishes `llms.txt` and a machine-readable index of every component's props, keyboard path, server boundary and minimum viewport, so an assistant can choose a component instead of guessing."
+            },
+            {
+              "depth": 0,
+              "text": "**Our own work.** We learn from the wider ecosystem, and we write our own code. Every component in this registry is original to Interlace."
+            }
+          ]
         },
         {
           "type": "heading",
@@ -216,6 +268,10 @@
         {
           "id": "what-this-is",
           "text": "What this is"
+        },
+        {
+          "id": "what-interlace-does-differently",
+          "text": "What Interlace does differently"
         },
         {
           "id": "the-five-layers",
@@ -700,7 +756,7 @@
         {
           "type": "code",
           "lang": null,
-          "code": "  layer 1   --interlace-primary: #7d350c        ← the only hex literals\n     │\n     │      brand/interlace.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      brand/interlace.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
+          "code": "  layer 1   --interlace-primary: oklch(0.422 0.1117 45.2)  ← the only colour literals\n     │\n     │      brand/interlace.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      brand/interlace.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
         },
         {
           "type": "paragraph",
@@ -798,7 +854,7 @@
           ],
           "rows": [
             [
-              "`:root`",
+              "`:root`, `[data-scheme='light']`",
               "interlace · light — the default"
             ],
             [
@@ -818,6 +874,10 @@
         {
           "type": "paragraph",
           "text": "Scheme is keyed on the `.dark` class, matching the shadcn / `next-themes` convention, so the system drops into an existing app without a migration. Theme is keyed on `data-theme`."
+        },
+        {
+          "type": "paragraph",
+          "text": "Either scheme can be forced on a subtree. `<div class=\"dark\">` makes a dark panel on a light page, and `<div data-scheme=\"light\">` makes a light panel on a dark page. The palette, the semantic names and `color-scheme` all switch together, so the panel's scrollbars and form controls match it."
         },
         {
           "type": "paragraph",
@@ -885,12 +945,12 @@
         },
         {
           "type": "paragraph",
-          "text": "The entire override surface is `@layer interlace.brand`: the `--interlace-*` literals, in both schemes. A theme file contains hex values and nothing else — no semantic alias, no `@theme` block, no component CSS."
+          "text": "The entire override surface is `@layer interlace.brand`: the `--interlace-*` literals, in both schemes. A theme file contains colour values (OKLCH) and nothing else — no semantic alias, no `@theme` block, no component CSS."
         },
         {
           "type": "code",
           "lang": "css",
-          "code": "@layer interlace.brand {\n  [data-theme='harbor'] {\n    --interlace-primary: #0f4c81;\n    --interlace-background: #f7f9fb;\n    /* …the other 52… */\n  }\n\n  [data-theme='harbor'].dark,\n  [data-theme='harbor'][data-scheme='dark'] {\n    --interlace-primary: #8dc2f0;\n    --interlace-background: #06111f;\n    /* … */\n  }\n}"
+          "code": "@layer interlace.brand {\n  [data-theme='harbor'] {\n    --interlace-primary: oklch(0.409 0.1065 250.2);\n    --interlace-background: oklch(0.981 0.0034 247.9);\n    /* …the other 52… */\n  }\n\n  [data-theme='harbor'].dark,\n  [data-theme='harbor'][data-scheme='dark'] {\n    --interlace-primary: oklch(0.794 0.086 245.4);\n    --interlace-background: oklch(0.175 0.0338 254.1);\n    /* … */\n  }\n}"
         },
         {
           "type": "paragraph",
@@ -1242,7 +1302,7 @@
         {
           "type": "code",
           "lang": "ts",
-          "code": "cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {\n  variants: {\n    size: {\n      prose:   'max-w-[65ch]',\n      content: 'max-w-[1024px]',   // default\n      wide:    'max-w-[1280px]',\n      full:    'max-w-none px-0 xs:px-0 lg:px-0',\n    },\n  },\n});"
+          "code": "cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {\n  variants: {\n    size: {\n      prose:   'max-w-(--container-prose)',\n      content: 'max-w-(--container-content)',   // default\n      wide:    'max-w-(--container-wide)',\n      full:    'max-w-none px-0 xs:px-0 lg:px-0',\n    },\n  },\n});"
         },
         {
           "type": "paragraph",
@@ -1273,7 +1333,7 @@
         {
           "type": "code",
           "lang": null,
-          "code": "spacing=\"tight\"       py-12 md:py-16 lg:py-20\nspacing=\"comfortable\" py-16 md:py-20 lg:py-24    (default)\nspacing=\"spacious\"    py-20 md:py-24 lg:py-32"
+          "code": "spacing=\"tight\"       py-section-tight          48 → 80px\nspacing=\"comfortable\" py-section-comfortable    64 → 96px   (default)\nspacing=\"spacious\"    py-section-spacious       80 → 128px"
         },
         {
           "type": "paragraph",
@@ -1663,7 +1723,7 @@
         {
           "type": "code",
           "lang": "css",
-          "code": "@media (prefers-reduced-motion: reduce) {\n  .animate-shimmer-slide, .animate-spin-around, .animate-gradient,\n  .animate-marquee, .animate-marquee-vertical,\n  .animate-first, .animate-second, .animate-third, .animate-fourth,\n  .animate-fifth, .animate-border-beam,\n  .animate-accordion-down, .animate-accordion-up,\n  .animate-fade-in-up, .animate-slide-in-left, .animate-scale-in {\n    animation: none !important;\n    transition: none !important;\n  }\n}"
+          "code": "@media (prefers-reduced-motion: reduce) {\n  .animate-accordion-down, .animate-accordion-up,\n  .animate-fade-in-up, .animate-slide-in-left, .animate-scale-in {\n    animation: none !important;\n    transition: none !important;\n  }\n}"
         },
         {
           "type": "paragraph",

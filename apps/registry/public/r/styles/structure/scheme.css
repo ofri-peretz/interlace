@@ -1,0 +1,24 @@
+/*
+ * @interlace/ui — STRUCTURE / scheme: tell the browser which scheme is on.
+ *
+ * Layer 3 of 4 (brand → semantics → structure → page). The palette switches
+ * on `.dark` / `[data-scheme='dark']`, but the browser's own parts do not
+ * read either: scrollbars, form controls, the date picker, autofill and the
+ * caret stay light on a dark page unless `color-scheme` says otherwise.
+ * Declaring it on the same selectors that switch the palette keeps the two
+ * in step, in a subtree too: a `.dark` preview inside a light page gets dark
+ * scrollbars, and a `[data-scheme='light']` panel inside a dark page gets
+ * light ones. It sits in `@layer base`, so an app's own `color-scheme` wins.
+ */
+
+@layer base {
+  :root,
+  [data-scheme='light'] {
+    color-scheme: light;
+  }
+
+  .dark,
+  [data-scheme='dark'] {
+    color-scheme: dark;
+  }
+}

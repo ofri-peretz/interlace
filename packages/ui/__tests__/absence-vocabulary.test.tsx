@@ -403,7 +403,16 @@ describe('StatStrip — the three-state null', () => {
     );
     const list = document.querySelector('dl')!.className;
     expect(list).toContain('grid-cols-2');
-    expect(list).toContain('lg:grid-cols-6');
+    expect(list).toContain('@4xl:grid-cols-6');
+  });
+
+  it('sizes its tracks to its own width, not the viewport', () => {
+    // A strip inside a dashboard card is narrow on a wide screen; keyed on
+    // the viewport it would hold six tracks there and clip every value.
+    render(<StatStrip cols={6} items={[{ key: 'a', label: 'a', value: 1 }]} />);
+    const list = document.querySelector('dl')!;
+    expect(list.parentElement!.className).toContain('@container');
+    expect(list.className).not.toMatch(/(^|\s)(xs|sm|md|lg|xl):grid-cols-/);
   });
 });
 

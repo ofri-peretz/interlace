@@ -7,18 +7,26 @@
  * authored aside ("note: this rule is type-aware"). Both can share pigment
  * but they live at different altitudes in the system.
  *
- * Five tones, each fixed to a lucide icon + a semantic-token border-tint:
+ * Six tones, each fixed to a lucide icon + a semantic-token border-tint:
  *
  *   - info     Info             — neutral context, parallel to the body
  *   - note     Lightbulb        — author tip / suggestion
  *   - success  CircleCheck      — confirmation / positive outcome
  *   - warn     TriangleAlert    — non-blocking caution
  *   - danger   OctagonAlert     — destructive / blocking consequence
+ *   - highlight Highlighter     — the line the page wants remembered: a
+ *                                 highlighter-tinted surface, not just a rule
+ *
+ * ## Kicker
+ *
+ * `kicker` replaces the icon with a word or two set in bold at the start
+ * ("Straight talk", or a word in another script with its own `lang`). It is
+ * text, so it is read aloud before the body; the icon it replaces never is.
  *
  * ## Anatomy
  *
  *   Callout                            (div — role="note" — data-min-viewport=320)
- *     ├─ {icon}                        (lucide, decorative — aria-hidden)
+ *     ├─ {icon} | {kicker}             (lucide, aria-hidden | bold text, read first)
  *     └─ <div>                         (text column)
  *         ├─ {title?}                  (Typography variant=ui font-medium)
  *         └─ {children}                (free-form prose)
@@ -34,8 +42,8 @@
  * | R4   | Extends native el + VariantProps | `React.ComponentProps<'div'> & VariantProps<...>` + props   |
  * | R6   | data-slot on root                | `data-slot="callout"` + data-tone                           |
  * | R7   | className merged + ...rest + ref | `cn(calloutVariants(...), className)` + `{...props}`        |
- * | R8   | No `isXxx`; enum for tone        | `tone` is a 5-way enum, never a boolean                     |
- * | R10  | Composition seam                 | `title` slot + `children`                                   |
+ * | R8   | No `isXxx`; enum for tone        | `tone` is a 6-way enum, never a boolean                     |
+ * | R10  | Composition seam                 | `title` + `kicker` slots + `children`                       |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | zero inline `style`; cva classes + Lucide via className     |
  * | R19  | Tokens only                      | `p-6` / `rounded-lg` / `border-l-*` widths via spacing + radius tokens; colors via semantic tokens |
@@ -48,6 +56,7 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import {
   CircleCheck,
+  Highlighter,
   Info,
   Lightbulb,
   OctagonAlert,
@@ -68,9 +77,12 @@ const calloutVariants = cva(
   // Base — flex row, icon left, text column right; 4px left border via
   // `border-l-4`; padding from the spacing scale; rounded-lg from radius
   // tokens. Card-tint surface so the callout reads as a block in prose.
+  // The tint is a flat gradient over a solid page-colour fill, so the
+  // surface is opaque: on a brand band or a photo nothing shows through,
+  // and the callout sets its own text colour instead of inheriting the band's.
   [
-    'flex items-start gap-4',
-    'rounded-lg border border-border border-l-4 bg-card/40 p-6',
+    'flex items-start gap-4 text-foreground',
+    'rounded-lg border border-border border-l-4 bg-background bg-linear-to-r from-card/40 to-card/40 p-6',
     '[&_[data-slot=callout-icon]]:size-5 [&_[data-slot=callout-icon]]:shrink-0',
   ].join(' '),
   {
@@ -91,6 +103,11 @@ const calloutVariants = cva(
           'border-l-foreground [&_[data-slot=callout-icon]]:text-foreground',
         danger:
           'border-l-destructive [&_[data-slot=callout-icon]]:text-destructive',
+        // The one tone that tints the surface: the body stays text-foreground
+        // on a 15% highlighter wash over the opaque page fill, so contrast is
+        // the page's own wherever the callout sits.
+        highlight:
+          'border-l-highlight from-highlight/15 to-highlight/15 [&_[data-slot=callout-icon]]:text-foreground',
       },
     },
     defaultVariants: {
@@ -108,6 +125,7 @@ const TONE_ICON: Record<CalloutTone, React.ComponentType<{ className?: string; '
   success: CircleCheck,
   warn: TriangleAlert,
   danger: OctagonAlert,
+  highlight: Highlighter,
 };
 
 interface CalloutProps
@@ -120,6 +138,12 @@ interface CalloutProps
    * and the visible heading wins.
    */
   title?: React.ReactNode;
+  /**
+   * A word or two set bold at the start, in place of the icon. It is text and
+   * is read before the body; give a word in another script its own `lang`
+   * and `dir` (`<span lang="he" dir="rtl">…</span>`).
+   */
+  kicker?: React.ReactNode;
   children?: React.ReactNode;
 }
 
@@ -133,7 +157,7 @@ interface CalloutProps
  *   </Callout>
  */
 const Callout = React.forwardRef<HTMLDivElement, CalloutProps>(
-  ({ className, tone, title, children, ...props }, ref) => {
+  ({ className, tone, title, kicker, children, ...props }, ref) => {
     const resolvedTone: CalloutTone = tone ?? 'info';
     const Icon = TONE_ICON[resolvedTone];
 
@@ -147,7 +171,16 @@ const Callout = React.forwardRef<HTMLDivElement, CalloutProps>(
         className={cn(calloutVariants({ tone }), className)}
         {...props}
       >
-        <Icon data-slot="callout-icon" aria-hidden />
+        {kicker ? (
+          <span
+            data-slot="callout-kicker"
+            className="font-heading text-foreground shrink-0 font-bold"
+          >
+            {kicker}
+          </span>
+        ) : (
+          <Icon data-slot="callout-icon" aria-hidden />
+        )}
         <div data-slot="callout-body" className="min-w-0 flex-1">
           {title ? (
             <Typography

@@ -5,7 +5,7 @@
  * default, or whatever Base UI's `render` prop is given, so the same badge can
  * be an anchor without losing its shape.
  *
- * Six variants, and every one that names a text colour also paints an opaque
+ * Ten variants, and every one that names a text colour also paints an opaque
  * surface under it — see the rule below.
  *
  * ## Anatomy
@@ -69,7 +69,7 @@
  * | R4   | Extends native el                | `React.ComponentProps<'span'>`                              |
  * | R6   | data-slot + data-variant on root | `'data-slot': 'badge'`, `'data-variant': variant`           |
  * | R7   | cva + cn + ...rest               | `cn(badgeVariants({ variant }), className)` + `...props`    |
- * | R8   | Enum for variant                 | default / secondary / destructive / outline / ghost / link  |
+ * | R8   | Enum for variant                 | default / success / warning / info / highlight / secondary / destructive / outline / ghost / link |
  * | R10  | Composition seam                 | `render` — Base UI's `useRender`, not an `as` prop          |
  * | R19  | Tokens only                      | `bg-primary`, `bg-secondary`, `bg-destructive`, `bg-accent` |
  * | R20  | AA contrast                      | every variant composited by `composite-contrast-lock`       |
@@ -89,6 +89,14 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: 'bg-primary text-primary-foreground [a&]:hover:bg-primary/90',
+        // Status tones. Each paints its semantic surface with the paired
+        // foreground, both measured AAA in light and dark (brand/interlace.css),
+        // so a status chip reads the same in any section.
+        success: 'bg-success text-success-foreground [a&]:hover:bg-success/90',
+        warning: 'bg-warning text-warning-foreground [a&]:hover:bg-warning/90',
+        info: 'bg-info text-info-foreground [a&]:hover:bg-info/90',
+        highlight:
+          'bg-highlight text-highlight-foreground [a&]:hover:bg-highlight/90',
         secondary:
           'bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90',
         // No `dark:bg-destructive/60` here, unlike stock shadcn. That tint

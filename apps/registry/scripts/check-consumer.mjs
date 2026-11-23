@@ -141,8 +141,8 @@ const main = async () => {
   for (const dir of candidates) {
     try {
       // RECURSIVE, and that is not a nicety. The registry nests its
-      // decorative and pattern tiers (`aceternity/`, `magicui/`,
-      // `patterns/`) to preserve provenance, so a top-level-only scan misses
+      // decorative and pattern tiers (`effects/`, `patterns/`) to
+      // preserve provenance, so a top-level-only scan misses
       // them — measured: 23 of 50 items on the first consumer we ran this
       // against. It reported "29 installed" over a tree of 52 files and
       // looked entirely healthy, which is the exact false pass this file's

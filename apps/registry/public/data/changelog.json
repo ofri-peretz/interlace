@@ -17,6 +17,64 @@
           "source": ".changeset/css-layers.md"
         },
         {
+          "summary": "Interlace's own effects replace the backdrop set that was modelled on another library. Each one is written from scratch, coloured from theme tokens, still under reduced motion, hidden from assistive tech, and self-contained (no keyframes to add to your stylesheet):\n\n- `Starfield`: stars, shooting stars and meteors on one canvas with one frame loop that sleeps out of view.\n- `GradientMesh`: drifting glows of theme colour behind a hero or feature band.\n- `ThreadLines`: a seeded bundle of crossing threads in the two strand colours, with a travelling glint.\n- `SkyBackdrop`: a daytime sky with a sun glow and drifting clouds, turning to dusk in the dark scheme.\n- `LightBeam`: a static cone of light, rendered on the server.\n- `RotatingText`: a rotating headline word with no layout shift and one stable label for screen readers.\n- `FocusGrid` (pattern): picture cards where the hovered or focused one stays bright, in pure CSS.\n\n`HeroCosmic` now draws its sky with `Starfield`. Its `effects` bag is simpler: `starDensity`, `twinkleProbability`, `shootingStars` (`[min, max]` seconds, or `false`), `meteorCount` and `meteorDuration` (`[min, max]` seconds).",
+          "components": [
+            "starfield",
+            "gradient-mesh",
+            "thread-lines",
+            "sky-backdrop",
+            "light-beam",
+            "rotating-text",
+            "focus-grid",
+            "hero-cosmic",
+            "spotlight",
+            "background-beams-with-collision",
+            "background-gradient-animation",
+            "background-lines",
+            "cloud-particles",
+            "flip-words",
+            "focus-cards",
+            "stars-background",
+            "sunny-background",
+            "meteors"
+          ],
+          "componentsDeclared": true,
+          "kind": "Breaking",
+          "bump": "major",
+          "migration": "The `@interlace/ui/aceternity/*` entry points, the `meteors` primitive and their registry items are removed. Replace `StarsBackground`, `ShootingStars` and `Meteors` with one `Starfield` (`density`, `twinkle`, `shootingStars`, `meteors`, `meteorDuration`). Replace `BackgroundGradientAnimation` with `GradientMesh` (`colors`, `intensity`, `spread`), `BackgroundLines` with `ThreadLines`, `SunnyBackground` and `CloudParticles` with `SkyBackdrop`, `Spotlight` with `LightBeam`, `FlipWords` with `RotatingText` (`words`, `interval`), and `FocusCards` with `FocusGrid` and `FocusGrid.Item` (`media`, `title`, `description`, `href`). `BackgroundBeamsWithCollision` has no replacement. In `HeroCosmic`, `minTwinkleSpeed`, `maxTwinkleSpeed`, the `shooting*` speed and delay keys and `meteorMinDuration` / `meteorMaxDuration` are replaced by `shootingStars` and `meteorDuration`.",
+          "source": ".changeset/original-effects.md"
+        },
+        {
+          "summary": "The last borrowed motion components are replaced with Interlace's own, written from scratch. Content that moves now renders in full on the server and is announced once; decoration is a layer you drop inside any component, so a button stays a `Button` and a card stays a `Card`:\n\n- `CountUp`: a number that counts to its value when it scrolls into view. The server renders the final figure, the box never shifts, and `format` takes any `Intl.NumberFormat` options.\n- `Scroller`: a looping row of items. Each item is announced and tabbed to once, a visible Pause button sits beside it, and under reduced motion it becomes a plain scrollable row.\n- `StaggerList`: a real `ul` or `ol` whose items arrive one by one, once. Focus shows an item at once.\n- `SheenText`: a few words painted with a slow travelling gradient, on text-grade tokens, with a forced-colours fallback.\n- `Sheen`: a band of light that crosses its parent. Put it inside a `Button`; it sits under the label.\n- `EdgeGlow`: a light that runs around the edge of a `Card` or any positioned element.\n- `GridField`: graph-paper lines or a dot grid, with a few seeded (or chosen) cells that light up and fade, and with `interactive`, the cell under the pointer.\n\n`Button` is now `relative isolate` and `Card` is `relative`, so `Sheen` and `EdgeGlow` work inside them with no extra classes.",
+          "components": [
+            "count-up",
+            "scroller",
+            "stagger-list",
+            "sheen-text",
+            "sheen",
+            "edge-glow",
+            "grid-field",
+            "button",
+            "card",
+            "number-ticker",
+            "marquee",
+            "animated-list",
+            "animated-gradient-text",
+            "shimmer-button",
+            "border-beam",
+            "animated-grid-pattern",
+            "interactive-grid-pattern",
+            "grid-pattern",
+            "dot-pattern",
+            "particles"
+          ],
+          "componentsDeclared": true,
+          "kind": "Breaking",
+          "bump": "major",
+          "migration": "The `@interlace/ui/magicui/*` entry points and their registry items are removed. Replace `NumberTicker` with `CountUp` (`value`, `from`, `duration`, and `format` for decimals or compact notation), `Marquee` with `Scroller` (`direction`, `duration`, `gap`, `pauseOnHover`; children become list items), `AnimatedList` with `StaggerList` (it reveals once and does not loop), `AnimatedGradientText` with `SheenText` (`from`, `to`, `duration`), `ShimmerButton` with a `Button` that contains a `<Sheen />`, `BorderBeam` with `EdgeGlow` (`from`, `to`, `width`, `length`, `duration`), `AnimatedGridPattern`, `InteractiveGridPattern`, `GridPattern` and `DotPattern` with `GridField` (`mark=\"lines\" | \"dots\"`, `cell`, `lit` or `cells`, `seed`, `fade`, `interactive`; `GridPattern`'s `squares` become `cells`), and `Particles` with `Starfield`.",
+          "source": ".changeset/original-motion.md"
+        },
+        {
           "summary": "Interlace no longer rewrites the host app's Tailwind theme. Installing one component used to redefine `max-w-sm` (24rem became 1rem), move `sm:` from 640px to 480px, delete `2xl:` and change every `rounded-sm|md|lg`. Spacing is now Tailwind's numeric scale, which follows `--spacing`. Radius derives from `--radius` exactly as shadcn derives it. The only breakpoint Interlace declares is a new `xs:` tier at 480px, which Tailwind doesn't use. Components render pixel-for-pixel as before.",
           "components": [
             "accordion",
@@ -129,6 +187,586 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "Button takes `loading`. The button keeps its place, its width and keyboard focus while the reader's action runs: the label keeps its space but stops painting, a spinner sits over the middle in the label's own colour, and nothing beside it moves. It sets `aria-busy` and `aria-disabled` rather than `disabled`, so focus is not dropped to the page, and it ignores clicks (a form submit included) until `loading` is false, so a double press cannot send twice. The spinner stands still under reduced motion. LOADING_PHILOSOPHY gains a \"busy button\" section.",
+          "components": [
+            "button"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/button-loading.md"
+        },
+        {
+          "summary": "`Callout` gets a sixth tone, `highlight`, for the one line a page wants remembered: a highlighter wash behind the body and a highlighter rule on the left, with the body still in `text-foreground`. A new `kicker` slot puts a word or two in bold where the icon was (\"In short\", or a word in another script with its own `lang`). The kicker is text, so it is read before the body.",
+          "components": [
+            "callout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/callout-highlight.md"
+        },
+        {
+          "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"City archive\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
+          "components": [
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/citation-chip.md"
+        },
+        {
+          "summary": "New `Citation` pattern: an inline source marker for a sentence that makes a claim. A footnote number (or a dotted underline on the phrase itself) opens a popover listing every source behind the claim, with the publisher linked, the kind of source, and the quote as a blockquote. Several sources stack in one popover. Only `https:` URLs become links. Keyboard and touch work out of the box, Escape closes it, and the claim text is in the server HTML. An optional `status` shows \"Enough sources\" or a warning \"Short of sources\".",
+          "components": [
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/citation.md"
+        },
+        {
+          "summary": "New `ClaimCard` pattern: one claim, examined. A status row for badges, the claim quoted in serif, a short answer that can carry `Citation` markers, collapsible sections for the evidence (facts and sources, who says this, where it is contested, what it does not claim, what could not be verified, or any section you name), and a footer. Every part is a slot. Sections are native `<details>`, so the card renders on the server, opens without JavaScript, and its closed sections still show up in find-in-page.",
+          "components": [
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/claim-card.md"
+        },
+        {
+          "summary": "`density` on the collections: `FeatureGrid`, `PricingTable`, `ArticleListGrid` and `StatGroup` take `compact`, `default` or `relaxed`. It sets the gap between items, the section's padding and each card's padding together, so a page tightens or opens up without a custom className. `default` renders exactly as before.",
+          "components": [
+            "feature-grid",
+            "pricing-table",
+            "article-list-grid",
+            "stat-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/collection-density.md"
+        },
+        {
+          "summary": "Four patterns for writing that shows its work, all server components:\n\n- `StanceList`: who holds which position, each with a toned badge and a sentence. The label is text; the page picks the tone.\n- `SideBySide`: two or three accounts next to each other (\"what you hear\" / \"what the record shows\"), stacking below `md`; each column is a labelled region.\n- `Dialogue`: a written conversation with named speakers on opposite edges.\n- `AudioPlayer`: a titled clip on the browser's own `<audio controls>`, with a transcript in a native `<details>`.",
+          "components": [
+            "stance-list",
+            "side-by-side",
+            "dialogue",
+            "audio-player"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/content-patterns.md"
+        },
+        {
+          "summary": "CTASection gets `variant=\"card\"` (a contained rounded card inside the content width), `align=\"start\"`, a decorative `background` slot clipped to the surface, and `children` under the actions for a search box or a form. The title moves to the fluid `text-section` size and the padding to `py-section-comfortable`.",
+          "components": [
+            "cta-section"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/cta-section-card.md"
+        },
+        {
+          "summary": "New `DialogueStepper`: a `Dialogue` the reader steps through, one step of turns at a time. Each `DialogueStepper.Step` ends in `DialogueStepper.Choices`; a `Choice` reveals the step its `next` names, so a talk can branch, and choosing a step already on the path goes back to it. Back, \"Show the whole conversation\" and \"Start over\" sit below, with `labels` for another language. After a choice, focus moves to the new step's first choice (or to Back at the end) and the new turns are read out once through a polite live region; the step enters with a short fade behind `motion-safe:`. The server renders every step, and without JavaScript a `<noscript>` style shows the whole conversation with no controls.",
+          "components": [
+            "dialogue-stepper"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/dialogue-stepper.md"
+        },
+        {
+          "summary": "`Dialogue` reads as a chat transcript when you want it to. `speakers=\"inside\"` sets each speaker's name as the first line of its bubble (one element, read once, in order). A turn's `tone` picks its bubble: `muted` and `accent` stay the defaults by side, and `inverse` is a high-contrast bubble in which a `Citation` chip flips to a light pill. New `Dialogue.Suggestions` and `Dialogue.Suggestion` give the row of follow-up pills under a transcript: a link with `href`, a button without, or your own element with `asChild`.",
+          "components": [
+            "dialogue"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/dialogue-transcript.md"
+        },
+        {
+          "summary": "New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.",
+          "components": [
+            "drawer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/drawer.md"
+        },
+        {
+          "summary": "The editorial look is one line: `@theme { --font-heading: var(--font-serif); }` gives serif headings over the sans body. `CardTitle` now reads `font-heading` like every other heading in the kit, so card titles follow too; with the default `--font-heading` (your body face) nothing changes. `interlace-foundation` names a serif stack (Source Serif 4, then the system serifs) for `--font-serif`. A new Storybook story, Foundations/Typography/Editorial Headings, shows it.",
+          "components": [
+            "card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/editorial-headings.md"
+        },
+        {
+          "summary": "FeaturedIcon: an icon in a tinted rounded square or circle with a soft outer ring, for the head of a feature card, a step or a section. Sizes `sm` to `xl`, tones `primary`, `highlight`, `neutral` and `inverse`, every surface opaque. Decorative by default; `label` makes it a named image.",
+          "components": [
+            "featured-icon"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/featured-icon.md"
+        },
+        {
+          "summary": "Section padding and the h2 and h3 sizes are now fluid. They grow on one smooth curve from a 360px phone to a 1024px laptop, instead of jumping at the `md` and `lg` breakpoints.\n\n- **New tokens:** `--spacing-section-tight`, `--spacing-section-comfortable` and `--spacing-section-spacious`. They generate `py-section-*`, which `Section`'s `spacing` prop now uses.\n- tight: 48px to 80px\n- comfortable: 64px to 96px\n- spacious: 80px to 128px\n- Each step still clears the layout floors: 40px or more on a phone, and 64px or more by 768px.\n- A brand retunes the rhythm by re-pointing one variable, such as `:root { --spacing-section-comfortable: 5rem; }`.\n- **Headings:**\n- `--text-h2` runs from 24px to 30px. It was a fixed 30px.\n- `--text-h3` runs from 22px to 24px, so it stays above h4 on a phone.\n- h4 and smaller, and body text, stay fixed.\n- Every clamp keeps a rem term, so sizes still scale with zoom and the user's font size.\n- **Overlap:** the `overlap` variants on `Section` need a single `pt-0` now, not one per breakpoint.",
+          "components": [
+            "section",
+            "typography"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/fluid-rhythm.md"
+        },
+        {
+          "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
+          "components": [
+            "button",
+            "badge",
+            "typography",
+            "hero",
+            "hero-cosmic",
+            "interlace-base",
+            "interlace-foundation",
+            "theme"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/highlight-heading-tones.md"
+        },
+        {
+          "summary": "Motion tokens and a press, hover and overlay standard.\n\n- New tokens in `structure/motion.css`: `--ease-enter`, `--ease-exit`, `--ease-move` (Tailwind utilities `ease-enter`, `ease-exit`, `ease-move`) and `--duration-fast` / `-base` / `-medium` / `-slow` (100 / 150 / 250 / 400ms, used as `duration-(--duration-fast)`). Override any of them on `:root` and the whole system follows.\n- `Button` and `Toggle` answer a press: they scale to 0.97 while pressed (not under reduced motion), and time hover, focus and press with `--duration-fast`. A `link` button keeps its size.\n- Dialog, AlertDialog, Sheet, Popover, Tooltip, DropdownMenu and ContextMenu ease in with `ease-enter` and leave faster with `ease-exit`. Sheet now opens in 250ms (was 500ms) and closes in 150ms (was 300ms).\n- View transitions (`startViewTransition`, React `<ViewTransition>`, cross-document) take the tokens: 250ms with `ease-move`. Under reduced motion they are removed entirely, which the `*` clamp never reached. These are global rules, so they ship in `page/preflight.css` (part of `index.css`), not `base.css`.\n- No component transitions every property any more: Switch, Accordion, Select, ArticleCard and HeroCosmic name the properties they animate.",
+          "components": [
+            "button",
+            "toggle",
+            "dialog",
+            "alert-dialog",
+            "sheet",
+            "popover",
+            "tooltip",
+            "dropdown-menu",
+            "context-menu",
+            "switch",
+            "accordion",
+            "select",
+            "article-card",
+            "hero-cosmic"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/interaction-foundation.md"
+        },
+        {
+          "summary": "FocusGrid and TestimonialGrid now pick their column count from their own width, not the screen's. TestimonialGrid sets a CSS container like the other collections: one quote per row below 28rem, two from 28rem, three from 56rem, so a quote card no longer squeezes to 210px on a 480px phone. FocusGrid uses intrinsic tracks with no breakpoint: a column drops when a card would fall below 16rem, 14rem or 12rem (for 2, 3 or 4 columns), and `columns` is now the most it shows. Both collapse inside a sidebar or a card with no `className` override.",
+          "components": [
+            "focus-grid",
+            "testimonial"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/intrinsic-grids.md"
+        },
+        {
+          "summary": "`Kbd` and `KbdGroup`: the shadcn core `kbd` item in Interlace tokens. `Kbd` is a native `<kbd>` with `sm` (default) and `md` sizes; `KbdGroup` nests keys inside one `<kbd>` for a chord (`⌘ K`) or a sequence (`G` then `I`). Server component.",
+          "components": [
+            "kbd"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/kbd.md"
+        },
+        {
+          "summary": "Layout fixes found on a real wide-screen page:\n\n- Timeline: in a wide column each event gets at least 13rem. More events than fit wrap onto a second row with its own rule, instead of squeezing into thin strips.\n- Container: `prose`, `content` and `wide` read `--container-prose`, `--container-content` and `--container-wide`, the same tokens as Topbar and Footer, so retuning a token moves every edge together.\n- Topbar: row links never wrap onto two lines, and a new `collapseBelow` prop (`md`, `lg`, `xl`; default `md`) sets the width below which the links move into the menu.",
+          "components": [
+            "timeline",
+            "container",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/layout-fit.md"
+        },
+        {
+          "summary": "Any element can now force the light scheme with `data-scheme=\"light\"`, the mirror of `class=\"dark\"`. A light panel inside a dark page gets the light palette, the light semantic colours and `color-scheme: light`, so its scrollbars and form controls match. This works for every theme, Harbor included.",
+          "components": [
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/light-subtree.md"
+        },
+        {
+          "summary": "New `List` primitive with markers that carry the voice of the page: `bullet`, `number` (a real `ol`, numbered by the browser in a filled circle), `check` and `cross`. Markers are drawn in CSS, so they centre on the first line whatever the item holds (rich text, inline `Citation` chips) and are never read aloud; `start` and `reversed` work as on any ordered list. `density` sets the space between items.",
+          "components": [
+            "list"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/list-markers.md"
+        },
+        {
+          "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
+          "components": [
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": "None. If your own code parsed `--interlace-*` values as hex, parse `oklch()` as well; the hex each value paints is in the token file.",
+          "source": ".changeset/oklch-tokens.md"
+        },
+        {
+          "summary": "New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an \"On this page\" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.",
+          "components": [
+            "reading-layout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/reading-layout.md"
+        },
+        {
+          "summary": "New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.",
+          "components": [
+            "reveal"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/reveal.md"
+        },
+        {
+          "summary": "ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says \"there is more\" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade=\"none\"` for hard edges.",
+          "components": [
+            "scroll-area"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/scroll-area-fades.md"
+        },
+        {
+          "summary": "`Section` gets a `brand` tone, the full-bleed brand band (`bg-primary` with `text-primary-foreground`), and a new `overlap` axis (`none`, `sm`, `md`, `lg`). A Section with `overlap` drops its own top padding, pulls up by that depth and stacks above the band before it, so a card can straddle the edge of a brand band with no custom class: two Sections, the second with `overlap=\"md\"`.",
+          "components": [
+            "section"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/section-brand-overlap.md"
+        },
+        {
+          "summary": "Site chrome that needs no custom classes:\n\n- `Topbar` keeps its links on small screens. By default they move behind a Menu button that opens a side sheet (new `TopbarMenu`); `mobileNav=\"wrap\"` shows them as a second row. `currentHref` marks the current page with `aria-current=\"page\"` and a visible style, and `renderLink` now receives `aria-current` to forward.\n- New `Banner`: a thin full-width bar for a site-wide message, in muted, info, success, warning and highlight tones, with an optional action and close button.\n- `Prose` headings now use `--font-heading` (they used `--font-body` before), like Typography. If you set the two to different faces, Prose headings change to the heading face. New `width=\"fill\"` drops the 65ch cap for prose inside a card or panel.\n- `StatCard` and `StatGroup` take `layout=\"value-first\"` (the number, then what it counts) next to the default label-first.\n- `Footer` takes a `tagline` shown under the brand.",
+          "components": [
+            "topbar",
+            "topbar-menu",
+            "banner",
+            "prose",
+            "stat-card",
+            "stat-group",
+            "footer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/site-chrome.md"
+        },
+        {
+          "summary": "New SplitText: a headline that arrives a word, or a letter, at a time the first time it scrolls into view. `by` picks words or letters, `effect` is `rise` (default), `fade` or `blur`, and `step` sets the pace. The whole line is in the server HTML and read once from a visually hidden copy, so a screen reader never spells a word out. Letters keep emoji and combining marks whole, words never break mid-line, RTL arrives from the right, and under reduced motion the line is simply there.",
+          "components": [
+            "split-text"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/split-text.md"
+        },
+        {
+          "summary": "New `StatusPills`: short facts about a page (\"9 facts\", \"38 sources quoted\") as a wrapping row of pills, made to sit on a brand band under a title. A default pill is an outline in the text colour around it, with no fill so its text keeps the band's contrast, so the same component reads on a dark band and on the page. `tone=\"ok\"` is a solid pill with a check in the success colour, for a passed check.",
+          "components": [
+            "status-pills"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/status-pills.md"
+        },
+        {
+          "summary": "`ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.",
+          "components": [
+            "thread-mark"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/thread-mark.md"
+        },
+        {
+          "summary": "`ThreadSteps`: an ordered sequence held together by Interlace's woven thread. Each step has a knot, and two strands cross to the next knot, drawing in as the reader reaches the step. Use it plain for \"how it works\" or \"how we checked this\". Set `state` (`complete`, `current`, `upcoming`) to make it a progress tracker: complete steps are woven, the current knot is ringed and marked `aria-current=\"step\"`, and the thread ahead is a loose dotted strand. Every state is also in words for assistive tech. The server HTML is fully drawn; reduced motion keeps it that way.",
+          "components": [
+            "thread-steps"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/thread-steps.md"
+        },
+        {
+          "summary": "New `Timeline`: a short record in date order, where each event has a date, a title, what was said and where it comes from. Once the timeline itself is 48rem wide the events sit in one row on a single rule; below that they stack down a vertical rule. The switch keys on the timeline's own width, not the viewport. `orientation=\"vertical\"` always stacks, and `marker=\"accent\"` fills one event's dot in the highlight colour.",
+          "components": [
+            "timeline"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/timeline.md"
+        },
+        {
+          "summary": "New Toolbar: a row of controls that is one stop in the Tab order. Tab enters on the control used last and the next Tab leaves the whole bar; inside, the arrow keys move between controls, Home and End jump to the ends, and focus wraps, so a keyboard user no longer Tabs through every button of a formatting bar or a table's bulk actions. Built on Base UI's Toolbar: buttons take Button's `variant` and `size` (ghost, icon-sm by default), any trigger joins through `render` (`<ToolbarButton render={<Toggle />} />`), a disabled button stays reachable so its label can be read, and the bar wraps at 320px. Parts: Toolbar, ToolbarButton, ToolbarLink, ToolbarGroup, ToolbarSeparator, ToolbarInput.",
+          "components": [
+            "toolbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/toolbar.md"
+        },
+        {
+          "summary": "TopbarMenu now opens its links in a Drawer instead of a Sheet: on a phone a finger drags the panel back toward its edge to close it, and the panel follows the finger. Focus trap, Escape, press-outside and close-on-navigate are unchanged. A new `side` prop (`right`, `left`, `bottom`; default `right`) picks the edge, and `Topbar` passes it through as `menuSide` (an RTL page passes `left`).",
+          "components": [
+            "topbar-menu",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/topbar-menu-drawer.md"
+        },
+        {
+          "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
+          "components": [
+            "weave-texture"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/weave-texture.md"
+        },
+        {
+          "summary": "New `Wordmark`: a text logo of stacked lines (a name over its tagline, or one name in several scripts), with each `Wordmark.Line` carrying its own `lang` and `dir`. `variant=\"framed\"` is a page-coloured plate with an inset rule in the brand colour; `plain` is the lines alone in the text colour. With `href` the whole lockup is one link named by `label`; without, it is an image of text. Lines use `--font-heading`; for another script, add its font to that stack and the browser picks per glyph. `Topbar`'s row is now at least 3.5rem and grows to fit a taller logo instead of clipping it.",
+          "components": [
+            "wordmark",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/wordmark.md"
+        },
+        {
+          "summary": "`Button` no longer lists `text-decoration-color` in its transition: no variant changes it, so the entry did nothing.",
+          "components": [
+            "button"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/button-transition-trim.md"
+        },
+        {
+          "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
+          "components": [
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/claim-heading-font.md"
+        },
+        {
+          "summary": "Grids of repeated items now pick their column count from their own width, not the screen's. FeatureGrid, StatGroup, ArticleListGrid, PricingTable, RelatedPosts and StatStrip each set a CSS container on their root: one track below 28rem, two from 28rem, and the `cols` you asked for from 56rem. A grid placed in a sidebar or a dashboard card now collapses as it would on a phone, with no `className` override. At full page width the layout is the same as before.",
+          "components": [
+            "feature-grid",
+            "stat-group",
+            "article-list-grid",
+            "pricing-table",
+            "related-posts",
+            "stat-strip"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/container-collections.md"
+        },
+        {
+          "summary": "CTASection: the section is named by its title (`aria-labelledby`), so it is announced as a region with that name.",
+          "components": [
+            "cta-section"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/cta-section-labelled.md"
+        },
+        {
+          "summary": "DialogueStepper works when a server component renders it, and its no-JS fallback shows every step.\n\n- `DialogueStep` takes its choices through a new `choices` prop. A server component holds only a reference to each client part, so a `DialogueChoices` child could not be told apart from a turn: it landed inside the list of turns and stayed after the reader moved on. Use the named exports (`DialogueStep`, `DialogueChoices`, `DialogueChoice`) from a server component, since the dot form is undefined there.\n- `DialogueChoices` now hides itself once its step is past, wherever it renders, and the stepper warns when choices land inside a list of turns.\n- Pending steps hide with a class instead of the `hidden` attribute. Tailwind's preflight rule for `[hidden]` is `!important` in a cascade layer, which beat the no-JS style, so only the first step showed with scripting off.",
+          "components": [
+            "dialogue-stepper"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/dialogue-stepper-rsc.md"
+        },
+        {
+          "summary": "Fixes in the new backdrops. `Starfield` tints stars and meteors correctly when given an `oklch()` or `color-mix()` colour. `SkyBackdrop` rests every cloud fully inside the sky, so a cloud never jumps where it can be seen when its loop wraps. `GradientMesh` and `SkyBackdrop` add no content wrapper when `children` is `null`.",
+          "components": [
+            "starfield",
+            "sky-backdrop",
+            "gradient-mesh"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": "none.",
+          "source": ".changeset/effects-review-fixes.md"
+        },
+        {
+          "summary": "FeaturedIcon: the neutral ring is an opaque mix with the background, like the other tones, so it looks the same on a tinted band.",
+          "components": [
+            "featured-icon"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/featured-icon-neutral-ring.md"
+        },
+        {
+          "summary": "Hero: the section is named by its headline (`aria-labelledby` on the h1), so it is announced as a region with that name.",
+          "components": [
+            "hero"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/hero-labelled.md"
+        },
+        {
+          "summary": "Hero no longer hides its media slot from screen readers. It used to set `aria-hidden` on any non-string media, which hid an interactive panel or a form while leaving it focusable. The media is now read by default; pass `mediaRole=\"decorative\"` for ornament. The vertical padding moves to `py-section-comfortable`, the same fluid curve as Section.",
+          "components": [
+            "hero"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/hero-media-readable.md"
+        },
+        {
+          "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",
+          "components": [
+            "grid",
+            "callout",
+            "citation"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/neutral-fixes.md"
+        },
+        {
+          "summary": "Form fields paint their own opaque face and text colour, so they read on a brand band, an image or a dark hero. `Input`, `Textarea`, `Combobox` (input and chips), `Checkbox` and `RadioGroup` now use `bg-background` in both schemes instead of `bg-transparent` / `dark:bg-input/30`, and the text fields (and `NumberField`'s group) set `text-foreground` rather than inheriting the band's foreground. `ComboboxCompose` now warns once, naming them, when two items share a `value` (each value keys a row, so filtering and selection broke with no error).",
+          "components": [
+            "input",
+            "textarea",
+            "combobox",
+            "checkbox",
+            "radio-group",
+            "number-field"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/opaque-fields.md"
+        },
+        {
+          "summary": "`PricingTable`: the space inside a tier (between its sections, and above its CTA) now follows `density` too, so a `compact` tier's inside never breathes more than its 16px shell. `default` renders exactly as before.",
+          "components": [
+            "pricing-table"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/pricing-tier-density.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"
@@ -140,6 +778,28 @@
           "source": ".changeset/prose-scroll-margin.md"
         },
         {
+          "summary": "SectionHeader sets its title on the fluid type scale instead of stepped `text-3xl md:text-4xl lg:text-5xl`, and takes its bottom gap from the section rhythm tokens instead of `mb-12` / `mb-16`. New `size=\"display\"` for a page's loudest line, `eyebrowStyle=\"pill\"` for a chip-style label, and `align=\"start\"` now follows the writing direction. Two new type tokens, `--text-section` (28 → 40px) and `--text-display` (44 → 64px), are registered with `cn` so a colour never strips them.",
+          "components": [
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/section-header-fluid.md"
+        },
+        {
+          "summary": "SectionHeader: the default title tracks like a heading (`tracking-heading`) and only the display title uses the tighter `tracking-display`, since the section size floors below 32px.",
+          "components": [
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/section-header-tracking.md"
+        },
+        {
           "summary": "fix(ui): Spotlight type-checks against motion 14. motion 14 added an `fx` boolean prop to every motion element, which clashes with the SVG `fx` focal-point attribute Spotlight inherited from its native `<svg>` props; installing Spotlight next to the latest motion failed `next build`'s type check. `fx` is now omitted from the native props, like the animation handlers and `values` before it.",
           "components": [
             "spotlight"
@@ -149,6 +809,28 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/spotlight-motion-fx.md"
+        },
+        {
+          "summary": "TocPopover works on a narrow screen with a long outline.\n\n- The popover's height is capped at the room the screen has left (`--available-height`), and the list scrolls inside it. Before, an outline of 18 headings ran 906px tall and the later links fell off the bottom of a phone screen.\n- Picking a link closes the popover, so it no longer covers the text it just scrolled to. Focus stays on the heading.\n- `Toc` gives a heading `tabindex=\"-1\"` before focusing it, unless the heading already has a tabindex. Before, the focus call did nothing on a plain heading. `Toc` also takes a new `onNavigate(id)` callback.",
+          "components": [
+            "toc"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/toc-popover-narrow.md"
+        },
+        {
+          "summary": "The Interlace page is warm paper now, not screen white. In light mode `--background` is #fdfbf8 and cards and popovers stay white, so they lift off the page the way a sheet lifts off a desk. In dark mode the page is a warm near-black (#0e0c0a) instead of a neutral one, matching the warm cards. Every text pair keeps its contrast floor: primary measures 8.52:1 on the paper and 7.23:1 on its own 10% tint, and `--input` 3.50:1 still clears SC 1.4.11. To keep a white page, set `--interlace-background: oklch(1 0 0)` in your own brand layer.",
+          "components": [
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/warm-paper.md"
         }
       ]
     },

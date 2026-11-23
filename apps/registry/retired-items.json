@@ -1,0 +1,26 @@
+{
+  "$comment": "Registry items that were removed. Released changelog entries keep naming them, so the changelog contract accepts these names as history. Never install-able again; never add a live item here.",
+  "items": [
+    { "name": "animated-gradient-text", "removedIn": "2.0.0", "replacedBy": "sheen-text" },
+    { "name": "animated-grid-pattern", "removedIn": "2.0.0", "replacedBy": "grid-field" },
+    { "name": "animated-list", "removedIn": "2.0.0", "replacedBy": "stagger-list" },
+    { "name": "background-beams-with-collision", "removedIn": "2.0.0" },
+    { "name": "background-gradient-animation", "removedIn": "2.0.0", "replacedBy": "gradient-mesh" },
+    { "name": "background-lines", "removedIn": "2.0.0", "replacedBy": "thread-lines" },
+    { "name": "border-beam", "removedIn": "2.0.0", "replacedBy": "edge-glow" },
+    { "name": "cloud-particles", "removedIn": "2.0.0", "replacedBy": "sky-backdrop" },
+    { "name": "dot-pattern", "removedIn": "2.0.0", "replacedBy": "grid-field" },
+    { "name": "flip-words", "removedIn": "2.0.0", "replacedBy": "rotating-text" },
+    { "name": "focus-cards", "removedIn": "2.0.0", "replacedBy": "focus-grid" },
+    { "name": "grid-pattern", "removedIn": "2.0.0", "replacedBy": "grid-field" },
+    { "name": "interactive-grid-pattern", "removedIn": "2.0.0", "replacedBy": "grid-field" },
+    { "name": "marquee", "removedIn": "2.0.0", "replacedBy": "scroller" },
+    { "name": "meteors", "removedIn": "2.0.0", "replacedBy": "starfield" },
+    { "name": "number-ticker", "removedIn": "2.0.0", "replacedBy": "count-up" },
+    { "name": "particles", "removedIn": "2.0.0", "replacedBy": "starfield" },
+    { "name": "shimmer-button", "removedIn": "2.0.0", "replacedBy": "sheen" },
+    { "name": "spotlight", "removedIn": "2.0.0", "replacedBy": "light-beam" },
+    { "name": "stars-background", "removedIn": "2.0.0", "replacedBy": "starfield" },
+    { "name": "sunny-background", "removedIn": "2.0.0", "replacedBy": "sky-backdrop" }
+  ]
+}

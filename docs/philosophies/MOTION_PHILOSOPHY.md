@@ -208,19 +208,23 @@ GIF/video for genuinely hand-authored animation), per-frame
 
 ## Duration & easing budget
 
-**These are budget bands, not CSS custom properties.** The DS ships no
-`--duration-*` and no `--ease-*` tokens — `grep -rE '\-\-duration|\-\-ease'
-packages/ui/styles/` returns nothing but `--duration`/`--speed`, which
-are *per-instance knobs* a Marquee/ShimmerButton call site sets, not a
-scale. Every shipped duration is a literal inside an `--animate-*`
-shorthand in `packages/ui/styles/structure/motion.css`
-(`--animate-accordion-down: accordion-down 0.2s ease-out`), and the
-shipped easing is the CSS keyword `ease-out`, not a custom curve.
+**The durations below are budget bands, and four of them ship as tokens.**
+`packages/ui/styles/structure/motion.css` declares:
 
-So the bands below are what you check a number against; the number
-itself is written as a Tailwind `duration-*` / `ease-*` utility at the
-call site, or as a literal in the `--animate-*` shorthand when you add
-a keyframe animation to `structure/motion.css`.
+| Token | Value | Use |
+| --- | --- | --- |
+| `--duration-fast` | 100ms | Hover, focus and press feedback |
+| `--duration-base` | 150ms | Small state changes; overlay enter |
+| `--duration-medium` | 250ms | Sheets, larger surfaces |
+| `--duration-slow` | 400ms | Continuity between views |
+| `--ease-enter` | `cubic-bezier(0.16, 1, 0.3, 1)` | Anything appearing (utility `ease-enter`) |
+| `--ease-exit` | `cubic-bezier(0.5, 0, 0.75, 0)` | Anything leaving (utility `ease-exit`) |
+| `--ease-move` | `cubic-bezier(0.65, 0, 0.35, 1)` | Moving between two resting places (utility `ease-move`) |
+
+Write a duration as `duration-(--duration-fast)` and an easing as `ease-enter`, so a brand can retune
+the whole system on `:root`. Keyframe animations in `structure/motion.css` still carry a literal in
+their `--animate-*` shorthand, checked against the bands below. Other durations are
+budget bands, not CSS custom properties: write them as a Tailwind `duration-*` literal that lands in a band.
 
 | Band | Duration | Use for |
 | --- | --- | --- |
@@ -229,19 +233,19 @@ a keyframe animation to `structure/motion.css`.
 | base | 150-200ms | Default for visible UI state transitions (`--animate-accordion-*` is 0.2s) |
 | medium | 250-300ms | Sheets, modals, accordions |
 | slow | 400-500ms | Hero / continuity / cross-route transitions |
-| forbidden | > 600ms | Almost never. Requires justification in code comment. Ambient decorative loops (`--animate-first` 30s, `--animate-gradient` 8s) are the carve-out: they are infinite background motion, never entry. |
+| forbidden | > 600ms | Almost never. Requires justification in code comment. Ambient decorative loops (GradientMesh's 20-30s drift, SheenText's 6s pass) are the carve-out: they are infinite background motion, never entry. |
 
 | Easing | What ships | Use for |
 | --- | --- | --- |
-| `linear` | `linear` | Loading shimmer, marquee |
-| `ease-out` | the CSS keyword — **not** a custom bezier | Default for entry / appear; what every `--animate-*` in `structure/motion.css` uses |
-| `ease-in` | Tailwind `ease-in` | Exit / dismiss |
-| `ease-in-out` | Tailwind `ease-in-out` | Movement that returns |
+| `linear` | `linear` | Loading shimmer, the Scroller loop |
+| `ease-enter` | `--ease-enter` | Entry / appear, press release, overlay open |
+| `ease-exit` | `--ease-exit` | Exit / dismiss, overlay close |
+| `ease-move` | `--ease-move` | Movement that returns |
+| `ease-out` | the CSS keyword | What the `--animate-*` keyframes in `structure/motion.css` use |
 | spring | `motion/react` springs | Direct-manipulation only |
 
-If a real token scale is ever wanted, it is a `structure/motion.css` change plus
-a lock test — not a doc edit. Until then, do not write
-`var(--duration-fast)`; it resolves to nothing.
+A new token is a `structure/motion.css` change plus a row in the table above:
+`motion-contract-lock` fails when the styles declare a token this document does not name.
 
 ### How the budget is held
 

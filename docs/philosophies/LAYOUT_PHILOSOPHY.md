@@ -110,7 +110,7 @@ below is the layout-side summary.
 | (base) | 0–479 | Single column, smallest typography, page padding `px-4` |
 | `xs:` | ≥ 480 (`30rem`) | Page padding `px-6`, side-by-side chips |
 | `md:` | ≥ 768 (`48rem`) | Multi-column grids start, headlines scale up |
-| `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding `py-24` |
+| `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding fluid, see §5 |
 | `xl:` | ≥ 1280 (`80rem`) | `wide` containers reach max width |
 
 DS components stop growing at `xl:` — `Container size="wide"` (1280px)
@@ -127,7 +127,7 @@ Mobile gets the tightest geometry. Desktop earns breathing room.
 Three load-bearing patterns:
 
 - **Horizontal page padding**: `px-4 sm:px-6 lg:px-8`
-- **Section vertical padding**: `py-16 md:py-20 lg:py-24` (the
+- **Section vertical padding**: `py-section-comfortable`, fluid from 64px to 96px (the
   `<Section spacing="comfortable">` default)
 - **Card grid gap**: `gap-4 md:gap-6 lg:gap-8`
 
@@ -138,16 +138,16 @@ codebase today and the most visible to side-door visitors.
 **Section spacing variants (the floor rule):** the three named
 variants on `<Section spacing>` exist so callers don't pick `py-*`
 classes by hand — but every variant **must clear the §3 desktop
-floor** (`py-16` = `xl` token) by the `md:` breakpoint. Anything
+floor** (`py-16` = `xl` token) by 768px of viewport. Anything
 smaller renders as a "padless band" — the exact regression the
 stats-bar shipped in 2026-05 (`py-10 md:py-12 lg:py-14`, max 56px
 at desktop). The current variants:
 
 | Variant | Classes | When |
 | --- | --- | --- |
-| `tight` | `py-12 md:py-16 lg:py-20` | Stat bars, divider stripes, short interstitials |
-| `comfortable` | `py-16 md:py-20 lg:py-24` | Default for content sections |
-| `spacious` | `py-20 md:py-24 lg:py-32` | Hero adjacents, final CTAs |
+| `tight` | `py-section-tight` (48 → 80px) | Stat bars, divider stripes, short interstitials |
+| `comfortable` | `py-section-comfortable` (64 → 96px) | Default for content sections |
+| `spacious` | `py-section-spacious` (80 → 128px) | Hero adjacents, final CTAs |
 
 Locked by [layout-primitives-lock.test.tsx](../../packages/ui/__tests__/layout-primitives-lock.test.tsx).
 
@@ -203,7 +203,7 @@ Borders only appear at section *transitions*, never inside content.
 
 ### 9. Decorative chrome is positioned, never displacing
 
-Gradient blobs, `<BorderBeam>`, decorative SVGs, glow rings — all of
+Gradient blobs, `<EdgeGlow>`, decorative SVGs, glow rings — all of
 them are `absolute` (or `fixed`) and never affect document flow. The
 parent is `relative overflow-hidden`. Decorative chrome that nudges
 content even by a pixel is a layout-CLS source.
@@ -391,7 +391,7 @@ When designing or reviewing a layout, ask:
 4. **#4 Mobile-first** — do base classes describe the smallest
    viewport, with `sm:` / `md:` / `lg:` only adding density?
 5. **#5 Density** — does horizontal padding scale `px-4 → sm:px-6 →
-   lg:px-8`? Section padding `py-16 → md:py-20 → lg:py-24`?
+   lg:px-8`? Section padding from a `py-section-*` token, not stepped `py-*`?
 6. **#6 Reserve** — does every async slot reserve its final height?
    Do images carry aspect-ratio?
 7. **#7 Compose** — is every `border-y` / `bg-fd-card/*` expressed as

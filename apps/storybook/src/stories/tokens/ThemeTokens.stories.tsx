@@ -336,7 +336,11 @@ export const Default: Story = {
           )
           ?.textContent?.trim()
           .toLowerCase() ?? '';
-      expect(background).toBe(dark ? '#0a0a0a' : '#fff');
+      // The build's CSS minifier may print lightness as a percentage
+      // (`oklch(100% 0 0)`), so compare the lightness, not the spelling.
+      const lightness = /^oklch\(\s*([\d.]+)(%?)/.exec(background ?? '');
+      expect(lightness).not.toBeNull();
+      expect(Number(lightness![1]) / (lightness![2] ? 100 : 1)).toBeCloseTo(dark ? 0.155 : 0.989, 4);
     });
   },
 };

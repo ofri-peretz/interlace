@@ -12,7 +12,7 @@
  * ## Anatomy
  *
  *   buttonVariants({ variant, size })
- *     ├─ variant  default | destructive | outline | secondary | ghost | link
+ *     ├─ variant  default | highlight | destructive | outline | secondary | ghost | link
  *     └─ size     default | xs | sm | lg | icon | icon-xs | icon-sm | icon-lg
  *
  * Defaults are `variant: 'default'`, `size: 'default'`. `pagination.tsx` is
@@ -23,7 +23,7 @@
  *
  * ## Why half this file is comments
  *
- * Four of the six variants carry a long note recording a measured contrast
+ * Four of the seven variants carry a long note recording a measured contrast
  * failure and the rule it produced: a variant that declares its own foreground
  * must paint an opaque surface in the same state, because a button is dropped
  * onto surfaces the design system does not control. `outline` inheriting the
@@ -48,11 +48,16 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "relative isolate inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[color,background-color,border-color,box-shadow,scale] duration-(--duration-fast) ease-enter motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        // The warm call-to-action that is NOT the brand primary: the second
+        // button on a hero, "start here" beside a primary "sign up". Opaque
+        // face plus its own foreground, so it holds on any section surface.
+        highlight:
+          'bg-highlight text-highlight-foreground hover:bg-highlight/90',
         // No `dark:bg-destructive/60` here, unlike stock shadcn — see the
         // matching note in badge.tsx. Our dark destructive token is a light
         // red tuned for AAA on near-black; muting it to 60% drops the label
@@ -112,7 +117,8 @@ const buttonVariants = cva(
         // already renders links. `decoration-from-font` is Prose's too; hover
         // thickens the rule instead of shifting the hue, because any hue we
         // could shift to reintroduces the bug.
-        link: 'underline underline-offset-4 decoration-from-font hover:decoration-2',
+        // A link does not press like a button: it keeps its size.
+        link: 'underline underline-offset-4 decoration-from-font hover:decoration-2 motion-safe:active:scale-100',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

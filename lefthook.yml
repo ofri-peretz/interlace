@@ -5,6 +5,7 @@
 #   commit-msg  commitlint
 #   pre-commit  npm run hook:staged -- <staged files>   oxlint on the staged files only
 #   pre-push    npm run hook:verify                     turbo typecheck, test and build
+#               npm run lint:guidance                   agent guidance lint (local step below)
 #
 # `npm run ci:local` runs the pre-push battery over every file, as CI does.
 remotes:
@@ -14,3 +15,8 @@ remotes:
       - packages/hookset/presets/lefthook/commit-msg.yml
       - packages/hookset/presets/lefthook/pre-commit.yml
       - packages/hookset/presets/lefthook/pre-push.yml
+
+pre-push:
+  commands:
+    guidance:
+      run: npm run lint:guidance

@@ -49,44 +49,6 @@
     "previewDark": "primitives-alertdialog--dark",
     "skeleton": null
   },
-  "animated-gradient-text": {
-    "title": "MagicUI/AnimatedGradientText",
-    "storyIds": [
-      "magicui-animatedgradienttext--default",
-      "magicui-animatedgradienttext--dark",
-      "magicui-animatedgradienttext--fast-sweep",
-      "magicui-animatedgradienttext--slow-sweep",
-      "magicui-animatedgradienttext--brand-gradient"
-    ],
-    "preview": "magicui-animatedgradienttext--default",
-    "previewDark": "magicui-animatedgradienttext--dark",
-    "skeleton": null
-  },
-  "animated-grid-pattern": {
-    "title": "MagicUI/AnimatedGridPattern",
-    "storyIds": [
-      "magicui-animatedgridpattern--default",
-      "magicui-animatedgridpattern--dark",
-      "magicui-animatedgridpattern--dense",
-      "magicui-animatedgridpattern--sparse",
-      "magicui-animatedgridpattern--large-dashed-cells"
-    ],
-    "preview": "magicui-animatedgridpattern--default",
-    "previewDark": "magicui-animatedgridpattern--dark",
-    "skeleton": null
-  },
-  "animated-list": {
-    "title": "MagicUI/AnimatedList",
-    "storyIds": [
-      "magicui-animatedlist--default",
-      "magicui-animatedlist--dark",
-      "magicui-animatedlist--pause-on-hover",
-      "magicui-animatedlist--fast-reveal"
-    ],
-    "preview": "magicui-animatedlist--default",
-    "previewDark": "magicui-animatedlist--dark",
-    "skeleton": null
-  },
   "article-card": {
     "title": "Blocks/ArticleCard",
     "storyIds": [
@@ -118,6 +80,8 @@
     "storyIds": [
       "blocks-articlelistgrid--default",
       "blocks-articlelistgrid--no-featured",
+      "blocks-articlelistgrid--compact",
+      "blocks-articlelistgrid--relaxed",
       "blocks-articlelistgrid--loading",
       "blocks-articlelistgrid--empty",
       "blocks-articlelistgrid--empty-filtered",
@@ -169,6 +133,16 @@
     ],
     "preview": "primitives-aspectratio--default",
     "previewDark": "primitives-aspectratio--dark",
+    "skeleton": null
+  },
+  "audio-player": {
+    "title": "Blocks/AudioPlayer",
+    "storyIds": [
+      "blocks-audioplayer--default",
+      "blocks-audioplayer--without-transcript"
+    ],
+    "preview": "blocks-audioplayer--default",
+    "previewDark": null,
     "skeleton": null
   },
   "auth-template": {
@@ -224,42 +198,6 @@
     "previewDark": "primitives-avatar--dark",
     "skeleton": "primitives-avatar--loading"
   },
-  "background-beams-with-collision": {
-    "title": "Aceternity/BackgroundBeamsWithCollision",
-    "storyIds": [
-      "aceternity-backgroundbeamswithcollision--default",
-      "aceternity-backgroundbeamswithcollision--hidden-collision-surface",
-      "aceternity-backgroundbeamswithcollision--custom-beams",
-      "aceternity-backgroundbeamswithcollision--dark"
-    ],
-    "preview": "aceternity-backgroundbeamswithcollision--default",
-    "previewDark": "aceternity-backgroundbeamswithcollision--dark",
-    "skeleton": null
-  },
-  "background-gradient-animation": {
-    "title": "Aceternity/BackgroundGradientAnimation",
-    "storyIds": [
-      "aceternity-backgroundgradientanimation--default",
-      "aceternity-backgroundgradientanimation--calm-surface",
-      "aceternity-backgroundgradientanimation--custom-palette",
-      "aceternity-backgroundgradientanimation--dark"
-    ],
-    "preview": "aceternity-backgroundgradientanimation--default",
-    "previewDark": "aceternity-backgroundgradientanimation--dark",
-    "skeleton": null
-  },
-  "background-lines": {
-    "title": "Aceternity/BackgroundLines",
-    "storyIds": [
-      "aceternity-backgroundlines--default",
-      "aceternity-backgroundlines--slow-loop",
-      "aceternity-backgroundlines--fast-loop",
-      "aceternity-backgroundlines--dark"
-    ],
-    "preview": "aceternity-backgroundlines--default",
-    "previewDark": "aceternity-backgroundlines--dark",
-    "skeleton": null
-  },
   "badge": {
     "title": "Primitives/Badge",
     "storyIds": [
@@ -273,6 +211,20 @@
     "previewDark": "primitives-badge--dark",
     "skeleton": "primitives-badge--loading"
   },
+  "banner": {
+    "title": "Blocks/Banner",
+    "storyIds": [
+      "blocks-banner--default",
+      "blocks-banner--with-link-and-dismiss",
+      "blocks-banner--warning",
+      "blocks-banner--highlight",
+      "blocks-banner--dark",
+      "blocks-banner--rtl"
+    ],
+    "preview": "blocks-banner--default",
+    "previewDark": "blocks-banner--dark",
+    "skeleton": null
+  },
   "blog-home-template": {
     "title": "Templates/BlogHomeTemplate",
     "storyIds": [
@@ -284,19 +236,6 @@
     "preview": "templates-bloghometemplate--default",
     "previewDark": "templates-bloghometemplate--dark",
     "skeleton": "templates-bloghometemplate--page-skeleton"
-  },
-  "border-beam": {
-    "title": "MagicUI/BorderBeam",
-    "storyIds": [
-      "magicui-borderbeam--default",
-      "magicui-borderbeam--dark",
-      "magicui-borderbeam--reverse",
-      "magicui-borderbeam--thick-and-slow",
-      "magicui-borderbeam--brand-gradient"
-    ],
-    "preview": "magicui-borderbeam--default",
-    "previewDark": "magicui-borderbeam--dark",
-    "skeleton": null
   },
   "box": {
     "title": "Primitives/Box",
@@ -347,6 +286,7 @@
       "primitives-button--disabled",
       "primitives-button--dark",
       "primitives-button--loading",
+      "primitives-button--loading-flow",
       "primitives-button--rtl"
     ],
     "preview": "primitives-button--variants",
@@ -369,6 +309,8 @@
     "storyIds": [
       "primitives-callout--default",
       "primitives-callout--variants",
+      "primitives-callout--kicker",
+      "primitives-callout--on-ab-rand-band",
       "primitives-callout--dark",
       "primitives-callout--rtl",
       "primitives-callout--below-min-viewport"
@@ -404,17 +346,30 @@
     "previewDark": "primitives-checkbox--dark",
     "skeleton": "primitives-checkbox--loading"
   },
-  "cloud-particles": {
-    "title": "Aceternity/CloudParticles",
+  "citation": {
+    "title": "Blocks/Citation",
     "storyIds": [
-      "aceternity-cloudparticles--default",
-      "aceternity-cloudparticles--dark",
-      "aceternity-cloudparticles--dense-and-slow",
-      "aceternity-cloudparticles--sparse",
-      "aceternity-cloudparticles--body-color-on-light-and-dark-heroes"
+      "blocks-citation--default",
+      "blocks-citation--underline",
+      "blocks-citation--chip",
+      "blocks-citation--chips-in-prose",
+      "blocks-citation--enough-sources",
+      "blocks-citation--short-of-sources",
+      "blocks-citation--non-https-link",
+      "blocks-citation--keyboard"
     ],
-    "preview": "aceternity-cloudparticles--default",
-    "previewDark": "aceternity-cloudparticles--dark",
+    "preview": "blocks-citation--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "claim-card": {
+    "title": "Blocks/ClaimCard",
+    "storyIds": [
+      "blocks-claimcard--default",
+      "blocks-claimcard--still-being-checked"
+    ],
+    "preview": "blocks-claimcard--default",
+    "previewDark": null,
     "skeleton": null
   },
   "cn": {
@@ -572,6 +527,19 @@
     "previewDark": "primitives-contextmenu--dark",
     "skeleton": "primitives-contextmenu--loading"
   },
+  "count-up": {
+    "title": "Effects/CountUp",
+    "storyIds": [
+      "effects-countup--default",
+      "effects-countup--compact",
+      "effects-countup--percent",
+      "effects-countup--currency",
+      "effects-countup--in-as-entence"
+    ],
+    "preview": "effects-countup--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "cta-section": {
     "title": "Blocks/CTASection",
     "storyIds": [
@@ -580,7 +548,11 @@
       "blocks-ctasection--neutral",
       "blocks-ctasection--loading",
       "blocks-ctasection--dark",
-      "blocks-ctasection--rtl"
+      "blocks-ctasection--rtl",
+      "blocks-ctasection--card",
+      "blocks-ctasection--card-with-background",
+      "blocks-ctasection--card-with-search",
+      "blocks-ctasection--card-rtl"
     ],
     "preview": "blocks-ctasection--default",
     "previewDark": "blocks-ctasection--dark",
@@ -690,6 +662,27 @@
     "previewDark": "primitives-dialog--dark",
     "skeleton": null
   },
+  "dialogue": {
+    "title": "Blocks/Dialogue",
+    "storyIds": [
+      "blocks-dialogue--default",
+      "blocks-dialogue--transcript"
+    ],
+    "preview": "blocks-dialogue--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "dialogue-stepper": {
+    "title": "Blocks/DialogueStepper",
+    "storyIds": [
+      "blocks-dialoguestepper--default",
+      "blocks-dialoguestepper--speakers-inside",
+      "blocks-dialoguestepper--whole-conversation"
+    ],
+    "preview": "blocks-dialoguestepper--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "distribution": {
     "title": "Charts/Distribution",
     "storyIds": [
@@ -724,16 +717,19 @@
     "previewDark": "templates-docspagetemplate--dark",
     "skeleton": "templates-docspagetemplate--page-skeleton"
   },
-  "dot-pattern": {
-    "title": "Blocks/DotPattern",
+  "drawer": {
+    "title": "Primitives/Drawer",
     "storyIds": [
-      "blocks-dotpattern--default",
-      "blocks-dotpattern--dense",
-      "blocks-dotpattern--glow",
-      "blocks-dotpattern--behind-content"
+      "primitives-drawer--default",
+      "primitives-drawer--keyboard-flow",
+      "primitives-drawer--directions",
+      "primitives-drawer--snap-points",
+      "primitives-drawer--dark",
+      "primitives-drawer--rtl",
+      "primitives-drawer--reduced-motion"
     ],
-    "preview": "blocks-dotpattern--default",
-    "previewDark": null,
+    "preview": "primitives-drawer--default",
+    "previewDark": "primitives-drawer--dark",
     "skeleton": null
   },
   "dropdown-menu": {
@@ -749,6 +745,16 @@
     "preview": "primitives-dropdownmenu--default",
     "previewDark": "primitives-dropdownmenu--dark",
     "skeleton": "primitives-dropdownmenu--loading"
+  },
+  "edge-glow": {
+    "title": "Effects/EdgeGlow",
+    "storyIds": [
+      "effects-edgeglow--default",
+      "effects-edgeglow--long-arc"
+    ],
+    "preview": "effects-edgeglow--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "edit-on-git-hub": {
     "title": "Fumadocs/EditOnGitHub",
@@ -804,6 +810,8 @@
     "storyIds": [
       "blocks-featuregrid--default",
       "blocks-featuregrid--two-columns",
+      "blocks-featuregrid--compact",
+      "blocks-featuregrid--relaxed",
       "blocks-featuregrid--loading",
       "blocks-featuregrid--dark",
       "blocks-featuregrid--rtl"
@@ -811,6 +819,18 @@
     "preview": "blocks-featuregrid--default",
     "previewDark": "blocks-featuregrid--dark",
     "skeleton": "blocks-featuregrid--loading"
+  },
+  "featured-icon": {
+    "title": "Primitives/FeaturedIcon",
+    "storyIds": [
+      "primitives-featuredicon--default",
+      "primitives-featuredicon--matrix",
+      "primitives-featuredicon--in-feature-cards",
+      "primitives-featuredicon--dark"
+    ],
+    "preview": "primitives-featuredicon--default",
+    "previewDark": "primitives-featuredicon--dark",
+    "skeleton": null
   },
   "figure": {
     "title": "Blocks/Figure",
@@ -825,29 +845,15 @@
     "previewDark": "blocks-figure--dark",
     "skeleton": null
   },
-  "flip-words": {
-    "title": "Aceternity/FlipWords",
+  "focus-grid": {
+    "title": "Blocks/FocusGrid",
     "storyIds": [
-      "aceternity-flipwords--default",
-      "aceternity-flipwords--headline",
-      "aceternity-flipwords--dark",
-      "aceternity-flipwords--long-dwell",
-      "aceternity-flipwords--pause-on-hover"
+      "blocks-focusgrid--default",
+      "blocks-focusgrid--dark",
+      "blocks-focusgrid--rtl"
     ],
-    "preview": "aceternity-flipwords--headline",
-    "previewDark": "aceternity-flipwords--dark",
-    "skeleton": null
-  },
-  "focus-cards": {
-    "title": "Aceternity/FocusCards",
-    "storyIds": [
-      "aceternity-focuscards--default",
-      "aceternity-focuscards--dark",
-      "aceternity-focuscards--two-columns",
-      "aceternity-focuscards--preselected-active"
-    ],
-    "preview": "aceternity-focuscards--default",
-    "previewDark": "aceternity-focuscards--dark",
+    "preview": "blocks-focusgrid--default",
+    "previewDark": "blocks-focusgrid--dark",
     "skeleton": null
   },
   "focus-ring": {
@@ -870,7 +876,8 @@
     "storyIds": [
       "blocks-footer--default",
       "blocks-footer--dark",
-      "blocks-footer--rtl"
+      "blocks-footer--rtl",
+      "blocks-footer--with-tagline"
     ],
     "preview": "blocks-footer--default",
     "previewDark": "blocks-footer--dark",
@@ -903,6 +910,17 @@
     "previewDark": "primitives-gradebadge--dark",
     "skeleton": null
   },
+  "gradient-mesh": {
+    "title": "Effects/GradientMesh",
+    "storyIds": [
+      "effects-gradientmesh--default",
+      "effects-gradientmesh--subtle",
+      "effects-gradientmesh--dark"
+    ],
+    "preview": "effects-gradientmesh--default",
+    "previewDark": "effects-gradientmesh--dark",
+    "skeleton": null
+  },
   "grid": {
     "title": "Primitives/Grid",
     "storyIds": [
@@ -916,15 +934,17 @@
     "previewDark": "primitives-grid--dark",
     "skeleton": null
   },
-  "grid-pattern": {
-    "title": "Blocks/GridPattern",
+  "grid-field": {
+    "title": "Effects/GridField",
     "storyIds": [
-      "blocks-gridpattern--default",
-      "blocks-gridpattern--dashed",
-      "blocks-gridpattern--highlighted-squares",
-      "blocks-gridpattern--animated"
+      "effects-gridfield--default",
+      "effects-gridfield--fade-to-bottom",
+      "effects-gridfield--still",
+      "effects-gridfield--follows-the-pointer",
+      "effects-gridfield--dots",
+      "effects-gridfield--chosen-cells"
     ],
-    "preview": "blocks-gridpattern--default",
+    "preview": "effects-gridfield--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -933,7 +953,9 @@
     "storyIds": [
       "blocks-hero--default",
       "blocks-hero--with-eyebrow",
-      "blocks-hero--two-column"
+      "blocks-hero--two-column",
+      "blocks-hero--interactive-media",
+      "blocks-hero--decorative-media"
     ],
     "preview": "blocks-hero--default",
     "previewDark": null,
@@ -1005,24 +1027,23 @@
     "previewDark": "primitives-input--dark",
     "skeleton": "primitives-input--loading"
   },
-  "interactive-grid-pattern": {
-    "title": "Blocks/InteractiveGridPattern",
-    "storyIds": [
-      "blocks-interactivegridpattern--default",
-      "blocks-interactivegridpattern--uncontrolled",
-      "blocks-interactivegridpattern--controlled",
-      "blocks-interactivegridpattern--higher-contrast"
-    ],
-    "preview": "blocks-interactivegridpattern--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "interlace-weave": {
     "title": "Effects/InterlaceWeave",
     "storyIds": [
       "effects-interlaceweave--on-ac-ard"
     ],
     "preview": "effects-interlaceweave--on-ac-ard",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "kbd": {
+    "title": "Primitives/Kbd",
+    "storyIds": [
+      "primitives-kbd--default",
+      "primitives-kbd--sizes",
+      "primitives-kbd--groups"
+    ],
+    "preview": "primitives-kbd--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1064,6 +1085,16 @@
     "previewDark": "starters-layout-starter--dark",
     "skeleton": null
   },
+  "light-beam": {
+    "title": "Effects/LightBeam",
+    "storyIds": [
+      "effects-lightbeam--default",
+      "effects-lightbeam--from-the-left"
+    ],
+    "preview": "effects-lightbeam--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "lint-playground": {
     "title": "Blocks/LintPlayground",
     "storyIds": [
@@ -1075,17 +1106,17 @@
     "previewDark": null,
     "skeleton": null
   },
-  "marquee": {
-    "title": "MagicUI/Marquee",
+  "list": {
+    "title": "Primitives/List",
     "storyIds": [
-      "magicui-marquee--default",
-      "magicui-marquee--reverse",
-      "magicui-marquee--pause-on-hover",
-      "magicui-marquee--vertical",
-      "magicui-marquee--dark"
+      "primitives-list--default",
+      "primitives-list--numbered-claims",
+      "primitives-list--crosses",
+      "primitives-list--checks",
+      "primitives-list--sizes"
     ],
-    "preview": "magicui-marquee--default",
-    "previewDark": "magicui-marquee--dark",
+    "preview": "primitives-list--default",
+    "previewDark": null,
     "skeleton": null
   },
   "mdx-starter": {
@@ -1097,21 +1128,6 @@
     ],
     "preview": "starters-mdx-starter--default",
     "previewDark": "starters-mdx-starter--dark",
-    "skeleton": null
-  },
-  "meteors": {
-    "title": "Primitives/Meteors",
-    "storyIds": [
-      "primitives-meteors--default",
-      "primitives-meteors--light-surface",
-      "primitives-meteors--sparse",
-      "primitives-meteors--density",
-      "primitives-meteors--dark",
-      "primitives-meteors--rtl",
-      "primitives-meteors--reduced-motion"
-    ],
-    "preview": "primitives-meteors--default",
-    "previewDark": "primitives-meteors--dark",
     "skeleton": null
   },
   "meter": {
@@ -1230,21 +1246,6 @@
     "previewDark": "primitives-numberfield--dark",
     "skeleton": "primitives-numberfield--loading"
   },
-  "number-ticker": {
-    "title": "MagicUI/NumberTicker",
-    "storyIds": [
-      "magicui-numberticker--default",
-      "magicui-numberticker--no-animation",
-      "magicui-numberticker--count-down",
-      "magicui-numberticker--decimal-places",
-      "magicui-numberticker--compact",
-      "magicui-numberticker--compact-with-decimal",
-      "magicui-numberticker--dark"
-    ],
-    "preview": "magicui-numberticker--default",
-    "previewDark": "magicui-numberticker--dark",
-    "skeleton": null
-  },
   "page-header": {
     "title": "Blocks/PageHeader",
     "storyIds": [
@@ -1270,19 +1271,6 @@
     "preview": "primitives-pagination--default",
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
-  },
-  "particles": {
-    "title": "MagicUI/Particles",
-    "storyIds": [
-      "magicui-particles--default",
-      "magicui-particles--dense",
-      "magicui-particles--brand-color",
-      "magicui-particles--non-interactive",
-      "magicui-particles--dark"
-    ],
-    "preview": "magicui-particles--default",
-    "previewDark": "magicui-particles--dark",
-    "skeleton": null
   },
   "popover": {
     "title": "Primitives/Popover",
@@ -1316,6 +1304,8 @@
     "title": "Blocks/PricingTable",
     "storyIds": [
       "blocks-pricingtable--default",
+      "blocks-pricingtable--compact",
+      "blocks-pricingtable--relaxed",
       "blocks-pricingtable--loading",
       "blocks-pricingtable--dark",
       "blocks-pricingtable--rtl"
@@ -1343,6 +1333,7 @@
     "storyIds": [
       "primitives-prose--default",
       "primitives-prose--variants",
+      "primitives-prose--fill-width",
       "primitives-prose--dark",
       "primitives-prose--rtl",
       "primitives-prose--below-min-viewport"
@@ -1408,6 +1399,18 @@
     ],
     "preview": "foundations-radius--default",
     "previewDark": "foundations-radius--dark",
+    "skeleton": null
+  },
+  "reading-layout": {
+    "title": "Blocks/ReadingLayout",
+    "storyIds": [
+      "blocks-readinglayout--default",
+      "blocks-readinglayout--narrow-column",
+      "blocks-readinglayout--below-sticky-header",
+      "blocks-readinglayout--without-contents"
+    ],
+    "preview": "blocks-readinglayout--default",
+    "previewDark": null,
     "skeleton": null
   },
   "reading-strand": {
@@ -1486,6 +1489,27 @@
     "previewDark": null,
     "skeleton": null
   },
+  "reveal": {
+    "title": "Effects/Reveal",
+    "storyIds": [
+      "effects-reveal--default",
+      "effects-reveal--effects",
+      "effects-reveal--sequenced"
+    ],
+    "preview": "effects-reveal--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "rotating-text": {
+    "title": "Effects/RotatingText",
+    "storyIds": [
+      "effects-rotatingtext--default",
+      "effects-rotatingtext--slow"
+    ],
+    "preview": "effects-rotatingtext--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "scorecard-row": {
     "title": "Blocks/ScorecardRow",
     "storyIds": [
@@ -1517,11 +1541,25 @@
       "primitives-scrollarea--default",
       "primitives-scrollarea--keyboard-flow",
       "primitives-scrollarea--no-overflow",
+      "primitives-scrollarea--on-at-inted-card",
+      "primitives-scrollarea--without-fades",
       "primitives-scrollarea--dark",
       "primitives-scrollarea--rtl"
     ],
     "preview": "primitives-scrollarea--default",
     "previewDark": "primitives-scrollarea--dark",
+    "skeleton": null
+  },
+  "scroller": {
+    "title": "Effects/Scroller",
+    "storyIds": [
+      "effects-scroller--default",
+      "effects-scroller--right",
+      "effects-scroller--links",
+      "effects-scroller--vertical"
+    ],
+    "preview": "effects-scroller--default",
+    "previewDark": null,
     "skeleton": null
   },
   "section": {
@@ -1532,6 +1570,9 @@
       "primitives-section--inset-strip",
       "primitives-section--spacing-scale",
       "primitives-section--tone-variants",
+      "primitives-section--brand-band-with-overlap",
+      "primitives-section--fields-on-brand-band",
+      "primitives-section--fields-on-brand-band-dark",
       "primitives-section--dark",
       "primitives-section--rtl"
     ],
@@ -1559,6 +1600,9 @@
     "storyIds": [
       "blocks-sectionheader--default",
       "blocks-sectionheader--with-eyebrow",
+      "blocks-sectionheader--pill-eyebrow",
+      "blocks-sectionheader--display",
+      "blocks-sectionheader--start-with-pill",
       "blocks-sectionheader--title-only",
       "blocks-sectionheader--left-aligned",
       "blocks-sectionheader--all-variants"
@@ -1647,6 +1691,26 @@
     "previewDark": "blocks-sharebuttons--dark",
     "skeleton": null
   },
+  "sheen": {
+    "title": "Effects/Sheen",
+    "storyIds": [
+      "effects-sheen--on-ap-rimary-button",
+      "effects-sheen--on-highlight"
+    ],
+    "preview": "effects-sheen--on-ap-rimary-button",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "sheen-text": {
+    "title": "Effects/SheenText",
+    "storyIds": [
+      "effects-sheentext--default",
+      "effects-sheentext--still"
+    ],
+    "preview": "effects-sheentext--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "sheet": {
     "title": "Primitives/Sheet",
     "storyIds": [
@@ -1661,23 +1725,13 @@
     "previewDark": "primitives-sheet--dark",
     "skeleton": null
   },
-  "shimmer-button": {
-    "title": "MagicUI/ShimmerButton",
+  "side-by-side": {
+    "title": "Blocks/SideBySide",
     "storyIds": [
-      "magicui-shimmerbutton--default",
-      "magicui-shimmerbutton--static-pill",
-      "magicui-shimmerbutton--spark-only",
-      "magicui-shimmerbutton--highlight-only",
-      "magicui-shimmerbutton--brand-primary",
-      "magicui-shimmerbutton--gallery",
-      "magicui-shimmerbutton--click-interaction",
-      "magicui-shimmerbutton--keyboard-activation",
-      "magicui-shimmerbutton--shimmer-prop-gates-spark",
-      "magicui-shimmerbutton--highlight-prop-gates-glow",
-      "magicui-shimmerbutton--static-pill-has-no-effects",
-      "magicui-shimmerbutton--disabled-is-not-clickable"
+      "blocks-sidebyside--default",
+      "blocks-sidebyside--three-columns"
     ],
-    "preview": "magicui-shimmerbutton--default",
+    "preview": "blocks-sidebyside--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1734,6 +1788,17 @@
     "previewDark": "primitives-skiplink--dark",
     "skeleton": null
   },
+  "sky-backdrop": {
+    "title": "Effects/SkyBackdrop",
+    "storyIds": [
+      "effects-skybackdrop--default",
+      "effects-skybackdrop--sun-left",
+      "effects-skybackdrop--dusk"
+    ],
+    "preview": "effects-skybackdrop--default",
+    "previewDark": "effects-skybackdrop--dusk",
+    "skeleton": null
+  },
   "slider": {
     "title": "Primitives/Slider",
     "storyIds": [
@@ -1781,17 +1846,16 @@
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
   },
-  "spotlight": {
-    "title": "Aceternity/Spotlight",
+  "split-text": {
+    "title": "Effects/SplitText",
     "storyIds": [
-      "aceternity-spotlight--default",
-      "aceternity-spotlight--high-opacity",
-      "aceternity-spotlight--slow-reveal",
-      "aceternity-spotlight--repositioned",
-      "aceternity-spotlight--dark"
+      "effects-splittext--default",
+      "effects-splittext--by-letter",
+      "effects-splittext--fade",
+      "effects-splittext--rtl"
     ],
-    "preview": "aceternity-spotlight--default",
-    "previewDark": "aceternity-spotlight--dark",
+    "preview": "effects-splittext--default",
+    "previewDark": null,
     "skeleton": null
   },
   "stack": {
@@ -1808,17 +1872,34 @@
     "previewDark": "primitives-stack--dark",
     "skeleton": null
   },
-  "stars-background": {
-    "title": "Aceternity/StarsBackground",
+  "stagger-list": {
+    "title": "Effects/StaggerList",
     "storyIds": [
-      "aceternity-starsbackground--default",
-      "aceternity-starsbackground--dense",
-      "aceternity-starsbackground--slow-twinkle",
-      "aceternity-starsbackground--with-shooting-stars",
-      "aceternity-starsbackground--dark"
+      "effects-staggerlist--default",
+      "effects-staggerlist--numbered"
     ],
-    "preview": "aceternity-starsbackground--default",
-    "previewDark": "aceternity-starsbackground--dark",
+    "preview": "effects-staggerlist--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "stance-list": {
+    "title": "Blocks/StanceList",
+    "storyIds": [
+      "blocks-stancelist--default"
+    ],
+    "preview": "blocks-stancelist--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "starfield": {
+    "title": "Effects/Starfield",
+    "storyIds": [
+      "effects-starfield--default",
+      "effects-starfield--calm",
+      "effects-starfield--busy"
+    ],
+    "preview": "effects-starfield--default",
+    "previewDark": null,
     "skeleton": null
   },
   "stat-card": {
@@ -1828,7 +1909,8 @@
       "blocks-statcard--loading",
       "blocks-statcard--with-icon",
       "blocks-statcard--grid",
-      "blocks-statcard--tones"
+      "blocks-statcard--tones",
+      "blocks-statcard--value-first"
     ],
     "preview": "blocks-statcard--default",
     "previewDark": null,
@@ -1881,6 +1963,16 @@
     "previewDark": "templates-statstemplate--dark",
     "skeleton": "templates-statstemplate--page-skeleton"
   },
+  "status-pills": {
+    "title": "Blocks/StatusPills",
+    "storyIds": [
+      "blocks-statuspills--default",
+      "blocks-statuspills--on-ab-rand-band"
+    ],
+    "preview": "blocks-statuspills--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "strand-field": {
     "title": "Effects/StrandField",
     "storyIds": [
@@ -1890,19 +1982,6 @@
     ],
     "preview": "effects-strandfield--default",
     "previewDark": null,
-    "skeleton": null
-  },
-  "sunny-background": {
-    "title": "Aceternity/SunnyBackground",
-    "storyIds": [
-      "aceternity-sunnybackground--default",
-      "aceternity-sunnybackground--top-left",
-      "aceternity-sunnybackground--custom-palette",
-      "aceternity-sunnybackground--static",
-      "aceternity-sunnybackground--dark"
-    ],
-    "preview": "aceternity-sunnybackground--default",
-    "previewDark": "aceternity-sunnybackground--dark",
     "skeleton": null
   },
   "switch": {
@@ -2040,6 +2119,40 @@
     "previewDark": "tokens-theme-tokens--dark",
     "skeleton": null
   },
+  "thread-lines": {
+    "title": "Effects/ThreadLines",
+    "storyIds": [
+      "effects-threadlines--default",
+      "effects-threadlines--dense",
+      "effects-threadlines--dark"
+    ],
+    "preview": "effects-threadlines--default",
+    "previewDark": "effects-threadlines--dark",
+    "skeleton": null
+  },
+  "thread-mark": {
+    "title": "Primitives/ThreadMark",
+    "storyIds": [
+      "primitives-threadmark--default",
+      "primitives-threadmark--all-states",
+      "primitives-threadmark--loading",
+      "primitives-threadmark--in-an-empty-state",
+      "primitives-threadmark--in-an-error-state"
+    ],
+    "preview": "primitives-threadmark--default",
+    "previewDark": null,
+    "skeleton": "primitives-threadmark--loading"
+  },
+  "thread-steps": {
+    "title": "Blocks/ThreadSteps",
+    "storyIds": [
+      "blocks-threadsteps--default",
+      "blocks-threadsteps--progress"
+    ],
+    "preview": "blocks-threadsteps--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "time-series": {
     "title": "Charts/TimeSeries",
     "storyIds": [
@@ -2067,6 +2180,17 @@
     "preview": "charts-timeseries--default",
     "previewDark": "charts-timeseries--dark",
     "skeleton": "charts-timeseries--loading"
+  },
+  "timeline": {
+    "title": "Blocks/Timeline",
+    "storyIds": [
+      "blocks-timeline--default",
+      "blocks-timeline--in-ac-ontent-column",
+      "blocks-timeline--in-an-arrow-column"
+    ],
+    "preview": "blocks-timeline--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "timeline-map": {
     "title": "Blocks/TimelineMap",
@@ -2125,6 +2249,20 @@
     "previewDark": "primitives-toggle--dark",
     "skeleton": null
   },
+  "toolbar": {
+    "title": "Primitives/Toolbar",
+    "storyIds": [
+      "primitives-toolbar--default",
+      "primitives-toolbar--keyboard-flow",
+      "primitives-toolbar--vertical",
+      "primitives-toolbar--with-input-and-link",
+      "primitives-toolbar--rtl",
+      "primitives-toolbar--dark"
+    ],
+    "preview": "primitives-toolbar--default",
+    "previewDark": "primitives-toolbar--dark",
+    "skeleton": null
+  },
   "tooltip": {
     "title": "Primitives/Tooltip",
     "storyIds": [
@@ -2144,10 +2282,27 @@
       "blocks-topbar--default",
       "blocks-topbar--no-actions",
       "blocks-topbar--dark",
-      "blocks-topbar--rtl"
+      "blocks-topbar--rtl",
+      "blocks-topbar--current-page",
+      "blocks-topbar--mobile-menu",
+      "blocks-topbar--mobile-wrap",
+      "blocks-topbar--many-links",
+      "blocks-topbar--rtl-mobile-menu"
     ],
     "preview": "blocks-topbar--default",
     "previewDark": "blocks-topbar--dark",
+    "skeleton": null
+  },
+  "topbar-menu": {
+    "title": "Blocks/TopbarMenu",
+    "storyIds": [
+      "blocks-topbarmenu--default",
+      "blocks-topbarmenu--keyboard",
+      "blocks-topbarmenu--closes-on-navigate",
+      "blocks-topbarmenu--from-the-bottom"
+    ],
+    "preview": "blocks-topbarmenu--default",
+    "previewDark": null,
     "skeleton": null
   },
   "typography": {
@@ -2201,6 +2356,30 @@
     ],
     "preview": "primitives-visuallyhidden--default",
     "previewDark": "primitives-visuallyhidden--dark",
+    "skeleton": null
+  },
+  "weave-texture": {
+    "title": "Effects/WeaveTexture",
+    "storyIds": [
+      "effects-weavetexture--default",
+      "effects-weavetexture--fine",
+      "effects-weavetexture--coarse",
+      "effects-weavetexture--fade-to-bottom"
+    ],
+    "preview": "effects-weavetexture--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "wordmark": {
+    "title": "Blocks/Wordmark",
+    "storyIds": [
+      "blocks-wordmark--default",
+      "blocks-wordmark--several-scripts",
+      "blocks-wordmark--on-ab-rand-band",
+      "blocks-wordmark--in-the-topbar"
+    ],
+    "preview": "blocks-wordmark--default",
+    "previewDark": null,
     "skeleton": null
   }
 }

@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Card, CardContent, CardHeader, CardTitle } from '@interlace/ui/card';
+import { Checkbox } from '@interlace/ui/checkbox';
+import { ComboboxCompose } from '@interlace/ui/combobox';
+import { Input } from '@interlace/ui/input';
+import { Label } from '@interlace/ui/label';
 import { Section } from '@interlace/ui/section';
+import { Textarea } from '@interlace/ui/textarea';
 import { withRtl } from '@/decorators';
 
 const meta: Meta<typeof Section> = {
@@ -28,11 +34,11 @@ const meta: Meta<typeof Section> = {
     },
     tone: {
       control: 'select',
-      options: ['default', 'muted', 'inset'],
+      options: ['default', 'muted', 'inset', 'brand'],
       description:
-        'Background. `default` is transparent; `muted` (`bg-card/30`) separates adjacent bands without a rule; `inset` adds a backdrop blur for a strip that should read as a raised surface.',
+        'Background. `default` is transparent; `muted` (`bg-card/30`) separates adjacent bands without a rule; `inset` adds a backdrop blur for a strip that should read as a raised surface; `brand` is the full-bleed brand band (`bg-primary` with `text-primary-foreground`).',
       table: {
-        type: { summary: "'default' | 'muted' | 'inset'" },
+        type: { summary: "'default' | 'muted' | 'inset' | 'brand'" },
         defaultValue: { summary: 'default' },
         category: 'Appearance',
       },
@@ -46,6 +52,17 @@ const meta: Meta<typeof Section> = {
         type: { summary: "'none' | 'top' | 'bottom' | 'both'" },
         defaultValue: { summary: 'none' },
         category: 'Appearance',
+      },
+    },
+    overlap: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg'],
+      description:
+        'Ride up over the band above by this depth: the section drops its own top padding, pulls up, and stacks above. Use it for a card that straddles the edge of a `brand` band. Keep the depth below the band\'s bottom padding.',
+      table: {
+        type: { summary: "'none' | 'sm' | 'md' | 'lg'" },
+        defaultValue: { summary: 'none' },
+        category: 'Layout',
       },
     },
     container: {
@@ -157,6 +174,71 @@ export const ToneVariants: Story = {
       </Section>
     </div>
   ),
+};
+
+/** A brand band with a card riding over its bottom edge: two Sections, the second with `overlap`. */
+export const BrandBandWithOverlap: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <div>
+      <Section as="header" tone="brand" spacing="tight">
+        <p className="text-sm font-semibold tracking-widest uppercase">The claim</p>
+        <h1 className="font-heading mt-3 text-4xl font-extrabold tracking-tight">
+          &quot;The bridge was closed for months.&quot;
+        </h1>
+      </Section>
+      <Section overlap="md" spacing="tight">
+        <Card>
+          <CardHeader>
+            <CardTitle>Say it straight</CardTitle>
+          </CardHeader>
+          <CardContent>It was six weeks, from 3 March to 14 April. It felt longer because the detour was slow.</CardContent>
+        </Card>
+      </Section>
+    </div>
+  ),
+};
+
+const TOPICS = [
+  { value: 'roads', label: 'Roads and bridges' },
+  { value: 'parks', label: 'Parks' },
+  { value: 'water', label: 'Water' },
+];
+
+/**
+ * Form fields on a brand band. Every field paints its own opaque face and
+ * text colour, so it reads on the band in both schemes; the labels inherit
+ * the band's foreground.
+ */
+export const FieldsOnBrandBand: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <Section tone="brand" spacing="tight">
+      <form className="grid max-w-prose gap-4" onSubmit={(e) => e.preventDefault()}>
+        <div className="grid gap-2">
+          <Label htmlFor="band-email">Email</Label>
+          <Input id="band-email" type="email" placeholder="you@example.com" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="band-topic">Topic</Label>
+          <ComboboxCompose items={TOPICS} aria-label="Topic" placeholder="Pick a topic" />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="band-question">Your question</Label>
+          <Textarea id="band-question" placeholder="Ask anything about the works." />
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox id="band-updates" />
+          <Label htmlFor="band-updates">Send me updates</Label>
+        </div>
+      </form>
+    </Section>
+  ),
+};
+
+export const FieldsOnBrandBandDark: Story = {
+  ...FieldsOnBrandBand,
+  globals: { theme: 'dark' },
 };
 
 export const Dark: Story = {

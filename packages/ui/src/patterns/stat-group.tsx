@@ -28,23 +28,39 @@ type StatItem = React.ComponentProps<typeof StatCard>;
 interface StatGroupProps extends React.ComponentProps<'section'> {
   stats?: StatItem[];
   cols?: 2 | 3 | 4;
+  /**
+   * How much air the collection has: the gap between cards.
+   * `compact` for dashboards and sidebars, `relaxed` for a landing page.
+   * @default 'default'
+   */
+  density?: 'compact' | 'default' | 'relaxed';
   loading?: boolean;
+  /** Reading order for every card; a card's own `layout` wins. @default 'label-first' */
+  layout?: StatItem['layout'];
 }
 
 /**
- * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
+ * Track counts per `cols`, keyed on the width of this component (it is the
+ * `@container`), not the viewport: the same grid in a sidebar or a card
+ * collapses as it would on a phone. Two tracks from 28rem, the full count
+ * from 56rem. Written out statically because Tailwind cannot scan a
+ * runtime-built `@4xl:grid-cols-${n}`.
  */
 const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 xs:grid-cols-2',
-  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 @md:grid-cols-2',
+  3: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-3',
+  4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
+
+/** Card gap per `density`, on the Grid primitive's closed gap scale. */
+const DENSITY_GAP = { compact: 'sm', default: 'md', relaxed: 'lg' } as const;
 
 function StatGroup({
   stats = [],
   cols = 3,
+  density = 'default',
   loading,
+  layout,
   className,
   ...props
 }: StatGroupProps) {
@@ -52,18 +68,19 @@ function StatGroup({
     <section
       data-slot="stat-group"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('w-full', className)}
+      data-density={density}
+      className={cn('@container w-full', className)}
       {...props}
     >
       {/* Responsive collapse: `cols` is a DESKTOP count. Handed to Grid
           unqualified it stays 4 tracks at every width, which on a 375px phone
           is a 68px card whose label and trend icon spill past the viewport. */}
-      <Grid cols={cols} gap="md" className={STAT_GRID_COLS[cols]}>
+      <Grid cols={cols} gap={DENSITY_GAP[density]} className={STAT_GRID_COLS[cols]}>
         {loading
           ? Array.from({ length: cols }).map((_, i) => (
               <Skeleton key={i} variant="stat-card" label={null} />
             ))
-          : stats.map((stat, i) => <StatCard key={i} {...stat} />)}
+          : stats.map((stat, i) => <StatCard key={i} layout={layout} {...stat} />)}
       </Grid>
     </section>
   );

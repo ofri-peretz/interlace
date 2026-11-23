@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sheen-text",
+  "type": "registry:ui",
+  "title": "Sheen Text",
+  "description": "A word or short phrase painted with a slow, travelling gradient: the one word of a headline that carries the promise. Use it once per view, on a few words, never on body text.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json",
+    "https://ds.interlace.tools/r/use-reduced-motion.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/effects/sheen-text.tsx",
+      "target": "components/ui/effects/sheen-text.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/sheen-text v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/sheen-text\n// What changed since: https://ds.interlace.tools/c/sheen-text#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — SheenText\n *\n * A word or short phrase painted with a slow, travelling gradient: the one\n * word of a headline that carries the promise. Use it once per view, on a few\n * words, never on body text.\n *\n * ## The colour is the text\n *\n * The gradient is clipped to the glyphs, so its colours are not decoration\n * behind the words: they are the words. Both defaults (`--primary` and\n * `--primary-active`) are text-grade on the page background in both schemes,\n * and any colour passed in must be too. In forced-colours mode the gradient is\n * dropped and the text takes the system colour.\n *\n * ## Motion\n *\n * The gradient is twice the width of the text and slides across it on the\n * Web Animations API, out and back, so there is no seam and no keyframes to\n * add. It pauses off screen. Under `prefers-reduced-motion: reduce` it holds\n * still, still two-toned.\n *\n * | Rule | Concept                 | Where in this file                                   |\n * | ---- | ----------------------- | ---------------------------------------------------- |\n * | R4   | Extends native el       | `span` props                                          |\n * | R6   | data-slot per part      | sheen-text                                            |\n * | R7   | cn + ...rest            | `cn(…, className)` + `{...props}`                     |\n * | R19  | Tokens only             | `--primary`, `--primary-active` defaults              |\n * | R25  | Client component        | the animation runs in the browser                     |\n * | R26  | A11y                    | real text, text-grade stops, forced-colours fallback  |\n */\n\nimport { cn } from '@/lib/utils';\nimport { useReducedMotion } from '@/hooks/use-reduced-motion';\n\nexport interface SheenTextProps extends React.ComponentPropsWithoutRef<'span'> {\n  /** First colour. Must be text-grade on the surface behind it. @default 'var(--primary)' */\n  from?: string;\n  /** Second colour. Must be text-grade on the surface behind it. @default 'var(--primary-active)' */\n  to?: string;\n  /** Seconds for one pass across the text. @default 6 */\n  duration?: number;\n  /** Set false to hold the gradient still even when motion is allowed. @default true */\n  animated?: boolean;\n}\n\nexport function SheenText({\n  from = 'var(--primary)',\n  to = 'var(--primary-active)',\n  duration = 6,\n  animated = true,\n  className,\n  style,\n  ...props\n}: SheenTextProps) {\n  const ref = React.useRef<HTMLSpanElement>(null);\n  const reduced = useReducedMotion();\n  const moving = animated && !reduced;\n\n  React.useEffect(() => {\n    const el = ref.current;\n    if (!el || !moving || typeof el.animate !== 'function') return;\n    const animation = el.animate(\n      [{ backgroundPosition: '0% 50%' }, { backgroundPosition: '100% 50%' }],\n      { duration: duration * 1000, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' },\n    );\n    const io =\n      typeof IntersectionObserver === 'undefined'\n        ? null\n        : new IntersectionObserver(([entry]) => {\n            if (entry?.isIntersecting) animation.play();\n            else animation.pause();\n          });\n    io?.observe(el);\n    return () => {\n      io?.disconnect();\n      animation.cancel();\n    };\n  }, [moving, duration]);\n\n  return (\n    <span\n      ref={ref}\n      data-slot=\"sheen-text\"\n      className={cn(\n        'bg-clip-text text-transparent [background-size:200%_100%] forced-colors:bg-none forced-colors:text-[CanvasText]',\n        className,\n      )}\n      style={{\n        backgroundImage: `linear-gradient(90deg, ${from}, ${to}, ${from})`,\n        ...style,\n      }}\n      {...props}\n    />\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/sheen-text\n\nInstalled to `components/ui/effects/sheen-text.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/sheen-text';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/sheen-text\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

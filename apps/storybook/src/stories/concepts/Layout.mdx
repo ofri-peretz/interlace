@@ -99,9 +99,9 @@ elements, not one.
 cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {
   variants: {
     size: {
-      prose:   'max-w-[65ch]',
-      content: 'max-w-[1024px]',   // default
-      wide:    'max-w-[1280px]',
+      prose:   'max-w-(--container-prose)',
+      content: 'max-w-(--container-content)',   // default
+      wide:    'max-w-(--container-wide)',
       full:    'max-w-none px-0 xs:px-0 lg:px-0',
     },
   },
@@ -140,9 +140,9 @@ can find where.
 ### `Section` — vertical rhythm, and it always contains
 
 ```
-spacing="tight"       py-12 md:py-16 lg:py-20
-spacing="comfortable" py-16 md:py-20 lg:py-24    (default)
-spacing="spacious"    py-20 md:py-24 lg:py-32
+spacing="tight"       py-section-tight          48 → 80px
+spacing="comfortable" py-section-comfortable    64 → 96px   (default)
+spacing="spacious"    py-section-spacious       80 → 128px
 ```
 
 Three things to notice.

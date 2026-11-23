@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Callout, MIN_VIEWPORT } from '@interlace/ui/callout';
+import { Section } from '@interlace/ui/section';
 import { withRtl } from '@/decorators';
 
 const meta = {
@@ -17,7 +18,7 @@ const meta = {
   argTypes: {
     tone: {
       control: 'select',
-      options: ['info', 'note', 'success', 'warn', 'danger'],
+      options: ['info', 'note', 'success', 'warn', 'danger', 'highlight'],
       description:
         'Narrative tone. Drives the fixed lucide icon and the left-border tint; the surface stays neutral so stacked callouts do not compete. Not a severity level — `danger` means "this destroys something", not "this is important".',
       table: {
@@ -71,13 +72,14 @@ export const Default: Story = {
  */
 export const Variants: Story = {
   render: () => {
-    const tones = ['info', 'note', 'success', 'warn', 'danger'] as const;
+    const tones = ['info', 'note', 'success', 'warn', 'danger', 'highlight'] as const;
     const copy: Record<(typeof tones)[number], string> = {
       info: 'Heads-up context that runs parallel to the body prose.',
       note: 'Author tip — usually a shortcut or a non-obvious pairing.',
       success: 'The happy path landed; no further action required.',
       warn: 'Non-blocking caution — read before continuing.',
       danger: 'Destructive or blocking consequence; review carefully.',
+      highlight: 'The one line the page wants remembered.',
     };
 
     return (
@@ -99,6 +101,52 @@ export const Variants: Story = {
       </div>
     );
   },
+};
+
+/**
+ * `kicker` puts a word or two in bold where the icon was. It is text, read
+ * before the body, so a word in another script gets its own `lang` and `dir`.
+ */
+export const Kicker: Story = {
+  render: () => (
+    <div className="flex w-[640px] max-w-full flex-col gap-6">
+      <Callout
+        tone="highlight"
+        kicker={
+          <span lang="ar" dir="rtl">
+            ملاحظة
+          </span>
+          /* Arabic for "note" */
+        }
+      >
+        Line 4 is about the city&apos;s own mistake. Say it before someone else does.
+      </Callout>
+      <Callout tone="info" kicker="In short">
+        The bridge reopened on Monday, and traffic should be normal by Friday.
+      </Callout>
+    </div>
+  ),
+};
+
+/**
+ * On a brand band. The surface is opaque and the callout sets its own text
+ * colour, so nothing of the band shows through and the kicker keeps the
+ * page's contrast.
+ */
+export const OnABrandBand: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <Section tone="brand" spacing="tight">
+      <div className="flex max-w-prose flex-col gap-6">
+        <Callout tone="highlight" kicker="In short">
+          The bridge reopened on Monday, and traffic should be normal by Friday.
+        </Callout>
+        <Callout tone="info" title="Detour">
+          Until then, take the north crossing.
+        </Callout>
+      </div>
+    </Section>
+  ),
 };
 
 export const Dark: Story = {

@@ -236,6 +236,26 @@ export const Variants: Story = {
   ),
 };
 
+/** `width="fill"` drops the 65ch cap, for prose inside a card or panel. */
+export const FillWidth: Story = {
+  render: () => (
+    <div className="rounded-xl border border-border bg-card p-6">
+      <Prose width="fill">
+        <h3>What the record shows</h3>
+        <p>
+          Inside a card, the card already sets a readable width, so the text
+          fills it instead of stopping at 65 characters and leaving the right
+          half empty.
+        </p>
+        <ul>
+          <li>Lists and quotes fill the card too.</li>
+          <li>Headings keep the heading face.</li>
+        </ul>
+      </Prose>
+    </div>
+  ),
+};
+
 export const Dark: Story = {
   ...Default,
   globals: { theme: 'dark' },

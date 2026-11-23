@@ -174,12 +174,12 @@ function ValueCell({
   if (!value) {
     return <td className="p-4 font-mono text-muted-foreground">—</td>;
   }
-  const isHex = /^#[0-9a-fA-F]{3,8}$/.test(value);
+  const isColor = /^(#[0-9a-fA-F]{3,8}|oklch\([^)]*\))$/.test(value);
   const isVar = value.startsWith('var(');
   return (
     <td className="p-4 font-mono">
       <span className="inline-flex items-center gap-2">
-        {isHex ? (
+        {isColor ? (
           <span
             aria-hidden
             className="border-border inline-block size-4 rounded border"

@@ -313,7 +313,7 @@ const readEscapeLock = async () => {
   };
 };
 
-// ─── 2. contrast, re-measured against the shipped hexes ──────────────────────
+// ─── 2. contrast, re-measured against the shipped colours ──────────────────────
 
 const stripComments = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
 
@@ -374,6 +374,34 @@ const parseHex = (hex) => {
   ];
 };
 
+/**
+ * `oklch(L C H)` → 8-bit sRGB, the way a browser paints it (OKLab matrices,
+ * Björn Ottosson). The brand palette is authored in oklch; the same
+ * conversion is pinned against Chromium in packages/ui/__tests__/color-math.ts.
+ */
+const parseOklch = (value) => {
+  const m = /^oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)\s*\)$/i.exec(String(value).trim());
+  if (!m) return null;
+  const L = parseFloat(m[1]) / (m[2] ? 100 : 1);
+  const [C, H] = [parseFloat(m[3]), parseFloat(m[4])];
+  const hr = (H * Math.PI) / 180;
+  const a = C * Math.cos(hr);
+  const b = C * Math.sin(hr);
+  const l3 = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const m3 = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const s3 = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+  return [
+    4.0767416621 * l3 - 3.3077115913 * m3 + 0.2309699292 * s3,
+    -1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3,
+    -0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3,
+  ].map((c) => {
+    const v = c <= 0.0031308 ? 12.92 * c : 1.055 * Math.max(c, 0) ** (1 / 2.4) - 0.055;
+    return Math.round(Math.min(1, Math.max(0, v)) * 255);
+  });
+};
+
+const parseColor = (value) => parseHex(value) ?? parseOklch(value);
+
 const luminance = ([r, g, b]) => {
   const [rs, gs, bs] = [r, g, b].map((v) => {
     const s = v / 255;
@@ -391,11 +419,11 @@ const contrast = (a, b) => {
 /** The selector matrix from `styles/brand/interlace.css`, in executable form. */
 const THEME_SELECTORS = {
   interlace: {
-    light: { file: INTERLACE_CSS, selector: ':root' },
+    light: { file: INTERLACE_CSS, selector: ":root,\n  [data-scheme='light']" },
     dark: { file: INTERLACE_CSS, selector: ".dark,\n  [data-scheme='dark']" },
   },
   harbor: {
-    light: { file: HARBOR_CSS, selector: "[data-theme='harbor']" },
+    light: { file: HARBOR_CSS, selector: "[data-theme='harbor'],\n  [data-theme='harbor'] [data-scheme='light']" },
     dark: {
       file: HARBOR_CSS,
       selector:
@@ -473,16 +501,16 @@ const readPairTable = async () => {
     {
       fg: tone,
       bg: 'background',
-      floor: floors.AA_NON_TEXT,
-      why: `${tone} tint on the page surface`,
-      kind: 'non-text',
+      floor: floors.AA_TEXT,
+      why: `text-${tone} on the page`,
+      kind: 'text',
     },
     {
       fg: tone,
       bg: 'card',
-      floor: floors.AA_NON_TEXT,
-      why: `${tone} tint inside a card`,
-      kind: 'non-text',
+      floor: floors.AA_TEXT,
+      why: `text-${tone} in a card`,
+      kind: 'text',
     },
   ]);
 
@@ -505,14 +533,14 @@ const buildMatrix = (palettes) =>
 
 /**
  * Measure one pair across every theme × scheme, as a positional array lined up
- * with `matrix`. `null` when a token does not resolve to a hex in some theme —
+ * with `matrix`. `null` when a token does not resolve to a colour literal in some theme —
  * a half-measured row is not a measurement.
  */
 const measurePair = (pair, palettes, matrix) => {
   const ratios = matrix.map(({ theme, scheme }) => {
     const declarations = palettes[theme][scheme];
-    const fg = parseHex(resolveValue(pair.fg, declarations) ?? '');
-    const bg = parseHex(resolveValue(pair.bg, declarations) ?? '');
+    const fg = parseColor(resolveValue(pair.fg, declarations) ?? '');
+    const bg = parseColor(resolveValue(pair.bg, declarations) ?? '');
     if (!fg || !bg) return null;
     return Math.round(contrast(fg, bg) * 100) / 100;
   });
@@ -953,6 +981,14 @@ const main = async () => {
   const withContrast = Object.values(map.components).filter(
     (c) => c.contrast.length > 0,
   ).length;
+  if (withContrast < 50) {
+    // A palette written in a colour syntax this file cannot read measures as
+    // nothing, and every contrast table would vanish without an error.
+    fail(
+      `only ${withContrast} components have a measured contrast table (expected 50+). ` +
+        'A brand colour is probably in a syntax parseColor does not read.',
+    );
+  }
   const withAlt = Object.values(map.components).filter(
     (c) => c.textAlternative.kind,
   ).length;

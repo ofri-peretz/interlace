@@ -312,7 +312,7 @@ const TIER_RANK = [
   'Templates',
   'Pages',
   'Fumadocs',
-  'MagicUI',
+  'Effects',
   'Foundations',
   'Tokens',
 ];

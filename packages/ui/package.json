@@ -108,6 +108,10 @@
       "types": "./dist/primitives/collapsible.d.ts",
       "default": "./dist/primitives/collapsible.js"
     },
+    "./toolbar": {
+      "types": "./dist/primitives/toolbar.d.ts",
+      "default": "./dist/primitives/toolbar.js"
+    },
     "./tooltip": {
       "types": "./dist/primitives/tooltip.d.ts",
       "default": "./dist/primitives/tooltip.js"
@@ -156,6 +160,10 @@
       "types": "./dist/primitives/skeleton.d.ts",
       "default": "./dist/primitives/skeleton.js"
     },
+    "./featured-icon": {
+      "types": "./dist/primitives/featured-icon.d.ts",
+      "default": "./dist/primitives/featured-icon.js"
+    },
     "./grade-badge": {
       "types": "./dist/primitives/grade-badge.d.ts",
       "default": "./dist/primitives/grade-badge.js"
@@ -200,6 +208,18 @@
       "types": "./dist/primitives/reading-strand.d.ts",
       "default": "./dist/primitives/reading-strand.js"
     },
+    "./list": {
+      "types": "./dist/primitives/list.d.ts",
+      "default": "./dist/primitives/list.js"
+    },
+    "./thread-mark": {
+      "types": "./dist/primitives/thread-mark.d.ts",
+      "default": "./dist/primitives/thread-mark.js"
+    },
+    "./kbd": {
+      "types": "./dist/primitives/kbd.d.ts",
+      "default": "./dist/primitives/kbd.js"
+    },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
       "default": "./dist/primitives/label.js"
@@ -215,6 +235,10 @@
     "./radio-group": {
       "types": "./dist/primitives/radio-group.d.ts",
       "default": "./dist/primitives/radio-group.js"
+    },
+    "./drawer": {
+      "types": "./dist/primitives/drawer.d.ts",
+      "default": "./dist/primitives/drawer.js"
     },
     "./sheet": {
       "types": "./dist/primitives/sheet.d.ts",
@@ -259,10 +283,6 @@
     "./focus-ring": {
       "types": "./dist/primitives/focus-ring.d.ts",
       "default": "./dist/primitives/focus-ring.js"
-    },
-    "./meteors": {
-      "types": "./dist/primitives/meteors.d.ts",
-      "default": "./dist/primitives/meteors.js"
     },
     "./blocks/article-card": {
       "types": "./dist/blocks/article-card.d.ts",
@@ -415,14 +435,6 @@
     "./fumadocs/edit-on-github": {
       "types": "./dist/fumadocs/edit-on-github.d.ts",
       "default": "./dist/fumadocs/edit-on-github.js"
-    },
-    "./magicui/*": {
-      "types": "./dist/magicui/*.d.ts",
-      "default": "./dist/magicui/*.js"
-    },
-    "./aceternity/*": {
-      "types": "./dist/aceternity/*.d.ts",
-      "default": "./dist/aceternity/*.js"
     },
     "./effects/*": {
       "types": "./dist/effects/*.d.ts",

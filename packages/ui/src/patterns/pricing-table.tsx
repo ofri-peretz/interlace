@@ -53,24 +53,44 @@ interface PricingTableProps extends Omit<React.ComponentProps<'section'>, 'title
   lead?: React.ReactNode;
   tiers?: PricingTier[];
   cols?: 2 | 3 | 4;
+  /**
+   * How much air the collection has: the gap between cards, the section's
+   * padding and each tier's padding.
+   * `compact` for dashboards and sidebars, `relaxed` for a landing page.
+   * @default 'default'
+   */
+  density?: 'compact' | 'default' | 'relaxed';
   loading?: boolean;
 }
 
 /**
- * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
+ * Track counts per `cols`, keyed on the width of this component (it is the
+ * `@container`), not the viewport: the same grid in a sidebar or a card
+ * collapses as it would on a phone. Two tracks from 28rem, the full count
+ * from 56rem. Written out statically because Tailwind cannot scan a
+ * runtime-built `@4xl:grid-cols-${n}`.
  */
 const TIER_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 xs:grid-cols-2',
-  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 @md:grid-cols-2',
+  3: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-3',
+  4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
+
+/** Card gap per `density`, on the Grid primitive's closed gap scale. */
+const DENSITY_GAP = { compact: 'sm', default: 'md', relaxed: 'lg' } as const;
+/** Section padding per `density`. */
+const DENSITY_SECTION = { compact: 'py-10', default: 'py-16', relaxed: 'py-24' } as const;
+/** Tier padding and the rhythm inside it per `density`, so the inside never breathes more than the shell. */
+const DENSITY_CARD = { compact: 'gap-4 p-4', default: 'gap-6 p-6', relaxed: 'gap-8 p-8' } as const;
+/** Space above a tier's CTA per `density`, on the same step as the tier's padding. */
+const DENSITY_CTA = { compact: 'pt-4', default: 'pt-6', relaxed: 'pt-8' } as const;
 
 function PricingTable({
   title,
   lead,
   tiers = [],
   cols = 3,
+  density = 'default',
   loading,
   className,
   ...props
@@ -79,7 +99,8 @@ function PricingTable({
     <section
       data-slot="pricing-table"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-16', className)}
+      data-density={density}
+      className={cn('@container', DENSITY_SECTION[density], className)}
       {...props}
     >
       <Container size="content">
@@ -101,7 +122,7 @@ function PricingTable({
           {/* Responsive collapse: `cols` is a DESKTOP count. Left unqualified
               it holds 3 tracks at every width — a 98px tier card on a 375px
               phone, whose price and CTA button overflow the viewport. */}
-          <Grid cols={cols} gap="md" className={TIER_GRID_COLS[cols]}>
+          <Grid cols={cols} gap={DENSITY_GAP[density]} className={TIER_GRID_COLS[cols]}>
             {loading
               ? Array.from({ length: cols }).map((_, i) => (
                   <Skeleton key={i} variant="card" label={null} />
@@ -112,7 +133,8 @@ function PricingTable({
                     data-slot="pricing-tier"
                     data-featured={tier.featured ? '' : undefined}
                     className={cn(
-                      'border-border bg-card text-card-foreground relative flex flex-col gap-6 rounded-xl border p-6',
+                      'border-border bg-card text-card-foreground relative flex flex-col rounded-xl border',
+                      DENSITY_CARD[density],
                       tier.featured && 'border-primary ring-primary/40 ring-2',
                     )}
                   >
@@ -143,16 +165,15 @@ function PricingTable({
                       <ul className="flex flex-col gap-2 text-sm">
                         {tier.features.map((feature, fi) => (
                           <li key={fi} className="flex items-start gap-2">
-                            <Check
-                              aria-hidden
-                              className="text-primary mt-1 size-4 shrink-0"
-                            />
+                            <Check aria-hidden className="text-primary mt-1 size-4 shrink-0" />
                             <span>{feature}</span>
                           </li>
                         ))}
                       </ul>
                     ) : null}
-                    {tier.cta ? <div className="mt-auto pt-6">{tier.cta}</div> : null}
+                    {tier.cta ? (
+                      <div className={cn('mt-auto', DENSITY_CTA[density])}>{tier.cta}</div>
+                    ) : null}
                   </article>
                 ))}
           </Grid>

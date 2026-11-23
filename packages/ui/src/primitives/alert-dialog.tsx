@@ -84,7 +84,7 @@ function AlertDialogBackdrop({
     <BaseAlertDialog.Backdrop
       data-slot="alert-dialog-backdrop"
       className={cn(
-        'fixed inset-0 z-50 bg-foreground/60 data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0',
+        'fixed inset-0 z-50 bg-foreground/60 data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0',
         className,
       )}
       {...props}
@@ -101,7 +101,7 @@ function AlertDialogPopup({
       data-slot="alert-dialog-popup"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'fixed top-1/2 left-1/2 z-50 grid w-full max-w-(--container-prose) -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl border bg-card p-(--spacing-lg) text-card-foreground shadow-xl outline-hidden data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95',
+        'fixed top-1/2 left-1/2 z-50 grid w-full max-w-(--container-prose) -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl border bg-card p-(--spacing-lg) text-card-foreground shadow-xl outline-hidden data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95',
         className,
       )}
       {...props}

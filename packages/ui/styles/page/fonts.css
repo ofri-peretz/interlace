@@ -14,8 +14,17 @@
  */
 
 @theme {
-  /* --font-body is declared in structure/type.css (additive). */
-  --font-sans: var(--font-body);
+  /* structure/type.css points `font-body` (and through it `font-heading`)
+     at `font-sans`, so this one line sets the Interlace typeface for
+     components and the app alike. */
+  --font-sans:
+    'Inter', 'Inter Variable', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  /* The serif stack for the editorial look. Nothing reads it until an app
+     opts in with `--font-heading: var(--font-serif)` (structure/type.css). */
+  --font-serif:
+    'Source Serif 4', 'Source Serif Pro', ui-serif, Georgia, Cambria,
+    'Times New Roman', serif;
   --font-mono:
     'JetBrains Mono', 'JetBrains Mono Variable', 'SF Mono', Menlo, Consolas,
     'Liberation Mono', monospace;

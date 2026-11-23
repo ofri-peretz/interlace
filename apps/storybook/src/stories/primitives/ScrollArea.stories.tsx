@@ -34,6 +34,13 @@ const meta: Meta<ScrollAreaStoryArgs> = {
         'The sizing seam. The root is `relative` and otherwise size-agnostic — it scrolls only once a height (or width) bounds it, so the box dimensions, border and padding all arrive through here.',
       table: { type: { summary: 'string' }, category: 'Appearance' },
     },
+    fade: {
+      control: 'inline-radio',
+      options: ['edges', 'none'],
+      description:
+        'Soften the top or bottom edge while there is more to scroll that way. The fade grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest. It is a mask, so it works on any background, and it drops while the region has keyboard focus so the focus ring stays whole.',
+      table: { type: { summary: "'edges' | 'none'" }, defaultValue: { summary: 'edges' }, category: 'Appearance' },
+    },
     overflowEdgeThreshold: {
       control: { type: 'number', min: 0, max: 64, step: 4 },
       description:
@@ -145,6 +152,29 @@ export const NoOverflow: Story = {
   args: {
     className: 'border-border h-72 w-60 rounded-lg border p-3',
     itemCount: 4,
+  },
+};
+
+/**
+ * The fades are a mask, not a colour overlay, so they read on any surface:
+ * here a tinted card, where a gradient painted in the page colour would show
+ * as a grey band.
+ */
+export const OnATintedCard: Story = {
+  ...Default,
+  args: {
+    className: 'bg-primary text-primary-foreground h-72 w-60 rounded-lg p-3',
+    itemCount: 30,
+  },
+};
+
+/** `fade="none"`: hard edges, as before. */
+export const WithoutFades: Story = {
+  ...Default,
+  args: {
+    className: 'border-border h-72 w-60 rounded-lg border p-3',
+    itemCount: 30,
+    fade: 'none',
   },
 };
 

@@ -186,7 +186,7 @@ function ComboboxInput({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-size={size}
       className={cn(
-        'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 w-full min-w-0 rounded-lg border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
+        'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground w-full min-w-0 rounded-lg border bg-background text-foreground px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
         'data-[size=default]:h-9 data-[size=sm]:h-8',
         // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
         // under the 3:1 focus-indicator floor (SC 2.4.13). 3px > the 2px
@@ -484,7 +484,7 @@ function ComboboxChips({
     <BaseCombobox.Chips
       data-slot="combobox-chips"
       className={cn(
-        'border-input dark:bg-input/30 flex w-full flex-wrap items-center gap-1.5 rounded-lg border bg-transparent p-1.5 shadow-xs',
+        'border-input flex w-full flex-wrap items-center gap-1.5 rounded-lg border bg-background text-foreground p-1.5 shadow-xs',
         'focus-within:border-ring',
         className,
       )}
@@ -582,6 +582,28 @@ interface ComboboxComposeProps {
   className?: string;
 }
 
+/**
+ * Each item's `value` keys its row, so two items with one value collide: the
+ * list keeps a stale row and filtering looks broken with no error. Say so
+ * once per distinct set of duplicates, naming them, instead of failing
+ * silently. Only bad data reaches the warning.
+ */
+function useWarnDuplicateValues(items: readonly ComboboxComposeItem[]) {
+  const duplicates = React.useMemo(() => {
+    const seen = new Set<string>();
+    const dupes = new Set<string>();
+    for (const { value } of items) (seen.has(value) ? dupes : seen).add(value);
+    return [...dupes].join(', ');
+  }, [items]);
+  React.useEffect(() => {
+    if (duplicates) {
+      console.warn(
+        `<ComboboxCompose> items share a value (${duplicates}). Each value keys a row, so filtering and selection break; give every item a unique value.`,
+      );
+    }
+  }, [duplicates]);
+}
+
 function ComboboxCompose({
   items,
   placeholder,
@@ -595,6 +617,7 @@ function ComboboxCompose({
   clearable = true,
   className,
 }: ComboboxComposeProps) {
+  useWarnDuplicateValues(items);
   return (
     <Combobox
       items={items}

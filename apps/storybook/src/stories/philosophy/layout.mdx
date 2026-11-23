@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
     source: docs/philosophies/LAYOUT_PHILOSOPHY.md
-    hash: 6dcacc66e409 */}
+    hash: 3bb5f05a5ed8 */}
 
 # Layout & Responsiveness Philosophy
 
@@ -118,7 +118,7 @@ below is the layout-side summary.
 | (base) | 0–479 | Single column, smallest typography, page padding `px-4` |
 | `xs:` | ≥ 480 (`30rem`) | Page padding `px-6`, side-by-side chips |
 | `md:` | ≥ 768 (`48rem`) | Multi-column grids start, headlines scale up |
-| `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding `py-24` |
+| `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding fluid, see §5 |
 | `xl:` | ≥ 1280 (`80rem`) | `wide` containers reach max width |
 
 DS components stop growing at `xl:` — `Container size="wide"` (1280px)
@@ -135,7 +135,7 @@ Mobile gets the tightest geometry. Desktop earns breathing room.
 Three load-bearing patterns:
 
 - **Horizontal page padding**: `px-4 sm:px-6 lg:px-8`
-- **Section vertical padding**: `py-16 md:py-20 lg:py-24` (the
+- **Section vertical padding**: `py-section-comfortable`, fluid from 64px to 96px (the
   `<Section spacing="comfortable">` default)
 - **Card grid gap**: `gap-4 md:gap-6 lg:gap-8`
 
@@ -146,16 +146,16 @@ codebase today and the most visible to side-door visitors.
 **Section spacing variants (the floor rule):** the three named
 variants on `<Section spacing>` exist so callers don't pick `py-*`
 classes by hand — but every variant **must clear the §3 desktop
-floor** (`py-16` = `xl` token) by the `md:` breakpoint. Anything
+floor** (`py-16` = `xl` token) by 768px of viewport. Anything
 smaller renders as a "padless band" — the exact regression the
 stats-bar shipped in 2026-05 (`py-10 md:py-12 lg:py-14`, max 56px
 at desktop). The current variants:
 
 | Variant | Classes | When |
 | --- | --- | --- |
-| `tight` | `py-12 md:py-16 lg:py-20` | Stat bars, divider stripes, short interstitials |
-| `comfortable` | `py-16 md:py-20 lg:py-24` | Default for content sections |
-| `spacious` | `py-20 md:py-24 lg:py-32` | Hero adjacents, final CTAs |
+| `tight` | `py-section-tight` (48 → 80px) | Stat bars, divider stripes, short interstitials |
+| `comfortable` | `py-section-comfortable` (64 → 96px) | Default for content sections |
+| `spacious` | `py-section-spacious` (80 → 128px) | Hero adjacents, final CTAs |
 
 Locked by `layout-primitives-lock.test.tsx`.
 
@@ -211,7 +211,7 @@ Borders only appear at section *transitions*, never inside content.
 
 ### 9. Decorative chrome is positioned, never displacing
 
-Gradient blobs, `<BorderBeam>`, decorative SVGs, glow rings — all of
+Gradient blobs, `<EdgeGlow>`, decorative SVGs, glow rings — all of
 them are `absolute` (or `fixed`) and never affect document flow. The
 parent is `relative overflow-hidden`. Decorative chrome that nudges
 content even by a pixel is a layout-CLS source.
@@ -247,7 +247,7 @@ an `import`.
 | --- | --- | --- |
 | `<Container>` | `packages/ui/src/primitives/container.tsx` | Width contract from §2. Props: `size`, `as`, `className`. |
 | `<Section>` | `packages/ui/src/primitives/section.tsx` | Vertical rhythm + tone + dividers + container. Props: `spacing`, `tone`, `divider`, `container`, `as`. |
-| `<SectionHeader>` | `packages/ui/src/blocks/section-header.tsx` | The repeated `text-center mb-12` + h2 + tagline pattern. Props: `eyebrow`, `title`, `tagline`, `align`. |
+| `<SectionHeader>` | `packages/ui/src/patterns/section-header.tsx` | The repeated `text-center mb-12` + h2 + tagline pattern, on the fluid type scale and the section rhythm. Props: `eyebrow`, `eyebrowStyle`, `title`, `tagline`, `align`, `size`, `spacing`. |
 | `<Stack>` / `<Cluster>` | `packages/ui/src/primitives/stack.tsx` | Vertical (`Stack`) and horizontal-wrapping (`Cluster`) gap rhythm. Props: `gap`, `direction?`, `align?`, `wrap?`. |
 | `<Grid>` / `<GridItem>` | `packages/ui/src/primitives/grid.tsx` | 2-D CSS-grid rhythm on the §3 spacing scale: `<Grid>` sets columns + gap, `<GridItem>` spans responsively per breakpoint. Two flat components (never a `kind` union). Props: `cols`, `gap`, `as` / `span`, `mdSpan`, `lgSpan`, `as`. Gap is a single token (no split `rowGap`/`colGap`), and there is no `colStart` — placement is span-only. |
 | `<Box>` | `packages/ui/src/primitives/box.tsx` | The lowest-altitude wrapper — surface + box-model on one element. Props: `surface`, `padding`, `radius`, `border`, `as`. Curated tokenized props only (no `sx` / `mt`/`px` style-prop soup). `<Card>` composes `<Box>`; reach for `<Section>`/`<Container>` for page rhythm. |
@@ -354,7 +354,7 @@ Locks mobile padding at every breakpoint.
 **Right** (handled by `<Container>` internally):
 
 ```tsx
-<Container size="content"> {/* px-4 sm:px-6 lg:px-8 mx-auto max-w-[1024px] */}
+<Container size="content"> {/* px-4 sm:px-6 lg:px-8 mx-auto max-w-(--container-content) */}
 ```
 
 ### Decorative chrome
@@ -399,7 +399,7 @@ When designing or reviewing a layout, ask:
 4. **#4 Mobile-first** — do base classes describe the smallest
    viewport, with `sm:` / `md:` / `lg:` only adding density?
 5. **#5 Density** — does horizontal padding scale `px-4 → sm:px-6 →
-   lg:px-8`? Section padding `py-16 → md:py-20 → lg:py-24`?
+   lg:px-8`? Section padding from a `py-section-*` token, not stepped `py-*`?
 6. **#6 Reserve** — does every async slot reserve its final height?
    Do images carry aspect-ratio?
 7. **#7 Compose** — is every `border-y` / `bg-fd-card/*` expressed as

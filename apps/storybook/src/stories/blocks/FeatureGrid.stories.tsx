@@ -44,6 +44,17 @@ const meta: Meta<typeof FeatureGrid> = {
         defaultValue: { summary: '[]' },
       },
     },
+    density: {
+      control: 'inline-radio',
+      options: ['compact', 'default', 'relaxed'],
+      description:
+        "How much air the collection has. Sets the gap between items, the section padding and each card's padding together, so a page tightens or opens up without a className.",
+      table: {
+        category: 'Appearance',
+        type: { summary: "'compact' | 'default' | 'relaxed'" },
+        defaultValue: { summary: "'default'" },
+      },
+    },
     cols: {
       control: 'select',
       options: [2, 3, 4],
@@ -58,7 +69,11 @@ const meta: Meta<typeof FeatureGrid> = {
     loading: {
       control: 'boolean',
       description: 'Render a grid of card skeletons instead of the features.',
-      table: { category: 'State', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+      table: {
+        category: 'State',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
     },
     loadingCount: {
       control: { type: 'range', min: 1, max: 12, step: 1 },
@@ -122,6 +137,9 @@ export const Default: Story = {
 export const TwoColumns: Story = {
   args: { ...Default.args, cols: 2, features: sampleFeatures.slice(0, 4) },
 };
+
+export const Compact: Story = { args: { ...Default.args, density: 'compact' } };
+export const Relaxed: Story = { args: { ...Default.args, density: 'relaxed' } };
 
 export const Loading: Story = { args: { loading: true } };
 

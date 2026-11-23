@@ -203,10 +203,10 @@ function Specimen() {
         file="styles/structure/motion.css"
         owns="Structure: keyframes, motion timings, animation utility classes. No semantic meaning — the mechanical primitives everything else spends. Classes sit in Tailwind's components layer, so a call-site utility still wins."
       >
-        <Probe name="--animate-marquee" />
+        <Probe name="--animate-strand-draw" />
         <Typography variant="caption" tone="muted">
           Registered as a Tailwind theme key, so{' '}
-          <code className="font-mono">animate-marquee</code> exists as a
+          <code className="font-mono">animate-strand-draw</code> exists as a
           utility. This layer also enumerates every long-running animation in
           the <code className="font-mono">prefers-reduced-motion</code> clamp.
         </Typography>
@@ -388,7 +388,11 @@ export const Default: Story = {
         .querySelector('[data-probe="--interlace-background"]')
         ?.textContent?.trim()
         .toLowerCase();
-      expect(background).toBe(dark ? '#0a0a0a' : '#fff');
+      // The build's CSS minifier may print lightness as a percentage
+      // (`oklch(100% 0 0)`), so compare the lightness, not the spelling.
+      const lightness = /^oklch\(\s*([\d.]+)(%?)/.exec(background ?? '');
+      expect(lightness).not.toBeNull();
+      expect(Number(lightness![1]) / (lightness![2] ? 100 : 1)).toBeCloseTo(dark ? 0.155 : 0.989, 4);
     });
   },
 };

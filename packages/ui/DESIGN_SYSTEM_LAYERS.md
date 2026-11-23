@@ -45,8 +45,8 @@ In `docs/philosophies/`, at the repo root:
 │                  --primary, --ring, --destructive (CSS vars)    │
 │                  → references the brand layer via var(...)      │
 ├─────────────────────────────────────────────────────────────────┤
-│  1. Primitives   raw values — hex, px, keyframes, motion        │
-│                  (animations + foundation + brand hex literals) │
+│  1. Primitives   raw values — oklch, px, keyframes, motion      │
+│                  (animations + foundation + brand colours)      │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -59,7 +59,7 @@ A template (5) composes patterns (4) and components (3).
 
 **Why this layering matters.** It keeps the override surface
 predictable: a consumer who wants to fork the brand only touches layer 1
-(brand hex literals), and every higher layer flows through automatically
+(brand colour literals), and every higher layer flows through automatically
 because they reference *down* via `var(--…)` and React imports — never
 up. Same logic in reverse: a template that wants a different layout
 composes different patterns; it doesn't reach into a primitive's
@@ -71,8 +71,8 @@ internals.
 
 **What lives here:** raw value tokens — keyframes, animation timings,
 font families, the type/spacing/radius scales registered as Tailwind
-theme tokens, and the concrete brand hex literals (`--interlace-primary:
-#7d350c`, etc.).
+theme tokens, and the concrete brand colour literals, written in OKLCH
+(`--interlace-primary: oklch(0.422 0.1117 45.2)`, etc.).
 
 **Files:**
 

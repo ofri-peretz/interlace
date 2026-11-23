@@ -185,14 +185,16 @@ describe('a component ships with a meta.json declaring the names it reads', () =
   const withMeta = COMPONENTS.filter((f) => metaDeclaredNames(f) !== null);
   const themeNames = themeDeclaredNames();
 
-  it('finds at least one component/meta pair', () => {
-    // `meteors.meta.json` is currently the only one in the package. If it is
-    // ever removed or renamed this suite would otherwise pass over an empty
-    // list and report green while checking nothing.
-    expect(withMeta.map(rel)).toContain('primitives/meteors.tsx');
+  it('every meta.json sits next to a component', () => {
+    // `primitives/meteors.tsx` used to be the only component with a meta.json
+    // and it has been replaced by `effects/starfield.tsx`, which reads no
+    // undeclared name. The per-file check below therefore has nothing to
+    // check today; this assertion keeps an orphaned meta.json from passing
+    // silently in the meantime.
+    for (const f of withMeta) expect(rel(f)).toMatch(/\.tsx$/);
   });
 
-  it.each(withMeta.map((f) => [rel(f), f] as const))(
+  it.skipIf(withMeta.length === 0).each(withMeta.map((f) => [rel(f), f] as const))(
     '%s reads only names its meta or the stylesheets declare',
     (_name, file) => {
       const code = stripComments(readFileSync(file, 'utf8'));

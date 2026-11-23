@@ -23,7 +23,7 @@
  * | R4   | Extends native el                | `React.ComponentProps<'footer'>` + Footer props             |
  * | R6   | data-slot on root                | `data-slot="footer"`                                        |
  * | R7   | className merged + ...rest       | `cn(BASE, className)` + `{...props}`                        |
- * | R10  | Composition seam (slots)         | `brand` / `groups` / `social` / `copyright` ReactNode props |
+ * | R10  | Composition seam (slots)         | `brand` / `tagline` / `groups` / `social` / `copyright`     |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes only                   |
  * | R19  | Tokens only                      | `bg-card` / `border-border` / `text-muted-foreground`       |
@@ -50,8 +50,10 @@ interface FooterGroup {
 }
 
 interface FooterProps extends React.ComponentProps<'footer'> {
-  /** Brand mark + tagline. Renders left of the link groups. */
+  /** Brand mark. Renders left of the link groups. */
   brand?: React.ReactNode;
+  /** A short line under the brand: what the site is, in one sentence. */
+  tagline?: React.ReactNode;
   /** 1-4 grouped link columns. */
   groups?: FooterGroup[];
   /** Copyright line (left of the tail row). */
@@ -91,6 +93,7 @@ const CONTAINER_CLASSES = {
 
 function Footer({
   brand,
+  tagline,
   groups = [],
   copyright,
   social,
@@ -115,7 +118,7 @@ function Footer({
           CONTAINER_CLASSES[containerSize],
         )}
       >
-        {brand || groups.length > 0 ? (
+        {brand || tagline || groups.length > 0 ? (
           <div
             className={cn(
               'grid gap-10',
@@ -125,7 +128,16 @@ function Footer({
               groups.length >= 4 && 'md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]',
             )}
           >
-            {brand ? <div>{brand}</div> : null}
+            {brand || tagline ? (
+              <div data-slot="footer-brand" className="flex flex-col gap-3">
+                {brand}
+                {tagline ? (
+                  <p data-slot="footer-tagline" className="text-muted-foreground max-w-prose text-sm text-pretty">
+                    {tagline}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
             {groups.map((group, i) => (
               <nav key={i} aria-label={group.title}>
                 <h2 className="font-body text-ui font-semibold mb-4">

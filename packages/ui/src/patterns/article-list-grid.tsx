@@ -46,6 +46,12 @@ interface ArticleListGridProps extends Omit<React.ComponentProps<'section'>, 'ti
   /** Regular tiles. */
   posts?: ArticleCardProps[];
   cols?: 2 | 3 | 4;
+  /**
+   * How much air the collection has: the gap between cards and the section's padding.
+   * `compact` for dashboards and sidebars, `relaxed` for a landing page.
+   * @default 'default'
+   */
+  density?: 'compact' | 'default' | 'relaxed';
   loading?: boolean;
   loadingCount?: number;
   /** Custom empty state. Defaults to a small muted line. */
@@ -53,14 +59,22 @@ interface ArticleListGridProps extends Omit<React.ComponentProps<'section'>, 'ti
 }
 
 /**
- * Mobile-first track counts per desktop `cols`. Written out statically because
- * Tailwind cannot scan a runtime-built `xs:grid-cols-${n}`.
+ * Track counts per `cols`, keyed on the width of this component (it is the
+ * `@container`), not the viewport: the same grid in a sidebar or a card
+ * collapses as it would on a phone. Two tracks from 28rem, the full count
+ * from 56rem. Written out statically because Tailwind cannot scan a
+ * runtime-built `@4xl:grid-cols-${n}`.
  */
 const ARTICLE_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 xs:grid-cols-2',
-  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 @md:grid-cols-2',
+  3: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-3',
+  4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
+
+/** Card gap per `density`, on the Grid primitive's closed gap scale. */
+const DENSITY_GAP = { compact: 'sm', default: 'md', relaxed: 'lg' } as const;
+/** Section padding per `density`. */
+const DENSITY_SECTION = { compact: 'py-10', default: 'py-16', relaxed: 'py-24' } as const;
 
 function ArticleListGrid({
   title,
@@ -68,6 +82,7 @@ function ArticleListGrid({
   featured,
   posts = [],
   cols = 3,
+  density = 'default',
   loading,
   loadingCount,
   emptyState,
@@ -80,7 +95,8 @@ function ArticleListGrid({
     <section
       data-slot="article-list-grid"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-16', className)}
+      data-density={density}
+      className={cn('@container', DENSITY_SECTION[density], className)}
       {...props}
     >
       <Container size="content">
@@ -105,25 +121,23 @@ function ArticleListGrid({
               {/* Responsive collapse: `cols` is a DESKTOP count. Unqualified it
                   holds 3 tracks at 375px and the truncated author name inside
                   each card measures 0px wide — invisible. */}
-              <Grid cols={cols} gap="md" className={ARTICLE_GRID_COLS[cols]}>
+              <Grid cols={cols} gap={DENSITY_GAP[density]} className={ARTICLE_GRID_COLS[cols]}>
                 {Array.from({ length: skeletonCount }).map((_, i) => (
                   <Skeleton key={i} variant="article-card" label={null} />
                 ))}
               </Grid>
             </>
           ) : isEmpty ? (
-            emptyState ?? (
+            (emptyState ?? (
               <Typography variant="long" tone="muted" className="text-center">
                 No articles yet.
               </Typography>
-            )
+            ))
           ) : (
             <>
-              {featured ? (
-                <ArticleCard {...featured} variant="overlay" priority />
-              ) : null}
+              {featured ? <ArticleCard {...featured} variant="overlay" priority /> : null}
               {posts.length > 0 ? (
-                <Grid cols={cols} gap="md" className={ARTICLE_GRID_COLS[cols]}>
+                <Grid cols={cols} gap={DENSITY_GAP[density]} className={ARTICLE_GRID_COLS[cols]}>
                   {posts.map((post, i) => (
                     <ArticleCard key={i} {...post} />
                   ))}

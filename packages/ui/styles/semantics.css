@@ -20,7 +20,7 @@
    *  here (`@layer interlace.semantics { :root { --background: ... } }`)
    *  AFTER importing this file, or they can fork the entire brand layer
    *  upstream (`@layer interlace.brand { ... }`) to swap the underlying
-   *  hex values without touching the alias graph.
+   *  colour values without touching the alias graph.
    *
    *  WHY FOUR SELECTORS AND NOT JUST `:root`. A custom property whose
    *  value is a `var()` is substituted at computed-value time on the
@@ -42,6 +42,7 @@
   :root,
   .dark,
   [data-scheme='dark'],
+  [data-scheme='light'],
   [data-theme] {
     --primary: var(--interlace-primary);
     --primary-foreground: var(--interlace-primary-foreground);
@@ -69,7 +70,7 @@
      * `text-warning`, `bg-info` instead of `bg-emerald-700` /
      * `bg-amber-500` / `bg-blue-600`. Brand fork-friendly: override
      * `--interlace-success` / `-warning` / `-info` in
-     * `@layer interlace.brand` to swap the underlying hex. */
+     * `@layer interlace.brand` to swap the underlying colour. */
     --success: var(--interlace-success);
     --success-foreground: var(--interlace-success-foreground);
     --warning: var(--interlace-warning);
@@ -78,6 +79,8 @@
     --info-foreground: var(--interlace-info-foreground);
     --caution: var(--interlace-caution);
     --caution-foreground: var(--interlace-caution-foreground);
+    --highlight: var(--interlace-highlight);
+    --highlight-foreground: var(--interlace-highlight-foreground);
 
     --scrim: var(--interlace-scrim);
     --scrim-foreground: var(--interlace-scrim-foreground);
@@ -115,7 +118,7 @@
      * code, but `--viz-*` is Interlace-original. `index.css` imports both, so
      * every consumer on the canonical one-line import gets it.
      *
-     * Three resolve to brand hex (grid / axis / edge — contrast tables above).
+     * Three resolve to brand colours (grid / axis / edge — contrast tables above).
      * Every other one is an ALIAS of a token whose contrast is already verified
      * in both themes. Deliberate: a diverging red/green scale that drifts away
      * from `--success` / `--destructive` is how a product ends up with two
@@ -215,6 +218,8 @@
   --color-info-foreground: var(--info-foreground);
   --color-caution: var(--caution);
   --color-caution-foreground: var(--caution-foreground);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
 
   /* Scrim — generates bg-scrim/70, text-scrim-foreground,
    * border-scrim-foreground/30 so image-overlay surfaces stop reaching for

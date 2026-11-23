@@ -69,6 +69,7 @@ const PRIMITIVES = [
   { name: 'prose', viewport: 320, tier: 'client' },
   { name: 'code-block', viewport: 320, tier: 'client' },
   { name: 'tag', viewport: 320, tier: 'server' },
+  { name: 'kbd', viewport: 320, tier: 'server' },
   { name: 'toc', viewport: 480, tier: 'client' },
   { name: 'reading-time', viewport: 320, tier: 'server' },
   { name: 'published-date', viewport: 320, tier: 'server' },
@@ -80,6 +81,8 @@ const PRIMITIVES = [
   { name: 'section-boundary', viewport: 320, tier: 'client' },
   // Phase: scorecard pages — visual grade pill.
   { name: 'grade-badge', viewport: 320, tier: 'server' },
+  // Landing sections — the icon mark at the head of a feature or a step.
+  { name: 'featured-icon', viewport: 320, tier: 'server' },
   // Right-click menu (paired with DropdownMenu's click-to-open variant).
   { name: 'context-menu', viewport: 320, tier: 'client' },
   // Phase 1.1 — form & input primitives brought to the component floor.
@@ -102,6 +105,7 @@ const PRIMITIVES = [
   // Accordion, Pagination, ScrollArea) own a real root element and use it.
   { name: 'dialog', viewport: 320, tier: 'client' },
   { name: 'sheet', viewport: 320, tier: 'client' },
+  { name: 'drawer', viewport: 320, tier: 'client' },
   { name: 'popover', viewport: 320, tier: 'client' },
   // 320, not 768 like HoverCard: a tooltip is a short `w-fit` label that
   // Base UI also opens on keyboard focus, so it survives a touch screen.
@@ -112,6 +116,7 @@ const PRIMITIVES = [
   // Pagination is a server primitive — plain anchors, no state.
   { name: 'pagination', viewport: 320, tier: 'server' },
   { name: 'scroll-area', viewport: 320, tier: 'client' },
+  { name: 'toolbar', viewport: 320, tier: 'client' },
   // ── Phase 8 — semantic themes ─────────────────────────────────────────
   // ThemeSwitcher is client-tier by necessity, not by preference: it reads
   // localStorage and matchMedia and writes to <html>. Its trigger collapses

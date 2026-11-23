@@ -276,6 +276,18 @@ describe('interlace-base leaves the host app alone', () => {
     expect([...counts].filter(([, n]) => n > 1).map(([k]) => k)).toEqual([]);
   });
 
+  it('lets components follow the host typeface', async () => {
+    // `font-body` and `font-heading` are what components read. With base
+    // alone, both must end at the host's own `--font-sans`, so a shadcn
+    // app's typeface reaches Interlace components without configuration.
+    const css = (await compileApp('./base.css')).build(['font-heading', 'font-body', 'font-sans']);
+    const vars = themeVars(css);
+    expect(vars.get('--font-heading')).toBe('var(--font-body)');
+    expect(vars.get('--font-body')).toBe('var(--font-sans)');
+    const host = themeVars((await compileApp()).build(['font-sans']));
+    expect(vars.get('--font-sans')).toBe(host.get('--font-sans'));
+  });
+
   it('ships a barrel that imports only additive files', async () => {
     const barrel = await readFile(path.join(STYLES_DIR, 'base.css'), 'utf8');
     const imports = [...barrel.matchAll(/@import\s+["']\.\/([^"']+)["']/g)].map((m) => m[1]);

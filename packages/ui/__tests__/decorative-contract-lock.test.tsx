@@ -3,7 +3,7 @@
  *
  * WHY THIS LOCK EXISTS
  * --------------------
- * `src/magicui/`, `src/aceternity/` and the decorative half of `src/patterns/`
+ * `src/effects/` and the decorative half of `src/patterns/`
  * are the DS's least-tested surface, because almost nothing about them is
  * visible to the tools that guard the rest of it:
  *
@@ -34,6 +34,8 @@ import { render } from '@testing-library/react';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
+import { COLOR_LITERAL, contrast, parseColor, parseHex, type RGB } from './color-math.js';
+
 // ── the reduced-motion seam ─────────────────────────────────────────────
 //
 // Mocked rather than driven through `window.matchMedia`, and the reason is
@@ -50,21 +52,6 @@ vi.mock('../src/lib/use-reduced-motion.js', () => ({
   useReducedMotion: () => reduced.value,
 }));
 
-const { AnimatedList, AnimatedListItem } = await import(
-  '../src/magicui/animated-list.js'
-);
-const { Marquee } = await import('../src/magicui/marquee.js');
-const { Particles } = await import('../src/magicui/particles.js');
-const { StarsBackground, ShootingStars, Meteors } = await import(
-  '../src/aceternity/stars-background.js'
-);
-const { CloudParticles } = await import('../src/aceternity/cloud-particles.js');
-const { BorderBeam } = await import('../src/magicui/border-beam.js');
-const { NumberTicker } = await import('../src/magicui/number-ticker.js');
-const { BackgroundLines } = await import('../src/aceternity/background-lines.js');
-const { BackgroundGradientAnimation } = await import(
-  '../src/aceternity/background-gradient-animation.js'
-);
 const { SectionHeader } = await import('../src/patterns/section-header.js');
 const { ArticleCard, FeaturedArticleCard } = await import(
   '../src/patterns/article-card.js'
@@ -86,23 +73,6 @@ class StubObserver {
   }
 }
 
-/** Enough of a 2D context for the particle field to seed and paint. */
-function stubCanvas() {
-  const ctx = {
-    clearRect: vi.fn(),
-    beginPath: vi.fn(),
-    arc: vi.fn(),
-    fill: vi.fn(),
-    translate: vi.fn(),
-    setTransform: vi.fn(),
-    fillStyle: '',
-  };
-  vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(
-    ctx as unknown as CanvasRenderingContext2D,
-  );
-  return ctx;
-}
-
 beforeEach(() => {
   reduced.value = false;
   vi.stubGlobal('IntersectionObserver', StubObserver);
@@ -115,104 +85,9 @@ afterEach(() => {
   document.body.innerHTML = '';
 });
 
-const styleOf = (el: Element) => el.getAttribute('style') ?? '';
-
 // ════════════════════════════════════════════════════════════════════════
 // A. Reduced motion
 // ════════════════════════════════════════════════════════════════════════
-
-describe('AnimatedList — reduced motion reaches the ITEM, not just the list', () => {
-  // An ARRAY, not a fragment: `AnimatedList` counts its children with
-  // `Children.toArray`, which sees a single Fragment as one child. Wrapping
-  // these in `<>…</>` yields a one-entry feed and quietly weakens every
-  // assertion below.
-  const feed = [
-    <div key="a">A</div>,
-    <div key="b">B</div>,
-    <div key="c">C</div>,
-  ];
-
-  it('mounts every entry settled, with no spring pop-in', () => {
-    // THE DEFECT: the list correctly killed auto-advance and revealed all
-    // three at once, and then every one of them sprang in from `scale: 0`
-    // simultaneously — a bigger movement than the staggered version it
-    // replaced. `AnimatedListItem` passed `initial={{ scale: 0, opacity: 0 }}`
-    // unconditionally. `motion/react` writes inline styles, so neither the
-    // preflight wildcard nor the structure/motion.css allowlist could reach it, and no
-    // `MotionConfig` wrapped the tree.
-    reduced.value = true;
-    render(<AnimatedList data-testid="feed">{feed}</AnimatedList>);
-
-    const items = [
-      ...document.querySelectorAll('[data-slot="animated-list-item"]'),
-    ];
-    expect(items).toHaveLength(3);
-
-    for (const item of items) {
-      expect(
-        styleOf(item),
-        'An entry mounted mid-animation under `reduce`. motion writes the ' +
-          '`initial` keyframe as an inline style, so `scale(0)` here means the ' +
-          'pop-in is still running.',
-      ).not.toContain('scale(0)');
-      expect(styleOf(item)).not.toContain('opacity: 0');
-    }
-  });
-
-  it('still plays the pop-in when motion is allowed (negative control)', () => {
-    // Without this, the assertion above passes just as well against a
-    // component that never animates at all.
-    reduced.value = false;
-    render(<AnimatedList data-testid="feed">{feed}</AnimatedList>);
-
-    const items = [
-      ...document.querySelectorAll('[data-slot="animated-list-item"]'),
-    ];
-    expect(items.length).toBeGreaterThan(0);
-    expect(
-      styleOf(items[0]),
-      'No entry animation at all under no-preference — the gate is stuck on.',
-    ).toContain('scale(0)');
-  });
-
-  it('gates the exported item on its own, not via the list', () => {
-    // `AnimatedListItem` is exported for consumers driving the window
-    // themselves. A gate that lived only in `AnimatedList` would leave them
-    // with the un-gated pop-in.
-    reduced.value = true;
-    render(<AnimatedListItem>solo</AnimatedListItem>);
-    const item = document.querySelector('[data-slot="animated-list-item"]')!;
-    expect(styleOf(item)).not.toContain('scale(0)');
-  });
-});
-
-describe('Marquee — no control that cannot do what it says', () => {
-  it('withdraws the pause button under reduce', () => {
-    // THE DEFECT: `isAnimating = !paused && !reducedMotion`, so under `reduce`
-    // the button rendered in its "Play" state with `aria-pressed=true` — and
-    // clicking it flipped `paused` to false, which changed `isAnimating` not at
-    // all, because reduced motion outranks it. A control announcing "Resume
-    // scrolling content" that can never resume anything.
-    reduced.value = true;
-    render(<Marquee>logos</Marquee>);
-    expect(
-      document.querySelector('button'),
-      'The pause control is still rendered under `reduce`, where it cannot ' +
-        'affect the animation state in either direction.',
-    ).toBeNull();
-  });
-
-  it('still ships the control when motion is allowed (WCAG 2.2.2)', () => {
-    // The other half: withdrawing it under `reduce` must not become
-    // withdrawing it always. A 40s infinite scroll needs a pause affordance.
-    reduced.value = false;
-    render(<Marquee>logos</Marquee>);
-    const button = document.querySelector('button')!;
-    expect(button).not.toBeNull();
-    expect(button.getAttribute('aria-label')).toBe('Pause scrolling content');
-    expect(button.getAttribute('aria-pressed')).toBe('false');
-  });
-});
 
 describe('ArticleCard — the hover zoom carries its own gate', () => {
   it('gates the cover scale with motion-safe:, not with preflight alone', () => {
@@ -249,121 +124,6 @@ describe('ArticleCard — the hover zoom carries its own gate', () => {
 // ════════════════════════════════════════════════════════════════════════
 // B. Props that lie
 // ════════════════════════════════════════════════════════════════════════
-
-describe('Particles — `interactive` listens somewhere it can actually be heard', () => {
-  /**
-   * Record every `addEventListener` call with the element it was made on.
-   *
-   * Spying on ONE element instead would not work, and the way it fails is
-   * instructive: React 19 attaches its delegated handlers — `pointermove`
-   * among ~136 others — to the root container it renders into. A spy on that
-   * container therefore reports `pointermove` whatever the component does, and
-   * the test passes against the broken code. Hence a prototype-level spy that
-   * records the target, plus assertions naming the exact elements, plus a
-   * render tree deep enough that the interesting parent is NOT React's root.
-   */
-  function recordListeners() {
-    const calls: Array<{ target: Element; type: string }> = [];
-    const original = Element.prototype.addEventListener;
-    vi.spyOn(Element.prototype, 'addEventListener').mockImplementation(
-      function (
-        this: Element,
-        type: string,
-        ...rest: [EventListenerOrEventListenerObject, (boolean | AddEventListenerOptions)?]
-      ) {
-        calls.push({ target: this, type });
-        return original.call(this, type, ...rest);
-      } as typeof Element.prototype.addEventListener,
-    );
-    return calls;
-  }
-
-  const targetsFor = (
-    calls: Array<{ target: Element; type: string }>,
-    type: string,
-  ) => calls.filter((call) => call.type === type).map((call) => call.target);
-
-  it('binds pointermove to the parent, never to the pointer-events-none wrapper', () => {
-    // THE DEFECT: the listener was bound to the wrapper, and the wrapper is
-    // `pointer-events-none` by contract (a decorative field must not eat
-    // clicks). An element with `pointer-events: none` is not a hit target, so
-    // the handler could never fire — which made `interactive`, `staticity` and
-    // `ease` three props the component accepted and ignored.
-    stubCanvas();
-    const calls = recordListeners();
-
-    render(
-      <div data-testid="host">
-        <Particles data-testid="field" interactive />
-      </div>,
-    );
-
-    const wrapper = document.querySelector('[data-slot="particles"]')!;
-    const host = wrapper.parentElement!;
-
-    expect(
-      wrapper.className,
-      'The wrapper stopped being pointer-events-none. That would make the ' +
-        'original binding work again — and make the field swallow clicks, ' +
-        'which is the reason it is decorative-only in the first place.',
-    ).toContain('pointer-events-none');
-
-    const listeners = targetsFor(calls, 'pointermove');
-    expect(
-      listeners,
-      'The pointermove listener is still on the field wrapper, which is not a ' +
-        'hit target. It can never fire.',
-    ).not.toContain(wrapper);
-    expect(
-      listeners,
-      'Nothing bound pointermove to the surface the field covers.',
-    ).toContain(host);
-  });
-
-  it('binds nothing when interactive is off', () => {
-    // Pins that the assertion above measures the `interactive` path, and not
-    // some listener the component adds unconditionally.
-    stubCanvas();
-    const calls = recordListeners();
-
-    render(
-      <div data-testid="host">
-        <Particles data-testid="field" interactive={false} />
-      </div>,
-    );
-
-    const wrapper = document.querySelector('[data-slot="particles"]')!;
-    const listeners = targetsFor(calls, 'pointermove');
-    expect(listeners).not.toContain(wrapper);
-    expect(listeners).not.toContain(wrapper.parentElement!);
-  });
-});
-
-describe('Meteors — `trailColor` reaches the gradient', () => {
-  it('uses the prop as the tail stop', () => {
-    // THE DEFECT: destructured to `_trailColor` and dropped on the floor. The
-    // tail was hard-coded `transparent`, so the prop was documented, typed,
-    // accepted — and inert.
-    render(<Meteors trailColor="rgb(1, 2, 3)" number={2} />);
-    const streaks = [...document.querySelectorAll('span')];
-    expect(streaks.length).toBeGreaterThan(0);
-    for (const streak of streaks) {
-      expect(
-        styleOf(streak),
-        'The meteor tail does not mention the colour it was given.',
-      ).toContain('rgb(1, 2, 3)');
-    }
-  });
-
-  it('still defaults to a transparent falloff', () => {
-    // The fix must be invisible at the default — `trailColor` defaults to
-    // `transparent`, which is exactly what the literal used to be. A visual
-    // change here would mean the prop was wired to the wrong stop.
-    render(<Meteors number={1} />);
-    const streak = document.querySelector('span')!;
-    expect(styleOf(streak)).toContain('transparent 100%');
-  });
-});
 
 describe('SectionHeader — `align` reaches the eyebrow', () => {
   it('left-aligns the eyebrow row under align="start"', () => {
@@ -432,271 +192,15 @@ describe('ArticleCard — dates are pinned to UTC', () => {
   });
 });
 
-describe('BackgroundGradientAnimation — the goo filter id is per-instance', () => {
-  it('gives two instances on one page two different filters', () => {
-    // THE DEFECT: `id="bga-goo"`, a literal. SVG ids are document-global, so
-    // two instances emitted duplicate ids; `url(#bga-goo)` resolves to the
-    // first, meaning both surfaces shared one filter and unmounting the first
-    // took the second's goo with it.
-    render(
-      <>
-        <BackgroundGradientAnimation>one</BackgroundGradientAnimation>
-        <BackgroundGradientAnimation>two</BackgroundGradientAnimation>
-      </>,
-    );
-
-    const ids = [...document.querySelectorAll('filter')].map((f) => f.id);
-    expect(ids).toHaveLength(2);
-    expect(
-      new Set(ids).size,
-      `Both instances emitted the same filter id (${ids[0]}). Duplicate ids ` +
-        `are legal HTML and silently wrong SVG.`,
-    ).toBe(2);
-
-    // …and each blob layer must point at its OWN filter, not merely at a
-    // unique-looking string. A per-instance id that nothing references is the
-    // same bug with an extra step.
-    const layers = [...document.querySelectorAll('[data-slot="gradient-blobs"]')];
-    expect(layers).toHaveLength(2);
-    layers.forEach((layer, index) => {
-      expect(styleOf(layer)).toContain(`url(#${ids[index]})`);
-    });
-  });
-
-  it('keeps the reference out of the class system', () => {
-    // Tailwind scans source as raw TEXT. A `[filter:url(#${id})]` utility is a
-    // candidate it can never see, so the class would be emitted by React and
-    // never generated by Tailwind — a fix that type-checks, renders, and
-    // produces no filter at all. It has to be an inline style.
-    render(<BackgroundGradientAnimation>x</BackgroundGradientAnimation>);
-    const layer = document.querySelector('[data-slot="gradient-blobs"]')!;
-    expect(styleOf(layer)).toContain('filter:');
-    expect(layer.className).not.toContain('filter:url');
-  });
-});
-
-describe('ShootingStars — the spawn chain has an owner', () => {
-  beforeEach(() => {
-    // Only the timer functions: `requestAnimationFrame` is left real so the
-    // star-movement loop does not land in `getTimerCount()` and make the
-    // count below meaningless.
-    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
-  });
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it('does not leave a second chain running when a timing prop changes', () => {
-    // THE DEFECT: `setTimeout(createStar, …)` re-armed itself forever and the
-    // effect returned no cleanup. It self-terminated after UNMOUNT (because
-    // `svgRef.current` goes null), which is what made it look harmless — but
-    // re-tuning any of minSpeed/maxSpeed/minDelay/maxDelay while mounted, or
-    // scrolling back into view, re-ran the effect and started a second chain
-    // on top of the first. Two chains, one `setStar`, twice the stars.
-    const { rerender } = render(<ShootingStars minDelay={1000} maxDelay={2000} />);
-    expect(vi.getTimerCount()).toBe(1);
-
-    rerender(<ShootingStars minDelay={3000} maxDelay={4000} />);
-    expect(
-      vi.getTimerCount(),
-      'A second spawn chain is pending alongside the first. Each one keeps ' +
-        're-arming, so the leak compounds with every prop change.',
-    ).toBe(1);
-  });
-
-  it('cancels the chain on unmount', () => {
-    const { unmount } = render(<ShootingStars />);
-    expect(vi.getTimerCount()).toBe(1);
-    unmount();
-    expect(vi.getTimerCount()).toBe(0);
-  });
-});
-
-describe('ShootingStars — the trail gradient id is per-instance', () => {
-  it('does not reach for `#gradient`', () => {
-    // Found alongside the goo-filter defect and identical in kind, but worse
-    // in degree: `id="gradient"` is about the most collision-prone id an SVG
-    // can declare.
-    render(
-      <>
-        <ShootingStars />
-        <ShootingStars />
-      </>,
-    );
-    const ids = [...document.querySelectorAll('linearGradient')].map((g) => g.id);
-    expect(ids).toHaveLength(2);
-    expect(ids).not.toContain('gradient');
-    expect(new Set(ids).size).toBe(2);
-  });
-});
-
-// ════════════════════════════════════════════════════════════════════════
-// D. Accessibility
-// ════════════════════════════════════════════════════════════════════════
-
-describe('BackgroundLines — the decorative layer is hidden from AT', () => {
-  it('marks the SVG aria-hidden', () => {
-    // THE DEFECT: twelve unlabelled `<path>`s, `pointer-events-none` but with
-    // no `aria-hidden` — the only backdrop in `aceternity/` missing it.
-    reduced.value = false;
-    render(<BackgroundLines>content</BackgroundLines>);
-    const svg = document.querySelector('svg');
-    expect(svg, 'The decorative layer did not render; nothing was asserted.')
-      .not.toBeNull();
-    expect(svg!.getAttribute('aria-hidden')).toBe('true');
-  });
-});
-
-/**
- * `aria-hidden` on the ROOT of a decorative layer, and the reason the check is
- * "the root, and every node under it is covered by it" rather than "every
- * node carries the attribute": `aria-hidden` prunes a SUBTREE. Asserting it on
- * children too would lock in redundancy, and — worse — would pass just as well
- * against a component that hid a child while leaving the parent group
- * announced. So each test below finds the layer's root and asserts the
- * attribute is there, plus that no OTHER element in the tree is left outside
- * a hidden subtree.
- */
-function assertFullyHidden(roots: Element[], label: string) {
-  expect(roots.length, `${label}: nothing rendered; nothing was asserted.`)
-    .toBeGreaterThan(0);
-  for (const root of roots) {
-    expect(
-      root.getAttribute('aria-hidden'),
-      `${label}: <${root.tagName.toLowerCase()}> is an empty, roleless, ` +
-        `decorative node that a screen reader walks into.`,
-    ).toBe('true');
-  }
-}
-
-describe('BorderBeam — the ring and the beam are out of the a11y tree', () => {
-  it('hides the wrapper, which takes the beam with it', () => {
-    // THE DEFECT: two empty `<div>`s, no role, no text, no `aria-hidden`
-    // anywhere in the file. The effect is decoration drawn inside someone
-    // else's card, so a reader working through that card met two anonymous
-    // group nodes on the way to its content.
-    const { container } = render(<BorderBeam />);
-    const wrapper = container.firstElementChild!;
-    assertFullyHidden([wrapper], 'BorderBeam wrapper');
-
-    // The beam is the wrapper's child, so it inherits the pruning. Pin the
-    // structural fact the inheritance rests on — if the beam is ever hoisted
-    // out of the wrapper, this fails and the `aria-hidden` has to follow it.
-    const beam = container.querySelector('.animate-border-beam')!;
-    expect(beam, 'the beam element is gone').not.toBeNull();
-    expect(
-      wrapper.contains(beam),
-      'The beam is no longer inside the aria-hidden wrapper, so it is back in ' +
-        'the a11y tree on its own.',
-    ).toBe(true);
-  });
-
-  it('does not put aria-hidden anywhere className can reach', () => {
-    // `className` lands on the BEAM by this component's documented API. If the
-    // attribute lived there, a consumer restyling the gradient would be one
-    // prop away from hiding whatever they aimed it at.
-    const { container } = render(<BorderBeam className="custom-beam" />);
-    const beam = container.querySelector('.custom-beam')!;
-    expect(beam.hasAttribute('aria-hidden')).toBe(false);
-  });
-});
-
-describe('StarsBackground family — all three layers are hidden from AT', () => {
-  // `HeroCosmic` stacks all three at once, which is what made this worth
-  // three separate assertions: the defect was not one missed attribute, it
-  // was a whole file with zero occurrences of `aria-hidden`, and a hero
-  // therefore opened with three unannounced graphics nodes in a row.
-
-  it('StarsBackground: the canvas', () => {
-    stubCanvas();
-    reduced.value = false;
-    const { container } = render(<StarsBackground />);
-    assertFullyHidden([...container.querySelectorAll('canvas')], 'StarsBackground');
-  });
-
-  it('ShootingStars: the svg, gradient defs included', () => {
-    reduced.value = false;
-    const { container } = render(<ShootingStars />);
-    const svg = container.querySelector('svg')!;
-    assertFullyHidden([svg], 'ShootingStars');
-    // The `<defs>`/`<linearGradient>` are inside it — no separate attribute
-    // needed, but prove they are actually inside it.
-    const defs = container.querySelector('defs')!;
-    expect(svg.contains(defs)).toBe(true);
-  });
-
-  it('Meteors: the streak container', () => {
-    reduced.value = false;
-    const { container } = render(<Meteors number={2} />);
-    const root = container.firstElementChild!;
-    assertFullyHidden([root], 'aceternity Meteors');
-    // Every streak lives under the hidden root; none escaped into a sibling.
-    for (const streak of container.querySelectorAll('span')) {
-      expect(root.contains(streak)).toBe(true);
-    }
-  });
-
-  it('leaves no un-hidden decorative root in the composed hero (negative control)', () => {
-    // The three assertions above pass one at a time even if a fourth layer is
-    // added with no attribute. Render them the way `HeroCosmic` does and
-    // sweep the whole tree: every top-level element must be hidden.
-    stubCanvas();
-    reduced.value = false;
-    const { container } = render(
-      <div>
-        <StarsBackground />
-        <ShootingStars />
-        <Meteors number={1} />
-      </div>,
-    );
-    const layers = [...container.firstElementChild!.children];
-    expect(layers).toHaveLength(3);
-    assertFullyHidden(layers, 'composed hero');
-  });
-});
-
 // ════════════════════════════════════════════════════════════════════════
 // E. Tokens
 // ════════════════════════════════════════════════════════════════════════
 //
-// R19 is "tokens only", but for these four components the interesting question
+// R19 is "tokens only", but for these components the interesting question
 // is not whether a literal is gone — it is whether what replaced it is
 // ADMISSIBLE, which depends on what the colour is doing. The DS gates SC 1.4.3
 // / 1.4.11 by token maths rather than by axe (see composite-contrast-lock), so
 // the check is arithmetic, on the same theme file.
-
-type RGB = [number, number, number];
-
-function parseHex(hex: string): RGB | null {
-  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
-  if (!m) return null;
-  const h =
-    m[1].length === 3
-      ? m[1]
-          .split('')
-          .map((c) => c + c)
-          .join('')
-      : m[1];
-  return [
-    parseInt(h.slice(0, 2), 16),
-    parseInt(h.slice(2, 4), 16),
-    parseInt(h.slice(4, 6), 16),
-  ];
-}
-
-function luminance([r, g, b]: RGB): number {
-  const [rs, gs, bs] = [r, g, b].map((v) => {
-    const s = v / 255;
-    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-}
-
-function contrast(a: RGB, b: RGB): number {
-  const [la, lb] = [luminance(a), luminance(b)];
-  const [hi, lo] = la > lb ? [la, lb] : [lb, la];
-  return (hi + 0.05) / (lo + 0.05);
-}
 
 // The palette (brand) and the names bound to it (semantics), read as one.
 const THEME_CSS = ['brand/interlace.css', 'semantics.css'].map((f) =>
@@ -726,10 +230,10 @@ function readTheme(): Record<'light' | 'dark', Map<string, RGB>> {
   >;
   const sections = { light: css.slice(0, darkAt), dark: css.slice(darkAt) };
   for (const mode of ['light', 'dark'] as const) {
-    const re = /--interlace-([a-z0-9-]+):\s*(#[0-9a-fA-F]{3,8})\s*;/g;
+    const re = new RegExp(String.raw`--interlace-([a-z0-9-]+):\s*(${COLOR_LITERAL})\s*;`, 'g');
     let m: RegExpExecArray | null;
     while ((m = re.exec(sections[mode])) !== null) {
-      const rgb = parseHex(m[2]);
+      const rgb = parseColor(m[2]);
       if (rgb) out[mode].set(m[1], rgb);
     }
   }
@@ -741,7 +245,7 @@ function defaultsOf(file: string): Record<string, string> {
   const source = readFileSync(resolve(__dirname, '../src', file), 'utf8');
   const out: Record<string, string> = {};
   for (const m of source.matchAll(
-    /^\s{2,6}(\w+) = "([^"]+)",?$/gm,
+    /^\s{2,6}(\w+) = ['"]([^'"]+)['"],?$/gm,
   )) {
     out[m[1]] = m[2];
   }
@@ -764,15 +268,13 @@ describe('token defaults, weighed against what the colour is doing', () => {
     }
   });
 
-  it('AnimatedGradientText: both stops are text-grade in both schemes', () => {
-    // THE DEFECT: `#ffaa40` / `#9c40ff`, raw literals — and the span is
-    // `bg-clip-text text-transparent`, so those literals were not decoration
-    // sitting behind the words, they WERE the words. `#ffaa40` measures ~2:1
-    // on white: an AA failure on text, on the DS's default surface, shipped as
-    // a default.
-    const defaults = defaultsOf('magicui/animated-gradient-text.tsx');
-    expect(defaults.colorFrom).toBe('var(--primary)');
-    expect(defaults.colorTo).toBe('var(--primary-active)');
+  it('SheenText: both stops are text-grade in both schemes', () => {
+    // The gradient is clipped to the glyphs, so its stops are not decoration
+    // behind the words: they ARE the words, and SC 1.4.3 binds at 4.5:1. The
+    // component this one replaced shipped a stop that measured ~2:1 on white.
+    const defaults = defaultsOf('effects/sheen-text.tsx');
+    expect(defaults.from).toBe('var(--primary)');
+    expect(defaults.to).toBe('var(--primary-active)');
 
     for (const mode of ['light', 'dark'] as const) {
       const surface = theme[mode].get('background')!;
@@ -781,8 +283,7 @@ describe('token defaults, weighed against what the colour is doing', () => {
         expect(
           ratio,
           `${mode}: --interlace-${token} measures ${ratio.toFixed(2)}:1 on the ` +
-            `page background. It is a gradient stop on bg-clip-text, so it is ` +
-            `glyph fill and SC 1.4.3 binds at ${AA_NORMAL}:1.`,
+            `page background. It is glyph fill, so it must clear ${AA_NORMAL}:1.`,
         ).toBeGreaterThanOrEqual(AA_NORMAL);
       }
     }
@@ -814,117 +315,32 @@ describe('token defaults, weighed against what the colour is doing', () => {
     }
   });
 
-  it('ShimmerButton: the scrim pair, which does not invert and clears AA', () => {
-    // THE DEFECT: `text-white`, `border-white/10`, `rgba(0, 0, 0, 1)`,
-    // `#ffffff` — four literals for colours the token system already names.
-    // `--scrim` / `--scrim-foreground` are the tokens for "dark by intent, not
-    // by mode": identical in both schemes, which is why moving to them changes
-    // nothing visually and everything about forkability.
-    const defaults = defaultsOf('magicui/shimmer-button.tsx');
-    expect(defaults.background).toBe('var(--scrim)');
-    expect(defaults.shimmerColor).toBe('var(--scrim-foreground)');
-
-    for (const mode of ['light', 'dark'] as const) {
-      const ratio = contrast(
-        theme[mode].get('scrim-foreground')!,
-        theme[mode].get('scrim')!,
-      );
-      expect(
-        ratio,
-        `${mode}: the button's own text pair measures ${ratio.toFixed(2)}:1.`,
-      ).toBeGreaterThanOrEqual(AA_NORMAL);
-    }
-
-    // The pair not inverting is the property the choice rests on. If a fork
-    // makes the scrim theme-dependent, this button silently becomes a
-    // light-on-light CTA in one mode.
-    expect(theme.light.get('scrim')).toEqual(theme.dark.get('scrim'));
-    expect(theme.light.get('scrim-foreground')).toEqual(
-      theme.dark.get('scrim-foreground'),
-    );
+  it('Sheen: light from the primary pair, so it reads on the primary button', () => {
+    // Sheen sits under the label at z-index -1 inside the button, so it never
+    // touches the text pair. Its default is the button's own foreground token.
+    const defaults = defaultsOf('effects/sheen.tsx');
+    expect(defaults.color).toBe('var(--primary-foreground)');
   });
 
-  it('BorderBeam: on tokens, and allowed a 3:1-grade one because it is not text', () => {
-    // THE DEFECT: the same `#ffaa40` / `#9c40ff` pair as the gradient text —
-    // but the admissibility question has a different answer here. The beam is
-    // a decorative overlay inside a container that draws its own border: not
+  it('EdgeGlow: on tokens, and allowed a 3:1-grade one because it is not text', () => {
+    // The arc is decoration inside a container that draws its own border: not
     // text (1.4.3), not the boundary identifying a control (1.4.11). So a
-    // `--chart-*` token, tuned to the 3:1 graphical floor, is fine — where in
-    // AnimatedGradientText it would not be.
-    const defaults = defaultsOf('magicui/border-beam.tsx');
-    expect(defaults.colorFrom).toBe('var(--primary)');
-    expect(defaults.colorTo).toBe('var(--chart-2)');
+    // `--chart-*` token, tuned to the 3:1 graphical floor, is admissible here
+    // where in SheenText it would not be.
+    const defaults = defaultsOf('effects/edge-glow.tsx');
+    expect(defaults.from).toBe('var(--primary)');
+    expect(defaults.to).toBe('var(--chart-2)');
   });
 
-  it('CloudParticles: the body fill is a material, so it does not inherit text colour', () => {
-    // THE DEFECT: `bodyColor = "var(--cloud-body-color, currentColor)"`. The DS
-    // declares no `--cloud-body-color`, so `currentColor` WAS the shipped
-    // default and the cloud body painted in whatever `--foreground` the
-    // surface had. On a dark hero that is near-white and looks intentional,
-    // which is exactly why it survived review; on a light hero it is
-    // `#0d0b09` and the field renders as a near-black smear. Nothing but a
-    // browser can see it — jsdom has no cascade and the value is syntactically
-    // valid either way, so the check has to be about WHICH TOKEN, not about
-    // what painted.
-    const defaults = defaultsOf('aceternity/cloud-particles.tsx');
-    expect(defaults.bodyColor).toBe(
-      'var(--cloud-body-color, var(--scrim-foreground))',
-    );
-    expect(
-      defaults.bodyColor,
-      'The body fill is back on `currentColor`. A volumetric fill is a ' +
-        'material, not a mark — it must not invert with the paragraph it ' +
-        'happens to sit near.',
-    ).not.toContain('currentColor');
-
-    // `--scrim-foreground` is admissible here for one specific property: it is
-    // the DS's "light by intent, not by mode" token, so a cloud stays light in
-    // BOTH schemes. A token that inverts would reintroduce the defect with an
-    // extra step.
-    expect(theme.light.get('scrim-foreground')).toEqual(
-      theme.dark.get('scrim-foreground'),
-    );
-    for (const mode of ['light', 'dark'] as const) {
-      const l = luminance(theme[mode].get('scrim-foreground')!);
-      expect(
-        l,
-        `${mode}: the chosen body token has luminance ${l.toFixed(3)}. A cloud ` +
-          `is lit from above by day and from below at night; in neither case ` +
-          `is it darker than the sky.`,
-      ).toBeGreaterThan(0.8);
-    }
-  });
-
-  it('…and the old default really was dark on the light theme (negative control)', () => {
-    // Without this, the assertion above passes against any token at all — it
-    // would never have to demonstrate that `currentColor` was WRONG, only that
-    // it is gone. `currentColor` resolves to `--foreground`; measure it.
-    const inherited = luminance(theme.light.get('foreground')!);
-    expect(
-      inherited,
-      `--interlace-foreground has luminance ${inherited.toFixed(3)} on the ` +
-        `light theme. If that is genuinely bright now the palette moved and ` +
-        `this control needs rewriting — its job is to show that inheriting ` +
-        `the text colour produced a near-black fill.`,
-    ).toBeLessThan(0.05);
-    // …and inverted in dark mode, which is the half that made it look fine.
-    expect(luminance(theme.dark.get('foreground')!)).toBeGreaterThan(0.8);
-  });
-
-  it('NumberTicker: text-foreground, not a hand-rolled black/white', () => {
-    // THE DEFECT: `text-black dark:text-white` — an approximation of
-    // `text-foreground` that is wrong under both shipped themes
-    // (`--interlace-foreground` is #0d0b09 / #f0ede9, neither pure).
-    //
-    // Comments are stripped first. The file header NAMES the old classes while
-    // explaining what replaced them, and a scanner that cannot tell a class
-    // from a sentence about a class would fail on the documentation of the fix.
+  it('CountUp: takes the colour of the text around it', () => {
+    // The component it replaced hand-rolled `text-black dark:text-white`, an
+    // approximation of the foreground that was wrong under both themes. A
+    // number in a sentence should simply inherit.
     const code = stripComments(
-      readFileSync(resolve(__dirname, '../src/magicui/number-ticker.tsx'), 'utf8'),
+      readFileSync(resolve(__dirname, '../src/effects/count-up.tsx'), 'utf8'),
     );
-    expect(code).toContain('text-foreground');
-    expect(code).not.toContain('text-black');
-    expect(code).not.toContain('dark:text-white');
+    expect(code).not.toMatch(/text-(black|white)\b/);
+    expect(code).not.toMatch(/['"]#[0-9a-f]{3,8}['"]/i);
   });
 });
 
@@ -936,79 +352,6 @@ describe('token defaults, weighed against what the colour is doing', () => {
 // onto the current registry. The pattern is the same in all three: the DS was
 // not wrong in isolation, it was missing the seam the consumer needed, so the
 // consumer re-patched the component locally and the DS never heard about it.
-
-describe('CloudParticles — the chosen body token reaches the gradient', () => {
-  it('paints the fill from the token, not from currentColor', () => {
-    // The source assertion in section E proves the DEFAULT changed. This
-    // proves the default is what the element is actually given — a default
-    // that never reaches the `background` is the same defect with a nicer
-    // string in the props table.
-    render(<CloudParticles data-testid="clouds" count={2} />);
-    const shapes = [
-      ...document.querySelectorAll('[data-slot="cloud-particles-shape"]'),
-    ];
-    expect(shapes.length, 'no clouds rendered; nothing was asserted')
-      .toBeGreaterThan(0);
-    for (const shape of shapes) {
-      expect(styleOf(shape)).toContain('var(--scrim-foreground)');
-      expect(styleOf(shape)).not.toContain('currentColor');
-    }
-  });
-
-  it('still lets a caller ask for currentColor explicitly', () => {
-    // Removing a bad default must not remove the behaviour. Someone painting
-    // clouds inside a deliberately-tinted block still gets to opt in.
-    render(
-      <CloudParticles data-testid="clouds" count={1} bodyColor="currentColor" />,
-    );
-    const shape = document.querySelector('[data-slot="cloud-particles-shape"]')!;
-    expect(styleOf(shape)).toContain('currentColor');
-  });
-});
-
-describe('NumberTicker — `notation` is a prop, not a re-patch', () => {
-  // THE DEFECT: none, strictly — the component was simply missing an option
-  // `Intl.NumberFormat` already supports, and every consumer with a six-figure
-  // metric re-implemented `notation: "compact"` on top of it. `128,400` is
-  // eight tabular glyphs; in a stat tile at the 320px floor it wraps.
-
-  it('formats compact when asked', () => {
-    reduced.value = false;
-    render(<NumberTicker value={128400} notation="compact" />);
-    expect(
-      document.querySelector('span')!.textContent,
-      'notation="compact" did not reach Intl.NumberFormat.',
-    ).toBe('128K');
-  });
-
-  it('keeps decimalPlaces meaningful under compact', () => {
-    reduced.value = false;
-    render(<NumberTicker value={128400} notation="compact" decimalPlaces={1} />);
-    expect(document.querySelector('span')!.textContent).toBe('128.4K');
-  });
-
-  it('changes nothing for a caller that does not pass it', () => {
-    // The half that matters more. `notation` defaults to `"standard"`, which
-    // is Intl's own default, so an existing call site must render the exact
-    // grouped string it rendered before the prop existed.
-    reduced.value = false;
-    render(<NumberTicker value={128400} />);
-    expect(
-      document.querySelector('span')!.textContent,
-      'The default notation changed. Every existing stat just moved.',
-    ).toBe('128,400');
-  });
-
-  it('applies to the reduced-motion write path too', () => {
-    // Under `reduce` a separate effect writes `formatNumber(value)` straight
-    // to the node. It closes over the SAME memoized formatter — a `notation`
-    // left out of that formatter's dep list would make this path disagree
-    // with the render path, and only for users who asked for less motion.
-    reduced.value = true;
-    render(<NumberTicker value={128400} startValue={0} notation="compact" />);
-    expect(document.querySelector('span')!.textContent).toBe('128K');
-  });
-});
 
 describe('ArticleCard — the cover is a slot, and the box is the cover’s ratio', () => {
   const COVER = 'https://example.com/cover.png';
@@ -1154,34 +497,3 @@ describe('ArticleCard — the cover is a slot, and the box is the cover’s rati
 // The one defect with no runtime and no type-level symptom
 // ════════════════════════════════════════════════════════════════════════
 
-describe('AnimatedGradientText — props describe the element it renders', () => {
-  it('declares span props for a span root', () => {
-    // `ComponentPropsWithoutRef<"div">` on a component that renders a `<span>`.
-    //
-    // This is asserted STRUCTURALLY, and the reason is worth stating rather
-    // than hiding: the defect has no runtime symptom (the type is erased) AND
-    // no type-level one. React's event handlers are declared through the
-    // `bivarianceHack` indirection, which makes `MouseEventHandler<HTMLDivElement>`
-    // and `MouseEventHandler<HTMLSpanElement>` mutually assignable — so the two
-    // prop types are structurally interchangeable and no `tsc` assertion, and
-    // no `expectTypeOf`, can tell them apart. Reading the source is the only
-    // check that discriminates, so that is the check.
-    const source = readFileSync(
-      resolve(__dirname, '../src/magicui/animated-gradient-text.tsx'),
-      'utf8',
-    );
-
-    const propsExtends = /extends ComponentPropsWithoutRef<"(\w+)">/.exec(source);
-    expect(propsExtends, 'props interface no longer extends a native element')
-      .not.toBeNull();
-
-    const rootTag = /return \(\s*<(\w+)/.exec(source);
-    expect(rootTag, 'could not find the rendered root element').not.toBeNull();
-
-    expect(
-      propsExtends![1],
-      `Props extend <${propsExtends![1]}> while the component renders a ` +
-        `<${rootTag![1]}>. Div-only attributes type-check and then do nothing.`,
-    ).toBe(rootTag![1]);
-  });
-});

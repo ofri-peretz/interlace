@@ -4,7 +4,7 @@
   "components": [
     {
       "name": "a11y-starter",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -27,28 +27,10 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "animated-gradient-text",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
-      "name": "animated-grid-pattern",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
-      "name": "animated-list",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
       "name": "article-card",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "article-list-grid",
@@ -67,6 +49,12 @@
       "version": "1.1.0",
       "since": "1.0.0",
       "updated": "2026-08-22"
+    },
+    {
+      "name": "audio-player",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "auth-template",
@@ -93,40 +81,22 @@
       "updated": "2026-08-22"
     },
     {
-      "name": "background-beams-with-collision",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
-      "name": "background-gradient-animation",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
-      "name": "background-lines",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
       "name": "badge",
       "version": "1.3.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "banner",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "blog-home-template",
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
-    },
-    {
-      "name": "border-beam",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
     },
     {
       "name": "box",
@@ -136,9 +106,9 @@
     },
     {
       "name": "brand-logo",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "breadcrumb",
@@ -148,15 +118,15 @@
     },
     {
       "name": "button",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "button-variants",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "callout",
@@ -177,16 +147,22 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "cloud-particles",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
+      "name": "citation",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "claim-card",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "cn",
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "code-block",
@@ -208,27 +184,27 @@
     },
     {
       "name": "collapsible",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "combobox",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.1.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "command-palette",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.1.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "container",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "context-menu",
@@ -237,10 +213,16 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "count-up",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "cta-section",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "dashboard-template",
@@ -267,6 +249,12 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "decode-text",
+      "version": "2.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "delta",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -277,6 +265,18 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
+    },
+    {
+      "name": "dialogue",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "dialogue-stepper",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "distribution",
@@ -291,16 +291,22 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "dot-pattern",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
+      "name": "drawer",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "dropdown-menu",
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
+    },
+    {
+      "name": "edge-glow",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "empty-state",
@@ -327,28 +333,28 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "featured-icon",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
       "name": "figure",
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
     },
     {
-      "name": "flip-words",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
-      "name": "focus-cards",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-22"
+      "name": "focus-grid",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "focus-ring",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "footer",
@@ -364,9 +370,15 @@
     },
     {
       "name": "grade-badge",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "gradient-mesh",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "grid",
@@ -375,22 +387,28 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "grid-pattern",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
+      "name": "grid-field",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "hero",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "hero-cosmic",
-      "version": "2.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "hero-strand",
+      "version": "2.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "hover-card",
@@ -405,22 +423,28 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "interactive-grid-pattern",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
       "name": "interlace-base",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": null,
       "updated": "2026-11-23"
     },
     {
       "name": "interlace-foundation",
+      "version": "3.1.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "interlace-weave",
       "version": "2.0.0",
       "since": null,
       "updated": "2026-11-23"
+    },
+    {
+      "name": "kbd",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "label",
@@ -436,8 +460,14 @@
     },
     {
       "name": "layout-starter",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "light-beam",
+      "version": "1.0.0",
+      "since": null,
       "updated": "2026-11-23"
     },
     {
@@ -447,22 +477,16 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "marquee",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
+      "name": "list",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "mdx-starter",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
-    },
-    {
-      "name": "meteors",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
     },
     {
       "name": "meter",
@@ -501,12 +525,6 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "number-ticker",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
-    },
-    {
       "name": "page-header",
       "version": "2.0.0",
       "since": "1.0.0",
@@ -517,12 +535,6 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
-    },
-    {
-      "name": "particles",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
     },
     {
       "name": "popover",
@@ -550,9 +562,9 @@
     },
     {
       "name": "prose",
-      "version": "2.0.1",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-23"
+      "updated": "2026-11-22"
     },
     {
       "name": "published-date",
@@ -579,6 +591,12 @@
       "updated": "2026-08-25"
     },
     {
+      "name": "reading-layout",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
       "name": "reading-time",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -595,6 +613,18 @@
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
+    },
+    {
+      "name": "reveal",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "rotating-text",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "scorecard-row",
@@ -615,6 +645,12 @@
       "updated": "2026-08-22"
     },
     {
+      "name": "scroller",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "section",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -628,9 +664,9 @@
     },
     {
       "name": "section-header",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "section-index",
@@ -669,16 +705,28 @@
       "updated": "2026-08-22"
     },
     {
+      "name": "sheen",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "sheen-text",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "sheet",
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
     },
     {
-      "name": "shimmer-button",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-22"
+      "name": "side-by-side",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "sign-in-form",
@@ -705,6 +753,12 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "sky-backdrop",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "slider",
       "version": "1.2.0",
       "since": "1.0.0",
@@ -717,10 +771,10 @@
       "updated": "2026-08-26"
     },
     {
-      "name": "spotlight",
-      "version": "1.2.0",
-      "since": "1.0.0",
-      "updated": "2026-11-18"
+      "name": "split-text",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "stack",
@@ -729,16 +783,28 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "stars-background",
-      "version": "1.1.0",
-      "since": "1.0.0",
-      "updated": "2026-08-22"
+      "name": "stagger-list",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "stance-list",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "starfield",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
     },
     {
       "name": "stat-card",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "stat-group",
@@ -759,10 +825,10 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "sunny-background",
-      "version": "2.0.0",
-      "since": "1.0.0",
-      "updated": "2026-11-22"
+      "name": "status-pills",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "switch",
@@ -796,15 +862,15 @@
     },
     {
       "name": "textarea",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "theme",
       "version": "2.0.0",
       "since": "1.0.0",
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "theme-script",
@@ -820,15 +886,39 @@
     },
     {
       "name": "theme-tokens",
-      "version": "2.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "thread-lines",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "thread-mark",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "thread-steps",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "time-series",
       "version": "2.0.0",
       "since": "1.0.0",
       "updated": "2026-11-22"
+    },
+    {
+      "name": "timeline",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "timeline-map",
@@ -855,6 +945,12 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "toolbar",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
       "name": "tooltip",
       "version": "2.0.0",
       "since": "1.0.0",
@@ -867,16 +963,22 @@
       "updated": "2026-11-22"
     },
     {
-      "name": "typography",
+      "name": "topbar-menu",
       "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "typography",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "use-reduced-motion",
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "use-theme",
@@ -889,6 +991,18 @@
       "version": "1.1.0",
       "since": "1.0.0",
       "updated": "2026-08-22"
+    },
+    {
+      "name": "weave-texture",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "wordmark",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     }
   ]
 }

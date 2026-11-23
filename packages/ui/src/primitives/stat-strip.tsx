@@ -194,8 +194,10 @@ const TONE: Record<
 };
 
 /**
- * Mobile-first track counts. Written out statically because Tailwind scans
- * source as raw text and cannot see a runtime-built `lg:grid-cols-${n}`.
+ * Track counts keyed on the strip's own width (it is the `@container`), not
+ * the viewport, so a strip inside a dashboard card collapses like one on a
+ * phone. Written out statically because Tailwind scans source as raw text
+ * and cannot see a runtime-built `@4xl:grid-cols-${n}`.
  *
  * Two columns at the 320 floor in every case: the desktop count is a ceiling,
  * not a promise. A six-track strip held at six on a phone gives each metric
@@ -203,10 +205,10 @@ const TONE: Record<
  */
 const STRIP_COLS = {
   2: 'grid-cols-2',
-  3: 'grid-cols-2 xs:grid-cols-3',
-  4: 'grid-cols-2 xs:grid-cols-3 lg:grid-cols-4',
-  5: 'grid-cols-2 xs:grid-cols-3 lg:grid-cols-5',
-  6: 'grid-cols-2 xs:grid-cols-3 lg:grid-cols-6',
+  3: 'grid-cols-2 @md:grid-cols-3',
+  4: 'grid-cols-2 @md:grid-cols-3 @4xl:grid-cols-4',
+  5: 'grid-cols-2 @md:grid-cols-3 @4xl:grid-cols-5',
+  6: 'grid-cols-2 @md:grid-cols-3 @4xl:grid-cols-6',
 } as const;
 
 export type StatStripCols = keyof typeof STRIP_COLS;
@@ -267,7 +269,7 @@ export const StatStrip = React.forwardRef<HTMLElement, StatStripProps>(
         data-state={strip.state}
         data-qualifiers={strip.qualifiers.join(' ') || undefined}
         data-min-viewport={String(MIN_VIEWPORT)}
-        className={cn('w-full', className)}
+        className={cn('@container w-full', className)}
         {...props}
       >
         {caption || strip.state !== 'idle' ? (

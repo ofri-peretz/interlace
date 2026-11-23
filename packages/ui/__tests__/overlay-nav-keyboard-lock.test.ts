@@ -50,6 +50,7 @@ const KEYBOARD_DRIVEN = [
   { primitive: 'dialog', story: 'Dialog' },
   { primitive: 'alert-dialog', story: 'AlertDialog' },
   { primitive: 'sheet', story: 'Sheet' },
+  { primitive: 'drawer', story: 'Drawer' },
   { primitive: 'popover', story: 'Popover' },
   { primitive: 'tooltip', story: 'Tooltip' },
   { primitive: 'hover-card', story: 'HoverCard' },
@@ -71,6 +72,8 @@ const KEYBOARD_DRIVEN = [
   { primitive: 'toc', story: 'Toc' },
   { primitive: 'skip-link', story: 'SkipLink' },
   { primitive: 'scroll-area', story: 'ScrollArea' },
+  // One Tab stop with arrow-key roving: the whole point is a key contract.
+  { primitive: 'toolbar', story: 'Toolbar' },
   // Not an overlay and not nav — but its ENTIRE contract is a focus
   // affordance painted by `:focus-within`, a live pseudo-class no static tree
   // ever enters. axe reports a clean pass on a ring that paints nothing, so a
@@ -88,6 +91,7 @@ const MUST_ASSERT_ESCAPE = new Set([
   'Dialog',
   'AlertDialog',
   'Sheet',
+  'Drawer',
   'Popover',
   'Tooltip',
   'HoverCard',

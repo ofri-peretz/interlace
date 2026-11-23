@@ -72,9 +72,12 @@ const discoverStyleFiles = async () => {
  *
  * Brace-depth tracked rather than regex-scanned across the block: `@theme`
  * bodies contain `@keyframes name { from { … } }`, whose declarations are NOT
- * theme keys. Only depth-1 declarations count.
+ * theme keys. Only depth-1 declarations count, and comments are ignored.
  */
-export const parseThemeKeys = (css) => {
+export const parseThemeKeys = (source) => {
+  // Comments go first: a comment that quotes a declaration
+  // (`--font-heading: var(--font-serif)`) is prose, not a key.
+  const css = source.replace(/\/\*[\s\S]*?\*\//g, '');
   const keys = [];
   const re = /@theme(\s+inline)?\s*\{/g;
   let m;

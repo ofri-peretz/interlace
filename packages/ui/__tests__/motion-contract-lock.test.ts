@@ -365,9 +365,13 @@ describe('motion contract lock', () => {
   it('reads a non-empty allowlist, animation set and source scan', () => {
     // Each of the three assertions below is a set comparison. An empty set on
     // either side passes every one of them.
-    expect(ALLOWLIST.size).toBeGreaterThan(10);
-    expect(ANIMATIONS.length).toBeGreaterThan(10);
-    expect(EMITTED.size).toBeGreaterThan(5);
+    // The floors are well under today's counts (the reduced-motion list names
+    // every CSS animation; the ambient loops moved to the Web Animations API
+    // in the effects, which gate themselves) and well over zero. The same
+    // holds for the `animate-*` utilities the source emits.
+    expect(ALLOWLIST.size).toBeGreaterThan(4);
+    expect(ANIMATIONS.length).toBeGreaterThan(4);
+    expect(EMITTED.size).toBeGreaterThan(2);
     expect(ENTRY_BUDGET_MS).toBeGreaterThan(0);
   });
 
@@ -511,9 +515,12 @@ describe('motion contract lock', () => {
      */
     const finite = ANIMATIONS.filter((animation) => !animation.infinite);
 
-    it('has finite and ambient animations to tell apart', () => {
+    it('has entry animations to measure', () => {
+      // Ambient loops are no longer CSS: every one lives in an effect that
+      // drives it through the Web Animations API and stops it under reduced
+      // motion (effects-contract.test.tsx). Any that come back to CSS are
+      // still held to the allowlist by the last test in this block.
       expect(finite.length).toBeGreaterThan(0);
-      expect(ANIMATIONS.length - finite.length).toBeGreaterThan(0);
     });
 
     it('keeps every entry animation inside the ceiling', () => {
@@ -574,7 +581,7 @@ describe('motion contract lock', () => {
   // ── 4. the token tables MOTION_PHILOSOPHY.md documents ───────────────
 
   describe('duration & easing bands', () => {
-    it('documents bands, not a token scale that does not exist', () => {
+    it('ships exactly the motion tokens the doc names', () => {
       // The doc used to print `--duration-*` / `--ease-*` tables as though
       // they were tokens. They never existed, so `var(--duration-fast)`
       // resolved to nothing — a component author following the doc shipped an
@@ -612,6 +619,12 @@ describe('motion contract lock', () => {
           `existed, while packages/ui/styles declared no such token. Restore ` +
           `the disclaimer, or ship the tokens (and extend this lock).`,
       ).toContain('budget bands, not CSS custom properties');
+
+      // And the scale the doc promises really ships: `var(--duration-fast)`
+      // resolving to nothing is the failure this block was written for.
+      for (const token of ['--duration-fast', '--duration-base', '--duration-medium', '--duration-slow', '--ease-enter', '--ease-exit', '--ease-move']) {
+        expect(declared, `MOTION_PHILOSOPHY.md names ${token}; structure/motion.css must declare it`).toContain(token);
+      }
     });
   });
 });

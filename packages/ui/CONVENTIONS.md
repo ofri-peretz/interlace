@@ -163,8 +163,8 @@ src/
 │                            #   Never add a file here.
 ├── mdx/                     # MDX-author components (Mermaid)
 ├── fumadocs/                # Fumadocs-ecosystem helpers (RemoteMarkdown, ...)
-├── magicui/                 # MagicUI-derived decorative motion
-└── aceternity/              # Aceternity-derived backgrounds
+└── effects/                 # Interlace's own motion and backdrops
+                             #   (Starfield, GradientMesh, Scroller, CountUp, ...)
 ```
 
 The path tells the consumer the level of opinion.
