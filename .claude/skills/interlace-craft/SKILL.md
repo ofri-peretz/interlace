@@ -80,6 +80,10 @@ Rules of the contract:
   for Interlace's own themes, is WCAG AA: 4.5:1 for text, 3:1 for large text, icons, control
   borders (`--input`) and the focus ring (`--ring`). The aim for body text is 7:1 (AAA), which
   the default palette reaches in both schemes.
+- More contrast (below) overrides your unlayered values on purpose, so a reader who asks for it
+  always gets it. To keep your accent there, set `--contrast-primary` and
+  `--contrast-primary-foreground` to a pair you measured at 7:1, and check the tinted surfaces
+  built from it too (`text-primary` on `bg-primary/10`).
 - The full token list is at https://ds.interlace.tools/semantics-catalog, and writing a full
   theme is at https://ds.interlace.tools/theme-authoring.
 
@@ -203,7 +207,13 @@ the neutral rows above.
 
 - WCAG 2.2 AA is the floor and AAA the aim for text (see the contrast rules above). Colour is never the only signal; pair it with text, an icon or shape.
 - Every interactive element shows the focus ring (2px `--ring`, 2px offset). For a custom
-  clickable surface, wrap it in `FocusRing`.
+  clickable surface, wrap it in `FocusRing`. The ring sits outside the element and never covers
+  its text; give scrolling or clipping containers room (`p-1 -m-1`) so it is not cut off.
+- More contrast is an AAA reading mode on every theme. It turns on from the system preference
+  (`prefers-contrast: more`) or from `data-contrast="more"` on `<html>`; `data-contrast="normal"`
+  opts a page out of the system path. The page-set mode also draws focus as a 3px outline.
+- `data-density="comfortable"` on `<html>` or a region gives touch-sized controls (44px default,
+  `--spacing-control`) and 44px hit areas for small targets.
 - Keyboard behaviour comes from Base UI. Composites (menus, tabs, comboboxes, dialogs) are built
   on the existing primitives, never on hand-rolled focus traps or roving tabindex.
 - Icons are lucide-react, outlined, sized to the text (`size-4`, `size-5`, `size-6`), and always
