@@ -2218,6 +2218,24 @@
       }
     },
     {
+      "name": "reading-layout",
+      "type": "registry:ui",
+      "title": "Reading Layout",
+      "description": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into an \"On this page\" button (`TocPopover`) on a bar that sticks to…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "related-posts",
       "type": "registry:ui",
       "title": "Related Posts",

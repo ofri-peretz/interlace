@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 161
+    "itemCount": 162
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 69,
-      "pattern": 43,
+      "pattern": 44,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 69,
-      "pattern": 43,
-      "blog": 34,
+      "pattern": 44,
+      "blog": 35,
       "foundation": 25,
       "data": 22,
       "effect": 17,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 97,
+      "server": 98,
       "client": 64
     },
     "keyboard": {
-      "none": 126,
+      "none": 127,
       "handled": 35
     },
     "loading": {
-      "none": 129,
+      "none": 130,
       "built-in": 32
     },
     "minViewport": {
-      "320": 97,
+      "320": 98,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -5455,6 +5455,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json",
       "item": "https://ds.interlace.tools/r/radio-group.json",
       "docs": "https://ds.interlace.tools/c/radio-group"
+    },
+    {
+      "name": "reading-layout",
+      "title": "Reading Layout",
+      "type": "registry:ui",
+      "summary": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into an \"On this page\" button (`TocPopover`) on a bar that sticks to…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "toc"
+      ],
+      "installsTo": [
+        "components/ui/patterns/reading-layout.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reading-layout.json",
+      "item": "https://ds.interlace.tools/r/reading-layout.json",
+      "docs": "https://ds.interlace.tools/c/reading-layout"
     },
     {
       "name": "reading-strand",
