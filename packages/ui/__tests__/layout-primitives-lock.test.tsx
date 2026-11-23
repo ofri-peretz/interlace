@@ -19,6 +19,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Container } from '../src/primitives/container';
 import { Section } from '../src/primitives/section';
 import { Stack, Cluster } from '../src/primitives/stack';
+import { Grid } from '../src/primitives/grid';
 import { SectionHeader } from '../src/blocks/section-header';
 
 const render = (el: React.ReactNode) =>
@@ -297,6 +298,31 @@ describe('Stack: gap scale (LAYOUT §3)', () => {
     const html = render(<Stack direction="horizontal">x</Stack>);
     expect(html).toContain('flex-row');
     expect(html).toContain('flex-wrap');
+  });
+});
+
+describe('Grid: column gap fits a phone', () => {
+  // Twelve tracks need eleven column gaps. Below md the large steps cap the
+  // column gap so 11 gaps stay narrower than the 320px minimum viewport.
+  it.each([
+    ['lg', 'gap-x-4', 'md:gap-x-10', 'gap-y-10'],
+    ['xl', 'gap-x-6', 'md:gap-x-16', 'gap-y-16'],
+    ['2xl', 'gap-x-6', 'md:gap-x-24', 'gap-y-24'],
+  ] as const)('gap="%s": %s on phones, %s from md, rows keep %s', (gap, phone, wide, rows) => {
+    const html = render(<Grid gap={gap}>x</Grid>);
+    expect(html).toContain(phone);
+    expect(html).toContain(wide);
+    expect(html).toContain(rows);
+  });
+
+  it('keeps every phone column gap × 11 under 320px', () => {
+    const px = { 'gap-x-4': 16, 'gap-x-6': 24 } as const;
+    for (const gap of ['lg', 'xl', '2xl'] as const) {
+      const html = render(<Grid gap={gap}>x</Grid>);
+      const m = html.match(/ gap-x-(4|6)\b/);
+      expect(m).toBeTruthy();
+      expect(px[`gap-x-${m![1]}` as keyof typeof px] * 11).toBeLessThan(320);
+    }
   });
 });
 

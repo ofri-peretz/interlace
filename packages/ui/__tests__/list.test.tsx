@@ -50,12 +50,12 @@ describe('List', () => {
     render(
       <List marker="cross">
         <ListItem>
-          That the slogan is <strong>antisemitic</strong>.
+          That the bridge is <strong>unsafe</strong>.
         </ListItem>
       </List>,
     );
     const item = screen.getByRole('listitem');
-    expect(item.textContent).toBe('That the slogan is antisemitic.');
+    expect(item.textContent).toBe('That the bridge is unsafe.');
     expect(item.querySelector('[data-slot=list-marker]')?.getAttribute('aria-hidden')).toBe('true');
     expect(item.dataset.slot).toBe('list-item');
   });

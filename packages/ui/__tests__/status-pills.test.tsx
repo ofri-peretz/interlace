@@ -12,7 +12,7 @@ describe('StatusPills', () => {
   it('is a list of pills whose words carry the meaning', () => {
     const { container } = render(
       <StatusPills aria-label="About this answer" className="mt-4">
-        <StatusPills.Item tone="ok">Checked by a second reader</StatusPills.Item>
+        <StatusPills.Item tone="ok">Reviewed</StatusPills.Item>
         <StatusPills.Item>9 facts</StatusPills.Item>
       </StatusPills>,
     );
@@ -20,7 +20,7 @@ describe('StatusPills', () => {
     expect(list.className).toContain('mt-4');
     expect(list.getAttribute('data-min-viewport')).toBe(String(MIN_VIEWPORT));
     const items = screen.getAllByRole('listitem');
-    expect(items.map((li) => li.textContent)).toEqual(['Checked by a second reader', '9 facts']);
+    expect(items.map((li) => li.textContent)).toEqual(['Reviewed', '9 facts']);
     expect(items.map((li) => li.getAttribute('data-tone'))).toEqual(['ok', 'default']);
     expect(container.querySelectorAll('[data-slot="status-pill-check"]')).toHaveLength(1);
   });
@@ -38,7 +38,7 @@ describe('StatusPills', () => {
   it('outlines the default pill in the surrounding text colour, with no fill', () => {
     render(
       <StatusPills>
-        <StatusPills.Item>38 sources quoted</StatusPills.Item>
+        <StatusPills.Item>38 sources</StatusPills.Item>
       </StatusPills>,
     );
     const pill = screen.getByRole('listitem');

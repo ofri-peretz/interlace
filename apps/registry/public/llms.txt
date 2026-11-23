@@ -337,7 +337,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Data Table](https://ds.interlace.tools/c/data-table): Columns, sorting, row selection, pagination, and the three states a table spends most of its life in (loading / empty / error). It composes primitives — Checkbox, Pagination, Skeleton, Button — so it is a pattern, not a primitive.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/data-table.json`
   - contract: client, min 320px, loading state, states asc|desc, v2.0.0
-- [Dialogue](https://ds.interlace.tools/c/dialogue): A written conversation: a script of turns, each with a speaker. Use it for a sample exchange ("what to say when your child asks…"), an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the…
+- [Dialogue](https://ds.interlace.tools/c/dialogue): A written conversation: a script of turns, each with a speaker. Use it for a sample support chat, an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the back-and-forth reads at a glance, and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialogue.json`
   - contract: server, min 320px, states muted|accent|inverse, v1.0.0
 - [Empty State](https://ds.interlace.tools/c/empty-state): The "nothing here yet" surface. Used wherever a list, table, or search returns zero rows AND the consumer can act on it (create the first item, adjust filters, link to docs). Empty states are first-class UX, not an afterthought — `LOADING_PHILOSOPHY` flags…
@@ -406,7 +406,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Stat Group](https://ds.interlace.tools/c/stat-group): Horizontal row (or grid) of StatCards. The pattern stat pages reach for: 3-5 hero KPIs at the top of a page, each a labelled big number. Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stat-group.json`
   - contract: server, min 320px, loading state, v2.0.0
-- [Status Pills](https://ds.interlace.tools/c/status-pills): A row of short facts about the page, set as pills: "Checked by a second reader", "9 facts", "38 sources quoted", "About 1 minute out loud". Built to sit on a brand band (`<Section tone="brand">`) under a title, and just as readable on the page background.
+- [Status Pills](https://ds.interlace.tools/c/status-pills): A row of short facts about the page, set as pills: "Reviewed", "9 facts", "38 sources", "4 min read". Built to sit on a brand band (`<Section tone="brand">`) under a title, and just as readable on the page background.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/status-pills.json`
   - contract: server, min 320px, states default|ok, v1.0.0
 - [Testimonial](https://ds.interlace.tools/c/testimonial): Quote + attribution surfaces. Single Testimonial cells render an blockquote with an author avatar; TestimonialGrid lays them out in a 1-3 column grid. Server components.
@@ -427,9 +427,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Topbar Menu](https://ds.interlace.tools/c/topbar-menu): The small-screen half of `Topbar`: a "Menu" button that opens the site's links in a side sheet. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json`
   - contract: client, v1.0.0
-- [Wordmark](https://ds.interlace.tools/c/wordmark): A name set in more than one script, stacked: "למה ככה" over "ليش هيك" over "WHYLIKEDIS". Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the browser's font fallback all know…
+- [Wordmark](https://ds.interlace.tools/c/wordmark): A text logo of one or more stacked lines: a name over its tagline, or the same name in several languages or scripts. Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/wordmark.json`
-  - contract: server, min 320px, states sign|plain, v1.0.0
+  - contract: server, min 320px, states framed|plain, v1.0.0
 
 ## Items — tier `template`
 

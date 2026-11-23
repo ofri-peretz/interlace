@@ -2,7 +2,7 @@
  * @interlace/ui — Dialogue
  *
  * A written conversation: a script of turns, each with a speaker. Use it for
- * a sample exchange ("what to say when your child asks…"), an interview
+ * a sample support chat, an interview
  * excerpt, or a worked example of a hard conversation. Turns from the two
  * sides sit on opposite edges so the back-and-forth reads at a glance, and
  * every turn names its speaker in text, so nothing depends on position or
