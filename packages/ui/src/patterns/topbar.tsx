@@ -102,6 +102,12 @@ interface TopbarProps extends React.ComponentProps<"header"> {
   /** Label of the small-screen menu button. @default 'Menu' */
   menuLabel?: string;
   /**
+   * The edge the small-screen menu opens from; a drag back toward it closes it.
+   * Topbar cannot know the page's direction, so an RTL page passes `left`.
+   * @default "right"
+   */
+  menuSide?: "right" | "left" | "bottom";
+  /**
    * Render-prop slot for internal links. Defaults to a plain `<a>`. A
    * Next.js consumer passes `({ href, className, children, ...rest }) =>
    * <Link href={href} className={className} {...rest}>{children}</Link>`
@@ -180,6 +186,7 @@ function Topbar({
   currentHref,
   mobileNav = "menu",
   menuLabel = "Menu",
+  menuSide = "right",
   renderLink = defaultRenderLink,
   className,
   ...props
@@ -215,7 +222,7 @@ function Topbar({
             {actions}
             {hasLinks && mobileNav === "menu" ? (
               <div className="md:hidden">
-                <TopbarMenu label={menuLabel}>
+                <TopbarMenu label={menuLabel} side={menuSide}>
                   {renderLinks(links, "menu", currentHref, renderLink)}
                 </TopbarMenu>
               </div>

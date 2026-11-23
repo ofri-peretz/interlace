@@ -58,6 +58,17 @@ const meta: Meta<typeof Topbar> = {
         category: "Appearance",
       },
     },
+    menuSide: {
+      control: "inline-radio",
+      options: ["right", "left", "bottom"],
+      description:
+        "The edge the small-screen menu opens from. Topbar cannot know the page's direction, so an RTL page passes `left`.",
+      table: {
+        type: { summary: "'right' | 'left' | 'bottom'" },
+        defaultValue: { summary: "right" },
+        category: "Appearance",
+      },
+    },
     menuLabel: {
       control: "text",
       description:
