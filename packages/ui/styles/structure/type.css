@@ -27,14 +27,15 @@
   --font-heading: var(--font-body);
 
   /* ── Type scale (font-size + paired line-height) ───────────────────
-     SIX heading levels max (TYPOGRAPHY "heading scale"). Display end fluids
-     on a single curve; body stays FIXED (no clamp on body — confuses readers).
+     SIX heading levels max (TYPOGRAPHY "heading scale"). h1 to h3 are fluid,
+     each on one curve with a rem floor and ceiling, so a phone's h2 is not a
+     laptop's; h4 down and body stay FIXED (no clamp on body — confuses readers).
      Generates text-h1…text-h6, text-body, text-long, text-ui, text-code, etc. */
   --text-h1: clamp(2.5rem, 4vw + 1rem, 3.5rem); /* 40 → 56px */
   --text-h1--line-height: 1.1;
-  --text-h2: 1.875rem; /* 30px */
+  --text-h2: clamp(1.5rem, 1.2967rem + 0.9036vw, 1.875rem); /* 24 → 30px, 360 → 1024 */
   --text-h2--line-height: 1.2;
-  --text-h3: 1.5rem; /* 24px */
+  --text-h3: clamp(1.375rem, 1.3072rem + 0.3012vw, 1.5rem); /* 22 → 24px, 360 → 1024; stays over h4 */
   --text-h3--line-height: 1.25;
   --text-h4: 1.25rem; /* 20px */
   --text-h4--line-height: 1.3;

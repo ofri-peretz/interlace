@@ -14,6 +14,8 @@
  * has regressed. Update the philosophy doc first if the change is intentional.
  */
 
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Container } from '../src/primitives/container';
@@ -99,39 +101,39 @@ describe('Container: width contract (LAYOUT §2)', () => {
 // =========================================
 
 describe('Section: vertical rhythm (LAYOUT §3, §5)', () => {
-  it('spacing="tight" produces py-12 md:py-16 lg:py-20 (clears LAYOUT §3 desktop floor of py-16)', () => {
-    // Floor rule: even the smallest section spacing variant must hit the
-    // §3 desktop minimum (xl token = py-16) by the `md:` breakpoint, or
-    // the rendered band looks "padless" — the regression reported on the
-    // stats-bar in 2026-05.
-    const html = render(<Section spacing="tight">x</Section>);
-    expect(html).toContain('py-12');
-    expect(html).toContain('md:py-16');
-    expect(html).toContain('lg:py-20');
-    // Locked OUT: the prior values that triggered the regression.
+  // Each step is one fluid token (structure/layout.css), not a py-* ladder
+  // that jumps at md and lg.
+  it.each([
+    ['tight', 'py-section-tight'],
+    ['comfortable', 'py-section-comfortable'],
+    ['spacious', 'py-section-spacious'],
+  ] as const)('spacing="%s" uses the fluid token %s', (spacing, klass) => {
+    const html = render(<Section spacing={spacing}>x</Section>);
+    expect(html).toContain(klass);
+    // Locked OUT: the stepped ladder, and the values behind the 2026-05
+    // "padless" stats-bar regression.
+    expect(html).not.toMatch(/\b(md|lg):py-/);
     expect(html).not.toContain('py-10');
-    expect(html).not.toContain('lg:py-14');
-  });
-
-  it('spacing="comfortable" produces py-16 md:py-20 lg:py-24 (the landing default)', () => {
-    const html = render(<Section spacing="comfortable">x</Section>);
-    expect(html).toContain('py-16');
-    expect(html).toContain('md:py-20');
-    expect(html).toContain('lg:py-24');
-  });
-
-  it('spacing="spacious" produces py-20 md:py-24 lg:py-32', () => {
-    const html = render(<Section spacing="spacious">x</Section>);
-    expect(html).toContain('py-20');
-    expect(html).toContain('md:py-24');
-    expect(html).toContain('lg:py-32');
   });
 
   it('defaults to spacing="comfortable" when no prop is passed', () => {
-    const html = render(<Section>x</Section>);
-    expect(html).toContain('py-16');
-    expect(html).toContain('md:py-20');
-    expect(html).toContain('lg:py-24');
+    expect(render(<Section>x</Section>)).toContain('py-section-comfortable');
+  });
+
+  it('every fluid step clears the floors: 40px+ on a phone, 64px+ by 768px', () => {
+    // The tokens' own curve, read back from the CSS: clamp(min, a + b·vw, max).
+    const css = readFileSync(resolve(__dirname, '../styles/structure/layout.css'), 'utf8');
+    for (const step of ['tight', 'comfortable', 'spacious']) {
+      const m = css.match(
+        new RegExp(`--spacing-section-${step}: clamp\\(([\\d.]+)rem, ([\\d.]+)rem \\+ ([\\d.]+)vw, ([\\d.]+)rem\\)`),
+      );
+      expect(m, step).not.toBeNull();
+      const [min, a, b, max] = m!.slice(1).map(Number) as [number, number, number, number];
+      const at = (w: number) => Math.min(max * 16, Math.max(min * 16, a * 16 + (b / 100) * w));
+      expect(at(320), `${step} on a phone`).toBeGreaterThanOrEqual(40);
+      expect(at(768), `${step} at 768`).toBeGreaterThanOrEqual(64);
+      expect(at(1024), `${step} reaches its ceiling by 1024`).toBeCloseTo(max * 16, 2);
+    }
   });
 });
 
@@ -165,8 +167,8 @@ describe('Section: tone + divider (LAYOUT §8)', () => {
       const html = render(<Section overlap={depth}>x</Section>);
       expect(html).toContain(pull);
       expect(html).toContain('z-10');
-      expect(html).toContain('md:pt-0');
-      expect(html).toContain('lg:pt-0');
+      // One pt-0 beats the single fluid py-section-* at every width.
+      expect(html).toMatch(/(^|\s)pt-0(\s|")/);
       expect(html).toContain(`data-overlap="${depth}"`);
     }
   });
@@ -424,10 +426,8 @@ describe('Section + Container composition: the stats-bar contract', () => {
       </Section>,
     );
 
-    // §3 vertical rhythm — tight tier (must still clear §3 desktop floor)
-    expect(html).toContain('py-12');
-    expect(html).toContain('md:py-16');
-    expect(html).toContain('lg:py-20');
+    // §3 vertical rhythm — tight tier (its curve clears the floors; see above)
+    expect(html).toContain('py-section-tight');
 
     // §8 tone + divider
     expect(html).toContain('bg-card/50');
