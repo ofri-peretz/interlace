@@ -367,6 +367,17 @@
           "source": ".changeset/effects-review-fixes.md"
         },
         {
+          "summary": "`PricingTable`: the space inside a tier (between its sections, and above its CTA) now follows `density` too, so a `compact` tier's inside never breathes more than its 16px shell. `default` renders exactly as before.",
+          "components": [
+            "pricing-table"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/pricing-tier-density.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"

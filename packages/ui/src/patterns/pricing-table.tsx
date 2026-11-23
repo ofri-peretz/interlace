@@ -80,8 +80,10 @@ const TIER_GRID_COLS: Record<2 | 3 | 4, string> = {
 const DENSITY_GAP = { compact: 'sm', default: 'md', relaxed: 'lg' } as const;
 /** Section padding per `density`. */
 const DENSITY_SECTION = { compact: 'py-10', default: 'py-16', relaxed: 'py-24' } as const;
-/** Card padding per `density`. */
-const DENSITY_CARD = { compact: 'p-4', default: 'p-6', relaxed: 'p-8' } as const;
+/** Tier padding and the rhythm inside it per `density`, so the inside never breathes more than the shell. */
+const DENSITY_CARD = { compact: 'gap-4 p-4', default: 'gap-6 p-6', relaxed: 'gap-8 p-8' } as const;
+/** Space above a tier's CTA per `density`, on the same step as the tier's padding. */
+const DENSITY_CTA = { compact: 'pt-4', default: 'pt-6', relaxed: 'pt-8' } as const;
 
 function PricingTable({
   title,
@@ -131,7 +133,7 @@ function PricingTable({
                     data-slot="pricing-tier"
                     data-featured={tier.featured ? '' : undefined}
                     className={cn(
-                      'border-border bg-card text-card-foreground relative flex flex-col gap-6 rounded-xl border',
+                      'border-border bg-card text-card-foreground relative flex flex-col rounded-xl border',
                       DENSITY_CARD[density],
                       tier.featured && 'border-primary ring-primary/40 ring-2',
                     )}
@@ -169,7 +171,9 @@ function PricingTable({
                         ))}
                       </ul>
                     ) : null}
-                    {tier.cta ? <div className="mt-auto pt-6">{tier.cta}</div> : null}
+                    {tier.cta ? (
+                      <div className={cn('mt-auto', DENSITY_CTA[density])}>{tier.cta}</div>
+                    ) : null}
                   </article>
                 ))}
           </Grid>
