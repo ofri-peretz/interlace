@@ -11,7 +11,7 @@
   ],
   "dependencies": [],
   "registryDependencies": [
-    "https://ds.interlace.tools/r/theme.json",
+    "https://ds.interlace.tools/r/interlace-base.json",
     "https://ds.interlace.tools/r/button.json",
     "https://ds.interlace.tools/r/form.json",
     "https://ds.interlace.tools/r/input.json",
@@ -34,5 +34,5 @@
     "version": "1.2.0",
     "since": "1.0.0"
   },
-  "docs": "## @interlace/sign-in-form\n\nInstalled to `components/ui/patterns/sign-in-form.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/sign-in-form';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/sign-in-form\n\nRequires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency)."
+  "docs": "## @interlace/sign-in-form\n\nInstalled to `components/ui/patterns/sign-in-form.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/sign-in-form';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/sign-in-form\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
 }

@@ -22,11 +22,11 @@ const ALIAS_INSTALL = 'npx shadcn@latest add @interlace/button';
 const CLI_INSTALL = 'npx interlace-ui add button';
 
 const STYLE_INSTALL =
-  'npx shadcn@latest add https://ds.interlace.tools/r/theme.json';
+  'npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json';
 
 export default async function HomePage() {
   const [index, proof] = await Promise.all([loadIndex(), loadInstallProof()]);
-  const styleItem = index.items.find((i) => i.name === 'theme');
+  const styleItem = index.items.find((i) => i.name === 'interlace-base');
   // Every installable item, not just the primitives — patterns, templates and
   // the vendored effects are 60% of the registry and used to be unbrowsable.
   const components = index.items.filter((i) => i.type !== 'registry:style');
@@ -112,21 +112,21 @@ export default async function HomePage() {
               CSS module export
             </div>
             <h2 className="mt-2 text-3xl font-bold tracking-tight">
-              Theme + tokens, installed alongside.
+              Tokens installed alongside. Your app left alone.
             </h2>
             <p className="text-muted-foreground mt-4">
               Every primitive ships with{' '}
-              <code className="text-foreground font-mono">theme</code> as a
-              registry dependency. The shadcn CLI lands the whole CSS contract
-              in your project —
-              brand palette, shadcn-bare token bridge, animation keyframes,
-              type / spacing / radius scales — behind the one{' '}
-              <code className="text-foreground font-mono">index.css</code>{' '}
-              barrel, so primitives render the moment you import them.
+              <code className="text-foreground font-mono">interlace-base</code>{' '}
+              as a registry dependency: motion tokens, the type scale,
+              container widths and layered colour tokens, behind one{' '}
+              <code className="text-foreground font-mono">base.css</code>{' '}
+              barrel. It only adds, so your fonts, radii, breakpoints and
+              colours compile as they did. The Interlace palette and the page
+              preflight are separate items you add by name.
             </p>
             {styleItem ? (
               <p className="text-muted-foreground mt-3 text-sm">
-                Install separately:{' '}
+                The look, opt-in:{' '}
                 <code className="text-foreground font-mono">
                   npx shadcn@latest add @interlace/theme
                 </code>
@@ -134,15 +134,15 @@ export default async function HomePage() {
             ) : null}
           </div>
           <div className="min-w-0 space-y-3">
-            <CodeBlock label="Install the theme bundle" code={STYLE_INSTALL} />
+            <CodeBlock label="Install the baseline" code={STYLE_INSTALL} />
             <div className="grid gap-3 xs:grid-cols-3">
               <StyleFileCard
                 name="tokens.css"
                 description="Animation + motion tokens (marquee, shimmer, scale-in)."
               />
               <StyleFileCard
-                name="theme.css"
-                description="shadcn-bare ↔ fumadocs token bridge; Shiki AAA boosts."
+                name="foundation.css"
+                description="Type scale, container widths, the xs breakpoint, radius from --radius."
               />
               <StyleFileCard
                 name="interlace-theme.css"
@@ -152,7 +152,7 @@ export default async function HomePage() {
             <p className="text-muted-foreground text-xs">
               Or fetch raw:{' '}
               <code className="font-mono break-all">
-                /r/styles/&lt;tokens|theme|interlace-theme&gt;.css
+                /r/styles/&lt;base|tokens|foundation|interlace-theme&gt;.css
               </code>
             </p>
           </div>

@@ -1,0 +1,22 @@
+/*
+ * @interlace/ui — the Interlace typefaces, applied to the app's OWN font
+ * utilities. Opt-in: shipped by `interlace-foundation`, never by
+ * `interlace-base`.
+ *
+ * `font-sans` and `font-mono` are the host app's keys. Redeclaring them swaps
+ * the typeface of every page that uses them, including pages that never
+ * render an Interlace component, so it is a decision the adopter makes by
+ * installing this file, not a side effect of adding a button.
+ *
+ * Fonts: families only. Inter / JetBrains Mono are loaded by the app (next/font
+ * or @font-face with font-display: swap, per TYPOGRAPHY_PHILOSOPHY "no FOIT").
+ * This file names the family stack; it does not ship font binaries.
+ */
+
+@theme {
+  /* --font-body is declared in foundation.css (additive). */
+  --font-sans: var(--font-body);
+  --font-mono:
+    'JetBrains Mono', 'JetBrains Mono Variable', 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+}

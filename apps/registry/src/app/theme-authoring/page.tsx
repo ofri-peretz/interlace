@@ -322,7 +322,7 @@ export default function ThemeAuthoringPage() {
   [data-theme='<name>'] .dark,
   [data-theme='<name>'] [data-scheme='dark'] { /* … every token, dark … */ }
 }`}</Snippet>
-          <Snippet>{`/* 2. packages/ui/styles/index.css — AFTER interlace-theme.css.
+          <Snippet>{`/* 2. packages/ui/styles/base.css — AFTER interlace-theme.css.
       Order is load-bearing: [data-theme='X'] and .dark are BOTH (0,1,0),
       so the tie is broken by source order. */
 @import "./interlace-theme.css";

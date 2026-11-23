@@ -41,15 +41,27 @@ export default function CSSContractPage() {
         <section className="mt-12">
           <h2 className="text-2xl font-semibold tracking-tight">TL;DR</h2>
           <p className="text-muted-foreground mt-2">
-            One import gives you the entire DS contract:
+            Two barrels. <code className="font-mono">base.css</code> is the
+            additive baseline every component needs; it leaves the host
+            app&apos;s own styles alone. <code className="font-mono">index.css</code>{' '}
+            is the full contract: base plus the opt-in fonts, page preflight
+            and fumadocs bridge.
           </p>
           <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
             <code>{`@import "tailwindcss";
-@import "@interlace/ui/styles/index.css";`}</code>
+@import "@interlace/ui/styles/base.css";   /* additive: what components need */
+
+/* or, for the full Interlace page: */
+@import "@interlace/ui/styles/index.css";  /* base + fonts + preflight + bridge */`}</code>
           </pre>
           <p className="text-muted-foreground mt-3 text-sm">
-            That barrel resolves to six CSS files imported in
-            cascade-correct order. Read on for the why.
+            In the registry these are{' '}
+            <code className="font-mono">interlace-base</code> (installed with
+            every component) and{' '}
+            <code className="font-mono">interlace-foundation</code> (opt-in).
+            The Interlace palette itself is a third item,{' '}
+            <code className="font-mono">theme</code>, which writes shadcn
+            cssVars. Read on for the why.
           </p>
         </section>
 
@@ -59,18 +71,23 @@ export default function CSSContractPage() {
             The six layers
           </h2>
           <p className="text-muted-foreground mt-2">
-            `index.css` declares the layer order up front, so the cascade
-            is self-documenting:
+            Both barrels declare the same layer order up front, so the
+            cascade is self-documenting:
           </p>
           <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
             <code>{`@layer interlace.primitives, interlace.foundation, interlace.preflight,
        interlace.bridge, interlace.brand, interlace.semantics;
 
+/* base.css */
 @import "./tokens.css";
 @import "./foundation.css";
+@import "./interlace-theme.css";
+@import "./themes/harbor.css";
+
+/* index.css adds */
+@import "./fonts.css";
 @import "./preflight.css";
-@import "./theme.css";
-@import "./interlace-theme.css";`}</code>
+@import "./theme.css";`}</code>
           </pre>
 
           <div className="mt-6 overflow-x-auto">
@@ -124,7 +141,7 @@ export default function CSSContractPage() {
           <p className="text-muted-foreground mt-2">
             The supported override surface is{' '}
             <code className="font-mono">@layer interlace.brand</code>.
-            Declare it AFTER importing index.css and your hex values
+            Declare it AFTER importing base.css (or index.css) and your values
             deterministically win — regardless of declaration order or
             specificity. Without cascade layers, brand override is
             source-order roulette.

@@ -34,53 +34,77 @@ export default async function GettingStartedPage() {
 
         <h1 className="mt-6 text-4xl font-bold tracking-tight">Getting started</h1>
         <p className="text-muted-foreground mt-3 max-w-prose text-lg">
-          Three commands to a fully-themed app with the DS&apos;s a11y and
-          responsive contracts active. Then keep installing primitives one at
+          A baseline that leaves your app alone, then as much of the Interlace
+          look as you choose. Then keep installing primitives one at
           a time as you need them.
         </p>
 
-        {/* ─── Step 1: theme ─────────────────────────────────────────── */}
+        {/* ─── Step 1: base ──────────────────────────────────────────── */}
         <Step
           n={1}
-          title="Install the full CSS baseline"
+          title="Install the CSS baseline"
           description={
             <>
-              The <code className="font-mono text-foreground">@interlace/theme</code>{' '}
-              bundle ships the{' '}
-              <code className="font-mono">styles/interlace/index.css</code>{' '}
-              barrel plus the six leaves it imports (
-              <code className="font-mono">tokens</code> →{' '}
-              <code className="font-mono">foundation</code> →{' '}
-              <code className="font-mono">preflight</code> →{' '}
-              <code className="font-mono">theme</code> →{' '}
-              <code className="font-mono">interlace-theme</code> →{' '}
-              <code className="font-mono">themes/harbor</code>). Import the
-              barrel and the cascade order — including the part that is not
-              guessable, where a theme file must come <em>after</em>{' '}
-              <code className="font-mono">interlace-theme</code> — is handled
-              for you. One command lands the type / spacing / radius scales, the
-              WCAG 2.2 SC 2.4.13 focus ring, the{' '}
-              <code className="font-mono">[data-min-viewport]</code>{' '}
-              container contract, reduced-motion respect, and the burnt-orange
-              brand palette.
+              <code className="font-mono text-foreground">@interlace/interlace-base</code>{' '}
+              is what every component depends on, so the CLI installs it with
+              your first component anyway. It only <em>adds</em>: the type
+              scale, container widths, the{' '}
+              <code className="font-mono">xs:</code> breakpoint, motion tokens,
+              and Interlace&apos;s colour tokens in cascade layers. Your
+              existing <code className="font-mono">font-sans</code>,{' '}
+              <code className="font-mono">rounded-*</code>, breakpoints and{' '}
+              <code className="font-mono">:root</code> colours compile exactly
+              as before, and a test holds it to that.
             </>
           }
         >
           <CodeBlock
-            label="Install the theme"
-            code="npx shadcn@latest add @interlace/theme"
+            label="Install the baseline"
+            code="npx shadcn@latest add @interlace/interlace-base"
           />
           <div className="mt-3">
             <CodeBlock
-              label="globals.css — one import, not six"
-              code={`@import "tailwindcss";\n@import "./styles/interlace/index.css";`}
+              label="globals.css — after Tailwind"
+              code={`@import "tailwindcss";\n@import "./styles/interlace/base.css";`}
             />
           </div>
         </Step>
 
-        {/* ─── Step 2: layout starter ────────────────────────────────── */}
+        {/* ─── Step 2: theme + foundation (both opt-in) ──────────────── */}
         <Step
           n={2}
+          title="Choose how much of the Interlace look you want"
+          description={
+            <>
+              Components render in your own shadcn colours until you opt in.{' '}
+              <code className="font-mono text-foreground">@interlace/theme</code>{' '}
+              writes the burnt-orange palette and radius into your{' '}
+              <code className="font-mono">:root</code> and{' '}
+              <code className="font-mono">.dark</code> the way any shadcn theme
+              does.{' '}
+              <code className="font-mono text-foreground">@interlace/interlace-foundation</code>{' '}
+              goes further and restyles the page: Inter and JetBrains Mono,
+              body colours, a WCAG 2.2 SC 2.4.13 focus ring on every focusable
+              element, a media reset and thin scrollbars. Take either, both, or
+              neither.
+            </>
+          }
+        >
+          <CodeBlock
+            label="The Interlace palette, as shadcn cssVars"
+            code="npx shadcn@latest add @interlace/theme"
+          />
+          <div className="mt-3">
+            <CodeBlock
+              label="Fonts + page preflight (replaces the base.css import)"
+              code={`npx shadcn@latest add @interlace/interlace-foundation\n\n/* globals.css */\n@import "tailwindcss";\n@import "./styles/interlace/index.css";`}
+            />
+          </div>
+        </Step>
+
+        {/* ─── Step 3: layout starter ────────────────────────────────── */}
+        <Step
+          n={3}
           title="Install the layout starter"
           description={
             <>
@@ -101,9 +125,9 @@ export default async function GettingStartedPage() {
           />
         </Step>
 
-        {/* ─── Step 3: a11y starter ──────────────────────────────────── */}
+        {/* ─── Step 4: a11y starter ──────────────────────────────────── */}
         <Step
-          n={3}
+          n={4}
           title="Install the a11y starter"
           description={
             <>

@@ -28,9 +28,10 @@
   --animate-fourth: moveHorizontal 40s ease infinite;
   --animate-fifth: moveInCircle 20s ease infinite;
 
-  /* Primitives: accordion */
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
+  /* Primitives: accordion — `animate-accordion-down/up` come from
+     tw-animate-css, which the base item depends on. Declaring them here
+     too replaced tw-animate's version in every shadcn app (losing its
+     duration/ease modifiers) for an identical keyframe. */
 
   /* Interlace: the draw verb (BRAND_PHILOSOPHY §2) — a strand drawn,
    * never faded. Paths normalize with pathLength=100 so one keyframe
@@ -144,22 +145,6 @@
       transform: translateY(-50%);
     }
   }
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
-  }
 }
 
 /* Border Beam — pure CSS animation, used by @interlace/ui/magicui/border-beam.
@@ -226,8 +211,6 @@
   .animate-fourth,
   .animate-fifth,
   .animate-border-beam,
-  .animate-accordion-down,
-  .animate-accordion-up,
   .animate-fade-in-up,
   .animate-slide-in-left,
   .animate-scale-in,

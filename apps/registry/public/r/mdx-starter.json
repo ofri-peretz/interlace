@@ -16,14 +16,14 @@
     "https://ds.interlace.tools/r/code-block.json",
     "https://ds.interlace.tools/r/tag.json",
     "https://ds.interlace.tools/r/figure.json",
-    "https://ds.interlace.tools/r/theme.json"
+    "https://ds.interlace.tools/r/interlace-base.json"
   ],
   "files": [
     {
       "path": "registry/interlace-ui/starters/mdx-starter.md",
       "target": "components/ui/INTERLACE-MDX-STARTER.md",
       "type": "registry:file",
-      "content": "# @interlace/mdx-starter\n\nInstalled:\n\n- `Callout` — info / warn / danger / success / note prose annotations.\n- `Prose` — typographic article-body wrapper.\n- `CodeBlock` — Shiki-rendered fenced code with copy button.\n- `Tag` + `TagList` — article tag badges.\n- `Figure` — image + caption + alt + AspectRatio.\n- `theme` — full DS CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n"
+      "content": "# @interlace/mdx-starter\n\nInstalled:\n\n- `Callout` — info / warn / danger / success / note prose annotations.\n- `Prose` — typographic article-body wrapper.\n- `CodeBlock` — Shiki-rendered fenced code with copy button.\n- `Tag` + `TagList` — article tag badges.\n- `Figure` — image + caption + alt + AspectRatio.\n- `interlace-base` — the additive CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n"
     }
   ],
   "meta": {
@@ -34,5 +34,5 @@
     "version": "1.7.3",
     "since": "1.0.0"
   },
-  "docs": "# @interlace/mdx-starter\n\nInstalled:\n\n- `Callout` — info / warn / danger / success / note prose annotations.\n- `Prose` — typographic article-body wrapper.\n- `CodeBlock` — Shiki-rendered fenced code with copy button.\n- `Tag` + `TagList` — article tag badges.\n- `Figure` — image + caption + alt + AspectRatio.\n- `theme` — full DS CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n"
+  "docs": "# @interlace/mdx-starter\n\nInstalled:\n\n- `Callout` — info / warn / danger / success / note prose annotations.\n- `Prose` — typographic article-body wrapper.\n- `CodeBlock` — Shiki-rendered fenced code with copy button.\n- `Tag` + `TagList` — article tag badges.\n- `Figure` — image + caption + alt + AspectRatio.\n- `interlace-base` — the additive CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n"
 }
