@@ -27,7 +27,7 @@ const COLLECTIONS: Array<[string, React.ReactElement]> = [
   ['StatGroup', <StatGroup key="s" cols={4} loading />],
   ['ArticleListGrid', <ArticleListGrid key="a" cols={4} loading />],
   ['PricingTable', <PricingTable key="p" cols={4} loading />],
-  ['RelatedPosts', <RelatedPosts key="r" loading />],
+  ['RelatedPosts', <RelatedPosts key="r" data-testid="related-posts" loading />],
 ];
 
 describe('collections size to their container, not the viewport', () => {
