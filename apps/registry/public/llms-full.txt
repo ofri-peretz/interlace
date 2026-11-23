@@ -520,7 +520,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Radio Group](https://ds.interlace.tools/c/radio-group): Single-select control over 2+ mutually exclusive options. Built on @base-ui/react/radio-group + /radio: Base UI owns `role="radiogroup"`, roving-tabindex arrow navigation, and the controlled/uncontrolled pair (`value` + `onValueChange` / `defaultValue`).…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json`
   - contract: client, min 320px, keyboard via Base UI radio-group, v1.2.0
-- [Reading Settings](https://ds.interlace.tools/c/reading-settings): toggle.
+- [Reading Settings](https://ds.interlace.tools/c/reading-settings): A text size control and a More contrast toggle: two small controls for the reader, not the theme author. They write the `data-text-size` and `data-contrast` attributes on `<html>` through `useReadingPrefs`, remember the choice, and `THEME_SCRIPT` puts it…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/reading-settings.json`
   - contract: client, v1.0.0
 - [Reading Strand](https://ds.interlace.tools/c/reading-strand): ReadingStrand — reading progress as the brand's draw verb: a single strand-a line at the top of the viewport that draws itself as the reader moves through the piece. BRAND_PHILOSOPHY: one strand, drawn — never faded.

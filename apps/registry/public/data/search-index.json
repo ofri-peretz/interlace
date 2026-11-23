@@ -2198,6 +2198,7 @@
     "readabl": 11,
     "reader": 81,
     "readinglayout": 1,
+    "readingsett": 1,
     "readingstrand": 1,
     "readingtim": 2,
     "readingtimeprop": 1,
@@ -5141,7 +5142,7 @@
     {
       "name": "reading-settings",
       "title": "Reading Settings",
-      "blurb": "toggle.",
+      "blurb": "A text size control and a More contrast toggle: two small controls for the reader, not the theme author. They write the `data-text-size` and `data-contrast` attributes on `<html>` through `useReadingPrefs`, remember the choice, and `THEME_SCRIPT` puts it…",
       "tier": "primitive",
       "categories": [
         "foundation",
@@ -5152,7 +5153,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "read sett foundation primitiv client press button size reset choic larger contrast name stor text smaller toggl contrasttoggl textsizecontrol translation unpress show current reader disabl thrown usereadingpref visit stop group step remember said accessibl translat control label outer normal middl otherwis tell neither writ script attribut turn author either explicit ask labell 100 alon html small besid word page end back icon last prefer"
+      "terms": "read sett foundation primitiv client size press choic button contrast reset usereadingpref text larger remember name control stor smaller reader toggl writ contrasttoggl readingsett textsizecontrol translation unpress show script attribut author current disabl thrown html small visit stop group step said accessibl translat label outer normal data middl otherwis tell neither turn either explicit ask labell 100 alon besid word page end back icon"
     },
     {
       "name": "reading-strand",

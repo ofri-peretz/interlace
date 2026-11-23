@@ -1,10 +1,9 @@
 'use client';
 
 /**
- * @interlace/ui — reading settings: a text size control and a contrast
- * toggle.
+ * @interlace/ui — ReadingSettings
  *
- * Two small controls for the reader, not the theme author. They write the
+ * A text size control and a More contrast toggle: two small controls for the reader, not the theme author. They write the
  * `data-text-size` and `data-contrast` attributes on `<html>` through
  * `useReadingPrefs`, remember the choice, and `THEME_SCRIPT` puts it back
  * before first paint on the next visit.

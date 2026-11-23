@@ -5708,7 +5708,7 @@
       "name": "reading-settings",
       "title": "Reading Settings",
       "type": "registry:ui",
-      "summary": "toggle.",
+      "summary": "A text size control and a More contrast toggle: two small controls for the reader, not the theme author. They write the `data-text-size` and `data-contrast` attributes on `<html>` through `useReadingPrefs`, remember the choice, and `THEME_SCRIPT` puts it…",
       "topics": [],
       "categories": [
         "foundation",
