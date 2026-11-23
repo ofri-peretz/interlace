@@ -96,7 +96,7 @@ const NumberFieldInput = React.forwardRef<
     ref={ref}
     data-slot="number-field-input"
     className={cn(
-      'h-9 w-20 bg-transparent px-3 text-center text-sm tabular-nums',
+      'h-control w-20 bg-transparent px-3 text-center text-sm tabular-nums',
       'focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}

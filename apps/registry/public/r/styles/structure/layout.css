@@ -28,6 +28,19 @@
   --spacing-section-comfortable: clamp(4rem, 2.9157rem + 4.8193vw, 6rem);
   --spacing-section-spacious: clamp(5rem, 3.3735rem + 7.2289vw, 8rem);
 
+  /* ── Control heights ────────────────────────────────────────────────
+     Button, Input, Select, Toggle, Tabs and the other one-line controls
+     take their height from these, through h-control / size-control and
+     the -xs / -sm / -lg steps. The defaults are the compact app sizes
+     (24 / 32 / 36 / 40px). `data-density="comfortable"` below re-points
+     them to touch sizes (32 / 40 / 44 / 48px), so the default control
+     meets the 44px target (WCAG 2.5.5 AAA, Apple HIG). A brand can
+     re-point any single one instead: :root { --spacing-control: 2.5rem; } */
+  --spacing-control-xs: 1.5rem;
+  --spacing-control-sm: 2rem;
+  --spacing-control: 2.25rem;
+  --spacing-control-lg: 2.5rem;
+
   /* ── Container widths (LAYOUT #2 — four sizes only) ─────────────────
      Generates max-w-prose / max-w-content / max-w-wide. `full` = no max-width
      (omit the utility). ad-hoc max-w-3xl/4xl/5xl/6xl are forbidden by R21. */
@@ -51,4 +64,16 @@
 
      `rem`-based so user zoom and browser font-size scaling move it too. */
   --breakpoint-xs: 30rem;
+}
+
+/* Density: put data-density="comfortable" on <html> (or any region) for
+   touch-sized controls. Opt-in, like a theme: nothing changes without it.
+   In @layer base so an app's own unlayered rule still wins. */
+@layer base {
+  [data-density='comfortable'] {
+    --spacing-control-xs: 2rem;
+    --spacing-control-sm: 2.5rem;
+    --spacing-control: 2.75rem;
+    --spacing-control-lg: 3rem;
+  }
 }

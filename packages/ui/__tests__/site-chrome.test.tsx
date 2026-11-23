@@ -139,6 +139,33 @@ const GROUPED = [
 ];
 
 describe("Topbar link groups", () => {
+  it("passes group items through renderLink too", async () => {
+    render(
+      <Topbar
+        logo="Site"
+        links={GROUPED}
+        currentHref="/data"
+        renderLink={({ href, className, children, ...rest }) => (
+          <a href={href} className={className} data-router {...rest}>
+            {children}
+          </a>
+        )}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Products" }));
+    const item = await screen.findByRole("link", { name: /Data hub/ });
+    expect(item.hasAttribute("data-router")).toBe(true);
+    expect(item.getAttribute("aria-current")).toBe("page");
+  });
+
+  it('mobileNav="none" adds no menu button and no second row', () => {
+    const { container } = render(
+      <Topbar logo="Site" links={LINKS} mobileNav="none" />,
+    );
+    expect(screen.queryByRole("button", { name: "Menu" })).toBeNull();
+    expect(container.querySelector('[data-slot="topbar-wrap-nav"]')).toBeNull();
+  });
+
   it("opens a group as a panel of its items, with descriptions, and closes on Escape", async () => {
     render(<Topbar logo="Site" links={GROUPED} currentHref="/workshops" />);
     const trigger = screen.getByRole("button", { name: "Products" });

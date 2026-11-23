@@ -89,9 +89,9 @@ const toggleVariants = cva(
          * label grows the pill instead of clipping.
          */
         xs: 'min-h-6 px-2.5 py-0.5 text-xs',
-        sm: 'h-8 px-2',
-        md: 'h-9 px-3',
-        lg: 'h-10 px-4',
+        sm: 'h-control-sm px-2',
+        md: 'h-control px-3',
+        lg: 'h-control-lg px-4',
       },
     },
     defaultVariants: {
