@@ -140,6 +140,17 @@
           "source": ".changeset/citation.md"
         },
         {
+          "summary": "New `ClaimCard` pattern: one claim, examined. A status row for badges, the claim quoted in serif, a short answer that can carry `Citation` markers, collapsible sections for the evidence (facts and sources, who says this, where it is contested, what it does not claim, what could not be verified, or any section you name), and a footer. Every part is a slot. Sections are native `<details>`, so the card renders on the server, opens without JavaScript, and its closed sections still show up in find-in-page.",
+          "components": [
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/claim-card.md"
+        },
+        {
           "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
           "components": [
             "button",

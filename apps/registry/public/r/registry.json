@@ -1804,6 +1804,24 @@
       }
     },
     {
+      "name": "claim-card",
+      "type": "registry:ui",
+      "title": "Claim Card",
+      "description": "One claim, examined. The card quotes a claim as a reader heard it, gives a short answer, and keeps the evidence one click away in collapsible sections: the facts and their sources, who makes the claim, where the record is contested, what the answer does…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "code-window",
       "type": "registry:ui",
       "title": "Code Window",

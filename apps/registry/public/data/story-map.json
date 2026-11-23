@@ -418,6 +418,16 @@
     "previewDark": null,
     "skeleton": null
   },
+  "claim-card": {
+    "title": "Blocks/ClaimCard",
+    "storyIds": [
+      "blocks-claimcard--default",
+      "blocks-claimcard--still-being-checked"
+    ],
+    "preview": "blocks-claimcard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "cloud-particles": {
     "title": "Aceternity/CloudParticles",
     "storyIds": [

@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 149 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 150 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -43,17 +43,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 83 server, 66 client
-- keyboard: 114 none, 35 handled
-- built-in loading state: 32 of 149
-- declared minViewport: 83 at 320, 7 at 480, 1 at 768, 58 at inherited
+- rendering: 84 server, 66 client
+- keyboard: 115 none, 35 handled
+- built-in loading state: 32 of 150
+- declared minViewport: 84 at 320, 7 at 480, 1 at 768, 58 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 67 item(s)
-- tier `pattern` — 33 item(s)
+- tier `pattern` — 34 item(s)
 - tier `effect` — 17 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
@@ -62,8 +62,8 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 67 item(s)
-- category `pattern` (Patterns) — 33 item(s)
-- category `blog` (Blog & long-form) — 25 item(s)
+- category `pattern` (Patterns) — 34 item(s)
+- category `blog` (Blog & long-form) — 26 item(s)
 - category `foundation` (Foundation) — 22 item(s)
 - category `decorative` (Decorative) — 21 item(s)
 - category `data` (Data display) — 21 item(s)
@@ -313,6 +313,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Citation](https://ds.interlace.tools/c/citation): An inline source marker for a sentence that makes a claim. The reader taps or tabs to the marker and a popover lists every source behind the claim: who published it, what kind of source it is, and the exact words quoted from it. Several sources stack in…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/citation.json`
   - contract: client, min 320px, states enough|short, v1.0.0
+- [Claim Card](https://ds.interlace.tools/c/claim-card): One claim, examined. The card quotes a claim as a reader heard it, gives a short answer, and keeps the evidence one click away in collapsible sections: the facts and their sources, who makes the claim, where the record is contested, what the answer does…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json`
+  - contract: server, min 320px, v1.0.0
 - [Code Window](https://ds.interlace.tools/c/code-window): macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/code-window.json`
   - contract: client, v2.0.0

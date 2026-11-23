@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 149
+    "itemCount": 150
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 67,
-      "pattern": 33,
+      "pattern": 34,
       "effect": 17,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 67,
-      "pattern": 33,
-      "blog": 25,
+      "pattern": 34,
+      "blog": 26,
       "foundation": 22,
       "decorative": 21,
       "data": 21,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 83,
+      "server": 84,
       "client": 66
     },
     "keyboard": {
-      "none": 114,
+      "none": 115,
       "handled": 35
     },
     "loading": {
-      "none": 117,
+      "none": 118,
       "built-in": 32
     },
     "minViewport": {
-      "320": 83,
+      "320": 84,
       "480": 7,
       "768": 1,
       "inherited": 58
@@ -1682,6 +1682,58 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/citation.json",
       "item": "https://ds.interlace.tools/r/citation.json",
       "docs": "https://ds.interlace.tools/c/citation"
+    },
+    {
+      "name": "claim-card",
+      "title": "Claim Card",
+      "type": "registry:ui",
+      "summary": "One claim, examined. The card quotes a claim as a reader heard it, gives a short answer, and keeps the evidence one click away in collapsible sections: the facts and their sources, who makes the claim, where the record is contested, what the answer does…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/claim-card.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json",
+      "item": "https://ds.interlace.tools/r/claim-card.json",
+      "docs": "https://ds.interlace.tools/c/claim-card"
     },
     {
       "name": "cloud-particles",
