@@ -65,15 +65,16 @@ The file lands in your repo (`src/components/ui/button.tsx`) — own it, mod it,
 Read [`DESIGN_PRINCIPLES.md`](./DESIGN_PRINCIPLES.md) before adding a primitive — the 14 principles are the spec.
 
 ```bash
-# A new primitive lands as four pieces, in one PR:
+# A new primitive lands as five pieces, in one PR:
 # 1. packages/ui/src/primitives/<name>.tsx     (the primitive)
 # 2. apps/storybook/src/stories/primitives/<Pascal>.stories.tsx
 # 3. packages/ui/__tests__/primitives-min-viewport-lock.test.tsx  (append to PRIMITIVES)
 # 4. packages/ui/package.json                  (the export entry)
+# 5. apps/registry/registry-categories.json    (its category)
 ```
 
 Then rebuild the registry (`npm run registry:build`) and add a changeset (`npm run changeset`).
-The full guide is in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+The full checklist is in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 CI gates on every PR:
 
