@@ -258,11 +258,14 @@ function levelFor(ratio: number | null): BadgeLevel {
   return 'fail';
 }
 
+// The tone lives in the border; the text stays foreground-on-background so
+// the badge itself clears the 7:1 the a11y job holds every story to (a tone
+// on its own 15% tint measures about 6.4:1).
 const BADGE_CLASS: Record<BadgeLevel, string> = {
-  AAA: 'bg-success/15 text-success border-success/30',
-  AA: 'bg-success/15 text-success border-success/30',
-  'AA-large': 'bg-warning/15 text-warning border-warning/30',
-  fail: 'bg-destructive/15 text-destructive border-destructive/30',
+  AAA: 'bg-background text-foreground border-success',
+  AA: 'bg-background text-foreground border-success',
+  'AA-large': 'bg-background text-foreground border-warning',
+  fail: 'bg-background text-foreground border-destructive',
   'n/a': 'bg-muted text-muted-foreground border-border',
 };
 

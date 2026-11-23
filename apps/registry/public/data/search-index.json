@@ -706,7 +706,7 @@
     "collator": 1,
     "collect": 1,
     "collid": 1,
-    "color": 25,
+    "color": 26,
     "colorschem": 1,
     "colour": 44,
     "column": 42,
@@ -798,7 +798,7 @@
     "continuous": 1,
     "contract": 48,
     "contrast": 63,
-    "control": 31,
+    "control": 32,
     "controll": 15,
     "convention": 11,
     "converg": 1,
@@ -854,7 +854,7 @@
     "dangerous": 2,
     "dangerouslysetinnerhtml": 2,
     "dangl": 1,
-    "dark": 37,
+    "dark": 38,
     "dash": 9,
     "dashboard": 6,
     "dashboardtemplat": 1,
@@ -1204,7 +1204,7 @@
     "focusringprop": 1,
     "fold": 4,
     "folklor": 2,
-    "follow": 24,
+    "follow": 25,
     "font": 10,
     "foo": 1,
     "food": 1,
@@ -1613,7 +1613,7 @@
     "market": 11,
     "markup": 10,
     "mask": 3,
-    "match": 33,
+    "match": 34,
     "matchmedia": 3,
     "matrix": 2,
     "max": 22,
@@ -1703,7 +1703,7 @@
     "narrow": 22,
     "narrower": 4,
     "narrowest": 7,
-    "nativ": 88,
+    "nativ": 89,
     "natural": 6,
     "nav": 19,
     "navigation": 20,
@@ -1767,7 +1767,7 @@
     "offset": 8,
     "ofri": 1,
     "often": 5,
-    "oklch": 1,
+    "oklch": 2,
     "old": 4,
     "omit": 11,
     "omitt": 9,
@@ -2202,7 +2202,7 @@
     "scann": 2,
     "scen": 1,
     "schedul": 1,
-    "schem": 9,
+    "schem": 10,
     "schemepreferenc": 2,
     "school": 1,
     "scop": 11,
@@ -3180,7 +3180,7 @@
         "pattern",
         "foundation"
       ],
-      "terms": "brand logo foundation pattern server rsc lockup mark bar wordmark lowercas tool eslint svg monospac favicon var site geometry nav defin lock fill identical 0a6b47 0d9460 a84c17 bend brandlogo brandmark f4794a monorepo upper 100 copi plus follow attr rotat height pair automatical public custom product decorativ top center high orang header instead green ship size lower outsid every beyond hex viewbox noun packag width"
+      "terms": "brand logo foundation pattern server rsc lockup mark bar wordmark lowercas tool eslint svg monospac favicon var site geometry nav defin lock fill identical 0a6b47 0d9460 a84c17 bend brandlogo brandmark f4794a monorepo upper 100 copi plus attr rotat follow height pair automatical public custom product decorativ top center high orang header instead green ship size lower outsid every beyond hex viewbox noun packag width"
     },
     {
       "name": "breadcrumb",
@@ -3277,7 +3277,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "card foundation primitiv server rsc load skeleton surfac header action radius cardaction cardtitl shadow border box flex description content titl footer grid column part layout carddescription col padd 1fr cardcontent cardfooter cardheader participat shift creat come round match footprint gap local normal instead real arriv data shap auto child present specific variant switch slot docu treat head composit silhouett utility compos land caller else"
+      "terms": "card foundation primitiv server rsc load skeleton surfac header action radius cardaction cardtitl shadow border box flex description content titl footer grid column part layout carddescription col padd 1fr cardcontent cardfooter cardheader participat shift creat come round footprint gap match local normal instead real arriv data shap auto child present specific variant switch slot docu treat head composit silhouett utility compos land caller else"
     },
     {
       "name": "checkbox",
@@ -3339,7 +3339,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "claim card blog pattern server rsc responsiv min viewport 320 detail fact collapsibl section answer quot head claimcard contest examin heard summary evidenc footer face record away claimcardanswer claimcardclaim claimcardfooter claimcardsection claimcardstatus quotation click badg expand explainer operabl page mut part nativ status citation faq open marker articl short level decid javascript review clos found carry text find keep font border verifi row know"
+      "terms": "claim card blog pattern server rsc responsiv min viewport 320 detail fact collapsibl section answer quot head claimcard contest examin heard summary evidenc footer face record away claimcardanswer claimcardclaim claimcardfooter claimcardsection claimcardstatus quotation click badg expand explainer operabl page mut part status nativ citation faq open marker articl short level decid javascript review clos found carry text find keep font border verifi row know"
     },
     {
       "name": "cn",
@@ -3816,7 +3816,7 @@
         "template",
         "blog"
       ],
-      "terms": "page templat blog server rsc responsiv min viewport 320 toc sidebar docspagetemplat rail nav optional documentation pros skeleton left right main topbar reserv flank column centr rout typical content wrapper app eslint prevent body match mirror plugin top hidden hydration full tool load bug opt sectionboundary ten flight inner surfac bottom rect footer shift tree silhouett hear swap status registry cls neutral wrapp region"
+      "terms": "page templat blog server rsc responsiv min viewport 320 toc sidebar docspagetemplat rail nav optional documentation pros skeleton left right main topbar reserv flank column centr rout typical content wrapper app eslint prevent body mirror plugin match top hidden hydration full tool load bug opt sectionboundary ten flight inner surfac bottom rect footer shift tree silhouett hear swap status registry cls neutral wrapp region"
     },
     {
       "name": "dropdown-menu",
@@ -3975,7 +3975,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "focus grid market pattern server rsc responsiv min viewport 320 card scrim focusgrid media pictur chapter study titl link busy feel help href video bright tab compar option back step destination dimm img stay hover column whol invert case imag visual without dim portrait strength aspect blur motion every point articl appli framework javascript item notic script soft hit hydration schem readabl cover handler"
+      "terms": "focus grid market pattern server rsc responsiv min viewport 320 card scrim focusgrid media pictur chapter study titl link busy feel help href video bright tab compar option back step destination dimm img stay hover column whol invert case imag visual without dim portrait strength aspect blur motion every point articl appli framework javascript item notic script soft hit hydration readabl schem cover handler"
     },
     {
       "name": "focus-ring",
@@ -4043,7 +4043,7 @@
         "primitive",
         "form"
       ],
-      "terms": "form primitiv server rsc responsiv min viewport 320 keyboard base field fielddescription fielderror fieldlabel validity onsubmit wir fieldcontrol email method serveraction action cloneel flipp ecosystem aschild generat ids ramp subtl manag tail describedby text description safe aria association textarea part error invalid sign control input child classic fieldvalidity remix skin validation nativ slot data passthrough root composit destructiv r13 attr impl contact composition foreground"
+      "terms": "form primitiv server rsc responsiv min viewport 320 keyboard base field fielddescription fielderror fieldlabel validity onsubmit wir fieldcontrol email method serveraction action cloneel flipp ecosystem aschild generat ids ramp subtl manag tail describedby text description safe aria association textarea part error invalid sign input control child classic fieldvalidity remix skin validation nativ slot data passthrough root composit destructiv r13 attr impl contact composition foreground"
     },
     {
       "name": "grade-badge",
@@ -4085,7 +4085,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "gradient mesh decorativ effect client gradientmesh glow loop colour drift aliv blurr band chart feel slow soft larg motion featur watch content goe blend field diameter strong hero shift plac hold highlight reduc fad base self surfac transform long keyfram primary stylesheet children percentag schem transparent noth filter paus radial web without rest contain flow reader allow token animat six svg absolut even composit"
+      "terms": "gradient mesh decorativ effect client gradientmesh glow loop colour drift aliv blurr band chart feel slow soft larg motion featur watch content goe blend field diameter strong hero shift plac hold highlight reduc fad base self surfac transform long keyfram primary stylesheet children percentag transparent schem noth filter paus radial web without rest contain flow reader allow token animat six svg absolut even composit"
     },
     {
       "name": "grid-field",
@@ -4221,7 +4221,7 @@
     {
       "name": "interlace-base",
       "title": "Interlace Base",
-      "blurb": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, and layered brand + semantic colour tokens. Changes nothing the host app already styles.",
+      "blurb": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.",
       "tier": "theme",
       "categories": [
         "foundation",
@@ -4234,7 +4234,7 @@
         "theme",
         "foundation"
       ],
-      "terms": "base foundation server rsc radius additiv host breakpoint baselin deriv layer app brand motion already token scal chang colour semantic container noth width styl every"
+      "terms": "base foundation server rsc oklch radius additiv host breakpoint schem baselin deriv layer follow color app brand motion control match already token dark scal chang colour semantic container noth width nativ styl every"
     },
     {
       "name": "interlace-foundation",
@@ -4270,7 +4270,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "weav decorativ effect server rsc interlaceweav host strand pathlength corner strok signatur gestur radius overshoot uniform hover transition interaction 100 rect opposit relativ group focus none dash brand meet viewbox 500m earlier enact hous mechanic memorabl normalization unscal scal geometry overlay card svg cool dashoffset doubl ease edgeglow honor preserveaspectratio tip touch drawn path follow along chromium normaliz trac vector reduc round calc discard"
+      "terms": "weav decorativ effect server rsc interlaceweav host strand pathlength corner strok signatur gestur radius overshoot uniform hover transition interaction 100 rect opposit relativ group focus none dash brand meet viewbox 500m earlier enact hous mechanic memorabl normalization unscal scal geometry overlay card svg cool dashoffset doubl ease edgeglow honor preserveaspectratio tip touch drawn path along chromium normaliz trac vector follow reduc round calc discard"
     },
     {
       "name": "label",
@@ -4290,7 +4290,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "label foundation primitiv server rsc responsiv min viewport 320 control form awar canon association dep headless wir lower peer shadcn disabl ref field data htmlfor ramp machinery inherit base mirror level interfac carv floor nativ exempt text bespok inactiv http well variant com flow wrap forward past slot opacity overflow raw group smallest r12 viabl gap reus user background dark token scal light rather"
+      "terms": "label foundation primitiv server rsc responsiv min viewport 320 control form awar canon association dep headless wir lower peer shadcn disabl ref field data htmlfor ramp machinery inherit base mirror level interfac carv floor exempt nativ text bespok inactiv http well variant com flow wrap forward past slot opacity overflow raw group smallest r12 viabl gap reus user background token dark scal light rather"
     },
     {
       "name": "landing-template",
@@ -4672,7 +4672,7 @@
         "primitive",
         "feedback"
       ],
-      "terms": "progress feedback primitiv client responsiv min viewport 320 keyboard base indicator track rail baseprogress tone size determinat progresstrack 4px motion progresslabel part reduc consum compound defin raw width transition height danger map hex root 12px bleed progresscard progressindicator progressxvariant upload xcircl parent success variantprop scal warn label hood portion progressbar progressvalu simpl spac destructiv fill 8px indeterminat matchmedia orthogonal color compos intentional canon public"
+      "terms": "progress feedback primitiv client responsiv min viewport 320 keyboard base indicator track rail baseprogress tone size determinat progresstrack 4px motion progresslabel part reduc consum compound defin raw width transition height danger map hex root 12px bleed progresscard progressindicator progressxvariant upload xcircl parent success variantprop scal warn label hood portion progressbar progressvalu simpl spac destructiv fill 8px indeterminat matchmedia orthogonal compos color intentional canon public"
     },
     {
       "name": "prose",
@@ -4768,7 +4768,7 @@
         "primitive",
         "form"
       ],
-      "terms": "radio group form primitiv client responsiv min viewport 320 keyboard base radiogroup readon rov select tabindex item radiogroupitem rootprop aria role dot option exclusiv mutual defaultvalu onvaluechang arrow background ring indicator uncontroll conformant enlarg radioroot allow controll upstream ref critical overlapp pitch navigation check composit border target fill 8px attr trust uncheck wrap blind tile unconditional built control input key pair pseudo 24px drill"
+      "terms": "radio group form primitiv client responsiv min viewport 320 keyboard base radiogroup readon rov select tabindex item radiogroupitem rootprop aria role dot option exclusiv mutual defaultvalu onvaluechang arrow background ring indicator uncontroll conformant enlarg radioroot allow controll upstream ref critical overlapp pitch navigation check composit border target fill 8px attr trust uncheck wrap blind tile unconditional built input key control pair pseudo 24px drill"
     },
     {
       "name": "reading-strand",
@@ -5104,7 +5104,7 @@
         "template",
         "form"
       ],
-      "terms": "sett templat form server rsc responsiv min viewport 480 section rail rout activ settingstemplat tab main account friend topbar content driven settingssection area page app left render skeleton load current shown sectionboundary ten flight inner surfac rect silhouett becom hear swap status horizontal scroll cls neutral region overrid match mirror null r23 level next titl announc real whol full list role shap layout row"
+      "terms": "sett templat form server rsc responsiv min viewport 480 section rail rout activ settingstemplat tab main account friend topbar content driven settingssection area page app left render skeleton load current shown sectionboundary ten flight inner surfac rect silhouett becom hear swap status horizontal scroll cls neutral region overrid mirror match null r23 level next titl announc real whol full list role shap layout row"
     },
     {
       "name": "share-buttons",
@@ -5383,7 +5383,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "sky backdrop decorativ effect client stat top left right none skybackdrop cloud sun seed glow daytim drama warmth drift soft counterpart warm info gradient calm starfield friend mix corner suit colour highlight var motion dusk background across card 120 overlapp spe hero reduc sequenc loop stay extra light rather schem set still filter paus radial web content circl turn ele flow allow animat direct"
+      "terms": "sky backdrop decorativ effect client stat top left right none skybackdrop cloud sun seed glow daytim drama warmth drift soft counterpart warm info gradient calm starfield friend mix corner suit colour highlight var motion dusk background across card 120 overlapp spe hero reduc sequenc loop stay extra light rather set still schem filter paus radial web content circl turn ele flow allow animat direct"
     },
     {
       "name": "slider",
@@ -5470,7 +5470,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "stagger list decorativ effect client staggerlist item millisecond process arriv ordinary recent updat arrival reveal step eye another motion point argu order first bullet focus 420 rise view scroll whos reduc time fold run fade receiv crawler decid loop keyfram script transparent paus web child remov turn never read enter reader invisibl slot pixel simp data html repeat animation becom prefer nativ move browser"
+      "terms": "stagger list decorativ effect client staggerlist item millisecond process arriv ordinary recent updat arrival reveal step eye another motion point argu order first bullet focus 420 rise view scroll whos reduc time fold run fade receiv crawler decid loop keyfram script transparent paus web child remov turn never read enter reader invisibl slot pixel simp data html repeat animation becom prefer move nativ browser"
     },
     {
       "name": "stance-list",
@@ -5513,7 +5513,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "starfield decorativ effect client star meteor sky canva shoot breath colour hero fram var night occasional oklch rgb loop callback shortest resiz pixel slow animation paint shar longest cost second everyth turn driven singl burn fastest getcomputedstyl modern particl resolvecolor sleep srgb layer 0002 spe back move alpha slowest color read mean reduc cascad behind motion cycl mix dom appli devic idle inset hidden"
+      "terms": "starfield decorativ effect client star meteor sky canva shoot breath colour hero fram var night occasional rgb loop callback oklch shortest resiz pixel slow animation paint shar longest cost second everyth turn driven singl burn fastest getcomputedstyl modern particl resolvecolor sleep srgb layer 0002 spe back move alpha slowest read color mean reduc cascad behind motion cycl mix dom appli devic idle inset hidden"
     },
     {
       "name": "stat-card",
@@ -5535,7 +5535,7 @@
         "pattern",
         "data"
       ],
-      "terms": "stat card data pattern server rsc load skeleton responsiv min viewport 320 statcard delta tone aaa icon tabular optional dashboard num label 30d launch sinc color success warn danger 600 footnot scorecard lucid suit semantic result variant emerald rose statcardvariant widget number contrast measur variantprop build four metric typography enhanc numeral scann enforc trend accent row first inherit key articl block pair big public"
+      "terms": "stat card data pattern server rsc load skeleton responsiv min viewport 320 statcard delta tone aaa icon tabular optional dashboard num label 30d launch sinc success color warn danger 600 footnot scorecard lucid suit semantic result variant emerald rose statcardvariant widget number contrast measur variantprop build four metric typography enhanc numeral scann enforc trend accent row first inherit key articl block pair big public"
     },
     {
       "name": "stat-group",
@@ -5778,7 +5778,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "switcher foundation primitiv client responsiv min viewport 320 themeswitcher menu dot lib themeschemetoggl schem dark toggl press appearanc menuitemradio popup script control trigger dropdownmenutrigger usethem harbor radiogroup typeahead light try src swatch click escap system aria serv axis check item base contract question writ genuin cooki flourish multiplicativ obvious permanent pretend themeswitchervariant user half stat four paint nav definition done reload represent schemepreferenc today"
+      "terms": "switcher foundation primitiv client responsiv min viewport 320 themeswitcher menu dot lib themeschemetoggl dark schem toggl press appearanc menuitemradio popup script trigger control dropdownmenutrigger usethem harbor radiogroup typeahead light try src swatch click escap system aria serv axis check item base contract question writ genuin cooki flourish multiplicativ obvious permanent pretend themeswitchervariant user half stat four paint nav definition done reload represent schemepreferenc today"
     },
     {
       "name": "theme-tokens",
@@ -6034,7 +6034,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "topbar menu navigation pattern client topbarmenu sheet open button side link inert half nav trigger render small come compos site clos dialog header focus dismissal extra trap outsid insid press row screen landmark new usual escap label leav page rout follow hold move anchor caller stat accessibl behind r12 reus already visibl titl chang primary children list never wrap pass base name part nativ"
+      "terms": "topbar menu navigation pattern client topbarmenu sheet open button side link inert half nav trigger render small come compos site clos dialog header focus dismissal extra trap outsid insid press row screen landmark new usual escap label leav page rout hold move anchor follow caller stat accessibl behind r12 reus already visibl titl chang primary children list never wrap pass base name part nativ"
     },
     {
       "name": "topbar",
