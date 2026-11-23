@@ -436,7 +436,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Topbar](https://ds.interlace.tools/c/topbar): Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar.json`
   - contract: server, min 320px, v2.0.0
-- [Topbar Menu](https://ds.interlace.tools/c/topbar-menu): The small-screen half of `Topbar`: a "Menu" button that opens the site's links in a side sheet. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.
+- [Topbar Menu](https://ds.interlace.tools/c/topbar-menu): The small-screen half of `Topbar`: a "Menu" button that opens the site's links in a panel at the edge of the screen. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json`
   - contract: client, v1.0.0
 - [Wordmark](https://ds.interlace.tools/c/wordmark): A text logo of one or more stacked lines: a name over its tagline, or the same name in several languages or scripts. Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the…

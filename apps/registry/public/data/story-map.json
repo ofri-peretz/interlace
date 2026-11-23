@@ -2250,7 +2250,9 @@
     "title": "Blocks/TopbarMenu",
     "storyIds": [
       "blocks-topbarmenu--default",
-      "blocks-topbarmenu--keyboard"
+      "blocks-topbarmenu--keyboard",
+      "blocks-topbarmenu--closes-on-navigate",
+      "blocks-topbarmenu--from-the-bottom"
     ],
     "preview": "blocks-topbarmenu--default",
     "previewDark": null,
