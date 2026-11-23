@@ -2029,19 +2029,12 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [
-        {
-          "name": "CTATone",
-          "values": [
-            "subtle",
-            "primary",
-            "neutral"
-          ]
-        }
-      ],
+      "states": [],
       "a11y": {
         "roles": [],
-        "aria": [],
+        "aria": [
+          "aria-labelledby"
+        ],
         "motion": {
           "driver": "none",
           "declaresPreference": false,
@@ -2052,7 +2045,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3839,7 +3832,8 @@
       "a11y": {
         "roles": [],
         "aria": [
-          "aria-hidden"
+          "aria-hidden",
+          "aria-labelledby"
         ],
         "motion": {
           "driver": "none",

@@ -548,7 +548,11 @@
       "blocks-ctasection--neutral",
       "blocks-ctasection--loading",
       "blocks-ctasection--dark",
-      "blocks-ctasection--rtl"
+      "blocks-ctasection--rtl",
+      "blocks-ctasection--card",
+      "blocks-ctasection--card-with-background",
+      "blocks-ctasection--card-with-search",
+      "blocks-ctasection--card-rtl"
     ],
     "preview": "blocks-ctasection--default",
     "previewDark": "blocks-ctasection--dark",

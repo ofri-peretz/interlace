@@ -270,6 +270,17 @@
           "source": ".changeset/content-patterns.md"
         },
         {
+          "summary": "CTASection gets `variant=\"card\"` (a contained rounded card inside the content width), `align=\"start\"`, a decorative `background` slot clipped to the surface, and `children` under the actions for a search box or a form. The title moves to the fluid `text-section` size and the padding to `py-section-comfortable`.",
+          "components": [
+            "cta-section"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/cta-section-card.md"
+        },
+        {
           "summary": "New `DialogueStepper`: a `Dialogue` the reader steps through, one step of turns at a time. Each `DialogueStepper.Step` ends in `DialogueStepper.Choices`; a `Choice` reveals the step its `next` names, so a talk can branch, and choosing a step already on the path goes back to it. Back, \"Show the whole conversation\" and \"Start over\" sit below, with `labels` for another language. After a choice, focus moves to the new step's first choice (or to Back at the end) and the new turns are read out once through a polite live region; the step enters with a short fade behind `motion-safe:`. The server renders every step, and without JavaScript a `<noscript>` style shows the whole conversation with no controls.",
           "components": [
             "dialogue-stepper"
@@ -648,6 +659,17 @@
           "source": ".changeset/container-collections.md"
         },
         {
+          "summary": "CTASection: the section is named by its title (`aria-labelledby`), so it is announced as a region with that name.",
+          "components": [
+            "cta-section"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/cta-section-labelled.md"
+        },
+        {
           "summary": "DialogueStepper works when a server component renders it, and its no-JS fallback shows every step.\n\n- `DialogueStep` takes its choices through a new `choices` prop. A server component holds only a reference to each client part, so a `DialogueChoices` child could not be told apart from a turn: it landed inside the list of turns and stayed after the reader moved on. Use the named exports (`DialogueStep`, `DialogueChoices`, `DialogueChoice`) from a server component, since the dot form is undefined there.\n- `DialogueChoices` now hides itself once its step is past, wherever it renders, and the stepper warns when choices land inside a list of turns.\n- Pending steps hide with a class instead of the `hidden` attribute. Tailwind's preflight rule for `[hidden]` is `!important` in a cascade layer, which beat the no-JS style, so only the first step showed with scripting off.",
           "components": [
             "dialogue-stepper"
@@ -681,6 +703,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/featured-icon-neutral-ring.md"
+        },
+        {
+          "summary": "Hero: the section is named by its headline (`aria-labelledby` on the h1), so it is announced as a region with that name.",
+          "components": [
+            "hero"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/hero-labelled.md"
         },
         {
           "summary": "Hero no longer hides its media slot from screen readers. It used to set `aria-hidden` on any non-string media, which hid an interactive panel or a form while leaving it focusable. The media is now read by default; pass `mediaRole=\"decorative\"` for ornament. The vertical padding moves to `py-section-comfortable`, the same fluid curve as Section.",

@@ -342,7 +342,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, v2.0.0
 - [Cta Section](https://ds.interlace.tools/c/cta-section): Call-to-action section. Title + description + 1-2 action buttons in a centred column on a tinted surface. The shape every landing page reaches for ("Ready to ship?" / "Start your trial" / "Read the docs"). Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/cta-section.json`
-  - contract: server, min 320px, loading state, states subtle|primary|neutral, v2.0.0
+  - contract: server, min 320px, loading state, v2.1.0
 - [Data Table](https://ds.interlace.tools/c/data-table): Columns, sorting, row selection, pagination, and the three states a table spends most of its life in (loading / empty / error). It composes primitives — Checkbox, Pagination, Skeleton, Button — so it is a pattern, not a primitive.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/data-table.json`
   - contract: client, min 320px, loading state, states asc|desc, v2.0.0
