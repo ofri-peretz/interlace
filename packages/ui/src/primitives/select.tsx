@@ -117,7 +117,7 @@ function SelectTrigger({
         'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/60',
         'data-popup-open:border-ring',
         'disabled:cursor-not-allowed disabled:opacity-50',
-        'data-[size=default]:h-9 data-[size=sm]:h-8',
+        'data-[size=default]:h-control data-[size=sm]:h-control-sm',
         '[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
         className,
       )}

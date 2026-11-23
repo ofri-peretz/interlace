@@ -100,6 +100,11 @@ interface TopbarGroupItem extends TopbarLink {
  * panel of its items; below, a labelled section of the menu.
  */
 interface TopbarLinkGroup {
+  /**
+   * The group's name. Pass plain text: it also names the group's region in
+   * the small-screen menu, and `aria-label` takes only a string. A node
+   * still renders, but its section is then an unnamed region.
+   */
   label: React.ReactNode;
   items: TopbarGroupItem[];
 }

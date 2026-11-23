@@ -187,7 +187,7 @@ function ComboboxInput({
       data-size={size}
       className={cn(
         'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground w-full min-w-0 rounded-lg border bg-background text-foreground px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
-        'data-[size=default]:h-9 data-[size=sm]:h-8',
+        'data-[size=default]:h-control data-[size=sm]:h-control-sm',
         // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
         // under the 3:1 focus-indicator floor (SC 2.4.13). 3px > the 2px
         // minimum thickness the same SC requires.
