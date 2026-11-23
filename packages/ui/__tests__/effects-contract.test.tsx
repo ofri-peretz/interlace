@@ -567,6 +567,63 @@ describe("Reveal", () => {
 });
 
 describe("SplitText", () => {
+  it("arrives piece by piece when it scrolls into view, and only once", () => {
+    let callback!: IntersectionObserverCallback;
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class {
+        constructor(cb: IntersectionObserverCallback) {
+          callback = cb;
+        }
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+        takeRecords() {
+          return [];
+        }
+      },
+    );
+    const { container, rerender } = render(
+      <SplitText delay={100} step={50}>
+        One two three
+      </SplitText>,
+    );
+    const el = container.querySelector<HTMLElement>(
+      '[data-slot="split-text"]',
+    )!;
+    const pieces = () => [
+      ...container.querySelectorAll<HTMLElement>(
+        '[data-slot="split-text-piece"]',
+      ),
+    ];
+    expect(pieces().every((p) => p.style.opacity === "0")).toBe(true);
+    act(() =>
+      callback(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      ),
+    );
+    // One animation per piece, each `step` after the last, after `delay`.
+    expect(animateSpy).toHaveBeenCalledTimes(3);
+    expect(
+      animateSpy.mock.calls.map(
+        ([, o]) => (o as KeyframeAnimationOptions).delay,
+      ),
+    ).toEqual([100, 150, 200]);
+    expect(pieces().every((p) => p.style.opacity === "")).toBe(true);
+    expect(el.dataset.revealed).toBe("true");
+    animateSpy.mockClear();
+    // A prop change after it has played does not hide it or play it again.
+    rerender(
+      <SplitText delay={100} step={50} effect="fade">
+        One two three
+      </SplitText>,
+    );
+    expect(pieces().every((p) => p.style.opacity === "")).toBe(true);
+    expect(el.dataset.revealed).toBe("true");
+    expect(animateSpy).not.toHaveBeenCalled();
+  });
+
   it("reads the whole line once and hides the pieces from assistive tech", () => {
     const html = renderToStaticMarkup(
       <SplitText as="h2">Ask a better question</SplitText>,

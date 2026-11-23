@@ -1341,7 +1341,7 @@
     "grammar": 3,
     "granularity": 2,
     "graph": 3,
-    "graphem": 1,
+    "graphem": 2,
     "green": 8,
     "greet": 1,
     "grey": 1,
@@ -1744,7 +1744,7 @@
     "mode": 31,
     "model": 10,
     "modern": 1,
-    "modul": 16,
+    "modul": 17,
     "moment": 7,
     "mond": 1,
     "mono": 4,
@@ -3176,7 +3176,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "author bylin blog pattern server rsc load skeleton responsiv min viewport 320 authorbylin avatar date time bio datetim adorn semibold read utc publication wrot meta local typography estimat publisheddat readingtim chip name iso mar zone articl vertical duration friend src short visibl right 2026 dot omitt larg optional mut stack america authorbylineprop authornam confus engineer furnitur googl graphem parser pt5m staff unparseabl row gap"
+      "terms": "author bylin blog pattern server rsc load skeleton responsiv min viewport 320 authorbylin avatar date time bio datetim adorn semibold read utc publication wrot meta local typography estimat publisheddat readingtim chip name iso mar zone articl vertical duration friend src short visibl right 2026 dot omitt larg optional mut stack america authorbylineprop authornam confus engineer furnitur googl parser pt5m staff unparseabl row gap left"
     },
     {
       "name": "author-template",
@@ -3379,7 +3379,7 @@
         "primitive",
         "form"
       ],
-      "terms": "button form primitiv client load skeleton keyboard base render buttonvariant variant spinner dialog exercis icon busy size submit polymorphism compound userender disabl focus counterpart passthrough composit minimal onclick primary direct click surfac nativ keep contrast testid secondary still aria ignor legacy mybutton reactel webkit ele portal event parent measur reach invisibl modul variantprop text stay link replac paint skill swallow label cva lock destructiv"
+      "terms": "button form primitiv client load skeleton keyboard base render buttonvariant variant spinner dialog exercis icon busy size submit polymorphism compound userender disabl focus counterpart passthrough composit minimal onclick primary direct click surfac nativ keep contrast testid secondary still aria ignor legacy mybutton reactel webkit ele portal event parent measur reach invisibl variantprop modul text stay link replac paint skill swallow label cva lock destructiv"
     },
     {
       "name": "callout",
@@ -5726,7 +5726,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "split text decorativ effect client splittext letter piec arriv word millisecond time rise combin emoji attention read fade whol blur enough short moment visual head segmenter first headlin twic enter littl sharpen hidden view keep ris page ele scroll 500 intl data run mark intersectionobserver platform wait reduc motion arrival str lift right slot transform cut role neither transparent spell break filter com web"
+      "terms": "split text decorativ effect client splittext letter piec arriv word millisecond time rise combin emoji segmenter attention read fade whol platform blur enough short moment visual head first headlin twic enter graphem littl sharpen hidden view keep ris page ele scroll 500 intl data run mark intersectionobserver wait reduc motion arrival str lift right slot transform cut role neither transparent spell break filter com"
     },
     {
       "name": "stack",
@@ -6403,7 +6403,7 @@
         "primitive",
         "form"
       ],
-      "terms": "toolbar form primitiv client responsiv min viewport 320 keyboard base button toolbarbutton tab buttonvariant variant rov end control arrow home size orientation focus icon last input composit wrap lock order bar link move caret ghost jump tooltip ring act separator group stop insid formatt basetoolbar menutrigger perpendicular toolbargroup toolbarinput toolbarlink toolbarseparator transport row contrast key measur modul ten enter overflow primary bulk player rove"
+      "terms": "toolbar form primitiv client responsiv min viewport 320 keyboard base button toolbarbutton tab buttonvariant variant rov end control arrow home size orientation focus icon last input composit wrap lock order bar link move caret ghost jump tooltip ring act separator group stop insid formatt basetoolbar menutrigger perpendicular toolbargroup toolbarinput toolbarlink toolbarseparator transport row contrast key measur ten modul enter overflow primary bulk player rove"
     },
     {
       "name": "tooltip",

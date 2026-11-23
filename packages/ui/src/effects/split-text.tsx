@@ -85,12 +85,15 @@ export interface SplitTextProps extends Omit<
   delay?: number;
 }
 
+/** One grapheme segmenter for the module, where the platform has one. */
+const GRAPHEMES =
+  typeof Intl !== "undefined" && "Segmenter" in Intl
+    ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+    : null;
+
 /** Letters, keeping emoji and combining marks whole where the platform can. */
 function letters(word: string): string[] {
-  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
-    const seg = new Intl.Segmenter(undefined, { granularity: "grapheme" });
-    return Array.from(seg.segment(word), (s) => s.segment);
-  }
+  if (GRAPHEMES) return Array.from(GRAPHEMES.segment(word), (s) => s.segment);
   return Array.from(word);
 }
 
