@@ -280,6 +280,17 @@
           "source": ".changeset/site-chrome.md"
         },
         {
+          "summary": "`ThreadSteps`: an ordered sequence held together by Interlace's woven thread. Each step has a knot, and two strands cross to the next knot, drawing in as the reader reaches the step. Use it plain for \"how it works\" or \"how we checked this\". Set `state` (`complete`, `current`, `upcoming`) to make it a progress tracker: complete steps are woven, the current knot is ringed and marked `aria-current=\"step\"`, and the thread ahead is a loose dotted strand. Every state is also in words for assistive tech. The server HTML is fully drawn; reduced motion keeps it that way.",
+          "components": [
+            "thread-steps"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/thread-steps.md"
+        },
+        {
           "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
           "components": [
             "claim-card"

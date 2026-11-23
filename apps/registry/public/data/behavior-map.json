@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T05:50:04.524Z",
+  "generatedAt": "2026-11-23T06:56:00.406Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -11926,6 +11926,172 @@
       "textAlternative": {
         "kind": null,
         "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "thread-steps": {
+      "sourcePath": "packages/ui/src/patterns/thread-steps.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "strand-a",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven strand (SC 1.4.11)",
+          "ratios": [
+            5.19,
+            9.34,
+            4.6,
+            9.44
+          ],
+          "worst": 4.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-b",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven counter-strand (SC 1.4.11)",
+          "ratios": [
+            4.65,
+            10.06,
+            4.89,
+            9.05
+          ],
+          "worst": 4.65,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-b",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven counter-strand inside a card",
+          "ratios": [
+            4.65,
+            9.32,
+            5.17,
+            8.21
+          ],
+          "worst": 4.65,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "strand-a",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "woven strand inside a card",
+          "ratios": [
+            5.19,
+            8.65,
+            4.86,
+            8.56
+          ],
+          "worst": 4.86,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.41,
+            11.32,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.8,
+            11.79,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {

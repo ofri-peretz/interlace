@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 152
+    "itemCount": 153
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 66,
-      "pattern": 38,
+      "pattern": 39,
       "effect": 16,
       "template": 13,
       "chart": 8,
@@ -40,8 +40,8 @@
     },
     "category": {
       "primitive": 66,
-      "pattern": 38,
-      "blog": 30,
+      "pattern": 39,
+      "blog": 31,
       "foundation": 22,
       "data": 22,
       "form": 16,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 90,
-      "client": 62
+      "client": 63
     },
     "keyboard": {
-      "none": 117,
+      "none": 118,
       "handled": 35
     },
     "loading": {
-      "none": 120,
+      "none": 121,
       "built-in": 32
     },
     "minViewport": {
-      "320": 90,
+      "320": 91,
       "480": 7,
       "768": 1,
       "inherited": 54
@@ -8054,6 +8054,66 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/thread-lines.json",
       "item": "https://ds.interlace.tools/r/thread-lines.json",
       "docs": "https://ds.interlace.tools/c/thread-lines"
+    },
+    {
+      "name": "thread-steps",
+      "title": "Thread Steps",
+      "type": "registry:ui",
+      "summary": "An ordered sequence held together by Interlace's woven thread: a knot for each step, and two strands that cross between one knot and the next. The strands draw in as the reader reaches each step, so the motion says one thing only: this leads to that.",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ThreadStepState",
+          "values": [
+            "complete",
+            "current",
+            "upcoming"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/thread-steps.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/thread-steps.json",
+      "item": "https://ds.interlace.tools/r/thread-steps.json",
+      "docs": "https://ds.interlace.tools/c/thread-steps"
     },
     {
       "name": "time-series",
