@@ -71,4 +71,20 @@ describe('collections take a density', () => {
     expect(feature.className.split(/\s+/)).toContain(pad);
     expect(tier.className.split(/\s+/)).toContain(pad);
   });
+
+  it.each([
+    ['compact', 'gap-4', 'pt-4'],
+    ['default', 'gap-6', 'pt-6'],
+    ['relaxed', 'gap-8', 'pt-8'],
+  ] as const)("keeps a pricing tier's inner rhythm on the %s step", (density, gap, ctaPad) => {
+    render(
+      <PricingTable
+        density={density}
+        tiers={[{ name: 'Free', price: '$0', features: [], cta: <a href="#">Start</a> }]}
+      />,
+    );
+    const tier = document.querySelector('[data-slot="pricing-tier"]')!;
+    expect(tier.className.split(/\s+/)).toContain(gap);
+    expect(tier.querySelector('a')!.parentElement!.className.split(/\s+/)).toContain(ctaPad);
+  });
 });
