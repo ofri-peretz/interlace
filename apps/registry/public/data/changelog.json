@@ -712,6 +712,17 @@
           "source": ".changeset/prose-scroll-margin.md"
         },
         {
+          "summary": "SectionHeader sets its title on the fluid type scale instead of stepped `text-3xl md:text-4xl lg:text-5xl`, and takes its bottom gap from the section rhythm tokens instead of `mb-12` / `mb-16`. New `size=\"display\"` for a page's loudest line, `eyebrowStyle=\"pill\"` for a chip-style label, and `align=\"start\"` now follows the writing direction. Two new type tokens, `--text-section` (28 → 40px) and `--text-display` (44 → 64px), are registered with `cn` so a colour never strips them.",
+          "components": [
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/section-header-fluid.md"
+        },
+        {
           "summary": "fix(ui): Spotlight type-checks against motion 14. motion 14 added an `fx` boolean prop to every motion element, which clashes with the SVG `fx` focal-point attribute Spotlight inherited from its native `<svg>` props; installing Spotlight next to the latest motion failed `next build`'s type check. `fx` is now omitted from the native props, like the animation handlers and `values` before it.",
           "components": [
             "spotlight"

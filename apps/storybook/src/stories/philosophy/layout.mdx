@@ -247,7 +247,7 @@ an `import`.
 | --- | --- | --- |
 | `<Container>` | `packages/ui/src/primitives/container.tsx` | Width contract from §2. Props: `size`, `as`, `className`. |
 | `<Section>` | `packages/ui/src/primitives/section.tsx` | Vertical rhythm + tone + dividers + container. Props: `spacing`, `tone`, `divider`, `container`, `as`. |
-| `<SectionHeader>` | `packages/ui/src/blocks/section-header.tsx` | The repeated `text-center mb-12` + h2 + tagline pattern. Props: `eyebrow`, `title`, `tagline`, `align`. |
+| `<SectionHeader>` | `packages/ui/src/patterns/section-header.tsx` | The repeated `text-center mb-12` + h2 + tagline pattern, on the fluid type scale and the section rhythm. Props: `eyebrow`, `eyebrowStyle`, `title`, `tagline`, `align`, `size`, `spacing`. |
 | `<Stack>` / `<Cluster>` | `packages/ui/src/primitives/stack.tsx` | Vertical (`Stack`) and horizontal-wrapping (`Cluster`) gap rhythm. Props: `gap`, `direction?`, `align?`, `wrap?`. |
 | `<Grid>` / `<GridItem>` | `packages/ui/src/primitives/grid.tsx` | 2-D CSS-grid rhythm on the §3 spacing scale: `<Grid>` sets columns + gap, `<GridItem>` spans responsively per breakpoint. Two flat components (never a `kind` union). Props: `cols`, `gap`, `as` / `span`, `mdSpan`, `lgSpan`, `as`. Gap is a single token (no split `rowGap`/`colGap`), and there is no `colStart` — placement is span-only. |
 | `<Box>` | `packages/ui/src/primitives/box.tsx` | The lowest-altitude wrapper — surface + box-model on one element. Props: `surface`, `padding`, `radius`, `border`, `as`. Curated tokenized props only (no `sx` / `mt`/`px` style-prop soup). `<Card>` composes `<Box>`; reach for `<Section>`/`<Container>` for page rhythm. |

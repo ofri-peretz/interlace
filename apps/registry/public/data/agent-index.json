@@ -1510,25 +1510,7 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [
-        {
-          "name": "DS_FONT_SIZES",
-          "values": [
-            "h1",
-            "h2",
-            "h3",
-            "h4",
-            "h5",
-            "h6",
-            "body",
-            "long",
-            "ui",
-            "ui-sm",
-            "caption",
-            "code"
-          ]
-        }
-      ],
+      "states": [],
       "a11y": {
         "roles": [],
         "aria": [],
@@ -6190,7 +6172,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.2.0",
+      "version": "1.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
