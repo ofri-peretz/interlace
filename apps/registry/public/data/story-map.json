@@ -1450,6 +1450,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "reading-settings": {
+    "title": "Primitives/ReadingSettings",
+    "storyIds": [
+      "primitives-readingsettings--default",
+      "primitives-readingsettings--grows-the-layout",
+      "primitives-readingsettings--contrast",
+      "primitives-readingsettings--icon-only-contrast",
+      "primitives-readingsettings--translated"
+    ],
+    "preview": "primitives-readingsettings--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "reading-strand": {
     "title": "Primitives/ReadingStrand",
     "storyIds": [

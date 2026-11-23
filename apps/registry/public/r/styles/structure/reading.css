@@ -1,0 +1,28 @@
+/*
+ * Reading size: the reader's text size, as a root font size.
+ *
+ * `useReadingPrefs` (and THEME_SCRIPT, before first paint) writes
+ * `data-text-size` on <html>. A percentage of the browser's own default, so
+ * a reader who already raised it in browser settings keeps that and gets
+ * this on top. Every rem in the system follows: type, spacing, control
+ * heights and containers all grow together, which is what keeps a layout
+ * whole at 200% (WCAG 1.4.4).
+ *
+ * The attribute belongs on <html>. On any other element it grows text set
+ * in em and leaves every rem box the size it was.
+ *
+ * In `base`, so a consumer's own utility still wins.
+ */
+@layer base {
+  [data-text-size='lg'] {
+    font-size: 112.5%;
+  }
+
+  [data-text-size='xl'] {
+    font-size: 125%;
+  }
+
+  [data-text-size='2xl'] {
+    font-size: 150%;
+  }
+}

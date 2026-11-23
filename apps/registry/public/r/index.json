@@ -184,6 +184,24 @@
       }
     },
     {
+      "name": "use-reading-prefs",
+      "type": "registry:lib",
+      "title": "useReadingPrefs hook",
+      "description": "@interlace/ui — reads and writes the reader's text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "theme-script",
       "type": "registry:lib",
       "title": "No-flash theme bootstrap script",
@@ -991,6 +1009,24 @@
         "loading": false,
         "version": "1.2.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "reading-settings",
+      "type": "registry:ui",
+      "title": "Reading Settings",
+      "description": "toggle.",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {

@@ -28,6 +28,14 @@
       "types": "./dist/lib/theme-tokens.d.ts",
       "default": "./dist/lib/theme-tokens.js"
     },
+    "./use-reading-prefs": {
+      "types": "./dist/lib/use-reading-prefs.d.ts",
+      "default": "./dist/lib/use-reading-prefs.js"
+    },
+    "./reading-settings": {
+      "types": "./dist/primitives/reading-settings.d.ts",
+      "default": "./dist/primitives/reading-settings.js"
+    },
     "./theme-switcher": {
       "types": "./dist/primitives/theme-switcher.d.ts",
       "default": "./dist/primitives/theme-switcher.js"
