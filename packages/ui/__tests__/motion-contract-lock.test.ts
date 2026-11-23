@@ -581,7 +581,7 @@ describe('motion contract lock', () => {
   // ── 4. the token tables MOTION_PHILOSOPHY.md documents ───────────────
 
   describe('duration & easing bands', () => {
-    it('documents bands, not a token scale that does not exist', () => {
+    it('ships exactly the motion tokens the doc names', () => {
       // The doc used to print `--duration-*` / `--ease-*` tables as though
       // they were tokens. They never existed, so `var(--duration-fast)`
       // resolved to nothing — a component author following the doc shipped an
@@ -619,6 +619,12 @@ describe('motion contract lock', () => {
           `existed, while packages/ui/styles declared no such token. Restore ` +
           `the disclaimer, or ship the tokens (and extend this lock).`,
       ).toContain('budget bands, not CSS custom properties');
+
+      // And the scale the doc promises really ships: `var(--duration-fast)`
+      // resolving to nothing is the failure this block was written for.
+      for (const token of ['--duration-fast', '--duration-base', '--duration-medium', '--duration-slow', '--ease-enter', '--ease-exit', '--ease-move']) {
+        expect(declared, `MOTION_PHILOSOPHY.md names ${token}; structure/motion.css must declare it`).toContain(token);
+      }
     });
   });
 });

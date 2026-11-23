@@ -299,6 +299,30 @@
           "source": ".changeset/highlight-heading-tones.md"
         },
         {
+          "summary": "Motion tokens and a press, hover and overlay standard.\n\n- New tokens in `structure/motion.css`: `--ease-enter`, `--ease-exit`, `--ease-move` (Tailwind utilities `ease-enter`, `ease-exit`, `ease-move`) and `--duration-fast` / `-base` / `-medium` / `-slow` (100 / 150 / 250 / 400ms, used as `duration-(--duration-fast)`). Override any of them on `:root` and the whole system follows.\n- `Button` and `Toggle` answer a press: they scale to 0.97 while pressed (not under reduced motion), and time hover, focus and press with `--duration-fast`. A `link` button keeps its size.\n- Dialog, AlertDialog, Sheet, Popover, Tooltip, DropdownMenu and ContextMenu ease in with `ease-enter` and leave faster with `ease-exit`. Sheet now opens in 250ms (was 500ms) and closes in 150ms (was 300ms).\n- No component transitions every property any more: Switch, Accordion, Select, ArticleCard and HeroCosmic name the properties they animate.",
+          "components": [
+            "button",
+            "toggle",
+            "dialog",
+            "alert-dialog",
+            "sheet",
+            "popover",
+            "tooltip",
+            "dropdown-menu",
+            "context-menu",
+            "switch",
+            "accordion",
+            "select",
+            "article-card",
+            "hero-cosmic"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/interaction-foundation.md"
+        },
+        {
           "summary": "`Kbd` and `KbdGroup`: the shadcn core `kbd` item in Interlace tokens. `Kbd` is a native `<kbd>` with `sm` (default) and `md` sizes; `KbdGroup` nests keys inside one `<kbd>` for a chord (`⌘ K`) or a sequence (`G` then `I`). Server component.",
           "components": [
             "kbd"

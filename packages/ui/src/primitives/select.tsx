@@ -191,7 +191,7 @@ function SelectItem({
     <BaseSelect.Item
       data-slot="select-item"
       className={cn(
-        'relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2.5 pr-8 pl-3 text-sm outline-hidden select-none transition-all duration-150',
+        'relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2.5 pr-8 pl-3 text-sm outline-hidden select-none transition-[color,background-color] duration-(--duration-fast)',
         'text-popover-foreground',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-selected:bg-primary data-selected:text-primary-foreground data-selected:font-medium',

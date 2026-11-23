@@ -117,7 +117,7 @@ function renderCta(cta: HeroCosmicCTA | undefined) {
     <a
       href={cta.href}
       data-slot="hero-cosmic-cta"
-      className="inline-flex items-center gap-2 rounded-xl border-2 border-hero-foreground/20 bg-hero-foreground/10 px-6 py-4 font-semibold text-hero-foreground backdrop-blur-sm transition-all hover:border-hero-foreground/30 hover:bg-hero-foreground/20"
+      className="inline-flex items-center gap-2 rounded-xl border-2 border-hero-foreground/20 bg-hero-foreground/10 px-6 py-4 font-semibold text-hero-foreground backdrop-blur-sm transition-[background-color,border-color] duration-(--duration-fast) hover:border-hero-foreground/30 hover:bg-hero-foreground/20"
     >
       {cta.label}
     </a>
