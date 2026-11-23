@@ -712,6 +712,21 @@
     "previewDark": "templates-docspagetemplate--dark",
     "skeleton": "templates-docspagetemplate--page-skeleton"
   },
+  "drawer": {
+    "title": "Primitives/Drawer",
+    "storyIds": [
+      "primitives-drawer--default",
+      "primitives-drawer--keyboard-flow",
+      "primitives-drawer--directions",
+      "primitives-drawer--snap-points",
+      "primitives-drawer--dark",
+      "primitives-drawer--rtl",
+      "primitives-drawer--reduced-motion"
+    ],
+    "preview": "primitives-drawer--default",
+    "previewDark": "primitives-drawer--dark",
+    "skeleton": null
+  },
   "dropdown-menu": {
     "title": "Primitives/DropdownMenu",
     "storyIds": [
