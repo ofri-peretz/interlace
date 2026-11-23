@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T20:54:10.243Z",
+  "generatedAt": "2026-11-23T21:06:33.022Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -6108,6 +6108,98 @@
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "flip-card": {
+      "sourcePath": "packages/ui/src/patterns/flip-card.tsx",
+      "keyboard": {
+        "storyId": "blocks-flipcard--default",
+        "storyExport": "Default",
+        "storyFile": "apps/storybook/src/stories/blocks/FlipCard.stories.tsx",
+        "steps": [
+          {
+            "title": "the back is hidden and its link cannot be tabbed to",
+            "keys": []
+          },
+          {
+            "title": "pressing turns it, and focus follows to the back",
+            "keys": []
+          },
+          {
+            "title": "Enter turns it back",
+            "keys": [
+              "Enter"
+            ]
+          }
+        ],
+        "escapeLocked": false
+      },
+      "contrast": [
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
           },
           "passes": true
         }

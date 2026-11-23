@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 167
+    "itemCount": 168
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 72,
-      "pattern": 44,
+      "pattern": 45,
       "effect": 19,
       "template": 13,
       "chart": 8,
@@ -40,7 +40,7 @@
     },
     "category": {
       "primitive": 72,
-      "pattern": 44,
+      "pattern": 45,
       "blog": 35,
       "foundation": 25,
       "data": 23,
@@ -49,8 +49,8 @@
       "decorative": 17,
       "feedback": 14,
       "template": 13,
+      "marketing": 12,
       "navigation": 11,
-      "marketing": 11,
       "overlay": 10,
       "chart": 8,
       "util": 5,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 99,
-      "client": 68
+      "client": 69
     },
     "keyboard": {
-      "none": 130,
+      "none": 131,
       "handled": 37
     },
     "loading": {
-      "none": 134,
+      "none": 135,
       "built-in": 33
     },
     "minViewport": {
-      "320": 101,
+      "320": 102,
       "480": 7,
       "768": 1,
       "inherited": 58
@@ -3290,6 +3290,57 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/figure.json",
       "item": "https://ds.interlace.tools/r/figure.json",
       "docs": "https://ds.interlace.tools/c/figure"
+    },
+    {
+      "name": "flip-card",
+      "title": "Flip Card",
+      "type": "registry:ui",
+      "summary": "A card with two faces: a front that asks (a claim, a question) and a back that answers (with any children, such as source links). Pressing the card turns it over in 3D. It makes the reader commit to a guess before the answer arrives, which is what turns a…",
+      "topics": [],
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-controls",
+          "aria-expanded"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/flip-card.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/flip-card.json",
+      "item": "https://ds.interlace.tools/r/flip-card.json",
+      "docs": "https://ds.interlace.tools/c/flip-card"
     },
     {
       "name": "focus-grid",
