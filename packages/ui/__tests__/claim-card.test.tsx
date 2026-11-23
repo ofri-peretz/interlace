@@ -42,6 +42,13 @@ describe('ClaimCard', () => {
     expect(heading.querySelector('q')?.textContent).toBe('The bridge never closed');
   });
 
+  it('sets the claim in the heading face, so --font-heading alone restyles it', () => {
+    render(<Example />);
+    const classes = screen.getByRole('heading', { level: 2 }).className.split(/\s+/);
+    expect(classes).toContain('font-heading');
+    expect(classes).not.toContain('font-serif');
+  });
+
   it('uses native details, with open honoured and meta shown', () => {
     const { container } = render(<Example />);
     const sections = container.querySelectorAll('details[data-slot="claim-card-section"]');

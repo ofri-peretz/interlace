@@ -183,6 +183,34 @@
           "source": ".changeset/highlight-heading-tones.md"
         },
         {
+          "summary": "Site chrome that needs no custom classes:\n\n- `Topbar` keeps its links on small screens. By default they move behind a Menu button that opens a side sheet (new `TopbarMenu`); `mobileNav=\"wrap\"` shows them as a second row. `currentHref` marks the current page with `aria-current=\"page\"` and a visible style, and `renderLink` now receives `aria-current` to forward.\n- New `Banner`: a thin full-width bar for a site-wide message, in muted, info, success, warning and highlight tones, with an optional action and close button.\n- `Prose` headings use `font-heading`, like Typography. New `width=\"fill\"` drops the 65ch cap for prose inside a card or panel.\n- `StatCard` and `StatGroup` take `layout=\"value-first\"` (the number, then what it counts) next to the default label-first.\n- `Footer` takes a `tagline` shown under the brand.",
+          "components": [
+            "topbar",
+            "topbar-menu",
+            "banner",
+            "prose",
+            "stat-card",
+            "stat-group",
+            "footer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/site-chrome.md"
+        },
+        {
+          "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
+          "components": [
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/claim-heading-font.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"

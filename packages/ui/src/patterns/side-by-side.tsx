@@ -25,7 +25,7 @@
  * | R8   | Enums, not booleans              | `tone`, `as`                                                |
  * | R14  | Declares min viewport            | `data-min-viewport` on the root + exported const            |
  * | R19  | Tokens only                      | `bg-card`, tone tokens on the top border                    |
- * | R25  | Server component                 | No hooks → no `'use client'`                                |
+ * | R25  | Server component                 | Only `useId`, which RSC supports → no `'use client'`         |
  * | R26  | A11y from native el              | Each column is a `section` named by its heading (useId)     |
  */
 
