@@ -92,6 +92,8 @@ type TocProps = Omit<React.ComponentProps<'nav'>, 'children'> & {
   items: TocItem[];
   /** Optional accessible name override. Defaults to "Table of contents". */
   label?: string;
+  /** Called after a link scrolls to its heading and moves focus there. */
+  onNavigate?: (id: string) => void;
 };
 
 const LEVEL_INDENT: Record<TocItem['level'], string> = {
@@ -101,7 +103,7 @@ const LEVEL_INDENT: Record<TocItem['level'], string> = {
 };
 
 const TocComponent = React.forwardRef<HTMLElement, TocProps>(
-  ({ className, items, label = 'Table of contents', ...rest }, ref) => {
+  ({ className, items, label = 'Table of contents', onNavigate, ...rest }, ref) => {
     const reduceMotion = useReducedMotion();
     const [activeId, setActiveId] = React.useState<string | null>(null);
 
@@ -176,10 +178,13 @@ const TocComponent = React.forwardRef<HTMLElement, TocProps>(
           history.pushState(null, '', `#${id}`);
         }
         // Move focus into the target so screen readers / keyboard users
-        // land where sighted users do.
+        // land where sighted users do. A heading is not focusable on its
+        // own, so it takes tabindex=-1: focusable by script, not by Tab.
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
+        onNavigate?.(id);
       },
-      [reduceMotion],
+      [reduceMotion, onNavigate],
     );
 
     return (
@@ -249,10 +254,21 @@ export function TocPopover({
   triggerLabel = 'On this page',
   triggerClassName,
   className,
+  onNavigate,
   ...rest
 }: TocPopoverProps) {
+  const [open, setOpen] = React.useState(false);
+  // A picked link closes the popover so it stops covering the text. Focus
+  // has already moved to the heading, outside the popup, so it stays there.
+  const handleNavigate = React.useCallback(
+    (id: string) => {
+      setOpen(false);
+      onNavigate?.(id);
+    },
+    [onNavigate],
+  );
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         data-slot="toc-popover-trigger"
         data-min-viewport={String(MIN_VIEWPORT)}
@@ -268,12 +284,14 @@ export function TocPopover({
       <PopoverContent
         data-slot="toc-popover-content"
         align="start"
-        className="w-72 p-4"
+        // A long outline scrolls inside the room the screen has left.
+        className="max-h-(--available-height) w-72 overflow-y-auto overscroll-contain p-4"
       >
         <Toc
           items={items}
           label={label}
           className={className}
+          onNavigate={handleNavigate}
           {...rest}
         />
       </PopoverContent>

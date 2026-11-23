@@ -608,6 +608,17 @@
           "source": ".changeset/spotlight-motion-fx.md"
         },
         {
+          "summary": "TocPopover works on a narrow screen with a long outline.\n\n- The popover's height is capped at the room the screen has left (`--available-height`), and the list scrolls inside it. Before, an outline of 18 headings ran 906px tall and the later links fell off the bottom of a phone screen.\n- Picking a link closes the popover, so it no longer covers the text it just scrolled to. Focus stays on the heading.\n- `Toc` gives a heading `tabindex=\"-1\"` before focusing it, unless the heading already has a tabindex. Before, the focus call did nothing on a plain heading. `Toc` also takes a new `onNavigate(id)` callback.",
+          "components": [
+            "toc"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/toc-popover-narrow.md"
+        },
+        {
           "summary": "The Interlace page is warm paper now, not screen white. In light mode `--background` is #fdfbf8 and cards and popovers stay white, so they lift off the page the way a sheet lifts off a desk. In dark mode the page is a warm near-black (#0e0c0a) instead of a neutral one, matching the warm cards. Every text pair keeps its contrast floor: primary measures 8.52:1 on the paper and 7.23:1 on its own 10% tint, and `--input` 3.50:1 still clears SC 1.4.11. To keep a white page, set `--interlace-background: oklch(1 0 0)` in your own brand layer.",
           "components": [
             "interlace-base"
