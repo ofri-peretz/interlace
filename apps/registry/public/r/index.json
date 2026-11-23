@@ -1624,6 +1624,24 @@
       }
     },
     {
+      "name": "reveal",
+      "type": "registry:ui",
+      "title": "Reveal",
+      "description": "Any block that arrives as it scrolls into view: a section heading, a card, a figure, a quote. It fades in and, depending on `effect`, rises a little, comes into focus or grows to size, once. Use it on the few things a reader should notice arriving, not on…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "rotating-text",
       "type": "registry:ui",
       "title": "Rotating Text",

@@ -1471,6 +1471,17 @@
     "previewDark": null,
     "skeleton": null
   },
+  "reveal": {
+    "title": "Effects/Reveal",
+    "storyIds": [
+      "effects-reveal--default",
+      "effects-reveal--effects",
+      "effects-reveal--sequenced"
+    ],
+    "preview": "effects-reveal--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "rotating-text": {
     "title": "Effects/RotatingText",
     "storyIds": [
