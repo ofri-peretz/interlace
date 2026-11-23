@@ -13,6 +13,9 @@
  *   3. A pressable control answers a press: Button and Toggle scale to 0.97
  *      while pressed, behind `motion-safe:` so reduced motion keeps them
  *      still, and they time their feedback with the motion tokens.
+ *   4. View transitions take the motion tokens and are removed entirely
+ *      under reduced motion (the `*` clamp does not reach them). They are
+ *      global rules, so they live in the page layer, not in base.css.
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
@@ -69,4 +72,18 @@ describe('interaction contract lock', () => {
       expect(f.text).toContain('ease-enter');
     },
   );
+
+  it('retimes view transitions to the tokens and removes them under reduced motion', () => {
+    // Global rules, so the page layer (preflight), never base.css.
+    const css = code(resolve(__dirname, '../styles/page/preflight.css'));
+    expect(code(resolve(__dirname, '../styles/structure/motion.css'))).not.toContain('::view-transition');
+    expect(css).toMatch(/::view-transition-group\(\*\)\s*\{[^}]*var\(--duration-medium\)[^}]*var\(--ease-move\)/);
+    const pair = css.indexOf('::view-transition-image-pair(*)');
+    expect(pair).toBeGreaterThan(0);
+    const reduce = css.slice(css.lastIndexOf('@media (prefers-reduced-motion: reduce)', pair));
+    for (const pseudo of ['group', 'image-pair', 'old', 'new']) {
+      expect(reduce).toContain(`::view-transition-${pseudo}(*)`);
+    }
+    expect(reduce).toMatch(/animation:\s*none\s*!important/);
+  });
 });
