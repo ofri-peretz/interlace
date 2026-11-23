@@ -1,0 +1,44 @@
+/*
+ * @interlace/ui — the additive baseline every component needs.
+ *
+ *   @import "tailwindcss";
+ *   @import "@interlace/ui/styles/base.css";
+ *
+ * This is what `interlace-base` installs, and every registry component
+ * depends on it, so it lands in an adopter's app with their FIRST component.
+ * It therefore adds and never replaces:
+ *
+ *   - new theme keys only (text-h1…, max-w-prose…, xs:, --font-body,
+ *     animate-* names Tailwind does not ship);
+ *   - the radius derivation, written exactly as shadcn writes it;
+ *   - brand and semantic colour tokens inside cascade layers, so a host's
+ *     unlayered `:root { --primary: … }` keeps winning;
+ *   - class- and attribute-scoped rules only: no `body`, `img`, `*` or
+ *     `:focus-visible`.
+ *
+ * `apps/registry/src/__tests__/host-style-safety.test.ts` compiles a stock
+ * shadcn globals.css with and without this file and holds every line above.
+ *
+ * What it leaves out, and where that went:
+ *
+ *   fonts.css      Inter / JetBrains Mono on the app's font-sans / font-mono
+ *   preflight.css  body font + colours, focus ring, media reset, scrollbars
+ *   theme.css      fumadocs colour bridge + Shiki contrast boosts
+ *
+ * Those three are the `interlace-foundation` item. `index.css` imports this
+ * file plus all three: the full contract, as Interlace's own apps use it.
+ *
+ * The layer statement declares every Interlace layer, including the ones
+ * only foundation fills, so the order is fixed whichever file loads first.
+ */
+
+@layer interlace.primitives, interlace.foundation, interlace.preflight,
+       interlace.bridge, interlace.brand, interlace.semantics;
+
+@import "./tokens.css";
+@import "./foundation.css";
+@import "./interlace-theme.css";
+
+/* Themes (the `[data-theme]` axis). ORDER IS LOAD-BEARING: every theme file
+ * must follow interlace-theme.css — see index.css for why. */
+@import "./themes/harbor.css";

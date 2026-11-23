@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T00:32:26.322Z",
+  "generatedAt": "2026-11-23T01:03:47.082Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -6034,6 +6034,32 @@
         "inGate": false
       }
     },
+    "interlace-base": {
+      "sourcePath": "packages/ui/styles/base.css",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "interlace-foundation": {
+      "sourcePath": "packages/ui/styles/index.css",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "label": {
       "sourcePath": "packages/ui/src/primitives/label.tsx",
       "keyboard": null,
@@ -10935,19 +10961,6 @@
       "states": [],
       "coverage": {
         "inGate": true
-      }
-    },
-    "theme": {
-      "sourcePath": "packages/ui/styles/index.css",
-      "keyboard": null,
-      "contrast": [],
-      "textAlternative": {
-        "kind": null,
-        "detail": null
-      },
-      "states": [],
-      "coverage": {
-        "inGate": false
       }
     },
     "time-series": {

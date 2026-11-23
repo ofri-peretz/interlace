@@ -412,21 +412,34 @@ const docsFor = (name, target, { requiresTheme = true } = {}) =>
     `\`\`\`tsx\nimport { /* … */ } from '@/${target.replace(/\.tsx?$/, '')}';\n\`\`\``,
     '',
     `Props, a11y contract, live preview and source: ${HOMEPAGE}/c/${name}`,
-    // Only true for items that actually declare `theme` as a dependency —
+    // Only true for items that actually declare `interlace-base` as a dependency —
     // the lib utilities don't, so telling their installer otherwise is a lie
     // printed straight into their terminal.
     ...(requiresTheme
       ? [
           '',
-          'Requires the `@interlace/theme` CSS baseline (installed automatically as a registry dependency).',
+          'Requires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`.',
         ]
       : []),
   ].join('\n');
 
-// Name of the registry:style item that every primitive depends on.
-// Consumers install it once; `shadcn add` pulls it as a transitive dep when
-// they add any primitive after the first.
-const STYLE_ITEM = 'theme';
+// The CSS contract ships as three items, split by what installing them does
+// to the HOST app. Before Interlace 2.0 it was one `theme` item that every
+// component depended on, so adding a button also swapped the app's typeface,
+// set `img { display: block }` and drew a focus outline on every element.
+//
+//   interlace-base        every component depends on it. Additive only:
+//                         new theme keys, layered colour tokens, scoped
+//                         classes. `host-style-safety.test.ts` holds it there.
+//   theme                 opt-in. shadcn `cssVars` that point the app's own
+//                         `--primary` etc. at Interlace's brand tokens: the
+//                         Interlace look, applied the way shadcn themes are.
+//   interlace-foundation  opt-in. Typefaces on font-sans/font-mono, the page
+//                         preflight, the fumadocs bridge, and `index.css`
+//                         (the full contract, as Interlace's own apps use it).
+const BASE_ITEM = 'interlace-base';
+const THEME_ITEM = 'theme';
+const FOUNDATION_ITEM = 'interlace-foundation';
 
 /**
  * Cross-registry references MUST be absolute URLs — `itemRef` above.
@@ -443,91 +456,96 @@ const STYLE_ITEM = 'theme';
  */
 
 /**
- * Stylesheet files copied verbatim from @interlace/ui/styles into the
- * registry's public dir so they live at stable URLs (CSS @imports + raw
- * fetch both work). Bundled into the `theme` registry:style item in this
- * order — the cascade matters:
+ * The stylesheet items. Each ships a barrel plus leaves; files land in
+ * `styles/interlace/` side by side, so a barrel's `./x.css` specifiers
+ * resolve as authored, including `index.css` importing base's `base.css`.
  *
- *   1. tokens.css           — animation + motion tokens (keyframes etc.).
- *   2. foundation.css       — type scale, spacing scale, radius scale,
- *                             container widths, font tokens. The
- *                             structural floor every primitive depends on.
- *   3. preflight.css        — token-aware baseline beyond Tailwind preflight:
- *                             focus ring (WCAG 2.2 SC 2.4.13), selection,
- *                             scrollbar tint, smooth-scroll under
- *                             prefers-reduced-motion, tabular-nums, the
- *                             [data-min-viewport] container contract.
- *   4. theme.css            — shadcn↔fumadocs token bridge + Shiki AAA boosts.
- *   5. interlace-theme.css  — brand burnt-orange palette (light + dark, AAA).
- *
- * Before this commit, only 1/4/5 shipped — half of DESIGN_PRINCIPLES.md
- * was unreachable to consumers. See plan
- * `.claude/plans/majestic-humming-sloth.md` § A1.
+ * Order inside a barrel is load-bearing (see `packages/ui/styles/index.css`):
+ * `themes/harbor.css` must follow `interlace-theme.css` or a Harbor dark page
+ * resolves against Interlace's dark block. `assertStyleBarrel` turns "the
+ * barrel imports exactly what the item ships" into a build-time check, so a
+ * retargeted leaf fails the build instead of shipping a dangling `@import`
+ * that CSS resolves to nothing, silently, at paint time.
  */
-const STYLE_FILES = [
-  'tokens.css',
-  'foundation.css',
-  'preflight.css',
-  'theme.css',
-  'interlace-theme.css',
-  // Alternate brand themes (phase 8.2). Shipping them with `@interlace/theme`
-  // rather than as separate items is deliberate: a theme file is inert on its
-  // own — it only overrides `--interlace-*` inside `@layer interlace.brand`,
-  // which the baseline declares. Installing one without the baseline would
-  // resolve to nothing, so they are one contract, not two.
-  'themes/harbor.css',
+const STYLE_ITEMS = [
+  {
+    name: BASE_ITEM,
+    title: 'Interlace Base',
+    barrel: 'base.css',
+    leaves: [
+      'tokens.css',
+      'foundation.css',
+      'interlace-theme.css',
+      // Alternate brand themes ship with the base: a theme file only
+      // overrides `--interlace-*` inside `@layer interlace.brand`, which is
+      // inert until something reads it, so it changes nothing in the host.
+      'themes/harbor.css',
+    ],
+    requires: [],
+    description:
+      '@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, and layered brand + semantic colour tokens. Changes nothing the host app already styles.',
+  },
+  {
+    name: FOUNDATION_ITEM,
+    title: 'Interlace Foundation',
+    barrel: 'index.css',
+    leaves: ['fonts.css', 'preflight.css', 'theme.css'],
+    requires: [BASE_ITEM],
+    description:
+      '@interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.',
+  },
 ];
 
-/**
- * The barrel — `styles/index.css` — shipped alongside the leaves.
- *
- * It was NOT shipped, and that was the single biggest gap in the CSS half of
- * the registry. `index.css` exists precisely because "a typo or skipped file
- * silently degraded half the contract" (its own header). Withholding it from
- * the registry handed every consumer exactly the problem it was written to
- * remove: reconstruct the `@layer` declaration and six `@import`s by hand, in
- * order, including the non-obvious rule that `themes/harbor.css` must come
- * AFTER `interlace-theme.css` or a Harbor dark page resolves against
- * Interlace's dark block.
- *
- * No path rewriting is required, and that is a property worth stating rather
- * than assuming: the barrel lands at `styles/interlace/index.css` and the
- * leaves at `styles/interlace/<name>`, so its `./tokens.css` and
- * `./themes/harbor.css` specifiers resolve as-authored. `assertStyleBarrel`
- * below turns that from an assumption into a build-time check — if a leaf is
- * ever retargeted, the barrel fails the build instead of shipping a dangling
- * `@import` that CSS resolves to nothing, silently, at paint time.
- */
-const STYLE_BARREL = 'index.css';
+/** Every stylesheet any item ships, barrels included, in a stable order. */
+const ALL_STYLE_FILES = STYLE_ITEMS.flatMap((i) => [i.barrel, ...i.leaves]);
 
-/** Everything the `theme` item ships: the barrel plus the six leaves. */
-const ALL_STYLE_FILES = [STYLE_BARREL, ...STYLE_FILES];
+/** The files an item can reach through its barrel: its own plus its deps'. */
+const reachableFiles = (item) =>
+  new Set([
+    ...item.leaves,
+    ...item.requires.flatMap((dep) => {
+      const d = STYLE_ITEMS.find((i) => i.name === dep);
+      return [d.barrel, ...d.leaves];
+    }),
+  ]);
 
 /**
- * Every `@import "./x.css"` in the barrel must name a file the item also
- * ships, at the path the barrel expects to find it.
+ * Every `@import "./x.css"` in a barrel must name a file the item (or an item
+ * it requires) ships, and every leaf the item ships must be imported.
  */
-const assertStyleBarrel = (barrelSource) => {
-  const shipped = new Set(STYLE_FILES);
+const assertStyleBarrel = (item, barrelSource) => {
+  const reachable = reachableFiles(item);
   const errors = [];
   for (const [, spec] of barrelSource.matchAll(
     /@import\s+["']\.\/([^"']+)["']/g,
   )) {
-    if (!shipped.has(spec)) {
+    if (!reachable.has(spec)) {
       errors.push(
-        `theme: styles/${STYLE_BARREL} imports "./${spec}", which the item does not ship`,
+        `${item.name}: styles/${item.barrel} imports "./${spec}", which neither it nor its dependencies ship`,
       );
     }
   }
-  for (const leaf of STYLE_FILES) {
+  for (const leaf of item.leaves) {
     if (!barrelSource.includes(`"./${leaf}"`)) {
       errors.push(
-        `theme: styles/${leaf} is shipped but styles/${STYLE_BARREL} never imports it — a consumer using the barrel would not get it`,
+        `${item.name}: styles/${leaf} is shipped but styles/${item.barrel} never imports it — a consumer using the barrel would not get it`,
       );
     }
   }
   return errors;
 };
+
+const assertStyleBarrels = async () =>
+  (
+    await Promise.all(
+      STYLE_ITEMS.map(async (item) =>
+        assertStyleBarrel(
+          item,
+          await readFile(path.join(STYLES_DIR, item.barrel), 'utf8'),
+        ),
+      ),
+    )
+  ).flat();
 
 /**
  * Library utilities exposed as `registry:lib` items so consumers can install
@@ -605,13 +623,13 @@ const STARTER_BUNDLES = [
     description:
       '@interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.',
     target: 'components/ui/INTERLACE-A11Y-STARTER.md',
-    body: `# @interlace/a11y-starter\n\nInstalled:\n\n- \`SkipLink\` — focus-visible skip-to-main link.\n- \`VisuallyHidden\` — screen-reader-only span (component variant).\n- \`FocusRing\` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- \`useReducedMotion\` — gates every animation in the DS.\n- \`theme\` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n`,
+    body: `# @interlace/a11y-starter\n\nInstalled:\n\n- \`SkipLink\` — focus-visible skip-to-main link.\n- \`VisuallyHidden\` — screen-reader-only span (component variant).\n- \`FocusRing\` — composable WCAG 2.2 SC 2.4.13 focus contract.\n- \`useReducedMotion\` — gates every animation in the DS.\n- \`interlace-base\` — the additive CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n`,
     registryDependencies: [
       'skip-link',
       'visually-hidden',
       'focus-ring',
       'use-reduced-motion',
-      STYLE_ITEM,
+      BASE_ITEM,
     ],
   },
   {
@@ -620,7 +638,7 @@ const STARTER_BUNDLES = [
     description:
       '@interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.',
     target: 'components/ui/INTERLACE-LAYOUT-STARTER.md',
-    body: `# @interlace/layout-starter\n\nInstalled:\n\n- \`Container\` — 4 width tiers (prose / content / wide / full).\n- \`Section\` — vertical-rhythm slabs.\n- \`Stack\` + \`Cluster\` — six-step gap scale.\n- \`Grid\` — responsive grid primitive.\n- \`Box\` — token-aware surface (background + padding + radius + border).\n- \`Typography\` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- \`theme\` — full DS CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n`,
+    body: `# @interlace/layout-starter\n\nInstalled:\n\n- \`Container\` — 4 width tiers (prose / content / wide / full).\n- \`Section\` — vertical-rhythm slabs.\n- \`Stack\` + \`Cluster\` — six-step gap scale.\n- \`Grid\` — responsive grid primitive.\n- \`Box\` — token-aware surface (background + padding + radius + border).\n- \`Typography\` — h1..h6, body, long, ui, ui-sm, caption, code variants.\n- \`interlace-base\` — the additive CSS baseline.\n\nDocs: https://ds.interlace.tools/getting-started\n`,
     registryDependencies: [
       'container',
       'section',
@@ -628,7 +646,7 @@ const STARTER_BUNDLES = [
       'grid',
       'box',
       'typography',
-      STYLE_ITEM,
+      BASE_ITEM,
     ],
   },
   {
@@ -637,14 +655,14 @@ const STARTER_BUNDLES = [
     description:
       '@interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.',
     target: 'components/ui/INTERLACE-MDX-STARTER.md',
-    body: `# @interlace/mdx-starter\n\nInstalled:\n\n- \`Callout\` — info / warn / danger / success / note prose annotations.\n- \`Prose\` — typographic article-body wrapper.\n- \`CodeBlock\` — Shiki-rendered fenced code with copy button.\n- \`Tag\` + \`TagList\` — article tag badges.\n- \`Figure\` — image + caption + alt + AspectRatio.\n- \`theme\` — full DS CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n`,
+    body: `# @interlace/mdx-starter\n\nInstalled:\n\n- \`Callout\` — info / warn / danger / success / note prose annotations.\n- \`Prose\` — typographic article-body wrapper.\n- \`CodeBlock\` — Shiki-rendered fenced code with copy button.\n- \`Tag\` + \`TagList\` — article tag badges.\n- \`Figure\` — image + caption + alt + AspectRatio.\n- \`interlace-base\` — the additive CSS baseline.\n\nWire into your MDX pipeline by spreading the DS defaults into your\nmdx-components.tsx. See https://ds.interlace.tools/getting-started\n`,
     registryDependencies: [
       'callout',
       'prose',
       'code-block',
       'tag',
       'figure',
-      STYLE_ITEM,
+      BASE_ITEM,
     ],
   },
 ];
@@ -927,13 +945,13 @@ const buildItem = async (filePath, fileName, tier = null) => {
       })),
     )),
   ];
-  // Every primitive depends on the shared theme item so consumers get the
+  // Every primitive depends on the additive base item so consumers get the
   // brand tokens + animation keyframes installed alongside the .tsx — plus
   // every `registry:lib` item the EMITTED files import (`@/lib/utils` → `cn`
   // and friends). Derived from `files`, so an item can never ship an import
   // it did not ask the CLI to install.
   const registryDependencies = [
-    STYLE_ITEM,
+    BASE_ITEM,
     ...[...new Set([...deps, ...libDepsOf(files)])].sort(),
   ].map(itemRef);
   const item = {
@@ -1081,26 +1099,48 @@ const starterItem = (entry) => ({
   docs: entry.body,
 });
 
-// ─── Theme / style registry item ─────────────────────────────────────────
+// ─── Stylesheet registry items ───────────────────────────────────────────────
 //
-// Publishes the @interlace/ui CSS contract — the barrel (`index.css`) plus
-// the six leaf stylesheets it imports — as a single shadcn `registry:style`
-// item, so consumers get the full DS CSS baseline installed when they
-// `npx shadcn add` any primitive: focus ring, min-viewport contract, type
-// scale, spacing scale, radius scale, brand palette.
+// Publishes the @interlace/ui CSS contract as two `registry:style` items
+// (`interlace-base`, `interlace-foundation`, see STYLE_ITEMS) and one
+// `registry:theme` item (`theme`). Files land in `styles/interlace/`.
 //
 // The raw .css files are also copied to `public/r/styles/*.css` so
 // consumers can pull them directly without the shadcn CLI (e.g. as plain
-// `@import "https://ds.interlace.tools/r/styles/tokens.css"` URLs from
+// `@import "https://ds.interlace.tools/r/styles/base.css"` URLs from
 // their global stylesheet).
 
-const buildStyleItem = async () => {
+const STYLE_INSTALL_DOCS = {
+  [BASE_ITEM]: (item) => [
+    'Add ONE line to your global stylesheet, after Tailwind:',
+    '',
+    '```css',
+    '@import "tailwindcss";',
+    `@import "./styles/interlace/${item.barrel}";`,
+    '```',
+    '',
+    'This adds tokens and never replaces your own: your `font-sans`, `rounded-*`, breakpoints, spacing and `:root` colours compile exactly as before. Components use your shadcn colours until you add `@interlace/theme`.',
+  ],
+  [FOUNDATION_ITEM]: (item) => [
+    'Replace the `base.css` import with the full contract:',
+    '',
+    '```css',
+    '@import "tailwindcss";',
+    `@import "./styles/interlace/${item.barrel}";`,
+    '```',
+    '',
+    'This restyles your page on purpose: Inter and JetBrains Mono on `font-sans` / `font-mono`, body colours, a focus ring on every focusable element, `img { display: block }`, thin scrollbars, and smooth scrolling. Load the fonts yourself (next/font or @font-face).',
+  ],
+};
+
+const buildStyleFilesItem = async (item) => {
+  const shipped = [item.barrel, ...item.leaves];
   SOURCE_PATHS.set(
-    STYLE_ITEM,
-    ALL_STYLE_FILES.map((f) => `packages/ui/styles/${f}`),
+    item.name,
+    shipped.map((f) => `packages/ui/styles/${f}`),
   );
   const files = await Promise.all(
-    ALL_STYLE_FILES.map(async (name) => {
+    shipped.map(async (name) => {
       const content = await readFile(path.join(STYLES_DIR, name), 'utf8');
       return {
         path: `registry/interlace-ui/styles/${name}`,
@@ -1110,52 +1150,128 @@ const buildStyleItem = async () => {
       };
     }),
   );
-  const claims = await collectThemeClaims(STYLE_FILES);
+  const claims = await collectThemeClaims(item.leaves);
   return {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
-    name: STYLE_ITEM,
+    name: item.name,
     type: 'registry:style',
-    title: 'Interlace Theme',
-    description:
-      '@interlace/ui — full DS CSS baseline: tokens, foundation (type/spacing/radius), preflight (focus ring + min-viewport contract), shadcn↔fumadocs bridge, and brand palette.',
+    title: item.title,
+    description: item.description,
     author: AUTHOR,
-    categories: categoriesFor(STYLE_ITEM, 'theme'),
-    dependencies: ['tw-animate-css'],
-    registryDependencies: [],
+    categories: categoriesFor(item.name, 'theme'),
+    dependencies: item.name === BASE_ITEM ? ['tw-animate-css'] : [],
+    registryDependencies: item.requires.map(itemRef),
     files,
     meta: {
       tier: 'theme',
       client: false,
       minViewport: null,
       loading: false,
-      ...versionMetaFor(STYLE_ITEM),
+      ...versionMetaFor(item.name),
     },
     docs: [
-      '## @interlace/theme',
+      `## @interlace/${item.name}`,
       '',
-      // The count comes from the array, so it cannot say "five" while
-      // shipping six again. It said "Five stylesheets" for the whole of the
-      // release that added `themes/harbor.css`.
-      `${ALL_STYLE_FILES.length} stylesheets landed in \`styles/interlace/\`: the \`${STYLE_BARREL}\` barrel plus ${STYLE_FILES.length} leaves.`,
+      // The count comes from the array, so it cannot drift from what ships.
+      `${shipped.length} stylesheets landed in \`styles/interlace/\`: the \`${item.barrel}\` barrel plus ${item.leaves.length} leaves.`,
       '',
-      'Add ONE line to your global stylesheet:',
+      ...STYLE_INSTALL_DOCS[item.name](item),
       '',
-      '```css',
-      '@import "tailwindcss";',
-      `@import "./styles/interlace/${STYLE_BARREL}";`,
-      '```',
+      // The barrel is the point: it declares the cascade layers and imports
+      // the leaves in the one order that works.
+      `The barrel declares the cascade layers and imports the leaves in the one order that works (${item.leaves.join(' → ')}). Importing the leaves yourself means reproducing that order exactly.`,
       '',
-      // The barrel is the point. Reconstructing it by hand means the @layer
-      // declaration AND six imports in an order whose last step (harbor after
-      // interlace-theme) is not guessable — see STYLE_BARREL above.
-      `The barrel declares the cascade layers and imports the leaves in the one order that works (${STYLE_FILES.join(' → ')}). Importing the leaves yourself means reproducing that order exactly; the last step in particular is load-bearing and not guessable.`,
-      '',
-      collisionMarkdown(claims, HOMEPAGE),
-      '',
+      ...(claims.length ? [collisionMarkdown(claims, HOMEPAGE), ''] : []),
       `Full contract: ${HOMEPAGE}/css-contract`,
     ].join('\n'),
   };
 };
+
+/**
+ * The shadcn names `theme` points at Interlace's brand tokens.
+ *
+ * Derived, not authored: every `--x: var(--interlace-y)` binding in
+ * interlace-theme.css's semantics layer whose `--x` is a variable shadcn
+ * itself writes into `:root`. Interlace-only semantics (success, scrim, viz…)
+ * are not here: base defines those and no host has them to replace.
+ */
+const SHADCN_CSS_VARS = new Set([
+  'background', 'foreground', 'card', 'card-foreground', 'popover',
+  'popover-foreground', 'primary', 'primary-foreground', 'secondary',
+  'secondary-foreground', 'muted', 'muted-foreground', 'accent',
+  'accent-foreground', 'destructive', 'destructive-foreground', 'border',
+  'input', 'ring', 'chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5',
+  'radius',
+]);
+
+const themeCssVars = async () => {
+  const css = await readFile(path.join(STYLES_DIR, 'interlace-theme.css'), 'utf8');
+  const semantics = css.slice(css.indexOf('@layer interlace.semantics'));
+  const vars = {};
+  for (const [, name, brand] of semantics.matchAll(
+    /^\s*--([\w-]+):\s*var\(--(interlace-[\w-]+)\);/gm,
+  )) {
+    if (SHADCN_CSS_VARS.has(name) && !(name in vars)) vars[name] = `var(--${brand})`;
+  }
+  const missing = [...SHADCN_CSS_VARS].filter((n) => !(n in vars));
+  if (missing.length) {
+    throw new Error(
+      `theme: interlace-theme.css binds no --interlace-* token for ${missing.map((n) => `--${n}`).join(', ')}`,
+    );
+  }
+  return vars;
+};
+
+/**
+ * `theme` — the Interlace look, installed the way every shadcn theme is.
+ *
+ * The CLI writes these into the app's own `:root` and `.dark`. Each value is a
+ * `var(--interlace-*)` rather than a colour literal, so the brand tokens base
+ * ships stay the single source, and `[data-theme]` switching (Harbor) keeps
+ * working: the brand layer changes `--interlace-primary`, the app's
+ * `--primary` follows.
+ */
+const buildThemeItem = async () => {
+  SOURCE_PATHS.set(THEME_ITEM, ['packages/ui/styles/interlace-theme.css']);
+  const vars = await themeCssVars();
+  return {
+    $schema: 'https://ui.shadcn.com/schema/registry-item.json',
+    name: THEME_ITEM,
+    type: 'registry:theme',
+    title: 'Interlace Theme',
+    description:
+      '@interlace/ui — the Interlace look as shadcn cssVars: points your --primary, --background, --radius and the rest at Interlace\'s burnt-orange brand tokens (light + dark, AAA). Opt-in; components work without it.',
+    author: AUTHOR,
+    categories: categoriesFor(THEME_ITEM, 'theme'),
+    registryDependencies: [itemRef(BASE_ITEM)],
+    // A theme writes variables, not files. Empty rather than absent so every
+    // tool that walks `files` (agent index, search) treats it like any item.
+    files: [],
+    cssVars: { light: vars, dark: vars },
+    meta: {
+      tier: 'theme',
+      client: false,
+      minViewport: null,
+      loading: false,
+      ...versionMetaFor(THEME_ITEM),
+    },
+    docs: [
+      `## @interlace/${THEME_ITEM}`,
+      '',
+      `Updated ${Object.keys(vars).length} variables in your global stylesheet's \`:root\` and \`.dark\` to point at Interlace's brand tokens (from \`@interlace/interlace-base\`).`,
+      '',
+      'To re-brand, override the `--interlace-*` tokens in `@layer interlace.brand`, or set `--primary` and friends back to your own values.',
+      '',
+      `Themes and the full token list: ${HOMEPAGE}/theme-authoring`,
+    ].join('\n'),
+  };
+};
+
+const buildStyleItems = async () => [
+  await buildStyleFilesItem(STYLE_ITEMS[0]),
+  await buildThemeItem(),
+  ...(await Promise.all(STYLE_ITEMS.slice(1).map(buildStyleFilesItem))),
+];
 
 const writeRawStyleFiles = async () => {
   for (const name of ALL_STYLE_FILES) {
@@ -1170,11 +1286,7 @@ const writeRawStyleFiles = async () => {
 
 const checkRawStyleFiles = async () => {
   const errors = [];
-  errors.push(
-    ...assertStyleBarrel(
-      await readFile(path.join(STYLES_DIR, STYLE_BARREL), 'utf8'),
-    ),
-  );
+  errors.push(...(await assertStyleBarrels()));
   for (const name of ALL_STYLE_FILES) {
     const sourcePath = path.join(STYLES_DIR, name);
     const outPath = path.join(STYLES_OUT_DIR, name);
@@ -1251,8 +1363,8 @@ export const buildAll = async () => {
     .sort();
 
   const items = [];
-  // Theme/style item first so it appears at the top of `index.json`.
-  items.push(await buildStyleItem());
+  // Stylesheet items first so they appear at the top of `index.json`.
+  items.push(...(await buildStyleItems()));
   // Starter bundles next — most-prominent install surface for new consumers.
   for (const entry of STARTER_BUNDLES) items.push(buildStarterItem(entry));
   // Lib utilities — needed for components to compile in the consumer tree.
@@ -1368,7 +1480,7 @@ const assertRegistryContract = (items) => {
 };
 
 const summary = (built) =>
-  `${built.primitiveCount} primitive(s) + ${built.decorativeCount} decorative + 1 style + ${ALL_STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s)`;
+  `${built.primitiveCount} primitive(s) + ${built.decorativeCount} decorative + ${STYLE_ITEMS.length + 1} style + ${ALL_STYLE_FILES.length} raw stylesheet(s) + ${LIB_FILES.length} lib + ${STARTER_BUNDLES.length} starter(s)`;
 
 const main = async () => {
   const built = await buildAll();
@@ -1408,9 +1520,7 @@ const main = async () => {
 
   const contractErrors = [
     ...assertRegistryContract(built.items),
-    ...assertStyleBarrel(
-      await readFile(path.join(STYLES_DIR, STYLE_BARREL), 'utf8'),
-    ),
+    ...(await assertStyleBarrels()),
   ];
   if (contractErrors.length) {
     console.error(

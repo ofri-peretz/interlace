@@ -189,15 +189,22 @@ describe('component documentation survives shadcn add', () => {
  * handed every consumer that exact problem, plus a cascade order whose last
  * step (a theme AFTER interlace-theme) is not guessable.
  */
-describe('theme item ships the CSS barrel', () => {
-  it('includes index.css alongside every leaf it imports', async () => {
-    const theme = JSON.parse(await readFile(path.join(R_DIR, 'theme.json'), 'utf8'));
-    const targets = theme.files.map((f: { target: string }) => f.target);
-    expect(targets).toContain('styles/interlace/index.css');
+const readItem = async (name: string) =>
+  JSON.parse(await readFile(path.join(R_DIR, `${name}.json`), 'utf8'));
 
-    const barrel = theme.files.find(
-      (f: { target: string }) => f.target === 'styles/interlace/index.css',
+describe.each(['interlace-base', 'interlace-foundation'])('%s ships its CSS barrel', (name) => {
+  it('ships every file its barrel imports, here or in a dependency', async () => {
+    const item = await readItem(name);
+    const deps = await Promise.all(
+      item.registryDependencies.map((ref: string) => readItem(path.basename(ref, '.json'))),
     );
+    const targets = [item, ...deps].flatMap((i) =>
+      (i.files ?? []).map((f: { target: string }) => f.target),
+    );
+    const barrel = item.files.find((f: { target: string }) =>
+      /styles\/interlace\/(base|index)\.css$/.test(f.target),
+    );
+    expect(barrel).toBeDefined();
     const imported = [...barrel.content.matchAll(/@import\s+["']\.\/([^"']+)["']/g)].map(
       (m) => `styles/interlace/${m[1]}`,
     );
@@ -207,17 +214,54 @@ describe('theme item ships the CSS barrel', () => {
   });
 
   it('does not claim a stylesheet count it is not shipping', async () => {
-    const theme = JSON.parse(await readFile(path.join(R_DIR, 'theme.json'), 'utf8'));
-    // The post-install docs said "Five stylesheets" for an entire release in
-    // which the item shipped six.
-    expect(theme.docs).toContain(`${theme.files.length} stylesheets`);
-    expect(theme.docs).not.toMatch(/\bFive stylesheets\b/);
+    const item = await readItem(name);
+    // The post-install docs once said "Five stylesheets" for an entire
+    // release in which the item shipped six.
+    expect(item.docs).toContain(`${item.files.length} stylesheets`);
+  });
+});
+
+describe('the base / theme / foundation split', () => {
+  it('base ships nothing that restyles the host page', async () => {
+    const base = await readItem('interlace-base');
+    const targets = base.files.map((f: { target: string }) => f.target);
+    for (const optIn of ['fonts.css', 'preflight.css', 'theme.css', 'index.css']) {
+      expect(targets).not.toContain(`styles/interlace/${optIn}`);
+    }
+  });
+
+  it('every component depends on base, never on theme or foundation', async () => {
+    const index = JSON.parse(await readFile(path.join(R_DIR, 'index.json'), 'utf8'));
+    const offenders: string[] = [];
+    for (const entry of index.items as { name: string }[]) {
+      if (['interlace-base', 'theme', 'interlace-foundation'].includes(entry.name)) continue;
+      const item = await readItem(entry.name);
+      const deps = (item.registryDependencies ?? []).map((r: string) => path.basename(r, '.json'));
+      if (deps.includes('theme') || deps.includes('interlace-foundation')) offenders.push(entry.name);
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it('theme points the shadcn variables at brand tokens base defines', async () => {
+    const theme = await readItem('theme');
+    const base = await readItem('interlace-base');
+    const css = base.files.map((f: { content: string }) => f.content).join('\n');
+    expect(theme.type).toBe('registry:theme');
+    for (const mode of ['light', 'dark']) {
+      for (const [name, value] of Object.entries(theme.cssVars[mode] as Record<string, string>)) {
+        const brand = /^var\((--interlace-[\w-]+)\)$/.exec(value)?.[1];
+        expect(brand, `--${name}`).toBeDefined();
+        expect(css, `${brand} for --${name}`).toContain(`${brand}:`);
+      }
+    }
+    expect(theme.cssVars.light.primary).toBe('var(--interlace-primary)');
+    expect(theme.cssVars.light.radius).toBe('var(--interlace-radius)');
   });
 
   it('warns about the token namespace where the CLI will print it', async () => {
-    const theme = JSON.parse(await readFile(path.join(R_DIR, 'theme.json'), 'utf8'));
-    expect(theme.docs).toContain('--color-accent');
-    expect(theme.docs).toContain('@theme inline');
+    const base = await readItem('interlace-base');
+    expect(base.docs).toContain('--color-accent');
+    expect(base.docs).toContain('@theme inline');
   });
 });
 

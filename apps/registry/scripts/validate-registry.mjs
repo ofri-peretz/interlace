@@ -91,7 +91,11 @@ const main = async () => {
         fail(where, `missing ${field}`);
       }
     }
-    if (!item.files?.length) fail(where, 'has no files');
+    // A `registry:theme` installs by writing `cssVars` into the app's global
+    // stylesheet; it has nothing to copy. Every other type must ship files.
+    const installsVars =
+      item.type === 'registry:theme' && Object.keys(item.cssVars ?? {}).length > 0;
+    if (!item.files?.length && !installsVars) fail(where, 'has no files');
     for (const file of item.files ?? []) {
       if (!file.content) fail(where, `file ${file.path} has empty content`);
       if (!file.target) fail(where, `file ${file.path} has no target`);

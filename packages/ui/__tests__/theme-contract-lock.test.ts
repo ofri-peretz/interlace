@@ -50,7 +50,6 @@ import {
 const STYLES = resolve(__dirname, '../styles');
 const INTERLACE_CSS = resolve(STYLES, 'interlace-theme.css');
 const HARBOR_CSS = resolve(STYLES, 'themes/harbor.css');
-const INDEX_CSS = resolve(STYLES, 'index.css');
 
 /** WCAG 2.2 AA floors. */
 const AA_TEXT = 4.5;
@@ -588,7 +587,9 @@ describe('theme contract lock', () => {
     it('is wired into the canonical stylesheet, after the default theme', () => {
       // Order is load-bearing: `[data-theme='X']` and `.dark` are both
       // (0,1,0), so theme files must be imported AFTER interlace-theme.css.
-      const index = readFileSync(INDEX_CSS, 'utf8');
+      // Both live in base.css (the additive barrel index.css imports), so
+      // every consumer path, base-only or the full contract, gets the order.
+      const index = readFileSync(resolve(STYLES, 'base.css'), 'utf8');
       const base = index.indexOf('./interlace-theme.css');
       const theme = index.indexOf('./themes/harbor.css');
       expect(base).toBeGreaterThan(-1);

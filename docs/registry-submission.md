@@ -179,9 +179,10 @@ Checklist:
 
 ## 5. Not blocking, worth doing first
 
-1. **The theme installs 5 CSS files and wires none of them.** After
-   `shadcn add @interlace/theme` the consumer's `globals.css` is untouched — no
-   `@import`. Wants a `docs` field carrying the import block.
+1. **The CSS items copy files and wire none of them.** After
+   `shadcn add @interlace/interlace-base` the consumer's `globals.css` is untouched — no
+   `@import`. The item's `docs` field carries the import block; the CLI cannot add it.
+   (`theme` is now `registry:theme` cssVars, which the CLI does write.)
 2. **No `author` on any item.** Optional, but it is the field that attributes the
    work when someone reads a vendored file six months later.
 3. **Repo signals:** 1 star, 0 topics, no CHANGELOG; `packages/ui/package.json`

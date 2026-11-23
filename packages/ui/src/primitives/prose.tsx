@@ -85,12 +85,12 @@ type ProseElement = 'article' | 'div' | 'main' | 'section';
  */
 const PROSE_CASCADE = [
   // Headings — type scale + scroll-margin for deep-link anchors.
-  '[&_h1]:font-body [&_h1]:text-h1 [&_h1]:font-bold [&_h1]:tracking-display [&_h1]:text-balance [&_h1]:scroll-mt-xl [&_h1]:mt-16 [&_h1]:mb-6',
-  '[&_h2]:font-body [&_h2]:text-h2 [&_h2]:font-bold [&_h2]:tracking-heading [&_h2]:text-balance [&_h2]:scroll-mt-xl [&_h2]:mt-10 [&_h2]:mb-4',
-  '[&_h3]:font-body [&_h3]:text-h3 [&_h3]:font-semibold [&_h3]:tracking-heading [&_h3]:scroll-mt-xl [&_h3]:mt-10 [&_h3]:mb-4',
-  '[&_h4]:font-body [&_h4]:text-h4 [&_h4]:font-semibold [&_h4]:scroll-mt-xl [&_h4]:mt-6 [&_h4]:mb-2',
-  '[&_h5]:font-body [&_h5]:text-h5 [&_h5]:font-semibold [&_h5]:scroll-mt-xl [&_h5]:mt-6 [&_h5]:mb-2',
-  '[&_h6]:font-body [&_h6]:text-h6 [&_h6]:font-semibold [&_h6]:scroll-mt-xl [&_h6]:mt-6 [&_h6]:mb-2',
+  '[&_h1]:font-body [&_h1]:text-h1 [&_h1]:font-bold [&_h1]:tracking-display [&_h1]:text-balance [&_h1]:scroll-mt-16 [&_h1]:mt-16 [&_h1]:mb-6',
+  '[&_h2]:font-body [&_h2]:text-h2 [&_h2]:font-bold [&_h2]:tracking-heading [&_h2]:text-balance [&_h2]:scroll-mt-16 [&_h2]:mt-10 [&_h2]:mb-4',
+  '[&_h3]:font-body [&_h3]:text-h3 [&_h3]:font-semibold [&_h3]:tracking-heading [&_h3]:scroll-mt-16 [&_h3]:mt-10 [&_h3]:mb-4',
+  '[&_h4]:font-body [&_h4]:text-h4 [&_h4]:font-semibold [&_h4]:scroll-mt-16 [&_h4]:mt-6 [&_h4]:mb-2',
+  '[&_h5]:font-body [&_h5]:text-h5 [&_h5]:font-semibold [&_h5]:scroll-mt-16 [&_h5]:mt-6 [&_h5]:mb-2',
+  '[&_h6]:font-body [&_h6]:text-h6 [&_h6]:font-semibold [&_h6]:scroll-mt-16 [&_h6]:mt-6 [&_h6]:mb-2',
 
   // Paragraph rhythm.
   '[&_p]:my-4',
