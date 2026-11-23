@@ -63,6 +63,29 @@ container in dev gets the dashed `data-interlace-dev` outline; the
 `xs:` Tailwind variant is the layout API that lets them swap to a
 narrower-friendly alternative below 480px.
 
+## Collections size to their container
+
+A component that repeats items in a grid (FeatureGrid, StatGroup,
+ArticleListGrid, PricingTable, RelatedPosts, StatStrip) picks its column count
+from its **own width**, not the viewport. Its root is a CSS `@container`, and
+its tracks use Tailwind's container variants:
+
+| Container width | Tracks |
+|---|---|
+| below 28rem (`@md`) | one (two for StatStrip) |
+| 28rem and up | two (three for StatStrip) |
+| 56rem and up (`@4xl`) | the `cols` the caller asked for |
+
+The viewport cannot tell a full-width section from the same section in a
+sidebar or a dashboard card. Keyed on the viewport, a `cols={4}` grid in a
+320px column on a 1440px screen holds four 60px tracks. Keyed on its
+container, it collapses as it would on a phone, with no `className` needed.
+
+The thresholds are `rem`, so they scale with the user's font like the
+viewport ladder does. Page-level layout (Container padding, navigation,
+Section rhythm) stays on the viewport ladder above: it really does depend on
+the screen.
+
 ## Inspiration
 
 | DS | Breakpoints (px) | Tiers | Tracks `rem`? |

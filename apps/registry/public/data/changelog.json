@@ -291,6 +291,22 @@
           "source": ".changeset/claim-heading-font.md"
         },
         {
+          "summary": "Grids of repeated items now pick their column count from their own width, not the screen's. FeatureGrid, StatGroup, ArticleListGrid, PricingTable, RelatedPosts and StatStrip each set a CSS container on their root: one track below 28rem, two from 28rem, and the `cols` you asked for from 56rem. A grid placed in a sidebar or a dashboard card now collapses as it would on a phone, with no `className` override. At full page width the layout is the same as before.",
+          "components": [
+            "feature-grid",
+            "stat-group",
+            "article-list-grid",
+            "pricing-table",
+            "related-posts",
+            "stat-strip"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/container-collections.md"
+        },
+        {
           "summary": "Fixes in the new backdrops. `Starfield` tints stars and meteors correctly when given an `oklch()` or `color-mix()` colour. `SkyBackdrop` rests every cloud fully inside the sky, so a cloud never jumps where it can be seen when its loop wraps. `GradientMesh` and `SkyBackdrop` add no content wrapper when `children` is `null`.",
           "components": [
             "starfield",

@@ -139,13 +139,13 @@ export function RelatedPosts({
         data-min-viewport={String(MIN_VIEWPORT)}
         aria-label={typeof title === 'string' ? title : undefined}
         aria-busy="true"
-        className={cn('w-full', className)}
+        className={cn('@container w-full', className)}
         {...props}
       >
         <Typography variant="h3" as="h2" className="mb-6">
           {title}
         </Typography>
-        <Grid cols={3} gap="md">
+        <Grid cols={1} gap="md" className="@xl:grid-cols-2 @4xl:grid-cols-3">
           {Array.from({ length: loadingCount }).map((_, i) => (
             <Skeleton key={i} variant="article-card" label={null} />
           ))}
@@ -161,7 +161,7 @@ export function RelatedPosts({
       data-testid={testId}
       data-min-viewport={String(MIN_VIEWPORT)}
       aria-label={typeof title === 'string' ? title : undefined}
-      className={cn('w-full', className)}
+      className={cn('@container w-full', className)}
       {...props}
     >
       <Typography as="h2" variant="h3" className="mb-6">
@@ -176,7 +176,7 @@ export function RelatedPosts({
       <Grid
         cols={1}
         gap="md"
-        className="md:grid-cols-2 lg:grid-cols-3"
+        className="@xl:grid-cols-2 @4xl:grid-cols-3"
       >
         {posts.map((post, i) => (
           <ArticleCard

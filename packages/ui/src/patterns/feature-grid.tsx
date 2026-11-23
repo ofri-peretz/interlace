@@ -68,13 +68,16 @@ interface FeatureGridProps extends Omit<React.ComponentProps<'section'>, 'title'
  * `cols` holds N narrow tracks at every width — at 375px a `cols={3}` board
  * gives each feature card ~98px and its copy overflows the viewport.
  *
- * Written out statically because Tailwind cannot scan a runtime-built
- * `xs:grid-cols-${n}`.
+ * The counts key on this component's own width (its root is the
+ * `@container`), not the viewport, so a feature grid dropped into a sidebar
+ * collapses as it would on a phone: two tracks from 28rem, the full count
+ * from 56rem. Written out statically because Tailwind cannot scan a
+ * runtime-built `@4xl:grid-cols-${n}`.
  */
 const FEATURE_GRID_COLS: Record<2 | 3 | 4, string> = {
-  2: 'grid-cols-1 xs:grid-cols-2',
-  3: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
+  2: 'grid-cols-1 @md:grid-cols-2',
+  3: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-3',
+  4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
 
 function FeatureGrid({
@@ -92,7 +95,7 @@ function FeatureGrid({
     <section
       data-slot="feature-grid"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('py-16', className)}
+      className={cn('@container py-16', className)}
       {...props}
     >
       <Container size="content">
