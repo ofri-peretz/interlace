@@ -21,6 +21,19 @@ const LINKS = [
 ];
 
 describe('Topbar', () => {
+  it.each(['md', 'lg', 'xl'] as const)(
+    'collapseBelow="%s" switches the row and the menu button at that breakpoint only',
+    (bp) => {
+      const html = renderToStaticMarkup(<Topbar logo="Site" links={LINKS} collapseBelow={bp} />);
+      expect(html).toContain(`${bp}:flex`);
+      expect(html).toContain(`${bp}:hidden`);
+      for (const other of ['md', 'lg', 'xl'].filter((b) => b !== bp)) {
+        expect(html).not.toContain(`${other}:flex`);
+        expect(html).not.toContain(`${other}:hidden`);
+      }
+    },
+  );
+
   it('marks the current page with aria-current', () => {
     render(<Topbar logo={<a href="/">Site</a>} links={LINKS} currentHref="/questions" />);
     const nav = screen.getByRole('navigation', { name: 'Primary' });

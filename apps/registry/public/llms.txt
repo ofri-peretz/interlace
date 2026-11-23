@@ -148,7 +148,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Command Palette](https://ds.interlace.tools/c/command-palette): ⌘K. A modal surface holding one filterable list of actions.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/command-palette.json`
   - contract: client, min 320px, keyboard via Base UI combobox, v3.0.0
-- [Container](https://ds.interlace.tools/c/container): The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one fixed max-width, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).
+- [Container](https://ds.interlace.tools/c/container): The width contract from LAYOUT_PHILOSOPHY.md §2: four sizes only, each mapped to one layout token, plus the responsive horizontal padding scale `px-4 xs:px-6 lg:px-8` (§5).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/container.json`
   - contract: server, keyboard via Base UI use-render, v3.0.0
 - [Context Menu](https://ds.interlace.tools/c/context-menu): Right-click / long-press menu. Wraps `@base-ui/react/context-menu` (same Menu compositional API as DropdownMenu, just with a Root that handles right-click / long-press / Shift+F10 as the open gesture).
@@ -427,9 +427,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Thread Steps](https://ds.interlace.tools/c/thread-steps): An ordered sequence held together by Interlace's woven thread: a knot for each step, and two strands that cross between one knot and the next. The strands draw in as the reader reaches each step, so the motion says one thing only: this leads to that.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/thread-steps.json`
   - contract: client, min 320px, states complete|current|upcoming, v1.0.0
-- [Timeline](https://ds.interlace.tools/c/timeline): A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on one horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…
+- [Timeline](https://ds.interlace.tools/c/timeline): A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on a horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/timeline.json`
-  - contract: server, min 320px, states responsive|vertical, v1.0.0
+  - contract: server, min 320px, v1.0.0
 - [Timeline Map](https://ds.interlace.tools/c/timeline-map): TimelineMap — dated entities as linked dots on a shared time axis, one labeled strip per category lane.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/timeline-map.json`
   - contract: client, keys ArrowLeft/ArrowRight/End/Home, v2.0.0

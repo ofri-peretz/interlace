@@ -99,9 +99,9 @@ elements, not one.
 cva('mx-auto w-full px-4 xs:px-6 lg:px-8', {
   variants: {
     size: {
-      prose:   'max-w-[65ch]',
-      content: 'max-w-[1024px]',   // default
-      wide:    'max-w-[1280px]',
+      prose:   'max-w-(--container-prose)',
+      content: 'max-w-(--container-content)',   // default
+      wide:    'max-w-(--container-wide)',
       full:    'max-w-none px-0 xs:px-0 lg:px-0',
     },
   },

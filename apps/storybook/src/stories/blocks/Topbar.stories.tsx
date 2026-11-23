@@ -14,7 +14,7 @@ const meta: Meta<typeof Topbar> = {
         component:
           "The one row every landing, docs and dashboard surface starts with: logo left, primary nav centre-right, action cluster right. Sticky with a translucent backdrop blur, so content scrolls visibly underneath without a colour seam.\n\n" +
           'It is framework-agnostic on purpose. `logo` is a slot rather than an `href`, and `renderLink` is the seam a Next.js or React Router consumer passes its own `<Link>` through — the DS never imports a router. External links opt out of that seam entirely and always render a plain `<a target="_blank">` with a trailing ↗.\n\n' +
-          'Below 768px the links never disappear. By default they move behind a Menu button that opens a side panel that a finger can drag closed (`mobileNav="menu"`); `mobileNav="wrap"` shows them as a second row instead. Pass `currentHref` and the current link gets `aria-current="page"` and an underline, in the row and in the menu.',
+          'Below the `collapseBelow` width (768px by default) the links never disappear. By default they move behind a Menu button that opens a side panel that a finger can drag closed (`mobileNav="menu"`); `mobileNav="wrap"` shows them as a second row instead. Pass `currentHref` and the current link gets `aria-current="page"` and an underline, in the row and in the menu.',
       },
     },
   },
@@ -28,7 +28,7 @@ const meta: Meta<typeof Topbar> = {
     links: {
       control: "object",
       description:
-        'Primary nav: `{ href, label, external? }`. `external: true` forces a plain `<a target="_blank" rel="noopener noreferrer">` with a ↗ affix and bypasses `renderLink`. Below 768px, see `mobileNav`.',
+        'Primary nav: `{ href, label, external? }`. `external: true` forces a plain `<a target="_blank" rel="noopener noreferrer">` with a ↗ affix and bypasses `renderLink`. Below `collapseBelow`, see `mobileNav`.',
       table: {
         type: { summary: "TopbarLink[]" },
         defaultValue: { summary: "[]" },
@@ -47,11 +47,22 @@ const meta: Meta<typeof Topbar> = {
         'The current page. The link with this exact href gets `aria-current="page"` and the current style.',
       table: { type: { summary: "string" }, category: "State" },
     },
+    collapseBelow: {
+      control: "inline-radio",
+      options: ["md", "lg", "xl"],
+      description:
+        "The width below which the row of links gives way to the menu. Pick the one at which your links still fit on one line: `md` for three or four short links, `lg` for five or six, `xl` for more.",
+      table: {
+        type: { summary: "'md' | 'lg' | 'xl'" },
+        defaultValue: { summary: "md" },
+        category: "Appearance",
+      },
+    },
     mobileNav: {
       control: "inline-radio",
       options: ["menu", "wrap", "none"],
       description:
-        "What the links do below 768px. `menu`: a Menu button opening a swipeable side panel. `wrap`: a second, wrapping row. `none`: hidden, only when the page offers another route to them.",
+        "What the links do below `collapseBelow` (768px by default). `menu`: a Menu button opening a swipeable side panel. `wrap`: a second, wrapping row. `none`: hidden, only when the page offers another route to them.",
       table: {
         type: { summary: "'menu' | 'wrap' | 'none'" },
         defaultValue: { summary: "menu" },
@@ -172,5 +183,30 @@ export const MobileWrap: Story = {
     mobileNav: "wrap",
     currentHref: sampleLinks[0]?.href,
   },
+  parameters: { viewport: { defaultViewport: "mobile1" } },
+};
+
+const manyLinks = [
+  { href: "/questions", label: "Questions we tested" },
+  { href: "/answers", label: "Answers" },
+  { href: "/sources", label: "Sources" },
+  { href: "/method", label: "How we check" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+
+/**
+ * Six links at 820px: with `collapseBelow="lg"` they sit behind the menu until
+ * there is room for all of them on one line, instead of each wrapping in two.
+ */
+export const ManyLinks: Story = {
+  args: { ...Default.args, links: manyLinks, collapseBelow: "lg" },
+  parameters: { viewport: { defaultViewport: "tablet" } },
+};
+
+/** An RTL page on a phone: the menu opens from the left. */
+export const RTLMobileMenu: Story = {
+  args: { ...Default.args, menuSide: "left" },
+  decorators: [withRtl],
   parameters: { viewport: { defaultViewport: "mobile1" } },
 };
