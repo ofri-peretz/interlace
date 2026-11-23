@@ -79,7 +79,7 @@ const statCardVariants = cva(
 // Semantic tokens, NOT raw palette. `text-emerald-600` / `-rose-600` scored
 // 3.65:1 and 4.52:1 on white — failing `color-contrast` (AA, 4.5:1) and
 // `color-contrast-enhanced` (AAA, 7:1), both of which this DS enforces. The
-// `--success` / `--warning` / `--destructive` ladder in interlace-theme.css is
+// `--success` / `--warning` / `--destructive` ladder in brand/interlace.css is
 // already tuned to clear AAA in BOTH schemes, so it needs no `dark:` variant:
 // the token itself re-resolves under `.dark`. This is what R19 ("tone classes
 // map to semantic tokens") meant all along.

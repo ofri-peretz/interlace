@@ -28,7 +28,7 @@
  * `transition-[fill] duration-100` in, `duration-1000` out; under
  * `prefers-reduced-motion: reduce` `useReducedMotion` swaps the whole class
  * for `transition-none`, so the fill snaps instantly rather than relying on
- * the `transition-duration: 0.01ms` clamp in `styles/preflight.css`. Nothing
+ * the `transition-duration: 0.01ms` clamp in `styles/page/preflight.css`. Nothing
  * here animates on its own — motion happens only while a pointer moves.
  *
  * ## The `<title>` is not an accessible name

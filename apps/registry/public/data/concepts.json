@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T01:03:47.128Z",
+  "generatedAt": "2026-11-23T01:20:47.904Z",
   "source": "apps/storybook/src/stories/concepts",
   "pages": [
     {
@@ -357,7 +357,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The document-level ring is declared once, in `preflight.css`:"
+          "text": "The document-level ring is declared once, in `page/preflight.css`:"
         },
         {
           "type": "code",
@@ -628,7 +628,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/src/charts/{series-table,time-series,network-graph,delta}.tsx` · `packages/ui/src/primitives/{skip-link,visually-hidden,focus-ring}.tsx` · `packages/ui/styles/preflight.css` · `packages/ui/vitest.config.ts` · `apps/storybook/.storybook/test-runner.ts` · `docs/philosophies/{A11Y,KEYBOARD,VISUALIZATION}_PHILOSOPHY.md`"
+          "text": "**Sources.** `packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/src/charts/{series-table,time-series,network-graph,delta}.tsx` · `packages/ui/src/primitives/{skip-link,visually-hidden,focus-ring}.tsx` · `packages/ui/styles/page/preflight.css` · `packages/ui/vitest.config.ts` · `apps/storybook/.storybook/test-runner.ts` · `docs/philosophies/{A11Y,KEYBOARD,VISUALIZATION}_PHILOSOPHY.md`"
         }
       ],
       "headings": [
@@ -700,7 +700,7 @@
         {
           "type": "code",
           "lang": null,
-          "code": "  layer 1   --interlace-primary: #7d350c        ← the only hex literals\n     │\n     │      interlace-theme.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      interlace-theme.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
+          "code": "  layer 1   --interlace-primary: #7d350c        ← the only hex literals\n     │\n     │      brand/interlace.css, @layer interlace.brand\n     ▼\n  layer 2   --primary: var(--interlace-primary) ← semantic alias\n     │\n     │      brand/interlace.css, @layer interlace.semantics\n     ▼\n  layer 3   @theme inline {\n     │        --color-primary: var(--primary);\n     │      }                                   ← Tailwind utility surface\n     ▼\n  usage     className=\"bg-primary text-primary-foreground\""
         },
         {
           "type": "paragraph",
@@ -716,12 +716,12 @@
         },
         {
           "type": "paragraph",
-          "text": "The full stylesheet layer order, from `styles/index.css`:"
+          "text": "The stylesheet tree, from `styles/base.css` and `styles/index.css`:"
         },
         {
           "type": "code",
           "lang": "css",
-          "code": "@layer interlace.primitives, interlace.foundation, interlace.preflight,\n       interlace.bridge, interlace.brand, interlace.semantics;"
+          "code": "@layer interlace.bridge, interlace.brand, interlace.semantics;"
         },
         {
           "type": "table",
@@ -732,34 +732,29 @@
           ],
           "rows": [
             [
-              "`interlace.primitives`",
-              "`tokens.css`",
-              "keyframes, animation utilities"
+              "`interlace.brand`",
+              "`brand/interlace.css`, `brand/harbor.css`",
+              "the `--interlace-*` literals. **The supported override surface**"
             ],
             [
-              "`interlace.foundation`",
-              "`foundation.css`",
-              "type / spacing / radius / container / breakpoint scales"
+              "`interlace.semantics`",
+              "`semantics.css`",
+              "`--background`, `--primary`, `--ring`, … bound to the brand layer"
             ],
             [
-              "`interlace.preflight`",
-              "`preflight.css`",
+              "`@theme` / `components`",
+              "`structure/*.css`",
+              "type, layout, radius and motion scales; same for every brand"
+            ],
+            [
+              "`base`",
+              "`page/preflight.css` (opt-in)",
               "body paint, `::selection`, the focus ring, scrollbar tint"
             ],
             [
               "`interlace.bridge`",
-              "`theme.css`",
+              "`page/fumadocs.css` (opt-in)",
               "the fumadocs ↔ shadcn seam"
-            ],
-            [
-              "`interlace.brand`",
-              "`interlace-theme.css`",
-              "the `--interlace-*` hex literals. **The supported override surface**"
-            ],
-            [
-              "`interlace.semantics`",
-              "`interlace-theme.css`",
-              "`--background`, `--primary`, `--ring`, … bound to the brand layer"
             ]
           ]
         },
@@ -907,7 +902,7 @@
         },
         {
           "type": "paragraph",
-          "text": "What you should not override: `interlace.preflight` (the focus ring, the body paint), `interlace.bridge` (the fumadocs seam), `interlace.foundation` (the scales). Those are the parts that are the same across brands by design."
+          "text": "What you should not override: `page/preflight.css` (the focus ring, the body paint), `interlace.bridge` (the fumadocs seam), `structure/` (the scales). Those are the parts that are the same across brands by design."
         },
         {
           "type": "rule"
@@ -1060,7 +1055,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/styles/index.css` · `packages/ui/styles/interlace-theme.css` · `packages/ui/styles/themes/harbor.css` · `packages/ui/src/lib/{use-theme,theme-script,theme-tokens}.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/__tests__/composite-contrast-lock.test.ts` · `packages/ui/__tests__/use-theme.test.tsx`"
+          "text": "**Sources.** `packages/ui/styles/index.css` · `packages/ui/styles/brand/interlace.css` · `packages/ui/styles/brand/harbor.css` · `packages/ui/src/lib/{use-theme,theme-script,theme-tokens}.ts` · `packages/ui/__tests__/theme-contract-lock.test.ts` · `packages/ui/__tests__/composite-contrast-lock.test.ts` · `packages/ui/__tests__/use-theme.test.tsx`"
         }
       ],
       "headings": [
@@ -1189,7 +1184,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Interlace 2.0 uses the numeric scale instead. `spacing-token-shadowing-lock` keeps it that way: no t-shirt-named `--spacing-*` key in `foundation.css`, and no named spacing utility in the DS source. `container-scale-lock` still bans named `max-w-*` widths in favour of the four container tokens."
+          "text": "Interlace 2.0 uses the numeric scale instead. `spacing-token-shadowing-lock` keeps it that way: no t-shirt-named `--spacing-*` key in `structure/type.css`, and no named spacing utility in the DS source. `container-scale-lock` still bans named `max-w-*` widths in favour of the four container tokens."
         },
         {
           "type": "paragraph",
@@ -1408,13 +1403,13 @@
           "rows": [
             [
               "1",
-              "`styles/tokens.css`, `styles/foundation.css`, `styles/interlace-theme.css` (brand half)",
-              "`interlace.primitives`, `interlace.foundation`, `interlace.brand`"
+              "`styles/brand/*.css`, `styles/semantics.css`, `styles/structure/*.css`",
+              "`interlace.brand`, `interlace.semantics`, `@theme`, `components`"
             ],
             [
               "2",
-              "`styles/theme.css`, `styles/interlace-theme.css` (semantic half)",
-              "`interlace.bridge`, `interlace.semantics`"
+              "`styles/page/*.css` (opt-in)",
+              "`base`, `interlace.bridge`"
             ],
             [
               "3",
@@ -1435,23 +1430,27 @@
         },
         {
           "type": "paragraph",
-          "text": "Declared order, in `styles/index.css`:"
+          "text": "Declared order, in `styles/base.css` and `styles/index.css`:"
         },
         {
           "type": "code",
           "lang": "css",
-          "code": "@layer interlace.primitives, interlace.foundation, interlace.preflight,\n       interlace.bridge, interlace.brand, interlace.semantics;"
+          "code": "@layer interlace.bridge, interlace.brand, interlace.semantics;"
         },
         {
           "type": "paragraph",
-          "text": "Order is load-bearing, and one detail is worth stealing outright: the fumadocs bridge (`theme.css`) is **wrapped in a layer on purpose**. Per the CSS cascade-layers spec, unlayered styles beat every layered style. An unlayered `:root { --background: … }` in the bridge would therefore trump the layered semantic bindings that are supposed to override it — the exact opposite of what \"a bridge\" means. Wrapping it puts it back under the system's control."
+          "text": "These three hold custom properties only. Every rule that styles an element sits in one of Tailwind's own layers (`base`, `components`), so a utility at the call site always beats it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Order is load-bearing, and one detail is worth stealing outright: the fumadocs bridge (`page/fumadocs.css`) is **wrapped in a layer on purpose**. Per the CSS cascade-layers spec, unlayered styles beat every layered style. An unlayered `:root { --background: … }` in the bridge would therefore trump the layered semantic bindings that are supposed to override it — the exact opposite of what \"a bridge\" means. Wrapping it puts it back under the system's control."
         },
         {
           "type": "rule"
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/styles/foundation.css` · `packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` · `packages/ui/src/primitives/{container,section,stack,grid}.tsx` · `packages/ui/__tests__/layout-primitives-lock.test.tsx` · `packages/ui/__tests__/container-scale-lock.test.ts` · `packages/ui/__tests__/spacing-token-shadowing-lock.test.ts`"
+          "text": "**Sources.** `packages/ui/styles/structure/type.css` · `packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` · `packages/ui/src/primitives/{container,section,stack,grid}.tsx` · `packages/ui/__tests__/layout-primitives-lock.test.tsx` · `packages/ui/__tests__/container-scale-lock.test.ts` · `packages/ui/__tests__/spacing-token-shadowing-lock.test.ts`"
         }
       ],
       "headings": [
@@ -1659,7 +1658,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**CSS-driven animation** is disabled wholesale under the media query, in `tokens.css`:"
+          "text": "**CSS-driven animation** is disabled wholesale under the media query, in `structure/motion.css`:"
         },
         {
           "type": "code",
@@ -1764,7 +1763,7 @@
             },
             {
               "depth": 0,
-              "text": "**The documented \"max 200ms on entry\" budget is not met by three entry animations** in `theme.css`: `fade-in-up` and `slide-in-left` at 500ms and `scale-in` at 400ms, two of them with additional delays. The accordion, at 200ms, is on budget."
+              "text": "**The documented \"max 200ms on entry\" budget is not met by three entry animations** in `page/fumadocs.css`: `fade-in-up` and `slide-in-left` at 500ms and `scale-in` at 400ms, two of them with additional delays. The accordion, at 200ms, is on budget."
             },
             {
               "depth": 0,
@@ -1781,7 +1780,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/src/primitives/skeleton.tsx` · `packages/ui/src/primitives/skeleton-variants.ts` · `packages/ui/src/primitives/data-state.tsx` · `packages/ui/src/lib/use-reduced-motion.ts` · `packages/ui/styles/tokens.css` · `packages/ui/styles/theme.css` · `packages/ui/__tests__/skeleton-variant-coverage-lock.test.ts` · `packages/ui/__tests__/templates-section-boundary-lock.test.ts` · `packages/ui/__tests__/use-reduced-motion.test.tsx` · `docs/philosophies/{LOADING,MOTION}_PHILOSOPHY.md`"
+          "text": "**Sources.** `packages/ui/src/primitives/skeleton.tsx` · `packages/ui/src/primitives/skeleton-variants.ts` · `packages/ui/src/primitives/data-state.tsx` · `packages/ui/src/lib/use-reduced-motion.ts` · `packages/ui/styles/structure/motion.css` · `packages/ui/styles/page/fumadocs.css` · `packages/ui/__tests__/skeleton-variant-coverage-lock.test.ts` · `packages/ui/__tests__/templates-section-boundary-lock.test.ts` · `packages/ui/__tests__/use-reduced-motion.test.tsx` · `docs/philosophies/{LOADING,MOTION}_PHILOSOPHY.md`"
         }
       ],
       "headings": [
@@ -1883,7 +1882,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Tailwind's own ladder, untouched, plus one handheld tier that Interlace adds in `packages/ui/styles/foundation.css`:"
+          "text": "Tailwind's own ladder, untouched, plus one handheld tier that Interlace adds in `packages/ui/styles/structure/type.css`:"
         },
         {
           "type": "code",
@@ -2288,7 +2287,7 @@
         },
         {
           "type": "paragraph",
-          "text": "**Sources.** `packages/ui/BREAKPOINT_PHILOSOPHY.md` · `packages/ui/styles/foundation.css` · `packages/ui/styles/preflight.css` · `packages/ui/__tests__/breakpoints-lock.test.ts` · `packages/ui/__tests__/primitives-min-viewport-lock.test.tsx` · `packages/ui/src/primitives/grid.tsx` · `packages/ui/src/patterns/stat-group.tsx` · `packages/ui/src/primitives/pagination.tsx`"
+          "text": "**Sources.** `packages/ui/BREAKPOINT_PHILOSOPHY.md` · `packages/ui/styles/structure/type.css` · `packages/ui/styles/page/preflight.css` · `packages/ui/__tests__/breakpoints-lock.test.ts` · `packages/ui/__tests__/primitives-min-viewport-lock.test.tsx` · `packages/ui/src/primitives/grid.tsx` · `packages/ui/src/patterns/stat-group.tsx` · `packages/ui/src/primitives/pagination.tsx`"
         }
       ],
       "headings": [

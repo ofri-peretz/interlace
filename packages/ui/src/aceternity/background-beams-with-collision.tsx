@@ -34,7 +34,7 @@
  *
  * JS-driven throughout — `motion/react` transforms for the fall, a
  * `setInterval` collision poll, and `AnimatePresence` for the burst. None of
- * it is reachable by the CSS reset in `styles/preflight.css`, so the gate is
+ * it is reachable by the CSS reset in `styles/page/preflight.css`, so the gate is
  * in JS and it is total: `{isVisible && !reduceMotion && beams.map(…)}` means
  * that under `prefers-reduced-motion: reduce` no `CollisionMechanism` mounts
  * at all — no beams, no interval, no explosions. What remains is the gradient

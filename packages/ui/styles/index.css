@@ -1,51 +1,21 @@
 /*
- * @interlace/ui — canonical CSS contract.
- *
- * THE single import a consumer app needs:
+ * @interlace/ui — the full CSS contract, as Interlace's own apps use it.
  *
  *   @import "tailwindcss";
  *   @import "@interlace/ui/styles/index.css";
  *
- * That's the full DS baseline (base.css plus the opt-in foundation files) — type scale + spacing + radius + container
- * widths + focus ring + min-viewport contract + fumadocs bridge + brand
- * palette + every semantic token (--background / --foreground /
- * --muted-foreground / --ring / ...) — wired into Tailwind v4 utilities.
- *
- * ─── Why a barrel + cascade layers ─────────────────────────────────
- *
- * Before this file existed, consumers had to know — and repeat in order —
- * the five-file import chain (tokens → foundation → preflight → theme →
- * interlace-theme). A typo or skipped file silently degraded half the
- * contract (e.g. omitting preflight.css cost the WCAG 2.2 SC 2.4.13 focus
- * ring). This barrel makes the contract a single line, and CSS Cascade
- * Layers make the order self-documenting:
- *
- *   `@layer interlace.primitives, interlace.foundation, interlace.preflight,
-       interlace.bridge, interlace.brand, interlace.semantics;
+ * base.css (brand, semantics, structure: additive, what every component
+ * needs) plus layer 4, the opt-in page styling. In the registry this is the
+ * `interlace-foundation` item. See base.css for the layer model.
+ */
 
-/* The additive baseline: tokens, foundation, brand + semantics, themes.
- * Everything a registry component needs; nothing that restyles the host. */
+@layer interlace.bridge, interlace.brand, interlace.semantics;
+
 @import "./base.css";
 
-/* The opt-in half (`interlace-foundation`): the Interlace typefaces on the
- * app's own font utilities, the page-level preflight, and the fumadocs
- * bridge. Each is layered or scoped, so import order among them is free. */
-@import "./fonts.css";
-@import "./preflight.css";
-@import "./theme.css";
-
-/* ─── Themes (the `[data-theme]` axis) ─────────────────────────────
- *
- * Theme files live in base.css. Every file there declares into `@layer
- * interlace.brand` and overrides ONLY `--interlace-*` values, scoped to
- * `[data-theme='<name>']` (light) and `[data-theme='<name>'].dark` (dark).
- * Interlace itself is the unprefixed default, in interlace-theme.css.
- *
- * ORDER IS LOAD-BEARING: `[data-theme='X']` and `.dark` have identical
- * specificity (0,1,0), so on `<html data-theme="X" class="dark">` the
- * light block of theme X must come AFTER interlace's dark block for
- * `[data-theme='X'].dark` (0,2,0) to sit on top of a coherent stack.
- * Theme imports therefore always follow interlace-theme.css.
- *
- * Adding a theme = one file + one line in base.css + its row in
- * `THEMES` (src/lib/theme-tokens.ts). The contract lock reads both. */
+/* 4. Page. Each file styles the page on purpose; none is needed by a
+ * component. */
+@import "./page/fonts.css";
+@import "./page/preflight.css";
+@import "./page/fumadocs.css";
+@import "./page/shiki.css";

@@ -2,13 +2,13 @@
 
 **Status: RESOLVED, 2026-08-10** — `.animate-pulse` (plus `.animate-meteor`
 and `.animate-meteor-effect`, the other two bare utilities the DS emitted
-without listing) is now in the `tokens.css` allowlist, and
+without listing) is now in the `structure/motion.css` allowlist, and
 `packages/ui/__tests__/motion-contract-lock.test.ts` fails if any bare
 `animate-*` utility in `packages/ui/src` is missing from it.
 
 **Correction to the severity below.** The stated impact — "a user with
 `reduce` set gets the full 2s infinite opacity pulse on every skeleton" —
-was wrong. `packages/ui/styles/preflight.css` carries a universal
+was wrong. `packages/ui/styles/page/preflight.css` carries a universal
 `@media (prefers-reduced-motion: reduce) { *, *::before, *::after {
 animation-duration: 0.01ms !important; animation-iteration-count: 1
 !important; … } }`, and `styles/index.css` — the canonical single import —
@@ -18,8 +18,8 @@ pulls it in. Measured in Chrome against the real stylesheets, a
 in any app importing `index.css` has ever pulsed for a `reduce` user.
 
 The real defect was narrower and still worth fixing: every stylesheet is a
-separate `exports` entry, so a consumer can import `tokens.css` +
-`theme.css` and skip `preflight.css` — the case `index.css` was written to
+separate `exports` entry, so a consumer can import `structure/motion.css` +
+`page/fumadocs.css` and skip `page/preflight.css` — the case `index.css` was written to
 prevent, and the case where the allowlist is the entire contract. It also
 matters that Storybook's reset was blamed for hiding this: the reset that
 was actually doing the work ships in the package, and the audit's
@@ -50,7 +50,7 @@ writes `motion-safe:animate-pulse`. The contract is unambiguous.
 - `skeleton.tsx:173` — `'animate-pulse bg-muted'`
 - `skeleton.tsx:210` — `'animate-pulse bg-muted'`
 
-And the reduced-motion block in `packages/ui/styles/tokens.css:155-175`
+And the reduced-motion block in `packages/ui/styles/structure/motion.css:155-175`
 is a **16-class allowlist**, not a wildcard:
 
 ```css
@@ -90,7 +90,7 @@ are `motion-safe:`-gated:
 
 ## Recommended fix
 
-**Add `.animate-pulse` to the `tokens.css` allowlist.** One line, and
+**Add `.animate-pulse` to the `structure/motion.css` allowlist.** One line, and
 it covers all four sites above plus every future consumer that reaches
 for Tailwind's `animate-pulse` — including app code the DS doesn't
 own.

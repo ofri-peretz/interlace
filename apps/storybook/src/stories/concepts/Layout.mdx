@@ -69,7 +69,7 @@ namespace also feeds `w-*`, `h-*`, `size-*` and `max-w-*`. So `--spacing-sm:
 inside every app that installed a single Interlace component.
 
 Interlace 2.0 uses the numeric scale instead. `spacing-token-shadowing-lock`
-keeps it that way: no t-shirt-named `--spacing-*` key in `foundation.css`, and
+keeps it that way: no t-shirt-named `--spacing-*` key in `structure/type.css`, and
 no named spacing utility in the DS source. `container-scale-lock` still bans
 named `max-w-*` widths in favour of the four container tokens.
 
@@ -235,21 +235,24 @@ Ship the variant on the primitive instead.
 
 | Layer | Files | Cascade layer |
 | --- | --- | --- |
-| 1 | `styles/tokens.css`, `styles/foundation.css`, `styles/interlace-theme.css` (brand half) | `interlace.primitives`, `interlace.foundation`, `interlace.brand` |
-| 2 | `styles/theme.css`, `styles/interlace-theme.css` (semantic half) | `interlace.bridge`, `interlace.semantics` |
+| 1 | `styles/brand/*.css`, `styles/semantics.css`, `styles/structure/*.css` | `interlace.brand`, `interlace.semantics`, `@theme`, `components` |
+| 2 | `styles/page/*.css` (opt-in) | `base`, `interlace.bridge` |
 | 3 | `src/primitives/**` | — |
 | 4 | `src/patterns/**` | — |
 | 5 | `src/templates/**` | — |
 
-Declared order, in `styles/index.css`:
+Declared order, in `styles/base.css` and `styles/index.css`:
 
 ```css
-@layer interlace.primitives, interlace.foundation, interlace.preflight,
-       interlace.bridge, interlace.brand, interlace.semantics;
+@layer interlace.bridge, interlace.brand, interlace.semantics;
 ```
 
+These three hold custom properties only. Every rule that styles an element
+sits in one of Tailwind's own layers (`base`, `components`), so a utility at
+the call site always beats it.
+
 Order is load-bearing, and one detail is worth stealing outright: the
-fumadocs bridge (`theme.css`) is **wrapped in a layer on purpose**. Per the
+fumadocs bridge (`page/fumadocs.css`) is **wrapped in a layer on purpose**. Per the
 CSS cascade-layers spec, unlayered styles beat every layered style. An
 unlayered `:root { --background: … }` in the bridge would therefore trump the
 layered semantic bindings that are supposed to override it — the exact
@@ -258,7 +261,7 @@ system's control.
 
 ---
 
-**Sources.** `packages/ui/styles/foundation.css` ·
+**Sources.** `packages/ui/styles/structure/type.css` ·
 `packages/ui/styles/index.css` · `packages/ui/DESIGN_SYSTEM_LAYERS.md` ·
 `packages/ui/src/primitives/{container,section,stack,grid}.tsx` ·
 `packages/ui/__tests__/layout-primitives-lock.test.tsx` ·

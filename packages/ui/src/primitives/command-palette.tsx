@@ -101,7 +101,7 @@
  *
  * The input adds no ring of its own — it inherits the DS-wide
  * `:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px }`
- * from `styles/preflight.css`. It is deliberately NOT suppressed even
+ * from `styles/page/preflight.css`. It is deliberately NOT suppressed even
  * though the input is the only tab stop and holds focus for the whole life
  * of the panel: SC 2.4.7 asks for a visible indicator on a focusable
  * element, and "there is nowhere else for focus to be" is not one of the

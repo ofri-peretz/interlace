@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'CSS Contract — Interlace DS',
     description:
-      'One import. Six layers. Deterministic override surface. Tailwind v4 native.',
+      'One import. Four layers, one direction. Deterministic override surface. Tailwind v4 native.',
     url: 'https://ds.interlace.tools/css-contract',
   },
 };
@@ -65,29 +65,30 @@ export default function CSSContractPage() {
           </p>
         </section>
 
-        {/* ─── The six layers ─────────────────────────────────────── */}
+        {/* ─── The four layers ────────────────────────────────────── */}
         <section className="mt-12">
           <h2 className="text-2xl font-semibold tracking-tight">
-            The six layers
+            Four layers, one direction
           </h2>
           <p className="text-muted-foreground mt-2">
-            Both barrels declare the same layer order up front, so the
-            cascade is self-documenting:
+            The stylesheet tree is the architecture. Each layer reads only the
+            one before it, and a test fails the build if one reaches across:
           </p>
           <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
-            <code>{`@layer interlace.primitives, interlace.foundation, interlace.preflight,
-       interlace.bridge, interlace.brand, interlace.semantics;
-
-/* base.css */
-@import "./tokens.css";
-@import "./foundation.css";
-@import "./interlace-theme.css";
-@import "./themes/harbor.css";
-
-/* index.css adds */
-@import "./fonts.css";
-@import "./preflight.css";
-@import "./theme.css";`}</code>
+            <code>{`styles/
+  brand/interlace.css    1. raw --interlace-* values, light + dark
+  brand/harbor.css          (one file per theme)
+  semantics.css          2. --primary, --card, … bound to brand values
+  structure/type.css     3. type scale, prose
+  structure/layout.css      containers, xs breakpoint
+  structure/radius.css      radius steps derived from --radius
+  structure/motion.css      keyframes, durations, easings
+  page/fonts.css         4. opt-in: Inter + JetBrains Mono
+  page/preflight.css        opt-in: focus ring, selection, scrollbars
+  page/fumadocs.css         opt-in: fumadocs token bridge
+  page/shiki.css            opt-in: code highlighting
+  base.css               = 1 + 2 + 3   (interlace-base)
+  index.css              = base + 4    (interlace-foundation)`}</code>
           </pre>
 
           <div className="mt-6 overflow-x-auto">
@@ -101,7 +102,7 @@ export default function CSSContractPage() {
                   Owns
                 </th>
                 <th className="border-border border p-4 text-left font-semibold">
-                  File
+                  May not
                 </th>
               </tr>
             </thead>
@@ -114,22 +115,42 @@ export default function CSSContractPage() {
                   <td className="border-border border p-4 text-sm">
                     {row.owns}
                   </td>
-                  <td className="border-border border p-4 font-mono text-sm">
-                    {row.file}
+                  <td className="border-border border p-4 text-sm">
+                    {row.mayNot}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
           </div>
+        </section>
 
-          <p className="text-muted-foreground mt-4 text-sm">
-            Left-to-right in the layer declaration = ascending cascade
-            priority (later wins). So{' '}
-            <code className="font-mono">interlace.semantics</code>{' '}
-            overrides{' '}
-            <code className="font-mono">interlace.brand</code>, which
-            overrides everything before it.
+        {/* ─── Cascade ─────────────────────────────────────────────── */}
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Your classes always win
+          </h2>
+          <p className="text-muted-foreground mt-2">
+            Tailwind declares{' '}
+            <code className="font-mono">theme, base, components, utilities</code>.
+            Every Interlace rule that styles an element sits inside one of
+            those: preflight in <code className="font-mono">base</code>,
+            prose and animation classes in{' '}
+            <code className="font-mono">components</code>. So{' '}
+            <code className="font-mono">h-10</code> on an image or{' '}
+            <code className="font-mono">inline</code> on an svg beats the
+            baseline, as it should.
+          </p>
+          <p className="text-muted-foreground mt-3">
+            Three named layers hold custom properties only, and nothing else:
+          </p>
+          <pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-lg p-6 font-mono text-sm">
+            <code>{`@layer interlace.bridge, interlace.brand, interlace.semantics;`}</code>
+          </pre>
+          <p className="text-muted-foreground mt-3 text-sm">
+            Later wins, so semantics resolves on top of brand. An unlayered{' '}
+            <code className="font-mono">:root {'{'} --primary: … {'}'}</code>{' '}
+            in your own CSS beats all three.
           </p>
         </section>
 
@@ -196,11 +217,11 @@ export default function CSSContractPage() {
           </p>
           <ul className="mt-3 ml-6 list-disc space-y-2 text-sm">
             <li>
-              <code className="font-mono">interlace.preflight</code> —
-              overriding this loses the WCAG 2.2 SC 2.4.13 focus ring,
-              scrollbar tint, and{' '}
-              <code className="font-mono">[data-min-viewport]</code>{' '}
-              dev-mode outline contract.
+              <code className="font-mono">interlace.semantics</code> — the
+              alias graph. Re-binding{' '}
+              <code className="font-mono">--background</code> here skips the
+              brand layer, and the next token added to the graph will not
+              reach your theme. Set brand values instead.
             </li>
             <li>
               <code className="font-mono">interlace.bridge</code> —
@@ -208,11 +229,9 @@ export default function CSSContractPage() {
               cross-framework primitive resolution.
             </li>
             <li>
-              <code className="font-mono">interlace.primitives</code> +{' '}
-              <code className="font-mono">interlace.foundation</code> —
-              keyframes, motion timings, type scale, spacing scale.
-              These are structural; the brand layer is the authoring
-              seam.
+              <code className="font-mono">structure/</code> — type scale,
+              radius derivation, containers, motion. Structural; the brand
+              layer is the authoring seam.
             </li>
           </ul>
         </section>
@@ -252,35 +271,25 @@ export default function CSSContractPage() {
   );
 }
 
-const LAYERS: Array<{ layer: string; owns: string; file: string }> = [
+const LAYERS: Array<{ layer: string; owns: string; mayNot: string }> = [
   {
-    layer: 'interlace.primitives',
-    owns: 'Keyframes, motion timings, animation utility classes',
-    file: 'tokens.css',
+    layer: '1. brand/',
+    owns: 'Raw --interlace-* values per theme, light and dark, in @layer interlace.brand. The override surface.',
+    mayNot: 'Declare a semantic name (--primary) or style an element.',
   },
   {
-    layer: 'interlace.foundation',
-    owns: 'Type scale, spacing scale, radius, container widths, font families (Tailwind @theme tokens)',
-    file: 'foundation.css',
+    layer: '2. semantics.css',
+    owns: 'shadcn and Interlace semantic names bound to brand values, plus the Tailwind colour registration.',
+    mayNot: 'Hold a colour literal; every value is var(--interlace-*).',
   },
   {
-    layer: 'interlace.preflight',
-    owns: 'body bg/fg/font, focus ring (WCAG 2.2 SC 2.4.13), scrollbar tint, placeholder contrast, min-viewport contract',
-    file: 'preflight.css',
+    layer: '3. structure/',
+    owns: 'Type scale, containers, the xs breakpoint, radius steps, motion. Same for every brand.',
+    mayNot: 'Mention a colour or an --interlace-* token, or style a bare element.',
   },
   {
-    layer: 'interlace.bridge',
-    owns: 'fumadocs ↔ shadcn token bridge (--background: var(--color-fd-background))',
-    file: 'theme.css',
-  },
-  {
-    layer: 'interlace.brand',
-    owns: 'Concrete brand hex literals (--interlace-primary, --interlace-background, …) for light + dark',
-    file: 'interlace-theme.css',
-  },
-  {
-    layer: 'interlace.semantics',
-    owns: 'Alias bindings: --background → var(--interlace-background), etc. Plus Tailwind @theme inline registration.',
-    file: 'interlace-theme.css',
+    layer: '4. page/',
+    owns: 'Fonts, preflight, fumadocs bridge, code highlighting. Opt-in, in index.css only.',
+    mayNot: 'Be needed by a component; base.css never imports it.',
   },
 ];

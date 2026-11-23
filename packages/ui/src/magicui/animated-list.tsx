@@ -28,7 +28,7 @@
  * ## Motion
  *
  * The sequencing is JS-driven (a `setTimeout` chain) and the pop-in is
- * `motion/react`, so the CSS reset in `styles/preflight.css` reaches neither.
+ * `motion/react`, so the CSS reset in `styles/page/preflight.css` reaches neither.
  * Every layer is gated in JS instead:
  *
  * | Layer            | Driven by                    | Under `reduce`                       |

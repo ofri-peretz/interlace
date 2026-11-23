@@ -38,7 +38,7 @@ to claim. Read it before writing props; the props table on
   behaviour a static a11y scan cannot see, so it is the behaviour to test.
 - `a11y.motion.driver` — `css` | `js` | `both` | `none`. This decides WHO
   honours `prefers-reduced-motion`. A `css` driver is clamped to 0.01ms by
-  `preflight.css` whether or not the component mentions the preference — as
+  `page/preflight.css` whether or not the component mentions the preference — as
   long as you imported the stylesheet barrel. A `js` driver (motion,
   `requestAnimationFrame`, a timer) is out of reach of every reset we ship and
   must gate itself.

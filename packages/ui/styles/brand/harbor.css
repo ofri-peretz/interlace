@@ -24,14 +24,14 @@
  *
  * The two DESCENDANT forms are not decoration — without them a `.dark`
  * wrapper anywhere inside a Harbor page repaints that subtree in INTERLACE
- * dark, because the bare `.dark` block in interlace-theme.css re-declares
+ * dark, because the bare `.dark` block in brand/interlace.css re-declares
  * every brand literal on whatever element carries it. See the dark block
  * below for the full story.
  *
  * Specificity note, because it is the whole mechanism: `[data-theme='harbor']`
  * and `.dark` are BOTH (0,1,0). On `<html data-theme="harbor" class="dark">`
  * the tie is broken by source order — this file is imported after
- * interlace-theme.css — and then `[data-theme='harbor'].dark` (0,2,0) beats
+ * brand/interlace.css — and then `[data-theme='harbor'].dark` (0,2,0) beats
  * everything. That only produces a coherent page because this file defines
  * EVERY token in both blocks: a token missing from the dark block would
  * silently fall through to the harbor LIGHT value sitting one specificity
@@ -228,14 +228,14 @@
   /* ─────────────────────────────────────────────────────────────────
    *  HARBOR · DARK
    *
-   *  Both spellings of the scheme axis, exactly as interlace-theme.css
+   *  Both spellings of the scheme axis, exactly as brand/interlace.css
    *  declares them — `.dark` (shadcn / next-themes canon, what the
    *  Storybook decorator and every consumer writes) and the attribute
    *  form for hosts that would rather not touch className.
    *
    *  ─── Why the DESCENDANT forms are here too ──────────────────────
    *
-   *  `.dark` in interlace-theme.css is unscoped, so what it really means
+   *  `.dark` in brand/interlace.css is unscoped, so what it really means
    *  is "INTERLACE dark" — it re-declares every `--interlace-*` literal on
    *  whatever element carries it. A `.dark` on a SUBTREE of a Harbor page
    *  therefore silently resets that subtree to the Interlace palette:

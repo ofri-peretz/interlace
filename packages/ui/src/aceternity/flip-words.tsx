@@ -35,7 +35,7 @@
  * ## Motion
  *
  * JS-driven — `motion/react` enter/exit variants plus a `setTimeout` cycle —
- * so the CSS reset in `styles/preflight.css` reaches none of it. It is gated
+ * so the CSS reset in `styles/page/preflight.css` reaches none of it. It is gated
  * in JS, at both levels: `cyclingPaused` includes `reducedMotion`, so the
  * timer never fires, and the render swaps the entire `AnimatePresence` subtree
  * for a plain `<span>` carrying the active word. Under

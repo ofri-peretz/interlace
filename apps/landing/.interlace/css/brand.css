@@ -41,7 +41,7 @@
  */
 @theme {
   /* Burnt orange — mirrors --interlace-primary #7d350c in
-   * interlace/packages/ui/styles/interlace-theme.css (8.80:1 on white, AAA). */
+   * interlace/packages/ui/styles/brand/interlace.css (8.80:1 on white, AAA). */
   --color-fd-primary: hsl(22, 82%, 27%);
   --color-fd-primary-foreground: hsl(0, 0%, 100%);
   --color-fd-foreground: hsl(0, 0%, 3.9%);

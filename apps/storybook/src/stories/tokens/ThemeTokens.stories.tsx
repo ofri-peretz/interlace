@@ -268,7 +268,7 @@ function Specimen() {
           <Typography variant="ui-sm" tone="muted" className="max-w-prose">
             In source order — the order of the{' '}
             <code className="font-mono">:root</code> block in{' '}
-            <code className="font-mono">styles/interlace-theme.css</code>, from
+            <code className="font-mono">styles/brand/interlace.css</code>, from
             which the list is re-derived by the lock on every run. Switch the
             Theme toolbar to Harbor and every value below changes; the names
             cannot.

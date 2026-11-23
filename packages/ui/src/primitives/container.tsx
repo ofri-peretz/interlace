@@ -27,7 +27,7 @@
  *
  * ## Two things worth knowing
  *
- *   - Named Tailwind widths are BROKEN in this codebase: `foundation.css`
+ *   - Named Tailwind widths are BROKEN in this codebase: `structure/type.css`
  *     defines `--spacing-xs…2xl`, and Tailwind v4 resolves a named max-width
  *     against the spacing namespace first — so the one that should be 42rem
  *     renders 96 pixels instead. That is why the sizes here are literal

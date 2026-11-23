@@ -29,7 +29,7 @@
  * ## Motion
  *
  * JS-driven — a `motion/react` opacity tween, invisible to the CSS reset in
- * `styles/preflight.css`. It is gated in JS: under
+ * `styles/page/preflight.css`. It is gated in JS: under
  * `prefers-reduced-motion: reduce` the component passes `initial={false}` and
  * `transition={undefined}`, so the glow is simply present at full opacity on
  * first paint with no tween scheduled. Nothing is lost visually; only the

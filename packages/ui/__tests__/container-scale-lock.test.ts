@@ -10,10 +10,10 @@
  * that ladder: it sizes detached chrome that docks to a viewport edge (the
  * toast stack), never a page section. Kept as a token rather than
  * `max-w-[420px]` at the call site so every edge-docked surface agrees on
- * one number — see foundation.css.
+ * one number — see structure/type.css.
  *
  * This is not just style policing — the named subset is BROKEN here:
- * `foundation.css` defines `--spacing-xs…2xl` in `@theme`, and Tailwind v4
+ * `structure/layout.css` defines `--spacing-xs…2xl` in `@theme`, and Tailwind v4
  * resolves named sizing values against the spacing namespace before the
  * container scale. So `max-w-sm` emits `max-width: var(--spacing-sm)` =
  * **16px**, `max-w-2xl` = **96px**, etc. This shipped real bugs: 96px hero

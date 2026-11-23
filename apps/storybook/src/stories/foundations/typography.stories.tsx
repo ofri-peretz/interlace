@@ -34,7 +34,7 @@ import { Box } from '@interlace/ui/box';
  *
  * Sources: TYPOGRAPHY_PHILOSOPHY.md (type scale, body/code contracts, fluid
  * type, reading-vs-UI modes) + DESIGN_PRINCIPLES #2 ("Reading-first
- * typography") + foundation.css (the --text-* token table).
+ * typography") + structure/type.css (the --text-* token table).
  */
 
 // ── Variant roster ──────────────────────────────────────────────────────────
@@ -582,7 +582,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Live specimen of every Typography variant. Each row pairs the rendered sample with the underlying --text-* token and the live computed font-size / line-height / max-width, read from the cascade after mount. Client-side by necessity — `getComputedStyle` is a browser-only API. Source: TYPOGRAPHY_PHILOSOPHY.md + foundation.css.',
+          'Live specimen of every Typography variant. Each row pairs the rendered sample with the underlying --text-* token and the live computed font-size / line-height / max-width, read from the cascade after mount. Client-side by necessity — `getComputedStyle` is a browser-only API. Source: TYPOGRAPHY_PHILOSOPHY.md + structure/layout.css.',
       },
     },
   },

@@ -87,7 +87,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v2.0.0
 - [Interlace Foundation](https://ds.interlace.tools/c/interlace-foundation): @interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-foundation.json`
-  - contract: server, v1.1.0
+  - contract: server, v2.0.0
 - [Interlace Theme](https://ds.interlace.tools/c/theme): @interlace/ui — the Interlace look as shadcn cssVars: points your --primary, --background, --radius and the rest at Interlace's burnt-orange brand tokens (light + dark, AAA). Opt-in; components work without it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme.json`
   - contract: server, v2.0.0
@@ -210,7 +210,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI progress, v1.0.0
 - [Prose](https://ds.interlace.tools/c/prose): The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer. Think MDX-target…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/prose.json`
-  - contract: client, min 320px, states article|div|main|section, v2.0.0
+  - contract: client, min 320px, states article|div|main|section, v2.0.1
 - [Published Date](https://ds.interlace.tools/c/published-date): Article publish-date stamp. A pure surface primitive that renders a semantic `<time dateTime={iso}>` with a human-readable label produced by `Intl.DateTimeFormat` at render time. The native element owns the machine value (the `dateTime` attribute is what…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/published-date.json`
   - contract: server, min 320px, loading state, states long|short, v1.1.0
@@ -522,13 +522,13 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [A11y Starter](https://ds.interlace.tools/c/a11y-starter): @interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/a11y-starter.json`
-  - contract: server, v1.7.3
+  - contract: server, v2.0.0
 - [Layout Starter](https://ds.interlace.tools/c/layout-starter): @interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json`
-  - contract: server, v1.7.3
+  - contract: server, v2.0.0
 - [MDX Starter](https://ds.interlace.tools/c/mdx-starter): @interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/mdx-starter.json`
-  - contract: server, v1.7.3
+  - contract: server, v2.0.0
 
 ## Items — tier `util`
 

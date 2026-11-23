@@ -37,8 +37,8 @@
  *
  * Pure CSS, covered twice. Both `.animate-shimmer-slide` and
  * `.animate-spin-around` are named in the `prefers-reduced-motion: reduce`
- * block in `styles/tokens.css` (`animation: none !important`) and also caught
- * by the wildcard in `styles/preflight.css`. There is no `useReducedMotion`
+ * block in `styles/structure/motion.css` (`animation: none !important`) and also caught
+ * by the wildcard in `styles/page/preflight.css`. There is no `useReducedMotion`
  * call and none is needed. Under `reduce` the spark parks in place — it does
  * not vanish — so a static wedge of the conic gradient can remain visible at
  * the rim; pass `shimmer={false}` if you want it gone entirely. The press

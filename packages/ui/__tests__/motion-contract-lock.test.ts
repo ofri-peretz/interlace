@@ -28,10 +28,10 @@
  *      `transition-*` in the DS start animating under `reduce`, with no
  *      symptom anywhere.
  *   2. Every bare `animate-*` utility the DS puts on an element is in the
- *      tokens.css allowlist — the second layer, which is the ONLY layer on
+ *      structure/motion.css allowlist — the second layer, which is the ONLY layer on
  *      the à-la-carte import path (every stylesheet is its own `exports`
- *      entry, so a consumer can take tokens.css + theme.css and skip
- *      preflight.css). `.animate-pulse` was missing from it for the whole
+ *      entry, so a consumer can take structure/motion.css + page/fumadocs.css and skip
+ *      page/preflight.css). `.animate-pulse` was missing from it for the whole
  *      of Skeleton's life.
  *   3. No finite animation exceeds the documented entry budget, and none
  *      carries an entry delay. `.animate-slide-in-left` shipped at
@@ -52,9 +52,10 @@ import { readFileSync, readdirSync, statSync } from 'fs';
 import { resolve, join, relative } from 'path';
 
 const STYLES = resolve(__dirname, '../styles');
-const TOKENS_CSS = resolve(STYLES, 'tokens.css');
-const THEME_CSS = resolve(STYLES, 'theme.css');
-const PREFLIGHT_CSS = resolve(STYLES, 'preflight.css');
+const TOKENS_CSS = resolve(STYLES, 'structure/motion.css');
+// The entry animations (fade-in-up …) moved here from the fumadocs file.
+const THEME_CSS = resolve(STYLES, 'structure/motion.css');
+const PREFLIGHT_CSS = resolve(STYLES, 'page/preflight.css');
 const SRC = resolve(__dirname, '../src');
 const MOTION_DOC = resolve(__dirname, '../../../docs/philosophies/MOTION_PHILOSOPHY.md');
 
@@ -128,7 +129,7 @@ function readReduceBlock(file: string): string {
   throw new Error(`Unbalanced braces after \`${REDUCE_QUERY}\` in ${file}`);
 }
 
-/** The class names selected by the tokens.css reduced-motion allowlist. */
+/** The class names selected by the structure/motion.css reduced-motion allowlist. */
 function readAllowlist(): Set<string> {
   const block = readReduceBlock(TOKENS_CSS);
   // Selector positions only — strip declaration bodies first so property
@@ -185,8 +186,8 @@ function toMs(value: string, unit: string): number {
 
 /**
  * Every animation shorthand the DS declares: `--animate-*` theme tokens
- * (tokens.css, which Tailwind emits as `.animate-*` utilities) plus the
- * hand-written `.animate-*` rules (tokens.css + theme.css).
+ * (structure/motion.css, which Tailwind emits as `.animate-*` utilities) plus the
+ * hand-written `.animate-*` rules (structure/motion.css + page/fumadocs.css).
  */
 function readAnimations(): Animation[] {
   const out: Animation[] = [];
@@ -409,7 +410,7 @@ describe('motion contract lock', () => {
       expect(
         block.replace(/\s+/g, ' '),
         'The universal selector disappeared from the preflight reduced-motion ' +
-          'block. It is not redundant with the tokens.css allowlist: a class ' +
+          'block. It is not redundant with the structure/motion.css allowlist: a class ' +
           'list can only name classes, and the DS\'s most common animations ' +
           'are not nameable — Tailwind compiles `data-[open]:animate-in` into ' +
           '`.data-\\[open\\]\\:animate-in`, so every Dialog, Sheet, Popover, ' +
@@ -444,7 +445,7 @@ describe('motion contract lock', () => {
     });
   });
 
-  // ── 2. the second layer: the tokens.css allowlist ────────────────────
+  // ── 2. the second layer: the structure/motion.css allowlist ────────────────────
 
   describe('reduced-motion allowlist', () => {
     it('names every bare animate-* utility the DS emits', () => {
@@ -455,14 +456,14 @@ describe('motion contract lock', () => {
       expect(
         missing,
         `packages/ui/src puts ${missing.length} animate-* utilit(ies) on an ` +
-          `element that the tokens.css reduced-motion allowlist does not name.\n\n` +
-          `This is survivable only while preflight.css is loaded. Every ` +
+          `element that the structure/motion.css reduced-motion allowlist does not name.\n\n` +
+          `This is survivable only while page/preflight.css is loaded. Every ` +
           `stylesheet in this package is a separate \`exports\` entry, so a ` +
-          `consumer can import tokens.css + theme.css and skip preflight — ` +
+          `consumer can import structure/motion.css + page/fumadocs.css and skip preflight — ` +
           `index.css exists precisely because that used to happen. On that ` +
           `path the allowlist is the whole contract, and an unlisted class ` +
           `animates for a user who asked for no animation.\n\n` +
-          `Add the class to the allowlist in styles/tokens.css, or gate the ` +
+          `Add the class to the allowlist in styles/structure/motion.css, or gate the ` +
           `call site with \`motion-safe:\`.\n\n${missing.join('\n')}`,
       ).toEqual([]);
     });

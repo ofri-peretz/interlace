@@ -10,7 +10,7 @@
  * Interlace 2.0 uses Tailwind's numeric scale instead (`gap-6`), which already
  * follows the `--spacing` CSS variable. This lock keeps it that way:
  *
- *   1. foundation.css declares no named `--spacing-<name>` key that collides
+ *   1. structure/type.css declares no named `--spacing-<name>` key that collides
  *      with a Tailwind sizing name;
  *   2. no DS source writes a named spacing utility (`gap-md`, `p-sm`), which
  *      would silently mean Tailwind's container width instead.
@@ -22,7 +22,7 @@ import { join, resolve } from 'path';
 import { describe, expect, it } from 'vitest';
 
 const SRC = resolve(__dirname, '../src');
-const FOUNDATION = resolve(__dirname, '../styles/foundation.css');
+const FOUNDATION = resolve(__dirname, '../styles/structure/layout.css');
 
 /** Tailwind's t-shirt names — every one of them also names a container width. */
 const TSHIRT = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl'];
@@ -49,7 +49,7 @@ const sourceFiles = (dir: string = SRC): string[] =>
   });
 
 describe('spacing stays on the numeric scale', () => {
-  it('foundation.css declares no t-shirt-named --spacing key', () => {
+  it('structure/type.css declares no t-shirt-named --spacing key', () => {
     const css = readFileSync(FOUNDATION, 'utf8');
     const declared = [...css.matchAll(/^\s*--spacing-([a-z0-9-]+)\s*:/gim)].map((m) => m[1]);
     expect(declared.filter((name) => TSHIRT.includes(name))).toEqual([]);

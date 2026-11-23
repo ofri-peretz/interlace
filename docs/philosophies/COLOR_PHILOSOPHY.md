@@ -37,12 +37,12 @@ standing on. There are three, and they are not interchangeable.
 
 | Layer | Spelling | Where | What it is |
 | --- | --- | --- | --- |
-| **Brand** | `--interlace-*` | `packages/ui/styles/interlace-theme.css`, `@layer interlace.brand` | The concrete hex values. **The only layer a theme overrides.** |
+| **Brand** | `--interlace-*` | `packages/ui/styles/brand/interlace.css`, `@layer interlace.brand` | The concrete hex values. **The only layer a theme overrides.** |
 | **Semantics** | `--primary`, `--muted`, `--success`, … | same file, `@layer interlace.semantics` | shadcn-bare aliases, each `var(--interlace-*)`. Re-bound on every brand-override selector so subtree theming repaints. |
 | **Utilities** | `bg-primary`, `text-success`, … | `@theme inline` in the same file | What component code writes. Never a hex, never an `--interlace-*` read. |
 
 `fd-*` is **not** a fourth layer of ours — it is the *fumadocs bridge*,
-and it runs the other direction. `packages/ui/styles/theme.css` maps
+and it runs the other direction. `packages/ui/styles/page/fumadocs.css` maps
 shadcn-bare names onto whatever fumadocs exposes
 (`--background: var(--color-fd-background)`) so fumadocs chrome and DS
 components agree in a fumadocs app. Consumer app code reaches for
@@ -53,7 +53,7 @@ Two orthogonal axes select which brand values are live:
 
 - **scheme** — `light` | `dark`, via `.dark` / `[data-scheme='dark']`
 - **theme** — `interlace` | `harbor` | …, via `[data-theme='<name>']`
-  (`packages/ui/styles/themes/*.css`)
+  (`packages/ui/styles/brand/*.css`)
 
 They do not share a selector. `[data-theme='dark']` reads as "the theme
 named dark", which is not a registered theme — use `.dark` or
@@ -67,7 +67,7 @@ previous theme's value and ships a two-brand page.
 
 ## The semantic token table
 
-The full set, as shipped in `interlace-theme.css`. New tokens get
+The full set, as shipped in `brand/interlace.css`. New tokens get
 added there and here, not invented per-component. Values below are the
 brand layer (`--interlace-*`); write them as the utility
 (`--interlace-card` → `bg-card`).
@@ -105,7 +105,7 @@ brand layer (`--interlace-*`); write them as the utility
 Every status token is AAA (≥7:1) **in both directions** — as text on
 the page surface, and as `-foreground` on its own filled chip. That is
 why several sit darker than the obvious Tailwind pick; the inline
-comments in `interlace-theme.css` record each bump.
+comments in `brand/interlace.css` record each bump.
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
@@ -313,7 +313,7 @@ Hard bans.
 
 ## Implementation in this codebase
 
-The single source of truth is `packages/ui/styles/interlace-theme.css`
+The single source of truth is `packages/ui/styles/brand/interlace.css`
 — not an app's `global.css`. A consumer gets the whole contract with
 one import:
 
@@ -373,7 +373,7 @@ Forking the brand is a re-declaration of layer 1 after the import — see
 "Consumer override pattern" in
 [`packages/ui/DESIGN_SYSTEM_LAYERS.md`](../../packages/ui/DESIGN_SYSTEM_LAYERS.md).
 A whole alternate theme is a data file that touches only
-`--interlace-*`: `packages/ui/styles/themes/harbor.css` is the worked
+`--interlace-*`: `packages/ui/styles/brand/harbor.css` is the worked
 example.
 
 ---

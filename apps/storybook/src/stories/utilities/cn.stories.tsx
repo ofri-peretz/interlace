@@ -226,7 +226,7 @@ function RegressionPanel({ input }: { input: string }) {
 // `DS_FONT_SIZES` is the list `extendTailwindMerge` registers. Rendering it
 // from the export (not a copy) means a token added to the scale shows up here
 // on the next reload — and `cn-type-scale-lock.test.ts` is what stops the
-// list drifting from `foundation.css` in the first place.
+// list drifting from `structure/type.css` in the first place.
 
 function ScalePanel() {
   return (
@@ -247,7 +247,7 @@ function ScalePanel() {
             Read from the <code className="font-mono">DS_FONT_SIZES</code>{' '}
             export, not copied. Each is declared as{' '}
             <code className="font-mono">--text-*</code> in{' '}
-            <code className="font-mono">styles/foundation.css</code>; a token
+            <code className="font-mono">styles/structure/type.css</code>; a token
             added there and forgotten here does not error, it silently loses
             its size at the first <code className="font-mono">cn()</code> that
             also sets a colour.

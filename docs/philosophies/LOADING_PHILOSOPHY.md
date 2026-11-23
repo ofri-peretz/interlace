@@ -85,11 +85,11 @@ sub-element.
 
   Enforced in two places, both held by
   `packages/ui/__tests__/motion-contract-lock.test.ts`: the universal
-  clamp in `styles/preflight.css`, which is what actually reaches
-  Tailwind's `animate-pulse`, and the class list in `styles/tokens.css`,
+  clamp in `styles/page/preflight.css`, which is what actually reaches
+  Tailwind's `animate-pulse`, and the class list in `styles/structure/motion.css`,
   which turns it off outright and is the only cover on the à-la-carte
-  import path (a consumer who imports `tokens.css` + `theme.css` and skips
-  `preflight.css`). `.animate-pulse` was missing from that second list
+  import path (a consumer who imports `structure/motion.css` + `page/fumadocs.css` and skips
+  `page/preflight.css`). `.animate-pulse` was missing from that second list
   until 2026-08-10.
 
 ### 3. Skeleton color is semi-transparent foreground, not background

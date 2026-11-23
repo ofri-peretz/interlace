@@ -12,7 +12,7 @@ import { cn } from '../lib/cn.js';
  * ### Motion — the draw verb, zero client JS
  *
  * A SERVER component on purpose. The draw is the `strand-draw` CSS
- * keyframe (tokens.css, `--animate-strand-draw`): it runs on load with
+ * keyframe (structure/motion.css, `--animate-strand-draw`): it runs on load with
  * no hydration cost, and because the driver is CSS, the preflight
  * `prefers-reduced-motion` clamp reaches it — reduced-motion users see
  * the strand instantly drawn (the honest end state), never animating.

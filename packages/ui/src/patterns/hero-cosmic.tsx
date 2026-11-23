@@ -27,7 +27,7 @@
  * off `document.documentElement` on mount and returns `null` until all three
  * resolve non-empty. While it is `null` no decorative layer renders at all —
  * which also means a consumer who imports this component but not
- * `styles/interlace-theme.css` gets the gradient and the copy and no stars,
+ * `styles/brand/interlace.css` gets the gradient and the copy and no stars,
  * silently and permanently. That is deliberate: the components concatenate an
  * alpha suffix onto the colour (`${meteorColor}80`) and paint to `<canvas>`,
  * neither of which can consume a `var()` reference, and painting an arbitrary
@@ -41,7 +41,7 @@
  * paints one static frame (no twinkle loop) and `ShootingStars` and `Meteors`
  * both `return null`. So a reduced-motion reader sees a still starfield on the
  * gradient and nothing moving. All three are JS-gated; the CSS reset in
- * `styles/preflight.css` reaches only the meteor keyframe.
+ * `styles/page/preflight.css` reaches only the meteor keyframe.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -77,7 +77,7 @@ export const MIN_VIEWPORT = 320 as const;
 
 /**
  * Brand tokens the decorative layer paints with, in `--custom-property`
- * form. See `styles/interlace-theme.css` (`@layer interlace.brand`).
+ * form. See `styles/brand/interlace.css` (`@layer interlace.brand`).
  *
  * These are read at runtime instead of passed as `var(--hero-star)`
  * because the vendored effect components concatenate an alpha suffix onto
@@ -246,7 +246,7 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
         {...props}
       >
         {/* The hero owns its surface in BOTH colour schemes — see the
-            `--hero-*` token block in interlace-theme.css for why these
+            `--hero-*` token block in brand/interlace.css for why these
             don't invert. `text-hero-foreground` here is what every nested
             slot inherits, so the copy stays 16.4:1 in light mode too. */}
         <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-primary/20 via-hero-surface to-hero-surface-deep text-hero-foreground">

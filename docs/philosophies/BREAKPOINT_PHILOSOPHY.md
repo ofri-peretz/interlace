@@ -1,7 +1,7 @@
 # Interlace DS — Breakpoint Philosophy
 
 The Interlace DS uses **Tailwind v4's own breakpoint ladder, plus one
-handheld tier** that it adds in `packages/ui/styles/foundation.css`
+handheld tier** that it adds in `packages/ui/styles/structure/type.css`
 (`@theme { --breakpoint-xs }`). This doc explains the why and the rules.
 
 ## The ladder

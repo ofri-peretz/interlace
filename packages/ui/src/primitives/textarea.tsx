@@ -5,7 +5,7 @@
  * machinery: the native `<textarea>` already owns selection, IME, undo/redo,
  * `onChange` etc., so we add structure (size + tone) without wrapping a
  * single native behaviour. Server component — no hooks, no Base UI client
- * surface required. Inherits the DS font from `preflight.css` (rule #3).
+ * surface required. Inherits the DS font from `page/preflight.css` (rule #3).
  *
  * ## Anatomy
  *
