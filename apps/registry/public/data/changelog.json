@@ -359,6 +359,17 @@
           "source": ".changeset/fluid-rhythm.md"
         },
         {
+          "summary": "GuessReveal: a one-question quiz. Two to four answers as buttons; the pick is marked right or wrong in words and with a short movement, the right answer is always shown, and an explanation opens. `onAnswer` lets the consumer record the pick. The status is a polite live region, the options stay focusable after the pick, and without JavaScript a details element holds the answer.",
+          "components": [
+            "guess-reveal"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/guess-reveal.md"
+        },
+        {
           "summary": "Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.",
           "components": [
             "button",
@@ -714,6 +725,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/featured-icon-neutral-ring.md"
+        },
+        {
+          "summary": "FlipCard: focus follows a turn only when the card lands on the side the press asked for. A controlled parent that refuses a turn and later changes `flipped` on its own no longer pulls focus.",
+          "components": [
+            "flip-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/flip-card-focus.md"
         },
         {
           "summary": "Hero: the section is named by its headline (`aria-labelledby` on the h1), so it is announced as a region with that name.",
