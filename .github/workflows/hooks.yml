@@ -1,0 +1,23 @@
+# The shared gates from burgee's reusable workflows: the git hooks match the hookset presets this
+# repo pins, and a PR that changes the CLI package ships a changeset (`skip-changeset` opts out).
+# packages/ui keeps its own, stricter gate in ci.yml (scripts/require-changeset.mjs).
+name: Shared gates
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  hookset:
+    uses: ofri-peretz/burgee/.github/workflows/hookset-check.yml@main
+  changeset:
+    uses: ofri-peretz/burgee/.github/workflows/changeset-gate.yml@main
+    with:
+      paths: '^packages/cli/(src|package\.json)'
