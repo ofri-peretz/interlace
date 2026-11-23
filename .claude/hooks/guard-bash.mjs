@@ -100,7 +100,7 @@ function skipsHooks(words) {
   const g = words.indexOf("git");
   if (g === -1) return false;
   const env = words.slice(0, g);
-  // Skip git"s global options (git -C dir commit, git -c k=v push) to reach the subcommand.
+  // Skip git's global options (git -C dir commit, git -c k=v push) to reach the subcommand.
   let s = g + 1;
   while (words[s]?.startsWith("-"))
     s += GIT_OPTS_WITH_VALUE.has(words[s]) ? 2 : 1;
