@@ -642,3 +642,44 @@ export const ReadingVsUI: Story = {
 export const WrapBalance: Story = {
   render: () => <WrapBalanceSpecimen />,
 };
+
+/**
+ * The editorial look: serif headings over the sans body. One CSS variable,
+ * no className. Every heading in the kit reads `font-heading` (Typography
+ * h1–h6, `CardTitle`, the claim and focus-grid titles), so pointing it at
+ * the serif stack restyles them all at once:
+ *
+ *     @theme { --font-heading: var(--font-serif); }
+ *
+ * Here the variable is set on a wrapper, so only this story changes.
+ */
+export const EditorialHeadings: Story = {
+  render: () => (
+    <Box
+      style={{ '--font-heading': 'var(--font-serif)' } as React.CSSProperties}
+      className="bg-background p-8"
+    >
+      <Stack gap="md" className="max-w-prose">
+        <Typography variant="caption" as="p">
+          Field notes
+        </Typography>
+        <Typography variant="h1" as="h1">
+          The thread that holds a page together
+        </Typography>
+        <Typography variant="long" as="p">
+          Serif headings give a page the rhythm of print: the headline sets the voice, and the
+          sans-serif body stays easy to read at length. Nothing else changes, so a product screen
+          and an article can share one kit.
+        </Typography>
+        <Typography variant="h2" as="h2">
+          One variable, every heading
+        </Typography>
+        <Typography variant="body" as="p">
+          Point <code>--font-heading</code> at <code>--font-serif</code> and the kit&rsquo;s
+          headings follow. Body, UI text and code keep their own faces.
+        </Typography>
+      </Stack>
+    </Box>
+  ),
+};
+
