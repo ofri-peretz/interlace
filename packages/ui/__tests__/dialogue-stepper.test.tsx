@@ -6,9 +6,15 @@
  */
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { DialogueStepper, MIN_VIEWPORT } from '../src/patterns/dialogue-stepper.js';
+import {
+  DialogueChoice,
+  DialogueChoices,
+  DialogueStep,
+  DialogueStepper,
+  MIN_VIEWPORT,
+} from '../src/patterns/dialogue-stepper.js';
 import { Dialogue } from '../src/patterns/dialogue.js';
 
 function Talk(props: { defaultMode?: 'step' | 'all' }) {
@@ -41,6 +47,11 @@ function Talk(props: { defaultMode?: 'step' | 'all' }) {
 }
 
 const step = (c: HTMLElement, id: string) => c.querySelector<HTMLElement>(`[data-step="${id}"]`)!;
+/** Pending steps hide by class; the hidden attribute would beat the no-JS style. */
+const isHidden = (el: HTMLElement) => {
+  expect(el.hasAttribute('hidden')).toBe(false);
+  return el.classList.contains('hidden');
+};
 
 describe('DialogueStepper', () => {
   it('server-renders every step, and a no-JS style that shows them all', () => {
@@ -60,10 +71,10 @@ describe('DialogueStepper', () => {
   it('opens on the start step with the rest hidden', () => {
     const { container } = render(<Talk />);
     expect(step(container, 'open').dataset.state).toBe('current');
-    expect(step(container, 'open').hidden).toBe(false);
+    expect(isHidden(step(container, 'open'))).toBe(false);
     for (const id of ['answer', 'aside', 'close']) {
       expect(step(container, id).dataset.state).toBe('pending');
-      expect(step(container, id).hidden).toBe(true);
+      expect(isHidden(step(container, id))).toBe(true);
     }
     expect(screen.getByRole('button', { name: 'Back' })).toHaveProperty('disabled', true);
   });
@@ -90,17 +101,17 @@ describe('DialogueStepper', () => {
     const { container } = render(<Talk />);
     act(() => fireEvent.click(screen.getByRole('button', { name: /why it took so long/ })));
     expect(step(container, 'aside').dataset.state).toBe('current');
-    expect(step(container, 'answer').hidden).toBe(true);
+    expect(isHidden(step(container, 'answer'))).toBe(true);
     act(() => fireEvent.click(screen.getByRole('button', { name: 'Back to the start' })));
     expect(step(container, 'open').dataset.state).toBe('current');
-    expect(step(container, 'aside').hidden).toBe(true);
+    expect(isHidden(step(container, 'aside'))).toBe(true);
   });
 
   it('shows steps in the order they were taken', () => {
     const { container } = render(<Talk />);
     act(() => fireEvent.click(screen.getByRole('button', { name: /why it took so long/ })));
     const shown = [...container.querySelectorAll<HTMLElement>('[data-slot="dialogue-step"]')]
-      .filter((el) => !el.hidden)
+      .filter((el) => !isHidden(el))
       .map((el) => el.dataset.step);
     expect(shown).toEqual(['open', 'aside']);
   });
@@ -113,7 +124,7 @@ describe('DialogueStepper', () => {
     expect(step(container, 'answer').dataset.state).toBe('current');
     act(() => fireEvent.click(screen.getByRole('button', { name: 'Start over' })));
     expect(step(container, 'open').dataset.state).toBe('current');
-    expect(step(container, 'answer').hidden).toBe(true);
+    expect(isHidden(step(container, 'answer'))).toBe(true);
   });
 
   it('Show the whole conversation shows every step without choices, and toggles back', () => {
@@ -121,12 +132,12 @@ describe('DialogueStepper', () => {
     const toggle = screen.getByRole('button', { name: 'Show the whole conversation' });
     act(() => fireEvent.click(toggle));
     expect(container.querySelector('[data-slot="dialogue-stepper"]')!.getAttribute('data-mode')).toBe('all');
-    for (const id of ['open', 'answer', 'aside', 'close']) expect(step(container, id).hidden).toBe(false);
+    for (const id of ['open', 'answer', 'aside', 'close']) expect(isHidden(step(container, id))).toBe(false);
     expect(container.querySelector('[data-slot="dialogue-choice"]')).toBeNull();
     const back = screen.getByRole('button', { name: 'Step through' });
     expect(back.getAttribute('aria-pressed')).toBe('true');
     act(() => fireEvent.click(back));
-    expect(step(container, 'answer').hidden).toBe(true);
+    expect(isHidden(step(container, 'answer'))).toBe(true);
   });
 
   it('can open in all mode, and takes translated labels', () => {
@@ -159,7 +170,78 @@ describe('DialogueStepper', () => {
       </DialogueStepper>,
     );
     act(() => fireEvent.click(screen.getByRole('button', { name: 'Next' })));
-    expect(step(container, 'b').hidden).toBe(true);
+    expect(isHidden(step(container, 'b'))).toBe(true);
+  });
+
+  it('takes choices through a prop, as a server component must pass them', () => {
+    const { container } = render(
+      <DialogueStepper start="a">
+        <DialogueStep
+          id="a"
+          choices={
+            <DialogueChoices>
+              <DialogueChoice next="b">Next</DialogueChoice>
+            </DialogueChoices>
+          }
+        >
+          <Dialogue.Turn speaker="A">One</Dialogue.Turn>
+        </DialogueStep>
+        <DialogueStep id="b">
+          <Dialogue.Turn speaker="B">Two</Dialogue.Turn>
+        </DialogueStep>
+      </DialogueStepper>,
+    );
+    // The choices sit beside the list of turns, never inside it.
+    expect(container.querySelector('[data-slot="dialogue"] [data-slot="dialogue-choices"]')).toBeNull();
+    act(() => fireEvent.click(screen.getByRole('button', { name: 'Next' })));
+    expect(isHidden(step(container, 'b'))).toBe(false);
+    expect(screen.queryByRole('button', { name: 'Next' })).toBeNull();
+  });
+
+  it('the choices prop wins over a DialogueChoices child', () => {
+    render(
+      <DialogueStepper start="a">
+        <DialogueStep
+          id="a"
+          choices={
+            <DialogueChoices>
+              <DialogueChoice next="a">From the prop</DialogueChoice>
+            </DialogueChoices>
+          }
+        >
+          <Dialogue.Turn speaker="A">One</Dialogue.Turn>
+          <DialogueChoices>
+            <DialogueChoice next="a">From a child</DialogueChoice>
+          </DialogueChoices>
+        </DialogueStep>
+      </DialogueStepper>,
+    );
+    expect(screen.getAllByRole('button', { name: /^From/ }).map((b) => b.textContent)).toEqual(['From the prop']);
+  });
+
+  it('choices it cannot recognise still hide once past, and warn where they landed', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    // Stands in for a server component's client reference: not DialogueChoices by identity.
+    const Opaque = () => (
+      <DialogueChoices>
+        <DialogueChoice next="b">Next</DialogueChoice>
+      </DialogueChoices>
+    );
+    render(
+      <DialogueStepper start="a">
+        <DialogueStep id="a">
+          <Dialogue.Turn speaker="A">One</Dialogue.Turn>
+          <Opaque />
+        </DialogueStep>
+        <DialogueStep id="b">
+          <Dialogue.Turn speaker="B">Two</Dialogue.Turn>
+        </DialogueStep>
+      </DialogueStepper>,
+    );
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('choices={'));
+    act(() => fireEvent.click(screen.getByRole('button', { name: 'Next' })));
+    expect(screen.queryByRole('button', { name: 'Next' })).toBeNull();
+    warn.mockRestore();
   });
 
   it('throws outside a stepper', () => {

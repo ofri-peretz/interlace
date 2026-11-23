@@ -511,6 +511,17 @@
           "source": ".changeset/container-collections.md"
         },
         {
+          "summary": "DialogueStepper works when a server component renders it, and its no-JS fallback shows every step.\n\n- `DialogueStep` takes its choices through a new `choices` prop. A server component holds only a reference to each client part, so a `DialogueChoices` child could not be told apart from a turn: it landed inside the list of turns and stayed after the reader moved on. Use the named exports (`DialogueStep`, `DialogueChoices`, `DialogueChoice`) from a server component, since the dot form is undefined there.\n- `DialogueChoices` now hides itself once its step is past, wherever it renders, and the stepper warns when choices land inside a list of turns.\n- Pending steps hide with a class instead of the `hidden` attribute. Tailwind's preflight rule for `[hidden]` is `!important` in a cascade layer, which beat the no-JS style, so only the first step showed with scripting off.",
+          "components": [
+            "dialogue-stepper"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/dialogue-stepper-rsc.md"
+        },
+        {
           "summary": "Fixes in the new backdrops. `Starfield` tints stars and meteors correctly when given an `oklch()` or `color-mix()` colour. `SkyBackdrop` rests every cloud fully inside the sky, so a cloud never jumps where it can be seen when its loop wraps. `GradientMesh` and `SkyBackdrop` add no content wrapper when `children` is `null`.",
           "components": [
             "starfield",
