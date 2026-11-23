@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T18:38:35.852Z",
+  "generatedAt": "2026-11-23T18:55:07.370Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -11072,6 +11072,19 @@
       ],
       "coverage": {
         "inGate": true
+      }
+    },
+    "split-text": {
+      "sourcePath": "packages/ui/src/effects/split-text.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "stack": {

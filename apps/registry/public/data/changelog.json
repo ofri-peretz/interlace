@@ -485,6 +485,17 @@
           "source": ".changeset/site-chrome.md"
         },
         {
+          "summary": "New SplitText: a headline that arrives a word, or a letter, at a time the first time it scrolls into view. `by` picks words or letters, `effect` is `rise` (default), `fade` or `blur`, and `step` sets the pace. The whole line is in the server HTML and read once from a visually hidden copy, so a screen reader never spells a word out. Letters keep emoji and combining marks whole, words never break mid-line, RTL arrives from the right, and under reduced motion the line is simply there.",
+          "components": [
+            "split-text"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/split-text.md"
+        },
+        {
           "summary": "New `StatusPills`: short facts about a page (\"9 facts\", \"38 sources quoted\") as a wrapping row of pills, made to sit on a brand band under a title. A default pill is an outline in the text colour around it, with no fill so its text keeps the band's contrast, so the same component reads on a dark band and on the page. `tone=\"ok\"` is a solid pill with a check in the success colour, for a passed check.",
           "components": [
             "status-pills"

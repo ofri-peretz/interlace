@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 165
+    "itemCount": 166
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 71,
       "pattern": 44,
-      "effect": 18,
+      "effect": 19,
       "template": 13,
       "chart": 8,
       "util": 5,
@@ -44,9 +44,9 @@
       "blog": 35,
       "foundation": 25,
       "data": 22,
-      "effect": 18,
+      "effect": 19,
       "form": 17,
-      "decorative": 16,
+      "decorative": 17,
       "feedback": 14,
       "template": 13,
       "navigation": 11,
@@ -60,21 +60,21 @@
     },
     "rendering": {
       "server": 98,
-      "client": 67
+      "client": 68
     },
     "keyboard": {
-      "none": 128,
+      "none": 129,
       "handled": 37
     },
     "loading": {
-      "none": 132,
+      "none": 133,
       "built-in": 33
     },
     "minViewport": {
       "320": 100,
       "480": 7,
       "768": 1,
-      "inherited": 57
+      "inherited": 58
     }
   },
   "items": [
@@ -7291,6 +7291,69 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/sparkline.json",
       "item": "https://ds.interlace.tools/r/sparkline.json",
       "docs": "https://ds.interlace.tools/c/sparkline"
+    },
+    {
+      "name": "split-text",
+      "title": "Split Text",
+      "type": "registry:ui",
+      "summary": "A headline or short line that arrives a word, or a letter, at a time the first time it scrolls into view. It gives one line on a page a moment of attention; use it once or twice per page, on text short enough to read while it arrives.",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "SplitTextElement",
+          "values": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "p",
+            "span"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "SplitText"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/split-text.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/split-text.json",
+      "item": "https://ds.interlace.tools/r/split-text.json",
+      "docs": "https://ds.interlace.tools/c/split-text"
     },
     {
       "name": "stack",

@@ -1825,6 +1825,18 @@
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
   },
+  "split-text": {
+    "title": "Effects/SplitText",
+    "storyIds": [
+      "effects-splittext--default",
+      "effects-splittext--by-letter",
+      "effects-splittext--fade",
+      "effects-splittext--rtl"
+    ],
+    "preview": "effects-splittext--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "stack": {
     "title": "Primitives/Stack",
     "storyIds": [
