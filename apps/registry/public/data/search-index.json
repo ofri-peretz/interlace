@@ -596,7 +596,7 @@
     "broken": 5,
     "brows": 1,
     "browser": 30,
-    "bubbl": 3,
+    "bubbl": 4,
     "bug": 13,
     "build": 17,
     "builder": 2,
@@ -661,7 +661,7 @@
     "chart": 24,
     "chat": 2,
     "cheapest": 1,
-    "check": 24,
+    "check": 25,
     "checkabl": 3,
     "checkbox": 9,
     "checkboxindicator": 1,
@@ -702,7 +702,7 @@
     "cleanup": 1,
     "clear": 41,
     "click": 18,
-    "clickabl": 2,
+    "clickabl": 3,
     "client": 115,
     "clip": 11,
     "clipboard": 2,
@@ -1361,6 +1361,7 @@
     "handl": 18,
     "hang": 1,
     "happen": 14,
+    "happi": 2,
     "harbor": 3,
     "hard": 4,
     "harness": 1,
@@ -3363,7 +3364,7 @@
         "primitive",
         "form"
       ],
-      "terms": "button form primitiv client load skeleton keyboard base render buttonvariant variant spinner dialog exercis icon size busy submit polymorphism compound userender focus counterpart passthrough composit minimal onclick primary direct disabl nativ surfac keep contrast testid secondary ele legacy mybutton reactel webkit portal event invisibl measur reach modul variantprop stay text click link paint replac skill swallow label cva still lock destructiv stop brandabl checkabl"
+      "terms": "button form primitiv client load skeleton keyboard base render buttonvariant variant spinner dialog exercis icon busy size submit polymorphism compound userender disabl focus counterpart passthrough composit minimal onclick primary direct click nativ surfac keep contrast testid secondary still aria ignor ele legacy mybutton reactel webkit portal event invisibl parent measur reach modul variantprop stay text link paint replac skill swallow label cva lock destructiv"
     },
     {
       "name": "callout",
@@ -3611,7 +3612,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "command palett overlay primitiv client responsiv min viewport 320 keyboard base combobox dialog panel open focus input modal field commandpalett setopen backdrop filter highlight search portal list popup inlin escap root commanddialog clos indicator activedescendant activeel dialogcontent filterabl fork supp fals result uncontroll ring 2px bubbl listbox virtual hold aria onopenchang controll second role assert surfac trigger ele padd option restor row stay background"
+      "terms": "command palett overlay primitiv client responsiv min viewport 320 keyboard base combobox dialog panel open focus input modal field commandpalett setopen backdrop filter highlight search portal list popup inlin escap root commanddialog clos indicator activedescendant activeel dialogcontent filterabl fork supp fals result uncontroll ring 2px listbox virtual hold aria bubbl onopenchang controll second role assert surfac trigger ele padd option restor row stay background"
     },
     {
       "name": "container",
@@ -3653,7 +3654,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "context menu overlay primitiv client responsiv min viewport 320 keyboard base contextmenu click f10 open right contextmenulabel press dropdownmenu contextmenugroup contextmenuitem contextmenuportal contextmenutrigger group long grouplabel shift label compositional event handl gestur trigger separator fire wrap tabindex nest flat throw addition basecontextmenu baseuievent blew canvas contextmenucheckboxitem contextmenucontent contextmenuradiogroup contextmenuradioitem contextmenuseparator crash dedicat keydown opener rendercomposeitem portal invisibl popup key item tab apg bind clickabl"
+      "terms": "context menu overlay primitiv client responsiv min viewport 320 keyboard base contextmenu click f10 open right contextmenulabel press dropdownmenu contextmenugroup contextmenuitem contextmenuportal contextmenutrigger group long grouplabel shift label compositional event handl gestur trigger separator fire wrap tabindex nest flat throw addition basecontextmenu baseuievent blew canvas contextmenucheckboxitem contextmenucontent contextmenuradiogroup contextmenuradioitem contextmenuseparator crash dedicat keydown opener rendercomposeitem portal invisibl popup key item tab apg bind happi"
     },
     {
       "name": "count-up",
@@ -3898,7 +3899,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "dialogu stepper blog pattern client responsiv min viewport 320 stat step current past pend choic dialoguechoic turn conversation dialoguestep dialoguestepper show path polit control back noscript uniqu live reveal reader branch region talk whol child speaker hidden start reset next focus append hunt important onboard practic data order enter new read ask written earlier progressiv taken server word group bubbl choos ease enhanc hydrat"
+      "terms": "dialogu stepper blog pattern client responsiv min viewport 320 stat step current past pend choic dialoguechoic turn conversation dialoguestep dialoguestepper show path polit control back noscript uniqu live reveal reader branch region talk whol child speaker hidden start reset next focus append hunt important onboard practic data order enter new read ask written earlier progressiv taken server word group choos ease enhanc hydrat rise"
     },
     {
       "name": "dialogue",
@@ -4180,7 +4181,7 @@
         "primitive",
         "a11y"
       ],
-      "terms": "focus ring a11y primitiv server rsc responsiv min viewport 320 stat none focusr child wrapper block within offset global contract wrapp display focusringprop putt subtre visibl paint 0px clickabl honor thousand tun universal preflight insid 2px circular configurabl ele implement contrast land consequenc distanc preview public render inlin custom dom measur devic normal solid preferenc mous shipp data interactiv invalid chrom convention seam focusabl"
+      "terms": "focus ring a11y primitiv server rsc responsiv min viewport 320 stat none focusr child wrapper block within offset global contract wrapp display focusringprop putt subtre visibl paint 0px honor thousand tun universal preflight insid 2px circular clickabl configurabl ele implement contrast land consequenc distanc preview public render inlin custom dom measur devic normal solid preferenc mous shipp data interactiv invalid chrom convention seam focusabl"
     },
     {
       "name": "footer",
@@ -6046,7 +6047,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "switcher foundation primitiv client responsiv min viewport 320 themeswitcher menu lib themeschemetoggl dot schem dark toggl appearanc menuitemradio press popup dropdownmenutrigger usethem control trigger script harbor radiogroup typeahead light try src swatch click escap system axis aria serv base check item contract question writ genuin user cooki flourish multiplicativ obvious permanent pretend themeswitchervariant half four paint stat definition reload represent schemepreferenc today unusabl role"
+      "terms": "switcher foundation primitiv client responsiv min viewport 320 themeswitcher menu lib themeschemetoggl dot schem dark toggl appearanc menuitemradio press popup dropdownmenutrigger usethem control trigger script harbor radiogroup typeahead light try src swatch click escap system axis aria serv base item check contract question writ genuin user cooki flourish multiplicativ obvious permanent pretend themeswitchervariant half four paint stat definition reload represent schemepreferenc today unusabl role"
     },
     {
       "name": "theme-tokens",
