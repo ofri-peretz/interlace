@@ -11,15 +11,13 @@
  *   - `registry:ui`     — per primitive (`packages/ui/src/primitives/*.tsx`)
  *                       — plus three "starter bundle" composite items
  *                         (`a11y-starter`, `layout-starter`, `mdx-starter`).
- *   - `registry:style`  — the `theme` bundle: the `index.css` BARREL plus
- *                         every leaf it imports (tokens, foundation,
- *                         preflight, theme, interlace-theme,
- *                         themes/harbor), so a consumer who runs
- *                         `npx shadcn add @interlace/theme` gets the full
- *                         DS baseline behind ONE `@import` — including the
- *                         WCAG 2.2 SC 2.4.13 focus ring, the
- *                         `[data-min-viewport]` container contract, and the
- *                         type / spacing / radius scales.
+ *   - `registry:style`  — `interlace-base` (the `base.css` barrel: brand,
+ *                         semantics, structure; additive, every component
+ *                         depends on it) and `interlace-foundation` (the
+ *                         `index.css` barrel: base plus the opt-in page
+ *                         layer). See STYLE_ITEMS.
+ *   - `registry:theme`  — `theme`: shadcn cssVars pointing the host's own
+ *                         `--primary` etc. at Interlace's brand tokens.
  *   - `registry:lib`    — utilities under `packages/ui/src/lib/*.ts` exposed
  *                         to consumers: `cn` → `@/lib/utils.ts`,
  *                         `use-reduced-motion` → `@/hooks/use-reduced-motion.ts`.
@@ -27,7 +25,8 @@
  * Consumer usage (when deployed):
  *
  *   npx shadcn add https://ds.interlace.tools/r/button.json
- *   npx shadcn add @interlace/theme            # full CSS contract
+ *   npx shadcn add @interlace/theme            # the Interlace palette (cssVars)
+ *   npx shadcn add @interlace/interlace-foundation  # fonts + page preflight
  *   npx shadcn add @interlace/a11y-starter     # SkipLink+VisuallyHidden+FocusRing+useReducedMotion
  *   npx shadcn add @interlace/layout-starter   # Container+Section+Stack+Grid+Box+Typography
  *   npx shadcn add @interlace/mdx-starter      # mdx-components.tsx defaults
@@ -461,7 +460,7 @@ const FOUNDATION_ITEM = 'interlace-foundation';
  * resolve as authored, including `index.css` importing base's `base.css`.
  *
  * Order inside a barrel is load-bearing (see `packages/ui/styles/index.css`):
- * `themes/harbor.css` must follow `interlace-theme.css` or a Harbor dark page
+ * `brand/harbor.css` must follow `brand/interlace.css` or a Harbor dark page
  * resolves against Interlace's dark block. `assertStyleBarrel` turns "the
  * barrel imports exactly what the item ships" into a build-time check, so a
  * retargeted leaf fails the build instead of shipping a dangling `@import`
@@ -472,14 +471,18 @@ const STYLE_ITEMS = [
     name: BASE_ITEM,
     title: 'Interlace Base',
     barrel: 'base.css',
+    // In dependency order: brand → semantics → structure. See base.css.
     leaves: [
-      'tokens.css',
-      'foundation.css',
-      'interlace-theme.css',
+      'brand/interlace.css',
       // Alternate brand themes ship with the base: a theme file only
       // overrides `--interlace-*` inside `@layer interlace.brand`, which is
       // inert until something reads it, so it changes nothing in the host.
-      'themes/harbor.css',
+      'brand/harbor.css',
+      'semantics.css',
+      'structure/type.css',
+      'structure/layout.css',
+      'structure/radius.css',
+      'structure/motion.css',
     ],
     requires: [],
     description:
@@ -489,7 +492,7 @@ const STYLE_ITEMS = [
     name: FOUNDATION_ITEM,
     title: 'Interlace Foundation',
     barrel: 'index.css',
-    leaves: ['fonts.css', 'preflight.css', 'theme.css'],
+    leaves: ['page/fonts.css', 'page/preflight.css', 'page/fumadocs.css', 'page/shiki.css'],
     requires: [BASE_ITEM],
     description:
       '@interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.',
@@ -1191,7 +1194,7 @@ const buildStyleFilesItem = async (item) => {
  * The shadcn names `theme` points at Interlace's brand tokens.
  *
  * Derived, not authored: every `--x: var(--interlace-y)` binding in
- * interlace-theme.css's semantics layer whose `--x` is a variable shadcn
+ * semantics.css whose `--x` is a variable shadcn
  * itself writes into `:root`. Interlace-only semantics (success, scrim, viz…)
  * are not here: base defines those and no host has them to replace.
  */
@@ -1205,8 +1208,7 @@ const SHADCN_CSS_VARS = new Set([
 ]);
 
 const themeCssVars = async () => {
-  const css = await readFile(path.join(STYLES_DIR, 'interlace-theme.css'), 'utf8');
-  const semantics = css.slice(css.indexOf('@layer interlace.semantics'));
+  const semantics = await readFile(path.join(STYLES_DIR, 'semantics.css'), 'utf8');
   const vars = {};
   for (const [, name, brand] of semantics.matchAll(
     /^\s*--([\w-]+):\s*var\(--(interlace-[\w-]+)\);/gm,
@@ -1216,7 +1218,7 @@ const themeCssVars = async () => {
   const missing = [...SHADCN_CSS_VARS].filter((n) => !(n in vars));
   if (missing.length) {
     throw new Error(
-      `theme: interlace-theme.css binds no --interlace-* token for ${missing.map((n) => `--${n}`).join(', ')}`,
+      `theme: semantics.css binds no --interlace-* token for ${missing.map((n) => `--${n}`).join(', ')}`,
     );
   }
   return vars;
@@ -1232,7 +1234,7 @@ const themeCssVars = async () => {
  * `--primary` follows.
  */
 const buildThemeItem = async () => {
-  SOURCE_PATHS.set(THEME_ITEM, ['packages/ui/styles/interlace-theme.css']);
+  SOURCE_PATHS.set(THEME_ITEM, ['packages/ui/styles/semantics.css']);
   const vars = await themeCssVars();
   return {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
@@ -1276,7 +1278,7 @@ const buildStyleItems = async () => [
 const writeRawStyleFiles = async () => {
   for (const name of ALL_STYLE_FILES) {
     const outPath = path.join(STYLES_OUT_DIR, name);
-    // `themes/harbor.css` nests, so the mkdir has to follow the file, not
+    // `brand/harbor.css` nests, so the mkdir has to follow the file, not
     // just the root.
     await mkdir(path.dirname(outPath), { recursive: true });
     const content = await readFile(path.join(STYLES_DIR, name), 'utf8');

@@ -22,7 +22,7 @@
  *
  * JS-driven, not CSS. The pulse is a `motion.rect` from `motion/react`
  * animating `opacity: [0.5, 1, 0.5]` on `repeat: Infinity` — inline styles the
- * `prefers-reduced-motion` reset in `styles/preflight.css` cannot reach. It is
+ * `prefers-reduced-motion` reset in `styles/page/preflight.css` cannot reach. It is
  * gated in JS instead: `shouldAnimate = animated && !reducedMotion`, and when
  * that is false the accent cells render as plain `<rect>` elements with no
  * animation object at all. The grid lines themselves never animate.

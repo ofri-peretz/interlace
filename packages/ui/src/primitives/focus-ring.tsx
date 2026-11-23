@@ -35,7 +35,7 @@
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | Zero inline `style`; utility classes only                   |
  * | R19  | Tokens only                      | `--ring` semantic token                                     |
- * | R20  | AA contrast                      | `--ring` is contrast-tuned by interlace-theme.css per mode  |
+ * | R20  | AA contrast                      | `--ring` is contrast-tuned by brand/interlace.css per mode  |
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  * | R26  | A11y per WCAG 2.2 SC 2.4.13      | 2px solid ring, ≥3:1 contrast, configurable offset          |
  */

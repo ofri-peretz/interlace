@@ -12,7 +12,7 @@
  * `tone`. The reading-vs-UI distinction (TYPOGRAPHY_PHILOSOPHY "Reading mode vs
  * UI mode") is encoded in the variant set, not a second axis (R11: one
  * variable). Sizes/leading come from the bridged `--text-*` tokens in
- * foundation.css; weights use the built-in 400/500/600/700 ladder (no 900).
+ * structure/type.css; weights use the built-in 400/500/600/700 ladder (no 900).
  *
  * | Rule | Concept                          | Where in this file                                   |
  * | ---- | -------------------------------- | ---------------------------------------------------- |

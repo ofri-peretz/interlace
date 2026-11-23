@@ -19,7 +19,7 @@ import { withReducedMotion, withRtl } from '@/decorators';
  * not the hook — it is that the reduced-motion contract has TWO carriers and
  * neither one covers the other:
  *
- *   CSS   `@media (prefers-reduced-motion: reduce)` in `preflight.css`
+ *   CSS   `@media (prefers-reduced-motion: reduce)` in `page/preflight.css`
  *         clamps every `animation-duration` / `transition-duration` to
  *         0.01ms. It covers transitions and keyframes, globally, with no
  *         opt-out — and it cannot touch JavaScript.
@@ -225,7 +225,7 @@ function Specimen({ forced }: ReducedMotionArgs) {
             Two carriers, and neither covers the other
           </Typography>
           <Typography variant="ui-sm" tone="muted" className="max-w-prose">
-            <code className="font-mono">preflight.css</code> clamps every CSS
+            <code className="font-mono">page/preflight.css</code> clamps every CSS
             animation and transition to 0.01ms under{' '}
             <code className="font-mono">
               @media (prefers-reduced-motion: reduce)
@@ -314,7 +314,7 @@ export const Reduced: Story = {
 
 /**
  * The CSS half of the contract: the decorator injects the same clamp that
- * `@media (prefers-reduced-motion: reduce)` applies in `preflight.css`, so
+ * `@media (prefers-reduced-motion: reduce)` applies in `page/preflight.css`, so
  * every animation and transition in the story collapses to ~0.
  *
  * The `useReducedMotion()` row stays `false`, and that is correct — injected

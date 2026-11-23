@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Parse packages/ui/styles/interlace-theme.css and emit a JSON catalogue
+ * Parse packages/ui/styles/brand/interlace.css + semantics.css and emit a JSON catalogue
  * of every semantic token + its concrete value in light + dark mode.
  *
  * Output: apps/registry/public/r/semantics-catalogue.json
@@ -26,9 +26,9 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const REPO_ROOT = resolve(__dirname, '../../..');
-const INTERLACE_THEME_PATH = resolve(
-  REPO_ROOT,
-  'packages/ui/styles/interlace-theme.css',
+// The palette (brand) and the names bound to it (semantics), read as one.
+const THEME_PATHS = ['brand/interlace.css', 'semantics.css'].map((f) =>
+  resolve(REPO_ROOT, 'packages/ui/styles', f),
 );
 // NOT inside public/r/ — the `/c/[name]` dynamic route maps names to
 // JSON files under public/r/, and a non-registry-item shape there
@@ -41,7 +41,7 @@ const OUTPUT_PATH = resolve(
   'apps/registry/public/data/semantics-catalogue.json',
 );
 
-const css = readFileSync(INTERLACE_THEME_PATH, 'utf-8');
+const css = THEME_PATHS.map((p) => readFileSync(p, 'utf-8')).join('\n');
 
 /**
  * Extract `:root { --foo: bar; ... }` and `.dark, [data-theme='dark'] { ... }`
@@ -79,7 +79,7 @@ function extractRulesInLayer(layerSource) {
   // them first.
   const sanitized = layerSource.replace(/\/\*[\s\S]*?\*\//g, '');
   const rules = [];
-  // Match `<selectors> { ... }` non-nested. interlace-theme.css doesn't
+  // Match `<selectors> { ... }` non-nested. brand/interlace.css doesn't
   // currently nest, so a simple regex is enough; if nesting lands later
   // this will need a real parser.
   const ruleRe = /([^{}@]+?)\{([^{}]*)\}/g;
@@ -133,7 +133,7 @@ const semanticsLayer = extractLayerBlocks(css, 'interlace.semantics');
 
 if (!brandLayer || !semanticsLayer) {
   console.error(
-    'build-semantics-catalog: could not find @layer interlace.brand and/or @layer interlace.semantics in interlace-theme.css. Did Phase 1 land?',
+    'build-semantics-catalog: could not find @layer interlace.brand and/or @layer interlace.semantics in brand/interlace.css. Did Phase 1 land?',
   );
   process.exit(1);
 }

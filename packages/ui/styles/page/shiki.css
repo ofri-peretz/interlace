@@ -1,0 +1,93 @@
+/*
+ * @interlace/ui — PAGE / shiki: AAA contrast for Shiki's GitHub themes.
+ *
+ * Layer 4 of 4 (opt-in page styling). Scoped to `.shiki span[style*=…]`,
+ * so it touches nothing but Shiki output. Split out of the fumadocs file:
+ * any app that renders Shiki wants it, docs framework or not.
+ */
+
+/* ─────────────────────────────────────────────────────────────────
+ * 2. Shiki AAA boosts — github-light / github-dark themes.
+ *    Boost muted comment + keyword colors past 7:1 contrast.
+ *
+ *    NOT in `@layer interlace.bridge` — these are component-style
+ *    overrides keyed off inline Shiki styles. They need higher cascade
+ *    weight than our bridge layer to actually win against the inline
+ *    `style="--shiki-light: #..."` values; leaving them unlayered is
+ *    intentional.
+ * ──────────────────────────────────────────────────────────────── */
+.shiki span[style*="--shiki-light:#6E7781"],
+.shiki span[style*="--shiki-light:#6e7781"] {
+  --shiki-light: #424952 !important;
+}
+.shiki span[style*="--shiki-light:#CF222E"],
+.shiki span[style*="--shiki-light:#cf222e"] {
+  --shiki-light: #82071e !important;
+}
+.shiki span[style*="--shiki-light:#0550AE"],
+.shiki span[style*="--shiki-light:#0550ae"] {
+  --shiki-light: #033d8b !important;
+}
+.shiki span[style*="--shiki-light:#953800"] {
+  --shiki-light: #6c2700 !important;
+}
+.shiki span[style*="--shiki-light:#8250DF"],
+.shiki span[style*="--shiki-light:#8250df"] {
+  --shiki-light: #5a31aa !important;
+}
+.shiki span[style*="--shiki-light:#0A3069"] {
+  --shiki-light: #062350 !important;
+}
+
+/* DynamicCodeBlock (install snippets, fumadocs) ships a different Shiki
+   theme variant — match `--shiki-light: #XXXXXX` (with space) too. */
+.shiki span[style*="#6F42C1"],
+.shiki span[style*="#6f42c1"] {
+  --shiki-light: #5a2da3 !important;
+}
+.shiki span[style*="#005CC5"],
+.shiki span[style*="#005cc5"] {
+  --shiki-light: #003e8a !important;
+}
+.shiki span[style*="#032F62"],
+.shiki span[style*="#032f62"] {
+  --shiki-light: #021f42 !important;
+}
+.shiki span[style*="#D73A49"],
+.shiki span[style*="#d73a49"] {
+  --shiki-light: #971923 !important;
+}
+.shiki span[style*="#24292E"],
+.shiki span[style*="#24292e"] {
+  --shiki-light: #14171b !important;
+}
+
+/* Dark-mode tokens — brighten muted colors over near-black bg. */
+.shiki span[style*="#B392F0"],
+.shiki span[style*="#b392f0"] {
+  --shiki-dark: #d2b5ff !important;
+}
+.shiki span[style*="#9ECBFF"],
+.shiki span[style*="#9ecbff"] {
+  --shiki-dark: #c4e0ff !important;
+}
+.shiki span[style*="#F97583"],
+.shiki span[style*="#f97583"] {
+  --shiki-dark: #ffa3ad !important;
+}
+.shiki span[style*="--shiki-dark:#8B949E"],
+.shiki span[style*="--shiki-dark:#8b949e"] {
+  --shiki-dark: #b8c0c8 !important;
+}
+.shiki span[style*="--shiki-dark:#FF7B72"],
+.shiki span[style*="--shiki-dark:#ff7b72"] {
+  --shiki-dark: #ffa39d !important;
+}
+.shiki span[style*="--shiki-dark:#FFA657"],
+.shiki span[style*="--shiki-dark:#ffa657"] {
+  --shiki-dark: #ffc787 !important;
+}
+.shiki span[style*="--shiki-dark:#79C0FF"],
+.shiki span[style*="--shiki-dark:#79c0ff"] {
+  --shiki-dark: #a5d6ff !important;
+}

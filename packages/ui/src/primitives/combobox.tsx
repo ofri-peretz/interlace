@@ -95,7 +95,7 @@
  * ## Contrast (verified by token math)
  *
  * Identical token pairs on identical surfaces to `select.tsx`; the measured
- * figures are carried over from `interlace-theme.css`.
+ * figures are carried over from `brand/interlace.css`.
  *
  * | Composite                                            | Light   | Dark    | Floor           |
  * | ---------------------------------------------------- | ------- | ------- | --------------- |
@@ -473,7 +473,7 @@ function ComboboxSeparator({
  *
  * Only the border changes on focus, with no `ring-*`: the input inside the
  * rail already carries the DS-wide `:focus-visible` outline from
- * `styles/preflight.css`, and stacking a container ring on top of it is two
+ * `styles/page/preflight.css`, and stacking a container ring on top of it is two
  * indicators for one focus.
  */
 function ComboboxChips({

@@ -279,8 +279,8 @@ describe('interlace-base leaves the host app alone', () => {
   it('ships a barrel that imports only additive files', async () => {
     const barrel = await readFile(path.join(STYLES_DIR, 'base.css'), 'utf8');
     const imports = [...barrel.matchAll(/@import\s+["']\.\/([^"']+)["']/g)].map((m) => m[1]);
-    expect(imports).not.toContain('preflight.css');
-    expect(imports).not.toContain('fonts.css');
-    expect(imports).not.toContain('theme.css');
+    expect(imports).not.toContain('page/preflight.css');
+    expect(imports).not.toContain('page/fonts.css');
+    expect(imports).not.toContain('page/fumadocs.css');
   });
 });

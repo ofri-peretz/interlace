@@ -57,14 +57,14 @@ const STYLES_DIR = path.resolve(HERE, '../../packages/ui/styles');
  * collision list, which is worse than no list at all.
  */
 const discoverStyleFiles = async () => {
-  const top = (await readdir(STYLES_DIR, { withFileTypes: true }))
-    .filter((e) => e.isFile() && e.name.endsWith('.css') && e.name !== 'index.css')
-    .map((e) => e.name);
-  const themes = await readdir(path.join(STYLES_DIR, 'themes')).catch(() => []);
-  return [
-    ...top.sort(),
-    ...themes.filter((f) => f.endsWith('.css')).sort().map((f) => `themes/${f}`),
-  ];
+  // Every leaf stylesheet in the layered tree (brand/, semantics.css,
+  // structure/, page/). The two barrels only import, so they claim nothing.
+  const entries = await readdir(STYLES_DIR, { withFileTypes: true, recursive: true });
+  return entries
+    .filter((e) => e.isFile() && e.name.endsWith('.css'))
+    .map((e) => path.relative(STYLES_DIR, path.join(e.parentPath ?? e.path, e.name)))
+    .filter((f) => f !== 'index.css' && f !== 'base.css')
+    .sort();
 };
 
 /**

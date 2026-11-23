@@ -138,7 +138,7 @@ describe('AnimatedList — reduced motion reaches the ITEM, not just the list', 
     // simultaneously — a bigger movement than the staggered version it
     // replaced. `AnimatedListItem` passed `initial={{ scale: 0, opacity: 0 }}`
     // unconditionally. `motion/react` writes inline styles, so neither the
-    // preflight wildcard nor the tokens.css allowlist could reach it, and no
+    // preflight wildcard nor the structure/motion.css allowlist could reach it, and no
     // `MotionConfig` wrapped the tree.
     reduced.value = true;
     render(<AnimatedList data-testid="feed">{feed}</AnimatedList>);
@@ -218,9 +218,9 @@ describe('ArticleCard — the hover zoom carries its own gate', () => {
   it('gates the cover scale with motion-safe:, not with preflight alone', () => {
     // THE DEFECT: the cover was `transition-transform group-hover:scale-105`
     // with no gate of any kind, so the ONLY thing stopping a 5% zoom under
-    // `reduce` was the `transition-duration: 0.01ms` wildcard in preflight.css.
+    // `reduce` was the `transition-duration: 0.01ms` wildcard in page/preflight.css.
     // Every stylesheet in this package is its own `exports` entry —
-    // `motion-contract-lock` treats the tokens.css-without-preflight path as
+    // `motion-contract-lock` treats the structure/motion.css-without-preflight path as
     // live, and it is the reason `styles/index.css` exists. On that path there
     // was no gate at all, and unlike an `animate-*` utility, a `transition-*`
     // has no allowlist to be added to. `motion-safe:` compiles the media query
@@ -241,7 +241,7 @@ describe('ArticleCard — the hover zoom carries its own gate', () => {
       classes,
       'A bare `group-hover:scale-105` is back on the cover. It applies ' +
         'regardless of preference; only the transition DURATION was ever ' +
-        'clamped, and only when preflight.css is loaded.',
+        'clamped, and only when page/preflight.css is loaded.',
     ).not.toContain('group-hover:scale-105');
   });
 });
@@ -698,7 +698,10 @@ function contrast(a: RGB, b: RGB): number {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-const THEME_CSS = resolve(__dirname, '../styles/interlace-theme.css');
+// The palette (brand) and the names bound to it (semantics), read as one.
+const THEME_CSS = ['brand/interlace.css', 'semantics.css'].map((f) =>
+  resolve(__dirname, '../styles', f),
+);
 
 /**
  * Drop block and whole-line `//` comments, so a class NAMED in prose is never
@@ -710,11 +713,11 @@ function stripComments(source: string): string {
 }
 
 function readTheme(): Record<'light' | 'dark', Map<string, RGB>> {
-  const css = readFileSync(THEME_CSS, 'utf8');
+  const css = THEME_CSS.map((f) => readFileSync(f, 'utf8')).join('\n');
   const darkAt = css.indexOf(".dark,\n  [data-scheme='dark']");
   expect(
     darkAt,
-    'interlace-theme.css no longer contains the expected dark-mode selector.',
+    'brand/interlace.css no longer contains the expected dark-mode selector.',
   ).toBeGreaterThan(-1);
 
   const out = { light: new Map(), dark: new Map() } as Record<

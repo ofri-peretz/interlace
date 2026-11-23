@@ -48,8 +48,9 @@ packages/ui/src/templates/
 ## Layer order in the DS taxonomy
 
 ```
-Primitives (CSS vars)   — interlace.primitives / interlace.foundation
-Semantics  (CSS vars)   — interlace.semantics  / interlace.brand
+Brand      (CSS vars)   — styles/brand/*.css     (@layer interlace.brand)
+Semantics  (CSS vars)   — styles/semantics.css   (@layer interlace.semantics)
+Structure  (scales)     — styles/structure/*.css
 Components (R1–R26)     — packages/ui/src/primitives/*.tsx
 Patterns   (composites) — packages/ui/src/patterns/*.tsx
 Templates  (full pages) — packages/ui/src/templates/*.tsx   ← YOU ARE HERE

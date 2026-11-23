@@ -110,7 +110,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3882,10 +3882,13 @@
       "registryDependencies": [],
       "installsTo": [
         "styles/interlace/base.css",
-        "styles/interlace/tokens.css",
-        "styles/interlace/foundation.css",
-        "styles/interlace/interlace-theme.css",
-        "styles/interlace/themes/harbor.css"
+        "styles/interlace/brand/interlace.css",
+        "styles/interlace/brand/harbor.css",
+        "styles/interlace/semantics.css",
+        "styles/interlace/structure/type.css",
+        "styles/interlace/structure/layout.css",
+        "styles/interlace/structure/radius.css",
+        "styles/interlace/structure/motion.css"
       ],
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json",
       "item": "https://ds.interlace.tools/r/interlace-base.json",
@@ -3918,14 +3921,14 @@
         ],
         "aria": [],
         "motion": {
-          "driver": "css",
+          "driver": "none",
           "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true
       },
       "exports": [],
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -3933,9 +3936,10 @@
       ],
       "installsTo": [
         "styles/interlace/index.css",
-        "styles/interlace/fonts.css",
-        "styles/interlace/preflight.css",
-        "styles/interlace/theme.css"
+        "styles/interlace/page/fonts.css",
+        "styles/interlace/page/preflight.css",
+        "styles/interlace/page/fumadocs.css",
+        "styles/interlace/page/shiki.css"
       ],
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-foundation.json",
       "item": "https://ds.interlace.tools/r/interlace-foundation.json",
@@ -4080,7 +4084,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4248,7 +4252,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5203,7 +5207,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"

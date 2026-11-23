@@ -3,7 +3,7 @@
  *
  * WHY THIS LOCK EXISTS
  * --------------------
- * Every `--interlace-*` value in `interlace-theme.css` was measured against
+ * Every `--interlace-*` value in `brand/interlace.css` was measured against
  * the surface it was *designed* for, and the header comments record those
  * numbers. But components don't only put solid tokens on solid surfaces —
  * they put a TINT of a token on a surface and then text on top of that:
@@ -43,7 +43,10 @@ import { tagVariants } from '../src/primitives/tag.js';
 import { gradeBadgeVariants } from '../src/primitives/grade-badge.js';
 
 const REPO_ROOT = resolve(__dirname, '../../..');
-const THEME_CSS = resolve(__dirname, '../styles/interlace-theme.css');
+// The palette (brand) and the names bound to it (semantics), read as one.
+const THEME_CSS = ['brand/interlace.css', 'semantics.css'].map((f) =>
+  resolve(__dirname, '../styles', f),
+);
 const SCAN_ROOTS = [resolve(__dirname, '../src')];
 
 /** WCAG 2.2 AA floor for normal body text. */
@@ -130,18 +133,18 @@ type Mode = 'light' | 'dark';
  * than as a silently-passing lock.
  *
  * DELIBERATELY ONLY THE DEFAULT THEME. Since Phase 8 there is a second
- * palette (`styles/themes/harbor.css`), but it lives in its own file and is
+ * palette (`styles/brand/harbor.css`), but it lives in its own file and is
  * checked by `theme-contract-lock` — which measures the palette. THIS lock
  * measures COMPONENT SOURCE, where the tint alphas live, and component source
  * is theme-agnostic by construction. Reading both palettes here would only
  * let one silently overwrite the other in the maps below.
  */
 function readThemeTokens(): Record<Mode, Map<string, RGB>> {
-  const css = readFileSync(THEME_CSS, 'utf8');
+  const css = THEME_CSS.map((f) => readFileSync(f, 'utf8')).join('\n');
   const darkAt = css.indexOf(".dark,\n  [data-scheme='dark']");
   expect(
     darkAt,
-    'interlace-theme.css no longer contains the expected dark-mode selector — ' +
+    'brand/interlace.css no longer contains the expected dark-mode selector — ' +
       'this lock parses the file structurally; update it alongside the CSS.',
   ).toBeGreaterThan(-1);
 
@@ -437,7 +440,7 @@ describe('composite AA contrast lock', () => {
     expect(effectiveBackground(text, [], 'light')).toBeNull();
   });
 
-  it('parses both brand-layer palettes out of interlace-theme.css', () => {
+  it('parses both brand-layer palettes out of brand/interlace.css', () => {
     // If the parse silently returned nothing, every assertion below would
     // vacuously pass. Anchor on tokens the file is built around.
     for (const mode of ['light', 'dark'] as const) {

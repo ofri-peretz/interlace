@@ -8,7 +8,7 @@ The Interlace DS ships into two kinds of app:
 Both get the **same** components. This document is the contract that makes
 that possible, and the rules that keep it true.
 
-> **One sentence:** `packages/ui/styles/theme.css` is the only seam between
+> **One sentence:** `packages/ui/styles/page/fumadocs.css` is the only seam between
 > the DS and fumadocs — DS components never import `fumadocs-ui`, and
 > fumadocs pages consume DS components through the bridge tokens.
 
@@ -30,7 +30,7 @@ dropdowns, invisible borders, unreadable popovers.
 The bridge is one file of aliases:
 
 ```css
-/* packages/ui/styles/theme.css */
+/* packages/ui/styles/page/fumadocs.css */
 @layer interlace.bridge {
   :root {
     --background: var(--color-fd-background);
@@ -42,7 +42,7 @@ The bridge is one file of aliases:
 ```
 
 Inside a fumadocs app, `bg-card` now resolves to whatever fumadocs' theme
-says a card is. Outside one, `interlace-theme.css` (a later cascade layer)
+says a card is. Outside one, `brand/interlace.css` (a later cascade layer)
 binds the same names to the Interlace brand values, and the bridge simply
 falls away. **One component, two hosts, zero conditionals.**
 
@@ -105,7 +105,7 @@ above, in the PR that needs it.
 
 Reading a fumadocs token is bridging — that's this file's job. Other
 stylesheets may *write* `--color-fd-*` (pushing a brand value into
-fumadocs' own surface, as `interlace-theme.css` does for
+fumadocs' own surface, as `brand/interlace.css` does for
 `--color-fd-muted-foreground` to hit AAA contrast), but never read.
 
 ---

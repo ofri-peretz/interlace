@@ -6,10 +6,10 @@
  * Interlace 2.0 keeps Tailwind v4's own ladder (640/768/1024/1280/1536)
  * untouched — overriding it changed every consumer app's `sm:` and
  * deleted their `2xl:`. Interlace ADDS one handheld tier below it,
- * `xs` = 30rem (480px), in `packages/ui/styles/foundation.css`.
+ * `xs` = 30rem (480px), in `packages/ui/styles/structure/layout.css`.
  * The contract only holds if:
  *
- *   1. foundation.css declares `xs` and redeclares none of Tailwind's
+ *   1. structure/layout.css declares `xs` and redeclares none of Tailwind's
  *      own tiers.
  *   2. No primitive / pattern / template source file declares an
  *      ad-hoc `@media (...)` query — every responsive surface must
@@ -30,7 +30,7 @@ import { resolve, join } from 'path';
 
 const FOUNDATION_PATH = resolve(
   __dirname,
-  '../styles/foundation.css',
+  '../styles/structure/layout.css',
 );
 
 const SCAN_ROOTS = [
@@ -74,7 +74,7 @@ describe('Breakpoints lock', () => {
   const foundation = readFileSync(FOUNDATION_PATH, 'utf-8');
 
   it.each(Object.entries(EXPECTED_BREAKPOINTS))(
-    'foundation.css declares %s = %s',
+    'structure/type.css declares %s = %s',
     (token, value) => {
       // Match `<token>: <value>;` with flexible whitespace + a trailing
       // comment.
@@ -85,7 +85,7 @@ describe('Breakpoints lock', () => {
     },
   );
 
-  it.each(TAILWIND_TIERS)('foundation.css does NOT redeclare Tailwind\'s %s tier', (tier) => {
+  it.each(TAILWIND_TIERS)('structure/type.css does NOT redeclare Tailwind\'s %s tier', (tier) => {
     expect(foundation).not.toMatch(new RegExp(`--breakpoint-${tier}\\s*:`));
   });
 

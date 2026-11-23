@@ -22,7 +22,7 @@ const load = async (): Promise<Item[]> =>
  * `prefers-reduced-motion` exists.
  *
  * The distinction this locks is the one that decides who is responsible.
- * `preflight.css` clamps `animation-duration` and `transition-duration` to
+ * `page/preflight.css` clamps `animation-duration` and `transition-duration` to
  * 0.01ms with `!important` on `*` under `reduce`, so a CSS-driven component is
  * covered whether or not it mentions the preference. Nothing in any stylesheet
  * reaches `motion/react`, `requestAnimationFrame` or a `setInterval` step — a

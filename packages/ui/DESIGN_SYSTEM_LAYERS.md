@@ -11,7 +11,7 @@ Sibling docs that drill into specific layers:
 In this package:
 
 - `FUMADOCS_BRIDGE.md` (layer-2 seam — the ONLY coupling between the DS
-  and fumadocs; read before touching `theme.css` or `src/fumadocs/`)
+  and fumadocs; read before touching `page/fumadocs.css` or `src/fumadocs/`)
 - `CONVENTIONS.md` (authoring rules: file structure, naming, headers)
 
 The canonical CSS import order is "The CSS import contract" below, and
@@ -76,16 +76,17 @@ theme tokens, and the concrete brand hex literals (`--interlace-primary:
 
 **Files:**
 
-- `packages/ui/styles/tokens.css` — animations + motion tokens, wrapped
-  in `@layer interlace.primitives`.
-- `packages/ui/styles/foundation.css` — type scale, spacing, radius,
-  container widths, font families (registered as Tailwind `@theme`
-  tokens; `@theme` directives stay top-level).
-- `packages/ui/styles/interlace-theme.css` — brand hex literals
-  (`--interlace-*: #hex`), light + dark, wrapped in `@layer interlace.brand`.
+- `packages/ui/styles/brand/interlace.css`, `brand/harbor.css` — brand
+  literals (`--interlace-*`), light + dark, one file per theme, wrapped in
+  `@layer interlace.brand`.
+- `packages/ui/styles/structure/type.css`, `layout.css`, `radius.css`,
+  `motion.css` — the brand-invariant scales (type, containers + `xs`
+  breakpoint, radius steps, keyframes + timings), registered as Tailwind
+  `@theme` tokens. Their classes (prose, animations) sit in Tailwind's
+  `components` layer.
 
-**Cascade layer name(s):** `interlace.primitives`, `interlace.foundation`,
-`interlace.brand`.
+**Cascade layer name(s):** `interlace.brand`; structure uses Tailwind's own
+`@theme` and `components`.
 
 **Rule:** Never reference a semantic (layer 2) token from here. Layer 1
 is the *source*; everything else flows down from it.
@@ -103,12 +104,12 @@ to utility classes (`bg-background`, `text-foreground`, …).
 
 **Files:**
 
-- `packages/ui/styles/theme.css` — fumadocs bridge:
-  `:root { --background: var(--color-fd-background); ... }`. Wrapped in
+- `packages/ui/styles/semantics.css` — the bindings:
+  `:root { --background: var(--interlace-background); ... }`, wrapped in
+  `@layer interlace.semantics`, plus the `@theme inline` registration.
+- `packages/ui/styles/page/fumadocs.css` (opt-in) — fumadocs bridge:
+  `:root { --background: var(--color-fd-background); ... }`, wrapped in
   `@layer interlace.bridge`.
-- `packages/ui/styles/interlace-theme.css` (the second half) — brand
-  bindings: `:root { --background: var(--interlace-background); ... }`.
-  Wrapped in `@layer interlace.semantics`.
 
 **Cascade layer name(s):** `interlace.bridge`, `interlace.semantics`.
 
@@ -130,7 +131,7 @@ import `fumadocs-ui` and never style with `*-fd-*` classes (they'd render
 unstyled outside a docs app); `src/fumadocs/` is the one adapter
 directory, allowed only the headless `fumadocs-core/*` entrypoints
 enumerated in that doc; fumadocs pages consume DS components through the
-bridge tokens. Read it before touching `theme.css` or `src/fumadocs/`.
+bridge tokens. Read it before touching `page/fumadocs.css` or `src/fumadocs/`.
 
 ---
 
@@ -208,33 +209,43 @@ See `packages/ui/src/templates/README.md` for the per-template contract.
 
 ## CSS Cascade Layers — the override story
 
-The DS declares its layer order in **`packages/ui/styles/index.css`**:
+The stylesheet tree is the architecture. Each directory reads only the one
+before it, and `__tests__/css-layer-lock.test.ts` fails the build if one
+reaches across:
 
-```css
-@layer interlace.primitives, interlace.foundation, interlace.preflight,
-       interlace.bridge, interlace.brand, interlace.semantics;
-
-@import "./tokens.css";
-@import "./foundation.css";
-@import "./preflight.css";
-@import "./theme.css";
-@import "./interlace-theme.css";
+```
+styles/
+  brand/*.css        1. raw --interlace-* values      @layer interlace.brand
+  semantics.css      2. semantic names → brand values  @layer interlace.semantics
+  structure/*.css    3. type, layout, radius, motion   @theme + @layer components
+  page/*.css         4. opt-in page styling            @layer base + interlace.bridge
+  base.css           = 1 + 2 + 3   (registry: interlace-base, ships with every component)
+  index.css          = base + 4    (registry: interlace-foundation, opt-in)
 ```
 
-The declared order is the **cascade order** — later layers win when two
-layers set the same property.
+Both barrels declare:
+
+```css
+@layer interlace.bridge, interlace.brand, interlace.semantics;
+```
+
+Tailwind has already declared `theme, base, components, utilities`, so
+these three rank ABOVE utilities. That is safe only because they hold
+nothing but custom properties on `:root`, `.dark`, `[data-scheme]` and
+`[data-theme]`. Every rule that styles an element (preflight, prose,
+animation classes) sits in Tailwind's `base` or `components` layer, so a
+utility at the call site always wins. (Until 2026-11 preflight sat in a
+custom `interlace.preflight` layer above utilities: `img { height: auto }`
+beat `h-10`.)
 
 **Consumer override pattern:**
 
 ```css
 /* consumer's global.css */
 @import "tailwindcss";
-@import "@interlace/ui/styles/index.css";   /* full DS contract */
+@import "@interlace/ui/styles/index.css";   /* or base.css */
 
-/* Fork the brand: re-declare interlace.brand AFTER the import.
- * Your declarations land in the same layer, but later source order
- * wins WITHIN a layer. Or declare a higher layer name (e.g.
- * @layer my-brand;) for an unambiguous override. */
+/* Fork the brand: re-declare interlace.brand AFTER the import. */
 @layer interlace.brand {
   :root {
     --interlace-primary: oklch(0.55 0.22 264);    /* your blue */
@@ -244,15 +255,15 @@ layers set the same property.
 }
 ```
 
-Without cascade layers, brand override = source-order roulette. With
-them, the override surface is named, documented, and deterministic.
+An unlayered `:root { --primary: … }` in the consumer's own CSS beats all
+three layers, which is what a shadcn app expects.
 
 **What's INTENTIONALLY unlayered:**
 
-- Tailwind v4 `@theme { ... }` blocks in `foundation.css` and
-  `interlace-theme.css` (Tailwind processes them globally — wrapping
-  breaks utility generation).
-- Shiki AAA overrides in `theme.css` (they need higher cascade weight
+- Tailwind v4 `@theme { ... }` blocks in `structure/*.css` and
+  `semantics.css` (Tailwind processes them globally — wrapping breaks
+  utility generation).
+- Shiki AAA overrides in `page/shiki.css` (they need higher cascade weight
   than inline `style="--shiki-light: #…"` declarations to win).
 - Component-specific styles inside a primitive's CVA (governed by the
   primitive's own contract, not the DS-wide layer model).
@@ -261,25 +272,18 @@ them, the override surface is named, documented, and deterministic.
 
 ## The CSS import contract
 
-For a consumer app, **one line** gives the full DS baseline:
-
 ```css
 @import "tailwindcss";
-@import "@interlace/ui/styles/index.css";
+@import "@interlace/ui/styles/base.css";    /* additive: what components need */
+/* or */
+@import "@interlace/ui/styles/index.css";   /* base + fonts, preflight, fumadocs, shiki */
 ```
 
-That single import resolves to (in cascade order):
-
-1. `tokens.css` — keyframes, animation utilities → `@layer interlace.primitives`
-2. `foundation.css` — type/spacing/radius `@theme` tokens (top-level for Tailwind)
-3. `preflight.css` — body bg/fg/font, focus ring, scrollbar, min-viewport → `@layer interlace.preflight`
-4. `theme.css` — fumadocs bridge `:root { --background: var(--color-fd-*) }` → `@layer interlace.bridge`
-5. `interlace-theme.css` — brand hex literals + alias bindings → `@layer interlace.brand` + `@layer interlace.semantics`
-
-A consumer who already had the long-form chain
-(`@import "@interlace/ui/styles/tokens.css"` … 5 lines) continues to
-work — the individual files still export — but new code should use the
-barrel.
+`base.css` is held to "adds, never replaces" by
+`apps/registry/src/__tests__/host-style-safety.test.ts`, which compiles a
+stock shadcn globals.css with and without it. Individual files are exported
+under `styles/brand/*`, `styles/semantics.css`, `styles/structure/*` and
+`styles/page/*`, but new code should use a barrel.
 
 ---
 
@@ -287,8 +291,8 @@ barrel.
 
 | Layer | Enforcement |
 |---|---|
-| 1 (Primitives) | `no-raw-color-literal` (ESLint) blocks raw hex outside `@interlace/ui/styles/interlace-theme.css`. |
-| 2 (Semantics) | `fumadocs-bridge-lock.test.ts` — bridge is the only seam: no `fumadocs-ui` import, no `*-fd-*` class, `theme.css` layered + complete, adapter allowlist. See `FUMADOCS_BRIDGE.md`. |
+| 1 (Primitives) | `no-raw-color-literal` (ESLint) blocks raw hex outside `@interlace/ui/styles/brand/*.css`. |
+| 2 (Semantics) | `fumadocs-bridge-lock.test.ts` — bridge is the only seam: no `fumadocs-ui` import, no `*-fd-*` class, `page/fumadocs.css` layered + complete, adapter allowlist. See `FUMADOCS_BRIDGE.md`. |
 | 3 (Components) | R1–R26 via `componentApi` ESLint preset (8 rules). |
 | 4 (Patterns) | Lives under `patterns/`; old `blocks/` aliases marked `@deprecated`. |
 | 5 (Templates) | `templates-section-boundary-lock.test.ts` asserts every template composes `<SectionBoundary>` AND ships a `<X.Skeleton>` page-level loading state. |

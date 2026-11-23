@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { extendTailwindMerge } from 'tailwind-merge';
 
 /**
- * The DS type scale, as declared in `styles/foundation.css`.
+ * The DS type scale, as declared in `styles/structure/type.css`.
  *
  * Tailwind v4 generates a `text-<name>` utility for every `--text-<name>` theme
  * key, which collides head-on with `text-<color>`. tailwind-merge cannot tell
@@ -18,7 +18,7 @@ import { extendTailwindMerge } from 'tailwind-merge';
  * `<pre>` (which lost `text-code`), and `<Typography variant="ui" tone="muted">`,
  * which lost the size that is the entire point of the variant.
  *
- * Keep this list in sync with `--text-*` in `foundation.css`. A token added
+ * Keep this list in sync with `--text-*` in `structure/type.css`. A token added
  * there and forgotten here does not error — it silently loses its size at the
  * first `cn()` that also sets a colour, which is the worst possible failure
  * mode, so `__tests__/cn-type-scale-lock.test.ts` asserts the two agree.

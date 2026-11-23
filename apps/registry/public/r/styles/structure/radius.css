@@ -1,0 +1,22 @@
+/*
+ * @interlace/ui — STRUCTURE / radius: the `rounded-*` scale from `--radius`.
+ *
+ * Layer 3 of 4 (brand → semantics → structure → page). One knob: the
+ * brand sets `--interlace-radius`, semantics.css binds `--radius` to it,
+ * and these four keys derive from `--radius`.
+ */
+
+/* ── Radius: derived from the `--radius` CSS variable ───────────────────
+   The same derivation shadcn writes into every app, so in a shadcn app
+   these keys agree with the app's own and `--radius` is the one knob.
+   Written character for character as shadcn writes them, so a shadcn app
+   compiles `rounded-*` exactly as it did before Interlace arrived. An app
+   without `--radius` gets it from semantics.css.
+   Interlace sets --interlace-radius to 0.75rem (brand/interlace.css):
+   sm 8px · md 10px · lg 12px · xl 16px. */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}

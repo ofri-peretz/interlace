@@ -14,7 +14,7 @@
  */
 
 @theme {
-  /* --font-body is declared in foundation.css (additive). */
+  /* --font-body is declared in structure/type.css (additive). */
   --font-sans: var(--font-body);
   --font-mono:
     'JetBrains Mono', 'JetBrains Mono Variable', 'SF Mono', Menlo, Consolas,

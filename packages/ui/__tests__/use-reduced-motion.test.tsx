@@ -120,7 +120,7 @@ describe('useReducedMotion', () => {
     // it is the branch that decides what the SSR HTML contains. `false` is the
     // only honest answer (the server cannot know the preference), and it is
     // exactly why the hydration frame is unavoidable for any JS hook. The
-    // stylesheet reset in preflight.css is what covers that case.
+    // stylesheet reset in page/preflight.css is what covers that case.
     const matchMedia = vi.fn();
     vi.stubGlobal('matchMedia', matchMedia);
     expect(renderToString(<Probe />)).toContain('false');

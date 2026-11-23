@@ -4,9 +4,9 @@
   "components": [
     {
       "name": "a11y-starter",
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "accordion",
@@ -414,13 +414,13 @@
       "name": "interlace-base",
       "version": "2.0.0",
       "since": null,
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "interlace-foundation",
-      "version": "1.1.0",
+      "version": "2.0.0",
       "since": null,
-      "updated": "2026-08-25"
+      "updated": "2026-11-23"
     },
     {
       "name": "label",
@@ -436,9 +436,9 @@
     },
     {
       "name": "layout-starter",
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "lint-playground",
@@ -454,9 +454,9 @@
     },
     {
       "name": "mdx-starter",
-      "version": "1.7.3",
+      "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-08-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "meteors",
@@ -550,9 +550,9 @@
     },
     {
       "name": "prose",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "published-date",
@@ -804,7 +804,7 @@
       "name": "theme",
       "version": "2.0.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": null
     },
     {
       "name": "theme-script",

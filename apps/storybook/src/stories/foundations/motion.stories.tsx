@@ -31,7 +31,7 @@ import { withReducedMotion, withRtl } from '@/decorators';
  * sample skips its translate entirely and snaps to the destination.
  *
  * Below the samples sits a preflight callout — the four motion invariants
- * that ship in `@interlace/ui/styles/preflight.css` and apply globally to
+ * that ship in `@interlace/ui/styles/page/preflight.css` and apply globally to
  * every Interlace surface. Listing them on the specimen is the seam
  * between the per-component motion choice (durations above) and the
  * global motion budget (the rules below).
@@ -154,7 +154,7 @@ function DurationRow({ step }: { step: DurationStep }) {
 // Uses `useReducedMotion()` from `@interlace/ui/use-reduced-motion` to gate
 // the sample. When the user (or the `ReducedMotion` decorator) has the
 // preference set, the row's duration collapses to 0 and a label calls it
-// out — the JS-driven inverse of the CSS clamp in preflight.css.
+// out — the JS-driven inverse of the CSS clamp in page/preflight.css.
 
 function ReducedMotionRow() {
   const reduce = useReducedMotion();
@@ -202,7 +202,7 @@ function ReducedMotionRow() {
 
 // ── Preflight motion callout ─────────────────────────────────────────────────
 //
-// The four invariants that ship in `@interlace/ui/styles/preflight.css`
+// The four invariants that ship in `@interlace/ui/styles/page/preflight.css`
 // section 6 — the global motion budget every Interlace surface inherits
 // regardless of per-component choices. Box doesn't ship a `warning` surface,
 // so we paint the callout with the warning tint directly + a token border.
@@ -246,7 +246,7 @@ function PreflightCallout() {
           </Typography>
           <Typography variant="ui-sm" tone="muted">
             Global invariants shipped by{' '}
-            <code className="font-mono">@interlace/ui/styles/preflight.css</code>
+            <code className="font-mono">@interlace/ui/styles/page/preflight.css</code>
             . Every Interlace surface inherits these — per-component motion
             choices layer on top.
           </Typography>

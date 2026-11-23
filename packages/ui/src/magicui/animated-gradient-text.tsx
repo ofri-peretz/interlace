@@ -8,7 +8,7 @@
  *
  * Our reimplementation of the Magic UI component of the same name. It is a
  * single span plus one keyframe, so the whole effect lives in three places:
- * this file, `--animate-gradient` in `styles/tokens.css`, and the `gradient`
+ * this file, `--animate-gradient` in `styles/structure/motion.css`, and the `gradient`
  * keyframe next to it.
  *
  * ## Anatomy
@@ -19,9 +19,9 @@
  * ## Motion
  *
  * Pure CSS, and covered twice. `.animate-gradient` is named in the
- * `prefers-reduced-motion: reduce` block in `styles/tokens.css`, which sets
+ * `prefers-reduced-motion: reduce` block in `styles/structure/motion.css`, which sets
  * `animation: none !important`, and it is also caught by the
- * `animation-duration: 0.01ms` wildcard in `styles/preflight.css`. There is no
+ * `animation-duration: 0.01ms` wildcard in `styles/page/preflight.css`. There is no
  * `useReducedMotion` call here and none is needed. Under `reduce` the gradient
  * stops moving but still paints, so the text stays readable.
  *
@@ -39,7 +39,7 @@
  * underneath, so the gradient stops are the glyph colour and SC 1.4.3's 4.5:1
  * binds on every one of them. Both defaults are measured body-text tokens in
  * both schemes — 8.80:1 and 13.76:1 on light, 11.79:1 and 14.68:1 on dark
- * (`styles/interlace-theme.css`). A `--chart-*` token would NOT be admissible
+ * (`styles/brand/interlace.css`). A `--chart-*` token would NOT be admissible
  * here even though it is on the token system, because those are tuned to the
  * 3:1 graphical floor; `magicui/border-beam.tsx` may use one precisely because
  * nothing there is text.

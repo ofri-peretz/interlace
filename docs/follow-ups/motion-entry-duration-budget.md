@@ -1,7 +1,7 @@
 # Follow-up: three entry animations exceed the 200ms entry budget
 
 **Status: RESOLVED, 2026-08-10** — option 1. All three are now
-`0.2s ease-out both` with no delay (`packages/ui/styles/theme.css`), and
+`0.2s ease-out both` with no delay (`packages/ui/styles/page/fumadocs.css`), and
 `packages/ui/__tests__/motion-contract-lock.test.ts` recomputes every
 duration/delay against the ceiling it parses out of MOTION_PHILOSOPHY.md.
 The "Known violation" section named below has been replaced with a
@@ -21,7 +21,7 @@ pointer to that lock.
 
 ## What ships
 
-`packages/ui/styles/theme.css:342-351`:
+`packages/ui/styles/page/fumadocs.css:342-351`:
 
 | Class | Duration | Delay | Total to fully visible |
 | --- | --- | --- | --- |
@@ -33,7 +33,7 @@ All three are entry animations (`both` fill mode, from
 `opacity: 0`), so the budget applies squarely. `.animate-slide-in-left`
 is 4× over.
 
-These are correctly registered in the `tokens.css` reduced-motion
+These are correctly registered in the `structure/motion.css` reduced-motion
 allowlist, so the `reduce` path is fine — this is purely a duration
 budget breach on the default path.
 

@@ -31,7 +31,7 @@ import { useReducedMotion } from '../lib/use-reduced-motion.js';
  * a label, not a scene.
  *
  * Motion driver is rAF, so the gate is `useReducedMotion` (the CSS clamp
- * in preflight.css cannot reach JS-driven motion).
+ * in page/preflight.css cannot reach JS-driven motion).
  */
 export interface DecodeTextProps
   extends Omit<React.ComponentPropsWithoutRef<'span'>, 'children'> {

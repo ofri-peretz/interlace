@@ -213,14 +213,14 @@ GIF/video for genuinely hand-authored animation), per-frame
 packages/ui/styles/` returns nothing but `--duration`/`--speed`, which
 are *per-instance knobs* a Marquee/ShimmerButton call site sets, not a
 scale. Every shipped duration is a literal inside an `--animate-*`
-shorthand in `packages/ui/styles/tokens.css`
+shorthand in `packages/ui/styles/structure/motion.css`
 (`--animate-accordion-down: accordion-down 0.2s ease-out`), and the
 shipped easing is the CSS keyword `ease-out`, not a custom curve.
 
 So the bands below are what you check a number against; the number
 itself is written as a Tailwind `duration-*` / `ease-*` utility at the
 call site, or as a literal in the `--animate-*` shorthand when you add
-a keyframe animation to `tokens.css`.
+a keyframe animation to `structure/motion.css`.
 
 | Band | Duration | Use for |
 | --- | --- | --- |
@@ -234,12 +234,12 @@ a keyframe animation to `tokens.css`.
 | Easing | What ships | Use for |
 | --- | --- | --- |
 | `linear` | `linear` | Loading shimmer, marquee |
-| `ease-out` | the CSS keyword — **not** a custom bezier | Default for entry / appear; what every `--animate-*` in `tokens.css` uses |
+| `ease-out` | the CSS keyword — **not** a custom bezier | Default for entry / appear; what every `--animate-*` in `structure/motion.css` uses |
 | `ease-in` | Tailwind `ease-in` | Exit / dismiss |
 | `ease-in-out` | Tailwind `ease-in-out` | Movement that returns |
 | spring | `motion/react` springs | Direct-manipulation only |
 
-If a real token scale is ever wanted, it is a `tokens.css` change plus
+If a real token scale is ever wanted, it is a `structure/motion.css` change plus
 a lock test — not a doc edit. Until then, do not write
 `var(--duration-fast)`; it resolves to nothing.
 
@@ -248,11 +248,11 @@ a lock test — not a doc edit. Until then, do not write
 `packages/ui/__tests__/motion-contract-lock.test.ts` reads the ceiling
 out of this document — the "Max 200ms on entry" sentence above is the
 number the test enforces — and recomputes every duration and delay from
-`tokens.css` and `theme.css`. Ambient loops (`infinite`) are exempt from
+`structure/motion.css` and `page/fumadocs.css`. Ambient loops (`infinite`) are exempt from
 the ceiling, and pay for it by having to appear in the reduced-motion
 class list.
 
-The three entry classes in `theme.css` shipped at 0.5s, 0.5s + 0.3s and
+The three entry classes in `page/fumadocs.css` shipped at 0.5s, 0.5s + 0.3s and
 0.4s + 0.2s until 2026-08-10 — up to 800ms of invisible hero — which is
 what the lock exists to stop recurring. Do not cite them as precedent.
 

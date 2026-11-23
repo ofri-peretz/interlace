@@ -48,8 +48,8 @@ import {
 } from '../src/lib/theme-tokens.js';
 
 const STYLES = resolve(__dirname, '../styles');
-const INTERLACE_CSS = resolve(STYLES, 'interlace-theme.css');
-const HARBOR_CSS = resolve(STYLES, 'themes/harbor.css');
+const INTERLACE_CSS = resolve(STYLES, 'brand/interlace.css');
+const HARBOR_CSS = resolve(STYLES, 'brand/harbor.css');
 
 /** WCAG 2.2 AA floors. */
 const AA_TEXT = 4.5;
@@ -59,7 +59,7 @@ const AA_NON_TEXT = 3;
 /**
  * Where each theme × scheme physically lives.
  *
- * This table IS the selector matrix from `styles/interlace-theme.css`, in
+ * This table IS the selector matrix from `styles/brand/interlace.css`, in
  * executable form:
  *
  *   :root                                        interlace · light
@@ -355,7 +355,7 @@ describe('theme contract lock', () => {
     const derived = [...readDeclarations(readBlock(INTERLACE_CSS, ':root')).keys()];
     expect(
       derived,
-      'THEME_TOKENS was derived from the `:root` block of interlace-theme.css ' +
+      'THEME_TOKENS was derived from the `:root` block of brand/interlace.css ' +
         'and has drifted from it. Adding a brand token to the default theme ' +
         'without adding it to the manifest means no other theme is ever asked ' +
         'for it — which is exactly the silent-inheritance bug this file exists ' +
@@ -523,7 +523,7 @@ describe('theme contract lock', () => {
     });
 
     it('claims the whole SUBTREE, not just the element it is set on', () => {
-      // `.dark` in interlace-theme.css is unscoped, so it means "INTERLACE
+      // `.dark` in brand/interlace.css is unscoped, so it means "INTERLACE
       // dark": it re-declares every brand literal on whatever element carries
       // it. `[data-theme='X'].dark` needs both on the SAME element, so a
       // `<div class="dark">` inside a themed page silently repaints that
@@ -564,7 +564,7 @@ describe('theme contract lock', () => {
       // `:root`, a subtree that re-brands itself (`<div class="dark">`, which
       // is exactly what a side-by-side theme preview renders) changes the
       // brand token and nothing repaints.
-      const semantics = interlace.slice(interlace.indexOf('@layer interlace.semantics'));
+      const semantics = readFileSync(resolve(STYLES, 'semantics.css'), 'utf8');
       expect(semantics).toContain(':root,\n  .dark,\n  [data-scheme=\'dark\'],\n  [data-theme]');
     });
 
@@ -586,12 +586,12 @@ describe('theme contract lock', () => {
 
     it('is wired into the canonical stylesheet, after the default theme', () => {
       // Order is load-bearing: `[data-theme='X']` and `.dark` are both
-      // (0,1,0), so theme files must be imported AFTER interlace-theme.css.
+      // (0,1,0), so theme files must be imported AFTER brand/interlace.css.
       // Both live in base.css (the additive barrel index.css imports), so
       // every consumer path, base-only or the full contract, gets the order.
       const index = readFileSync(resolve(STYLES, 'base.css'), 'utf8');
-      const base = index.indexOf('./interlace-theme.css');
-      const theme = index.indexOf('./themes/harbor.css');
+      const base = index.indexOf('./brand/interlace.css');
+      const theme = index.indexOf('./brand/harbor.css');
       expect(base).toBeGreaterThan(-1);
       expect(theme).toBeGreaterThan(base);
     });

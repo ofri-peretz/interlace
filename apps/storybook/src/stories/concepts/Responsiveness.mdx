@@ -41,7 +41,7 @@ Desktop-first degrades to a four-column grid on a phone.
 ## 2. The breakpoint ladder
 
 Tailwind's own ladder, untouched, plus one handheld tier that Interlace adds
-in `packages/ui/styles/foundation.css`:
+in `packages/ui/styles/structure/type.css`:
 
 ```css
 --breakpoint-xs: 30rem;   /*  480px — handheld (added) */
@@ -340,7 +340,7 @@ Before you call a component responsive:
 ---
 
 **Sources.** `packages/ui/BREAKPOINT_PHILOSOPHY.md` ·
-`packages/ui/styles/foundation.css` · `packages/ui/styles/preflight.css` ·
+`packages/ui/styles/structure/type.css` · `packages/ui/styles/page/preflight.css` ·
 `packages/ui/__tests__/breakpoints-lock.test.ts` ·
 `packages/ui/__tests__/primitives-min-viewport-lock.test.tsx` ·
 `packages/ui/src/primitives/grid.tsx` ·

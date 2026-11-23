@@ -8,7 +8,7 @@ import { SiteNav } from '@/components/site-nav';
 export const metadata: Metadata = {
   title: 'Semantics Catalogue',
   description:
-    'Every Interlace semantic token — its value in light + dark, the brand primitive it resolves to, and its purpose. Auto-generated from packages/ui/styles/interlace-theme.css at build time.',
+    'Every Interlace semantic token — its value in light + dark, the brand primitive it resolves to, and its purpose. Auto-generated from packages/ui/styles/brand/interlace.css at build time.',
   openGraph: {
     title: 'Semantics Catalogue — Interlace DS',
     description:
@@ -61,7 +61,7 @@ export default function SemanticsCataloguePage() {
           Every Interlace semantic token, its resolved value in light +
           dark, the brand primitive it points at. Auto-generated from{' '}
           <code className="font-mono text-sm">
-            packages/ui/styles/interlace-theme.css
+            packages/ui/styles/brand/interlace.css
           </code>{' '}
           at build time — when the source CSS changes, this table
           changes too.

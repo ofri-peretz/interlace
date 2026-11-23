@@ -64,7 +64,8 @@ describe('brand lockup lock', () => {
   });
 
   it('both token layers define the bar fills in light and dark', () => {
-    const theme = read('packages/ui/styles/interlace-theme.css');
+    const theme =
+      read('packages/ui/styles/brand/interlace.css') + read('packages/ui/styles/semantics.css');
     // Brand layer: one light + one dark value per bar.
     expect(theme.match(/--interlace-brand-mark-bar-o:/g)?.length).toBe(2);
     expect(theme.match(/--interlace-brand-mark-bar-g:/g)?.length).toBe(2);

@@ -137,22 +137,22 @@ export default async function HomePage() {
             <CodeBlock label="Install the baseline" code={STYLE_INSTALL} />
             <div className="grid gap-3 xs:grid-cols-3">
               <StyleFileCard
-                name="tokens.css"
+                name="structure/motion.css"
                 description="Animation + motion tokens (marquee, shimmer, scale-in)."
               />
               <StyleFileCard
-                name="foundation.css"
+                name="structure/type.css"
                 description="Type scale, container widths, the xs breakpoint, radius from --radius."
               />
               <StyleFileCard
-                name="interlace-theme.css"
+                name="brand/interlace.css"
                 description="Brand burnt-orange palette (light + dark), AAA contrast."
               />
             </div>
             <p className="text-muted-foreground text-xs">
               Or fetch raw:{' '}
               <code className="font-mono break-all">
-                /r/styles/&lt;base|tokens|foundation|interlace-theme&gt;.css
+                /r/styles/base.css (imports brand/, semantics.css, structure/)
               </code>
             </p>
           </div>

@@ -187,7 +187,7 @@ describe('component documentation survives shadcn add', () => {
  * The `theme` item must ship the barrel, not just the leaves. It exists
  * because a skipped file "silently degraded half the contract"; withholding it
  * handed every consumer that exact problem, plus a cascade order whose last
- * step (a theme AFTER interlace-theme) is not guessable.
+ * step (a theme AFTER brand/interlace.css) is not guessable.
  */
 const readItem = async (name: string) =>
   JSON.parse(await readFile(path.join(R_DIR, `${name}.json`), 'utf8'));
@@ -225,7 +225,7 @@ describe('the base / theme / foundation split', () => {
   it('base ships nothing that restyles the host page', async () => {
     const base = await readItem('interlace-base');
     const targets = base.files.map((f: { target: string }) => f.target);
-    for (const optIn of ['fonts.css', 'preflight.css', 'theme.css', 'index.css']) {
+    for (const optIn of ['page/fonts.css', 'page/preflight.css', 'page/fumadocs.css', 'index.css']) {
       expect(targets).not.toContain(`styles/interlace/${optIn}`);
     }
   });
@@ -292,8 +292,8 @@ describe('token-namespace parser', () => {
     const files = new Set(claims.map((c: { file: string }) => c.file));
     // The published collision list is only trustworthy if it read the real
     // files — an empty or partial parse would render an empty table.
-    expect(files.has('interlace-theme.css')).toBe(true);
-    expect(files.has('foundation.css')).toBe(true);
+    expect(files.has('semantics.css')).toBe(true);
+    expect(files.has('structure/type.css')).toBe(true);
     expect(claims.some((c: { name: string }) => c.name === '--color-accent')).toBe(true);
     expect(claims.some((c: { name: string }) => c.name === '--breakpoint-xs')).toBe(true);
   });
@@ -301,12 +301,12 @@ describe('token-namespace parser', () => {
   it('matches the stylesheets on disk, not a copy', async () => {
     const claims = await collectThemeClaims();
     const css = await readFile(
-      path.join(process.cwd(), '../../packages/ui/styles/interlace-theme.css'),
+      path.join(process.cwd(), '../../packages/ui/styles/semantics.css'),
       'utf8',
     );
     const direct = parseThemeKeys(css).length;
     expect(
-      claims.filter((c: { file: string }) => c.file === 'interlace-theme.css').length,
+      claims.filter((c: { file: string }) => c.file === 'semantics.css').length,
     ).toBe(direct);
   });
 
