@@ -121,6 +121,10 @@ const TEXT: [string, string][] = [
   ['secondary-foreground', 'secondary'],
   ['primary-foreground', 'primary'],
   ['primary', 'background'],
+  // Not overridden by the mode, on purpose: highlight is only ever used as
+  // this pair (badge, banner, button, featured icon), and every brand already
+  // sets it at 11:1 or more. Listing it here proves that stays true.
+  ['highlight-foreground', 'highlight'],
 ];
 const TONES = ['destructive', 'success', 'warning', 'info', 'caution'];
 for (const tone of TONES) {

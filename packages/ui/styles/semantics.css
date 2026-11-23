@@ -300,9 +300,12 @@
  *      at 7:1.
  *   4. Status colours mix toward the foreground until their text clears 7:1,
  *      as text on the page and as a filled chip.
- *   5. Borders and inputs darken to a clear line, the ring becomes the
- *      foreground, and the focus indicator becomes a 3px outline 2px outside
- *      the element.
+ *   5. Borders and inputs darken to a clear line, and the ring becomes the
+ *      foreground colour. With `data-contrast="more"`, the focus indicator
+ *      also becomes a 3px outline 2px outside the element. The system
+ *      preference path only upgrades the ring colour; see structure/focus.css.
+ *   Highlight is left alone: it is only used as highlight-foreground on
+ *   highlight, which every brand already sets at 11:1 or more.
  *
  * contrast-more-lock recomputes every pair for every theme in both schemes.
  * The tokens live in @layer interlace.semantics, after the bindings, so an
