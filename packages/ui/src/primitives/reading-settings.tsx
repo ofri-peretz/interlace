@@ -148,7 +148,7 @@ function ContrastToggle({
   showLabel = true,
   ...props
 }: ContrastToggleProps) {
-  const { moreContrast, setContrast } = useReadingPrefs();
+  const { moreContrast, setContrast, mounted } = useReadingPrefs();
 
   return (
     <Toggle
@@ -158,7 +158,10 @@ function ContrastToggle({
       aria-label={showLabel ? undefined : label}
       pressed={moreContrast}
       onPressedChange={(pressed: boolean) => setContrast(pressed ? 'more' : 'normal')}
-      className={className}
+      // Until storage is read the hook reports "off", so a reader who chose
+      // More contrast would see the toggle flip on. Hold it invisible (its
+      // space kept) for that first frame, as TextSizeControl does its label.
+      className={cn(!mounted && 'invisible', className)}
       {...props}
     >
       <ContrastIcon aria-hidden="true" className="size-4" />
