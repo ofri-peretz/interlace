@@ -33,7 +33,7 @@ describe('fluid heading scale', () => {
   });
 
   it('body text never scales with the viewport', () => {
-    for (const level of ['body', 'long', 'ui']) {
+    for (const level of ['body', 'long', 'ui', 'ui-sm', 'code', 'caption']) {
       expect(css.match(new RegExp(`--text-${level}: ([^;]+);`))![1]).not.toMatch(/vw|clamp/);
     }
   });

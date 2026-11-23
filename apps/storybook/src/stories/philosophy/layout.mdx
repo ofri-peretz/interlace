@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
     source: docs/philosophies/LAYOUT_PHILOSOPHY.md
-    hash: 1fa027fb5fe0 */}
+    hash: 3bb5f05a5ed8 */}
 
 # Layout & Responsiveness Philosophy
 
@@ -118,7 +118,7 @@ below is the layout-side summary.
 | (base) | 0–479 | Single column, smallest typography, page padding `px-4` |
 | `xs:` | ≥ 480 (`30rem`) | Page padding `px-6`, side-by-side chips |
 | `md:` | ≥ 768 (`48rem`) | Multi-column grids start, headlines scale up |
-| `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding `py-24` |
+| `lg:` | ≥ 1024 (`64rem`) | Page padding `px-8`, section padding fluid, see §5 |
 | `xl:` | ≥ 1280 (`80rem`) | `wide` containers reach max width |
 
 DS components stop growing at `xl:` — `Container size="wide"` (1280px)
@@ -399,7 +399,7 @@ When designing or reviewing a layout, ask:
 4. **#4 Mobile-first** — do base classes describe the smallest
    viewport, with `sm:` / `md:` / `lg:` only adding density?
 5. **#5 Density** — does horizontal padding scale `px-4 → sm:px-6 →
-   lg:px-8`? Section padding `py-16 → md:py-20 → lg:py-24`?
+   lg:px-8`? Section padding from a `py-section-*` token, not stepped `py-*`?
 6. **#6 Reserve** — does every async slot reserve its final height?
    Do images carry aspect-ratio?
 7. **#7 Compose** — is every `border-y` / `bg-fd-card/*` expressed as
