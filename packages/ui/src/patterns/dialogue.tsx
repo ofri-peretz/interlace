@@ -87,7 +87,7 @@ const BUBBLE: Record<DialogueTone, string> = {
   // A Citation chip is text-primary on a primary tint; on the inverse
   // surface that pair loses its contrast, so the chip turns light.
   inverse:
-    'bg-foreground text-background [&_[data-slot=citation-trigger]]:bg-background/15 [&_[data-slot=citation-trigger]]:text-background',
+    'bg-foreground text-background [&_[data-slot=citation-trigger]]:bg-background [&_[data-slot=citation-trigger]]:text-foreground',
 };
 
 /** The speaker's colour when it sits inside the bubble. */
