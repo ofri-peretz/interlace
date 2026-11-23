@@ -990,6 +990,17 @@
     "previewDark": null,
     "skeleton": null
   },
+  "kbd": {
+    "title": "Primitives/Kbd",
+    "storyIds": [
+      "primitives-kbd--default",
+      "primitives-kbd--sizes",
+      "primitives-kbd--groups"
+    ],
+    "preview": "primitives-kbd--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "label": {
     "title": "Primitives/Label",
     "storyIds": [

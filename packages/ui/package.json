@@ -208,6 +208,10 @@
       "types": "./dist/primitives/thread-mark.d.ts",
       "default": "./dist/primitives/thread-mark.js"
     },
+    "./kbd": {
+      "types": "./dist/primitives/kbd.d.ts",
+      "default": "./dist/primitives/kbd.js"
+    },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
       "default": "./dist/primitives/label.js"

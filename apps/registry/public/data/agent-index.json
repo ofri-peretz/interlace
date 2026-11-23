@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 156
+    "itemCount": 157
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 68,
+      "primitive": 69,
       "pattern": 39,
       "effect": 17,
       "template": 13,
@@ -39,10 +39,10 @@
       "theme": 3
     },
     "category": {
-      "primitive": 68,
+      "primitive": 69,
       "pattern": 39,
       "blog": 31,
-      "foundation": 23,
+      "foundation": 24,
       "data": 22,
       "effect": 17,
       "form": 16,
@@ -59,19 +59,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 93,
+      "server": 94,
       "client": 63
     },
     "keyboard": {
-      "none": 121,
+      "none": 122,
       "handled": 35
     },
     "loading": {
-      "none": 124,
+      "none": 125,
       "built-in": 32
     },
     "minViewport": {
-      "320": 92,
+      "320": 93,
       "480": 7,
       "768": 1,
       "inherited": 56
@@ -3951,6 +3951,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-weave.json",
       "item": "https://ds.interlace.tools/r/interlace-weave.json",
       "docs": "https://ds.interlace.tools/c/interlace-weave"
+    },
+    {
+      "name": "kbd",
+      "title": "Kbd",
+      "type": "registry:ui",
+      "summary": "A key the reader presses: `⌘`, `Esc`, `Ctrl` `K`. The shadcn core `kbd` item, drawn in Interlace tokens. `KbdGroup` sets a chord (`⌘ + K`) or a sequence (`G` then `I`) as one inline run, so the gap between keys is owned by the container, not by a margin on…",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/kbd.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/kbd.json",
+      "item": "https://ds.interlace.tools/r/kbd.json",
+      "docs": "https://ds.interlace.tools/c/kbd"
     },
     {
       "name": "label",
