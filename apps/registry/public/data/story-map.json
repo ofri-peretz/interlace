@@ -335,6 +335,21 @@
     "previewDark": "primitives-card--dark",
     "skeleton": "primitives-card--loading"
   },
+  "chart-frame": {
+    "title": "Charts/ChartFrame",
+    "storyIds": [
+      "charts-chartframe--default",
+      "charts-chartframe--source-only",
+      "charts-chartframe--sources",
+      "charts-chartframe--other-words",
+      "charts-chartframe--narrow-column",
+      "charts-chartframe--dark",
+      "charts-chartframe--rtl"
+    ],
+    "preview": "charts-chartframe--default",
+    "previewDark": "charts-chartframe--dark",
+    "skeleton": null
+  },
   "checkbox": {
     "title": "Primitives/Checkbox",
     "storyIds": [
