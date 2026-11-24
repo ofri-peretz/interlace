@@ -56,17 +56,17 @@ to claim. Read it before writing props; the props table on
 same render the accessibility gate asserts against, including the loading and
 dark variants.
 
-## Worked example — `choropleth-map`
+## Worked example — `calendar`
 
 ```
 rendering    client
 minViewport  320
-keyboard     Escape
-states       MapBinning = quantile | equal
-exports      ChoroplethMap, MAX_BINS, MIN_VIEWPORT
+keyboard     ArrowDown, ArrowLeft, ArrowRight, ArrowUp, End, Home, PageDown, PageUp
+states       DayState = open | today | selected | unavailable
+exports      MIN_VIEWPORT
 ```
 
-A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.
+One month of days to pick one from: the date grid of a booking page, a date field's popup, a "when" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.
 
 ## The rule
 

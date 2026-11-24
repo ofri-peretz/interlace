@@ -400,6 +400,42 @@
       }
     },
     {
+      "name": "calendar-model",
+      "type": "registry:ui",
+      "title": "Calendar Model",
+      "description": "The pure half of `Calendar`: dates as plain `YYYY-MM-DD` strings, the month grid, the keyboard moves of the WAI-ARIA date grid, and the bounds.",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "One month of days to pick one from: the date grid of a booking page, a date field's popup, a \"when\" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "callout",
       "type": "registry:ui",
       "title": "Callout",
@@ -2699,6 +2735,24 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "time-slot-picker",
+      "type": "registry:ui",
+      "title": "Time Slot Picker",
+      "description": "The times open on one day, as tiles to pick one from: the second half of a booking page, next to a `Calendar`. Built on Base UI's radio group, so it is one tab stop, the arrows move between times, and a form posts the picked slot's `value` under `name`.…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
         "version": "1.0.0",
         "since": null
       }

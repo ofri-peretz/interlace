@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 193 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 196 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -54,17 +54,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 102 server, 91 client
-- keyboard: 151 none, 42 handled
-- built-in loading state: 37 of 193
-- declared minViewport: 122 at 320, 7 at 480, 1 at 768, 63 at inherited
+- rendering: 103 server, 93 client
+- keyboard: 151 none, 45 handled
+- built-in loading state: 38 of 196
+- declared minViewport: 124 at 320, 7 at 480, 1 at 768, 64 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 75 item(s)
-- tier `pattern` — 50 item(s)
+- tier `primitive` — 77 item(s)
+- tier `pattern` — 51 item(s)
 - tier `effect` — 20 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 13 item(s)
@@ -73,12 +73,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
-- category `primitive` (Primitives) — 75 item(s)
-- category `pattern` (Patterns) — 50 item(s)
+- category `primitive` (Primitives) — 77 item(s)
+- category `pattern` (Patterns) — 51 item(s)
 - category `blog` (Blog & long-form) — 35 item(s)
 - category `data` (Data display) — 28 item(s)
 - category `foundation` (Foundation) — 27 item(s)
-- category `form` (Form & input) — 20 item(s)
+- category `form` (Form & input) — 23 item(s)
 - category `effect` (Effects) — 20 item(s)
 - category `decorative` (Decorative) — 18 item(s)
 - category `feedback` (Feedback) — 15 item(s)
@@ -138,6 +138,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Button Variants](https://ds.interlace.tools/c/button-variants): The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button-variants.json`
   - contract: server, v3.3.0
+- [Calendar](https://ds.interlace.tools/c/calendar): One month of days to pick one from: the date grid of a booking page, a date field's popup, a "when" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/calendar.json`
+  - contract: client, min 320px, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, states open|today|selected|unavailable, v1.0.0
+- [Calendar Model](https://ds.interlace.tools/c/calendar-model): The pure half of `Calendar`: dates as plain `YYYY-MM-DD` strings, the month grid, the keyboard moves of the WAI-ARIA date grid, and the bounds.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/calendar-model.json`
+  - contract: server, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, v1.0.0
 - [Callout](https://ds.interlace.tools/c/callout): Inline-prose annotation. The "stop and read this" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner ("your save failed"), Callout is an in-band authored aside ("note: this rule is…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/callout.json`
   - contract: server, min 320px, v2.1.1
@@ -465,6 +471,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Thread Steps](https://ds.interlace.tools/c/thread-steps): An ordered sequence held together by Interlace's woven thread: a knot for each step, and two strands that cross between one knot and the next. The strands draw in as the reader reaches each step, so the motion says one thing only: this leads to that.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/thread-steps.json`
   - contract: client, min 320px, states complete|current|upcoming, v1.0.0
+- [Time Slot Picker](https://ds.interlace.tools/c/time-slot-picker): The times open on one day, as tiles to pick one from: the second half of a booking page, next to a `Calendar`. Built on Base UI's radio group, so it is one tab stop, the arrows move between times, and a form posts the picked slot's `value` under `name`.…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/time-slot-picker.json`
+  - contract: client, min 320px, loading state, keyboard via Base UI radio, states morning|afternoon|evening, v1.0.0
 - [Timeline](https://ds.interlace.tools/c/timeline): A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on a horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/timeline.json`
   - contract: server, min 320px, v1.0.2
