@@ -170,13 +170,48 @@ export function thinTicks(extents: ReadonlyArray<readonly [number, number]>, gap
   return show;
 }
 
+/**
+ * The fixed words a reader meets, for a page in another language. Sentences are
+ * functions, so each language can order and inflect them its own way.
+ */
+export type DotPlotLabels = {
+  /** A missing value in the table. */
+  noData: string;
+  /** The name of the legend, for screen readers. */
+  series: string;
+  /** The table's first column, for screen readers. */
+  row: string;
+  /** Shown when there is nothing to plot. */
+  empty: string;
+  /** The table's caption, given the chart's `label` when it is a string. */
+  tableCaption: (label?: string) => string;
+  /** The sentence for one row. Each value is formatted, or null when missing. */
+  rowSentence: (row: string, values: ReadonlyArray<{ series: string; value: string | null }>) => string;
+};
+
+const LABELS: DotPlotLabels = {
+  noData: 'No data',
+  series: 'Series',
+  row: 'Row',
+  empty: 'No values to show yet.',
+  tableCaption: (label) => (label ? `${label}: values by row` : 'Values by row'),
+  rowSentence: (row, values) => `${row}: ${values.map((v) => `${v.series} ${v.value ?? 'no data'}`).join(', ')}.`,
+};
+
 /** One sentence for a row: its label, then every series' value. */
-export function describeDotRow(row: DotRow, series: readonly DotSeries[], format: (v: number) => string): string {
-  const parts = series.map((s) => {
-    const v = row.values[s.id];
-    return `${s.label} ${finite(v) ? format(v) : 'no data'}`;
-  });
-  return `${row.label}: ${parts.join(', ')}.`;
+export function describeDotRow(
+  row: DotRow,
+  series: readonly DotSeries[],
+  format: (v: number) => string,
+  sentence: DotPlotLabels['rowSentence'] = LABELS.rowSentence,
+): string {
+  return sentence(
+    row.label,
+    series.map((s) => {
+      const v = row.values[s.id];
+      return { series: s.label, value: finite(v) ? format(v) : null };
+    }),
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -208,6 +243,8 @@ export interface DotPlotProps extends Omit<React.ComponentProps<'figure'>, 'chil
   showTable?: boolean;
   /** Reserve the chart's box while the data loads. */
   loading?: boolean;
+  /** Fixed words, for pages in another language. */
+  labels?: Partial<DotPlotLabels>;
 }
 
 export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotPlot(
@@ -221,11 +258,13 @@ export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotP
     label,
     showTable = false,
     loading = false,
+    labels: labelsProp,
     className,
     ...props
   },
   ref,
 ) {
+  const labels = { ...LABELS, ...labelsProp };
   const reduced = useReducedMotion();
   const labelId = React.useId();
   const listRef = React.useRef<HTMLUListElement>(null);
@@ -369,7 +408,7 @@ export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotP
         className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
-        <p className="text-sm text-muted-foreground">No values to show yet.</p>
+        <p className="text-sm text-muted-foreground">{labels.empty}</p>
       </figure>
     );
   }
@@ -407,7 +446,7 @@ export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotP
         </figcaption>
       ) : null}
 
-      <ul data-slot="dot-plot-legend" aria-label="Series" className="m-0 flex list-none flex-wrap gap-x-4 gap-y-1 p-0 text-ui-sm">
+      <ul data-slot="dot-plot-legend" aria-label={labels.series} className="m-0 flex list-none flex-wrap gap-x-4 gap-y-1 p-0 text-ui-sm">
         {series.map((s, i) => (
           <li key={s.id}>
             <button
@@ -522,7 +561,7 @@ export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotP
                 {finite(endValue) ? format(endValue) : '–'}
               </span>
               <span className="sr-only">
-                {describeDotRow(row, series, format)}
+                {describeDotRow(row, series, format, labels.rowSentence)}
                 {row.note ? ` ${row.note}.` : ''}
               </span>
             </li>
@@ -557,12 +596,12 @@ export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotP
       <div data-slot="dot-plot-table" className={cn(showTable ? 'overflow-x-auto' : 'sr-only')}>
         <table className="w-full text-ui-sm tabular-nums">
           <caption className="text-muted-foreground pb-2 text-start text-caption">
-            {typeof label === 'string' ? `${label}: values by row` : 'Values by row'}
+            {labels.tableCaption(typeof label === 'string' ? label : undefined)}
           </caption>
           <thead>
             <tr className="border-border border-b">
               <th scope="col" className="py-1.5 pe-4 text-start font-medium">
-                <span className="sr-only">Row</span>
+                <span className="sr-only">{labels.row}</span>
               </th>
               {series.map((s) => (
                 <th key={s.id} scope="col" className="py-1.5 pe-4 text-end font-medium last:pe-0">
@@ -581,7 +620,7 @@ export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotP
                   const v = row.values[s.id];
                   return (
                     <td key={s.id} className="py-1.5 pe-4 text-end last:pe-0">
-                      {finite(v) ? format(v) : '–'}
+                      {finite(v) ? format(v) : labels.noData}
                     </td>
                   );
                 })}

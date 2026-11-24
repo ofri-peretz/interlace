@@ -171,7 +171,7 @@ describe('<DotPlot>', () => {
     const { container, rerender } = renderPlot({ label: 'Support' });
     const wrap = container.querySelector('[data-slot="dot-plot-table"]')!;
     expect(wrap.className).toContain('sr-only');
-    expect(within(wrap as HTMLElement).getByRole('rowheader', { name: 'Not asked' }).parentElement!.textContent).toBe('Not asked––');
+    expect(within(wrap as HTMLElement).getByRole('rowheader', { name: 'Not asked' }).parentElement!.textContent).toBe('Not askedNo dataNo data');
     rerender(<DotPlot series={YEARS} rows={ROWS} showTable />);
     expect(container.querySelector('[data-slot="dot-plot-table"]')!.className).not.toContain('sr-only');
     expect(screen.getByText('Values by row')).toBeTruthy();
@@ -307,5 +307,34 @@ describe('<DotPlot> when series change', () => {
     rerender(<DotPlot rows={ROWS} series={YEARS.slice(0, 1)} format={pctFormat} locale="en-US" />);
     expect(container.querySelector('[data-slot="dot-plot-dot"][class*="opacity-25"]')).toBeNull();
     expect(screen.getByRole('button', { name: /Year one/ }).getAttribute('aria-pressed')).toBe('false');
+  });
+});
+
+describe('<DotPlot> labels', () => {
+  it('takes every fixed word from labels, for a page in another language', () => {
+    const { container, rerender } = render(
+      <DotPlot
+        rows={ROWS}
+        series={YEARS}
+        format={pctFormat}
+        locale="en-US"
+        label="Support"
+        labels={{
+          noData: 'Sin datos',
+          series: 'Series (es)',
+          row: 'Fila',
+          tableCaption: (l) => `${l} por fila`,
+          rowSentence: (row, values) => `${row} — ${values.map((v) => v.value ?? '?').join(' / ')}`,
+        }}
+      />,
+    );
+    expect(screen.getByRole('list', { name: 'Series (es)' })).toBeTruthy();
+    const table = container.querySelector('[data-slot="dot-plot-table"]') as HTMLElement;
+    expect(within(table).getByText('Support por fila')).toBeTruthy();
+    expect(within(table).getByText('Fila')).toBeTruthy();
+    expect(within(table).getAllByText('Sin datos')).toHaveLength(2);
+    expect(screen.getByText('Not asked — ? / ?')).toBeTruthy();
+    rerender(<DotPlot rows={[]} series={YEARS} labels={{ empty: 'Nada todavía.' }} />);
+    expect(screen.getByText('Nada todavía.')).toBeTruthy();
   });
 });

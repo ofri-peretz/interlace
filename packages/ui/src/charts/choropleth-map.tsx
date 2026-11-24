@@ -181,22 +181,69 @@ export function shadeSteps(count: number): number[] {
   return Array.from({ length: count }, (_, i) => Math.round((i * top) / (count - 1)));
 }
 
+/** What `describeMap` knows about a map, for a sentence in any language. */
+export type MapSummary = {
+  /** How many areas the map has. */
+  count: number;
+  /** The highest and lowest area, with its value formatted. Absent when no area has a value. */
+  high?: { label: string; value: string };
+  low?: { label: string; value: string };
+  /** How many areas have no value. */
+  missing: number;
+};
+
+/**
+ * The fixed words a reader meets, for a page in another language. Sentences are
+ * functions, so each language can order and inflect them its own way.
+ */
+export type ChoroplethMapLabels = {
+  /** An area without a value, in the legend and the table. */
+  noData: string;
+  /** The table's first column. */
+  area: string;
+  /** The table's value column, when `legendLabel` is not given. */
+  value: string;
+  /** What the live line says before anything is picked out. */
+  hint: string;
+  /** Shown when there are no areas. */
+  empty: string;
+  /** The table's caption, given the chart's `label` when it is a string. */
+  tableCaption: (label?: string) => string;
+  /**
+   * The live line and the hover title for one area. `value` is null when the area has no data.
+   * `range` is null then too, and always in the hover title, which leaves the range out.
+   */
+  readout: (area: string, value: string | null, range: string | null) => string;
+  /** The map's one-sentence description. */
+  summary: (s: MapSummary) => string;
+};
+
+const LABELS: ChoroplethMapLabels = {
+  noData: 'No data',
+  area: 'Area',
+  value: 'Value',
+  hint: 'Point at an area, or focus the map and use the arrow keys.',
+  empty: 'No areas to show yet.',
+  tableCaption: (label) => (label ? `${label}: by area` : 'Values by area'),
+  readout: (area, value, range) =>
+    value === null ? `${area}: no data` : range === null ? `${area}: ${value}` : `${area}: ${value} (${range})`,
+  summary: ({ count, high, low, missing }) =>
+    !high || !low
+      ? `Map of ${count} areas. No data.`
+      : `Map of ${count} areas. Highest: ${high.label}, ${high.value}. Lowest: ${low.label}, ${low.value}.` +
+        (missing > 0 ? ` No data for ${missing}.` : ''),
+};
+
 /** One sentence for the whole map: how many areas, the range, and the highest and lowest. */
 export function describeMap(
   areas: readonly MapArea[],
   values: Readonly<Record<string, number | null | undefined>>,
   format: (v: number) => string,
+  summary: ChoroplethMapLabels['summary'] = LABELS.summary,
 ): string {
   const known = areas.filter((a) => finite(values[a.id])).sort((a, b) => values[b.id]! - values[a.id]!);
-  const missing = areas.length - known.length;
-  if (known.length === 0) return `Map of ${areas.length} areas. No data.`;
-  const high = known[0]!;
-  const low = known.at(-1)!;
-  return (
-    `Map of ${areas.length} areas. Highest: ${high.label}, ${format(values[high.id]!)}. ` +
-    `Lowest: ${low.label}, ${format(values[low.id]!)}.` +
-    (missing > 0 ? ` No data for ${missing}.` : '')
-  );
+  const pick = (a: MapArea | undefined) => (a ? { label: a.label, value: format(values[a.id]!) } : undefined);
+  return summary({ count: areas.length, high: pick(known[0]), low: pick(known.at(-1)), missing: areas.length - known.length });
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -230,6 +277,8 @@ export interface ChoroplethMapProps extends Omit<React.ComponentProps<'figure'>,
   showTable?: boolean;
   /** Reserve the map's box while the data loads. */
   loading?: boolean;
+  /** Fixed words, for pages in another language. */
+  labels?: Partial<ChoroplethMapLabels>;
 }
 
 export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(function ChoroplethMap(
@@ -247,11 +296,13 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
     legendLabel,
     showTable = false,
     loading = false,
+    labels: labelsProp,
     className,
     ...props
   },
   ref,
 ) {
+  const labels = { ...LABELS, ...labelsProp };
   const labelId = React.useId();
   const hatchId = `${React.useId().replaceAll(':', '')}-hatch`;
   const [hovered, setHovered] = React.useState<number | null>(null);
@@ -267,7 +318,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
     [areas, values, bins, binning, breaks],
   );
   const classCount = Math.max(0, classes.edges.length - 1);
-  const tableCaption = typeof label === 'string' ? `${label}: by area` : 'Values by area';
+  const tableCaption = labels.tableCaption(typeof label === 'string' ? label : undefined);
   const steps = shadeSteps(classCount);
   // Keyboard order: by name, so a reader who knows the area's name can find it.
   const order = React.useMemo(
@@ -301,7 +352,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
         className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
-        <p className="text-sm text-muted-foreground">No areas to show yet.</p>
+        <p className="text-sm text-muted-foreground">{labels.empty}</p>
       </figure>
     );
   }
@@ -310,7 +361,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
   const active = hovered ?? focused;
   const highlightBin = activeBin ?? pinnedBin;
   const missing = areas.some((a) => !finite(values[a.id]));
-  const summary = describeMap(areas, values, format);
+  const summary = describeMap(areas, values, format, labels.summary);
   const range = (b: number) => `${format(classes.edges[b]!)}–${format(classes.edges[b + 1]!)}`;
 
   const step = (delta: number | 'first' | 'last') => {
@@ -357,7 +408,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
           const area = areas[active]!;
           const v = values[area.id];
           const b = binOfArea(active);
-          return finite(v) ? `${area.label}: ${format(v)} (${range(b)})` : `${area.label}: no data`;
+          return finite(v) ? labels.readout(area.label, format(v), range(b)) : labels.readout(area.label, null, null);
         })();
 
   // The hatch is a pattern, so missing areas take it as a `fill` attribute; classes cannot name an id made at render.
@@ -412,7 +463,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
               <svg aria-hidden viewBox="0 0 12 12" className="size-3 shrink-0 overflow-visible">
                 <rect width="12" height="12" rx="2" strokeWidth={1} fill={hatch} className="stroke-border" />
               </svg>
-              <span className="text-muted-foreground">No data</span>
+              <span className="text-muted-foreground">{labels.noData}</span>
             </li>
           ) : null}
         </ul>
@@ -458,7 +509,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
                 highlightBin !== null && b !== highlightBin && 'opacity-25',
               )}
             >
-              <title>{finite(values[area.id]) ? `${area.label}: ${format(values[area.id]!)}` : `${area.label}: no data`}</title>
+              <title>{labels.readout(area.label, finite(values[area.id]) ? format(values[area.id]!) : null, null)}</title>
             </path>
           );
         })}
@@ -479,7 +530,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
         aria-live="polite"
         className="text-muted-foreground min-h-[1lh] text-caption tabular-nums"
       >
-        {readout ?? (classCount > 0 ? 'Point at an area, or focus the map and use the arrow keys.' : '')}
+        {readout ?? (classCount > 0 ? labels.hint : '')}
       </output>
 
       {/* Shown, the table scrolls, so it takes focus and a name: keyboard users can scroll it too. */}
@@ -497,10 +548,10 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
           <thead>
             <tr className="border-border border-b">
               <th scope="col" className="py-1.5 pe-4 text-start font-medium">
-                Area
+                {labels.area}
               </th>
               <th scope="col" className="py-1.5 text-end font-medium">
-                {legendLabel ?? 'Value'}
+                {legendLabel ?? labels.value}
               </th>
             </tr>
           </thead>
@@ -513,7 +564,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
                   <th scope="row" className="py-1.5 pe-4 text-start font-normal">
                     {area.label}
                   </th>
-                  <td className="py-1.5 text-end">{finite(v) ? format(v) : 'No data'}</td>
+                  <td className="py-1.5 text-end">{finite(v) ? format(v) : labels.noData}</td>
                 </tr>
               );
             })}
