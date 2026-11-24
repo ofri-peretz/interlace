@@ -54,8 +54,17 @@ import { configs as reliabilityCfg } from 'eslint-plugin-reliability';
 import maintainability from 'eslint-plugin-maintainability';
 import operability from 'eslint-plugin-operability';
 
+// truepass (test integrity) — its own flat preset, scoped to test files below.
+import { configs as truepass } from 'truepass/eslint';
+
 /** All TSX files across apps and packages (excluding build artefacts). */
 const TSX_FILES = ['apps/**/*.tsx', 'packages/**/*.tsx'];
+
+/** Every test file truepass reads: `*.test.*`, `*.spec.*` and anything under `__tests__`. */
+const TEST_FILES = [
+  '**/*.{test,spec}.{ts,tsx,mts,cts,js,jsx,mjs,cjs}',
+  '**/__tests__/**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}',
+];
 
 export default [
   // ── 1. Global ignores ──────────────────────────────────────────────────────
@@ -257,5 +266,19 @@ export default [
       'react-a11y/anchor-has-content': 'warn',
       'react-a11y/heading-has-content': 'warn',
     },
+  },
+
+  // ── 7. Test integrity (truepass recommended, at error) ─────────────────────
+  // A focused test, a skip with no reason, a fixed sleep or a retry lets a suite
+  // report green while checking less. All four rules run at ERROR on test files.
+  // Findings that predate this are held in each workspace's
+  // `eslint-suppressions.json` (ESLint's own suppressions ratchet): a new one
+  // fails lint, and a fixed one must be pruned (`eslint . --prune-suppressions`).
+  // `truepass diff` runs at pre-push, as the hookset preset's test-integrity
+  // station (`npm run hook:test-integrity`). Locked by
+  // packages/ui/__tests__/truepass-dogfood-lock.test.ts.
+  {
+    ...truepass.recommended,
+    files: TEST_FILES,
   },
 ];

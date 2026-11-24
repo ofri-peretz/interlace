@@ -21,8 +21,11 @@
   },
   "scripts": {
     "prepare": "[ -d .git ] && lefthook install || true",
-    "hook:staged": "oxlint -c .oxlintrc.json",
+    "hook:staged": "oxlint -c .oxlintrc.json --no-error-on-unmatched-pattern",
     "hook:verify": "turbo run typecheck test build --output-logs=errors-only",
+    "hook:provedone": "provedone gate --mode enforce",
+    "hook:test-integrity": "truepass diff --base origin/main",
+    "hook:triggerlist": "git cat-file -e origin/main:.sdlc/checklist.yaml 2>/dev/null || { echo 'triggerlist: no checklist on origin/main yet, protect skipped'; exit 0; }; triggerlist protect origin/main",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "typecheck": "turbo run typecheck",
@@ -64,6 +67,9 @@
     "lefthook": "^1.7.0",
     "oxlint": "^1.70.0",
     "prettier": "^3.4.0",
+    "provedone": "^0.3.1",
+    "triggerlist": "^0.3.0",
+    "truepass": "^1.0.0",
     "tsx": "^4.19.0",
     "turbo": "^2.9.0",
     "typescript": "^5.7.0"

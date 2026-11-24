@@ -43,6 +43,9 @@ const NON_COMPONENT_FILES = new Set([
   // `meter-scale.test.ts`, not by a story.
   'data-state-model.ts',
   'meter-scale.ts',
+  // Calendar's pure date arithmetic (`YYYY-MM-DD` days, the month grid, the
+  // grid's keyboard moves). Proved by `calendar.test.tsx`, not by a story.
+  'calendar-model.ts',
 ]);
 
 const kebabToPascal = (name: string) =>

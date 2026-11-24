@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 199
+    "itemCount": 204
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,8 +29,8 @@
   },
   "facets": {
     "tier": {
-      "primitive": 75,
-      "pattern": 51,
+      "primitive": 77,
+      "pattern": 54,
       "effect": 20,
       "chart": 14,
       "game": 14,
@@ -40,21 +40,21 @@
       "theme": 3
     },
     "category": {
-      "primitive": 75,
-      "pattern": 51,
+      "primitive": 77,
+      "pattern": 54,
       "blog": 35,
       "data": 30,
       "foundation": 27,
-      "form": 20,
+      "form": 24,
       "effect": 20,
       "decorative": 18,
       "feedback": 15,
       "chart": 14,
       "games": 14,
       "game": 14,
+      "marketing": 14,
       "navigation": 13,
       "template": 13,
-      "marketing": 13,
       "overlay": 10,
       "util": 6,
       "a11y": 4,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 103,
-      "client": 96
+      "server": 105,
+      "client": 99
     },
     "keyboard": {
-      "none": 156,
-      "handled": 43
+      "none": 158,
+      "handled": 46
     },
     "loading": {
-      "none": 162,
-      "built-in": 37
+      "none": 166,
+      "built-in": 38
     },
     "minViewport": {
-      "320": 128,
+      "320": 131,
       "480": 7,
       "768": 1,
-      "inherited": 63
+      "inherited": 65
     }
   },
   "items": [
@@ -1220,6 +1220,144 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/button.json",
       "item": "https://ds.interlace.tools/r/button.json",
       "docs": "https://ds.interlace.tools/c/button"
+    },
+    {
+      "name": "calendar-model",
+      "title": "Calendar Model",
+      "type": "registry:ui",
+      "summary": "The pure half of `Calendar`: dates as plain `YYYY-MM-DD` strings, the month grid, the keyboard moves of the WAI-ARIA date grid, and the bounds.",
+      "topics": [],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/calendar-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/calendar-model.json",
+      "item": "https://ds.interlace.tools/r/calendar-model.json",
+      "docs": "https://ds.interlace.tools/c/calendar-model"
+    },
+    {
+      "name": "calendar",
+      "title": "Calendar",
+      "type": "registry:ui",
+      "summary": "One month of days to pick one from: the date grid of a booking page, a date field's popup, a \"when\" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.",
+      "topics": [],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "DayState",
+          "values": [
+            "open",
+            "today",
+            "selected",
+            "unavailable",
+            "outside"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "grid",
+          "gridcell"
+        ],
+        "aria": [
+          "aria-current",
+          "aria-disabled",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-selected"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/calendar.tsx",
+        "components/ui/calendar-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/calendar.json",
+      "item": "https://ds.interlace.tools/r/calendar.json",
+      "docs": "https://ds.interlace.tools/c/calendar"
     },
     {
       "name": "callout",
@@ -5471,6 +5609,67 @@
       "docs": "https://ds.interlace.tools/c/metric-table"
     },
     {
+      "name": "multi-step-form",
+      "title": "Multi Step Form",
+      "type": "registry:ui",
+      "summary": "One form, a few steps, a last look before it is sent: a booking flow (when, who, check), a sign-up, a request. Every step is a real part of one `<form>`, kept in the page and hidden while it is not the current one, so what the reader typed survives going…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "alert",
+          "radio"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-current",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/multi-step-form.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/multi-step-form.json",
+      "item": "https://ds.interlace.tools/r/multi-step-form.json",
+      "docs": "https://ds.interlace.tools/c/multi-step-form"
+    },
+    {
       "name": "network-graph",
       "title": "Network Graph",
       "type": "registry:ui",
@@ -7945,6 +8144,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-chart.json",
       "item": "https://ds.interlace.tools/r/share-chart.json",
       "docs": "https://ds.interlace.tools/c/share-chart"
+    },
+    {
+      "name": "share-image",
+      "title": "Share Image",
+      "type": "registry:ui",
+      "summary": "The picture a link unfurls into on X, LinkedIn, Facebook, WhatsApp, iMessage and Slack: a kicker, the page's title, a line of description, and one optional piece of evidence (a big number, a few bars, or anything you draw), with your mark at the top and…",
+      "topics": [],
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ShareImageSize",
+          "values": [
+            "og",
+            "square"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "NEUTRAL_SHARE_THEME",
+        "SHARE_IMAGE_SIZES",
+        "ShareImage"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/share-image.tsx",
+        "components/ui/patterns/share-image-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-image.json",
+      "item": "https://ds.interlace.tools/r/share-image.json",
+      "docs": "https://ds.interlace.tools/c/share-image"
     },
     {
       "name": "sheen-text",
@@ -10433,6 +10690,76 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/time-slider.json",
       "item": "https://ds.interlace.tools/r/time-slider.json",
       "docs": "https://ds.interlace.tools/c/time-slider"
+    },
+    {
+      "name": "time-slot-picker",
+      "title": "Time Slot Picker",
+      "type": "registry:ui",
+      "summary": "The times open on one day, as tiles to pick one from: the second half of a booking page, next to a `Calendar`. Built on Base UI's radio group, so it is one tab stop, the arrows move between times, and a form posts the picked slot's `value` under `name`.…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DayPeriod",
+          "values": [
+            "morning",
+            "afternoon",
+            "evening"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "radio-group",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/time-slot-picker.tsx",
+        "components/ui/patterns/time-slot-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/time-slot-picker.json",
+      "item": "https://ds.interlace.tools/r/time-slot-picker.json",
+      "docs": "https://ds.interlace.tools/c/time-slot-picker"
     },
     {
       "name": "timeline-map",

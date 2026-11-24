@@ -48,6 +48,14 @@
       "types": "./dist/primitives/button-variants.d.ts",
       "default": "./dist/primitives/button-variants.js"
     },
+    "./calendar": {
+      "types": "./dist/primitives/calendar.d.ts",
+      "default": "./dist/primitives/calendar.js"
+    },
+    "./calendar-model": {
+      "types": "./dist/primitives/calendar-model.d.ts",
+      "default": "./dist/primitives/calendar-model.js"
+    },
     "./badge": {
       "types": "./dist/primitives/badge.d.ts",
       "default": "./dist/primitives/badge.js"

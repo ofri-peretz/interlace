@@ -99,6 +99,7 @@ const PRIMITIVES = [
   { name: 'label', viewport: 320, tier: 'server' },
   { name: 'checkbox', viewport: 320, tier: 'client' },
   { name: 'radio-group', viewport: 320, tier: 'client' },
+  { name: 'calendar', viewport: 320, tier: 'client' },
   { name: 'select', viewport: 320, tier: 'client' },
   { name: 'switch', viewport: 320, tier: 'client' },
   // ── Phase 1.2 — overlay & nav primitives ──────────────────────────────

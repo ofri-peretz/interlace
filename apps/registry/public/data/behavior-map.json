@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T18:29:53.345Z",
+  "generatedAt": "2026-11-24T22:23:02.417Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -23,10 +23,13 @@
       "src/charts/**/*.{ts,tsx}",
       " pure cores: day keys, puzzle order, streak arithmetic.\n        ",
       ",\n        ",
-      ",\n        // The four pure variant/model modules.\n        ",
-      ",\n        // The 36 components with real render coverage. See the ledger above.\n        ",
-      ",\n        // Patterns with full render coverage — the same ledger rule: a\n        // file is in at 100 or it is out, and joining is a one-line diff.\n        ",
-      ",\n        // Effects with full render coverage, on the same rule.\n        "
+      ",\n        // The five pure variant/model modules.\n        ",
+      ",\n        // Booking: the slot picker",
+      "src/patterns/time-slot-model.ts",
+      "src/patterns/share-image-model.ts",
+      "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
+      "src/patterns/{lint-playground,multi-step-form,share-image,thread-steps}.tsx",
+      "src/effects/weave-texture.tsx"
     ]
   },
   "contrastFloors": {
@@ -625,7 +628,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "article-card": {
@@ -830,7 +833,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "audio-player": {
@@ -1089,7 +1092,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "badge": {
@@ -1483,7 +1486,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "banner": {
@@ -1867,7 +1870,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "brand-logo": {
@@ -1972,7 +1975,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "button-variants": {
@@ -2515,6 +2518,204 @@
       },
       "states": [],
       "coverage": {
+        "inGate": true
+      }
+    },
+    "calendar-model": {
+      "sourcePath": "packages/ui/src/primitives/calendar-model.ts",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "calendar": {
+      "sourcePath": "packages/ui/src/primitives/calendar.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "accent-foreground",
+          "bg": "accent",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "hover/highlight face",
+          "ratios": [
+            8.98,
+            10.46,
+            8.95,
+            9.65
+          ],
+          "worst": 8.95,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
         "inGate": false
       }
     },
@@ -2624,7 +2825,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "card": {
@@ -2733,7 +2934,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "celebrate": {
@@ -3117,7 +3318,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "choropleth-map": {
@@ -3860,7 +4061,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "code-window": {
@@ -4597,7 +4798,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "context-menu": {
@@ -5314,7 +5515,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "data-table": {
@@ -7164,7 +7365,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "footer": {
@@ -7643,7 +7844,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "gradient-mesh": {
@@ -7682,7 +7883,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "guess-reveal": {
@@ -8371,7 +8572,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "interlace-base": {
@@ -8572,7 +8773,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "label": {
@@ -8585,7 +8786,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "landing-template": {
@@ -8900,7 +9101,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "list": {
@@ -9009,7 +9210,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "live-room": {
@@ -9320,7 +9521,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "metric-table": {
@@ -9474,6 +9675,248 @@
         "first-measurement",
         "idle"
       ],
+      "coverage": {
+        "inGate": true
+      }
+    },
+    "multi-step-form": {
+      "sourcePath": "packages/ui/src/patterns/multi-step-form.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
+          "ratios": [
+            8.05,
+            10.29,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
       "coverage": {
         "inGate": true
       }
@@ -10315,7 +10758,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "podium": {
@@ -11248,7 +11691,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "qr-code": {
@@ -12072,7 +12515,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "registry-item-template": {
@@ -12543,7 +12986,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "section-header": {
@@ -12832,7 +13275,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "select": {
@@ -13098,7 +13541,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "series-table": {
@@ -13487,6 +13930,19 @@
       "textAlternative": {
         "kind": "sr-only-table",
         "detail": "Ships an sr-only <table> carrying the same rows the graphic draws."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
+      }
+    },
+    "share-image": {
+      "sourcePath": "packages/ui/src/patterns/share-image.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
       },
       "states": [],
       "coverage": {
@@ -13964,7 +14420,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "sky-backdrop": {
@@ -14269,7 +14725,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "split-text": {
@@ -14295,7 +14751,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "stagger-list": {
@@ -14709,7 +15165,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "stats-template": {
@@ -15561,7 +16017,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "tally-bars": {
@@ -16002,7 +16458,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "theme-script": {
@@ -16312,7 +16768,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "thread-steps": {
@@ -16478,7 +16934,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "time-series": {
@@ -16798,6 +17254,248 @@
       "textAlternative": {
         "kind": null,
         "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
+      }
+    },
+    "time-slot-picker": {
+      "sourcePath": "packages/ui/src/patterns/time-slot-picker.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "muted",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a muted surface",
+          "ratios": [
+            8.81,
+            10.48,
+            7.34,
+            8.64
+          ],
+          "worst": 7.34,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "accent-foreground",
+          "bg": "accent",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "hover/highlight face",
+          "ratios": [
+            8.98,
+            10.46,
+            8.95,
+            9.65
+          ],
+          "worst": 8.95,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {
@@ -18679,7 +19377,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "use-reading-prefs": {
@@ -18731,7 +19429,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "weave-texture": {
@@ -18744,7 +19442,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": false
+        "inGate": true
       }
     },
     "wordmark": {
