@@ -120,9 +120,9 @@ const PROSE_CASCADE = [
   '[&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:rounded-none',
 
   // Pre — block code surface with horizontal overflow on narrow viewports.
-  // Pairs with the focus-visible ring contract: when consumers add the
-  // recommended `tabIndex={0}` (see Prose JSDoc "Keyboard access" section),
-  // the ring activates on keyboard focus.
+  // Pairs with the focus-visible ring contract: Prose adds `tabIndex={0}`
+  // itself when a block overflows (the sync effect in Prose), so the ring
+  // shows on keyboard focus.
   '[&_pre]:my-6 [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-none [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
 
   // Tables — GFM zebra rows; block + overflow-x for narrow viewports (R14).
