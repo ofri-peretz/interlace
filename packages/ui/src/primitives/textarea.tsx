@@ -66,8 +66,6 @@ const textareaVariants = cva(
     'block w-full min-w-0 border border-input bg-background text-foreground',
     'rounded-lg shadow-xs outline-none transition-[color,box-shadow]',
     'placeholder:text-muted-foreground',
-    // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
-    // under the 3:1 focus-indicator floor (SC 2.4.13).
     'focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
     'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
     'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',

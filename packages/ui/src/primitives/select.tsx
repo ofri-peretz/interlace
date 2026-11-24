@@ -112,8 +112,6 @@ function SelectTrigger({
       className={cn(
         'flex w-fit items-center justify-between gap-2 rounded-lg border border-input bg-background px-3 py-2 text-sm whitespace-nowrap shadow-sm transition-[color,box-shadow] outline-none',
         'hover:bg-accent hover:text-accent-foreground',
-        // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
-        // under the 3:1 focus-indicator floor (SC 2.4.13).
         'focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring',
         'data-popup-open:border-ring',
         'disabled:cursor-not-allowed disabled:opacity-50',
