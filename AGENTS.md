@@ -16,8 +16,8 @@ test holds its token and component names to the code.
 
 ## Standing rules
 
-- Interlace stays brand-neutral. No consumer's product name, copy, colours, fonts or scripts go
-  into a component, story default or token. A consumer brands through cssVars and props.
+- Interlace stays [brand-neutral](packages/ui/__tests__/brand-neutral-lock.test.ts): a consumer
+  brands through cssVars and props, never with its copy, colours or fonts in a component.
 - Benchmark against the best teams (Linear, Vercel, Stripe, Apple, Anthropic, Radix, shadcn,
   Magic UI, Untitled UI) for the level of care. Take inspiration, never copy a look, asset or
   layout.
@@ -29,15 +29,15 @@ test holds its token and component names to the code.
 
 ## Where the rules live
 
-| Need | Read |
-| --- | --- |
-| How to compose, brand and animate | the craft skill above |
-| The principles behind Interlace's own surfaces | [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md), [BRAND_PHILOSOPHY.md](BRAND_PHILOSOPHY.md) |
-| One area in depth (motion, layout, colour, a11y, i18n) | [docs/philosophies/](docs/philosophies/) |
-| Component API shape and naming | [packages/ui/CONVENTIONS.md](packages/ui/CONVENTIONS.md) |
-| The five layers and the CSS import order | [packages/ui/DESIGN_SYSTEM_LAYERS.md](packages/ui/DESIGN_SYSTEM_LAYERS.md) |
-| What a new component PR contains | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| How an AI-authored PR is verified, and the review checklist | [docs/AI_SDLC.md](docs/AI_SDLC.md) |
+| Need                                                        | Read                                                                                     |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| How to compose, brand and animate                           | the craft skill above                                                                    |
+| The principles behind Interlace's own surfaces              | [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md), [BRAND_PHILOSOPHY.md](BRAND_PHILOSOPHY.md) |
+| One area in depth (motion, layout, colour, a11y, i18n)      | [docs/philosophies/](docs/philosophies/)                                                 |
+| Component API shape and naming                              | [packages/ui/CONVENTIONS.md](packages/ui/CONVENTIONS.md)                                 |
+| The five layers and the CSS import order                    | [packages/ui/DESIGN_SYSTEM_LAYERS.md](packages/ui/DESIGN_SYSTEM_LAYERS.md)               |
+| What a new component PR contains                            | [CONTRIBUTING.md](CONTRIBUTING.md)                                                       |
+| How an AI-authored PR is verified, and the review checklist | [docs/AI_SDLC.md](docs/AI_SDLC.md)                                                       |
 
 DESIGN_PRINCIPLES and BRAND_PHILOSOPHY describe the Interlace house brand (burnt orange, the
 thread). They govern interlace.tools surfaces, not what a consumer's site must look like.

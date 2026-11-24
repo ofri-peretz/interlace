@@ -28,7 +28,7 @@ interface AuthorTemplateProps extends React.ComponentProps<'div'> {
    * <AuthorByline /> + a paragraph + social links.
    */
   bio: React.ReactNode;
-  /** Article grid — typically <ArticleListGrid title="By Ofri" posts={...} />. */
+  /** Article grid — typically <ArticleListGrid title="By the author" posts={...} />. */
   articles: React.ReactNode;
   footer?: React.ComponentProps<typeof Footer>;
 }
