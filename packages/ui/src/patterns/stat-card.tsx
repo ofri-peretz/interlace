@@ -59,22 +59,30 @@ import { Typography } from '../primitives/typography.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
-const statCardVariants = cva(
-  'border-border bg-card text-card-foreground rounded-xl border p-5 flex flex-col gap-2',
-  {
-    variants: {
-      tone: {
+const statCardVariants = cva('flex flex-col gap-2', {
+  variants: {
+    /**
+     * `card` is a bordered tile for dashboards. `plain` drops the tile for a
+     * hairline rule above the number, so a figure can sit on a page or a brand
+     * band like a line in a report. A plain card takes its colour from where it
+     * sits: on `bg-primary` the number and label are `primary-foreground`.
+     */
+    surface: {
+      card: 'border-border bg-card text-card-foreground rounded-xl border p-5',
+      plain: 'border-t border-current/25 pt-4',
+    },
+    tone: {
         default: '',
         success: 'border-success/40',
         warning: 'border-warning/40',
-        danger: 'border-destructive/40',
-      },
-    },
-    defaultVariants: {
-      tone: 'default',
+      danger: 'border-destructive/40',
     },
   },
-);
+  defaultVariants: {
+    surface: 'card',
+    tone: 'default',
+  },
+});
 
 // Semantic tokens, NOT raw palette. `text-emerald-600` / `-rose-600` scored
 // 3.65:1 and 4.52:1 on white — failing `color-contrast` (AA, 4.5:1) and
@@ -112,6 +120,7 @@ type StatCardProps = React.ComponentProps<'article'> &
 
 export function StatCard({
   className,
+  surface = 'card',
   tone = 'default',
   label,
   value,
@@ -131,6 +140,9 @@ export function StatCard({
       />
     );
   }
+  // A plain stat inherits the colour of what it sits on, so its label cannot
+  // assume the muted token: muted-foreground on a brand band fails AA.
+  const labelTone = surface === 'plain' ? 'default' : 'muted';
   const iconNode = icon ? (
     <span className="text-muted-foreground" aria-hidden>
       {icon}
@@ -141,8 +153,9 @@ export function StatCard({
       data-slot="stat-card"
       data-layout={layout}
       data-tone={tone ?? undefined}
+      data-surface={surface ?? undefined}
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn(statCardVariants({ tone, className }))}
+      className={cn(statCardVariants({ surface, tone, className }))}
       {...props}
     >
       {layout === 'value-first' ? (
@@ -153,14 +166,14 @@ export function StatCard({
             </Typography>
             {iconNode}
           </div>
-          <Typography variant="ui-sm" tone="muted">
+          <Typography variant="ui-sm" tone={labelTone}>
             {label}
           </Typography>
         </>
       ) : (
         <>
           <div className="flex items-start justify-between gap-2">
-            <Typography variant="ui-sm" tone="muted">
+            <Typography variant="ui-sm" tone={labelTone}>
               {label}
             </Typography>
             {iconNode}
