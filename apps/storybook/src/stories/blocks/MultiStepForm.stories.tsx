@@ -203,6 +203,8 @@ export const WalkThrough: Story = {
     await expect(canvas.getByRole('heading', { name: /Step 3 of 3/ })).toBeTruthy();
     await userEvent.click(canvas.getByRole('button', { name: 'Change: Email' }));
     await expect(document.activeElement?.textContent).toMatch(/Your details/);
+    // Let the step slide settle, so the a11y scan reads the text at full opacity.
+    await Promise.all(canvasElement.getAnimations({ subtree: true }).map((a) => a.finished));
   },
 };
 
