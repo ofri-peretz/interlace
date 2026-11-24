@@ -89,7 +89,7 @@ const NOTATION_LINES = cn(
   '[&_.line.highlighted]:bg-accent',
   '[&_.line.diff.add]:bg-success/15',
   '[&_.line.diff.remove]:bg-destructive/10 [&_.line.diff.remove]:select-none',
-  '[&_.line.diff]:before:absolute [&_.line.diff]:before:left-2',
+  '[&_.line.diff]:before:absolute [&_.line.diff]:before:start-2',
   "[&_.line.diff.add]:before:content-['+'] [&_.line.diff.add]:before:text-success",
   "[&_.line.diff.remove]:before:content-['-'] [&_.line.diff.remove]:before:text-destructive",
 );

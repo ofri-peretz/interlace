@@ -208,13 +208,13 @@ function ContextMenuCheckboxItem({
     <BaseContextMenu.CheckboxItem
       data-slot="context-menu-checkbox-item"
       className={cn(
-        'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none',
+        'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pe-2 ps-8 text-sm outline-hidden select-none',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         className,
       )}
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+      <span className="pointer-events-none absolute start-2 flex size-3.5 items-center justify-center">
         <BaseContextMenu.CheckboxItemIndicator>
           <CheckIcon className="size-4" />
         </BaseContextMenu.CheckboxItemIndicator>
@@ -239,13 +239,13 @@ function ContextMenuRadioItem({
     <BaseContextMenu.RadioItem
       data-slot="context-menu-radio-item"
       className={cn(
-        'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none',
+        'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pe-2 ps-8 text-sm outline-hidden select-none',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         className,
       )}
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+      <span className="pointer-events-none absolute start-2 flex size-3.5 items-center justify-center">
         <BaseContextMenu.RadioItemIndicator>
           <CircleIcon className="size-2 fill-current" />
         </BaseContextMenu.RadioItemIndicator>
@@ -289,7 +289,7 @@ function ContextMenuShortcut({
     <span
       data-slot="context-menu-shortcut"
       className={cn(
-        'text-muted-foreground ml-auto text-xs tracking-widest',
+        'text-muted-foreground ms-auto text-xs tracking-widest',
         className,
       )}
       {...props}

@@ -66,8 +66,8 @@ export const LINE_HEIGHT_PX = 24;
 export const PAD_Y_PX = 16;
 
 const SEVERITY_BAR: Record<CodeEditorDiagnostic['severity'], string> = {
-  error: 'bg-destructive/15 border-l-2 border-destructive',
-  warn: 'bg-chart-4/15 border-l-2 border-chart-4',
+  error: 'bg-destructive/15 border-s-2 border-destructive',
+  warn: 'bg-chart-4/15 border-s-2 border-chart-4',
 };
 
 export interface CodeEditorProps

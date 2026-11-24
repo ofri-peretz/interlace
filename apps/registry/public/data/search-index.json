@@ -1646,7 +1646,7 @@
     "leaner": 1,
     "least": 13,
     "leav": 32,
-    "left": 45,
+    "left": 44,
     "legacy": 1,
     "legend": 7,
     "legibl": 14,
@@ -2632,7 +2632,7 @@
     "standard": 6,
     "star": 4,
     "starfield": 3,
-    "start": 39,
+    "start": 40,
     "starter": 3,
     "stat": 119,
     "statcard": 3,
@@ -3166,7 +3166,7 @@
         "primitive",
         "feedback"
       ],
-      "terms": "alert feedback primitiv server rsc icon alertdescription alerttitl svg destructiv messag role description titl siz tone col alertvariant assertiv iserror respons child direct lead grid text current column 1fr impos optional descendant page wrapp unconditional translat start compet card cut gutter longer variant neither border belong clamp know selector switch appear cva root sentenc empty part inherit exist region live reach announc boolean size"
+      "terms": "alert feedback primitiv server rsc icon alertdescription alerttitl svg destructiv messag role description titl siz tone col alertvariant assertiv iserror respons child direct lead grid text current column 1fr impos optional descendant page wrapp unconditional translat compet start card cut gutter longer variant neither border belong clamp know selector switch appear cva root sentenc empty part inherit exist region live reach announc boolean size"
     },
     {
       "name": "article-card",
@@ -3316,7 +3316,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "author bylin blog pattern server rsc load skeleton responsiv min viewport 320 authorbylin avatar date time bio datetim adorn semibold read publication utc wrot meta typography local estimat publisheddat readingtim chip mar iso name zone articl vertical friend src duration visibl short right 2026 omitt dot larg optional mut stack america authorbylineprop authornam confus engineer furnitur parser pt5m staff unparseabl row direct gap left"
+      "terms": "author bylin blog pattern server rsc load skeleton responsiv min viewport 320 authorbylin avatar date time bio datetim adorn semibold read publication utc wrot meta typography local estimat publisheddat readingtim chip mar iso name zone articl vertical friend src duration visibl short right 2026 omitt dot larg optional mut stack america authorbylineprop authornam confus engineer furnitur parser pt5m staff unparseabl row direct left gap"
     },
     {
       "name": "author-template",
@@ -3834,7 +3834,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "cta section market pattern server rsc load skeleton responsiv min viewport 320 action tint band card trial typography ctasection description surfac subtl titl variant copy ready align center data search background clipp tone sign start button width slot layer centr gridfield primary tech assistiv shap children labelledby stick hidden neutral land round behind brand stack call box reach decorativ ship column ful form page"
+      "terms": "cta section market pattern server rsc load skeleton responsiv min viewport 320 action tint band card trial typography ctasection description surfac subtl titl variant copy ready align center data search background clipp tone sign button start width slot layer centr gridfield primary tech assistiv shap children labelledby stick hidden neutral land round behind brand stack call box reach decorativ ship column ful form page"
     },
     {
       "name": "dashboard-template",
@@ -4061,7 +4061,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "dialogu blog pattern server rsc responsiv min viewport 320 stat mut accent invers speaker bubbl dialoguesuggestion turn conversation suggestion side chat aschild forth interview transcript pill excerpt clon glanc hard sampl start opposit sit read tone end edge dialogueturn ups href script support link heard name data written cloneel insid bold speak tight back text citation voic work flip high cap depend colour set"
+      "terms": "dialogu blog pattern server rsc responsiv min viewport 320 stat mut accent invers speaker bubbl dialoguesuggestion turn conversation suggestion side chat aschild forth interview transcript pill excerpt clon glanc hard sampl opposit start sit read tone end edge dialogueturn ups href script support link heard name data written cloneel insid bold speak tight back text citation voic work flip high cap depend colour set"
     },
     {
       "name": "distribution",
@@ -4377,7 +4377,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "footer navigation pattern server rsc responsiv min viewport 320 copyright tail link group social row brand href sub site mark column spa data list compos target 20px 28px 44px head slot plain 8px taglin stack comfortabl external 24px logo mobil tall grid gap left 4px blank extra primary density rhythm children internal container least border landmark foreground utility nav sentenc nativ wide icon text"
+      "terms": "footer navigation pattern server rsc responsiv min viewport 320 copyright tail link group social row brand href sub site mark column spa data list compos target 20px 28px 44px head slot plain 8px taglin stack comfortabl external 24px logo mobil tall grid left gap 4px blank extra primary density rhythm children internal container least border landmark foreground utility nav sentenc nativ wide icon text"
     },
     {
       "name": "form",
@@ -5460,7 +5460,7 @@
         "chart",
         "data"
       ],
-      "terms": "seat chart data client load skeleton responsiv min viewport 320 stat none side leader seatchart seatchartcompar group shad majority legend tone arc far total grey hue sit tabl assemb paler tal circl five colour hold count deeper order fill toward box half left right entry election eleven opposition pale seatlayout seatslabel vacant wedg svg big row first shar neighbour answer govern hollow showtabl every"
+      "terms": "seat chart data client load skeleton responsiv min viewport 320 stat none side leader seatchart seatchartcompar group shad majority legend tone arc far total grey hue sit tabl assemb paler tal circl five colour hold count deeper order fill toward box left half right entry election eleven opposition pale seatlayout seatslabel vacant wedg svg big row first shar neighbour answer govern hollow showtabl every"
     },
     {
       "name": "section-boundary",
@@ -5667,7 +5667,7 @@
         "chart",
         "data"
       ],
-      "terms": "shar chart data client load skeleton responsiv min viewport 320 stat stack diverg sharechart category row side bar legend end total start sum seg pole neutral order print straddl scal answer 100 every zero activity depart lighter sharelayout compar showtabl survey widest percentag tabl slot sentenc figur svg budget strong sit entry middl label glanc split run exclud unless figcaption hue toward cut part"
+      "terms": "shar chart data client load skeleton responsiv min viewport 320 stat stack diverg sharechart category row side bar legend end total sum start seg pole neutral order print straddl scal answer 100 every zero activity depart lighter sharelayout compar showtabl survey widest percentag tabl slot sentenc figur svg budget strong sit entry middl label glanc split run exclud unless figcaption hue toward cut part"
     },
     {
       "name": "sheen-text",
@@ -5921,7 +5921,7 @@
         "primitive",
         "a11y"
       ],
-      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl user corner tab anchor target moment lett tabindex satisfy keyboard content emulator encounter physical skiplinkprop focusabl jump past hash utility nav ele step wcag position scroll action block earn pair move activation aaa work header left ring devic top mous whether whichever nativ data interactiv href first docu"
+      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl user corner tab anchor target moment lett tabindex satisfy keyboard content emulator encounter physical skiplinkprop focusabl jump past hash utility nav ele step wcag position scroll action block earn pair move activation aaa left work header ring devic top mous whether whichever nativ data interactiv href first docu"
     },
     {
       "name": "sky-backdrop",

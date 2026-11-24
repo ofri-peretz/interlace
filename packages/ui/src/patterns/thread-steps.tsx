@@ -176,7 +176,7 @@ function ThreadStep({ title, state, className, children, ...props }: ThreadStepP
       <span
         data-slot="thread-step-strand"
         aria-hidden
-        className="pointer-events-none absolute top-6 bottom-0 left-0 w-6 group-last/step:hidden"
+        className="pointer-events-none absolute top-6 bottom-0 start-0 w-6 group-last/step:hidden"
       >
         <svg
           viewBox="0 0 12 100"

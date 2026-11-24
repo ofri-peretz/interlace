@@ -46,7 +46,7 @@
  * | R10  | Composition seam                 | `title` + `kicker` slots + `children`                       |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | zero inline `style`; cva classes + Lucide via className     |
- * | R19  | Tokens only                      | `p-6` / `rounded-lg` / `border-l-*` widths via spacing + radius tokens; colors via semantic tokens |
+ * | R19  | Tokens only                      | `p-6` / `rounded-lg` / `border-s-*` widths via spacing + radius tokens; colors via semantic tokens |
  * | R20  | AA contrast                      | tones map to AA-cleared semantic tokens (primary/destructive/foreground/muted-foreground) + neutral surface |
  * | R25  | Server component                 | no hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `role="note"` on the div; lucide icon marked `aria-hidden`  |
@@ -75,14 +75,14 @@ export const MIN_VIEWPORT = 320 as const;
 
 const calloutVariants = cva(
   // Base — flex row, icon left, text column right; 4px left border via
-  // `border-l-4`; padding from the spacing scale; rounded-lg from radius
+  // `border-s-4`; padding from the spacing scale; rounded-lg from radius
   // tokens. Card-tint surface so the callout reads as a block in prose.
   // The tint is a flat gradient over a solid page-colour fill, so the
   // surface is opaque: on a brand band or a photo nothing shows through,
   // and the callout sets its own text colour instead of inheriting the band's.
   [
     'flex items-start gap-4 text-foreground',
-    'rounded-lg border border-border border-l-4 bg-background bg-linear-to-r from-card/40 to-card/40 p-6',
+    'rounded-lg border border-border border-s-4 bg-background bg-linear-to-r from-card/40 to-card/40 p-6',
     '[&_[data-slot=callout-icon]]:size-5 [&_[data-slot=callout-icon]]:shrink-0',
   ].join(' '),
   {
@@ -94,20 +94,20 @@ const calloutVariants = cva(
        */
       tone: {
         info:
-          'border-l-primary [&_[data-slot=callout-icon]]:text-primary',
+          'border-s-primary [&_[data-slot=callout-icon]]:text-primary',
         note:
-          'border-l-accent-foreground [&_[data-slot=callout-icon]]:text-accent-foreground',
+          'border-s-accent-foreground [&_[data-slot=callout-icon]]:text-accent-foreground',
         success:
-          'border-l-primary [&_[data-slot=callout-icon]]:text-primary',
+          'border-s-primary [&_[data-slot=callout-icon]]:text-primary',
         warn:
-          'border-l-foreground [&_[data-slot=callout-icon]]:text-foreground',
+          'border-s-foreground [&_[data-slot=callout-icon]]:text-foreground',
         danger:
-          'border-l-destructive [&_[data-slot=callout-icon]]:text-destructive',
+          'border-s-destructive [&_[data-slot=callout-icon]]:text-destructive',
         // The one tone that tints the surface: the body stays text-foreground
         // on a 15% highlighter wash over the opaque page fill, so contrast is
         // the page's own wherever the callout sits.
         highlight:
-          'border-l-highlight from-highlight/15 to-highlight/15 [&_[data-slot=callout-icon]]:text-foreground',
+          'border-s-highlight from-highlight/15 to-highlight/15 [&_[data-slot=callout-icon]]:text-foreground',
       },
     },
     defaultVariants: {
