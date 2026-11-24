@@ -303,7 +303,8 @@ jobs:
   storybook-visual-gate:
     name: storybook (visual)
     needs: storybook-visual
-    if: always()
+    # Not `always()`: a run cancelled by a newer push would report red here.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: Every shard passed
