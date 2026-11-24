@@ -283,7 +283,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 179 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 180 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -337,16 +337,16 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 100 server, 79 client
-- keyboard: 140 none, 39 handled
-- built-in loading state: 35 of 179
-- declared minViewport: 109 at 320, 7 at 480, 1 at 768, 62 at inherited
+- rendering: 100 server, 80 client
+- keyboard: 140 none, 40 handled
+- built-in loading state: 35 of 180
+- declared minViewport: 110 at 320, 7 at 480, 1 at 768, 62 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 74 item(s)
+- tier `primitive` — 75 item(s)
 - tier `pattern` — 50 item(s)
 - tier `effect` — 19 item(s)
 - tier `template` — 13 item(s)
@@ -356,7 +356,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 - tier `game` — 1 item(s)
 
-- category `primitive` (Primitives) — 74 item(s)
+- category `primitive` (Primitives) — 75 item(s)
 - category `pattern` (Patterns) — 50 item(s)
 - category `blog` (Blog & long-form) — 35 item(s)
 - category `foundation` (Foundation) — 27 item(s)
@@ -371,7 +371,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `overlay` (Overlay) — 10 item(s)
 - category `chart` (Charts) — 10 item(s)
 - category `util` (Utilities) — 6 item(s)
-- category `a11y` (A11y) — 4 item(s)
+- category `a11y` (A11y) — 5 item(s)
 - category `starter` (Starters) — 3 item(s)
 - category `theme` (Theme) — 3 item(s)
 - category `games` (Games) — 1 item(s)
@@ -460,6 +460,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Dialog](https://ds.interlace.tools/c/dialog): A MODAL dialog: it traps focus, dismisses on Escape and on an outside click, marks the rest of the page inert while open, and restores focus to the trigger on close. Base UI owns all of that, which is exactly why this file never says so anywhere else — and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialog.json`
   - contract: client, min 320px, keyboard via Base UI dialog, v2.1.0
+- [Direction](https://ds.interlace.tools/c/direction): Sets the reading direction once, for both halves of a component: the CSS and the keyboard.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/direction.json`
+  - contract: client, min 320px, keyboard via Base UI direction-provider, v1.0.0
 - [Drawer](https://ds.interlace.tools/c/drawer): A panel that slides in from an edge and follows the finger: drag it back toward its edge and it goes, let go early and it settles back. The bottom sheet of a phone app, on the web. Base UI's Drawer owns the gesture, the open state, the focus trap, page…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/drawer.json`
   - contract: client, min 320px, keyboard via Base UI drawer, states top|right|bottom|left, v1.0.0

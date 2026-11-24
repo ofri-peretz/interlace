@@ -351,6 +351,17 @@
           "source": ".changeset/dialogue-transcript.md"
         },
         {
+          "summary": "New `DirectionProvider` sets the reading direction once for both layout and keyboard. `dir=\"rtl\"` alone flips the CSS but not Base UI's behaviour, so sliders kept growing to the right and ArrowRight kept moving to the next tab in Hebrew and Arabic pages. Wrap the app (or a subtree in the other direction) in `<DirectionProvider direction=\"rtl\">` and both follow. It renders a `display: contents` wrapper with `dir`, so it never changes layout, and re-exports `useDirection` for your own components.",
+          "components": [
+            "direction"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/direction-provider.md"
+        },
+        {
           "summary": "New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.",
           "components": [
             "drawer"
