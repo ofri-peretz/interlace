@@ -8,7 +8,7 @@
  *
  * ## Anatomy
  *
- *   QrCode                         (div — data-slot="qr-code", data-scheme)
+ *   QrCode                         (div — data-slot="qr-code", data-scheme, data-state)
  *     └─ svg role="img"            (data-slot="qr-code-svg", named by `label`)
  *         ├─ rect                  (quiet zone, the background token)
  *         └─ path                  (dark modules, the foreground token)
