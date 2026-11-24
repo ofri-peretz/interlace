@@ -43,8 +43,9 @@ const meta = {
       description: {
         component:
           'A long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail ' +
-          'sits beside the text and stays in view. Narrower, the contents fold into an "On this page" ' +
-          'button on a bar that sticks to the top of the column. The switch is a container query on the ' +
+          'sits beside the text and stays in view: a marker slides to the section being read and the track ' +
+          'fills as you go. Narrower, the contents fold into a slim bar that sticks to the top of the column, ' +
+          'names the current section, and opens the list in a bottom sheet. The switch is a container query on the ' +
           "layout's own width, so the same layout folds inside a narrow column with no prop. A page with " +
           'a sticky header sets `--reading-offset` to its height.',
       },
@@ -55,7 +56,11 @@ const meta = {
     toc: { control: false },
     children: { control: false },
     tocLabel: { control: 'text', table: { defaultValue: { summary: 'Table of contents' } } },
-    triggerLabel: { control: 'text', table: { defaultValue: { summary: 'On this page' } } },
+    triggerLabel: {
+      control: 'text',
+      description: "The rail's title, the bar's label and the sheet's title.",
+      table: { defaultValue: { summary: 'On this page' } },
+    },
   },
   render: (args) => (
     <ReadingLayout {...args}>
@@ -92,6 +97,43 @@ export const BelowStickyHeader: Story = {
         <Article />
       </ReadingLayout>
     </div>
+  ),
+};
+
+const LONG_TOC = ['Why the bridge closed', 'The bearings', 'Waiting for parts', 'The detour', 'Reopening'].flatMap(
+  (label, s) => [
+    { id: `l${s}`, label, level: 2 as const },
+    { id: `l${s}a`, label: 'What the city said', level: 3 as const },
+    { id: `l${s}b`, label: 'What residents remember', level: 3 as const },
+  ],
+);
+
+function LongArticle() {
+  return (
+    <Prose>
+      {LONG_TOC.map((item) => {
+        const Heading = item.level === 2 ? 'h2' : 'h3';
+        return (
+          <section key={item.id}>
+            <Heading id={item.id} tabIndex={-1}>
+              {item.label}
+            </Heading>
+            <p>{PARA}</p>
+            <p>{PARA}</p>
+          </section>
+        );
+      })}
+    </Prose>
+  );
+}
+
+/** A long outline: sub-headings show only under the section being read. */
+export const LongRead: Story = {
+  args: { toc: LONG_TOC },
+  render: (args) => (
+    <ReadingLayout {...args}>
+      <LongArticle />
+    </ReadingLayout>
   ),
 };
 

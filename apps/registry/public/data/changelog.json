@@ -697,6 +697,18 @@
           "source": ".changeset/timeline.md"
         },
         {
+          "summary": "Toc: the table of contents now follows the reader. A section stays current from the moment its heading crosses the reading line until the next one does, so the rail never goes blank; a marker slides to the current entry and the track fills as you read; long outlines (over 10 entries, or `collapse`) show sub-headings only under the current section; a pick holds its entry while the page scrolls there. New `title` prop for a visible heading. New `TocBar` for narrow layouts: a slim bar that names the current section, shows the page's progress along its foot, and opens the list in a bottom sheet that closes on a pick with focus on the heading. ReadingLayout uses `TocBar` below `@4xl` and titles its rail with `triggerLabel`. All motion is `motion-safe`.",
+          "components": [
+            "toc",
+            "reading-layout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/toc-reading-rail.md"
+        },
+        {
           "summary": "New Toolbar: a row of controls that is one stop in the Tab order. Tab enters on the control used last and the next Tab leaves the whole bar; inside, the arrow keys move between controls, Home and End jump to the ends, and focus wraps, so a keyboard user no longer Tabs through every button of a formatting bar or a table's bulk actions. Built on Base UI's Toolbar: buttons take Button's `variant` and `size` (ghost, icon-sm by default), any trigger joins through `render` (`<ToolbarButton render={<Toggle />} />`), a disabled button stays reachable so its label can be read, and the bar wraps at 320px. Parts: Toolbar, ToolbarButton, ToolbarLink, ToolbarGroup, ToolbarSeparator, ToolbarInput.",
           "components": [
             "toolbar"
