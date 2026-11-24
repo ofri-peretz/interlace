@@ -205,7 +205,11 @@ function syncScrollRegion(el: HTMLElement, label: string) {
   if (!ours && el.hasAttribute('tabindex')) return;
   const scrolls = el.scrollWidth > el.clientWidth + 1;
   if (scrolls && !ours) claimScrollRegion(el, label);
-  else if (scrolls && el.hasAttribute('data-prose-label')) {
+  else if (
+    scrolls &&
+    el.hasAttribute('data-prose-label') &&
+    el.getAttribute('aria-label') !== label
+  ) {
     // Labels changed (a language switch): keep our name current.
     el.setAttribute('aria-label', label);
   } else if (!scrolls && ours) releaseScrollRegion(el);

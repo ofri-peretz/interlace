@@ -170,6 +170,15 @@ describe('Prose scrolling regions', () => {
     );
     expect(pre!.getAttribute('aria-label')).toBe('Code, scrolls sideways');
     expect(plain!.getAttribute('aria-label')).toBe('טבלה, נגללת לצד');
+
+    // New children with the same labels leave the names as they are.
+    const setAttribute = vi.spyOn(plain!, 'setAttribute');
+    rerender(
+      <Prose labels={{ table: 'טבלה, נגללת לצד' }}>
+        <Content labelled />
+      </Prose>,
+    );
+    expect(setAttribute).not.toHaveBeenCalledWith('aria-label', expect.anything());
   });
 
   it('keeps an author role and label on an overflowing pre', () => {
