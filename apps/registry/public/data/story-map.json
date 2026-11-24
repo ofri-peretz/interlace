@@ -1491,6 +1491,16 @@
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
   },
+  "pointer-surface": {
+    "title": "Effects/PointerSurface",
+    "storyIds": [
+      "effects-pointersurface--default",
+      "effects-pointersurface--grid"
+    ],
+    "preview": "effects-pointersurface--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "poll": {
     "title": "Games/Poll",
     "storyIds": [
@@ -2784,6 +2794,17 @@
     ],
     "preview": "primitives-typography--default",
     "previewDark": "primitives-typography--dark",
+    "skeleton": null
+  },
+  "underline-link": {
+    "title": "Effects/UnderlineLink",
+    "storyIds": [
+      "effects-underlinelink--default",
+      "effects-underlinelink--navigation",
+      "effects-underlinelink--right-to-left"
+    ],
+    "preview": "effects-underlinelink--default",
+    "previewDark": null,
     "skeleton": null
   },
   "use-reduced-motion": {

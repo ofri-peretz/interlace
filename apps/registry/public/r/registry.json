@@ -1804,6 +1804,24 @@
       }
     },
     {
+      "name": "pointer-surface",
+      "type": "registry:ui",
+      "title": "Pointer Surface",
+      "description": "A surface that answers the pointer: a soft light that follows it across a card, a slight tilt toward it, or both. It is the feel of picking a card up off a table, for a grid of choices a reader is weighing (plans, sessions, topics), not for every box on a…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "reveal",
       "type": "registry:ui",
       "title": "Reveal",
@@ -1977,6 +1995,24 @@
       "meta": {
         "tier": "effect",
         "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "underline-link",
+      "type": "registry:ui",
+      "title": "Underline Link",
+      "description": "A text link whose underline draws itself in when the reader points at it or tabs to it, from the start of the line to the end, and wraps across lines with the text. For links in running text, navigation and footers where a hard underline on every link…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": false,
         "minViewport": null,
         "loading": false,
         "version": "1.0.0",

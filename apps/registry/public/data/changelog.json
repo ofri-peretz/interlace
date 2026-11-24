@@ -710,6 +710,18 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
+          "summary": "New PointerSurface and UnderlineLink, motion that answers the reader. PointerSurface wraps a card so a soft `--primary` light follows the pointer, the card leans a few degrees toward it, or both (`effect`), and keyboard focus inside lights it from the centre; it only runs on a fine pointer that can hover and is still under reduced motion. UnderlineLink is a link whose underline draws in from the inline-start edge on hover and focus, keeps a thin line at rest by default so links are not told apart by colour alone, takes a router link through `render`, and needs no JavaScript.",
+          "components": [
+            "pointer-surface",
+            "underline-link"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/pointer-surface-underline-link.md"
+        },
+        {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
           "components": [
             "prose"
