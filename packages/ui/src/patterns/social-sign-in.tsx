@@ -179,6 +179,11 @@ const DEFAULT_PROVIDERS: readonly SocialProvider[] = ['google', 'apple', 'facebo
 
 type Resolved = { id: string; name: string; icon: React.ReactNode };
 
+/** A built-in provider's display name and mark, or undefined for an unknown id. */
+export function providerMark(id: string): { name: string; icon: React.ReactNode } | undefined {
+  return Object.prototype.hasOwnProperty.call(MARKS, id) ? MARKS[id as SocialProvider] : undefined;
+}
+
 function resolve(p: SocialSignInProvider): Resolved {
   if (typeof p === 'string') return { id: p, ...MARKS[p] };
   return { id: p.id, name: p.name, icon: p.icon ?? null };

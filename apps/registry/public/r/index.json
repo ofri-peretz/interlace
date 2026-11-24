@@ -17,7 +17,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "4.8.0",
+        "version": "4.11.1",
         "since": null
       }
     },
@@ -71,7 +71,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "5.1.0",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -89,7 +89,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "5.1.0",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -107,7 +107,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "5.1.0",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -359,7 +359,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.2.0",
+        "version": "3.3.0",
         "since": "1.0.0"
       }
     },
@@ -377,7 +377,7 @@
         "client": true,
         "minViewport": null,
         "loading": true,
-        "version": "3.3.0",
+        "version": "3.4.0",
         "since": "1.0.0"
       }
     },
@@ -503,7 +503,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.0.1",
+        "version": "3.1.0",
         "since": "1.1.0"
       }
     },
@@ -773,7 +773,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.1",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -881,8 +881,26 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.1",
+        "version": "2.1.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "otp-field",
+      "type": "registry:ui",
+      "title": "Otp Field",
+      "description": "A one-time code typed into a row of boxes, one character each: the \"enter the 6-digit code we emailed you\" field. Built on Base UI's OTPField, which owns the hard parts: paste of the whole code into any box, the phone's \"from Messages\" autofill…",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -899,7 +917,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1115,7 +1133,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.2.0",
         "since": "1.0.0"
       }
     },
@@ -1169,7 +1187,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1187,7 +1205,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1295,7 +1313,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1349,7 +1367,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1421,7 +1439,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.2.0",
         "since": "1.0.0"
       }
     },
@@ -1439,7 +1457,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.3.0",
+        "version": "3.4.0",
         "since": null
       }
     },
@@ -1961,7 +1979,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.1",
+        "version": "1.2.0",
         "since": null
       }
     },
@@ -2051,7 +2069,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.1",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2069,7 +2087,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.1",
+        "version": "1.2.0",
         "since": null
       }
     },
@@ -2159,7 +2177,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.1",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2470,6 +2488,24 @@
       }
     },
     {
+      "name": "sign-in-methods",
+      "type": "registry:ui",
+      "title": "Sign In Methods",
+      "description": "The \"ways you can sign in\" list on an account page: one row per method (Google, Apple, email…), each with its mark, what it is linked to, and a Connect or Disconnect button. Disconnecting asks once more in place (\"Disconnect\" → \"Yes, disconnect\" /…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.1",
+        "since": null
+      }
+    },
+    {
       "name": "social-sign-in",
       "type": "registry:ui",
       "title": "Social Sign In",
@@ -2483,7 +2519,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.1",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2645,7 +2681,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.2.0",
         "since": null
       }
     },
@@ -2663,7 +2699,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2699,7 +2735,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.4.0",
+        "version": "2.6.0",
         "since": "1.0.0"
       }
     },
