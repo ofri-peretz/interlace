@@ -70,6 +70,12 @@ import { type DayPeriod, formatSlot, groupByPeriod } from './time-slot-model.js'
 
 export const MIN_VIEWPORT = 320 as const;
 
+/** The brand's `--ease-enter`, so WAAPI motion retunes with the CSS. */
+function easeEnter(el: Element): string {
+  const value = getComputedStyle(el).getPropertyValue('--ease-enter').trim();
+  return value || 'cubic-bezier(0.16, 1, 0.3, 1)';
+}
+
 export interface TimeSlot {
   /** What your store keys the slot by: `HH:MM`, an ISO instant, or your own id. */
   value: string;
@@ -174,7 +180,7 @@ const TimeSlotPicker = React.forwardRef<HTMLDivElement, TimeSlotPickerProps>(
           { transform: 'translateY(0.25rem)', opacity: 0 },
           { transform: 'translateY(0)', opacity: 1 },
         ],
-        { duration: 200, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+        { duration: 200, easing: easeEnter(group) },
       );
     }, [signature, reduced, loading]);
 

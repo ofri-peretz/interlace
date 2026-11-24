@@ -62,7 +62,7 @@ dark variants.
 rendering    client
 minViewport  320
 keyboard     ArrowDown, ArrowLeft, ArrowRight, ArrowUp, End, Home, PageDown, PageUp
-states       DayState = open | today | selected | unavailable
+states       DayState = open | today | selected | unavailable | outside
 exports      MIN_VIEWPORT
 ```
 

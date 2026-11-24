@@ -115,6 +115,12 @@ import {
 
 export const MIN_VIEWPORT = 320 as const;
 
+/** The brand's `--ease-enter`, so WAAPI motion retunes with the CSS. */
+function easeEnter(el: Element): string {
+  const value = getComputedStyle(el).getPropertyValue('--ease-enter').trim();
+  return value || 'cubic-bezier(0.16, 1, 0.3, 1)';
+}
+
 export interface CalendarLabels {
   /** @default 'Previous month' */
   previousMonth?: string;
@@ -297,7 +303,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(function Calend
         { transform: `translateX(${from})`, opacity: 0 },
         { transform: 'translateX(0)', opacity: 1 },
       ],
-      { duration: 200, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+      { duration: 200, easing: easeEnter(body) },
     );
   }, [month, reduced]);
 
@@ -311,15 +317,18 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(function Calend
   const canGoBack = !min || startOfMonth(min) < month;
   const canGoForward = !max || endOfMonth(max) > endOfMonth(month);
 
-  const fmtCaption = new Intl.DateTimeFormat(locale, {
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
-  });
-  const fmtDay = new Intl.DateTimeFormat(locale, { day: 'numeric', timeZone: 'UTC' });
-  const fmtFull = new Intl.DateTimeFormat(locale, { dateStyle: 'full', timeZone: 'UTC' });
-  const fmtWeekdayShort = new Intl.DateTimeFormat(locale, { weekday: 'short', timeZone: 'UTC' });
-  const fmtWeekdayLong = new Intl.DateTimeFormat(locale, { weekday: 'long', timeZone: 'UTC' });
+  // Built once per locale, not on every arrow key.
+  const fmt = React.useMemo(() => {
+    const make = (o: Intl.DateTimeFormatOptions) =>
+      new Intl.DateTimeFormat(locale, { ...o, timeZone: 'UTC' });
+    return {
+      caption: make({ month: 'long', year: 'numeric' }),
+      day: make({ day: 'numeric' }),
+      full: make({ dateStyle: 'full' }),
+      weekdayShort: make({ weekday: 'short' }),
+      weekdayLong: make({ weekday: 'long' }),
+    };
+  }, [locale]);
   // 2023-01-01 was a Sunday: weekday n is 1 + n January 2023.
   const weekdayDate = (d: Weekday) => toUtcDate(`2023-01-0${d + 1}`);
 
@@ -381,7 +390,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(function Calend
           aria-live="polite"
           className="min-w-0 truncate text-center text-sm font-semibold"
         >
-          {fmtCaption.format(toUtcDate(month))}
+          {fmt.caption.format(toUtcDate(month))}
         </div>
         <Button
           type="button"
@@ -408,11 +417,11 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(function Calend
               <th
                 key={d}
                 scope="col"
-                abbr={fmtWeekdayLong.format(weekdayDate(d))}
+                abbr={fmt.weekdayLong.format(weekdayDate(d))}
                 data-slot="calendar-weekday"
                 className="text-muted-foreground pb-1 text-xs font-normal"
               >
-                {fmtWeekdayShort.format(weekdayDate(d))}
+                {fmt.weekdayShort.format(weekdayDate(d))}
               </th>
             ))}
           </tr>
@@ -431,7 +440,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(function Calend
                   isDateMarked,
                 });
                 const name = [
-                  fmtFull.format(toUtcDate(date)),
+                  fmt.full.format(toUtcDate(date)),
                   isToday && labels.today,
                   disabled && labels.unavailable,
                   marked && labels.marked,
@@ -474,7 +483,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(function Calend
                         (state === 'open' || state === 'today') && 'motion-safe:active:scale-[0.97]',
                       )}
                     >
-                      {fmtDay.format(toUtcDate(date))}
+                      {fmt.day.format(toUtcDate(date))}
                       {(marked || isToday) && (
                         <span
                           aria-hidden="true"

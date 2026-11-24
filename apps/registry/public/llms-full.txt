@@ -423,7 +423,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v3.3.0
 - [Calendar](https://ds.interlace.tools/c/calendar): One month of days to pick one from: the date grid of a booking page, a date field's popup, a "when" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/calendar.json`
-  - contract: client, min 320px, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, states open|today|selected|unavailable, v1.0.0
+  - contract: client, min 320px, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, states open|today|selected|unavailable|outside, v1.0.0
 - [Calendar Model](https://ds.interlace.tools/c/calendar-model): The pure half of `Calendar`: dates as plain `YYYY-MM-DD` strings, the month grid, the keyboard moves of the WAI-ARIA date grid, and the bounds.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/calendar-model.json`
   - contract: server, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, v1.0.0
