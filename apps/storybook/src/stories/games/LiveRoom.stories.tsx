@@ -111,7 +111,8 @@ function Phone({ hub, id, name }: { hub: ReturnType<typeof createMemoryRoomHub>;
         Join as {name}
       </Button>
     );
-  else if (room.phase === 'lobby') body = <RoomLobby players={room.players} selfId={id} />;
+  else if (room.phase === 'lobby')
+    body = <RoomLobby players={room.players} selfId={id} aria-label={`${name}'s lobby`} />;
   else if (room.phase === 'countdown') body = <RoomCountdown startsAt={room.startsAt} />;
   else if (room.phase === 'question')
     body =
@@ -162,6 +163,7 @@ function Host({ hub }: { hub: ReturnType<typeof createMemoryRoomHub> }) {
       {room.phase === 'lobby' ? (
         <RoomLobby
           players={room.players}
+          aria-label="Host lobby"
           join={<JoinCode code={room.code} href={HREF} where="example.com/play" />}
           onRemove={(playerId) => send({ type: 'remove', playerId })}
           actions={controls}

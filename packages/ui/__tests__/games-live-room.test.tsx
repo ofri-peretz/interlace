@@ -540,6 +540,15 @@ describe('RoomLobby', () => {
     { id: 'b', name: 'Sam', connected: false },
   ];
 
+  it('takes its name from aria-label when given, for pages with more than one lobby', () => {
+    const { container, rerender } = render(<RoomLobby players={players} />);
+    const section = container.querySelector('section')!;
+    expect(section.getAttribute('aria-labelledby')).toBeTruthy();
+    rerender(<RoomLobby players={players} aria-label="Host lobby" />);
+    expect(section.hasAttribute('aria-labelledby')).toBe(false);
+    expect(screen.getByRole('region', { name: 'Host lobby' })).toBeTruthy();
+  });
+
   it('lists players, marks you and who is away, and waits for the host', () => {
     render(<RoomLobby players={players} selfId="a" />);
     expect(screen.getByRole('heading', { name: '1 player' })).toBeTruthy();

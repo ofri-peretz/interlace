@@ -238,6 +238,11 @@ export interface RoomLobbyLabels {
   list?: string;
 }
 
+/**
+ * The lobby is a landmark named by its player count. With more than one lobby
+ * on a page (a host screen beside a preview), give each its own `aria-label`,
+ * which then names the landmark instead.
+ */
 type RoomLobbyProps = Omit<React.ComponentProps<'section'>, 'children'> & {
   players: readonly RoomPlayer[];
   /** The viewer's id, to mark their chip. */
@@ -305,7 +310,7 @@ function RoomLobby({
       data-slot="room-lobby"
       data-count={live}
       data-min-viewport={String(MIN_VIEWPORT)}
-      aria-labelledby={headingId}
+      aria-labelledby={props['aria-label'] ? undefined : headingId}
       className={cn('@container', className)}
       {...props}
     >
