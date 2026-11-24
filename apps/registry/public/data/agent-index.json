@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 184
+    "itemCount": 185
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 74,
+      "primitive": 75,
       "pattern": 50,
       "effect": 19,
       "template": 13,
@@ -40,7 +40,7 @@
       "theme": 3
     },
     "category": {
-      "primitive": 74,
+      "primitive": 75,
       "pattern": 50,
       "blog": 35,
       "foundation": 27,
@@ -48,7 +48,7 @@
       "form": 20,
       "effect": 19,
       "decorative": 17,
-      "feedback": 14,
+      "feedback": 15,
       "navigation": 13,
       "template": 13,
       "marketing": 13,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 101,
+      "server": 102,
       "client": 83
     },
     "keyboard": {
-      "none": 145,
+      "none": 146,
       "handled": 39
     },
     "loading": {
-      "none": 149,
+      "none": 150,
       "built-in": 35
     },
     "minViewport": {
-      "320": 114,
+      "320": 115,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -8065,6 +8065,58 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/sparkline.json",
       "item": "https://ds.interlace.tools/r/sparkline.json",
       "docs": "https://ds.interlace.tools/c/sparkline"
+    },
+    {
+      "name": "spinner",
+      "title": "Spinner",
+      "type": "registry:ui",
+      "summary": "Something is working and there is no number to show yet. The shadcn core `spinner` item, drawn in Interlace tokens. Use `Progress` when you know how far along it is, and `Skeleton` when you know the shape of what is coming.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/spinner.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/spinner.json",
+      "item": "https://ds.interlace.tools/r/spinner.json",
+      "docs": "https://ds.interlace.tools/c/spinner"
     },
     {
       "name": "split-text",

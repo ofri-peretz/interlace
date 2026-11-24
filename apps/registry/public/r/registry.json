@@ -1282,6 +1282,24 @@
       }
     },
     {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Something is working and there is no number to show yet. The shadcn core `spinner` item, drawn in Interlace tokens. Use `Progress` when you know how far along it is, and `Skeleton` when you know the shape of what is coming.",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "stack",
       "type": "registry:ui",
       "title": "Stack",
