@@ -16,7 +16,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  reporter: process.env.CI ? [['list'], ['github']] : 'list',
+  // `dot` in CI: a thousand-line `list` buries the one failure.
+  reporter: process.env.CI ? [['dot'], ['github']] : 'list',
   use: {
     baseURL: 'http://127.0.0.1:6007',
     // The determinism contract: reduce completes every draw instantly.
@@ -25,7 +26,29 @@ export default defineConfig({
     // supplies it — a top-level viewport here would be dead config, as
     // project-level `use` wins). Baselines are cut at that size.
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    {
+      name: 'chromium',
+      testMatch: 'kit.spec.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      // Every component × six reading conditions (visual/matrix.ts). Runs in
+      // the pinned image only, so baselines carry no platform suffix: there
+      // is one platform. Grouped by condition, one folder each.
+      name: 'matrix',
+      testMatch: 'matrix.spec.ts',
+      snapshotPathTemplate: '{testDir}/baselines/{arg}{ext}',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      // Axe, reflow and visible focus across the same matrix. No baselines:
+      // results are judged against visual/a11y-known.json.
+      name: 'a11y',
+      testMatch: 'a11y-matrix.spec.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
+  ],
   webServer: {
     command: 'npx --yes http-server storybook-static -p 6007 -s',
     url: 'http://127.0.0.1:6007/iframe.html',
