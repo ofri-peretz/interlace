@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 178
+    "itemCount": 179
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -33,7 +33,7 @@
       "pattern": 50,
       "effect": 19,
       "template": 13,
-      "chart": 10,
+      "chart": 11,
       "util": 6,
       "starter": 3,
       "theme": 3
@@ -43,7 +43,7 @@
       "pattern": 50,
       "blog": 35,
       "foundation": 27,
-      "data": 25,
+      "data": 26,
       "form": 20,
       "effect": 19,
       "decorative": 17,
@@ -51,8 +51,8 @@
       "navigation": 13,
       "template": 13,
       "marketing": 13,
+      "chart": 11,
       "overlay": 10,
-      "chart": 10,
       "util": 6,
       "a11y": 4,
       "starter": 3,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 99,
-      "client": 79
+      "client": 80
     },
     "keyboard": {
-      "none": 139,
+      "none": 140,
       "handled": 39
     },
     "loading": {
-      "none": 143,
+      "none": 144,
       "built-in": 35
     },
     "minViewport": {
-      "320": 108,
+      "320": 109,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -1319,6 +1319,59 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/card.json",
       "item": "https://ds.interlace.tools/r/card.json",
       "docs": "https://ds.interlace.tools/c/card"
+    },
+    {
+      "name": "chart-frame",
+      "title": "Chart Frame",
+      "type": "registry:ui",
+      "summary": "The frame a published chart sits in: a title that states the finding, a line on what is measured, the chart, and a footer with where the numbers came from and a copy of them to take away. Every chart on a page gets the same frame, so a reader learns once…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ChartFrame",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "tabs"
+      ],
+      "installsTo": [
+        "components/ui/charts/chart-frame.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/chart-frame.json",
+      "item": "https://ds.interlace.tools/r/chart-frame.json",
+      "docs": "https://ds.interlace.tools/c/chart-frame"
     },
     {
       "name": "checkbox",
