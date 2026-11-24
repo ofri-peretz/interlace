@@ -75,12 +75,21 @@ export function formatSlot(value: string, opts: FormatSlotOptions = {}): string 
   const wall = wallDate(value);
   const date = wall ?? instantDate(value);
   if (!date) return value;
-  return new Intl.DateTimeFormat(opts.locale, {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: opts.hour12,
-    timeZone: wall ? 'UTC' : opts.timeZone,
-  }).format(date);
+  return formatter(opts.locale, opts.hour12, wall ? 'UTC' : opts.timeZone).format(date);
+}
+
+// Building an Intl.DateTimeFormat is far dearer than using one, and a day
+// of slots asks for the same one every time.
+const formatters = new Map<string, Intl.DateTimeFormat>();
+
+function formatter(locale?: string, hour12?: boolean, timeZone?: string): Intl.DateTimeFormat {
+  const key = `${locale}|${hour12}|${timeZone}`;
+  let fmt = formatters.get(key);
+  if (!fmt) {
+    fmt = new Intl.DateTimeFormat(locale, { hour: 'numeric', minute: '2-digit', hour12, timeZone });
+    formatters.set(key, fmt);
+  }
+  return fmt;
 }
 
 /**
