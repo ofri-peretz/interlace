@@ -791,6 +791,24 @@
     "previewDark": "templates-docspagetemplate--dark",
     "skeleton": "templates-docspagetemplate--page-skeleton"
   },
+  "dot-plot": {
+    "title": "Charts/DotPlot",
+    "storyIds": [
+      "charts-dotplot--default",
+      "charts-dotplot--by-change",
+      "charts-dotplot--full-scale",
+      "charts-dotplot--three-series",
+      "charts-dotplot--with-table",
+      "charts-dotplot--narrow-column",
+      "charts-dotplot--loading",
+      "charts-dotplot--empty",
+      "charts-dotplot--dark",
+      "charts-dotplot--rtl"
+    ],
+    "preview": "charts-dotplot--default",
+    "previewDark": "charts-dotplot--dark",
+    "skeleton": "charts-dotplot--loading"
+  },
   "drawer": {
     "title": "Primitives/Drawer",
     "storyIds": [

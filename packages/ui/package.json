@@ -408,6 +408,10 @@
       "types": "./dist/charts/choropleth-map.d.ts",
       "default": "./dist/charts/choropleth-map.js"
     },
+    "./charts/dot-plot": {
+      "types": "./dist/charts/dot-plot.d.ts",
+      "default": "./dist/charts/dot-plot.js"
+    },
     "./games/daily": {
       "types": "./dist/games/daily.d.ts",
       "default": "./dist/games/daily.js"

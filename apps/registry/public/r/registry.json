@@ -2884,6 +2884,24 @@
       }
     },
     {
+      "name": "dot-plot",
+      "type": "registry:ui",
+      "title": "Dot Plot",
+      "description": "One dot per value on a shared axis, one row per thing compared: support for a policy by age group in two years, life expectancy by country for women and men, a price in three cities. With two or more series, a line joins each row's dots, so the length of…",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "metric-table",
       "type": "registry:ui",
       "title": "Metric Table",
