@@ -1810,6 +1810,18 @@
     "previewDark": "primitives-scrollarea--dark",
     "skeleton": null
   },
+  "scroll-story": {
+    "title": "Blocks/ScrollStory",
+    "storyIds": [
+      "blocks-scrollstory--default",
+      "blocks-scrollstory--chart-first",
+      "blocks-scrollstory--dark",
+      "blocks-scrollstory--rtl"
+    ],
+    "preview": "blocks-scrollstory--default",
+    "previewDark": "blocks-scrollstory--dark",
+    "skeleton": null
+  },
   "scroller": {
     "title": "Effects/Scroller",
     "storyIds": [
@@ -2555,6 +2567,21 @@
     "preview": "charts-timeseries--default",
     "previewDark": "charts-timeseries--dark",
     "skeleton": "charts-timeseries--loading"
+  },
+  "time-slider": {
+    "title": "Charts/TimeSlider",
+    "storyIds": [
+      "charts-timeslider--default",
+      "charts-timeslider--keyboard",
+      "charts-timeslider--looping",
+      "charts-timeslider--with-dot-plot",
+      "charts-timeslider--seasons",
+      "charts-timeslider--rtl",
+      "charts-timeslider--dark"
+    ],
+    "preview": "charts-timeslider--default",
+    "previewDark": "charts-timeslider--dark",
+    "skeleton": null
   },
   "timeline": {
     "title": "Blocks/Timeline",

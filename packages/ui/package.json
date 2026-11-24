@@ -428,6 +428,14 @@
       "types": "./dist/charts/share-chart.d.ts",
       "default": "./dist/charts/share-chart.js"
     },
+    "./charts/time-slider": {
+      "types": "./dist/charts/time-slider.d.ts",
+      "default": "./dist/charts/time-slider.js"
+    },
+    "./charts/time-slider-model": {
+      "types": "./dist/charts/time-slider-model.d.ts",
+      "default": "./dist/charts/time-slider-model.js"
+    },
     "./charts/chart-frame": {
       "types": "./dist/charts/chart-frame.d.ts",
       "default": "./dist/charts/chart-frame.js"
