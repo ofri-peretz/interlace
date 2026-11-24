@@ -230,15 +230,23 @@ function PullToRefresh({
       }
     };
 
+    // A cancel is the system cutting the gesture short (a call, a fourth finger): never refresh.
+    const onCancel = () => {
+      const wasPulling = start !== null && pulling;
+      start = null;
+      pulling = false;
+      if (wasPulling) settle();
+    };
+
     el.addEventListener('touchstart', onStart, { passive: true });
     el.addEventListener('touchmove', onMove, { passive: false });
     el.addEventListener('touchend', onEnd);
-    el.addEventListener('touchcancel', onEnd);
+    el.addEventListener('touchcancel', onCancel);
     return () => {
       el.removeEventListener('touchstart', onStart);
       el.removeEventListener('touchmove', onMove);
       el.removeEventListener('touchend', onEnd);
-      el.removeEventListener('touchcancel', onEnd);
+      el.removeEventListener('touchcancel', onCancel);
     };
   }, [disabled, refresh, setPull, settle, threshold]);
 

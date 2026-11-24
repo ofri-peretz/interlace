@@ -126,6 +126,25 @@ describe('PullToRefresh', () => {
     expect(root.getAttribute('data-state')).toBe('settling');
   });
 
+  it('never refreshes when the system cancels the gesture, even past the threshold', () => {
+    const onRefresh = vi.fn();
+    const { container } = render(<PullToRefresh onRefresh={onRefresh}>x</PullToRefresh>);
+    const root = region(container);
+    pull(
+      root,
+      [
+        [0, 0],
+        [0, 400],
+      ],
+      { end: 'touchcancel' },
+    );
+    expect(onRefresh).not.toHaveBeenCalled();
+    expect(root.getAttribute('data-state')).toBe('settling');
+    // A cancel with no pull under way changes nothing.
+    fireEvent.touchCancel(root, { touches: [] });
+    expect(root.getAttribute('data-state')).toBe('settling');
+  });
+
   it('says so when the refresh fails', async () => {
     const onRefresh = vi.fn(() => Promise.reject(new Error('offline')));
     render(<PullToRefresh onRefresh={onRefresh}>x</PullToRefresh>);
