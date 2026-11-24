@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 198
+    "itemCount": 199
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 77,
-      "pattern": 52,
+      "pattern": 53,
       "effect": 20,
       "chart": 14,
       "template": 13,
@@ -41,7 +41,7 @@
     },
     "category": {
       "primitive": 77,
-      "pattern": 52,
+      "pattern": 53,
       "blog": 35,
       "data": 30,
       "foundation": 27,
@@ -50,9 +50,9 @@
       "decorative": 18,
       "feedback": 15,
       "chart": 14,
+      "marketing": 14,
       "navigation": 13,
       "template": 13,
-      "marketing": 13,
       "overlay": 10,
       "games": 10,
       "game": 10,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 103,
+      "server": 104,
       "client": 95
     },
     "keyboard": {
-      "none": 152,
+      "none": 153,
       "handled": 46
     },
     "loading": {
-      "none": 160,
+      "none": 161,
       "built-in": 38
     },
     "minViewport": {
       "320": 126,
       "480": 7,
       "768": 1,
-      "inherited": 64
+      "inherited": 65
     }
   },
   "items": [
@@ -7831,6 +7831,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-chart.json",
       "item": "https://ds.interlace.tools/r/share-chart.json",
       "docs": "https://ds.interlace.tools/c/share-chart"
+    },
+    {
+      "name": "share-image",
+      "title": "Share Image",
+      "type": "registry:ui",
+      "summary": "The picture a link unfurls into on X, LinkedIn, Facebook, WhatsApp, iMessage and Slack: a kicker, the page's title, a line of description, and one optional piece of evidence (a big number, a few bars, or anything you draw), with your mark at the top and…",
+      "topics": [],
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ShareImageSize",
+          "values": [
+            "og",
+            "square"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "NEUTRAL_SHARE_THEME",
+        "SHARE_IMAGE_SIZES",
+        "ShareImage"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/share-image.tsx",
+        "components/ui/patterns/share-image-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-image.json",
+      "item": "https://ds.interlace.tools/r/share-image.json",
+      "docs": "https://ds.interlace.tools/c/share-image"
     },
     {
       "name": "sheen-text",

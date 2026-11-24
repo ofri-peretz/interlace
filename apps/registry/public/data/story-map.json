@@ -1976,6 +1976,19 @@
     "previewDark": "charts-sharechart--dark",
     "skeleton": "charts-sharechart--loading"
   },
+  "share-image": {
+    "title": "Blocks/ShareImage",
+    "storyIds": [
+      "blocks-shareimage--default",
+      "blocks-shareimage--stat",
+      "blocks-shareimage--square-bars",
+      "blocks-shareimage--right-to-left",
+      "blocks-shareimage--neutral"
+    ],
+    "preview": "blocks-shareimage--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "sheen": {
     "title": "Effects/Sheen",
     "storyIds": [

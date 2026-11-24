@@ -2578,6 +2578,24 @@
       }
     },
     {
+      "name": "share-image",
+      "type": "registry:ui",
+      "title": "Share Image",
+      "description": "The picture a link unfurls into on X, LinkedIn, Facebook, WhatsApp, iMessage and Slack: a kicker, the page's title, a line of description, and one optional piece of evidence (a big number, a few bars, or anything you draw), with your mark at the top and…",
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "side-by-side",
       "type": "registry:ui",
       "title": "Side By Side",
