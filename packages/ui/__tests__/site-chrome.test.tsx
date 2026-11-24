@@ -53,6 +53,8 @@ describe("Topbar", () => {
     const [logo, , actions] = Array.from(row.children);
     expect(logo!.className).toContain("min-w-0");
     expect(actions!.className).toMatch(/\bms-auto\b.*\bflex-wrap\b/);
+    // Where the desktop nav shows, the row's justify-between centres it again.
+    expect(actions!.className).toContain("md:ms-0");
   });
 
   it("marks the current page with aria-current", () => {

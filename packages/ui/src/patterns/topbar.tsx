@@ -245,9 +245,9 @@ const CASCADE_ITEM =
 
 /** Each breakpoint spelled out, so Tailwind sees every class it needs. */
 const COLLAPSE = {
-  md: { row: "md:flex", actions: "md:gap-4", small: "md:hidden" },
-  lg: { row: "lg:flex", actions: "lg:gap-4", small: "lg:hidden" },
-  xl: { row: "xl:flex", actions: "xl:gap-4", small: "xl:hidden" },
+  md: { row: "md:flex", actions: "md:ms-0 md:gap-4", small: "md:hidden" },
+  lg: { row: "lg:flex", actions: "lg:ms-0 lg:gap-4", small: "lg:hidden" },
+  xl: { row: "xl:flex", actions: "xl:ms-0 xl:gap-4", small: "xl:hidden" },
 } as const;
 
 /**
