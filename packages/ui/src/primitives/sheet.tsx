@@ -50,7 +50,7 @@
  * | R4   | Extends Base UI part props       | `React.ComponentProps<typeof BaseDialog.*>`                 |
  * | R6   | data-slot per part               | sheet / -trigger / -close / -portal / -overlay / -content / -header / -footer / -title / -description / -close-x |
  * | R7   | cn + ...rest                     | `cn('bg-background …', side && …, className)` + `{...props}` |
- * | R8   | Enum for edge                    | `side = top | right | bottom | left` (default right)        |
+ * | R8   | Enum for edge                    | `side = top | right | bottom | left | start | end` (default right) |
  * | R10  | Composition seam                 | `Compose` for the standard tree; the parts for the rest     |
  * | R12  | Reuse over wrap                  | Base UI Dialog owns focus trap, inerting and dismissal      |
  * | R14  | Declares min viewport            | `data-min-viewport` on the popup + exported const           |
@@ -61,6 +61,7 @@
 
 import * as React from 'react';
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
+import { useDirection } from '@base-ui/react/direction-provider';
 import { XIcon } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
@@ -109,8 +110,24 @@ function SheetOverlay({
   );
 }
 
+/** A screen edge, or `start` / `end`, which follow the reading direction. */
+type SheetSide = 'top' | 'right' | 'bottom' | 'left' | 'start' | 'end';
+
+/**
+ * `start` is the left edge in English and the right edge in Hebrew or Arabic.
+ * The popup is portalled to `body`, outside any `dir` wrapper, so the side is
+ * resolved from the `DirectionProvider` context, not from the DOM.
+ */
+function useSheetEdge(side: SheetSide): Exclude<SheetSide, 'start' | 'end'> {
+  const rtl = useDirection() === 'rtl';
+  if (side === 'start') return rtl ? 'right' : 'left';
+  if (side === 'end') return rtl ? 'left' : 'right';
+  return side;
+}
+
 type SheetContentProps = React.ComponentProps<typeof BaseDialog.Popup> & {
-  side?: 'top' | 'right' | 'bottom' | 'left';
+  /** The edge the sheet slides from. `start` and `end` follow `DirectionProvider`. @default 'right' */
+  side?: SheetSide;
 };
 
 function SheetContent({
@@ -119,24 +136,25 @@ function SheetContent({
   side = 'right',
   ...props
 }: SheetContentProps) {
+  const edge = useSheetEdge(side);
   return (
     <SheetPortal>
       <SheetOverlay />
       <BaseDialog.Popup
         data-slot="sheet-content"
-        data-side={side}
+        data-side={edge}
         data-min-viewport={String(MIN_VIEWPORT)}
         className={cn(
           // A panel this size enters in the medium band and leaves faster:
           // the reader asked it to go, so it should not linger.
           'bg-background data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-medium) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-base) fixed z-50 flex flex-col gap-4 shadow-lg',
-          side === 'right' &&
+          edge === 'right' &&
             'data-[closed]:slide-out-to-right data-[open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l xs:max-w-96',
-          side === 'left' &&
+          edge === 'left' &&
             'data-[closed]:slide-out-to-left data-[open]:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r xs:max-w-96',
-          side === 'top' &&
+          edge === 'top' &&
             'data-[closed]:slide-out-to-top data-[open]:slide-in-from-top inset-x-0 top-0 h-auto border-b',
-          side === 'bottom' &&
+          edge === 'bottom' &&
             'data-[closed]:slide-out-to-bottom data-[open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t',
           className,
         )}
@@ -226,7 +244,7 @@ interface SheetComposeProps {
   description?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
-  side?: 'top' | 'right' | 'bottom' | 'left';
+  side?: SheetSide;
   className?: string;
 }
 

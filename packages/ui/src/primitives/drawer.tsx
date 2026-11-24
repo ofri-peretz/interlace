@@ -66,7 +66,7 @@
  * | R4   | Extends Base UI part props       | `React.ComponentProps<typeof BaseDrawer.*>`                 |
  * | R6   | data-slot per part               | drawer-trigger / -close / -portal / -overlay / -viewport / -content / -handle / -body / -header / -footer / -title / -description / -close-x |
  * | R7   | cn + ...rest                     | `cn(…, className)` + `{...props}`                           |
- * | R8   | Enum for edge                    | `direction = top | right | bottom | left` (default bottom)  |
+ * | R8   | Enum for edge                    | `direction = top | right | bottom | left | start | end` (default bottom) |
  * | R12  | Reuse over wrap                  | Base UI Drawer owns the gesture, focus trap and dismissal   |
  * | R14  | Declares min viewport            | `data-min-viewport` on the popup + exported const           |
  * | R19  | Tokens only                      | `bg-background`, `bg-muted-foreground/40` handle, motion tokens (the scrim excepted, as in Sheet) |
@@ -76,6 +76,7 @@
 
 import * as React from 'react';
 import { Drawer as BaseDrawer } from '@base-ui/react/drawer';
+import { useDirection } from '@base-ui/react/direction-provider';
 import { XIcon } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
@@ -95,16 +96,24 @@ const SWIPE = { top: 'up', right: 'right', bottom: 'down', left: 'left' } as con
 const DirectionContext = React.createContext<DrawerDirection>('bottom');
 
 type DrawerProps = Omit<React.ComponentProps<typeof BaseDrawer.Root>, 'swipeDirection'> & {
-  /** The edge the drawer is attached to; dragging toward it dismisses. @default 'bottom' */
-  direction?: DrawerDirection;
+  /**
+   * The edge the drawer is attached to; dragging toward it dismisses. `start` and `end` follow
+   * the reading direction from `DirectionProvider`: `start` is the left edge in English and the
+   * right edge in Hebrew or Arabic. @default 'bottom'
+   */
+  direction?: DrawerDirection | 'start' | 'end';
   /** Heights a bottom drawer rests at (fractions of the viewport, px, or rem strings). Bottom drawers only: other directions ignore it. */
   snapPoints?: React.ComponentProps<typeof BaseDrawer.Root>['snapPoints'];
 };
 
 function Drawer({ direction = 'bottom', ...props }: DrawerProps) {
+  // Resolved from context, not the DOM: the panel is portalled outside any `dir` wrapper.
+  const rtl = useDirection() === 'rtl';
+  const edge: DrawerDirection =
+    direction === 'start' ? (rtl ? 'right' : 'left') : direction === 'end' ? (rtl ? 'left' : 'right') : direction;
   return (
-    <DirectionContext.Provider value={direction}>
-      <BaseDrawer.Root swipeDirection={SWIPE[direction]} {...props} />
+    <DirectionContext.Provider value={edge}>
+      <BaseDrawer.Root swipeDirection={SWIPE[edge]} {...props} />
     </DirectionContext.Provider>
   );
 }

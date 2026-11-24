@@ -7152,7 +7152,19 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "SheetSide",
+          "values": [
+            "top",
+            "right",
+            "bottom",
+            "left",
+            "start",
+            "end"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [],

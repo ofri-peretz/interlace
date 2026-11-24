@@ -275,7 +275,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, keyboard via Base UI separator, v1.1.0
 - [Sheet](https://ds.interlace.tools/c/sheet): A modal panel anchored to one edge of the viewport — a nav drawer, a filter panel, a settings pane. Base UI's Dialog owns the open state, the focus trap, page inerting, Escape and outside-press dismissal; we own the scrim, the slide and the side geometry.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/sheet.json`
-  - contract: client, min 320px, keyboard via Base UI dialog, v2.1.0
+  - contract: client, min 320px, keyboard via Base UI dialog, states top|right|bottom|left|start|end, v2.1.0
 - [Skeleton](https://ds.interlace.tools/c/skeleton): Loading-state placeholder. ONE component, many shapes — the `variant` prop picks the silhouette of the resting component being loaded so the page layout doesn't jump when real data arrives.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/skeleton.json`
   - contract: server, min 320px, states rect|circle|text|paragraph|avatar|badge|breadcrumb|button|card|code-block|input|menu|pagination|prose|tabs|tag|toc|checkbox|form|label|number-field|radio-group|select|slider|switch|textarea|article-card|author-byline|data-table|newsletter-form|page-header|prev-next-post|stat-card|chart|metric-table|sparkline|meter|stat-strip, v2.1.0
