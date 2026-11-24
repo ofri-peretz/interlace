@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T23:19:08.816Z",
+  "generatedAt": "2026-11-24T00:59:56.003Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -2665,6 +2665,63 @@
           "worstAt": {
             "theme": "harbor",
             "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
           },
           "passes": true
         }
@@ -8819,6 +8876,191 @@
         "inGate": false
       }
     },
+    "otp-field": {
+      "sourcePath": "packages/ui/src/primitives/otp-field.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive on the page",
+          "ratios": [
+            8.05,
+            10.29,
+            7.6,
+            10.03
+          ],
+          "worst": 7.6,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "destructive",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-destructive in a card",
+          "ratios": [
+            8.31,
+            9.66,
+            8.02,
+            9.09
+          ],
+          "worst": 8.02,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "page-header": {
       "sourcePath": "packages/ui/src/patterns/page-header.tsx",
       "keyboard": null,
@@ -9932,6 +10174,134 @@
       "sourcePath": "packages/ui/src/patterns/reading-layout.tsx",
       "keyboard": null,
       "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "reading-settings": {
+      "sourcePath": "packages/ui/src/primitives/reading-settings.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "accent-foreground",
+          "bg": "accent",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "hover/highlight face",
+          "ratios": [
+            8.98,
+            10.46,
+            8.95,
+            9.65
+          ],
+          "worst": 8.95,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -11260,6 +11630,96 @@
       "sourcePath": "packages/ui/src/patterns/sign-in-form.tsx",
       "keyboard": null,
       "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "sign-in-methods": {
+      "sourcePath": "packages/ui/src/patterns/sign-in-methods.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -15516,6 +15976,19 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
+      }
+    },
+    "use-reading-prefs": {
+      "sourcePath": "packages/ui/src/lib/use-reading-prefs.ts",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
