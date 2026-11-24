@@ -144,7 +144,7 @@ const SliderThumb = React.forwardRef<
       // A transparent hit area around the 20px knob: 24px (SC 2.5.8 AA),
       // 44px under data-density="comfortable" (SC 2.5.5 AAA). The knob's
       // look is unchanged.
-      "relative before:absolute before:top-1/2 before:left-1/2 before:size-target before:-translate-1/2 before:rounded-full before:content-['']",
+      "relative before:absolute before:top-1/2 before:left-1/2 before:size-target before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:content-['']",
       className,
     )}
     {...props}
