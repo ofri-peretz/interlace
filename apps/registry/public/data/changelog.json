@@ -220,6 +220,17 @@
           "source": ".changeset/chart-frame.md"
         },
         {
+          "summary": "New `ChoroplethMap`: a value per area as shades of one colour. You pass the shapes as projected SVG paths, so Interlace ships no geography and decides no borders. Values fall into a few classes (quantile, equal or your own breaks) with a legend a reader can match; missing areas are hatched and labelled \"No data\", never drawn as the lowest shade. Every area is reachable by keyboard and announced with its value, and a table view carries the same numbers.",
+          "components": [
+            "choropleth-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/choropleth-map.md"
+        },
+        {
           "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"City archive\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
           "components": [
             "citation"

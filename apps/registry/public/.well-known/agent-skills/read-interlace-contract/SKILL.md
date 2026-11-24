@@ -56,18 +56,17 @@ to claim. Read it before writing props; the props table on
 same render the accessibility gate asserts against, including the loading and
 dark variants.
 
-## Worked example — `distribution`
+## Worked example — `choropleth-map`
 
 ```
 rendering    client
 minViewport  320
-keyboard     ArrowLeft, ArrowRight, End, Escape, Home
-states       ANNOTATION_KINDS = publish | release | action
-             Direction = up | down | flat
-exports      ANNOTATION_KINDS, Distribution, MIN_VIEWPORT
+keyboard     none of its own
+states       MapBinning = quantile | equal
+exports      ChoroplethMap, MAX_BINS, MIN_VIEWPORT
 ```
 
-One quantity spread across a fixed set of bins — hours of the day, days of the week, cohorts, buckets — with an optional REFERENCE distribution drawn over it.
+A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.
 
 ## The rule
 
