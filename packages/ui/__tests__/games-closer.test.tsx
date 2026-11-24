@@ -38,6 +38,7 @@ describe('closer-model', () => {
     expect(() => fromPosition(1, { min: 0, max: 10, scale: 'log' })).toThrow(RangeError);
     expect(() => scoreGuess(1000, 1200, R)).toThrow(RangeError);
     expect(() => scoreGuess(0, Number.NaN, R)).toThrow(RangeError);
+    expect(() => scoreGuess(Number.NaN, 500, R)).toThrow(RangeError);
   });
 
   it('scores by share of the range, in bands', () => {

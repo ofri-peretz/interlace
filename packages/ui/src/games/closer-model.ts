@@ -112,8 +112,9 @@ export function scoreGuess(
   options: CloserScoreOptions = {},
 ): CloserResult {
   const { maxPoints = 100, zeroAt = 0.5 } = options;
-  // Positions clamp to the track, so an answer off it would score a guess at the end as close.
+  // Without this guard, toPosition would clamp the answer and score a guess at the end of the track as close.
   if (!(answer >= range.min && answer <= range.max)) throw new RangeError('answer must be within the range');
+  if (!Number.isFinite(guess)) throw new RangeError('guess must be a finite number');
   const tolerance = options.tolerance ?? (range.step ?? 1) / 2;
   const close = options.bands?.close ?? 0.05;
   const near = options.bands?.near ?? 0.15;
