@@ -117,14 +117,24 @@ function ShareCard({
     if (manual) fieldRef.current?.select();
   }, [manual]);
 
+  // A live region speaks only when its text changes, so clear it first and
+  // set the message a moment later: a second copy is announced again.
+  const announceTimer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
+  React.useEffect(() => () => clearTimeout(announceTimer.current), []);
+  const announce = (message: string) => {
+    setStatus('');
+    clearTimeout(announceTimer.current);
+    announceTimer.current = setTimeout(() => setStatus(message), 50);
+  };
+
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(text);
-      setStatus(labels?.copied ?? 'Copied.');
+      announce(labels?.copied ?? 'Copied.');
       onShare?.('copy');
     } catch {
       setManual(true);
-      setStatus(labels?.copyFallback ?? 'Select the text and copy it.');
+      announce(labels?.copyFallback ?? 'Select the text and copy it.');
       onShare?.('manual');
     }
   };

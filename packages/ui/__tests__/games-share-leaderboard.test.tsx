@@ -46,8 +46,24 @@ describe('ShareCard', () => {
     expect(screen.queryByRole('button', { name: 'Share' })).toBeNull();
     await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Copy result' })));
     expect(writeText).toHaveBeenCalledWith('Game No. 42\n🟩🟨🎯 240/300\n🔥 6');
-    expect(screen.getByText('Copied.')).toBeTruthy();
+    expect(await screen.findByText('Copied.')).toBeTruthy();
     expect(onShare).toHaveBeenCalledWith('copy');
+  });
+
+  it('says it again on a second copy', async () => {
+    vi.stubGlobal('navigator', { clipboard: { writeText: vi.fn().mockResolvedValue(undefined) } });
+    const { container } = render(<ShareCard {...base} />);
+    const status = container.querySelector('[data-slot="share-card-status"]')!;
+    const seen: string[] = [];
+    const watch = new MutationObserver(() => seen.push(status.textContent ?? ''));
+    watch.observe(status, { childList: true, characterData: true, subtree: true });
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Copy result' })));
+    await screen.findByText('Copied.');
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Copy result' })));
+    await vi.waitFor(() => expect(seen.filter((t) => t === 'Copied.')).toHaveLength(2));
+    watch.disconnect();
+    // The region empties between the two, which is what makes it speak again.
+    expect(seen.slice(seen.indexOf('Copied.') + 1)).toContain('');
   });
 
   it('falls back to a selected field when the clipboard is refused', async () => {
@@ -57,7 +73,7 @@ describe('ShareCard', () => {
     expect(container.querySelector('[data-slot="share-card-score"]')).toBeNull();
     await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Copy result' })));
     expect((container.querySelector('[data-slot="share-card-text"]') as HTMLTextAreaElement).value).toContain('Game No. 42');
-    expect(screen.getByText('Select the text and copy it.')).toBeTruthy();
+    expect(await screen.findByText('Select the text and copy it.')).toBeTruthy();
     expect(onShare).toHaveBeenCalledWith('manual');
   });
 
