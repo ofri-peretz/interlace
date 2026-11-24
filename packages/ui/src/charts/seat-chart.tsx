@@ -370,10 +370,93 @@ export function placeGroups(groups: readonly SeatGroup[], sides: readonly SeatSi
 // Words
 // ─────────────────────────────────────────────────────────────────
 
-const plural = (n: number, one: string, many: string) => `${n.toLocaleString()} ${n === 1 ? one : many}`;
+const plural = (n: number, one: string, many: string, number: (n: number) => string) =>
+  `${number(n)} ${n === 1 ? one : many}`;
 
 const sideTotal = (groups: readonly SeatGroup[], id: string) =>
   groups.filter((g) => g.side === id).reduce((sum, g) => sum + Math.max(0, Math.floor(g.seats)), 0);
+
+/** What the screen-reader sentence is built from, so it can be written in any language. */
+export interface SeatSummary {
+  /** Seats in the assembly. */
+  total: number;
+  /** Seats no group holds. */
+  vacant: number;
+  /** Seats needed for a majority, when given. */
+  majority?: number;
+  /** True when the groups are grouped into sides. */
+  sided: boolean;
+  /** The sides with their groups, or each group on its own when there are no sides. */
+  blocs: readonly { label: string; seats: number; members: readonly SeatGroup[] }[];
+  /** Groups that belong to no listed side. */
+  loose: readonly SeatGroup[];
+  /** The largest bloc and how many seats it is short of a majority (0 or less when it holds one). */
+  largest?: { label: string; seats: number; short: number };
+  /** Formats a count in the chart's locale. */
+  number: (n: number) => string;
+}
+
+/** Every fixed word in SeatChart. Pass only the ones to change. */
+export interface SeatChartLabels {
+  /** Shown when there are no seats. */
+  empty: string;
+  /** The row and legend entry for seats no group holds. */
+  vacant: string;
+  /** The legend heading for groups outside every side. */
+  noSide: string;
+  /** Table column headers and the footer row. */
+  group: string;
+  side: string;
+  seats: string;
+  share: string;
+  total: string;
+  /** The caption under the arc when there is a majority. Gets the formatted count. */
+  majorityNeeded: (majority: string) => string;
+  /** The table footer's majority cell. Gets the formatted count. */
+  majorityCell: (majority: string) => string;
+  /** The table caption, given the chart's label when it is a string. */
+  tableCaption: (label?: string) => string;
+  /** The sentence a screen reader hears for the picture. */
+  summary: (summary: SeatSummary) => string;
+}
+
+const LABELS: SeatChartLabels = {
+  empty: 'No seats to show yet.',
+  vacant: 'Vacant',
+  noSide: 'No side',
+  group: 'Group',
+  side: 'Side',
+  seats: 'Seats',
+  share: 'Share',
+  total: 'Total',
+  majorityNeeded: (m) => `${m} needed for a majority`,
+  majorityCell: (m) => `Majority ${m}`,
+  tableCaption: (label) => (label ? `${label}: seats by group` : 'Seats by group'),
+  summary: (s) => {
+    const n = s.number;
+    const count = (k: number) => plural(k, 'seat', 'seats', n);
+    const list = (gs: readonly { label: string; seats: number }[]) => gs.map((g) => `${g.label} ${n(g.seats)}`).join(', ');
+    const parts = [`${count(s.total)}.`];
+    if (s.sided) {
+      for (const b of s.blocs) parts.push(b.members.length > 0 ? `${b.label} ${n(b.seats)}: ${list(b.members)}.` : `${b.label} 0.`);
+      if (s.loose.length > 0) parts.push(`No side: ${list(s.loose)}.`);
+    } else if (s.blocs.length > 0) {
+      parts.push(`${list(s.blocs)}.`);
+    }
+    if (s.vacant > 0) parts.push(`${count(s.vacant)} vacant.`);
+    if (s.majority !== undefined) {
+      parts.push(`A majority is ${n(s.majority)}.`);
+      if (s.largest) {
+        parts.push(
+          s.largest.short <= 0
+            ? `${s.largest.label} holds a majority${s.sided ? '' : ' on its own'}.`
+            : `The largest ${s.sided ? 'side' : 'group'}, ${s.largest.label}, is ${count(s.largest.short)} short.`,
+        );
+      }
+    }
+    return parts.join(' ');
+  },
+};
 
 /** The sentence a screen reader hears for the picture. */
 export function describeSeats(
@@ -381,44 +464,33 @@ export function describeSeats(
   total: number,
   majority?: number,
   sides: readonly SeatSide[] = [],
+  { summary = LABELS.summary, locale }: { summary?: SeatChartLabels['summary']; locale?: string } = {},
 ): string {
   groups = groups.map((g) => ({ ...g, seats: Math.max(0, Math.floor(g.seats)) }));
   const held = groups.reduce((sum, g) => sum + g.seats, 0);
-  const parts = [`${plural(total, 'seat', 'seats')}.`];
-  const list = (gs: readonly SeatGroup[]) => gs.map((g) => `${g.label} ${g.seats.toLocaleString()}`).join(', ');
-
-  const blocs: { label: string; seats: number }[] = [];
-  if (sides.length > 0) {
-    for (const side of sides) {
-      const members = groups.filter((g) => g.side === side.id);
-      const seats = sideTotal(groups, side.id);
-      blocs.push({ label: side.label, seats });
-      parts.push(members.length > 0 ? `${side.label} ${seats}: ${list(members)}.` : `${side.label} 0.`);
-    }
-    const loose = groups.filter((g) => !sides.some((side) => side.id === g.side));
-    if (loose.length > 0) parts.push(`No side: ${list(loose)}.`);
-  } else if (groups.length > 0) {
-    parts.push(`${list(groups)}.`);
-    blocs.push(...groups.map((g) => ({ label: g.label, seats: g.seats })));
-  }
-
-  if (total > held) parts.push(`${plural(total - held, 'seat', 'seats')} vacant.`);
-  if (majority !== undefined) {
-    parts.push(`A majority is ${majority.toLocaleString()}.`);
-    const largest = blocs.reduce<(typeof blocs)[number] | undefined>(
-      (best, b) => (!best || b.seats > best.seats ? b : best),
-      undefined,
-    );
-    if (largest) {
-      const kind = sides.length > 0 ? 'side' : 'group';
-      parts.push(
-        largest.seats >= majority
-          ? `${largest.label} holds a majority${sides.length > 0 ? '' : ' on its own'}.`
-          : `The largest ${kind}, ${largest.label}, is ${plural(majority - largest.seats, 'seat', 'seats')} short.`,
-      );
-    }
-  }
-  return parts.join(' ');
+  const format = new Intl.NumberFormat(locale);
+  const sided = sides.length > 0;
+  const blocs = sided
+    ? sides.map((side) => ({
+        label: side.label,
+        seats: sideTotal(groups, side.id),
+        members: groups.filter((g) => g.side === side.id),
+      }))
+    : groups.map((g) => ({ label: g.label, seats: g.seats, members: [g] }));
+  const best = blocs.reduce<(typeof blocs)[number] | undefined>(
+    (top, b) => (!top || b.seats > top.seats ? b : top),
+    undefined,
+  );
+  return summary({
+    total,
+    vacant: Math.max(0, total - held),
+    majority,
+    sided,
+    blocs,
+    loose: sided ? groups.filter((g) => !sides.some((side) => side.id === g.side)) : [],
+    largest: best && majority !== undefined ? { label: best.label, seats: best.seats, short: majority - best.seats } : undefined,
+    number: (k) => format.format(k),
+  });
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -472,6 +544,10 @@ export interface SeatChartProps extends Omit<React.ComponentProps<'figure'>, 'ch
   seatsLabel?: string;
   /** The same noun for a count of one. @default 'seat' when `seatsLabel` is 'seats', else `seatsLabel` */
   seatLabel?: string;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
+  /** Replace any fixed word: headers, captions, the empty note, the spoken summary. */
+  labels?: Partial<SeatChartLabels>;
   /** Show the table of groups and seats, which otherwise is for screen readers only. */
   showTable?: boolean;
   /** Reserve the chart's box while the data loads. */
@@ -489,6 +565,8 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
     label,
     seatsLabel = 'seats',
     seatLabel = seatsLabel === 'seats' ? 'seat' : seatsLabel,
+    locale,
+    labels: labelsProp,
     showTable = false,
     loading = false,
     className,
@@ -497,6 +575,9 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
   ref,
 ) {
   const reduced = useReducedMotion();
+  const labels = { ...LABELS, ...labelsProp };
+  const numberFormat = new Intl.NumberFormat(locale);
+  const number = (n: number) => numberFormat.format(n);
   const labelId = React.useId();
   const plotRef = React.useRef<SVGSVGElement>(null);
   const [hovered, setHovered] = React.useState<number | null>(null);
@@ -580,7 +661,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
         className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
-        <p className="text-sm text-muted-foreground">No seats to show yet.</p>
+        <p className="text-sm text-muted-foreground">{labels.empty}</p>
       </figure>
     );
   }
@@ -592,10 +673,11 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
   // The bottom row sits on the centre line; the box ends just past its seats.
   const H = Math.ceil(CY + seatRadius + 2);
   const innerEdge = CY - (0.4 * SCALE - seatRadius - 4);
-  const summary = describeSeats(groups, total, majority, sides);
-  const pct = (n: number) => `${((n / total) * 100).toLocaleString(undefined, { maximumFractionDigits: 1 })}%`;
+  const summary = describeSeats(groups, total, majority, sides, { summary: labels.summary, locale });
+  const percent = new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 1 });
+  const pct = (n: number) => percent.format(n / total);
   const vacant = total - held;
-  const seatsWord = (n: number) => plural(n, seatLabel, seatsLabel);
+  const seatsWord = (n: number) => plural(n, seatLabel, seatsLabel, number);
 
   const tallyMode: SeatTally = tally ?? (sides.length > 0 ? 'sides' : 'none');
   const tallies: { key: string; label: string; seats: number; fill: string }[] =
@@ -640,7 +722,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
         <Swatch className={fillOf(g)} />
         <span className="text-foreground min-w-0 flex-1 break-words">{g.label}</span>
         <span className="text-foreground shrink-0 font-medium tabular-nums">
-          {g.seats.toLocaleString()}
+          {number(g.seats)}
           <span className="sr-only"> {g.seats === 1 ? seatLabel : seatsLabel}</span>
         </span>
       </button>
@@ -651,8 +733,8 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
     vacant > 0 ? (
       <li className="flex min-h-target min-w-0 items-baseline gap-2 py-0.5">
         <Swatch vacant />
-        <span className="text-muted-foreground min-w-0 flex-1">Vacant</span>
-        <span className="text-foreground shrink-0 font-medium tabular-nums">{vacant.toLocaleString()}</span>
+        <span className="text-muted-foreground min-w-0 flex-1">{labels.vacant}</span>
+        <span className="text-foreground shrink-0 font-medium tabular-nums">{number(vacant)}</span>
       </li>
     ) : null;
 
@@ -712,7 +794,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
                   {t.label}
                 </span>
                 <span className="text-foreground leading-none font-semibold tabular-nums text-[min(2.5rem,12cqi)]">
-                  {t.seats.toLocaleString()}
+                  {number(t.seats)}
                 </span>
               </div>
             </React.Fragment>
@@ -770,7 +852,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
           aria-hidden
           className="text-foreground pointer-events-none absolute inset-x-0 bottom-0 m-0 text-center leading-none font-semibold tabular-nums text-[min(2.25rem,11cqi)]"
         >
-          {(activeGroup ? activeGroup.seats : total).toLocaleString()}
+          {number(activeGroup ? activeGroup.seats : total)}
         </p>
       </div>
 
@@ -783,7 +865,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
             {activeGroup.label}: {seatsWord(activeGroup.seats)}, {pct(activeGroup.seats)}
           </>
         ) : majority !== undefined ? (
-          (majorityLabel ?? `${majority.toLocaleString()} needed for a majority`)
+          (majorityLabel ?? labels.majorityNeeded(number(majority)))
         ) : (
           seatsWord(total)
         )}
@@ -797,10 +879,10 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
                 <p className="text-muted-foreground m-0 text-caption">
                   {block.label ? (
                     <>
-                      {block.label} <span className="text-foreground font-medium tabular-nums">{block.seats.toLocaleString()}</span>
+                      {block.label} <span className="text-foreground font-medium tabular-nums">{number(block.seats)}</span>
                     </>
                   ) : (
-                    'No side'
+                    labels.noSide
                   )}
                 </p>
                 <ul className={LIST}>
@@ -821,23 +903,23 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
       <div data-slot="seat-chart-table" className={cn(showTable ? 'overflow-x-auto' : 'sr-only')}>
         <table className="w-full text-ui-sm tabular-nums">
           <caption className="text-muted-foreground pb-2 text-start text-caption">
-            {typeof label === 'string' ? `${label}: seats by group` : 'Seats by group'}
+            {labels.tableCaption(typeof label === 'string' ? label : undefined)}
           </caption>
           <thead>
             <tr className="border-border border-b">
               <th scope="col" className="py-1.5 pe-4 text-start font-medium">
-                Group
+                {labels.group}
               </th>
               {sides.length > 0 ? (
                 <th scope="col" className="py-1.5 pe-4 text-start font-medium">
-                  Side
+                  {labels.side}
                 </th>
               ) : null}
               <th scope="col" className="py-1.5 pe-4 text-end font-medium">
-                Seats
+                {labels.seats}
               </th>
               <th scope="col" className="py-1.5 text-end font-medium">
-                Share
+                {labels.share}
               </th>
             </tr>
           </thead>
@@ -850,17 +932,17 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
                 {sides.length > 0 ? (
                   <td className="py-1.5 pe-4">{sides.find((side) => side.id === group.side)?.label ?? '—'}</td>
                 ) : null}
-                <td className="py-1.5 pe-4 text-end">{byIndex.get(index)!.seats.toLocaleString()}</td>
+                <td className="py-1.5 pe-4 text-end">{number(byIndex.get(index)!.seats)}</td>
                 <td className="py-1.5 text-end">{pct(byIndex.get(index)!.seats)}</td>
               </tr>
             ))}
             {vacant > 0 ? (
               <tr className="border-border border-b">
                 <th scope="row" className="py-1.5 pe-4 text-start font-normal">
-                  Vacant
+                  {labels.vacant}
                 </th>
                 {sides.length > 0 ? <td className="py-1.5 pe-4">—</td> : null}
-                <td className="py-1.5 pe-4 text-end">{vacant.toLocaleString()}</td>
+                <td className="py-1.5 pe-4 text-end">{number(vacant)}</td>
                 <td className="py-1.5 text-end">{pct(vacant)}</td>
               </tr>
             ) : null}
@@ -868,11 +950,11 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
           <tfoot>
             <tr>
               <th scope="row" className="py-1.5 pe-4 text-start font-medium">
-                Total
+                {labels.total}
               </th>
               {sides.length > 0 ? <td /> : null}
-              <td className="py-1.5 pe-4 text-end font-medium">{total.toLocaleString()}</td>
-              <td className="py-1.5 text-end">{majority !== undefined ? `Majority ${majority.toLocaleString()}` : ''}</td>
+              <td className="py-1.5 pe-4 text-end font-medium">{number(total)}</td>
+              <td className="py-1.5 text-end">{majority !== undefined ? labels.majorityCell(number(majority)) : ''}</td>
             </tr>
           </tfoot>
         </table>

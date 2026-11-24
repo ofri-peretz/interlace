@@ -373,3 +373,36 @@ describe('<ShareChart>', () => {
     }
   });
 });
+
+describe('labels', () => {
+  const CATS = [
+    { id: 'y', label: 'Yes' },
+    { id: 'n', label: 'No' },
+  ];
+  const LABELLED = {
+    empty: 'Nothing yet',
+    categories: 'Answers',
+    row: 'Question',
+    tableCaption: (label?: string) => `Table for ${label ?? 'chart'}`,
+    rowSentence: (row: string, shares: readonly { category: string; share: string }[]) =>
+      `${row} = ${shares.map((s) => s.share).join(' / ')}`,
+  };
+
+  it('replaces every fixed word', () => {
+    const { container } = render(
+      <ShareChart label="Poll" categories={CATS} rows={[{ label: 'Q1', values: { y: 3, n: 1 } }]} labels={LABELLED} locale="en-US" />,
+    );
+    expect(screen.getByRole('list', { name: 'Answers' })).toBeTruthy();
+    expect(screen.getByRole('table', { name: 'Table for Poll' })).toBeTruthy();
+    expect(screen.getByText('Question')).toBeTruthy();
+    expect(container.textContent).toContain('Q1 = 75% / 25%');
+  });
+
+  it('uses its own empty note and a default caption without a string label', () => {
+    const { unmount } = render(<ShareChart categories={CATS} rows={[]} labels={{ empty: 'Nothing yet' }} />);
+    expect(screen.getByText('Nothing yet')).toBeTruthy();
+    unmount();
+    render(<ShareChart label={<b>Poll</b>} categories={CATS} rows={[{ label: 'Q1', values: { y: 1, n: 1 } }]} labels={LABELLED} />);
+    expect(screen.getByRole('table', { name: 'Table for chart' })).toBeTruthy();
+  });
+});

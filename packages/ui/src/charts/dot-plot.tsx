@@ -185,7 +185,10 @@ export type DotPlotLabels = {
   empty: string;
   /** The table's caption, given the chart's `label` when it is a string. */
   tableCaption: (label?: string) => string;
-  /** The sentence for one row. Each value is formatted, or null when missing. */
+  /**
+   * The sentence for one row. Each value is formatted, or null when missing. It words a missing
+   * value itself, so set it alongside `noData` when translating.
+   */
   rowSentence: (row: string, values: ReadonlyArray<{ series: string; value: string | null }>) => string;
 };
 
