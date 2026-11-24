@@ -17,7 +17,7 @@ will.
 
 `GET https://ds.interlace.tools/data/agent-index.json`
 
-177 items, each with `tier`, `categories`, `summary`, `topics`,
+178 items, each with `tier`, `categories`, `summary`, `topics`,
 `rendering`, `minViewport`, `loadingState`, `keyboard`, `states`, `a11y`,
 `exports`, `version` and `install`. It is a flat array — filter it directly.
 
@@ -34,7 +34,7 @@ jq '.items[] | select(.keyboard.keys | length > 0) | {name, keys: .keyboard.keys
 
 # models an explicit state union — i.e. absence is a value, not a null check
 jq '.items[] | select(.states | length > 0) | {name, states: [.states[].name]}' agent-index.json
-# → 42 item(s)
+# → 43 item(s)
 
 # safe down to a 320px viewport
 jq '.items[] | select(.minViewport == null or .minViewport <= 320) | .name' agent-index.json
@@ -42,7 +42,7 @@ jq '.items[] | select(.minViewport == null or .minViewport <= 320) | .name' agen
 
 ## The vocabulary that matters here
 
-- `meta.tier` — Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.
+- `meta.tier` — Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.
 - `meta.client` — true when the installed file carries the "use client" directive. false means it is safe inside a React Server Component with no boundary.
 - `meta.minViewport` — The narrowest viewport in CSS px this component is designed to render correctly at, declared in source as `export const MIN_VIEWPORT`. null means it inherits the min-viewport of whatever it renders and introduces no floor of its own.
 - `meta.loading` — true when the component accepts `loading?: boolean` and renders its own skeleton — the DS-wide opt-in, so a caller never hand-rolls a placeholder.

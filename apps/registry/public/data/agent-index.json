@@ -13,10 +13,10 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 177
+    "itemCount": 178
   },
   "fieldGuide": {
-    "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
+    "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
     "meta.client": "true when the installed file carries the \"use client\" directive. false means it is safe inside a React Server Component with no boundary.",
     "meta.minViewport": "The narrowest viewport in CSS px this component is designed to render correctly at, declared in source as `export const MIN_VIEWPORT`. null means it inherits the min-viewport of whatever it renders and introduces no floor of its own.",
     "meta.loading": "true when the component accepts `loading?: boolean` and renders its own skeleton — the DS-wide opt-in, so a caller never hand-rolls a placeholder.",
@@ -36,7 +36,8 @@
       "chart": 9,
       "util": 6,
       "starter": 3,
-      "theme": 3
+      "theme": 3,
+      "game": 1
     },
     "category": {
       "primitive": 74,
@@ -56,22 +57,24 @@
       "util": 6,
       "a11y": 4,
       "starter": 3,
-      "theme": 3
+      "theme": 3,
+      "games": 1,
+      "game": 1
     },
     "rendering": {
-      "server": 99,
+      "server": 100,
       "client": 78
     },
     "keyboard": {
-      "none": 138,
+      "none": 139,
       "handled": 39
     },
     "loading": {
-      "none": 143,
+      "none": 144,
       "built-in": 34
     },
     "minViewport": {
-      "320": 107,
+      "320": 108,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -8294,6 +8297,81 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/status-pills.json",
       "item": "https://ds.interlace.tools/r/status-pills.json",
       "docs": "https://ds.interlace.tools/c/status-pills"
+    },
+    {
+      "name": "streak",
+      "title": "Streak",
+      "type": "registry:ui",
+      "summary": "A player's run of days: the count, a line on where today stands, and a strip of recent days, each marked played, rested, missed or still open. Rest days come from a `RestRule` (weekdays and dates that never break a run), so a habit does not punish a day…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "StreakStatus",
+          "values": [
+            "played",
+            "pending",
+            "resting",
+            "none"
+          ]
+        },
+        {
+          "name": "StreakDayState",
+          "values": [
+            "played",
+            "rest",
+            "missed",
+            "open",
+            "future"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/streak.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/streak-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/streak.json",
+      "item": "https://ds.interlace.tools/r/streak.json",
+      "docs": "https://ds.interlace.tools/c/streak"
     },
     {
       "name": "switch",
