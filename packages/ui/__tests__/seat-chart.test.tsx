@@ -471,3 +471,60 @@ describe('SeatChart highlight', () => {
     expect(screen.getByText('5 seats')).toBeTruthy();
   });
 });
+
+describe('labels and locale', () => {
+  const SIDES2: SeatSide[] = [{ id: 'g', label: 'Gov', tone: 1 }];
+  const LABELLED = {
+    empty: 'Nothing yet',
+    vacant: 'Empty seats',
+    noSide: 'Unaligned',
+    group: 'Party',
+    side: 'Camp',
+    seats: 'Count',
+    share: 'Percent',
+    total: 'Sum',
+    majorityNeeded: (m: string) => `Need ${m}`,
+    majorityCell: (m: string) => `Half+1 ${m}`,
+    tableCaption: (label?: string) => `Table for ${label ?? 'chart'}`,
+    summary: (s: { total: number; largest?: { short: number } }) => `T${s.total} short ${s.largest?.short}`,
+  };
+
+  it('replaces every fixed word', () => {
+    render(
+      <SeatChart
+        label="Vote"
+        groups={[{ label: 'A', seats: 1000, side: 'g' }, { label: 'B', seats: 5 }]}
+        sides={SIDES2}
+        total={1010}
+        majority={506}
+        labels={LABELLED}
+        showTable
+      />,
+    );
+    expect(screen.getByRole('img').getAttribute('aria-label')).toBe('T1010 short -494');
+    expect(screen.getByText('Need 506')).toBeTruthy();
+    expect(screen.getByRole('table', { name: 'Table for Vote' })).toBeTruthy();
+    for (const word of ['Party', 'Camp', 'Count', 'Percent', 'Sum', 'Half+1 506', 'Unaligned']) {
+      expect(screen.getAllByText(word).length).toBeGreaterThan(0);
+    }
+    expect(screen.getAllByText('Empty seats')).toHaveLength(2);
+  });
+
+  it('shows the empty note in its own words, and a default caption without a string label', () => {
+    const { unmount } = render(<SeatChart groups={[]} labels={{ empty: 'Nothing yet' }} />);
+    expect(screen.getByText('Nothing yet')).toBeTruthy();
+    unmount();
+    render(<SeatChart label={<b>Vote</b>} groups={[{ label: 'A', seats: 3 }]} labels={LABELLED} />);
+    expect(screen.getByRole('table', { name: 'Table for chart' })).toBeTruthy();
+  });
+
+  it('formats numbers in the given locale', () => {
+    render(<SeatChart groups={[{ label: 'A', seats: 1200 }]} total={1500} majority={751} locale="de-DE" showTable />);
+    expect(screen.getByText('751 needed for a majority')).toBeTruthy();
+    expect(screen.getAllByText('1.500').length).toBeGreaterThan(0);
+    expect(screen.getByText('80 %')).toBeTruthy();
+    expect(describeSeats([{ label: 'A', seats: 1200 }], 1500, undefined, [], { locale: 'de-DE' })).toBe(
+      '1.500 seats. A 1.200. 300 seats vacant.',
+    );
+  });
+});
