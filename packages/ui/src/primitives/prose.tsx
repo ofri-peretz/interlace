@@ -53,7 +53,7 @@
  * | R18  | Tailwind only                    | Zero inline `style`; cva + arbitrary-variant utilities      |
  * | R19  | Tokens only                      | `--text-*`, `--spacing-*`, `--container-prose`, semantic colors |
  * | R20  | AA contrast                      | `text-foreground` / `text-muted-foreground` clear AA in light + dark |
- * | R25  | Client component                 | useLayoutEffect injects `tabindex="0"` on overflowing `<pre>`/`<table>` for axe `scrollable-region-focusable` |
+ * | R25  | Client component                 | useLayoutEffect makes an overflowing `<pre>`/`<table>` focusable and named, and undoes it when it fits |
  * | R26  | A11y from native el              | semantic elements (`article`, `h*`, `a`, `table`) own the a11y tree |
  */
 
@@ -120,9 +120,9 @@ const PROSE_CASCADE = [
   '[&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:rounded-none',
 
   // Pre — block code surface with horizontal overflow on narrow viewports.
-  // Pairs with the focus-visible ring contract: when consumers add the
-  // recommended `tabIndex={0}` (see Prose JSDoc "Keyboard access" section),
-  // the ring activates on keyboard focus.
+  // Pairs with the focus-visible ring contract: Prose adds `tabIndex={0}`
+  // itself when a block overflows (the sync effect in Prose), so the ring
+  // shows on keyboard focus.
   '[&_pre]:my-6 [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-none [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
 
   // Tables — GFM zebra rows; block + overflow-x for narrow viewports (R14).
@@ -184,7 +184,8 @@ interface ProseProps
 }
 
 /**
- * Typographic article-body wrapper. Server component (no hooks).
+ * Typographic article-body wrapper. Client component: a layout effect makes
+ * blocks that scroll sideways reachable by keyboard.
  *
  * Drop any combination of `h1`–`h6`, `p`, `a`, `ul`/`ol`, `blockquote`,
  * `code`/`pre`, `table`, `img` inside; the cascade styles them with DS
@@ -197,30 +198,72 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
     const localRef = React.useRef<HTMLElement | null>(null);
 
     /**
-     * axe `scrollable-region-focusable`: any element with `overflow:auto|scroll`
-     * that actually scrolls (scrollWidth/Height > clientWidth/Height) MUST be
-     * keyboard-reachable. The cleanest way to satisfy that without forcing
-     * every consumer to manually `tabIndex={0}` on every `<pre>` and `<table>`
-     * inside their MDX/HTML content is to inject it from the wrapper.
+     * axe `scrollable-region-focusable`: a `<pre>` or `<table>` that actually
+     * scrolls sideways must be reachable by keyboard, or a keyboard user can
+     * never read its right edge. One that fits is left alone, so it is not a
+     * stray tab stop. The check re-runs when the wrapper resizes (a rotated
+     * phone, a bigger text size) and when children change.
      *
-     * useLayoutEffect runs after render but before paint, so the attribute is
-     * in place before the test-runner's axe scan inspects the DOM. We also
-     * re-run when children change (React reconciles a new key set) by keying
-     * on `children` identity via the dependency array.
+     * A region we make focusable also needs a name, or a screen reader
+     * announces an unnamed stop. A table is named by its `<caption>`; without
+     * one, or on a `<pre>`, we add a short label. Anything the author set
+     * (`tabindex`, `aria-label`, `aria-labelledby`, `role`) wins and is never
+     * touched. What we add is marked `data-prose-scroll` so we can take it
+     * back when the element stops overflowing.
+     *
+     * useLayoutEffect runs before paint, so the attributes are in place before
+     * the test-runner's axe scan inspects the DOM.
      */
     React.useLayoutEffect(() => {
       const root = localRef.current;
       if (!root) return;
-      for (const el of root.querySelectorAll<HTMLElement>('pre, table')) {
-        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
-      }
+      const sync = () => {
+        for (const el of root.querySelectorAll<HTMLElement>('pre, table')) {
+          const ours = el.hasAttribute('data-prose-scroll');
+          if (!ours && el.hasAttribute('tabindex')) continue;
+          const scrolls = el.scrollWidth > el.clientWidth + 1;
+          if (scrolls && !ours) {
+            el.setAttribute('data-prose-scroll', '');
+            el.setAttribute('tabindex', '0');
+            const named = el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby');
+            const isTable = el.tagName === 'TABLE';
+            if (!isTable && !el.hasAttribute('role')) {
+              el.setAttribute('role', 'region');
+              el.setAttribute('data-prose-role', '');
+            }
+            if (!named && !(isTable && el.querySelector('caption'))) {
+              el.setAttribute('aria-label', isTable ? 'Table, scrolls sideways' : 'Code, scrolls sideways');
+              el.setAttribute('data-prose-label', '');
+            }
+          } else if (!scrolls && ours) {
+            el.removeAttribute('data-prose-scroll');
+            el.removeAttribute('tabindex');
+            if (el.hasAttribute('data-prose-role')) {
+              el.removeAttribute('role');
+              el.removeAttribute('data-prose-role');
+            }
+            if (el.hasAttribute('data-prose-label')) {
+              el.removeAttribute('aria-label');
+              el.removeAttribute('data-prose-label');
+            }
+          }
+        }
+      };
+      sync();
+      if (typeof ResizeObserver === 'undefined') return;
+      const ro = new ResizeObserver(sync);
+      ro.observe(root);
+      return () => ro.disconnect();
     }, [children]);
 
-    const setRef = (node: HTMLElement | null) => {
-      localRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
-    };
+    const setRef = React.useCallback(
+      (node: HTMLElement | null) => {
+        localRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+      },
+      [ref],
+    );
 
     return (
       <Tag
