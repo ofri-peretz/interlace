@@ -335,6 +335,21 @@
     "previewDark": "primitives-card--dark",
     "skeleton": "primitives-card--loading"
   },
+  "chart-frame": {
+    "title": "Charts/ChartFrame",
+    "storyIds": [
+      "charts-chartframe--default",
+      "charts-chartframe--source-only",
+      "charts-chartframe--sources",
+      "charts-chartframe--other-words",
+      "charts-chartframe--narrow-column",
+      "charts-chartframe--dark",
+      "charts-chartframe--rtl"
+    ],
+    "preview": "charts-chartframe--default",
+    "previewDark": "charts-chartframe--dark",
+    "skeleton": null
+  },
   "checkbox": {
     "title": "Primitives/Checkbox",
     "storyIds": [
@@ -373,6 +388,21 @@
       "blocks-claimcard--still-being-checked"
     ],
     "preview": "blocks-claimcard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "closer-game": {
+    "title": "Games/CloserGame",
+    "storyIds": [
+      "games-closergame--default",
+      "games-closergame--revealed",
+      "games-closergame--spot-on",
+      "games-closergame--log-scale",
+      "games-closergame--percent",
+      "games-closergame--right-to-left",
+      "games-closergame--narrow"
+    ],
+    "preview": "games-closergame--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -571,6 +601,19 @@
     "preview": "blocks-ctasection--default",
     "previewDark": "blocks-ctasection--dark",
     "skeleton": "blocks-ctasection--loading"
+  },
+  "daily-puzzle": {
+    "title": "Games/DailyPuzzle",
+    "storyIds": [
+      "games-dailypuzzle--default",
+      "games-dailypuzzle--done",
+      "games-dailypuzzle--whole-game",
+      "games-dailypuzzle--right-to-left",
+      "games-dailypuzzle--narrow"
+    ],
+    "preview": "games-dailypuzzle--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "dashboard-template": {
     "title": "Templates/DashboardTemplate",
@@ -1133,6 +1176,20 @@
     ],
     "preview": "starters-layout-starter--default",
     "previewDark": "starters-layout-starter--dark",
+    "skeleton": null
+  },
+  "leaderboard": {
+    "title": "Games/Leaderboard",
+    "storyIds": [
+      "games-leaderboard--default",
+      "games-leaderboard--viewer-on-top",
+      "games-leaderboard--not-enough-players",
+      "games-leaderboard--lowest-wins",
+      "games-leaderboard--right-to-left",
+      "games-leaderboard--narrow"
+    ],
+    "preview": "games-leaderboard--default",
+    "previewDark": null,
     "skeleton": null
   },
   "light-beam": {
@@ -1788,6 +1845,17 @@
     ],
     "preview": "blocks-sharebuttons--variants",
     "previewDark": "blocks-sharebuttons--dark",
+    "skeleton": null
+  },
+  "share-card": {
+    "title": "Games/ShareCard",
+    "storyIds": [
+      "games-sharecard--default",
+      "games-sharecard--right-or-wrong",
+      "games-sharecard--right-to-left"
+    ],
+    "preview": "games-sharecard--default",
+    "previewDark": null,
     "skeleton": null
   },
   "share-chart": {

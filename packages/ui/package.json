@@ -420,6 +420,38 @@
       "types": "./dist/charts/share-chart.d.ts",
       "default": "./dist/charts/share-chart.js"
     },
+    "./charts/chart-frame": {
+      "types": "./dist/charts/chart-frame.d.ts",
+      "default": "./dist/charts/chart-frame.js"
+    },
+    "./games/closer-model": {
+      "types": "./dist/games/closer-model.d.ts",
+      "default": "./dist/games/closer-model.js"
+    },
+    "./games/closer-game": {
+      "types": "./dist/games/closer-game.d.ts",
+      "default": "./dist/games/closer-game.js"
+    },
+    "./games/daily-puzzle": {
+      "types": "./dist/games/daily-puzzle.d.ts",
+      "default": "./dist/games/daily-puzzle.js"
+    },
+    "./games/share-model": {
+      "types": "./dist/games/share-model.d.ts",
+      "default": "./dist/games/share-model.js"
+    },
+    "./games/share-card": {
+      "types": "./dist/games/share-card.d.ts",
+      "default": "./dist/games/share-card.js"
+    },
+    "./games/leaderboard-model": {
+      "types": "./dist/games/leaderboard-model.d.ts",
+      "default": "./dist/games/leaderboard-model.js"
+    },
+    "./games/leaderboard": {
+      "types": "./dist/games/leaderboard.d.ts",
+      "default": "./dist/games/leaderboard.js"
+    },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",
       "default": "./dist/charts/delta.js"

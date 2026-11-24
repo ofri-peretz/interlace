@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 180
+    "itemCount": 185
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -33,18 +33,18 @@
       "pattern": 50,
       "effect": 19,
       "template": 13,
-      "chart": 10,
+      "chart": 11,
       "util": 6,
+      "game": 5,
       "starter": 3,
-      "theme": 3,
-      "game": 1
+      "theme": 3
     },
     "category": {
       "primitive": 75,
       "pattern": 50,
       "blog": 35,
       "foundation": 27,
-      "data": 25,
+      "data": 26,
       "form": 20,
       "effect": 19,
       "decorative": 17,
@@ -52,29 +52,29 @@
       "navigation": 13,
       "template": 13,
       "marketing": 13,
+      "chart": 11,
       "overlay": 10,
-      "chart": 10,
       "util": 6,
       "a11y": 5,
+      "games": 5,
+      "game": 5,
       "starter": 3,
-      "theme": 3,
-      "games": 1,
-      "game": 1
+      "theme": 3
     },
     "rendering": {
-      "server": 100,
-      "client": 80
+      "server": 101,
+      "client": 84
     },
     "keyboard": {
-      "none": 140,
+      "none": 145,
       "handled": 40
     },
     "loading": {
-      "none": 145,
+      "none": 150,
       "built-in": 35
     },
     "minViewport": {
-      "320": 110,
+      "320": 115,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -1324,6 +1324,59 @@
       "docs": "https://ds.interlace.tools/c/card"
     },
     {
+      "name": "chart-frame",
+      "title": "Chart Frame",
+      "type": "registry:ui",
+      "summary": "The frame a published chart sits in: a title that states the finding, a line on what is measured, the chart, and a footer with where the numbers came from and a copy of them to take away. Every chart on a page gets the same frame, so a reader learns once…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ChartFrame",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "tabs"
+      ],
+      "installsTo": [
+        "components/ui/charts/chart-frame.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/chart-frame.json",
+      "item": "https://ds.interlace.tools/r/chart-frame.json",
+      "docs": "https://ds.interlace.tools/c/chart-frame"
+    },
+    {
       "name": "checkbox",
       "title": "Checkbox",
       "type": "registry:ui",
@@ -1492,6 +1545,73 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json",
       "item": "https://ds.interlace.tools/r/claim-card.json",
       "docs": "https://ds.interlace.tools/c/claim-card"
+    },
+    {
+      "name": "closer-game",
+      "title": "Closer Game",
+      "type": "registry:ui",
+      "summary": "Guess a number by sliding to it. The player sets a value on a slider (or types it), locks it in, and the answer slides out from their guess to where it really is, with the gap between them shaded and said in words: \"900 off. Close.\" Scoring lives in…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CloserBand",
+          "values": [
+            "exact",
+            "close",
+            "near",
+            "far"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "slider",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/closer-game.tsx",
+        "components/ui/games/closer-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/closer-game.json",
+      "item": "https://ds.interlace.tools/r/closer-game.json",
+      "docs": "https://ds.interlace.tools/c/closer-game"
     },
     {
       "name": "cn",
@@ -2065,6 +2185,59 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/cta-section.json",
       "item": "https://ds.interlace.tools/r/cta-section.json",
       "docs": "https://ds.interlace.tools/c/cta-section"
+    },
+    {
+      "name": "daily-puzzle",
+      "title": "Daily Puzzle",
+      "type": "registry:ui",
+      "summary": "The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/daily-puzzle.tsx",
+        "components/ui/games/daily.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/daily-puzzle.json",
+      "item": "https://ds.interlace.tools/r/daily-puzzle.json",
+      "docs": "https://ds.interlace.tools/c/daily-puzzle"
     },
     {
       "name": "dashboard-template",
@@ -4483,6 +4656,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json",
       "item": "https://ds.interlace.tools/r/layout-starter.json",
       "docs": "https://ds.interlace.tools/c/layout-starter"
+    },
+    {
+      "name": "leaderboard",
+      "title": "Leaderboard",
+      "type": "registry:ui",
+      "summary": "A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/leaderboard.tsx",
+        "components/ui/games/leaderboard-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/leaderboard.json",
+      "item": "https://ds.interlace.tools/r/leaderboard.json",
+      "docs": "https://ds.interlace.tools/c/leaderboard"
     },
     {
       "name": "light-beam",
@@ -6969,6 +7191,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-buttons.json",
       "item": "https://ds.interlace.tools/r/share-buttons.json",
       "docs": "https://ds.interlace.tools/c/share-buttons"
+    },
+    {
+      "name": "share-card",
+      "title": "Share Card",
+      "type": "registry:ui",
+      "summary": "How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_SYMBOLS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/share-card.tsx",
+        "components/ui/games/share-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-card.json",
+      "item": "https://ds.interlace.tools/r/share-card.json",
+      "docs": "https://ds.interlace.tools/c/share-card"
     },
     {
       "name": "share-chart",

@@ -2812,6 +2812,24 @@
       }
     },
     {
+      "name": "chart-frame",
+      "type": "registry:ui",
+      "title": "Chart Frame",
+      "description": "The frame a published chart sits in: a title that states the finding, a line on what is measured, the chart, and a footer with where the numbers came from and a copy of them to take away. Every chart on a page gets the same frame, so a reader learns once…",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "delta",
       "type": "registry:ui",
       "title": "Delta",
@@ -2989,6 +3007,78 @@
         "loading": true,
         "version": "2.0.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "closer-game",
+      "type": "registry:ui",
+      "title": "Closer Game",
+      "description": "Guess a number by sliding to it. The player sets a value on a slider (or types it), locks it in, and the answer slides out from their guess to where it really is, with the gap between them shaded and said in words: \"900 off. Close.\" Scoring lives in…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "daily-puzzle",
+      "type": "registry:ui",
+      "title": "Daily Puzzle",
+      "description": "The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "leaderboard",
+      "type": "registry:ui",
+      "title": "Leaderboard",
+      "description": "A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "share-card",
+      "type": "registry:ui",
+      "title": "Share Card",
+      "description": "How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {

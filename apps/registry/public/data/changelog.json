@@ -209,6 +209,17 @@
           "source": ".changeset/callout-highlight.md"
         },
         {
+          "summary": "New `ChartFrame`: the frame a published chart sits in. A `title` that states the finding (at the `headingLevel` the page needs) and a `subtitle` on what is measured sit above any chart; the footer names every `source` (linked when it has an address), a `note` on how to read the numbers and when they were `updated`, all as plain HTML under the chart. Pass `table` and the frame offers Chart and Table views as tabs, both kept in the server HTML. `download` writes the rows as a UTF-8 CSV into a link at render time, so it works before scripts load, and prefixes cells a spreadsheet would run as a formula. Every fixed word comes from `labels`, and the date goes through `Intl` in `locale`. `toCsv` and `csvHref` are exported and pure.",
+          "components": [
+            "chart-frame"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/chart-frame.md"
+        },
+        {
           "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"City archive\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
           "components": [
             "citation"
@@ -418,6 +429,30 @@
           "source": ".changeset/fluid-rhythm.md"
         },
         {
+          "summary": "New `CloserGame` in the games tier: guess a number by sliding to it (or typing it), lock it in, and the answer slides out from the guess to where it really is, with the gap shaded and said in words (\"You said 450. The answer is 500, 50 off. Close. 90 points.\"). Distance is a share of the range, so the same rule works for 0 to 100 and 0 to 100,000; `range.scale = 'log'` handles answers that span orders of magnitude. Numbers go through `Intl.NumberFormat` (`format`, `locale`), every word through `labels`. `guess` / `defaultGuess` restore a stored guess as the revealed state, and `onGuess` fires once with the scored result. The answer travels in 400ms on the reveal and is simply in place under reduced motion. Scoring is pure and exported from `games/closer-model` (`scoreGuess`, `toPosition`, `fromPosition`, `snap`), so a server can score the same guess and a share card can draw the band without the number.",
+          "components": [
+            "closer-game"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-closer.md"
+        },
+        {
+          "summary": "Three more pieces in the games tier.\n\n- `DailyPuzzle`: the frame around a daily game. Its name, today's number and date (\"No. 42 · Tuesday, November 24\"), progress through the rounds in words (\"Round 2 of 3\", announced politely), an `aside` for a compact Streak, and the round itself as children, rising in once per round. `DailyPuzzleCountdown` says \"Next puzzle at midnight\" in the server HTML, then the time left in the player's zone, and calls `onNextDay` when the day turns.\n- `ShareCard`: how the player did without spoiling it, one mark per round (a band, never the answer), the score and the streak. Share opens the device's share sheet where there is one; Copy always works and falls back to a selected field. The marks are read as a sentence for assistive tech. `games/share-model` exports `shareText` and `shareMarks`, so a server can build the same text.\n- `Leaderboard`: a group's board as a captioned table. Ties share a rank (\"=2\"), the viewer's row says \"You\" and stays visible below the top rows, and `minPlayers` holds the board back until no score stands alone. `games/leaderboard-model` exports `rankEntries` and `buildBoard`.",
+          "components": [
+            "daily-puzzle",
+            "share-card",
+            "leaderboard"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-daily-share-board.md"
+        },
+        {
           "summary": "New `games` tier, the engine of a daily game, starting with `Streak`: a player's run of days, a sentence on where today stands (\"Play today to keep your streak.\") and a strip of recent days marked played, rest, missed or still open. Rest days are a setting, not a special case: `rest={{ weekdays: [6], dates: ['2026-12-25'] }}` names days that never break a run, and a rest day the player plays anyway still counts. Today never ends a run while it is still open. Each mark pairs its colour with a shape and an icon, and every day is read out with its date and state; `variant=\"compact\"` is one chip for a header. No hooks, so it renders on the server. The arithmetic ships beside it and is exported: `games/daily` (day keys in a time zone, puzzle numbers, a seeded puzzle-of-the-day that never repeats inside a cycle, time to the next day) and `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`).",
           "components": [
             "streak"
@@ -549,6 +584,17 @@
           "bump": "minor",
           "migration": "None. If your own code parsed `--interlace-*` values as hex, parse `oklch()` as well; the hex each value paints is in the token file.",
           "source": ".changeset/oklch-tokens.md"
+        },
+        {
+          "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/prose-labels.md"
         },
         {
           "summary": "New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an \"On this page\" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.",
@@ -1185,6 +1231,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/section-header-tracking.md"
+        },
+        {
+          "summary": "`ShareCard` says \"Copied.\" again on a second copy: the status clears and refills, so screen readers announce it each time.",
+          "components": [
+            "share-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/share-card-reannounce.md"
         },
         {
           "summary": "fix(ui): Spotlight type-checks against motion 14. motion 14 added an `fx` boolean prop to every motion element, which clashes with the SVG `fx` focal-point attribute Spotlight inherited from its native `<svg>` props; installing Spotlight next to the latest motion failed `next build`'s type check. `fx` is now omitted from the native props, like the animation handlers and `values` before it.",
