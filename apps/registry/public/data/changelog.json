@@ -540,6 +540,20 @@
           "source": ".changeset/reading-layout.md"
         },
         {
+          "summary": "Reading settings for the reader: a text size control and a More contrast toggle.\n\n`TextSizeControl` is a labelled group of three buttons: smaller, the current size (which resets), and larger. It sets the root font size to 100, 112, 125 or 150% of the browser's own default through `data-text-size` on `<html>`, so type, spacing, control heights and containers all grow together and the layout holds. At the ends the buttons stay focusable, so a keyboard user is never dropped to the top of the page.\n\n`ContrastToggle` turns More contrast on or off. Off stores an explicit `normal`, which also overrides `prefers-contrast: more`.\n\n`useReadingPrefs` is the hook behind both: it persists the choices, keeps every control in the document and every open tab in step, and follows the OS when nothing is stored. `THEME_SCRIPT` now restores both choices before first paint, so a returning reader never sees the page reflow. Every word in both controls is a prop.",
+          "components": [
+            "reading-settings",
+            "use-reading-prefs",
+            "theme-script",
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/reading-settings.md"
+        },
+        {
           "summary": "New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.",
           "components": [
             "reveal"

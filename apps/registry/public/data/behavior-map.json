@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T23:57:10.100Z",
+  "generatedAt": "2026-11-24T00:45:51.412Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -10049,6 +10049,134 @@
         "inGate": false
       }
     },
+    "reading-settings": {
+      "sourcePath": "packages/ui/src/primitives/reading-settings.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "accent-foreground",
+          "bg": "accent",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "hover/highlight face",
+          "ratios": [
+            8.98,
+            10.46,
+            8.95,
+            9.65
+          ],
+          "worst": 8.95,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "reading-strand": {
       "sourcePath": "packages/ui/src/primitives/reading-strand.tsx",
       "keyboard": null,
@@ -15714,6 +15842,19 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
+      }
+    },
+    "use-reading-prefs": {
+      "sourcePath": "packages/ui/src/lib/use-reading-prefs.ts",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null

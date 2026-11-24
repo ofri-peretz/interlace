@@ -63,6 +63,48 @@ export const THEME_STORAGE_KEY = 'interlace-theme';
 export const SCHEME_STORAGE_KEY = 'interlace-scheme';
 
 /**
+ * `localStorage` key holding the chosen text size: a `TEXT_SIZES` value
+ * other than `'default'`, or absent. Absent is the default (100%).
+ */
+export const TEXT_SIZE_STORAGE_KEY = 'interlace-text-size';
+
+/**
+ * `localStorage` key holding the contrast preference: `'more'`, `'normal'`,
+ * or absent. Absent means "follow `prefers-contrast`", the same rule as the
+ * scheme. `'normal'` is stored because it is a real choice: it opts out of
+ * the OS setting, which the stylesheet honours through
+ * `data-contrast="normal"`.
+ */
+export const CONTRAST_STORAGE_KEY = 'interlace-contrast';
+
+/**
+ * The reading sizes, smallest first. `scale` is the root font size as a
+ * fraction of the browser's own default, so a reader who already raised the
+ * browser's text size keeps that and gets this on top. Every rem in the
+ * system (type, spacing, control heights, containers) follows, which is
+ * what WCAG 1.4.4 asks for: text that grows without the layout breaking.
+ *
+ * Steps stop at 150%. Combined with a browser zoom of 133% that already
+ * reaches the 200% the criterion is tested at.
+ */
+export const TEXT_SIZES = [
+  { value: 'default', scale: 1, label: '100%' },
+  { value: 'lg', scale: 1.125, label: '112%' },
+  { value: 'xl', scale: 1.25, label: '125%' },
+  { value: '2xl', scale: 1.5, label: '150%' },
+] as const;
+
+export type TextSize = (typeof TEXT_SIZES)[number]['value'];
+
+/** `true` for a registered text size. Storage is user-writable. */
+export const isTextSize = (value: unknown): value is TextSize =>
+  TEXT_SIZES.some((size) => size.value === value);
+
+const NON_DEFAULT_TEXT_SIZES = TEXT_SIZES.filter(
+  (size) => size.value !== 'default',
+).map((size) => size.value);
+
+/**
  * Names the bootstrap will accept out of `localStorage`, minus the default
  * (which is written as no attribute at all — `:root` already IS that theme).
  *
@@ -94,6 +136,10 @@ const NON_DEFAULT_THEMES = THEMES.filter((t) => t.name !== DEFAULT_THEME).map(
  *   4. set `style.color-scheme`, so form controls, scrollbars and the
  *      canvas the browser paints BEFORE any CSS also match. Without it the
  *      page is dark and the scrollbar is white.
+ *   5. read the stored text size and contrast preference, and write
+ *      `data-text-size` / `data-contrast` when one is set. A size applied
+ *      after hydration would reflow the whole page under the reader's eyes,
+ *      which is worse than the colour flash this script exists to stop.
  */
 /**
  * JSON for embedding inside a `<script>` element.
@@ -114,4 +160,10 @@ export const THEME_SCRIPT = `(function(){try{var d=document.documentElement,l=wi
   NON_DEFAULT_THEMES,
 )}.indexOf(t)>-1){d.setAttribute('data-theme',t)}else{d.removeAttribute('data-theme')}var s=l.getItem(${jsonForScript(
   SCHEME_STORAGE_KEY,
-)});if(s!=='light'&&s!=='dark'){s=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.classList.toggle('dark',s==='dark');d.style.colorScheme=s}catch(e){}})();`;
+)});if(s!=='light'&&s!=='dark'){s=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.classList.toggle('dark',s==='dark');d.style.colorScheme=s;var z=l.getItem(${jsonForScript(
+  TEXT_SIZE_STORAGE_KEY,
+)});if(${jsonForScript(
+  NON_DEFAULT_TEXT_SIZES,
+)}.indexOf(z)>-1){d.setAttribute('data-text-size',z)}var c=l.getItem(${jsonForScript(
+  CONTRAST_STORAGE_KEY,
+)});if(c==='more'||c==='normal'){d.setAttribute('data-contrast',c)}}catch(e){}})();`;

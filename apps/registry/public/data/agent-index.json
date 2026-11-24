@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 174
+    "itemCount": 176
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,20 +29,20 @@
   },
   "facets": {
     "tier": {
-      "primitive": 73,
+      "primitive": 74,
       "pattern": 50,
       "effect": 19,
       "template": 13,
       "chart": 8,
-      "util": 5,
+      "util": 6,
       "starter": 3,
       "theme": 3
     },
     "category": {
-      "primitive": 73,
+      "primitive": 74,
       "pattern": 50,
       "blog": 35,
-      "foundation": 25,
+      "foundation": 27,
       "data": 23,
       "form": 20,
       "effect": 19,
@@ -53,28 +53,28 @@
       "marketing": 13,
       "overlay": 10,
       "chart": 8,
-      "util": 5,
+      "util": 6,
       "a11y": 4,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
       "server": 99,
-      "client": 75
+      "client": 77
     },
     "keyboard": {
-      "none": 135,
+      "none": 137,
       "handled": 39
     },
     "loading": {
-      "none": 141,
+      "none": 143,
       "built-in": 33
     },
     "minViewport": {
       "320": 106,
       "480": 7,
       "768": 1,
-      "inherited": 60
+      "inherited": 62
     }
   },
   "items": [
@@ -4117,7 +4117,8 @@
         "styles/interlace/structure/radius.css",
         "styles/interlace/structure/motion.css",
         "styles/interlace/structure/scheme.css",
-        "styles/interlace/structure/focus.css"
+        "styles/interlace/structure/focus.css",
+        "styles/interlace/structure/reading.css"
       ],
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json",
       "item": "https://ds.interlace.tools/r/interlace-base.json",
@@ -5755,6 +5756,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/reading-layout.json",
       "item": "https://ds.interlace.tools/r/reading-layout.json",
       "docs": "https://ds.interlace.tools/c/reading-layout"
+    },
+    {
+      "name": "reading-settings",
+      "title": "Reading Settings",
+      "type": "registry:ui",
+      "summary": "A text size control and a More contrast toggle: two small controls for the reader, not the theme author. They write the `data-text-size` and `data-contrast` attributes on `<html>` through `useReadingPrefs`, remember the choice, and `THEME_SCRIPT` puts it…",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-disabled",
+          "aria-hidden",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "toggle",
+        "use-reading-prefs"
+      ],
+      "installsTo": [
+        "components/ui/reading-settings.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reading-settings.json",
+      "item": "https://ds.interlace.tools/r/reading-settings.json",
+      "docs": "https://ds.interlace.tools/c/reading-settings"
     },
     {
       "name": "reading-strand",
@@ -8510,7 +8567,16 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "TEXT_SIZES",
+          "values": [
+            "default",
+            "lg",
+            "xl"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [],
@@ -8522,7 +8588,10 @@
         "focusRing": false
       },
       "exports": [
+        "CONTRAST_STORAGE_KEY",
         "SCHEME_STORAGE_KEY",
+        "TEXT_SIZES",
+        "TEXT_SIZE_STORAGE_KEY",
         "THEME_SCRIPT",
         "THEME_STORAGE_KEY"
       ],
@@ -9668,6 +9737,60 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/typography.json",
       "item": "https://ds.interlace.tools/r/typography.json",
       "docs": "https://ds.interlace.tools/c/typography"
+    },
+    {
+      "name": "use-reading-prefs",
+      "title": "useReadingPrefs hook",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — reads and writes the reader's text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ContrastPreference",
+          "values": [
+            "more",
+            "normal",
+            "system"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "theme-script"
+      ],
+      "installsTo": [
+        "hooks/use-reading-prefs.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/use-reading-prefs.json",
+      "item": "https://ds.interlace.tools/r/use-reading-prefs.json",
+      "docs": "https://ds.interlace.tools/c/use-reading-prefs"
     },
     {
       "name": "use-reduced-motion",
