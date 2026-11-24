@@ -127,6 +127,8 @@ describe('MultiStepForm', () => {
     const summary = document.querySelector('[data-slot="multi-step-form-summary"]')!;
     expect(summary.tagName).toBe('DL');
     expect(summary.textContent).toContain('Not given');
+    // A label that is not text still names its button, through the <dt>.
+    expect(screen.getByRole('button', { name: 'Change Note' })).toBeTruthy();
     act(() => {
       fireEvent.click(screen.getByRole('button', { name: 'Change: Name' }));
     });

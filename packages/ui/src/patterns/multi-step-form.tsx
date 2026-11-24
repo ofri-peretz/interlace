@@ -488,6 +488,7 @@ function MultiStepFormSummary({
   ...props
 }: MultiStepFormSummaryProps) {
   const ctx = React.useContext(MultiStepFormContext);
+  const id = React.useId();
   return (
     <dl
       data-slot="multi-step-form-summary"
@@ -498,7 +499,9 @@ function MultiStepFormSummary({
         const empty = item.value === null || item.value === undefined || item.value === '';
         return (
           <div key={i} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 px-4 py-3">
-            <dt className="text-muted-foreground w-full text-sm @md:w-32 @md:shrink-0">{item.label}</dt>
+            <dt id={`${id}-${i}`} className="text-muted-foreground w-full text-sm @md:w-32 @md:shrink-0">
+              {item.label}
+            </dt>
             <dd className={cn('min-w-0 flex-1 text-sm font-medium', empty && 'text-muted-foreground font-normal')}>
               {empty ? emptyText : item.value}
             </dd>
@@ -509,9 +512,11 @@ function MultiStepFormSummary({
                   variant="link"
                   size="sm"
                   onClick={() => ctx.goTo(item.step!)}
-                  aria-label={
-                    typeof item.label === 'string' ? `${ctx.labels.edit}: ${item.label}` : undefined
-                  }
+                  // A text label names the button "Change: Email"; any other label is read
+                  // from its <dt>, so every Change button still says which answer it changes.
+                  {...(typeof item.label === 'string'
+                    ? { 'aria-label': `${ctx.labels.edit}: ${item.label}` }
+                    : { id: `${id}-${i}-edit`, 'aria-labelledby': `${id}-${i}-edit ${id}-${i}` })}
                   className="h-auto px-0"
                 >
                   {ctx.labels.edit}
