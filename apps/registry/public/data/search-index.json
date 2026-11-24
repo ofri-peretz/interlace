@@ -397,7 +397,7 @@
     "alternat": 3,
     "although": 1,
     "altitud": 3,
-    "alway": 41,
+    "alway": 42,
     "ambient": 1,
     "america": 1,
     "analogu": 1,
@@ -1512,7 +1512,7 @@
     "host": 6,
     "hour": 9,
     "hous": 1,
-    "hover": 20,
+    "hover": 21,
     "hovercard": 2,
     "hovercardpopup": 1,
     "hovercardportal": 1,
@@ -1676,7 +1676,6 @@
     "laptop": 1,
     "larg": 11,
     "larger": 12,
-    "largest": 12,
     "last": 41,
     "late": 3,
     "later": 5,
@@ -1693,7 +1692,7 @@
     "leaner": 1,
     "learn": 3,
     "least": 13,
-    "leav": 33,
+    "leav": 34,
     "left": 48,
     "legacy": 1,
     "legend": 9,
@@ -2924,7 +2923,7 @@
     "toolbarinput": 1,
     "toolbarlink": 1,
     "toolbarseparator": 1,
-    "tooltip": 7,
+    "tooltip": 6,
     "tooltipcompos": 1,
     "tooltipcontent": 1,
     "tooltipprovider": 1,
@@ -3712,7 +3711,7 @@
         "chart",
         "data"
       ],
-      "terms": "choropleth map data chart client load skeleton responsiv min viewport 320 keyboard stat quantil equal choroplethmap max bin area legend shad lowest readout tabl path solar edge svg many languag binn county district highest legendlabel lightest mapbin rainfall turnout home sentenc tone mix coordinat interval viewbox live slot figur showtabl break panel seven reader miss box shown ladder figcaption polit never plot fewer largest"
+      "terms": "choropleth map data chart client load skeleton responsiv min viewport 320 keyboard stat quantil equal choroplethmap max bin area legend shad lowest readout tabl path solar edge svg many languag binn county district highest legendlabel lightest mapbin rainfall turnout home sentenc tone mix coordinat rang interval viewbox live slot figur showtabl break panel seven reader miss box shown ladder figcaption polit never plot fewer"
     },
     {
       "name": "citation",
@@ -5570,7 +5569,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "rotat text decorativ effect client rotatingtext word founder student team careful familiar cell join done sentenc paus second 2800 headlin build 1000 widest jump every reader hear tech assistiv rotation timer cls stop never read reflow millisecond grid reduc accessibility cycl chang instead stay focus least hidden pattern noth therefor pointer first animat hover screen current minus shift around tab mov index wide html"
+      "terms": "rotat text decorativ effect client rotatingtext word founder student team careful familiar cell join done sentenc paus second 2800 headlin build 1000 widest jump every reader hear tech assistiv rotation timer cls stop never read reflow millisecond grid reduc accessibility cycl chang instead stay focus least hidden pattern noth therefor pointer first animat screen hover current minus shift around tab mov index wide html"
     },
     {
       "name": "scorecard-row",
@@ -5649,7 +5648,7 @@
         "effect",
         "marketing"
       ],
-      "terms": "scroller market effect client paus item strip loop play organisation copy second glid fade animation motion clon button control quot track logo list edge inert seamless child headlin hover treat past tab visit becom content hidden ordinary row first scrollabl move visibl reachabl reduc short work stylesheet visibility add real column cut keyfram focus noth five direction ref squar travel web overflow pointer slot"
+      "terms": "scroller market effect client paus item strip loop play organisation copy second glid fade animation motion clon button control quot track logo list edge inert seamless child headlin treat hover past tab visit becom content hidden ordinary row first scrollabl move visibl reachabl reduc short work stylesheet visibility add real column cut keyfram focus noth five direction ref squar travel web overflow pointer slot"
     },
     {
       "name": "seat-chart",
@@ -6595,7 +6594,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "tag blog primitiv server rsc load skeleton responsiv min viewport 320 taglist chip taxonomy cluster tiny reinvent topic anchor semantic tone item flex almost plugin list activation destination link wrapp brand category render mut accidental tagvariant unorder alway border data canonical variantprop surfac nativ foreground assum primary appear radius hook articl drop emphasis low wrap inlin idle prod ship desktop contract lift markup true"
+      "terms": "tag blog primitiv server rsc load skeleton responsiv min viewport 320 taglist chip taxonomy cluster tiny reinvent topic anchor semantic tone item flex almost plugin list activation destination link wrapp brand category render mut accidental tagvariant unorder border alway data canonical variantprop surfac nativ foreground assum primary appear radius hook articl drop emphasis low wrap inlin idle prod ship desktop contract lift markup true"
     },
     {
       "name": "testimonial",
@@ -6836,7 +6835,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "thread step blog pattern client responsiv min viewport 320 stat complet current upcom knot strand woven threadstep loos sequenc together tracker dott strok draw cross intersectionobserver word next held progress motion clip dash ahead lead yet 600m mechanism process order dashoffset explain hollow 5rem chromium history interlaceweav pathlength timesery drawn leav none medium verb fill reader tall reach reduc ring work downward marker weav"
+      "terms": "thread step blog pattern client responsiv min viewport 320 stat complet current upcom knot strand woven threadstep loos sequenc together tracker dott strok draw cross intersectionobserver word next held progress motion clip dash ahead lead yet 600m mechanism process order dashoffset explain hollow 5rem chromium history interlaceweav pathlength timesery drawn none leav medium verb fill reader tall reach reduc ring work downward marker weav"
     },
     {
       "name": "time-series",
@@ -6986,7 +6985,7 @@
         "primitive",
         "form"
       ],
-      "terms": "toolbar form primitiv client responsiv min viewport 320 keyboard base toolbarbutton button buttonvariant tab variant rov control end arrow home size orientation icon focus composit input last wrap lock caret bar order link ghost move jump act tooltip ring separator stop group insid basetoolbar menutrigger perpendicular toolbargroup toolbarinput toolbarlink toolbarseparator transport contrast measur formatt ten row modul key enter overflow bulk gave rove tooltiptrigger"
+      "terms": "toolbar form primitiv client responsiv min viewport 320 keyboard base toolbarbutton button buttonvariant tab variant rov control end arrow home size orientation icon focus composit input last wrap lock caret bar order link ghost tooltip move jump act ring separator stop group insid basetoolbar menutrigger perpendicular toolbargroup toolbarinput toolbarlink toolbarseparator transport contrast measur formatt ten row modul key enter overflow bulk gave rove tooltiptrigger"
     },
     {
       "name": "tooltip",
@@ -7023,7 +7022,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "topbar menu navigation pattern client topbarmenu panel open drawer edge finger clos button link toward drag right screen menus half trigger render nav compos side small site back follow gestur extra header trap dismissal outsid focus inert insid landmark row new usual escap press rout anchor label phon bottom page caller nativ leav come r12 stat accessibl reus behind hold move visibl already chang"
+      "terms": "topbar menu navigation pattern client topbarmenu panel open drawer edge finger clos button link toward drag right screen menus half trigger render nav compos side small site back follow gestur extra header trap dismissal outsid focus inert insid landmark row new usual escap press rout anchor label phon bottom page caller nativ come leav r12 stat accessibl reus behind hold move visibl already chang"
     },
     {
       "name": "topbar-nav",

@@ -209,7 +209,10 @@ export type ChoroplethMapLabels = {
   empty: string;
   /** The table's caption, given the chart's `label` when it is a string. */
   tableCaption: (label?: string) => string;
-  /** The live line and tooltip for one area. `value` and `range` are null when it has no value. */
+  /**
+   * The live line and the hover title for one area. `value` is null when the area has no data.
+   * `range` is null then too, and always in the hover title, which leaves the range out.
+   */
   readout: (area: string, value: string | null, range: string | null) => string;
   /** The map's one-sentence description. */
   summary: (s: MapSummary) => string;
