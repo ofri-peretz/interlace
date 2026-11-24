@@ -29,10 +29,10 @@
  * | Composite                                       | Light  | Dark   | Floor           |
  * | ----------------------------------------------- | ------ | ------ | --------------- |
  * | unchecked track `bg-input` on `--background`    | 3.62:1 | 3.35:1 | 3:1 (SC 1.4.11) |
- * | checked track `bg-primary` on `--background`    | 8.80:1 | 11.79:1| 3:1 (SC 1.4.11) |
+ * | checked track `bg-primary` on `--background`    | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | thumb on unchecked track                        | 3.62:1 | 5.06:1 | 3:1 (SC 1.4.11) |
- * | thumb on checked track                          | 8.80:1 | 11.79:1| 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring` on `--background`  | 3.23:1 | 4.73:1 | 3:1 (SC 2.4.13) |
+ * | thumb on checked track                          | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
+ * | `focus-visible:ring-ring` on `--background`  | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
  *
  * The dark unchecked track previously carried `bg-input/80`, which
  * composited to 1.17:1 — the off state was invisible on dark. Dropped:

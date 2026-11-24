@@ -43,7 +43,7 @@
  * | Composite                                            | Light  | Dark    | Floor           |
  * | ---------------------------------------------------- | ------ | ------- | --------------- |
  * | trigger `border-input` on `--background`             | 3.62:1 | 3.35:1  | 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring` on `--background`       | 3.23:1 | 4.73:1  | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background`       | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
  * | item `text-popover-foreground` on `--popover`        | 19.65:1| 15.71:1  | 4.5:1 (SC 1.4.3)|
  * | highlighted `text-accent-foreground` on `--accent`   | 8.98:1 | 10.46:1 | 4.5:1 (SC 1.4.3)|
  * | selected `text-primary-foreground` on `--primary`    | 8.80:1 | 11.79:1 | 4.5:1 (SC 1.4.3)|

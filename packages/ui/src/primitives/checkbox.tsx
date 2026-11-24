@@ -33,7 +33,7 @@
  * | indeterminate `bg-primary` on `--background`       | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | glyph `text-primary-foreground` on `bg-primary`    | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | `aria-invalid:border-destructive` on `--background`| 8.31:1 | 10.43:1  | 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring` on `--background`     | 3.23:1 | 4.73:1  | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background`     | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
  *
  * `disabled:opacity-50` is exempt — SC 1.4.11 carves out inactive
  * user-interface components.

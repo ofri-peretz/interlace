@@ -23,7 +23,7 @@
  * | ---------------------------------------------- | ------ | ------ | --------------- |
  * | `border-input` on `--background`               | 3.62:1 | 3.35:1 | 3:1 (SC 1.4.11) |
  * | `placeholder:text-muted-foreground` on the bg  | 9.41:1 | 8.74:1 | 4.5:1 (SC 1.4.3)|
- * | `focus-visible:ring-ring` on `--background` | 3.23:1 | 4.73:1 | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background` | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
  *
  * `disabled:opacity-50` is exempt — SC 1.4.3 and SC 1.4.11 both carve out
  * inactive user-interface components.

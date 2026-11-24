@@ -39,7 +39,7 @@
  * | unchecked `border-input` on `--background`         | 3.62:1 | 3.35:1  | 3:1 (SC 1.4.11) |
  * | checked dot `fill-primary` on `--background`       | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | `aria-invalid:border-destructive` on `--background`| 8.31:1 | 10.43:1  | 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring` on `--background`     | 3.23:1 | 4.73:1  | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background`     | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
