@@ -74,8 +74,8 @@ const NODES: GraphNode[] = [
   { id: 'c', weight: 2 },
 ];
 const EDGES: GraphEdge[] = [
-  { source: 'a', target: 'b' },
-  { source: 'a', target: 'c' },
+  { from: 'a', to: 'b' },
+  { from: 'a', to: 'c' },
 ];
 
 describe('describeGraph', () => {
