@@ -1200,6 +1200,17 @@
     "previewDark": "primitives-input--dark",
     "skeleton": "primitives-input--loading"
   },
+  "install-prompt": {
+    "title": "Blocks/InstallPrompt",
+    "storyIds": [
+      "blocks-installprompt--default",
+      "blocks-installprompt--labels",
+      "blocks-installprompt--right-to-left"
+    ],
+    "preview": "blocks-installprompt--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "interlace-weave": {
     "title": "Effects/InterlaceWeave",
     "storyIds": [
@@ -1596,6 +1607,17 @@
     "preview": "primitives-publisheddate--variants",
     "previewDark": "primitives-publisheddate--dark",
     "skeleton": "primitives-publisheddate--loading"
+  },
+  "pull-to-refresh": {
+    "title": "Blocks/PullToRefresh",
+    "storyIds": [
+      "blocks-pulltorefresh--default",
+      "blocks-pulltorefresh--refresh-button",
+      "blocks-pulltorefresh--right-to-left"
+    ],
+    "preview": "blocks-pulltorefresh--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "quiz-question": {
     "title": "Games/QuizQuestion",

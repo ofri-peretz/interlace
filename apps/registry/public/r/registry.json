@@ -2452,6 +2452,24 @@
       }
     },
     {
+      "name": "install-prompt",
+      "type": "registry:ui",
+      "title": "Install Prompt",
+      "description": "An offer to add the site to the home screen, made once, politely, and only where it can work. Browsers that support it hand over their install dialog (`beforeinstallprompt`), and the Install button opens it. Safari on an iPhone or iPad has no such dialog…",
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "lint-playground",
       "type": "registry:ui",
       "title": "Lint Playground",
@@ -2557,6 +2575,24 @@
         "loading": true,
         "version": "2.2.1",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "pull-to-refresh",
+      "type": "registry:ui",
+      "title": "Pull To Refresh",
+      "description": "Pull a list down from its top to load what is new, the gesture a phone reader already knows. The pull is one finger and one path, so it always has a twin: a Refresh button that is visible wherever the pointer is a mouse, and reachable by keyboard and…",
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
