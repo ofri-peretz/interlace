@@ -3,3 +3,6 @@
 /coverage
 /.nx/cache
 /.nx/workspace-data
+# Vendored byte-for-byte from burgee packages/hookset/claude; `hookset check` fails on any difference.
+/.claude/hooks/guard-bash.mjs
+/.claude/hooks/stop-after-3.mjs

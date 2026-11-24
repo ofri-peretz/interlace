@@ -21,6 +21,8 @@
   },
   "scripts": {
     "prepare": "[ -d .git ] && lefthook install || true",
+    "hook:staged": "oxlint -c .oxlintrc.json",
+    "hook:verify": "turbo run typecheck test build --output-logs=errors-only",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "typecheck": "turbo run typecheck",
