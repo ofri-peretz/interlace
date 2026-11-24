@@ -202,7 +202,8 @@ export const GameNight: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(await canvas.findByRole('button', { name: 'Join as Avery' }));
-    await expect(await canvas.findByRole('heading', { name: '1 player' }, { timeout: 2000 })).toBeTruthy();
+    const host = within(await canvas.findByRole('region', { name: 'Host lobby' }));
+    await expect(await host.findByRole('heading', { name: '1 player' }, { timeout: 2000 })).toBeTruthy();
   },
 };
 
