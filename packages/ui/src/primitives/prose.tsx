@@ -184,7 +184,8 @@ interface ProseProps
 }
 
 /**
- * Typographic article-body wrapper. Server component (no hooks).
+ * Typographic article-body wrapper. Client component: a layout effect makes
+ * blocks that scroll sideways reachable by keyboard.
  *
  * Drop any combination of `h1`–`h6`, `p`, `a`, `ul`/`ol`, `blockquote`,
  * `code`/`pre`, `table`, `img` inside; the cascade styles them with DS
@@ -255,11 +256,14 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
       return () => ro.disconnect();
     }, [children]);
 
-    const setRef = (node: HTMLElement | null) => {
-      localRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
-    };
+    const setRef = React.useCallback(
+      (node: HTMLElement | null) => {
+        localRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+      },
+      [ref],
+    );
 
     return (
       <Tag
