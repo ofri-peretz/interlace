@@ -57,7 +57,10 @@ const ALLOWED: Record<string, { classes: string[]; why: string }> = {
   },
 };
 
-/** `left-1/2` with `-translate-x-1/2` centres, which is the same in both directions. */
+/**
+ * `left-1/2` or `left-[50%]` with `-translate-x-1/2` centres, which is the same in both
+ * directions. Other symmetric values (`left-[50cqw]`) are not exempt: allowlist them above.
+ */
 const CENTRING = /(?:^|:)left-(?:1\/2|\[50%\])$/;
 
 /** Class-string matches, with comments removed so prose may name the old classes. */
