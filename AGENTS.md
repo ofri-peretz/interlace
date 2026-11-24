@@ -37,6 +37,7 @@ test holds its token and component names to the code.
 | Component API shape and naming | [packages/ui/CONVENTIONS.md](packages/ui/CONVENTIONS.md) |
 | The five layers and the CSS import order | [packages/ui/DESIGN_SYSTEM_LAYERS.md](packages/ui/DESIGN_SYSTEM_LAYERS.md) |
 | What a new component PR contains | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| How an AI-authored PR is verified, and the review checklist | [docs/AI_SDLC.md](docs/AI_SDLC.md) |
 
 DESIGN_PRINCIPLES and BRAND_PHILOSOPHY describe the Interlace house brand (burnt orange, the
 thread). They govern interlace.tools surfaces, not what a consumer's site must look like.
