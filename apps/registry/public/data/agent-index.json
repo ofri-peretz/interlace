@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 200
+    "itemCount": 202
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 77,
       "pattern": 54,
-      "effect": 20,
+      "effect": 22,
       "chart": 14,
       "template": 13,
       "game": 10,
@@ -46,8 +46,8 @@
       "data": 30,
       "foundation": 27,
       "form": 24,
-      "effect": 20,
-      "decorative": 18,
+      "effect": 22,
+      "decorative": 20,
       "feedback": 15,
       "chart": 14,
       "marketing": 14,
@@ -63,21 +63,21 @@
     },
     "rendering": {
       "server": 104,
-      "client": 96
+      "client": 98
     },
     "keyboard": {
-      "none": 154,
+      "none": 156,
       "handled": 46
     },
     "loading": {
-      "none": 162,
+      "none": 164,
       "built-in": 38
     },
     "minViewport": {
       "320": 127,
       "480": 7,
       "768": 1,
-      "inherited": 65
+      "inherited": 67
     }
   },
   "items": [
@@ -3316,6 +3316,63 @@
       "docs": "https://ds.interlace.tools/c/dot-plot"
     },
     {
+      "name": "draw-on",
+      "title": "Draw On",
+      "type": "registry:ui",
+      "summary": "A line drawing that draws itself as it scrolls into view: an illustration, a diagram, an arrow that points at the next thing, a signature. Wrap any inline SVG; every stroked shape inside traces its own line, one after another in document order, and filled…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DrawOnOrder",
+          "values": [
+            "sequence",
+            "together"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DrawOn"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/draw-on.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/draw-on.json",
+      "item": "https://ds.interlace.tools/r/draw-on.json",
+      "docs": "https://ds.interlace.tools/c/draw-on"
+    },
+    {
       "name": "drawer",
       "title": "Drawer",
       "type": "registry:ui",
@@ -5159,6 +5216,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/list.json",
       "item": "https://ds.interlace.tools/r/list.json",
       "docs": "https://ds.interlace.tools/c/list"
+    },
+    {
+      "name": "marker",
+      "title": "Marker",
+      "type": "registry:ui",
+      "summary": "A highlighter stroke across the one phrase in a paragraph a reader should not miss. The first time the phrase scrolls into view, the stroke sweeps across it from the start of the line to the end, the way a pen would, and wraps across lines with the text.…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "Marker"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/marker.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/marker.json",
+      "item": "https://ds.interlace.tools/r/marker.json",
+      "docs": "https://ds.interlace.tools/c/marker"
     },
     {
       "name": "mdx-starter",

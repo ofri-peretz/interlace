@@ -833,6 +833,17 @@
     "previewDark": "charts-dotplot--dark",
     "skeleton": "charts-dotplot--loading"
   },
+  "draw-on": {
+    "title": "Effects/DrawOn",
+    "storyIds": [
+      "effects-drawon--default",
+      "effects-drawon--together",
+      "effects-drawon--on-scroll"
+    ],
+    "preview": "effects-drawon--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "drawer": {
     "title": "Primitives/Drawer",
     "storyIds": [
@@ -1272,6 +1283,17 @@
       "primitives-list--sizes"
     ],
     "preview": "primitives-list--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "marker": {
+    "title": "Effects/Marker",
+    "storyIds": [
+      "effects-marker--default",
+      "effects-marker--variants",
+      "effects-marker--right-to-left"
+    ],
+    "preview": "effects-marker--default",
     "previewDark": null,
     "skeleton": null
   },

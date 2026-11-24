@@ -1660,6 +1660,24 @@
       }
     },
     {
+      "name": "draw-on",
+      "type": "registry:ui",
+      "title": "Draw On",
+      "description": "A line drawing that draws itself as it scrolls into view: an illustration, a diagram, an arrow that points at the next thing, a signature. Wrap any inline SVG; every stroked shape inside traces its own line, one after another in document order, and filled…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "edge-glow",
       "type": "registry:ui",
       "title": "Edge Glow",
@@ -1761,6 +1779,24 @@
       "meta": {
         "tier": "effect",
         "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "marker",
+      "type": "registry:ui",
+      "title": "Marker",
+      "description": "A highlighter stroke across the one phrase in a paragraph a reader should not miss. The first time the phrase scrolls into view, the stroke sweeps across it from the start of the line to the end, the way a pen would, and wraps across lines with the text.…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
         "minViewport": null,
         "loading": false,
         "version": "1.0.0",
