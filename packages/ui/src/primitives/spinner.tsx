@@ -15,11 +15,14 @@
  *
  * ## Announced, once
  *
- * `role="status"` is a polite live region, so a screen reader says the
- * `label` ("Loading" by default) when the spinner appears. Pass `label` in
- * the page's language. When the spinner sits inside something that already
- * says it is busy (a button with `aria-busy` and its own text), pass
- * `decorative` so it is hidden and nothing is read twice.
+ * `role="status"` is a polite live region: a screen reader announces the
+ * `label` ("Loading" by default) when the spinner is inserted after the page
+ * has loaded, as in `{isLoading && <Spinner />}` driven by client state. A
+ * spinner already in the server HTML is not announced; it is read in order
+ * like any other text. Pass `label` in the page's language. When the spinner
+ * sits next to text that already says what is happening ("Saving your
+ * changes"), or inside a button with `aria-busy`, pass `decorative` so it is
+ * hidden and nothing is read twice.
  *
  * ## Motion
  *

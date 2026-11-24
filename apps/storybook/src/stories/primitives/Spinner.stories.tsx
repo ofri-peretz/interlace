@@ -47,7 +47,7 @@ export const Sizes: Story = {
   ),
 };
 
-/** It takes the colour of the text around it. */
+/** It takes the colour of the text around it. Next to visible text that says what is happening, it is `decorative`. */
 export const InText: Story = {
   render: () => (
     <div className="flex flex-col gap-3 text-sm">
@@ -56,7 +56,7 @@ export const InText: Story = {
         Saving your changes
       </p>
       <p className="text-muted-foreground flex items-center gap-2">
-        <Spinner label="Checking" />
+        <Spinner decorative />
         Checking the address
       </p>
     </div>
