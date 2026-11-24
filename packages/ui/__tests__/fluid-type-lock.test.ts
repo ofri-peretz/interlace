@@ -16,15 +16,15 @@ const css = readFileSync(
  * The size in px at a viewport width, for a rem value, a clamp(min, a + b·vw,
  * max), or that clamp capped by min(…, c·cqi). `root` is the root font size,
  * which a reader's text size or zoom raises; the cap is measured against a
- * full-width container.
+ * full-width container; `capped: false` reads the clamp alone.
  */
-function size(level: string, width: number, root = 16): number {
+function size(level: string, width: number, root = 16, capped = true): number {
   let decl = css.match(new RegExp(`--text-${level}: ([^;]+);`))![1]!.trim();
   let cap = Infinity;
-  const capped = decl.match(/^min\((clamp\(.+\)), ([\d.]+)cqi\)$/);
-  if (capped) {
-    decl = capped[1]!;
-    cap = (Number(capped[2]) / 100) * width;
+  const withCap = decl.match(/^min\((clamp\(.+\)), ([\d.]+)cqi\)$/);
+  if (withCap) {
+    decl = withCap[1]!;
+    if (capped) cap = (Number(withCap[2]) / 100) * width;
   }
   const fixed = decl.match(/^([\d.]+)rem$/);
   if (fixed) return Number(fixed[1]) * root;
@@ -35,7 +35,10 @@ function size(level: string, width: number, root = 16): number {
   const rem = Number(m![2]!.match(/([\d.]+)rem/)![1]);
   const vw = Number(m![2]!.match(/([\d.]+)vw/)![1]);
   const [a, b] = [rem, vw];
-  const fluid = Math.min(max * root, Math.max(min * root, a * root + (b / 100) * width));
+  const fluid = Math.min(
+    max * root,
+    Math.max(min * root, a * root + (b / 100) * width),
+  );
   return Math.min(fluid, cap);
 }
 
@@ -74,18 +77,23 @@ describe("fluid heading scale", () => {
     ["display", 12.5],
     ["h1", 11.5],
   ])("%s stays under a phone line at 150%% text size", (level, share) => {
-    expect(size(level as string, 390, 24)).toBeCloseTo((share as number) * 3.9, 5);
-    expect(size(level as string, 390, 24)).toBeLessThan(size(level as string, 390, 16) * 1.5);
+    expect(size(level as string, 390, 24)).toBeCloseTo(
+      (share as number) * 3.9,
+      5,
+    );
+    expect(size(level as string, 390, 24)).toBeLessThan(
+      size(level as string, 390, 16) * 1.5,
+    );
   });
 
   it("the cap never bites at 100% from 360px up", () => {
     for (const width of [360, 480, 768, 1024, 1440]) {
       for (const level of ["display", "h1"]) {
-        const uncapped = css
-          .match(new RegExp(`--text-${level}: min\\((clamp\\(.+\\)), [\\d.]+cqi\\);`))![1]!;
-        expect(uncapped).toMatch(/^clamp/);
-        expect(size(level, width)).toBeGreaterThanOrEqual(
-          level === "display" ? 44 : 40,
+        expect(css).toMatch(
+          new RegExp(`--text-${level}: min\\(clamp\\(.+\\), [\\d.]+cqi\\);`),
+        );
+        expect(size(level, width), `${level} at ${width}px`).toBe(
+          size(level, width, 16, false),
         );
       }
     }
