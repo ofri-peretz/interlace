@@ -430,7 +430,9 @@ function RoomCountdown({
   const latest = React.useRef(onDone);
   latest.current = onDone;
 
-  // Speak once on arrival and once at 0, never every second.
+  // Speak once on arrival and once at 0, never every second. The deps are
+  // `startsAt` alone on purpose: a new `now` or `labels` must not re-announce
+  // mid-countdown.
   React.useEffect(() => {
     if (startsAt === null) return;
     const s = Math.max(0, Math.ceil((startsAt - now()) / 1000));
