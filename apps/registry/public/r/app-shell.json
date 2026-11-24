@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-shell",
+  "type": "registry:ui",
+  "title": "App Shell",
+  "description": "The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "navigation",
+    "pattern"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/app-shell.tsx",
+      "target": "components/ui/patterns/app-shell.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\n\n// @interlace/app-shell v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/app-shell\n// What changed since: https://ds.interlace.tools/c/app-shell#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — AppShell\n *\n * The frame of an app-like page on a phone: a header that sticks to the\n * top, the view's content, and a tab bar that sticks to the bottom. It is a\n * column at least as tall as the screen (`100dvh`, so the browser's own bars\n * coming and going never hide the tab bar), with a `<main>` that takes the\n * room between. Nothing in it is fixed-position, so the content's last line\n * always scrolls clear of the tab bar and an on-screen keyboard never drags\n * a bar into the middle of the page.\n *\n * ## Anatomy\n *\n *   <div data-slot=\"app-shell\">\n *     {header}                         (AppHeader or Topbar)\n *     <main id=\"main\" data-slot=\"app-shell-main\">{children}</main>\n *     {tabBar}                         (TabBar)\n *   </div>\n *\n * ## Installable\n *\n * For a page added to a home screen, set `viewport-fit=cover` in the\n * viewport meta so the bars can reach under the notch and the home\n * indicator; AppHeader, TabBar and the main column pad themselves by the\n * safe areas. `InstallPrompt` offers the install itself.\n *\n * ## MIN_VIEWPORT — 320\n *\n * | Rule | Concept                 | Where in this file                       |\n * | ---- | ----------------------- | ---------------------------------------- |\n * | R4   | Extends native el       | `React.ComponentProps<'div'>`            |\n * | R6   | data-slot per part      | app-shell, app-shell-main                |\n * | R7   | className merged + rest | `cn(BASE, className)` + `{...props}`     |\n * | R14  | Declares min viewport   | `data-min-viewport` + exported const     |\n * | R25  | Server component        | layout only                              |\n * | R26  | A11y from native el     | one `<main>`, a SkipLink target          |\n */\n\nimport { cn } from '@/lib/utils';\n\nexport const MIN_VIEWPORT = 320 as const;\n\nexport interface AppShellProps extends React.ComponentProps<'div'> {\n  /** The top of the frame: an `AppHeader`, or a `Topbar` on wider screens. */\n  header?: React.ReactNode;\n  /** The bottom of the frame: a `TabBar`. */\n  tabBar?: React.ReactNode;\n  /** The id of `<main>`, the target of the page's SkipLink. @default 'main' */\n  mainId?: string;\n  /** Props for the `<main>` element. */\n  mainProps?: Omit<React.ComponentProps<'main'>, 'id' | 'children'>;\n}\n\nfunction AppShell({ header, tabBar, mainId = 'main', mainProps, children, className, ...props }: AppShellProps) {\n  return (\n    <div\n      data-slot=\"app-shell\"\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('flex min-h-dvh flex-col', className)}\n      {...props}\n    >\n      {header}\n      <main\n        id={mainId}\n        data-slot=\"app-shell-main\"\n        {...mainProps}\n        className={cn(\n          'flex min-w-0 flex-1 flex-col px-[max(env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] focus:outline-hidden',\n          mainProps?.className,\n        )}\n        tabIndex={mainProps?.tabIndex ?? -1}\n      >\n        {children}\n      </main>\n      {tabBar}\n    </div>\n  );\n}\nAppShell.displayName = 'AppShell';\n\nexport { AppShell };\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": false,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/app-shell\n\nInstalled to `components/ui/patterns/app-shell.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/app-shell';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/app-shell\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

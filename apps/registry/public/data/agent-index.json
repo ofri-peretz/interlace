@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 201
+    "itemCount": 205
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 77,
-      "pattern": 54,
+      "pattern": 58,
       "effect": 21,
       "chart": 14,
       "template": 13,
@@ -41,15 +41,15 @@
     },
     "category": {
       "primitive": 77,
-      "pattern": 54,
+      "pattern": 58,
       "blog": 35,
       "data": 30,
       "foundation": 27,
       "form": 24,
       "effect": 21,
+      "navigation": 18,
       "decorative": 18,
       "feedback": 15,
-      "navigation": 14,
       "chart": 14,
       "marketing": 14,
       "template": 13,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 104,
-      "client": 97
+      "server": 107,
+      "client": 98
     },
     "keyboard": {
-      "none": 155,
+      "none": 159,
       "handled": 46
     },
     "loading": {
-      "none": 163,
+      "none": 167,
       "built-in": 38
     },
     "minViewport": {
-      "320": 127,
+      "320": 130,
       "480": 7,
       "768": 1,
-      "inherited": 66
+      "inherited": 67
     }
   },
   "items": [
@@ -280,6 +280,150 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/alert.json",
       "item": "https://ds.interlace.tools/r/alert.json",
       "docs": "https://ds.interlace.tools/c/alert"
+    },
+    {
+      "name": "app-header-edge",
+      "title": "App Header Edge",
+      "type": "registry:ui",
+      "summary": "The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "AppHeaderEdge"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-header-edge.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-header-edge.json",
+      "item": "https://ds.interlace.tools/r/app-header-edge.json",
+      "docs": "https://ds.interlace.tools/c/app-header-edge"
+    },
+    {
+      "name": "app-header",
+      "title": "App Header",
+      "type": "registry:ui",
+      "summary": "The bar at the top of an app-like view on a phone: a way back at the start, the view's title in the middle, one or two actions at the end. It sticks to the top, clears the notch or status bar (`env(safe-area-inset-top)`), and shows its surface and border…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "app-header-edge",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-header.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-header.json",
+      "item": "https://ds.interlace.tools/r/app-header.json",
+      "docs": "https://ds.interlace.tools/c/app-header"
+    },
+    {
+      "name": "app-shell",
+      "title": "App Shell",
+      "type": "registry:ui",
+      "summary": "The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-shell.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-shell.json",
+      "item": "https://ds.interlace.tools/r/app-shell.json",
+      "docs": "https://ds.interlace.tools/c/app-shell"
     },
     {
       "name": "article-card",
@@ -9507,6 +9651,57 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/switch.json",
       "item": "https://ds.interlace.tools/r/switch.json",
       "docs": "https://ds.interlace.tools/c/switch"
+    },
+    {
+      "name": "tab-bar",
+      "title": "Tab Bar",
+      "type": "registry:ui",
+      "summary": "The row of three to five destinations at the bottom of a phone screen, where a thumb reaches. Each tab is a real link with an icon and a word; the current one says so to assistive tech (`aria-current=\"page\"`) and to the eye with a filled pill behind its…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/tab-bar.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/tab-bar.json",
+      "item": "https://ds.interlace.tools/r/tab-bar.json",
+      "docs": "https://ds.interlace.tools/c/tab-bar"
     },
     {
       "name": "tabs",

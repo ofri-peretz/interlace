@@ -1984,6 +1984,60 @@
       }
     },
     {
+      "name": "app-header-edge",
+      "type": "registry:ui",
+      "title": "App Header Edge",
+      "description": "The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "app-header",
+      "type": "registry:ui",
+      "title": "App Header",
+      "description": "The bar at the top of an app-like view on a phone: a way back at the start, the view's title in the middle, one or two actions at the end. It sticks to the top, clears the notch or status bar (`env(safe-area-inset-top)`), and shows its surface and border…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:ui",
+      "title": "App Shell",
+      "description": "The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "article-card",
       "type": "registry:ui",
       "title": "Article Card",
@@ -2772,6 +2826,24 @@
         "minViewport": 320,
         "loading": false,
         "version": "1.0.1",
+        "since": null
+      }
+    },
+    {
+      "name": "tab-bar",
+      "type": "registry:ui",
+      "title": "Tab Bar",
+      "description": "The row of three to five destinations at the bottom of a phone screen, where a thumb reaches. Each tab is a real link with an icon and a word; the current one says so to assistive tech (`aria-current=\"page\"`) and to the eye with a filled pill behind its…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
         "since": null
       }
     },

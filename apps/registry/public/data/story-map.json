@@ -49,6 +49,37 @@
     "previewDark": "primitives-alertdialog--dark",
     "skeleton": null
   },
+  "app-header": {
+    "title": "Blocks/AppHeader",
+    "storyIds": [
+      "blocks-appheader--default",
+      "blocks-appheader--large-title",
+      "blocks-appheader--icon-only-back",
+      "blocks-appheader--right-to-left"
+    ],
+    "preview": "blocks-appheader--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "app-header-edge": {
+    "title": "Blocks/AppHeaderEdge",
+    "storyIds": [
+      "blocks-appheaderedge--default"
+    ],
+    "preview": "blocks-appheaderedge--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "app-shell": {
+    "title": "Blocks/AppShell",
+    "storyIds": [
+      "blocks-appshell--default",
+      "blocks-appshell--right-to-left"
+    ],
+    "preview": "blocks-appshell--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "article-card": {
     "title": "Blocks/ArticleCard",
     "storyIds": [
@@ -2368,6 +2399,18 @@
     "preview": "primitives-switch--settings-rows",
     "previewDark": "primitives-switch--dark",
     "skeleton": "primitives-switch--loading"
+  },
+  "tab-bar": {
+    "title": "Blocks/TabBar",
+    "storyIds": [
+      "blocks-tabbar--default",
+      "blocks-tabbar--three-tabs",
+      "blocks-tabbar--long-labels",
+      "blocks-tabbar--right-to-left"
+    ],
+    "preview": "blocks-tabbar--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "tabs": {
     "title": "Primitives/Tabs",
