@@ -24,13 +24,11 @@ beforeEach(() => {
   animateSpy.mockClear();
   cancel.mockClear();
   (Element.prototype as unknown as { animate: unknown }).animate = animateSpy;
-  (Element.prototype as unknown as { getAnimations: unknown }).getAnimations = () => [];
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
   delete (Element.prototype as unknown as { animate?: unknown }).animate;
-  delete (Element.prototype as unknown as { getAnimations?: unknown }).getAnimations;
 });
 
 class FakeViewTimeline {
@@ -134,6 +132,22 @@ describe('FlipGroup', () => {
     expect(moves).toContainEqual({ transform: 'translate(0px, -40px)' });
     expect(moves).toContainEqual({ opacity: 0 });
     expect(calls[0]![1]).toMatchObject({ duration: 300 });
+  });
+
+  it("settles its own glide when interrupted, and leaves the consumer's animations alone", () => {
+    stubLayout();
+    const own = vi.fn();
+    animateSpy.mockImplementation(() => ({ cancel: own }));
+    const theirs = { cancel: vi.fn() };
+    (Element.prototype as unknown as { getAnimations: unknown }).getAnimations = () => [theirs];
+    const { rerender } = render(<Ranked order={['a', 'b']} />);
+    rerender(<Ranked order={['b', 'a']} />);
+    expect(own).not.toHaveBeenCalled();
+    rerender(<Ranked order={['a', 'b']} />);
+    expect(own).toHaveBeenCalledTimes(2);
+    expect(theirs.cancel).not.toHaveBeenCalled();
+    animateSpy.mockImplementation(() => ({ cancel }));
+    delete (Element.prototype as unknown as { getAnimations?: unknown }).getAnimations;
   });
 
   it('leaves items that did not move alone, and can be the list itself', () => {

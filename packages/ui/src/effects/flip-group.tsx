@@ -71,6 +71,8 @@ export function FlipGroup({ duration = 400, render, className, ...props }: FlipG
   const reduced = useReducedMotion();
   const ref = React.useRef<HTMLElement>(null);
   const last = React.useRef(new Map<string, DOMRect>());
+  // Only the glides this group started: a consumer's own transitions on an item are left alone.
+  const glides = React.useRef(new Map<string, Animation>());
 
   // Every commit: compare each item's place now with its place at the last
   // commit, play the difference, then remember where everything is.
@@ -81,8 +83,10 @@ export function FlipGroup({ duration = 400, render, className, ...props }: FlipG
     const now = new Map<string, DOMRect>();
     for (const el of items(root)) {
       // Measure the layout, not a glide still in flight from the last change.
-      for (const a of el.getAnimations?.() ?? []) a.cancel();
-      now.set(el.dataset.flipId!, el.getBoundingClientRect());
+      const id = el.dataset.flipId!;
+      glides.current.get(id)?.cancel();
+      glides.current.delete(id);
+      now.set(id, el.getBoundingClientRect());
     }
     last.current = now;
     if (reduced || before.size === 0 || typeof root.animate !== 'function') return;
@@ -92,16 +96,19 @@ export function FlipGroup({ duration = 400, render, className, ...props }: FlipG
       const to = now.get(id)!;
       const from = before.get(id);
       if (!from) {
-        el.animate([{ opacity: 0 }, { opacity: 1 }], { duration, easing: EASE });
+        glides.current.set(id, el.animate([{ opacity: 0 }, { opacity: 1 }], { duration, easing: EASE }));
         continue;
       }
       const dx = from.left - to.left;
       const dy = from.top - to.top;
       if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) continue;
-      el.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], {
-        duration,
-        easing: EASE,
-      });
+      glides.current.set(
+        id,
+        el.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], {
+          duration,
+          easing: EASE,
+        }),
+      );
     }
   });
 
