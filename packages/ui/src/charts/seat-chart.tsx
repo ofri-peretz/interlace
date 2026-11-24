@@ -27,7 +27,8 @@
  * the left end, the last from the right end, and anything else sits between
  * them, next to the majority mark. Big totals for each side sit above the
  * arc (`tally`). Without sides, each group has its own colour: the five
- * chart hues in order, then the same hues deepened, then neutral; a tone used
+ * chart hues in order, then the same hues alternately deeper and paler, then
+ * a pale grey; a tone used
  * twice gets its next shade, so neighbours never merge. There are five
  * shades per tone: a sixth group on one side starts the shades again, so
  * split a side that large across two tones, or rely on the legend counts.
@@ -122,7 +123,7 @@ export type SeatGroup = {
   seats: number;
   /** The `id` of the side it sits with. */
   side?: string;
-  /** Its colour. On a side, the side's tone is the default. @default the next of 1..5, then the same hues deepened, then neutral */
+  /** Its colour. On a side, the side's tone is the default. @default the five hues, then the same hues deeper and paler in turn, then grey */
   tone?: SeatTone;
 };
 
@@ -130,8 +131,8 @@ export type SeatTally = 'none' | 'sides' | 'leaders';
 
 /**
  * Five shades per tone, in the order groups take them. Shade 0 is the token;
- * shade 1 is it deepened by a third, which stays far from the token in both
- * schemes; shade 2 leans 22% toward the page; shades 3 and 4 grey it toward
+ * shade 1 is it deepened (30% toward black), which stays far from the token in
+ * both schemes; shade 2 leans toward the page (18%, 22% for grey); shades 3 and 4 grey it toward
  * the muted text and pull it toward the text colour, and sit closer to the
  * others, so they come last. Each keeps 3:1 against the page in the default
  * light and dark themes. Written out in full so Tailwind sees every class.
@@ -139,42 +140,42 @@ export type SeatTally = 'none' | 'sides' | 'leaders';
 const SHADES: Record<SeatTone, readonly string[]> = {
   1: [
     'fill-chart-1',
-    'fill-[color-mix(in_oklab,var(--chart-1),black_35%)]',
-    'fill-[color-mix(in_oklab,var(--chart-1),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-1),black_30%)]',
+    'fill-[color-mix(in_oklab,var(--chart-1),var(--background)_18%)]',
     'fill-[color-mix(in_oklab,var(--chart-1),var(--muted-foreground)_50%)]',
     'fill-[color-mix(in_oklab,var(--chart-1),var(--foreground)_75%)]',
   ],
   2: [
     'fill-chart-2',
-    'fill-[color-mix(in_oklab,var(--chart-2),black_35%)]',
-    'fill-[color-mix(in_oklab,var(--chart-2),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-2),black_30%)]',
+    'fill-[color-mix(in_oklab,var(--chart-2),var(--background)_18%)]',
     'fill-[color-mix(in_oklab,var(--chart-2),var(--muted-foreground)_50%)]',
     'fill-[color-mix(in_oklab,var(--chart-2),var(--foreground)_75%)]',
   ],
   3: [
     'fill-chart-3',
-    'fill-[color-mix(in_oklab,var(--chart-3),black_35%)]',
-    'fill-[color-mix(in_oklab,var(--chart-3),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-3),black_30%)]',
+    'fill-[color-mix(in_oklab,var(--chart-3),var(--background)_18%)]',
     'fill-[color-mix(in_oklab,var(--chart-3),var(--muted-foreground)_50%)]',
     'fill-[color-mix(in_oklab,var(--chart-3),var(--foreground)_75%)]',
   ],
   4: [
     'fill-chart-4',
-    'fill-[color-mix(in_oklab,var(--chart-4),black_35%)]',
-    'fill-[color-mix(in_oklab,var(--chart-4),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-4),black_30%)]',
+    'fill-[color-mix(in_oklab,var(--chart-4),var(--background)_18%)]',
     'fill-[color-mix(in_oklab,var(--chart-4),var(--muted-foreground)_50%)]',
     'fill-[color-mix(in_oklab,var(--chart-4),var(--foreground)_75%)]',
   ],
   5: [
     'fill-chart-5',
-    'fill-[color-mix(in_oklab,var(--chart-5),black_35%)]',
-    'fill-[color-mix(in_oklab,var(--chart-5),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-5),black_30%)]',
+    'fill-[color-mix(in_oklab,var(--chart-5),var(--background)_18%)]',
     'fill-[color-mix(in_oklab,var(--chart-5),var(--muted-foreground)_50%)]',
     'fill-[color-mix(in_oklab,var(--chart-5),var(--foreground)_75%)]',
   ],
   neutral: [
     'fill-muted-foreground',
-    'fill-[color-mix(in_oklab,var(--muted-foreground),black_35%)]',
+    'fill-[color-mix(in_oklab,var(--muted-foreground),black_30%)]',
     'fill-[color-mix(in_oklab,var(--muted-foreground),var(--background)_22%)]',
     'fill-[color-mix(in_oklab,var(--muted-foreground),var(--foreground)_55%)]',
     'fill-[color-mix(in_oklab,var(--muted-foreground),var(--foreground)_75%)]',
@@ -272,32 +273,84 @@ export type PlacedGroup = SeatGroup & {
 };
 
 /**
+ * The colour each group takes when it names no tone and no side, in order.
+ * The five hues first; then the five again, alternating deeper and paler so
+ * neighbouring hues in the second round also differ in lightness (green and
+ * teal, orange and gold sit far apart); then a pale grey; then the rounds
+ * swapped. Measured on the default tokens: every added colour sits at least
+ * as far from the rest as the base palette's own closest pair, in light and
+ * dark.
+ */
+const DEFAULT_COLOURS: readonly (readonly [SeatTone, number])[] = [
+  [1, 0], [2, 0], [3, 0], [4, 0], [5, 0],
+  [1, 1], [2, 2], [3, 1], [4, 2], [5, 1],
+  ['neutral', 2],
+  [1, 2], [2, 1], [3, 2], [4, 1], [5, 2],
+  ['neutral', 0], ['neutral', 1],
+];
+
+/**
  * Order the groups along the arc and give each its colour. With sides, the
  * first side runs from the left end, the last from the right end, and the
  * rest sit between; each group takes the next shade of its side's tone.
  * Without sides, groups keep their order and a repeated tone takes its next
- * shade; groups with no tone run through the five hues, then the five hues
- * deepened, then neutral shades, so eleven lists get eleven colours.
+ * shade. A group with no tone and no side takes the next free entry of
+ * `DEFAULT_COLOURS`, so eleven lists get eleven colours. Groups that name a
+ * tone claim their shades first, so the two kinds never share a fill.
  */
 export function placeGroups(groups: readonly SeatGroup[], sides: readonly SeatSide[] = []): PlacedGroup[] {
   const sideAt = (id?: string) => sides.findIndex((side) => side.id === id);
-  const used = new Map<string, number>();
-  const shadeOf = (key: string) => {
-    const n = used.get(key) ?? 0;
-    used.set(key, n + 1);
+  // Shades already taken per tone, so a group with its own tone and a group
+  // given a default colour never share a fill.
+  const taken = new Map<string, Set<number>>();
+  const take = (key: string, shade?: number) => {
+    const set = taken.get(key) ?? new Set<number>();
+    taken.set(key, set);
+    let n = shade ?? 0;
+    if (shade === undefined) while (set.has(n)) n += 1;
+    set.add(n);
     return n;
+  };
+  const isTaken = ([tone, shade]: readonly [SeatTone, number]) =>
+    taken.get(`tone:${tone}`)?.has(shade) ?? false;
+  // Groups that name a tone or a side claim their shades first, in order.
+  const fixed = groups.map((group) => {
+    const side = sides[sideAt(group.side)];
+    if (group.tone) return take(`tone:${group.tone}`);
+    if (side) {
+      const shade = take(`side:${side.id}`);
+      take(`tone:${side.tone}`, shade);
+      return shade;
+    }
+    return undefined;
+  });
+  // The rest take the next default colour that is still free.
+  let cursor = 0;
+  const nextDefault = () => {
+    for (let tries = 0; tries < DEFAULT_COLOURS.length; tries += 1) {
+      const colour = DEFAULT_COLOURS[cursor % DEFAULT_COLOURS.length]!;
+      cursor += 1;
+      if (!isTaken(colour)) return colour;
+    }
+    return DEFAULT_COLOURS[(cursor - 1) % DEFAULT_COLOURS.length]!;
   };
   const placed = groups.map((group, index): PlacedGroup => {
     const sideIndex = sideAt(group.side);
     const side = sides[sideIndex];
-    const tone: SeatTone = group.tone ?? side?.tone ?? (index < 10 ? (((index % 5) + 1) as SeatTone) : 'neutral');
+    let tone: SeatTone = group.tone ?? side?.tone ?? 'neutral';
+    let shade = fixed[index];
+    if (shade === undefined) {
+      const colour = nextDefault();
+      tone = colour[0];
+      shade = take(`tone:${tone}`, colour[1]);
+    }
     return {
       ...group,
       seats: Math.max(0, Math.floor(group.seats)),
       index,
       sideIndex,
       tone,
-      shade: shadeOf(side && !group.tone ? `side:${side.id}` : `tone:${tone}`),
+      shade,
     };
   });
   if (sides.length === 0) return placed;
