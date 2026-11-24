@@ -10,7 +10,7 @@
 # `npm run ci:local` runs the pre-push battery over every file, as CI does.
 remotes:
   - git_url: https://github.com/ofri-peretz/burgee
-    ref: hookset@0.2.1
+    ref: hookset@0.2.2
     configs:
       - packages/hookset/presets/lefthook/commit-msg.yml
       - packages/hookset/presets/lefthook/pre-commit.yml
