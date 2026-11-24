@@ -1,0 +1,84 @@
+# The review checklist (triggerlist). Each item fires only when its trigger matches the diff, so a
+# reviewer reads the handful that apply, never the whole list. CI reads this file from the base
+# branch: a pull request cannot change the checks it is held to.
+# After editing: `npx triggerlist compile` rewrites REVIEW.md.
+# Draft more items with `npx triggerlist seed`, then narrow each trigger before adding it here.
+
+# Files that judge code. A pull request changing one of these and other files together is flagged
+# by `triggerlist protect` (npm run hook:triggerlist).
+gates:
+  - REVIEW.md
+  - .sdlc/checklist.yaml
+  - lefthook.yml
+  - packages/ui/__tests__/*-lock.test.ts
+  - packages/ui/__tests__/*-lock.test.tsx
+  - scripts/require-changeset.mjs
+  - .github/workflows/claude-code-review.yml
+
+items:
+  - id: brand-neutral
+    trigger:
+      paths: ["packages/ui/src/**", "packages/ui/styles/**"]
+    question: Does a consumer's product name, copy, colour, font or script ship inside a component, story default or token, instead of arriving through cssVars and props?
+    check: npx vitest run --config packages/ui/vitest.config.ts packages/ui/__tests__/brand-neutral-lock.test.ts
+    sources: [AGENTS.md, packages/ui/__tests__/brand-neutral-lock.test.ts]
+
+  - id: changeset-for-ui-change
+    trigger:
+      paths: ["packages/ui/**"]
+    question: Does a change to the design system carry a changeset, the only upgrade path a consumer of copied source has?
+    check: node scripts/require-changeset.mjs
+    sources: [scripts/require-changeset.mjs, .github/pull_request_template.md]
+
+  - id: registry-rebuilt
+    trigger:
+      paths: ["packages/ui/src/**", "apps/registry/public/r/**"]
+    question: Was the registry output rebuilt with `npm run registry:build` rather than edited by hand or left stale?
+    check: node apps/registry/scripts/build-registry.mjs --check
+    sources: [AGENTS.md, .github/workflows/ci.yml]
+
+  - id: motion-earned
+    trigger:
+      paths: ["packages/ui/src/**", "packages/ui/styles/**"]
+      pattern: "animate|transition|keyframes|duration|motion"
+    question: Does new motion explain a change, keep the content in the server HTML, and do nothing under reduced motion?
+    check: npx vitest run --config packages/ui/vitest.config.ts packages/ui/__tests__/motion-contract-lock.test.ts
+    sources: [AGENTS.md, packages/ui/__tests__/motion-contract-lock.test.ts]
+
+  - id: css-layer-order
+    trigger:
+      paths: ["packages/ui/styles/**"]
+    question: Does a stylesheet read only the layer before it (brand, semantics, structure, page), so a consumer's classes still win?
+    check: npx vitest run --config packages/ui/vitest.config.ts packages/ui/__tests__/css-layer-lock.test.ts
+    sources:
+      [
+        packages/ui/DESIGN_SYSTEM_LAYERS.md,
+        packages/ui/__tests__/css-layer-lock.test.ts,
+      ]
+
+  - id: contrast-floor
+    trigger:
+      paths: ["packages/ui/styles/**", "packages/ui/src/**"]
+      pattern: "--interlace-|bg-[a-z]+/[0-9]+|text-[a-z]+/[0-9]+"
+    question: Does a new token value or tinted composite still clear AA contrast on the surface it sits on?
+    check: npx vitest run --config packages/ui/vitest.config.ts packages/ui/__tests__/composite-contrast-lock.test.ts packages/ui/__tests__/theme-contract-lock.test.ts
+    sources: [AGENTS.md, packages/ui/__tests__/composite-contrast-lock.test.ts]
+
+  - id: lock-weakened
+    trigger:
+      paths:
+        [
+          "packages/ui/__tests__/*-lock.test.ts",
+          "packages/ui/__tests__/*-lock.test.tsx",
+        ]
+    question: Does the change loosen a lock test to make it pass, where the component or token should have been fixed?
+    check: read the diff of the lock; a lock changes only when the rule it states changes
+    sources: [AGENTS.md]
+
+  - id: hooks-bypassed
+    trigger:
+      paths: ["**"]
+      pattern: "--no-verify|LEFTHOOK=0"
+    question: Does the change bypass or teach bypassing the git hooks, which are the gate?
+    check: read the lines that fired; the hooks may never be skipped
+    sources: [CLAUDE.md, .claude/hooks/guard-bash.mjs]
