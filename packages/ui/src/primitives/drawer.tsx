@@ -247,7 +247,7 @@ function DrawerContent({ className, children, ...props }: DrawerContentProps) {
             tabIndex={0}
             className={cn(
               'flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain',
-              'focus-visible:ring-ring/50 outline-none focus-visible:ring-[3px] focus-visible:ring-inset',
+              'focus-visible:ring-ring outline-none focus-visible:ring-2 focus-visible:ring-inset',
               vertical && 'touch-auto',
               BODY[direction],
             )}
@@ -257,7 +257,7 @@ function DrawerContent({ className, children, ...props }: DrawerContentProps) {
           {direction === 'top' ? <DrawerHandle className="mb-3" /> : null}
           <BaseDrawer.Close
             data-slot="drawer-close-x"
-            className="ring-offset-background focus-visible:ring-ring absolute top-4 end-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-[3px] focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none"
+            className="ring-offset-background focus-visible:ring-ring absolute top-4 end-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none"
           >
             <XIcon className="size-4" />
             <span className="sr-only">Close</span>

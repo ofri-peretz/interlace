@@ -128,7 +128,7 @@ function FocusGridItem({
     >
       <article
         className={cn(
-          'focus-within:ring-ring relative isolate overflow-hidden rounded-xl focus-within:ring-[3px]',
+          'focus-within:ring-ring relative isolate overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-background',
           ASPECT[aspect],
           className,
         )}

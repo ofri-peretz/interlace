@@ -29,7 +29,7 @@ component at once and, where a computer can check it, adds a lock so it stays fi
 | 2 | Right-to-left | "Next" arrows and chevrons pointed the wrong way, the switch thumb slid out of its track, toasts entered from the wrong edge | pagination, breadcrumb, prev-next post, submenu trigger, switch, toast | Closed with row 1 |
 | 3 | Right-to-left, keyboard | No direction provider, so Base UI's sliders, tabs, toolbars, radio groups and submenus keep left-to-right arrow keys in an RTL page | every Base UI composite | Closed: `DirectionProvider` sets `dir` and Base UI's direction from one prop; Storybook's RTL decorator uses it |
 | 4 | Motion | Hard-coded durations and easings (`duration-150`, `duration-[180ms]`, `ease-out`) that a brand cannot retune | toast, select, combobox, command palette, progress, flip card, guess reveal, social sign-in, focus grid, article card | Closed: tokens everywhere, plus `motion-token-lock` |
-| 5 | Focus | Four ring recipes (`ring-ring/50`, `ring-ring/60`, `ring-2` with offset, `outline-2`), two of them at partial strength that may fall under 3:1 | inputs, tabs, accordion, dialog close, buttons | Open |
+| 5 | Focus | Four ring recipes (`ring-ring/50`, `ring-ring/60`, `ring-2` with offset, `outline-2`), two of them at partial strength that may fall under 3:1 | inputs, tabs, accordion, dialog close, buttons | Closed: one 2px full-strength ring with a 2px gap, plus `focus-ring-strength-lock` |
 | 6 | Right-to-left | Sheet and drawer only open from a physical edge; no `start` or `end` side that follows the page | sheet, drawer | Open |
 
 ## Out of scope here

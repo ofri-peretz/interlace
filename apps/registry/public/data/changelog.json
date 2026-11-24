@@ -944,6 +944,42 @@
           "source": ".changeset/flip-card-focus.md"
         },
         {
+          "summary": "Focus rings are drawn at full strength with one recipe: a 2px ring in `--ring` with a 2px gap in the page colour, the same weight as the preflight outline. Before, most controls drew a 3px ring at 50% or 60% of `--ring`, which measured 2.5:1 against the light themes (WCAG 1.4.11 asks 3:1), and a destructive button focused at 20%, which measured 1.4:1. Inputs, selects, buttons, tabs, checkboxes, switches, dialogs, sheets, drawers, toasts, menus and the patterns built on them now all focus alike, and the ring sits outside the control instead of over its edge.",
+          "components": [
+            "accordion",
+            "badge",
+            "banner",
+            "button",
+            "checkbox",
+            "combobox",
+            "command-palette",
+            "dialog",
+            "dialogue",
+            "dialogue-stepper",
+            "drawer",
+            "focus-grid",
+            "input",
+            "otp-field",
+            "radio-group",
+            "scroll-area",
+            "scroller",
+            "select",
+            "sheet",
+            "switch",
+            "tabs",
+            "textarea",
+            "toast",
+            "toolbar",
+            "topbar-menu",
+            "wordmark"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/focus-ring-strength.md"
+        },
+        {
           "summary": "Every focus ring is visible, whole, and clear of the text.\n\nA keyboard audit of every story found three kinds of gap, now fixed:\n\n- No visible focus: CollapsibleTrigger and a focusable TabsContent now show the system ring, 2px clear of the element. CodeEditor's textarea fills a clipping frame, so its ring is now inset, inside the padding and off the code. CodeWindow shows the ring on its frame when its body (a `<pre tabIndex={0}>`) has focus.\n- Clipped rings: the ReadingLayout contents rail, SettingsTemplate's section nav, Scroller's viewport and GuessReveal's explanation scroll or clip their content, and cut the top and bottom off a focused link. Each now keeps a 4px margin for the ring, with no change to layout.",
           "components": [
             "collapsible",

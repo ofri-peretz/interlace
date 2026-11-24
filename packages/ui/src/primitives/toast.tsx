@@ -316,7 +316,7 @@ const ToastClose = React.forwardRef<HTMLButtonElement, ToastCloseProps>(
         className={cn(
           'ms-auto inline-flex size-6 shrink-0 items-center justify-center rounded-sm',
           'text-muted-foreground hover:text-foreground',
-          'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring',
           'transition-colors',
           className,
         )}

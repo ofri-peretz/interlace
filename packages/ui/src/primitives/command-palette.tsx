@@ -97,7 +97,7 @@
  * | `placeholder:text-muted-foreground` on `--background`| 9.41:1  | 8.74:1  | 4.5:1 (SC 1.4.3)|
  * | highlighted `text-accent-foreground` on `--accent`   | 8.98:1  | 10.46:1 | 4.5:1 (SC 1.4.3)|
  * | group label `text-muted-foreground` on `--background`| 9.41:1  | 8.74:1  | 4.5:1 (SC 1.4.3)|
- * | `focus-visible:ring-ring/60` on `--background`       | 3.23:1  | 4.73:1  | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background`       | 3.23:1  | 4.73:1  | 3:1 (SC 2.4.13) |
  *
  * The input adds no ring of its own — it inherits the DS-wide
  * `:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px }`

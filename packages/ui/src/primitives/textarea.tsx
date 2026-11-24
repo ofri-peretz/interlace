@@ -39,7 +39,7 @@
  * | `border-input` on `--background`               | 3.62:1 | 3.35:1 | 3:1 (SC 1.4.11) |
  * | `placeholder:text-muted-foreground` on the bg  | 9.41:1 | 8.74:1 | 4.5:1 (SC 1.4.3)|
  * | `aria-invalid:border-destructive` on `--background` | 8.31:1 | 10.43:1 | 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring/60` on `--background` | 3.23:1 | 4.73:1 | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background` | 3.23:1 | 4.73:1 | 3:1 (SC 2.4.13) |
  *
  * `disabled:opacity-50` is exempt — SC 1.4.3 and SC 1.4.11 both carve out
  * inactive user-interface components.
@@ -68,7 +68,7 @@ const textareaVariants = cva(
     'placeholder:text-muted-foreground',
     // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
     // under the 3:1 focus-indicator floor (SC 2.4.13).
-    'focus-visible:border-ring focus-visible:ring-ring/60 focus-visible:ring-[3px]',
+    'focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
     'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
     'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
   ].join(' '),

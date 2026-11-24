@@ -23,7 +23,7 @@
  * | ---------------------------------------------- | ------ | ------ | --------------- |
  * | `border-input` on `--background`               | 3.62:1 | 3.35:1 | 3:1 (SC 1.4.11) |
  * | `placeholder:text-muted-foreground` on the bg  | 9.41:1 | 8.74:1 | 4.5:1 (SC 1.4.3)|
- * | `focus-visible:ring-ring/60` on `--background` | 3.23:1 | 4.73:1 | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background` | 3.23:1 | 4.73:1 | 3:1 (SC 2.4.13) |
  *
  * `disabled:opacity-50` is exempt — SC 1.4.3 and SC 1.4.11 both carve out
  * inactive user-interface components.
@@ -61,7 +61,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
           "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground border-input h-control w-full min-w-0 rounded-lg border bg-background text-foreground px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
           // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
           // under the 3:1 focus-indicator floor (SC 2.4.13). See table above.
-          'focus-visible:border-ring focus-visible:ring-ring/60 focus-visible:ring-[3px]',
+          'focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
           'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
           className,
         )}

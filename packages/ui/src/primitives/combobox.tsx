@@ -100,7 +100,7 @@
  * | Composite                                            | Light   | Dark    | Floor           |
  * | ---------------------------------------------------- | ------- | ------- | --------------- |
  * | input `border-input` on `--background`               | 3.62:1  | 3.35:1  | 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring/60` on `--background`       | 3.23:1  | 4.73:1  | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background`       | 3.23:1  | 4.73:1  | 3:1 (SC 2.4.13) |
  * | `placeholder:text-muted-foreground` on `--background`| 9.41:1  | 8.74:1  | 4.5:1 (SC 1.4.3)|
  * | item `text-popover-foreground` on `--popover`        | 19.65:1 | 15.71:1 | 4.5:1 (SC 1.4.3)|
  * | highlighted `text-accent-foreground` on `--accent`   | 8.98:1  | 10.46:1 | 4.5:1 (SC 1.4.3)|
@@ -191,7 +191,7 @@ function ComboboxInput({
         // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
         // under the 3:1 focus-indicator floor (SC 2.4.13). 3px > the 2px
         // minimum thickness the same SC requires.
-        'focus-visible:border-ring focus-visible:ring-ring/60 focus-visible:ring-[3px]',
+        'focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
         'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
@@ -216,7 +216,7 @@ function ComboboxTrigger({
       data-slot="combobox-trigger"
       className={cn(
         'text-muted-foreground hover:text-foreground absolute end-1 flex size-7 items-center justify-center rounded-sm transition-colors outline-none',
-        'focus-visible:ring-ring/60 focus-visible:ring-[3px]',
+        'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         'disabled:pointer-events-none disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
@@ -272,7 +272,7 @@ function ComboboxClear({
         // `:has(~ …)` keeps the fix in CSS and out of the public API:
         // neither part needs to know whether the other was rendered.
         '[&:has(~[data-slot=combobox-trigger])]:end-9',
-        'focus-visible:ring-ring/60 focus-visible:ring-[3px]',
+        'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         'disabled:pointer-events-none disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
@@ -523,7 +523,7 @@ function ComboboxChipRemove({
         // match the icon; the icon is 12px and the target is not the icon.
         'flex size-6 items-center justify-center rounded-sm transition-colors outline-none',
         'hover:bg-accent hover:text-accent-foreground',
-        'focus-visible:ring-ring/60 focus-visible:ring-[3px]',
+        'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",
         className,
       )}
