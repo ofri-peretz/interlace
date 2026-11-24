@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 177
+    "itemCount": 178
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
@@ -33,7 +33,7 @@
       "pattern": 50,
       "effect": 19,
       "template": 13,
-      "chart": 9,
+      "chart": 10,
       "util": 6,
       "starter": 3,
       "theme": 3
@@ -43,7 +43,7 @@
       "pattern": 50,
       "blog": 35,
       "foundation": 27,
-      "data": 24,
+      "data": 25,
       "form": 20,
       "effect": 19,
       "decorative": 17,
@@ -52,7 +52,7 @@
       "template": 13,
       "marketing": 13,
       "overlay": 10,
-      "chart": 9,
+      "chart": 10,
       "util": 6,
       "a11y": 4,
       "starter": 3,
@@ -60,18 +60,18 @@
     },
     "rendering": {
       "server": 99,
-      "client": 78
+      "client": 79
     },
     "keyboard": {
-      "none": 138,
+      "none": 139,
       "handled": 39
     },
     "loading": {
       "none": 143,
-      "built-in": 34
+      "built-in": 35
     },
     "minViewport": {
-      "320": 107,
+      "320": 108,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -6916,6 +6916,70 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-buttons.json",
       "item": "https://ds.interlace.tools/r/share-buttons.json",
       "docs": "https://ds.interlace.tools/c/share-buttons"
+    },
+    {
+      "name": "share-chart",
+      "title": "Share Chart",
+      "type": "registry:ui",
+      "summary": "How a whole splits into parts, one bar per row: survey answers by group, a budget by department, time by activity. Each row is one 100% bar cut into segments, and every row shares one scale, so rows compare at a glance.",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ShareLayoutKind",
+          "values": [
+            "stacked",
+            "diverging"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "ShareChart"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/charts/share-chart.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-chart.json",
+      "item": "https://ds.interlace.tools/r/share-chart.json",
+      "docs": "https://ds.interlace.tools/c/share-chart"
     },
     {
       "name": "sheen-text",
