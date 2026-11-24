@@ -141,6 +141,13 @@ describe('QrCode', () => {
     expect(container.firstElementChild?.hasAttribute('data-scheme')).toBe(false);
     expect(container.querySelector('svg')?.getAttribute('viewBox')).toBe('0 0 21 21');
   });
+
+  it('draws an empty, still-named box when the value is too long to encode', () => {
+    const { container } = render(<QrCode value={'x'.repeat(3000)} label="QR" />);
+    expect(container.firstElementChild?.getAttribute('data-state')).toBe('too-long');
+    expect(screen.getByRole('img', { name: 'QR' })).toBeTruthy();
+    expect(container.querySelector('path')).toBeNull();
+  });
 });
 
 // --- Join codes -----------------------------------------------------------------

@@ -159,7 +159,17 @@ export function createRoom(init: { code: string; hostId: string; rounds?: number
 export type RoomPlayerEvent =
   | { type: 'join'; playerId: string; name: string }
   | { type: 'leave'; playerId: string }
-  | { type: 'answer'; playerId: string; value: unknown; at: number };
+  | {
+      type: 'answer';
+      playerId: string;
+      value: unknown;
+      /**
+       * When the answer arrived. `useRoom` replaces it with the host's clock on
+       * receipt; code that calls `applyRoomEvent` directly must do the same
+       * rather than trust the sender's value.
+       */
+      at: number;
+    };
 
 /** Events only the host sends. */
 export type RoomHostEvent =

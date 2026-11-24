@@ -26,6 +26,13 @@
  *
  * No hooks: the matrix is computed while rendering.
  *
+ * ## Too long
+ *
+ * A QR code holds at most 2,953 bytes (version 40, level L), fewer at higher
+ * error correction. A longer `value` does not throw: the box keeps its size
+ * and label, carries `data-state="too-long"`, and draws no code. Keep links
+ * short; a join link is well under 100 bytes.
+ *
  * ## MIN_VIEWPORT — 320
  *
  * | Rule | Concept                   | Where in this file                         |
@@ -55,7 +62,7 @@ const SIZE = {
 } as const;
 
 type QrCodeProps = Omit<React.ComponentProps<'div'>, 'children'> & {
-  /** What the code holds, usually a join link. */
+  /** What the code holds, usually a join link. Too long to encode renders an empty box (see "Too long"). */
   value: string;
   /** Names the code for assistive tech, e.g. "QR code to join the room". */
   label: string;
@@ -79,12 +86,18 @@ function QrCode({
   className,
   ...props
 }: QrCodeProps) {
-  const matrix = encodeQr(value, { errorCorrection });
+  let matrix: ReturnType<typeof encodeQr> | null = null;
+  try {
+    matrix = encodeQr(value, { errorCorrection });
+  } catch {
+    matrix = null;
+  }
   const m = Math.max(0, Math.round(margin));
-  const side = matrix.size + m * 2;
+  const side = (matrix?.size ?? 21) + m * 2;
   return (
     <div
       data-slot="qr-code"
+      data-state={matrix ? undefined : 'too-long'}
       data-scheme={scheme === 'light' ? 'light' : undefined}
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn('bg-background text-foreground inline-block max-w-full shrink-0 rounded-lg', SIZE[size], className)}
@@ -99,7 +112,7 @@ function QrCode({
         className="block h-auto w-full"
       >
         <rect width={side} height={side} className="fill-background" />
-        <path d={qrPath(matrix, m)} className="fill-current" />
+        {matrix && <path d={qrPath(matrix, m)} className="fill-current" />}
       </svg>
     </div>
   );
