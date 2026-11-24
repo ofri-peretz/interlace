@@ -1570,6 +1570,24 @@
       }
     },
     {
+      "name": "celebrate",
+      "type": "registry:ui",
+      "title": "Celebrate",
+      "description": "Small, one-time moments for something the player earned: a streak that hits a milestone, a perfect round, a right answer. `Celebrate` wraps the thing that earned it and, each time `play` changes, sends a short burst of rays and a ring out from it.…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "count-up",
       "type": "registry:ui",
       "title": "Count Up",
@@ -3100,6 +3118,60 @@
       }
     },
     {
+      "name": "order-game",
+      "type": "registry:ui",
+      "title": "Order Game",
+      "description": "Put a handful of items in order: events from earliest to latest, places from smallest to largest. The player drags rows by their handle, or moves them with the arrow keys or the up and down buttons, then locks in. The rows then glide into the right order…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "poll",
+      "type": "registry:ui",
+      "title": "Poll",
+      "description": "One question, one tap. The options are plain buttons; tapping one casts the vote, and the options turn into the results in place, with the bars growing to everyone's shares and the viewer's choice named. There is no submit step, because a poll that asks…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "quiz-question",
+      "type": "registry:ui",
+      "title": "Quiz Question",
+      "description": "A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "share-card",
       "type": "registry:ui",
       "title": "Share Card",
@@ -3129,6 +3201,42 @@
       "meta": {
         "tier": "game",
         "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "tally-bars",
+      "type": "registry:ui",
+      "title": "Tally Bars",
+      "description": "How everyone answered, as one bar per option with its whole percent: the results of a poll, or the spread of answers after a quiz question. The viewer's own choice is named in words, and a quiz can mark the right option, so nothing depends on colour alone.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "timer-ring",
+      "type": "registry:ui",
+      "title": "Timer Ring",
+      "description": "A countdown drawn as a ring that empties, with the seconds left in the middle. It counts to a deadline (a timestamp), not from a start, so a page that reloads, or several players in one room, all see the same clock.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
         "minViewport": 320,
         "loading": false,
         "version": "1.0.0",
