@@ -25,48 +25,59 @@
  * Grid analogue of Container's "four sizes only" (R21 — keeps every grid on-system).
  */
 
-import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from '../lib/cn.js';
+import { cn } from "../lib/cn.js";
 
-const gridVariants = cva('grid', {
+// Twelve tracks need eleven column gaps. The gap is in rem, so it grows with
+// a reader's text size, while the column does not: at 150% on a 390px phone
+// eleven 36px gaps came to 396px in a 342px column. The column gap is the
+// step's value, but never more than one track's share of the width
+// (100% / cols), so eleven gaps always leave room for twelve tracks. At 100%
+// the cap never bites on a phone (24px or less against 320 / 12 = 26.7px); on
+// wider screens it only trims xl and 2xl where eleven of them would overflow.
+// A className gap (gap-8, gap-x-*) still replaces it.
+const COLUMN_GAP =
+  "gap-x-[min(var(--grid-gap-x),calc(100%/var(--grid-cols,12)))]";
+
+const gridVariants = cva(["grid", COLUMN_GAP], {
   variants: {
     /** Column track count. Closed set (R21). */
     cols: {
-      1: 'grid-cols-1',
-      2: 'grid-cols-2',
-      3: 'grid-cols-3',
-      4: 'grid-cols-4',
-      6: 'grid-cols-6',
-      12: 'grid-cols-12',
+      1: "grid-cols-1 [--grid-cols:1]",
+      2: "grid-cols-2 [--grid-cols:2]",
+      3: "grid-cols-3 [--grid-cols:3]",
+      4: "grid-cols-4 [--grid-cols:4]",
+      6: "grid-cols-6 [--grid-cols:6]",
+      12: "grid-cols-12 [--grid-cols:12]",
     },
     /** Gap from the foundation --spacing scale (8/16/24/40/64/96px). */
     gap: {
-      none: 'gap-0',
-      xs: 'gap-2',
-      sm: 'gap-4',
-      md: 'gap-6',
-      // The large steps keep their row gap but cap the column gap below
-      // md: twelve tracks need eleven gaps, and 11 × 40px is wider than a
-      // 390px phone. Capped, a 12-column grid fits the 320px minimum.
-      lg: 'gap-y-10 gap-x-4 md:gap-x-10',
-      xl: 'gap-y-16 gap-x-6 md:gap-x-16',
-      '2xl': 'gap-y-24 gap-x-6 md:gap-x-24',
+      none: "gap-y-0 [--grid-gap-x:0px]",
+      xs: "gap-y-2 [--grid-gap-x:calc(var(--spacing)*2)]",
+      sm: "gap-y-4 [--grid-gap-x:calc(var(--spacing)*4)]",
+      md: "gap-y-6 [--grid-gap-x:calc(var(--spacing)*6)]",
+      // The large steps keep their row gap but use a smaller column gap
+      // below md, so a phone's twelve tracks are not all gap.
+      lg: "gap-y-10 [--grid-gap-x:calc(var(--spacing)*4)] md:[--grid-gap-x:calc(var(--spacing)*10)]",
+      xl: "gap-y-16 [--grid-gap-x:calc(var(--spacing)*6)] md:[--grid-gap-x:calc(var(--spacing)*16)]",
+      "2xl":
+        "gap-y-24 [--grid-gap-x:calc(var(--spacing)*6)] md:[--grid-gap-x:calc(var(--spacing)*24)]",
     },
   },
-  defaultVariants: { cols: 12, gap: 'md' },
+  defaultVariants: { cols: 12, gap: "md" },
 });
 
 interface GridProps
-  extends React.ComponentProps<'div'>, VariantProps<typeof gridVariants> {
+  extends React.ComponentProps<"div">, VariantProps<typeof gridVariants> {
   /** Render as a different element (e.g. `ul`, `section`). Default `div`. */
   as?: React.ElementType;
 }
 
 /** 2-D grid container. Server component (no hooks). */
 function Grid({ className, cols, gap, as, ...props }: GridProps) {
-  const Tag = (as ?? 'div') as React.ElementType;
+  const Tag = (as ?? "div") as React.ElementType;
   return (
     <Tag
       data-slot="grid"
@@ -79,62 +90,62 @@ function Grid({ className, cols, gap, as, ...props }: GridProps) {
 }
 
 // Static span maps — Tailwind can't scan runtime-built `col-span-${n}`.
-const gridItemVariants = cva('', {
+const gridItemVariants = cva("", {
   variants: {
     /** Base column span. `full` = the whole track. */
     span: {
-      1: 'col-span-1',
-      2: 'col-span-2',
-      3: 'col-span-3',
-      4: 'col-span-4',
-      5: 'col-span-5',
-      6: 'col-span-6',
-      7: 'col-span-7',
-      8: 'col-span-8',
-      9: 'col-span-9',
-      10: 'col-span-10',
-      11: 'col-span-11',
-      12: 'col-span-12',
-      full: 'col-span-full',
+      1: "col-span-1",
+      2: "col-span-2",
+      3: "col-span-3",
+      4: "col-span-4",
+      5: "col-span-5",
+      6: "col-span-6",
+      7: "col-span-7",
+      8: "col-span-8",
+      9: "col-span-9",
+      10: "col-span-10",
+      11: "col-span-11",
+      12: "col-span-12",
+      full: "col-span-full",
     },
     /** Span from the `md` breakpoint up. */
     mdSpan: {
-      1: 'md:col-span-1',
-      2: 'md:col-span-2',
-      3: 'md:col-span-3',
-      4: 'md:col-span-4',
-      5: 'md:col-span-5',
-      6: 'md:col-span-6',
-      7: 'md:col-span-7',
-      8: 'md:col-span-8',
-      9: 'md:col-span-9',
-      10: 'md:col-span-10',
-      11: 'md:col-span-11',
-      12: 'md:col-span-12',
-      full: 'md:col-span-full',
+      1: "md:col-span-1",
+      2: "md:col-span-2",
+      3: "md:col-span-3",
+      4: "md:col-span-4",
+      5: "md:col-span-5",
+      6: "md:col-span-6",
+      7: "md:col-span-7",
+      8: "md:col-span-8",
+      9: "md:col-span-9",
+      10: "md:col-span-10",
+      11: "md:col-span-11",
+      12: "md:col-span-12",
+      full: "md:col-span-full",
     },
     /** Span from the `lg` breakpoint up. */
     lgSpan: {
-      1: 'lg:col-span-1',
-      2: 'lg:col-span-2',
-      3: 'lg:col-span-3',
-      4: 'lg:col-span-4',
-      5: 'lg:col-span-5',
-      6: 'lg:col-span-6',
-      7: 'lg:col-span-7',
-      8: 'lg:col-span-8',
-      9: 'lg:col-span-9',
-      10: 'lg:col-span-10',
-      11: 'lg:col-span-11',
-      12: 'lg:col-span-12',
-      full: 'lg:col-span-full',
+      1: "lg:col-span-1",
+      2: "lg:col-span-2",
+      3: "lg:col-span-3",
+      4: "lg:col-span-4",
+      5: "lg:col-span-5",
+      6: "lg:col-span-6",
+      7: "lg:col-span-7",
+      8: "lg:col-span-8",
+      9: "lg:col-span-9",
+      10: "lg:col-span-10",
+      11: "lg:col-span-11",
+      12: "lg:col-span-12",
+      full: "lg:col-span-full",
     },
   },
-  defaultVariants: { span: 'full' },
+  defaultVariants: { span: "full" },
 });
 
 interface GridItemProps
-  extends React.ComponentProps<'div'>, VariantProps<typeof gridItemVariants> {
+  extends React.ComponentProps<"div">, VariantProps<typeof gridItemVariants> {
   /** Render as a different element (e.g. `li`, `article`). Default `div`. */
   as?: React.ElementType;
 }
@@ -148,7 +159,7 @@ function GridItem({
   as,
   ...props
 }: GridItemProps) {
-  const Tag = (as ?? 'div') as React.ElementType;
+  const Tag = (as ?? "div") as React.ElementType;
   return (
     <Tag
       data-slot="grid-item"
