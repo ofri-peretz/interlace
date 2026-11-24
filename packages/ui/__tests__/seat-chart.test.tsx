@@ -4,6 +4,7 @@
  * name, the table behind the picture, vacant seats, and the one-time reveal
  * that never runs under reduced motion.
  */
+import * as React from 'react';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -167,8 +168,15 @@ describe('SeatChart', () => {
     const { container, rerender } = render(<SeatChart groups={[]} />);
     expect(screen.getByText('No seats to show yet.')).toBeTruthy();
     expect(container.querySelector('[data-slot="seat-chart"][data-state="empty"]')).not.toBeNull();
-    rerender(<SeatChart groups={GROUPS} loading />);
-    expect(container.querySelector('[data-slot="seat-chart"]')!.getAttribute('data-min-viewport')).toBe('320');
+    const ref = React.createRef<HTMLElement>();
+    rerender(<SeatChart ref={ref} groups={GROUPS} loading id="busy" className="mt-2" />);
+    const root = container.querySelector('[data-slot="seat-chart"]')!;
+    expect(root.getAttribute('data-min-viewport')).toBe('320');
+    expect(root.getAttribute('data-state')).toBe('loading');
+    expect(root.getAttribute('aria-busy')).toBe('true');
+    expect(root.id).toBe('busy');
+    expect(root.className).toContain('mt-2');
+    expect(ref.current).toBe(root);
     expect(screen.queryByRole('img')).toBeNull();
   });
 

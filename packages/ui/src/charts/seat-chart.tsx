@@ -503,12 +503,17 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
 
   if (loading) {
     return (
-      <Skeleton
-        variant="chart"
+      <figure
+        ref={ref}
         data-slot="seat-chart"
+        data-state="loading"
         data-min-viewport={String(MIN_VIEWPORT)}
-        className={className}
-      />
+        aria-busy="true"
+        className={cn('m-0 w-full', className)}
+        {...props}
+      >
+        <Skeleton variant="chart" />
+      </figure>
     );
   }
 
