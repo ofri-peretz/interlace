@@ -717,6 +717,17 @@
           "source": ".changeset/social-sign-in.md"
         },
         {
+          "summary": "`Spinner`: the shadcn core `spinner` item in Interlace tokens. An inline SVG in `currentColor` with `sm` (default), `md` and `lg` sizes. Announced once as a status named by `label` (\"Loading\" by default, so it can be translated); `decorative` hides it inside something that already says it is busy. It turns only under `motion-safe`. Server component.",
+          "components": [
+            "spinner"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/spinner.md"
+        },
+        {
           "summary": "New SplitText: a headline that arrives a word, or a letter, at a time the first time it scrolls into view. `by` picks words or letters, `effect` is `rise` (default), `fade` or `blur`, and `step` sets the pace. The whole line is in the server HTML and read once from a visually hidden copy, so a screen reader never spells a word out. Letters keep emoji and combining marks whole, words never break mid-line, RTL arrives from the right, and under reduced motion the line is simply there.",
           "components": [
             "split-text"

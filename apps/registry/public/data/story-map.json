@@ -2066,6 +2066,17 @@
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
   },
+  "spinner": {
+    "title": "Primitives/Spinner",
+    "storyIds": [
+      "primitives-spinner--default",
+      "primitives-spinner--sizes",
+      "primitives-spinner--in-text"
+    ],
+    "preview": "primitives-spinner--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "split-text": {
     "title": "Effects/SplitText",
     "storyIds": [

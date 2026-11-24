@@ -232,6 +232,10 @@
       "types": "./dist/primitives/kbd.d.ts",
       "default": "./dist/primitives/kbd.js"
     },
+    "./spinner": {
+      "types": "./dist/primitives/spinner.d.ts",
+      "default": "./dist/primitives/spinner.js"
+    },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
       "default": "./dist/primitives/label.js"

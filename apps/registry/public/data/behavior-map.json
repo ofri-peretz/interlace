@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T10:21:45.530Z",
+  "generatedAt": "2026-11-24T11:05:29.536Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -24,7 +24,7 @@
       " pure cores: day keys, puzzle order, streak arithmetic.\n        ",
       ",\n        ",
       ",\n        // The four pure variant/model modules.\n        ",
-      ",\n        // The 35 components with real render coverage. See the ledger above.\n        ",
+      ",\n        // The 36 components with real render coverage. See the ledger above.\n        ",
       ",\n        // Patterns with full render coverage — the same ledger rule: a\n        // file is in at 100 or it is out, and joining is a one-line diff.\n        ",
       ",\n        // Effects with full render coverage, on the same rule.\n        "
     ]
@@ -13148,6 +13148,19 @@
       ],
       "coverage": {
         "inGate": true
+      }
+    },
+    "spinner": {
+      "sourcePath": "packages/ui/src/primitives/spinner.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "split-text": {
