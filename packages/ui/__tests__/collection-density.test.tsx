@@ -28,7 +28,13 @@ const COLLECTIONS: Array<[string, string, (d?: Density) => React.ReactElement, b
   ['StatGroup', 'stat-group', (d) => <StatGroup density={d} loading />, false],
 ];
 
-const GAP = { compact: 'gap-4', default: 'gap-6', relaxed: 'md:gap-x-10' } as const;
+// The Grid's step shows as its row gap (gap-y-*) and, for relaxed, the wide
+// column step it switches to from md.
+const GAP = {
+  compact: 'gap-y-4',
+  default: 'gap-y-6',
+  relaxed: 'md:[--grid-gap-x:calc(var(--spacing)*10)]',
+} as const;
 const SECTION = { compact: 'py-10', default: 'py-16', relaxed: 'py-24' } as const;
 
 describe('collections take a density', () => {
@@ -37,7 +43,7 @@ describe('collections take a density', () => {
       render(make());
       const root = document.querySelector<HTMLElement>(`[data-slot="${slot}"]`)!;
       expect(root.getAttribute('data-density')).toBe('default');
-      expect(document.querySelector('[data-slot="grid"]')!.className).toContain('gap-6');
+      expect(document.querySelector('[data-slot="grid"]')!.className).toContain(GAP.default);
       if (ownsSection) expect(root.className).toContain('py-16');
     });
 

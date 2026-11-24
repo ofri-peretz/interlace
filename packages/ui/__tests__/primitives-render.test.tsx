@@ -460,16 +460,25 @@ describe("Grid", () => {
     "maps gap=%s onto the spacing token",
     (gap) => {
       const { container } = render(<Grid gap={gap} />);
-      // lg and up keep the full step for rows and, from md, for columns; below
-      // md their column gap is capped so twelve tracks fit a phone.
+      // Rows take the step; columns take it through --grid-gap-x, capped at
+      // one track's share. lg and up use a smaller column step below md.
       const cls = slot(container, "grid")!.getAttribute("class")!;
-      if (gap === "none") expect(cls).toContain("gap-0");
-      else if (gap === "lg" || gap === "xl" || gap === "2xl") {
-        expect(cls).toContain(`gap-y-${SPACING_STEP[gap]}`);
-        expect(cls).toContain(`md:gap-x-${SPACING_STEP[gap]}`);
-      } else expect(cls).toContain(`gap-${SPACING_STEP[gap]}`);
+      const step = gap === "none" ? 0 : SPACING_STEP[gap];
+      expect(cls).toContain(`gap-y-${step}`);
+      expect(cls).toContain("gap-x-[min(var(--grid-gap-x),calc(100%/var(--grid-cols,12)))]");
+      if (gap === "none") expect(cls).toContain("[--grid-gap-x:0px]");
+      else if (gap === "lg" || gap === "xl" || gap === "2xl")
+        expect(cls).toContain(`md:[--grid-gap-x:calc(var(--spacing)*${step})]`);
+      else expect(cls).toContain(`[--grid-gap-x:calc(var(--spacing)*${step})]`);
     },
   );
+
+  it("a className gap still replaces the capped column gap", () => {
+    const { container } = render(<Grid className="gap-8" />);
+    const cls = slot(container, "grid")!.getAttribute("class")!;
+    expect(cls).toContain("gap-8");
+    expect(cls).not.toContain("gap-x-[min(");
+  });
 
   it("emits neither data attribute when cols and gap are left to the defaults", () => {
     const { container } = render(<Grid />);

@@ -318,30 +318,61 @@ describe("Stack: gap scale (LAYOUT §3)", () => {
 });
 
 describe("Grid: column gap fits a phone", () => {
-  // Twelve tracks need eleven column gaps. Below md the large steps cap the
-  // column gap so 11 gaps stay narrower than the 320px minimum viewport.
-  it.each([
-    ["lg", "gap-x-4", "md:gap-x-10", "gap-y-10"],
-    ["xl", "gap-x-6", "md:gap-x-16", "gap-y-16"],
-    ["2xl", "gap-x-6", "md:gap-x-24", "gap-y-24"],
-  ] as const)(
-    'gap="%s": %s on phones, %s from md, rows keep %s',
-    (gap, phone, wide, rows) => {
+  // Twelve tracks need eleven column gaps. The gap is in rem and grows with
+  // a reader's text size; the column does not. So the column gap is the
+  // step, capped at one track's share of the width (100% / cols).
+  const steps = {
+    "2": 8,
+    "4": 16,
+    "6": 24,
+    "10": 40,
+    "16": 64,
+    "24": 96,
+  } as const;
+  const columnGap = (
+    html: string,
+    root: number,
+    width: number,
+    wide = false,
+  ) => {
+    const set = [
+      ...html.matchAll(
+        /(md:)?\[--grid-gap-x:calc\(var\(--spacing\)\*(\d+)\)\]/g,
+      ),
+    ];
+    const pick = (wide && set.find((m) => m[1])) || set.find((m) => !m[1]);
+    const px = pick ? (steps[pick[2] as keyof typeof steps] / 16) * root : 0;
+    expect(html).toContain(
+      "gap-x-[min(var(--grid-gap-x),calc(100%/var(--grid-cols,12)))]",
+    );
+    return Math.min(px, width / 12);
+  };
+
+  it.each(["xs", "sm", "md", "lg", "xl", "2xl"] as const)(
+    'gap="%s": eleven column gaps fit a 342px column at 100% and 150%',
+    (gap) => {
       const html = render(<Grid gap={gap}>x</Grid>);
-      expect(html).toContain(phone);
-      expect(html).toContain(wide);
-      expect(html).toContain(rows);
+      for (const root of [16, 24]) {
+        expect(columnGap(html, root, 342) * 11).toBeLessThan(342);
+      }
     },
   );
 
-  it("keeps every phone column gap × 11 under 320px", () => {
-    const px = { "gap-x-4": 16, "gap-x-6": 24 } as const;
-    for (const gap of ["lg", "xl", "2xl"] as const) {
+  it.each(["xs", "sm", "md", "lg", "xl", "2xl"] as const)(
+    'gap="%s": the cap never bites on a phone at 100%%',
+    (gap) => {
       const html = render(<Grid gap={gap}>x</Grid>);
-      const m = html.match(/ gap-x-(4|6)\b/);
-      expect(m).toBeTruthy();
-      expect(px[`gap-x-${m![1]}` as keyof typeof px] * 11).toBeLessThan(320);
-    }
+      const uncapped = columnGap(html, 16, Infinity);
+      expect(columnGap(html, 16, 320)).toBe(uncapped);
+    },
+  );
+
+  it.each([
+    ["lg", "gap-y-10"],
+    ["xl", "gap-y-16"],
+    ["2xl", "gap-y-24"],
+  ] as const)('gap="%s": rows keep the full step (%s)', (gap, rows) => {
+    expect(render(<Grid gap={gap}>x</Grid>)).toContain(rows);
   });
 });
 
