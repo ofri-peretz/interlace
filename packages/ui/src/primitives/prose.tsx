@@ -171,9 +171,20 @@ const proseVariants = cva(
   },
 );
 
-interface ProseProps
-  extends React.ComponentProps<'article'>,
-    VariantProps<typeof proseVariants> {
+/** Names Prose gives a `<pre>` or `<table>` it makes focusable because it scrolls sideways. */
+interface ProseLabels {
+  /** Name for an overflowing `<table>` with no caption. */
+  table: string;
+  /** Name for an overflowing `<pre>`. */
+  code: string;
+}
+
+const DEFAULT_PROSE_LABELS: ProseLabels = {
+  table: 'Table, scrolls sideways',
+  code: 'Code, scrolls sideways',
+};
+
+interface ProseProps extends React.ComponentProps<'article'>, VariantProps<typeof proseVariants> {
   /**
    * Override the rendered element. Defaults to `article` — the natural
    * semantic for an article-body wrapper. Use `main` when this is the page's
@@ -181,6 +192,52 @@ interface ProseProps
    * surrounding container already owns the landmark.
    */
   as?: ProseElement;
+  /** The names given to blocks that scroll sideways, for another language. */
+  labels?: Partial<ProseLabels>;
+}
+
+/**
+ * Make one `<pre>` or `<table>` focusable and named while it scrolls sideways,
+ * and take back what we added once it fits. Author attributes always win.
+ */
+function syncScrollRegion(el: HTMLElement, label: string) {
+  const ours = el.hasAttribute('data-prose-scroll');
+  if (!ours && el.hasAttribute('tabindex')) return;
+  const scrolls = el.scrollWidth > el.clientWidth + 1;
+  if (scrolls && !ours) claimScrollRegion(el, label);
+  else if (scrolls && el.hasAttribute('data-prose-label')) {
+    // Labels changed (a language switch): keep our name current.
+    el.setAttribute('aria-label', label);
+  } else if (!scrolls && ours) releaseScrollRegion(el);
+}
+
+function claimScrollRegion(el: HTMLElement, label: string) {
+  el.setAttribute('data-prose-scroll', '');
+  el.setAttribute('tabindex', '0');
+  const isTable = el.tagName === 'TABLE';
+  if (!isTable && !el.hasAttribute('role')) {
+    el.setAttribute('role', 'region');
+    el.setAttribute('data-prose-role', '');
+  }
+  const named = el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby');
+  if (!named && !(isTable && el.querySelector('caption'))) {
+    el.setAttribute('aria-label', label);
+    el.setAttribute('data-prose-label', '');
+  }
+}
+
+function releaseScrollRegion(el: HTMLElement) {
+  el.removeAttribute('data-prose-scroll');
+  el.removeAttribute('tabindex');
+  for (const [marker, attr] of [
+    ['data-prose-role', 'role'],
+    ['data-prose-label', 'aria-label'],
+  ] as const) {
+    if (el.hasAttribute(marker)) {
+      el.removeAttribute(attr);
+      el.removeAttribute(marker);
+    }
+  }
 }
 
 /**
@@ -193,9 +250,11 @@ interface ProseProps
  * with the measure bounded.
  */
 const Prose = React.forwardRef<HTMLElement, ProseProps>(
-  ({ className, variant, width, as, children, ...props }, ref) => {
+  ({ className, variant, width, as, labels, children, ...props }, ref) => {
     const Tag = (as ?? 'article') as React.ElementType;
     const localRef = React.useRef<HTMLElement | null>(null);
+    const tableLabel = labels?.table ?? DEFAULT_PROSE_LABELS.table;
+    const codeLabel = labels?.code ?? DEFAULT_PROSE_LABELS.code;
 
     /**
      * axe `scrollable-region-focusable`: a `<pre>` or `<table>` that actually
@@ -206,7 +265,8 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
      *
      * A region we make focusable also needs a name, or a screen reader
      * announces an unnamed stop. A table is named by its `<caption>`; without
-     * one, or on a `<pre>`, we add a short label. Anything the author set
+     * one, or on a `<pre>`, we add a short label (`labels`, English by
+     * default). Anything the author set
      * (`tabindex`, `aria-label`, `aria-labelledby`, `role`) wins and is never
      * touched. What we add is marked `data-prose-scroll` so we can take it
      * back when the element stops overflowing.
@@ -219,34 +279,7 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
       if (!root) return;
       const sync = () => {
         for (const el of root.querySelectorAll<HTMLElement>('pre, table')) {
-          const ours = el.hasAttribute('data-prose-scroll');
-          if (!ours && el.hasAttribute('tabindex')) continue;
-          const scrolls = el.scrollWidth > el.clientWidth + 1;
-          if (scrolls && !ours) {
-            el.setAttribute('data-prose-scroll', '');
-            el.setAttribute('tabindex', '0');
-            const named = el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby');
-            const isTable = el.tagName === 'TABLE';
-            if (!isTable && !el.hasAttribute('role')) {
-              el.setAttribute('role', 'region');
-              el.setAttribute('data-prose-role', '');
-            }
-            if (!named && !(isTable && el.querySelector('caption'))) {
-              el.setAttribute('aria-label', isTable ? 'Table, scrolls sideways' : 'Code, scrolls sideways');
-              el.setAttribute('data-prose-label', '');
-            }
-          } else if (!scrolls && ours) {
-            el.removeAttribute('data-prose-scroll');
-            el.removeAttribute('tabindex');
-            if (el.hasAttribute('data-prose-role')) {
-              el.removeAttribute('role');
-              el.removeAttribute('data-prose-role');
-            }
-            if (el.hasAttribute('data-prose-label')) {
-              el.removeAttribute('aria-label');
-              el.removeAttribute('data-prose-label');
-            }
-          }
+          syncScrollRegion(el, el.tagName === 'TABLE' ? tableLabel : codeLabel);
         }
       };
       sync();
@@ -254,7 +287,7 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
       const ro = new ResizeObserver(sync);
       ro.observe(root);
       return () => ro.disconnect();
-    }, [children]);
+    }, [children, tableLabel, codeLabel]);
 
     const setRef = React.useCallback(
       (node: HTMLElement | null) => {
@@ -283,4 +316,4 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
 Prose.displayName = 'Prose';
 
 export { Prose, proseVariants };
-export type { ProseProps };
+export type { ProseLabels, ProseProps };

@@ -151,6 +151,27 @@ describe('Prose scrolling regions', () => {
     expect(disconnect).toHaveBeenCalled();
   });
 
+  it('names blocks in the language given by labels, and follows a change', () => {
+    fakeWidths(() => 900);
+    const { container, rerender } = render(
+      <Prose labels={{ table: 'Tableau, défile', code: 'Code, défile' }}>
+        <Content />
+      </Prose>,
+    );
+    const [pre, plain] = [...container.querySelectorAll<HTMLElement>('pre, table')];
+    expect(pre!.getAttribute('aria-label')).toBe('Code, défile');
+    expect(plain!.getAttribute('aria-label')).toBe('Tableau, défile');
+
+    // A partial set keeps the English default for the rest.
+    rerender(
+      <Prose labels={{ table: 'טבלה, נגללת לצד' }}>
+        <Content />
+      </Prose>,
+    );
+    expect(pre!.getAttribute('aria-label')).toBe('Code, scrolls sideways');
+    expect(plain!.getAttribute('aria-label')).toBe('טבלה, נגללת לצד');
+  });
+
   it('keeps an author role and label on an overflowing pre', () => {
     fakeWidths(() => 900);
     const { container } = render(

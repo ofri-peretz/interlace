@@ -540,6 +540,17 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
+          "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/prose-labels.md"
+        },
+        {
           "summary": "New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an \"On this page\" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.",
           "components": [
             "reading-layout"
