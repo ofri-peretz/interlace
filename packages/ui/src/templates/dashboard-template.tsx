@@ -53,7 +53,7 @@ function DashboardTemplate({
 
       <div className="flex flex-1">
         <aside
-          className="border-border bg-card hidden w-60 shrink-0 border-r md:block"
+          className="border-border bg-card hidden w-60 shrink-0 border-e md:block"
           aria-label="Primary navigation"
         >
           <SectionBoundary name="dashboard-sidebar" skeletonVariant="card">
@@ -114,7 +114,7 @@ function DashboardTemplateSkeleton({
         label={null}
       />
       <div className="flex flex-1">
-        <div className="border-border hidden w-60 shrink-0 border-r p-6 md:block">
+        <div className="border-border hidden w-60 shrink-0 border-e p-6 md:block">
           <Skeleton variant="text" count={6} label={null} />
         </div>
         <div className="flex-1 px-10 py-10">

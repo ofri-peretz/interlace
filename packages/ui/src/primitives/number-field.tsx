@@ -113,7 +113,7 @@ const NumberFieldIncrement = React.forwardRef<
     ref={ref}
     data-slot="number-field-increment"
     className={cn(
-      'border-input hover:bg-muted active:bg-accent flex w-control cursor-pointer items-center justify-center border-l text-sm transition-colors',
+      'border-input hover:bg-muted active:bg-accent flex w-control cursor-pointer items-center justify-center border-s text-sm transition-colors',
       'disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}
@@ -130,7 +130,7 @@ const NumberFieldDecrement = React.forwardRef<
     ref={ref}
     data-slot="number-field-decrement"
     className={cn(
-      'border-input hover:bg-muted active:bg-accent flex w-control cursor-pointer items-center justify-center border-r text-sm transition-colors',
+      'border-input hover:bg-muted active:bg-accent flex w-control cursor-pointer items-center justify-center border-e text-sm transition-colors',
       'disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}

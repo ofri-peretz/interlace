@@ -69,7 +69,7 @@ export const SkipLink = React.forwardRef<HTMLAnchorElement, SkipLinkProps>(
         'sr-only',
         // Pop into view when focus-visible. Top-left corner, above sticky
         // headers (`z-50`), with the DS focus ring contract.
-        'focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-50',
+        'focus-visible:not-sr-only focus-visible:fixed focus-visible:start-4 focus-visible:top-4 focus-visible:z-50',
         'focus-visible:rounded-lg focus-visible:border focus-visible:border-border',
         'focus-visible:bg-background focus-visible:px-4 focus-visible:py-2',
         'focus-visible:text-sm focus-visible:font-medium focus-visible:text-foreground',
