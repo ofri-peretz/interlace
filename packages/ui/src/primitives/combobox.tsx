@@ -314,7 +314,7 @@ function ComboboxContent({
             'origin-(--transform-origin)',
             'data-starting-style:scale-95 data-starting-style:opacity-0',
             'data-ending-style:scale-95 data-ending-style:opacity-0',
-            'transition-[opacity,scale] duration-150',
+            'transition-[opacity,scale] duration-(--duration-base) ease-enter',
             popupClassName,
           )}
         >
@@ -349,7 +349,7 @@ function ComboboxItem({
       className={cn(
         // 36px tall (py-2 + text-sm line box) — over the 24px floor of
         // SC 2.5.8 at the 320px viewport.
-        'text-popover-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2 pe-8 ps-3 text-sm transition-colors duration-150 outline-hidden select-none',
+        'text-popover-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2 pe-8 ps-3 text-sm transition-colors duration-(--duration-fast) outline-hidden select-none',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-selected:bg-primary data-selected:text-primary-foreground data-selected:font-medium',
         'data-disabled:pointer-events-none data-disabled:opacity-50',

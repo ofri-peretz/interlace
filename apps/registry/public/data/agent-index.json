@@ -5484,7 +5484,7 @@
         ],
         "aria": [],
         "motion": {
-          "driver": "css",
+          "driver": "none",
           "declaresPreference": true,
           "stylesheetCannotReach": false
         },
@@ -6700,7 +6700,7 @@
         ],
         "aria": [],
         "motion": {
-          "driver": "css",
+          "driver": "none",
           "declaresPreference": false,
           "stylesheetCannotReach": false
         },

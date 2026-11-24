@@ -124,7 +124,7 @@ function FocusGridItem({
   return (
     <li
       data-slot="focus-grid-item"
-      className="motion-safe:transition-[opacity,filter,transform] motion-safe:duration-300 transition-opacity"
+      className="motion-safe:transition-[opacity,filter,transform] motion-safe:duration-(--duration-medium) transition-opacity"
     >
       <article
         className={cn(

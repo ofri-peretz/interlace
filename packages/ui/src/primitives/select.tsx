@@ -156,7 +156,7 @@ function SelectContent({
             'origin-(--transform-origin)',
             'data-starting-style:opacity-0 data-starting-style:scale-95',
             'data-ending-style:opacity-0 data-ending-style:scale-95',
-            'transition-[opacity,scale] duration-150',
+            'transition-[opacity,scale] duration-(--duration-base) ease-enter',
             'p-1',
             popupClassName,
           )}

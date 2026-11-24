@@ -316,7 +316,7 @@ function CommandPaletteItem({
       className={cn(
         // 40px tall — over the 24px floor of SC 2.5.8, and comfortable for a
         // surface the user drives at speed.
-        'text-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl px-3 py-2.5 text-sm transition-colors duration-150 outline-hidden select-none',
+        'text-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl px-3 py-2.5 text-sm transition-colors duration-(--duration-fast) outline-hidden select-none',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",

@@ -316,7 +316,7 @@ export function SocialSignIn({
         data-min-viewport={String(MIN_VIEWPORT)}
         className={cn(
           'bg-muted/50 border-border flex flex-col gap-2 rounded-xl border p-5 text-sm',
-          'motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-1 motion-safe:duration-300',
+          'motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-1 motion-safe:duration-(--duration-medium)',
           className,
         )}
       >

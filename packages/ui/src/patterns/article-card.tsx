@@ -571,7 +571,7 @@ function CoverImage({
         // `motion-safe:` on the SCALE, not on the transition. The transition
         // is inert once nothing transforms, and gating the transform is what
         // survives the à-la-carte import path — see the file header.
-        'h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-105',
+        'h-full w-full object-cover object-center transition-transform duration-(--duration-slow) ease-move motion-safe:group-hover:scale-105',
         className,
       ),
     };
