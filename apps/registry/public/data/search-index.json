@@ -1780,7 +1780,7 @@
     "lighter": 1,
     "lightest": 1,
     "lighthous": 2,
-    "like": 30,
+    "like": 31,
     "likewis": 1,
     "limit": 5,
     "linear": 9,
@@ -1913,7 +1913,7 @@
     "minifi": 1,
     "minimal": 3,
     "minimiz": 2,
-    "minimum": 31,
+    "minimum": 32,
     "minplayer": 1,
     "minus": 22,
     "minut": 6,
@@ -1977,7 +1977,7 @@
     "nearby": 1,
     "nearest": 10,
     "nearestslot": 7,
-    "negativ": 20,
+    "negativ": 21,
     "neighbour": 11,
     "neither": 15,
     "nest": 11,
@@ -3304,7 +3304,7 @@
     "yield": 11,
     "yyyy": 14,
     "zebra": 1,
-    "zero": 88,
+    "zero": 89,
     "zier": 1,
     "zone": 9,
     "zoom": 4
@@ -3988,7 +3988,7 @@
         "util",
         "foundation"
       ],
-      "terms": "name merg utility foundation util server rsc font size text medium lost structur compatibl configuration deterministical forgotten possibl theoretical twmerg worst collid helper progresslabel progressvalu toastdescription toasttitl delet generat sync color colour alia codeblock eight gone pre whenever test lose agre tailwind shipp scal present list variant tell apart least assert failur typography foreground entir silent look alon lock error like mode head tone"
+      "terms": "name merg utility foundation util server rsc font size text medium lost structur compatibl configuration deterministical forgotten possibl theoretical twmerg worst collid helper progresslabel progressvalu toastdescription toasttitl delet generat sync color colour alia codeblock eight gone pre whenever test lose agre tailwind shipp scal present list variant tell apart least assert failur typography foreground entir silent look alon lock error mode like head tone"
     },
     {
       "name": "code-block",
@@ -4124,7 +4124,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "container foundation primitiv server rsc keyboard base render size userender width wide pros directiv four layout full mapp padd ble edge 80rem accumulat containervariant hoc namespac contract section band 42rem 64rem flagg heavy oversight retir spac plus horizontal 65ch codebas usemergedref userenderel lock safe content philosophy fail max 2xl data zero breakpoint broken defin guard retun together nam chosen shadow tailwind call name rather"
+      "terms": "container foundation primitiv server rsc keyboard base render size userender width wide pros directiv four layout full mapp padd ble edge 80rem accumulat containervariant hoc namespac contract section band 42rem 64rem flagg heavy oversight retir spac plus horizontal 65ch codebas usemergedref userenderel lock safe content philosophy fail max 2xl data breakpoint broken defin guard retun together zero nam chosen shadow tailwind call name rather"
     },
     {
       "name": "context-menu",
@@ -4359,7 +4359,7 @@
         "chart",
         "data"
       ],
-      "terms": "delta data chart server rsc responsiv min viewport 320 stat publish releas action normal invers flat annotation kind sery bin axis domain distribution day sentenc point rather unit band measur bar null plot centr last sweep svg number slot across user several every observ tick chang observation peak zero seriestabl degre path label languag scal end arc good percentag direction read baselin dens radius"
+      "terms": "delta data chart server rsc responsiv min viewport 320 stat publish releas action normal invers flat annotation kind sery bin axis domain distribution day sentenc point rather unit band measur bar null plot centr last sweep svg number slot across user several every observ tick chang observation peak seriestabl zero degre path label languag scal end arc good percentag direction read baselin dens radius"
     },
     {
       "name": "dialog",
@@ -4456,7 +4456,7 @@
         "chart",
         "data"
       ],
-      "terms": "distribution data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind bin sery axis day referenc bar domain readout plot unit label svg measur peak timesery point sentenc rather tabl quantity across slot band every user seriestabl last null reader shar sort awak read centr hour observ zero empty sweep scal first gap path several unmeasur drawn"
+      "terms": "distribution data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind bin sery axis day referenc bar domain readout plot unit label svg measur peak timesery point sentenc rather tabl quantity across slot band every user seriestabl last null reader shar sort awak read centr hour observ empty zero sweep scal first gap path several unmeasur drawn"
     },
     {
       "name": "docs-page-template",
@@ -5307,7 +5307,7 @@
         "chart",
         "data"
       ],
-      "terms": "metric tabl data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind metrictabl sery bin axis domain distribution day row rather plot measur point across band bar several centr null date sweep svg sentenc select every unit last slot user observ roic first tick observation peak zero seriestabl degre path languag reader number scal end arc sparklin"
+      "terms": "metric tabl data chart client load skeleton responsiv min viewport 320 keyboard stat publish releas action flat annotation kind metrictabl sery bin axis domain distribution day row rather plot measur point across band bar several centr null date sweep svg sentenc select every unit last slot user observ roic first tick observation peak seriestabl zero degre path languag reader number scal end arc sparklin"
     },
     {
       "name": "multi-step-form",
@@ -5673,7 +5673,7 @@
         "chart",
         "data"
       ],
-      "terms": "radial weav data chart server rsc load skeleton stat publish releas action flat annotation kind radialweav sery bin axis domain plot distribution timesery dial day centr point sweep rather sentenc band measur bar shar observation null scal seriestabl svg unit last across user several every slot observ tick peak label gap inspection degre path languag number end zero arc box first draw around baselin"
+      "terms": "radial weav data chart server rsc load skeleton stat publish releas action flat annotation kind radialweav sery bin axis domain plot distribution timesery dial day centr point sweep rather sentenc band measur bar shar observation null scal seriestabl svg unit last across user several every slot observ tick peak label gap inspection degre path languag number end arc zero box first draw around baselin"
     },
     {
       "name": "radio-group",
@@ -6188,7 +6188,7 @@
         "chart",
         "data"
       ],
-      "terms": "shar chart data client load skeleton responsiv min viewport 320 stat stack diverg sharechart category row side legend bar total end seg start pole neutral sum straddl tabl scal order print every zero activity depart lighter sharelayout 100 answer sentenc given widest label percentag slot budget survey compar svg figur showtabl strong sit entry name middl split glanc exclud run figcaption toward cut hue"
+      "terms": "shar chart data client load skeleton responsiv min viewport 320 stat stack diverg sharechart category row side legend bar total end seg start pole neutral sum straddl tabl scal order print every activity depart lighter sharelayout zero 100 answer sentenc given widest label percentag slot budget survey compar svg figur showtabl strong sit entry name middl split glanc exclud run figcaption toward cut hue"
     },
     {
       "name": "share-image",
@@ -6209,7 +6209,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "shar imag market pattern server rsc stat squar neutral size shareimag arabic satori letter left word right 1200 imagerespons evidenc titl kicker renderer description bidi hebrew imessag whatsapp revers plann draw big algorithm themefromcss visualrtllin font var foot bar order run facebook noto face box linkedin oklch slack text cut strong kept 630 bracket breaklin latin opengraph planword unfurl number character largest wide selector"
+      "terms": "shar imag market pattern server rsc stat squar neutral size shareimag arabic satori letter left word right 1200 imagerespons evidenc titl kicker renderer description bidi hebrew imessag whatsapp revers draw plann big algorithm themefromcss visualrtllin font var foot bar order run facebook noto face box linkedin oklch slack text cut strong kept 630 bracket breaklin latin opengraph planword unfurl character largest wide selector piec"
     },
     {
       "name": "sheen-text",
@@ -6551,7 +6551,7 @@
         "chart",
         "data"
       ],
-      "terms": "sparklin data chart server rsc load skeleton responsiv min viewport 320 stat publish releas action flat annotation kind sery bin axis domain distribution day point svg rather sentenc band measur bar plot unit metrictabl trend centr null sweep row number last slot across languag user packag several label every observ tick end observation peak seriesscal read zero seriestabl metric degre never path scal arc"
+      "terms": "sparklin data chart server rsc load skeleton responsiv min viewport 320 stat publish releas action flat annotation kind sery bin axis domain distribution day point svg rather sentenc band measur bar plot unit metrictabl trend centr null sweep row number last slot across languag user packag several label every observ tick end observation peak seriesscal read seriestabl zero metric degre never path scal arc"
     },
     {
       "name": "spinner",
@@ -7494,7 +7494,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "typography foundation primitiv server rsc variant clamp tone semantic body natural mui truncation 400 orthogonal mode static reactnod distinction weight map text encod outlin variabl body1 typographyvariant variantprop docu r11 raw 700 correctness lineclamp pig read scal caption plus visual singl non ele like philosophy 500 900 ellipsis intentional overrid 600 awar level render long built token contract bridg differ ladder palett form data"
+      "terms": "typography foundation primitiv server rsc variant clamp tone semantic body natural mui truncation 400 orthogonal mode static reactnod distinction weight map text encod outlin variabl body1 typographyvariant variantprop docu r11 raw 700 correctness lineclamp pig read scal caption plus visual singl non ele philosophy like 500 900 ellipsis intentional overrid 600 awar level render long built token contract bridg differ ladder palett form data"
     },
     {
       "name": "use-reading-prefs",

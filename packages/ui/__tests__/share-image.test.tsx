@@ -291,6 +291,21 @@ describe('ShareImage', () => {
     expect(out).not.toContain('beside the title<');
   });
 
+  it('draws negative bar values as zero', () => {
+    const out = html(
+      <ShareImage
+        size="square"
+        title="T"
+        bars={[
+          { label: 'A', value: -5 },
+          { label: 'B', value: -2 },
+        ]}
+      />,
+    );
+    expect(out).toContain('width:2%');
+    expect(out).toContain('>-5<');
+  });
+
   it('lets a drawing win over a stat, and ignores empty bars', () => {
     const out = html(<ShareImage title="T" visual={<i>drawn</i>} stat={{ value: '1', label: 'x' }} />);
     expect(out).toContain('<i>drawn</i>');

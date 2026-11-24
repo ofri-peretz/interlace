@@ -89,7 +89,7 @@ import {
 
 export interface ShareImageBar {
   label: string;
-  /** Any number: bars are scaled to the largest. */
+  /** Zero or more: bars are scaled to the largest, and a negative value draws like zero, at the minimum width. */
   value: number;
   /** What is printed at the bar's end; defaults to the value. */
   display?: string;
@@ -136,9 +136,9 @@ function Words({ text, rtl, width, style }: { text: string; rtl: boolean; width:
   const fontSize = Number(style.fontSize);
   return (
     <div style={{ ...style, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-      {breakLines(text, fontSize, width).map((line, i) => (
-        <div key={`${i}-${line}`} style={{ letterSpacing: 0, textTransform: 'none' }}>
-          {visualRtlLine(line)}
+      {breakLines(text, fontSize, width).map((lineText, i) => (
+        <div key={`${i}-${lineText}`} style={{ letterSpacing: 0, textTransform: 'none' }}>
+          {visualRtlLine(lineText)}
         </div>
       ))}
     </div>
