@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 200
+    "itemCount": 201
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 77,
       "pattern": 54,
-      "effect": 20,
+      "effect": 21,
       "chart": 14,
       "template": 13,
       "game": 10,
@@ -46,12 +46,12 @@
       "data": 30,
       "foundation": 27,
       "form": 24,
-      "effect": 20,
+      "effect": 21,
       "decorative": 18,
       "feedback": 15,
+      "navigation": 14,
       "chart": 14,
       "marketing": 14,
-      "navigation": 13,
       "template": 13,
       "overlay": 10,
       "games": 10,
@@ -63,21 +63,21 @@
     },
     "rendering": {
       "server": 104,
-      "client": 96
+      "client": 97
     },
     "keyboard": {
-      "none": 154,
+      "none": 155,
       "handled": 46
     },
     "loading": {
-      "none": 162,
+      "none": 163,
       "built-in": 38
     },
     "minViewport": {
       "320": 127,
       "480": 7,
       "768": 1,
-      "inherited": 65
+      "inherited": 66
     }
   },
   "items": [
@@ -11365,6 +11365,52 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/use-theme.json",
       "item": "https://ds.interlace.tools/r/use-theme.json",
       "docs": "https://ds.interlace.tools/c/use-theme"
+    },
+    {
+      "name": "view-transition",
+      "title": "View Transition",
+      "type": "registry:ui",
+      "summary": "The browser's View Transitions API, made safe to reach for: a card grows into its detail page, a list reorders in place, and a page change cross-fades instead of blinking. Interlace adds only what the API leaves to every app: a fallback where it is…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/view-transition.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/view-transition.json",
+      "item": "https://ds.interlace.tools/r/view-transition.json",
+      "docs": "https://ds.interlace.tools/c/view-transition"
     },
     {
       "name": "visually-hidden",

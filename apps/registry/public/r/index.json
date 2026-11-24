@@ -1948,6 +1948,24 @@
       }
     },
     {
+      "name": "view-transition",
+      "type": "registry:ui",
+      "title": "View Transition",
+      "description": "The browser's View Transitions API, made safe to reach for: a card grows into its detail page, a list reorders in place, and a page change cross-fades instead of blinking. Interlace adds only what the API leaves to every app: a fallback where it is…",
+      "categories": [
+        "navigation",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "weave-texture",
       "type": "registry:ui",
       "title": "Weave Texture",
