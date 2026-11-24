@@ -50,31 +50,39 @@
  * | R25  | Server component                 | No hooks → no `'use client'`                                |
  */
 
-import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from '../lib/cn.js';
-import { Skeleton } from '../primitives/skeleton.js';
-import { Typography } from '../primitives/typography.js';
+import { cn } from "../lib/cn.js";
+import { Skeleton } from "../primitives/skeleton.js";
+import { Typography } from "../primitives/typography.js";
 
 export const MIN_VIEWPORT = 320 as const;
 
-const statCardVariants = cva(
-  'border-border bg-card text-card-foreground rounded-xl border p-5 flex flex-col gap-2',
-  {
-    variants: {
-      tone: {
-        default: '',
-        success: 'border-success/40',
-        warning: 'border-warning/40',
-        danger: 'border-destructive/40',
-      },
+const statCardVariants = cva("flex flex-col gap-2", {
+  variants: {
+    /**
+     * `card` is a bordered tile for dashboards. `plain` drops the tile for a
+     * hairline rule above the number, so a figure can sit on a page or a brand
+     * band like a line in a report. A plain card takes its colour from where it
+     * sits: on `bg-primary` the number and label are `primary-foreground`.
+     */
+    surface: {
+      card: "border-border bg-card text-card-foreground rounded-xl border p-5",
+      plain: "border-t border-current/25 pt-4",
     },
-    defaultVariants: {
-      tone: 'default',
+    tone: {
+      default: "",
+      success: "border-success/40",
+      warning: "border-warning/40",
+      danger: "border-destructive/40",
     },
   },
-);
+  defaultVariants: {
+    surface: "card",
+    tone: "default",
+  },
+});
 
 // Semantic tokens, NOT raw palette. `text-emerald-600` / `-rose-600` scored
 // 3.65:1 and 4.52:1 on white — failing `color-contrast` (AA, 4.5:1) and
@@ -83,14 +91,17 @@ const statCardVariants = cva(
 // already tuned to clear AAA in BOTH schemes, so it needs no `dark:` variant:
 // the token itself re-resolves under `.dark`. This is what R19 ("tone classes
 // map to semantic tokens") meant all along.
-const deltaToneClass: Record<NonNullable<VariantProps<typeof statCardVariants>['tone']>, string> = {
-  default: 'text-muted-foreground',
-  success: 'text-success',
-  warning: 'text-warning',
-  danger: 'text-destructive',
+const deltaToneClass: Record<
+  NonNullable<VariantProps<typeof statCardVariants>["tone"]>,
+  string
+> = {
+  default: "text-muted-foreground",
+  success: "text-success",
+  warning: "text-warning",
+  danger: "text-destructive",
 };
 
-type StatCardProps = React.ComponentProps<'article'> &
+type StatCardProps = React.ComponentProps<"article"> &
   VariantProps<typeof statCardVariants> & {
     label?: React.ReactNode;
     value?: React.ReactNode;
@@ -107,19 +118,20 @@ type StatCardProps = React.ComponentProps<'article'> &
      * are scanned by label; `value-first` (big number, then what it counts)
      * suits public pages where the number is the headline. @default 'label-first'
      */
-    layout?: 'label-first' | 'value-first';
+    layout?: "label-first" | "value-first";
   };
 
 export function StatCard({
   className,
-  tone = 'default',
+  surface = "card",
+  tone = "default",
   label,
   value,
   delta,
   footnote,
   icon,
   loading,
-  layout = 'label-first',
+  layout = "label-first",
   ...props
 }: StatCardProps) {
   if (loading) {
@@ -131,8 +143,16 @@ export function StatCard({
       />
     );
   }
+  // A plain stat inherits the colour of what it sits on, so its label, icon,
+  // footnote and default delta cannot assume the muted token: muted-foreground
+  // on a brand band fails AA.
+  const plain = surface === "plain";
+  const labelTone = plain ? "default" : "muted";
+  // Without a tile the number is the only thing holding the eye, so it reads a
+  // size up, like a figure set in a report.
+  const valueVariant = plain ? "h1" : "h2";
   const iconNode = icon ? (
-    <span className="text-muted-foreground" aria-hidden>
+    <span className={plain ? undefined : "text-muted-foreground"} aria-hidden>
       {icon}
     </span>
   ) : null;
@@ -141,42 +161,51 @@ export function StatCard({
       data-slot="stat-card"
       data-layout={layout}
       data-tone={tone ?? undefined}
+      data-surface={surface ?? undefined}
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn(statCardVariants({ tone, className }))}
+      className={cn(statCardVariants({ surface, tone, className }))}
       {...props}
     >
-      {layout === 'value-first' ? (
+      {layout === "value-first" ? (
         <>
           <div className="flex items-start justify-between gap-2">
-            <Typography as="div" variant="h2" data-tabular-nums>
+            <Typography as="div" variant={valueVariant} data-tabular-nums>
               {value}
             </Typography>
             {iconNode}
           </div>
-          <Typography variant="ui-sm" tone="muted">
+          <Typography variant="ui-sm" tone={labelTone}>
             {label}
           </Typography>
         </>
       ) : (
         <>
           <div className="flex items-start justify-between gap-2">
-            <Typography variant="ui-sm" tone="muted">
+            <Typography variant="ui-sm" tone={labelTone}>
               {label}
             </Typography>
             {iconNode}
           </div>
-          <Typography as="div" variant="h2" data-tabular-nums>
+          <Typography as="div" variant={valueVariant} data-tabular-nums>
             {value}
           </Typography>
         </>
       )}
       {delta ? (
-        <div className={cn('text-sm font-medium', deltaToneClass[tone ?? 'default'])}>
+        <div
+          className={cn(
+            "text-sm font-medium",
+            // A plain default delta inherits like its label; semantic tones keep their token.
+            plain && (tone ?? "default") === "default"
+              ? undefined
+              : deltaToneClass[tone ?? "default"],
+          )}
+        >
           {delta}
         </div>
       ) : null}
       {footnote ? (
-        <Typography variant="ui-sm" tone="muted">
+        <Typography variant="ui-sm" tone={labelTone}>
           {footnote}
         </Typography>
       ) : null}
