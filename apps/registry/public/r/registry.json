@@ -2794,6 +2794,24 @@
       }
     },
     {
+      "name": "chart-frame",
+      "type": "registry:ui",
+      "title": "Chart Frame",
+      "description": "The frame a published chart sits in: a title that states the finding, a line on what is measured, the chart, and a footer with where the numbers came from and a copy of them to take away. Every chart on a page gets the same frame, so a reader learns once…",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "delta",
       "type": "registry:ui",
       "title": "Delta",
