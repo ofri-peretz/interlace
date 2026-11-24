@@ -7,13 +7,17 @@
 import { act, cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { fireEvent } from '@testing-library/react';
+
 import {
   MIN_VIEWPORT,
+  placeGroups,
   SeatChart,
   SeatChartCompare,
   describeSeats,
   seatLayout,
   type SeatGroup,
+  type SeatSide,
 } from '../src/charts/seat-chart.js';
 
 afterEach(() => {
@@ -85,6 +89,8 @@ describe('describeSeats', () => {
     expect(describeSeats([{ label: 'A', seats: 60 }], 61, 31)).toContain('A holds a majority');
     expect(describeSeats([{ label: 'A', seats: 1 }], 1)).toBe('1 seat. A 1.');
     expect(describeSeats([], 2, 2)).toBe('2 seats. 2 seats vacant. A majority is 2.');
+    // Negative or fractional counts read as the chart draws them.
+    expect(describeSeats([{ label: 'A', seats: -5 }, { label: 'B', seats: 2.7 }], 4)).toBe('4 seats. A 0, B 2. 2 seats vacant.');
   });
 });
 
@@ -112,8 +118,14 @@ describe('SeatChart', () => {
     render(<SeatChart groups={GROUPS} majority={61} />);
     const legend = screen.getAllByRole('list')[0]!;
     const items = within(legend).getAllByRole('listitem');
-    expect(items.map((li) => li.textContent)).toEqual(['Group A32', 'Group B24', 'Group C17', 'Group D12', 'Others35']);
-    expect(screen.getByText('61 for a majority', { exact: false })).toBeTruthy();
+    expect(items.map((li) => li.textContent)).toEqual([
+      'Group A32 seats',
+      'Group B24 seats',
+      'Group C17 seats',
+      'Group D12 seats',
+      'Others35 seats',
+    ]);
+    expect(screen.getByText('61 needed for a majority')).toBeTruthy();
   });
 
   it('keeps a table of groups, seats and shares behind the picture', () => {
@@ -141,6 +153,12 @@ describe('SeatChart', () => {
     expect(container.querySelector('[data-slot="seat-chart-majority"]')).toBeNull();
   });
 
+  it('uses the singular noun for a count of one', () => {
+    render(<SeatChart groups={[{ label: 'A', seats: 1 }]} seatsLabel="mandates" seatLabel="mandate" />);
+    expect(screen.getByText('1 mandate')).toBeTruthy();
+    expect(screen.getByText('mandate', { exact: false, selector: '.sr-only' })).toBeTruthy();
+  });
+
   it('never draws fewer seats than the groups hold', () => {
     const { container } = render(<SeatChart groups={[{ label: 'A', seats: 4 }, { label: 'B', seats: -2 }]} total={2} />);
     expect(container.querySelectorAll('[data-slot="seat-chart-seat"]')).toHaveLength(4);
@@ -150,7 +168,7 @@ describe('SeatChart', () => {
   it('says so when there are no seats, and reserves its box while loading', () => {
     const { container, rerender } = render(<SeatChart groups={[]} />);
     expect(screen.getByText('No seats to show yet.')).toBeTruthy();
-    expect(container.querySelector('[data-slot="seat-chart-empty"]')).not.toBeNull();
+    expect(container.querySelector('[data-slot="seat-chart"][data-state="empty"]')).not.toBeNull();
     rerender(<SeatChart groups={GROUPS} loading />);
     expect(container.querySelector('[data-slot="seat-chart"]')!.getAttribute('data-min-viewport')).toBe('320');
     expect(screen.queryByRole('img')).toBeNull();
@@ -245,12 +263,187 @@ describe('SeatChartCompare', () => {
         <SeatChart groups={GROUPS} label="2026" />
       </SeatChartCompare>,
     );
-    const root = container.querySelector('[data-slot="seat-chart-compare"]')!;
+    const root = screen.getByTestId('c');
+    expect(root.getAttribute('data-slot')).toBe('seat-chart-compare');
     expect(root.className).toContain('@container/compare');
-    expect(screen.getByTestId('c').className).toContain('@2xl/compare:grid-cols-2');
+    const grid = () => container.querySelector('[data-slot="seat-chart-compare-grid"]')!;
+    expect(grid().className).toContain('@2xl/compare:grid-cols-2');
     expect(screen.getAllByRole('figure')).toHaveLength(2);
     rerender(<SeatChartCompare data-testid="c" columns={3} className="mt-4" />);
-    expect(screen.getByTestId('c').className).toContain('@4xl/compare:grid-cols-3');
-    expect(container.querySelector('[data-slot="seat-chart-compare"]')!.className).toContain('mt-4');
+    expect(grid().className).toContain('@4xl/compare:grid-cols-3');
+    expect(screen.getByTestId('c').className).toContain('mt-4');
+  });
+});
+
+const SIDES: SeatSide[] = [
+  { id: 'gov', label: 'Coalition', tone: 3 },
+  { id: 'opp', label: 'Opposition', tone: 1 },
+];
+
+const SIDED: SeatGroup[] = [
+  { label: 'North', seats: 30, side: 'gov' },
+  { label: 'East', seats: 20, side: 'opp' },
+  { label: 'South', seats: 25, side: 'gov' },
+  { label: 'West', seats: 30, side: 'opp' },
+  { label: 'Free', seats: 5 },
+  { label: 'Centre', seats: 10, side: 'gov' },
+];
+
+describe('placeGroups', () => {
+  it('runs the first side from the left, the last from the right, the rest between', () => {
+    const order = placeGroups(SIDED, SIDES).map((g) => g.label);
+    expect(order).toEqual(['North', 'South', 'Centre', 'Free', 'West', 'East']);
+  });
+
+  it('shades each group of a side from that side’s tone, in turn', () => {
+    const placed = placeGroups(SIDED, SIDES);
+    const of = (label: string) => placed.find((g) => g.label === label)!;
+    expect([of('North').tone, of('South').tone, of('Centre').tone]).toEqual([3, 3, 3]);
+    expect([of('North').shade, of('South').shade, of('Centre').shade]).toEqual([0, 1, 2]);
+    expect([of('East').shade, of('West').shade]).toEqual([0, 1]);
+    // No side, no tone: it takes the palette by position.
+    expect(of('Free').tone).toBe(5);
+  });
+
+  it('puts middle sides in their order and groups with no side after them', () => {
+    const three: SeatSide[] = [...SIDES.slice(0, 1), { id: 'mid', label: 'Middle', tone: 2 }, SIDES[1]!];
+    const order = placeGroups(
+      [
+        { label: 'Loose', seats: 1 },
+        { label: 'M', seats: 1, side: 'mid' },
+        { label: 'G', seats: 1, side: 'gov' },
+        { label: 'O', seats: 1, side: 'opp' },
+      ],
+      three,
+    ).map((g) => g.label);
+    expect(order).toEqual(['G', 'M', 'Loose', 'O']);
+    // One side: it starts at the left, the rest follow.
+    expect(placeGroups([{ label: 'X', seats: 1 }, { label: 'Y', seats: 1, side: 'gov' }], SIDES.slice(0, 1)).map((g) => g.label)).toEqual(['Y', 'X']);
+  });
+
+  it('gives a repeated tone its next shade, so neighbours never merge', () => {
+    const placed = placeGroups([
+      { label: 'a', seats: 1, tone: 'neutral' },
+      { label: 'b', seats: 1, tone: 'neutral' },
+      { label: 'c', seats: 1, tone: 2 },
+      { label: 'd', seats: 1 },
+      { label: 'e', seats: 1 },
+      { label: 'f', seats: 1 },
+      { label: 'g', seats: 1 },
+    ]);
+    expect(placed.map((g) => `${g.tone}:${g.shade}`)).toEqual(['neutral:0', 'neutral:1', '2:0', '4:0', '5:0', '1:0', '2:1']);
+  });
+
+  it('gives eleven untoned lists eleven colours: the five hues, then deepened, then neutral', () => {
+    const placed = placeGroups(Array.from({ length: 11 }, (_, i) => ({ label: `L${i}`, seats: 11 - i })));
+    const keys = placed.map((g) => `${g.tone}:${g.shade}`);
+    expect(keys).toEqual(['1:0', '2:0', '3:0', '4:0', '5:0', '1:1', '2:1', '3:1', '4:1', '5:1', 'neutral:0']);
+    expect(new Set(keys).size).toBe(11);
+  });
+});
+
+describe('SeatChart with sides', () => {
+  it('fills the last side from the right, with vacant seats between, and says who is short', () => {
+    const { container } = render(<SeatChart groups={SIDED} sides={SIDES} total={125} majority={63} label="Assembly" />);
+    const seats = Array.from(container.querySelectorAll('[data-slot="seat-chart-seat"]'));
+    expect(seats[0]!.getAttribute('data-group')).toBe('0');
+    expect(seats.at(-1)!.getAttribute('data-group')).toBe('1');
+    expect(seats[70]!.getAttribute('data-group')).toBe('-1');
+    expect(seats[0]!.getAttribute('class')).toContain('fill-chart-3');
+    expect(container.querySelector('[data-group="2"]')!.getAttribute('class')).toContain('var(--chart-3),black_35%');
+
+    const sentence = screen.getByRole('img').getAttribute('aria-label')!;
+    expect(sentence).toContain('Coalition 65: North 30, South 25, Centre 10.');
+    expect(sentence).toContain('No side: Free 5.');
+    expect(sentence).toContain('Coalition holds a majority.');
+    expect(describeSeats(SIDED.slice(0, 2), 120, 61, SIDES)).toContain('The largest side, Coalition, is 31 seats short.');
+  });
+
+  it('shows big totals per side, and a legend headed by side', () => {
+    const { container } = render(<SeatChart groups={SIDED} sides={SIDES} majority={61} majorityLabel="61 to govern" />);
+    const tally = container.querySelector('[data-slot="seat-chart-tally"]')!;
+    expect(tally.textContent).toBe('Coalition65Opposition50');
+    const legend = container.querySelector('[data-slot="seat-chart-legend"]')!;
+    expect(legend.textContent).toContain('Coalition 65');
+    expect(legend.textContent).toContain('No side');
+    expect(screen.getByText('61 to govern')).toBeTruthy();
+    expect(within(screen.getByRole('table')).getAllByRole('columnheader').map((h) => h.textContent)).toEqual([
+      'Group',
+      'Side',
+      'Seats',
+      'Share',
+    ]);
+    expect(within(screen.getByRole('table')).getByText('—')).toBeTruthy();
+  });
+
+  it('can show the two leading groups instead, or no totals', () => {
+    const { container, rerender } = render(<SeatChart groups={GROUPS} tally="leaders" total={130} />);
+    expect(container.querySelector('[data-slot="seat-chart-tally"]')!.textContent).toBe('Group A32Others35');
+    rerender(<SeatChart groups={SIDED} sides={SIDES} tally="none" total={130} />);
+    expect(container.querySelector('[data-slot="seat-chart-tally"]')).toBeNull();
+    expect(screen.getAllByText('Vacant').length).toBeGreaterThan(0);
+  });
+
+  it('centres the total of a middle side between the outer two', () => {
+    const three: SeatSide[] = [SIDES[0]!, { id: 'mid', label: 'Middle', tone: 'neutral' }, SIDES[1]!];
+    const { container } = render(
+      <SeatChart
+        groups={[...SIDED.slice(0, 4), { label: 'Swing', seats: 8, side: 'mid' }]}
+        sides={three}
+      />,
+    );
+    const columns = container.querySelectorAll('[data-slot="seat-chart-tally"] > div');
+    expect(Array.from(columns).map((c) => c.className.match(/items-(start|center|end)/)![1])).toEqual(['start', 'center', 'end']);
+  });
+
+  it('lists a side with no groups as holding none', () => {
+    const sides: SeatSide[] = [...SIDES, { id: 'x', label: 'Empty', tone: 'neutral' }];
+    expect(describeSeats(SIDED, 120, undefined, sides)).toContain('Empty 0.');
+  });
+});
+
+describe('SeatChart highlight', () => {
+  it('dims the other groups and shows the count while a legend entry is hovered or focused', () => {
+    const { container } = render(<SeatChart groups={GROUPS} majority={61} />);
+    const entry = screen.getByRole('button', { name: /Group B/ });
+    fireEvent.pointerEnter(entry);
+    expect(container.querySelector('[data-group="0"]')!.getAttribute('class')).toContain('opacity-20');
+    expect(container.querySelector('[data-group="1"]')!.getAttribute('class')).not.toContain('opacity-20');
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('24');
+    expect(screen.getByText('Group B: 24 seats, 20%')).toBeTruthy();
+    fireEvent.pointerLeave(entry);
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('120');
+
+    fireEvent.focus(entry);
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('24');
+    fireEvent.blur(entry);
+    expect(screen.getByText('61 needed for a majority')).toBeTruthy();
+  });
+
+  it('pins a group on click, and lets go on a second click', () => {
+    const { container } = render(<SeatChart groups={GROUPS} />);
+    const entry = screen.getByRole('button', { name: /Group C/ });
+    fireEvent.click(entry);
+    expect(entry.getAttribute('aria-pressed')).toBe('true');
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('17');
+    fireEvent.click(entry);
+    expect(entry.getAttribute('aria-pressed')).toBe('false');
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('120');
+  });
+
+  it('follows the pointer across the seats', () => {
+    const { container } = render(<SeatChart groups={[{ label: 'A', seats: 3 }]} total={5} />);
+    const svg = screen.getByRole('img');
+    fireEvent.pointerMove(container.querySelector('[data-group="0"]')!);
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('3');
+    fireEvent.pointerMove(container.querySelector('[data-group="-1"]')!);
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('5');
+    fireEvent.pointerMove(container.querySelector('[data-group="0"]')!);
+    fireEvent.pointerMove(svg);
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('5');
+    fireEvent.pointerMove(container.querySelector('[data-group="0"]')!);
+    fireEvent.pointerLeave(svg);
+    expect(container.querySelector('[data-slot="seat-chart-total"]')!.textContent).toBe('5');
+    expect(screen.getByText('5 seats')).toBeTruthy();
   });
 });

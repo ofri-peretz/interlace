@@ -2887,7 +2887,7 @@
       "name": "seat-chart",
       "type": "registry:ui",
       "title": "Seat Chart",
-      "description": "How an assembly divides its seats: a half-circle of dots, one per seat, filled group by group from left to right. It answers the question a results table cannot answer at a glance: who holds the room, and how far the largest group is from a majority.",
+      "description": "How an assembly divides its seats: a half-circle of dots, one per seat, filled group by group. It answers the question a results table cannot answer at a glance: who holds the room, and how far each side is from a majority.",
       "categories": [
         "data",
         "chart"

@@ -540,9 +540,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Radial Weave](https://ds.interlace.tools/c/radial-weave): The same series `TimeSeries` plots, wrapped around a dial — the POSTER form: identity and shape, composed to be looked at and shared.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/radial-weave.json`
   - contract: server, loading state, states publish|release|action, v2.0.0
-- [Seat Chart](https://ds.interlace.tools/c/seat-chart): How an assembly divides its seats: a half-circle of dots, one per seat, filled group by group from left to right. It answers the question a results table cannot answer at a glance: who holds the room, and how far the largest group is from a majority.
+- [Seat Chart](https://ds.interlace.tools/c/seat-chart): How an assembly divides its seats: a half-circle of dots, one per seat, filled group by group. It answers the question a results table cannot answer at a glance: who holds the room, and how far each side is from a majority.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/seat-chart.json`
-  - contract: client, min 320px, loading state, v1.0.0
+  - contract: client, min 320px, loading state, states none|sides|leaders, v1.0.0
 - [Series Table](https://ds.interlace.tools/c/series-table): The data behind a chart, as a real `<table>`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/series-table.json`
   - contract: server, min 320px, states publish|release|action, v1.2.0

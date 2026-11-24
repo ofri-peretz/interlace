@@ -4,29 +4,49 @@
  * @interlace/ui — SeatChart
  *
  * How an assembly divides its seats: a half-circle of dots, one per seat,
- * filled group by group from left to right. It answers the question a
- * results table cannot answer at a glance: who holds the room, and how far
- * the largest group is from a majority.
+ * filled group by group. It answers the question a results table cannot
+ * answer at a glance: who holds the room, and how far each side is from a
+ * majority.
  *
  * ## The layout
  *
  * Seats sit on concentric rows of the half-circle with one pitch for every
  * row, so seats are evenly spaced along each arc and between arcs. The row
  * count is the smallest that holds the total; each row takes a share of the
- * seats in proportion to its length. All seats are then ordered by angle,
- * left to right, and handed to the groups in the order given. So each group
- * is a wedge, and the seat at the top centre is the one a majority must
- * reach. `seatLayout()` is exported and pure, so the geometry is tested on
- * its own.
+ * seats in proportion to its length. All seats are then ordered by angle and
+ * handed to the groups in turn, so each group is a wedge, and the seat at the
+ * top centre is the one a majority must reach. `seatLayout()` is exported
+ * and pure, so the geometry is tested on its own.
+ *
+ * ## Sides
+ *
+ * Pass `sides` (government and opposition, say; they are only labelled
+ * props) and give each group a `side`. Each side has one tone, and every
+ * group in it takes a distinguishable shade of that tone, so the split reads
+ * in colour first and the groups inside it second. The first side fills from
+ * the left end, the last from the right end, and anything else sits between
+ * them, next to the majority mark. Big totals for each side sit above the
+ * arc (`tally`). Without sides, each group has its own colour: the five
+ * chart hues in order, then the same hues deepened, then neutral; a tone used
+ * twice gets its next shade, so neighbours never merge. There are five
+ * shades per tone: a sixth group on one side starts the shades again, so
+ * split a side that large across two tones, or rely on the legend counts.
  *
  * ## Colour is never the only channel
  *
- * The legend prints every group's count next to its name, in the same order
- * as the wedges. The SVG is one `role="img"` with a sentence that names the
- * total, each group and the majority. A table of groups, seats and shares
- * sits behind the picture (`showTable` shows it). Tones are the chart
- * palette (`chart-1..5`) plus `neutral`; a seat that no group holds is drawn
- * as an outline and counted as vacant.
+ * The legend prints every count beside its name, by side. The SVG is one
+ * `role="img"` with a sentence that names the total, every side and group,
+ * and who is how far from a majority. A table of groups, sides, seats and
+ * shares sits behind the picture (`showTable` shows it). Seats no group
+ * holds are drawn as outlines and counted as vacant. Every shade keeps 3:1
+ * against the page in light and dark.
+ *
+ * ## Pointing at a group
+ *
+ * Hovering a seat or a legend entry, or focusing a legend entry, dims every
+ * other group and puts that group's count in the middle of the arc. A click
+ * on a legend entry pins it (`aria-pressed`); a second click lets go. The
+ * dimming is a colour change, instant under reduced motion.
  *
  * ## Motion
  *
@@ -37,10 +57,10 @@
  *
  * ## Container, not viewport
  *
- * The SVG scales to its box up to 36rem, the numbers are HTML, and the
- * legend fills as many 11–14rem columns as the chart's own width holds. `SeatChartCompare`
- * sets two or three charts side by side once its own box is wide enough for
- * them, and stacks them otherwise.
+ * The SVG scales to its box up to 36rem, the numbers are HTML sized against
+ * the chart's own width, and the legend fills as many 11–14rem columns as
+ * that width holds. `SeatChartCompare` sets two or three charts side by side
+ * once its own box is wide enough for them, and stacks them otherwise.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -48,6 +68,7 @@
  *
  *   <figure data-slot="seat-chart" data-min-viewport="320">
  *     <figcaption>{label}</figcaption>
+ *     <div data-slot="seat-chart-tally" />                       (big side totals)
  *     <div data-slot="seat-chart-plot">
  *       <svg role="img" aria-label="{summary}">
  *         <circle data-slot="seat-chart-seat" data-group="0" /> × total
@@ -55,8 +76,8 @@
  *       </svg>
  *       <p data-slot="seat-chart-total" aria-hidden />          (the number in the hollow)
  *     </div>
- *     <p data-slot="seat-chart-readout" />                       (seats, majority)
- *     <ul data-slot="seat-chart-legend"> <li /> × groups </ul>
+ *     <p data-slot="seat-chart-readout" />                       (majority caption)
+ *     <div data-slot="seat-chart-legend"> <button aria-pressed /> × groups </div>
  *     <table data-slot="seat-chart-table" />                     (sr-only unless showTable)
  *   </figure>
  *
@@ -65,13 +86,13 @@
  * | R4   | Extends native el          | `React.ComponentProps<'figure'>`                           |
  * | R6   | data-slot on every part    | `seat-chart` / `-plot` / `-seat` / `-legend` / `-table`     |
  * | R7   | className merged + ...rest | `cn(...)` + `{...props}`                                   |
- * | R8   | Enums, not booleans        | `tone: 1..5 \| 'neutral'`                                  |
+ * | R8   | Enums, not booleans        | `tone`, `tally: 'none' \| 'sides' \| 'leaders'`             |
  * | R13  | Ecosystem first            | no charting dep: `seatLayout` + SVG                        |
  * | R14  | Declares min viewport      | `data-min-viewport={String(MIN_VIEWPORT)}`                 |
  * | R18  | Tailwind only              | zero inline `style`; the reveal runs on WAAPI              |
- * | R19  | Tokens only                | `fill-chart-1..5`, `fill-muted-foreground`, `stroke-foreground` |
+ * | R19  | Tokens only                | `--chart-1..5`, `--muted-foreground`, mixed with `--foreground` |
  * | R23  | Loading reserves its box   | `loading` → `<Skeleton variant="chart">`                   |
- * | R25  | Client component           | the first-view reveal runs in the browser                  |
+ * | R25  | Client component           | the reveal and the highlight run in the browser            |
  * | R26  | A11y                       | `role="img"` + sentence + counts in the legend + table     |
  */
 
@@ -85,26 +106,80 @@ export const MIN_VIEWPORT = 320 as const;
 
 export type SeatTone = 1 | 2 | 3 | 4 | 5 | 'neutral';
 
+export type SeatSide = {
+  /** What groups name in their `side`. */
+  id: string;
+  /** The side's name, such as "Coalition". */
+  label: string;
+  /** The tone family every group on this side is a shade of. */
+  tone: SeatTone;
+};
+
 export type SeatGroup = {
   /** The group's name, as the legend and the table print it. */
   label: string;
   /** Seats it holds. */
   seats: number;
-  /** Its colour: a chart palette slot or neutral. @default the next of 1..5 in order */
+  /** The `id` of the side it sits with. */
+  side?: string;
+  /** Its colour. On a side, the side's tone is the default. @default the next of 1..5, then the same hues deepened, then neutral */
   tone?: SeatTone;
 };
 
-const TONE_FILL: Record<SeatTone, string> = {
-  1: 'fill-chart-1',
-  2: 'fill-chart-2',
-  3: 'fill-chart-3',
-  4: 'fill-chart-4',
-  5: 'fill-chart-5',
-  neutral: 'fill-muted-foreground',
-};
+export type SeatTally = 'none' | 'sides' | 'leaders';
 
-const toneOf = (group: SeatGroup, index: number): SeatTone =>
-  group.tone ?? (((index % 5) + 1) as SeatTone);
+/**
+ * Five shades per tone, in the order groups take them. Shade 0 is the token;
+ * shade 1 is it deepened by a third, which stays far from the token in both
+ * schemes; shade 2 leans 22% toward the page; shades 3 and 4 grey it toward
+ * the muted text and pull it toward the text colour, and sit closer to the
+ * others, so they come last. Each keeps 3:1 against the page in the default
+ * light and dark themes. Written out in full so Tailwind sees every class.
+ */
+const SHADES: Record<SeatTone, readonly string[]> = {
+  1: [
+    'fill-chart-1',
+    'fill-[color-mix(in_oklab,var(--chart-1),black_35%)]',
+    'fill-[color-mix(in_oklab,var(--chart-1),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-1),var(--muted-foreground)_50%)]',
+    'fill-[color-mix(in_oklab,var(--chart-1),var(--foreground)_75%)]',
+  ],
+  2: [
+    'fill-chart-2',
+    'fill-[color-mix(in_oklab,var(--chart-2),black_35%)]',
+    'fill-[color-mix(in_oklab,var(--chart-2),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-2),var(--muted-foreground)_50%)]',
+    'fill-[color-mix(in_oklab,var(--chart-2),var(--foreground)_75%)]',
+  ],
+  3: [
+    'fill-chart-3',
+    'fill-[color-mix(in_oklab,var(--chart-3),black_35%)]',
+    'fill-[color-mix(in_oklab,var(--chart-3),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-3),var(--muted-foreground)_50%)]',
+    'fill-[color-mix(in_oklab,var(--chart-3),var(--foreground)_75%)]',
+  ],
+  4: [
+    'fill-chart-4',
+    'fill-[color-mix(in_oklab,var(--chart-4),black_35%)]',
+    'fill-[color-mix(in_oklab,var(--chart-4),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-4),var(--muted-foreground)_50%)]',
+    'fill-[color-mix(in_oklab,var(--chart-4),var(--foreground)_75%)]',
+  ],
+  5: [
+    'fill-chart-5',
+    'fill-[color-mix(in_oklab,var(--chart-5),black_35%)]',
+    'fill-[color-mix(in_oklab,var(--chart-5),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--chart-5),var(--muted-foreground)_50%)]',
+    'fill-[color-mix(in_oklab,var(--chart-5),var(--foreground)_75%)]',
+  ],
+  neutral: [
+    'fill-muted-foreground',
+    'fill-[color-mix(in_oklab,var(--muted-foreground),black_35%)]',
+    'fill-[color-mix(in_oklab,var(--muted-foreground),var(--background)_22%)]',
+    'fill-[color-mix(in_oklab,var(--muted-foreground),var(--foreground)_55%)]',
+    'fill-[color-mix(in_oklab,var(--muted-foreground),var(--foreground)_75%)]',
+  ],
+};
 
 // ─────────────────────────────────────────────────────────────────
 // Geometry
@@ -181,28 +256,114 @@ export function seatLayout(total: number): SeatLayout {
   return { seats, rows, pitch };
 }
 
+
+// ─────────────────────────────────────────────────────────────────
+// Who sits where
+// ─────────────────────────────────────────────────────────────────
+
+export type PlacedGroup = SeatGroup & {
+  /** Position in the `groups` prop. */
+  index: number;
+  /** The side's position in `sides`, or -1 when it has none. */
+  sideIndex: number;
+  tone: SeatTone;
+  /** Which shade of its tone it takes. */
+  shade: number;
+};
+
+/**
+ * Order the groups along the arc and give each its colour. With sides, the
+ * first side runs from the left end, the last from the right end, and the
+ * rest sit between; each group takes the next shade of its side's tone.
+ * Without sides, groups keep their order and a repeated tone takes its next
+ * shade; groups with no tone run through the five hues, then the five hues
+ * deepened, then neutral shades, so eleven lists get eleven colours.
+ */
+export function placeGroups(groups: readonly SeatGroup[], sides: readonly SeatSide[] = []): PlacedGroup[] {
+  const sideAt = (id?: string) => sides.findIndex((side) => side.id === id);
+  const used = new Map<string, number>();
+  const shadeOf = (key: string) => {
+    const n = used.get(key) ?? 0;
+    used.set(key, n + 1);
+    return n;
+  };
+  const placed = groups.map((group, index): PlacedGroup => {
+    const sideIndex = sideAt(group.side);
+    const side = sides[sideIndex];
+    const tone: SeatTone = group.tone ?? side?.tone ?? (index < 10 ? (((index % 5) + 1) as SeatTone) : 'neutral');
+    return {
+      ...group,
+      seats: Math.max(0, Math.floor(group.seats)),
+      index,
+      sideIndex,
+      tone,
+      shade: shadeOf(side && !group.tone ? `side:${side.id}` : `tone:${tone}`),
+    };
+  });
+  if (sides.length === 0) return placed;
+
+  const last = sides.length - 1;
+  const left = placed.filter((g) => g.sideIndex === 0);
+  const right = last > 0 ? placed.filter((g) => g.sideIndex === last).reverse() : [];
+  // Middle sides in their own order, then groups with no side.
+  const middle = [
+    ...sides.slice(1, last).flatMap((_, k) => placed.filter((g) => g.sideIndex === k + 1)),
+    ...placed.filter((g) => g.sideIndex === -1),
+  ];
+  return [...left, ...middle, ...right];
+}
+
 // ─────────────────────────────────────────────────────────────────
 // Words
 // ─────────────────────────────────────────────────────────────────
 
 const plural = (n: number, one: string, many: string) => `${n.toLocaleString()} ${n === 1 ? one : many}`;
 
+const sideTotal = (groups: readonly SeatGroup[], id: string) =>
+  groups.filter((g) => g.side === id).reduce((sum, g) => sum + g.seats, 0);
+
 /** The sentence a screen reader hears for the picture. */
-export function describeSeats(groups: readonly SeatGroup[], total: number, majority?: number): string {
+export function describeSeats(
+  groups: readonly SeatGroup[],
+  total: number,
+  majority?: number,
+  sides: readonly SeatSide[] = [],
+): string {
+  groups = groups.map((g) => ({ ...g, seats: Math.max(0, Math.floor(g.seats)) }));
   const held = groups.reduce((sum, g) => sum + g.seats, 0);
   const parts = [`${plural(total, 'seat', 'seats')}.`];
-  if (groups.length > 0) {
-    parts.push(`${groups.map((g) => `${g.label} ${g.seats.toLocaleString()}`).join(', ')}.`);
+  const list = (gs: readonly SeatGroup[]) => gs.map((g) => `${g.label} ${g.seats.toLocaleString()}`).join(', ');
+
+  const blocs: { label: string; seats: number }[] = [];
+  if (sides.length > 0) {
+    for (const side of sides) {
+      const members = groups.filter((g) => g.side === side.id);
+      const seats = sideTotal(groups, side.id);
+      blocs.push({ label: side.label, seats });
+      parts.push(members.length > 0 ? `${side.label} ${seats}: ${list(members)}.` : `${side.label} 0.`);
+    }
+    const loose = groups.filter((g) => !sides.some((side) => side.id === g.side));
+    if (loose.length > 0) parts.push(`No side: ${list(loose)}.`);
+  } else if (groups.length > 0) {
+    parts.push(`${list(groups)}.`);
+    blocs.push(...groups.map((g) => ({ label: g.label, seats: g.seats })));
   }
+
   if (total > held) parts.push(`${plural(total - held, 'seat', 'seats')} vacant.`);
-  if (majority !== undefined) parts.push(`A majority is ${majority.toLocaleString()}.`);
-  const largest = groups.reduce<SeatGroup | undefined>((best, g) => (!best || g.seats > best.seats ? g : best), undefined);
-  if (largest && majority !== undefined) {
-    parts.push(
-      largest.seats >= majority
-        ? `${largest.label} holds a majority on its own.`
-        : `The largest group, ${largest.label}, is ${plural(majority - largest.seats, 'seat', 'seats')} short.`,
+  if (majority !== undefined) {
+    parts.push(`A majority is ${majority.toLocaleString()}.`);
+    const largest = blocs.reduce<(typeof blocs)[number] | undefined>(
+      (best, b) => (!best || b.seats > best.seats ? b : best),
+      undefined,
     );
+    if (largest) {
+      const kind = sides.length > 0 ? 'side' : 'group';
+      parts.push(
+        largest.seats >= majority
+          ? `${largest.label} holds a majority${sides.length > 0 ? '' : ' on its own'}.`
+          : `The largest ${kind}, ${largest.label}, is ${plural(majority - largest.seats, 'seat', 'seats')} short.`,
+      );
+    }
   }
   return parts.join(' ');
 }
@@ -214,7 +375,7 @@ export function describeSeats(groups: readonly SeatGroup[], total: number, major
 /** Drawing box. The viewBox scales it to any width. */
 const W = 400;
 const SCALE = 188;
-const TOP = 18;
+const TOP = 14;
 const CX = W / 2;
 const CY = TOP + SCALE;
 
@@ -222,17 +383,42 @@ const SPREAD_MS = 520;
 const SEAT_MS = 280;
 const EASE_ENTER = 'cubic-bezier(0.2, 0, 0, 1)';
 
+const fillOf = (group: PlacedGroup) => {
+  const shades = SHADES[group.tone];
+  return shades[group.shade % shades.length]!;
+};
+
+function Swatch({ className, vacant }: { className?: string; vacant?: boolean }) {
+  return (
+    <svg aria-hidden viewBox="0 0 10 10" className="size-2.5 shrink-0 self-center">
+      {vacant ? (
+        <circle cx={5} cy={5} r={4.25} strokeWidth={1.5} className="fill-none stroke-muted-foreground" />
+      ) : (
+        <circle cx={5} cy={5} r={5} className={className} />
+      )}
+    </svg>
+  );
+}
+
 export interface SeatChartProps extends Omit<React.ComponentProps<'figure'>, 'children'> {
-  /** The groups, in the order their wedges run left to right. */
+  /** The groups. Without sides, their wedges run left to right in this order. */
   groups: readonly SeatGroup[];
+  /** Sides the groups belong to, such as government and opposition. The first fills from the left, the last from the right. */
+  sides?: readonly SeatSide[];
   /** Seats in the assembly. @default the sum of the groups; any seats beyond it are vacant */
   total?: number;
-  /** Seats needed for a majority, marked at the top of the arc. Leave out for no mark. */
+  /** Seats needed for a majority, marked at the top centre of the arc. Leave out for no mark. */
   majority?: number;
+  /** The caption under the arc. @default '{majority} needed for a majority' */
+  majorityLabel?: React.ReactNode;
+  /** Big totals above the arc: one per side, the two largest groups, or none. @default 'sides' with sides, else 'none' */
+  tally?: SeatTally;
   /** The chart's title, such as the election or the year. */
   label?: React.ReactNode;
-  /** The noun under the total. @default 'seats' */
+  /** The noun after a count. @default 'seats' */
   seatsLabel?: string;
+  /** The same noun for a count of one. @default 'seat' when `seatsLabel` is 'seats', else `seatsLabel` */
+  seatLabel?: string;
   /** Show the table of groups and seats, which otherwise is for screen readers only. */
   showTable?: boolean;
   /** Reserve the chart's box while the data loads. */
@@ -242,10 +428,14 @@ export interface SeatChartProps extends Omit<React.ComponentProps<'figure'>, 'ch
 export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function SeatChart(
   {
     groups,
+    sides = [],
     total: totalProp,
     majority,
+    majorityLabel,
+    tally,
     label,
     seatsLabel = 'seats',
+    seatLabel = seatsLabel === 'seats' ? 'seat' : seatsLabel,
     showTable = false,
     loading = false,
     className,
@@ -256,16 +446,25 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
   const reduced = useReducedMotion();
   const labelId = React.useId();
   const plotRef = React.useRef<SVGSVGElement>(null);
-  const held = groups.reduce((sum, g) => sum + Math.max(0, g.seats), 0);
+  const [hovered, setHovered] = React.useState<number | null>(null);
+  const [pinned, setPinned] = React.useState<number | null>(null);
+
+  const placed = React.useMemo(() => placeGroups(groups, sides), [groups, sides]);
+  const held = placed.reduce((sum, g) => sum + g.seats, 0);
   const total = Math.max(held, Math.floor(totalProp ?? held));
   const layout = React.useMemo(() => seatLayout(total), [total]);
 
-  // Which group holds each seat, in left-to-right order. -1 is vacant.
+  // Which group holds each seat, in left-to-right order. -1 is vacant: it
+  // sits between the left-hand groups and a right-hand side, if any.
   const owner: number[] = [];
-  groups.forEach((g, index) => {
-    for (let k = 0; k < Math.max(0, g.seats); k++) owner.push(index);
-  });
-  while (owner.length < total) owner.push(-1);
+  const rightStart = sides.length > 1 ? placed.findIndex((g) => g.sideIndex === sides.length - 1) : -1;
+  const split = rightStart === -1 ? placed.length : rightStart;
+  const take = (g: PlacedGroup) => {
+    for (let k = 0; k < g.seats; k++) owner.push(g.index);
+  };
+  placed.slice(0, split).forEach(take);
+  for (let k = held; k < total; k++) owner.push(-1);
+  placed.slice(split).forEach(take);
 
   // The first view fills the seats in, once, left to right.
   React.useLayoutEffect(() => {
@@ -317,7 +516,8 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
     return (
       <figure
         ref={ref}
-        data-slot="seat-chart-empty"
+        data-slot="seat-chart"
+        data-state="empty"
         data-min-viewport={String(MIN_VIEWPORT)}
         className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
@@ -327,12 +527,97 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
     );
   }
 
+  const byIndex = new Map(placed.map((g) => [g.index, g]));
+  const active = hovered ?? pinned;
+  const activeGroup = active === null ? undefined : byIndex.get(active);
   const seatRadius = layout.pitch * SCALE * 0.42;
   // The bottom row sits on the centre line; the box ends just past its seats.
   const H = Math.ceil(CY + seatRadius + 2);
-  const summary = describeSeats(groups, total, majority);
+  const innerEdge = CY - (0.4 * SCALE - seatRadius - 4);
+  const summary = describeSeats(groups, total, majority, sides);
   const pct = (n: number) => `${((n / total) * 100).toLocaleString(undefined, { maximumFractionDigits: 1 })}%`;
   const vacant = total - held;
+  const seatsWord = (n: number) => plural(n, seatLabel, seatsLabel);
+
+  const tallyMode: SeatTally = tally ?? (sides.length > 0 ? 'sides' : 'none');
+  const tallies: { key: string; label: string; seats: number; fill: string }[] =
+    tallyMode === 'sides'
+      ? sides.map((side) => ({
+          key: side.id,
+          label: side.label,
+          seats: sideTotal(groups, side.id),
+          fill: SHADES[side.tone][0]!,
+        }))
+      : tallyMode === 'leaders'
+        ? [...placed]
+            .sort((a, b) => b.seats - a.seats)
+            .slice(0, 2)
+            .sort((a, b) => placed.indexOf(a) - placed.indexOf(b))
+            .map((g) => ({ key: `g${g.index}`, label: g.label, seats: g.seats, fill: fillOf(g) }))
+        : [];
+
+  const point = (event: React.PointerEvent<SVGSVGElement>) => {
+    const group = (event.target as Element).getAttribute('data-group');
+    setHovered(group === null || group === '-1' ? null : Number(group));
+  };
+
+  const legendEntry = (g: PlacedGroup) => (
+    <li key={g.index}>
+      <button
+        type="button"
+        aria-pressed={pinned === g.index}
+        data-slot="seat-chart-legend-item"
+        data-active={active === g.index ? '' : undefined}
+        onPointerEnter={() => setHovered(g.index)}
+        onPointerLeave={() => setHovered(null)}
+        onFocus={() => setHovered(g.index)}
+        onBlur={() => setHovered(null)}
+        onClick={() => setPinned((current) => (current === g.index ? null : g.index))}
+        className={cn(
+          '-mx-1.5 flex min-h-target w-[calc(100%+0.75rem)] min-w-0 items-baseline gap-2 rounded-md px-1.5 py-0.5 text-start',
+          'hover:bg-muted data-[active]:bg-muted aria-pressed:bg-muted',
+          'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none',
+        )}
+      >
+        <Swatch className={fillOf(g)} />
+        <span className="text-foreground min-w-0 flex-1 break-words">{g.label}</span>
+        <span className="text-foreground shrink-0 font-medium tabular-nums">
+          {g.seats.toLocaleString()}
+          <span className="sr-only"> {g.seats === 1 ? seatLabel : seatsLabel}</span>
+        </span>
+      </button>
+    </li>
+  );
+
+  const vacantEntry =
+    vacant > 0 ? (
+      <li className="flex min-h-target min-w-0 items-baseline gap-2 py-0.5">
+        <Swatch vacant />
+        <span className="text-muted-foreground min-w-0 flex-1">Vacant</span>
+        <span className="text-foreground shrink-0 font-medium tabular-nums">{vacant.toLocaleString()}</span>
+      </li>
+    ) : null;
+
+  const LIST = 'm-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(100%,11rem),14rem))] gap-x-8 p-0 text-ui-sm';
+
+  // The legend by side, in the order of `sides`, each in its given order.
+  const bySide =
+    sides.length > 0
+      ? [
+          ...sides.map((side, s) => ({
+            key: side.id,
+            label: side.label as string | undefined,
+            seats: sideTotal(groups, side.id),
+            members: placed.filter((g) => g.sideIndex === s).sort((a, b) => a.index - b.index),
+          })),
+          {
+            key: '__none',
+            label: undefined,
+            seats: 0,
+            members: placed.filter((g) => g.sideIndex === -1),
+          },
+        ].filter((block) => block.members.length > 0)
+      : [];
 
   return (
     <figure
@@ -350,26 +635,61 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
         </figcaption>
       ) : null}
 
+      {tallies.length > 0 ? (
+        <div
+          data-slot="seat-chart-tally"
+          className="mx-auto flex w-full max-w-144 flex-wrap items-end justify-between gap-x-4 gap-y-2"
+        >
+          {tallies.map((t, i) => (
+            <React.Fragment key={t.key}>
+              {i > 0 ? <span aria-hidden className="bg-border w-px self-stretch" /> : null}
+              <div
+                className={cn(
+                  'flex min-w-0 flex-1 flex-col',
+                  i === 0 ? 'items-start text-start' : i === tallies.length - 1 ? 'items-end text-end' : 'items-center text-center',
+                )}
+              >
+                <span className="text-muted-foreground flex items-center gap-1.5 text-caption">
+                  <Swatch className={t.fill} />
+                  {t.label}
+                </span>
+                <span className="text-foreground leading-none font-semibold tabular-nums text-[min(2.5rem,12cqi)]">
+                  {t.seats.toLocaleString()}
+                </span>
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
+      ) : null}
+
       <div data-slot="seat-chart-plot" className="relative mx-auto w-full max-w-144">
-        <svg ref={plotRef} viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full" role="img" aria-label={summary}>
+        <svg
+          ref={plotRef}
+          viewBox={`0 0 ${W} ${H}`}
+          className="block h-auto w-full"
+          role="img"
+          aria-label={summary}
+          onPointerMove={point}
+          onPointerLeave={() => setHovered(null)}
+        >
           {layout.seats.map((seat, i) => {
-            const group = owner[i]!;
+            const index = owner[i]!;
+            const group = byIndex.get(index);
             const x = CX + seat.r * SCALE * Math.cos(seat.angle);
             const y = CY - seat.r * SCALE * Math.sin(seat.angle);
             return (
               <circle
                 key={i}
                 data-slot="seat-chart-seat"
-                data-group={group}
+                data-group={index}
                 cx={Number(x.toFixed(2))}
                 cy={Number(y.toFixed(2))}
                 r={Number(seatRadius.toFixed(2))}
-                strokeWidth={group === -1 ? 1.25 : undefined}
+                strokeWidth={group ? undefined : 1.25}
                 className={cn(
-                  'origin-center [transform-box:fill-box]',
-                  group === -1
-                    ? 'fill-none stroke-muted-foreground'
-                    : TONE_FILL[toneOf(groups[group]!, group)],
+                  'origin-center [transform-box:fill-box] motion-safe:transition-opacity motion-safe:duration-(--duration-fast)',
+                  group ? fillOf(group) : 'fill-none stroke-muted-foreground',
+                  active !== null && index !== active && 'opacity-20',
                 )}
               />
             );
@@ -380,8 +700,8 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
               x1={CX}
               x2={CX}
               y1={1}
-              y2={TOP - 4}
-              strokeWidth={2}
+              y2={Number(innerEdge.toFixed(2))}
+              strokeWidth={1.5}
               strokeLinecap="round"
               className="stroke-foreground"
             />
@@ -392,7 +712,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
           aria-hidden
           className="text-foreground pointer-events-none absolute inset-x-0 bottom-0 m-0 text-center leading-none font-semibold tabular-nums text-[min(2.25rem,11cqi)]"
         >
-          {total.toLocaleString()}
+          {(activeGroup ? activeGroup.seats : total).toLocaleString()}
         </p>
       </div>
 
@@ -400,42 +720,44 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
         data-slot="seat-chart-readout"
         className="text-muted-foreground m-0 text-center text-caption tabular-nums"
       >
-        {plural(total, seatsLabel === 'seats' ? 'seat' : seatsLabel, seatsLabel)}
-        {majority !== undefined ? (
+        {activeGroup ? (
           <>
-            <span aria-hidden> · </span>
-            <span className="sr-only">, </span>
-            {majority.toLocaleString()} for a majority
+            {activeGroup.label}: {seatsWord(activeGroup.seats)}, {pct(activeGroup.seats)}
           </>
-        ) : null}
+        ) : majority !== undefined ? (
+          (majorityLabel ?? `${majority.toLocaleString()} needed for a majority`)
+        ) : (
+          seatsWord(total)
+        )}
       </p>
 
-      {groups.length > 0 ? (
-        <ul
-          data-slot="seat-chart-legend"
-          className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(100%,11rem),14rem))] gap-x-8 gap-y-1.5 p-0 text-ui-sm"
-        >
-          {groups.map((group, index) => (
-            <li key={`${group.label}-${index}`} className="flex min-w-0 items-baseline gap-2">
-              <svg aria-hidden viewBox="0 0 10 10" className="size-2.5 shrink-0 self-center">
-                <circle cx={5} cy={5} r={5} className={TONE_FILL[toneOf(group, index)]} />
-              </svg>
-              <span className="text-foreground min-w-0 flex-1 break-words">{group.label}</span>
-              <span className="text-foreground shrink-0 font-medium tabular-nums">
-                {group.seats.toLocaleString()}
-              </span>
-            </li>
-          ))}
-          {vacant > 0 ? (
-            <li className="flex min-w-0 items-baseline gap-2">
-              <svg aria-hidden viewBox="0 0 10 10" className="size-2.5 shrink-0 self-center">
-                <circle cx={5} cy={5} r={4.25} strokeWidth={1.5} className="fill-none stroke-muted-foreground" />
-              </svg>
-              <span className="text-muted-foreground min-w-0 flex-1">Vacant</span>
-              <span className="text-foreground shrink-0 font-medium tabular-nums">{vacant.toLocaleString()}</span>
-            </li>
-          ) : null}
-        </ul>
+      {placed.length > 0 ? (
+        <div data-slot="seat-chart-legend" className="flex flex-col gap-3">
+          {sides.length > 0 ? (
+            bySide.map((block, b) => (
+              <div key={block.key} className="flex flex-col gap-1">
+                <p className="text-muted-foreground m-0 text-caption">
+                  {block.label ? (
+                    <>
+                      {block.label} <span className="text-foreground font-medium tabular-nums">{block.seats.toLocaleString()}</span>
+                    </>
+                  ) : (
+                    'No side'
+                  )}
+                </p>
+                <ul className={LIST}>
+                  {block.members.map(legendEntry)}
+                  {b === bySide.length - 1 ? vacantEntry : null}
+                </ul>
+              </div>
+            ))
+          ) : (
+            <ul className={LIST}>
+              {[...placed].sort((a, b) => a.index - b.index).map(legendEntry)}
+              {vacantEntry}
+            </ul>
+          )}
+        </div>
       ) : null}
 
       <div data-slot="seat-chart-table" className={cn(showTable ? 'overflow-x-auto' : 'sr-only')}>
@@ -448,6 +770,11 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
               <th scope="col" className="py-1.5 pe-4 text-start font-medium">
                 Group
               </th>
+              {sides.length > 0 ? (
+                <th scope="col" className="py-1.5 pe-4 text-start font-medium">
+                  Side
+                </th>
+              ) : null}
               <th scope="col" className="py-1.5 pe-4 text-end font-medium">
                 Seats
               </th>
@@ -462,8 +789,11 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
                 <th scope="row" className="py-1.5 pe-4 text-start font-normal">
                   {group.label}
                 </th>
-                <td className="py-1.5 pe-4 text-end">{group.seats.toLocaleString()}</td>
-                <td className="py-1.5 text-end">{pct(group.seats)}</td>
+                {sides.length > 0 ? (
+                  <td className="py-1.5 pe-4">{sides.find((side) => side.id === group.side)?.label ?? '—'}</td>
+                ) : null}
+                <td className="py-1.5 pe-4 text-end">{byIndex.get(index)!.seats.toLocaleString()}</td>
+                <td className="py-1.5 text-end">{pct(byIndex.get(index)!.seats)}</td>
               </tr>
             ))}
             {vacant > 0 ? (
@@ -471,6 +801,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
                 <th scope="row" className="py-1.5 pe-4 text-start font-normal">
                   Vacant
                 </th>
+                {sides.length > 0 ? <td className="py-1.5 pe-4">—</td> : null}
                 <td className="py-1.5 pe-4 text-end">{vacant.toLocaleString()}</td>
                 <td className="py-1.5 text-end">{pct(vacant)}</td>
               </tr>
@@ -481,6 +812,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
               <th scope="row" className="py-1.5 pe-4 text-start font-medium">
                 Total
               </th>
+              {sides.length > 0 ? <td /> : null}
               <td className="py-1.5 pe-4 text-end font-medium">{total.toLocaleString()}</td>
               <td className="py-1.5 text-end">{majority !== undefined ? `Majority ${majority.toLocaleString()}` : ''}</td>
             </tr>
@@ -511,10 +843,12 @@ export interface SeatChartCompareProps extends React.ComponentProps<'div'> {
  * the box is too narrow for them. The switch is a container query on this
  * box, not the window.
  */
-export function SeatChartCompare({ columns = 2, className, ...props }: SeatChartCompareProps) {
+export function SeatChartCompare({ columns = 2, className, children, ...props }: SeatChartCompareProps) {
   return (
-    <div data-slot="seat-chart-compare" className={cn('@container/compare', className)}>
-      <div className={cn('grid grid-cols-1 gap-x-10 gap-y-12', COLUMNS[columns])} {...props} />
+    <div data-slot="seat-chart-compare" className={cn('@container/compare', className)} {...props}>
+      <div data-slot="seat-chart-compare-grid" className={cn('grid grid-cols-1 gap-x-10 gap-y-12', COLUMNS[columns])}>
+        {children}
+      </div>
     </div>
   );
 }

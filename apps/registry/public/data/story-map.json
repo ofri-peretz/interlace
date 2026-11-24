@@ -1635,6 +1635,9 @@
     "title": "Charts/SeatChart",
     "storyIds": [
       "charts-seatchart--default",
+      "charts-seatchart--sides",
+      "charts-seatchart--compare-sides",
+      "charts-seatchart--leaders",
       "charts-seatchart--compare",
       "charts-seatchart--narrow-column",
       "charts-seatchart--with-table",
