@@ -1297,11 +1297,11 @@
         "roles": [],
         "aria": [],
         "motion": {
-          "driver": "none",
+          "driver": "css",
           "declaresPreference": false,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [],
       "version": "2.1.0",
@@ -1719,7 +1719,7 @@
           "declaresPreference": true,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT"

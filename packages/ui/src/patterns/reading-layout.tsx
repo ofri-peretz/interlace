@@ -104,7 +104,7 @@ function ReadingLayout({
           // landmark, and an unnamed complementary one around it is noise.
           <div data-slot="reading-layout-rail" className="hidden @4xl/reading:block">
             <div
-              className="sticky top-[calc(var(--reading-offset,0px)+1.5rem)] max-h-[calc(100dvh-var(--reading-offset,0px)-3rem)] overflow-y-auto overscroll-contain"
+              className="sticky top-[calc(var(--reading-offset,0px)+1.5rem)] max-h-[calc(100dvh-var(--reading-offset,0px)-3rem)] -m-1 overflow-y-auto overscroll-contain p-1"
             >
               <Toc items={toc} label={tocLabel} />
             </div>

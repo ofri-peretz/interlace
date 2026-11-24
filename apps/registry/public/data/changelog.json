@@ -649,6 +649,21 @@
           "source": ".changeset/status-pills.md"
         },
         {
+          "summary": "Comfortable density reaches the small links, and Card gets a whole-card link. Under `data-density=\"comfortable\"`, Tag and Breadcrumb links keep their size but take the tap through an invisible pad of `--spacing-target` (44px), the ClaimCard section summary and Footer links grow to 44px rows, and the default density stays at the same rhythm. New `CardLink`: wrap the card's title text in it and the whole card becomes the target through a stretched `::after`, with one accessible name, the focus ring on the card and a quiet border lift on hover. `asChild` takes a router link.",
+          "components": [
+            "card",
+            "tag",
+            "breadcrumb",
+            "footer",
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/target-sizes-and-card-link.md"
+        },
+        {
           "summary": "`ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.",
           "components": [
             "thread-mark"
@@ -862,6 +877,24 @@
           "source": ".changeset/flip-card-focus.md"
         },
         {
+          "summary": "Every focus ring is visible, whole, and clear of the text.\n\nA keyboard audit of every story found three kinds of gap, now fixed:\n\n- No visible focus: CollapsibleTrigger and a focusable TabsContent now show the system ring, 2px clear of the element. CodeEditor's textarea fills a clipping frame, so its ring is now inset, inside the padding and off the code. CodeWindow shows the ring on its frame when its body (a `<pre tabIndex={0}>`) has focus.\n- Clipped rings: the ReadingLayout contents rail, SettingsTemplate's section nav, Scroller's viewport and GuessReveal's explanation scroll or clip their content, and cut the top and bottom off a focused link. Each now keeps a 4px margin for the ring, with no change to layout.",
+          "components": [
+            "collapsible",
+            "tabs",
+            "code-editor",
+            "code-window",
+            "reading-layout",
+            "settings-template",
+            "scroller",
+            "guess-reveal"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/focus-sweep.md"
+        },
+        {
           "summary": "Hero: the section is named by its headline (`aria-labelledby` on the h1), so it is announced as a region with that name.",
           "components": [
             "hero"
@@ -966,6 +999,24 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/spotlight-motion-fx.md"
+        },
+        {
+          "summary": "Text alignment follows the writing direction everywhere.\n\nTypography's `align`, Accordion triggers, the Dialog header, Prose table headers, PrevNextPost cards, SeriesTable and MetricTable used `text-left` and `text-right`, which put text against the wrong edge in a right-to-left page. They now use `text-start` and `text-end`, so the same markup is correct in English, Hebrew and Arabic. Left-to-right pages render exactly as before. A new lock keeps physical alignment out of the components.",
+          "components": [
+            "typography",
+            "accordion",
+            "dialog",
+            "prose",
+            "prev-next-post",
+            "series-table",
+            "metric-table",
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/text-align-logical.md"
         },
         {
           "summary": "TocPopover works on a narrow screen with a long outline.\n\n- The popover's height is capped at the room the screen has left (`--available-height`), and the list scrolls inside it. Before, an outline of 18 headings ran 906px tall and the later links fell off the bottom of a phone screen.\n- Picking a link closes the popover, so it no longer covers the text it just scrolled to. Focus stays on the heading.\n- `Toc` gives a heading `tabindex=\"-1\"` before focusing it, unless the heading already has a tabindex. Before, the focus call did nothing on a plain heading. `Toc` also takes a new `onNavigate(id)` callback.",

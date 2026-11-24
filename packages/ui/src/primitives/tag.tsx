@@ -65,7 +65,10 @@ const tagVariants = cva(
     // surface here keeps the whole tone API intact — each tone is once again
     // measured against the background it was designed for — and costs one
     // class instead of a redesign. Locked by composite-contrast-lock.
-    'inline-flex items-center rounded-full border border-border bg-background',
+    'relative inline-flex items-center rounded-full border border-border bg-background',
+    // The chip stays small; an invisible pad takes the tap, at least
+    // --spacing-target (24px, or 44px under data-density="comfortable").
+    "after:absolute after:top-1/2 after:left-1/2 after:min-h-target after:min-w-target after:size-full after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']",
     'px-2.5 py-0.5 text-xs',
     'transition-colors',
     // Brand-accent hover lift (only on the interactive surface).

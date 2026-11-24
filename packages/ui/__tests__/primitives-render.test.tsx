@@ -49,6 +49,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
+  CardLink,
   CardTitle,
 } from "../src/primitives/card.js";
 import { FeaturedIcon } from "../src/primitives/featured-icon.js";
@@ -414,9 +415,9 @@ describe("Typography", () => {
     (align) => {
       const { container } = render(<Typography align={align}>x</Typography>);
       const expected = {
-        start: "text-left",
+        start: "text-start",
         center: "text-center",
-        end: "text-right",
+        end: "text-end",
       }[align];
       expect(slot(container, "typography")!.getAttribute("class")).toContain(
         expected,
@@ -798,6 +799,24 @@ describe("Card", () => {
   it("is a card surface, so it does not inherit the page background", () => {
     const { container } = render(<Card />);
     expect(slot(container, "card")!.getAttribute("data-surface")).toBe("card");
+  });
+
+  it("makes the whole card one link through CardLink, as an <a> or a router link", () => {
+    const { container } = render(
+      <Card>
+        <CardLink href="/a" className="x">A</CardLink>
+        <CardLink asChild className="y" data-testid="routed">
+          <a href="/b" className="z">B</a>
+        </CardLink>
+      </Card>,
+    );
+    const links = container.querySelectorAll("[data-slot=card-link]");
+    expect(links).toHaveLength(2);
+    expect(links[0]!.getAttribute("href")).toBe("/a");
+    expect(links[0]!.className).toContain("after:inset-0");
+    expect(links[1]!.getAttribute("href")).toBe("/b");
+    expect(links[1]!.className).toMatch(/after:inset-0.*z.*y/);
+    expect(links[1]!.getAttribute("data-testid")).toBe("routed");
   });
 
   it("swaps to a card-shaped skeleton while loading", () => {
