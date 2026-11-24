@@ -113,6 +113,8 @@ export default defineConfig({
       provider: 'v8',
       include: [
         'src/charts/**/*.{ts,tsx}',
+        // The games' pure cores: day keys, puzzle order, streak arithmetic.
+        'src/games/*.ts',
         'src/lib/**/*.{ts,tsx}',
         // The four pure variant/model modules.
         'src/primitives/{button-variants,data-state-model,meter-scale,skeleton-variants}.ts',

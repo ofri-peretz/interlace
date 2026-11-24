@@ -82,6 +82,11 @@ const DECORATIVE_DIRS = [
   // generic names to occupy in a shared registry namespace, and neither file
   // renders anything a consumer would install on its own.
   { name: 'charts', dir: path.join(REPO_ROOT, 'packages/ui/src/charts') },
+  // Games — the engine of a daily game: streaks, the daily puzzle shell,
+  // guess games, share cards and leaderboards. Same shape as charts: the
+  // `.tsx` components are items and their pure cores (`daily.ts`,
+  // `streak-model.ts`, …) ride along as companions.
+  { name: 'games', dir: path.join(REPO_ROOT, 'packages/ui/src/games') },
   // Phase 4 of the 5-layer architecture — templates are full-page
   // surfaces that compose patterns + primitives inside SectionBoundaries.
   // They ship as registry items so consumers can
@@ -704,6 +709,7 @@ const TIER_SUBDIR = {
   primitives: '',
   patterns: 'patterns/',
   charts: 'charts/',
+  games: 'games/',
   templates: 'templates/',
   effects: 'effects/',
 };

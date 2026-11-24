@@ -477,7 +477,7 @@ const buildAgentIndex = (items) => ({
   },
   fieldGuide: {
     'meta.tier':
-      'Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.',
+      'Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.',
     'meta.client':
       'true when the installed file carries the "use client" directive. false means it is safe inside a React Server Component with no boundary.',
     'meta.minViewport':
@@ -590,7 +590,7 @@ const contractLine = (it) => {
   return bits.join(', ');
 };
 
-const TIER_ORDER = ['theme', 'lib', 'primitive', 'pattern', 'template', 'charts', 'effects'];
+const TIER_ORDER = ['theme', 'lib', 'primitive', 'pattern', 'template', 'charts', 'game', 'effects'];
 
 const buildLlmsTxt = (items, agentIndex) => {
   const byTier = new Map();
