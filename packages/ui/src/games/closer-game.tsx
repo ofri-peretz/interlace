@@ -123,7 +123,7 @@ const BAND: Record<CloserBand, string> = {
 };
 
 const RESULT: NonNullable<CloserGameLabels['result']> = ({ guess, answer, distance, band, points }) =>
-  distance === '0' || guess === answer
+  guess === answer
     ? `You said ${guess}. The answer is ${answer}. ${band} ${points} points.`
     : `You said ${guess}. The answer is ${answer}, ${distance} off. ${band} ${points} points.`;
 
@@ -158,6 +158,9 @@ function CloserGame({
   const gapRef = React.useRef<HTMLSpanElement>(null);
   const animate = React.useRef(false);
   const sentRef = React.useRef(revealed);
+  const resultRef = React.useRef<HTMLParagraphElement>(null);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const moveFocus = React.useRef(false);
 
   const nf = React.useMemo(() => new Intl.NumberFormat(locale, format), [locale, format]);
   const result = revealed ? scoreGuess(locked, answer, range, score) : null;
@@ -172,6 +175,8 @@ function CloserGame({
     if (revealed || sentRef.current) return;
     sentRef.current = true;
     animate.current = true;
+    // The form goes away on reveal: if focus was in it, the result takes it.
+    moveFocus.current = !!formRef.current?.contains(document.activeElement);
     const v = snap(value, range);
     if (guessProp === undefined) setUncontrolled(v);
     onGuess?.(scoreGuess(v, answer, range, score));
@@ -181,6 +186,12 @@ function CloserGame({
   const answerPos = toPosition(answer, range) * 100;
 
   // The answer travels from the guess to where it is; the gap fills behind it.
+  React.useEffect(() => {
+    if (!revealed || !moveFocus.current) return;
+    moveFocus.current = false;
+    resultRef.current?.focus();
+  }, [revealed]);
+
   React.useEffect(() => {
     if (!revealed || !animate.current) return;
     animate.current = false;
@@ -299,6 +310,7 @@ function CloserGame({
 
       {!revealed ? (
         <form
+          ref={formRef}
           data-slot="closer-game-form"
           className="flex flex-wrap items-end gap-3"
           onSubmit={(e) => {
@@ -329,10 +341,12 @@ function CloserGame({
       ) : null}
 
       <p
+        ref={resultRef}
+        tabIndex={-1}
         data-slot="closer-game-result"
         aria-live="polite"
         aria-describedby={result && explanation ? explanationId : undefined}
-        className="text-sm font-semibold empty:hidden"
+        className="focus-visible:outline-ring rounded-sm text-sm font-semibold outline-offset-4 empty:hidden focus-visible:outline-2"
       >
         {result
           ? (labels?.result ?? RESULT)({

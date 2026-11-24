@@ -36,6 +36,8 @@ describe('closer-model', () => {
   it('rejects ranges it cannot score', () => {
     expect(() => toPosition(1, { min: 5, max: 5 })).toThrow(RangeError);
     expect(() => fromPosition(1, { min: 0, max: 10, scale: 'log' })).toThrow(RangeError);
+    expect(() => scoreGuess(1000, 1200, R)).toThrow(RangeError);
+    expect(() => scoreGuess(0, Number.NaN, R)).toThrow(RangeError);
   });
 
   it('scores by share of the range, in bands', () => {
@@ -84,6 +86,26 @@ describe('CloserGame', () => {
     expect(container.querySelector('[data-slot="closer-game-answer"]')).toBeTruthy();
     expect(container.querySelector('[data-slot="closer-game-form"]')).toBeNull();
     expect(container.querySelector('[data-slot="closer-game-explanation"]')!.hasAttribute('inert')).toBe(false);
+  });
+
+  it('hands focus to the result when the form it was in goes away', () => {
+    const { container } = render(<CloserGame question="Q" answer={500} range={R} />);
+    const button = screen.getByRole('button', { name: 'Lock in' });
+    button.focus();
+    fireEvent.click(button);
+    const result = container.querySelector('[data-slot="closer-game-result"]')!;
+    expect(document.activeElement).toBe(result);
+    expect(result.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('leaves focus alone when the guess is locked from outside the form', () => {
+    const outside = document.createElement('button');
+    document.body.append(outside);
+    outside.focus();
+    const { rerender } = render(<CloserGame question="Q" answer={500} range={R} guess={null} />);
+    rerender(<CloserGame question="Q" answer={500} range={R} guess={800} />);
+    expect(document.activeElement).toBe(outside);
+    outside.remove();
   });
 
   it('takes a typed value, snapped and clamped, and ignores junk', () => {

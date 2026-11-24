@@ -40,7 +40,12 @@ export type CloserBand = 'exact' | 'close' | 'near' | 'far';
 export interface CloserScoreOptions {
   /** Points for a perfect guess. @default 100 */
   maxPoints?: number;
-  /** Absolute distance that still counts as exact. @default half of `step` */
+  /**
+   * Absolute distance that still counts as exact. @default half of `step`
+   *
+   * On a log range, set this or `step`: a slider moving by share of the
+   * range rarely lands within half a unit of the answer.
+   */
   tolerance?: number;
   /** Band edges, as shares of the range (0–1). @default { close: 0.05, near: 0.15 } */
   bands?: { close?: number; near?: number };
@@ -107,6 +112,8 @@ export function scoreGuess(
   options: CloserScoreOptions = {},
 ): CloserResult {
   const { maxPoints = 100, zeroAt = 0.5 } = options;
+  // Positions clamp to the track, so an answer off it would score a guess at the end as close.
+  if (!(answer >= range.min && answer <= range.max)) throw new RangeError('answer must be within the range');
   const tolerance = options.tolerance ?? (range.step ?? 1) / 2;
   const close = options.bands?.close ?? 0.05;
   const near = options.bands?.near ?? 0.15;
