@@ -79,7 +79,8 @@ export function formatSlot(value: string, opts: FormatSlotOptions = {}): string 
 }
 
 // Building an Intl.DateTimeFormat is far dearer than using one, and a day
-// of slots asks for the same one every time.
+// of slots asks for the same one every time. The keys are a few locales, zones
+// and clocks, so the map stays small even in a long-lived server.
 const formatters = new Map<string, Intl.DateTimeFormat>();
 
 function formatter(locale?: string, hour12?: boolean, timeZone?: string): Intl.DateTimeFormat {

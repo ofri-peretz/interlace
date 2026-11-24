@@ -146,7 +146,7 @@ describe('MultiStepForm', () => {
     expect(data.get('note')).toBe('hello');
   });
 
-  it('will not submit while a hidden earlier step is invalid on the last step itself', () => {
+  it('checks the last step\'s own fields before submitting', () => {
     const onSubmit = vi.fn();
     render(
       <MultiStepForm onSubmit={onSubmit}>

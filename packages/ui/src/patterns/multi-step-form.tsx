@@ -219,7 +219,11 @@ type MultiStepFormProps = Omit<React.ComponentProps<'form'>, 'onSubmit'> & {
   defaultStep?: string;
   /** Fires with the id of the step the reader moved to. */
   onStepChange?: (id: string) => void;
-  /** The last step's submit, with every field of every step. */
+  /**
+   * The last step's submit, with every field of every step. Submit checks only the last
+   * step: earlier ones were checked by Continue. If you jump to the last step with a
+   * controlled `step`, validate the earlier answers yourself.
+   */
   onSubmit?: (data: FormData, event: React.FormEvent<HTMLFormElement>) => void;
   /** Disable the buttons and say `labels.submitting` while you send. */
   submitting?: boolean;
