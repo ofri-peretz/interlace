@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 199
+    "itemCount": 200
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 77,
-      "pattern": 53,
+      "pattern": 54,
       "effect": 20,
       "chart": 14,
       "template": 13,
@@ -41,11 +41,11 @@
     },
     "category": {
       "primitive": 77,
-      "pattern": 53,
+      "pattern": 54,
       "blog": 35,
       "data": 30,
       "foundation": 27,
-      "form": 23,
+      "form": 24,
       "effect": 20,
       "decorative": 18,
       "feedback": 15,
@@ -63,18 +63,18 @@
     },
     "rendering": {
       "server": 104,
-      "client": 95
+      "client": 96
     },
     "keyboard": {
-      "none": 153,
+      "none": 154,
       "handled": 46
     },
     "loading": {
-      "none": 161,
+      "none": 162,
       "built-in": 38
     },
     "minViewport": {
-      "320": 126,
+      "320": 127,
       "480": 7,
       "768": 1,
       "inherited": 65
@@ -5461,6 +5461,67 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/metric-table.json",
       "item": "https://ds.interlace.tools/r/metric-table.json",
       "docs": "https://ds.interlace.tools/c/metric-table"
+    },
+    {
+      "name": "multi-step-form",
+      "title": "Multi Step Form",
+      "type": "registry:ui",
+      "summary": "One form, a few steps, a last look before it is sent: a booking flow (when, who, check), a sign-up, a request. Every step is a real part of one `<form>`, kept in the page and hidden while it is not the current one, so what the reader typed survives going…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "alert",
+          "radio"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-current",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/multi-step-form.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/multi-step-form.json",
+      "item": "https://ds.interlace.tools/r/multi-step-form.json",
+      "docs": "https://ds.interlace.tools/c/multi-step-form"
     },
     {
       "name": "network-graph",

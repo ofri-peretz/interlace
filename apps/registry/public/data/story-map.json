@@ -1354,6 +1354,20 @@
     "previewDark": "foundations-motion--dark",
     "skeleton": null
   },
+  "multi-step-form": {
+    "title": "Blocks/MultiStepForm",
+    "storyIds": [
+      "blocks-multistepform--default",
+      "blocks-multistepform--walk-through",
+      "blocks-multistepform--summary",
+      "blocks-multistepform--needs-an-answer",
+      "blocks-multistepform--narrow-column",
+      "blocks-multistepform--right-to-left"
+    ],
+    "preview": "blocks-multistepform--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "network-graph": {
     "title": "Charts/NetworkGraph",
     "storyIds": [
