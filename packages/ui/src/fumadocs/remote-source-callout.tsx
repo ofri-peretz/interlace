@@ -84,7 +84,7 @@ export function RemoteSourceCallout({
         {cacheWindowLabel ? `, cached for ${cacheWindowLabel}` : ''}
         .
       </span>
-      <span className="ml-auto">
+      <span className="ms-auto">
         <EditOnGitHub url={resolvedEditUrl} />
       </span>
     </div>

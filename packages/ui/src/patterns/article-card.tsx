@@ -483,7 +483,7 @@ function SourceChip({ label, testId }: { label: string; testId: string }) {
     <div
       data-slot="article-card-source"
       data-testid={`${testId}-source`}
-      className={cn(OVER_COVER_CHIP, 'right-3')}
+      className={cn(OVER_COVER_CHIP, 'end-3')}
     >
       {label}
     </div>
@@ -496,7 +496,7 @@ function FeaturedChip({ testId }: { testId: string }) {
     <div
       data-slot="article-card-featured-chip"
       data-testid={`${testId}-featured-chip`}
-      className={cn(OVER_COVER_CHIP, 'left-3')}
+      className={cn(OVER_COVER_CHIP, 'start-3')}
     >
       <Sparkles className="h-3 w-3" aria-hidden />
       Featured
@@ -789,7 +789,7 @@ function StackBody({
           className="text-muted-foreground mt-2 gap-4 border-t border-border pt-3"
         >
           <MetaChips meta={meta} tone="muted" testId={testId} />
-          <span className="ml-auto opacity-0 transition-opacity group-hover:opacity-100">
+          <span className="ms-auto opacity-0 transition-opacity group-hover:opacity-100">
             <ExternalLink className="text-primary h-4 w-4" aria-hidden />
           </span>
         </CardFooter>
@@ -934,7 +934,7 @@ function OverlayBody({
         </div>
       </div>
 
-      <span className="absolute top-3 right-14 z-10 opacity-0 transition-opacity group-hover:opacity-100">
+      <span className="absolute top-3 end-14 z-10 opacity-0 transition-opacity group-hover:opacity-100">
         <ExternalLink className="h-5 w-5 text-scrim-foreground drop-shadow" aria-hidden />
       </span>
     </>

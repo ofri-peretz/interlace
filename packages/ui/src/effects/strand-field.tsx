@@ -219,7 +219,7 @@ export function StrandField({
               </svg>
               <span
                 data-slot="strand-field-label"
-                className="absolute right-2 -translate-y-1/2 text-[10px] tracking-wide text-muted-foreground"
+                className="absolute end-2 -translate-y-1/2 text-[10px] tracking-wide text-muted-foreground"
                 style={{ top: `${(strand.scales.y(lastPoint.v) / H) * 100}%` }}
               >
                 {strand.label}

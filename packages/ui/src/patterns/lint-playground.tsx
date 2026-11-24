@@ -179,13 +179,13 @@ export const LintPlayground = React.forwardRef<HTMLElement, LintPlaygroundProps>
               <li
                 key={`${f.line}-${f.ruleId ?? 'parse'}-${index}`}
                 className={cn(
-                  'rounded-lg border-l-2 bg-muted/40 px-3 py-2 text-xs',
+                  'rounded-lg border-s-2 bg-muted/40 px-3 py-2 text-xs',
                   f.severity === 'error' ? 'border-destructive' : 'border-chart-4',
                 )}
               >
                 <span className="font-medium tabular-nums">L{f.line}</span>
                 {f.ruleId && (
-                  <span className="ml-2 font-mono text-muted-foreground">{f.ruleId}</span>
+                  <span className="ms-2 font-mono text-muted-foreground">{f.ruleId}</span>
                 )}
                 {/* The analyzer's sentence verbatim, line breaks kept —
                     a CWE-tagged multi-line message IS the product. */}
