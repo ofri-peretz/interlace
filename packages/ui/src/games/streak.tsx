@@ -149,6 +149,7 @@ function DayMark({ state, today }: { state: StreakDayState; today: boolean }) {
       );
     case 'future':
       return <span className={cn(MARK, 'border-input border border-dashed')} />;
+    case 'missed':
     default:
       return <span className={cn(MARK, 'border-input border-2')} />;
   }
