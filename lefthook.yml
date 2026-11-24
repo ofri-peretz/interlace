@@ -6,6 +6,8 @@
 #   pre-commit  npm run hook:staged -- <staged files>   oxlint on the staged files only
 #   pre-push    npm run hook:verify                     turbo typecheck, test and build
 #               npm run lint:guidance                   agent guidance lint (local step below)
+#               npm run hook:test-integrity             truepass diff --base origin/main: weakened
+#                                                       assertions, unexplained snapshots
 #
 # `npm run ci:local` runs the pre-push battery over every file, as CI does.
 remotes:
