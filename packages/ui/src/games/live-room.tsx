@@ -51,7 +51,7 @@
  *
  * ## Motion
  *
- * A player's chip pops in when they join (transform and opacity, 240ms);
+ * A player's chip pops in when they join (scale only, 240ms);
  * each countdown number lands with a short scale (400ms). Under reduced
  * motion both are simply there. The words carry everything: joins and the
  * countdown are announced, sparsely.
@@ -449,10 +449,8 @@ function RoomCountdown({
     const el = valueRef.current;
     if (!el || typeof el.animate !== 'function') return;
     el.animate(
-      [
-        { transform: 'scale(1.5)', opacity: 0 },
-        { transform: 'scale(1)', opacity: 1 },
-      ],
+      // Scale only, like the chips: a fading number would dip below text contrast.
+      [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
       { duration: 400, easing: EASE },
     );
   }, [left, reduced]);
