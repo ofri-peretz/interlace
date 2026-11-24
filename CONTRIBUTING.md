@@ -47,7 +47,8 @@ tests that turn the design rules into checks) and build. CI also validates every
 against the official shadcn schemas, installs every item into a scratch Next.js app, and runs
 axe and visual snapshots against every story.
 
-Never push with `--no-verify`. The hooks are the gate.
+Never push with `--no-verify`. The hooks are the gate. The full path from change to merge, and
+the checklist a reviewer uses, is in [`docs/AI_SDLC.md`](./docs/AI_SDLC.md).
 
 ## Commits and pull requests
 
