@@ -20,3 +20,12 @@ pre-push:
   commands:
     guidance:
       run: npm run lint:guidance
+
+# provedone: a commit message must carry a `Verified-by:` trailer. Local until the hookset preset
+# at hookset@0.4.0 adds this commit-msg station; delete this block when `ref` moves there
+# (`hookset check` flags the duplicate).
+commit-msg:
+  commands:
+    provedone:
+      run: npm run --silent hook:provedone -- {1}
+      fail_text: "No Verified-by: trailer. Add `Verified-by: <command> -> exit 0` or `Verified-by: none (<reason>)`."
