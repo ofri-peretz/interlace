@@ -32,6 +32,8 @@ const git = (args) =>
  *     rewrites. Requiring a changeset for them would mean the release PR needs
  *     a changeset to describe the release — a loop with no exit.
  *   - tests and internal docs change nothing in the file a consumer installs.
+ *   - `eslint-suppressions.json` is the lint ratchet over this package's own
+ *     tests (truepass findings); it is never copied into a consumer's tree.
  */
 const EXEMPT = [
   /^packages\/ui\/package\.json$/,
@@ -39,6 +41,7 @@ const EXEMPT = [
   /^packages\/ui\/__tests__\//,
   /^packages\/ui\/.*\.test\.tsx?$/,
   /^packages\/ui\/[A-Z_]+\.md$/,
+  /^packages\/ui\/eslint-suppressions\.json$/,
 ];
 
 const isRelevant = (file) =>
