@@ -404,6 +404,10 @@
       "types": "./dist/charts/seat-chart.d.ts",
       "default": "./dist/charts/seat-chart.js"
     },
+    "./charts/choropleth-map": {
+      "types": "./dist/charts/choropleth-map.d.ts",
+      "default": "./dist/charts/choropleth-map.js"
+    },
     "./games/daily": {
       "types": "./dist/games/daily.d.ts",
       "default": "./dist/games/daily.js"

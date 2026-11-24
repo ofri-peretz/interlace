@@ -365,6 +365,23 @@
     "previewDark": "primitives-checkbox--dark",
     "skeleton": "primitives-checkbox--loading"
   },
+  "choropleth-map": {
+    "title": "Charts/ChoroplethMap",
+    "storyIds": [
+      "charts-choroplethmap--default",
+      "charts-choroplethmap--equal-intervals",
+      "charts-choroplethmap--own-breaks",
+      "charts-choroplethmap--with-table",
+      "charts-choroplethmap--narrow-column",
+      "charts-choroplethmap--loading",
+      "charts-choroplethmap--empty",
+      "charts-choroplethmap--dark",
+      "charts-choroplethmap--rtl"
+    ],
+    "preview": "charts-choroplethmap--default",
+    "previewDark": "charts-choroplethmap--dark",
+    "skeleton": "charts-choroplethmap--loading"
+  },
   "citation": {
     "title": "Blocks/Citation",
     "storyIds": [

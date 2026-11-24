@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 185
+    "itemCount": 186
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -33,7 +33,7 @@
       "pattern": 50,
       "effect": 19,
       "template": 13,
-      "chart": 11,
+      "chart": 12,
       "util": 6,
       "game": 5,
       "starter": 3,
@@ -44,7 +44,7 @@
       "pattern": 50,
       "blog": 35,
       "foundation": 27,
-      "data": 26,
+      "data": 27,
       "form": 20,
       "effect": 19,
       "decorative": 17,
@@ -52,7 +52,7 @@
       "navigation": 13,
       "template": 13,
       "marketing": 13,
-      "chart": 11,
+      "chart": 12,
       "overlay": 10,
       "util": 6,
       "games": 5,
@@ -63,18 +63,18 @@
     },
     "rendering": {
       "server": 102,
-      "client": 83
+      "client": 84
     },
     "keyboard": {
       "none": 146,
-      "handled": 39
+      "handled": 40
     },
     "loading": {
       "none": 150,
-      "built-in": 35
+      "built-in": 36
     },
     "minViewport": {
-      "320": 115,
+      "320": 116,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -1431,6 +1431,76 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/checkbox.json",
       "item": "https://ds.interlace.tools/r/checkbox.json",
       "docs": "https://ds.interlace.tools/c/checkbox"
+    },
+    {
+      "name": "choropleth-map",
+      "title": "Choropleth Map",
+      "type": "registry:ui",
+      "summary": "A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "Escape"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "MapBinning",
+          "values": [
+            "quantile",
+            "equal"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img",
+          "region"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ChoroplethMap",
+        "MAX_BINS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton"
+      ],
+      "installsTo": [
+        "components/ui/charts/choropleth-map.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/choropleth-map.json",
+      "item": "https://ds.interlace.tools/r/choropleth-map.json",
+      "docs": "https://ds.interlace.tools/c/choropleth-map"
     },
     {
       "name": "citation",

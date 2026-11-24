@@ -2830,6 +2830,24 @@
       }
     },
     {
+      "name": "choropleth-map",
+      "type": "registry:ui",
+      "title": "Choropleth Map",
+      "description": "A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "delta",
       "type": "registry:ui",
       "title": "Delta",
