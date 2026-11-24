@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T18:30:35.623Z",
+  "generatedAt": "2026-11-24T20:40:20.615Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -26,8 +26,9 @@
       ",\n        // The five pure variant/model modules.\n        ",
       ",\n        // Booking: the slot picker",
       "src/patterns/time-slot-model.ts",
+      "src/patterns/share-image-model.ts",
       "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
-      "src/patterns/{lint-playground,multi-step-form,thread-steps}.tsx",
+      "src/patterns/{lint-playground,multi-step-form,share-image,thread-steps}.tsx",
       "src/effects/weave-texture.tsx"
     ]
   },
@@ -13550,6 +13551,19 @@
       "textAlternative": {
         "kind": "sr-only-table",
         "detail": "Ships an sr-only <table> carrying the same rows the graphic draws."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
+      }
+    },
+    "share-image": {
+      "sourcePath": "packages/ui/src/patterns/share-image.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
       },
       "states": [],
       "coverage": {

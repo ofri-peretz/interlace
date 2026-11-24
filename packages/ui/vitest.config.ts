@@ -120,11 +120,13 @@ export default defineConfig({
         'src/primitives/{button-variants,calendar-model,data-state-model,meter-scale,skeleton-variants}.ts',
         // Booking: the slot picker's pure core (hours, parts of the day, formatting).
         'src/patterns/time-slot-model.ts',
+        // Share images: the theme reader, line planning and bidi order, and the card itself.
+        'src/patterns/share-image-model.ts',
         // The 36 components with real render coverage. See the ledger above.
         'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx',
         // Patterns with full render coverage — the same ledger rule: a
         // file is in at 100 or it is out, and joining is a one-line diff.
-        'src/patterns/{lint-playground,multi-step-form,thread-steps}.tsx',
+        'src/patterns/{lint-playground,multi-step-form,share-image,thread-steps}.tsx',
         // Effects with full render coverage, on the same rule.
         'src/effects/weave-texture.tsx',
       ],
