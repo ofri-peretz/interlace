@@ -1,3 +1,6 @@
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 import { expect, test } from '@playwright/test';
 
 import { MODES, storiesFor } from './matrix';
@@ -27,6 +30,16 @@ for (const mode of MODES) {
   test.describe(mode.name, () => {
     for (const story of storiesFor(mode)) {
       test(`${story.title} › ${story.name}`, async ({ page }) => {
+        const baseline = fileURLToPath(
+          new URL(`./baselines/${mode.name}/${story.id}.png`, import.meta.url),
+        );
+        if (process.env.CI && !existsSync(baseline)) {
+          throw new Error(
+            `No baseline for ${story.id} in ${mode.name}. A new component ships with its ` +
+              `screenshots: build Storybook, run \`npm run visual:docker:update -- ` +
+              `--project=matrix\` in apps/storybook, look at the new PNGs and commit them.`,
+          );
+        }
         await stage(page, story.id, mode);
         // One screen, not the full page. Every baseline is committed, and a
         // token change rewrites all of them, so size is history: a full-page
