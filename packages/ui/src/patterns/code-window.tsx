@@ -21,7 +21,7 @@
  *     │   ├─ span aria-hidden        (data-slot="code-window-traffic-lights")
  *     │   │   └─ 3 × span size-3     (bg-window-control-close/-minimize/-zoom)
  *     │   ├─ span                    (title — centred, font-mono text-xs)
- *     │   └─ span                    (actions — ml-auto)
+ *     │   └─ span                    (actions — ms-auto)
  *     └─ children                    (the body: editor, <pre>, anything)
  *
  * ## No accessible name, deliberately
@@ -127,7 +127,7 @@ function CodeWindowTitleBar({
         </span>
       )}
       {actions && (
-        <span className="ml-auto flex shrink-0 items-center gap-1.5">
+        <span className="ms-auto flex shrink-0 items-center gap-1.5">
           {actions}
         </span>
       )}

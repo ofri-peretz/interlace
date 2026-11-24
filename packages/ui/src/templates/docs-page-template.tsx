@@ -60,7 +60,7 @@ function DocsPageTemplate({
       <div className="flex flex-1">
         {sidebar ? (
           <aside
-            className="border-border bg-card hidden w-64 shrink-0 border-r md:block"
+            className="border-border bg-card hidden w-64 shrink-0 border-e md:block"
             aria-label="Section navigation"
           >
             <SectionBoundary name="docs-sidebar" skeletonVariant="card">
@@ -142,7 +142,7 @@ function DocsPageTemplateSkeleton({
       />
       <div className="flex flex-1">
         {sidebar ? (
-          <div className="border-border hidden w-64 shrink-0 border-r p-6 md:block">
+          <div className="border-border hidden w-64 shrink-0 border-e p-6 md:block">
             <Skeleton variant="text" count={8} label={null} />
           </div>
         ) : null}

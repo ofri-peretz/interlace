@@ -126,7 +126,7 @@ export function PrevNextPost({
           className={cn(CARD_BASE, 'items-start text-start')}
         >
           <span className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            <ArrowLeft className="size-4" aria-hidden />
+            <ArrowLeft className="size-4 rtl:-scale-x-100" aria-hidden />
             {prev.kicker ?? 'Previous'}
           </span>
           <span className="text-body font-medium text-foreground">
@@ -147,7 +147,7 @@ export function PrevNextPost({
         >
           <span className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
             {next.kicker ?? 'Next'}
-            <ArrowRight className="size-4" aria-hidden />
+            <ArrowRight className="size-4 rtl:-scale-x-100" aria-hidden />
           </span>
           <span className="text-body font-medium text-foreground">
             {next.title}
