@@ -2398,6 +2398,24 @@
       }
     },
     {
+      "name": "multi-step-form",
+      "type": "registry:ui",
+      "title": "Multi Step Form",
+      "description": "One form, a few steps, a last look before it is sent: a booking flow (when, who, check), a sign-up, a request. Every step is a real part of one `<form>`, kept in the page and hidden while it is not the current one, so what the reader typed survives going…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "newsletter-form",
       "type": "registry:ui",
       "title": "Newsletter Form",
