@@ -77,6 +77,17 @@ describe('ShareCard', () => {
     expect(onShare).toHaveBeenCalledWith('manual');
   });
 
+  it('puts the fallback field away once a later copy works', async () => {
+    const writeText = vi.fn().mockRejectedValueOnce(new Error('no')).mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', { clipboard: { writeText } });
+    const { container } = render(<ShareCard {...base} />);
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Copy result' })));
+    expect(container.querySelector('[data-slot="share-card-text"]')).not.toBeNull();
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Copy result' })));
+    expect(container.querySelector('[data-slot="share-card-text"]')).toBeNull();
+    expect(await screen.findByText('Copied.')).toBeTruthy();
+  });
+
   it('opens the share sheet where there is one, and copies if it fails', async () => {
     const share = vi.fn().mockResolvedValueOnce(undefined).mockRejectedValueOnce(Object.assign(new Error('x'), { name: 'AbortError' })).mockRejectedValueOnce(new Error('denied'));
     const writeText = vi.fn().mockResolvedValue(undefined);

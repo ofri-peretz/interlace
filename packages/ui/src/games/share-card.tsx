@@ -130,6 +130,7 @@ function ShareCard({
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(text);
+      setManual(false);
       announce(labels?.copied ?? 'Copied.');
       onShare?.('copy');
     } catch {

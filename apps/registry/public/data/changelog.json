@@ -1166,6 +1166,17 @@
           "source": ".changeset/section-header-tracking.md"
         },
         {
+          "summary": "`ShareCard` puts the select-and-copy field away once a later copy works.",
+          "components": [
+            "share-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/share-card-fallback-reset.md"
+        },
+        {
           "summary": "`ShareCard` says \"Copied.\" again on a second copy: the status clears and refills, so screen readers announce it each time.",
           "components": [
             "share-card"
