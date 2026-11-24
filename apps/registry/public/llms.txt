@@ -542,7 +542,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, v1.0.0
 - [Choropleth Map](https://ds.interlace.tools/c/choropleth-map): A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/choropleth-map.json`
-  - contract: client, min 320px, loading state, states quantile|equal, v1.0.0
+  - contract: client, min 320px, loading state, keys Escape, states quantile|equal, v1.0.0
 - [Delta](https://ds.interlace.tools/c/delta): "It moved, this much, this way." The smallest complete unit of analysis and the most-repeated element in a dense view, so it is worth getting exactly right once.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/delta.json`
   - contract: server, min 320px, states publish|release|action, v1.2.0

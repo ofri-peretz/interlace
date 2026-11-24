@@ -144,8 +144,10 @@ describe('<ChoroplethMap>', () => {
     fireEvent.keyDown(map, { key: 'ArrowUp' });
     expect(readout()).toBe('West: no data');
     expect(container.querySelector('[data-slot="choropleth-map-active"]')).toBeTruthy();
-    fireEvent.keyDown(map, { key: 'Escape' });
+    expect(fireEvent.keyDown(map, { key: 'Escape' })).toBe(false);
     expect(container.querySelector('[data-slot="choropleth-map-active"]')).toBeNull();
+    // Nothing left to let go of, so Escape passes through to whatever holds the map.
+    expect(fireEvent.keyDown(map, { key: 'Escape' })).toBe(true);
     fireEvent.keyDown(map, { key: 'ArrowLeft' });
     expect(readout()).toBe('West: no data');
     fireEvent.keyDown(map, { key: 'a' });

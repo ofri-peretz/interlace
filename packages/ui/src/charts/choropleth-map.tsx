@@ -334,7 +334,8 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
       Escape: () => setFocused(null),
     };
     const run = keys[event.key];
-    if (!run) return;
+    // With nothing picked out, Escape belongs to the page (a dialog around the map, say).
+    if (!run || (event.key === 'Escape' && focused === null)) return;
     event.preventDefault();
     run();
   };

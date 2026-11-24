@@ -1449,7 +1449,9 @@
       "keyboard": {
         "handled": true,
         "baseUi": null,
-        "keys": [],
+        "keys": [
+          "Escape"
+        ],
         "ownHandler": true
       },
       "states": [

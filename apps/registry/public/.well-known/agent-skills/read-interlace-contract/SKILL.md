@@ -61,7 +61,7 @@ dark variants.
 ```
 rendering    client
 minViewport  320
-keyboard     none of its own
+keyboard     Escape
 states       MapBinning = quantile | equal
 exports      ChoroplethMap, MAX_BINS, MIN_VIEWPORT
 ```
