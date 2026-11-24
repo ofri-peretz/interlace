@@ -420,6 +420,14 @@
       "types": "./dist/charts/chart-frame.d.ts",
       "default": "./dist/charts/chart-frame.js"
     },
+    "./games/closer-model": {
+      "types": "./dist/games/closer-model.d.ts",
+      "default": "./dist/games/closer-model.js"
+    },
+    "./games/closer-game": {
+      "types": "./dist/games/closer-game.d.ts",
+      "default": "./dist/games/closer-game.js"
+    },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",
       "default": "./dist/charts/delta.js"

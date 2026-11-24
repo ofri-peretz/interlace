@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T07:32:55.889Z",
+  "generatedAt": "2026-11-24T09:23:51.019Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -3235,6 +3235,96 @@
           "worstAt": {
             "theme": "harbor",
             "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "closer-game": {
+      "sourcePath": "packages/ui/src/games/closer-game.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "success",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success on the page",
+          "ratios": [
+            7.44,
+            10.16,
+            7.28,
+            9.86
+          ],
+          "worst": 7.28,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "success",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-success in a card",
+          "ratios": [
+            7.68,
+            9.54,
+            7.68,
+            8.95
+          ],
+          "worst": 7.68,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
           },
           "passes": true
         }

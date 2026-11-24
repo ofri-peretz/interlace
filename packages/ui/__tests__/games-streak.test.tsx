@@ -91,7 +91,7 @@ describe('Streak', () => {
     );
     const chip = container.querySelector('[data-slot="streak"]')!;
     expect(chip.getAttribute('data-variant')).toBe('compact');
-    expect(chip.textContent).toContain('2 day streak. Played today. See you tomorrow.');
+    expect(chip.textContent).toBe('22 day streak. Played today. See you tomorrow.');
     expect(chip.querySelector('[data-slot="streak-days"]')).toBeNull();
     rerender(<Streak variant="compact" played={[]} today="2026-11-23" />);
     expect(container.querySelector('[data-slot="streak"]')!.getAttribute('data-status')).toBe('none');

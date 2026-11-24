@@ -2992,6 +2992,24 @@
       }
     },
     {
+      "name": "closer-game",
+      "type": "registry:ui",
+      "title": "Closer Game",
+      "description": "Guess a number by sliding to it. The player sets a value on a slider (or types it), locks it in, and the answer slides out from their guess to where it really is, with the gap between them shaded and said in words: \"900 off. Close.\" Scoring lives in…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "streak",
       "type": "registry:ui",
       "title": "Streak",
