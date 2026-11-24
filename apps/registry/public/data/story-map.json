@@ -1283,6 +1283,21 @@
     "previewDark": "primitives-numberfield--dark",
     "skeleton": "primitives-numberfield--loading"
   },
+  "otp-field": {
+    "title": "Primitives/OtpField",
+    "storyIds": [
+      "primitives-otpfield--default",
+      "primitives-otpfield--grouped",
+      "primitives-otpfield--invalid",
+      "primitives-otpfield--small",
+      "primitives-otpfield--disabled",
+      "primitives-otpfield--dark",
+      "primitives-otpfield--rtl"
+    ],
+    "preview": "primitives-otpfield--default",
+    "previewDark": "primitives-otpfield--dark",
+    "skeleton": null
+  },
   "page-header": {
     "title": "Blocks/PageHeader",
     "storyIds": [
@@ -1796,6 +1811,18 @@
     ],
     "preview": "blocks-signinform--default",
     "previewDark": "blocks-signinform--dark",
+    "skeleton": null
+  },
+  "sign-in-methods": {
+    "title": "Blocks/SignInMethods",
+    "storyIds": [
+      "blocks-signinmethods--default",
+      "blocks-signinmethods--last-method",
+      "blocks-signinmethods--dark",
+      "blocks-signinmethods--rtl"
+    ],
+    "preview": "blocks-signinmethods--default",
+    "previewDark": "blocks-signinmethods--dark",
     "skeleton": null
   },
   "skeleton": {

@@ -4,7 +4,7 @@
   "components": [
     {
       "name": "a11y-starter",
-      "version": "5.1.0",
+      "version": "5.2.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -118,13 +118,13 @@
     },
     {
       "name": "button",
-      "version": "3.3.0",
+      "version": "3.4.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "button-variants",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -148,7 +148,7 @@
     },
     {
       "name": "citation",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -190,7 +190,7 @@
     },
     {
       "name": "combobox",
-      "version": "3.0.1",
+      "version": "3.1.0",
       "since": "1.1.0",
       "updated": "2026-11-23"
     },
@@ -268,13 +268,13 @@
     },
     {
       "name": "dialogue",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "since": null,
       "updated": "2026-11-23"
     },
     {
       "name": "dialogue-stepper",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -346,7 +346,7 @@
     },
     {
       "name": "flip-card",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -402,7 +402,7 @@
       "name": "guess-reveal",
       "version": "1.0.0",
       "since": null,
-      "updated": null
+      "updated": "2026-11-23"
     },
     {
       "name": "hero",
@@ -430,13 +430,13 @@
     },
     {
       "name": "input",
-      "version": "2.0.1",
+      "version": "2.1.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "interlace-base",
-      "version": "4.8.0",
+      "version": "4.11.1",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -472,7 +472,7 @@
     },
     {
       "name": "layout-starter",
-      "version": "5.1.0",
+      "version": "5.2.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -496,7 +496,7 @@
     },
     {
       "name": "mdx-starter",
-      "version": "5.1.0",
+      "version": "5.2.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -532,8 +532,14 @@
     },
     {
       "name": "number-field",
-      "version": "2.0.1",
+      "version": "2.1.0",
       "since": "1.0.0",
+      "updated": "2026-11-23"
+    },
+    {
+      "name": "otp-field",
+      "version": "1.0.0",
+      "since": null,
       "updated": "2026-11-23"
     },
     {
@@ -544,9 +550,9 @@
     },
     {
       "name": "pagination",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "popover",
@@ -694,7 +700,7 @@
     },
     {
       "name": "select",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
@@ -753,16 +759,22 @@
       "updated": "2026-11-08"
     },
     {
+      "name": "sign-in-methods",
+      "version": "1.0.1",
+      "since": null,
+      "updated": "2026-11-23"
+    },
+    {
       "name": "skeleton",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "skeleton-variants",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "skip-link",
@@ -784,7 +796,7 @@
     },
     {
       "name": "social-sign-in",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -862,9 +874,9 @@
     },
     {
       "name": "tabs",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "tag",
@@ -904,9 +916,9 @@
     },
     {
       "name": "theme-switcher",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
-      "updated": "2026-11-22"
+      "updated": "2026-11-23"
     },
     {
       "name": "theme-tokens",
@@ -964,13 +976,13 @@
     },
     {
       "name": "toggle",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "toolbar",
-      "version": "3.3.0",
+      "version": "3.4.0",
       "since": null,
       "updated": "2026-11-23"
     },
@@ -982,19 +994,19 @@
     },
     {
       "name": "topbar",
-      "version": "2.4.0",
+      "version": "2.6.0",
       "since": "1.0.0",
       "updated": "2026-11-23"
     },
     {
       "name": "topbar-menu",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": null,
       "updated": "2026-11-23"
     },
     {
       "name": "topbar-nav",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "updated": "2026-11-23"
     },

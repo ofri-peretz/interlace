@@ -283,7 +283,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 174 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 176 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -337,17 +337,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 99 server, 75 client
-- keyboard: 136 none, 38 handled
-- built-in loading state: 33 of 174
-- declared minViewport: 104 at 320, 7 at 480, 1 at 768, 62 at inherited
+- rendering: 99 server, 77 client
+- keyboard: 137 none, 39 handled
+- built-in loading state: 33 of 176
+- declared minViewport: 106 at 320, 7 at 480, 1 at 768, 62 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 73 item(s)
-- tier `pattern` — 49 item(s)
+- tier `primitive` — 74 item(s)
+- tier `pattern` — 50 item(s)
 - tier `effect` — 19 item(s)
 - tier `template` — 13 item(s)
 - tier `chart` — 8 item(s)
@@ -355,13 +355,13 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
-- category `primitive` (Primitives) — 73 item(s)
-- category `pattern` (Patterns) — 49 item(s)
+- category `primitive` (Primitives) — 74 item(s)
+- category `pattern` (Patterns) — 50 item(s)
 - category `blog` (Blog & long-form) — 35 item(s)
 - category `foundation` (Foundation) — 27 item(s)
 - category `data` (Data display) — 23 item(s)
+- category `form` (Form & input) — 20 item(s)
 - category `effect` (Effects) — 19 item(s)
-- category `form` (Form & input) — 18 item(s)
 - category `decorative` (Decorative) — 17 item(s)
 - category `feedback` (Feedback) — 14 item(s)
 - category `navigation` (Navigation) — 13 item(s)
@@ -378,7 +378,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [Interlace Base](https://ds.interlace.tools/c/interlace-base): @interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json`
-  - contract: server, v4.8.0
+  - contract: server, v4.11.1
 - [Interlace Foundation](https://ds.interlace.tools/c/interlace-foundation): @interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-foundation.json`
   - contract: server, v3.3.0
@@ -414,10 +414,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 480px, v2.0.0
 - [Button](https://ds.interlace.tools/c/button): The minimal-surface counterpart to [dialog.tsx](./dialog.tsx). Where Dialog exercises compound composition + portal + focus, Button exercises the variant + render-prop polymorphism + native-event passthrough surface.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button.json`
-  - contract: client, loading state, keyboard via Base UI use-render, v3.3.0
+  - contract: client, loading state, keyboard via Base UI use-render, v3.4.0
 - [Button Variants](https://ds.interlace.tools/c/button-variants): The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button-variants.json`
-  - contract: server, v3.2.0
+  - contract: server, v3.3.0
 - [Callout](https://ds.interlace.tools/c/callout): Inline-prose annotation. The "stop and read this" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner ("your save failed"), Callout is an in-band authored aside ("note: this rule is…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/callout.json`
   - contract: server, min 320px, v2.1.1
@@ -438,7 +438,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI collapsible, v2.0.0
 - [Combobox](https://ds.interlace.tools/c/combobox): A text input that filters a list. Built on `@base-ui/react/combobox`: Base UI owns the filtering (`Intl.Collator`-backed `useFilter`), the combobox/listbox ARIA pairing, VIRTUAL focus (the input keeps DOM focus and `aria-activedescendant` moves), single +…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/combobox.json`
-  - contract: client, min 320px, keyboard via Base UI combobox, v3.0.1
+  - contract: client, min 320px, keyboard via Base UI combobox, v3.1.0
 - [Command Palette](https://ds.interlace.tools/c/command-palette): ⌘K. A modal surface holding one filterable list of actions.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/command-palette.json`
   - contract: client, min 320px, keyboard via Base UI combobox, v3.0.0
@@ -483,7 +483,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 768px, keyboard via Base UI preview-card, v2.0.0
 - [Input](https://ds.interlace.tools/c/input): Single-line text input. A pure surface primitive with no controlled-state machinery: the native `<input>` already owns selection, IME, undo/redo and `onChange`, so we add structure (surface, border, focus + invalid rings) without wrapping a single native…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/input.json`
-  - contract: server, min 320px, v2.0.1
+  - contract: server, min 320px, v2.1.0
 - [Kbd](https://ds.interlace.tools/c/kbd): A key the reader presses: `⌘`, `Esc`, `Ctrl` `K`. The shadcn core `kbd` item, drawn in Interlace tokens. `KbdGroup` sets a chord (`⌘ + K`) or a sequence (`G` then `I`) as one inline run, so the gap between keys is owned by the container, not by a margin on…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/kbd.json`
   - contract: server, min 320px, v1.0.0
@@ -501,10 +501,13 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, states linear|log, v1.0.0
 - [Number Field](https://ds.interlace.tools/c/number-field): A numeric input with increment/decrement controls and built-in scrubbing. Wraps @base-ui/react/number-field. Re-exports the compositional parts (Root, Group, Increment, Input, Decrement, ScrubArea) under DS-styled wrappers without owning state.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/number-field.json`
-  - contract: client, min 320px, keyboard via Base UI number-field, v2.0.1
+  - contract: client, min 320px, keyboard via Base UI number-field, v2.1.0
+- [Otp Field](https://ds.interlace.tools/c/otp-field): A one-time code typed into a row of boxes, one character each: the "enter the 6-digit code we emailed you" field. Built on Base UI's OTPField, which owns the hard parts: paste of the whole code into any box, the phone's "from Messages" autofill…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/otp-field.json`
+  - contract: client, min 320px, keyboard via Base UI otp-field, v1.0.0
 - [Pagination](https://ds.interlace.tools/c/pagination): The page-navigation bar: a `<nav aria-label="pagination">` of anchor links with previous / next / ellipsis parts. It is presentation only — it computes no page numbers and knows no total.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/pagination.json`
-  - contract: server, min 320px, v2.0.0
+  - contract: server, min 320px, v2.1.0
 - [Popover](https://ds.interlace.tools/c/popover): A non-modal floating panel anchored to its trigger. It dismisses on Escape and on an outside click and returns focus to the trigger, but it does NOT trap focus or make the page inert.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/popover.json`
   - contract: client, min 320px, keyboard via Base UI popover, v2.1.0
@@ -543,7 +546,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v1.0.0
 - [Select](https://ds.interlace.tools/c/select): Single-select listbox with a portalled popup. Built on @base-ui/react/select: Base UI owns `role="combobox"` / `role="listbox"`, typeahead, arrow + Home/End navigation, focus return on close, and the controlled/uncontrolled pair (`value` + `onValueChange`…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/select.json`
-  - contract: client, min 320px, keyboard via Base UI select, v2.1.0
+  - contract: client, min 320px, keyboard via Base UI select, v2.2.0
 - [Separator](https://ds.interlace.tools/c/separator): A one-pixel rule between blocks of content, horizontal or vertical. Wraps @base-ui/react/separator, which owns the `role` and `aria-orientation` semantics; this file owns exactly two things — the `bg-border` colour and the axis geometry.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/separator.json`
   - contract: server, keyboard via Base UI separator, v1.1.0
@@ -552,10 +555,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI dialog, v2.1.0
 - [Skeleton](https://ds.interlace.tools/c/skeleton): Loading-state placeholder. ONE component, many shapes — the `variant` prop picks the silhouette of the resting component being loaded so the page layout doesn't jump when real data arrives.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/skeleton.json`
-  - contract: server, min 320px, states rect|circle|text|paragraph|avatar|badge|breadcrumb|button|card|code-block|input|menu|pagination|prose|tabs|tag|toc|checkbox|form|label|number-field|radio-group|select|slider|switch|textarea|article-card|author-byline|data-table|newsletter-form|page-header|prev-next-post|stat-card|chart|metric-table|sparkline|meter|stat-strip, v2.0.0
+  - contract: server, min 320px, states rect|circle|text|paragraph|avatar|badge|breadcrumb|button|card|code-block|input|menu|pagination|prose|tabs|tag|toc|checkbox|form|label|number-field|radio-group|select|slider|switch|textarea|article-card|author-byline|data-table|newsletter-form|page-header|prev-next-post|stat-card|chart|metric-table|sparkline|meter|stat-strip, v2.1.0
 - [Skeleton Variants](https://ds.interlace.tools/c/skeleton-variants): Single source of truth for the `<Skeleton variant>` discriminated union. Every entry maps to a Tailwind shape class set that paints a placeholder matching the corresponding primitive / pattern / template.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/skeleton-variants.json`
-  - contract: server, states rect|circle|text|paragraph|avatar|badge|breadcrumb|button|card|code-block|input|menu|pagination|prose|tabs|tag|toc|checkbox|form|label|number-field|radio-group|select|slider|switch|textarea|article-card|author-byline|data-table|newsletter-form|page-header|prev-next-post|stat-card|chart|metric-table|sparkline|meter|stat-strip, v2.0.0
+  - contract: server, states rect|circle|text|paragraph|avatar|badge|breadcrumb|button|card|code-block|input|menu|pagination|prose|tabs|tag|toc|checkbox|form|label|number-field|radio-group|select|slider|switch|textarea|article-card|author-byline|data-table|newsletter-form|page-header|prev-next-post|stat-card|chart|metric-table|sparkline|meter|stat-strip, v2.1.0
 - [Skip Link](https://ds.interlace.tools/c/skip-link): The "jump to main content" link that satisfies WCAG 2.4.1 (Bypass Blocks): an `sr-only` anchor that pops into the top-left corner the moment it takes focus, letting a keyboard user step past the header and nav in one Tab.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/skip-link.json`
   - contract: server, min 320px, v2.0.0
@@ -573,7 +576,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI switch, v1.1.0
 - [Tabs](https://ds.interlace.tools/c/tabs): A tab bar and its panels. Wraps @base-ui/react/tabs: Base UI owns which tab is selected, arrow-key roving focus and the tablist/tab/tabpanel ARIA; we own the muted pill list and the raised face of the selected tab.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/tabs.json`
-  - contract: client, min 320px, keyboard via Base UI tabs, v2.0.0
+  - contract: client, min 320px, keyboard via Base UI tabs, v2.1.0
 - [Tag](https://ds.interlace.tools/c/tag): A tiny inline anchor used to surface taxonomy (rule categories, plugin tags, article topics). Two exports because tag chips almost always appear in a wrapping cluster — `TagList` ships the canonical `<ul>`-of-`<li>` semantics so consumers don't reinvent…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/tag.json`
   - contract: server, min 320px, loading state, v1.3.0
@@ -582,7 +585,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v3.0.1
 - [Theme Switcher](https://ds.interlace.tools/c/theme-switcher): The UI half of the two-axis theme contract (`styles/index.css`, `src/lib/use-theme.ts`). Two controls, because the two axes are genuinely different questions and a single control that tries to serve both ends up as a four-item list called "Light / Dark /…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-switcher.json`
-  - contract: client, min 320px, v2.0.0
+  - contract: client, min 320px, v2.1.0
 - [Thread Mark](https://ds.interlace.tools/c/thread-mark): Interlace's thread, drawn as a state. Where a generic kit reaches for a spinner, an empty-box icon and a red warning triangle, Interlace says the same things with its one motif:
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/thread-mark.json`
   - contract: server, states woven|drawing|loose|cut, v1.0.0
@@ -594,10 +597,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 480px, v2.0.1
 - [Toggle](https://ds.interlace.tools/c/toggle): A two-state button (pressed / not-pressed) and a grouped form thereof (mutually-exclusive or multi-select). Wraps @base-ui/react/toggle and @base-ui/react/toggle-group; we own the surface (size, variant, focus ring) and Base UI owns the pressed-state…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/toggle.json`
-  - contract: client, min 320px, keyboard via Base UI toggle, v2.1.0
+  - contract: client, min 320px, keyboard via Base UI toggle, v2.2.0
 - [Toolbar](https://ds.interlace.tools/c/toolbar): A row of controls that acts as ONE stop in the Tab order: Tab enters the toolbar on its last-focused control and leaves it on the next Tab, and the arrow keys move between the controls inside, Home and End jump to the ends, and focus wraps. A formatting…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/toolbar.json`
-  - contract: client, min 320px, keyboard via Base UI toolbar, v3.3.0
+  - contract: client, min 320px, keyboard via Base UI toolbar, v3.4.0
 - [Tooltip](https://ds.interlace.tools/c/tooltip): A short label that appears beside its trigger on hover or on keyboard focus. Wraps @base-ui/react/tooltip and adds the one thing Base UI 1.6 does not emit: the `role="tooltip"` / `aria-describedby` pair.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/tooltip.json`
   - contract: client, min 320px, keyboard via Base UI tooltip, v2.1.0
@@ -630,7 +633,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v2.0.0
 - [Citation](https://ds.interlace.tools/c/citation): An inline source marker for a sentence that makes a claim. The reader taps or tabs to the marker and a popover lists every source behind the claim: who published it, what kind of source it is, and the exact words quoted from it. Several sources stack in…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/citation.json`
-  - contract: client, min 320px, states enough|short, v1.1.1
+  - contract: client, min 320px, states enough|short, v1.2.0
 - [Claim Card](https://ds.interlace.tools/c/claim-card): One claim, examined. The card quotes a claim as a reader heard it, gives a short answer, and keeps the evidence one click away in collapsible sections: the facts and their sources, who makes the claim, where the record is contested, what the answer does…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json`
   - contract: server, min 320px, v1.1.0
@@ -645,10 +648,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, loading state, states asc|desc, v2.0.0
 - [Dialogue](https://ds.interlace.tools/c/dialogue): A written conversation: a script of turns, each with a speaker. Use it for a sample support chat, an interview excerpt, or a worked example of a hard conversation. Turns from the two sides sit on opposite edges so the back-and-forth reads at a glance, and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialogue.json`
-  - contract: server, min 320px, states muted|accent|inverse, v1.1.1
+  - contract: server, min 320px, states muted|accent|inverse, v1.2.0
 - [Dialogue Stepper](https://ds.interlace.tools/c/dialogue-stepper): A `Dialogue` the reader steps through: one step of turns at a time, each revealed by a choice ("What do I say?", "They might ask…"). A choice can branch to any step, the reader can go back, reset, or show the whole conversation at once. Use it for a…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dialogue-stepper.json`
-  - contract: client, min 320px, states step|all, v1.0.1
+  - contract: client, min 320px, states step|all, v1.1.0
 - [Empty State](https://ds.interlace.tools/c/empty-state): The "nothing here yet" surface. Used wherever a list, table, or search returns zero rows AND the consumer can act on it (create the first item, adjust filters, link to docs). Empty states are first-class UX, not an afterthought — `LOADING_PHILOSOPHY` flags…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/empty-state.json`
   - contract: server, min 320px, v2.0.0
@@ -663,7 +666,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v2.0.0
 - [Flip Card](https://ds.interlace.tools/c/flip-card): A card with two faces: a front that asks (a claim, a question) and a back that answers (with any children, such as source links). Pressing the card turns it over in 3D. It makes the reader commit to a guess before the answer arrives, which is what turns a…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/flip-card.json`
-  - contract: client, min 320px, v1.0.1
+  - contract: client, min 320px, v1.1.0
 - [Focus Grid](https://ds.interlace.tools/c/focus-grid): A grid of picture cards where the one you point at or tab to stays bright and the others step back. It helps a reader compare a few visual options (destinations, case studies, chapters) without the grid feeling busy.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/focus-grid.json`
   - contract: server, min 320px, v1.1.0
@@ -715,9 +718,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Sign In Form](https://ds.interlace.tools/c/sign-in-form): Canonical sign-in pattern: title + email + password + submit. Composition of the auth primitive set (Form / Field / Input / Button + Typography for the title). The block owns *structure*; consumers wire `action` / `onSubmit` and pass the brand specifics…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/sign-in-form.json`
   - contract: server, min 320px, v1.2.0
+- [Sign In Methods](https://ds.interlace.tools/c/sign-in-methods): The "ways you can sign in" list on an account page: one row per method (Google, Apple, email…), each with its mark, what it is linked to, and a Connect or Disconnect button. Disconnecting asks once more in place ("Disconnect" → "Yes, disconnect" /…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/sign-in-methods.json`
+  - contract: client, min 320px, v1.0.1
 - [Social Sign In](https://ds.interlace.tools/c/social-sign-in): "Continue with Google / Apple / X / …" plus an optional email link, in one form. Pick the providers and their order; the first `featured` ones get a full-width button with their name, the rest share a row of icon buttons, and the provider the visitor used…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/social-sign-in.json`
-  - contract: client, min 320px, v1.0.1
+  - contract: client, min 320px, v1.1.0
 - [Stance List](https://ds.interlace.tools/c/stance-list): Who holds which position on a question. Each row names a holder (a person, a group, a school of thought), labels their position with a toned badge, and says it in a sentence or two, optionally with a source.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stance-list.json`
   - contract: server, min 320px, states neutral|success|warning|info|destructive|highlight, v1.0.0
@@ -744,13 +750,13 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, keys ArrowLeft/ArrowRight/End/Home, v2.0.0
 - [Topbar](https://ds.interlace.tools/c/topbar): Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar.json`
-  - contract: server, min 320px, v2.4.0
+  - contract: server, min 320px, v2.6.0
 - [Topbar Menu](https://ds.interlace.tools/c/topbar-menu): The small-screen half of `Topbar`: a "Menu" button that opens the site's links in a panel at the edge of the screen. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json`
-  - contract: client, v2.1.0
+  - contract: client, v2.2.0
 - [Topbar Nav](https://ds.interlace.tools/c/topbar-nav): The wide-screen half of `Topbar` when its links hold groups: a row of plain links and group triggers, where a group opens a panel of its items, each with an optional icon and a one-line description. It is how a site that is a family of products lists them…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-nav.json`
-  - contract: client, keyboard via Base UI navigation-menu, v1.0.0
+  - contract: client, keyboard via Base UI navigation-menu, v1.1.0
 - [Topbar Scroll Edge](https://ds.interlace.tools/c/topbar-scroll-edge): The client half of `Topbar edge="scroll"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-scroll-edge.json`
   - contract: client, v1.0.0
@@ -891,13 +897,13 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [A11y Starter](https://ds.interlace.tools/c/a11y-starter): @interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/a11y-starter.json`
-  - contract: server, v5.1.0
+  - contract: server, v5.2.0
 - [Layout Starter](https://ds.interlace.tools/c/layout-starter): @interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json`
-  - contract: server, v5.1.0
+  - contract: server, v5.2.0
 - [MDX Starter](https://ds.interlace.tools/c/mdx-starter): @interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/mdx-starter.json`
-  - contract: server, v5.1.0
+  - contract: server, v5.2.0
 
 ## Items — tier `util`
 
