@@ -53,6 +53,9 @@ async function axeFindings(page: Page, mode: Mode): Promise<Finding[]> {
   if (!(await page.evaluate(() => 'axe' in window))) {
     await page.addScriptTag({ content: AXE_SOURCE });
   }
+  // Scoped to the story root, like the story-by-story gate. Known gap: an
+  // overlay portalled to <body> (an open dialog, menu or tooltip) is outside
+  // it and is not scanned by either gate. Default stories render closed.
   const extra = mode.name === 'contrast-more' ? ['color-contrast-enhanced'] : [];
   const violations = await page.evaluate(
     async ({ tags, extra }) => {
@@ -99,15 +102,26 @@ async function reflowFinding(page: Page): Promise<Finding[]> {
     : [];
 }
 
+/**
+ * Focus stops are tracked by element identity, held in the page: the stop
+ * is refocused after the blurred shot, and two stops can share a tag and a
+ * position (a stacked or collapsed pair), so nothing positional is safe.
+ */
+type FocusWindow = Window & { __focusStop?: HTMLElement; __focusSeen?: Set<HTMLElement> };
+
 async function focusFindings(page: Page): Promise<Finding[]> {
   const findings: Finding[] = [];
-  const seen = new Set<string>();
   for (let i = 0; i < FOCUS_STOPS; i++) {
     await page.keyboard.press('Tab');
     const stop = await page.evaluate(() => {
+      const w = window as FocusWindow;
       const el = document.activeElement as HTMLElement | null;
       const root = document.getElementById('storybook-root');
       if (!el || el === document.body || !root?.contains(el)) return null;
+      w.__focusSeen ??= new Set();
+      if (w.__focusSeen.has(el)) return null; // wrapped around
+      w.__focusSeen.add(el);
+      w.__focusStop = el;
       const r = el.getBoundingClientRect();
       const name =
         el.getAttribute('aria-label') ||
@@ -115,13 +129,11 @@ async function focusFindings(page: Page): Promise<Finding[]> {
         el.getAttribute('data-slot') ||
         '';
       return {
-        key: `${el.tagName}:${Math.round(r.x)}:${Math.round(r.y)}`,
         label: `<${el.tagName.toLowerCase()}> ${name}`.trim(),
         box: { x: r.x, y: r.y, width: r.width, height: r.height },
       };
     });
-    if (!stop || seen.has(stop.key)) break;
-    seen.add(stop.key);
+    if (!stop) break;
     if (stop.box.width < 1 || stop.box.height < 1) continue;
     // Room for a ring drawn outside the box with an offset.
     const pad = 8;
@@ -142,16 +154,7 @@ async function focusFindings(page: Page): Promise<Finding[]> {
       findings.push({ rule: 'focus-visible', detail: `no visible change when ${stop.label} takes focus` });
     }
     // Put focus back so the next Tab continues from here.
-    await page.evaluate((key) => {
-      const all = document.querySelectorAll<HTMLElement>('#storybook-root *');
-      for (const el of all) {
-        const r = el.getBoundingClientRect();
-        if (`${el.tagName}:${Math.round(r.x)}:${Math.round(r.y)}` === key) {
-          el.focus({ preventScroll: true });
-          return;
-        }
-      }
-    }, stop.key);
+    await page.evaluate(() => (window as FocusWindow).__focusStop?.focus({ preventScroll: true }));
   }
   return findings;
 }
