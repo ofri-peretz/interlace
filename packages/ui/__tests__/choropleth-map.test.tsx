@@ -73,6 +73,11 @@ describe('shadeSteps', () => {
     expect(shadeSteps(1)).toEqual([5]);
     expect(shadeSteps(2)).toEqual([0, 5]);
     expect(shadeSteps(6)).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(shadeSteps(MAX_BINS)).toEqual([0, 1, 2, 3, 4, 5, 6]);
+  });
+
+  it('never gives two classes the same shade', () => {
+    for (let n = 1; n <= MAX_BINS; n++) expect(new Set(shadeSteps(n)).size).toBe(n);
   });
 });
 

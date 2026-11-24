@@ -165,10 +165,16 @@ export function binOf(value: number | null | undefined, { edges }: MapBins): num
   return last;
 }
 
-/** Which ladder step each of `count` classes takes: spread evenly, darkest last. */
+/**
+ * Which ladder step each of `count` classes takes: spread evenly, farthest
+ * from the page last. Up to six classes stop at the tone itself; the seventh
+ * shade (the tone deepened) is used only when all seven are needed, so no two
+ * classes ever share a shade.
+ */
 export function shadeSteps(count: number): number[] {
-  if (count <= 1) return [LADDER.length - 2];
-  return Array.from({ length: count }, (_, i) => Math.round((i * (LADDER.length - 2)) / (count - 1)));
+  const top = count >= LADDER.length ? LADDER.length - 1 : LADDER.length - 2;
+  if (count <= 1) return [top];
+  return Array.from({ length: count }, (_, i) => Math.round((i * top) / (count - 1)));
 }
 
 /** One sentence for the whole map: how many areas, the range, and the highest and lowest. */
