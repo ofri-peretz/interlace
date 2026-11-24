@@ -34,8 +34,9 @@ loops. Wait on CI with `gh pr checks <PR> --watch` or a PR subscription.
 | registry (drift) | Registry output out of date with sources, items that fail the official shadcn schemas, token file drift, an item without a version, release notes that name components that do not exist |
 | changeset | A change to `packages/ui` without a changeset |
 | registry (e2e install) | An item that does not install into a fresh Next.js app |
-| storybook (a11y) | An axe violation in any story |
-| storybook (visual) | A pixel change against the committed baselines |
+| storybook (a11y) | An axe violation in any story, in every theme |
+| storybook (visual) | A pixel change in any component's default story, in light, dark, phone, right-to-left, 150% text and more contrast, against committed baselines |
+| storybook (a11y matrix) | An axe violation at phone width, right-to-left, 150% text or more contrast (AAA there); a page that scrolls sideways on a phone or at 150% text; a focus stop with no visible change. Known failures are listed in `visual/a11y-known.json`, which may only shrink |
 | codeql | Security issues in the code |
 
 When a lock test fails, fix the component or the token, not the test. A change to a check lands
