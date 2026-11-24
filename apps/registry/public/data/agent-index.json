@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 186
+    "itemCount": 187
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -33,7 +33,7 @@
       "pattern": 50,
       "effect": 19,
       "template": 13,
-      "chart": 12,
+      "chart": 13,
       "util": 6,
       "game": 5,
       "starter": 3,
@@ -43,16 +43,16 @@
       "primitive": 75,
       "pattern": 50,
       "blog": 35,
+      "data": 28,
       "foundation": 27,
-      "data": 27,
       "form": 20,
       "effect": 19,
       "decorative": 17,
       "feedback": 15,
       "navigation": 13,
       "template": 13,
+      "chart": 13,
       "marketing": 13,
-      "chart": 12,
       "overlay": 10,
       "util": 6,
       "games": 5,
@@ -63,18 +63,18 @@
     },
     "rendering": {
       "server": 102,
-      "client": 84
+      "client": 85
     },
     "keyboard": {
-      "none": 146,
+      "none": 147,
       "handled": 40
     },
     "loading": {
       "none": 150,
-      "built-in": 36
+      "built-in": 37
     },
     "minViewport": {
-      "320": 116,
+      "320": 117,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -3057,6 +3057,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/docs-page-template.json",
       "item": "https://ds.interlace.tools/r/docs-page-template.json",
       "docs": "https://ds.interlace.tools/c/docs-page-template"
+    },
+    {
+      "name": "dot-plot",
+      "title": "Dot Plot",
+      "type": "registry:ui",
+      "summary": "One dot per value on a shared axis, one row per thing compared: support for a policy by age group in two years, life expectancy by country for women and men, a price in three cities. With two or more series, a line joins each row's dots, so the length of…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "DotPlot",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/charts/dot-plot.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-plot.json",
+      "item": "https://ds.interlace.tools/r/dot-plot.json",
+      "docs": "https://ds.interlace.tools/c/dot-plot"
     },
     {
       "name": "drawer",
