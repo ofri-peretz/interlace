@@ -31,17 +31,24 @@
      each on one curve with a rem floor and ceiling, so a phone's h2 is not a
      laptop's; h4 down and body stay FIXED (no clamp on body — confuses readers).
      Generates text-h1…text-h6, text-body, text-long, text-ui, text-code, etc. */
-  --text-h1: clamp(2.5rem, 4vw + 1rem, 3.5rem); /* 40 → 56px */
+  --text-h1: min(clamp(2.5rem, 4vw + 1rem, 3.5rem), 11.5cqi); /* 40 → 56px */
   --text-h1--line-height: 1.1;
   --text-h2: clamp(1.5rem, 1.2967rem + 0.9036vw, 1.875rem); /* 24 → 30px, 360 → 1024 */
   --text-h2--line-height: 1.2;
   --text-h3: clamp(1.375rem, 1.3072rem + 0.3012vw, 1.5rem); /* 22 → 24px, 360 → 1024; stays over h4 */
   --text-h3--line-height: 1.25;
-  /* Display tiers, for landing pages: one above h1 for a hero or a page's
+  /* The two largest sizes also stop at a share of their container (cqi, the
+     viewport when there is none). The rem floor is what grows with a reader's
+     text size or zoom, and at 150% on a phone it would push one long word
+     past the edge: a 44px floor becomes 66px in a 342px column. The cap keeps
+     the line inside (WCAG 1.4.10 reflow) and never bites at 100% from 360px
+     up: 12.5cqi is 45px at 360, over display's 44px floor; 11.5cqi is 41px,
+     over h1's 40px.
+     Display tiers, for landing pages: one above h1 for a hero or a page's
      single loudest line, one between h1 and h2 for a landing section's title.
      They are sizes, not levels: SectionHeader renders an h2 at text-section.
      `fluid-type-lock` keeps display > h1 > section > h2 at every width. */
-  --text-display: clamp(2.75rem, 2.0723rem + 3.012vw, 4rem); /* 44 → 64px, 360 → 1024 */
+  --text-display: min(clamp(2.75rem, 2.0723rem + 3.012vw, 4rem), 12.5cqi); /* 44 → 64px, 360 → 1024 */
   --text-display--line-height: 1.05;
   --text-section: clamp(1.75rem, 1.3434rem + 1.8072vw, 2.5rem); /* 28 → 40px, 360 → 1024 */
   --text-section--line-height: 1.15;

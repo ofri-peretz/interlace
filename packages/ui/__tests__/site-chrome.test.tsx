@@ -44,6 +44,17 @@ describe("Topbar", () => {
     },
   );
 
+  it("wraps its actions below the logo when the row does not fit, never past the edge (WCAG 1.4.10)", () => {
+    const { container } = render(
+      <Topbar logo="Site" links={LINKS} actions={<button>Sign in</button>} />,
+    );
+    const row = container.querySelector("[data-slot=topbar] > div")!;
+    expect(row.className).toContain("flex-wrap");
+    const [logo, , actions] = Array.from(row.children);
+    expect(logo!.className).toContain("min-w-0");
+    expect(actions!.className).toMatch(/\bms-auto\b.*\bflex-wrap\b/);
+  });
+
   it("marks the current page with aria-current", () => {
     render(
       <Topbar
