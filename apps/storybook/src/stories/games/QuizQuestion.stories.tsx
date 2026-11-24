@@ -44,7 +44,7 @@ const meta = {
     score: { control: 'object', description: '`{ maxPoints?, speedShare? }`', table: { category: 'Scoring' } },
   },
   render: (args) => (
-    <div className="max-w-2xl">
+    <div className="max-w-prose">
       <QuizQuestion {...args} />
     </div>
   ),

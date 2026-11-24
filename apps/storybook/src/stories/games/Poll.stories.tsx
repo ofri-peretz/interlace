@@ -39,7 +39,7 @@ const meta = {
     locale: { control: 'text', table: { category: 'Content' } },
   },
   render: (args) => (
-    <div className="max-w-md">
+    <div className="max-w-prose">
       <Poll {...args} />
     </div>
   ),

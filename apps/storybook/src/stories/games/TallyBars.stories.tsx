@@ -21,7 +21,7 @@ const meta = {
   },
   args: { rows: ROWS, optionLabels: LABELS, locale: 'en-US' },
   render: (args) => (
-    <div className="max-w-md">
+    <div className="max-w-prose">
       <TallyBars {...args} />
     </div>
   ),

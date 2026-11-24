@@ -37,7 +37,7 @@ const meta = {
     explanation: 'Sample content. A real round would say where each value comes from here.',
   },
   render: (args) => (
-    <div className="max-w-lg">
+    <div className="max-w-prose">
       <OrderGame {...args} />
     </div>
   ),
