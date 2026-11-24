@@ -76,6 +76,7 @@ describe("brand-neutral lock", () => {
       "b.css": "--brand: burgee-blue;",
       "c.ts": "const ofrix = 1;",
       "d.tsx": "// the Dugri band, as on WhyLikeDis and why-like-dis.fyi",
+      "e.tsx": "// copy from the why like dis redesign",
     };
     const hits = consumerHits(
       Object.keys(fake).map((f) => join(UI_ROOT, f)),
@@ -88,6 +89,7 @@ describe("brand-neutral lock", () => {
       'd.tsx:1 names "Dugri"',
       'd.tsx:1 names "WhyLikeDis"',
       'd.tsx:1 names "why-like-dis"',
+      'e.tsx:1 names "why like dis"',
     ]);
   });
 
