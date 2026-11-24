@@ -38,7 +38,7 @@ describe('csvHref', () => {
   it('is a UTF-8 data address with a byte-order mark', () => {
     const href = csvHref([{ city: 'Zürich' }]);
     expect(href.startsWith('data:text/csv;charset=utf-8,')).toBe(true);
-    expect(decodeURIComponent(href.slice(href.indexOf(',') + 1))).toBe('﻿city\r\nZürich');
+    expect(decodeURIComponent(href.slice(href.indexOf(',') + 1))).toBe('\uFEFFcity\r\nZürich');
   });
 });
 

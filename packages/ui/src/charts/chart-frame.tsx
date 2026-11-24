@@ -140,7 +140,7 @@ export function toCsv(rows: readonly CsvRow[], columns?: readonly string[]): str
 
 /** A `data:` address holding the CSV, with a byte-order mark so spreadsheet apps read it as UTF-8. */
 export function csvHref(rows: readonly CsvRow[], columns?: readonly string[]): string {
-  return `data:text/csv;charset=utf-8,${encodeURIComponent(`﻿${toCsv(rows, columns)}`)}`;
+  return `data:text/csv;charset=utf-8,${encodeURIComponent(`\uFEFF${toCsv(rows, columns)}`)}`;
 }
 
 // ─────────────────────────────────────────────────────────────────
