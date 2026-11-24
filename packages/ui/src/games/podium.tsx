@@ -125,7 +125,9 @@ function Podium({
   const ranked = rankEntries(entries);
   const top = ranked.slice(0, 3);
   const rest = ranked.slice(3);
-  const nf = new Intl.NumberFormat(locale, format);
+  const formatKey = JSON.stringify(format ?? null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed on the options' value, not their identity
+  const nf = React.useMemo(() => new Intl.NumberFormat(locale, format), [locale, formatKey]);
   const place = labels?.place ?? PLACE;
   const you = labels?.you ?? 'You';
   const stepsRef = React.useRef<HTMLOListElement>(null);

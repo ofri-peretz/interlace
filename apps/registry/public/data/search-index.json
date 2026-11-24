@@ -456,7 +456,7 @@
     "arrang": 1,
     "array": 25,
     "arriv": 16,
-    "arrival": 7,
+    "arrival": 9,
     "arrow": 25,
     "arrowleft": 1,
     "arrowright": 1,
@@ -743,7 +743,7 @@
     "citationsourc": 1,
     "cite": 1,
     "city": 3,
-    "claim": 20,
+    "claim": 22,
     "claimcard": 1,
     "claimcardanswer": 1,
     "claimcardclaim": 1,
@@ -1155,7 +1155,6 @@
     "e2e": 13,
     "eager": 1,
     "ear": 2,
-    "earlier": 5,
     "earliest": 8,
     "earn": 6,
     "eas": 1,
@@ -1409,7 +1408,7 @@
     "gap": 47,
     "gat": 3,
     "gate": 16,
-    "gave": 2,
+    "gave": 4,
     "generat": 3,
     "generator": 4,
     "generic": 6,
@@ -2771,7 +2770,7 @@
     "stag": 2,
     "stagger": 2,
     "staggerlist": 1,
-    "stamp": 1,
+    "stamp": 3,
     "stanc": 1,
     "stanceitem": 1,
     "stancelist": 1,
@@ -3129,7 +3128,7 @@
     "usereducedmotion": 7,
     "userender": 6,
     "userenderel": 3,
-    "useroom": 1,
+    "useroom": 2,
     "usestat": 8,
     "usesyncexternalstor": 1,
     "usethem": 3,
@@ -3758,7 +3757,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect send ring hit chang mark unless player browser 300m nearby mount draw short support yesterday new motion animat 600m answer hidden noth dashoffset replay tone drawn small data nam arrival round api tap untouch job slot count right idle loop strok"
+      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect send ring hit chang mark unless player browser 300m nearby mount draw short support yesterday new motion animat 600m answer hidden noth dashoffset replay tone drawn small data nam round api tap untouch arrival job slot count right idle loop strok"
     },
     {
       "name": "chart-frame",
@@ -4319,7 +4318,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "dialogu stepper blog pattern client responsiv min viewport 320 stat step current past pend choic dialoguechoic conversation dialoguestep dialoguestepper turn path show control uniqu branch live region polit back reader noscript child speaker talk reveal whol hidden reset start next focus append important onboard practic data enter hunt progressiv new read server order ask enhanc mode written bubbl choos hydrat button earlier group every"
+      "terms": "dialogu stepper blog pattern client responsiv min viewport 320 stat step current past pend choic dialoguechoic conversation dialoguestep dialoguestepper turn path show control uniqu branch live region polit back reader noscript child speaker talk reveal whol hidden reset start next focus append important onboard practic data enter hunt progressiv new read server order ask enhanc mode written bubbl choos hydrat button group every cascad"
     },
     {
       "name": "dialogue",
@@ -4947,7 +4946,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "weav decorativ effect server rsc interlaceweav strand host corner signatur strok pathlength radius uniform gestur overshoot hover transition interaction opposit rect 100 relativ focus brand meet group dash viewbox 500m enact hous mechanic memorabl normalization unscal none geometry overlay cool doubl edgeglow honor preserveaspectratio tip card touch scal normaliz trac vector path svg chromium dashoffset discard match calc compl earlier later drawn compound rfc"
+      "terms": "weav decorativ effect server rsc interlaceweav strand host corner signatur strok pathlength radius uniform gestur overshoot hover transition interaction opposit rect 100 relativ focus brand meet group dash viewbox 500m enact hous mechanic memorabl normalization unscal none geometry overlay cool doubl edgeglow honor preserveaspectratio tip card touch scal normaliz trac vector path svg chromium dashoffset discard match calc compl later drawn compound rfc signal"
     },
     {
       "name": "join-code",
@@ -4972,7 +4971,7 @@
         "game",
         "games"
       ],
-      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet player host room rank send board scor address peopl event copy clock letter round character broadcastchannel realtim link big refus group makejoincod connect screen outsid tie phon row entry 4mz endsat joincod k7q sender stag new play demo memory servic transport null spell app copi intent leaderboard minplayer visit"
+      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet host player room rank send board scor address peopl event copy clock letter round character broadcastchannel realtim link big refus group makejoincod connect screen outsid tie phon row entry 4mz endsat joincod k7q sender stag new play demo memory servic transport null spell answer app copi intent leaderboard minplayer"
     },
     {
       "name": "kbd",
@@ -5162,7 +5161,7 @@
         "game",
         "games"
       ],
-      "terms": "live room game client responsiv min viewport 320 stat lobby countdown question reveal podium clos join alphabet host player round send clock rank everyon start event useroom board scor intent refus joincod night realtim play data null answer app connect wait slot broadcastchannel new transport second end big name show phon timer control messag roomcountdown roomhostcontrol roomlobby settimeout unlock outsid remov tie next lock"
+      "terms": "live room game client responsiv min viewport 320 stat lobby countdown question reveal podium clos join alphabet host player round clock send rank useroom everyon start event board scor answer intent refus joincod night realtim play data null app connect wait slot broadcastchannel new transport second end big name show phon timer control messag roomcountdown roomhostcontrol roomlobby settimeout unlock outsid remov tie next open"
     },
     {
       "name": "mdx-starter",
@@ -5475,7 +5474,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "popover overlay primitiv client responsiv min viewport 320 keyboard base trigger anchor positioner popup panel inert popovercontent float popoveranchor focus ele introduc dismissal side dismiss render escap modal open click context shift register node flip 288px trap lock lett clip gutter position dom basepopover haspopup popovercompos outsid ship part gave popovertrigger seam another compos richer virtual non content different anyway caret common data second"
+      "terms": "popover overlay primitiv client responsiv min viewport 320 keyboard base trigger anchor positioner popup panel inert popovercontent float popoveranchor focus ele introduc dismissal side dismiss render escap modal open click context shift register node flip 288px trap lock lett clip gutter position dom basepopover haspopup popovercompos outsid ship part popovertrigger seam another compos richer virtual non content different anyway caret gave common data second"
     },
     {
       "name": "prev-next-post",
@@ -5753,7 +5752,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "read time blog primitiv server rsc load skeleton responsiv min viewport 320 readingtim showicon minut badg impos metadata icon articl text lucid render clock row tag fixtur localisation presenc readingtimeprop scraper data compact header 14px analytic builder estimat validat utility true date altitud cod index label hidden downstream pars besid block footprint hard json emitt higher translat inlin arrival verbatim gap machin short sit"
+      "terms": "read time blog primitiv server rsc load skeleton responsiv min viewport 320 readingtim showicon minut badg impos metadata icon articl text lucid render clock row tag fixtur localisation presenc readingtimeprop scraper data compact header 14px analytic builder estimat validat utility true date altitud cod index label hidden downstream pars besid block footprint hard json emitt higher translat inlin verbatim gap machin short arrival sit"
     },
     {
       "name": "registry-item-template",
@@ -5811,7 +5810,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "reveal decorativ effect client arriv block rise littl fade grow blur quot focus millisecond notic view depend content figur enter compositor sharpen animat reader ele head intersectionobserver scroll 600 without browser come wait visibl arrival crawler receiv sibl run section ful reduc lift card motion show keyfram loop sequenc filter transform every size straight noth much remov invisibl script away web handl hide first"
+      "terms": "reveal decorativ effect client arriv block rise littl fade grow blur quot focus millisecond notic view depend content figur enter compositor sharpen animat reader ele head intersectionobserver scroll 600 without browser come wait visibl crawler receiv sibl run section arrival ful reduc lift card motion show keyfram loop sequenc filter transform every size straight noth much remov invisibl script away web handl hide first"
     },
     {
       "name": "rotating-text",
@@ -6533,7 +6532,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "split text decorativ effect client splittext letter piec arriv millisecond word segmenter time rise attention combin emoji fade read platform blur whol visual short head enough moment headlin enter twic first graphem sharpen littl ele hidden 500 intersectionobserver ris page keep scroll view data wait arrival str run slot reduc right mark lift motion transparent cut role filter neither spell transform across com modul"
+      "terms": "split text decorativ effect client splittext letter piec arriv millisecond word segmenter time rise attention combin emoji fade read platform blur whol visual short head enough moment headlin enter twic first graphem sharpen littl ele hidden 500 intersectionobserver ris page keep scroll view data wait str run arrival slot reduc right mark lift motion transparent cut role filter neither spell transform across com modul"
     },
     {
       "name": "stack",
@@ -6570,7 +6569,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "stagger list decorativ effect client staggerlist item millisecond process ordinary recent updat arriv arrival eye argu step reveal point first 420 bullet motion another order whos focus scroll view fold crawler receiv time decid rise run reduc keyfram loop paus transparent fade child remov invisibl script web enter pixel slot never read reader turn data becom animation repeat simp prefer html nativ land browser"
+      "terms": "stagger list decorativ effect client staggerlist item millisecond process ordinary recent updat arriv eye arrival argu step reveal point first 420 bullet motion another order whos focus scroll view fold crawler receiv time decid rise run reduc keyfram loop paus transparent fade child remov invisibl script web enter pixel slot never read reader turn data becom animation repeat simp prefer html nativ land browser"
     },
     {
       "name": "stance-list",
@@ -7282,7 +7281,7 @@
         "primitive",
         "form"
       ],
-      "terms": "toolbar form primitiv client responsiv min viewport 320 keyboard base toolbarbutton button buttonvariant variant tab rov control end arrow home size orientation icon focus composit input wrap last lock caret link bar ghost order tooltip jump act move separator ring stop group insid basetoolbar menutrigger perpendicular toolbargroup toolbarinput toolbarlink toolbarseparator contrast ten measur modul overflow row key enter formatt bulk gave rove tooltiptrigger root"
+      "terms": "toolbar form primitiv client responsiv min viewport 320 keyboard base toolbarbutton button buttonvariant variant tab rov control end arrow home size orientation icon focus composit input wrap last lock caret link bar ghost order tooltip jump act move separator ring stop group insid basetoolbar menutrigger perpendicular toolbargroup toolbarinput toolbarlink toolbarseparator contrast ten measur modul overflow row key enter formatt bulk rove tooltiptrigger root render"
     },
     {
       "name": "tooltip",

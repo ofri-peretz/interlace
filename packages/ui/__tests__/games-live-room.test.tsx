@@ -313,12 +313,12 @@ describe('room-model', () => {
   });
 
   it('restarts with the same players and closes for good', () => {
-    let r = roomWith('a');
+    let r = applyRoomEvent(roomWith('a'), { type: 'lock', locked: true }, HOST);
     r = applyRoomEvent(r, { type: 'countdown', startsAt: 1 }, HOST);
     r = applyRoomEvent(r, { type: 'question', endsAt: null }, HOST);
     r = applyRoomEvent(r, { type: 'reveal', points: { a: 3 } }, HOST);
     r = applyRoomEvent(r, { type: 'restart' }, HOST);
-    expect(r).toMatchObject({ phase: 'lobby', round: 0, scores: { a: 0 } });
+    expect(r).toMatchObject({ phase: 'lobby', round: 0, scores: { a: 0 }, locked: false });
     r = applyRoomEvent(r, { type: 'close' }, HOST);
     expect(r).toMatchObject({ phase: 'closed', locked: true });
     expect(rejectRoomEvent(r, join('b'), 'b')).toBe('closed');
@@ -386,7 +386,7 @@ function Client({
   onRejected?: (reason: string, type: string) => void;
 }) {
   const [transport] = React.useState(() => hub.connect());
-  const api = useRoom({ transport, selfId: id, host, code, onRejected });
+  const api = useRoom({ transport, selfId: id, host, code, onRejected, now: () => 4242 });
   onRoom(api);
   return null;
 }
@@ -424,6 +424,11 @@ describe('useRoom', () => {
 
     await act(async () => host.send({ type: 'reveal', points: {} }));
     expect(hostRejected).toHaveBeenCalledWith('wrong-phase', 'reveal');
+
+    await act(async () => host.send({ type: 'countdown', startsAt: 0 }));
+    await act(async () => host.send({ type: 'question', endsAt: null }));
+    await act(async () => player.send({ type: 'answer', playerId: 'p1', value: 'x', at: -999 }));
+    expect(host.room?.answers.p1?.at).toBe(4242); // stamped by the host on arrival
 
     const seq = player.room!.seq;
     await act(async () => host.send({ type: 'lock', locked: true }));

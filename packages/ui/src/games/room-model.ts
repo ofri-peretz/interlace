@@ -120,7 +120,10 @@ export interface RoomState {
 
 export interface RoomAnswer {
   value: unknown;
-  /** When it arrived, in ms (host clock). */
+  /**
+   * When it reached the host, in ms (host clock). `useRoom` stamps it on
+   * arrival, so a player cannot claim an earlier answer than they gave.
+   */
   at: number;
 }
 
@@ -170,7 +173,7 @@ export type RoomHostEvent =
   | { type: 'reveal'; points: Record<string, number> }
   | { type: 'podium' }
   | { type: 'close' }
-  /** Back to the lobby with the same players, scores at zero. */
+  /** Back to the lobby with the same players, scores at zero and the room open again. */
   | { type: 'restart' };
 
 export type RoomEvent = RoomPlayerEvent | RoomHostEvent;
@@ -350,6 +353,7 @@ export function applyRoomEvent(
     case 'restart':
       return next({
         phase: 'lobby',
+        locked: false,
         round: 0,
         startsAt: null,
         endsAt: null,

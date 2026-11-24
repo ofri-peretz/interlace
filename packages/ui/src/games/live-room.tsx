@@ -107,6 +107,8 @@ export interface UseRoomOptions {
   settings?: RoomSettings;
   /** A player's intent (or the host's own event) was refused. */
   onRejected?: (reason: RoomRejection, event: RoomEvent['type']) => void;
+  /** The host's clock, which stamps each answer as it arrives. @default Date.now */
+  now?: () => number;
 }
 
 export interface UseRoomResult {
@@ -117,12 +119,20 @@ export interface UseRoomResult {
   send: (event: RoomEvent) => void;
 }
 
-export function useRoom({ transport, selfId, host, code, settings, onRejected }: UseRoomOptions): UseRoomResult {
+export function useRoom({
+  transport,
+  selfId,
+  host,
+  code,
+  settings,
+  onRejected,
+  now = Date.now,
+}: UseRoomOptions): UseRoomResult {
   const isHost = host !== undefined;
   const [room, setRoom] = React.useState<RoomState | null>(host ?? null);
   const roomRef = React.useRef<RoomState | null>(host ?? null);
-  const latest = React.useRef({ settings, onRejected, code });
-  latest.current = { settings, onRejected, code };
+  const latest = React.useRef({ settings, onRejected, code, now });
+  latest.current = { settings, onRejected, code, now };
 
   const apply = React.useCallback(
     (event: RoomEvent, from: string) => {
@@ -152,8 +162,12 @@ export function useRoom({ transport, selfId, host, code, settings, onRejected }:
     if (!transport) return;
     const off = transport.subscribe((message) => {
       if (isHost) {
-        if (message.kind === 'intent') apply(message.event, message.from);
-        else if (message.kind === 'hello' && roomRef.current) transport.send({ kind: 'state', state: roomRef.current });
+        if (message.kind === 'intent') {
+          // The host's clock decides when an answer arrived, never the sender's.
+          const event = message.event;
+          apply(event.type === 'answer' ? { ...event, at: latest.current.now() } : event, message.from);
+        } else if (message.kind === 'hello' && roomRef.current)
+          transport.send({ kind: 'state', state: roomRef.current });
         return;
       }
       if (message.kind === 'state') {
