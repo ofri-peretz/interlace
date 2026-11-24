@@ -62,6 +62,34 @@ export function toneFor(direction: Direction, polarity: Polarity): 'good' | 'bad
   return isGood ? 'good' : 'bad';
 }
 
+/** What Delta's spoken sentence is built from. Numbers come formatted. */
+export interface DeltaSpoken {
+  direction: Direction;
+  /** The size of the change, without a sign. */
+  magnitude: string;
+  /** The percentage change, without a sign, or null when the start was 0. */
+  pct: string | null;
+  from: string;
+  to: string;
+  unit?: string;
+}
+
+/** Every fixed word in Delta. Pass only the ones to change. */
+export interface DeltaLabels {
+  /** Read when there are fewer than two points. */
+  empty: string;
+  /** The sentence a screen reader hears for the change. */
+  spoken: (change: DeltaSpoken) => string;
+}
+
+const LABELS: DeltaLabels = {
+  empty: 'Not enough data to compare',
+  spoken: ({ direction, magnitude, pct, from, to, unit }) =>
+    direction === 'flat'
+      ? `unchanged${unit ? ` ${unit}` : ''}`
+      : `${direction} ${magnitude}${unit ? ` ${unit}` : ''}${pct ? `, ${pct}` : ''}, from ${from} to ${to}`,
+};
+
 export interface DeltaProps extends Omit<React.ComponentProps<'span'>, 'children'> {
   points: readonly Point[];
   polarity?: Polarity;
@@ -69,13 +97,19 @@ export interface DeltaProps extends Omit<React.ComponentProps<'span'>, 'children
   percent?: boolean;
   /** Noun for the accessible sentence — "views", "downloads". */
   unit?: string;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
+  /** Replace the spoken words: the empty note and the change sentence. */
+  labels?: Partial<DeltaLabels>;
 }
 
 export const Delta = React.forwardRef<HTMLSpanElement, DeltaProps>(function Delta(
-  { points, polarity = 'normal', percent = true, unit, className, ...props },
+  { points, polarity = 'normal', percent = true, unit, locale, labels: labelsProp, className, ...props },
   ref,
 ) {
   const change = React.useMemo(() => computeDelta(points), [points]);
+  const labels = { ...LABELS, ...labelsProp };
+  const format = new Intl.NumberFormat(locale);
 
   if (!change) {
     return (
@@ -86,21 +120,31 @@ export const Delta = React.forwardRef<HTMLSpanElement, DeltaProps>(function Delt
         {...props}
       >
         <span aria-hidden>–</span>
-        <span className="sr-only">Not enough data to compare</span>
+        <span className="sr-only">{labels.empty}</span>
       </span>
     );
   }
 
   const tone = toneFor(change.direction, polarity);
   const sign = change.direction === 'up' ? '+' : change.direction === 'down' ? '−' : '';
-  const magnitude = Math.abs(change.abs).toLocaleString();
-  const pct = change.pct === null ? null : `${Math.abs(change.pct).toFixed(1)}%`;
+  const magnitude = format.format(Math.abs(change.abs));
+  const pct =
+    change.pct === null
+      ? null
+      : new Intl.NumberFormat(locale, {
+          style: 'percent',
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+        }).format(Math.abs(change.pct) / 100);
 
-  const spoken =
-    change.direction === 'flat'
-      ? `unchanged${unit ? ` ${unit}` : ''}`
-      : `${change.direction} ${magnitude}${unit ? ` ${unit}` : ''}` +
-        `${pct ? `, ${pct}` : ''}, from ${change.from.toLocaleString()} to ${change.to.toLocaleString()}`;
+  const spoken = labels.spoken({
+    direction: change.direction,
+    magnitude,
+    pct,
+    from: format.format(change.from),
+    to: format.format(change.to),
+    unit,
+  });
 
   return (
     <span

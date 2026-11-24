@@ -587,6 +587,22 @@
           "source": ".changeset/light-subtree.md"
         },
         {
+          "summary": "The line charts can be shown in any language. `TimeSeries` and `RadialWeave` take `labels` (a shared `TimeSeriesLabels` set: the unnamed-series word, the empty note, the readout's missing word, the \"more not plotted\" note, the keyboard instructions, the table caption, date header and empty cell, the spoken summary and the comparison's words) and a `locale` for their numbers. `Delta` takes `labels` for its empty note and spoken sentence, and a `locale`. `Sparkline` takes `summary` and `locale`. `SeriesTable` takes `noDataLabel` and `locale`. `describeSeries` builds its sentence from a new `SeriesSummary`, with `seriesSentence` as the English default, and `compact` takes a locale. English output is unchanged. `SeatChart`'s `seatsLabel` doc now says the spoken sentence has its own words.",
+          "components": [
+            "time-series",
+            "radial-weave",
+            "delta",
+            "sparkline",
+            "series-table",
+            "seat-chart"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/line-chart-labels.md"
+        },
+        {
           "summary": "New `List` primitive with markers that carry the voice of the page: `bullet`, `number` (a real `ol`, numbered by the browser in a filled circle), `check` and `cross`. Markers are drawn in CSS, so they centre on the first line whatever the item holds (rich text, inline `Citation` chips) and are never read aloud; `start` and `reversed` work as on any ordered list. `density` sets the space between items.",
           "components": [
             "list"
