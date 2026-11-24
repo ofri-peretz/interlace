@@ -379,7 +379,9 @@ export const DotPlot = React.forwardRef<HTMLElement, DotPlotProps>(function DotP
   const span = hi - lo;
   // The track is inset by a dot's radius (`px-1.5`), so a dot at either end is never clipped.
   const pct = (v: number) => `${Number((Math.min(1, Math.max(0, (v - lo) / span)) * 100).toFixed(3))}%`;
-  const active = hovered ?? pinned;
+  // A pin or hover can outlive its series when `series` shrinks; then nothing is picked out.
+  const picked = hovered ?? pinned;
+  const active = picked !== null && picked < series.length ? picked : null;
   const endId = active === null ? last! : series[active]!.id;
 
   const point = (event: React.PointerEvent<SVGSVGElement>) => {

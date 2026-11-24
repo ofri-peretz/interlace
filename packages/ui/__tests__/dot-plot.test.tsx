@@ -298,3 +298,14 @@ describe('<DotPlot> axis labels', () => {
     expect(container.querySelector('[data-slot="dot-plot-axis"] text')).toBeTruthy();
   });
 });
+
+describe('<DotPlot> when series change', () => {
+  it('lets go of a pinned series that no longer exists, instead of crashing', () => {
+    const { rerender, container } = render(<DotPlot rows={ROWS} series={YEARS} format={pctFormat} locale="en-US" />);
+    fireEvent.click(screen.getByRole('button', { name: /Year two/ }));
+    expect(screen.getByRole('button', { name: /Year two/ }).getAttribute('aria-pressed')).toBe('true');
+    rerender(<DotPlot rows={ROWS} series={YEARS.slice(0, 1)} format={pctFormat} locale="en-US" />);
+    expect(container.querySelector('[data-slot="dot-plot-dot"][class*="opacity-25"]')).toBeNull();
+    expect(screen.getByRole('button', { name: /Year one/ }).getAttribute('aria-pressed')).toBe('false');
+  });
+});
