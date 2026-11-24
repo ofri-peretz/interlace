@@ -209,6 +209,17 @@
           "source": ".changeset/callout-highlight.md"
         },
         {
+          "summary": "New `Celebrate` effect for a moment someone earned: wrap the thing that earned it (a streak count, a score) and a ring and a burst of rays go out from it each time `play` changes, never on first render, so a restored page does not replay it. `CelebrateCheck` is a check mark that draws itself, and `vibrate` gives an opt-in matching tap (`tap`, `success`, `milestone`, `miss`) where the browser supports it. 600ms and 300ms, transform, opacity and stroke only, and nothing plays under reduced motion.",
+          "components": [
+            "celebrate"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/celebrate.md"
+        },
+        {
           "summary": "New `ChartFrame`: the frame a published chart sits in. A `title` that states the finding (at the `headingLevel` the page needs) and a `subtitle` on what is measured sit above any chart; the footer names every `source` (linked when it has an address), a `note` on how to read the numbers and when they were `updated`, all as plain HTML under the chart. Pass `table` and the frame offers Chart and Table views as tabs, both kept in the server HTML. `download` writes the rows as a UTF-8 CSV into a link at render time, so it works before scripts load, and prefixes cells a spreadsheet would run as a formula. Every fixed word comes from `labels`, and the date goes through `Intl` in `locale`. `toCsv` and `csvHref` are exported and pure.",
           "components": [
             "chart-frame"
@@ -486,6 +497,21 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/games-daily-share-board.md"
+        },
+        {
+          "summary": "Four new pieces for daily games and live quizzes. `Poll`: one question, one tap; the options turn into the results in place, bars growing to everyone's shares, the viewer's choice named, and `minVotes` keeping small polls private. `QuizQuestion`: big answer tiles you tap or pick with keys 1 to 9, an optional `timeLimit` drawn by the new `TimerRing` (with a \"Stop the clock\" button that always works and never pays more than racing), and a reveal that marks the right tile, says how you did and shows how everyone answered in the new `TallyBars`. `OrderGame`: put items in order by dragging a handle, the arrow keys or up and down buttons, then watch the rows travel to their right places with each value and where you had it. Dealing and scoring are pure and exported from `games/tally-model` (`tally`, `wholePercents`: percents that sum to 100), `games/quiz-model` (`scoreAnswer`) and `games/order-model` (`dealOrder`, `scoreOrder`, `moveItem`), so a server repeats them. Every word goes through `labels`; every motion is transform or opacity and is off under reduced motion.",
+          "components": [
+            "poll",
+            "quiz-question",
+            "timer-ring",
+            "tally-bars",
+            "order-game"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-habit-batch.md"
         },
         {
           "summary": "New `games` tier, the engine of a daily game, starting with `Streak`: a player's run of days, a sentence on where today stands (\"Play today to keep your streak.\") and a strip of recent days marked played, rest, missed or still open. Rest days are a setting, not a special case: `rest={{ weekdays: [6], dates: ['2026-12-25'] }}` names days that never break a run, and a rest day the player plays anyway still counts. Today never ends a run while it is still open. Each mark pairs its colour with a shape and an icon, and every day is read out with its date and state; `variant=\"compact\"` is one chip for a header. No hooks, so it renders on the server. The arithmetic ships beside it and is exported: `games/daily` (day keys in a time zone, puzzle numbers, a seeded puzzle-of-the-day that never repeats inside a cycle, time to the next day) and `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`).",

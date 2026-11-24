@@ -335,6 +335,17 @@
     "previewDark": "primitives-card--dark",
     "skeleton": "primitives-card--loading"
   },
+  "celebrate": {
+    "title": "Effects/Celebrate",
+    "storyIds": [
+      "effects-celebrate--default",
+      "effects-celebrate--check",
+      "effects-celebrate--haptics"
+    ],
+    "preview": "effects-celebrate--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "chart-frame": {
     "title": "Charts/ChartFrame",
     "storyIds": [
@@ -1378,6 +1389,18 @@
     "previewDark": "primitives-numberfield--dark",
     "skeleton": "primitives-numberfield--loading"
   },
+  "order-game": {
+    "title": "Games/OrderGame",
+    "storyIds": [
+      "games-ordergame--default",
+      "games-ordergame--revealed",
+      "games-ordergame--keyboard-moves",
+      "games-ordergame--right-to-left"
+    ],
+    "preview": "games-ordergame--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "otp-field": {
     "title": "Primitives/OtpField",
     "storyIds": [
@@ -1418,6 +1441,19 @@
     "preview": "primitives-pagination--default",
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
+  },
+  "poll": {
+    "title": "Games/Poll",
+    "storyIds": [
+      "games-poll--default",
+      "games-poll--voted",
+      "games-poll--cast-av-ote",
+      "games-poll--held-back",
+      "games-poll--right-to-left"
+    ],
+    "preview": "games-poll--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "popover": {
     "title": "Primitives/Popover",
@@ -1502,6 +1538,20 @@
     "preview": "primitives-publisheddate--variants",
     "previewDark": "primitives-publisheddate--dark",
     "skeleton": "primitives-publisheddate--loading"
+  },
+  "quiz-question": {
+    "title": "Games/QuizQuestion",
+    "storyIds": [
+      "games-quizquestion--default",
+      "games-quizquestion--wrong",
+      "games-quizquestion--right",
+      "games-quizquestion--timed",
+      "games-quizquestion--keyboard-pick",
+      "games-quizquestion--right-to-left"
+    ],
+    "preview": "games-quizquestion--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "radial-weave": {
     "title": "Charts/RadialWeave",
@@ -2307,6 +2357,16 @@
     "previewDark": "templates-tagtemplate--dark",
     "skeleton": "templates-tagtemplate--page-skeleton"
   },
+  "tally-bars": {
+    "title": "Games/TallyBars",
+    "storyIds": [
+      "games-tallybars--default",
+      "games-tallybars--quiz-spread"
+    ],
+    "preview": "games-tallybars--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "testimonial": {
     "title": "Blocks/Testimonial",
     "storyIds": [
@@ -2469,6 +2529,17 @@
       "blocks-timelinemap--reading-time-landscape"
     ],
     "preview": "blocks-timelinemap--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "timer-ring": {
+    "title": "Games/TimerRing",
+    "storyIds": [
+      "games-timerring--default",
+      "games-timerring--sizes",
+      "games-timerring--countdown"
+    ],
+    "preview": "games-timerring--default",
     "previewDark": null,
     "skeleton": null
   },
