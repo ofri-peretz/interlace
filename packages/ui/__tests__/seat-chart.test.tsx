@@ -308,8 +308,8 @@ describe('placeGroups', () => {
     expect([of('North').tone, of('South').tone, of('Centre').tone]).toEqual([3, 3, 3]);
     expect([of('North').shade, of('South').shade, of('Centre').shade]).toEqual([0, 1, 2]);
     expect([of('East').shade, of('West').shade]).toEqual([0, 1]);
-    // No side, no tone: it takes the palette by position.
-    expect(of('Free').tone).toBe(5);
+    // No side, no tone: it takes the next default colour the sides left free.
+    expect(`${of('Free').tone}:${of('Free').shade}`).toBe('2:0');
   });
 
   it('puts middle sides in their order and groups with no side after them', () => {
@@ -338,7 +338,24 @@ describe('placeGroups', () => {
       { label: 'f', seats: 1 },
       { label: 'g', seats: 1 },
     ]);
-    expect(placed.map((g) => `${g.tone}:${g.shade}`)).toEqual(['neutral:0', 'neutral:1', '2:0', '4:0', '5:0', '1:1', '2:2']);
+    expect(placed.map((g) => `${g.tone}:${g.shade}`)).toEqual(['neutral:0', 'neutral:1', '2:0', '1:0', '3:0', '4:0', '5:0']);
+  });
+
+  it('never gives a default colour and a named tone the same fill', () => {
+    const placed = placeGroups([
+      { label: 'A', seats: 1 },
+      { label: 'B', seats: 1, tone: 1 },
+      { label: 'C', seats: 1, tone: 1 },
+    ]);
+    const keys = placed.map((g) => `${g.tone}:${g.shade}`);
+    expect(keys).toEqual(['2:0', '1:0', '1:1']);
+    expect(new Set(keys).size).toBe(3);
+  });
+
+  it('keeps reusing default colours once all of them are taken', () => {
+    const placed = placeGroups(Array.from({ length: 20 }, (_, i) => ({ label: `L${i}`, seats: 1 })));
+    expect(placed).toHaveLength(20);
+    expect(new Set(placed.slice(0, 18).map((g) => `${g.tone}:${g.shade}`)).size).toBe(18);
   });
 
   it('gives eleven untoned lists eleven colours: the five hues, then deeper and paler in turn, then grey', () => {

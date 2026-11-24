@@ -294,30 +294,63 @@ const DEFAULT_COLOURS: readonly (readonly [SeatTone, number])[] = [
  * first side runs from the left end, the last from the right end, and the
  * rest sit between; each group takes the next shade of its side's tone.
  * Without sides, groups keep their order and a repeated tone takes its next
- * shade. A group with no tone and no side takes the next of
- * `DEFAULT_COLOURS`, so eleven lists get eleven colours.
+ * shade. A group with no tone and no side takes the next free entry of
+ * `DEFAULT_COLOURS`, so eleven lists get eleven colours. Groups that name a
+ * tone claim their shades first, so the two kinds never share a fill.
  */
 export function placeGroups(groups: readonly SeatGroup[], sides: readonly SeatSide[] = []): PlacedGroup[] {
   const sideAt = (id?: string) => sides.findIndex((side) => side.id === id);
-  const used = new Map<string, number>();
-  const shadeOf = (key: string) => {
-    const n = used.get(key) ?? 0;
-    used.set(key, n + 1);
+  // Shades already taken per tone, so a group with its own tone and a group
+  // given a default colour never share a fill.
+  const taken = new Map<string, Set<number>>();
+  const take = (key: string, shade?: number) => {
+    const set = taken.get(key) ?? new Set<number>();
+    taken.set(key, set);
+    let n = shade ?? 0;
+    if (shade === undefined) while (set.has(n)) n += 1;
+    set.add(n);
     return n;
+  };
+  const isTaken = ([tone, shade]: readonly [SeatTone, number]) =>
+    taken.get(`tone:${tone}`)?.has(shade) ?? false;
+  // Groups that name a tone or a side claim their shades first, in order.
+  const fixed = groups.map((group) => {
+    const side = sides[sideAt(group.side)];
+    if (group.tone) return take(`tone:${group.tone}`);
+    if (side) {
+      const shade = take(`side:${side.id}`);
+      take(`tone:${side.tone}`, shade);
+      return shade;
+    }
+    return undefined;
+  });
+  // The rest take the next default colour that is still free.
+  let cursor = 0;
+  const nextDefault = () => {
+    for (let tries = 0; tries < DEFAULT_COLOURS.length; tries += 1) {
+      const colour = DEFAULT_COLOURS[cursor % DEFAULT_COLOURS.length]!;
+      cursor += 1;
+      if (!isTaken(colour)) return colour;
+    }
+    return DEFAULT_COLOURS[(cursor - 1) % DEFAULT_COLOURS.length]!;
   };
   const placed = groups.map((group, index): PlacedGroup => {
     const sideIndex = sideAt(group.side);
     const side = sides[sideIndex];
-    const fallback = DEFAULT_COLOURS[index % DEFAULT_COLOURS.length]!;
-    const tone: SeatTone = group.tone ?? side?.tone ?? fallback[0];
-    const own = !group.tone && !side;
+    let tone: SeatTone = group.tone ?? side?.tone ?? 'neutral';
+    let shade = fixed[index];
+    if (shade === undefined) {
+      const colour = nextDefault();
+      tone = colour[0];
+      shade = take(`tone:${tone}`, colour[1]);
+    }
     return {
       ...group,
       seats: Math.max(0, Math.floor(group.seats)),
       index,
       sideIndex,
       tone,
-      shade: own ? fallback[1] : shadeOf(side && !group.tone ? `side:${side.id}` : `tone:${tone}`),
+      shade,
     };
   });
   if (sides.length === 0) return placed;
