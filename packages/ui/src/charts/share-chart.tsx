@@ -29,7 +29,8 @@
  *
  * ## Colour is never the only channel
  *
- * Stacked categories take the five chart hues in order, then neutral.
+ * Stacked categories take the five chart hues in order, skipping any a
+ * category names for itself, then neutral.
  * Diverging categories take two poles (`poles`, chart hues 1 and 3 by
  * default): the outer category of each side in the full tone, the inner ones
  * lighter towards the middle, and the neutral one grey. The legend names
@@ -265,12 +266,11 @@ export function shareFills(
   options: { neutral?: number; split?: number; poles?: readonly [ShareTone, ShareTone] } = {},
 ): string[] {
   if (layout === 'stacked') {
+    // Auto tones skip every hue a category names, wherever it sits, so no two categories share a fill.
+    const named = new Set(categories.map((c) => c.tone));
+    const free = STACK_ORDER.filter((tone) => !named.has(tone));
     let next = 0;
-    return categories.map((c) => {
-      if (c.tone !== undefined) return FILLS[c.tone][0];
-      const tone = STACK_ORDER[next++] ?? 'neutral';
-      return FILLS[tone][0];
-    });
+    return categories.map((c) => FILLS[c.tone ?? free[next++] ?? 'neutral'][0]);
   }
   const [startPole, endPole] = options.poles ?? [1, 3];
   const neutral = options.neutral !== undefined && options.neutral >= 0 ? options.neutral : -1;

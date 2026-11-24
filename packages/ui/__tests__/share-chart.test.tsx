@@ -100,6 +100,11 @@ describe('shareFills', () => {
     expect(fills).toEqual(['fill-chart-1', 'fill-chart-2', 'fill-chart-3', 'fill-muted-foreground']);
   });
 
+  it('never gives an auto-toned category a hue another category names', () => {
+    const fills = shareFills([{ id: 'a', label: 'A', tone: 2 }, { id: 'b', label: 'B' }, { id: 'c', label: 'C' }], 'stacked');
+    expect(fills).toEqual(['fill-chart-2', 'fill-chart-1', 'fill-chart-3']);
+  });
+
   it('gives each diverging side its pole, strongest at the ends, and greys the neutral', () => {
     const fills = shareFills(SCALE, 'diverging', { neutral: 2 });
     expect(fills[0]).toBe('fill-chart-1');
