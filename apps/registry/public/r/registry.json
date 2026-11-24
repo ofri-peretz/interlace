@@ -17,7 +17,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.1.0",
+        "version": "4.11.1",
         "since": null
       }
     },
@@ -53,7 +53,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.1.0",
+        "version": "3.3.0",
         "since": null
       }
     },
@@ -71,7 +71,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.0.0",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -89,7 +89,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.0.0",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -107,7 +107,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.0.0",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -125,7 +125,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -143,7 +143,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "3.0.0",
         "since": "1.0.0"
       }
     },
@@ -184,6 +184,24 @@
       }
     },
     {
+      "name": "use-reading-prefs",
+      "type": "registry:lib",
+      "title": "useReadingPrefs hook",
+      "description": "@interlace/ui — reads and writes the reader's text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "theme-script",
       "type": "registry:lib",
       "title": "No-flash theme bootstrap script",
@@ -215,7 +233,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -233,7 +251,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -359,7 +377,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.1.0",
+        "version": "3.3.0",
         "since": "1.0.0"
       }
     },
@@ -377,7 +395,7 @@
         "client": true,
         "minViewport": null,
         "loading": true,
-        "version": "2.1.0",
+        "version": "3.4.0",
         "since": "1.0.0"
       }
     },
@@ -395,7 +413,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.1",
         "since": "1.0.0"
       }
     },
@@ -413,7 +431,7 @@
         "client": false,
         "minViewport": null,
         "loading": true,
-        "version": "1.2.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -431,7 +449,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.0.1",
         "since": "1.0.0"
       }
     },
@@ -503,7 +521,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.0.0",
+        "version": "3.1.0",
         "since": "1.1.0"
       }
     },
@@ -539,7 +557,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.0.0",
+        "version": "3.0.1",
         "since": "1.0.0"
       }
     },
@@ -557,7 +575,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -611,7 +629,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -647,7 +665,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -665,7 +683,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.0.1",
         "since": null
       }
     },
@@ -737,7 +755,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.0.1",
         "since": "1.0.0"
       }
     },
@@ -773,7 +791,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -881,8 +899,26 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "otp-field",
+      "type": "registry:ui",
+      "title": "Otp Field",
+      "description": "A one-time code typed into a row of boxes, one character each: the \"enter the 6-digit code we emailed you\" field. Built on Base UI's OTPField, which owns the hard parts: paste of the whole code into any box, the phone's \"from Messages\" autofill…",
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -899,7 +935,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -917,7 +953,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -953,7 +989,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.0.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },
@@ -991,6 +1027,24 @@
         "loading": false,
         "version": "1.2.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "reading-settings",
+      "type": "registry:ui",
+      "title": "Reading Settings",
+      "description": "A text size control and a More contrast toggle: two small controls for the reader, not the theme author. They write the `data-text-size` and `data-contrast` attributes on `<html>` through `useReadingPrefs`, remember the choice, and `THEME_SCRIPT` puts it…",
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -1115,7 +1169,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.2.0",
         "since": "1.0.0"
       }
     },
@@ -1151,7 +1205,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1169,7 +1223,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1187,7 +1241,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1228,6 +1282,24 @@
       }
     },
     {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Something is working and there is no number to show yet. The shadcn core `spinner` item, drawn in Interlace tokens. Use `Progress` when you know how far along it is, and `Skeleton` when you know the shape of what is coming.",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "stack",
       "type": "registry:ui",
       "title": "Stack",
@@ -1259,7 +1331,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.1.0"
       }
     },
@@ -1295,7 +1367,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1331,7 +1403,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "3.0.0",
+        "version": "3.0.1",
         "since": "1.0.0"
       }
     },
@@ -1349,7 +1421,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1393,7 +1465,7 @@
       "name": "toc",
       "type": "registry:ui",
       "title": "Toc",
-      "description": "The in-page Table of Contents. Long-form pages (docs, MDX articles, rule reference) need a persistent navigation rail that mirrors the heading outline so a reader can both orient themselves and jump. On wide viewports this lives in a right-hand rail…",
+      "description": "The in-page Table of Contents. A long read needs a quiet map of its headings that shows where the reader is and lets them jump. On a wide layout it is a rail beside the text (`Toc`); on a narrow one it is a slim bar that names the current section and opens…",
       "categories": [
         "blog",
         "primitive"
@@ -1403,7 +1475,7 @@
         "client": true,
         "minViewport": 480,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.0.1",
         "since": "1.0.0"
       }
     },
@@ -1421,7 +1493,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.2.0",
         "since": "1.0.0"
       }
     },
@@ -1439,7 +1511,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "3.4.0",
         "since": null
       }
     },
@@ -1457,7 +1529,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1529,7 +1601,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "3.0.0",
         "since": null
       }
     },
@@ -1565,7 +1637,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "2.0.0",
         "since": null
       }
     },
@@ -1619,7 +1691,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "3.0.0",
         "since": null
       }
     },
@@ -1673,7 +1745,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "2.0.0",
         "since": null
       }
     },
@@ -1745,7 +1817,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "2.0.0",
         "since": null
       }
     },
@@ -1799,7 +1871,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.0.0",
+        "version": "2.0.0",
         "since": null
       }
     },
@@ -1853,7 +1925,7 @@
         "client": true,
         "minViewport": null,
         "loading": true,
-        "version": "3.0.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },
@@ -1871,7 +1943,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.0",
+        "version": "2.2.0",
         "since": "1.0.0"
       }
     },
@@ -1961,7 +2033,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.2.0",
         "since": null
       }
     },
@@ -1979,7 +2051,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -1997,7 +2069,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.0",
+        "version": "3.0.0",
         "since": "1.0.0"
       }
     },
@@ -2051,7 +2123,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2069,7 +2141,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.2.0",
         "since": null
       }
     },
@@ -2123,7 +2195,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.0",
+        "version": "2.2.0",
         "since": "1.0.0"
       }
     },
@@ -2159,7 +2231,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.1",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2177,7 +2249,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2195,7 +2267,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -2231,7 +2303,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.1.0",
+        "version": "5.1.0",
         "since": "1.0.0"
       }
     },
@@ -2249,7 +2321,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.1",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -2339,7 +2411,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.0",
+        "version": "2.2.1",
         "since": "1.0.0"
       }
     },
@@ -2347,7 +2419,7 @@
       "name": "reading-layout",
       "type": "registry:ui",
       "title": "Reading Layout",
-      "description": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into an \"On this page\" button (`TocPopover`) on a bar that sticks to…",
+      "description": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into a slim bar (`TocBar`) that sticks to the top of the column, names…",
       "categories": [
         "blog",
         "pattern"
@@ -2375,7 +2447,7 @@
         "client": false,
         "minViewport": 480,
         "loading": true,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -2447,7 +2519,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2467,6 +2539,42 @@
         "loading": false,
         "version": "1.2.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "sign-in-methods",
+      "type": "registry:ui",
+      "title": "Sign In Methods",
+      "description": "The \"ways you can sign in\" list on an account page: one row per method (Google, Apple, email…), each with its mark, what it is linked to, and a Connect or Disconnect button. Disconnecting asks once more in place (\"Disconnect\" → \"Yes, disconnect\" /…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.1",
+        "since": null
+      }
+    },
+    {
+      "name": "social-sign-in",
+      "type": "registry:ui",
+      "title": "Social Sign In",
+      "description": "\"Continue with Google / Apple / X / …\" plus an optional email link, in one form. Pick the providers and their order; the first `featured` ones get a full-width button with their name, the rest share a row of icon buttons, and the provider the visitor used…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.1.0",
+        "since": null
       }
     },
     {
@@ -2501,7 +2609,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "3.0.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },
@@ -2519,7 +2627,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.0",
+        "version": "2.3.0",
         "since": "1.0.0"
       }
     },
@@ -2537,7 +2645,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.0.1",
         "since": null
       }
     },
@@ -2555,7 +2663,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -2609,7 +2717,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.0.2",
         "since": null
       }
     },
@@ -2618,6 +2726,42 @@
       "type": "registry:ui",
       "title": "Topbar Menu",
       "description": "The small-screen half of `Topbar`: a \"Menu\" button that opens the site's links in a panel at the edge of the screen. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "2.2.0",
+        "since": null
+      }
+    },
+    {
+      "name": "topbar-nav",
+      "type": "registry:ui",
+      "title": "Topbar Nav",
+      "description": "The wide-screen half of `Topbar` when its links hold groups: a row of plain links and group triggers, where a group opens a panel of its items, each with an optional icon and a one-line description. It is how a site that is a family of products lists them…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.1.0",
+        "since": null
+      }
+    },
+    {
+      "name": "topbar-scroll-edge",
+      "type": "registry:ui",
+      "title": "Topbar Scroll Edge",
+      "description": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…",
       "categories": [
         "navigation",
         "pattern"
@@ -2645,7 +2789,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.0",
+        "version": "2.6.0",
         "since": "1.0.0"
       }
     },
@@ -2663,6 +2807,42 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
+        "version": "1.0.1",
+        "since": null
+      }
+    },
+    {
+      "name": "chart-frame",
+      "type": "registry:ui",
+      "title": "Chart Frame",
+      "description": "The frame a published chart sits in: a title that states the finding, a line on what is measured, the chart, and a footer with where the numbers came from and a copy of them to take away. Every chart on a page gets the same frame, so a reader learns once…",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "choropleth-map",
+      "type": "registry:ui",
+      "title": "Choropleth Map",
+      "description": "A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
         "version": "1.0.0",
         "since": null
       }
@@ -2701,6 +2881,24 @@
         "loading": true,
         "version": "2.0.0",
         "since": "1.1.0"
+      }
+    },
+    {
+      "name": "dot-plot",
+      "type": "registry:ui",
+      "title": "Dot Plot",
+      "description": "One dot per value on a shared axis, one row per thing compared: support for a policy by age group in two years, life expectancy by country for women and men, a price in three cities. With two or more series, a line joins each row's dots, so the length of…",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -2758,6 +2956,24 @@
       }
     },
     {
+      "name": "seat-chart",
+      "type": "registry:ui",
+      "title": "Seat Chart",
+      "description": "How an assembly divides its seats: a half-circle of dots, one per seat, filled group by group. It answers the question a results table cannot answer at a glance: who holds the room, and how far each side is from a majority.",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "series-table",
       "type": "registry:ui",
       "title": "Series Table",
@@ -2773,6 +2989,24 @@
         "loading": false,
         "version": "1.2.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "share-chart",
+      "type": "registry:ui",
+      "title": "Share Chart",
+      "description": "How a whole splits into parts, one bar per row: survey answers by group, a budget by department, time by activity. Each row is one 100% bar cut into segments, and every row shares one scale, so rows compare at a glance.",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -2809,6 +3043,96 @@
         "loading": true,
         "version": "2.0.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "closer-game",
+      "type": "registry:ui",
+      "title": "Closer Game",
+      "description": "Guess a number by sliding to it. The player sets a value on a slider (or types it), locks it in, and the answer slides out from their guess to where it really is, with the gap between them shaded and said in words: \"900 off. Close.\" Scoring lives in…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "daily-puzzle",
+      "type": "registry:ui",
+      "title": "Daily Puzzle",
+      "description": "The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "leaderboard",
+      "type": "registry:ui",
+      "title": "Leaderboard",
+      "description": "A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "share-card",
+      "type": "registry:ui",
+      "title": "Share Card",
+      "description": "How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "streak",
+      "type": "registry:ui",
+      "title": "Streak",
+      "description": "A player's run of days: the count, a line on where today stands, and a strip of recent days, each marked played, rested, missed or still open. Rest days come from a `RestRule` (weekdays and dates that never break a run), so a habit does not punish a day…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {

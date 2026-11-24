@@ -275,3 +275,103 @@
   --color-viz-annotation-release: var(--viz-annotation-release);
   --color-viz-annotation-action: var(--viz-annotation-action);
 }
+
+/*
+ * ── More contrast, an AAA reading mode on top of any theme.
+ *
+ * Interlace's floor is WCAG 2.2 AA in every theme. This mode is for readers
+ * who find that hard to read. It turns on in two ways:
+ *
+ *   - by itself, when the reader's system asks for it
+ *     (`prefers-contrast: more`), unless the page sets data-contrast="normal";
+ *   - when the page asks for it, with data-contrast="more" on <html> or on
+ *     any region, for example from a reading-settings toggle.
+ *
+ * What it does, all by re-pointing the semantic tokens the components
+ * already read, so it works on every theme and in both schemes:
+ *
+ *   1. Every text colour becomes the theme's own foreground, which clears
+ *      7:1 (AAA) on its background. Secondary text stops being grey.
+ *   2. Surfaces (muted, accent, secondary) become a faint 6% tint of the
+ *      foreground, so text on them stays at AAA.
+ *   3. Primary becomes foreground on background: the strongest pair the
+ *      theme has. A brand that wants its own colour here sets
+ *      `--contrast-primary` and `--contrast-primary-foreground` (anywhere,
+ *      unlayered is fine) to a pair it has measured at 7:1, including on
+ *      tinted surfaces built from primary, such as text-primary on
+ *      bg-primary/10.
+ *   4. Status colours mix toward the foreground until their text clears 7:1,
+ *      as text on the page and as a filled chip.
+ *   5. Borders and inputs darken to a clear line, and the ring becomes the
+ *      foreground colour. With `data-contrast="more"`, the focus indicator
+ *      also becomes a 3px outline 2px outside the element. The system
+ *      preference path only upgrades the ring colour; see structure/focus.css.
+ *   Highlight is left alone: it is only used as highlight-foreground on
+ *   highlight, which every brand already sets at 11:1 or more.
+ *
+ * contrast-more-lock recomputes every pair for every theme in both schemes.
+ * Every declaration is !important, on purpose. Brands are told to declare
+ * their tokens unlayered on :root, and an unlayered rule beats any layered
+ * one, so without !important a branded app would silently lose the mode.
+ * A layered !important wins over unlayered rules, important or not, which
+ * makes the reader's request authoritative. The one hook a brand gets is
+ * the primary pair in point 3. The focus outline is a property, not a
+ * token, so it lives in structure/focus.css.
+ */
+@layer interlace.semantics {
+  [data-contrast='more'],
+  [data-contrast='more'] :is(.dark, [data-scheme], [data-theme]) {
+    --card-foreground: var(--foreground) !important;
+    --popover-foreground: var(--foreground) !important;
+    --muted: color-mix(in srgb, var(--foreground) 6%, var(--background)) !important;
+    --muted-foreground: var(--foreground) !important;
+    --accent: color-mix(in srgb, var(--foreground) 6%, var(--background)) !important;
+    --accent-foreground: var(--foreground) !important;
+    --secondary: color-mix(in srgb, var(--foreground) 6%, var(--background)) !important;
+    --secondary-foreground: var(--foreground) !important;
+    --primary: var(--contrast-primary, var(--foreground)) !important;
+    --primary-foreground: var(--contrast-primary-foreground, var(--background)) !important;
+    --border: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
+    --input: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
+    --ring: var(--foreground) !important;
+    --destructive: color-mix(in srgb, var(--interlace-destructive) 45%, var(--foreground)) !important;
+    --destructive-foreground: var(--background) !important;
+    --success: color-mix(in srgb, var(--interlace-success) 45%, var(--foreground)) !important;
+    --success-foreground: var(--background) !important;
+    --warning: color-mix(in srgb, var(--interlace-warning) 45%, var(--foreground)) !important;
+    --warning-foreground: var(--background) !important;
+    --info: color-mix(in srgb, var(--interlace-info) 45%, var(--foreground)) !important;
+    --info-foreground: var(--background) !important;
+    --caution: color-mix(in srgb, var(--interlace-caution) 45%, var(--foreground)) !important;
+    --caution-foreground: var(--background) !important;
+  }
+
+  @media (prefers-contrast: more) {
+    :root:not([data-contrast='normal']),
+    :root:not([data-contrast='normal']) :is(.dark, [data-scheme], [data-theme]) {
+      --card-foreground: var(--foreground) !important;
+      --popover-foreground: var(--foreground) !important;
+      --muted: color-mix(in srgb, var(--foreground) 6%, var(--background)) !important;
+      --muted-foreground: var(--foreground) !important;
+      --accent: color-mix(in srgb, var(--foreground) 6%, var(--background)) !important;
+      --accent-foreground: var(--foreground) !important;
+      --secondary: color-mix(in srgb, var(--foreground) 6%, var(--background)) !important;
+      --secondary-foreground: var(--foreground) !important;
+      --primary: var(--contrast-primary, var(--foreground)) !important;
+      --primary-foreground: var(--contrast-primary-foreground, var(--background)) !important;
+      --border: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
+      --input: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
+      --ring: var(--foreground) !important;
+      --destructive: color-mix(in srgb, var(--interlace-destructive) 45%, var(--foreground)) !important;
+      --destructive-foreground: var(--background) !important;
+      --success: color-mix(in srgb, var(--interlace-success) 45%, var(--foreground)) !important;
+      --success-foreground: var(--background) !important;
+      --warning: color-mix(in srgb, var(--interlace-warning) 45%, var(--foreground)) !important;
+      --warning-foreground: var(--background) !important;
+      --info: color-mix(in srgb, var(--interlace-info) 45%, var(--foreground)) !important;
+      --info-foreground: var(--background) !important;
+      --caution: color-mix(in srgb, var(--interlace-caution) 45%, var(--foreground)) !important;
+      --caution-foreground: var(--background) !important;
+    }
+  }
+}

@@ -78,6 +78,10 @@ export interface SeriesTableProps extends React.ComponentProps<'div'> {
    * would become "Wednesday ".
    */
   axis?: 'time' | 'category';
+  /** The word in an empty cell. @default 'No data' */
+  noDataLabel?: string;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
 }
 
 export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
@@ -88,6 +92,8 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
       hidden = true,
       keyLabel = 'Date',
       axis = 'time',
+      noDataLabel = 'No data',
+      locale,
       className,
       ...props
     },
@@ -103,6 +109,8 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
         for (const p of s.points) keys.add(axis === 'time' ? day(p.t) : p.t);
       return axis === 'time' ? [...keys].sort() : [...keys];
     }, [series, axis]);
+
+    const format = new Intl.NumberFormat(locale);
 
     const byKey = React.useMemo(
       () =>
@@ -121,17 +129,17 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
         {...props}
       >
         <table className="w-full border-collapse text-sm tabular-nums">
-          <caption className="mb-2 text-left text-xs text-muted-foreground">{caption}</caption>
+          <caption className="mb-2 text-start text-xs text-muted-foreground">{caption}</caption>
           <thead>
             <tr>
-              <th scope="col" className="border-b border-border px-3 py-2 text-left font-medium">
+              <th scope="col" className="border-b border-border px-3 py-2 text-start font-medium">
                 {keyLabel}
               </th>
               {series.map((s) => (
                 <th
                   key={s.label}
                   scope="col"
-                  className="border-b border-border px-3 py-2 text-right font-medium"
+                  className="border-b border-border px-3 py-2 text-end font-medium"
                 >
                   {s.label}
                 </th>
@@ -143,7 +151,7 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
               <tr key={key}>
                 <th
                   scope="row"
-                  className="border-b border-border px-3 py-1.5 text-left font-normal"
+                  className="border-b border-border px-3 py-1.5 text-start font-normal"
                 >
                   {key}
                 </th>
@@ -152,14 +160,14 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
                   return (
                     <td
                       key={series[i].label}
-                      className="border-b border-border px-3 py-1.5 text-right"
+                      className="border-b border-border px-3 py-1.5 text-end"
                     >
                       {/* "No data" spelled out, not an em dash — a screen
                           reader announces "—" as nothing at all. */}
                       {value == null ? (
-                        <span className="text-muted-foreground">No data</span>
+                        <span className="text-muted-foreground">{noDataLabel}</span>
                       ) : (
-                        value.toLocaleString()
+                        format.format(value)
                       )}
                     </td>
                   );

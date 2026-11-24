@@ -149,7 +149,7 @@ function CitationSource({ source }: { source: CitationSourceData }) {
         {detail ? <span className="text-muted-foreground"> ({detail})</span> : null}
       </p>
       {source.quote ? (
-        <blockquote className="border-border text-muted-foreground border-l-2 pl-3 text-sm italic">
+        <blockquote className="border-border text-muted-foreground border-s-2 ps-3 text-sm italic">
           {source.quote}
         </blockquote>
       ) : null}
@@ -218,10 +218,11 @@ function Citation({
           <>
             {children}{' '}
             {/* The pill is 16px tall so it sits in the line; the ::after
-                pad grows its hit area to 24px (WCAG 2.5.8) without moving text. */}
+                pad grows its hit area to --spacing-target (24px, or 44px
+                under comfortable density) without moving text. */}
             <PopoverTrigger
               data-slot="citation-trigger"
-              className="bg-primary/10 text-primary hover:bg-primary/15 relative inline-flex max-w-[min(24ch,100%)] items-center rounded-md px-1.5 py-0.5 align-baseline text-xs leading-none font-semibold whitespace-nowrap after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+              className="bg-primary/10 text-primary hover:bg-primary/15 relative inline-flex max-w-[min(24ch,100%)] items-center rounded-md px-1.5 py-0.5 align-baseline text-xs leading-none font-semibold whitespace-nowrap after:absolute after:top-1/2 after:left-1/2 after:min-h-target after:min-w-target after:size-full after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']"
             >
               {/* A long publisher list ends in an ellipsis instead of widening
                   the page; the whole text stays in the name and the popover. */}
@@ -238,7 +239,7 @@ function Citation({
               <PopoverTrigger
                 data-slot="citation-trigger"
                 aria-label={label}
-                className="text-primary hover:bg-accent inline-flex min-h-6 min-w-6 items-center justify-center rounded-sm px-0.5 text-xs font-semibold tabular-nums"
+                className="text-primary hover:bg-accent relative inline-flex min-h-6 min-w-6 items-center justify-center rounded-sm px-0.5 text-xs font-semibold tabular-nums after:absolute after:top-1/2 after:left-1/2 after:min-h-target after:min-w-target after:size-full after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']"
               >
                 [{number}]
               </PopoverTrigger>

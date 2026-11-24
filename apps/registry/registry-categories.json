@@ -52,6 +52,11 @@
       "description": "Motion-aware visual flair. Always reduced-motion-respecting."
     },
     {
+      "id": "games",
+      "title": "Games",
+      "description": "The engine of a daily game: the puzzle of the day, streaks with rest days, guess games, spoiler-free share cards and group leaderboards. Bring your own content and storage."
+    },
+    {
       "id": "other",
       "title": "Other",
       "description": "Uncategorised — falls here so a newly added component surfaces immediately without a manual step."
@@ -72,6 +77,11 @@
       "id": "chart",
       "title": "Charts",
       "description": "Data visualisation — series, deltas, tables, graphs. Dependency-free SVG on the --viz-* token family. Every chart ships an sr-only data table and a keyboard path to every value."
+    },
+    {
+      "id": "game",
+      "title": "Games",
+      "description": "Daily-game components with their pure cores exported: day keys, seeded puzzle order, streak arithmetic and scoring run the same on a server as in the browser."
     },
     {
       "id": "template",
@@ -104,6 +114,7 @@
     "patterns": "pattern",
     "templates": "template",
     "charts": "chart",
+    "games": "game",
     "effects": "effect"
   },
   "tierDefaultCategory": {
@@ -114,7 +125,8 @@
     "util": "foundation",
     "theme": "foundation",
     "starter": "foundation",
-    "chart": "data"
+    "chart": "data",
+    "game": "games"
   },
   "assignments": {
     "a11y-starter": "a11y",
@@ -226,10 +238,19 @@
     "sheet": "overlay",
     "side-by-side": "blog",
     "sign-in-form": "form",
+    "social-sign-in": "form",
+    "sign-in-methods": "form",
+    "otp-field": "form",
     "skeleton": "feedback",
+    "spinner": "feedback",
     "skeleton-variants": "feedback",
     "skip-link": "a11y",
     "slider": "form",
+    "seat-chart": "data",
+    "choropleth-map": "data",
+    "dot-plot": "data",
+    "chart-frame": "data",
+    "share-chart": "data",
     "sparkline": "data",
     "stack": "foundation",
     "stance-list": "blog",
@@ -248,6 +269,7 @@
     "theme": "foundation",
     "theme-script": "foundation",
     "theme-switcher": "foundation",
+    "reading-settings": "foundation",
     "theme-tokens": "foundation",
     "list": "foundation",
     "thread-mark": "feedback",
@@ -262,8 +284,11 @@
     "tooltip": "overlay",
     "topbar": "navigation",
     "topbar-menu": "navigation",
+    "topbar-nav": "navigation",
+    "topbar-scroll-edge": "navigation",
     "typography": "foundation",
     "use-reduced-motion": "foundation",
+    "use-reading-prefs": "foundation",
     "use-theme": "foundation",
     "visually-hidden": "a11y",
     "wordmark": "foundation"

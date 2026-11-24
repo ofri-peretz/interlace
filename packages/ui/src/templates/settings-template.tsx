@@ -74,7 +74,7 @@ function SettingsTemplate({
                 aria-label="Settings sections"
                 className="md:w-56 md:shrink-0"
               >
-                <ul className="flex gap-2 overflow-x-auto md:flex-col md:gap-2">
+                <ul className="-m-1 flex gap-2 overflow-x-auto p-1 md:flex-col md:gap-2">
                   {sections.map((section) => (
                     <li key={section.id}>
                       <a

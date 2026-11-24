@@ -10,7 +10,7 @@
  * ## Anatomy
  *
  *   Tabs                             (Tabs.Root — flex-col gap-2, data-min-viewport=320)
- *     ├─ TabsList                    (Tabs.List — bg-muted pill, h-9, w-fit)
+ *     ├─ TabsList                    (Tabs.List — bg-muted pill, min-h-control, grows to hold its triggers)
  *     │    └─ TabsTrigger            (Tabs.Tab — flex-1, raised on data-[selected])
  *     └─ TabsContent                 (Tabs.Panel)
  *
@@ -76,7 +76,7 @@ function TabsList({
     <BaseTabs.List
       data-slot="tabs-list"
       className={cn(
-        'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-xl p-[3px]',
+        'bg-muted text-muted-foreground inline-flex min-h-control w-fit items-stretch justify-center rounded-xl p-[3px]',
         className,
       )}
       {...props}
@@ -92,7 +92,7 @@ function TabsTrigger({
     <BaseTabs.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "data-[selected]:bg-background dark:data-[selected]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[selected]:border-input dark:data-[selected]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[selected]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-[selected]:bg-background dark:data-[selected]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[selected]:border-input dark:data-[selected]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex min-h-target flex-1 items-center justify-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[selected]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -107,7 +107,11 @@ function TabsContent({
   return (
     <BaseTabs.Panel
       data-slot="tabs-content"
-      className={cn('flex-1 outline-none', className)}
+      className={cn(
+        // The panel takes focus (Tab from the list lands here), so it shows it.
+        'flex-1 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+        className,
+      )}
       {...props}
     />
   );

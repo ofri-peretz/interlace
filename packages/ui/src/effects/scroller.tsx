@@ -53,9 +53,9 @@ import { useReducedMotion } from '../lib/use-reduced-motion.js';
 
 const GAP = { sm: 'gap-4', md: 'gap-8', lg: 'gap-16' } as const;
 const GAP_PAD = {
-  sm: { x: 'pr-4', y: 'pb-4' },
-  md: { x: 'pr-8', y: 'pb-8' },
-  lg: { x: 'pr-16', y: 'pb-16' },
+  sm: { x: 'pe-4', y: 'pb-4' },
+  md: { x: 'pe-8', y: 'pb-8' },
+  lg: { x: 'pe-16', y: 'pb-16' },
 } as const;
 
 const FADE = {
@@ -199,7 +199,8 @@ export function Scroller({
       <div
         data-slot="scroller-viewport"
         className={cn(
-          'min-w-0 flex-1',
+          // -m-1 p-1: a scroll container clips, so give focus rings room.
+          '-m-1 min-w-0 flex-1 p-1',
           moving ? 'overflow-hidden' : vertical ? 'overflow-y-auto' : 'overflow-x-auto',
           edges === 'fade' && FADE[axis],
         )}

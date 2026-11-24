@@ -6,7 +6,7 @@
  * Transient, portal-mounted notification. Wraps `@base-ui/react/toast`
  * (Provider, Portal, Viewport, Root, Title, Description, Close) and overlays
  * the Interlace tone system on top — four semantic tones (`info`, `success`,
- * `warning`, `danger`) that each render a 4px left accent strip, so the toast
+ * `warning`, `danger`) that each render a 4px accent strip on the start edge, so the toast
  * reads without colour alone (paired with a consumer-supplied icon per
  * `ERROR_PHILOSOPHY` + `DESIGN_PRINCIPLES` #9).
  *
@@ -65,7 +65,7 @@ import { useReducedMotion } from '../lib/use-reduced-motion.js';
 export const MIN_VIEWPORT = 320 as const;
 
 // ─────────────────────────────────────────────────────────────────
-// Tone variants — 4px left accent strip + matching outline ring on
+// Tone variants — 4px start-edge accent strip + matching outline ring on
 // keyboard focus. The strip is the ONLY tone-coloured channel on the
 // surface (the body stays neutral `bg-card`) so the tone reads as a
 // secondary signal beside the consumer-supplied icon, never as the
@@ -76,8 +76,8 @@ const toastVariants = cva(
     'pointer-events-auto relative flex w-full items-start gap-4 overflow-hidden',
     'border border-border bg-card text-card-foreground',
     'rounded-lg shadow-lg',
-    'p-6 pl-7',
-    'before:absolute before:left-0 before:top-0 before:h-full before:w-1',
+    'p-6 ps-7',
+    'before:absolute before:start-0 before:top-0 before:h-full before:w-1',
     'before:content-[""]',
   ].join(' '),
   {
@@ -103,7 +103,9 @@ const toastVariants = cva(
 const ANIMATE_BASE =
   'transition-[transform,opacity] duration-[180ms] ease-out will-change-[transform,opacity]';
 const ANIMATE_FULL =
-  'data-[starting-style]:translate-x-full data-[starting-style]:opacity-0 data-[ending-style]:translate-x-full data-[ending-style]:opacity-0';
+  'data-[starting-style]:translate-x-full data-[starting-style]:opacity-0 data-[ending-style]:translate-x-full data-[ending-style]:opacity-0 ' +
+  // In a right-to-left page the viewport sits on the left edge, so the toast comes in from there.
+  'rtl:data-[starting-style]:-translate-x-full rtl:data-[ending-style]:-translate-x-full';
 const ANIMATE_REDUCED =
   'data-[starting-style]:opacity-0 data-[ending-style]:opacity-0';
 
@@ -136,7 +138,7 @@ const ToastViewport = React.forwardRef<HTMLDivElement, ToastViewportProps>(
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
             'fixed inset-x-0 bottom-0 z-50 flex w-full flex-col gap-4 p-6',
-            'xs:inset-x-auto xs:right-0 xs:bottom-0 xs:max-w-float',
+            'xs:inset-x-auto xs:end-0 xs:bottom-0 xs:max-w-float',
             'outline-none',
             className,
           )}
@@ -312,7 +314,7 @@ const ToastClose = React.forwardRef<HTMLButtonElement, ToastCloseProps>(
         data-slot="toast-close"
         aria-label="Close"
         className={cn(
-          'ml-auto inline-flex size-6 shrink-0 items-center justify-center rounded-sm',
+          'ms-auto inline-flex size-6 shrink-0 items-center justify-center rounded-sm',
           'text-muted-foreground hover:text-foreground',
           'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
           'transition-colors',

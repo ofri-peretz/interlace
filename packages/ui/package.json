@@ -28,6 +28,14 @@
       "types": "./dist/lib/theme-tokens.d.ts",
       "default": "./dist/lib/theme-tokens.js"
     },
+    "./use-reading-prefs": {
+      "types": "./dist/lib/use-reading-prefs.d.ts",
+      "default": "./dist/lib/use-reading-prefs.js"
+    },
+    "./reading-settings": {
+      "types": "./dist/primitives/reading-settings.d.ts",
+      "default": "./dist/primitives/reading-settings.js"
+    },
     "./theme-switcher": {
       "types": "./dist/primitives/theme-switcher.d.ts",
       "default": "./dist/primitives/theme-switcher.js"
@@ -164,6 +172,10 @@
       "types": "./dist/primitives/featured-icon.d.ts",
       "default": "./dist/primitives/featured-icon.js"
     },
+    "./otp-field": {
+      "types": "./dist/primitives/otp-field.d.ts",
+      "default": "./dist/primitives/otp-field.js"
+    },
     "./grade-badge": {
       "types": "./dist/primitives/grade-badge.d.ts",
       "default": "./dist/primitives/grade-badge.js"
@@ -219,6 +231,10 @@
     "./kbd": {
       "types": "./dist/primitives/kbd.d.ts",
       "default": "./dist/primitives/kbd.js"
+    },
+    "./spinner": {
+      "types": "./dist/primitives/spinner.d.ts",
+      "default": "./dist/primitives/spinner.js"
     },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
@@ -383,6 +399,66 @@
     "./charts/sparkline": {
       "types": "./dist/charts/sparkline.d.ts",
       "default": "./dist/charts/sparkline.js"
+    },
+    "./charts/seat-chart": {
+      "types": "./dist/charts/seat-chart.d.ts",
+      "default": "./dist/charts/seat-chart.js"
+    },
+    "./charts/choropleth-map": {
+      "types": "./dist/charts/choropleth-map.d.ts",
+      "default": "./dist/charts/choropleth-map.js"
+    },
+    "./charts/dot-plot": {
+      "types": "./dist/charts/dot-plot.d.ts",
+      "default": "./dist/charts/dot-plot.js"
+    },
+    "./games/daily": {
+      "types": "./dist/games/daily.d.ts",
+      "default": "./dist/games/daily.js"
+    },
+    "./games/streak-model": {
+      "types": "./dist/games/streak-model.d.ts",
+      "default": "./dist/games/streak-model.js"
+    },
+    "./games/streak": {
+      "types": "./dist/games/streak.d.ts",
+      "default": "./dist/games/streak.js"
+    },
+    "./charts/share-chart": {
+      "types": "./dist/charts/share-chart.d.ts",
+      "default": "./dist/charts/share-chart.js"
+    },
+    "./charts/chart-frame": {
+      "types": "./dist/charts/chart-frame.d.ts",
+      "default": "./dist/charts/chart-frame.js"
+    },
+    "./games/closer-model": {
+      "types": "./dist/games/closer-model.d.ts",
+      "default": "./dist/games/closer-model.js"
+    },
+    "./games/closer-game": {
+      "types": "./dist/games/closer-game.d.ts",
+      "default": "./dist/games/closer-game.js"
+    },
+    "./games/daily-puzzle": {
+      "types": "./dist/games/daily-puzzle.d.ts",
+      "default": "./dist/games/daily-puzzle.js"
+    },
+    "./games/share-model": {
+      "types": "./dist/games/share-model.d.ts",
+      "default": "./dist/games/share-model.js"
+    },
+    "./games/share-card": {
+      "types": "./dist/games/share-card.d.ts",
+      "default": "./dist/games/share-card.js"
+    },
+    "./games/leaderboard-model": {
+      "types": "./dist/games/leaderboard-model.d.ts",
+      "default": "./dist/games/leaderboard-model.js"
+    },
+    "./games/leaderboard": {
+      "types": "./dist/games/leaderboard.d.ts",
+      "default": "./dist/games/leaderboard.js"
     },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",

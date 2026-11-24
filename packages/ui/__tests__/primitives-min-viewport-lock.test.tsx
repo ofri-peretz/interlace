@@ -70,6 +70,7 @@ const PRIMITIVES = [
   { name: 'code-block', viewport: 320, tier: 'client' },
   { name: 'tag', viewport: 320, tier: 'server' },
   { name: 'kbd', viewport: 320, tier: 'server' },
+  { name: 'spinner', viewport: 320, tier: 'server' },
   { name: 'toc', viewport: 480, tier: 'client' },
   { name: 'reading-time', viewport: 320, tier: 'server' },
   { name: 'published-date', viewport: 320, tier: 'server' },
@@ -93,6 +94,8 @@ const PRIMITIVES = [
   // 320 across the board: a sign-in / contact / search form is the LAST
   // surface allowed to degrade on a narrow screen (iPhone SE class).
   { name: 'input', viewport: 320, tier: 'server' },
+  // A one-time code: six boxes fit 320 with gutters (see its header).
+  { name: 'otp-field', viewport: 320, tier: 'client' },
   { name: 'label', viewport: 320, tier: 'server' },
   { name: 'checkbox', viewport: 320, tier: 'client' },
   { name: 'radio-group', viewport: 320, tier: 'client' },

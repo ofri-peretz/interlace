@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Topbar } from "@interlace/ui/patterns/topbar";
 import { Button } from "@interlace/ui/button";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 import { withRtl } from "@/decorators";
 
 const meta: Meta<typeof Topbar> = {
@@ -71,12 +72,33 @@ const meta: Meta<typeof Topbar> = {
     },
     menuSide: {
       control: "inline-radio",
-      options: ["right", "left", "bottom"],
+      options: ["right", "left", "bottom", "full"],
       description:
-        "The edge the small-screen menu opens from. Topbar cannot know the page's direction, so an RTL page passes `left`.",
+        "The edge the small-screen menu opens from. Topbar cannot know the page's direction, so an RTL page passes `left`. `full` covers the whole screen.",
       table: {
-        type: { summary: "'right' | 'left' | 'bottom'" },
+        type: { summary: "'right' | 'left' | 'bottom' | 'full'" },
         defaultValue: { summary: "right" },
+        category: "Appearance",
+      },
+    },
+    hideOnScroll: {
+      control: "boolean",
+      description:
+        "Slide the bar away while the reader scrolls down, and back on the first scroll up. It stays while focus or an open panel is inside it.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Appearance",
+      },
+    },
+    edge: {
+      control: "inline-radio",
+      options: ["always", "scroll"],
+      description:
+        "When the bar shows its surface and border. `scroll` keeps it clear over the top of the page and fades them in once the page scrolls under it.",
+      table: {
+        type: { summary: "'always' | 'scroll'" },
+        defaultValue: { summary: "always" },
         category: "Appearance",
       },
     },
@@ -209,4 +231,183 @@ export const RTLMobileMenu: Story = {
   args: { ...Default.args, menuSide: "left" },
   decorators: [withRtl],
   parameters: { viewport: { defaultViewport: "mobile1" } },
+};
+
+const icon = (d: string) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d={d} />
+  </svg>
+);
+
+const groupedLinks = [
+  {
+    label: "Products",
+    items: [
+      {
+        href: "/data",
+        label: "Data hub",
+        description: "Every source we use, searchable and cited.",
+        icon: icon(
+          "M4 6c0-1.1 3.6-2 8-2s8 .9 8 2-3.6 2-8 2-8-.9-8-2Zm0 0v12c0 1.1 3.6 2 8 2s8-.9 8-2V6M4 12c0 1.1 3.6 2 8 2s8-.9 8-2",
+        ),
+      },
+      {
+        href: "/workshops",
+        label: "Workshops",
+        description: "Live sessions for schools and community groups.",
+        icon: icon(
+          "M3 7h18M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7M8 3v4m8-4v4",
+        ),
+      },
+      {
+        href: "/guides",
+        label: "Guides",
+        description: "Short reads for one question at a time.",
+        icon: icon("M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2V5Zm4 2h6"),
+      },
+    ],
+  },
+  {
+    label: "Company",
+    items: [
+      {
+        href: "/about",
+        label: "About",
+        description: "Who we are and how we work.",
+      },
+      {
+        href: "/method",
+        label: "Method",
+        description: "How every claim is checked.",
+      },
+      { href: "https://example.org/press", label: "Press kit", external: true },
+    ],
+  },
+  { href: "/pricing", label: "Pricing" },
+];
+
+/**
+ * Link groups: a family of products. From `collapseBelow` up a group is a
+ * button that opens a panel of its items, each with an icon and a line of
+ * description; the panel slides between groups. Arrow keys move between
+ * triggers, Tab walks the panel, Escape closes it.
+ */
+export const LinkGroups: Story = {
+  args: { ...Default.args, links: groupedLinks, currentHref: "/workshops" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole("button", { name: "Products" });
+    // Keyboard, not a click: a synthetic click also starts the hover-open
+    // timer, which would reopen the panel after Escape and end the story open.
+    trigger.focus();
+    await userEvent.keyboard("{Enter}");
+    await waitFor(() =>
+      expect(trigger).toHaveAttribute("aria-expanded", "true"),
+    );
+    const body = within(canvasElement.ownerDocument.body);
+    const item = await body.findByRole("link", { name: /Data hub/ });
+    // The panel fades in from opacity 0, so visibility settles after a frame or two.
+    await waitFor(() => expect(item).toBeVisible());
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() =>
+      expect(trigger).toHaveAttribute("aria-expanded", "false"),
+    );
+    await waitFor(() =>
+      expect(canvasElement.ownerDocument.activeElement).toBe(trigger),
+    );
+    await userEvent.keyboard("{ArrowRight}");
+    await expect(canvasElement.ownerDocument.activeElement).toBe(
+      canvas.getByRole("button", { name: "Company" }),
+    );
+  },
+};
+
+/** The same groups on a phone: each is a labelled section of the menu. */
+export const LinkGroupsMobile: Story = {
+  args: { ...Default.args, links: groupedLinks, currentHref: "/workshops" },
+  parameters: { viewport: { defaultViewport: "mobile1" } },
+};
+
+export const LinkGroupsDark: Story = {
+  ...LinkGroups,
+  play: undefined,
+  globals: { theme: "dark" },
+};
+
+/** A long page under the bar, so the scroll edge has something to pass beneath. */
+const withPage: NonNullable<Story["decorators"]>[number] = (Story) => (
+  <div className="bg-background text-foreground">
+    <Story />
+    <section className="mx-auto max-w-(--container-wide) px-6 py-24">
+      <h1 className="font-heading text-display max-w-(--container-prose)">
+        A calm header that steps back until you scroll
+      </h1>
+      <p className="text-muted-foreground mt-6 max-w-(--container-prose) text-lg">
+        At the top of the page the bar has no surface and no border, so it reads
+        as part of the hero. Scroll, and its surface, blur and hairline fade in.
+      </p>
+    </section>
+    {Array.from({ length: 6 }, (_, i) => (
+      <section
+        key={i}
+        className="border-border mx-auto max-w-(--container-wide) border-t px-6 py-20"
+      >
+        <p className="text-muted-foreground max-w-(--container-prose)">
+          Section {i + 1}
+        </p>
+      </section>
+    ))}
+  </div>
+);
+
+/**
+ * The quiet header: `edge="scroll"` keeps the bar clear over the hero and
+ * brings in its surface and border once the page scrolls; one understated
+ * action on the right.
+ */
+export const ClearUntilScroll: Story = {
+  args: {
+    ...Default.args,
+    links: groupedLinks,
+    edge: "scroll",
+    actions: (
+      <Button size="sm" variant="outline">
+        Get in touch
+      </Button>
+    ),
+  },
+  decorators: [withPage],
+  play: async ({ canvasElement }) => {
+    const header = canvasElement.querySelector<HTMLElement>(
+      '[data-slot="topbar"]',
+    )!;
+    await expect(header.getAttribute("data-edge")).toBe("scroll");
+    await expect(header.hasAttribute("data-scrolled")).toBe(false);
+  },
+};
+
+/** `menuSide="full"`: on a phone the menu covers the screen, with larger links. */
+export const FullScreenMenu: Story = {
+  args: { ...ClearUntilScroll.args, menuSide: "full" },
+  decorators: [withPage],
+  parameters: { viewport: { defaultViewport: "mobile1" } },
+  play: undefined,
+};
+
+/**
+ * `hideOnScroll`: the bar slides away while you read down the page and comes
+ * back the moment you scroll up. Hover the row to see the pill follow the
+ * pointer; open Products, then move to Company to see the panel slide.
+ */
+export const HideOnScroll: Story = {
+  args: { ...ClearUntilScroll.args, hideOnScroll: true },
+  decorators: [withPage],
+  play: undefined,
 };

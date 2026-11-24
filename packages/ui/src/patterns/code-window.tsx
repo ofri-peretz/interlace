@@ -21,7 +21,7 @@
  *     │   ├─ span aria-hidden        (data-slot="code-window-traffic-lights")
  *     │   │   └─ 3 × span size-3     (bg-window-control-close/-minimize/-zoom)
  *     │   ├─ span                    (title — centred, font-mono text-xs)
- *     │   └─ span                    (actions — ml-auto)
+ *     │   └─ span                    (actions — ms-auto)
  *     └─ children                    (the body: editor, <pre>, anything)
  *
  * ## No accessible name, deliberately
@@ -68,6 +68,10 @@ function CodeWindow({
       data-slot="code-window"
       className={cn(
         'overflow-hidden rounded-xl border border-border bg-card shadow-sm',
+        // The frame clips, so a focusable body (a <pre tabIndex=0>) cannot show
+        // its own ring. The frame shows it instead, 2px outside. Direct
+        // children only: a nested editor draws its own.
+        'ring-offset-background has-[>:focus-visible]:ring-2 has-[>:focus-visible]:ring-ring has-[>:focus-visible]:ring-offset-2',
         className,
       )}
       {...props}
@@ -123,7 +127,7 @@ function CodeWindowTitleBar({
         </span>
       )}
       {actions && (
-        <span className="ml-auto flex shrink-0 items-center gap-1.5">
+        <span className="ms-auto flex shrink-0 items-center gap-1.5">
           {actions}
         </span>
       )}

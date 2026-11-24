@@ -172,7 +172,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
         {...props}
       >
         <table className="w-full border-collapse text-sm">
-          <caption className="mb-2 text-left text-xs text-muted-foreground">
+          <caption className="mb-2 text-start text-xs text-muted-foreground">
             {caption}
             {selectable && (
               <span className="sr-only">
@@ -184,7 +184,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
             <tr>
               <th
                 scope="col"
-                className="border-b border-border px-3 py-2 text-left text-xs font-medium uppercase tracking-wide text-muted-foreground"
+                className="border-b border-border px-3 py-2 text-start text-xs font-medium uppercase tracking-wide text-muted-foreground"
               >
                 Metric
               </th>
@@ -200,7 +200,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
               </th>
               <th
                 scope="col"
-                className="whitespace-nowrap border-b border-border px-3 py-2 text-right text-xs font-medium text-muted-foreground"
+                className="whitespace-nowrap border-b border-border px-3 py-2 text-end text-xs font-medium text-muted-foreground"
               >
                 Change
               </th>
@@ -208,7 +208,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
                 <th
                   key={column}
                   scope="col"
-                  className="whitespace-nowrap border-b border-border px-3 py-2 text-right text-xs font-medium text-muted-foreground tabular-nums"
+                  className="whitespace-nowrap border-b border-border px-3 py-2 text-end text-xs font-medium text-muted-foreground tabular-nums"
                 >
                   {column.slice(5)}
                 </th>
@@ -246,7 +246,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
                 >
                   <th
                     scope="row"
-                    className="whitespace-nowrap px-3 py-1.5 text-left font-normal"
+                    className="whitespace-nowrap px-3 py-1.5 text-start font-normal"
                   >
                     {row.label}
                   </th>
@@ -259,7 +259,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
                       columns the space first and squeezes this one to a zero
                       content box, which clips the digits and leaves only the
                       direction glyph visible. The numbers ARE the column. */}
-                  <td className="whitespace-nowrap px-3 py-1.5 text-right">
+                  <td className="whitespace-nowrap px-3 py-1.5 text-end">
                     <Delta points={row.points} polarity={row.polarity} unit={row.unit} />
                   </td>
                   {columns.map((column) => {
@@ -268,7 +268,7 @@ export const MetricTable = React.forwardRef<HTMLDivElement, MetricTableProps>(
                       <td
                         key={column}
                         className={cn(
-                          'px-3 py-1.5 text-right tabular-nums',
+                          'px-3 py-1.5 text-end tabular-nums',
                           value == null && 'text-muted-foreground',
                         )}
                       >

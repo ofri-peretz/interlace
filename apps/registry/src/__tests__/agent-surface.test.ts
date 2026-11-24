@@ -147,10 +147,11 @@ describe('/.well-known/agent-skills/', () => {
     llmsTxt: string;
   };
 
-  it('describes what an agent can DO, in three skills', () => {
+  it('describes what an agent can DO, in four skills', () => {
     expect(manifest.skills.map((s) => s.id).sort()).toEqual([
       'discover-interlace-components',
       'install-interlace-component',
+      'interlace-craft',
       'read-interlace-contract',
     ]);
   });
@@ -184,6 +185,62 @@ describe('/.well-known/agent-skills/', () => {
           known.has(name) ? `${skill.id} cites ${name}` : `${skill.id} cites a real item`,
         );
       }
+    }
+  });
+});
+
+/**
+ * The craft skill is the one hand-written file on this surface, so the build
+ * cannot make it true. These checks hold its checkable claims to the code: a
+ * token it names is declared in the shipped styles, a component it names is
+ * exported by @interlace/ui, and the published copy is the repo's own skill.
+ */
+describe('interlace-craft skill', () => {
+  const REPO = join(process.cwd(), '..', '..');
+  const source = readFileSync(join(REPO, '.claude/skills/interlace-craft/SKILL.md'), 'utf8');
+
+  const walk = (dir: string, ext: RegExp): string[] =>
+    readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+      e.isDirectory()
+        ? walk(join(dir, e.name), ext)
+        : ext.test(e.name)
+          ? [readFileSync(join(dir, e.name), 'utf8')]
+          : [],
+    );
+  const styles = walk(join(REPO, 'packages/ui/styles'), /\.css$/).join('\n');
+  const ui = walk(join(REPO, 'packages/ui/src'), /\.tsx?$/).join('\n');
+
+  it('is published byte for byte, and leads llms-full.txt', () => {
+    expect(read('.well-known/agent-skills/interlace-craft/SKILL.md')).toBe(source);
+    const full = read('llms-full.txt');
+    expect(full.startsWith('# Build UI in the Interlace craft')).toBe(true);
+    expect(full.endsWith(read('llms.txt'))).toBe(true);
+    expect(read('llms.txt')).toContain(`${HOMEPAGE}/.well-known/agent-skills/interlace-craft/SKILL.md`);
+  });
+
+  it('names only tokens the styles declare', () => {
+    // Example values in the branding snippet are the consumer's to set, so the
+    // check covers the names, not the values. `--x-*` is a family. A hook the
+    // styles read with a fallback, var(--name, ...), is the consumer's to set
+    // and counts as declared.
+    const names = new Set([...source.matchAll(/(?<![\w-])--([a-z][a-z0-9-]*[a-z0-9](?:-\*)?)/g)].map(([, n]) => n));
+    expect(names.size).toBeGreaterThan(10);
+    for (const name of names) {
+      const declared = name.endsWith('-*')
+        ? styles.includes(`--${name.slice(0, -1)}`)
+        : new RegExp(`--${name}\\s*:`).test(styles) ||
+          styles.includes(`var(--${name},`) ||
+          name === 'font-sans';
+      expect(`--${name} ${declared ? 'declared' : 'missing'}`).toBe(`--${name} declared`);
+    }
+  });
+
+  it('names only components @interlace/ui exports', () => {
+    const components = new Set([...source.matchAll(/`([A-Z][A-Za-z]+)`/g)].map(([, n]) => n));
+    expect(components.size).toBeGreaterThan(15);
+    for (const name of components) {
+      const exported = new RegExp(`(?:function|const)\\s+${name}\\b`).test(ui);
+      expect(`${name} ${exported ? 'exported' : 'missing'}`).toBe(`${name} exported`);
     }
   });
 });

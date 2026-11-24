@@ -13,10 +13,10 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 169
+    "itemCount": 187
   },
   "fieldGuide": {
-    "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts. Composition runs upward only — a primitive never imports a pattern.",
+    "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
     "meta.client": "true when the installed file carries the \"use client\" directive. false means it is safe inside a React Server Component with no boundary.",
     "meta.minViewport": "The narrowest viewport in CSS px this component is designed to render correctly at, declared in source as `export const MIN_VIEWPORT`. null means it inherits the min-viewport of whatever it renders and introduces no floor of its own.",
     "meta.loading": "true when the component accepts `loading?: boolean` and renders its own skeleton — the DS-wide opt-in, so a caller never hand-rolls a placeholder.",
@@ -29,52 +29,55 @@
   },
   "facets": {
     "tier": {
-      "primitive": 72,
-      "pattern": 46,
+      "primitive": 75,
+      "pattern": 50,
       "effect": 19,
       "template": 13,
-      "chart": 8,
-      "util": 5,
+      "chart": 13,
+      "util": 6,
+      "game": 5,
       "starter": 3,
       "theme": 3
     },
     "category": {
-      "primitive": 72,
-      "pattern": 46,
+      "primitive": 75,
+      "pattern": 50,
       "blog": 35,
-      "foundation": 25,
-      "data": 23,
+      "data": 28,
+      "foundation": 27,
+      "form": 20,
       "effect": 19,
-      "form": 17,
       "decorative": 17,
-      "feedback": 14,
+      "feedback": 15,
+      "navigation": 13,
       "template": 13,
+      "chart": 13,
       "marketing": 13,
-      "navigation": 11,
       "overlay": 10,
-      "chart": 8,
-      "util": 5,
+      "util": 6,
+      "games": 5,
+      "game": 5,
       "a11y": 4,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "server": 99,
-      "client": 70
+      "server": 102,
+      "client": 85
     },
     "keyboard": {
-      "none": 132,
-      "handled": 37
+      "none": 147,
+      "handled": 40
     },
     "loading": {
-      "none": 136,
-      "built-in": 33
+      "none": 150,
+      "built-in": 37
     },
     "minViewport": {
-      "320": 103,
+      "320": 117,
       "480": 7,
       "768": 1,
-      "inherited": 58
+      "inherited": 62
     }
   },
   "items": [
@@ -110,7 +113,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "5.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -161,7 +164,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -212,7 +215,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -321,7 +324,7 @@
         "ArticleCard",
         "FeaturedArticleCard"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -374,7 +377,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1150,7 +1153,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "3.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -1199,7 +1202,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "3.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1254,7 +1257,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -1297,14 +1300,14 @@
         "roles": [],
         "aria": [],
         "motion": {
-          "driver": "none",
+          "driver": "css",
           "declaresPreference": false,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [],
-      "version": "1.2.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1319,6 +1322,59 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/card.json",
       "item": "https://ds.interlace.tools/r/card.json",
       "docs": "https://ds.interlace.tools/c/card"
+    },
+    {
+      "name": "chart-frame",
+      "title": "Chart Frame",
+      "type": "registry:ui",
+      "summary": "The frame a published chart sits in: a title that states the finding, a line on what is measured, the chart, and a footer with where the numbers came from and a copy of them to take away. Every chart on a page gets the same frame, so a reader learns once…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ChartFrame",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "tabs"
+      ],
+      "installsTo": [
+        "components/ui/charts/chart-frame.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/chart-frame.json",
+      "item": "https://ds.interlace.tools/r/chart-frame.json",
+      "docs": "https://ds.interlace.tools/c/chart-frame"
     },
     {
       "name": "checkbox",
@@ -1359,7 +1415,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1375,6 +1431,76 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/checkbox.json",
       "item": "https://ds.interlace.tools/r/checkbox.json",
       "docs": "https://ds.interlace.tools/c/checkbox"
+    },
+    {
+      "name": "choropleth-map",
+      "title": "Choropleth Map",
+      "type": "registry:ui",
+      "summary": "A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "Escape"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "MapBinning",
+          "values": [
+            "quantile",
+            "equal"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img",
+          "region"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ChoroplethMap",
+        "MAX_BINS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton"
+      ],
+      "installsTo": [
+        "components/ui/charts/choropleth-map.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/choropleth-map.json",
+      "item": "https://ds.interlace.tools/r/choropleth-map.json",
+      "docs": "https://ds.interlace.tools/c/choropleth-map"
     },
     {
       "name": "citation",
@@ -1422,7 +1548,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.2.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -1474,7 +1600,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [
         "lucide-react"
@@ -1489,6 +1615,73 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json",
       "item": "https://ds.interlace.tools/r/claim-card.json",
       "docs": "https://ds.interlace.tools/c/claim-card"
+    },
+    {
+      "name": "closer-game",
+      "title": "Closer Game",
+      "type": "registry:ui",
+      "summary": "Guess a number by sliding to it. The player sets a value on a slider (or types it), locks it in, and the answer slides out from their guess to where it really is, with the gap between them shaded and said in words: \"900 off. Close.\" Scoring lives in…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CloserBand",
+          "values": [
+            "exact",
+            "close",
+            "near",
+            "far"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "slider",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/closer-game.tsx",
+        "components/ui/games/closer-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/closer-game.json",
+      "item": "https://ds.interlace.tools/r/closer-game.json",
+      "docs": "https://ds.interlace.tools/c/closer-game"
     },
     {
       "name": "cn",
@@ -1524,7 +1717,7 @@
       "exports": [
         "DS_FONT_SIZES"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "clsx",
@@ -1676,7 +1869,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1719,7 +1912,7 @@
           "declaresPreference": true,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT"
@@ -1780,7 +1973,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1887,7 +2080,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1943,7 +2136,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2062,6 +2255,59 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/cta-section.json",
       "item": "https://ds.interlace.tools/r/cta-section.json",
       "docs": "https://ds.interlace.tools/c/cta-section"
+    },
+    {
+      "name": "daily-puzzle",
+      "title": "Daily Puzzle",
+      "type": "registry:ui",
+      "summary": "The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/daily-puzzle.tsx",
+        "components/ui/games/daily.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/daily-puzzle.json",
+      "item": "https://ds.interlace.tools/r/daily-puzzle.json",
+      "docs": "https://ds.interlace.tools/c/daily-puzzle"
     },
     {
       "name": "dashboard-template",
@@ -2397,7 +2643,7 @@
       "exports": [
         "DecodeText"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -2523,7 +2769,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2597,7 +2843,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -2655,7 +2901,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.2.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -2813,6 +3059,62 @@
       "docs": "https://ds.interlace.tools/c/docs-page-template"
     },
     {
+      "name": "dot-plot",
+      "title": "Dot Plot",
+      "type": "registry:ui",
+      "summary": "One dot per value on a shared axis, one row per thing compared: support for a policy by age group in two years, life expectancy by country for women and men, a price in three cities. With two or more series, a line joins each row's dots, so the length of…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "DotPlot",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/charts/dot-plot.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-plot.json",
+      "item": "https://ds.interlace.tools/r/dot-plot.json",
+      "docs": "https://ds.interlace.tools/c/dot-plot"
+    },
+    {
       "name": "drawer",
       "title": "Drawer",
       "type": "registry:ui",
@@ -2909,7 +3211,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -3171,7 +3473,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3226,7 +3528,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
       "npmDependencies": [
         "class-variance-authority"
@@ -3328,7 +3630,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.1",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -3376,7 +3678,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -3485,7 +3787,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3646,7 +3948,7 @@
       "exports": [
         "GradientMesh"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -3742,7 +4044,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -3849,7 +4151,7 @@
         "HeroCosmic",
         "MIN_VIEWPORT"
       ],
-      "version": "3.1.0",
+      "version": "5.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3953,7 +4255,7 @@
         "Hero",
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.1",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4055,7 +4357,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4101,7 +4403,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "4.11.1",
       "since": null,
       "npmDependencies": [
         "tw-animate-css"
@@ -4116,7 +4418,9 @@
         "styles/interlace/structure/layout.css",
         "styles/interlace/structure/radius.css",
         "styles/interlace/structure/motion.css",
-        "styles/interlace/structure/scheme.css"
+        "styles/interlace/structure/scheme.css",
+        "styles/interlace/structure/focus.css",
+        "styles/interlace/structure/reading.css"
       ],
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json",
       "item": "https://ds.interlace.tools/r/interlace-base.json",
@@ -4156,7 +4460,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "3.1.0",
+      "version": "3.3.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -4207,7 +4511,7 @@
       "exports": [
         "InterlaceWeave"
       ],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -4410,7 +4714,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "5.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4428,6 +4732,55 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json",
       "item": "https://ds.interlace.tools/r/layout-starter.json",
       "docs": "https://ds.interlace.tools/c/layout-starter"
+    },
+    {
+      "name": "leaderboard",
+      "title": "Leaderboard",
+      "type": "registry:ui",
+      "summary": "A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/leaderboard.tsx",
+        "components/ui/games/leaderboard-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/leaderboard.json",
+      "item": "https://ds.interlace.tools/r/leaderboard.json",
+      "docs": "https://ds.interlace.tools/c/leaderboard"
     },
     {
       "name": "light-beam",
@@ -4638,7 +4991,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "5.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5066,7 +5419,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -5081,6 +5434,59 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/number-field.json",
       "item": "https://ds.interlace.tools/r/number-field.json",
       "docs": "https://ds.interlace.tools/c/number-field"
+    },
+    {
+      "name": "otp-field",
+      "title": "Otp Field",
+      "type": "registry:ui",
+      "summary": "A one-time code typed into a row of boxes, one character each: the \"enter the 6-digit code we emailed you\" field. Built on Base UI's OTPField, which owns the hard parts: paste of the whole code into any box, the phone's \"from Messages\" autofill…",
+      "topics": [],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "otp-field",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-invalid",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/otp-field.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/otp-field.json",
+      "item": "https://ds.interlace.tools/r/otp-field.json",
+      "docs": "https://ds.interlace.tools/c/otp-field"
     },
     {
       "name": "page-header",
@@ -5171,7 +5577,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -5223,7 +5629,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -5328,7 +5734,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.1",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -5447,7 +5853,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -5657,7 +6063,7 @@
       "name": "reading-layout",
       "title": "Reading Layout",
       "type": "registry:ui",
-      "summary": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into an \"On this page\" button (`TocPopover`) on a bar that sticks to…",
+      "summary": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into a slim bar (`TocBar`) that sticks to the top of the column, names…",
       "topics": [],
       "categories": [
         "blog",
@@ -5701,6 +6107,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/reading-layout.json",
       "item": "https://ds.interlace.tools/r/reading-layout.json",
       "docs": "https://ds.interlace.tools/c/reading-layout"
+    },
+    {
+      "name": "reading-settings",
+      "title": "Reading Settings",
+      "type": "registry:ui",
+      "summary": "A text size control and a More contrast toggle: two small controls for the reader, not the theme author. They write the `data-text-size` and `data-contrast` attributes on `<html>` through `useReadingPrefs`, remember the choice, and `THEME_SCRIPT` puts it…",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-disabled",
+          "aria-hidden",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "toggle",
+        "use-reading-prefs"
+      ],
+      "installsTo": [
+        "components/ui/reading-settings.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reading-settings.json",
+      "item": "https://ds.interlace.tools/r/reading-settings.json",
+      "docs": "https://ds.interlace.tools/c/reading-settings"
     },
     {
       "name": "reading-strand",
@@ -5905,7 +6367,7 @@
         "MIN_VIEWPORT",
         "RelatedPosts"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6006,7 +6468,7 @@
       "exports": [
         "RotatingText"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -6238,6 +6700,74 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroller.json",
       "item": "https://ds.interlace.tools/r/scroller.json",
       "docs": "https://ds.interlace.tools/c/scroller"
+    },
+    {
+      "name": "seat-chart",
+      "title": "Seat Chart",
+      "type": "registry:ui",
+      "summary": "How an assembly divides its seats: a half-circle of dots, one per seat, filled group by group. It answers the question a results table cannot answer at a glance: who holds the room, and how far each side is from a majority.",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "SeatTally",
+          "values": [
+            "none",
+            "sides",
+            "leaders"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "SeatChart",
+        "SeatChartCompare"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/charts/seat-chart.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/seat-chart.json",
+      "item": "https://ds.interlace.tools/r/seat-chart.json",
+      "docs": "https://ds.interlace.tools/c/seat-chart"
     },
     {
       "name": "section-boundary",
@@ -6477,7 +7007,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -6739,6 +7269,126 @@
       "docs": "https://ds.interlace.tools/c/share-buttons"
     },
     {
+      "name": "share-card",
+      "title": "Share Card",
+      "type": "registry:ui",
+      "summary": "How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_SYMBOLS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/share-card.tsx",
+        "components/ui/games/share-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-card.json",
+      "item": "https://ds.interlace.tools/r/share-card.json",
+      "docs": "https://ds.interlace.tools/c/share-card"
+    },
+    {
+      "name": "share-chart",
+      "title": "Share Chart",
+      "type": "registry:ui",
+      "summary": "How a whole splits into parts, one bar per row: survey answers by group, a budget by department, time by activity. Each row is one 100% bar cut into segments, and every row shares one scale, so rows compare at a glance.",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ShareLayoutKind",
+          "values": [
+            "stacked",
+            "diverging"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "ShareChart"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/charts/share-chart.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-chart.json",
+      "item": "https://ds.interlace.tools/r/share-chart.json",
+      "docs": "https://ds.interlace.tools/c/share-chart"
+    },
+    {
       "name": "sheen-text",
       "title": "Sheen Text",
       "type": "registry:ui",
@@ -6870,7 +7520,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -6935,7 +7585,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7001,6 +7651,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/sign-in-form.json",
       "item": "https://ds.interlace.tools/r/sign-in-form.json",
       "docs": "https://ds.interlace.tools/c/sign-in-form"
+    },
+    {
+      "name": "sign-in-methods",
+      "title": "Sign In Methods",
+      "type": "registry:ui",
+      "summary": "The \"ways you can sign in\" list on an account page: one row per method (Google, Apple, email…), each with its mark, what it is linked to, and a Connect or Disconnect button. Disconnecting asks once more in place (\"Disconnect\" → \"Yes, disconnect\" /…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.1",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "social-sign-in"
+      ],
+      "installsTo": [
+        "components/ui/patterns/sign-in-methods.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/sign-in-methods.json",
+      "item": "https://ds.interlace.tools/r/sign-in-methods.json",
+      "docs": "https://ds.interlace.tools/c/sign-in-methods"
     },
     {
       "name": "skeleton-variants",
@@ -7081,7 +7787,7 @@
         "SKELETON_VARIANTS",
         "SKELETON_VARIANT_CLASSES"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7179,7 +7885,7 @@
         "SKELETON_VARIANTS",
         "SKELETON_VARIANT_CLASSES"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7286,7 +7992,7 @@
       "exports": [
         "SkyBackdrop"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7353,6 +8059,65 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/slider.json",
       "item": "https://ds.interlace.tools/r/slider.json",
       "docs": "https://ds.interlace.tools/c/slider"
+    },
+    {
+      "name": "social-sign-in",
+      "title": "Social Sign In",
+      "type": "registry:ui",
+      "summary": "\"Continue with Google / Apple / X / …\" plus an optional email link, in one form. Pick the providers and their order; the first `featured` ones get a full-width button with their name, the rest share a row of icon buttons, and the provider the visitor used…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "alert",
+          "status"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "SocialSignIn"
+      ],
+      "version": "1.1.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "cn",
+        "input",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/social-sign-in.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/social-sign-in.json",
+      "item": "https://ds.interlace.tools/r/social-sign-in.json",
+      "docs": "https://ds.interlace.tools/c/social-sign-in"
     },
     {
       "name": "sparkline",
@@ -7426,6 +8191,58 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/sparkline.json",
       "item": "https://ds.interlace.tools/r/sparkline.json",
       "docs": "https://ds.interlace.tools/c/sparkline"
+    },
+    {
+      "name": "spinner",
+      "title": "Spinner",
+      "type": "registry:ui",
+      "summary": "Something is working and there is no number to show yet. The shadcn core `spinner` item, drawn in Interlace tokens. Use `Progress` when you know how far along it is, and `Skeleton` when you know the shape of what is coming.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/spinner.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/spinner.json",
+      "item": "https://ds.interlace.tools/r/spinner.json",
+      "docs": "https://ds.interlace.tools/c/spinner"
     },
     {
       "name": "split-text",
@@ -7671,7 +8488,7 @@
       "exports": [
         "Starfield"
       ],
-      "version": "1.0.0",
+      "version": "2.0.0",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -7721,7 +8538,7 @@
         "MIN_VIEWPORT",
         "StatCard"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -7773,7 +8590,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.3.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7864,7 +8681,7 @@
         "REPLACING_STATES",
         "StatStrip"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7985,7 +8802,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
       "npmDependencies": [
         "lucide-react"
@@ -8000,6 +8817,81 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/status-pills.json",
       "item": "https://ds.interlace.tools/r/status-pills.json",
       "docs": "https://ds.interlace.tools/c/status-pills"
+    },
+    {
+      "name": "streak",
+      "title": "Streak",
+      "type": "registry:ui",
+      "summary": "A player's run of days: the count, a line on where today stands, and a strip of recent days, each marked played, rested, missed or still open. Rest days come from a `RestRule` (weekdays and dates that never break a run), so a habit does not punish a day…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "StreakStatus",
+          "values": [
+            "played",
+            "pending",
+            "resting",
+            "none"
+          ]
+        },
+        {
+          "name": "StreakDayState",
+          "values": [
+            "played",
+            "rest",
+            "missed",
+            "open",
+            "future"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/streak.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/streak-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/streak.json",
+      "item": "https://ds.interlace.tools/r/streak.json",
+      "docs": "https://ds.interlace.tools/c/streak"
     },
     {
       "name": "switch",
@@ -8087,7 +8979,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -8249,7 +9141,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -8305,7 +9197,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -8341,7 +9233,16 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "TEXT_SIZES",
+          "values": [
+            "default",
+            "lg",
+            "xl"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [],
@@ -8353,7 +9254,10 @@
         "focusRing": false
       },
       "exports": [
+        "CONTRAST_STORAGE_KEY",
         "SCHEME_STORAGE_KEY",
+        "TEXT_SIZES",
+        "TEXT_SIZE_STORAGE_KEY",
         "THEME_SCRIPT",
         "THEME_STORAGE_KEY"
       ],
@@ -8410,7 +9314,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -8832,6 +9736,7 @@
         "ANNOTATION_KINDS",
         "MIN_VIEWPORT",
         "SERIES_STYLE",
+        "TIME_SERIES_LABELS",
         "TimeSeries"
       ],
       "version": "2.0.0",
@@ -8946,7 +9851,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.2",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [
@@ -9021,7 +9926,7 @@
       "name": "toc",
       "title": "Toc",
       "type": "registry:ui",
-      "summary": "The in-page Table of Contents. Long-form pages (docs, MDX articles, rule reference) need a persistent navigation rail that mirrors the heading outline so a reader can both orient themselves and jump. On wide viewports this lives in a right-hand rail…",
+      "summary": "The in-page Table of Contents. A long read needs a quiet map of its headings that shows where the reader is and lets them jump. On a wide layout it is a rail beside the text (`Toc`); on a narrow one it is a slim bar that names the current section and opens…",
       "topics": [],
       "categories": [
         "blog",
@@ -9037,7 +9942,16 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "TocCollapse",
+          "values": [
+            "auto",
+            "always",
+            "never"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [
@@ -9045,22 +9959,26 @@
           "aria-label"
         ],
         "motion": {
-          "driver": "css",
+          "driver": "both",
           "declaresPreference": true,
-          "stylesheetCannotReach": false
+          "stylesheetCannotReach": true
         },
         "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT",
         "Toc",
+        "TocBar",
         "TocPopover"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
-      "npmDependencies": [],
+      "npmDependencies": [
+        "lucide-react"
+      ],
       "registryDependencies": [
         "cn",
+        "drawer",
         "interlace-base",
         "popover",
         "use-reduced-motion"
@@ -9111,7 +10029,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -9169,7 +10087,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "3.4.0",
       "since": null,
       "npmDependencies": [
         "@base-ui/react",
@@ -9225,7 +10143,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -9268,8 +10186,8 @@
           "aria-label"
         ],
         "motion": {
-          "driver": "none",
-          "declaresPreference": false,
+          "driver": "css",
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
         "focusRing": true
@@ -9277,7 +10195,7 @@
       "exports": [
         "TopbarMenu"
       ],
-      "version": "1.0.0",
+      "version": "2.2.0",
       "since": null,
       "npmDependencies": [
         "lucide-react"
@@ -9293,6 +10211,109 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json",
       "item": "https://ds.interlace.tools/r/topbar-menu.json",
       "docs": "https://ds.interlace.tools/c/topbar-menu"
+    },
+    {
+      "name": "topbar-nav",
+      "title": "Topbar Nav",
+      "type": "registry:ui",
+      "summary": "The wide-screen half of `Topbar` when its links hold groups: a row of plain links and group triggers, where a group opens a panel of its items, each with an optional icon and a one-line description. It is how a site that is a family of products lists them…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "navigation-menu",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "menu"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "TOPBAR_ROW_ITEM",
+        "TopbarNav"
+      ],
+      "version": "1.1.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/topbar-nav.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar-nav.json",
+      "item": "https://ds.interlace.tools/r/topbar-nav.json",
+      "docs": "https://ds.interlace.tools/c/topbar-nav"
+    },
+    {
+      "name": "topbar-scroll-edge",
+      "title": "Topbar Scroll Edge",
+      "type": "registry:ui",
+      "summary": "The client half of `Topbar edge=\"scroll\"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "TopbarScrollEdge"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/topbar-scroll-edge.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar-scroll-edge.json",
+      "item": "https://ds.interlace.tools/r/topbar-scroll-edge.json",
+      "docs": "https://ds.interlace.tools/c/topbar-scroll-edge"
     },
     {
       "name": "topbar",
@@ -9319,25 +10340,28 @@
         "roles": [],
         "aria": [
           "aria-current",
+          "aria-hidden",
           "aria-label"
         ],
         "motion": {
           "driver": "css",
-          "declaresPreference": false,
+          "declaresPreference": true,
           "stylesheetCannotReach": false
         },
-        "focusRing": false
+        "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.6.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
         "interlace-base",
-        "topbar-menu"
+        "topbar-menu",
+        "topbar-nav",
+        "topbar-scroll-edge"
       ],
       "installsTo": [
         "components/ui/patterns/topbar.tsx"
@@ -9395,6 +10419,60 @@
       "docs": "https://ds.interlace.tools/c/typography"
     },
     {
+      "name": "use-reading-prefs",
+      "title": "useReadingPrefs hook",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — reads and writes the reader's text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ContrastPreference",
+          "values": [
+            "more",
+            "normal",
+            "system"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "theme-script"
+      ],
+      "installsTo": [
+        "hooks/use-reading-prefs.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/use-reading-prefs.json",
+      "item": "https://ds.interlace.tools/r/use-reading-prefs.json",
+      "docs": "https://ds.interlace.tools/c/use-reading-prefs"
+    },
+    {
       "name": "use-reduced-motion",
       "title": "useReducedMotion hook",
       "type": "registry:lib",
@@ -9426,7 +10504,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.0",
+      "version": "3.0.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
@@ -9626,7 +10704,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": null,
       "npmDependencies": [],
       "registryDependencies": [

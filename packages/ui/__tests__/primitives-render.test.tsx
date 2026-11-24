@@ -49,6 +49,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
+  CardLink,
   CardTitle,
 } from "../src/primitives/card.js";
 import { FeaturedIcon } from "../src/primitives/featured-icon.js";
@@ -414,9 +415,9 @@ describe("Typography", () => {
     (align) => {
       const { container } = render(<Typography align={align}>x</Typography>);
       const expected = {
-        start: "text-left",
+        start: "text-start",
         center: "text-center",
-        end: "text-right",
+        end: "text-end",
       }[align];
       expect(slot(container, "typography")!.getAttribute("class")).toContain(
         expected,
@@ -459,16 +460,25 @@ describe("Grid", () => {
     "maps gap=%s onto the spacing token",
     (gap) => {
       const { container } = render(<Grid gap={gap} />);
-      // lg and up keep the full step for rows and, from md, for columns; below
-      // md their column gap is capped so twelve tracks fit a phone.
+      // Rows take the step; columns take it through --grid-gap-x, capped at
+      // one track's share. lg and up use a smaller column step below md.
       const cls = slot(container, "grid")!.getAttribute("class")!;
-      if (gap === "none") expect(cls).toContain("gap-0");
-      else if (gap === "lg" || gap === "xl" || gap === "2xl") {
-        expect(cls).toContain(`gap-y-${SPACING_STEP[gap]}`);
-        expect(cls).toContain(`md:gap-x-${SPACING_STEP[gap]}`);
-      } else expect(cls).toContain(`gap-${SPACING_STEP[gap]}`);
+      const step = gap === "none" ? 0 : SPACING_STEP[gap];
+      expect(cls).toContain(`gap-y-${step}`);
+      expect(cls).toContain("gap-x-[min(var(--grid-gap-x),calc(100%/var(--grid-cols,12)))]");
+      if (gap === "none") expect(cls).toContain("[--grid-gap-x:0px]");
+      else if (gap === "lg" || gap === "xl" || gap === "2xl")
+        expect(cls).toContain(`md:[--grid-gap-x:calc(var(--spacing)*${step})]`);
+      else expect(cls).toContain(`[--grid-gap-x:calc(var(--spacing)*${step})]`);
     },
   );
+
+  it("a className gap still replaces the capped column gap", () => {
+    const { container } = render(<Grid className="gap-8" />);
+    const cls = slot(container, "grid")!.getAttribute("class")!;
+    expect(cls).toContain("gap-8");
+    expect(cls).not.toContain("gap-x-[min(");
+  });
 
   it("emits neither data attribute when cols and gap are left to the defaults", () => {
     const { container } = render(<Grid />);
@@ -798,6 +808,24 @@ describe("Card", () => {
   it("is a card surface, so it does not inherit the page background", () => {
     const { container } = render(<Card />);
     expect(slot(container, "card")!.getAttribute("data-surface")).toBe("card");
+  });
+
+  it("makes the whole card one link through CardLink, as an <a> or a router link", () => {
+    const { container } = render(
+      <Card>
+        <CardLink href="/a" className="x">A</CardLink>
+        <CardLink asChild className="y" data-testid="routed">
+          <a href="/b" className="z">B</a>
+        </CardLink>
+      </Card>,
+    );
+    const links = container.querySelectorAll("[data-slot=card-link]");
+    expect(links).toHaveLength(2);
+    expect(links[0]!.getAttribute("href")).toBe("/a");
+    expect(links[0]!.className).toContain("after:inset-0");
+    expect(links[1]!.getAttribute("href")).toBe("/b");
+    expect(links[1]!.className).toMatch(/after:inset-0.*z.*y/);
+    expect(links[1]!.getAttribute("data-testid")).toBe("routed");
   });
 
   it("swaps to a card-shaped skeleton while loading", () => {

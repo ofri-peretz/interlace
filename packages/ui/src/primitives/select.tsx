@@ -117,7 +117,7 @@ function SelectTrigger({
         'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/60',
         'data-popup-open:border-ring',
         'disabled:cursor-not-allowed disabled:opacity-50',
-        'data-[size=default]:h-9 data-[size=sm]:h-8',
+        'data-[size=default]:h-control data-[size=sm]:h-control-sm',
         '[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
         className,
       )}
@@ -191,7 +191,7 @@ function SelectItem({
     <BaseSelect.Item
       data-slot="select-item"
       className={cn(
-        'relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2.5 pr-8 pl-3 text-sm outline-hidden select-none transition-[color,background-color] duration-(--duration-fast)',
+        'relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2.5 pe-8 ps-3 text-sm outline-hidden select-none transition-[color,background-color] duration-(--duration-fast)',
         'text-popover-foreground',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-selected:bg-primary data-selected:text-primary-foreground data-selected:font-medium',
@@ -201,7 +201,7 @@ function SelectItem({
       )}
       {...props}
     >
-      <span className="absolute right-2 flex size-3.5 items-center justify-center">
+      <span className="absolute end-2 flex size-3.5 items-center justify-center">
         <BaseSelect.ItemIndicator>
           <CheckIcon className="size-4" />
         </BaseSelect.ItemIndicator>

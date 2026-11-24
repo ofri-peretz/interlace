@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import {
   Toc,
+  TocBar,
   TocPopover,
   MIN_VIEWPORT,
   type TocItem,
@@ -55,12 +56,9 @@ const ArticleMock = ({ items }: { items: TocItem[] }) => (
 const PageMock = ({ items = ITEMS, ...tocProps }: Partial<TocProps>) => (
   <div className="grid min-h-[80vh] grid-cols-1 gap-10 bg-background px-6 py-10 text-foreground lg:grid-cols-[1fr_220px]">
     <ArticleMock items={items} />
-    <aside className="sticky top-6 self-start">
-      <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        On this page
-      </div>
-      <Toc items={items} {...tocProps} />
-    </aside>
+    <div className="sticky top-6 self-start">
+      <Toc items={items} title="On this page" {...tocProps} />
+    </div>
   </div>
 );
 
@@ -73,7 +71,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The "where am I" rail for a page long enough that the reader loses the thread — docs, MDX articles, rule reference. It is a mirror of the heading outline, so it earns its place only when the outline is real: a page with three h2s does not need one. Active tracking is an `IntersectionObserver` over the heading ids you pass (no scroll math), and the click scroll drops to `instant` under `prefers-reduced-motion`. Below the 480px floor hide it entirely rather than shrink it; `TocPopover` is the narrow-but-not-tiny companion.',
+          'The "where am I" map for a page long enough that the reader loses the thread. It mirrors the heading outline, so it earns its place only when the outline is real. A section is current from the moment its heading crosses the reading line until the next one does, so the rail never goes blank. A marker slides to the current entry and the track above it fills as you read. Long outlines (over 10 entries) show sub-headings only under the current section. A pick holds its entry while the page scrolls there, moves focus to the heading and puts it in the URL; under reduced motion everything lands at once. Below 480px use `TocBar`: a slim bar naming the current section that opens the list in a bottom sheet.',
       },
     },
   },
@@ -86,6 +84,18 @@ const meta = {
         category: 'Data',
         type: { summary: '{ id: string; label: ReactNode; level: 2 | 3 | 4 }[]' },
       },
+    },
+    title: {
+      control: 'text',
+      description: 'A small visible heading above the list, such as "On this page". The landmark keeps `label` as its name.',
+      table: { category: 'Content', type: { summary: 'ReactNode' } },
+    },
+    collapse: {
+      control: 'inline-radio',
+      options: ['auto', 'always', 'never'],
+      description:
+        'Fold sub-headings so only the current section shows its own. `auto` folds above 10 entries. Folded entries leave the tab order.',
+      table: { category: 'Behaviour', type: { summary: "'auto' | 'always' | 'never'" }, defaultValue: { summary: "'auto'" } },
     },
     label: {
       control: 'text',
@@ -100,7 +110,7 @@ const meta = {
     className: {
       control: 'text',
       description:
-        'Merged onto the `<nav>`. Indentation is not configurable — level 3 is `pl-6`, level 4 is `pl-10`, per LAYOUT_PHILOSOPHY.md.',
+        'Merged onto the `<nav>`. Indentation is not configurable: level 3 is `ps-6`, level 4 is `ps-9`.',
       table: { category: 'Appearance', type: { summary: 'string' } },
     },
   },
@@ -133,7 +143,15 @@ export const Variants: Story = {
       </section>
       <section>
         <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          Popover variant — narrow viewport
+          Bar variant — narrow layouts (opens a bottom sheet)
+        </div>
+        <div className="max-w-96 border-b border-border">
+          <TocBar items={ITEMS} />
+        </div>
+      </section>
+      <section>
+        <div className="mb-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          Popover variant — a small button
         </div>
         <TocPopover items={ITEMS} />
       </section>
@@ -188,6 +206,30 @@ export const Loading: Story = {
   render: () => (
     <div className="bg-background p-6">
       <Skeleton variant="toc" className="w-56" />
+    </div>
+  ),
+};
+
+const LONG_ITEMS: TocItem[] = ['Overview', 'Install', 'Configure', 'Theming', 'Deploy'].flatMap((section, s) => [
+  { id: `long-${s}`, label: section, level: 2 as const },
+  { id: `long-${s}-a`, label: `${section}: the basics`, level: 3 as const },
+  { id: `long-${s}-b`, label: `${section}: going further`, level: 3 as const },
+]);
+
+/** A long outline: sub-headings show only under the section being read. */
+export const LongOutline: Story = {
+  render: (args) => <PageMock {...args} items={LONG_ITEMS} />,
+};
+
+/** The narrow form: a slim sticky bar that names the current section. */
+export const Bar: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile1' } },
+  render: () => (
+    <div className="bg-background text-foreground">
+      <div className="sticky top-0 z-10 border-b border-border bg-background px-4">
+        <TocBar items={ITEMS} />
+      </div>
+      <ArticleMock items={ITEMS} />
     </div>
   ),
 };

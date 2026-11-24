@@ -209,6 +209,40 @@
           "source": ".changeset/callout-highlight.md"
         },
         {
+          "summary": "New `ChartFrame`: the frame a published chart sits in. A `title` that states the finding (at the `headingLevel` the page needs) and a `subtitle` on what is measured sit above any chart; the footer names every `source` (linked when it has an address), a `note` on how to read the numbers and when they were `updated`, all as plain HTML under the chart. Pass `table` and the frame offers Chart and Table views as tabs, both kept in the server HTML. `download` writes the rows as a UTF-8 CSV into a link at render time, so it works before scripts load, and prefixes cells a spreadsheet would run as a formula. Every fixed word comes from `labels`, and the date goes through `Intl` in `locale`. `toCsv` and `csvHref` are exported and pure.",
+          "components": [
+            "chart-frame"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/chart-frame.md"
+        },
+        {
+          "summary": "`ChoroplethMap` and `DotPlot` take a `labels` prop for every fixed word a reader meets: \"No data\", the legend and table names, the empty and hint lines, and the sentences read to screen readers. Sentences are functions, so a language can order and inflect them its own way. `describeMap` and `describeDotRow` take the same sentence function. English stays the default. In `DotPlot`'s table, a missing value now reads \"No data\" instead of a dash.",
+          "components": [
+            "choropleth-map",
+            "dot-plot"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/chart-labels.md"
+        },
+        {
+          "summary": "New `ChoroplethMap`: a value per area as shades of one colour. You pass the shapes as projected SVG paths, so Interlace ships no geography and decides no borders. Values fall into a few classes (quantile, equal or your own breaks) with a legend a reader can match; missing areas are hatched and labelled \"No data\", never drawn as the lowest shade. Every area is reachable by keyboard and announced with its value, and a table view carries the same numbers.",
+          "components": [
+            "choropleth-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/choropleth-map.md"
+        },
+        {
           "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"City archive\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
           "components": [
             "citation"
@@ -270,6 +304,38 @@
           "source": ".changeset/content-patterns.md"
         },
         {
+          "summary": "More contrast: an AAA reading mode on top of every theme.\n\nInterlace is AA in every theme. For readers who find that hard to read, the base CSS now carries a more-contrast mode, which lifts every text pair to 7:1 and every line to 3:1, on any theme and in both schemes. It turns on by itself when the reader's system asks for more contrast (`prefers-contrast: more`), or when the page sets `data-contrast=\"more\"` on `<html>` or on any region. `data-contrast=\"normal\"` opts a page out of the automatic switch.\n\n- Secondary text takes the full foreground.\n- Muted, accent and secondary surfaces become a faint tint of the foreground.\n- Primary becomes foreground on background. To keep a brand colour, re-point `--primary` inside `[data-contrast='more']` with a pair measured at 7:1.\n- Status colours deepen until their text clears 7:1, both as text and as a filled chip.\n- Borders and inputs darken, and the focus ring takes the foreground. With `data-contrast=\"more\"` it becomes a 3px outline, 2px outside the element.\n\nA new lock, `contrast-more-lock`, recomputes every pair for every theme.",
+          "components": [
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/contrast-more.md"
+        },
+        {
+          "summary": "Control heights are tokens now, with an opt-in comfortable density.\n\nButton, Input, Select, Combobox, Toggle, Tabs, NumberField and ThemeSwitcher take their height from `--spacing-control-xs`, `-sm`, `--spacing-control` and `-lg`, through the new `h-control` and `size-control` utilities. The defaults are unchanged: 24, 32, 36 and 40px. Put `data-density=\"comfortable\"` on `<html>` or on any region, and they become 32, 40, 44 and 48px, so the default control meets the 44px touch target. A brand can also re-point a single token, for example `:root { --spacing-control: 2.5rem; }`.",
+          "components": [
+            "button",
+            "input",
+            "select",
+            "combobox",
+            "toggle",
+            "tabs",
+            "number-field",
+            "theme-switcher",
+            "toolbar",
+            "pagination",
+            "skeleton"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/control-height.md"
+        },
+        {
           "summary": "CTASection gets `variant=\"card\"` (a contained rounded card inside the content width), `align=\"start\"`, a decorative `background` slot clipped to the surface, and `children` under the actions for a search box or a form. The title moves to the fluid `text-section` size and the padding to `py-section-comfortable`.",
           "components": [
             "cta-section"
@@ -279,6 +345,22 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/cta-section-card.md"
+        },
+        {
+          "summary": "Comfortable density now reaches the patterns too.\n\nThe Topbar row items, DialogueStepper's Back / Show the whole conversation / Start over, and Dialogue and DialogueStepper choices take their minimum height from `--spacing-control`, so they stay 36px by default and grow to 44px under `data-density=\"comfortable\"`. Citation's number and chip markers keep their size in the line, and an invisible pad of the new `--spacing-target` token takes the tap: 24px by default (WCAG 2.5.8), 44px when comfortable. The underline marker is the phrase itself, inside a sentence, so it is unchanged.",
+          "components": [
+            "topbar",
+            "topbar-nav",
+            "dialogue",
+            "dialogue-stepper",
+            "citation",
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/density-patterns.md"
         },
         {
           "summary": "New `DialogueStepper`: a `Dialogue` the reader steps through, one step of turns at a time. Each `DialogueStepper.Step` ends in `DialogueStepper.Choices`; a `Choice` reveals the step its `next` names, so a talk can branch, and choosing a step already on the path goes back to it. Back, \"Show the whole conversation\" and \"Start over\" sit below, with `labels` for another language. After a choice, focus moves to the new step's first choice (or to Back at the end) and the new turns are read out once through a polite live region; the step enters with a short fade behind `motion-safe:`. The server renders every step, and without JavaScript a `<noscript>` style shows the whole conversation with no controls.",
@@ -301,6 +383,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/dialogue-transcript.md"
+        },
+        {
+          "summary": "New `DotPlot`: one dot per value on a shared axis, one row per thing compared. With two or more series a line joins each row's dots, so the line's length is the gap and its direction is the change. The axis need not start at zero, ticks are round numbers that stay text-sized at any width, and the first series is a hollow ring so series differ in shape as well as colour. Each row reads as a sentence, a legend entry picks out a series, and a table carries the same numbers.",
+          "components": [
+            "dot-plot"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/dot-plot.md"
         },
         {
           "summary": "New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.",
@@ -357,6 +450,41 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/fluid-rhythm.md"
+        },
+        {
+          "summary": "New `CloserGame` in the games tier: guess a number by sliding to it (or typing it), lock it in, and the answer slides out from the guess to where it really is, with the gap shaded and said in words (\"You said 450. The answer is 500, 50 off. Close. 90 points.\"). Distance is a share of the range, so the same rule works for 0 to 100 and 0 to 100,000; `range.scale = 'log'` handles answers that span orders of magnitude. Numbers go through `Intl.NumberFormat` (`format`, `locale`), every word through `labels`. `guess` / `defaultGuess` restore a stored guess as the revealed state, and `onGuess` fires once with the scored result. The answer travels in 400ms on the reveal and is simply in place under reduced motion. Scoring is pure and exported from `games/closer-model` (`scoreGuess`, `toPosition`, `fromPosition`, `snap`), so a server can score the same guess and a share card can draw the band without the number.",
+          "components": [
+            "closer-game"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-closer.md"
+        },
+        {
+          "summary": "Three more pieces in the games tier.\n\n- `DailyPuzzle`: the frame around a daily game. Its name, today's number and date (\"No. 42 · Tuesday, November 24\"), progress through the rounds in words (\"Round 2 of 3\", announced politely), an `aside` for a compact Streak, and the round itself as children, rising in once per round. `DailyPuzzleCountdown` says \"Next puzzle at midnight\" in the server HTML, then the time left in the player's zone, and calls `onNextDay` when the day turns.\n- `ShareCard`: how the player did without spoiling it, one mark per round (a band, never the answer), the score and the streak. Share opens the device's share sheet where there is one; Copy always works and falls back to a selected field. The marks are read as a sentence for assistive tech. `games/share-model` exports `shareText` and `shareMarks`, so a server can build the same text.\n- `Leaderboard`: a group's board as a captioned table. Ties share a rank (\"=2\"), the viewer's row says \"You\" and stays visible below the top rows, and `minPlayers` holds the board back until no score stands alone. `games/leaderboard-model` exports `rankEntries` and `buildBoard`.",
+          "components": [
+            "daily-puzzle",
+            "share-card",
+            "leaderboard"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-daily-share-board.md"
+        },
+        {
+          "summary": "New `games` tier, the engine of a daily game, starting with `Streak`: a player's run of days, a sentence on where today stands (\"Play today to keep your streak.\") and a strip of recent days marked played, rest, missed or still open. Rest days are a setting, not a special case: `rest={{ weekdays: [6], dates: ['2026-12-25'] }}` names days that never break a run, and a rest day the player plays anyway still counts. Today never ends a run while it is still open. Each mark pairs its colour with a shape and an icon, and every day is read out with its date and state; `variant=\"compact\"` is one chip for a header. No hooks, so it renders on the server. The arithmetic ships beside it and is exported: `games/daily` (day keys in a time zone, puzzle numbers, a seeded puzzle-of-the-day that never repeats inside a cycle, time to the next day) and `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`).",
+          "components": [
+            "streak"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-streak.md"
         },
         {
           "summary": "GuessReveal: a one-question quiz. Two to four answers as buttons; the pick is marked right or wrong in words and with a short movement, the right answer is always shown, and an explanation opens. `onAnswer` lets the consumer record the pick. The status is a polite live region, the options stay focusable after the pick, and without JavaScript a details element holds the answer.",
@@ -459,6 +587,22 @@
           "source": ".changeset/light-subtree.md"
         },
         {
+          "summary": "The line charts can be shown in any language. `TimeSeries` and `RadialWeave` take `labels` (a shared `TimeSeriesLabels` set: the unnamed-series word, the empty note, the readout's missing word, the \"more not plotted\" note, the keyboard instructions, the table caption, date header and empty cell, the spoken summary and the comparison's words) and a `locale` for their numbers. `Delta` takes `labels` for its empty note and spoken sentence, and a `locale`. `Sparkline` takes `summary` and `locale`. `SeriesTable` takes `noDataLabel` and `locale`. `describeSeries` builds its sentence from a new `SeriesSummary`, with `seriesSentence` as the English default, and `compact` takes a locale. English output is unchanged. `SeatChart`'s `seatsLabel` doc now says the spoken sentence has its own words.",
+          "components": [
+            "time-series",
+            "radial-weave",
+            "delta",
+            "sparkline",
+            "series-table",
+            "seat-chart"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/line-chart-labels.md"
+        },
+        {
           "summary": "New `List` primitive with markers that carry the voice of the page: `bullet`, `number` (a real `ol`, numbered by the browser in a filled circle), `check` and `cross`. Markers are drawn in CSS, so they centre on the first line whatever the item holds (rich text, inline `Citation` chips) and are never read aloud; `start` and `reversed` work as on any ordered list. `density` sets the space between items.",
           "components": [
             "list"
@@ -481,6 +625,17 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
+          "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/prose-labels.md"
+        },
+        {
           "summary": "New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an \"On this page\" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.",
           "components": [
             "reading-layout"
@@ -490,6 +645,20 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/reading-layout.md"
+        },
+        {
+          "summary": "Reading settings for the reader: a text size control and a More contrast toggle.\n\n`TextSizeControl` is a labelled group of three buttons: smaller, the current size (which resets), and larger. It sets the root font size to 100, 112, 125 or 150% of the browser's own default through `data-text-size` on `<html>`, so type, spacing, control heights and containers all grow together and the layout holds. At the ends the buttons stay focusable, so a keyboard user is never dropped to the top of the page.\n\n`ContrastToggle` turns More contrast on or off. Off stores an explicit `normal`, which also overrides `prefers-contrast: more`.\n\n`useReadingPrefs` is the hook behind both: it persists the choices, keeps every control in the document and every open tab in step, and follows the OS when nothing is stored. `THEME_SCRIPT` now restores both choices before first paint, so a returning reader never sees the page reflow. Every word in both controls is a prop.",
+          "components": [
+            "reading-settings",
+            "use-reading-prefs",
+            "theme-script",
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/reading-settings.md"
         },
         {
           "summary": "New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.",
@@ -514,6 +683,30 @@
           "source": ".changeset/scroll-area-fades.md"
         },
         {
+          "summary": "`SeatChart` takes `labels` and `locale`. Every fixed word (the empty note, Vacant, No side, the table headers and caption, the majority caption and cell) can be replaced, and the screen-reader sentence is built by `labels.summary` from a `SeatSummary`, so it can be written in any language. Counts and shares are formatted with `Intl.NumberFormat` in the given locale. English stays the default.\n\n`ShareChart` takes `labels` too: the empty note, the legend's name, the table caption and row header, and the sentence read for each row. `describeShareRow` takes the same sentence function. `DotPlot`'s `rowSentence` now says that it words a missing value itself.",
+          "components": [
+            "seat-chart",
+            "share-chart",
+            "dot-plot"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/seat-chart-labels.md"
+        },
+        {
+          "summary": "New `SeatChart`: how an assembly divides its seats, as a half-circle of dots filled group by group from left to right, with the majority marked at the top and a caption under the arc (\"61 needed for a majority\", or `majorityLabel`). By default every group gets its own colour: the five chart hues, then the same hues deepened, then neutral, so eleven lists stay apart in light and dark. Groups can also sit on `sides` (government and opposition, say): each side has one tone, its groups take shades of it, the first side fills from the left and the last from the right, and `tally` puts big side or leader totals above the arc. Hovering or focusing a group dims the rest and shows its count; a click pins it. The legend prints every count, the picture carries a sentence naming the total, each group and the distance to a majority, and a table sits behind it (`showTable` shows it). Seats no group holds are outlines counted as vacant. On first view the seats fill in once, under a second; nothing moves under reduced motion. `SeatChartCompare` sets two or three charts side by side by its own width. `seatLayout`, `placeGroups` and `describeSeats` are exported and pure.",
+          "components": [
+            "seat-chart"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/seat-chart.md"
+        },
+        {
           "summary": "`Section` gets a `brand` tone, the full-bleed brand band (`bg-primary` with `text-primary-foreground`), and a new `overlap` axis (`none`, `sm`, `md`, `lg`). A Section with `overlap` drops its own top padding, pulls up by that depth and stacks above the band before it, so a card can straddle the edge of a brand band with no custom class: two Sections, the second with `overlap=\"md\"`.",
           "components": [
             "section"
@@ -523,6 +716,29 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/section-brand-overlap.md"
+        },
+        {
+          "summary": "New `ShareChart`: how a whole splits into parts, one bar per row on one shared scale. `layout=\"stacked\"` runs every bar from the same edge to 100%; `layout=\"diverging\"` puts an ordered scale around a zero line shared by every row, with a `neutral` category across it and each side's total printed at its end. Values become shares of the row's total (the sum, or `total`), so counts and percentages both work. Stacked categories take the five chart hues in order; diverging ones take two `poles`, strongest at the ends. Hovering a segment or a legend entry, or focusing one, dims the other categories and prints that share on every row; a click pins it. Every row carries a sentence with every share, and a table of values sits behind the picture (`showTable` shows it). On first view each bar grows out of its zero line once; nothing moves under reduced motion. Labels sit beside the bars when the chart's own box is wide enough and above them when it is not, and the bars mirror in right-to-left pages. `shareOf`, `shareLayout`, `shareFills` and `describeShareRow` are exported and pure.",
+          "components": [
+            "share-chart"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/share-chart.md"
+        },
+        {
+          "summary": "OtpField: a one-time code typed into a row of boxes, on Base UI's OTP field. Paste the whole code into any box or let the phone fill it from a message; `groupSize` adds a dash between groups, `invalid` marks every box.\n\nSignInMethods: an account page's list of ways to sign in, each with Connect or Disconnect. Disconnecting asks once more in place, and the last connected method is locked with the reason beside it, so nobody locks themselves out. Built-in providers take their name and mark from SocialSignIn.",
+          "components": [
+            "otp-field",
+            "sign-in-methods"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/sign-in-methods.md"
         },
         {
           "summary": "Site chrome that needs no custom classes:\n\n- `Topbar` keeps its links on small screens. By default they move behind a Menu button that opens a side sheet (new `TopbarMenu`); `mobileNav=\"wrap\"` shows them as a second row. `currentHref` marks the current page with `aria-current=\"page\"` and a visible style, and `renderLink` now receives `aria-current` to forward.\n- New `Banner`: a thin full-width bar for a site-wide message, in muted, info, success, warning and highlight tones, with an optional action and close button.\n- `Prose` headings now use `--font-heading` (they used `--font-body` before), like Typography. If you set the two to different faces, Prose headings change to the heading face. New `width=\"fill\"` drops the 65ch cap for prose inside a card or panel.\n- `StatCard` and `StatGroup` take `layout=\"value-first\"` (the number, then what it counts) next to the default label-first.\n- `Footer` takes a `tagline` shown under the brand.",
@@ -540,6 +756,28 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/site-chrome.md"
+        },
+        {
+          "summary": "SocialSignIn: \"Continue with Google / Apple / Facebook / X / TikTok / Microsoft / LinkedIn / GitHub\", or any provider you describe, plus an optional email link, in one form. The first providers get full-width buttons and the rest a row of 44px icon buttons; the one used last time moves first with a tag. Without JavaScript it submits `provider=<id>` to your action; with callbacks, the pressed button spins until its promise settles. Once the email link is sent it becomes a \"check your inbox\" note. It knows nothing about any auth library.",
+          "components": [
+            "social-sign-in"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/social-sign-in.md"
+        },
+        {
+          "summary": "`Spinner`: the shadcn core `spinner` item in Interlace tokens. An inline SVG in `currentColor` with `sm` (default), `md` and `lg` sizes. Announced once as a status named by `label` (\"Loading\" by default, so it can be translated); `decorative` hides it inside something that already says it is busy. It turns only under `motion-safe`. Server component.",
+          "components": [
+            "spinner"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/spinner.md"
         },
         {
           "summary": "New SplitText: a headline that arrives a word, or a letter, at a time the first time it scrolls into view. `by` picks words or letters, `effect` is `rise` (default), `fade` or `blur`, and `step` sets the pace. The whole line is in the server HTML and read once from a visually hidden copy, so a screen reader never spells a word out. Letters keep emoji and combining marks whole, words never break mid-line, RTL arrives from the right, and under reduced motion the line is simply there.",
@@ -562,6 +800,21 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/status-pills.md"
+        },
+        {
+          "summary": "Comfortable density reaches the small links, and Card gets a whole-card link. Under `data-density=\"comfortable\"`, Tag and Breadcrumb links keep their size but take the tap through an invisible pad of `--spacing-target` (44px), the ClaimCard section summary and Footer links grow to 44px rows, and the default density stays at the same rhythm. New `CardLink`: wrap the card's title text in it and the whole card becomes the target through a stretched `::after`, with one accessible name, the focus ring on the card and a quiet border lift on hover. `asChild` takes a router link.",
+          "components": [
+            "card",
+            "tag",
+            "breadcrumb",
+            "footer",
+            "claim-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/target-sizes-and-card-link.md"
         },
         {
           "summary": "`ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.",
@@ -597,6 +850,18 @@
           "source": ".changeset/timeline.md"
         },
         {
+          "summary": "Toc: the table of contents now follows the reader. A section stays current from the moment its heading crosses the reading line until the next one does, so the rail never goes blank; a marker slides to the current entry and the track fills as you read; long outlines (over 10 entries, or `collapse`) show sub-headings only under the current section; a pick holds its entry while the page scrolls there. New `title` prop for a visible heading. New `TocBar` for narrow layouts: a slim bar that names the current section, shows the page's progress along its foot, and opens the list in a bottom sheet that closes on a pick with focus on the heading. ReadingLayout uses `TocBar` below `@4xl` and titles its rail with `triggerLabel`. All motion is `motion-safe`.",
+          "components": [
+            "toc",
+            "reading-layout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/toc-reading-rail.md"
+        },
+        {
           "summary": "New Toolbar: a row of controls that is one stop in the Tab order. Tab enters on the control used last and the next Tab leaves the whole bar; inside, the arrow keys move between controls, Home and End jump to the ends, and focus wraps, so a keyboard user no longer Tabs through every button of a formatting bar or a table's bulk actions. Built on Base UI's Toolbar: buttons take Button's `variant` and `size` (ghost, icon-sm by default), any trigger joins through `render` (`<ToolbarButton render={<Toggle />} />`), a disabled button stays reachable so its label can be read, and the bar wraps at 320px. Parts: Toolbar, ToolbarButton, ToolbarLink, ToolbarGroup, ToolbarSeparator, ToolbarInput.",
           "components": [
             "toolbar"
@@ -606,6 +871,20 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/toolbar.md"
+        },
+        {
+          "summary": "`Topbar` takes link groups, a quiet edge and a full-screen phone menu.\n\n- **Link groups.** An entry of `links` can be `{ label, items }`, where each item is a link with an optional `description` and `icon`. From `collapseBelow` up, a group is a button that opens a panel of its items, built on Base UI NavigationMenu: arrow keys move between triggers, Enter opens a panel and focuses its first item, Escape closes it and returns focus, hover opens it after a short delay and the panel slides between groups. Following a link closes it. Below `collapseBelow`, each group is a labelled section of the menu, and `mobileNav=\"wrap\"` opens groups out into the row. Plain links work as before.\n- **`edge=\"scroll\"`.** The bar sits clear over the top of the page, with no surface or border, and fades them in once the page scrolls under it. The default, `edge=\"always\"`, is unchanged.\n- **`menuSide=\"full\"`.** The small-screen menu covers the whole screen, dropping from the top, with larger links.\n\nNew parts, installed with Topbar: `TopbarNav` (the wide row with groups) and `TopbarScrollEdge` (marks the header `data-scrolled`).",
+          "components": [
+            "topbar",
+            "topbar-menu",
+            "topbar-nav",
+            "topbar-scroll-edge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/topbar-groups.md"
         },
         {
           "summary": "TopbarMenu now opens its links in a Drawer instead of a Sheet: on a phone a finger drags the panel back toward its edge to close it, and the panel follows the finger. Focus trap, Escape, press-outside and close-on-navigate are unchanged. A new `side` prop (`right`, `left`, `bottom`; default `right`) picks the edge, and `Topbar` passes it through as `menuSide` (an RTL page passes `left`).",
@@ -618,6 +897,20 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/topbar-menu-drawer.md"
+        },
+        {
+          "summary": "`Topbar` motion and focus polish.\n\n- **Hover pill.** A soft pill slides under whichever row item the pointer is over, and rests under an open group's trigger.\n- **Panels slide between groups.** Moving from one group to the next, the panel resizes and its content slides in the direction of travel. The items cascade in, 20ms apart, inside the 150ms stagger window.\n- **`hideOnScroll`.** The bar slides away while the reader scrolls down and returns on the first scroll up. It stays put while focus or an open panel is inside it.\n- **Menu cascade.** The small-screen menu's links fade in a quick cascade.\n- **Focus ring.** Every row item is now a padded box, so the focus ring sits 2px outside it on the page colour and never touches the words. Rows of plain links now render through `TopbarNav` too, so they get the same pill and ring.\n\nEverything that moves is behind `motion-safe`. Under reduced motion the pill and panels still appear, without moving.",
+          "components": [
+            "topbar",
+            "topbar-nav",
+            "topbar-menu",
+            "topbar-scroll-edge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/topbar-motion.md"
         },
         {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
@@ -641,6 +934,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/wordmark.md"
+        },
+        {
+          "summary": "`Breadcrumb` reads on a brand band. Inside `Section tone=\"brand\"` the trail, the current page and the separators take the band's own text colour instead of the page's greys, which sat at about 1.2:1 on the primary fill. Measured on the house theme: 8.8:1 light, 11.8:1 dark, and over 16:1 under More contrast. The current page keeps its weight, and a link underlines on hover instead of changing colour. Outside a band nothing changes.",
+          "components": [
+            "breadcrumb"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/breadcrumb-on-brand-band.md"
         },
         {
           "summary": "`Button` no longer lists `text-decoration-color` in its transition: no variant changes it, so the entry did nothing.",
@@ -679,6 +983,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/container-collections.md"
+        },
+        {
+          "summary": "More contrast now wins over a branded app. Brands declare their tokens unlayered on `:root`, as the guide says, and an unlayered rule beats any layered one, so on a branded site the mode quietly did nothing: grey secondary text and the brand's own primary stayed. Every token the mode sets is now `!important` inside `@layer interlace.semantics`, which beats unlayered rules, so a reader who asks for more contrast always gets it. A brand that wants to keep its accent in the mode sets `--contrast-primary` and `--contrast-primary-foreground` to a pair it measured at 7:1, and checks the tinted surfaces built from it (`text-primary` on `bg-primary/10`). contrast-more-lock now also checks that every mode declaration is important. The craft skill covers More contrast, density, and the focus ring's room.",
+          "components": [
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/contrast-more-authoritative.md"
         },
         {
           "summary": "CTASection: the section is named by its title (`aria-labelledby`), so it is announced as a region with that name.",
@@ -738,6 +1053,35 @@
           "source": ".changeset/flip-card-focus.md"
         },
         {
+          "summary": "Every focus ring is visible, whole, and clear of the text.\n\nA keyboard audit of every story found three kinds of gap, now fixed:\n\n- No visible focus: CollapsibleTrigger and a focusable TabsContent now show the system ring, 2px clear of the element. CodeEditor's textarea fills a clipping frame, so its ring is now inset, inside the padding and off the code. CodeWindow shows the ring on its frame when its body (a `<pre tabIndex={0}>`) has focus.\n- Clipped rings: the ReadingLayout contents rail, SettingsTemplate's section nav, Scroller's viewport and GuessReveal's explanation scroll or clip their content, and cut the top and bottom off a focused link. Each now keeps a 4px margin for the ring, with no change to layout.",
+          "components": [
+            "collapsible",
+            "tabs",
+            "code-editor",
+            "code-window",
+            "reading-layout",
+            "settings-template",
+            "scroller",
+            "guess-reveal"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/focus-sweep.md"
+        },
+        {
+          "summary": "`Grid`'s column gap never takes more than one track's share of the width (100% / cols). Gaps are in rem and grow with a reader's text size; at 150% on a 390px phone, eleven 36px gaps in a 12-column grid came to 396px in a 342px column and pushed every section sideways. The row gap and every step's value are unchanged, and on a phone at 100% the cap never bites. On wider screens it trims `xl` and `2xl` only where eleven of their gaps would overflow. A `gap-*` className still replaces it.",
+          "components": [
+            "grid"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/grid-column-gap-cap.md"
+        },
+        {
           "summary": "Hero: the section is named by its headline (`aria-labelledby` on the h1), so it is announced as a region with that name.",
           "components": [
             "hero"
@@ -758,6 +1102,46 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/hero-media-readable.md"
+        },
+        {
+          "summary": "Right-to-left pages now get the same layout as left-to-right ones, mirrored. Menus, select and combobox put their check marks before the label, callouts, blockquotes, code-editor findings and toasts draw their accent on the start edge, dialog and sheet close buttons sit at the end, and the number field's dividers follow its buttons. \"Next\" chevrons and arrows in pagination, breadcrumbs, prev/next links and submenus point forward, the switch thumb slides toward the end, and toasts enter from the edge they live on. In a left-to-right page nothing moves.",
+          "components": [
+            "article-card",
+            "banner",
+            "breadcrumb",
+            "callout",
+            "citation",
+            "code-block",
+            "code-editor",
+            "code-window",
+            "combobox",
+            "context-menu",
+            "dashboard-template",
+            "dialog",
+            "docs-page-template",
+            "dropdown-menu",
+            "lint-playground",
+            "number-field",
+            "pagination",
+            "prev-next-post",
+            "pricing-table",
+            "prose",
+            "scroll-area",
+            "scroller",
+            "select",
+            "sheet",
+            "skeleton",
+            "skip-link",
+            "stat-strip",
+            "switch",
+            "thread-steps",
+            "toast"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/logical-sides.md"
         },
         {
           "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",
@@ -811,6 +1195,29 @@
           "source": ".changeset/prose-scroll-margin.md"
         },
         {
+          "summary": "Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.",
+          "components": [
+            "interlace-base",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/reflow-at-large-text.md"
+        },
+        {
+          "summary": "`SeatChart`'s default colours for lists six to eleven alternate deeper and paler shades of the five hues (then a pale grey), instead of deepening all five. Neighbouring hues in the second round now differ in lightness too, so eleven lists stay apart at seat size in light and dark. Every colour keeps 3:1 against the page.",
+          "components": [
+            "seat-chart"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/seat-chart-second-round.md"
+        },
+        {
           "summary": "SectionHeader sets its title on the fluid type scale instead of stepped `text-3xl md:text-4xl lg:text-5xl`, and takes its bottom gap from the section rhythm tokens instead of `mb-12` / `mb-16`. New `size=\"display\"` for a page's loudest line, `eyebrowStyle=\"pill\"` for a chip-style label, and `align=\"start\"` now follows the writing direction. Two new type tokens, `--text-section` (28 → 40px) and `--text-display` (44 → 64px), are registered with `cn` so a colour never strips them.",
           "components": [
             "section-header"
@@ -833,6 +1240,28 @@
           "source": ".changeset/section-header-tracking.md"
         },
         {
+          "summary": "`ShareCard` puts the select-and-copy field away once a later copy works.",
+          "components": [
+            "share-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/share-card-fallback-reset.md"
+        },
+        {
+          "summary": "`ShareCard` says \"Copied.\" again on a second copy: the status clears and refills, so screen readers announce it each time.",
+          "components": [
+            "share-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/share-card-reannounce.md"
+        },
+        {
           "summary": "fix(ui): Spotlight type-checks against motion 14. motion 14 added an `fx` boolean prop to every motion element, which clashes with the SVG `fx` focal-point attribute Spotlight inherited from its native `<svg>` props; installing Spotlight next to the latest motion failed `next build`'s type check. `fx` is now omitted from the native props, like the animation handlers and `values` before it.",
           "components": [
             "spotlight"
@@ -844,6 +1273,24 @@
           "source": ".changeset/spotlight-motion-fx.md"
         },
         {
+          "summary": "Text alignment follows the writing direction everywhere.\n\nTypography's `align`, Accordion triggers, the Dialog header, Prose table headers, PrevNextPost cards, SeriesTable and MetricTable used `text-left` and `text-right`, which put text against the wrong edge in a right-to-left page. They now use `text-start` and `text-end`, so the same markup is correct in English, Hebrew and Arabic. Left-to-right pages render exactly as before. A new lock keeps physical alignment out of the components.",
+          "components": [
+            "typography",
+            "accordion",
+            "dialog",
+            "prose",
+            "prev-next-post",
+            "series-table",
+            "metric-table",
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/text-align-logical.md"
+        },
+        {
           "summary": "TocPopover works on a narrow screen with a long outline.\n\n- The popover's height is capped at the room the screen has left (`--available-height`), and the list scrolls inside it. Before, an outline of 18 headings ran 906px tall and the later links fell off the bottom of a phone screen.\n- Picking a link closes the popover, so it no longer covers the text it just scrolled to. Focus stays on the heading.\n- `Toc` gives a heading `tabindex=\"-1\"` before focusing it, unless the heading already has a tabindex. Before, the focus call did nothing on a plain heading. `Toc` also takes a new `onNavigate(id)` callback.",
           "components": [
             "toc"
@@ -853,6 +1300,19 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/toc-popover-narrow.md"
+        },
+        {
+          "summary": "Touch targets and scrolling regions. `TabsTrigger` is at least `min-h-target` (24px, 44px under `data-density=\"comfortable\"`) and `TabsList` grows to hold it. `SliderThumb`'s invisible hit area is now `size-target` centred on the knob, so it reaches 44px under comfortable density; the 20px knob looks the same. `Prose` makes a `<pre>` or `<table>` keyboard-focusable only when it actually scrolls sideways, names it (a table's `<caption>`, or a short label), re-checks on resize, and takes the attributes back when it fits. Attributes the author set always win.",
+          "components": [
+            "tabs",
+            "slider",
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/touch-targets.md"
         },
         {
           "summary": "The Interlace page is warm paper now, not screen white. In light mode `--background` is #fdfbf8 and cards and popovers stay white, so they lift off the page the way a sheet lifts off a desk. In dark mode the page is a warm near-black (#0e0c0a) instead of a neutral one, matching the warm cards. Every text pair keeps its contrast floor: primary measures 8.52:1 on the paper and 7.23:1 on its own 10% tint, and `--input` 3.50:1 still clears SC 1.4.11. To keep a white page, set `--interlace-background: oklch(1 0 0)` in your own brand layer.",

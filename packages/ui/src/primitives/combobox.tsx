@@ -187,7 +187,7 @@ function ComboboxInput({
       data-size={size}
       className={cn(
         'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground w-full min-w-0 rounded-lg border bg-background text-foreground px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
-        'data-[size=default]:h-9 data-[size=sm]:h-8',
+        'data-[size=default]:h-control data-[size=sm]:h-control-sm',
         // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
         // under the 3:1 focus-indicator floor (SC 2.4.13). 3px > the 2px
         // minimum thickness the same SC requires.
@@ -203,7 +203,7 @@ function ComboboxInput({
 
 /**
  * Optional button that opens the popup without typing. Docked inside the
- * field, so the input reserves room for it with `pr-9` at the call site.
+ * field, so the input reserves room for it with `pe-9` at the call site.
  * 28px square — over the 24px floor of SC 2.5.8.
  */
 function ComboboxTrigger({
@@ -349,7 +349,7 @@ function ComboboxItem({
       className={cn(
         // 36px tall (py-2 + text-sm line box) — over the 24px floor of
         // SC 2.5.8 at the 320px viewport.
-        'text-popover-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2 pr-8 pl-3 text-sm transition-colors duration-150 outline-hidden select-none',
+        'text-popover-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-xl py-2 pe-8 ps-3 text-sm transition-colors duration-150 outline-hidden select-none',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         'data-selected:bg-primary data-selected:text-primary-foreground data-selected:font-medium',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
@@ -501,7 +501,7 @@ function ComboboxChip({
     <BaseCombobox.Chip
       data-slot="combobox-chip"
       className={cn(
-        'bg-secondary text-secondary-foreground flex h-7 items-center gap-1 rounded-lg pr-1 pl-2 text-sm outline-none',
+        'bg-secondary text-secondary-foreground flex h-7 items-center gap-1 rounded-lg pe-1 ps-2 text-sm outline-none',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         className,
       )}
@@ -631,7 +631,7 @@ function ComboboxCompose({
         <ComboboxInput
           placeholder={placeholder}
           aria-label={ariaLabel}
-          className={clearable ? 'pr-9' : undefined}
+          className={clearable ? 'pe-9' : undefined}
         />
         {clearable ? <ComboboxClear /> : null}
       </ComboboxControl>

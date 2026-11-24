@@ -11,6 +11,7 @@ import {
   BreadcrumbEllipsis,
   MIN_VIEWPORT,
 } from '@interlace/ui/breadcrumb';
+import { Section } from '@interlace/ui/section';
 import { withRtl } from '@/decorators';
 
 const meta = {
@@ -256,6 +257,28 @@ export const RTL: Story = {
 };
 
 /**
+ * On a brand band. The trail takes the band's own text colour, so it reads
+ * on the primary fill in both schemes; the current page keeps its weight and
+ * a link underlines on hover.
+ */
+export const OnABrandBand: Story = {
+  ...Default,
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (Story) => (
+      <Section as="header" tone="brand" spacing="tight">
+        <Story />
+      </Section>
+    ),
+  ],
+};
+
+export const OnABrandBandDark: Story = {
+  ...OnABrandBand,
+  globals: { theme: 'dark' },
+};
+
+/**
  * Below-min-viewport demo — wrap in a (MIN_VIEWPORT - 1)px container with the
  * `data-interlace-dev` flag so preflight's dashed warning outline appears.
  * The breadcrumb still functions; the outline is a dev-only signal that the
@@ -264,7 +287,7 @@ export const RTL: Story = {
  */
 export const BelowMinViewport: Story = {
   render: () => (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto p-1">
       {/* overflow-x-auto: this frame is pinned to a fixed pixel width to trip the
         min-viewport contract, so without an inner scroller it pushes the whole
         page sideways on a 375px phone. */}

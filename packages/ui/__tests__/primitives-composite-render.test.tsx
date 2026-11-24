@@ -244,6 +244,15 @@ describe('Breadcrumb', () => {
     expect(seps[1].textContent).toBe('/');
   });
 
+  it('takes a brand band\'s text colour on every visible part, so it never sits grey on primary', () => {
+    const { container } = render(tree);
+    const band = '[[data-slot=section][data-tone=brand]]';
+    for (const part of ['breadcrumb-list', 'breadcrumb-page', 'breadcrumb-separator']) {
+      expect(slot(container, part)!.className).toContain(`in-${band}:text-current`);
+    }
+    expect(slot(container, 'breadcrumb-link')!.className).toContain(`in-${band}:hover:underline`);
+  });
+
   it('still announces the collapsed segment as "More" behind the ellipsis glyph', () => {
     const { container } = render(tree);
     expect(slot(container, 'breadcrumb-ellipsis')!.textContent).toContain('More');

@@ -62,9 +62,9 @@ const typographyVariants = cva('', {
       destructive: 'text-destructive',
     },
     align: {
-      start: 'text-left',
+      start: 'text-start',
       center: 'text-center',
-      end: 'text-right',
+      end: 'text-end',
     },
   },
   defaultVariants: { variant: 'body', tone: 'default' },

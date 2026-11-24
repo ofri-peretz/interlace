@@ -44,6 +44,13 @@ import { cn } from '../lib/cn.js';
 /** Minimum viable viewport width (px). Exposed so consumers can mirror it. */
 export const MIN_VIEWPORT = 480;
 
+// On a brand band (Section tone="brand") the page's muted and foreground
+// greys sit on the primary fill at about 1.2:1. Every part takes the band's
+// own text colour instead, which the theme already holds to AA on primary;
+// the current page keeps its weight, and a link hover underlines rather than
+// changing colour.
+const ON_BAND = 'in-[[data-slot=section][data-tone=brand]]:text-current';
+
 // ─────────────────────────────────────────────────────────────────
 // Breadcrumb (root <nav>)
 // ─────────────────────────────────────────────────────────────────
@@ -78,6 +85,7 @@ const BreadcrumbList = React.forwardRef<HTMLOListElement, BreadcrumbListProps>(
         data-slot="breadcrumb-list"
         className={cn(
           'text-muted-foreground flex flex-wrap items-center gap-2 text-ui-sm break-words',
+          ON_BAND,
           className,
         )}
         {...props}
@@ -122,7 +130,9 @@ type BreadcrumbLinkProps = React.ComponentProps<'a'> & {
 const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
   ({ asChild, className, children, ...props }, ref) => {
     const baseClass = cn(
-      'hover:text-foreground transition-colors',
+      // The link stays text-sized; an invisible pad takes the tap, at least
+      // --spacing-target (24px, or 44px under data-density="comfortable").
+      "hover:text-foreground in-[[data-slot=section][data-tone=brand]]:hover:text-current in-[[data-slot=section][data-tone=brand]]:hover:underline underline-offset-4 relative transition-colors after:absolute after:top-1/2 after:left-1/2 after:min-h-target after:min-w-target after:size-full after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']",
       className,
     );
 
@@ -162,7 +172,7 @@ const BreadcrumbPage = React.forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
         aria-disabled="true"
         aria-current="page"
         data-slot="breadcrumb-page"
-        className={cn('text-foreground font-medium', className)}
+        className={cn('text-foreground font-medium', ON_BAND, className)}
         {...props}
       />
     );
@@ -186,7 +196,8 @@ const BreadcrumbSeparator = React.forwardRef<
       aria-hidden="true"
       data-slot="breadcrumb-separator"
       className={cn(
-        'text-muted-foreground inline-flex items-center [&>svg]:size-4',
+        'text-muted-foreground inline-flex items-center [&>svg]:size-4 rtl:[&>svg]:-scale-x-100',
+        ON_BAND,
         className,
       )}
       {...props}

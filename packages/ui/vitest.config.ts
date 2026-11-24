@@ -113,11 +113,13 @@ export default defineConfig({
       provider: 'v8',
       include: [
         'src/charts/**/*.{ts,tsx}',
+        // The games' pure cores: day keys, puzzle order, streak arithmetic.
+        'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model}.ts',
         'src/lib/**/*.{ts,tsx}',
         // The four pure variant/model modules.
         'src/primitives/{button-variants,data-state-model,meter-scale,skeleton-variants}.ts',
-        // The 35 components with real render coverage. See the ledger above.
-        'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx',
+        // The 36 components with real render coverage. See the ledger above.
+        'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx',
         // Patterns with full render coverage — the same ledger rule: a
         // file is in at 100 or it is out, and joining is a one-line diff.
         'src/patterns/{lint-playground,thread-steps}.tsx',

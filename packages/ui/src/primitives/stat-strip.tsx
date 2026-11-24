@@ -375,7 +375,7 @@ function StatStripItem({ item }: { item: StatItem }) {
             >
               {typeof value === 'number' ? value.toLocaleString() : value}
               {unit ? (
-                <span className="ml-0.5 text-ui font-normal text-muted-foreground">
+                <span className="ms-0.5 text-ui font-normal text-muted-foreground">
                   {unit}
                 </span>
               ) : null}

@@ -123,10 +123,10 @@ export function PrevNextPost({
           href={prev.href}
           data-slot="prev-next-prev"
           data-testid={`${testId}-prev`}
-          className={cn(CARD_BASE, 'items-start text-left')}
+          className={cn(CARD_BASE, 'items-start text-start')}
         >
           <span className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            <ArrowLeft className="size-4" aria-hidden />
+            <ArrowLeft className="size-4 rtl:-scale-x-100" aria-hidden />
             {prev.kicker ?? 'Previous'}
           </span>
           <span className="text-body font-medium text-foreground">
@@ -143,11 +143,11 @@ export function PrevNextPost({
           href={next.href}
           data-slot="prev-next-next"
           data-testid={`${testId}-next`}
-          className={cn(CARD_BASE, 'items-end text-right md:col-start-2')}
+          className={cn(CARD_BASE, 'items-end text-end md:col-start-2')}
         >
           <span className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
             {next.kicker ?? 'Next'}
-            <ArrowRight className="size-4" aria-hidden />
+            <ArrowRight className="size-4 rtl:-scale-x-100" aria-hidden />
           </span>
           <span className="text-body font-medium text-foreground">
             {next.title}

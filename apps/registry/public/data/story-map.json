@@ -271,6 +271,8 @@
       "primitives-breadcrumb--loading",
       "primitives-breadcrumb--dark",
       "primitives-breadcrumb--rtl",
+      "primitives-breadcrumb--on-ab-rand-band",
+      "primitives-breadcrumb--on-ab-rand-band-dark",
       "primitives-breadcrumb--below-min-viewport"
     ],
     "preview": "primitives-breadcrumb--variants",
@@ -287,7 +289,8 @@
       "primitives-button--dark",
       "primitives-button--loading",
       "primitives-button--loading-flow",
-      "primitives-button--rtl"
+      "primitives-button--rtl",
+      "primitives-button--comfortable-density"
     ],
     "preview": "primitives-button--variants",
     "previewDark": "primitives-button--dark",
@@ -323,6 +326,7 @@
     "title": "Primitives/Card",
     "storyIds": [
       "primitives-card--default",
+      "primitives-card--linked",
       "primitives-card--loading",
       "primitives-card--dark",
       "primitives-card--rtl"
@@ -330,6 +334,21 @@
     "preview": "primitives-card--default",
     "previewDark": "primitives-card--dark",
     "skeleton": "primitives-card--loading"
+  },
+  "chart-frame": {
+    "title": "Charts/ChartFrame",
+    "storyIds": [
+      "charts-chartframe--default",
+      "charts-chartframe--source-only",
+      "charts-chartframe--sources",
+      "charts-chartframe--other-words",
+      "charts-chartframe--narrow-column",
+      "charts-chartframe--dark",
+      "charts-chartframe--rtl"
+    ],
+    "preview": "charts-chartframe--default",
+    "previewDark": "charts-chartframe--dark",
+    "skeleton": null
   },
   "checkbox": {
     "title": "Primitives/Checkbox",
@@ -345,6 +364,23 @@
     "preview": "primitives-checkbox--default",
     "previewDark": "primitives-checkbox--dark",
     "skeleton": "primitives-checkbox--loading"
+  },
+  "choropleth-map": {
+    "title": "Charts/ChoroplethMap",
+    "storyIds": [
+      "charts-choroplethmap--default",
+      "charts-choroplethmap--equal-intervals",
+      "charts-choroplethmap--own-breaks",
+      "charts-choroplethmap--with-table",
+      "charts-choroplethmap--narrow-column",
+      "charts-choroplethmap--loading",
+      "charts-choroplethmap--empty",
+      "charts-choroplethmap--dark",
+      "charts-choroplethmap--rtl"
+    ],
+    "preview": "charts-choroplethmap--default",
+    "previewDark": "charts-choroplethmap--dark",
+    "skeleton": "charts-choroplethmap--loading"
   },
   "citation": {
     "title": "Blocks/Citation",
@@ -369,6 +405,21 @@
       "blocks-claimcard--still-being-checked"
     ],
     "preview": "blocks-claimcard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "closer-game": {
+    "title": "Games/CloserGame",
+    "storyIds": [
+      "games-closergame--default",
+      "games-closergame--revealed",
+      "games-closergame--spot-on",
+      "games-closergame--log-scale",
+      "games-closergame--percent",
+      "games-closergame--right-to-left",
+      "games-closergame--narrow"
+    ],
+    "preview": "games-closergame--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -527,6 +578,16 @@
     "previewDark": "primitives-contextmenu--dark",
     "skeleton": "primitives-contextmenu--loading"
   },
+  "contrast": {
+    "title": "Foundations/More contrast",
+    "storyIds": [
+      "foundations-more-contrast--side-by-side",
+      "foundations-more-contrast--side-by-side-dark"
+    ],
+    "preview": "foundations-more-contrast--side-by-side",
+    "previewDark": "foundations-more-contrast--side-by-side-dark",
+    "skeleton": null
+  },
   "count-up": {
     "title": "Effects/CountUp",
     "storyIds": [
@@ -557,6 +618,19 @@
     "preview": "blocks-ctasection--default",
     "previewDark": "blocks-ctasection--dark",
     "skeleton": "blocks-ctasection--loading"
+  },
+  "daily-puzzle": {
+    "title": "Games/DailyPuzzle",
+    "storyIds": [
+      "games-dailypuzzle--default",
+      "games-dailypuzzle--done",
+      "games-dailypuzzle--whole-game",
+      "games-dailypuzzle--right-to-left",
+      "games-dailypuzzle--narrow"
+    ],
+    "preview": "games-dailypuzzle--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "dashboard-template": {
     "title": "Templates/DashboardTemplate",
@@ -716,6 +790,24 @@
     "preview": "templates-docspagetemplate--default",
     "previewDark": "templates-docspagetemplate--dark",
     "skeleton": "templates-docspagetemplate--page-skeleton"
+  },
+  "dot-plot": {
+    "title": "Charts/DotPlot",
+    "storyIds": [
+      "charts-dotplot--default",
+      "charts-dotplot--by-change",
+      "charts-dotplot--full-scale",
+      "charts-dotplot--three-series",
+      "charts-dotplot--with-table",
+      "charts-dotplot--narrow-column",
+      "charts-dotplot--loading",
+      "charts-dotplot--empty",
+      "charts-dotplot--dark",
+      "charts-dotplot--rtl"
+    ],
+    "preview": "charts-dotplot--default",
+    "previewDark": "charts-dotplot--dark",
+    "skeleton": "charts-dotplot--loading"
   },
   "drawer": {
     "title": "Primitives/Drawer",
@@ -1111,6 +1203,20 @@
     "previewDark": "starters-layout-starter--dark",
     "skeleton": null
   },
+  "leaderboard": {
+    "title": "Games/Leaderboard",
+    "storyIds": [
+      "games-leaderboard--default",
+      "games-leaderboard--viewer-on-top",
+      "games-leaderboard--not-enough-players",
+      "games-leaderboard--lowest-wins",
+      "games-leaderboard--right-to-left",
+      "games-leaderboard--narrow"
+    ],
+    "preview": "games-leaderboard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "light-beam": {
     "title": "Effects/LightBeam",
     "storyIds": [
@@ -1271,6 +1377,21 @@
     "preview": "primitives-numberfield--default",
     "previewDark": "primitives-numberfield--dark",
     "skeleton": "primitives-numberfield--loading"
+  },
+  "otp-field": {
+    "title": "Primitives/OtpField",
+    "storyIds": [
+      "primitives-otpfield--default",
+      "primitives-otpfield--grouped",
+      "primitives-otpfield--invalid",
+      "primitives-otpfield--small",
+      "primitives-otpfield--disabled",
+      "primitives-otpfield--dark",
+      "primitives-otpfield--rtl"
+    ],
+    "preview": "primitives-otpfield--default",
+    "previewDark": "primitives-otpfield--dark",
+    "skeleton": null
   },
   "page-header": {
     "title": "Blocks/PageHeader",
@@ -1433,9 +1554,23 @@
       "blocks-readinglayout--default",
       "blocks-readinglayout--narrow-column",
       "blocks-readinglayout--below-sticky-header",
+      "blocks-readinglayout--long-read",
       "blocks-readinglayout--without-contents"
     ],
     "preview": "blocks-readinglayout--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "reading-settings": {
+    "title": "Primitives/ReadingSettings",
+    "storyIds": [
+      "primitives-readingsettings--default",
+      "primitives-readingsettings--grows-the-layout",
+      "primitives-readingsettings--contrast",
+      "primitives-readingsettings--icon-only-contrast",
+      "primitives-readingsettings--translated"
+    ],
+    "preview": "primitives-readingsettings--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1588,6 +1723,26 @@
     "previewDark": null,
     "skeleton": null
   },
+  "seat-chart": {
+    "title": "Charts/SeatChart",
+    "storyIds": [
+      "charts-seatchart--default",
+      "charts-seatchart--sides",
+      "charts-seatchart--compare-sides",
+      "charts-seatchart--leaders",
+      "charts-seatchart--compare",
+      "charts-seatchart--narrow-column",
+      "charts-seatchart--with-table",
+      "charts-seatchart--vacant-seats",
+      "charts-seatchart--large-assembly",
+      "charts-seatchart--loading",
+      "charts-seatchart--dark",
+      "charts-seatchart--rtl"
+    ],
+    "preview": "charts-seatchart--default",
+    "previewDark": "charts-seatchart--dark",
+    "skeleton": "charts-seatchart--loading"
+  },
   "section": {
     "title": "Primitives/Section",
     "storyIds": [
@@ -1717,6 +1872,35 @@
     "previewDark": "blocks-sharebuttons--dark",
     "skeleton": null
   },
+  "share-card": {
+    "title": "Games/ShareCard",
+    "storyIds": [
+      "games-sharecard--default",
+      "games-sharecard--right-or-wrong",
+      "games-sharecard--right-to-left"
+    ],
+    "preview": "games-sharecard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "share-chart": {
+    "title": "Charts/ShareChart",
+    "storyIds": [
+      "charts-sharechart--default",
+      "charts-sharechart--sorted",
+      "charts-sharechart--stacked",
+      "charts-sharechart--with-table",
+      "charts-sharechart--narrow-column",
+      "charts-sharechart--poles",
+      "charts-sharechart--loading",
+      "charts-sharechart--empty",
+      "charts-sharechart--dark",
+      "charts-sharechart--rtl"
+    ],
+    "preview": "charts-sharechart--default",
+    "previewDark": "charts-sharechart--dark",
+    "skeleton": "charts-sharechart--loading"
+  },
   "sheen": {
     "title": "Effects/Sheen",
     "storyIds": [
@@ -1772,6 +1956,18 @@
     ],
     "preview": "blocks-signinform--default",
     "previewDark": "blocks-signinform--dark",
+    "skeleton": null
+  },
+  "sign-in-methods": {
+    "title": "Blocks/SignInMethods",
+    "storyIds": [
+      "blocks-signinmethods--default",
+      "blocks-signinmethods--last-method",
+      "blocks-signinmethods--dark",
+      "blocks-signinmethods--rtl"
+    ],
+    "preview": "blocks-signinmethods--default",
+    "previewDark": "blocks-signinmethods--dark",
     "skeleton": null
   },
   "skeleton": {
@@ -1840,6 +2036,22 @@
     "previewDark": "primitives-slider--dark",
     "skeleton": "primitives-slider--loading"
   },
+  "social-sign-in": {
+    "title": "Blocks/SocialSignIn",
+    "storyIds": [
+      "blocks-socialsignin--default",
+      "blocks-socialsignin--all-providers",
+      "blocks-socialsignin--last-used",
+      "blocks-socialsignin--with-email",
+      "blocks-socialsignin--sent",
+      "blocks-socialsignin--with-error",
+      "blocks-socialsignin--dark",
+      "blocks-socialsignin--rtl"
+    ],
+    "preview": "blocks-socialsignin--default",
+    "previewDark": "blocks-socialsignin--dark",
+    "skeleton": null
+  },
   "spacing": {
     "title": "Foundations/Spacing",
     "storyIds": [
@@ -1871,6 +2083,17 @@
     "preview": "charts-sparkline--in-context",
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
+  },
+  "spinner": {
+    "title": "Primitives/Spinner",
+    "storyIds": [
+      "primitives-spinner--default",
+      "primitives-spinner--sizes",
+      "primitives-spinner--in-text"
+    ],
+    "preview": "primitives-spinner--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "split-text": {
     "title": "Effects/SplitText",
@@ -2007,6 +2230,23 @@
       "effects-strandfield--with-active"
     ],
     "preview": "effects-strandfield--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "streak": {
+    "title": "Games/Streak",
+    "storyIds": [
+      "games-streak--pending",
+      "games-streak--played-today",
+      "games-streak--resting-today",
+      "games-streak--broken",
+      "games-streak--empty",
+      "games-streak--two-weeks",
+      "games-streak--compact",
+      "games-streak--right-to-left",
+      "games-streak--narrow"
+    ],
+    "preview": "games-streak--pending",
     "previewDark": null,
     "skeleton": null
   },
@@ -2253,6 +2493,8 @@
       "primitives-toc--variants",
       "primitives-toc--keyboard-flow",
       "primitives-toc--loading",
+      "primitives-toc--long-outline",
+      "primitives-toc--bar",
       "primitives-toc--dark",
       "primitives-toc--rtl",
       "primitives-toc--below-min-viewport"
@@ -2313,7 +2555,13 @@
       "blocks-topbar--mobile-menu",
       "blocks-topbar--mobile-wrap",
       "blocks-topbar--many-links",
-      "blocks-topbar--rtl-mobile-menu"
+      "blocks-topbar--rtl-mobile-menu",
+      "blocks-topbar--link-groups",
+      "blocks-topbar--link-groups-mobile",
+      "blocks-topbar--link-groups-dark",
+      "blocks-topbar--clear-until-scroll",
+      "blocks-topbar--full-screen-menu",
+      "blocks-topbar--hide-on-scroll"
     ],
     "preview": "blocks-topbar--default",
     "previewDark": "blocks-topbar--dark",
@@ -2325,9 +2573,28 @@
       "blocks-topbarmenu--default",
       "blocks-topbarmenu--keyboard",
       "blocks-topbarmenu--closes-on-navigate",
-      "blocks-topbarmenu--from-the-bottom"
+      "blocks-topbarmenu--from-the-bottom",
+      "blocks-topbarmenu--full-screen"
     ],
     "preview": "blocks-topbarmenu--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "topbar-nav": {
+    "title": "Blocks/TopbarNav",
+    "storyIds": [
+      "blocks-topbarnav--default"
+    ],
+    "preview": "blocks-topbarnav--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "topbar-scroll-edge": {
+    "title": "Blocks/TopbarScrollEdge",
+    "storyIds": [
+      "blocks-topbarscrolledge--default"
+    ],
+    "preview": "blocks-topbarscrolledge--default",
     "previewDark": null,
     "skeleton": null
   },

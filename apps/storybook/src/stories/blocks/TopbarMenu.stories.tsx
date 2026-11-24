@@ -17,7 +17,7 @@ const meta = {
   argTypes: {
     side: {
       control: "inline-radio",
-      options: ["right", "left", "bottom"],
+      options: ["right", "left", "bottom", "full"],
       table: { defaultValue: { summary: "right" } },
     },
   },
@@ -106,4 +106,10 @@ export const FromTheBottom: Story = {
       expect(body.queryByRole("dialog")).not.toBeInTheDocument(),
     );
   },
+};
+
+/** `side="full"`: the menu covers the screen, dropping from the top, with larger links. */
+export const FullScreen: Story = {
+  args: { side: "full" },
+  parameters: { viewport: { defaultViewport: "mobile1" } },
 };

@@ -66,8 +66,8 @@ export const LINE_HEIGHT_PX = 24;
 export const PAD_Y_PX = 16;
 
 const SEVERITY_BAR: Record<CodeEditorDiagnostic['severity'], string> = {
-  error: 'bg-destructive/15 border-l-2 border-destructive',
-  warn: 'bg-chart-4/15 border-l-2 border-chart-4',
+  error: 'bg-destructive/15 border-s-2 border-destructive',
+  warn: 'bg-chart-4/15 border-s-2 border-chart-4',
 };
 
 export interface CodeEditorProps
@@ -165,7 +165,9 @@ export const CodeEditor = React.forwardRef<HTMLTextAreaElement, CodeEditorProps>
             'relative block w-full resize-none overflow-x-auto overflow-y-hidden',
             'whitespace-pre bg-transparent px-4 py-4 font-mono text-sm leading-6',
             'text-foreground caret-foreground outline-none',
-            'focus-visible:ring-2 focus-visible:ring-ring',
+            // Inset: the textarea fills a frame that clips (overflow-hidden), so an
+            // outer ring would be cut off entirely. py-4 / px-4 keep it off the code.
+            'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset',
           )}
           {...rest}
         />

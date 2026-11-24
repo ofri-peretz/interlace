@@ -3,8 +3,9 @@
  *
  * A long read with its table of contents: the text column, and beside it a
  * `Toc` rail that stays in view as the reader scrolls. When the layout is
- * too narrow for a rail, the contents fold into an "On this page" button
- * (`TocPopover`) on a bar that sticks to the top of the column.
+ * too narrow for a rail, the contents fold into a slim bar (`TocBar`) that
+ * sticks to the top of the column, names the section being read, shows the
+ * page's progress along its foot, and opens the list in a bottom sheet.
  *
  * ## Container, not viewport
  *
@@ -25,10 +26,10 @@
  *   ReadingLayout                   (div — data-slot="reading-layout", @container/reading)
  *     └─ div grid                   (one column, or text + rail at @4xl)
  *         ├─ bar                    (div — data-slot="reading-layout-bar", sticky; hidden at @4xl)
- *         │   └─ TocPopover
+ *         │   └─ TocBar
  *         ├─ content                (div — data-slot="reading-layout-content", min-w-0)
  *         └─ rail                   (div — data-slot="reading-layout-rail", shown at @4xl)
- *             └─ div sticky         (scrolls on its own when taller than the screen)
+ *             └─ div sticky         (data-toc-scroller; scrolls on its own when taller than the screen)
  *                 └─ Toc
  *
  * With no `toc` items, it renders the content alone: no bar, no rail.
@@ -52,7 +53,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
-import { Toc, TocPopover, type TocItem } from '../primitives/toc.js';
+import { Toc, TocBar, type TocItem } from '../primitives/toc.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -61,7 +62,7 @@ type ReadingLayoutProps = React.ComponentProps<'div'> & {
   toc?: TocItem[];
   /** The contents' accessible name. @default 'Table of contents' */
   tocLabel?: string;
-  /** The narrow layout's button text. @default 'On this page' */
+  /** The rail's title, the bar's label and the sheet's title. @default 'On this page' */
   triggerLabel?: React.ReactNode;
 };
 
@@ -91,9 +92,9 @@ function ReadingLayout({
         {hasToc ? (
           <div
             data-slot="reading-layout-bar"
-            className="border-border bg-background sticky top-[var(--reading-offset,0px)] z-10 -mt-2 border-b py-2 @4xl/reading:hidden"
+            className="border-border bg-background sticky top-[var(--reading-offset,0px)] z-10 -mt-2 border-b @4xl/reading:hidden"
           >
-            <TocPopover items={toc} label={tocLabel} triggerLabel={triggerLabel} />
+            <TocBar items={toc} label={tocLabel} triggerLabel={triggerLabel} />
           </div>
         ) : null}
         <div data-slot="reading-layout-content" className="min-w-0">
@@ -104,9 +105,10 @@ function ReadingLayout({
           // landmark, and an unnamed complementary one around it is noise.
           <div data-slot="reading-layout-rail" className="hidden @4xl/reading:block">
             <div
-              className="sticky top-[calc(var(--reading-offset,0px)+1.5rem)] max-h-[calc(100dvh-var(--reading-offset,0px)-3rem)] overflow-y-auto overscroll-contain"
+              data-toc-scroller=""
+              className="sticky top-[calc(var(--reading-offset,0px)+1.5rem)] max-h-[calc(100dvh-var(--reading-offset,0px)-3rem)] -m-1 overflow-y-auto overscroll-contain p-1"
             >
-              <Toc items={toc} label={tocLabel} />
+              <Toc items={toc} label={tocLabel} title={triggerLabel ?? 'On this page'} />
             </div>
           </div>
         ) : null}

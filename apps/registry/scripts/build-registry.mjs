@@ -82,6 +82,11 @@ const DECORATIVE_DIRS = [
   // generic names to occupy in a shared registry namespace, and neither file
   // renders anything a consumer would install on its own.
   { name: 'charts', dir: path.join(REPO_ROOT, 'packages/ui/src/charts') },
+  // Games — the engine of a daily game: streaks, the daily puzzle shell,
+  // guess games, share cards and leaderboards. Same shape as charts: the
+  // `.tsx` components are items and their pure cores (`daily.ts`,
+  // `streak-model.ts`, …) ride along as companions.
+  { name: 'games', dir: path.join(REPO_ROOT, 'packages/ui/src/games') },
   // Phase 4 of the 5-layer architecture — templates are full-page
   // surfaces that compose patterns + primitives inside SectionBoundaries.
   // They ship as registry items so consumers can
@@ -490,6 +495,8 @@ const STYLE_ITEMS = [
       'structure/radius.css',
       'structure/motion.css',
       'structure/scheme.css',
+      'structure/focus.css',
+      'structure/reading.css',
     ],
     requires: [],
     description:
@@ -607,6 +614,14 @@ const LIB_FILES = [
       '@interlace/ui — reads and writes the theme (`data-theme`) and colour scheme (`.dark`) axes, persists to localStorage, and follows the OS when no preference is stored.',
   },
   {
+    name: 'use-reading-prefs',
+    sourceFile: 'use-reading-prefs.ts',
+    target: 'hooks/use-reading-prefs.ts',
+    title: 'useReadingPrefs hook',
+    description:
+      '@interlace/ui — reads and writes the reader\'s text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.',
+  },
+  {
     name: 'theme-script',
     sourceFile: 'theme-script.ts',
     target: 'lib/theme-script.ts',
@@ -694,6 +709,7 @@ const TIER_SUBDIR = {
   primitives: '',
   patterns: 'patterns/',
   charts: 'charts/',
+  games: 'games/',
   templates: 'templates/',
   effects: 'effects/',
 };

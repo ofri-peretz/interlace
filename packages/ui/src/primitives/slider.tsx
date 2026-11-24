@@ -19,10 +19,11 @@
  *
  * ## MIN_VIEWPORT — 320
  *
- * ## Target size (SC 2.5.8, AA)
+ * ## Target size (SC 2.5.8 AA, 2.5.5 AAA under comfortable density)
  *
  * The painted knob is 20×20 CSS px; a transparent `before:` pseudo-element
- * extends the hit area to 24×24 without changing the visual, so the
+ * centred on it is `size-target`: 24×24 by default and 44×44 under
+ * `data-density="comfortable"`, without changing the visual, so the
  * primitive is usable by touch on every phone.
  *
  * ## Contrast (verified by token math)
@@ -140,8 +141,10 @@ const SliderThumb = React.forwardRef<
       // already well past the 3:1 focus floor, so no /60 alpha needed here.
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50',
-      // SC 2.5.8 — transparent 24×24 hit area around the 20px knob.
-      "relative before:absolute before:-inset-[2px] before:content-['']",
+      // A transparent hit area around the 20px knob: 24px (SC 2.5.8 AA),
+      // 44px under data-density="comfortable" (SC 2.5.5 AAA). The knob's
+      // look is unchanged.
+      "relative before:absolute before:top-1/2 before:left-1/2 before:size-target before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:content-['']",
       className,
     )}
     {...props}

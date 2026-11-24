@@ -128,8 +128,8 @@ const themeSwitcherVariants = cva(
   {
     variants: {
       size: {
-        sm: 'h-8 px-2 text-ui-sm',
-        default: 'h-9 px-3 text-ui-sm',
+        sm: 'h-control-sm px-2 text-ui-sm',
+        default: 'h-control px-3 text-ui-sm',
       },
     },
     defaultVariants: { size: 'default' },
@@ -288,7 +288,7 @@ const ThemeSchemeToggle = React.forwardRef<
       onPressedChange={(pressed: boolean) =>
         setScheme(pressed ? 'dark' : 'light')
       }
-      className={cn('size-9 p-0', className)}
+      className={cn('size-control p-0', className)}
       {...props}
     >
       {dark ? (
