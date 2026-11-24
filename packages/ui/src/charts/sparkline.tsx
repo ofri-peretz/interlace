@@ -43,7 +43,14 @@ import {
 } from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
 import { toneFor, type Polarity } from './delta.js';
-import { delta, describeSeries, linePath, seriesScales, type Point } from './scale.js';
+import {
+  delta,
+  describeSeries,
+  linePath,
+  seriesScales,
+  type Point,
+  type SeriesSummary,
+} from './scale.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -89,6 +96,10 @@ export interface SparklineProps
   error?: unknown;
   /** Context for the absence sentence — noun, coverage, reason. */
   announce?: AnnouncementOptions;
+  /** The locale for numbers in the spoken sentence. @default the reader's */
+  locale?: string;
+  /** Replace the spoken sentence, for another language. @default `seriesSentence` */
+  summary?: (summary: SeriesSummary) => string;
 }
 
 export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(function Sparkline(
@@ -102,6 +113,8 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(functio
     loading = false,
     error,
     announce,
+    locale,
+    summary,
     className,
     ...props
   },
@@ -181,7 +194,7 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(functio
       className={cn('inline-block align-middle overflow-visible', tone, className)}
       {...(decorative
         ? { 'aria-hidden': true }
-        : { role: 'img', 'aria-label': describeSeries(points, label) })}
+        : { role: 'img', 'aria-label': describeSeries(points, label, { summary, locale }) })}
       {...props}
     >
       <path d={path} fill="none" stroke="currentColor" strokeWidth={1.5} />

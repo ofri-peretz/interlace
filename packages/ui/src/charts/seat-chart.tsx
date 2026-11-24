@@ -540,7 +540,10 @@ export interface SeatChartProps extends Omit<React.ComponentProps<'figure'>, 'ch
   tally?: SeatTally;
   /** The chart's title, such as the election or the year. */
   label?: React.ReactNode;
-  /** The noun after a count. @default 'seats' */
+  /**
+   * The noun after a count, on screen. The spoken sentence has its own words: set
+   * `labels.summary` for those. @default 'seats'
+   */
   seatsLabel?: string;
   /** The same noun for a count of one. @default 'seat' when `seatsLabel` is 'seats', else `seatsLabel` */
   seatLabel?: string;

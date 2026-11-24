@@ -64,7 +64,13 @@ import {
   type DialGeometry,
   type Point,
 } from './scale.js';
-import { MIN_VIEWPORT, SERIES_STYLE, type ComparisonSeries } from './time-series.js';
+import {
+  MIN_VIEWPORT,
+  SERIES_STYLE,
+  TIME_SERIES_LABELS,
+  type ComparisonSeries,
+  type TimeSeriesLabels,
+} from './time-series.js';
 
 /** Drawing box, square. The viewBox scales it to any container width. */
 const S = 460;
@@ -101,6 +107,10 @@ export interface RadialWeaveProps extends Omit<React.ComponentProps<'figure'>, '
   error?: unknown;
   /** Context for the absence sentences — noun, coverage, reason. */
   announce?: AnnouncementOptions;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
+  /** Replace any fixed word. Shares TimeSeries' set; the readout and keyboard words go unused. */
+  labels?: Partial<TimeSeriesLabels>;
 }
 
 export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(function RadialWeave(
@@ -113,11 +123,16 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
     loading = false,
     error,
     announce,
+    locale,
+    labels: labelsProp,
     className,
     ...props
   },
   ref,
 ) {
+  const labels = { ...TIME_SERIES_LABELS, ...labelsProp };
+  const nameOf = (series?: string) => series ?? labels.value;
+  const number = new Intl.NumberFormat(locale);
   const clipId = `rw-reveal-${React.useId().replace(/[^a-zA-Z0-9-]/g, '')}`;
 
   const all: readonly { points: readonly Point[]; label?: string; unit?: string }[] = [
@@ -176,10 +191,7 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
         className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
-        <p className="text-sm text-muted-foreground">
-          {own.length === 0 ? 'No data yet.' : `Only ${own.length} point so far.`}{' '}
-          A trend needs at least two observations, and history cannot be back-filled.
-        </p>
+        <p className="text-sm text-muted-foreground">{labels.empty(own.length)}</p>
       </figure>
     );
   }
@@ -232,10 +244,10 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
                   className={SERIES_STYLE[index].stroke}
                 />
               </svg>
-              {named(series.label)}
+              {nameOf(series.label)}
             </li>
           ))}
-          {undrawn > 0 && <li>{`${undrawn} more not plotted — see the data table`}</li>}
+          {undrawn > 0 && <li>{labels.notPlotted(undrawn)}</li>}
         </ul>
       )}
 
@@ -246,7 +258,9 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
           className="block w-full"
           role="img"
           aria-label={drawn
-            .map((series) => describeSeries(series.points, series.label))
+            .map((series) =>
+              describeSeries(series.points, series.label, { summary: labels.summary, locale }),
+            )
             .join(' ')}
         >
           <defs>
@@ -304,7 +318,7 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
           className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center"
         >
           <span className="text-2xl font-semibold tabular-nums text-foreground">
-            {compact(latest)}
+            {compact(latest, locale)}
           </span>
           {unit && <span className="text-xs text-muted-foreground">{unit}</span>}
         </div>
@@ -314,20 +328,23 @@ export const RadialWeave = React.forwardRef<HTMLElement, RadialWeaveProps>(funct
         data-slot="radial-weave-readout"
         className="flex flex-wrap items-baseline justify-between gap-x-4 text-xs text-muted-foreground tabular-nums"
       >
-        <span>{plot.min.toLocaleString()}</span>
+        <span>{number.format(plot.min)}</span>
         <span>
           {plot.keys[0]} → {plot.keys[last]}
         </span>
-        <span>{plot.max.toLocaleString()}</span>
+        <span>{number.format(plot.max)}</span>
       </div>
 
       <SeriesTable
-        series={all.map((series) => ({ label: named(series.label), points: series.points }))}
+        series={all.map((series) => ({ label: nameOf(series.label), points: series.points }))}
         caption={
           all.length === 1
-            ? `${label ?? 'Series'} — full data${unit ? ` (${unit})` : ''}`
-            : `${all.map((series) => named(series.label)).join(', ')} — full data`
+            ? labels.tableCaption([label ?? labels.series], unit)
+            : labels.tableCaption(all.map((series) => nameOf(series.label)))
         }
+        keyLabel={labels.date}
+        noDataLabel={labels.noData}
+        locale={locale}
         hidden={!showTable}
       />
     </figure>
