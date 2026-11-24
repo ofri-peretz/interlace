@@ -1780,6 +1780,24 @@
     "previewDark": "blocks-sharebuttons--dark",
     "skeleton": null
   },
+  "share-chart": {
+    "title": "Charts/ShareChart",
+    "storyIds": [
+      "charts-sharechart--default",
+      "charts-sharechart--sorted",
+      "charts-sharechart--stacked",
+      "charts-sharechart--with-table",
+      "charts-sharechart--narrow-column",
+      "charts-sharechart--poles",
+      "charts-sharechart--loading",
+      "charts-sharechart--empty",
+      "charts-sharechart--dark",
+      "charts-sharechart--rtl"
+    ],
+    "preview": "charts-sharechart--default",
+    "previewDark": "charts-sharechart--dark",
+    "skeleton": "charts-sharechart--loading"
+  },
   "sheen": {
     "title": "Effects/Sheen",
     "storyIds": [

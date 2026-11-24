@@ -400,6 +400,10 @@
       "types": "./dist/charts/seat-chart.d.ts",
       "default": "./dist/charts/seat-chart.js"
     },
+    "./charts/share-chart": {
+      "types": "./dist/charts/share-chart.d.ts",
+      "default": "./dist/charts/share-chart.js"
+    },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",
       "default": "./dist/charts/delta.js"

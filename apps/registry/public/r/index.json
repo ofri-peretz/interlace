@@ -2920,6 +2920,24 @@
       }
     },
     {
+      "name": "share-chart",
+      "type": "registry:ui",
+      "title": "Share Chart",
+      "description": "How a whole splits into parts, one bar per row: survey answers by group, a budget by department, time by activity. Each row is one 100% bar cut into segments, and every row shares one scale, so rows compare at a glance.",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "sparkline",
       "type": "registry:ui",
       "title": "Sparkline",
