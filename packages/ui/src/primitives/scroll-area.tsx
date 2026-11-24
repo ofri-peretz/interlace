@@ -51,7 +51,7 @@
  * | R8   | Enum for axis                    | `orientation = horizontal | vertical` on `ScrollBar`        |
  * | R12  | Reuse over wrap                  | Base UI owns overflow detection and thumb geometry          |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
- * | R19  | Tokens only                      | `bg-border` thumb, `ring-ring/50` viewport ring             |
+ * | R19  | Tokens only                      | `bg-border` thumb, `ring-ring` viewport ring             |
  * | R25  | Client component                 | Required — Base UI ScrollArea ships client hooks            |
  * | R26  | A11y                             | the VIEWPORT takes focus and shows a ring, so a scrollable region is keyboard-reachable (axe `scrollable-region-focusable`); arrow-key scrolling is asserted by `ScrollArea.stories.tsx` |
  */

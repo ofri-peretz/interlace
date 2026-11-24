@@ -41,7 +41,7 @@
  * | R7   | cn + ...rest                     | `cn('border-b last:border-b-0', className)` + `{...props}`  |
  * | R12  | Reuse over wrap                  | Base UI owns open state, keyboard and ARIA                  |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` on the root      |
- * | R19  | Tokens only                      | `text-muted-foreground`, `ring-ring/50`, `border-ring`      |
+ * | R19  | Tokens only                      | `text-muted-foreground`, `ring-ring`, `border-ring`      |
  * | R25  | Client component                 | Required — Base UI Accordion ships client hooks             |
  * | R26  | A11y from upstream               | `Accordion.Header` + `Trigger` emit the button/region pair  |
  */

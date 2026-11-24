@@ -36,7 +36,7 @@
  * | R7   | cn + ...rest                     | `cn('…', className)` + `{...props}` on every part           |
  * | R12  | Reuse over wrap                  | Base UI owns selection, roving focus and ARIA               |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
- * | R19  | Tokens only                      | `bg-muted`, `text-muted-foreground`, `ring-ring/50`         |
+ * | R19  | Tokens only                      | `bg-muted`, `text-muted-foreground`, `ring-ring`         |
  * | R25  | Client component                 | Required — Base UI Tabs ships client hooks                  |
  * | R26  | Keyboard contract                | arrow-key flow asserted by `Tabs.stories.tsx`, locked by `overlay-nav-keyboard-lock` |
  */

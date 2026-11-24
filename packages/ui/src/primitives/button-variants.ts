@@ -35,7 +35,7 @@
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R8   | Enums, no booleans               | `variant` and `size` are closed string enums                |
- * | R19  | Tokens only                      | `bg-primary`, `bg-destructive`, `bg-accent`, `ring-ring/50` |
+ * | R19  | Tokens only                      | `bg-primary`, `bg-destructive`, `bg-accent`, `ring-ring` |
  * | R20  | AA contrast                      | every pair composited by `composite-contrast-lock`          |
  * | R25  | Server-safe                      | no React import, no hooks, no `'use client'`                |
  */
