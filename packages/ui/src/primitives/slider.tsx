@@ -140,6 +140,10 @@ const SliderThumb = React.forwardRef<
       // Full-opacity ring (8.80:1 light / 11.79:1 dark on --background) —
       // already well past the 3:1 focus floor, so no /60 alpha needed here.
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+      // Base UI puts focus on a visually hidden <input> inside the thumb, so
+      // the thumb itself never matches :focus-visible. Draw the same ring
+      // when the input inside it has keyboard focus.
+      'has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50',
       // A transparent hit area around the 20px knob: 24px (SC 2.5.8 AA),
       // 44px under data-density="comfortable" (SC 2.5.5 AAA). The knob's
