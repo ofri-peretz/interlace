@@ -79,7 +79,7 @@ export const MIN_VIEWPORT = 320 as const;
 export type ChartSource = {
   /** The source's name, such as a publisher and the title of the release. */
   label: string;
-  /** Where to read it. */
+  /** Where to read it: an http(s), mailto or relative URL; other schemes print as plain text. */
   href?: string;
 };
 
@@ -122,6 +122,17 @@ const LABELS: ChartFrameLabels = {
 // ─────────────────────────────────────────────────────────────────
 
 const FORMULA = /^[=+\-@\t\r]/;
+
+/**
+ * A source link keeps http(s), mailto and relative URLs and drops any other
+ * scheme (`javascript:`, `data:`), so a citation passed through from user
+ * input cannot run script when clicked. Such a source prints as plain text.
+ */
+export function safeHref(href: string | undefined): string | undefined {
+  if (!href) return undefined;
+  const scheme = /^\s*([a-z][a-z\d+.-]*):/i.exec(href);
+  return !scheme || /^(?:https?|mailto)$/i.test(scheme[1]!) ? href : undefined;
+}
 
 function cell(value: CsvValue): string {
   if (value === null || value === undefined) return '';
@@ -212,10 +223,12 @@ export const ChartFrame = React.forwardRef<HTMLElement, ChartFrameProps>(functio
     : undefined;
 
   const date = updated ? new Date(`${updated.slice(0, 10)}T00:00:00Z`) : undefined;
-  const dateText =
-    date && !Number.isNaN(date.getTime())
-      ? new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeZone: 'UTC' }).format(date)
-      : updated;
+  // A free-form `updated` ("autumn 2025") is printed as given, with no
+  // machine-readable `datetime`, which must be a valid date string.
+  const isoDate = date && !Number.isNaN(date.getTime()) ? date.toISOString().slice(0, 10) : undefined;
+  const dateText = isoDate
+    ? new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeZone: 'UTC' }).format(new Date(isoDate))
+    : updated;
 
   const hasFooter = sources.length > 0 || note || updated || download;
 
@@ -278,21 +291,24 @@ export const ChartFrame = React.forwardRef<HTMLElement, ChartFrameProps>(functio
               <span className="text-foreground font-medium">
                 {sources.length === 1 ? labels.source : labels.sources}:
               </span>{' '}
-              {sources.map((source, i) => (
-                <React.Fragment key={`${source.label}-${i}`}>
-                  {i > 0 ? '; ' : null}
-                  {source.href ? (
-                    <a
-                      href={source.href}
-                      className="text-foreground underline decoration-border underline-offset-2 hover:decoration-current focus-visible:ring-ring focus-visible:ring-offset-background rounded-sm focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
-                    >
-                      {source.label}
-                    </a>
-                  ) : (
-                    source.label
-                  )}
-                </React.Fragment>
-              ))}
+              {sources.map((source, i) => {
+                const link = safeHref(source.href);
+                return (
+                  <React.Fragment key={`${source.label}-${i}`}>
+                    {i > 0 ? '; ' : null}
+                    {link ? (
+                      <a
+                        href={link}
+                        className="text-foreground underline decoration-border underline-offset-2 hover:decoration-current focus-visible:ring-ring focus-visible:ring-offset-background rounded-sm focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
+                      >
+                        {source.label}
+                      </a>
+                    ) : (
+                      source.label
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </p>
           ) : null}
           {note ? (
@@ -305,7 +321,7 @@ export const ChartFrame = React.forwardRef<HTMLElement, ChartFrameProps>(functio
               {updated ? (
                 <span>
                   {labels.updated}{' '}
-                  <time data-slot="chart-frame-updated" dateTime={updated}>
+                  <time data-slot="chart-frame-updated" dateTime={isoDate}>
                     {dateText}
                   </time>
                 </span>

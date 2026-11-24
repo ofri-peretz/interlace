@@ -8,7 +8,7 @@ import * as React from 'react';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { ChartFrame, MIN_VIEWPORT, csvHref, toCsv } from '../src/charts/chart-frame.js';
+import { ChartFrame, MIN_VIEWPORT, csvHref, safeHref, toCsv } from '../src/charts/chart-frame.js';
 
 afterEach(cleanup);
 
@@ -46,6 +46,17 @@ const ROWS = [
   { year: 2024, share: 0.41 },
   { year: 2025, share: 0.47 },
 ];
+
+describe('safeHref', () => {
+  it('keeps web, mail and relative links and drops script schemes', () => {
+    expect(safeHref('https://example.org/a')).toBe('https://example.org/a');
+    expect(safeHref('mailto:data@example.org')).toBe('mailto:data@example.org');
+    expect(safeHref('/data/trips.csv')).toBe('/data/trips.csv');
+    expect(safeHref(' JavaScript:alert(1)')).toBeUndefined();
+    expect(safeHref('data:text/html,x')).toBeUndefined();
+    expect(safeHref(undefined)).toBeUndefined();
+  });
+});
 
 describe('<ChartFrame>', () => {
   it('names the figure by its title, at the level asked for', () => {
@@ -128,6 +139,7 @@ describe('<ChartFrame>', () => {
       </ChartFrame>,
     );
     expect(container.querySelector('time')!.textContent).toBe('autumn 2025');
+    expect(container.querySelector('time')!.getAttribute('datetime')).toBeNull();
   });
 
   it('offers the data as a CSV link that works before scripts load, adding .csv once', () => {
