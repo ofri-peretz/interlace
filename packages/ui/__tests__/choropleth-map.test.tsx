@@ -217,3 +217,42 @@ describe('<ChoroplethMap>', () => {
     expect(screen.getByText('No areas to show yet.')).toBeTruthy();
   });
 });
+
+describe('<ChoroplethMap> labels', () => {
+  it('takes every fixed word from labels, for a page in another language', () => {
+    const { container, rerender } = render(
+      <ChoroplethMap
+        areas={AREAS}
+        values={VALUES}
+        viewBox="0 0 20 20"
+        bins={3}
+        locale="en-US"
+        label="Lluvia"
+        labels={{
+          noData: 'Sin datos',
+          area: 'Zona',
+          value: 'Valor',
+          hint: 'Señala una zona.',
+          tableCaption: (l) => `${l} por zona`,
+          readout: (area, value, range) => `${area} = ${value ?? '?'}${range ? ` [${range}]` : ''}`,
+          summary: ({ count, high }) => `Mapa de ${count} zonas; máximo ${high?.label}.`,
+        }}
+      />,
+    );
+    const map = screen.getByRole('img');
+    expect(map.getAttribute('aria-label')).toBe('Mapa de 4 zonas; máximo East.');
+    const readout = () => container.querySelector('[data-slot="choropleth-map-readout"]')!.textContent;
+    expect(readout()).toBe('Señala una zona.');
+    fireEvent.keyDown(map, { key: 'End' });
+    expect(readout()).toBe('West = ?');
+    const legend = container.querySelector('[data-slot="choropleth-map-legend"]') as HTMLElement;
+    expect(within(legend).getByText('Sin datos')).toBeTruthy();
+    const table = container.querySelector('[data-slot="choropleth-map-table"]') as HTMLElement;
+    expect(within(table).getByText('Lluvia por zona')).toBeTruthy();
+    expect(within(table).getByRole('columnheader', { name: 'Zona' })).toBeTruthy();
+    expect(within(table).getByRole('columnheader', { name: 'Valor' })).toBeTruthy();
+    expect(container.querySelector('[data-slot="choropleth-map-area"][data-index="0"] title')!.textContent).toBe('North = 10');
+    rerender(<ChoroplethMap areas={[]} values={{}} viewBox="0 0 1 1" labels={{ empty: 'Nada todavía.' }} />);
+    expect(screen.getByText('Nada todavía.')).toBeTruthy();
+  });
+});
