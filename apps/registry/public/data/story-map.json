@@ -307,6 +307,19 @@
     "previewDark": "contracts-button-variants--dark",
     "skeleton": null
   },
+  "calendar": {
+    "title": "Primitives/Calendar",
+    "storyIds": [
+      "primitives-calendar--default",
+      "primitives-calendar--keyboard",
+      "primitives-calendar--plain",
+      "primitives-calendar--week-starts-monday",
+      "primitives-calendar--right-to-left"
+    ],
+    "preview": "primitives-calendar--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "callout": {
     "title": "Primitives/Callout",
     "storyIds": [
@@ -2533,6 +2546,20 @@
     "preview": "charts-timeslider--default",
     "previewDark": "charts-timeslider--dark",
     "skeleton": null
+  },
+  "time-slot-picker": {
+    "title": "Blocks/TimeSlotPicker",
+    "storyIds": [
+      "blocks-timeslotpicker--default",
+      "blocks-timeslotpicker--by-part-of-day",
+      "blocks-timeslotpicker--twenty-four-hour",
+      "blocks-timeslotpicker--loading",
+      "blocks-timeslotpicker--empty",
+      "blocks-timeslotpicker--right-to-left"
+    ],
+    "preview": "blocks-timeslotpicker--default",
+    "previewDark": null,
+    "skeleton": "blocks-timeslotpicker--loading"
   },
   "timeline": {
     "title": "Blocks/Timeline",
