@@ -396,6 +396,10 @@
       "types": "./dist/charts/sparkline.d.ts",
       "default": "./dist/charts/sparkline.js"
     },
+    "./charts/seat-chart": {
+      "types": "./dist/charts/seat-chart.d.ts",
+      "default": "./dist/charts/seat-chart.js"
+    },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",
       "default": "./dist/charts/delta.js"
