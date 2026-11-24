@@ -2157,6 +2157,7 @@
       "a11y": {
         "roles": [],
         "aria": [
+          "aria-hidden",
           "aria-labelledby",
           "aria-live"
         ],

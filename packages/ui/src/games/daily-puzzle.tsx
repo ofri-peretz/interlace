@@ -211,7 +211,7 @@ interface DailyPuzzleCountdownProps extends Omit<React.ComponentProps<'p'>, 'chi
   };
 }
 
-/** "5 h 12 min", "12 min", "45 s", in the locale's own unit words. */
+/** Time left in the locale's own short unit words, such as "5 hr 12 min", "12 min" or "45 sec" in en-US. */
 function formatLeft(ms: number, locale?: string) {
   const unit = (u: 'hour' | 'minute' | 'second', n: number) =>
     new Intl.NumberFormat(locale, { style: 'unit', unit: u, unitDisplay: 'short' }).format(n);
@@ -260,7 +260,12 @@ function DailyPuzzleCountdown({ timeZone, onNextDay, locale, labels, className, 
       className={cn('text-muted-foreground text-sm tabular-nums', className)}
       {...props}
     >
-      {text}
+      {/* The ticks stay quiet; only the day turning is announced. A live region
+          must exist before its text changes, so it is always rendered. */}
+      <span aria-hidden={left === 0 || undefined}>{text}</span>
+      <span data-slot="daily-puzzle-countdown-status" aria-live="polite" className="sr-only">
+        {left === 0 ? text : ''}
+      </span>
     </p>
   );
 }

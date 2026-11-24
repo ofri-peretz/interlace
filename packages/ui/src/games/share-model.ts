@@ -69,7 +69,7 @@ export function shareText(input: ShareTextInput): string {
   const marks = shareMarks(input.results, input.symbols, input.fallback);
   const score =
     input.score === undefined ? '' : input.maxScore === undefined ? ` ${input.score}` : ` ${input.score}/${input.maxScore}`;
-  const lines = [head, `${marks}${score}`];
+  const lines = [head, `${marks}${score}`.trimStart()];
   if (input.streak) lines.push(`${input.streakSymbol ?? '🔥'} ${input.streak}`);
   if (input.url) lines.push(input.url);
   return lines.join('\n');

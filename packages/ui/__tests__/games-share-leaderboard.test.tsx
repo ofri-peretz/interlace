@@ -23,6 +23,7 @@ describe('share-model', () => {
       shareText({ title: 'Game', number: 42, results: ['close', 'far'], score: 120, maxScore: 200, streak: 6, url: 'https://example.com' }),
     ).toBe('Game No. 42\n🟩⬜ 120/200\n🔥 6\nhttps://example.com');
     expect(shareText({ title: 'Game', results: ['right'], score: 3, streak: 0 })).toBe('Game\n🟩 3');
+    expect(shareText({ title: 'Game', results: [], score: 5 })).toBe('Game\n5');
     expect(shareText({ title: 'G', number: 1, results: [], numberLabel: (n) => `#${n}`, streak: 2, streakSymbol: '+' })).toBe(
       'G #1\n\n+ 2',
     );

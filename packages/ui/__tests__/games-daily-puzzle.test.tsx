@@ -81,11 +81,18 @@ describe('DailyPuzzleCountdown', () => {
     const onNextDay = vi.fn();
     const { container } = render(<DailyPuzzleCountdown timeZone="UTC" onNextDay={onNextDay} locale="en-US" />);
     const p = container.querySelector('[data-slot="daily-puzzle-countdown"]')!;
-    expect(p.textContent).toBe('Next puzzle in 2 min');
+    const shown = p.firstElementChild!;
+    const status = p.querySelector('[data-slot="daily-puzzle-countdown-status"]')!;
+    expect(status.getAttribute('aria-live')).toBe('polite');
+    expect(shown.textContent).toBe('Next puzzle in 2 min');
+    expect(status.textContent).toBe('');
     act(() => vi.advanceTimersByTime(40_000));
-    expect(p.textContent).toBe('Next puzzle in 51 sec');
+    expect(shown.textContent).toBe('Next puzzle in 51 sec');
+    expect(status.textContent).toBe('');
     act(() => vi.advanceTimersByTime(60_000));
-    expect(p.textContent).toBe('A new puzzle is ready');
+    // Only the day turning is announced, and the visible copy steps aside so it is read once.
+    expect(status.textContent).toBe('A new puzzle is ready');
+    expect(shown.getAttribute('aria-hidden')).toBe('true');
     expect(p.getAttribute('data-state')).toBe('ready');
     expect(onNextDay).toHaveBeenCalledTimes(1);
   });
