@@ -295,10 +295,8 @@ function RoomLobby({
       if (!freshIds.has(el.dataset.playerId ?? '')) continue;
       if (typeof el.animate === 'function') {
         el.animate(
-          [
-            { transform: 'scale(0.6)', opacity: 0 },
-            { transform: 'scale(1)', opacity: 1 },
-          ],
+          // Scale only: a fading name would dip below text contrast mid-entrance.
+          [{ transform: 'scale(0.6)' }, { transform: 'scale(1)' }],
           { duration: 240, easing: EASE },
         );
       }
