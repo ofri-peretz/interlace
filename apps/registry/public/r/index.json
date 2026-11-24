@@ -2524,6 +2524,24 @@
       }
     },
     {
+      "name": "scroll-story",
+      "type": "registry:ui",
+      "title": "Scroll Story",
+      "description": "A chart that stays in view while the story beside it scrolls: each step of text the reader reaches changes the chart, one point at a time. The story is told in the steps; the chart shows it.",
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "section-header",
       "type": "registry:ui",
       "title": "Section Header",
@@ -3115,6 +3133,24 @@
         "loading": true,
         "version": "2.0.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "time-slider",
+      "type": "registry:ui",
+      "title": "Time Slider",
+      "description": "Step a chart through time: a play button, a slider with one stop per frame (a year, a survey wave, a season), and the current frame printed large beside them. Any chart goes inside: the slider owns which frame is showing, and the chart is drawn for that…",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {

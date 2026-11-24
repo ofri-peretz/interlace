@@ -370,6 +370,18 @@
           "source": ".changeset/cta-section-card.md"
         },
         {
+          "summary": "Two pieces for telling a story with data. `TimeSlider` steps any chart through time: a play button, a slider with one stop per frame and the frame printed beside it; the chart is drawn by `children(frame, index)`, the server HTML holds the opening frame, play is started and stopped by the reader (and stops when the slider is touched), the thumb speaks the frame, and time runs right to left in an RTL page. Its pure steps (`nextFrame`, `playStart`, `clampFrame`, `formatFrame`) live in `charts/time-slider-model`. `ScrollStory` keeps a chart in view while the steps beside it scroll; `graphic(step)` redraws it when a step crosses the middle of the screen, never in proportion to scroll. Side by side from 48rem of its own box, the chart on top with the steps passing over it as cards below that, and every step in the server HTML.",
+          "components": [
+            "time-slider",
+            "scroll-story"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/data-storytelling.md"
+        },
+        {
           "summary": "Comfortable density now reaches the patterns too.\n\nThe Topbar row items, DialogueStepper's Back / Show the whole conversation / Start over, and Dialogue and DialogueStepper choices take their minimum height from `--spacing-control`, so they stay 36px by default and grow to 44px under `data-density=\"comfortable\"`. Citation's number and chip markers keep their size in the line, and an invisible pad of the new `--spacing-target` token takes the tap: 24px by default (WCAG 2.5.8), 44px when comfortable. The underline marker is the phrase itself, inside a sentence, so it is unchanged.",
           "components": [
             "topbar",
@@ -1321,6 +1333,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/share-card-reannounce.md"
+        },
+        {
+          "summary": "`Slider` draws its focus ring on keyboard focus again. Base UI puts focus on a hidden input inside the thumb, so the thumb's own `focus-visible` ring never showed; the ring now also follows `has-[:focus-visible]`. Every slider gains it, including `CloserGame` and `TimeSlider`.",
+          "components": [
+            "slider"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/slider-focus-ring.md"
         },
         {
           "summary": "fix(ui): Spotlight type-checks against motion 14. motion 14 added an `fx` boolean prop to every motion element, which clashes with the SVG `fx` focal-point attribute Spotlight inherited from its native `<svg>` props; installing Spotlight next to the latest motion failed `next build`'s type check. `fx` is now omitted from the native props, like the animation handlers and `values` before it.",
