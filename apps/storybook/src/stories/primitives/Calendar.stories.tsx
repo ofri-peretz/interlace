@@ -76,6 +76,8 @@ export const Keyboard: Story = {
     await userEvent.keyboard('{PageDown}');
     await expect(canvas.getByRole('grid', { name: 'December 2026' })).toBeTruthy();
     await expect(document.activeElement?.getAttribute('data-date')).toBe('2026-12-26');
+    // Let the month slide settle, so the a11y scan reads the days at full opacity.
+    await Promise.all(canvasElement.getAnimations({ subtree: true }).map((a) => a.finished));
   },
 };
 
