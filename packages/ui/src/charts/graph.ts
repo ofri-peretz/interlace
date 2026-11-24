@@ -130,14 +130,44 @@ export function describeGraph(
   nodes: readonly GraphNode[],
   edges: readonly GraphEdge[],
   shown: number,
+  {
+    summary = graphSentence,
+    locale,
+  }: { summary?: (s: GraphSummary) => string; locale?: string } = {},
 ): string {
-  if (nodes.length === 0) return 'Network graph: no nodes';
-  const ranked = rankNodes(nodes);
-  const hidden = nodes.length - shown;
+  const top = nodes.length === 0 ? null : rankNodes(nodes)[0];
+  const format = new Intl.NumberFormat(locale);
+  return summary({
+    nodes: nodes.length,
+    edges: edges.length,
+    shown,
+    hidden: nodes.length - shown,
+    top: top ? { label: top.label ?? top.id, weight: top.weight } : null,
+    number: (n) => format.format(n),
+  });
+}
+
+/** What a network graph's spoken sentence is built from, so it can be written in any language. */
+export interface GraphSummary {
+  nodes: number;
+  edges: number;
+  /** How many nodes are drawn, and how many fall below the display cap. */
+  shown: number;
+  hidden: number;
+  /** The most connected node, or null when there are no nodes. */
+  top: { label: string; weight: number } | null;
+  /** Formats a number in the chart's locale. */
+  number: (n: number) => string;
+}
+
+/** The English sentence for a network graph. Pass your own to `describeGraph` for another language. */
+export function graphSentence(s: GraphSummary): string {
+  if (!s.top) return 'Network graph: no nodes';
+  const n = s.number;
   return (
-    `Network graph: ${nodes.length} nodes, ${edges.length} connections. ` +
-    `Showing the ${shown} most connected${hidden > 0 ? `, ${hidden} below the display cap` : ''}. ` +
-    `Most connected is ${ranked[0].label ?? ranked[0].id} with ${ranked[0].weight}. ` +
+    `Network graph: ${n(s.nodes)} nodes, ${n(s.edges)} connections. ` +
+    `Showing the ${n(s.shown)} most connected${s.hidden > 0 ? `, ${n(s.hidden)} below the display cap` : ''}. ` +
+    `Most connected is ${s.top.label} with ${n(s.top.weight)}. ` +
     `Distance from the centre is rank by number of connections.`
   );
 }

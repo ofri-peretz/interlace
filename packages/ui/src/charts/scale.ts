@@ -380,22 +380,53 @@ export function describeDistribution(
   bins: readonly Bin[],
   label?: string,
   unit?: string,
+  {
+    summary = distributionSentence,
+    locale,
+  }: { summary?: (s: DistributionSummary) => string; locale?: string } = {},
 ): string {
-  const name = label ?? 'Distribution';
   const measured = bins.filter(
     (bin): bin is Bin & { v: number } =>
       typeof bin.v === 'number' && Number.isFinite(bin.v),
   );
-  if (measured.length === 0) return `${name}: no data`;
+  const format = new Intl.NumberFormat(locale);
+  const peak = measured.length === 0 ? null : peakBin(bins.map((bin) => bin.v))!;
+  return summary({
+    name: label,
+    unit,
+    bins: bins.length,
+    measured: measured.length,
+    total: measured.reduce((sum, bin) => sum + bin.v, 0),
+    peak: peak === null ? null : { label: bins[peak].label, value: bins[peak].v as number },
+    number: (n) => format.format(n),
+  });
+}
 
-  const peak = peakBin(bins.map((bin) => bin.v))!;
-  const total = measured.reduce((sum, bin) => sum + bin.v, 0);
-  const noun = unit ? ` ${unit}` : '';
-  const gaps = bins.length - measured.length;
+/** What a distribution's spoken sentence is built from, so it can be written in any language. */
+export interface DistributionSummary {
+  /** The plotted quantity's name, if it has one. */
+  name?: string;
+  unit?: string;
+  /** How many bins there are, and how many of them were measured. */
+  bins: number;
+  measured: number;
+  /** The sum of the measured bins. */
+  total: number;
+  /** The highest bin, or null when none was measured. */
+  peak: { label: string; value: number } | null;
+  /** Formats a number in the chart's locale. */
+  number: (n: number) => string;
+}
 
+/** The English sentence for a distribution. Pass your own to `describeDistribution` for another language. */
+export function distributionSentence(s: DistributionSummary): string {
+  const name = s.name ?? 'Distribution';
+  if (!s.peak) return `${name}: no data`;
+  const noun = s.unit ? ` ${s.unit}` : '';
+  const gaps = s.bins - s.measured;
   return (
-    `${name}: ${bins.length} bins, ${total.toLocaleString()}${noun} in total, ` +
-    `highest in ${bins[peak].label} at ${(bins[peak].v as number).toLocaleString()}${noun}` +
+    `${name}: ${s.bins} bins, ${s.number(s.total)}${noun} in total, ` +
+    `highest in ${s.peak.label} at ${s.number(s.peak.value)}${noun}` +
     `${gaps === 0 ? '' : `, ${gaps} bin${gaps === 1 ? '' : 's'} not measured`}.`
   );
 }
@@ -666,7 +697,11 @@ export function dialRing(radius: number, geometry: DialGeometry): string {
   return `M${start.x.toFixed(2)},${start.y.toFixed(2)}${arc(mid)}${arc(end)}`;
 }
 
-/** Compact number formatting for dense rows — 12.4k, 3.1M. */
+/**
+ * Compact number formatting for dense rows — 12.4k, 3.1M. The digits follow `locale`; the
+ * suffixes stay k, M and B in every locale on purpose, so a dense row reads the same everywhere
+ * (`Intl` compact notation would switch to words such as "Mio." in some languages).
+ */
 export function compact(value: number, locale?: string): string {
   const abs = Math.abs(value);
   const one = (n: number) =>
