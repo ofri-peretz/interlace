@@ -139,7 +139,7 @@ function PricingTable({
                     )}
                   >
                     {tier.featured ? (
-                      <span className="bg-primary text-primary-foreground absolute -top-3 right-6 rounded-full px-4 py-2 text-xs font-semibold">
+                      <span className="bg-primary text-primary-foreground absolute -top-3 end-6 rounded-full px-4 py-2 text-xs font-semibold">
                         Most popular
                       </span>
                     ) : null}

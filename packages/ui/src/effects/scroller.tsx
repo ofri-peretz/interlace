@@ -53,9 +53,9 @@ import { useReducedMotion } from '../lib/use-reduced-motion.js';
 
 const GAP = { sm: 'gap-4', md: 'gap-8', lg: 'gap-16' } as const;
 const GAP_PAD = {
-  sm: { x: 'pr-4', y: 'pb-4' },
-  md: { x: 'pr-8', y: 'pb-8' },
-  lg: { x: 'pr-16', y: 'pb-16' },
+  sm: { x: 'pe-4', y: 'pb-4' },
+  md: { x: 'pe-8', y: 'pb-8' },
+  lg: { x: 'pe-16', y: 'pb-16' },
 } as const;
 
 const FADE = {

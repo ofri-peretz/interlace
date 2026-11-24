@@ -196,7 +196,7 @@ const BreadcrumbSeparator = React.forwardRef<
       aria-hidden="true"
       data-slot="breadcrumb-separator"
       className={cn(
-        'text-muted-foreground inline-flex items-center [&>svg]:size-4',
+        'text-muted-foreground inline-flex items-center [&>svg]:size-4 rtl:[&>svg]:-scale-x-100',
         ON_BAND,
         className,
       )}

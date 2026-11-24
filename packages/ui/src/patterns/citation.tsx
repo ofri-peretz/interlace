@@ -149,7 +149,7 @@ function CitationSource({ source }: { source: CitationSourceData }) {
         {detail ? <span className="text-muted-foreground"> ({detail})</span> : null}
       </p>
       {source.quote ? (
-        <blockquote className="border-border text-muted-foreground border-l-2 pl-3 text-sm italic">
+        <blockquote className="border-border text-muted-foreground border-s-2 ps-3 text-sm italic">
           {source.quote}
         </blockquote>
       ) : null}

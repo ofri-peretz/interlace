@@ -79,7 +79,7 @@ const Switch = React.forwardRef<
       className={cn(
         'peer data-[checked]:bg-primary data-[unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/60 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-[background-color,border-color,box-shadow] duration-(--duration-base) ease-move outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
         // SC 2.5.8 — transparent 32×24 hit area centred on the 18.4px track.
-        "relative before:absolute before:top-1/2 before:left-0 before:h-6 before:w-full before:-translate-y-1/2 before:content-['']",
+        "relative before:absolute before:top-1/2 before:start-0 before:h-6 before:w-full before:-translate-y-1/2 before:content-['']",
         className,
       )}
       {...props}
@@ -87,7 +87,7 @@ const Switch = React.forwardRef<
       <BaseSwitch.Thumb
         data-slot="switch-thumb"
         className={cn(
-          'bg-background dark:data-[checked]:bg-primary-foreground dark:data-[unchecked]:bg-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[checked]:translate-x-[calc(100%-2px)] data-[unchecked]:translate-x-0',
+          'bg-background dark:data-[checked]:bg-primary-foreground dark:data-[unchecked]:bg-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[checked]:translate-x-[calc(100%-2px)] rtl:data-[checked]:-translate-x-[calc(100%-2px)] data-[unchecked]:translate-x-0',
         )}
       />
     </BaseSwitch.Root>
