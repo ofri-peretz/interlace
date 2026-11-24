@@ -580,7 +580,6 @@
     "bind": 2,
     "binn": 1,
     "bio": 2,
-    "bit": 4,
     "black": 4,
     "blank": 8,
     "ble": 8,
@@ -1120,7 +1119,7 @@
     "draggabl": 1,
     "drama": 1,
     "dramatical": 1,
-    "draw": 47,
+    "draw": 49,
     "drawer": 6,
     "drawercontent": 1,
     "drawerdescription": 1,
@@ -1526,7 +1525,7 @@
     "history": 4,
     "hit": 9,
     "hoc": 1,
-    "hold": 46,
+    "hold": 47,
     "holder": 1,
     "hollow": 3,
     "home": 16,
@@ -1831,7 +1830,7 @@
     "marker": 8,
     "market": 13,
     "markup": 9,
-    "mask": 5,
+    "mask": 7,
     "match": 36,
     "matchmedia": 3,
     "material": 1,
@@ -2404,7 +2403,7 @@
     "reintroduc": 1,
     "reinvent": 2,
     "reject": 1,
-    "rejection": 1,
+    "rejection": 3,
     "relat": 4,
     "relatedpost": 4,
     "relatedpostsprop": 1,
@@ -2512,7 +2511,7 @@
     "safe": 28,
     "safety": 1,
     "said": 7,
-    "sampl": 6,
+    "sampl": 8,
     "san": 2,
     "sat": 3,
     "satisfi": 2,
@@ -3232,7 +3231,7 @@
     "wir": 8,
     "wire": 8,
     "within": 14,
-    "without": 82,
+    "without": 83,
     "women": 1,
     "wonder": 1,
     "word": 49,
@@ -3759,7 +3758,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect send ring hit chang mark unless player browser 300m nearby draw mount short support yesterday new motion animat 600m answer hidden noth dashoffset replay tone drawn small data nam arrival round api tap untouch job slot count right idle loop strok"
+      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect send ring hit chang mark unless player browser 300m nearby mount draw short support yesterday new motion animat 600m answer hidden noth dashoffset replay tone drawn small data nam arrival round api tap untouch job slot count right idle loop strok"
     },
     {
       "name": "chart-frame",
@@ -3956,7 +3955,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "window blog pattern client traffic filenam titl dot bar maco chrom editor codewindow codewindowtitlebar terminal light action monospac preview centr whatever content slot typ nest optional reactnod landmark although buy leaner particular roleless sens bak familiar minimiz opinion orna spec plus name styl 40px expos intact prompt aria role wrapp hidden anyway directiv mono ordinary zoom border glanc pre body render control sampl box"
+      "terms": "window blog pattern client traffic filenam titl dot bar maco chrom editor codewindow codewindowtitlebar terminal light action monospac preview centr whatever content slot typ nest optional reactnod landmark although buy leaner particular roleless sens bak familiar minimiz opinion orna spec plus name styl 40px expos intact prompt aria role wrapp hidden anyway directiv mono ordinary zoom border glanc pre body render control box mapp"
     },
     {
       "name": "collapsible",
@@ -4475,7 +4474,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "edge glow decorativ effect client edgeglow arc parent lap plan turn recommend chart ring card bright around insid corner var admissibl cheapest squar layer light run pointer conic primary colour drop hidden position mask browser exclud box trail draw clockwis reduc live right motion paus relativ transparent cut larger still gradient inert thin decoration transform ele border width much boundary cover direction web either"
+      "terms": "edge glow decorativ effect client edgeglow arc parent lap plan turn recommend chart ring card bright around insid corner var admissibl cheapest squar layer light run pointer conic primary colour drop hidden position browser exclud box mask trail clockwis draw reduc live right motion paus relativ transparent cut larger still gradient inert thin decoration transform ele border width much boundary cover direction web either"
     },
     {
       "name": "empty-state",
@@ -4745,7 +4744,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "gradient mesh decorativ effect client gradientmesh glow drift loop colour blurr band aliv feel chart slow soft larg watch featur content blend goe diameter hero shift motion field strong base highlight plac surfac fad self long hold stylesheet reduc keyfram paus percentag radial transparent children primary contain filter schem transform flow noth allow rest without token web six absolut composit animat reader even color"
+      "terms": "gradient mesh decorativ effect client gradientmesh glow drift loop colour blurr band aliv feel chart slow soft larg watch featur content blend goe diameter hero shift motion field strong base highlight plac surfac fad self long hold stylesheet reduc keyfram paus percentag radial transparent children primary contain filter schem transform flow noth allow rest token without web six absolut composit animat reader even color"
     },
     {
       "name": "grid-field",
@@ -4761,7 +4760,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar fade dissolv worksheet careful paper generator graph breath board fad slow var toward radial arrang strongest either event hundr thousand motion column even primary listener highlight like hidden choos laid border edge plac glow mask mulberry32 timelin without browser fals row compet behind none fill hold measur move work ble soft"
+      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar fade dissolv worksheet careful paper generator graph breath board fad slow var toward radial arrang strongest either event hundr thousand motion column even primary listener highlight like hidden choos laid border edge plac glow mulberry32 timelin without browser fals row compet behind none fill mask measur hold move work ble soft"
     },
     {
       "name": "grid",
@@ -4833,7 +4832,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "hero strand decorativ effect server rsc herostrand counter ribbon scal thread draw weav decodetext micro section interlaceweav pathlength drawn timelinemap cross motion keyfram strok complet dash 726 gentl intend thicken across four 200m preserveaspectratio production proportion animat driver normaliz vector 100 chromium discard lesson page breath fad verb never shipp reduc hydration optional offset bug cost e2e provid every structur viewbox honest instant invisibl"
+      "terms": "hero strand decorativ effect server rsc herostrand counter ribbon scal thread weav draw decodetext micro section interlaceweav pathlength drawn timelinemap cross motion keyfram strok complet dash 726 gentl intend thicken across four 200m preserveaspectratio production proportion animat driver normaliz vector 100 chromium discard lesson page breath fad verb never shipp reduc hydration optional offset bug cost e2e provid every structur viewbox honest instant invisibl"
     },
     {
       "name": "hero",
@@ -4973,7 +4972,7 @@
         "game",
         "games"
       ],
-      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet player host room rank send board scor address peopl event copy clock letter round broadcastchannel realtim link character big refus group makejoincod connect screen outsid tie phon row entry 4mz endsat joincod k7q sender stag new play demo memory servic transport null spell app copi intent leaderboard minplayer visit"
+      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet player host room rank send board scor address peopl event copy clock letter round character broadcastchannel realtim link big refus group makejoincod connect screen outsid tie phon row entry 4mz endsat joincod k7q sender stag new play demo memory servic transport null spell app copi intent leaderboard minplayer visit"
     },
     {
       "name": "kbd",
@@ -5093,7 +5092,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "light beam decorativ effect server rsc stat top left right lightbeam cone soft stag gradient depth speaker star eye flat brightness crisp falloff headlin event conic origin hero pick fall angl edge bright mask blur dark draw move degre distanc section var inset radial javascript fade set filter flow surfac absolut fram minus cls svg part drawn come r23 long paint children boolean colour"
+      "terms": "light beam decorativ effect server rsc stat top left right lightbeam cone soft stag gradient depth speaker star eye flat brightness crisp falloff headlin event conic origin hero pick fall angl edge bright blur dark mask move degre distanc draw section var inset radial javascript fade set filter flow surfac absolut fram minus cls svg part drawn come r23 long paint children boolean colour"
     },
     {
       "name": "lint-playground",
@@ -5113,7 +5112,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "lint playground blog pattern client stat ready fail lintplayground analyzer find analysis analyz editor linter product bring inject messag keystrok newest plugin async list past testid answer status watch position render fact advanc conclusion debounc exhibit inversion licens mock reasonabl rejection vulnerabl wasm codeeditor diagnostic enumerat granularity honesty anchor footer 300 demo formatter privacy r16 r24 worker eslint flash human pars storybook bar old"
+      "terms": "lint playground blog pattern client stat ready fail lintplayground analyzer find analysis analyz editor linter product bring inject messag keystrok newest plugin async list past testid answer status watch position render fact advanc conclusion debounc exhibit inversion licens mock reasonabl vulnerabl wasm codeeditor diagnostic enumerat granularity honesty anchor footer 300 demo formatter privacy r16 r24 rejection worker eslint flash human pars storybook bar old"
     },
     {
       "name": "list",
@@ -5202,7 +5201,7 @@
         "primitive",
         "data"
       ],
-      "terms": "meter scal data primitiv server rsc stat linear log fill width floor bar unmeasur null length row fraction rather hairlin axis magnitud number chart percent measur alphabetical beautiful rankedbarlist maximum domain hatch sort silent wrong finit track max identical caller zero never stay denominator whol observ map empty opt wors honest split draw clamp paint compact entry look 101 10k 10m 300px 999 flatter"
+      "terms": "meter scal data primitiv server rsc stat linear log fill width floor bar unmeasur null length row fraction rather hairlin axis magnitud number chart percent measur alphabetical beautiful rankedbarlist maximum domain hatch sort silent wrong finit track max identical caller zero never stay denominator whol observ map empty opt wors honest split clamp draw paint compact entry look 101 10k 10m 300px 999 flatter"
     },
     {
       "name": "meter",
@@ -5337,7 +5336,7 @@
         "primitive",
         "form"
       ],
-      "terms": "number field form primitiv client responsiv min viewport 320 keyboard base decr incr input numberfield scrub scrubarea scrubb group control ring compositional wrapper background basenf comfortab numberfielddecr numberfieldgroup numberfieldincr numberfieldinput numberfieldscrubarea valuemax valuemin button floor numeric spar opacity 44px 36px alpha valuenow part pseudo wrap comfortabl root built exempt hit inactiv aria focus flat verifi within drag border upstream room squar area without token"
+      "terms": "number field form primitiv client responsiv min viewport 320 keyboard base decr incr input numberfield scrub scrubarea scrubb group control ring compositional wrapper background basenf comfortab numberfielddecr numberfieldgroup numberfieldincr numberfieldinput numberfieldscrubarea valuemax valuemin button floor numeric spar opacity 44px 36px alpha valuenow part pseudo wrap comfortabl root built exempt hit inactiv aria focus flat verifi within drag border upstream room squar area token without"
     },
     {
       "name": "order-game",
@@ -5609,7 +5608,7 @@
         "game",
         "games"
       ],
-      "terms": "game server rsc responsiv min viewport 320 modul encoder schem zone svg version matrix quiet byte light mask camera correction penalty sharp dark path join qrcod size dependency margin four model projector link phon request level canva lowest 18004 capacity damag encodeqr errorcorrection iec qrpath rangeerror reliab scor data draw background img text ground renderer utf imag turn worker error mode bit drawn foreground"
+      "terms": "game server rsc responsiv min viewport 320 modul encoder schem zone svg version matrix quiet byte light camera correction penalty sharp dark mask path join qrcod size dependency margin four model projector link phon request level canva lowest 18004 capacity damag encodeqr errorcorrection iec qrpath rangeerror reliab scor data background draw img text ground renderer utf imag turn worker error mode drawn foreground nam"
     },
     {
       "name": "quiz-question",
@@ -5659,7 +5658,7 @@
         "chart",
         "data"
       ],
-      "terms": "radial weav data chart server rsc load skeleton stat publish releas action flat annotation kind radialweav sery bin axis domain plot day distribution timesery dial centr point sweep sentenc rather band bar measur observation shar null scal seriestabl svg last unit across user every several slot observ tick peak label gap degre inspection languag number end path box arc zero look first draw local"
+      "terms": "radial weav data chart server rsc load skeleton stat publish releas action flat annotation kind radialweav sery bin axis domain plot day distribution timesery dial centr point sweep sentenc rather band bar measur observation shar null scal seriestabl svg last unit across user every several slot observ tick peak label gap degre inspection languag number end path box arc zero look first local draw"
     },
     {
       "name": "radio-group",
@@ -5732,7 +5731,7 @@
         "primitive",
         "feedback"
       ],
-      "terms": "read strand feedback primitiv client readingstrand progress progressbar scalex reduc brand piec fad verb carrier draw move ful philosophy transition unless height scroll reader ele 176 consider eas getboundingclientrect hasn informativ innerheight queri storm remov ref clamp page never compositor populat spam top motion viewport gat information snap lesson taller thumb updat valuenow prefer hid measurabl timelin blog drawn test coupl deviation equivalent rfc"
+      "terms": "read strand feedback primitiv client readingstrand progress progressbar scalex reduc brand piec fad verb carrier move draw ful philosophy transition unless height scroll reader ele 176 consider eas getboundingclientrect hasn informativ innerheight queri storm remov ref clamp page never compositor populat spam top motion viewport gat information snap lesson taller thumb updat valuenow prefer hid measurabl timelin blog drawn test coupl deviation equivalent rfc"
     },
     {
       "name": "reading-time",
@@ -5891,7 +5890,7 @@
         "primitive",
         "data"
       ],
-      "terms": "scroll area data primitiv client responsiv min viewport 320 keyboard base scrollarea scrollbar thumb scrollabl edge mask fade detection ring overflow overlay relativ platform horizontal track focus agnostic depth orientation parent vertical geometry grow region root 2rem siz cost basescrollarea soften unconstrain hide 10px constrain tied colour bottom plac wrap box corner opaqu reachabl shrink floor distanc ful static anyon top clip spac part"
+      "terms": "scroll area data primitiv client responsiv min viewport 320 keyboard base scrollarea scrollbar thumb scrollabl edge fade detection mask ring overflow overlay relativ platform horizontal track focus agnostic depth orientation parent vertical geometry grow region root 2rem siz cost basescrollarea soften unconstrain hide 10px constrain tied colour bottom plac wrap box corner opaqu reachabl shrink floor distanc ful static anyon top clip spac part"
     },
     {
       "name": "scroller",
@@ -5931,7 +5930,7 @@
         "chart",
         "data"
       ],
-      "terms": "seat chart data client load skeleton responsiv min viewport 320 stat none side leader seatchart seatchartcompar group majority shad legend tone arc assemb grey tabl total hold hue far count paler five sit circl colour deeper toward fill row entry box tal sentenc order left caption half right every election eleven opposition pale seatlayout seatslabel vacant wedg svg neighbour first govern big summary shar"
+      "terms": "seat chart data client load skeleton responsiv min viewport 320 stat none side leader seatchart seatchartcompar group majority shad legend tone arc assemb grey tabl total hue hold far count paler five sit circl colour deeper toward fill row entry box tal sentenc order left caption half right every election eleven opposition pale seatlayout seatslabel vacant wedg svg neighbour first govern big summary shar"
     },
     {
       "name": "section-boundary",
@@ -6133,7 +6132,7 @@
         "game",
         "games"
       ],
-      "terms": "shar card game client responsiv min viewport 320 symbol scor streak mark clipboard copy band round player sharecard spoil today key squar text near ready result sheet word button answer status unknown data devic slot bandlabel sharetext yellow open select character without clos 240 emoji model number 300 closer navigator went max copi dai graph puzzl typo sentenc action access map preview sampl whit"
+      "terms": "shar card game client responsiv min viewport 320 symbol scor streak mark clipboard copy band round player sharecard spoil today key squar text near ready result sheet word button answer status unknown data devic slot bandlabel sharetext yellow open select character without clos 240 emoji model number 300 closer navigator went max copi dai graph puzzl typo sentenc action access map preview whit never"
     },
     {
       "name": "share-chart",

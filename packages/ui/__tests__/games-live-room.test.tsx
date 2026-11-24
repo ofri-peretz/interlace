@@ -159,6 +159,20 @@ describe('join codes', () => {
     expect(makeJoinCode({ length: 3, alphabet: '0123456789' }, () => seq[i++]!)).toBe('059');
   });
 
+  it('draws from crypto without bias, rejecting bytes past the alphabet', () => {
+    const bytes = [31, 29, 0, 255, 28, 1, 2, 3];
+    vi.stubGlobal('crypto', {
+      getRandomValues: (a: Uint8Array) => {
+        a.set(bytes.splice(0, a.length).concat(Array(a.length).fill(0)).slice(0, a.length));
+        return a;
+      },
+    });
+    // 31, 29 and 255 (mask 31) are past the 29-letter alphabet and skipped.
+    expect(makeJoinCode({ length: 3 })).toBe('2Z3');
+    expect(makeJoinCode({ length: 1, alphabet: 'A' })).toBe('A');
+    expect(() => makeJoinCode({ alphabet: '' })).toThrow(RangeError);
+  });
+
   it('falls back to Math.random without crypto', () => {
     vi.stubGlobal('crypto', undefined);
     vi.spyOn(Math, 'random').mockReturnValue(0);

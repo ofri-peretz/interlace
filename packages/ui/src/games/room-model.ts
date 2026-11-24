@@ -33,23 +33,29 @@ export interface JoinCodeOptions {
 }
 
 /**
- * A new join code. `random` returns a float in [0, 1); pass a seeded one in
- * tests, or leave it out to use `crypto.getRandomValues` where there is one.
+ * A new join code. Leave `random` out to draw from `crypto.getRandomValues`
+ * without bias (rejection sampling on a bit mask); pass a function returning
+ * a float in [0, 1) for seeded tests. The alphabet holds at most 256 characters.
  */
 export function makeJoinCode(options: JoinCodeOptions = {}, random?: () => number): string {
   const { length = 6, alphabet = JOIN_CODE_ALPHABET } = options;
-  const pick = random ?? cryptoRandom();
+  const n = alphabet.length;
+  if (n < 1 || n > 256) throw new RangeError('A join code alphabet holds 1 to 256 characters.');
+  const crypto = (globalThis as { crypto?: Crypto }).crypto;
   let code = '';
-  for (let i = 0; i < length; i++) code += alphabet[Math.floor(pick() * alphabet.length) % alphabet.length];
-  return code;
-}
-
-function cryptoRandom(): () => number {
-  const c = (globalThis as { crypto?: Crypto }).crypto;
-  if (c?.getRandomValues) {
-    return () => c.getRandomValues(new Uint32Array(1))[0]! / 2 ** 32;
+  if (!random && crypto?.getRandomValues) {
+    const mask = 2 ** Math.ceil(Math.log2(n)) - 1;
+    while (code.length < length) {
+      for (const byte of crypto.getRandomValues(new Uint8Array(length * 2))) {
+        const index = byte & mask;
+        if (index < n && code.length < length) code += alphabet[index];
+      }
+    }
+    return code;
   }
-  return Math.random;
+  const pick = random ?? Math.random;
+  for (let i = 0; i < length; i++) code += alphabet[Math.min(n - 1, Math.floor(pick() * n))];
+  return code;
 }
 
 /**
