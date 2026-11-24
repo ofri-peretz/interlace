@@ -780,6 +780,18 @@
           "source": ".changeset/scroll-area-fades.md"
         },
         {
+          "summary": "New ScrollText and FlipGroup. ScrollText is one large sentence the reader brings into focus by scrolling: its words go from `--muted-foreground` to `--foreground` in reading order on a ViewTimeline, so the browser drives it from the scroll position with no listener. It is read once by a screen reader, every word is always at AA contrast, and it is in full colour without ViewTimeline or under reduced motion. FlipGroup makes items glide to their new place when a list is sorted, filtered or reordered: give each a `data-flip-id`, render the new order, and it plays the difference (FLIP); new items fade in, `render` makes it the `ul` or `ol` itself, and under reduced motion items simply take their place.",
+          "components": [
+            "scroll-text",
+            "flip-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/scroll-text-flip-group.md"
+        },
+        {
           "summary": "`SeatChart` takes `labels` and `locale`. Every fixed word (the empty note, Vacant, No side, the table headers and caption, the majority caption and cell) can be replaced, and the screen-reader sentence is built by `labels.summary` from a `SeatSummary`, so it can be written in any language. Counts and shares are formatted with `Intl.NumberFormat` in the given locale. English stays the default.\n\n`ShareChart` takes `labels` too: the empty note, the legend's name, the table caption and row header, and the sentence read for each row. `describeShareRow` takes the same sentence function. `DotPlot`'s `rowSentence` now says that it words a missing value itself.",
           "components": [
             "seat-chart",

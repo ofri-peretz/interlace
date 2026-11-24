@@ -985,6 +985,15 @@
     "previewDark": "blocks-flipcard--dark",
     "skeleton": null
   },
+  "flip-group": {
+    "title": "Effects/FlipGroup",
+    "storyIds": [
+      "effects-flipgroup--default"
+    ],
+    "preview": "effects-flipgroup--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "focus-grid": {
     "title": "Blocks/FocusGrid",
     "storyIds": [
@@ -1830,6 +1839,16 @@
     ],
     "preview": "blocks-scrollstory--default",
     "previewDark": "blocks-scrollstory--dark",
+    "skeleton": null
+  },
+  "scroll-text": {
+    "title": "Effects/ScrollText",
+    "storyIds": [
+      "effects-scrolltext--default",
+      "effects-scrolltext--on-scroll"
+    ],
+    "preview": "effects-scrolltext--default",
+    "previewDark": null,
     "skeleton": null
   },
   "scroller": {
