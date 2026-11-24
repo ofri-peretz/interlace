@@ -407,6 +407,17 @@
           "source": ".changeset/fluid-rhythm.md"
         },
         {
+          "summary": "New `CloserGame` in the games tier: guess a number by sliding to it (or typing it), lock it in, and the answer slides out from the guess to where it really is, with the gap shaded and said in words (\"You said 450. The answer is 500, 50 off. Close. 90 points.\"). Distance is a share of the range, so the same rule works for 0 to 100 and 0 to 100,000; `range.scale = 'log'` handles answers that span orders of magnitude. Numbers go through `Intl.NumberFormat` (`format`, `locale`), every word through `labels`. `guess` / `defaultGuess` restore a stored guess as the revealed state, and `onGuess` fires once with the scored result. The answer travels in 400ms on the reveal and is simply in place under reduced motion. Scoring is pure and exported from `games/closer-model` (`scoreGuess`, `toPosition`, `fromPosition`, `snap`), so a server can score the same guess and a share card can draw the band without the number.",
+          "components": [
+            "closer-game"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-closer.md"
+        },
+        {
           "summary": "New `games` tier, the engine of a daily game, starting with `Streak`: a player's run of days, a sentence on where today stands (\"Play today to keep your streak.\") and a strip of recent days marked played, rest, missed or still open. Rest days are a setting, not a special case: `rest={{ weekdays: [6], dates: ['2026-12-25'] }}` names days that never break a run, and a rest day the player plays anyway still counts. Today never ends a run while it is still open. Each mark pairs its colour with a shape and an icon, and every day is read out with its date and state; `variant=\"compact\"` is one chip for a header. No hooks, so it renders on the server. The arithmetic ships beside it and is exported: `games/daily` (day keys in a time zone, puzzle numbers, a seeded puzzle-of-the-day that never repeats inside a cycle, time to the next day) and `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`).",
           "components": [
             "streak"
