@@ -492,6 +492,30 @@
       "types": "./dist/games/order-game.d.ts",
       "default": "./dist/games/order-game.js"
     },
+    "./games/qr-model": {
+      "types": "./dist/games/qr-model.d.ts",
+      "default": "./dist/games/qr-model.js"
+    },
+    "./games/qr-code": {
+      "types": "./dist/games/qr-code.d.ts",
+      "default": "./dist/games/qr-code.js"
+    },
+    "./games/room-model": {
+      "types": "./dist/games/room-model.d.ts",
+      "default": "./dist/games/room-model.js"
+    },
+    "./games/join-code": {
+      "types": "./dist/games/join-code.d.ts",
+      "default": "./dist/games/join-code.js"
+    },
+    "./games/live-room": {
+      "types": "./dist/games/live-room.d.ts",
+      "default": "./dist/games/live-room.js"
+    },
+    "./games/podium": {
+      "types": "./dist/games/podium.d.ts",
+      "default": "./dist/games/podium.js"
+    },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",
       "default": "./dist/charts/delta.js"
