@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 204
+    "itemCount": 205
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,8 +32,8 @@
       "primitive": 77,
       "pattern": 54,
       "effect": 20,
+      "game": 15,
       "chart": 14,
-      "game": 14,
       "template": 13,
       "util": 6,
       "starter": 3,
@@ -49,9 +49,9 @@
       "effect": 20,
       "decorative": 18,
       "feedback": 15,
+      "games": 15,
+      "game": 15,
       "chart": 14,
-      "games": 14,
-      "game": 14,
       "marketing": 14,
       "navigation": 13,
       "template": 13,
@@ -63,18 +63,18 @@
     },
     "rendering": {
       "server": 105,
-      "client": 99
+      "client": 100
     },
     "keyboard": {
-      "none": 158,
+      "none": 159,
       "handled": 46
     },
     "loading": {
-      "none": 166,
+      "none": 167,
       "built-in": 38
     },
     "minViewport": {
-      "320": 131,
+      "320": 132,
       "480": 7,
       "768": 1,
       "inherited": 65
@@ -3428,6 +3428,74 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dropdown-menu.json",
       "item": "https://ds.interlace.tools/r/dropdown-menu.json",
       "docs": "https://ds.interlace.tools/c/dropdown-menu"
+    },
+    {
+      "name": "duel",
+      "title": "Duel",
+      "type": "registry:ui",
+      "summary": "Two players, one game, by link. The first player finishes and sends a challenge (`DuelInvite`); the second opens it and sees who they are up against (`DuelCard`); after playing the same game, both see the rounds side by side (`DuelCompare`). The challenge…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DuelSide",
+          "values": [
+            "a",
+            "b",
+            "tie"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DUEL_LIMITS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "celebrate",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/duel.tsx",
+        "components/ui/games/duel-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/duel.json",
+      "item": "https://ds.interlace.tools/r/duel.json",
+      "docs": "https://ds.interlace.tools/c/duel"
     },
     {
       "name": "edge-glow",
