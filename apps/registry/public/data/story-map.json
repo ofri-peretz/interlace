@@ -602,6 +602,19 @@
     "previewDark": "blocks-ctasection--dark",
     "skeleton": "blocks-ctasection--loading"
   },
+  "daily-puzzle": {
+    "title": "Games/DailyPuzzle",
+    "storyIds": [
+      "games-dailypuzzle--default",
+      "games-dailypuzzle--done",
+      "games-dailypuzzle--whole-game",
+      "games-dailypuzzle--right-to-left",
+      "games-dailypuzzle--narrow"
+    ],
+    "preview": "games-dailypuzzle--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "dashboard-template": {
     "title": "Templates/DashboardTemplate",
     "storyIds": [
@@ -1153,6 +1166,20 @@
     ],
     "preview": "starters-layout-starter--default",
     "previewDark": "starters-layout-starter--dark",
+    "skeleton": null
+  },
+  "leaderboard": {
+    "title": "Games/Leaderboard",
+    "storyIds": [
+      "games-leaderboard--default",
+      "games-leaderboard--viewer-on-top",
+      "games-leaderboard--not-enough-players",
+      "games-leaderboard--lowest-wins",
+      "games-leaderboard--right-to-left",
+      "games-leaderboard--narrow"
+    ],
+    "preview": "games-leaderboard--default",
+    "previewDark": null,
     "skeleton": null
   },
   "light-beam": {
@@ -1808,6 +1835,17 @@
     ],
     "preview": "blocks-sharebuttons--variants",
     "previewDark": "blocks-sharebuttons--dark",
+    "skeleton": null
+  },
+  "share-card": {
+    "title": "Games/ShareCard",
+    "storyIds": [
+      "games-sharecard--default",
+      "games-sharecard--right-or-wrong",
+      "games-sharecard--right-to-left"
+    ],
+    "preview": "games-sharecard--default",
+    "previewDark": null,
     "skeleton": null
   },
   "share-chart": {
