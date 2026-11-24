@@ -103,12 +103,12 @@ const PROSE_CASCADE = [
   '[&_a:focus-visible]:outline-none [&_a:focus-visible]:ring-2 [&_a:focus-visible]:ring-ring [&_a:focus-visible]:ring-offset-2 [&_a:focus-visible]:rounded-sm',
 
   // Lists.
-  '[&_ul]:my-4 [&_ul]:pl-6 [&_ul]:list-disc',
-  '[&_ol]:my-4 [&_ol]:pl-6 [&_ol]:list-decimal',
-  '[&_li]:my-2 [&_li]:pl-2',
+  '[&_ul]:my-4 [&_ul]:ps-6 [&_ul]:list-disc',
+  '[&_ol]:my-4 [&_ol]:ps-6 [&_ol]:list-decimal',
+  '[&_li]:my-2 [&_li]:ps-2',
 
   // Blockquote — quiet left rule with muted body.
-  '[&_blockquote]:my-6 [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-6 [&_blockquote]:text-muted-foreground [&_blockquote]:italic',
+  '[&_blockquote]:my-6 [&_blockquote]:border-s-4 [&_blockquote]:border-border [&_blockquote]:ps-6 [&_blockquote]:text-muted-foreground [&_blockquote]:italic',
 
   // Inline code — chip pill on muted surface. The vertical padding is the
   // one arbitrary value in this chain and stays arbitrary on purpose: an

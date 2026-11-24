@@ -412,10 +412,10 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       return (
         <div className="flex flex-col gap-2 p-4">
           <div className="bg-muted-foreground/10 h-3 w-3/4 rounded-sm" />
-          <div className="bg-muted-foreground/10 ml-6 h-3 w-2/3 rounded-sm" />
-          <div className="bg-muted-foreground/10 ml-6 h-3 w-1/2 rounded-sm" />
+          <div className="bg-muted-foreground/10 ms-6 h-3 w-2/3 rounded-sm" />
+          <div className="bg-muted-foreground/10 ms-6 h-3 w-1/2 rounded-sm" />
           <div className="bg-muted-foreground/10 h-3 w-4/5 rounded-sm" />
-          <div className="bg-muted-foreground/10 ml-6 h-3 w-3/5 rounded-sm" />
+          <div className="bg-muted-foreground/10 ms-6 h-3 w-3/5 rounded-sm" />
         </div>
       );
     case 'data-table':
@@ -431,7 +431,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
           <div className="flex items-center gap-4 border-b border-border pb-4">
             <div className="bg-muted-foreground/10 size-4 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-1/4 rounded-sm" />
-            <div className="bg-muted-foreground/10 ml-auto h-3 w-16 rounded-sm" />
+            <div className="bg-muted-foreground/10 ms-auto h-3 w-16 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-16 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-12 rounded-sm" />
           </div>
@@ -439,7 +439,7 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
             <div key={row} className="flex items-center gap-4">
               <div className="bg-muted-foreground/10 size-4 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-1/3 rounded-sm" />
-              <div className="bg-muted-foreground/10 ml-auto h-4 w-16 rounded-sm" />
+              <div className="bg-muted-foreground/10 ms-auto h-4 w-16 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-16 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-12 rounded-sm" />
             </div>
@@ -454,14 +454,14 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
         <div className="flex flex-col gap-2 p-4">
           <div className="flex items-center gap-4 border-b border-border pb-2">
             <div className="bg-muted-foreground/10 h-3 w-1/4 rounded-sm" />
-            <div className="bg-muted-foreground/10 ml-auto h-3 w-10 rounded-sm" />
+            <div className="bg-muted-foreground/10 ms-auto h-3 w-10 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-10 rounded-sm" />
             <div className="bg-muted-foreground/10 h-3 w-12 rounded-sm" />
           </div>
           {[0, 1, 2, 3].map((row) => (
             <div key={row} className="flex items-center gap-4">
               <div className="bg-muted-foreground/10 h-4 w-1/3 rounded-sm" />
-              <div className="bg-muted-foreground/10 ml-auto h-4 w-10 rounded-sm" />
+              <div className="bg-muted-foreground/10 ms-auto h-4 w-10 rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-[90px] rounded-sm" />
               <div className="bg-muted-foreground/10 h-4 w-12 rounded-sm" />
             </div>
