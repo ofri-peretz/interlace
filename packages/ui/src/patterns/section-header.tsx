@@ -24,7 +24,8 @@
  * `spacing` — the bottom margin, a fraction of the section rhythm tokens:
  * `md` = 0.8 × `--spacing-section-tight` (38 → 64px), `lg` (default) =
  * 0.75 × `--spacing-section-comfortable` (48 → 72px). A brand that retunes
- * the rhythm retunes this gap with it.
+ * the rhythm retunes this gap with it. `none` drops it, for a header in a
+ * Stack that owns the gap.
  * `eyebrowStyle` — `plain` (default) sets the eyebrow as small primary text;
  * `pill` wraps it in an outlined, rounded chip.
  * `as` — the heading level, `h1` | `h2` | `h3`, defaulting to `h2` because the
@@ -93,6 +94,9 @@ const sectionHeaderVariants = cva("", {
       // with the band's own padding: 38 → 64px and 48 → 72px.
       md: "mb-[calc(var(--spacing-section-tight)*0.8)]",
       lg: "mb-[calc(var(--spacing-section-comfortable)*0.75)]",
+      // No margin, for a header inside a Stack that already owns the gap:
+      // a margin there doubles it, and the header floats away from its aside.
+      none: "",
     },
   },
   defaultVariants: {
