@@ -376,6 +376,21 @@
     "previewDark": null,
     "skeleton": null
   },
+  "closer-game": {
+    "title": "Games/CloserGame",
+    "storyIds": [
+      "games-closergame--default",
+      "games-closergame--revealed",
+      "games-closergame--spot-on",
+      "games-closergame--log-scale",
+      "games-closergame--percent",
+      "games-closergame--right-to-left",
+      "games-closergame--narrow"
+    ],
+    "preview": "games-closergame--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "cn": {
     "title": "Utilities/cn",
     "storyIds": [

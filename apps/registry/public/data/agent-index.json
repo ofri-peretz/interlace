@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 179
+    "itemCount": 180
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -37,7 +37,7 @@
       "util": 6,
       "starter": 3,
       "theme": 3,
-      "game": 1
+      "game": 2
     },
     "category": {
       "primitive": 74,
@@ -58,23 +58,23 @@
       "a11y": 4,
       "starter": 3,
       "theme": 3,
-      "games": 1,
-      "game": 1
+      "games": 2,
+      "game": 2
     },
     "rendering": {
       "server": 100,
-      "client": 79
+      "client": 80
     },
     "keyboard": {
-      "none": 140,
+      "none": 141,
       "handled": 39
     },
     "loading": {
-      "none": 144,
+      "none": 145,
       "built-in": 35
     },
     "minViewport": {
-      "320": 109,
+      "320": 110,
       "480": 7,
       "768": 1,
       "inherited": 62
@@ -1492,6 +1492,73 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/claim-card.json",
       "item": "https://ds.interlace.tools/r/claim-card.json",
       "docs": "https://ds.interlace.tools/c/claim-card"
+    },
+    {
+      "name": "closer-game",
+      "title": "Closer Game",
+      "type": "registry:ui",
+      "summary": "Guess a number by sliding to it. The player sets a value on a slider (or types it), locks it in, and the answer slides out from their guess to where it really is, with the gap between them shaded and said in words: \"900 off. Close.\" Scoring lives in…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CloserBand",
+          "values": [
+            "exact",
+            "close",
+            "near",
+            "far"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "slider",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/closer-game.tsx",
+        "components/ui/games/closer-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/closer-game.json",
+      "item": "https://ds.interlace.tools/r/closer-game.json",
+      "docs": "https://ds.interlace.tools/c/closer-game"
     },
     {
       "name": "cn",
