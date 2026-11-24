@@ -4,10 +4,8 @@
  * name, the table behind the picture, vacant seats, and the one-time reveal
  * that never runs under reduced motion.
  */
-import { act, cleanup, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-
-import { fireEvent } from '@testing-library/react';
 
 import {
   MIN_VIEWPORT,
