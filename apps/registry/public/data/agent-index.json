@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 193
+    "itemCount": 195
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,10 +30,10 @@
   "facets": {
     "tier": {
       "primitive": 75,
-      "pattern": 50,
+      "pattern": 51,
       "effect": 20,
+      "chart": 14,
       "template": 13,
-      "chart": 13,
       "game": 10,
       "util": 6,
       "starter": 3,
@@ -41,17 +41,17 @@
     },
     "category": {
       "primitive": 75,
-      "pattern": 50,
+      "pattern": 51,
       "blog": 35,
-      "data": 28,
+      "data": 30,
       "foundation": 27,
       "form": 20,
       "effect": 20,
       "decorative": 18,
       "feedback": 15,
+      "chart": 14,
       "navigation": 13,
       "template": 13,
-      "chart": 13,
       "marketing": 13,
       "overlay": 10,
       "games": 10,
@@ -63,18 +63,18 @@
     },
     "rendering": {
       "server": 102,
-      "client": 91
+      "client": 93
     },
     "keyboard": {
-      "none": 151,
-      "handled": 42
+      "none": 152,
+      "handled": 43
     },
     "loading": {
-      "none": 156,
+      "none": 158,
       "built-in": 37
     },
     "minViewport": {
-      "320": 122,
+      "320": 124,
       "480": 7,
       "768": 1,
       "inherited": 63
@@ -6903,6 +6903,56 @@
       "docs": "https://ds.interlace.tools/c/scroll-area"
     },
     {
+      "name": "scroll-story",
+      "title": "Scroll Story",
+      "type": "registry:ui",
+      "summary": "A chart that stays in view while the story beside it scrolls: each step of text the reader reaches changes the chart, one point at a time. The story is told in the steps; the chart shows it.",
+      "topics": [],
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "ScrollStory",
+        "ScrollStoryStep"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/scroll-story.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroll-story.json",
+      "item": "https://ds.interlace.tools/r/scroll-story.json",
+      "docs": "https://ds.interlace.tools/c/scroll-story"
+    },
+    {
       "name": "scroller",
       "title": "Scroller",
       "type": "registry:ui",
@@ -10073,6 +10123,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/time-series.json",
       "item": "https://ds.interlace.tools/r/time-series.json",
       "docs": "https://ds.interlace.tools/c/time-series"
+    },
+    {
+      "name": "time-slider",
+      "title": "Time Slider",
+      "type": "registry:ui",
+      "summary": "Step a chart through time: a play button, a slider with one stop per frame (a year, a survey wave, a season), and the current frame printed large beside them. Any chart goes inside: the slider owns which frame is showing, and the chart is drawn for that…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "direction-provider",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "TimeSlider"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "slider"
+      ],
+      "installsTo": [
+        "components/ui/charts/time-slider.tsx",
+        "components/ui/charts/time-slider-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/time-slider.json",
+      "item": "https://ds.interlace.tools/r/time-slider.json",
+      "docs": "https://ds.interlace.tools/c/time-slider"
     },
     {
       "name": "timeline-map",
