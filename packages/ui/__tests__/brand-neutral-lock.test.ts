@@ -38,7 +38,7 @@ const CONSUMER_NAMES = [
 const ALTERNATION = [...CONSUMER_NAMES]
   .sort((a, b) => b.length - a.length)
   .join("|");
-const CONSUMER = new RegExp(`(?<!\\w)(${ALTERNATION})(?!\\w)`, "i");
+const CONSUMER = new RegExp(`(?<!\\w)(${ALTERNATION})(?!\\w)`, "gi");
 
 function walk(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
@@ -55,17 +55,18 @@ export function consumerHits(
   return files.flatMap((file) =>
     read(file)
       .split("\n")
-      .flatMap((line, i) => {
-        const m = CONSUMER.exec(line);
-        return m ? [`${relative(UI_ROOT, file)}:${i + 1} names "${m[1]}"`] : [];
-      }),
+      .flatMap((line, i) =>
+        [...line.matchAll(CONSUMER)].map(
+          (m) => `${relative(UI_ROOT, file)}:${i + 1} names "${m[1]}"`,
+        ),
+      ),
   );
 }
 
 describe("brand-neutral lock", () => {
   it("the matcher still catches a consumer name (instrument check)", () => {
     const fake = {
-      "a.tsx": 'title="By Ofri"',
+      "a.tsx": 'title="By Ofri" for burgee',
       "b.css": "--brand: burgee-blue;",
       "c.ts": "const ofrix = 1;",
     };
@@ -73,7 +74,11 @@ describe("brand-neutral lock", () => {
       Object.keys(fake).map((f) => join(UI_ROOT, f)),
       (p) => fake[relative(UI_ROOT, p) as keyof typeof fake],
     );
-    expect(hits).toEqual(['a.tsx:1 names "Ofri"', 'b.css:1 names "burgee"']);
+    expect(hits).toEqual([
+      'a.tsx:1 names "Ofri"',
+      'a.tsx:1 names "burgee"',
+      'b.css:1 names "burgee"',
+    ]);
   });
 
   it("no shipped component, style or token names a consumer", () => {
