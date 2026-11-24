@@ -1152,7 +1152,7 @@
     "driv": 10,
     "driven": 14,
     "driver": 3,
-    "drop": 34,
+    "drop": 35,
     "dropdown": 1,
     "dropdownmenu": 4,
     "dropdownmenucheckboxitem": 1,
@@ -2004,7 +2004,7 @@
     "nois": 7,
     "non": 29,
     "nonc": 1,
-    "none": 45,
+    "none": 46,
     "noon": 1,
     "normal": 10,
     "normaliz": 3,
@@ -2792,7 +2792,7 @@
     "srs": 1,
     "ssr": 6,
     "stabl": 36,
-    "stack": 37,
+    "stack": 38,
     "stackvariant": 1,
     "staff": 1,
     "stag": 2,
@@ -4845,7 +4845,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar fade dissolv worksheet careful board paper generator graph breath fad slow toward var radial arrang strongest event either hundr thousand even motion column listener primary hidden highlight like choos laid mask plac border edge glow mulberry32 timelin fals without behind row browser compet measur none fill hold ble soft move section"
+      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar fade dissolv worksheet careful board paper generator graph breath fad slow toward var radial arrang strongest event either hundr thousand even motion column listener primary hidden highlight like choos laid mask plac border edge glow mulberry32 timelin fals without behind row browser compet measur fill none hold ble soft move section"
     },
     {
       "name": "grid",
@@ -4937,7 +4937,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "hero market pattern server rsc responsiv min viewport 320 media section mediarol headlin typography eyebrow cta technical confident secondary interactiv calm enforc meaningful fold voic panel comfortabl retun support primary variant decorativ imag accessibility slot cluster rhythm optional pros heroprop focusabl vertical orna subhead tree column 96px february safe content max 900 labelledby useid video copy button action stack fluid hid land data leav"
+      "terms": "hero market pattern server rsc responsiv min viewport 320 media section mediarol headlin typography eyebrow cta technical confident secondary interactiv calm enforc meaningful fold voic panel comfortabl retun support primary variant decorativ imag accessibility slot cluster rhythm optional pros heroprop focusabl vertical orna subhead tree column 96px february safe content max 900 labelledby useid video copy button action fluid hid stack land data leav"
     },
     {
       "name": "hover-card",
@@ -5451,7 +5451,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "page header navigation pattern server rsc load skeleton responsiv min viewport 480 pageheader breadcrumb optional titl meta action admin landmark align typography typical sett description right cluster cta menu tag mini pageheaderprop simpler strip band crowd justify portrait date status clean stack expect render row narrower slot top carry data column primary iphon flex vertical button screen primitiv reader placeholder phon fit body floor"
+      "terms": "page header navigation pattern server rsc load skeleton responsiv min viewport 480 pageheader breadcrumb optional titl meta action admin landmark align typography typical sett description right cluster cta menu tag mini pageheaderprop simpler strip band crowd justify portrait date status clean expect stack render row narrower slot top carry data column primary iphon flex vertical button screen primitiv reader placeholder phon fit body floor"
     },
     {
       "name": "pagination",
@@ -5532,7 +5532,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "prev next post blog pattern server rsc load skeleton responsiv min viewport 480 prevnextpost card kicker previous articl side nav titl sery session improv landmark depth deterministic ramp bounc foot pair eyebrow exit omit user 390 arrowleft arrowright prevnextpostprop quality rotor label canonical navigation dominant link jump data column footer variant wrapp emb regression slot surfac stack promis try usabl async screen long destination"
+      "terms": "prev next post blog pattern server rsc load skeleton responsiv min viewport 480 prevnextpost card kicker previous articl side nav titl sery session improv landmark depth deterministic ramp bounc foot pair eyebrow exit omit user 390 arrowleft arrowright prevnextpostprop quality rotor label canonical navigation dominant link jump data column footer variant wrapp emb regression slot surfac promis try usabl stack async screen long destination"
     },
     {
       "name": "pricing-table",
@@ -5598,7 +5598,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "pros blog primitiv client responsiv min viewport 320 stat articl main section pre tabl wrapper sideway scroll descendant gfm mdx overflow mode landmark focusabl blockquot body typography measur head cascad 17px gymnastic think uselayouteffect zebra long read 65ch tbody variant ele semantic img deep bound mapp reachabl insid token contract whos accept cap drop stop block container fit overrid text name arbitrary anchorabl auditabl"
+      "terms": "pros blog primitiv client responsiv min viewport 320 stat articl main section pre tabl wrapper sideway scroll descendant gfm mdx overflow mode landmark focusabl blockquot body typography measur head cascad 17px gymnastic think uselayouteffect zebra long read 65ch tbody variant ele semantic img deep bound mapp reachabl insid token contract whos accept cap stop block drop container fit overrid text name arbitrary anchorabl auditabl"
     },
     {
       "name": "published-date",
@@ -6241,7 +6241,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "sheen decorativ effect client band parent button second cross soft sweep primary smudg light pointer press isolat hidden insid drop bright buttonvariant dim low foreground never corner strength var reduc card clip motion paus relativ inert variant colour surfac event rest layer web pass minus click context look name color aria label index animation like prefer repeat page stack accessibl else control every browser"
+      "terms": "sheen decorativ effect client band parent button second cross soft sweep primary smudg light pointer press isolat hidden insid drop bright buttonvariant dim low foreground never corner strength var reduc card clip motion paus relativ inert variant colour surfac event rest layer web pass minus click context look name color aria label index animation like prefer repeat page accessibl stack else control every browser"
     },
     {
       "name": "sheet",
@@ -6327,7 +6327,7 @@
         "pattern",
         "form"
       ],
-      "terms": "sign method form pattern client responsiv min viewport 320 disconnect connect appl googl yes email cancel signinmethod ids hint address confirm mark name link account known lock busy button said icon detail mail onconnect ondisconnect unlink data built row socialsignin ask callback plac border auth promis describ last custom settl slot list identity library least squar nobody pass narrow report reason drop shown page"
+      "terms": "sign method form pattern client responsiv min viewport 320 disconnect connect appl googl yes email cancel signinmethod ids hint address confirm mark name link account known lock busy button said icon detail mail onconnect ondisconnect unlink data built row socialsignin ask callback plac border auth promis describ last custom settl slot list identity library least squar nobody pass narrow report reason shown page drop"
     },
     {
       "name": "skeleton-variants",
@@ -7168,7 +7168,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "thread step blog pattern client responsiv min viewport 320 stat complet current upcom knot strand woven threadstep loos sequenc together tracker dott strok cross draw intersectionobserver next held word progress clip motion dash yet lead ahead mechanism process order 600m explain hollow 5rem chromium dashoffset history interlaceweav pathlength timesery drawn leav verb none medium fill reach reader downward marker tall weav ring work ful"
+      "terms": "thread step blog pattern client responsiv min viewport 320 stat complet current upcom knot strand woven threadstep loos sequenc together tracker dott strok cross draw intersectionobserver next held word progress clip motion dash yet lead ahead mechanism process order 600m explain hollow 5rem chromium dashoffset history interlaceweav pathlength timesery drawn leav verb medium fill none reach reader downward marker tall weav ring work ful"
     },
     {
       "name": "time-series",

@@ -143,6 +143,9 @@ export function StatCard({
   // A plain stat inherits the colour of what it sits on, so its label cannot
   // assume the muted token: muted-foreground on a brand band fails AA.
   const labelTone = surface === 'plain' ? 'default' : 'muted';
+  // Without a tile the number is the only thing holding the eye, so it reads a
+  // size up, like a figure set in a report.
+  const valueVariant = surface === 'plain' ? 'h1' : 'h2';
   const iconNode = icon ? (
     <span className="text-muted-foreground" aria-hidden>
       {icon}
@@ -161,7 +164,7 @@ export function StatCard({
       {layout === 'value-first' ? (
         <>
           <div className="flex items-start justify-between gap-2">
-            <Typography as="div" variant="h2" data-tabular-nums>
+            <Typography as="div" variant={valueVariant} data-tabular-nums>
               {value}
             </Typography>
             {iconNode}
@@ -178,7 +181,7 @@ export function StatCard({
             </Typography>
             {iconNode}
           </div>
-          <Typography as="div" variant="h2" data-tabular-nums>
+          <Typography as="div" variant={valueVariant} data-tabular-nums>
             {value}
           </Typography>
         </>

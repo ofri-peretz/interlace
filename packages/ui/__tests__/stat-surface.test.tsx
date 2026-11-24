@@ -46,3 +46,21 @@ describe('StatGroup surface', () => {
     ]);
   });
 });
+
+describe('StatCard plain value', () => {
+  it('reads a size up without a tile', async () => {
+    const { container } = render(<StatCard surface="plain" label="A" value="4" />);
+    const plain = container.querySelector('[data-tabular-nums]')!.className;
+    const { container: c2 } = render(<StatCard label="A" value="4" />);
+    const card = c2.querySelector('[data-tabular-nums]')!.className;
+    expect(plain).not.toBe(card);
+  });
+});
+
+describe('SectionHeader spacing none', () => {
+  it('leaves the gap to the parent stack', async () => {
+    const { SectionHeader } = await import('../src/patterns/section-header.js');
+    const { container } = render(<SectionHeader title="Where we stand" spacing="none" />);
+    expect((container.firstElementChild as HTMLElement).className).not.toMatch(/\bmb-/);
+  });
+});

@@ -875,10 +875,11 @@
           "source": ".changeset/split-text.md"
         },
         {
-          "summary": "`StatCard` and `StatGroup` get a `surface` prop. `card` (the default) is the bordered tile. `plain` drops the tile for a hairline rule above the number, so a few headline figures can sit on a page or a brand band like a line in a report. A plain stat takes its colour from what it sits on, label included, so it stays readable on `bg-primary`.",
+          "summary": "`StatCard` and `StatGroup` get a `surface` prop. `card` (the default) is the bordered tile. `plain` drops the tile for a hairline rule above the number, so a few headline figures can sit on a page or a brand band like a line in a report. A plain stat takes its colour from what it sits on, label included, so it stays readable on `bg-primary`, and its number reads a size up.\n\n`SectionHeader` gets `spacing=\"none\"` for a header inside a Stack that already owns the gap, so the header no longer floats away from an aside under it.",
           "components": [
             "stat-card",
-            "stat-group"
+            "stat-group",
+            "section-header"
           ],
           "componentsDeclared": true,
           "kind": "Added",
