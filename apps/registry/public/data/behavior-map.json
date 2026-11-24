@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T05:44:52.496Z",
+  "generatedAt": "2026-11-24T06:51:29.681Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -21,11 +21,12 @@
     },
     "include": [
       "src/charts/**/*.{ts,tsx}",
-      "src/lib/**/*.{ts,tsx}",
-      "src/primitives/{button-variants,data-state-model,meter-scale,skeleton-variants}.ts",
-      "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
-      "src/patterns/{lint-playground,thread-steps}.tsx",
-      "src/effects/weave-texture.tsx"
+      " pure cores: day keys, puzzle order, streak arithmetic.\n        ",
+      ",\n        ",
+      ",\n        // The four pure variant/model modules.\n        ",
+      ",\n        // The 35 components with real render coverage. See the ledger above.\n        ",
+      ",\n        // Patterns with full render coverage — the same ledger rule: a\n        // file is in at 100 or it is out, and joining is a one-line diff.\n        ",
+      ",\n        // Effects with full render coverage, on the same rule.\n        "
     ]
   },
   "contrastFloors": {
@@ -624,7 +625,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "article-card": {
@@ -829,7 +830,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "audio-player": {
@@ -1088,7 +1089,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "badge": {
@@ -1482,7 +1483,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "banner": {
@@ -1866,7 +1867,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "brand-logo": {
@@ -1971,7 +1972,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "button-variants": {
@@ -2232,7 +2233,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "button": {
@@ -2514,7 +2515,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "callout": {
@@ -2623,7 +2624,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "card": {
@@ -2732,7 +2733,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "chart-frame": {
@@ -3026,7 +3027,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "citation": {
@@ -3257,7 +3258,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "code-block": {
@@ -3551,7 +3552,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "code-window": {
@@ -4288,7 +4289,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "context-menu": {
@@ -4739,7 +4740,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "data-state": {
@@ -4877,7 +4878,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "data-table": {
@@ -6599,7 +6600,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "footer": {
@@ -7078,7 +7079,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "gradient-mesh": {
@@ -7117,7 +7118,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "guess-reveal": {
@@ -7806,7 +7807,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "interlace-base": {
@@ -7955,7 +7956,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "label": {
@@ -7968,7 +7969,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "landing-template": {
@@ -8155,7 +8156,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "list": {
@@ -8264,7 +8265,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "mdx-starter": {
@@ -8290,7 +8291,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "meter": {
@@ -8428,7 +8429,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "metric-table": {
@@ -9257,7 +9258,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "popover": {
@@ -9991,7 +9992,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "radial-weave": {
@@ -10521,7 +10522,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "registry-item-template": {
@@ -10959,7 +10960,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "section-header": {
@@ -11248,7 +11249,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "select": {
@@ -11514,7 +11515,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "series-table": {
@@ -12104,7 +12105,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "skeleton": {
@@ -12175,7 +12176,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "skip-link": {
@@ -12271,7 +12272,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "sky-backdrop": {
@@ -12589,7 +12590,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "stagger-list": {
@@ -13003,7 +13004,7 @@
         "idle"
       ],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "stats-template": {
@@ -13104,6 +13105,191 @@
       "textAlternative": {
         "kind": null,
         "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "streak": {
+      "sourcePath": "packages/ui/src/games/streak.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {
@@ -13670,7 +13856,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "testimonial": {
@@ -13945,7 +14131,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "theme-script": {
@@ -13958,7 +14144,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "theme-switcher": {
@@ -14133,7 +14319,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "thread-lines": {
@@ -14255,7 +14441,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "thread-steps": {
@@ -14421,7 +14607,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "time-series": {
@@ -15810,7 +15996,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "tooltip": {
@@ -16385,7 +16571,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "use-reading-prefs": {
@@ -16398,7 +16584,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "use-reduced-motion": {
@@ -16411,7 +16597,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "use-theme": {
@@ -16424,7 +16610,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "visually-hidden": {
@@ -16437,7 +16623,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "weave-texture": {
@@ -16450,7 +16636,7 @@
       },
       "states": [],
       "coverage": {
-        "inGate": true
+        "inGate": false
       }
     },
     "wordmark": {

@@ -2134,6 +2134,23 @@
     "previewDark": null,
     "skeleton": null
   },
+  "streak": {
+    "title": "Games/Streak",
+    "storyIds": [
+      "games-streak--pending",
+      "games-streak--played-today",
+      "games-streak--resting-today",
+      "games-streak--broken",
+      "games-streak--empty",
+      "games-streak--two-weeks",
+      "games-streak--compact",
+      "games-streak--right-to-left",
+      "games-streak--narrow"
+    ],
+    "preview": "games-streak--pending",
+    "previewDark": null,
+    "skeleton": null
+  },
   "switch": {
     "title": "Primitives/Switch",
     "storyIds": [

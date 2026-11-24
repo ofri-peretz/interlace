@@ -400,6 +400,18 @@
       "types": "./dist/charts/seat-chart.d.ts",
       "default": "./dist/charts/seat-chart.js"
     },
+    "./games/daily": {
+      "types": "./dist/games/daily.d.ts",
+      "default": "./dist/games/daily.js"
+    },
+    "./games/streak-model": {
+      "types": "./dist/games/streak-model.d.ts",
+      "default": "./dist/games/streak-model.js"
+    },
+    "./games/streak": {
+      "types": "./dist/games/streak.d.ts",
+      "default": "./dist/games/streak.js"
+    },
     "./charts/share-chart": {
       "types": "./dist/charts/share-chart.d.ts",
       "default": "./dist/charts/share-chart.js"

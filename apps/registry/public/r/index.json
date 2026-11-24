@@ -2992,6 +2992,24 @@
       }
     },
     {
+      "name": "streak",
+      "type": "registry:ui",
+      "title": "Streak",
+      "description": "A player's run of days: the count, a line on where today stands, and a strip of recent days, each marked played, rested, missed or still open. Rest days come from a `RestRule` (weekdays and dates that never break a run), so a habit does not punish a day…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "article-template",
       "type": "registry:block",
       "title": "Article Template",
