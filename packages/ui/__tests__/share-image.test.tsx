@@ -134,6 +134,11 @@ describe('text', () => {
     expect(
       planWords({ title: 'word '.repeat(60), description: 'Gone.', width: 400, height: 120, max: 50, min: 40 }),
     ).toEqual({ titleSize: 40, descriptionChars: 0 });
+    // A short title with a long description and little room: the title keeps its largest size
+    // and the description, which would be cut to a stub, is dropped.
+    expect(
+      planWords({ title: 'Short', description: 'long words '.repeat(40), width: 1000, height: 200, max: 76 }),
+    ).toEqual({ titleSize: 76, descriptionChars: 0 });
   });
 
   it('breaks lines by word', () => {
@@ -271,6 +276,19 @@ describe('ShareImage', () => {
     expect(bars).toContain('>50%<');
     expect(bars).toContain('width:100%');
     expect(bars).toContain('width:2%');
+  });
+
+  it('draws compact bars beside the words in a wide card, one line per label', () => {
+    const out = html(
+      <ShareImage
+        title="T"
+        bars={[{ label: 'A label far too long to fit on one line beside the title', value: 3, display: '3' }]}
+      />,
+    );
+    expect(out).toContain('data-slot="share-image-bars"');
+    expect(out).toContain('font-size:22px');
+    expect(out).toContain('…');
+    expect(out).not.toContain('beside the title<');
   });
 
   it('lets a drawing win over a stat, and ignores empty bars', () => {

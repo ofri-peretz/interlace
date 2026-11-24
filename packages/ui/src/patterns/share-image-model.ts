@@ -260,9 +260,10 @@ export interface WordsPlan {
 
 /**
  * Size a title block to a box: the largest title (from `max` down by 2px,
- * never under `min`, at most `maxLines` lines) that still leaves room for a
- * line of description, and as much description as then fits, up to two
- * lines. Line heights match `ShareImage`: title 1.1, description 28px at 1.4,
+ * never under `min`, at most `maxLines` lines) that still leaves room for
+ * most of the description (60% of it, up to two lines), and as much of it as
+ * then fits. When no size leaves that much room, the description is dropped
+ * and the title keeps its largest size that fits. Line heights match `ShareImage`: title 1.1, description 28px at 1.4,
  * kicker 34px plus an 18px gap.
  */
 export function planWords({
@@ -287,14 +288,19 @@ export function planWords({
   const kickerH = kicker ? 52 : 0;
   const descLine = 28 * 1.4;
   const perDescLine = Math.floor((width * 0.85) / (28 * 0.5));
+  // A description cut to a stub reads worse than none: keep at least 60% of it, or drop it.
+  const enough = description ? Math.ceil([...description].length * 0.6) : 0;
+  let fallback = min;
   for (let size = max; size >= min; size -= 2) {
-    if (estimateLines(title, size, width) > maxLines && size > min) continue;
-    const room = height - kickerH - estimateLines(title, size, width) * size * 1.1 - 18;
-    const descLines = description ? Math.min(2, Math.floor(room / descLine)) : 0;
-    const plan = { titleSize: size, descriptionChars: Math.max(0, descLines) * perDescLine };
-    if (!description || descLines >= 1) return plan;
+    const lines = estimateLines(title, size, width);
+    if (lines > maxLines && size > min) continue;
+    if (fallback === min) fallback = size;
+    if (!description) return { titleSize: size, descriptionChars: 0 };
+    const room = height - kickerH - lines * size * 1.1 - 18;
+    const chars = Math.max(0, Math.min(2, Math.floor(room / descLine))) * perDescLine;
+    if (chars >= enough) return { titleSize: size, descriptionChars: chars };
   }
-  return { titleSize: min, descriptionChars: 0 };
+  return { titleSize: fallback, descriptionChars: 0 };
 }
 
 /**
@@ -324,7 +330,16 @@ export function breakLines(text: string, size: number, width: number, em = 0.55)
 
 const HEBREW_RE = /[\u0590-\u05FF\uFB1D-\uFB4F]/;
 const LTR_PIECE_RE = /[A-Za-z0-9\u00C0-\u024F\u0370-\u03FF\u0400-\u04FF]+/g;
-const MIRROR: Record<string, string> = { '(': ')', ')': '(', '[': ']', ']': '[', '{': '}', '}': '{', '<': '>', '>': '<' };
+const MIRROR: Record<string, string> = {
+  '(': ')',
+  ')': '(',
+  '[': ']',
+  ']': '[',
+  '{': '}',
+  '}': '{',
+  '<': '>',
+  '>': '<',
+};
 
 /**
  * `text` cut into bidi runs, in reading order: each right-to-left word on

@@ -131,17 +131,7 @@ const line = (text: string, rtl: boolean) => (rtl ? visualRtlLine(text) : text);
  * one box per planned line (`breakLines`), each already in drawing order
  * (`visualRtlLine`), set against the right edge.
  */
-function Words({
-  text,
-  rtl,
-  width,
-  style,
-}: {
-  text: string;
-  rtl: boolean;
-  width: number;
-  style: CSSProperties;
-}) {
+function Words({ text, rtl, width, style }: { text: string; rtl: boolean; width: number; style: CSSProperties }) {
   if (!rtl) return <div style={style}>{text}</div>;
   const fontSize = Number(style.fontSize);
   return (
@@ -160,35 +150,37 @@ function Bars({
   theme,
   rtl,
   width,
+  compact,
 }: {
   bars: ShareImageBar[];
   theme: ShareImageTheme;
   rtl: boolean;
   width: number;
+  /** Beside the words in a wide image: smaller type, tighter rows. */
+  compact: boolean;
 }) {
   const top = Math.max(...bars.map((b) => b.value), 1e-9);
   const row = rtl ? 'row-reverse' : 'row';
+  const fontSize = compact ? 22 : 26;
+  const thick = compact ? 14 : 18;
+  // One line per label, leaving room for the value at its end.
+  const labelChars = Math.floor((width - 4 * fontSize) / (fontSize * 0.5));
   return (
-    <div data-slot="share-image-bars" style={flex({ flexDirection: 'column', gap: 22, width: '100%' })}>
+    <div data-slot="share-image-bars" style={flex({ flexDirection: 'column', gap: compact ? 16 : 22, width: '100%' })}>
       {bars.slice(0, 5).map((bar, i) => (
-        <div key={bar.label} style={flex({ flexDirection: 'column', gap: 8 })}>
-          <div style={flex({ flexDirection: row, justifyContent: 'space-between', fontSize: 26 })}>
-            <Words
-              text={bar.label}
-              rtl={rtl}
-              width={width - 120}
-              style={{ fontSize: 26, color: theme.foreground }}
-            />
+        <div key={bar.label} style={flex({ flexDirection: 'column', gap: compact ? 6 : 8 })}>
+          <div style={flex({ flexDirection: row, justifyContent: 'space-between', gap: 16, fontSize })}>
+            <span style={{ color: theme.foreground }}>{line(clampText(bar.label, labelChars), rtl)}</span>
             <span style={{ fontWeight: 700, color: theme.foreground }}>
               {line(bar.display ?? String(bar.value), rtl)}
             </span>
           </div>
-          <div style={flex({ flexDirection: row, height: 18, borderRadius: 9, background: theme.border })}>
+          <div style={flex({ flexDirection: row, height: thick, borderRadius: thick / 2, background: theme.border })}>
             <div
               style={{
                 width: `${Math.max(2, (bar.value / top) * 100)}%`,
-                height: 18,
-                borderRadius: 9,
+                height: thick,
+                borderRadius: thick / 2,
                 background: theme.chart[i % theme.chart.length],
               }}
             />
@@ -380,7 +372,7 @@ function pickEvidence({
 }: Frame & Pick<ShareImageProps, 'visual' | 'stat' | 'bars'> & { big: boolean; width: number }): ReactNode {
   if (visual) return visual;
   if (stat) return <Stat {...frame} stat={stat} big={big} width={width} />;
-  if (bars && bars.length > 0) return <Bars {...frame} bars={bars} width={width} />;
+  if (bars && bars.length > 0) return <Bars {...frame} bars={bars} width={width} compact={!big} />;
   return null;
 }
 
