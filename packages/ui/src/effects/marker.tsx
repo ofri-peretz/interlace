@@ -107,7 +107,8 @@ export function Marker({
     if (el.dataset.marked) return;
 
     // The resolved height of the stroke, e.g. "100% 8px" → "8px".
-    const height = getComputedStyle(el).backgroundSize.split(' ')[1] ?? '100%';
+    // Only the first layer: a consumer's own background adds a comma-separated second one.
+    const height = getComputedStyle(el).backgroundSize.split(',')[0]!.trim().split(/\s+/)[1] ?? '100%';
     const from = `0% ${height}`;
     const to = `100% ${height}`;
     el.style.backgroundSize = from;

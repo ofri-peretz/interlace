@@ -93,7 +93,7 @@ function hideShapes(root: HTMLElement): { strokes: Stroke[]; fills: SVGElement[]
       strokes.push({ el, length });
       el.style.strokeDasharray = `${length} ${length}`;
       el.style.strokeDashoffset = `${length}`;
-      // A filled, stroked shape shows its fill only once its outline is down.
+      // A filled, stroked shape fades its fill in from halfway through its outline, so the two resolve together.
       if (isFilled(el)) el.style.fillOpacity = '0';
     } else if (isFilled(el)) {
       fills.push(el);

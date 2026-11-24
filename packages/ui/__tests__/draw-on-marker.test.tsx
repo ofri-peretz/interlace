@@ -89,6 +89,12 @@ describe('DrawOn', () => {
     expect(delays[1]).toMatchObject({ delay: 150, duration: 1000 });
     expect(delays.length).toBe(4);
     expect(rect.style.opacity).toBe('');
+    // When a line finishes, its dash styles go, so the drawing ends exactly as authored.
+    const line = animateSpy.mock.results[0]!.value as { cancel: () => void; onfinish: null | (() => void) };
+    line.onfinish?.();
+    expect(path.style.strokeDasharray).toBe('');
+    expect(path.style.strokeDashoffset).toBe('');
+    expect(line.cancel).toHaveBeenCalled();
   });
 
   it('shows the drawing at once when focus lands inside', () => {
