@@ -575,6 +575,18 @@
           "source": ".changeset/list-markers.md"
         },
         {
+          "summary": "Sheet `side` and Drawer `direction` take `start` and `end`. They follow the reading direction from `DirectionProvider`: `start` opens from the left in English and from the right in Hebrew or Arabic, with the swipe to dismiss matching.",
+          "components": [
+            "sheet",
+            "drawer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/logical-edges.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"
