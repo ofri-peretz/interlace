@@ -1465,7 +1465,8 @@
       ],
       "a11y": {
         "roles": [
-          "img"
+          "img",
+          "region"
         ],
         "aria": [
           "aria-busy",

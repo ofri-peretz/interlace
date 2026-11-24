@@ -191,12 +191,16 @@ describe('<ChoroplethMap>', () => {
     const { container, rerender } = renderMap({ label: 'Rainfall', legendLabel: 'Rain in a year' });
     const wrap = container.querySelector('[data-slot="choropleth-map-table"]')!;
     expect(wrap.className).toContain('sr-only');
+    // Hidden, it is not a tab stop.
+    expect(wrap.getAttribute('tabindex')).toBeNull();
     const rows = within(wrap as HTMLElement).getAllByRole('row').slice(1);
     expect(rows.map((r) => r.textContent)).toEqual(['East40', 'North10', 'South20', 'WestNo data']);
     expect(within(wrap as HTMLElement).getByRole('columnheader', { name: 'Rain in a year' })).toBeTruthy();
     rerender(<ChoroplethMap areas={AREAS} values={VALUES} viewBox="0 0 20 20" showTable />);
     expect(container.querySelector('[data-slot="choropleth-map-table"]')!.className).not.toContain('sr-only');
     expect(screen.getByText('Values by area')).toBeTruthy();
+    // Shown, it scrolls, so a keyboard can reach it and it has a name.
+    expect(screen.getByRole('region', { name: 'Values by area' }).getAttribute('tabindex')).toBe('0');
   });
 
   it('takes another tone, and draws a map with no values at all', () => {

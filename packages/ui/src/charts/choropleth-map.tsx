@@ -51,19 +51,23 @@
  * ## Anatomy
  *
  *   <figure data-slot="choropleth-map">
- *     <figcaption>{label}</figcaption>
- *     <div data-slot="choropleth-map-legend"> <button aria-pressed /> × bins, No data </div>
- *     <svg role="img" tabIndex=0 aria-label="{summary}">
+ *     <figcaption data-slot="choropleth-map-label">{label}</figcaption>
+ *     <div data-slot="choropleth-map-legend"> {legendLabel}
+ *       <ul> <button data-slot="choropleth-map-legend-item" aria-pressed /> × bins, No data </ul>
+ *     </div>
+ *     <svg data-slot="choropleth-map-plot" role="img" tabIndex=0 aria-label="{summary}">
  *       <path data-slot="choropleth-map-area" data-bin /> × areas
+ *       <path data-slot="choropleth-map-active" />          (the focused area's outline)
  *     </svg>
  *     <output data-slot="choropleth-map-readout" aria-live="polite" />
- *     <div data-slot="choropleth-map-table" />                (sr-only unless showTable)
+ *     <div data-slot="choropleth-map-table" />              (sr-only unless showTable;
+ *                                                            then a focusable scroll region)
  *   </figure>
  *
  * | Rule | Concept                    | Where in this file                                       |
  * | ---- | -------------------------- | -------------------------------------------------------- |
  * | R4   | Extends native el          | `React.ComponentProps<'figure'>`                          |
- * | R6   | data-slot on every part    | `choropleth-map` / `-area` / `-legend` / `-readout` / `-table` |
+ * | R6   | data-slot on every part    | `choropleth-map` / `-label` / `-legend` / `-legend-item` / `-plot` / `-area` / `-active` / `-readout` / `-table` |
  * | R7   | className merged + ...rest | `cn(...)` + `{...props}`                                  |
  * | R8   | Enums, not booleans        | `binning: 'quantile' \| 'equal'`, `tone`                  |
  * | R13  | Ecosystem first            | no map dep: your paths, `mapBins` + SVG                   |
@@ -263,6 +267,7 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
     [areas, values, bins, binning, breaks],
   );
   const classCount = Math.max(0, classes.edges.length - 1);
+  const tableCaption = typeof label === 'string' ? `${label}: by area` : 'Values by area';
   const steps = shadeSteps(classCount);
   // Keyboard order: by name, so a reader who knows the area's name can find it.
   const order = React.useMemo(
@@ -477,11 +482,18 @@ export const ChoroplethMap = React.forwardRef<HTMLElement, ChoroplethMapProps>(f
         {readout ?? (classCount > 0 ? 'Point at an area, or focus the map and use the arrow keys.' : '')}
       </output>
 
-      <div data-slot="choropleth-map-table" className={cn(showTable ? 'max-h-96 overflow-auto' : 'sr-only')}>
+      {/* Shown, the table scrolls, so it takes focus and a name: keyboard users can scroll it too. */}
+      <div
+        data-slot="choropleth-map-table"
+        className={cn(
+          showTable
+            ? 'focus-visible:ring-ring max-h-96 overflow-auto rounded-md focus-visible:ring-2 focus-visible:outline-none'
+            : 'sr-only',
+        )}
+        {...(showTable ? { role: 'region', tabIndex: 0, 'aria-label': tableCaption } : {})}
+      >
         <table className="w-full text-ui-sm tabular-nums">
-          <caption className="text-muted-foreground pb-2 text-start text-caption">
-            {typeof label === 'string' ? `${label}: by area` : 'Values by area'}
-          </caption>
+          <caption className="text-muted-foreground pb-2 text-start text-caption">{tableCaption}</caption>
           <thead>
             <tr className="border-border border-b">
               <th scope="col" className="py-1.5 pe-4 text-start font-medium">
