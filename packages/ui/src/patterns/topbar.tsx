@@ -245,9 +245,9 @@ const CASCADE_ITEM =
 
 /** Each breakpoint spelled out, so Tailwind sees every class it needs. */
 const COLLAPSE = {
-  md: { row: "md:flex", actions: "md:gap-4", small: "md:hidden" },
-  lg: { row: "lg:flex", actions: "lg:gap-4", small: "lg:hidden" },
-  xl: { row: "xl:flex", actions: "xl:gap-4", small: "xl:hidden" },
+  md: { row: "md:flex", actions: "md:ms-0 md:gap-4", small: "md:hidden" },
+  lg: { row: "lg:flex", actions: "lg:ms-0 lg:gap-4", small: "lg:hidden" },
+  xl: { row: "xl:flex", actions: "xl:ms-0 xl:gap-4", small: "xl:hidden" },
 } as const;
 
 /**
@@ -481,11 +481,11 @@ function Topbar({
       ) : null}
       <div
         className={cn(
-          "mx-auto flex min-h-14 items-center justify-between gap-4 px-6 py-2",
+          "mx-auto flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-2",
           CONTAINER_CLASSES[containerSize],
         )}
       >
-        <div className="flex items-center gap-4">{logo}</div>
+        <div className="flex min-w-0 items-center gap-4">{logo}</div>
         {hasLinks ? (
           <div className={cn("hidden items-center", at.row)}>
             <TopbarNav
@@ -495,7 +495,12 @@ function Topbar({
           </div>
         ) : null}
         {actions || (hasLinks && mobileNav === "menu") ? (
-          <div className={cn("flex items-center gap-2", at.actions)}>
+          <div
+            className={cn(
+              "ms-auto flex flex-wrap items-center justify-end gap-2",
+              at.actions,
+            )}
+          >
             {actions}
             {hasLinks && mobileNav === "menu" ? (
               <div className={at.small}>

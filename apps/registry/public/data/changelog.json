@@ -771,6 +771,17 @@
           "source": ".changeset/wordmark.md"
         },
         {
+          "summary": "`Breadcrumb` reads on a brand band. Inside `Section tone=\"brand\"` the trail, the current page and the separators take the band's own text colour instead of the page's greys, which sat at about 1.2:1 on the primary fill. Measured on the house theme: 8.8:1 light, 11.8:1 dark, and over 16:1 under More contrast. The current page keeps its weight, and a link underlines on hover instead of changing colour. Outside a band nothing changes.",
+          "components": [
+            "breadcrumb"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/breadcrumb-on-brand-band.md"
+        },
+        {
           "summary": "`Button` no longer lists `text-decoration-color` in its transition: no variant changes it, so the entry did nothing.",
           "components": [
             "button"
@@ -966,6 +977,18 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/prose-scroll-margin.md"
+        },
+        {
+          "summary": "Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.",
+          "components": [
+            "interlace-base",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/reflow-at-large-text.md"
         },
         {
           "summary": "SectionHeader sets its title on the fluid type scale instead of stepped `text-3xl md:text-4xl lg:text-5xl`, and takes its bottom gap from the section rhythm tokens instead of `mb-12` / `mb-16`. New `size=\"display\"` for a page's loudest line, `eyebrowStyle=\"pill\"` for a chip-style label, and `align=\"start\"` now follows the writing direction. Two new type tokens, `--text-section` (28 → 40px) and `--text-display` (44 → 64px), are registered with `cn` so a colour never strips them.",

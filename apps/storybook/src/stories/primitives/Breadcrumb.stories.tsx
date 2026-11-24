@@ -11,6 +11,7 @@ import {
   BreadcrumbEllipsis,
   MIN_VIEWPORT,
 } from '@interlace/ui/breadcrumb';
+import { Section } from '@interlace/ui/section';
 import { withRtl } from '@/decorators';
 
 const meta = {
@@ -253,6 +254,28 @@ export const Dark: Story = {
 export const RTL: Story = {
   ...Default,
   decorators: [withRtl],
+};
+
+/**
+ * On a brand band. The trail takes the band's own text colour, so it reads
+ * on the primary fill in both schemes; the current page keeps its weight and
+ * a link underlines on hover.
+ */
+export const OnABrandBand: Story = {
+  ...Default,
+  parameters: { layout: 'fullscreen' },
+  decorators: [
+    (Story) => (
+      <Section as="header" tone="brand" spacing="tight">
+        <Story />
+      </Section>
+    ),
+  ],
+};
+
+export const OnABrandBandDark: Story = {
+  ...OnABrandBand,
+  globals: { theme: 'dark' },
 };
 
 /**
