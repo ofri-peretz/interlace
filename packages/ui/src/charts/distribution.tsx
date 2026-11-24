@@ -103,12 +103,14 @@ import {
   axisSlots,
   bandScales,
   describeDistribution,
+  distributionSentence,
   keepAtNarrow,
   peakBin,
   slotAt,
   stepPath,
   ticks,
   type Bin,
+  type DistributionSummary,
 } from './scale.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -163,6 +165,41 @@ export interface DistributionBin extends Bin {
   reference?: number | null;
 }
 
+/** Every fixed word in Distribution. Pass only the ones to change. */
+export interface DistributionLabels {
+  /** The name of the plotted quantity when it has no label, in the readout and table. */
+  value: string;
+  /** The name of the reference overlay when it has no label. */
+  reference: string;
+  /** Shown when there are no bins at all. */
+  empty: string;
+  /** The readout for a bin that was not measured. */
+  notMeasured: string;
+  /** How to use the chart from the keyboard, read after the summary. */
+  instructions: string;
+  /** The table caption, given the series names and, for one series, its unit. */
+  tableCaption: (names: readonly string[], unit?: string) => string;
+  /** The word in an empty table cell. */
+  noData: string;
+  /** The sentence read for the distribution and for its reference. */
+  summary: (summary: DistributionSummary) => string;
+}
+
+const LABELS: DistributionLabels = {
+  value: 'Value',
+  reference: 'Reference',
+  empty:
+    'No bins to plot. A distribution needs the set of slots it is spread across, even when every one of them is empty.',
+  notMeasured: 'not measured',
+  instructions: 'Focus this chart and use the left and right arrow keys to read individual bins.',
+  tableCaption: (names, unit) =>
+    names.length === 1
+      ? `${names[0]} — full data${unit ? ` (${unit})` : ''}`
+      : `${names.join(', ')} — full data`,
+  noData: 'No data',
+  summary: distributionSentence,
+};
+
 export interface DistributionProps
   extends Omit<React.ComponentProps<'figure'>, 'children'> {
   /**
@@ -192,6 +229,10 @@ export interface DistributionProps
   error?: unknown;
   /** Context for the absence sentences — noun, coverage, reason. */
   announce?: AnnouncementOptions;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
+  /** Replace any fixed word: the empty note, the readout, the spoken summary, the table. */
+  labels?: Partial<DistributionLabels>;
 }
 
 export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
@@ -207,12 +248,18 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
       loading = false,
       error,
       announce,
+      locale,
+      labels: labelsProp,
       className,
       ...props
     },
     ref,
   ) {
-    const [cursor, setCursor] = React.useState<number | null>(null);
+    const labels = { ...LABELS, ...labelsProp };
+    const number = new Intl.NumberFormat(locale);
+    const [picked, setCursor] = React.useState<number | null>(null);
+    // A cursor left past the end by new, shorter data reads nothing.
+    const cursor = picked !== null && picked < bins.length ? picked : null;
     const svgRef = React.useRef<SVGSVGElement>(null);
 
     // React's generated ids contain `:`, which is legal in an id and awkward
@@ -345,17 +392,14 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
           className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
           {...props}
         >
-          <p className="text-sm text-muted-foreground">
-            No bins to plot. A distribution needs the set of slots it is spread
-            across, even when every one of them is empty.
-          </p>
+          <p className="text-sm text-muted-foreground">{labels.empty}</p>
         </figure>
       );
     }
 
     const peak = peakBin(values);
-    const referenceName = named(referenceLabel, 'Reference');
-    const primaryName = named(label, 'Value');
+    const referenceName = named(referenceLabel, labels.reference);
+    const primaryName = named(label, labels.value);
 
     /** `label` and its second axis reading, as one string. */
     const binKey = (bin: DistributionBin): string =>
@@ -363,8 +407,8 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
 
     const spoken = (value: number | null): string =>
       value === null
-        ? 'not measured'
-        : `${value.toLocaleString()}${unit ? ` ${unit}` : ''}`;
+        ? labels.notMeasured
+        : `${number.format(value)}${unit ? ` ${unit}` : ''}`;
 
     /**
      * The crosshair readout, for BOTH the pointer and the keyboard. One string,
@@ -385,6 +429,7 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
               : []),
           ].join(' · ');
 
+    const words = { summary: labels.summary, locale };
     const referencePath = stepPath(references, plot);
     const tableSeries = [
       { label: primaryName, points: bins.map((bin) => ({ t: binKey(bin), v: bin.v })) },
@@ -465,15 +510,16 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
             'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
           )}
           role="img"
-          aria-label={`${describeDistribution(bins, label, unit)}${
+          aria-label={`${describeDistribution(bins, label, unit, words)}${
             hasReference
               ? ` ${describeDistribution(
                   bins.map((bin) => ({ label: bin.label, v: bin.reference ?? null })),
                   referenceName,
                   unit,
+                  words,
                 )}`
               : ''
-          } Focus this chart and use the left and right arrow keys to read individual bins.`}
+          } ${labels.instructions}`}
           tabIndex={0}
           onKeyDown={onKeyDown}
           onPointerMove={onPointerMove}
@@ -524,7 +570,7 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
                   className="fill-muted-foreground text-xs tabular-nums"
                   aria-hidden
                 >
-                  {Math.round(value).toLocaleString()}
+                  {number.format(Math.round(value))}
                 </text>
               </g>
             );
@@ -692,11 +738,11 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
           data-slot="distribution-readout"
           className="flex flex-wrap items-baseline justify-between gap-x-4 text-xs text-muted-foreground tabular-nums"
         >
-          <span aria-hidden>{plot.min.toLocaleString()}</span>
+          <span aria-hidden>{number.format(plot.min)}</span>
           <output aria-live="polite" className="font-medium text-foreground">
             {readout}
           </output>
-          <span aria-hidden>{plot.max.toLocaleString()}</span>
+          <span aria-hidden>{number.format(plot.max)}</span>
         </div>
 
         {/* `axis="category"` — the bins keep the caller's order. Sorting them
@@ -709,9 +755,11 @@ export const Distribution = React.forwardRef<HTMLElement, DistributionProps>(
           series={tableSeries}
           caption={
             hasReference
-              ? `${primaryName}, ${referenceName} — full data`
-              : `${primaryName} — full data${unit ? ` (${unit})` : ''}`
+              ? labels.tableCaption([primaryName, referenceName])
+              : labels.tableCaption([primaryName], unit)
           }
+          noDataLabel={labels.noData}
+          locale={locale}
           hidden={!showTable}
         />
       </figure>

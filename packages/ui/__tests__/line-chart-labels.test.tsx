@@ -91,24 +91,24 @@ describe('Sparkline', () => {
 
 describe('TimeSeries labels', () => {
   it('replaces every fixed word', () => {
-    const many = Array.from({ length: 6 }, () => ({ points: OTHER }));
+    const many = Array.from({ length: 6 }, (_, i) => ({ label: `C${i}`, points: OTHER }));
     const { container } = render(
       <TimeSeries points={RISING} compare={many} labels={LABELS} locale="de-DE" showTable />,
     );
     const plot = screen.getByRole('img');
-    expect(plot.getAttribute('aria-label')).toBe(`?=3@2.000 ${'?=2@7 '.repeat(4)}Pfeiltasten.`);
+    expect(plot.getAttribute('aria-label')).toBe('?=3@2.000 C0=2@7 C1=2@7 C2=2@7 C3=2@7 Pfeiltasten.');
     expect(screen.getByText('2 weitere')).toBeTruthy();
     expect(screen.getAllByText('Wert').length).toBeGreaterThan(0);
     expect(screen.getByText('Datum')).toBeTruthy();
     expect(screen.getAllByText('Keine Daten').length).toBeGreaterThan(0);
-    expect(container.querySelector('caption')!.textContent).toBe(`Tabelle ${Array(7).fill('Wert').join('+')}`);
+    expect(container.querySelector('caption')!.textContent).toBe('Tabelle Wert+C0+C1+C2+C3+C4+C5');
 
     plot.focus();
     fireEvent.keyDown(plot, { key: 'Home' });
     fireEvent.keyDown(plot, { key: 'ArrowRight' });
     const readout = document.querySelector('output')!.textContent;
     expect(readout).toContain('Wert 1.500');
-    expect(readout).toContain('Wert fehlt');
+    expect(readout).toContain('C0 fehlt');
 
     fireEvent.keyDown(plot, { key: 'Home' });
     fireEvent.keyDown(plot, { key: 'Enter' });
@@ -127,14 +127,14 @@ describe('TimeSeries labels', () => {
 
 describe('RadialWeave labels', () => {
   it('replaces every fixed word it shows', () => {
-    const many = Array.from({ length: 5 }, () => ({ points: OTHER }));
+    const many = Array.from({ length: 5 }, (_, i) => ({ label: `C${i}`, points: OTHER }));
     const { container, rerender } = render(
       <RadialWeave points={RISING} compare={many} labels={LABELS} locale="de-DE" showTable />,
     );
-    expect(screen.getByRole('img').getAttribute('aria-label')).toBe(`?=3@2.000 ${'?=2@7 '.repeat(3)}?=2@7`);
+    expect(screen.getByRole('img').getAttribute('aria-label')).toBe('?=3@2.000 C0=2@7 C1=2@7 C2=2@7 C3=2@7');
     expect(screen.getByText('1 weitere')).toBeTruthy();
     expect(screen.getByText('2,0k')).toBeTruthy();
-    expect(container.querySelector('caption')!.textContent).toBe(`Tabelle ${Array(6).fill('Wert').join('+')}`);
+    expect(container.querySelector('caption')!.textContent).toBe('Tabelle Wert+C0+C1+C2+C3+C4');
     rerender(<RadialWeave points={RISING} label="Downloads" labels={LABELS} />);
     expect(container.querySelector('caption')!.textContent).toBe('Tabelle Downloads');
     rerender(<RadialWeave points={[]} labels={LABELS} />);

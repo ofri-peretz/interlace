@@ -63,10 +63,12 @@ import {
   concentricLayout,
   describeGraph,
   edgesWithin,
+  graphSentence,
   neighborsOf,
   topNodes,
   type GraphEdge,
   type GraphNode,
+  type GraphSummary,
 } from './graph.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -74,6 +76,55 @@ export const MIN_VIEWPORT = 320 as const;
 /** Drawing box in user units; the viewBox scales it to any container. */
 const W = 900;
 const H = 560;
+
+/** Every fixed word in NetworkGraph. Pass only the ones to change. */
+export interface NetworkGraphLabels {
+  /** Said after the error announcement: a failed load is not an empty network. */
+  unknown: string;
+  /** Shown when there are no nodes. */
+  empty: string;
+  /** The header line, given the formatted node and connection counts. */
+  counts: (nodes: string, connections: string) => string;
+  /** A display-cap button, given the formatted cap. */
+  top: (limit: string) => string;
+  /** How to use the graph from the keyboard, read after the summary. */
+  instructions: string;
+  /** The side panel's note before a node is selected. */
+  selectHint: string;
+  /** The table caption when no `caption` is given. */
+  tableCaption: string;
+  /** Table column headers. */
+  node: string;
+  connections: string;
+  group: string;
+  /** The group cell for a node with no group. */
+  noGroup: string;
+  /** A node's hover title, given its name and formatted connection count. */
+  nodeTitle: (node: string, connections: string) => string;
+  /** The note under the table, given the formatted count below the cap and the cap. */
+  belowCap: (hidden: string, limit: string) => string;
+  /** The sentence a screen reader hears for the picture. */
+  summary: (summary: GraphSummary) => string;
+}
+
+const LABELS: NetworkGraphLabels = {
+  unknown: 'The network is unknown, not empty.',
+  empty: 'No connections observed yet. A network needs at least one node to plot.',
+  counts: (nodes, connections) => `${nodes} nodes · ${connections} connections`,
+  top: (limit) => `top ${limit}`,
+  instructions: 'Focus this graph and use the arrow keys to move between nodes, Enter to select.',
+  selectHint:
+    'Select a node. Distance from the centre is rank by number of connections — the centre is who this network converges on.',
+  tableCaption: 'Network nodes by connection count',
+  node: 'Node',
+  connections: 'Connections',
+  group: 'Group',
+  noGroup: 'None',
+  nodeTitle: (node, connections) => `${node} — ${connections} connections`,
+  belowCap: (hidden, limit) =>
+    `${hidden} lower-ranked nodes are below the display cap of ${limit}. They are not filtered out.`,
+  summary: graphSentence,
+};
 
 export interface NetworkGraphProps extends Omit<React.ComponentProps<'div'>, 'onSelect'> {
   nodes: readonly GraphNode[];
@@ -101,6 +152,10 @@ export interface NetworkGraphProps extends Omit<React.ComponentProps<'div'>, 'on
   error?: unknown;
   /** Context for the absence sentences — noun, coverage, reason. */
   announce?: AnnouncementOptions;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
+  /** Replace any fixed word: the header, the buttons, the hints, the spoken summary, the table. */
+  labels?: Partial<NetworkGraphLabels>;
 }
 
 export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
@@ -117,11 +172,16 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
       loading = false,
       error,
       announce,
+      locale,
+      labels: labelsProp,
       className,
       ...props
     },
     ref,
   ) {
+    const labels = { ...LABELS, ...labelsProp };
+    const format = new Intl.NumberFormat(locale);
+    const number = (n: number) => format.format(n);
     const [limit, setLimit] = React.useState(limitProp);
     const [cursor, setCursor] = React.useState(0);
 
@@ -202,8 +262,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
           {...props}
         >
           <p role="alert" className="text-sm text-destructive">
-            {announceDataState('error', announce)} The network is unknown, not
-            empty.
+            {announceDataState('error', announce)} {labels.unknown}
           </p>
         </div>
       );
@@ -218,9 +277,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
           className={cn('w-full rounded-xl border border-border p-6', className)}
           {...props}
         >
-          <p className="text-sm text-muted-foreground">
-            No connections observed yet. A network needs at least one node to plot.
-          </p>
+          <p className="text-sm text-muted-foreground">{labels.empty}</p>
         </div>
       );
     }
@@ -240,7 +297,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
       >
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-2.5 text-xs text-muted-foreground">
           <span>
-            {nodes.length} nodes · {edges.length} connections
+            {labels.counts(number(nodes.length), number(edges.length))}
             {caption ? ` · ${caption}` : ''}
           </span>
           {limitOptions.length > 0 && (
@@ -259,7 +316,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
                       : 'border-border hover:bg-muted',
                   )}
                 >
-                  top {option}
+                  {labels.top(number(option))}
                 </button>
               ))}
             </span>
@@ -272,7 +329,10 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
             viewBox={`0 0 ${W} ${H}`}
             className="block w-full focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
             role="img"
-            aria-label={`${describeGraph(nodes, drawn, shown.length)} Focus this graph and use the arrow keys to move between nodes, Enter to select.`}
+            aria-label={`${describeGraph(nodes, drawn, shown.length, {
+              summary: labels.summary,
+              locale,
+            })} ${labels.instructions}`}
             tabIndex={0}
             onKeyDown={onKeyDown}
           >
@@ -316,7 +376,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
                     )}
                     onClick={onSelect ? () => onSelect(node.id === selected ? null : node.id) : undefined}
                   >
-                    <title>{`${node.label ?? node.id} — ${node.weight} connections`}</title>
+                    <title>{labels.nodeTitle(node.label ?? node.id, number(node.weight))}</title>
                   </circle>
                   {/* The keyboard cursor is a ring, not a fill change: it has to
                       be visible on a node that is already selected. */}
@@ -344,10 +404,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
               {detail ? (
                 renderDetail(detail)
               ) : (
-                <p className="text-muted-foreground">
-                  Select a node. Distance from the centre is rank by number of connections —
-                  the centre is who this network converges on.
-                </p>
+                <p className="text-muted-foreground">{labels.selectHint}</p>
               )}
             </aside>
           )}
@@ -357,29 +414,26 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
             where numbers stop being readable by anything that is not an eye. */}
         <div className="sr-only">
           <table>
-            <caption>{caption ?? 'Network nodes by connection count'}</caption>
+            <caption>{caption ?? labels.tableCaption}</caption>
             <thead>
               <tr>
-                <th scope="col">Node</th>
-                <th scope="col">Connections</th>
-                <th scope="col">Group</th>
+                <th scope="col">{labels.node}</th>
+                <th scope="col">{labels.connections}</th>
+                <th scope="col">{labels.group}</th>
               </tr>
             </thead>
             <tbody>
               {shown.map((node) => (
                 <tr key={node.id}>
                   <th scope="row">{node.label ?? node.id}</th>
-                  <td>{node.weight}</td>
-                  <td>{node.group ?? 'None'}</td>
+                  <td>{number(node.weight)}</td>
+                  <td>{node.group ?? labels.noGroup}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           {hidden > 0 && (
-            <p>
-              {hidden} lower-ranked nodes are below the display cap of {limit}. They are not
-              filtered out.
-            </p>
+            <p>{labels.belowCap(number(hidden), number(limit))}</p>
           )}
         </div>
       </div>
