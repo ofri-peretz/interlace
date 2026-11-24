@@ -159,9 +159,9 @@ function ContrastToggle({
       pressed={moreContrast}
       onPressedChange={(pressed: boolean) => setContrast(pressed ? 'more' : 'normal')}
       // Until storage is read the hook reports "off", so a reader who chose
-      // More contrast would see the toggle flip on. Hold it invisible (its
-      // space kept) for that first frame, as TextSizeControl does its label.
-      className={cn(!mounted && 'invisible', className)}
+      // More contrast would see the toggle flip on. Keep it transparent (in
+      // place, and still in the accessibility tree) for that first frame.
+      className={cn(!mounted && 'opacity-0', className)}
       {...props}
     >
       <ContrastIcon aria-hidden="true" className="size-4" />
