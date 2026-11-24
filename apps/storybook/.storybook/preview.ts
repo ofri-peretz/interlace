@@ -221,8 +221,59 @@ const preview: Preview = {
       else html.removeAttribute('data-contrast');
       return Story();
     },
+    /**
+     * The direction axis (`dir` on <html>). On the root, not a wrapper, so
+     * portalled popups (menus, dialogs, tooltips) inherit it as they would
+     * in an RTL app. A story that sets its own `dir` keeps it.
+     */
+    (Story, context) => {
+      const html = document.documentElement;
+      if (context.globals.interlaceDir === 'rtl') html.setAttribute('dir', 'rtl');
+      else html.removeAttribute('dir');
+      return Story();
+    },
+    /**
+     * The reader's text size (`data-text-size` on <html>), the same attribute
+     * `useReadingPrefs` writes. Every rem follows it, so 150% is the real
+     * reflow case, not a zoomed screenshot.
+     */
+    (Story, context) => {
+      const size = context.globals.interlaceTextSize as string | undefined;
+      const html = document.documentElement;
+      if (size && size !== 'base') html.setAttribute('data-text-size', size);
+      else html.removeAttribute('data-text-size');
+      return Story();
+    },
   ],
   globalTypes: {
+    interlaceDir: {
+      description: 'Text direction (dir on <html>)',
+      defaultValue: 'ltr',
+      toolbar: {
+        title: 'Direction',
+        icon: 'transfer',
+        dynamicTitle: true,
+        items: [
+          { value: 'ltr', title: 'Left to right' },
+          { value: 'rtl', title: 'Right to left' },
+        ],
+      },
+    },
+    interlaceTextSize: {
+      description: 'Reader text size (data-text-size on <html>)',
+      defaultValue: 'base',
+      toolbar: {
+        title: 'Text size',
+        icon: 'zoom',
+        dynamicTitle: true,
+        items: [
+          { value: 'base', title: '100%' },
+          { value: 'lg', title: '112.5%' },
+          { value: 'xl', title: '125%' },
+          { value: '2xl', title: '150%' },
+        ],
+      },
+    },
     interlaceTheme: {
       description: 'Interlace brand theme (data-theme)',
       defaultValue: 'interlace',
