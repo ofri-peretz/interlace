@@ -781,6 +781,22 @@ const splitRelativeImports = async (source, sourceDir) => {
       companions.add(rel);
     }
   }
+  // A companion can lean on another companion (`order-model.ts` deals with
+  // `daily.ts`'s seeded shuffle). Follow those too, or the second one is
+  // missing from the item and its import dangles in the consumer's tree.
+  const queue = [...companions];
+  while (queue.length > 0) {
+    const companion = queue.shift();
+    const text = await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8');
+    for (const m of text.matchAll(RELATIVE_IMPORT_RE)) {
+      const rel = m[1].replace(/^\.\//, '').replace(/\.js$|\.tsx?$/, '');
+      if (rel.includes('/') || companions.has(rel)) continue;
+      if (await exists(path.join(sourceDir, `${rel}.ts`))) {
+        companions.add(rel);
+        queue.push(rel);
+      }
+    }
+  }
   // Cross-tier imports (`../primitives/skeleton.js` from a pattern) are
   // registry dependencies too. Missing them meant installing a single pattern
   // left a dangling import in the consumer's tree — `next build` in

@@ -232,6 +232,10 @@
       "types": "./dist/primitives/kbd.d.ts",
       "default": "./dist/primitives/kbd.js"
     },
+    "./spinner": {
+      "types": "./dist/primitives/spinner.d.ts",
+      "default": "./dist/primitives/spinner.js"
+    },
     "./label": {
       "types": "./dist/primitives/label.d.ts",
       "default": "./dist/primitives/label.js"
@@ -404,6 +408,14 @@
       "types": "./dist/charts/seat-chart.d.ts",
       "default": "./dist/charts/seat-chart.js"
     },
+    "./charts/choropleth-map": {
+      "types": "./dist/charts/choropleth-map.d.ts",
+      "default": "./dist/charts/choropleth-map.js"
+    },
+    "./charts/dot-plot": {
+      "types": "./dist/charts/dot-plot.d.ts",
+      "default": "./dist/charts/dot-plot.js"
+    },
     "./games/daily": {
       "types": "./dist/games/daily.d.ts",
       "default": "./dist/games/daily.js"
@@ -451,6 +463,38 @@
     "./games/leaderboard": {
       "types": "./dist/games/leaderboard.d.ts",
       "default": "./dist/games/leaderboard.js"
+    },
+    "./games/tally-model": {
+      "types": "./dist/games/tally-model.d.ts",
+      "default": "./dist/games/tally-model.js"
+    },
+    "./games/tally-bars": {
+      "types": "./dist/games/tally-bars.d.ts",
+      "default": "./dist/games/tally-bars.js"
+    },
+    "./games/poll": {
+      "types": "./dist/games/poll.d.ts",
+      "default": "./dist/games/poll.js"
+    },
+    "./games/quiz-model": {
+      "types": "./dist/games/quiz-model.d.ts",
+      "default": "./dist/games/quiz-model.js"
+    },
+    "./games/timer-ring": {
+      "types": "./dist/games/timer-ring.d.ts",
+      "default": "./dist/games/timer-ring.js"
+    },
+    "./games/quiz-question": {
+      "types": "./dist/games/quiz-question.d.ts",
+      "default": "./dist/games/quiz-question.js"
+    },
+    "./games/order-model": {
+      "types": "./dist/games/order-model.d.ts",
+      "default": "./dist/games/order-model.js"
+    },
+    "./games/order-game": {
+      "types": "./dist/games/order-game.d.ts",
+      "default": "./dist/games/order-game.js"
     },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",

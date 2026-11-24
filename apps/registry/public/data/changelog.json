@@ -209,6 +209,17 @@
           "source": ".changeset/callout-highlight.md"
         },
         {
+          "summary": "New `Celebrate` effect for a moment someone earned: wrap the thing that earned it (a streak count, a score) and a ring and a burst of rays go out from it each time `play` changes, never on first render, so a restored page does not replay it. `CelebrateCheck` is a check mark that draws itself, and `vibrate` gives an opt-in matching tap (`tap`, `success`, `milestone`, `miss`) where the browser supports it. 600ms and 300ms, transform, opacity and stroke only, and nothing plays under reduced motion.",
+          "components": [
+            "celebrate"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/celebrate.md"
+        },
+        {
           "summary": "New `ChartFrame`: the frame a published chart sits in. A `title` that states the finding (at the `headingLevel` the page needs) and a `subtitle` on what is measured sit above any chart; the footer names every `source` (linked when it has an address), a `note` on how to read the numbers and when they were `updated`, all as plain HTML under the chart. Pass `table` and the frame offers Chart and Table views as tabs, both kept in the server HTML. `download` writes the rows as a UTF-8 CSV into a link at render time, so it works before scripts load, and prefixes cells a spreadsheet would run as a formula. Every fixed word comes from `labels`, and the date goes through `Intl` in `locale`. `toCsv` and `csvHref` are exported and pure.",
           "components": [
             "chart-frame"
@@ -218,6 +229,29 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/chart-frame.md"
+        },
+        {
+          "summary": "`ChoroplethMap` and `DotPlot` take a `labels` prop for every fixed word a reader meets: \"No data\", the legend and table names, the empty and hint lines, and the sentences read to screen readers. Sentences are functions, so a language can order and inflect them its own way. `describeMap` and `describeDotRow` take the same sentence function. English stays the default. In `DotPlot`'s table, a missing value now reads \"No data\" instead of a dash.",
+          "components": [
+            "choropleth-map",
+            "dot-plot"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/chart-labels.md"
+        },
+        {
+          "summary": "New `ChoroplethMap`: a value per area as shades of one colour. You pass the shapes as projected SVG paths, so Interlace ships no geography and decides no borders. Values fall into a few classes (quantile, equal or your own breaks) with a legend a reader can match; missing areas are hatched and labelled \"No data\", never drawn as the lowest shade. Every area is reachable by keyboard and announced with its value, and a table view carries the same numbers.",
+          "components": [
+            "choropleth-map"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/choropleth-map.md"
         },
         {
           "summary": "`Citation` takes `marker=\"chip\"`: a small pill after the claim names the source (\"UN\", \"City archive\"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with \" · \"; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.",
@@ -373,6 +407,29 @@
           "source": ".changeset/direction-provider.md"
         },
         {
+          "summary": "`Distribution` and `NetworkGraph` can be shown in any language. `Distribution` takes `labels` (the unnamed value and reference words, the empty note, the readout's \"not measured\", the keyboard instructions, the table caption and empty cell, and the spoken summary) and a `locale`. `NetworkGraph` takes `labels` (the error and empty notes, the header counts, the cap buttons, the keyboard instructions, the selection hint, the table caption and headers, the \"None\" group, the node hover titles, the below-cap note and the spoken summary) and a `locale`. `describeDistribution` and `describeGraph` build their sentences from new `DistributionSummary` and `GraphSummary` types, with `distributionSentence` and `graphSentence` as the English defaults. English output is unchanged, except that the graph's counts now use thousands separators. `compact` documents why its suffixes stay k, M and B in every locale.\n\nFixed: `Distribution` no longer crashes when new, shorter data arrives while the keyboard cursor is past its end.",
+          "components": [
+            "distribution",
+            "network-graph"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/distribution-graph-labels.md"
+        },
+        {
+          "summary": "New `DotPlot`: one dot per value on a shared axis, one row per thing compared. With two or more series a line joins each row's dots, so the line's length is the gap and its direction is the change. The axis need not start at zero, ticks are round numbers that stay text-sized at any width, and the first series is a hollow ring so series differ in shape as well as colour. Each row reads as a sentence, a legend entry picks out a series, and a table carries the same numbers.",
+          "components": [
+            "dot-plot"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/dot-plot.md"
+        },
+        {
           "summary": "New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.",
           "components": [
             "drawer"
@@ -451,6 +508,21 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/games-daily-share-board.md"
+        },
+        {
+          "summary": "Four new pieces for daily games and live quizzes. `Poll`: one question, one tap; the options turn into the results in place, bars growing to everyone's shares, the viewer's choice named, and `minVotes` keeping small polls private. `QuizQuestion`: big answer tiles you tap or pick with keys 1 to 9, an optional `timeLimit` drawn by the new `TimerRing` (with a \"Stop the clock\" button that always works and never pays more than racing), and a reveal that marks the right tile, says how you did and shows how everyone answered in the new `TallyBars`. `OrderGame`: put items in order by dragging a handle, the arrow keys or up and down buttons, then watch the rows travel to their right places with each value and where you had it. Dealing and scoring are pure and exported from `games/tally-model` (`tally`, `wholePercents`: percents that sum to 100), `games/quiz-model` (`scoreAnswer`) and `games/order-model` (`dealOrder`, `scoreOrder`, `moveItem`), so a server repeats them. Every word goes through `labels`; every motion is transform or opacity and is off under reduced motion.",
+          "components": [
+            "poll",
+            "quiz-question",
+            "timer-ring",
+            "tally-bars",
+            "order-game"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-habit-batch.md"
         },
         {
           "summary": "New `games` tier, the engine of a daily game, starting with `Streak`: a player's run of days, a sentence on where today stands (\"Play today to keep your streak.\") and a strip of recent days marked played, rest, missed or still open. Rest days are a setting, not a special case: `rest={{ weekdays: [6], dates: ['2026-12-25'] }}` names days that never break a run, and a rest day the player plays anyway still counts. Today never ends a run while it is still open. Each mark pairs its colour with a shape and an icon, and every day is read out with its date and state; `variant=\"compact\"` is one chip for a header. No hooks, so it renders on the server. The arithmetic ships beside it and is exported: `games/daily` (day keys in a time zone, puzzle numbers, a seeded puzzle-of-the-day that never repeats inside a cycle, time to the next day) and `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`).",
@@ -564,6 +636,22 @@
           "source": ".changeset/light-subtree.md"
         },
         {
+          "summary": "The line charts can be shown in any language. `TimeSeries` and `RadialWeave` take `labels` (a shared `TimeSeriesLabels` set: the unnamed-series word, the empty note, the readout's missing word, the \"more not plotted\" note, the keyboard instructions, the table caption, date header and empty cell, the spoken summary and the comparison's words) and a `locale` for their numbers. `Delta` takes `labels` for its empty note and spoken sentence, and a `locale`. `Sparkline` takes `summary` and `locale`. `SeriesTable` takes `noDataLabel` and `locale`. `describeSeries` builds its sentence from a new `SeriesSummary`, with `seriesSentence` as the English default, and `compact` takes a locale. English output is unchanged. `SeatChart`'s `seatsLabel` doc now says the spoken sentence has its own words.",
+          "components": [
+            "time-series",
+            "radial-weave",
+            "delta",
+            "sparkline",
+            "series-table",
+            "seat-chart"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/line-chart-labels.md"
+        },
+        {
           "summary": "New `List` primitive with markers that carry the voice of the page: `bullet`, `number` (a real `ol`, numbered by the browser in a filled circle), `check` and `cross`. Markers are drawn in CSS, so they centre on the first line whatever the item holds (rich text, inline `Citation` chips) and are never read aloud; `start` and `reversed` work as on any ordered list. `density` sets the space between items.",
           "components": [
             "list"
@@ -656,6 +744,19 @@
           "source": ".changeset/scroll-area-fades.md"
         },
         {
+          "summary": "`SeatChart` takes `labels` and `locale`. Every fixed word (the empty note, Vacant, No side, the table headers and caption, the majority caption and cell) can be replaced, and the screen-reader sentence is built by `labels.summary` from a `SeatSummary`, so it can be written in any language. Counts and shares are formatted with `Intl.NumberFormat` in the given locale. English stays the default.\n\n`ShareChart` takes `labels` too: the empty note, the legend's name, the table caption and row header, and the sentence read for each row. `describeShareRow` takes the same sentence function. `DotPlot`'s `rowSentence` now says that it words a missing value itself.",
+          "components": [
+            "seat-chart",
+            "share-chart",
+            "dot-plot"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/seat-chart-labels.md"
+        },
+        {
           "summary": "New `SeatChart`: how an assembly divides its seats, as a half-circle of dots filled group by group from left to right, with the majority marked at the top and a caption under the arc (\"61 needed for a majority\", or `majorityLabel`). By default every group gets its own colour: the five chart hues, then the same hues deepened, then neutral, so eleven lists stay apart in light and dark. Groups can also sit on `sides` (government and opposition, say): each side has one tone, its groups take shades of it, the first side fills from the left and the last from the right, and `tally` puts big side or leader totals above the arc. Hovering or focusing a group dims the rest and shows its count; a click pins it. The legend prints every count, the picture carries a sentence naming the total, each group and the distance to a majority, and a table sits behind it (`showTable` shows it). Seats no group holds are outlines counted as vacant. On first view the seats fill in once, under a second; nothing moves under reduced motion. `SeatChartCompare` sets two or three charts side by side by its own width. `seatLayout`, `placeGroups` and `describeSeats` are exported and pure.",
           "components": [
             "seat-chart"
@@ -727,6 +828,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/social-sign-in.md"
+        },
+        {
+          "summary": "`Spinner`: the shadcn core `spinner` item in Interlace tokens. An inline SVG in `currentColor` with `sm` (default), `md` and `lg` sizes. Announced once as a status named by `label` (\"Loading\" by default, so it can be translated); `decorative` hides it inside something that already says it is busy. It turns only under `motion-safe`. Server component.",
+          "components": [
+            "spinner"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/spinner.md"
         },
         {
           "summary": "New SplitText: a headline that arrives a word, or a letter, at a time the first time it scrolls into view. `by` picks words or letters, `effect` is `rise` (default), `fade` or `blur`, and `step` sets the pace. The whole line is in the server HTML and read once from a visually hidden copy, so a screen reader never spells a word out. Letters keep emoji and combining marks whole, words never break mid-line, RTL arrives from the right, and under reduced motion the line is simply there.",
@@ -883,6 +995,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/wordmark.md"
+        },
+        {
+          "summary": "AuthorTemplate's doc comment no longer names a consumer in its example (`title=\"By the author\"`). A new lock fails when a component, style or token under `packages/ui` names a site or product that consumes Interlace.",
+          "components": [
+            "author-template"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/brand-neutral-lock.md"
         },
         {
           "summary": "`Breadcrumb` reads on a brand band. Inside `Section tone=\"brand\"` the trail, the current page and the separators take the band's own text colour instead of the page's greys, which sat at about 1.2:1 on the primary fill. Measured on the house theme: 8.8:1 light, 11.8:1 dark, and over 16:1 under More contrast. The current page keeps its weight, and a link underlines on hover instead of changing colour. Outside a band nothing changes.",
@@ -1243,6 +1366,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/section-header-tracking.md"
+        },
+        {
+          "summary": "`ShareCard` puts the select-and-copy field away once a later copy works.",
+          "components": [
+            "share-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/share-card-fallback-reset.md"
         },
         {
           "summary": "`ShareCard` says \"Copied.\" again on a second copy: the status clears and refills, so screen readers announce it each time.",

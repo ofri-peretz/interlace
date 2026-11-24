@@ -380,22 +380,53 @@ export function describeDistribution(
   bins: readonly Bin[],
   label?: string,
   unit?: string,
+  {
+    summary = distributionSentence,
+    locale,
+  }: { summary?: (s: DistributionSummary) => string; locale?: string } = {},
 ): string {
-  const name = label ?? 'Distribution';
   const measured = bins.filter(
     (bin): bin is Bin & { v: number } =>
       typeof bin.v === 'number' && Number.isFinite(bin.v),
   );
-  if (measured.length === 0) return `${name}: no data`;
+  const format = new Intl.NumberFormat(locale);
+  const peak = measured.length === 0 ? null : peakBin(bins.map((bin) => bin.v))!;
+  return summary({
+    name: label,
+    unit,
+    bins: bins.length,
+    measured: measured.length,
+    total: measured.reduce((sum, bin) => sum + bin.v, 0),
+    peak: peak === null ? null : { label: bins[peak].label, value: bins[peak].v as number },
+    number: (n) => format.format(n),
+  });
+}
 
-  const peak = peakBin(bins.map((bin) => bin.v))!;
-  const total = measured.reduce((sum, bin) => sum + bin.v, 0);
-  const noun = unit ? ` ${unit}` : '';
-  const gaps = bins.length - measured.length;
+/** What a distribution's spoken sentence is built from, so it can be written in any language. */
+export interface DistributionSummary {
+  /** The plotted quantity's name, if it has one. */
+  name?: string;
+  unit?: string;
+  /** How many bins there are, and how many of them were measured. */
+  bins: number;
+  measured: number;
+  /** The sum of the measured bins. */
+  total: number;
+  /** The highest bin, or null when none was measured. */
+  peak: { label: string; value: number } | null;
+  /** Formats a number in the chart's locale. */
+  number: (n: number) => string;
+}
 
+/** The English sentence for a distribution. Pass your own to `describeDistribution` for another language. */
+export function distributionSentence(s: DistributionSummary): string {
+  const name = s.name ?? 'Distribution';
+  if (!s.peak) return `${name}: no data`;
+  const noun = s.unit ? ` ${s.unit}` : '';
+  const gaps = s.bins - s.measured;
   return (
-    `${name}: ${bins.length} bins, ${total.toLocaleString()}${noun} in total, ` +
-    `highest in ${bins[peak].label} at ${(bins[peak].v as number).toLocaleString()}${noun}` +
+    `${name}: ${s.bins} bins, ${s.number(s.total)}${noun} in total, ` +
+    `highest in ${s.peak.label} at ${s.number(s.peak.value)}${noun}` +
     `${gaps === 0 ? '' : `, ${gaps} bin${gaps === 1 ? '' : 's'} not measured`}.`
   );
 }
@@ -435,23 +466,62 @@ export const day = (t: string): string => t.slice(0, 10);
  * announces "image". This is the sentence that replaces the picture — every
  * chart in this package owes one, alongside its `<SeriesTable>`.
  */
-export function describeSeries(points: readonly Point[], label?: string): string {
+export function describeSeries(
+  points: readonly Point[],
+  label?: string,
+  { summary = seriesSentence, locale }: { summary?: (s: SeriesSummary) => string; locale?: string } = {},
+): string {
   const pts = numeric(points);
-  const name = label ?? 'Series';
-  if (pts.length === 0) return `${name}: no data`;
-  if (pts.length === 1) return `${name}: a single value, ${pts[0].v}, on ${day(pts[0].t)}`;
-  const d = delta(pts)!;
-  const move =
-    d.direction === 'flat'
-      ? 'unchanged'
-      : `${d.direction} ${Math.abs(d.abs).toLocaleString()}${
-          d.pct === null ? '' : ` (${Math.abs(d.pct).toFixed(1)}%)`
-        }`;
+  const format = new Intl.NumberFormat(locale);
+  const values = pts.map((p) => p.v);
+  return summary({
+    name: label,
+    count: pts.length,
+    start: pts.length > 0 ? day(pts[0].t) : undefined,
+    end: pts.length > 0 ? day(pts[pts.length - 1].t) : undefined,
+    first: pts[0]?.v,
+    last: pts[pts.length - 1]?.v,
+    min: pts.length > 0 ? Math.min(...values) : undefined,
+    max: pts.length > 0 ? Math.max(...values) : undefined,
+    change: delta(pts),
+    number: (n) => format.format(n),
+  });
+}
+
+/** What a series' spoken sentence is built from, so it can be written in any language. */
+export interface SeriesSummary {
+  /** The series' label, if it has one. */
+  name?: string;
+  /** How many numeric points it has. */
+  count: number;
+  /** The first and last day, `YYYY-MM-DD`. Missing when there are no points. */
+  start?: string;
+  end?: string;
+  /** The first and last value. Missing when there are no points. */
+  first?: number;
+  last?: number;
+  /** The lowest and highest value. Missing when there are no points. */
+  min?: number;
+  max?: number;
+  /** First to last change. Null with fewer than two points. */
+  change: DeltaResult | null;
+  /** Formats a number in the chart's locale. */
+  number: (n: number) => string;
+}
+
+/** The English sentence for a series. Pass your own to `describeSeries` for another language. */
+export function seriesSentence(s: SeriesSummary): string {
+  const name = s.name ?? 'Series';
+  const n = s.number;
+  if (s.first === undefined || s.last === undefined) return `${name}: no data`;
+  if (!s.change) return `${name}: a single value, ${n(s.last)}, on ${s.end}`;
+  const d = s.change;
+  const pct = d.pct === null ? '' : ` (${Math.abs(d.pct).toFixed(1)}%)`;
+  const move = d.direction === 'flat' ? 'unchanged' : `${d.direction} ${n(Math.abs(d.abs))}${pct}`;
   return (
-    `${name}: ${pts.length} points from ${day(pts[0].t)} to ${day(pts[pts.length - 1].t)}, ` +
-    `${d.from.toLocaleString()} to ${d.to.toLocaleString()}, ${move}. ` +
-    `Range ${Math.min(...pts.map((p) => p.v)).toLocaleString()} to ` +
-    `${Math.max(...pts.map((p) => p.v)).toLocaleString()}.`
+    `${name}: ${s.count} points from ${s.start} to ${s.end}, ` +
+    `${n(d.from)} to ${n(d.to)}, ${move}. ` +
+    `Range ${n(s.min!)} to ${n(s.max!)}.`
   );
 }
 
@@ -627,11 +697,17 @@ export function dialRing(radius: number, geometry: DialGeometry): string {
   return `M${start.x.toFixed(2)},${start.y.toFixed(2)}${arc(mid)}${arc(end)}`;
 }
 
-/** Compact number formatting for dense rows — 12.4k, 3.1M. */
-export function compact(value: number): string {
+/**
+ * Compact number formatting for dense rows — 12.4k, 3.1M. The digits follow `locale`; the
+ * suffixes stay k, M and B in every locale on purpose, so a dense row reads the same everywhere
+ * (`Intl` compact notation would switch to words such as "Mio." in some languages).
+ */
+export function compact(value: number, locale?: string): string {
   const abs = Math.abs(value);
-  if (abs >= 1e9) return `${(value / 1e9).toFixed(1)}B`;
-  if (abs >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
-  if (abs >= 1e3) return `${(value / 1e3).toFixed(1)}k`;
-  return value.toLocaleString();
+  const one = (n: number) =>
+    new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
+  if (abs >= 1e9) return `${one(value / 1e9)}B`;
+  if (abs >= 1e6) return `${one(value / 1e6)}M`;
+  if (abs >= 1e3) return `${one(value / 1e3)}k`;
+  return new Intl.NumberFormat(locale).format(value);
 }

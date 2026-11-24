@@ -1,29 +1,22 @@
-# Git hooks for the Interlace community repo.
+# Git hooks. The stations come from the hookset presets (burgee packages/hookset), pinned by tag:
+# bump `ref` to take a new preset version. `hookset check` (CI, hooks.yml) fails on a missing
+# station, an unpinned ref, or a step here that repeats one a preset runs.
 #
-# Pre-commit: fast, file-scoped — typecheck + format on staged files only.
-# Commit-msg: enforce conventional-commits via commitlint.
-# Pre-push: full CI battery so the developer ships green without waiting on
-#   GitHub Actions feedback.
-
-commit-msg:
-  commands:
-    commitlint:
-      run: npx --no -- commitlint --edit {1}
-
-pre-commit:
-  parallel: true
-  commands:
-    commitlint:
-      run: "true"
+#   commit-msg  commitlint
+#   pre-commit  npm run hook:staged -- <staged files>   oxlint on the staged files only
+#   pre-push    npm run hook:verify                     turbo typecheck, test and build
+#               npm run lint:guidance                   agent guidance lint (local step below)
+#
+# `npm run ci:local` runs the pre-push battery over every file, as CI does.
+remotes:
+  - git_url: https://github.com/ofri-peretz/burgee
+    ref: hookset@0.2.2
+    configs:
+      - packages/hookset/presets/lefthook/commit-msg.yml
+      - packages/hookset/presets/lefthook/pre-commit.yml
+      - packages/hookset/presets/lefthook/pre-push.yml
 
 pre-push:
-  parallel: true
   commands:
-    typecheck:
-      run: npx --no turbo run typecheck --output-logs=errors-only
-    test:
-      run: npx --no turbo run test --output-logs=errors-only
-    build:
-      run: npx --no turbo run build --output-logs=errors-only
     guidance:
       run: npm run lint:guidance

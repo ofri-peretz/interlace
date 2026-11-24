@@ -283,7 +283,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 185 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 194 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -337,43 +337,43 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 101 server, 84 client
-- keyboard: 145 none, 40 handled
-- built-in loading state: 35 of 185
-- declared minViewport: 115 at 320, 7 at 480, 1 at 768, 62 at inherited
+- rendering: 102 server, 92 client
+- keyboard: 151 none, 43 handled
+- built-in loading state: 37 of 194
+- declared minViewport: 123 at 320, 7 at 480, 1 at 768, 63 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 75 item(s)
+- tier `primitive` — 76 item(s)
 - tier `pattern` — 50 item(s)
-- tier `effect` — 19 item(s)
+- tier `effect` — 20 item(s)
 - tier `template` — 13 item(s)
-- tier `chart` — 11 item(s)
+- tier `chart` — 13 item(s)
+- tier `game` — 10 item(s)
 - tier `util` — 6 item(s)
-- tier `game` — 5 item(s)
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
-- category `primitive` (Primitives) — 75 item(s)
+- category `primitive` (Primitives) — 76 item(s)
 - category `pattern` (Patterns) — 50 item(s)
 - category `blog` (Blog & long-form) — 35 item(s)
+- category `data` (Data display) — 28 item(s)
 - category `foundation` (Foundation) — 27 item(s)
-- category `data` (Data display) — 26 item(s)
 - category `form` (Form & input) — 20 item(s)
-- category `effect` (Effects) — 19 item(s)
-- category `decorative` (Decorative) — 17 item(s)
-- category `feedback` (Feedback) — 14 item(s)
+- category `effect` (Effects) — 20 item(s)
+- category `decorative` (Decorative) — 18 item(s)
+- category `feedback` (Feedback) — 15 item(s)
 - category `navigation` (Navigation) — 13 item(s)
 - category `template` (Templates) — 13 item(s)
+- category `chart` (Charts) — 13 item(s)
 - category `marketing` (Marketing) — 13 item(s)
-- category `chart` (Charts) — 11 item(s)
 - category `overlay` (Overlay) — 10 item(s)
+- category `games` (Games) — 10 item(s)
+- category `game` (Games) — 10 item(s)
 - category `util` (Utilities) — 6 item(s)
 - category `a11y` (A11y) — 5 item(s)
-- category `games` (Games) — 5 item(s)
-- category `game` (Games) — 5 item(s)
 - category `starter` (Starters) — 3 item(s)
 - category `theme` (Theme) — 3 item(s)
 
@@ -571,6 +571,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Slider](https://ds.interlace.tools/c/slider): Range / value-picker primitive on top of @base-ui/react/slider. Compositional API: Slider.Root + Track + Indicator + Thumb. Re-exports the DS-styled surface (rail, fill, thumb) without owning state — Base UI handles keyboard (Arrow / Home / End / PageUp /…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/slider.json`
   - contract: client, min 320px, keyboard via Base UI slider, v1.2.0
+- [Spinner](https://ds.interlace.tools/c/spinner): Something is working and there is no number to show yet. The shadcn core `spinner` item, drawn in Interlace tokens. Use `Progress` when you know how far along it is, and `Skeleton` when you know the shape of what is coming.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/spinner.json`
+  - contract: server, min 320px, v1.0.0
 - [Stack](https://ds.interlace.tools/c/stack): Flex layout whose gap comes from the DS six-step spacing scale, not from a number at the call site (LAYOUT_PHILOSOPHY.md §3). `Stack` stacks children vertically; `Cluster` is the horizontal, wrapping form for chip, tag and button rows.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/stack.json`
   - contract: server, keyboard via Base UI use-render, v2.0.0
@@ -823,24 +826,45 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Leaderboard](https://ds.interlace.tools/c/leaderboard): A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/leaderboard.json`
   - contract: server, min 320px, v1.0.0
+- [Order Game](https://ds.interlace.tools/c/order-game): Put a handful of items in order: events from earliest to latest, places from smallest to largest. The player drags rows by their handle, or moves them with the arrow keys or the up and down buttons, then locks in. The rows then glide into the right order…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/order-game.json`
+  - contract: client, min 320px, keys ArrowDown/ArrowUp/End/Home, v1.0.0
+- [Poll](https://ds.interlace.tools/c/poll): One question, one tap. The options are plain buttons; tapping one casts the vote, and the options turn into the results in place, with the bars growing to everyone's shares and the viewer's choice named. There is no submit step, because a poll that asks…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/poll.json`
+  - contract: client, min 320px, v1.0.0
+- [Quiz Question](https://ds.interlace.tools/c/quiz-question): A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/quiz-question.json`
+  - contract: client, min 320px, states correct|wrong|timeout, v1.0.0
 - [Share Card](https://ds.interlace.tools/c/share-card): How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-card.json`
   - contract: client, min 320px, v1.0.0
 - [Streak](https://ds.interlace.tools/c/streak): A player's run of days: the count, a line on where today stands, and a strip of recent days, each marked played, rested, missed or still open. Rest days come from a `RestRule` (weekdays and dates that never break a run), so a habit does not punish a day…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/streak.json`
   - contract: server, min 320px, states played|pending|resting|none, v1.0.0
+- [Tally Bars](https://ds.interlace.tools/c/tally-bars): How everyone answered, as one bar per option with its whole percent: the results of a poll, or the spread of answers after a quiz question. The viewer's own choice is named in words, and a quiz can mark the right option, so nothing depends on colour alone.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/tally-bars.json`
+  - contract: client, min 320px, states correct|wrong, v1.0.0
+- [Timer Ring](https://ds.interlace.tools/c/timer-ring): A countdown drawn as a ring that empties, with the seconds left in the middle. It counts to a deadline (a timestamp), not from a start, so a page that reloads, or several players in one room, all see the same clock.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/timer-ring.json`
+  - contract: client, min 320px, v1.0.0
 
 ## Items — tier `chart`
 
 - [Chart Frame](https://ds.interlace.tools/c/chart-frame): The frame a published chart sits in: a title that states the finding, a line on what is measured, the chart, and a footer with where the numbers came from and a copy of them to take away. Every chart on a page gets the same frame, so a reader learns once…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/chart-frame.json`
   - contract: client, min 320px, v1.0.0
+- [Choropleth Map](https://ds.interlace.tools/c/choropleth-map): A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/choropleth-map.json`
+  - contract: client, min 320px, loading state, keys Escape, states quantile|equal, v1.0.0
 - [Delta](https://ds.interlace.tools/c/delta): "It moved, this much, this way." The smallest complete unit of analysis and the most-repeated element in a dense view, so it is worth getting exactly right once.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/delta.json`
   - contract: server, min 320px, states publish|release|action, v1.2.0
 - [Distribution](https://ds.interlace.tools/c/distribution): One quantity spread across a fixed set of bins — hours of the day, days of the week, cohorts, buckets — with an optional REFERENCE distribution drawn over it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/distribution.json`
   - contract: client, min 320px, loading state, keys ArrowLeft/ArrowRight/End/Escape/Home, states publish|release|action, v2.0.0
+- [Dot Plot](https://ds.interlace.tools/c/dot-plot): One dot per value on a shared axis, one row per thing compared: support for a policy by age group in two years, life expectancy by country for women and men, a price in three cities. With two or more series, a line joins each row's dots, so the length of…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/dot-plot.json`
+  - contract: client, min 320px, loading state, v1.0.0
 - [Metric Table](https://ds.interlace.tools/c/metric-table): The roic.ai row: metric name, values across time, sparkline, delta. Click a row to promote it into whatever chart the caller renders above.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/metric-table.json`
   - contract: client, min 320px, loading state, states publish|release|action, v2.0.0
@@ -868,6 +892,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 ## Items — tier `effect`
 
+- [Celebrate](https://ds.interlace.tools/c/celebrate): Small, one-time moments for something the player earned: a streak that hits a milestone, a perfect round, a right answer. `Celebrate` wraps the thing that earned it and, each time `play` changes, sends a short burst of rays and a ring out from it.…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/celebrate.json`
+  - contract: client, states primary|success|highlight, v1.0.0
 - [Count Up](https://ds.interlace.tools/c/count-up): A number that counts to its value the first time it scrolls into view: "120 sources", "4.8k readers", "98%". The figure is the content, so the component is built around reading it, not around the motion.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/count-up.json`
   - contract: client, v1.0.0

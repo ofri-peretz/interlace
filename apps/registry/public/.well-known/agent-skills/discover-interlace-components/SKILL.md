@@ -17,7 +17,7 @@ will.
 
 `GET https://ds.interlace.tools/data/agent-index.json`
 
-185 items, each with `tier`, `categories`, `summary`, `topics`,
+194 items, each with `tier`, `categories`, `summary`, `topics`,
 `rendering`, `minViewport`, `loadingState`, `keyboard`, `states`, `a11y`,
 `exports`, `version` and `install`. It is a flat array — filter it directly.
 
@@ -30,11 +30,11 @@ jq '.items[] | select(.rendering=="server" and .loadingState) | .name' agent-ind
 
 # owns its own key handling (not just inherited from Base UI)
 jq '.items[] | select(.keyboard.keys | length > 0) | {name, keys: .keyboard.keys}' agent-index.json
-# → context-menu, distribution, network-graph, time-series
+# → choropleth-map, context-menu, distribution, network-graph
 
 # models an explicit state union — i.e. absence is a value, not a null check
 jq '.items[] | select(.states | length > 0) | {name, states: [.states[].name]}' agent-index.json
-# → 46 item(s)
+# → 50 item(s)
 
 # safe down to a 320px viewport
 jq '.items[] | select(.minViewport == null or .minViewport <= 320) | .name' agent-index.json

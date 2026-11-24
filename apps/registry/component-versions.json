@@ -795,6 +795,12 @@
       "updated": "2026-11-23"
     },
     {
+      "name": "spinner",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-24"
+    },
+    {
       "name": "skeleton-variants",
       "version": "2.1.0",
       "since": "1.0.0",
@@ -829,6 +835,18 @@
       "version": "1.1.0",
       "since": null,
       "updated": "2026-11-23"
+    },
+    {
+      "name": "choropleth-map",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-24"
+    },
+    {
+      "name": "dot-plot",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-24"
     },
     {
       "name": "seat-chart",
@@ -1111,6 +1129,42 @@
       "version": "1.0.1",
       "since": null,
       "updated": "2026-11-23"
+    },
+    {
+      "name": "celebrate",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "order-game",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-24"
+    },
+    {
+      "name": "poll",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "quiz-question",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "tally-bars",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
+    },
+    {
+      "name": "timer-ring",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     }
   ]
 }

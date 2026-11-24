@@ -292,15 +292,40 @@ export function shareFills(
   });
 }
 
+/** Every fixed word in ShareChart. Pass only the ones to change. */
+export interface ShareChartLabels {
+  /** Shown when there are no rows or categories. */
+  empty: string;
+  /** The legend's accessible name. */
+  categories: string;
+  /** The table's first column header, read by screen readers only. */
+  row: string;
+  /** The table caption, given the chart's label when it is a string. */
+  tableCaption: (label?: string) => string;
+  /** The sentence for one row, given its label and each category's formatted share. */
+  rowSentence: (row: string, shares: readonly { category: string; share: string }[]) => string;
+}
+
+const LABELS: ShareChartLabels = {
+  empty: 'No answers to show yet.',
+  categories: 'Categories',
+  row: 'Row',
+  tableCaption: (label) => (label ? `${label}: shares by row` : 'Shares by row'),
+  rowSentence: (row, shares) => `${row}: ${shares.map((s) => `${s.category} ${s.share}`).join(', ')}.`,
+};
+
 /** One sentence for a row: its label, then every category's share. */
 export function describeShareRow(
   row: ShareRow,
   categories: readonly ShareCategory[],
   format: (share: number) => string,
+  sentence: ShareChartLabels['rowSentence'] = LABELS.rowSentence,
 ): string {
   const shares = shareOf(row, categories);
-  const parts = categories.map((c, i) => `${c.label} ${format(shares[i]!)}`);
-  return `${row.label}: ${parts.join(', ')}.`;
+  return sentence(
+    row.label,
+    categories.map((c, i) => ({ category: c.label, share: format(shares[i]!) })),
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -339,6 +364,8 @@ export interface ShareChartProps extends Omit<React.ComponentProps<'figure'>, 'c
   locale?: string;
   /** Decimal places on printed shares. @default 0 */
   precision?: number;
+  /** Replace any fixed word: the empty note, the legend name, the table caption, the spoken rows. */
+  labels?: Partial<ShareChartLabels>;
   /** Show the table of values, which otherwise is for screen readers only. */
   showTable?: boolean;
   /** Reserve the chart's box while the data loads. */
@@ -359,6 +386,7 @@ export const ShareChart = React.forwardRef<HTMLElement, ShareChartProps>(functio
     label,
     locale,
     precision = 0,
+    labels: labelsProp,
     showTable = false,
     loading = false,
     className,
@@ -367,6 +395,7 @@ export const ShareChart = React.forwardRef<HTMLElement, ShareChartProps>(functio
   ref,
 ) {
   const reduced = useReducedMotion();
+  const labels = { ...LABELS, ...labelsProp };
   const labelId = React.useId();
   const listRef = React.useRef<HTMLUListElement>(null);
   const [hovered, setHovered] = React.useState<number | null>(null);
@@ -473,7 +502,7 @@ export const ShareChart = React.forwardRef<HTMLElement, ShareChartProps>(functio
         className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
-        <p className="text-sm text-muted-foreground">No answers to show yet.</p>
+        <p className="text-sm text-muted-foreground">{labels.empty}</p>
       </figure>
     );
   }
@@ -510,7 +539,7 @@ export const ShareChart = React.forwardRef<HTMLElement, ShareChartProps>(functio
 
       <ul
         data-slot="share-chart-legend"
-        aria-label="Categories"
+        aria-label={labels.categories}
         className="m-0 flex list-none flex-wrap gap-x-4 gap-y-1 p-0 text-ui-sm"
       >
         {categories.map((c, i) => (
@@ -561,7 +590,7 @@ export const ShareChart = React.forwardRef<HTMLElement, ShareChartProps>(functio
         ) : null}
         {sorted.map(({ row, index }, r) => {
           const placed = geometry.rows[r]!;
-          const sentence = describeShareRow(row, categories, format);
+          const sentence = describeShareRow(row, categories, format, labels.rowSentence);
           // A pointed-at share replaces its side's total; the other side's number steps aside.
           const shown = active === null ? null : format(placed.segments[active]!.share);
           const onStart = active !== null && active < startSide;
@@ -644,12 +673,12 @@ export const ShareChart = React.forwardRef<HTMLElement, ShareChartProps>(functio
       <div data-slot="share-chart-table" className={cn(showTable ? 'overflow-x-auto' : 'sr-only')}>
         <table className="w-full text-ui-sm tabular-nums">
           <caption className="text-muted-foreground pb-2 text-start text-caption">
-            {typeof label === 'string' ? `${label}: shares by row` : 'Shares by row'}
+            {labels.tableCaption(typeof label === 'string' ? label : undefined)}
           </caption>
           <thead>
             <tr className="border-border border-b">
               <th scope="col" className="py-1.5 pe-4 text-start font-medium">
-                <span className="sr-only">Row</span>
+                <span className="sr-only">{labels.row}</span>
               </th>
               {categories.map((c) => (
                 <th key={c.id} scope="col" className="py-1.5 pe-4 text-end font-medium last:pe-0">

@@ -118,7 +118,7 @@ import {
   type AnnouncementOptions,
 } from '../primitives/data-state.js';
 import { Skeleton } from '../primitives/skeleton.js';
-import { Delta, type Polarity } from './delta.js';
+import { Delta, type DeltaLabels, type Polarity } from './delta.js';
 import { SeriesTable } from './series-table.js';
 import {
   areaPath,
@@ -129,10 +129,12 @@ import {
   linePath,
   nearestSlot,
   plotScales,
+  seriesSentence,
   ticks,
   type Annotation,
   type AnnotationKind,
   type Point,
+  type SeriesSummary,
 } from './scale.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -182,6 +184,53 @@ export const SERIES_STYLE: readonly { stroke: string; fill: string; dash?: strin
  * word for the same column.
  */
 const named = (label?: string): string => label ?? 'Value';
+
+/** Every fixed word in TimeSeries and RadialWeave. Pass only the ones to change. */
+export interface TimeSeriesLabels {
+  /** The name of a series with no label, in the legend, readout and table. */
+  value: string;
+  /** The chart's name in the table caption when it has no label. */
+  series: string;
+  /** The empty note, given how many points there are (0 or 1). */
+  empty: (count: number) => string;
+  /** The readout for a series with no value at the pointed-at date. */
+  missing: string;
+  /** The legend note for series past the drawing limit. */
+  notPlotted: (count: number) => string;
+  /** How to use the chart from the keyboard, read after the summary. */
+  instructions: string;
+  /** The table caption, given the series names and, for one series, its unit. */
+  tableCaption: (names: readonly string[], unit?: string) => string;
+  /** The table's first column header. */
+  date: string;
+  /** The word in an empty table cell. */
+  noData: string;
+  /** The sentence read for each series. */
+  summary: (summary: SeriesSummary) => string;
+  /** Words for the comparison's change. */
+  delta: Partial<DeltaLabels>;
+}
+
+export const TIME_SERIES_LABELS: TimeSeriesLabels = {
+  value: 'Value',
+  series: 'Series',
+  empty: (count) =>
+    `${count === 0 ? 'No data yet.' : `Only ${count} point so far.`} ` +
+    'A trend needs at least two observations, and history cannot be back-filled.',
+  missing: 'no data',
+  notPlotted: (count) => `${count} more not plotted — see the data table`,
+  instructions:
+    'Focus this chart and use the left and right arrow keys to read individual values. ' +
+    'Press Enter or Space to mark a point, then again on a second point to compare the two.',
+  tableCaption: (names, unit) =>
+    names.length === 1
+      ? `${names[0]} — full data${unit ? ` (${unit})` : ''}`
+      : `${names.join(', ')} — full data`,
+  date: 'Date',
+  noData: 'No data',
+  summary: seriesSentence,
+  delta: {},
+};
 
 /**
  * Annotation marks differ by SHAPE first and hue second. A photocopy, a
@@ -281,6 +330,10 @@ export interface TimeSeriesProps extends Omit<React.ComponentProps<'figure'>, 'c
   error?: unknown;
   /** Context for the absence sentences — noun, coverage, reason. */
   announce?: AnnouncementOptions;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
+  /** Replace any fixed word: the empty note, the legend, the readout, the spoken summary, the table. */
+  labels?: Partial<TimeSeriesLabels>;
 }
 
 export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(function TimeSeries(
@@ -296,11 +349,16 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
     loading = false,
     error,
     announce,
+    locale,
+    labels: labelsProp,
     className,
     ...props
   },
   ref,
 ) {
+  const labels = { ...TIME_SERIES_LABELS, ...labelsProp };
+  const nameOf = (series?: string) => series ?? labels.value;
+  const number = new Intl.NumberFormat(locale);
   const [cursor, setCursor] = React.useState<number | null>(null);
   // Range comparison. `anchor` is the point the reader marked; `fixed` is the
   // second one, once they have committed it. While `fixed` is null the live
@@ -573,10 +631,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         className={cn('m-0 w-full rounded-xl border border-border p-6', className)}
         {...props}
       >
-        <p className="text-sm text-muted-foreground">
-          {own === 0 ? 'No data yet.' : `Only ${own} point so far.`}{' '}
-          A trend needs at least two observations, and history cannot be back-filled.
-        </p>
+        <p className="text-sm text-muted-foreground">{labels.empty(own)}</p>
       </figure>
     );
   }
@@ -599,10 +654,10 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
           plot.keys[cursor],
           ...drawn.map((series, index) => {
             const value = plot.at(index, cursor);
-            const name = drawn.length > 1 ? `${named(series.label)} ` : '';
+            const name = drawn.length > 1 ? `${nameOf(series.label)} ` : '';
             return value === null
-              ? `${name}no data`
-              : `${name}${value.toLocaleString()}${series.unit ? ` ${series.unit}` : ''}`;
+              ? `${name}${labels.missing}`
+              : `${name}${number.format(value)}${series.unit ? ` ${series.unit}` : ''}`;
           }),
         ].join(' · ');
 
@@ -659,11 +714,11 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
                   className={SERIES_STYLE[index].stroke}
                 />
               </svg>
-              {named(series.label)}
+              {nameOf(series.label)}
             </li>
           ))}
           {undrawn > 0 && (
-            <li>{`${undrawn} more not plotted — see the data table`}</li>
+            <li>{labels.notPlotted(undrawn)}</li>
           )}
         </ul>
       )}
@@ -678,8 +733,8 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         )}
         role="img"
         aria-label={`${drawn
-          .map((series) => describeSeries(series.points, series.label))
-          .join(' ')} Focus this chart and use the left and right arrow keys to read individual values. Press Enter or Space to mark a point, then again on a second point to compare the two.`}
+          .map((series) => describeSeries(series.points, series.label, { summary: labels.summary, locale }))
+          .join(' ')} ${labels.instructions}`}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onPointerMove={onPointerMove}
@@ -729,7 +784,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
                 className="fill-muted-foreground text-xs tabular-nums"
                 aria-hidden
               >
-                {Math.round(value).toLocaleString()}
+                {number.format(Math.round(value))}
               </text>
             </g>
           );
@@ -944,7 +999,7 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
         data-slot="time-series-readout"
         className="flex flex-wrap items-baseline justify-between gap-x-4 text-xs text-muted-foreground tabular-nums"
       >
-        <span aria-hidden>{plot.min.toLocaleString()}</span>
+        <span aria-hidden>{number.format(plot.min)}</span>
         <output aria-live="polite" className="font-medium text-foreground">
           {comparison ? (
             <span
@@ -958,7 +1013,14 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
                   screen-reader phrasing. Re-deriving any of that here would
                   give this chart its own opinion about what "up" looks like,
                   which is what a design system exists to prevent. */}
-              <Delta points={comparison} unit={unit} percent polarity={polarity} />
+              <Delta
+                points={comparison}
+                unit={unit}
+                percent
+                polarity={polarity}
+                locale={locale}
+                labels={labels.delta}
+              />
               {/* The crosshair reading, kept ALONGSIDE the locked range.
                   Without it this live region freezes the moment a comparison
                   completes: its content stops changing, so every later arrow
@@ -973,18 +1035,21 @@ export const TimeSeries = React.forwardRef<HTMLElement, TimeSeriesProps>(functio
             readout
           )}
         </output>
-        <span aria-hidden>{plot.max.toLocaleString()}</span>
+        <span aria-hidden>{number.format(plot.max)}</span>
       </div>
 
       {/* Every series, including any past `MAX_PLOTTED_SERIES`. The cap is a
           drawing limit, never a data limit — the table stays lossless. */}
       <SeriesTable
-        series={all.map((series) => ({ label: named(series.label), points: series.points }))}
+        series={all.map((series) => ({ label: nameOf(series.label), points: series.points }))}
         caption={
           all.length === 1
-            ? `${label ?? 'Series'} — full data${unit ? ` (${unit})` : ''}`
-            : `${all.map((series) => named(series.label)).join(', ')} — full data`
+            ? labels.tableCaption([label ?? labels.series], unit)
+            : labels.tableCaption(all.map((series) => nameOf(series.label)))
         }
+        keyLabel={labels.date}
+        noDataLabel={labels.noData}
+        locale={locale}
         hidden={!showTable}
       />
     </figure>

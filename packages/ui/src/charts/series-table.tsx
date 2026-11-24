@@ -78,6 +78,10 @@ export interface SeriesTableProps extends React.ComponentProps<'div'> {
    * would become "Wednesday ".
    */
   axis?: 'time' | 'category';
+  /** The word in an empty cell. @default 'No data' */
+  noDataLabel?: string;
+  /** The locale for numbers. @default the reader's */
+  locale?: string;
 }
 
 export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
@@ -88,6 +92,8 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
       hidden = true,
       keyLabel = 'Date',
       axis = 'time',
+      noDataLabel = 'No data',
+      locale,
       className,
       ...props
     },
@@ -103,6 +109,8 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
         for (const p of s.points) keys.add(axis === 'time' ? day(p.t) : p.t);
       return axis === 'time' ? [...keys].sort() : [...keys];
     }, [series, axis]);
+
+    const format = new Intl.NumberFormat(locale);
 
     const byKey = React.useMemo(
       () =>
@@ -157,9 +165,9 @@ export const SeriesTable = React.forwardRef<HTMLDivElement, SeriesTableProps>(
                       {/* "No data" spelled out, not an em dash — a screen
                           reader announces "—" as nothing at all. */}
                       {value == null ? (
-                        <span className="text-muted-foreground">No data</span>
+                        <span className="text-muted-foreground">{noDataLabel}</span>
                       ) : (
-                        value.toLocaleString()
+                        format.format(value)
                       )}
                     </td>
                   );

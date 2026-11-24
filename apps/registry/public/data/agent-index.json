@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 185
+    "itemCount": 194
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,55 +29,55 @@
   },
   "facets": {
     "tier": {
-      "primitive": 75,
+      "primitive": 76,
       "pattern": 50,
-      "effect": 19,
+      "effect": 20,
       "template": 13,
-      "chart": 11,
+      "chart": 13,
+      "game": 10,
       "util": 6,
-      "game": 5,
       "starter": 3,
       "theme": 3
     },
     "category": {
-      "primitive": 75,
+      "primitive": 76,
       "pattern": 50,
       "blog": 35,
+      "data": 28,
       "foundation": 27,
-      "data": 26,
       "form": 20,
-      "effect": 19,
-      "decorative": 17,
-      "feedback": 14,
+      "effect": 20,
+      "decorative": 18,
+      "feedback": 15,
       "navigation": 13,
       "template": 13,
+      "chart": 13,
       "marketing": 13,
-      "chart": 11,
       "overlay": 10,
+      "games": 10,
+      "game": 10,
       "util": 6,
       "a11y": 5,
-      "games": 5,
-      "game": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "server": 101,
-      "client": 84
+      "server": 102,
+      "client": 92
     },
     "keyboard": {
-      "none": 145,
-      "handled": 40
+      "none": 151,
+      "handled": 43
     },
     "loading": {
-      "none": 150,
-      "built-in": 35
+      "none": 157,
+      "built-in": 37
     },
     "minViewport": {
-      "320": 115,
+      "320": 123,
       "480": 7,
       "768": 1,
-      "inherited": 62
+      "inherited": 63
     }
   },
   "items": [
@@ -1324,6 +1324,69 @@
       "docs": "https://ds.interlace.tools/c/card"
     },
     {
+      "name": "celebrate",
+      "title": "Celebrate",
+      "type": "registry:ui",
+      "summary": "Small, one-time moments for something the player earned: a streak that hits a milestone, a perfect round, a right answer. `Celebrate` wraps the thing that earned it and, each time `play` changes, sends a short burst of rays and a ring out from it.…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CelebrateTone",
+          "values": [
+            "primary",
+            "success",
+            "highlight"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-hidden",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "HAPTICS"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/celebrate.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/celebrate.json",
+      "item": "https://ds.interlace.tools/r/celebrate.json",
+      "docs": "https://ds.interlace.tools/c/celebrate"
+    },
+    {
       "name": "chart-frame",
       "title": "Chart Frame",
       "type": "registry:ui",
@@ -1431,6 +1494,76 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/checkbox.json",
       "item": "https://ds.interlace.tools/r/checkbox.json",
       "docs": "https://ds.interlace.tools/c/checkbox"
+    },
+    {
+      "name": "choropleth-map",
+      "title": "Choropleth Map",
+      "type": "registry:ui",
+      "summary": "A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "Escape"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "MapBinning",
+          "values": [
+            "quantile",
+            "equal"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img",
+          "region"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ChoroplethMap",
+        "MAX_BINS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton"
+      ],
+      "installsTo": [
+        "components/ui/charts/choropleth-map.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/choropleth-map.json",
+      "item": "https://ds.interlace.tools/r/choropleth-map.json",
+      "docs": "https://ds.interlace.tools/c/choropleth-map"
     },
     {
       "name": "citation",
@@ -3037,6 +3170,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/docs-page-template.json",
       "item": "https://ds.interlace.tools/r/docs-page-template.json",
       "docs": "https://ds.interlace.tools/c/docs-page-template"
+    },
+    {
+      "name": "dot-plot",
+      "title": "Dot Plot",
+      "type": "registry:ui",
+      "summary": "One dot per value on a shared axis, one row per thing compared: support for a policy by age group in two years, life expectancy by country for women and men, a price in three cities. With two or more series, a line joins each row's dots, so the length of…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-busy",
+          "aria-label",
+          "aria-labelledby",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "DotPlot",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "skeleton",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/charts/dot-plot.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-plot.json",
+      "item": "https://ds.interlace.tools/r/dot-plot.json",
+      "docs": "https://ds.interlace.tools/c/dot-plot"
     },
     {
       "name": "drawer",
@@ -5360,6 +5549,70 @@
       "docs": "https://ds.interlace.tools/c/number-field"
     },
     {
+      "name": "order-game",
+      "title": "Order Game",
+      "type": "registry:ui",
+      "summary": "Put a handful of items in order: events from earliest to latest, places from smallest to largest. The player drags rows by their handle, or moves them with the arrow keys or the up and down buttons, then locks in. The rows then glide into the right order…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowUp",
+          "End",
+          "Home"
+        ],
+        "ownHandler": true
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/order-game.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/order-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/order-game.json",
+      "item": "https://ds.interlace.tools/r/order-game.json",
+      "docs": "https://ds.interlace.tools/c/order-game"
+    },
+    {
       "name": "otp-field",
       "title": "Otp Field",
       "type": "registry:ui",
@@ -5518,6 +5771,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/pagination.json",
       "item": "https://ds.interlace.tools/r/pagination.json",
       "docs": "https://ds.interlace.tools/c/pagination"
+    },
+    {
+      "name": "poll",
+      "title": "Poll",
+      "type": "registry:ui",
+      "summary": "One question, one tap. The options are plain buttons; tapping one casts the vote, and the options turn into the results in place, with the bars growing to everyone's shares and the viewer's choice named. There is no submit step, because a poll that asks…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "tally-bars"
+      ],
+      "installsTo": [
+        "components/ui/games/poll.tsx",
+        "components/ui/games/tally-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/poll.json",
+      "item": "https://ds.interlace.tools/r/poll.json",
+      "docs": "https://ds.interlace.tools/c/poll"
     },
     {
       "name": "popover",
@@ -5849,6 +6158,79 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/published-date.json",
       "item": "https://ds.interlace.tools/r/published-date.json",
       "docs": "https://ds.interlace.tools/c/published-date"
+    },
+    {
+      "name": "quiz-question",
+      "title": "Quiz Question",
+      "type": "registry:ui",
+      "summary": "A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "QuizOutcome",
+          "values": [
+            "correct",
+            "wrong",
+            "timeout"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-keyshortcuts",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "tally-bars",
+        "timer-ring",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/quiz-question.tsx",
+        "components/ui/games/quiz-model.ts",
+        "components/ui/games/tally-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/quiz-question.json",
+      "item": "https://ds.interlace.tools/r/quiz-question.json",
+      "docs": "https://ds.interlace.tools/c/quiz-question"
     },
     {
       "name": "radial-weave",
@@ -8129,6 +8511,58 @@
       "docs": "https://ds.interlace.tools/c/sparkline"
     },
     {
+      "name": "spinner",
+      "title": "Spinner",
+      "type": "registry:ui",
+      "summary": "Something is working and there is no number to show yet. The shadcn core `spinner` item, drawn in Interlace tokens. Use `Progress` when you know how far along it is, and `Skeleton` when you know the shape of what is coming.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/spinner.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/spinner.json",
+      "item": "https://ds.interlace.tools/r/spinner.json",
+      "docs": "https://ds.interlace.tools/c/spinner"
+    },
+    {
       "name": "split-text",
       "title": "Split Text",
       "type": "registry:ui",
@@ -8992,6 +9426,66 @@
       "docs": "https://ds.interlace.tools/c/tag"
     },
     {
+      "name": "tally-bars",
+      "title": "Tally Bars",
+      "type": "registry:ui",
+      "summary": "How everyone answered, as one bar per option with its whole percent: the results of a poll, or the spread of answers after a quiz question. The viewer's own choice is named in words, and a quiz can mark the right option, so nothing depends on colour alone.",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TallyMark",
+          "values": [
+            "correct",
+            "wrong"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/tally-bars.tsx",
+        "components/ui/games/tally-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/tally-bars.json",
+      "item": "https://ds.interlace.tools/r/tally-bars.json",
+      "docs": "https://ds.interlace.tools/c/tally-bars"
+    },
+    {
       "name": "testimonial",
       "title": "Testimonial",
       "type": "registry:ui",
@@ -9620,6 +10114,7 @@
         "ANNOTATION_KINDS",
         "MIN_VIEWPORT",
         "SERIES_STYLE",
+        "TIME_SERIES_LABELS",
         "TimeSeries"
       ],
       "version": "2.0.0",
@@ -9747,6 +10242,60 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/timeline.json",
       "item": "https://ds.interlace.tools/r/timeline.json",
       "docs": "https://ds.interlace.tools/c/timeline"
+    },
+    {
+      "name": "timer-ring",
+      "title": "Timer Ring",
+      "type": "registry:ui",
+      "summary": "A countdown drawn as a ring that empties, with the seconds left in the middle. It counts to a deadline (a timestamp), not from a start, so a page that reloads, or several players in one room, all see the same clock.",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "timer"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/timer-ring.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/timer-ring.json",
+      "item": "https://ds.interlace.tools/r/timer-ring.json",
+      "docs": "https://ds.interlace.tools/c/timer-ring"
     },
     {
       "name": "toast",

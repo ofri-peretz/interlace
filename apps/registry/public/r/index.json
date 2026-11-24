@@ -1300,6 +1300,24 @@
       }
     },
     {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Something is working and there is no number to show yet. The shadcn core `spinner` item, drawn in Interlace tokens. Use `Progress` when you know how far along it is, and `Skeleton` when you know the shape of what is coming.",
+      "categories": [
+        "feedback",
+        "primitive"
+      ],
+      "meta": {
+        "tier": "primitive",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "stack",
       "type": "registry:ui",
       "title": "Stack",
@@ -1567,6 +1585,24 @@
         "loading": false,
         "version": "1.1.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "celebrate",
+      "type": "registry:ui",
+      "title": "Celebrate",
+      "description": "Small, one-time moments for something the player earned: a streak that hits a milestone, a perfect round, a right answer. `Celebrate` wraps the thing that earned it and, each time `play` changes, sends a short burst of rays and a ring out from it.…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -2830,6 +2866,24 @@
       }
     },
     {
+      "name": "choropleth-map",
+      "type": "registry:ui",
+      "title": "Choropleth Map",
+      "description": "A value per area, shown as shades of one colour on a map: share of homes with solar panels by district, turnout by county, rainfall by region.",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "delta",
       "type": "registry:ui",
       "title": "Delta",
@@ -2863,6 +2917,24 @@
         "loading": true,
         "version": "2.0.0",
         "since": "1.1.0"
+      }
+    },
+    {
+      "name": "dot-plot",
+      "type": "registry:ui",
+      "title": "Dot Plot",
+      "description": "One dot per value on a shared axis, one row per thing compared: support for a policy by age group in two years, life expectancy by country for women and men, a price in three cities. With two or more series, a line joins each row's dots, so the length of…",
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "meta": {
+        "tier": "chart",
+        "client": true,
+        "minViewport": 320,
+        "loading": true,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -3064,6 +3136,60 @@
       }
     },
     {
+      "name": "order-game",
+      "type": "registry:ui",
+      "title": "Order Game",
+      "description": "Put a handful of items in order: events from earliest to latest, places from smallest to largest. The player drags rows by their handle, or moves them with the arrow keys or the up and down buttons, then locks in. The rows then glide into the right order…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "poll",
+      "type": "registry:ui",
+      "title": "Poll",
+      "description": "One question, one tap. The options are plain buttons; tapping one casts the vote, and the options turn into the results in place, with the bars growing to everyone's shares and the viewer's choice named. There is no submit step, because a poll that asks…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "quiz-question",
+      "type": "registry:ui",
+      "title": "Quiz Question",
+      "description": "A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "share-card",
       "type": "registry:ui",
       "title": "Share Card",
@@ -3093,6 +3219,42 @@
       "meta": {
         "tier": "game",
         "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "tally-bars",
+      "type": "registry:ui",
+      "title": "Tally Bars",
+      "description": "How everyone answered, as one bar per option with its whole percent: the results of a poll, or the spread of answers after a quiz question. The viewer's own choice is named in words, and a quiz can mark the right option, so nothing depends on colour alone.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "timer-ring",
+      "type": "registry:ui",
+      "title": "Timer Ring",
+      "description": "A countdown drawn as a ring that empties, with the seconds left in the middle. It counts to a deadline (a timestamp), not from a start, so a page that reloads, or several players in one room, all see the same clock.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
         "minViewport": 320,
         "loading": false,
         "version": "1.0.0",
