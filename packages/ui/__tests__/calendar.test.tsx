@@ -131,28 +131,43 @@ describe('calendar-model', () => {
     expect(weekStartFor('not a locale!')).toBe(1);
   });
 
-  it('falls back to the region table without week info', () => {
+  /** Swap Intl.Locale's week-info members for the test, whatever this runtime ships. */
+  function withWeekInfo(members: { getWeekInfo?: unknown; weekInfo?: unknown }, run: () => void) {
     const proto = Intl.Locale.prototype as unknown as Record<string, unknown>;
-    const desc = Object.getOwnPropertyDescriptor(proto, 'weekInfo');
-    Object.defineProperty(proto, 'weekInfo', { configurable: true, get: () => undefined });
+    const saved = ['getWeekInfo', 'weekInfo'].map(
+      (k) => [k, Object.getOwnPropertyDescriptor(proto, k)] as const,
+    );
+    Object.defineProperty(proto, 'getWeekInfo', {
+      configurable: true,
+      writable: true,
+      value: members.getWeekInfo,
+    });
+    Object.defineProperty(proto, 'weekInfo', { configurable: true, get: () => members.weekInfo });
     try {
+      run();
+    } finally {
+      for (const [k, d] of saved) {
+        if (d) Object.defineProperty(proto, k, d);
+        else delete proto[k];
+      }
+    }
+  }
+
+  it('falls back to the region table without week info', () => {
+    withWeekInfo({}, () => {
       expect(weekStartFor('en-US')).toBe(0);
       expect(weekStartFor('ar-EG')).toBe(6);
       expect(weekStartFor('de-DE')).toBe(1);
-    } finally {
-      if (desc) Object.defineProperty(proto, 'weekInfo', desc);
-      else delete proto.weekInfo;
-    }
+    });
   });
 
-  it('prefers getWeekInfo where the runtime has it', () => {
-    const proto = Intl.Locale.prototype as unknown as Record<string, unknown>;
-    proto.getWeekInfo = () => ({ firstDay: 3 });
-    try {
+  it('prefers getWeekInfo, then the weekInfo property', () => {
+    withWeekInfo({ getWeekInfo: () => ({ firstDay: 3 }), weekInfo: { firstDay: 5 } }, () => {
       expect(weekStartFor('en-US')).toBe(3);
-    } finally {
-      delete proto.getWeekInfo;
-    }
+    });
+    withWeekInfo({ weekInfo: { firstDay: 7 } }, () => {
+      expect(weekStartFor('en-GB')).toBe(0);
+    });
   });
 
   it('reads today in a time zone', () => {
