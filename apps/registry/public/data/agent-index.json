@@ -5712,7 +5712,7 @@
       "name": "reading-layout",
       "title": "Reading Layout",
       "type": "registry:ui",
-      "summary": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into an \"On this page\" button (`TocPopover`) on a bar that sticks to…",
+      "summary": "A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into a slim bar (`TocBar`) that sticks to the top of the column, names…",
       "topics": [],
       "categories": [
         "blog",
@@ -9259,7 +9259,7 @@
       "name": "toc",
       "title": "Toc",
       "type": "registry:ui",
-      "summary": "The in-page Table of Contents. Long-form pages (docs, MDX articles, rule reference) need a persistent navigation rail that mirrors the heading outline so a reader can both orient themselves and jump. On wide viewports this lives in a right-hand rail…",
+      "summary": "The in-page Table of Contents. A long read needs a quiet map of its headings that shows where the reader is and lets them jump. On a wide layout it is a rail beside the text (`Toc`); on a narrow one it is a slim bar that names the current section and opens…",
       "topics": [],
       "categories": [
         "blog",
@@ -9275,7 +9275,16 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "TocCollapse",
+          "values": [
+            "auto",
+            "always",
+            "never"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [
@@ -9283,22 +9292,26 @@
           "aria-label"
         ],
         "motion": {
-          "driver": "css",
+          "driver": "both",
           "declaresPreference": true,
-          "stylesheetCannotReach": false
+          "stylesheetCannotReach": true
         },
         "focusRing": true
       },
       "exports": [
         "MIN_VIEWPORT",
         "Toc",
+        "TocBar",
         "TocPopover"
       ],
       "version": "2.0.1",
       "since": "1.0.0",
-      "npmDependencies": [],
+      "npmDependencies": [
+        "lucide-react"
+      ],
       "registryDependencies": [
         "cn",
+        "drawer",
         "interlace-base",
         "popover",
         "use-reduced-motion"

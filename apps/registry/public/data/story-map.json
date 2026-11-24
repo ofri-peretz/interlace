@@ -1462,6 +1462,7 @@
       "blocks-readinglayout--default",
       "blocks-readinglayout--narrow-column",
       "blocks-readinglayout--below-sticky-header",
+      "blocks-readinglayout--long-read",
       "blocks-readinglayout--without-contents"
     ],
     "preview": "blocks-readinglayout--default",
@@ -2323,6 +2324,8 @@
       "primitives-toc--variants",
       "primitives-toc--keyboard-flow",
       "primitives-toc--loading",
+      "primitives-toc--long-outline",
+      "primitives-toc--bar",
       "primitives-toc--dark",
       "primitives-toc--rtl",
       "primitives-toc--below-min-viewport"
