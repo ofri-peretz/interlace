@@ -22,6 +22,11 @@
  * the jump has settled, so the marker goes straight to the pick instead of
  * stepping through every section the smooth scroll passes.
  *
+ * A pick also moves focus to its heading. A heading with no `tabindex` gets
+ * `tabindex="-1"` (focusable by script, never by Tab) and keeps it; one that
+ * already has a `tabindex` keeps its own. Set `tabIndex={-1}` on headings to
+ * have them render that way from the server.
+ *
  * ## The rail
  *
  * A hairline track runs down the start edge of the list. A marker in the

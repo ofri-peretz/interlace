@@ -110,6 +110,29 @@ describe('Toc scroll-spy', () => {
     expect(document.activeElement).toBe(document.getElementById('reopening'));
   });
 
+  it('marks the last heading on screen at the foot of the page', async () => {
+    const doc = document.documentElement;
+    Object.defineProperty(doc, 'scrollHeight', { configurable: true, value: 2000 });
+    vi.stubGlobal('innerHeight', 600);
+    vi.stubGlobal('scrollY', 1400);
+    try {
+      // The short last section never reaches the reading line, yet it wins.
+      tops = { closing: -600, bearings: -200, detour: 50, reopening: 400 };
+      render(
+        <>
+          <Toc items={items} />
+          <Headings />
+        </>,
+      );
+      scrollTo(tops);
+      await waitFor(() =>
+        expect(screen.getByRole('link', { name: 'Reopening' }).getAttribute('aria-current')).toBe('location'),
+      );
+    } finally {
+      delete (doc as unknown as Record<string, unknown>).scrollHeight;
+    }
+  });
+
   it('shows a visible title and keeps the accessible name', () => {
     render(<Toc items={items} title="On this page" label="Contents" />);
     expect(screen.getByRole('navigation', { name: 'Contents' })).toBeTruthy();
