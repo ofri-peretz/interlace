@@ -178,12 +178,14 @@ type CardLinkProps = React.ComponentProps<'a'> & {
 };
 
 const CARD_LINK =
-  "hover:underline underline-offset-4 focus-visible:outline-none after:absolute after:inset-0 after:rounded-[inherit] after:content-['']";
+  "hover:underline underline-offset-4 focus-visible:outline-none after:absolute after:inset-0 after:rounded-lg after:content-['']";
 
 function CardLink({ asChild, className, children, ...props }: CardLinkProps) {
   if (asChild && React.isValidElement(children)) {
     const child = children as React.ReactElement<{ className?: string; 'data-slot'?: string }>;
     return React.cloneElement(child, {
+      ...props,
+      ...child.props,
       'data-slot': 'card-link',
       className: cn(CARD_LINK, child.props.className, className),
     });

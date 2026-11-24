@@ -805,7 +805,7 @@ describe("Card", () => {
     const { container } = render(
       <Card>
         <CardLink href="/a" className="x">A</CardLink>
-        <CardLink asChild className="y">
+        <CardLink asChild className="y" data-testid="routed">
           <a href="/b" className="z">B</a>
         </CardLink>
       </Card>,
@@ -816,6 +816,7 @@ describe("Card", () => {
     expect(links[0]!.className).toContain("after:inset-0");
     expect(links[1]!.getAttribute("href")).toBe("/b");
     expect(links[1]!.className).toMatch(/after:inset-0.*z.*y/);
+    expect(links[1]!.getAttribute("data-testid")).toBe("routed");
   });
 
   it("swaps to a card-shaped skeleton while loading", () => {
