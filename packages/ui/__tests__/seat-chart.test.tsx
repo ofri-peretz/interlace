@@ -338,13 +338,13 @@ describe('placeGroups', () => {
       { label: 'f', seats: 1 },
       { label: 'g', seats: 1 },
     ]);
-    expect(placed.map((g) => `${g.tone}:${g.shade}`)).toEqual(['neutral:0', 'neutral:1', '2:0', '4:0', '5:0', '1:0', '2:1']);
+    expect(placed.map((g) => `${g.tone}:${g.shade}`)).toEqual(['neutral:0', 'neutral:1', '2:0', '4:0', '5:0', '1:1', '2:2']);
   });
 
-  it('gives eleven untoned lists eleven colours: the five hues, then deepened, then neutral', () => {
+  it('gives eleven untoned lists eleven colours: the five hues, then deeper and paler in turn, then grey', () => {
     const placed = placeGroups(Array.from({ length: 11 }, (_, i) => ({ label: `L${i}`, seats: 11 - i })));
     const keys = placed.map((g) => `${g.tone}:${g.shade}`);
-    expect(keys).toEqual(['1:0', '2:0', '3:0', '4:0', '5:0', '1:1', '2:1', '3:1', '4:1', '5:1', 'neutral:0']);
+    expect(keys).toEqual(['1:0', '2:0', '3:0', '4:0', '5:0', '1:1', '2:2', '3:1', '4:2', '5:1', 'neutral:2']);
     expect(new Set(keys).size).toBe(11);
   });
 });
@@ -357,7 +357,7 @@ describe('SeatChart with sides', () => {
     expect(seats.at(-1)!.getAttribute('data-group')).toBe('1');
     expect(seats[70]!.getAttribute('data-group')).toBe('-1');
     expect(seats[0]!.getAttribute('class')).toContain('fill-chart-3');
-    expect(container.querySelector('[data-group="2"]')!.getAttribute('class')).toContain('var(--chart-3),black_35%');
+    expect(container.querySelector('[data-group="2"]')!.getAttribute('class')).toContain('var(--chart-3),black_30%');
 
     const sentence = screen.getByRole('img').getAttribute('aria-label')!;
     expect(sentence).toContain('Coalition 65: North 30, South 25, Centre 10.');
