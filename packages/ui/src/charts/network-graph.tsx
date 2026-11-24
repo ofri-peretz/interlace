@@ -99,6 +99,8 @@ export interface NetworkGraphLabels {
   group: string;
   /** The group cell for a node with no group. */
   noGroup: string;
+  /** A node's hover title, given its name and formatted connection count. */
+  nodeTitle: (node: string, connections: string) => string;
   /** The note under the table, given the formatted count below the cap and the cap. */
   belowCap: (hidden: string, limit: string) => string;
   /** The sentence a screen reader hears for the picture. */
@@ -118,6 +120,7 @@ const LABELS: NetworkGraphLabels = {
   connections: 'Connections',
   group: 'Group',
   noGroup: 'None',
+  nodeTitle: (node, connections) => `${node} — ${connections} connections`,
   belowCap: (hidden, limit) =>
     `${hidden} lower-ranked nodes are below the display cap of ${limit}. They are not filtered out.`,
   summary: graphSentence,
@@ -373,7 +376,7 @@ export const NetworkGraph = React.forwardRef<HTMLDivElement, NetworkGraphProps>(
                     )}
                     onClick={onSelect ? () => onSelect(node.id === selected ? null : node.id) : undefined}
                   >
-                    <title>{`${node.label ?? node.id} — ${node.weight} connections`}</title>
+                    <title>{labels.nodeTitle(node.label ?? node.id, number(node.weight))}</title>
                   </circle>
                   {/* The keyboard cursor is a ring, not a fill change: it has to
                       be visible on a node that is already selected. */}

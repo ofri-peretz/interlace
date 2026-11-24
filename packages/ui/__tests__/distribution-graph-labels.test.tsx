@@ -106,6 +106,7 @@ describe('NetworkGraph labels', () => {
     group: 'Gruppe',
     noGroup: 'Keine',
     belowCap: (hidden: string, limit: string) => `${hidden} unter ${limit}`,
+    nodeTitle: (node: string, count: string) => `${node}: ${count} Kanten`,
     summary: () => 'Netz.',
   };
 
@@ -126,6 +127,7 @@ describe('NetworkGraph labels', () => {
     expect(screen.getByRole('img').getAttribute('aria-label')).toBe('Netz. Pfeiltasten.');
     expect(screen.getByText('Knoten wählen.')).toBeTruthy();
     expect(screen.getByRole('table', { name: 'Knotentabelle' })).toBeTruthy();
+    expect(screen.getByText('Ada: 1.200 Kanten', { selector: 'title' })).toBeTruthy();
     for (const word of ['Knoten', 'Kanten', 'Gruppe', 'Keine', '1.200', '1 unter 2']) {
       expect(screen.getAllByText(word).length).toBeGreaterThan(0);
     }
