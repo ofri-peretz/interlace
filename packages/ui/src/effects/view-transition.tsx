@@ -140,6 +140,7 @@ function Morph({ name, disabled = false, children }: MorphProps) {
   const child = React.Children.only(children);
   if (disabled) return child;
   return React.cloneElement(child, {
+    'data-slot': child.props['data-slot'] ?? 'morph',
     style: { ...child.props.style, viewTransitionName: viewTransitionName(name) },
   });
 }

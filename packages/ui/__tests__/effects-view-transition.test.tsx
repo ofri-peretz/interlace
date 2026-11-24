@@ -137,6 +137,16 @@ describe('Morph', () => {
     const img = screen.getByRole('img') as HTMLElement;
     expect(img.style.width).toBe('10px');
     expect(img.style.getPropertyValue('view-transition-name')).toBe('Card-42');
+    expect(img.getAttribute('data-slot')).toBe('morph');
+  });
+
+  it('keeps a slot the child already has', () => {
+    render(
+      <Morph name="hero">
+        <img alt="A hill" data-slot="figure-image" />
+      </Morph>,
+    );
+    expect(screen.getByRole('img').getAttribute('data-slot')).toBe('figure-image');
   });
 
   it('can stand down', () => {
@@ -146,6 +156,7 @@ describe('Morph', () => {
       </Morph>,
     );
     expect(screen.getByText('Text').getAttribute('style')).toBeNull();
+    expect(screen.getByText('Text').getAttribute('data-slot')).toBeNull();
   });
 
   it('makes names valid identifiers', () => {
