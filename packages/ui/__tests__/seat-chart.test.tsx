@@ -90,6 +90,7 @@ describe('describeSeats', () => {
     expect(describeSeats([], 2, 2)).toBe('2 seats. 2 seats vacant. A majority is 2.');
     // Negative or fractional counts read as the chart draws them.
     expect(describeSeats([{ label: 'A', seats: -5 }, { label: 'B', seats: 2.7 }], 4)).toBe('4 seats. A 0, B 2. 2 seats vacant.');
+    expect(describeSeats([{ label: 'A', seats: -5, side: 's' }, { label: 'B', seats: 2.7, side: 's' }], 4, undefined, [{ id: 's', label: 'S', tone: 1 }])).toContain('S 2: A 0, B 2.');
   });
 });
 

@@ -320,7 +320,7 @@ export function placeGroups(groups: readonly SeatGroup[], sides: readonly SeatSi
 const plural = (n: number, one: string, many: string) => `${n.toLocaleString()} ${n === 1 ? one : many}`;
 
 const sideTotal = (groups: readonly SeatGroup[], id: string) =>
-  groups.filter((g) => g.side === id).reduce((sum, g) => sum + g.seats, 0);
+  groups.filter((g) => g.side === id).reduce((sum, g) => sum + Math.max(0, Math.floor(g.seats)), 0);
 
 /** The sentence a screen reader hears for the picture. */
 export function describeSeats(
