@@ -37,6 +37,50 @@ const depNames = (item: { registryDependencies?: string[] }) =>
  * importing `@/lib/utils` while zero of them declared `cn`.
  */
 describe('installability into a pre-existing shadcn app', () => {
+  // `shadcn add` writes each file to its `target`. When two items write the
+  // same target with different bytes, the consumer's copy depends on install
+  // order: `button` shipped `components/ui/button-variants.ts` without the
+  // version banner while the `button-variants` item shipped it with one, so a
+  // site that installed `button` last held a file the upgrade diff could not
+  // date. Shared files belong to one item; the others depend on it.
+  it('writes every target with one content across all items', async () => {
+    const items = await loadAll();
+    const first = new Map<string, { item: string; content: string }>();
+    const offenders: string[] = [];
+    for (const item of items) {
+      for (const file of item.files ?? []) {
+        if (!file.target) continue;
+        const seen = first.get(file.target);
+        if (!seen) first.set(file.target, { item: item.name, content: file.content });
+        else if (seen.content !== file.content) {
+          offenders.push(`${file.target}: ${seen.item} vs ${item.name}`);
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it('declares a registry dependency for every component it imports and does not ship', async () => {
+    const items = await loadAll();
+    const names = new Set(items.map((i) => i.name));
+    const offenders: string[] = [];
+    for (const item of items) {
+      const declared = depNames(item);
+      const own = new Set((item.files ?? []).map((f: { target: string }) => f.target));
+      for (const file of item.files ?? []) {
+        for (const [, spec] of (file.content ?? '').matchAll(
+          /from\s+['"](@\/components\/ui\/[^'"]+)['"]/g,
+        )) {
+          const bare = spec.replace(/^@\//, '');
+          if (own.has(`${bare}.ts`) || own.has(`${bare}.tsx`)) continue;
+          const dep = spec.split('/').pop()!;
+          if (names.has(dep) && !declared.has(dep)) offenders.push(`${item.name} → ${dep}`);
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
   it('declares a registry dependency for every lib alias it imports', async () => {
     const items = await loadAll();
     const aliasToItem = new Map<string, string>([
