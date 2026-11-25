@@ -1120,6 +1120,15 @@
           "source": ".changeset/wordmark.md"
         },
         {
+          "summary": "The brand-neutral lock now also fails when shipped code names the flagship consumer site, under any of its spellings, or the name of its identity. No component changes.",
+          "components": [],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/brand-neutral-flagship.md"
+        },
+        {
           "summary": "AuthorTemplate's doc comment no longer names a consumer in its example (`title=\"By the author\"`). A new lock fails when a component, style or token under `packages/ui` names a site or product that consumes Interlace.",
           "components": [
             "author-template"

@@ -34,6 +34,12 @@ const CONSUMER_NAMES = [
   "hookset",
   "triggerlist",
   "contractdiff",
+  // WhyLikeDis, the flagship site, under every spelling it goes by, and "Dugri", the name of its
+  // identity. Its pieces were built here first and had to be made neutral after the fact (#123).
+  "whylikedis",
+  "why like dis",
+  "why-like-dis",
+  "dugri",
 ];
 const ALTERNATION = [...CONSUMER_NAMES]
   .sort((a, b) => b.length - a.length)
@@ -69,6 +75,8 @@ describe("brand-neutral lock", () => {
       "a.tsx": 'title="By Ofri" for burgee',
       "b.css": "--brand: burgee-blue;",
       "c.ts": "const ofrix = 1;",
+      "d.tsx": "// the Dugri band, as on WhyLikeDis and why-like-dis.fyi",
+      "e.tsx": "// copy from the why like dis redesign",
     };
     const hits = consumerHits(
       Object.keys(fake).map((f) => join(UI_ROOT, f)),
@@ -78,6 +86,10 @@ describe("brand-neutral lock", () => {
       'a.tsx:1 names "Ofri"',
       'a.tsx:1 names "burgee"',
       'b.css:1 names "burgee"',
+      'd.tsx:1 names "Dugri"',
+      'd.tsx:1 names "WhyLikeDis"',
+      'd.tsx:1 names "why-like-dis"',
+      'e.tsx:1 names "why like dis"',
     ]);
   });
 

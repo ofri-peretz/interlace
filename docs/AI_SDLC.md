@@ -62,6 +62,9 @@ A reviewer reads the diff and checks only the rows whose trigger matches. Findin
 | A visual baseline was updated                         | Is the visual change intended and described in the PR?                                              |
 | Exported API changed                                  | Are the stories, docs, the craft skill and `llms` surfaces updated with it?                         |
 
+Misses the reviewer finds in merged PRs go in [`lessons.md`](lessons.md), each with the check that
+would have caught it. A miss that happens twice becomes a check.
+
 ## Three rounds, then a person
 
 If a check still fails after three rounds of fixing, the agent stops and reports what it tried.
