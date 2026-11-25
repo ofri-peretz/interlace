@@ -71,6 +71,14 @@
  * host's deadline. Timing uses `setTimeout` to the next whole second, never
  * a frame loop.
  *
+ * ## Delivery
+ *
+ * Networks drop messages. A player's join or answer is sent again every 3s
+ * until the host's state shows it (5 tries at most); the host applies it
+ * once, and a repeated or late answer gets no reply, since a reply would go
+ * to every phone. The host's last state is the truth: a transport may send
+ * it again when quiet so a phone that missed one catches up.
+ *
  * ## Presence
  *
  * A player's page says it is away on `pagehide` and asks for the room again
@@ -163,6 +171,17 @@ export interface UseRoomResult {
 
 const OFFSET_WINDOW_MS = 60_000;
 const REJOIN_EVERY_MS = 3_000;
+/** A player's join or answer is sent again this often until the host's state shows it. */
+const RESEND_EVERY_MS = 3_000;
+const RESEND_TRIES = 5;
+
+/** True once `state` shows the player's `event` (or it can no longer count). */
+function settled(state: RoomState, event: RoomEvent, round: number): boolean {
+  if (event.type === 'join') return state.players.some((p) => p.id === event.playerId && p.connected);
+  if (event.type === 'answer')
+    return state.phase !== 'question' || state.round !== round || event.playerId in state.answers;
+  return true;
+}
 
 export function useRoom({
   transport,
@@ -184,6 +203,9 @@ export function useRoom({
   const offset = React.useRef(0);
   const leftOnPurpose = React.useRef(false);
   const lastRejoin = React.useRef(-Infinity);
+  // A player's join or answer, until the host's state shows it: networks drop messages.
+  const pending = React.useRef<{ event: RoomEvent; round: number; tries: number } | null>(null);
+  const [pendingTick, setPendingTick] = React.useState(0);
 
   const apply = React.useCallback(
     (event: RoomEvent, from: string) => {
@@ -192,7 +214,9 @@ export function useRoom({
       const reason = rejectRoomEvent(current, event, from, latest.current.settings);
       if (reason) {
         if (from === selfId) latest.current.onRejected?.(reason, event.type);
-        else
+        // A refused answer (a repeat, or one that arrived after the reveal) gets no reply: it
+        // would go to every phone, and the state already tells the player what counted.
+        else if (event.type !== 'answer')
           transport?.send({
             kind: 'rejected',
             to: from,
@@ -230,7 +254,10 @@ export function useRoom({
         if (want && message.state.code !== want) return;
         if (typeof message.at === 'number') {
           const local = Date.now();
-          samples.current = [...samples.current.filter((s) => local - s.local < OFFSET_WINDOW_MS), { at: message.at, local }];
+          samples.current = [
+            ...samples.current.filter((s) => local - s.local < OFFSET_WINDOW_MS),
+            { at: message.at, local },
+          ];
           offset.current = clockOffset(samples.current);
         }
         // Shown away (the phone slept, or its leave crossed a reload): come back, unless we left.
@@ -251,7 +278,10 @@ export function useRoom({
         if (current && current.code === message.state.code && message.state.seq <= current.seq) return;
         roomRef.current = message.state;
         setRoom(message.state);
+        const wait = pending.current;
+        if (wait && settled(message.state, wait.event, wait.round)) pending.current = null;
       } else if (message.kind === 'rejected' && message.to === selfId) {
+        if (pending.current?.event.type === message.event) pending.current = null;
         latest.current.onRejected?.(message.reason, message.event);
       }
     });
@@ -290,16 +320,38 @@ export function useRoom({
       else {
         if (event.type === 'leave') leftOnPurpose.current = true;
         else if (event.type === 'join') leftOnPurpose.current = false;
+        if (event.type === 'join' || event.type === 'answer') {
+          pending.current = { event, round: roomRef.current?.round ?? 0, tries: 0 };
+          setPendingTick((n) => n + 1);
+        }
         transport?.send({ kind: 'intent', from: selfId, event });
       }
     },
     [isHost, apply, selfId, transport],
   );
 
-  const corrected = React.useCallback(
-    () => (isHost ? latest.current.now() : Date.now() + offset.current),
-    [isHost],
-  );
+  // Send a waiting join or answer again until the host's state shows it, a few times at most.
+  React.useEffect(() => {
+    if (isHost || !transport) return;
+    const timer = setInterval(() => {
+      const wait = pending.current;
+      if (!wait) return clearInterval(timer);
+      const current = roomRef.current;
+      if (current && settled(current, wait.event, wait.round)) {
+        pending.current = null;
+        return clearInterval(timer);
+      }
+      if (wait.tries >= RESEND_TRIES) {
+        pending.current = null;
+        return clearInterval(timer);
+      }
+      wait.tries++;
+      transport.send({ kind: 'intent', from: selfId, event: wait.event });
+    }, RESEND_EVERY_MS);
+    return () => clearInterval(timer);
+  }, [isHost, transport, selfId, pendingTick]);
+
+  const corrected = React.useCallback(() => (isHost ? latest.current.now() : Date.now() + offset.current), [isHost]);
 
   return { room, isHost, send, now: corrected };
 }

@@ -562,6 +562,78 @@ describe('useRoom', () => {
     hidden.mockRestore();
   });
 
+  it('sends a lost answer again until the host shows it, then stops', async () => {
+    vi.useFakeTimers();
+    const sent: RoomMessage[] = [];
+    let listener: ((m: RoomMessage) => void) | null = null;
+    const transport = {
+      send: (m: RoomMessage) => void sent.push(m),
+      subscribe: (l: (m: RoomMessage) => void) => ((listener = l), () => (listener = null)),
+    };
+    let player!: ReturnType<typeof useRoom>;
+    function Phone() {
+      player = useRoom({ transport, selfId: 'p1', code: 'AAA' });
+      return null;
+    }
+    render(<Phone />);
+    let state = applyRoomEvent(createRoom({ code: 'AAA', hostId: HOST }), join('p1', 'Dana'), 'p1');
+    state = applyRoomEvent(state, { type: 'countdown', startsAt: 0 }, HOST);
+    state = applyRoomEvent(state, { type: 'question', endsAt: null }, HOST);
+    act(() => listener!({ kind: 'state', state }));
+    act(() => player.send({ type: 'answer', playerId: 'p1', value: 'x', at: 0 }));
+    const answers = () => sent.filter((m) => m.kind === 'intent' && m.event.type === 'answer').length;
+    expect(answers()).toBe(1);
+    // The first one was lost: no state shows it, so it goes again.
+    act(() => void vi.advanceTimersByTime(3_000));
+    expect(answers()).toBe(2);
+    // The host has it now.
+    act(() =>
+      listener!({
+        kind: 'state',
+        state: applyRoomEvent(state, { type: 'answer', playerId: 'p1', value: 'x', at: 1 }, 'p1'),
+      }),
+    );
+    act(() => void vi.advanceTimersByTime(9_000));
+    expect(answers()).toBe(2);
+    vi.useRealTimers();
+  });
+
+  it('gives up after a few tries, and does not reply to a repeated answer', async () => {
+    vi.useFakeTimers();
+    const sent: RoomMessage[] = [];
+    const transport = { send: (m: RoomMessage) => void sent.push(m), subscribe: () => () => {} };
+    let player!: ReturnType<typeof useRoom>;
+    function Phone() {
+      player = useRoom({ transport, selfId: 'p1', code: 'AAA' });
+      return null;
+    }
+    render(<Phone />);
+    act(() => player.send(join('p1', 'Dana')));
+    act(() => void vi.advanceTimersByTime(60_000));
+    expect(sent.filter((m) => m.kind === 'intent').length).toBe(6);
+    vi.useRealTimers();
+
+    const hub = createMemoryRoomHub();
+    const spy = hub.connect();
+    const seen: RoomMessage[] = [];
+    spy.subscribe((m) => seen.push(m));
+    let host!: ReturnType<typeof useRoom>;
+    render(<Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />);
+    await act(async () => host.send(join('p1', 'Dana')));
+    await act(async () => host.send({ type: 'countdown', startsAt: 0 }));
+    await act(async () => host.send({ type: 'question', endsAt: null }));
+    const answer = {
+      kind: 'intent',
+      from: 'p1',
+      event: { type: 'answer', playerId: 'p1', value: 'x', at: 0 },
+    } as const;
+    await act(async () => spy.send(answer));
+    await act(async () => spy.send(answer));
+    expect(seen.some((m) => m.kind === 'rejected')).toBe(false);
+    await act(async () => spy.send({ kind: 'intent', from: 'p2', event: { type: 'lock', locked: true } }));
+    expect(seen.some((m) => m.kind === 'rejected' && m.reason === 'not-host')).toBe(true);
+  });
+
   it('does nothing without a transport', () => {
     let api!: ReturnType<typeof useRoom>;
     function NoNet() {
@@ -577,7 +649,13 @@ describe('useRoom', () => {
 describe('clockOffset', () => {
   it('takes the largest lower bound, and 0 with nothing to go on', () => {
     expect(clockOffset([])).toBe(0);
-    expect(clockOffset([{ at: 1000, local: 900 }, { at: 2000, local: 1850 }, { at: NaN, local: 1 }])).toBe(150);
+    expect(
+      clockOffset([
+        { at: 1000, local: 900 },
+        { at: 2000, local: 1850 },
+        { at: NaN, local: 1 },
+      ]),
+    ).toBe(150);
     expect(clockOffset([{ at: 100, local: 400 }])).toBe(-300);
   });
 });
