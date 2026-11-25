@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Run a changed Interlace component where a consumer meets it, the registry site, Storybook or a shadcn install into a fresh app, and read what renders. Use before committing a change.
+description: Run a changed component where a consumer meets it and read what renders, before committing.
 ---
 
 # Verify a change by running it
