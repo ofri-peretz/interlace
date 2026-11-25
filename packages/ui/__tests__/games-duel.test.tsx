@@ -105,6 +105,10 @@ describe('duel-model: the link', () => {
     expect(duelHref('https://example.com/play?day=3#top', 'T', 'c h')).toBe(
       'https://example.com/play?day=3&c%20h=T#top',
     );
+    // A token from another encoder can carry +, / and =; the link must keep them.
+    const href = duelHref('https://example.com/play', 'a+b/c=');
+    expect(href).toBe('https://example.com/play?duel=a%2Bb%2Fc%3D');
+    expect(new URL(href).searchParams.get('duel')).toBe('a+b/c=');
   });
 });
 

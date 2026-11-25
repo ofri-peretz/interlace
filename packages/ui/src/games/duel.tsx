@@ -332,12 +332,17 @@ function DuelCompare({
         }),
       );
     });
-    const t = setTimeout(() => setCheer((c) => c + 1), Math.floor(bars.length / 2) * 40 + 400);
+    // Cheer only when someone celebrates: a late state update with nothing to
+    // show re-renders the result for no reason, mid-way through an a11y scan.
+    const t = youWon
+      ? setTimeout(() => setCheer((c) => c + 1), Math.floor(bars.length / 2) * 40 + 400)
+      : undefined;
     return () => {
       clearTimeout(t);
       running.forEach((r) => r.cancel());
     };
     // Once on mount: new a/b values update the bars in place and don't re-animate.
+    // eslint-disable-next-line react-features/hooks-exhaustive-deps -- youWon is read once, like a/b.
   }, [animate, reduced]);
 
   const verdict = (L.verdict ?? VERDICT)({
