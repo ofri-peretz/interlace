@@ -193,16 +193,39 @@ export const Default: Story = {
   },
 };
 
-/** Continue to the details, then to the summary, and back with Change. */
-export const WalkThrough: Story = {
-  play: async ({ canvasElement }) => {
+/**
+ * The journey: every phase of the flow. A step that stops on a missing answer,
+ * the details, the summary, back with Change, and the submit with every field.
+ */
+export const Journey: Story = {
+  args: { onSubmit: fn() },
+  render: (args) => (
+    <div className="max-w-content">
+      <BookingFlow defaultTime={null} onSubmit={args.onSubmit as (data: FormData) => void} />
+    </div>
+  ),
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole('button', { name: 'Continue' }));
-    await expect(document.activeElement?.textContent).toMatch(/Your details/);
-    await userEvent.click(canvas.getByRole('button', { name: 'Continue' }));
-    await expect(canvas.getByRole('heading', { name: /Step 3 of 3/ })).toBeTruthy();
-    await userEvent.click(canvas.getByRole('button', { name: 'Change: Email' }));
-    await expect(document.activeElement?.textContent).toMatch(/Your details/);
+    await step('invalid: no time picked', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Continue' }));
+      await expect(canvas.getByRole('alert').textContent).toBe('Pick a day and a time to go on.');
+    });
+    await step('step: pick a time, then the details', async () => {
+      await userEvent.click(canvas.getByRole('radio', { name: /1:00/ }));
+      await userEvent.click(canvas.getByRole('button', { name: 'Continue' }));
+      await expect(document.activeElement?.textContent).toMatch(/Your details/);
+      await userEvent.click(canvas.getByRole('button', { name: 'Continue' }));
+    });
+    await step('review: the summary, and back with Change', async () => {
+      await expect(canvas.getByRole('heading', { name: /Step 3 of 3/ })).toBeTruthy();
+      await userEvent.click(canvas.getByRole('button', { name: 'Change: Email' }));
+      await expect(document.activeElement?.textContent).toMatch(/Your details/);
+      await userEvent.click(canvas.getByRole('button', { name: 'Continue' }));
+    });
+    await step('sent: the app gets every field', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Book the session' }));
+      await expect(args.onSubmit).toHaveBeenCalledTimes(1);
+    });
     // Let the step slide settle, so the a11y scan reads the text at full opacity.
     await Promise.all(canvasElement.getAnimations({ subtree: true }).map((a) => a.finished));
   },

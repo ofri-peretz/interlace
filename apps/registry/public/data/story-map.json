@@ -819,7 +819,8 @@
     "storyIds": [
       "blocks-dialoguestepper--default",
       "blocks-dialoguestepper--speakers-inside",
-      "blocks-dialoguestepper--whole-conversation"
+      "blocks-dialoguestepper--whole-conversation",
+      "blocks-dialoguestepper--journey"
     ],
     "preview": "blocks-dialoguestepper--default",
     "previewDark": null,
@@ -1520,7 +1521,7 @@
     "title": "Blocks/MultiStepForm",
     "storyIds": [
       "blocks-multistepform--default",
-      "blocks-multistepform--walk-through",
+      "blocks-multistepform--journey",
       "blocks-multistepform--summary",
       "blocks-multistepform--needs-an-answer",
       "blocks-multistepform--narrow-column",
@@ -2423,6 +2424,7 @@
       "blocks-socialsignin--all-providers",
       "blocks-socialsignin--last-used",
       "blocks-socialsignin--with-email",
+      "blocks-socialsignin--journey",
       "blocks-socialsignin--sent",
       "blocks-socialsignin--with-error",
       "blocks-socialsignin--dark",

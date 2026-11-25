@@ -17,6 +17,17 @@
           "source": ".changeset/css-layers.md"
         },
         {
+          "summary": "`DialogueStepper` drops its dot aliases (`DialogueStepper.Step`, `DialogueStepper.Choices`, `DialogueStepper.Choice`). Its parts were already exported flat, and the dot form throws when a server component writes it, so there is now one spelling, the one that works everywhere. The file header gains a flow map and the stories a `Journey` that walks a branch, the end of the talk, Back, the whole conversation and Start over.",
+          "components": [
+            "dialogue-stepper"
+          ],
+          "componentsDeclared": true,
+          "kind": "Breaking",
+          "bump": "major",
+          "migration": "replace `DialogueStepper.Step` with `DialogueStep`, `DialogueStepper.Choices` with `DialogueChoices` and `DialogueStepper.Choice` with `DialogueChoice`, and import them from the same file as `DialogueStepper`.",
+          "source": ".changeset/dialogue-stepper-flat-parts.md"
+        },
+        {
           "summary": "Interlace's own effects replace the backdrop set that was modelled on another library. Each one is written from scratch, coloured from theme tokens, still under reduced motion, hidden from assistive tech, and self-contained (no keyframes to add to your stylesheet):\n\n- `Starfield`: stars, shooting stars and meteors on one canvas with one frame loop that sleeps out of view.\n- `GradientMesh`: drifting glows of theme colour behind a hero or feature band.\n- `ThreadLines`: a seeded bundle of crossing threads in the two strand colours, with a travelling glint.\n- `SkyBackdrop`: a daytime sky with a sun glow and drifting clouds, turning to dusk in the dark scheme.\n- `LightBeam`: a static cone of light, rendered on the server.\n- `RotatingText`: a rotating headline word with no layout shift and one stable label for screen readers.\n- `FocusGrid` (pattern): picture cards where the hovered or focused one stays bright, in pure CSS.\n\n`HeroCosmic` now draws its sky with `Starfield`. Its `effects` bag is simpler: `starDensity`, `twinkleProbability`, `shootingStars` (`[min, max]` seconds, or `false`), `meteorCount` and `meteorDuration` (`[min, max]` seconds).",
           "components": [
             "starfield",
@@ -1331,6 +1342,18 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/flip-card-focus.md"
+        },
+        {
+          "summary": "`MultiStepForm`, `DialogueStepper` and `SocialSignIn` are now flows under the flow standard: each file's header carries a flow map (every phase, the part that shows it, and what moves it on), each part's `displayName` is the name you write, and each has a `Journey` story that walks every phase. The standard now has two shapes, because React cannot read a property of a client module from a server component: a flow only a client component can compose ships a namespace (`LiveRoom.Lobby`), and a flow a server component can compose keeps flat parts (`MultiStepFormStep`, `DialogueStep`). Their names do not change.",
+          "components": [
+            "multi-step-form",
+            "social-sign-in"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/flows-two-shapes.md"
         },
         {
           "summary": "Every focus ring is visible, whole, and clear of the text.\n\nA keyboard audit of every story found three kinds of gap, now fixed:\n\n- No visible focus: CollapsibleTrigger and a focusable TabsContent now show the system ring, 2px clear of the element. CodeEditor's textarea fills a clipping frame, so its ring is now inset, inside the padding and off the code. CodeWindow shows the ring on its frame when its body (a `<pre tabIndex={0}>`) has focus.\n- Clipped rings: the ReadingLayout contents rail, SettingsTemplate's section nav, Scroller's viewport and GuessReveal's explanation scroll or clip their content, and cut the top and bottom off a focused link. Each now keeps a 4px margin for the ring, with no change to layout.",
