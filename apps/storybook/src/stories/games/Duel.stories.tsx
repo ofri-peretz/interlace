@@ -44,7 +44,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText('Avery won by 50 points.')).toBeTruthy();
+    await expect(canvas.getByText('Avery won by 70 points.')).toBeTruthy();
     await expect(canvas.getByRole('table', { name: 'Round by round' })).toBeTruthy();
   },
 };
