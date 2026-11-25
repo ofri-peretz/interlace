@@ -3,8 +3,8 @@
  *
  * Interlace is copied into someone else's app, so no consumer's identity may ship inside a
  * component, style or token. A consumer brands through cssVars and props. This lock scans
- * everything under packages/ui/src and packages/ui/styles (the files the registry copies out)
- * for the names of the sites and products that consume Interlace today.
+ * everything under packages/ui/src and packages/ui/styles (the files the registry copies out), and
+ * packages/native/src, for the names of the sites and products that consume Interlace today.
  *
  * A hit means a consumer's name, handle or product leaked into shipped code. Move it to the
  * consumer, or to a Storybook fixture, which never ships. When a new consumer adopts Interlace,
@@ -96,6 +96,13 @@ describe("brand-neutral lock", () => {
   it("no shipped component, style or token names a consumer", () => {
     const files = SHIPPED_DIRS.flatMap((d) => walk(join(UI_ROOT, d)));
     expect(files.length).toBeGreaterThan(100);
+    expect(consumerHits(files)).toEqual([]);
+  });
+
+  // @interlace/native ships into a consumer's app the same way, so the same names stay out of it.
+  it("no native component, theme or token names a consumer", () => {
+    const files = walk(resolve(UI_ROOT, "..", "native", "src"));
+    expect(files.length).toBeGreaterThan(10);
     expect(consumerHits(files)).toEqual([]);
   });
 });
