@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 221
+    "itemCount": 223
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,10 +30,10 @@
   "facets": {
     "tier": {
       "primitive": 77,
-      "pattern": 64,
+      "pattern": 65,
       "effect": 27,
+      "game": 15,
       "chart": 14,
-      "game": 14,
       "template": 13,
       "util": 6,
       "starter": 3,
@@ -41,8 +41,8 @@
     },
     "category": {
       "primitive": 77,
-      "pattern": 64,
-      "blog": 36,
+      "pattern": 65,
+      "blog": 37,
       "data": 30,
       "foundation": 27,
       "effect": 27,
@@ -50,9 +50,9 @@
       "decorative": 24,
       "navigation": 18,
       "feedback": 18,
+      "games": 15,
+      "game": 15,
       "chart": 14,
-      "games": 14,
-      "game": 14,
       "marketing": 14,
       "template": 13,
       "overlay": 10,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 111,
-      "server": 110
+      "client": 112,
+      "server": 111
     },
     "keyboard": {
-      "none": 173,
+      "none": 175,
       "handled": 48
     },
     "loading": {
-      "none": 183,
+      "none": 185,
       "built-in": 38
     },
     "minViewport": {
-      "320": 140,
+      "320": 142,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7595,6 +7595,64 @@
       "docs": "https://ds.interlace.tools/c/reading-time"
     },
     {
+      "name": "recall-card",
+      "title": "Recall Card",
+      "type": "registry:ui",
+      "summary": "A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group",
+          "region"
+        ],
+        "aria": [
+          "aria-controls",
+          "aria-expanded",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/recall-card.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/recall-card.json",
+      "item": "https://ds.interlace.tools/r/recall-card.json",
+      "docs": "https://ds.interlace.tools/c/recall-card"
+    },
+    {
       "name": "recap",
       "title": "Recap",
       "type": "registry:ui",
@@ -12369,6 +12427,57 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/underline-link.json",
       "item": "https://ds.interlace.tools/r/underline-link.json",
       "docs": "https://ds.interlace.tools/c/underline-link"
+    },
+    {
+      "name": "update-feed",
+      "title": "Update Feed",
+      "type": "registry:ui",
+      "summary": "What is new, newest first: a product's changelog, a publication's latest pieces, a team's releases. Entries are grouped under their day or month, each with a kind (\"Release\", \"Article\"), a title that links to the thing itself and a line on what it is. Pass…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/update-feed.tsx",
+        "components/ui/patterns/update-feed-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/update-feed.json",
+      "item": "https://ds.interlace.tools/r/update-feed.json",
+      "docs": "https://ds.interlace.tools/c/update-feed"
     },
     {
       "name": "use-reading-prefs",

@@ -484,6 +484,10 @@
       "types": "./dist/games/tally-bars.d.ts",
       "default": "./dist/games/tally-bars.js"
     },
+    "./games/recall-card": {
+      "types": "./dist/games/recall-card.d.ts",
+      "default": "./dist/games/recall-card.js"
+    },
     "./games/poll": {
       "types": "./dist/games/poll.d.ts",
       "default": "./dist/games/poll.js"

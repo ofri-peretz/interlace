@@ -1845,6 +1845,20 @@
     "previewDark": "primitives-readingtime--dark",
     "skeleton": "primitives-readingtime--loading"
   },
+  "recall-card": {
+    "title": "Games/RecallCard",
+    "storyIds": [
+      "games-recallcard--default",
+      "games-recallcard--revealed",
+      "games-recallcard--rated",
+      "games-recallcard--interaction",
+      "games-recallcard--three-ratings",
+      "games-recallcard--right-to-left"
+    ],
+    "preview": "games-recallcard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "recap": {
     "title": "Blocks/Recap",
     "storyIds": [
@@ -2989,6 +3003,20 @@
       "effects-underlinelink--right-to-left"
     ],
     "preview": "effects-underlinelink--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "update-feed": {
+    "title": "Blocks/UpdateFeed",
+    "storyIds": [
+      "blocks-updatefeed--default",
+      "blocks-updatefeed--first-visit",
+      "blocks-updatefeed--by-month",
+      "blocks-updatefeed--narrow",
+      "blocks-updatefeed--empty",
+      "blocks-updatefeed--right-to-left"
+    ],
+    "preview": "blocks-updatefeed--default",
     "previewDark": null,
     "skeleton": null
   },
