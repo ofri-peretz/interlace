@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 225
+    "itemCount": 226
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 77,
       "pattern": 65,
       "effect": 27,
-      "game": 17,
+      "game": 18,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -50,8 +50,8 @@
       "decorative": 24,
       "navigation": 18,
       "feedback": 18,
-      "games": 17,
-      "game": 17,
+      "games": 18,
+      "game": 18,
       "chart": 14,
       "marketing": 14,
       "template": 13,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 114,
+      "client": 115,
       "server": 111
     },
     "keyboard": {
-      "none": 176,
+      "none": 177,
       "handled": 49
     },
     "loading": {
-      "none": 187,
+      "none": 188,
       "built-in": 38
     },
     "minViewport": {
-      "320": 144,
+      "320": 145,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -326,6 +326,7 @@
         ],
         "aria": [
           "aria-disabled",
+          "aria-hidden",
           "aria-keyshortcuts",
           "aria-label",
           "aria-labelledby",
@@ -333,9 +334,9 @@
           "aria-pressed"
         ],
         "motion": {
-          "driver": "none",
+          "driver": "js",
           "declaresPreference": true,
-          "stylesheetCannotReach": false
+          "stylesheetCannotReach": true
         },
         "focusRing": true
       },
@@ -349,7 +350,8 @@
       ],
       "registryDependencies": [
         "cn",
-        "interlace-base"
+        "interlace-base",
+        "use-reduced-motion"
       ],
       "installsTo": [
         "components/ui/games/answer-pad.tsx"
@@ -10265,6 +10267,60 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/stance-list.json",
       "item": "https://ds.interlace.tools/r/stance-list.json",
       "docs": "https://ds.interlace.tools/c/stance-list"
+    },
+    {
+      "name": "standings",
+      "title": "Standings",
+      "type": "registry:ui",
+      "summary": "The board between rounds of a live game: who is where now, and how they got there. Each player's points from this round pop up beside their name, their total counts up from where it was, and then the rows glide to their new places, with the places gained…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "count-up",
+        "flip-group",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/standings.tsx",
+        "components/ui/games/leaderboard-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/standings.json",
+      "item": "https://ds.interlace.tools/r/standings.json",
+      "docs": "https://ds.interlace.tools/c/standings"
     },
     {
       "name": "starfield",

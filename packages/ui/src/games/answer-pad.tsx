@@ -40,7 +40,13 @@
  * ## Motion
  *
  * A tile presses in slightly when tapped, and the picked tile settles with a
- * small lift (transform only, 200ms). Under reduced motion nothing moves.
+ * small lift (transform only, 200ms). At the reveal the right tile lands
+ * (a 1.04 scale, 420ms, eased out), the tiles nobody needs fade back, a wrong
+ * pick gives one small sideways nudge, and on a right pick the points rise
+ * from the tile (`data-slot="answer-pad-points"`, aria-hidden: the status
+ * says them). Everything is transform and opacity, run by the compositor.
+ * Under reduced motion nothing moves: the marks, colours and words are the
+ * same.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -60,6 +66,7 @@ import * as React from 'react';
 import { Check, X } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
+import { useReducedMotion } from '../lib/use-reduced-motion.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -148,6 +155,8 @@ function AnswerPad({
   const state: AnswerPadState = revealed ? 'revealed' : value !== null ? 'sent' : closed ? 'closed' : 'open';
   const open = state === 'open';
   const promptId = React.useId();
+  const reduced = useReducedMotion();
+  const tiles = React.useRef(new Map<string, HTMLButtonElement>());
   const sent = React.useRef(false);
   React.useEffect(() => {
     if (value === null) sent.current = false;
@@ -179,6 +188,39 @@ function AnswerPad({
         ? 'correct'
         : 'wrong'
     : null;
+  // The reveal plays when `correct` arrives; a phone that reconnects into the reveal sees it too.
+  React.useEffect(() => {
+    if (!revealed || reduced) return;
+    const ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+    const hit = correct ? tiles.current.get(correct) : undefined;
+    if (hit && typeof hit.animate === 'function')
+      hit.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.04)', offset: 0.45 }, { transform: 'scale(1)' }], {
+        duration: 420,
+        easing: ease,
+      });
+    const chip = hit?.querySelector<HTMLElement>('[data-slot="answer-pad-points"]');
+    if (chip && typeof chip.animate === 'function')
+      chip.animate(
+        [
+          { transform: 'translateY(10px) scale(0.5)' },
+          { transform: 'translateY(-4px) scale(1.08)', offset: 0.6 },
+          { transform: 'translateY(0) scale(1)' },
+        ],
+        { duration: 560, delay: 160, easing: ease, fill: 'backwards' },
+      );
+    const miss = value !== null && value !== correct ? tiles.current.get(value) : undefined;
+    if (miss && typeof miss.animate === 'function')
+      miss.animate(
+        [
+          { transform: 'translateX(0)' },
+          { transform: 'translateX(-4px)', offset: 0.3 },
+          { transform: 'translateX(3px)', offset: 0.65 },
+          { transform: 'translateX(0)' },
+        ],
+        { duration: 320, easing: 'ease-out' },
+      );
+  }, [revealed, correct, value, reduced]);
+
   const right = choices.find((c) => c.id === correct);
   const status =
     state === 'revealed'
@@ -232,6 +274,10 @@ function AnswerPad({
           return (
             <button
               key={c.id}
+              ref={(el) => {
+                if (el) tiles.current.set(c.id, el);
+                else tiles.current.delete(c.id);
+              }}
               type="button"
               data-slot="answer-pad-choice"
               data-key={key}
@@ -245,12 +291,14 @@ function AnswerPad({
                 display === 'keys' ? 'min-h-24 justify-center' : 'min-h-16',
                 'bg-card text-card-foreground border-border',
                 'focus-visible:outline-ring outline-offset-2 focus-visible:outline-2',
-                'motion-safe:transition-[transform,background-color,border-color] motion-safe:duration-(--duration-fast)',
+                'motion-safe:transition-[transform,background-color,border-color,opacity] motion-safe:duration-(--duration-fast)',
                 open && 'hover:bg-accent hover:border-primary cursor-pointer motion-safe:active:scale-[0.97]',
                 !open && 'cursor-default',
                 mark === 'picked' && 'border-primary bg-primary/10 motion-safe:-translate-y-0.5',
                 mark === 'correct' && 'border-success bg-success/10',
                 mark === 'wrong' && 'border-destructive bg-destructive/10',
+                // At the reveal, the tiles that are neither right nor yours step back.
+                revealed && !mark && 'opacity-70',
               )}
             >
               <span
@@ -286,6 +334,15 @@ function AnswerPad({
                   {c.label}
                 </span>
               )}
+              {mark === 'correct' && mine && points ? (
+                <span
+                  aria-hidden
+                  data-slot="answer-pad-points"
+                  className="bg-success text-success-foreground pointer-events-none absolute -top-3 end-3 rounded-full px-2.5 py-0.5 text-sm font-bold tabular-nums shadow-sm"
+                >
+                  +{points.toLocaleString(locale)}
+                </span>
+              ) : null}
               {mark === 'correct' || mark === 'wrong' ? (
                 <span className="sr-only">
                   , {mark === 'correct' ? (labels?.correct ?? 'right answer') : (labels?.mine ?? 'your answer')}

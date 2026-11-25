@@ -5,6 +5,7 @@ import { Button } from '@interlace/ui/button';
 import { AnswerPad } from '@interlace/ui/games/answer-pad';
 import { JoinCode } from '@interlace/ui/games/join-code';
 import { Podium } from '@interlace/ui/games/podium';
+import { Standings } from '@interlace/ui/games/standings';
 import { LiveRoom, useRoom } from '@interlace/ui/games/live-room';
 import {
   applyRoomEvent,
@@ -184,7 +185,16 @@ function Host({ hub }: { hub: ReturnType<typeof createMemoryRoomHub> }) {
           {room.phase === 'question' ? (
             <p className="text-2xl font-semibold">Round {room.round}: which letter is third?</p>
           ) : null}
-          {room.phase === 'reveal' ? <p className="text-2xl font-semibold">It was {RIGHT}.</p> : null}
+          {room.phase === 'reveal' ? (
+            <>
+              <p className="text-2xl font-semibold">It was {RIGHT}.</p>
+              <Standings
+                caption={`After round ${room.round}`}
+                entries={roomStandings(room).map((e) => ({ ...e, gained: room.lastPoints[e.id] ?? 0 }))}
+                locale="en-US"
+              />
+            </>
+          ) : null}
           {room.phase === 'podium' ? <Podium entries={roomStandings(room)} /> : null}
           {controls}
         </>

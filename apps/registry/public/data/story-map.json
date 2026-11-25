@@ -2489,6 +2489,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "standings": {
+    "title": "Games/Standings",
+    "storyIds": [
+      "games-standings--default",
+      "games-standings--on-ap-hone",
+      "games-standings--still",
+      "games-standings--replay",
+      "games-standings--right-to-left"
+    ],
+    "preview": "games-standings--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "starfield": {
     "title": "Effects/Starfield",
     "storyIds": [

@@ -3766,6 +3766,24 @@
       }
     },
     {
+      "name": "standings",
+      "type": "registry:ui",
+      "title": "Standings",
+      "description": "The board between rounds of a live game: who is where now, and how they got there. Each player's points from this round pop up beside their name, their total counts up from where it was, and then the rows glide to their new places, with the places gained…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "streak",
       "type": "registry:ui",
       "title": "Streak",

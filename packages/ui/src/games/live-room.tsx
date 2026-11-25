@@ -16,16 +16,16 @@
  * and the app holds the room through `useRoom`. Every phase of
  * `RoomPhase`, the part that shows it, and what moves it on:
  *
- * | Phase     | Host screen                       | Player phone         | Leaves by (event)                        |
- * | --------- | --------------------------------- | -------------------- | ---------------------------------------- |
- * | lobby     | LiveRoom.Lobby with JoinCode      | LiveRoom.Lobby       | Start → `countdown`                      |
- * | countdown | LiveRoom.Countdown                | LiveRoom.Countdown   | its deadline → `question`                |
- * | question  | LiveRoom.HostControls             | AnswerPad, or Poll   | all answered or the clock → `reveal`     |
- * | reveal    | LiveRoom.HostControls, TallyBars  | AnswerPad (revealed) | Next → `countdown`, or Podium → `podium` |
- * | podium    | Podium, LiveRoom.HostControls     | Podium               | Play again → `restart`, or End → `close` |
- * | closed    | the app's own end screen          | the app's own screen | —                                        |
+ * | Phase     | Host screen                                 | Player phone         | Leaves by (event)                        |
+ * | --------- | ------------------------------------------- | -------------------- | ---------------------------------------- |
+ * | lobby     | LiveRoom.Lobby with JoinCode                | LiveRoom.Lobby       | Start → `countdown`                      |
+ * | countdown | LiveRoom.Countdown                          | LiveRoom.Countdown   | its deadline → `question`                |
+ * | question  | LiveRoom.HostControls                       | AnswerPad, or Poll   | all answered or the clock → `reveal`     |
+ * | reveal    | TallyBars, Standings, LiveRoom.HostControls | AnswerPad (revealed) | Next → `countdown`, or Podium → `podium` |
+ * | podium    | Podium, LiveRoom.HostControls               | Podium               | Play again → `restart`, or End → `close` |
+ * | closed    | the app's own end screen                    | the app's own screen | —                                        |
  *
- * AnswerPad, Poll, TallyBars and Podium are game components in their
+ * AnswerPad, Poll, TallyBars, Standings and Podium are game components in their
  * own right, so the flow names them rather than wrapping them. The round's
  * prompt reaches the phones in `room.prompt` and its answer in
  * `room.solution` (see room-model), so AnswerPad never needs the answer early.

@@ -544,6 +544,10 @@
       "types": "./dist/games/answer-pad.d.ts",
       "default": "./dist/games/answer-pad.js"
     },
+    "./games/standings": {
+      "types": "./dist/games/standings.d.ts",
+      "default": "./dist/games/standings.js"
+    },
     "./games/duel": {
       "types": "./dist/games/duel.d.ts",
       "default": "./dist/games/duel.js"
