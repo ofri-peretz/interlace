@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 217
+    "itemCount": 219
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 77,
-      "pattern": 60,
+      "pattern": 62,
       "effect": 27,
       "chart": 14,
       "game": 14,
@@ -41,15 +41,15 @@
     },
     "category": {
       "primitive": 77,
-      "pattern": 60,
+      "pattern": 62,
       "blog": 35,
       "data": 30,
       "foundation": 27,
       "effect": 27,
-      "form": 24,
+      "form": 25,
       "decorative": 24,
       "navigation": 18,
-      "feedback": 17,
+      "feedback": 18,
       "chart": 14,
       "games": 14,
       "game": 14,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "server": 109,
-      "client": 108
+      "client": 110,
+      "server": 109
     },
     "keyboard": {
-      "none": 169,
+      "none": 171,
       "handled": 48
     },
     "loading": {
-      "none": 179,
+      "none": 181,
       "built-in": 38
     },
     "minViewport": {
-      "320": 136,
+      "320": 138,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -2392,6 +2392,86 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/command-palette.json",
       "item": "https://ds.interlace.tools/r/command-palette.json",
       "docs": "https://ds.interlace.tools/c/command-palette"
+    },
+    {
+      "name": "commitment",
+      "title": "Commitment",
+      "type": "registry:ui",
+      "summary": "The end of a session, and a week later. `CommitmentPicker` asks each person to pick one thing to do this week, from a short list or in their own words, and says when they will be asked about it. `CommitmentCheckIn` is that question, on the follow-up link…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CheckInAnswer",
+          "values": [
+            "done",
+            "partly",
+            "not-yet"
+          ]
+        },
+        {
+          "name": "FollowUpState",
+          "values": [
+            "waiting",
+            "due",
+            "answered",
+            "lapsed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-hidden",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "CHECK_IN_ANSWERS",
+        "DAY_MS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/commitment.tsx",
+        "components/ui/patterns/commitment-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/commitment.json",
+      "item": "https://ds.interlace.tools/r/commitment.json",
+      "docs": "https://ds.interlace.tools/c/commitment"
     },
     {
       "name": "container",
@@ -4874,6 +4954,65 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/install-prompt.json",
       "item": "https://ds.interlace.tools/r/install-prompt.json",
       "docs": "https://ds.interlace.tools/c/install-prompt"
+    },
+    {
+      "name": "interest-signal",
+      "title": "Interest Signal",
+      "type": "registry:ui",
+      "summary": "\"I want more on this\": one tap that tells whoever runs the talk, the lesson or the page what people want to hear more about. The reader presses a toggle on a topic; the host sees every topic ranked by how many asked. It is the cheapest way to learn what an…",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/interest-signal.tsx",
+        "components/ui/patterns/interest-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/interest-signal.json",
+      "item": "https://ds.interlace.tools/r/interest-signal.json",
+      "docs": "https://ds.interlace.tools/c/interest-signal"
     },
     {
       "name": "interlace-base",

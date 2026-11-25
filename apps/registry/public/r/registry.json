@@ -2308,6 +2308,24 @@
       }
     },
     {
+      "name": "commitment",
+      "type": "registry:ui",
+      "title": "Commitment",
+      "description": "The end of a session, and a week later. `CommitmentPicker` asks each person to pick one thing to do this week, from a short list or in their own words, and says when they will be asked about it. `CommitmentCheckIn` is that question, on the follow-up link…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "cta-section",
       "type": "registry:ui",
       "title": "Cta Section",
@@ -2564,6 +2582,24 @@
       "type": "registry:ui",
       "title": "Install Prompt",
       "description": "An offer to add the site to the home screen, made once, politely, and only where it can work. Browsers that support it hand over their install dialog (`beforeinstallprompt`), and the Install button opens it. Safari on an iPhone or iPad has no such dialog…",
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "interest-signal",
+      "type": "registry:ui",
+      "title": "Interest Signal",
+      "description": "\"I want more on this\": one tap that tells whoever runs the talk, the lesson or the page what people want to hear more about. The reader presses a toggle on a topic; the host sees every topic ranked by how many asked. It is the cheapest way to learn what an…",
       "categories": [
         "feedback",
         "pattern"
