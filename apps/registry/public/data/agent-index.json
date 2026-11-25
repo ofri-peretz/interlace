@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 204
+    "itemCount": 210
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 77,
       "pattern": 54,
-      "effect": 20,
+      "effect": 26,
       "chart": 14,
       "game": 14,
       "template": 13,
@@ -45,9 +45,9 @@
       "blog": 35,
       "data": 30,
       "foundation": 27,
+      "effect": 26,
       "form": 24,
-      "effect": 20,
-      "decorative": 18,
+      "decorative": 24,
       "feedback": 15,
       "chart": 14,
       "games": 14,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 105,
-      "client": 99
+      "server": 106,
+      "client": 104
     },
     "keyboard": {
-      "none": 158,
-      "handled": 46
+      "none": 162,
+      "handled": 48
     },
     "loading": {
-      "none": 166,
+      "none": 172,
       "built-in": 38
     },
     "minViewport": {
       "320": 131,
       "480": 7,
       "768": 1,
-      "inherited": 65
+      "inherited": 71
     }
   },
   "items": [
@@ -3316,6 +3316,63 @@
       "docs": "https://ds.interlace.tools/c/dot-plot"
     },
     {
+      "name": "draw-on",
+      "title": "Draw On",
+      "type": "registry:ui",
+      "summary": "A line drawing that draws itself as it scrolls into view: an illustration, a diagram, an arrow that points at the next thing, a signature. Wrap any inline SVG; every stroked shape inside traces its own line, one after another in document order, and filled…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DrawOnOrder",
+          "values": [
+            "sequence",
+            "together"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DrawOn"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/draw-on.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/draw-on.json",
+      "item": "https://ds.interlace.tools/r/draw-on.json",
+      "docs": "https://ds.interlace.tools/c/draw-on"
+    },
+    {
       "name": "drawer",
       "title": "Drawer",
       "type": "registry:ui",
@@ -3844,6 +3901,57 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/flip-card.json",
       "item": "https://ds.interlace.tools/r/flip-card.json",
       "docs": "https://ds.interlace.tools/c/flip-card"
+    },
+    {
+      "name": "flip-group",
+      "title": "Flip Group",
+      "type": "registry:ui",
+      "summary": "Items that glide to their new place when a list is sorted, filtered or reordered, instead of jumping there: a leaderboard that re-ranks, results that narrow as a filter is typed, cards that swap. The motion tells the reader where each item went, which a…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "use-render",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "FlipGroup"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/flip-group.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/flip-group.json",
+      "item": "https://ds.interlace.tools/r/flip-group.json",
+      "docs": "https://ds.interlace.tools/c/flip-group"
     },
     {
       "name": "focus-grid",
@@ -5307,6 +5415,55 @@
       "docs": "https://ds.interlace.tools/c/live-room"
     },
     {
+      "name": "marker",
+      "title": "Marker",
+      "type": "registry:ui",
+      "summary": "A highlighter stroke across the one phrase in a paragraph a reader should not miss. The first time the phrase scrolls into view, the stroke sweeps across it from the start of the line to the end, the way a pen would, and wraps across lines with the text.…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "Marker"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/marker.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/marker.json",
+      "item": "https://ds.interlace.tools/r/marker.json",
+      "docs": "https://ds.interlace.tools/c/marker"
+    },
+    {
       "name": "mdx-starter",
       "title": "MDX Starter",
       "type": "registry:ui",
@@ -6119,6 +6276,66 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/podium.json",
       "item": "https://ds.interlace.tools/r/podium.json",
       "docs": "https://ds.interlace.tools/c/podium"
+    },
+    {
+      "name": "pointer-surface",
+      "title": "Pointer Surface",
+      "type": "registry:ui",
+      "summary": "A surface that answers the pointer: a soft light that follows it across a card, a slight tilt toward it, or both. It is the feel of picking a card up off a table, for a grid of choices a reader is weighing (plans, sessions, topics), not for every box on a…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PointerSurfaceEffect",
+          "values": [
+            "light",
+            "tilt",
+            "both"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "PointerSurface"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/pointer-surface.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/pointer-surface.json",
+      "item": "https://ds.interlace.tools/r/pointer-surface.json",
+      "docs": "https://ds.interlace.tools/c/pointer-surface"
     },
     {
       "name": "poll",
@@ -7402,6 +7619,69 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroll-story.json",
       "item": "https://ds.interlace.tools/r/scroll-story.json",
       "docs": "https://ds.interlace.tools/c/scroll-story"
+    },
+    {
+      "name": "scroll-text",
+      "title": "Scroll Text",
+      "type": "registry:ui",
+      "summary": "A statement that the reader brings into focus by scrolling: its words go from the muted text colour to the full one, in reading order, as the paragraph moves up the screen. For one large sentence a page is built around (a mission, a finding, a promise)…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ScrollTextElement",
+          "values": [
+            "p",
+            "h1",
+            "h2",
+            "h3",
+            "blockquote",
+            "div"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "ScrollText"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/scroll-text.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroll-text.json",
+      "item": "https://ds.interlace.tools/r/scroll-text.json",
+      "docs": "https://ds.interlace.tools/c/scroll-text"
     },
     {
       "name": "scroller",
@@ -11474,6 +11754,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/typography.json",
       "item": "https://ds.interlace.tools/r/typography.json",
       "docs": "https://ds.interlace.tools/c/typography"
+    },
+    {
+      "name": "underline-link",
+      "title": "Underline Link",
+      "type": "registry:ui",
+      "summary": "A text link whose underline draws itself in when the reader points at it or tabs to it, from the start of the line to the end, and wraps across lines with the text. For links in running text, navigation and footers where a hard underline on every link…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "use-render",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "UnderlineLink"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/effects/underline-link.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/underline-link.json",
+      "item": "https://ds.interlace.tools/r/underline-link.json",
+      "docs": "https://ds.interlace.tools/c/underline-link"
     },
     {
       "name": "use-reading-prefs",

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-text",
+  "type": "registry:ui",
+  "title": "Scroll Text",
+  "description": "A statement that the reader brings into focus by scrolling: its words go from the muted text colour to the full one, in reading order, as the paragraph moves up the screen. For one large sentence a page is built around (a mission, a finding, a promise)…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json",
+    "https://ds.interlace.tools/r/use-reduced-motion.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/effects/scroll-text.tsx",
+      "target": "components/ui/effects/scroll-text.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/scroll-text v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/scroll-text\n// What changed since: https://ds.interlace.tools/c/scroll-text#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — ScrollText\n *\n * A statement that the reader brings into focus by scrolling: its words go\n * from the muted text colour to the full one, in reading order, as the\n * paragraph moves up the screen. For one large sentence a page is built\n * around (a mission, a finding, a promise), not for body copy.\n *\n * ## Content first\n *\n * The sentence is in the server HTML once, as plain text, for a screen reader\n * and a crawler. The word-by-word copy is `aria-hidden`. Every word is always\n * readable: it starts at `--muted-foreground`, which already meets AA contrast\n * on the page, and ends at `--foreground`. Nothing fades from invisible.\n *\n * ## Motion\n *\n * The reader is the timeline. Each word gets one Web Animations API colour\n * animation on a `ViewTimeline`, so the browser drives it from the scroll\n * position off the main thread, with no scroll listener and no keyframes to\n * add. Words share the range between `start` and `end` (percentages of the\n * paragraph's pass through the viewport), so the colour runs through the\n * sentence like a reader's eye. Without `ViewTimeline`, or under\n * `prefers-reduced-motion: reduce`, the sentence is simply in full colour.\n *\n * ## Composition\n *\n *   ScrollText                          (p by default — data-slot=\"scroll-text\")\n *     ├─ text                           (sr-only, the sentence once)\n *     └─ visual                         (aria-hidden — data-slot=\"scroll-text-visual\")\n *         └─ word × n                   (data-slot=\"scroll-text-word\")\n *\n * | Rule | Concept                 | Where in this file                                   |\n * | ---- | ----------------------- | ---------------------------------------------------- |\n * | R4   | Extends native el       | `as` element props                                   |\n * | R6   | data-slot per part      | scroll-text / -visual / -word                        |\n * | R7   | cn + ...rest            | `cn(className)` + `{...props}`                       |\n * | R19  | Tokens only             | `--muted-foreground` → `--foreground`                |\n * | R25  | Client component        | the timeline is built in the browser                 |\n * | R26  | A11y                    | read once; every word always at AA contrast          |\n */\n\nimport { cn } from '@/lib/utils';\nimport { useReducedMotion } from '@/hooks/use-reduced-motion';\n\ntype ScrollTextElement = 'p' | 'h1' | 'h2' | 'h3' | 'blockquote' | 'div';\n\nexport interface ScrollTextProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {\n  /** The sentence, as plain text. */\n  children: string;\n  /** The element to render. @default 'p' */\n  as?: ScrollTextElement;\n  /** Where the first word starts to fill, as a percentage of the paragraph's pass through the viewport. @default 20 */\n  start?: number;\n  /** Where the last word is full, as a percentage of that pass. @default 60 */\n  end?: number;\n}\n\ninterface ViewTimelineLike {\n  new (options: { subject: Element; axis?: 'block' | 'inline' }): AnimationTimeline;\n}\n\nfunction viewTimeline(): ViewTimelineLike | undefined {\n  return (globalThis as { ViewTimeline?: ViewTimelineLike }).ViewTimeline;\n}\n\nexport function ScrollText({ children, as: Tag = 'p', start = 20, end = 60, className, ...props }: ScrollTextProps) {\n  const reduced = useReducedMotion();\n  const ref = React.useRef<HTMLElement>(null);\n  const words = children.split(/(\\s+)/);\n\n  React.useLayoutEffect(() => {\n    const el = ref.current;\n    const Timeline = viewTimeline();\n    if (!el || reduced || !Timeline || typeof el.animate !== 'function') return;\n    el.dataset.live = '';\n    const pieces = Array.from(el.querySelectorAll<HTMLElement>('[data-slot=\"scroll-text-word\"]'));\n    const timeline = new Timeline({ subject: el, axis: 'block' });\n    const from = Math.max(0, Math.min(100, start));\n    const to = Math.max(from, Math.min(100, end));\n    const step = pieces.length > 0 ? (to - from) / pieces.length : 0;\n    const animations = pieces.map((piece, i) =>\n      // var() keyframes stay live, so a theme switch mid-page recolours the sentence.\n      piece.animate([{ color: 'var(--muted-foreground)' }, { color: 'var(--foreground)' }], {\n        fill: 'both',\n        easing: 'linear',\n        timeline,\n        rangeStart: `cover ${from + i * step}%`,\n        rangeEnd: `cover ${from + (i + 1) * step}%`,\n      } as KeyframeAnimationOptions),\n    );\n    return () => {\n      delete el.dataset.live;\n      for (const a of animations) a.cancel();\n    };\n  }, [reduced, start, end, children]);\n\n  return (\n    <Tag ref={ref as React.Ref<never>} data-slot=\"scroll-text\" className={cn(className)} {...props}>\n      <span className=\"sr-only\">{children}</span>\n      <span data-slot=\"scroll-text-visual\" aria-hidden=\"true\">\n        {words.map((word, i) => {\n          if (word === '') return null;\n          if (/^\\s+$/.test(word)) return word;\n          return (\n            <span key={`${i}-${word}`} data-slot=\"scroll-text-word\">\n              {word}\n            </span>\n          );\n        })}\n      </span>\n    </Tag>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/scroll-text\n\nInstalled to `components/ui/effects/scroll-text.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/scroll-text';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/scroll-text\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}
