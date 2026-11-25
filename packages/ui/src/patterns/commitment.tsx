@@ -27,6 +27,7 @@
  *     ├─ p                         (data-slot="commitment-check-in-question", the group label)
  *     ├─ div role="group"          (data-slot="commitment-check-in-options": Yes / Partly / Not yet)
  *     ├─ p tabIndex=-1 aria-live   (data-slot="commitment-check-in-thanks")
+ *     ├─ Button?                   (data-slot="commitment-check-in-change": with allowChange, once answered)
  *     └─ div                       (data-slot="commitment-check-in-footer": optional, e.g. the next step)
  *
  * ## Data

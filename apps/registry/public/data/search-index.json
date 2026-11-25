@@ -415,6 +415,7 @@
     "alik": 2,
     "aliv": 2,
     "allow": 19,
+    "allowchang": 1,
     "almost": 5,
     "alon": 31,
     "along": 8,
@@ -1395,7 +1396,7 @@
     "figur": 17,
     "figurecaption": 1,
     "filenam": 2,
-    "fill": 51,
+    "fill": 52,
     "filter": 15,
     "filterabl": 2,
     "final": 3,
@@ -2038,7 +2039,7 @@
     "morph": 1,
     "motif": 1,
     "motion": 78,
-    "mount": 20,
+    "mount": 21,
     "mous": 11,
     "mov": 34,
     "move": 61,
@@ -3200,7 +3201,7 @@
     "touch": 28,
     "toward": 12,
     "trac": 4,
-    "track": 25,
+    "track": 26,
     "tracker": 1,
     "trad": 4,
     "traffic": 2,
@@ -3649,7 +3650,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "articl list grid blog pattern server rsc load skeleton responsiv min viewport 320 articlecard featur proper tile section card col relatedpost overlay stream density big sidebar regular empty post gap priority padd track compos optional container variant index air articlelistgrid collection relax slot 56rem data 4xl statical reach styl 28rem custom dashboard count page stat landmark much scan compact runtim tailwind hero array collaps"
+      "terms": "articl list grid blog pattern server rsc load skeleton responsiv min viewport 320 articlecard featur proper tile section card col relatedpost overlay stream density big sidebar regular empty post gap priority padd compos track optional container variant index air articlelistgrid collection relax slot 56rem data 4xl statical reach styl 28rem custom dashboard count page stat landmark much scan compact runtim tailwind hero array collaps"
     },
     {
       "name": "article-template",
@@ -4063,7 +4064,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect ring hit send mark chang player unless nearby mount browser draw short support 300m yesterday animat 600m new motion replay tone hidden dashoffset answer small noth data drawn round nam api job untouch arrival tap slot right count idle loop strok"
+      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect ring hit send mark chang player unless nearby browser mount draw short support 300m yesterday animat 600m new motion replay tone hidden dashoffset answer small noth data drawn round nam api job untouch arrival tap slot right count idle loop strok"
     },
     {
       "name": "chart-frame",
@@ -4349,7 +4350,7 @@
         "pattern",
         "form"
       ],
-      "terms": "commit form pattern client responsiv min viewport 320 stat done part yet wait due answer laps check day person week commitmentcheckin commitmentpicker ask option question pick data committ word slot yes null session group chang open follow later summary choic else defaultvalu onvaluechang short field button submit many restor ago commitmentimpact epoch followupat followupstat madeat openday reminder tabindex label stor time defaultanswer thank room"
+      "terms": "commit form pattern client responsiv min viewport 320 stat done part yet wait due answer laps check day person week commitmentcheckin commitmentpicker ask option question data pick committ word slot yes chang null session group open follow later summary button choic else defaultvalu onvaluechang short field submit many restor ago allowchang commitmentimpact epoch followupat followupstat madeat openday reminder tabindex label stor time defaultanswer thank"
     },
     {
       "name": "container",
@@ -4407,7 +4408,7 @@
         "effect",
         "data"
       ],
-      "terms": "count data effect client countup final digit number around figur 120 formatter local mov view scroll 4812 invisib jitter numberformatoption soon motion formatt intl currency decimal first start num show colour inherit 1200 laid fast stabl currentcolor tabular visibl numberformat percent built read browser reader wait time crawler notation label settl millisecond reduc format writ content hidden option unit compact mount script raw cell"
+      "terms": "count data effect client countup final digit number around figur 120 formatter local mov view scroll 4812 invisib jitter numberformatoption soon motion formatt intl currency decimal first start num show colour inherit 1200 laid fast stabl currentcolor tabular visibl numberformat percent built read browser reader wait time crawler notation label settl millisecond reduc format writ content hidden option unit compact script mount raw cell"
     },
     {
       "name": "cta-section",
@@ -4761,7 +4762,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "draw decorativ effect client stat sequenc together drawon svg strok illustration shap millisecond diagram signatur trac docu order animat another finish view gettotallength photograph dash remov editorial pen wrot hide length enter next arrow insid motion 1200 150 calm paper dashoffset scroll without drawn intersectionobserver ready exact measur fill point browser suit untouch wait crawler stylesheet add keyfram reduc stand every much straight print"
+      "terms": "draw decorativ effect client stat sequenc together drawon svg strok illustration shap millisecond diagram signatur trac docu order animat another finish view gettotallength photograph dash remov editorial pen wrot hide length enter next arrow insid motion 1200 150 calm paper dashoffset scroll without drawn intersectionobserver ready exact measur point browser fill suit untouch wait crawler stylesheet add keyfram reduc stand every much straight print"
     },
     {
       "name": "drawer",
@@ -5003,7 +5004,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "focus grid market pattern server rsc responsiv min viewport 320 card scrim focusgrid media chapter study pictur titl link column help video bright feel href destination busy tab readabl fit 12rem compar step option back fill img case hover dimm track imag visual invert portrait whol stay articl aspect intrinsic width calc appli blur dim without every floor narrower shrink strength point hit job"
+      "terms": "focus grid market pattern server rsc responsiv min viewport 320 card scrim focusgrid media chapter study pictur titl link column help video bright feel href destination busy tab readabl fit 12rem compar step option back fill img case hover dimm imag track visual invert portrait whol stay articl aspect intrinsic width calc appli blur dim without every floor narrower shrink strength point hit job"
     },
     {
       "name": "focus-ring",
@@ -5129,7 +5130,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar dissolv worksheet fade careful generator graph paper breath fad board slow var radial toward arrang strongest either event hundr thousand even column primary highlight motion choos laid border hidden glow mulberry32 like edge compet listener timelin plac row without behind fals mask measur ble fill browser none hold work soft section"
+      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar dissolv worksheet fade careful generator graph paper breath fad board slow var radial toward arrang strongest either event hundr thousand even column primary highlight motion choos laid border hidden glow mulberry32 like edge compet listener timelin plac row without behind fals mask measur ble browser fill none hold work soft section"
     },
     {
       "name": "grid",
@@ -5298,7 +5299,7 @@
         "pattern",
         "feedback"
       ],
-      "terms": "interest signal feedback pattern client responsiv min viewport 320 topic ask board press viewer mincount rank interestboard interestsignal peopl back many count held data defaultpress onpressedchang toggl slot cheapest top bar whoever stor learn lesson talk host tap ids status show small reader anonymous audienc presenter rankinterest titlea fals fewer tell button hold away includ yet care mine grow uncontroll every first controll hear"
+      "terms": "interest signal feedback pattern client responsiv min viewport 320 topic ask board press viewer mincount rank interestboard interestsignal peopl back data many count held defaultpress onpressedchang slot toggl cheapest top bar whoever stor learn lesson talk grow host tap ids status show small reader anonymous audienc presenter rankinterest titlea fals fewer tell button hold away includ yet care mine uncontroll every first controll hear"
     },
     {
       "name": "interlace-base",
@@ -6474,7 +6475,7 @@
         "chart",
         "data"
       ],
-      "terms": "seat chart data client load skeleton responsiv min viewport 320 stat none side leader seatchart seatchartcompar group majority shad legend tone arc assemb grey tabl total hue hold far count paler circl five sit colour deeper entry row tal toward box sentenc fill caption order election eleven opposition pale seatlayout seatslabel vacant wedg every left right half svg govern neighbour first big alternat hollow"
+      "terms": "seat chart data client load skeleton responsiv min viewport 320 stat none side leader seatchart seatchartcompar group majority shad legend tone arc assemb grey tabl total hue hold far count paler circl five sit colour deeper entry row tal toward box sentenc caption fill order election eleven opposition pale seatlayout seatslabel vacant wedg every left right half svg govern neighbour first big alternat hollow"
     },
     {
       "name": "section-boundary",
@@ -6528,7 +6529,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "section index navigation primitiv server rsc sectionindex numeral agenda eyebrow aaa decodetext terminal proof gestur orang padd sequenc decod mono uppercas brand label legibl integer law refract tell spoken zero 14px sectionheader track number r16 becom woven aloud storybook voic besid caught coerc coupl monospac tabular face nois review indic reader testid bas scop strand e2e featur positiv provid page order gate headlin stand"
+      "terms": "section index navigation primitiv server rsc sectionindex numeral agenda eyebrow aaa decodetext terminal proof gestur orang padd sequenc decod mono uppercas brand label legibl integer law refract tell spoken zero 14px sectionheader number track r16 becom woven aloud storybook voic besid caught coerc coupl monospac tabular face nois review indic reader testid bas scop strand e2e featur positiv provid page order gate headlin stand"
     },
     {
       "name": "section",
@@ -7322,7 +7323,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "status pill blog pattern server rsc responsiv min viewport 320 stat band statuspill check tone fact brand review background sit readabl page success seen bold text currentcolor row pass aaa serv solid surround built tint section short titl word mark data decoration cost colour set hidden read current wrapp inherit onto svg many mean outlin nativ dark fill light ring slot carry children boolean"
+      "terms": "status pill blog pattern server rsc responsiv min viewport 320 stat band statuspill check tone fact brand review background sit readabl page success seen bold text currentcolor row pass aaa serv solid surround built tint section short titl word mark data decoration cost colour set hidden read current wrapp inherit onto svg many mean outlin nativ dark light ring fill slot carry children boolean"
     },
     {
       "name": "streak",
@@ -7392,7 +7393,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "tab bar navigation pattern server rsc responsiv min viewport 320 current icon pill hidefrom link five destination tabbar page nav href badg thumb label tech assistiv bottom aria eye sidebar data dot topbar badgelabel heavier hyphenat fill reach cover area appshell dip slot word deeper env renderlink alon show safe sinc slight hidden 64px answer phon 150m lang pad behind breakpoint sticky screen never"
+      "terms": "tab bar navigation pattern server rsc responsiv min viewport 320 current icon pill hidefrom link five destination tabbar page nav href badg thumb label tech assistiv bottom aria eye sidebar data dot topbar badgelabel heavier hyphenat reach cover fill area appshell dip slot word deeper env renderlink alon show safe sinc slight hidden 64px answer phon 150m lang pad behind breakpoint sticky screen never"
     },
     {
       "name": "tabs",
@@ -7476,7 +7477,7 @@
         "game",
         "games"
       ],
-      "terms": "tal bar game client responsiv min viewport 320 stat correct wrong viewer percent option quiz vote poll total count choic answer vot sum 100 data mark countsincludevot remainder tallybar shar whol nobody fals lead reload slot result track nam tap word ids right row depend spread everyon 204 verdict largest fill mount formatt includ question mine grow add feed true alon model label list"
+      "terms": "tal bar game client responsiv min viewport 320 stat correct wrong viewer percent option quiz vote poll total count choic answer vot sum 100 data mark countsincludevot remainder tallybar shar whol nobody fals lead reload slot result nam track tap word ids right row depend spread everyon 204 verdict largest fill mount formatt includ question mine grow add feed true alon model label list"
     },
     {
       "name": "testimonial",
@@ -7717,7 +7718,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "thread step blog pattern client responsiv min viewport 320 stat complet current upcom strand knot woven threadstep loos sequenc tracker together dott cross strok draw next intersectionobserver held progress word clip motion dash yet ahead mechanism process lead 600m explain hollow order 5rem history interlaceweav pathlength timesery chromium dashoffset verb drawn leav downward medium weav fill reach ring none work reader ful marker tall"
+      "terms": "thread step blog pattern client responsiv min viewport 320 stat complet current upcom strand knot woven threadstep loos sequenc tracker together dott cross strok draw next intersectionobserver held progress word clip motion dash yet ahead mechanism process lead 600m explain hollow order 5rem history interlaceweav pathlength timesery chromium dashoffset verb drawn leav downward medium weav reach ring fill none work reader ful marker tall"
     },
     {
       "name": "time-series",
@@ -7869,7 +7870,7 @@
         "primitive",
         "feedback"
       ],
-      "terms": "toast feedback primitiv client responsiv min viewport 320 keyboard base tone portal notification transient strip info provider danger warn root success data description static clos remain titl card iphon basetoast develop displac lifecycl toastclos toastprovider toastvariant toastviewport usetoastmanager slot mount overlay slid system fade four transform 1280px 180m manager portall toastdescription toasttitl cva padd principl top philosophy design motion channel regression revers animation text"
+      "terms": "toast feedback primitiv client responsiv min viewport 320 keyboard base tone portal notification transient strip info provider danger warn root success data description static clos remain titl card iphon basetoast develop displac lifecycl toastclos toastprovider toastvariant toastviewport usetoastmanager slot overlay slid system mount fade four transform 1280px 180m manager portall toastdescription toasttitl cva padd principl top philosophy design motion channel regression revers animation text"
     },
     {
       "name": "toc",
@@ -7954,7 +7955,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "tooltip overlay primitiv client responsiv min viewport 320 keyboard base delay popup describedby trigger tooltipprovider provider hover open dangl race wherea tim govern hovercard emit 768 rich unlabell unmount portal label neither aria unlik short usabl role wir appear even wait announc root ignor stay focus primary part basetooltip tooltipcompos tooltipcontent 320px toggl mount referenc attribut context rout tooltiptrigger void node screen add touch"
+      "terms": "tooltip overlay primitiv client responsiv min viewport 320 keyboard base delay popup describedby trigger tooltipprovider provider hover open dangl race wherea tim govern hovercard emit 768 rich unlabell unmount portal label neither aria unlik short usabl role wir appear even wait announc root ignor stay focus primary part basetooltip tooltipcompos tooltipcontent 320px toggl referenc attribut mount context rout tooltiptrigger void node screen add touch"
     },
     {
       "name": "topbar-menu",
@@ -8084,7 +8085,7 @@
         "util",
         "foundation"
       ],
-      "terms": "read pref usereadingpref hook foundation util client stat normal system persist size contrast absent storag text usethem choos html axe preferenc follow agre prefer comfort control stor subscriber unregister corrupt 2xl rem written overrid access late reflow resiz chos picker first register held provider end hydration clipp settl smaller larger absenc data schem font throw ele whether writ activ modul mount script choic root"
+      "terms": "read pref usereadingpref hook foundation util client stat normal system persist size contrast absent storag text usethem choos html axe preferenc follow agre prefer comfort control stor subscriber unregister corrupt 2xl rem written overrid access late reflow resiz chos picker first register held provider end hydration clipp settl smaller larger absenc data schem font throw ele whether writ activ modul script choic mount root"
     },
     {
       "name": "use-reduced-motion",
@@ -8170,7 +8171,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "weav textur decorativ effect server rsc weavetextur cloth thread strand warp weft glow shin strength woven section cell tile top far checkerboard dress edg genr material stand behind parent plain noth absolut pixel beam isolat particl page quiet cross alternat survey useid svg like shad fill light host move sit backdrop density spac relativ toward inset identity thin viewbox colour flow let squar pass"
+      "terms": "weav textur decorativ effect server rsc weavetextur cloth thread strand warp weft glow shin strength woven section cell tile top far checkerboard dress edg genr material stand behind parent plain noth absolut pixel beam isolat particl page quiet cross alternat survey useid svg like shad light fill host move sit backdrop density spac relativ toward inset identity thin viewbox colour flow let squar pass"
     },
     {
       "name": "wordmark",
