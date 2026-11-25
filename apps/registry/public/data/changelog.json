@@ -1542,6 +1542,17 @@
           "source": ".changeset/share-card-reannounce.md"
         },
         {
+          "summary": "ShareCard: `results` typechecks as the array of result keys. The props took a `div`'s own attributes too, and React types a `div`'s `results` as a number, so passing `results={['right']}` failed to compile in a consumer's app. The div's `results` is now left out.",
+          "components": [
+            "share-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/share-card-results-type.md"
+        },
+        {
           "summary": "`Slider` draws its focus ring on keyboard focus again. Base UI puts focus on a hidden input inside the thumb, so the thumb's own `focus-visible` ring never showed; the ring now also follows `has-[:focus-visible]`. Every slider gains it, including `CloserGame` and `TimeSlider`.",
           "components": [
             "slider"
