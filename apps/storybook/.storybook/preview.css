@@ -53,6 +53,15 @@ body,
   color: var(--foreground);
 }
 
+/* A centered story's root is as wide as its content, which is the point of
+ * `layout: 'centered'`. It still never grows past the canvas: a page always
+ * bounds its content, so a story wider than a 390px phone at 150% text is a
+ * stage artifact, not a component that fails to reflow. Capped, a component's
+ * own `max-w-full` can do its job. */
+.sb-main-centered #storybook-root {
+  max-width: 100%;
+}
+
 .sb-show-main {
   padding: 1.5rem;
   background: var(--background);

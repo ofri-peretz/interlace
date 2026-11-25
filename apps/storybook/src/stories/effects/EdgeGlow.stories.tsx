@@ -24,7 +24,7 @@ const meta: Meta<typeof EdgeGlow> = {
     direction: { control: 'inline-radio', options: ['clockwise', 'counterclockwise'], table: { defaultValue: { summary: 'clockwise' } } },
   },
   render: (args) => (
-    <Card className="w-80">
+    <Card className="w-80 max-w-full">
       <EdgeGlow {...args} />
       <CardHeader>
         <CardTitle>Recommended</CardTitle>

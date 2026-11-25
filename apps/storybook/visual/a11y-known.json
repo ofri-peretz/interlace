@@ -11,17 +11,8 @@
   "phone/effects-scroller--default": [
     "reflow"
   ],
-  "phone/primitives-dialog--default": [
-    "reflow"
-  ],
-  "phone/primitives-dropdownmenu--default": [
-    "reflow"
-  ],
   "phone/starters-mdx-starter--default": [
     "scrollable-region-focusable"
-  ],
-  "text-150/blocks-scorecardrow--default": [
-    "reflow"
   ],
   "text-150/charts-distribution--audience-clock": [
     "reflow"
@@ -29,34 +20,7 @@
   "text-150/charts-metrictable--default": [
     "reflow"
   ],
-  "text-150/effects-edgeglow--default": [
-    "reflow"
-  ],
-  "text-150/effects-interlaceweave--on-a-card": [
-    "reflow"
-  ],
   "text-150/effects-scroller--default": [
-    "reflow"
-  ],
-  "text-150/effects-sheen--on-a-primary-button": [
-    "reflow"
-  ],
-  "text-150/primitives-combobox--default": [
-    "reflow"
-  ],
-  "text-150/primitives-contextmenu--default": [
-    "reflow"
-  ],
-  "text-150/primitives-dialog--default": [
-    "reflow"
-  ],
-  "text-150/primitives-dropdownmenu--default": [
-    "reflow"
-  ],
-  "text-150/primitives-hovercard--default": [
-    "reflow"
-  ],
-  "text-150/primitives-otpfield--default": [
     "reflow"
   ],
   "text-150/primitives-statstrip--default": [
@@ -70,11 +34,5 @@
   ],
   "text-150/starters-mdx-starter--default": [
     "scrollable-region-focusable"
-  ],
-  "text-150/templates-dashboardtemplate--default": [
-    "reflow"
-  ],
-  "text-150/templates-scorecardtemplate--default": [
-    "reflow"
   ]
 }
