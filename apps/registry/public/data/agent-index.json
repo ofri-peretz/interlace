@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 194
+    "itemCount": 224
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,55 +29,55 @@
   },
   "facets": {
     "tier": {
-      "primitive": 76,
-      "pattern": 50,
-      "effect": 20,
+      "primitive": 78,
+      "pattern": 65,
+      "effect": 27,
+      "game": 15,
+      "chart": 14,
       "template": 13,
-      "chart": 13,
-      "game": 10,
       "util": 6,
       "starter": 3,
       "theme": 3
     },
     "category": {
-      "primitive": 76,
-      "pattern": 50,
-      "blog": 35,
-      "data": 28,
+      "primitive": 78,
+      "pattern": 65,
+      "blog": 37,
+      "data": 30,
       "foundation": 27,
-      "form": 20,
-      "effect": 20,
-      "decorative": 18,
-      "feedback": 15,
-      "navigation": 13,
+      "effect": 27,
+      "form": 26,
+      "decorative": 24,
+      "navigation": 18,
+      "feedback": 18,
+      "games": 15,
+      "game": 15,
+      "chart": 14,
+      "marketing": 14,
       "template": 13,
-      "chart": 13,
-      "marketing": 13,
       "overlay": 10,
-      "games": 10,
-      "game": 10,
       "util": 6,
       "a11y": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "server": 102,
-      "client": 92
+      "client": 113,
+      "server": 111
     },
     "keyboard": {
-      "none": 151,
-      "handled": 43
+      "none": 175,
+      "handled": 49
     },
     "loading": {
-      "none": 157,
-      "built-in": 37
+      "none": 186,
+      "built-in": 38
     },
     "minViewport": {
-      "320": 123,
+      "320": 143,
       "480": 7,
       "768": 1,
-      "inherited": 63
+      "inherited": 73
     }
   },
   "items": [
@@ -280,6 +280,150 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/alert.json",
       "item": "https://ds.interlace.tools/r/alert.json",
       "docs": "https://ds.interlace.tools/c/alert"
+    },
+    {
+      "name": "app-header-edge",
+      "title": "App Header Edge",
+      "type": "registry:ui",
+      "summary": "The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "AppHeaderEdge"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-header-edge.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-header-edge.json",
+      "item": "https://ds.interlace.tools/r/app-header-edge.json",
+      "docs": "https://ds.interlace.tools/c/app-header-edge"
+    },
+    {
+      "name": "app-header",
+      "title": "App Header",
+      "type": "registry:ui",
+      "summary": "The bar at the top of an app-like view on a phone: a way back at the start, the view's title in the middle, one or two actions at the end. It sticks to the top, clears the notch or status bar (`env(safe-area-inset-top)`), and shows its surface and border…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "app-header-edge",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-header.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-header.json",
+      "item": "https://ds.interlace.tools/r/app-header.json",
+      "docs": "https://ds.interlace.tools/c/app-header"
+    },
+    {
+      "name": "app-shell",
+      "title": "App Shell",
+      "type": "registry:ui",
+      "summary": "The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-shell.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-shell.json",
+      "item": "https://ds.interlace.tools/r/app-shell.json",
+      "docs": "https://ds.interlace.tools/c/app-shell"
     },
     {
       "name": "article-card",
@@ -1222,6 +1366,144 @@
       "docs": "https://ds.interlace.tools/c/button"
     },
     {
+      "name": "calendar-model",
+      "title": "Calendar Model",
+      "type": "registry:ui",
+      "summary": "The pure half of `Calendar`: dates as plain `YYYY-MM-DD` strings, the month grid, the keyboard moves of the WAI-ARIA date grid, and the bounds.",
+      "topics": [],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/calendar-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/calendar-model.json",
+      "item": "https://ds.interlace.tools/r/calendar-model.json",
+      "docs": "https://ds.interlace.tools/c/calendar-model"
+    },
+    {
+      "name": "calendar",
+      "title": "Calendar",
+      "type": "registry:ui",
+      "summary": "One month of days to pick one from: the date grid of a booking page, a date field's popup, a \"when\" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.",
+      "topics": [],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "DayState",
+          "values": [
+            "open",
+            "today",
+            "selected",
+            "unavailable",
+            "outside"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "grid",
+          "gridcell"
+        ],
+        "aria": [
+          "aria-current",
+          "aria-disabled",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-selected"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/calendar.tsx",
+        "components/ui/calendar-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/calendar.json",
+      "item": "https://ds.interlace.tools/r/calendar.json",
+      "docs": "https://ds.interlace.tools/c/calendar"
+    },
+    {
       "name": "callout",
       "title": "Callout",
       "type": "registry:ui",
@@ -2110,6 +2392,86 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/command-palette.json",
       "item": "https://ds.interlace.tools/r/command-palette.json",
       "docs": "https://ds.interlace.tools/c/command-palette"
+    },
+    {
+      "name": "commitment",
+      "title": "Commitment",
+      "type": "registry:ui",
+      "summary": "The end of a session, and a week later. `CommitmentPicker` asks each person to pick one thing to do this week, from a short list or in their own words, and says when they will be asked about it. `CommitmentCheckIn` is that question, on the follow-up link…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "CheckInAnswer",
+          "values": [
+            "done",
+            "partly",
+            "not-yet"
+          ]
+        },
+        {
+          "name": "FollowUpState",
+          "values": [
+            "waiting",
+            "due",
+            "answered",
+            "lapsed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-hidden",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "CHECK_IN_ANSWERS",
+        "DAY_MS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/commitment.tsx",
+        "components/ui/patterns/commitment-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/commitment.json",
+      "item": "https://ds.interlace.tools/r/commitment.json",
+      "docs": "https://ds.interlace.tools/c/commitment"
     },
     {
       "name": "container",
@@ -3228,6 +3590,63 @@
       "docs": "https://ds.interlace.tools/c/dot-plot"
     },
     {
+      "name": "draw-on",
+      "title": "Draw On",
+      "type": "registry:ui",
+      "summary": "A line drawing that draws itself as it scrolls into view: an illustration, a diagram, an arrow that points at the next thing, a signature. Wrap any inline SVG; every stroked shape inside traces its own line, one after another in document order, and filled…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DrawOnOrder",
+          "values": [
+            "sequence",
+            "together"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DrawOn"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/draw-on.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/draw-on.json",
+      "item": "https://ds.interlace.tools/r/draw-on.json",
+      "docs": "https://ds.interlace.tools/c/draw-on"
+    },
+    {
       "name": "drawer",
       "title": "Drawer",
       "type": "registry:ui",
@@ -3756,6 +4175,57 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/flip-card.json",
       "item": "https://ds.interlace.tools/r/flip-card.json",
       "docs": "https://ds.interlace.tools/c/flip-card"
+    },
+    {
+      "name": "flip-group",
+      "title": "Flip Group",
+      "type": "registry:ui",
+      "summary": "Items that glide to their new place when a list is sorted, filtered or reordered, instead of jumping there: a leaderboard that re-ranks, results that narrow as a filter is typed, cards that swap. The motion tells the reader where each item went, which a…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "use-render",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "FlipGroup"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/flip-group.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/flip-group.json",
+      "item": "https://ds.interlace.tools/r/flip-group.json",
+      "docs": "https://ds.interlace.tools/c/flip-group"
     },
     {
       "name": "focus-grid",
@@ -4485,6 +4955,116 @@
       "docs": "https://ds.interlace.tools/c/input"
     },
     {
+      "name": "install-prompt",
+      "title": "Install Prompt",
+      "type": "registry:ui",
+      "summary": "An offer to add the site to the home screen, made once, politely, and only where it can work. Browsers that support it hand over their install dialog (`beforeinstallprompt`), and the Install button opens it. Safari on an iPhone or iPad has no such dialog…",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/install-prompt.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/install-prompt.json",
+      "item": "https://ds.interlace.tools/r/install-prompt.json",
+      "docs": "https://ds.interlace.tools/c/install-prompt"
+    },
+    {
+      "name": "interest-signal",
+      "title": "Interest Signal",
+      "type": "registry:ui",
+      "summary": "\"I want more on this\": one tap that tells whoever runs the talk, the lesson or the page what people want to hear more about. The reader presses a toggle on a topic; the host sees every topic ranked by how many asked. It is the cheapest way to learn what an…",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/interest-signal.tsx",
+        "components/ui/patterns/interest-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/interest-signal.json",
+      "item": "https://ds.interlace.tools/r/interest-signal.json",
+      "docs": "https://ds.interlace.tools/c/interest-signal"
+    },
+    {
       "name": "interlace-base",
       "title": "Interlace Base",
       "type": "registry:style",
@@ -4637,6 +5217,78 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/interlace-weave.json",
       "item": "https://ds.interlace.tools/r/interlace-weave.json",
       "docs": "https://ds.interlace.tools/c/interlace-weave"
+    },
+    {
+      "name": "join-code",
+      "title": "Join Code",
+      "type": "registry:ui",
+      "summary": "How people get into a live room: the address to visit, a code to type there, and a QR code that does both in one scan. Built for the host's big screen first (`size=\"stage\"`), and just as usable on a phone that wants to pass the room on, with a copy-link…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "JOIN_CODE_ALPHABET",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "qr-code"
+      ],
+      "installsTo": [
+        "components/ui/games/join-code.tsx",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/join-code.json",
+      "item": "https://ds.interlace.tools/r/join-code.json",
+      "docs": "https://ds.interlace.tools/c/join-code"
     },
     {
       "name": "kbd",
@@ -5073,6 +5725,129 @@
       "docs": "https://ds.interlace.tools/c/list"
     },
     {
+      "name": "live-room",
+      "title": "Live Room",
+      "type": "registry:ui",
+      "summary": "A game night on one big screen and everyone's phones. The host opens a room and shows its JoinCode; players scan or type it and land in the lobby; the host starts, everyone sees the same countdown, plays the same rounds, and the night ends on a Podium. The…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group",
+          "timer"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "JOIN_CODE_ALPHABET",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/live-room.tsx",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/live-room.json",
+      "item": "https://ds.interlace.tools/r/live-room.json",
+      "docs": "https://ds.interlace.tools/c/live-room"
+    },
+    {
+      "name": "marker",
+      "title": "Marker",
+      "type": "registry:ui",
+      "summary": "A highlighter stroke across the one phrase in a paragraph a reader should not miss. The first time the phrase scrolls into view, the stroke sweeps across it from the start of the line to the end, the way a pen would, and wraps across lines with the text.…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "Marker"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/marker.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/marker.json",
+      "item": "https://ds.interlace.tools/r/marker.json",
+      "docs": "https://ds.interlace.tools/c/marker"
+    },
+    {
       "name": "mdx-starter",
       "title": "MDX Starter",
       "type": "registry:ui",
@@ -5373,6 +6148,67 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/metric-table.json",
       "item": "https://ds.interlace.tools/r/metric-table.json",
       "docs": "https://ds.interlace.tools/c/metric-table"
+    },
+    {
+      "name": "multi-step-form",
+      "title": "Multi Step Form",
+      "type": "registry:ui",
+      "summary": "One form, a few steps, a last look before it is sent: a booking flow (when, who, check), a sign-up, a request. Every step is a real part of one `<form>`, kept in the page and hidden while it is not the current one, so what the reader typed survives going…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "alert",
+          "radio"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-current",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/multi-step-form.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/multi-step-form.json",
+      "item": "https://ds.interlace.tools/r/multi-step-form.json",
+      "docs": "https://ds.interlace.tools/c/multi-step-form"
     },
     {
       "name": "network-graph",
@@ -5773,6 +6609,119 @@
       "docs": "https://ds.interlace.tools/c/pagination"
     },
     {
+      "name": "podium",
+      "title": "Podium",
+      "type": "registry:ui",
+      "summary": "The end of a game: the top three on steps, second and third rising first and the winner last, with a burst for first place. Below it, everyone else, so no one has to wonder where they came. Ranking is the leaderboard's (`rankEntries`), so ties share a…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "celebrate",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/podium.tsx",
+        "components/ui/games/leaderboard-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/podium.json",
+      "item": "https://ds.interlace.tools/r/podium.json",
+      "docs": "https://ds.interlace.tools/c/podium"
+    },
+    {
+      "name": "pointer-surface",
+      "title": "Pointer Surface",
+      "type": "registry:ui",
+      "summary": "A surface that answers the pointer: a soft light that follows it across a card, a slight tilt toward it, or both. It is the feel of picking a card up off a table, for a grid of choices a reader is weighing (plans, sessions, topics), not for every box on a…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PointerSurfaceEffect",
+          "values": [
+            "light",
+            "tilt",
+            "both"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "PointerSurface"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/pointer-surface.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/pointer-surface.json",
+      "item": "https://ds.interlace.tools/r/pointer-surface.json",
+      "docs": "https://ds.interlace.tools/c/pointer-surface"
+    },
+    {
       "name": "poll",
       "title": "Poll",
       "type": "registry:ui",
@@ -6158,6 +7107,124 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/published-date.json",
       "item": "https://ds.interlace.tools/r/published-date.json",
       "docs": "https://ds.interlace.tools/c/published-date"
+    },
+    {
+      "name": "pull-to-refresh",
+      "title": "Pull To Refresh",
+      "type": "registry:ui",
+      "summary": "Pull a list down from its top to load what is new, the gesture a phone reader already knows. The pull is one finger and one path, so it always has a twin: a Refresh button that is visible wherever the pointer is a mouse, and reachable by keyboard and…",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PullToRefreshState",
+          "values": [
+            "idle",
+            "pulling",
+            "armed",
+            "refreshing",
+            "settling"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-busy"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "spinner",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/pull-to-refresh.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/pull-to-refresh.json",
+      "item": "https://ds.interlace.tools/r/pull-to-refresh.json",
+      "docs": "https://ds.interlace.tools/c/pull-to-refresh"
+    },
+    {
+      "name": "qr-code",
+      "title": "Qr Code",
+      "type": "registry:ui",
+      "summary": "A QR code for a link or a short text, drawn as one SVG path from the pure encoder in `qr-model.ts`. No dependency, no canvas, no image request: it renders on the server and stays sharp at any size, from a phone card to a projector.",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/qr-code.tsx",
+        "components/ui/games/qr-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/qr-code.json",
+      "item": "https://ds.interlace.tools/r/qr-code.json",
+      "docs": "https://ds.interlace.tools/c/qr-code"
     },
     {
       "name": "quiz-question",
@@ -6578,6 +7645,117 @@
       "docs": "https://ds.interlace.tools/c/reading-time"
     },
     {
+      "name": "recall-card",
+      "title": "Recall Card",
+      "type": "registry:ui",
+      "summary": "A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group",
+          "region"
+        ],
+        "aria": [
+          "aria-controls",
+          "aria-expanded",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/recall-card.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/recall-card.json",
+      "item": "https://ds.interlace.tools/r/recall-card.json",
+      "docs": "https://ds.interlace.tools/c/recall-card"
+    },
+    {
+      "name": "recap",
+      "title": "Recap",
+      "type": "registry:ui",
+      "summary": "What one person takes home from a session: what it covered, how they did, the one thing they picked for this week, what they asked to hear more about, and where to go next. Every section is optional and shows only when it has something in it, in the order…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/recap.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/recap.json",
+      "item": "https://ds.interlace.tools/r/recap.json",
+      "docs": "https://ds.interlace.tools/c/recap"
+    },
+    {
       "name": "registry-item-template",
       "title": "Registry Item Template",
       "type": "registry:block",
@@ -6951,6 +8129,119 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroll-area.json",
       "item": "https://ds.interlace.tools/r/scroll-area.json",
       "docs": "https://ds.interlace.tools/c/scroll-area"
+    },
+    {
+      "name": "scroll-story",
+      "title": "Scroll Story",
+      "type": "registry:ui",
+      "summary": "A chart that stays in view while the story beside it scrolls: each step of text the reader reaches changes the chart, one point at a time. The story is told in the steps; the chart shows it.",
+      "topics": [],
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "ScrollStory",
+        "ScrollStoryStep"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/scroll-story.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroll-story.json",
+      "item": "https://ds.interlace.tools/r/scroll-story.json",
+      "docs": "https://ds.interlace.tools/c/scroll-story"
+    },
+    {
+      "name": "scroll-text",
+      "title": "Scroll Text",
+      "type": "registry:ui",
+      "summary": "A statement that the reader brings into focus by scrolling: its words go from the muted text colour to the full one, in reading order, as the paragraph moves up the screen. For one large sentence a page is built around (a mission, a finding, a promise)…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ScrollTextElement",
+          "values": [
+            "p",
+            "h1",
+            "h2",
+            "h3",
+            "blockquote",
+            "div"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "ScrollText"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/scroll-text.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/scroll-text.json",
+      "item": "https://ds.interlace.tools/r/scroll-text.json",
+      "docs": "https://ds.interlace.tools/c/scroll-text"
     },
     {
       "name": "scroller",
@@ -7449,6 +8740,68 @@
       "docs": "https://ds.interlace.tools/c/series-table"
     },
     {
+      "name": "session-composer",
+      "title": "Session Composer",
+      "type": "registry:ui",
+      "summary": "Build a session out of modules: pick what goes in, put it in order, and see at every step how long it runs against the time you have. For a workshop host planning a morning, a community lead booking a session, a teacher putting a lesson together. Modules a…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "meter",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/session-composer.tsx",
+        "components/ui/patterns/session-plan-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/session-composer.json",
+      "item": "https://ds.interlace.tools/r/session-composer.json",
+      "docs": "https://ds.interlace.tools/c/session-composer"
+    },
+    {
       "name": "settings-template",
       "title": "Settings Template",
       "type": "registry:block",
@@ -7693,6 +9046,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-chart.json",
       "item": "https://ds.interlace.tools/r/share-chart.json",
       "docs": "https://ds.interlace.tools/c/share-chart"
+    },
+    {
+      "name": "share-image",
+      "title": "Share Image",
+      "type": "registry:ui",
+      "summary": "The picture a link unfurls into on X, LinkedIn, Facebook, WhatsApp, iMessage and Slack: a kicker, the page's title, a line of description, and one optional piece of evidence (a big number, a few bars, or anything you draw), with your mark at the top and…",
+      "topics": [],
+      "categories": [
+        "marketing",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ShareImageSize",
+          "values": [
+            "og",
+            "square"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "NEUTRAL_SHARE_THEME",
+        "SHARE_IMAGE_SIZES",
+        "ShareImage"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/share-image.tsx",
+        "components/ui/patterns/share-image-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/share-image.json",
+      "item": "https://ds.interlace.tools/r/share-image.json",
+      "docs": "https://ds.interlace.tools/c/share-image"
     },
     {
       "name": "sheen-text",
@@ -9264,6 +10675,57 @@
       "docs": "https://ds.interlace.tools/c/switch"
     },
     {
+      "name": "tab-bar",
+      "title": "Tab Bar",
+      "type": "registry:ui",
+      "summary": "The row of three to five destinations at the bottom of a phone screen, where a thumb reaches. Each tab is a real link with an icon and a word; the current one says so to assistive tech (`aria-current=\"page\"`) and to the eye with a filled pill behind its…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/tab-bar.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/tab-bar.json",
+      "item": "https://ds.interlace.tools/r/tab-bar.json",
+      "docs": "https://ds.interlace.tools/c/tab-bar"
+    },
+    {
       "name": "tabs",
       "title": "Tabs",
       "type": "registry:ui",
@@ -10137,6 +11599,134 @@
       "docs": "https://ds.interlace.tools/c/time-series"
     },
     {
+      "name": "time-slider",
+      "title": "Time Slider",
+      "type": "registry:ui",
+      "summary": "Step a chart through time: a play button, a slider with one stop per frame (a year, a survey wave, a season), and the current frame printed large beside them. Any chart goes inside: the slider owns which frame is showing, and the chart is drawn for that…",
+      "topics": [],
+      "categories": [
+        "data",
+        "chart"
+      ],
+      "tier": "chart",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "direction-provider",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "TimeSlider"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "slider"
+      ],
+      "installsTo": [
+        "components/ui/charts/time-slider.tsx",
+        "components/ui/charts/time-slider-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/time-slider.json",
+      "item": "https://ds.interlace.tools/r/time-slider.json",
+      "docs": "https://ds.interlace.tools/c/time-slider"
+    },
+    {
+      "name": "time-slot-picker",
+      "title": "Time Slot Picker",
+      "type": "registry:ui",
+      "summary": "The times open on one day, as tiles to pick one from: the second half of a booking page, next to a `Calendar`. Built on Base UI's radio group, so it is one tab stop, the arrows move between times, and a form posts the picked slot's `value` under `name`.…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": true,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DayPeriod",
+          "values": [
+            "morning",
+            "afternoon",
+            "evening"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-busy",
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "radio-group",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/time-slot-picker.tsx",
+        "components/ui/patterns/time-slot-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/time-slot-picker.json",
+      "item": "https://ds.interlace.tools/r/time-slot-picker.json",
+      "docs": "https://ds.interlace.tools/c/time-slot-picker"
+    },
+    {
       "name": "timeline-map",
       "title": "Timeline Map",
       "type": "registry:ui",
@@ -10851,6 +12441,107 @@
       "docs": "https://ds.interlace.tools/c/typography"
     },
     {
+      "name": "underline-link",
+      "title": "Underline Link",
+      "type": "registry:ui",
+      "summary": "A text link whose underline draws itself in when the reader points at it or tabs to it, from the start of the line to the end, and wraps across lines with the text. For links in running text, navigation and footers where a hard underline on every link…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "use-render",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "UnderlineLink"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/effects/underline-link.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/underline-link.json",
+      "item": "https://ds.interlace.tools/r/underline-link.json",
+      "docs": "https://ds.interlace.tools/c/underline-link"
+    },
+    {
+      "name": "update-feed",
+      "title": "Update Feed",
+      "type": "registry:ui",
+      "summary": "What is new, newest first: a product's changelog, a publication's latest pieces, a team's releases. Entries are grouped under their day or month, each with a kind (\"Release\", \"Article\"), a title that links to the thing itself and a line on what it is. Pass…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/update-feed.tsx",
+        "components/ui/patterns/update-feed-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/update-feed.json",
+      "item": "https://ds.interlace.tools/r/update-feed.json",
+      "docs": "https://ds.interlace.tools/c/update-feed"
+    },
+    {
       "name": "use-reading-prefs",
       "title": "useReadingPrefs hook",
       "type": "registry:lib",
@@ -10992,6 +12683,52 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/use-theme.json",
       "item": "https://ds.interlace.tools/r/use-theme.json",
       "docs": "https://ds.interlace.tools/c/use-theme"
+    },
+    {
+      "name": "view-transition",
+      "title": "View Transition",
+      "type": "registry:ui",
+      "summary": "The browser's View Transitions API, made safe to reach for: a card grows into its detail page, a list reorders in place, and a page change cross-fades instead of blinking. Interlace adds only what the API leaves to every app: a fallback where it is…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/view-transition.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/view-transition.json",
+      "item": "https://ds.interlace.tools/r/view-transition.json",
+      "docs": "https://ds.interlace.tools/c/view-transition"
     },
     {
       "name": "visually-hidden",

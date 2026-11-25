@@ -36,6 +36,20 @@ A new primitive lands as one PR with:
 
 Patterns, templates and charts follow the same shape in their own folders.
 
+## Where the rules live
+
+| Need                                                        | Read                                                                                     |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| How to compose, brand and animate                           | the `interlace-craft` skill                                                              |
+| The principles behind Interlace's own surfaces              | [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md), [BRAND_PHILOSOPHY.md](BRAND_PHILOSOPHY.md) |
+| One area in depth (motion, layout, colour, a11y, i18n)      | [docs/philosophies/](docs/philosophies/)                                                 |
+| Component API shape and naming                              | [packages/ui/CONVENTIONS.md](packages/ui/CONVENTIONS.md)                                 |
+| The five layers and the CSS import order                    | [packages/ui/DESIGN_SYSTEM_LAYERS.md](packages/ui/DESIGN_SYSTEM_LAYERS.md)               |
+| How an AI-authored PR is verified, and the review checklist | [docs/AI_SDLC.md](docs/AI_SDLC.md)                                                       |
+
+DESIGN_PRINCIPLES and BRAND_PHILOSOPHY describe the Interlace house brand (burnt orange, the
+thread). They govern interlace.tools surfaces, not what a consumer's site must look like.
+
 ## Checks
 
 ```bash

@@ -1,0 +1,12 @@
+{
+  "__tests__/flip-card.test.tsx": {
+    "truepass/no-fixed-sleep": {
+      "count": 1
+    }
+  },
+  "__tests__/primitive-api-contract-lock.test.tsx": {
+    "truepass/no-fixed-sleep": {
+      "count": 2
+    }
+  }
+}

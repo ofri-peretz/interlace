@@ -3,8 +3,8 @@
  *
  * Interlace is copied into someone else's app, so no consumer's identity may ship inside a
  * component, style or token. A consumer brands through cssVars and props. This lock scans
- * everything under packages/ui/src and packages/ui/styles (the files the registry copies out)
- * for the names of the sites and products that consume Interlace today.
+ * everything under packages/ui/src and packages/ui/styles (the files the registry copies out), and
+ * packages/native/src, for the names of the sites and products that consume Interlace today.
  *
  * A hit means a consumer's name, handle or product leaked into shipped code. Move it to the
  * consumer, or to a Storybook fixture, which never ships. When a new consumer adopts Interlace,
@@ -34,6 +34,12 @@ const CONSUMER_NAMES = [
   "hookset",
   "triggerlist",
   "contractdiff",
+  // WhyLikeDis, the flagship site, under every spelling it goes by, and "Dugri", the name of its
+  // identity. Its pieces were built here first and had to be made neutral after the fact (#123).
+  "whylikedis",
+  "why like dis",
+  "why-like-dis",
+  "dugri",
 ];
 const ALTERNATION = [...CONSUMER_NAMES]
   .sort((a, b) => b.length - a.length)
@@ -69,6 +75,8 @@ describe("brand-neutral lock", () => {
       "a.tsx": 'title="By Ofri" for burgee',
       "b.css": "--brand: burgee-blue;",
       "c.ts": "const ofrix = 1;",
+      "d.tsx": "// the Dugri band, as on WhyLikeDis and why-like-dis.fyi",
+      "e.tsx": "// copy from the why like dis redesign",
     };
     const hits = consumerHits(
       Object.keys(fake).map((f) => join(UI_ROOT, f)),
@@ -78,12 +86,23 @@ describe("brand-neutral lock", () => {
       'a.tsx:1 names "Ofri"',
       'a.tsx:1 names "burgee"',
       'b.css:1 names "burgee"',
+      'd.tsx:1 names "Dugri"',
+      'd.tsx:1 names "WhyLikeDis"',
+      'd.tsx:1 names "why-like-dis"',
+      'e.tsx:1 names "why like dis"',
     ]);
   });
 
   it("no shipped component, style or token names a consumer", () => {
     const files = SHIPPED_DIRS.flatMap((d) => walk(join(UI_ROOT, d)));
     expect(files.length).toBeGreaterThan(100);
+    expect(consumerHits(files)).toEqual([]);
+  });
+
+  // @interlace/native ships into a consumer's app the same way, so the same names stay out of it.
+  it("no native component, theme or token names a consumer", () => {
+    const files = walk(resolve(UI_ROOT, "..", "native", "src"));
+    expect(files.length).toBeGreaterThan(10);
     expect(consumerHits(files)).toEqual([]);
   });
 });

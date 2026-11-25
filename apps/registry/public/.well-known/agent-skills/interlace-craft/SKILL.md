@@ -235,6 +235,9 @@ the neutral rows above.
 - Absence is a state, not a null check: use the component's state union and its `loading`
   skeleton, and give every empty, loading and error case real words.
 - Every part carries `data-slot`, so tests and analytics select by slot, not by class.
+- A flow (phases an app adopts whole: a live room, a booking, a sign-in) is one namespace:
+  `LiveRoom.Lobby`, `LiveRoom.Countdown`. Keep its state in your app, pass it in, and handle
+  every event it sends; its file's `## Flow` map lists each phase and the part that shows it.
 - Server components by default; `"use client"` only where there is state or a browser API.
 
 ## Do and don't

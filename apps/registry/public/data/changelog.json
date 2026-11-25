@@ -187,6 +187,29 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "Two pieces for booking pages. `Calendar`: one month of days to pick one from, as the WAI-ARIA date grid (one tab stop; arrows by a day or a week, mirrored in RTL; Home and End; Page Up and Page Down by a month, with Shift by a year). Days are plain `YYYY-MM-DD` strings, so the day a reader picks is the day a server stores in every time zone. `min` and `max` bound it, `isDateUnavailable` strikes a day through and says so, `isDateMarked` dots the days that have room, and today carries `aria-current=\"date\"`. Names come from `Intl` in `locale`, and the week starts where the locale starts it. A new month slides in from its side, six rows always, nothing below moves. `TimeSlotPicker`: the times open on one day as tiles on Base UI's radio group, read from `HH:MM` or ISO instants in `timeZone`, with `groupBy=\"period\"`, a loading state and words for an empty day. The date arithmetic is pure and exported from `calendar-model`, the slot hours from `patterns/time-slot-model`. Every word goes through `labels`; every motion is transform or opacity and is off under reduced motion.",
+          "components": [
+            "calendar",
+            "time-slot-picker"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/booking-calendar-slots.md"
+        },
+        {
+          "summary": "`MultiStepForm`: one form in a few steps with a last look before it is sent, for a booking, a sign-up or a request. Every `MultiStepFormStep` is part of one real `<form>`, kept in the page while hidden, so answers survive going back and the submit posts every field as `FormData`. Continue runs the step's native constraints and then its `validate`; the first problem takes focus and the message is read out. Done steps are buttons in the progress list, which is one line and a segmented bar in a narrow column and names every step from 32rem. `MultiStepFormSummary` lists the answers, each with a Change button back to the step that asked. Focus moves to each new step's heading (\"Step 2 of 3\"). The new step slides in from its side (200ms, mirrored in RTL) and is simply there under reduced motion. `useMultiStepForm` gives a step the form's state. Every word goes through `labels`.",
+          "components": [
+            "multi-step-form"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/booking-multi-step-form.md"
+        },
+        {
           "summary": "Button takes `loading`. The button keeps its place, its width and keyboard focus while the reader's action runs: the label keeps its space but stops painting, a spinner sits over the middle in the label's own colour, and nothing beside it moves. It sets `aria-busy` and `aria-disabled` rather than `disabled`, so focus is not dropped to the page, and it ignores clicks (a form submit included) until `loading` is false, so a double press cannot send twice. The spinner stands still under reduced motion. LOADING_PHILOSOPHY gains a \"busy button\" section.",
           "components": [
             "button"
@@ -358,6 +381,18 @@
           "source": ".changeset/cta-section-card.md"
         },
         {
+          "summary": "Two pieces for telling a story with data. `TimeSlider` steps any chart through time: a play button, a slider with one stop per frame and the frame printed beside it; the chart is drawn by `children(frame, index)`, the server HTML holds the opening frame, play is started and stopped by the reader (and stops when the slider is touched), the thumb speaks the frame, and time runs right to left in an RTL page. Its pure steps (`nextFrame`, `playStart`, `clampFrame`, `formatFrame`) live in `charts/time-slider-model`. `ScrollStory` keeps a chart in view while the steps beside it scroll; `graphic(step)` redraws it when a step crosses the middle of the screen, never in proportion to scroll. Side by side from 48rem of its own box, the chart on top with the steps passing over it as cards below that, and every step in the server HTML.",
+          "components": [
+            "time-slider",
+            "scroll-story"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/data-storytelling.md"
+        },
+        {
           "summary": "Comfortable density now reaches the patterns too.\n\nThe Topbar row items, DialogueStepper's Back / Show the whole conversation / Start over, and Dialogue and DialogueStepper choices take their minimum height from `--spacing-control`, so they stay 36px by default and grow to 44px under `data-density=\"comfortable\"`. Citation's number and chip markers keep their size in the line, and an invisible pad of the new `--spacing-target` token takes the tap: 24px by default (WCAG 2.5.8), 44px when comfortable. The underline marker is the phrase itself, inside a sentence, so it is unchanged.",
           "components": [
             "topbar",
@@ -428,6 +463,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/dot-plot.md"
+        },
+        {
+          "summary": "New DrawOn and Marker, editorial motion for line drawings and emphasis. DrawOn wraps any inline SVG and draws its stroked shapes as it scrolls into view, one after another (`order=\"sequence\"`) or all at once, then fades in the fills. Marker is a `<mark>` whose highlighter stroke sweeps across a phrase from the inline-start edge, in `band`, `full` or `underline` shapes and `highlight` or `primary` tones. Both render the finished result on the server, run once, and are simply there under reduced motion.",
+          "components": [
+            "draw-on",
+            "marker"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/draw-on-marker.md"
         },
         {
           "summary": "New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.",
@@ -663,6 +710,31 @@
           "source": ".changeset/list-markers.md"
         },
         {
+          "summary": "The live room is now a flow with one namespace: `LiveRoom.Lobby`, `LiveRoom.Countdown` and `LiveRoom.HostControls`, so typing `LiveRoom.` lists the whole journey and every app writes it the same way. `useRoom`, `useSecondsLeft`, the label and prop types stay flat (now `LiveRoomLobbyProps`, `LiveRoomLobbyLabels` and so on). The header carries a flow map: each phase of the room, the part that shows it on the host screen and on a phone, and the event that moves it on. The live room has not been released yet, so the flat `RoomLobby`, `RoomCountdown` and `RoomHostControls` names go without a deprecation step. The rules for flows are in `docs/philosophies/FLOW_PHILOSOPHY.md`, and a new lock test holds them.",
+          "components": [
+            "live-room"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-room-flow-namespace.md"
+        },
+        {
+          "summary": "A live room kit for game nights on one big screen and everyone's phones. `QrCode` draws a join link as one SVG path from a dependency-free encoder (`games/qr-model`: byte mode, versions 1 to 40, levels L to H), and keeps dark-on-light on a dark page so every camera reads it. `JoinCode` shows the address, a code no one misreads (`makeJoinCode`, `normalizeJoinCode`, `formatJoinCode`) spelled out for screen readers, the QR and a copy-link button. `useRoom` keeps the host and every player on the same room: the host applies events with the pure rules in `games/room-model` (no joining a locked room, one answer a round, only the host starts) and sends the state to all, over any `RoomTransport`; an in-memory hub and a BroadcastChannel transport ship, and a realtime service is a small adapter in the app. `RoomLobby` (players pop in and are announced, the host can remove one), `RoomHostControls` (start, reveal, next, podium, lock, end, moving on by itself), `RoomCountdown` (3, 2, 1, Go to a host timestamp) and `Podium` (top three rising 3rd, 2nd, 1st with a burst for the winner, everyone else below) complete it. Every word goes through `labels`; all motion is transform or opacity and off under reduced motion.",
+          "components": [
+            "qr-code",
+            "join-code",
+            "live-room",
+            "podium"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-room-kit.md"
+        },
+        {
           "summary": "Sheet `side` and Drawer `direction` take `start` and `end`. They follow the reading direction from `DirectionProvider`: `start` opens from the left in English and from the right in Hebrew or Arabic, with the swipe to dismiss matching.",
           "components": [
             "sheet",
@@ -673,6 +745,20 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/logical-edges.md"
+        },
+        {
+          "summary": "A mobile app shell. `AppShell` is the frame: a column at least `100dvh` tall with a sticky header, a `<main>` (the SkipLink target) and a sticky tab bar, nothing fixed-position, so the last line of content always clears the bar and an on-screen keyboard never drags a bar into the page. `TabBar` holds three to five links with an icon and a word; the current one (`currentHref`, which keeps a parent tab current on its child pages) gets `aria-current=\"page\"`, a filled pill that grows in from the middle and a heavier label, and a tab can carry a count or a dot with words for assistive tech. `hideFrom` hides it where a Topbar takes over. `AppHeader` is the view's bar: back, title and actions, sticky, clear of the notch, with its surface only once content scrolls under it; `largeTitle` sets the title big and moves it into the bar on scroll, read once. `AppHeaderBack` is the back link, its arrow mirrored in RTL. Every part pads itself by `env(safe-area-inset-*)` for a page added to a home screen (`viewport-fit=cover`). Under reduced motion the pill, surface and title simply change.",
+          "components": [
+            "app-shell",
+            "app-header",
+            "app-header-edge",
+            "tab-bar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/mobile-app-shell.md"
         },
         {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
@@ -686,6 +772,18 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
+          "summary": "New PointerSurface and UnderlineLink, motion that answers the reader. PointerSurface wraps a card so a soft `--primary` light follows the pointer, the card leans a few degrees toward it, or both (`effect`), and keyboard focus inside lights it from the centre; it only runs on a fine pointer that can hover and is still under reduced motion. UnderlineLink is a link whose underline draws in from the inline-start edge on hover and focus, keeps a thin line at rest by default so links are not told apart by colour alone, takes a router link through `render`, and needs no JavaScript.",
+          "components": [
+            "pointer-surface",
+            "underline-link"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/pointer-surface-underline-link.md"
+        },
+        {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
           "components": [
             "prose"
@@ -695,6 +793,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/prose-labels.md"
+        },
+        {
+          "summary": "Two more pieces for app-like pages. `PullToRefresh`: pull a list down from its top to load what is new. The pull is damped like a spring, arms at `threshold` (the arrow flips), and a spinner holds until `onRefresh` settles; \"Refreshing\", \"Updated\" or \"Could not refresh\" is said in a live region. It starts only at the top of the page, for one finger moving down more than across, and holds back the browser's own pull-to-refresh while it runs. The gesture always has a twin, a Refresh button, visible where the pointer is a mouse and reachable by keyboard and screen reader everywhere (`button=\"hidden\"` when the page has its own). Under reduced motion nothing moves. `InstallPrompt` offers to add the site to the home screen only where it can work: Install opens the browser's dialog (`beforeinstallprompt`), Safari on iPhone and iPad gets the Share then Add to Home Screen steps, and nothing shows in an installed app, after an install, or for `dismissDays` after Not now. `useInstallPrompt()` gives the same state to a control of your own. Every word goes through `labels`.",
+          "components": [
+            "pull-to-refresh",
+            "install-prompt"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/pull-to-refresh-install.md"
         },
         {
           "summary": "New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an \"On this page\" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.",
@@ -722,6 +832,18 @@
           "source": ".changeset/reading-settings.md"
         },
         {
+          "summary": "RecallCard: a prompt the player answers in their head, then checks. Reveal opens the answer and moves focus to it; the ratings (\"I had it\", \"Not yet\", or your own two to four) appear only then, pressed and said in words. Controlled or uncontrolled; a details element holds the answer without JavaScript.\n\nUpdateFeed: what is new, newest first, grouped by day or month under real time headings, each entry with a kind, a linked title and a line on what it is. Pass `since` and the entries after it are tagged \"New\" with a one-line count; a first visit marks nothing. Container-query layout, a `renderLink` seam for routers, and a pure model (`update-feed-model`) that sorts, groups and counts new entries for a badge.",
+          "components": [
+            "recall-card",
+            "update-feed"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/recall-card-update-feed.md"
+        },
+        {
           "summary": "New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.",
           "components": [
             "reveal"
@@ -733,6 +855,18 @@
           "source": ".changeset/reveal.md"
         },
         {
+          "summary": "Live rooms close the door on time and on guessers. `createRoom` takes `codeExpiresAt`: after it, the room refuses new players with `expired` while anyone already in can still reconnect, and the host moves it with an `extend-code` event. `useRoom` now stamps each join with the host's clock, like answers, so a phone cannot beat the expiry by setting its clock back, and a join that arrives unstamped while the room has an expiry is refused. `checkJoinAttempt` / `recordJoinAttempt` (games/room-model) cap wrong codes per source (5) and per room (30) in a sliding window (10 minutes), so a six-character code cannot be guessed while a person who mistyped is never stopped. `JoinCode` takes `expiresAt` and says how many minutes the code still works; once it has expired the QR goes, the code is struck through and the change is announced.",
+          "components": [
+            "live-room",
+            "join-code"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/room-access.md"
+        },
+        {
           "summary": "ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says \"there is more\" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade=\"none\"` for hard edges.",
           "components": [
             "scroll-area"
@@ -742,6 +876,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/scroll-area-fades.md"
+        },
+        {
+          "summary": "New ScrollText and FlipGroup. ScrollText is one large sentence the reader brings into focus by scrolling: its words go from `--muted-foreground` to `--foreground` in reading order on a ViewTimeline, so the browser drives it from the scroll position with no listener. It is read once by a screen reader, every word is always at AA contrast, and it is in full colour without ViewTimeline or under reduced motion. FlipGroup makes items glide to their new place when a list is sorted, filtered or reordered: give each a `data-flip-id`, render the new order, and it plays the difference (FLIP); new items fade in, `render` makes it the `ul` or `ol` itself, and under reduced motion items simply take their place.",
+          "components": [
+            "scroll-text",
+            "flip-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/scroll-text-flip-group.md"
         },
         {
           "summary": "`SeatChart` takes `labels` and `locale`. Every fixed word (the empty note, Vacant, No side, the table headers and caption, the majority caption and cell) can be replaced, and the screen-reader sentence is built by `labels.summary` from a `SeatSummary`, so it can be written in any language. Counts and shares are formatted with `Intl.NumberFormat` in the given locale. English stays the default.\n\n`ShareChart` takes `labels` too: the empty note, the legend's name, the table caption and row header, and the sentence read for each row. `describeShareRow` takes the same sentence function. `DotPlot`'s `rowSentence` now says that it words a missing value itself.",
@@ -779,6 +925,30 @@
           "source": ".changeset/section-brand-overlap.md"
         },
         {
+          "summary": "After-session feedback, in two patterns. `InterestSignal` is \"I want more on this\": a toggle (`aria-pressed`, a name that never changes) with a status line that says \"Noted\" and how many others asked. `InterestBoard` is the host's view, ranked by `patterns/interest-model` (`rankInterest`): most-asked first, bars drawn against the top topic, the viewer's asks marked, and `minCount` holding back topics too small to be anonymous. `CommitmentPicker` asks each person to pick one thing to do this week, in one tap or in their own words, and says when they will be asked; `CommitmentCheckIn` is that question a week later (yes, partly, not yet). `patterns/commitment-model` says when the follow-up is due (`followUpAt`, `followUpState`) and what a room's answers add up to (`commitmentImpact`). Every word goes through `labels`; the only motion is a 200ms scale on the icon and a one-time bar growth, both off under reduced motion.",
+          "components": [
+            "interest-signal",
+            "commitment"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/session-feedback.md"
+        },
+        {
+          "summary": "Plan a session, then send each person their recap. `SessionComposer` builds a session from modules: add, remove and reorder with named controls, a meter of minutes against `maxMinutes` that turns and says by how much when the plan runs long, `seen` modules marked for a group that had them before, and `required` modules (an opening, a close) that stay in place. Its rules live in `patterns/session-plan-model` (`cleanPlan`, `summarizePlan`, `fitsPlan`, `addToPlan`, `removeFromPlan`, `movePlan`, `canMove`), so a server checks a submitted plan the same way. `Recap` is one person's take-home page: what it covered, their numbers, their one thing this week, what they asked more about, and where to go next, each section shown only when it has something. `patterns/recap-model` (`encodeRecap`, `decodeRecap`) puts the per-person part in the link as versioned, validated base64url JSON, so a recap page needs no account and stores nothing.",
+          "components": [
+            "session-composer",
+            "recap"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/session-plan-recap.md"
+        },
+        {
           "summary": "New `ShareChart`: how a whole splits into parts, one bar per row on one shared scale. `layout=\"stacked\"` runs every bar from the same edge to 100%; `layout=\"diverging\"` puts an ordered scale around a zero line shared by every row, with a `neutral` category across it and each side's total printed at its end. Values become shares of the row's total (the sum, or `total`), so counts and percentages both work. Stacked categories take the five chart hues in order; diverging ones take two `poles`, strongest at the ends. Hovering a segment or a legend entry, or focusing one, dims the other categories and prints that share on every row; a click pins it. Every row carries a sentence with every share, and a table of values sits behind the picture (`showTable` shows it). On first view each bar grows out of its zero line once; nothing moves under reduced motion. Labels sit beside the bars when the chart's own box is wide enough and above them when it is not, and the bars mirror in right-to-left pages. `shareOf`, `shareLayout`, `shareFills` and `describeShareRow` are exported and pure.",
           "components": [
             "share-chart"
@@ -788,6 +958,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/share-chart.md"
+        },
+        {
+          "summary": "`ShareImage`: the picture a link unfurls into on X, LinkedIn, Facebook, WhatsApp, iMessage and Slack, as a tree Satori (Next's `ImageResponse`) paints, at 1200 × 630 or 1200 × 1200 (`size=\"square\"`). A kicker, the title, a line of description, your mark and a label at the top, your address and a footnote at the foot, and one optional piece of evidence: a `stat`, up to five `bars`, or your own `visual`. The title steps down with its length and the room left, and the description is cut at a word. Image renderers cannot read CSS variables, so `patterns/share-image-model` reads your own theme file instead (`themeFromCss`: `:root` shadcn tokens, `var()` resolved, `oklch()` turned into hex), and `shareMeta()` writes the `openGraph` and `twitter` metadata with every image's size, type and alt. Satori has no bidi algorithm, so right-to-left text is broken into lines and put in drawing order before it sees it (`visualRtlLine`): Hebrew reads correctly, numbers and Latin runs keep their order, brackets mirror, and Arabic is shaped by the font engine (Cairo works; Noto Naskh Arabic throws in Satori). The card mirrors in right to left. A still: no motion.",
+          "components": [
+            "share-image"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/share-image.md"
         },
         {
           "summary": "OtpField: a one-time code typed into a row of boxes, on Base UI's OTP field. Paste the whole code into any box or let the phone fill it from a message; `groupSize` adds a dash between groups, `invalid` marks every box.\n\nSignInMethods: an account page's list of ways to sign in, each with Connect or Disconnect. Disconnecting asks once more in place, and the last connected method is locked with the reason beside it, so nobody locks themselves out. Built-in providers take their name and mark from SocialSignIn.",
@@ -850,6 +1031,19 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/split-text.md"
+        },
+        {
+          "summary": "`StatCard` and `StatGroup` get a `surface` prop. `card` (the default) is the bordered tile. `plain` drops the tile for a hairline rule above the number, so a few headline figures can sit on a page or a brand band like a line in a report. A plain stat takes its colour from what it sits on, label included, so it stays readable on `bg-primary`, and its number reads a size up.\n\n`SectionHeader` gets `spacing=\"none\"` for a header inside a Stack that already owns the gap, so the header no longer floats away from an aside under it.",
+          "components": [
+            "stat-card",
+            "stat-group",
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/stat-plain-surface.md"
         },
         {
           "summary": "New `StatusPills`: short facts about a page (\"9 facts\", \"38 sources quoted\") as a wrapping row of pills, made to sit on a brand band under a title. A default pill is an outline in the text colour around it, with no fill so its text keeps the band's contrast, so the same component reads on a dark band and on the page. `tone=\"ok\"` is a solid pill with a check in the success colour, for a passed check.",
@@ -974,6 +1168,17 @@
           "source": ".changeset/topbar-motion.md"
         },
         {
+          "summary": "View transitions, made safe to reach for. `Morph` gives its one child a view-transition name (any string, cleaned into a valid identifier), so a card's image and the detail page's hero with the same name morph into each other: the card grows into its page. `useViewTransition()` runs a React state change inside a transition, flushed so the browser captures the new view, with optional `types`. `startViewTransition` does the same for code outside React. `PageTransitions` (once, in the root layout) is a server-safe `<style>`: the old page fades out, the new one rises in by half a rem, and `@view-transition` turns it on between documents; `pageTransitionsCss()` returns the same CSS. Where the browser has no View Transitions the update simply runs, and under reduced motion there is no transition at all. Opacity and transform only.",
+          "components": [
+            "view-transition"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/view-transitions.md"
+        },
+        {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
           "components": [
             "weave-texture"
@@ -995,6 +1200,15 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/wordmark.md"
+        },
+        {
+          "summary": "The brand-neutral lock now also fails when shipped code names the flagship consumer site, under any of its spellings, or the name of its identity. No component changes.",
+          "components": [],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/brand-neutral-flagship.md"
         },
         {
           "summary": "AuthorTemplate's doc comment no longer names a consumer in its example (`title=\"By the author\"`). A new lock fails when a component, style or token under `packages/ui` names a site or product that consumes Interlace.",
@@ -1285,6 +1499,23 @@
           "source": ".changeset/neutral-fixes.md"
         },
         {
+          "summary": "`button`, `toolbar`, `skeleton`, `calendar`, `data-state`, `meter` and `stat-strip` ship their `.ts` helper (`button-variants.ts`, `skeleton-variants.ts`, `calendar-model.ts`, `data-state-model.ts`, `meter-scale.ts`) with the helper's version banner, byte for byte what the helper's own item ships. The inlined copy used to have no banner, so the file in your tree depended on which item you installed last and the upgrade diff could not date it. The build now fails when two items write one target with different content.",
+          "components": [
+            "button",
+            "toolbar",
+            "skeleton",
+            "calendar",
+            "data-state",
+            "meter",
+            "stat-strip"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/one-target-one-content.md"
+        },
+        {
           "summary": "Form fields paint their own opaque face and text colour, so they read on a brand band, an image or a dark hero. `Input`, `Textarea`, `Combobox` (input and chips), `Checkbox` and `RadioGroup` now use `bg-background` in both schemes instead of `bg-transparent` / `dark:bg-input/30`, and the text fields (and `NumberField`'s group) set `text-foreground` rather than inheriting the band's foreground. `ComboboxCompose` now warns once, naming them, when two items share a `value` (each value keys a row, so filtering and selection broke with no error).",
           "components": [
             "input",
@@ -1321,6 +1552,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/prose-scroll-margin.md"
+        },
+        {
+          "summary": "`RadioGroup`: the picked dot sits in the centre of its circle. Base UI renders the radio as a span, so the indicator had no height and the dot sat on the circle's top edge; the indicator now fills the circle.",
+          "components": [
+            "radio-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/radio-dot-centred.md"
         },
         {
           "summary": "Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.",
@@ -1388,6 +1630,28 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/share-card-reannounce.md"
+        },
+        {
+          "summary": "ShareCard: `results` typechecks as the array of result keys. The props took a `div`'s own attributes too, and React types a `div`'s `results` as a number, so passing `results={['right']}` failed to compile in a consumer's app. The div's `results` is now left out.",
+          "components": [
+            "share-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/share-card-results-type.md"
+        },
+        {
+          "summary": "`Slider` draws its focus ring on keyboard focus again. Base UI puts focus on a hidden input inside the thumb, so the thumb's own `focus-visible` ring never showed; the ring now also follows `has-[:focus-visible]`. Every slider gains it, including `CloserGame` and `TimeSlider`.",
+          "components": [
+            "slider"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/slider-focus-ring.md"
         },
         {
           "summary": "fix(ui): Spotlight type-checks against motion 14. motion 14 added an `fx` boolean prop to every motion element, which clashes with the SVG `fx` focal-point attribute Spotlight inherited from its native `<svg>` props; installing Spotlight next to the latest motion failed `next build`'s type check. `fx` is now omitted from the native props, like the animation handlers and `values` before it.",

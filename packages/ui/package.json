@@ -48,6 +48,14 @@
       "types": "./dist/primitives/button-variants.d.ts",
       "default": "./dist/primitives/button-variants.js"
     },
+    "./calendar": {
+      "types": "./dist/primitives/calendar.d.ts",
+      "default": "./dist/primitives/calendar.js"
+    },
+    "./calendar-model": {
+      "types": "./dist/primitives/calendar-model.d.ts",
+      "default": "./dist/primitives/calendar-model.js"
+    },
     "./badge": {
       "types": "./dist/primitives/badge.d.ts",
       "default": "./dist/primitives/badge.js"
@@ -432,6 +440,14 @@
       "types": "./dist/charts/share-chart.d.ts",
       "default": "./dist/charts/share-chart.js"
     },
+    "./charts/time-slider": {
+      "types": "./dist/charts/time-slider.d.ts",
+      "default": "./dist/charts/time-slider.js"
+    },
+    "./charts/time-slider-model": {
+      "types": "./dist/charts/time-slider-model.d.ts",
+      "default": "./dist/charts/time-slider-model.js"
+    },
     "./charts/chart-frame": {
       "types": "./dist/charts/chart-frame.d.ts",
       "default": "./dist/charts/chart-frame.js"
@@ -472,6 +488,10 @@
       "types": "./dist/games/tally-bars.d.ts",
       "default": "./dist/games/tally-bars.js"
     },
+    "./games/recall-card": {
+      "types": "./dist/games/recall-card.d.ts",
+      "default": "./dist/games/recall-card.js"
+    },
     "./games/poll": {
       "types": "./dist/games/poll.d.ts",
       "default": "./dist/games/poll.js"
@@ -495,6 +515,30 @@
     "./games/order-game": {
       "types": "./dist/games/order-game.d.ts",
       "default": "./dist/games/order-game.js"
+    },
+    "./games/qr-model": {
+      "types": "./dist/games/qr-model.d.ts",
+      "default": "./dist/games/qr-model.js"
+    },
+    "./games/qr-code": {
+      "types": "./dist/games/qr-code.d.ts",
+      "default": "./dist/games/qr-code.js"
+    },
+    "./games/room-model": {
+      "types": "./dist/games/room-model.d.ts",
+      "default": "./dist/games/room-model.js"
+    },
+    "./games/join-code": {
+      "types": "./dist/games/join-code.d.ts",
+      "default": "./dist/games/join-code.js"
+    },
+    "./games/live-room": {
+      "types": "./dist/games/live-room.d.ts",
+      "default": "./dist/games/live-room.js"
+    },
+    "./games/podium": {
+      "types": "./dist/games/podium.d.ts",
+      "default": "./dist/games/podium.js"
     },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",

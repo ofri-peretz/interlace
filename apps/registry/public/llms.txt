@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 194 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 224 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -54,41 +54,41 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 102 server, 92 client
-- keyboard: 151 none, 43 handled
-- built-in loading state: 37 of 194
-- declared minViewport: 123 at 320, 7 at 480, 1 at 768, 63 at inherited
+- rendering: 113 client, 111 server
+- keyboard: 175 none, 49 handled
+- built-in loading state: 38 of 224
+- declared minViewport: 143 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
-- tier `primitive` — 76 item(s)
-- tier `pattern` — 50 item(s)
-- tier `effect` — 20 item(s)
+- tier `primitive` — 78 item(s)
+- tier `pattern` — 65 item(s)
+- tier `effect` — 27 item(s)
+- tier `game` — 15 item(s)
+- tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
-- tier `chart` — 13 item(s)
-- tier `game` — 10 item(s)
 - tier `util` — 6 item(s)
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
-- category `primitive` (Primitives) — 76 item(s)
-- category `pattern` (Patterns) — 50 item(s)
-- category `blog` (Blog & long-form) — 35 item(s)
-- category `data` (Data display) — 28 item(s)
+- category `primitive` (Primitives) — 78 item(s)
+- category `pattern` (Patterns) — 65 item(s)
+- category `blog` (Blog & long-form) — 37 item(s)
+- category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
-- category `form` (Form & input) — 20 item(s)
-- category `effect` (Effects) — 20 item(s)
-- category `decorative` (Decorative) — 18 item(s)
-- category `feedback` (Feedback) — 15 item(s)
-- category `navigation` (Navigation) — 13 item(s)
+- category `effect` (Effects) — 27 item(s)
+- category `form` (Form & input) — 26 item(s)
+- category `decorative` (Decorative) — 24 item(s)
+- category `navigation` (Navigation) — 18 item(s)
+- category `feedback` (Feedback) — 18 item(s)
+- category `games` (Games) — 15 item(s)
+- category `game` (Games) — 15 item(s)
+- category `chart` (Charts) — 14 item(s)
+- category `marketing` (Marketing) — 14 item(s)
 - category `template` (Templates) — 13 item(s)
-- category `chart` (Charts) — 13 item(s)
-- category `marketing` (Marketing) — 13 item(s)
 - category `overlay` (Overlay) — 10 item(s)
-- category `games` (Games) — 10 item(s)
-- category `game` (Games) — 10 item(s)
 - category `util` (Utilities) — 6 item(s)
 - category `a11y` (A11y) — 5 item(s)
 - category `starter` (Starters) — 3 item(s)
@@ -138,6 +138,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Button Variants](https://ds.interlace.tools/c/button-variants): The cva variant map that `button.tsx` imports — variant × size class strings and nothing else. Pure CVA: no React, no client APIs, so a server component can style a plain `<a>` with `buttonVariants({ variant, size })`.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/button-variants.json`
   - contract: server, v3.3.0
+- [Calendar](https://ds.interlace.tools/c/calendar): One month of days to pick one from: the date grid of a booking page, a date field's popup, a "when" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/calendar.json`
+  - contract: client, min 320px, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, states open|today|selected|unavailable|outside, v1.0.0
+- [Calendar Model](https://ds.interlace.tools/c/calendar-model): The pure half of `Calendar`: dates as plain `YYYY-MM-DD` strings, the month grid, the keyboard moves of the WAI-ARIA date grid, and the bounds.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/calendar-model.json`
+  - contract: server, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, v1.0.0
 - [Callout](https://ds.interlace.tools/c/callout): Inline-prose annotation. The "stop and read this" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner ("your save failed"), Callout is an in-band authored aside ("note: this rule is…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/callout.json`
   - contract: server, min 320px, v2.1.1
@@ -339,6 +345,15 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 ## Items — tier `pattern`
 
+- [App Header](https://ds.interlace.tools/c/app-header): The bar at the top of an app-like view on a phone: a way back at the start, the view's title in the middle, one or two actions at the end. It sticks to the top, clears the notch or status bar (`env(safe-area-inset-top)`), and shows its surface and border…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/app-header.json`
+  - contract: server, min 320px, v1.0.0
+- [App Header Edge](https://ds.interlace.tools/c/app-header-edge): The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/app-header-edge.json`
+  - contract: client, v1.0.0
+- [App Shell](https://ds.interlace.tools/c/app-shell): The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/app-shell.json`
+  - contract: server, min 320px, v1.0.0
 - [Article Card](https://ds.interlace.tools/c/article-card): Two article tiles that share one focusable-anchor shell: `ArticleCard`, the stacked grid tile with the cover on top, and `FeaturedArticleCard`, the full-bleed hero whose copy sits on a gradient scrim over the image. Both read the same props.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/article-card.json`
   - contract: client, loading state, states stack|overlay, v3.1.0
@@ -366,6 +381,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Code Window](https://ds.interlace.tools/c/code-window): macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/code-window.json`
   - contract: client, v3.0.0
+- [Commitment](https://ds.interlace.tools/c/commitment): The end of a session, and a week later. `CommitmentPicker` asks each person to pick one thing to do this week, from a short list or in their own words, and says when they will be asked about it. `CommitmentCheckIn` is that question, on the follow-up link…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/commitment.json`
+  - contract: client, min 320px, states done|partly|not-yet, v1.0.0
 - [Cta Section](https://ds.interlace.tools/c/cta-section): Call-to-action section. Title + description + 1-2 action buttons in a centred column on a tinted surface. The shape every landing page reaches for ("Ready to ship?" / "Start your trial" / "Read the docs"). Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/cta-section.json`
   - contract: server, min 320px, loading state, v2.1.0
@@ -408,9 +426,18 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Hero Cosmic](https://ds.interlace.tools/c/hero-cosmic): The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero-cosmic.json`
   - contract: client, min 320px, v5.1.0
+- [Install Prompt](https://ds.interlace.tools/c/install-prompt): An offer to add the site to the home screen, made once, politely, and only where it can work. Browsers that support it hand over their install dialog (`beforeinstallprompt`), and the Install button opens it. Safari on an iPhone or iPad has no such dialog…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/install-prompt.json`
+  - contract: client, min 320px, v1.0.0
+- [Interest Signal](https://ds.interlace.tools/c/interest-signal): "I want more on this": one tap that tells whoever runs the talk, the lesson or the page what people want to hear more about. The reader presses a toggle on a topic; the host sees every topic ranked by how many asked. It is the cheapest way to learn what an…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/interest-signal.json`
+  - contract: client, min 320px, v1.0.0
 - [Lint Playground](https://ds.interlace.tools/c/lint-playground): LintPlayground — paste code, watch analysis light it up.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json`
   - contract: client, states linting|ready|failed, v2.0.0
+- [Multi Step Form](https://ds.interlace.tools/c/multi-step-form): One form, a few steps, a last look before it is sent: a booking flow (when, who, check), a sign-up, a request. Every step is a real part of one `<form>`, kept in the page and hidden while it is not the current one, so what the reader typed survives going…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/multi-step-form.json`
+  - contract: client, min 320px, v1.0.0
 - [Newsletter Form](https://ds.interlace.tools/c/newsletter-form): Canonical email-signup pattern: title + (optional) description + email field + consent checkbox + submit. Composition of the auth primitive set (Form / Field / Input / Button + Checkbox + Typography). The block owns *structure*; consumers wire `action` and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/newsletter-form.json`
   - contract: server, min 320px, loading state, v2.0.0
@@ -423,8 +450,14 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Pricing Table](https://ds.interlace.tools/c/pricing-table): 2-4 column pricing-tier grid. Each tier is a card with name, price, description, feature list, and a CTA button. The "Most popular" tier gets a highlight border. Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/pricing-table.json`
   - contract: server, min 320px, loading state, v2.2.1
+- [Pull To Refresh](https://ds.interlace.tools/c/pull-to-refresh): Pull a list down from its top to load what is new, the gesture a phone reader already knows. The pull is one finger and one path, so it always has a twin: a Refresh button that is visible wherever the pointer is a mouse, and reachable by keyboard and…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/pull-to-refresh.json`
+  - contract: client, min 320px, states idle|pulling|armed|refreshing|settling, v1.0.0
 - [Reading Layout](https://ds.interlace.tools/c/reading-layout): A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into a slim bar (`TocBar`) that sticks to the top of the column, names…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/reading-layout.json`
+  - contract: server, min 320px, v1.0.0
+- [Recap](https://ds.interlace.tools/c/recap): What one person takes home from a session: what it covered, how they did, the one thing they picked for this week, what they asked to hear more about, and where to go next. Every section is optional and shows only when it has something in it, in the order…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/recap.json`
   - contract: server, min 320px, v1.0.0
 - [Related Posts](https://ds.interlace.tools/c/related-posts): "Keep reading" surface that sits at the foot of an article page (or any long-form route). Renders an h3 section heading followed by a responsive grid of ArticleCards: one column on phones, two from `md` up, three from `lg` up — the same 1/2/3 cadence the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/related-posts.json`
@@ -432,12 +465,21 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Scorecard Row](https://ds.interlace.tools/c/scorecard-row): A single dimension row in a scorecard: name + GradeBadge + numeric score + optional details. Used by ScorecardTemplate to render each scored category (Performance, Coverage, Adoption, ...).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/scorecard-row.json`
   - contract: server, min 320px, loading state, v2.0.0
+- [Scroll Story](https://ds.interlace.tools/c/scroll-story): A chart that stays in view while the story beside it scrolls: each step of text the reader reaches changes the chart, one point at a time. The story is told in the steps; the chart shows it.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/scroll-story.json`
+  - contract: client, min 320px, v1.0.0
 - [Section Header](https://ds.interlace.tools/c/section-header): The "section intro" block — optional eyebrow, a heading, and a `max-w-prose` tagline — with the bottom margin, the alignment and the type rhythm owned in one place instead of being re-typed as `text-center mb-12` on every section.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/section-header.json`
   - contract: server, v1.3.0
+- [Session Composer](https://ds.interlace.tools/c/session-composer): Build a session out of modules: pick what goes in, put it in order, and see at every step how long it runs against the time you have. For a workshop host planning a morning, a community lead booking a session, a teacher putting a lesson together. Modules a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/session-composer.json`
+  - contract: client, min 320px, v1.0.0
 - [Share Buttons](https://ds.interlace.tools/c/share-buttons): A compact "share this page" cluster: one ghost icon-button per social network plus a copy-link affordance. Each share button opens its network's prefilled share URL in a new tab; the copy button writes the URL to the clipboard and flips its icon +…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-buttons.json`
   - contract: client, min 320px, states twitter|bluesky|linkedin|copy, v1.1.0
+- [Share Image](https://ds.interlace.tools/c/share-image): The picture a link unfurls into on X, LinkedIn, Facebook, WhatsApp, iMessage and Slack: a kicker, the page's title, a line of description, and one optional piece of evidence (a big number, a few bars, or anything you draw), with your mark at the top and…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-image.json`
+  - contract: server, states og|square, v1.0.0
 - [Side By Side](https://ds.interlace.tools/c/side-by-side): Two (or three) accounts of the same thing, set next to each other so the reader compares them line by line: what is said and what the record shows, before and after, one source and another. Columns stack on narrow screens, in source order, so the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/side-by-side.json`
   - contract: server, min 320px, states neutral|success|warning|info|destructive|highlight, v1.1.0
@@ -462,12 +504,18 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Status Pills](https://ds.interlace.tools/c/status-pills): A row of short facts about the page, set as pills: "Reviewed", "9 facts", "38 sources", "4 min read". Built to sit on a brand band (`<Section tone="brand">`) under a title, and just as readable on the page background.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/status-pills.json`
   - contract: server, min 320px, states default|ok, v1.0.1
+- [Tab Bar](https://ds.interlace.tools/c/tab-bar): The row of three to five destinations at the bottom of a phone screen, where a thumb reaches. Each tab is a real link with an icon and a word; the current one says so to assistive tech (`aria-current="page"`) and to the eye with a filled pill behind its…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/tab-bar.json`
+  - contract: server, min 320px, v1.0.0
 - [Testimonial](https://ds.interlace.tools/c/testimonial): Quote + attribution surfaces. Single Testimonial cells render an blockquote with an author avatar; TestimonialGrid lays them out in a 1-3 column grid. Server components.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/testimonial.json`
   - contract: server, min 320px, loading state, v2.1.0
 - [Thread Steps](https://ds.interlace.tools/c/thread-steps): An ordered sequence held together by Interlace's woven thread: a knot for each step, and two strands that cross between one knot and the next. The strands draw in as the reader reaches each step, so the motion says one thing only: this leads to that.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/thread-steps.json`
   - contract: client, min 320px, states complete|current|upcoming, v1.0.0
+- [Time Slot Picker](https://ds.interlace.tools/c/time-slot-picker): The times open on one day, as tiles to pick one from: the second half of a booking page, next to a `Calendar`. Built on Base UI's radio group, so it is one tab stop, the arrows move between times, and a form posts the picked slot's `value` under `name`.…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/time-slot-picker.json`
+  - contract: client, min 320px, loading state, keyboard via Base UI radio, states morning|afternoon|evening, v1.0.0
 - [Timeline](https://ds.interlace.tools/c/timeline): A short record in date order: each event has a date, a title, what was said or done, and where that comes from. In a wide column the events sit side by side on a horizontal rule; in a narrow one they stack down a vertical rule. The switch keys on the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/timeline.json`
   - contract: server, min 320px, v1.0.2
@@ -486,6 +534,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Topbar Scroll Edge](https://ds.interlace.tools/c/topbar-scroll-edge): The client half of `Topbar edge="scroll"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-scroll-edge.json`
   - contract: client, v1.0.0
+- [Update Feed](https://ds.interlace.tools/c/update-feed): What is new, newest first: a product's changelog, a publication's latest pieces, a team's releases. Entries are grouped under their day or month, each with a kind ("Release", "Article"), a title that links to the thing itself and a line on what it is. Pass…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/update-feed.json`
+  - contract: server, min 320px, v1.0.0
 - [Wordmark](https://ds.interlace.tools/c/wordmark): A text logo of one or more stacked lines: a name over its tagline, or the same name in several languages or scripts. Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/wordmark.json`
   - contract: server, min 320px, states framed|plain, v1.0.1
@@ -540,18 +591,33 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Daily Puzzle](https://ds.interlace.tools/c/daily-puzzle): The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/daily-puzzle.json`
   - contract: client, min 320px, v1.0.0
+- [Join Code](https://ds.interlace.tools/c/join-code): How people get into a live room: the address to visit, a code to type there, and a QR code that does both in one scan. Built for the host's big screen first (`size="stage"`), and just as usable on a phone that wants to pass the room on, with a copy-link…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/join-code.json`
+  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.0.0
 - [Leaderboard](https://ds.interlace.tools/c/leaderboard): A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/leaderboard.json`
   - contract: server, min 320px, v1.0.0
+- [Live Room](https://ds.interlace.tools/c/live-room): A game night on one big screen and everyone's phones. The host opens a room and shows its JoinCode; players scan or type it and land in the lobby; the host starts, everyone sees the same countdown, plays the same rounds, and the night ends on a Podium. The…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/live-room.json`
+  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.0.0
 - [Order Game](https://ds.interlace.tools/c/order-game): Put a handful of items in order: events from earliest to latest, places from smallest to largest. The player drags rows by their handle, or moves them with the arrow keys or the up and down buttons, then locks in. The rows then glide into the right order…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/order-game.json`
   - contract: client, min 320px, keys ArrowDown/ArrowUp/End/Home, v1.0.0
+- [Podium](https://ds.interlace.tools/c/podium): The end of a game: the top three on steps, second and third rising first and the winner last, with a burst for first place. Below it, everyone else, so no one has to wonder where they came. Ranking is the leaderboard's (`rankEntries`), so ties share a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/podium.json`
+  - contract: client, min 320px, v1.0.0
 - [Poll](https://ds.interlace.tools/c/poll): One question, one tap. The options are plain buttons; tapping one casts the vote, and the options turn into the results in place, with the bars growing to everyone's shares and the viewer's choice named. There is no submit step, because a poll that asks…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/poll.json`
   - contract: client, min 320px, v1.0.0
+- [Qr Code](https://ds.interlace.tools/c/qr-code): A QR code for a link or a short text, drawn as one SVG path from the pure encoder in `qr-model.ts`. No dependency, no canvas, no image request: it renders on the server and stays sharp at any size, from a phone card to a projector.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/qr-code.json`
+  - contract: server, min 320px, v1.0.0
 - [Quiz Question](https://ds.interlace.tools/c/quiz-question): A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/quiz-question.json`
   - contract: client, min 320px, states correct|wrong|timeout, v1.0.0
+- [Recall Card](https://ds.interlace.tools/c/recall-card): A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/recall-card.json`
+  - contract: client, min 320px, v1.0.0
 - [Share Card](https://ds.interlace.tools/c/share-card): How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-card.json`
   - contract: client, min 320px, v1.0.0
@@ -606,6 +672,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Time Series](https://ds.interlace.tools/c/time-series): One metric over time, with the actions that moved it drawn ON the curve.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/time-series.json`
   - contract: client, min 320px, loading state, keys ArrowLeft/ArrowRight/End/Enter/Escape/Home/Space, states publish|release|action, v2.0.0
+- [Time Slider](https://ds.interlace.tools/c/time-slider): Step a chart through time: a play button, a slider with one stop per frame (a year, a survey wave, a season), and the current frame printed large beside them. Any chart goes inside: the slider owns which frame is showing, and the chart is drawn for that…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/time-slider.json`
+  - contract: client, min 320px, keyboard via Base UI direction-provider, v1.0.0
 
 ## Items — tier `effect`
 
@@ -618,9 +687,15 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Decode Text](https://ds.interlace.tools/c/decode-text): DecodeText — micro-labels resolve from glyph noise into their text.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/decode-text.json`
   - contract: client, v3.0.0
+- [Draw On](https://ds.interlace.tools/c/draw-on): A line drawing that draws itself as it scrolls into view: an illustration, a diagram, an arrow that points at the next thing, a signature. Wrap any inline SVG; every stroked shape inside traces its own line, one after another in document order, and filled…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/draw-on.json`
+  - contract: client, states sequence|together, v1.0.0
 - [Edge Glow](https://ds.interlace.tools/c/edge-glow): A light that runs around the edge of its parent: the plan you recommend, the card that is live right now. Drop it inside a positioned element:
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/edge-glow.json`
   - contract: client, v1.0.0
+- [Flip Group](https://ds.interlace.tools/c/flip-group): Items that glide to their new place when a list is sorted, filtered or reordered, instead of jumping there: a leaderboard that re-ranks, results that narrow as a filter is typed, cards that swap. The motion tells the reader where each item went, which a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/flip-group.json`
+  - contract: client, keyboard via Base UI use-render, v1.0.0
 - [Gradient Mesh](https://ds.interlace.tools/c/gradient-mesh): A soft, slowly shifting field of colour for a hero or a feature band. A few large blurred glows, each a theme colour, drift on long loops over a base surface, so the band feels alive without anything a reader has to watch. Content goes in `children` and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/gradient-mesh.json`
   - contract: client, v2.0.0
@@ -636,12 +711,21 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Light Beam](https://ds.interlace.tools/c/light-beam): A soft cone of light falling into a dark section from an edge, the way a stage light picks out a speaker. It draws the eye to the headline under it and gives a flat surface depth. It does not move: the light is part of the set, not an event.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/light-beam.json`
   - contract: server, states top-left|top|top-right, v1.0.0
+- [Marker](https://ds.interlace.tools/c/marker): A highlighter stroke across the one phrase in a paragraph a reader should not miss. The first time the phrase scrolls into view, the stroke sweeps across it from the start of the line to the end, the way a pen would, and wraps across lines with the text.…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/marker.json`
+  - contract: client, v1.0.0
+- [Pointer Surface](https://ds.interlace.tools/c/pointer-surface): A surface that answers the pointer: a soft light that follows it across a card, a slight tilt toward it, or both. It is the feel of picking a card up off a table, for a grid of choices a reader is weighing (plans, sessions, topics), not for every box on a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/pointer-surface.json`
+  - contract: client, states light|tilt|both, v1.0.0
 - [Reveal](https://ds.interlace.tools/c/reveal): Any block that arrives as it scrolls into view: a section heading, a card, a figure, a quote. It fades in and, depending on `effect`, rises a little, comes into focus or grows to size, once. Use it on the few things a reader should notice arriving, not on…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/reveal.json`
   - contract: client, v1.0.0
 - [Rotating Text](https://ds.interlace.tools/c/rotating-text): One word in a headline that changes every few seconds ("Build for [teams / founders / students]"). It is a familiar pattern done carefully: the line never jumps, a screen reader hears the sentence once, and the reader can stop it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/rotating-text.json`
   - contract: client, v2.0.0
+- [Scroll Text](https://ds.interlace.tools/c/scroll-text): A statement that the reader brings into focus by scrolling: its words go from the muted text colour to the full one, in reading order, as the paragraph moves up the screen. For one large sentence a page is built around (a mission, a finding, a promise)…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/scroll-text.json`
+  - contract: client, states p|h1|h2|h3|blockquote|div, v1.0.0
 - [Scroller](https://ds.interlace.tools/c/scroller): A row (or column) of items that glides past on a loop: logos of the organisations you work with, short quotes, headlines. The items are real content, so the component treats them that way first and as motion second.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/scroller.json`
   - contract: client, v1.0.0
@@ -665,6 +749,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, v2.0.0
 - [Thread Lines](https://ds.interlace.tools/c/thread-lines): Interlace's own backdrop: a loose bundle of threads running across a section, crossing and parting the way strands do in a weave, with a small glint of light travelling along each one. It is the brand mark (two strands, interlaced) at the scale of a page.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/thread-lines.json`
+  - contract: client, v1.0.0
+- [Underline Link](https://ds.interlace.tools/c/underline-link): A text link whose underline draws itself in when the reader points at it or tabs to it, from the start of the line to the end, and wraps across lines with the text. For links in running text, navigation and footers where a hard underline on every link…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/underline-link.json`
+  - contract: server, keyboard via Base UI use-render, v1.0.0
+- [View Transition](https://ds.interlace.tools/c/view-transition): The browser's View Transitions API, made safe to reach for: a card grows into its detail page, a list reorders in place, and a page change cross-fades instead of blinking. Interlace adds only what the API leaves to every app: a fallback where it is…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/view-transition.json`
   - contract: client, v1.0.0
 - [Weave Texture](https://ds.interlace.tools/c/weave-texture): A quiet woven cloth behind a section: warp threads in `--strand-a` and weft threads in `--strand-b`, passing over and under each other in a plain weave. It is texture, not glow: nothing moves, nothing shines, and at the default strength it sits just above…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/weave-texture.json`

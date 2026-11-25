@@ -114,17 +114,24 @@ export default defineConfig({
       include: [
         'src/charts/**/*.{ts,tsx}',
         // The games' pure cores: day keys, puzzle order, streak arithmetic.
-        'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model,tally-model,quiz-model,order-model}.ts',
+        'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model,tally-model,quiz-model,order-model,qr-model,room-model}.ts',
+        'src/patterns/update-feed-model.ts',
         'src/lib/**/*.{ts,tsx}',
-        // The four pure variant/model modules.
-        'src/primitives/{button-variants,data-state-model,meter-scale,skeleton-variants}.ts',
+        // The five pure variant/model modules.
+        'src/primitives/{button-variants,calendar-model,data-state-model,meter-scale,skeleton-variants}.ts',
+        // Booking: the slot picker's pure core (hours, parts of the day, formatting).
+        'src/patterns/time-slot-model.ts',
+        // Share images: the theme reader, line planning and bidi order, and the card itself.
+        'src/patterns/share-image-model.ts',
+        // After a session: interest ranking and the commitment follow-up.
+        'src/patterns/{interest-model,commitment-model,session-plan-model,recap-model}.ts',
         // The 37 components with real render coverage. See the ledger above.
         'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,direction,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx',
         // Patterns with full render coverage — the same ledger rule: a
         // file is in at 100 or it is out, and joining is a one-line diff.
-        'src/patterns/{lint-playground,thread-steps}.tsx',
+        'src/patterns/{lint-playground,multi-step-form,share-image,thread-steps,tab-bar,app-header,app-header-edge,app-shell,pull-to-refresh,install-prompt}.tsx',
         // Effects with full render coverage, on the same rule.
-        'src/effects/weave-texture.tsx',
+        'src/effects/{weave-texture,view-transition}.tsx',
       ],
       exclude: ['**/*.stories.tsx', '**/*.meta.json'],
       thresholds: { lines: 100, statements: 100, functions: 100, branches: 100 },

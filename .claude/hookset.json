@@ -1,0 +1,14 @@
+{
+  "ask": [],
+  "frozen": [],
+  "generated": {
+    "apps/registry/public/r/**": "npm run registry:build",
+    "apps/registry/public/.well-known/**": "npm run registry:build",
+    "apps/registry/public/llms*.txt": "npm run registry:build",
+    "apps/registry/public/data/**": "npm run prebuild --workspace=registry",
+    "apps/registry/public/tokens/**": "npm run prebuild --workspace=registry"
+  },
+  "context": {
+    "tokens": 2534
+  }
+}

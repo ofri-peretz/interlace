@@ -157,4 +157,7 @@ packages/*/src/**/*.d.ts
 .claude/*
 !.claude/settings.json
 !.claude/hooks/
+!.claude/hookset.json
 !.claude/skills/
+# MCP server indexes, rebuilt per session by .claude/hooks (hookset)
+.codegraph/

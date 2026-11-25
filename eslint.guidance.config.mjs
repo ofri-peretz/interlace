@@ -29,8 +29,22 @@ export default [
   { plugins: { markdown } },
   {
     ...guidance,
-    rules: Object.fromEntries(
-      Object.keys(guidance.rules).map((rule) => [rule, "error"]),
-    ),
+    rules: {
+      ...Object.fromEntries(
+        Object.keys(guidance.rules).map((rule) => [rule, "error"]),
+      ),
+      // Budgets held near this repo's sizes, well under the preset's 4096
+      // bytes and 1024 description chars. A file already over them is pinned
+      // in .guidance-budget.json, which may only shrink. Lower them as files
+      // shrink; raise one only by decision.
+      "conventions/guidance-budget": [
+        "error",
+        {
+          memoryBytes: 800,
+          descriptionChars: 250,
+          ratchetFile: ".guidance-budget.json",
+        },
+      ],
+    },
   },
 ];

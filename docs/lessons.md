@@ -1,0 +1,11 @@
+# Lessons
+
+What slipped past the gates, found by the independent review of merged pull requests (step 7 in
+[AI_SDLC.md](AI_SDLC.md)). Each row names the check that would have caught it. When a row's check
+ships, link it; a miss that happens twice becomes a check, not a sentence.
+
+| Date       | PR                  | What slipped                                                                                                                                                                                                         | Check that catches it                                                                                     |
+| ---------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| 2026-11-24 | #181                | The brand-neutral lock listed the workspace's own tools but not the flagship consumer site or its identity name, the one consumer whose pieces had already leaked into components once (#122, made neutral in #123). | `brand-neutral-lock.test.ts` now lists them (this PR).                                                    |
+| 2026-11-24 | #168                | CloserGame's target marker uses `rounded-[3px]`, a literal radius instead of the radius scale. The review row "a radius comes from a token" is prose only.                                                           | None yet. #171's motion-token lock covers durations and easing only; an arbitrary-radius lock would.      |
+| 2026-11-24 | whylikedis/site #49 | `calendar-model.ts` was vendored from source rather than from the built registry item, so it lacked the version banner and never matched the release. Fixed in site #51.                                             | The adoption run's content diff against `apps/registry/public/r` found it; no gate in the site checks it. |
