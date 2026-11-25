@@ -194,12 +194,16 @@ export const GoalMeter = memo(function GoalMeter({ earned, goal, earnedBefore, l
 
 export interface RoundSummaryLabels {
   xp: string;
+  /** Above the streak count. */
+  streakTitle: string;
+  /** Read for the count: "7 day streak". */
   streak: (days: number) => string;
   streakKept: string;
 }
 
 export const DEFAULT_ROUND_SUMMARY_LABELS: RoundSummaryLabels = {
   xp: 'XP earned',
+  streakTitle: 'Day streak',
   streak: (n) => (n === 1 ? '1 day streak' : `${n} day streak`),
   streakKept: 'Kept today',
 };
@@ -257,7 +261,7 @@ export const RoundSummary = memo(function RoundSummary({
           {streak ? (
             <Card style={{ flex: 1 }}>
               <Text variant="caption" tone="muted">
-                {streak.extended ? labels.streakKept : labels.streak(streak.current)}
+                {labels.streakTitle}
               </Text>
               <Animated.View entering={streak.extended ? POP : undefined}>
                 <Text
@@ -268,6 +272,11 @@ export const RoundSummary = memo(function RoundSummary({
                   {streak.current}
                 </Text>
               </Animated.View>
+              {streak.extended ? (
+                <Text variant="caption" tone="primary">
+                  {labels.streakKept}
+                </Text>
+              ) : null}
             </Card>
           ) : null}
         </View>
