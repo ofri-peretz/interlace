@@ -28,6 +28,7 @@ const meta: Meta<typeof Badge> = {
         'outline',
         'ghost',
         'link',
+        'scrim',
       ],
       description:
         'Pigment ladder. `default` is the emphatic one — using it everywhere flattens the signal; reach for `secondary` / `outline` for neutral metadata and reserve `destructive` for failure. `success` / `warning` / `info` are status tones; `highlight` marks the one item to read first.',
@@ -35,10 +36,16 @@ const meta: Meta<typeof Badge> = {
         category: 'Appearance',
         type: {
           summary:
-            "'default' | 'success' | 'warning' | 'info' | 'highlight' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link'",
+            "'default' | 'success' | 'warning' | 'info' | 'highlight' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link' | 'scrim'",
         },
         defaultValue: { summary: 'default' },
       },
+    },
+    size: {
+      control: 'select',
+      options: ['default', 'sm'],
+      description: 'Density. `sm` is the caption step for tags and counts in dense lists. Use this, not text classes.',
+      table: { category: 'Appearance', type: { summary: "'default' | 'sm'" }, defaultValue: { summary: 'default' } },
     },
     loading: {
       control: 'boolean',
@@ -101,6 +108,26 @@ export const Variants: Story = {
       <Badge variant="outline">Outline</Badge>
       <Badge variant="ghost">Ghost</Badge>
       <Badge variant="link">Link</Badge>
+    </div>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-2">
+      <Badge variant="secondary">Default</Badge>
+      <Badge variant="secondary" size="sm">#small</Badge>
+    </div>
+  ),
+};
+
+export const OverMedia: Story = {
+  render: () => (
+    <div className="relative grid h-40 w-80 max-w-full place-items-end overflow-hidden rounded-lg bg-scrim p-3">
+      <div className="flex gap-1.5">
+        <Badge variant="scrim" size="sm">#security</Badge>
+        <Badge variant="scrim" size="sm">+3</Badge>
+      </div>
     </div>
   ),
 };

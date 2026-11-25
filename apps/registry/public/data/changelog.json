@@ -5,6 +5,17 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "feat(ui): Button no longer submits a form by default. A bare `<button>` is `type=\"submit\"`, so a Cancel or \"Show more\" Button inside a `<form>` submitted it; the Settings template shipped exactly that bug. Button now defaults to `type=\"button\"` (as MUI, Chakra and Primer do) and a submit action says so with `type=\"submit\"`. A Button rendered through `render` (a link) gets no `type` unless you pass one.",
+          "components": [
+            "button"
+          ],
+          "componentsDeclared": true,
+          "kind": "Breaking",
+          "bump": "minor",
+          "migration": "in your copy of `button.tsx`, take `type` out of the props and pass `type: type ?? (render ? undefined : 'button')` to `useRender`. Then search your app for Buttons inside a `<form>` that submit it without a `type` and add `type=\"submit\"` to each (e.g. `<Button>Save</Button>` → `<Button type=\"submit\">Save</Button>`). Buttons that should not submit need no change.",
+          "source": ".changeset/button-type-button-default.md"
+        },
+        {
           "summary": "The stylesheets are now four layers, one directory each, and your classes always beat them. Page preflight used to sit in a custom `interlace.preflight` cascade layer, which ranks above Tailwind's utilities: `img { height: auto }` beat a call-site `h-10`, and `svg { display: block }` beat `inline`. Preflight now sits in Tailwind's `base` layer, prose and animation classes in `components`, and the three named Interlace layers hold custom properties only. A new lock (`css-layer-lock.test.ts`) keeps each layer reading only the one before it.",
           "components": [
             "interlace-base",
@@ -187,6 +198,18 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "feat(ui): Badge gets `size=\"sm\"` (the caption step for dense tag lists and counts) and `variant=\"scrim\"` (a translucent face for badges over images and video). One in three Badges in the DS was re-sizing itself with `text-caption tracking-normal …`, and article-card hand-built the over-cover look with a seven-class chain; both now use the props.",
+          "components": [
+            "badge",
+            "article-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/badge-size-and-scrim.md"
+        },
+        {
           "summary": "Two pieces for booking pages. `Calendar`: one month of days to pick one from, as the WAI-ARIA date grid (one tab stop; arrows by a day or a week, mirrored in RTL; Home and End; Page Up and Page Down by a month, with Shift by a year). Days are plain `YYYY-MM-DD` strings, so the day a reader picks is the day a server stores in every time zone. `min` and `max` bound it, `isDateUnavailable` strikes a day through and says so, `isDateMarked` dots the days that have room, and today carries `aria-current=\"date\"`. Names come from `Intl` in `locale`, and the week starts where the locale starts it. A new month slides in from its side, six rows always, nothing below moves. `TimeSlotPicker`: the times open on one day as tiles on Base UI's radio group, read from `HH:MM` or ISO instants in `timeZone`, with `groupBy=\"period\"`, a loading state and words for an empty day. The date arithmetic is pure and exported from `calendar-model`, the slot hours from `patterns/time-slot-model`. Every word goes through `labels`; every motion is transform or opacity and is off under reduced motion.",
           "components": [
             "calendar",
@@ -208,6 +231,19 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/booking-multi-step-form.md"
+        },
+        {
+          "summary": "feat(ui): `Button fullWidth` stretches to its container. It replaces `className=\"w-full\"`, which sign-in-form, newsletter-form and consumers were passing by hand — the component API carries the intent, not a utility class.",
+          "components": [
+            "button",
+            "sign-in-form",
+            "newsletter-form"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/button-full-width.md"
         },
         {
           "summary": "Button takes `loading`. The button keeps its place, its width and keyboard focus while the reader's action runs: the label keeps its space but stops painting, a spinner sits over the middle in the label's own colour, and nothing beside it moves. It sets `aria-busy` and `aria-disabled` rather than `disabled`, so focus is not dropped to the page, and it ignores clicks (a form submit included) until `loading` is false, so a double press cannot send twice. The spinner stands still under reduced motion. LOADING_PHILOSOPHY gains a \"busy button\" section.",
@@ -1365,6 +1401,18 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/hero-media-readable.md"
+        },
+        {
+          "summary": "fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).",
+          "components": [
+            "card",
+            "badge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/loading-keeps-identity.md"
         },
         {
           "summary": "Right-to-left pages now get the same layout as left-to-right ones, mirrored. Menus, select and combobox put their check marks before the label, callouts, blockquotes, code-editor findings and toasts draw their accent on the start edge, dialog and sheet close buttons sit at the end, and the number field's dividers follow its buttons. \"Next\" chevrons and arrows in pagination, breadcrumbs, prev/next links and submenus point forward, the switch thumb slides toward the end, and toasts enter from the edge they live on. In a left-to-right page nothing moves.",

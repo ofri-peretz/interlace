@@ -149,7 +149,7 @@ export function NewsletterForm({
             className="sr-only"
           />
 
-          <Button type="submit" className="mt-2 w-full">
+          <Button type="submit" fullWidth className="mt-2">
             {submitLabel}
           </Button>
         </Stack>
