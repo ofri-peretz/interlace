@@ -520,6 +520,18 @@ export function recordJoinAttempt(
 
 // --- Reading the state ----------------------------------------------------------
 
+/**
+ * How far the host's clock is ahead of this one, in ms, from `{ at, local }` pairs: the host's
+ * send time and this client's receive time. A message can only arrive after it was sent, so each
+ * `at - local` is a lower bound on the true offset and the largest is the closest. Pass the recent
+ * samples only, so a host whose clock is reset is followed. 0 with no samples.
+ */
+export function clockOffset(samples: readonly { at: number; local: number }[]): number {
+  let best = -Infinity;
+  for (const s of samples) if (Number.isFinite(s.at) && Number.isFinite(s.local)) best = Math.max(best, s.at - s.local);
+  return best === -Infinity ? 0 : best;
+}
+
 /** Players still connected. */
 export function connectedPlayers(state: RoomState): RoomPlayer[] {
   return state.players.filter((p) => p.connected);
@@ -555,7 +567,12 @@ export type RoomMessage =
   /** A player asks the host to apply an event. */
   | { kind: 'intent'; from: string; event: RoomEvent }
   /** The host's room, after every change. */
-  | { kind: 'state'; state: RoomState }
+  | {
+      kind: 'state';
+      state: RoomState;
+      /** The host's clock when it sent this, in ms. Phones use it to read deadlines on the host's time. */
+      at?: number;
+    }
   /** A client that just arrived asks for the current state. */
   | { kind: 'hello'; from: string }
   /** The host refused a player's intent, and why. */

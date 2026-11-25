@@ -64,10 +64,19 @@
  *
  * ## Time
  *
- * Deadlines are timestamps from the host's clock. Pass `now` (yours, minus
- * a measured offset) where phones' clocks drift; the countdown and the host
- * controls then agree to the second. Timing uses `setTimeout` to the next
- * whole second, never a frame loop.
+ * Deadlines are timestamps from the host's clock. Every state the host sends
+ * carries its clock (`at`), and `useRoom` returns `now`: this device's clock
+ * corrected to the host's. Pass it to `LiveRoom.Countdown`, `TimerRing` and
+ * `useSecondsLeft`, and a phone whose clock is a minute off still shows the
+ * host's deadline. Timing uses `setTimeout` to the next whole second, never
+ * a frame loop.
+ *
+ * ## Presence
+ *
+ * A player's page says it is away on `pagehide` and asks for the room again
+ * when it is seen (a phone that slept missed messages). Shown away while
+ * still here, it rejoins by itself under the same id and name, scores kept;
+ * a player who sends `leave` stays out. Turn it off with `presence: false`.
  *
  * ## Motion
  *
@@ -98,6 +107,7 @@ import { Button } from '../primitives/button.js';
 import {
   answerProgress,
   applyRoomEvent,
+  clockOffset,
   connectedPlayers,
   rejectRoomEvent,
   type RoomEvent,
@@ -129,6 +139,12 @@ export interface UseRoomOptions {
   onRejected?: (reason: RoomRejection, event: RoomEvent['type']) => void;
   /** The host's clock, which stamps each answer and join as it arrives. @default Date.now */
   now?: () => number;
+  /**
+   * A player only: say "away" when the page is closed or hidden for good (`pagehide`), and come
+   * back by itself when the page is seen again or the host shows this player away. A player who
+   * sends `leave` themselves stays out. @default true
+   */
+  presence?: boolean;
 }
 
 export interface UseRoomResult {
@@ -137,7 +153,16 @@ export interface UseRoomResult {
   isHost: boolean;
   /** Apply (host) or ask the host to apply (player). */
   send: (event: RoomEvent) => void;
+  /**
+   * This client's clock, corrected to the host's: pass it as `now` to `LiveRoom.Countdown`,
+   * `TimerRing` and `useSecondsLeft`, so every phone shows the host's deadline, whatever its own
+   * clock says. On the host it is `now`.
+   */
+  now: () => number;
 }
+
+const OFFSET_WINDOW_MS = 60_000;
+const REJOIN_EVERY_MS = 3_000;
 
 export function useRoom({
   transport,
@@ -147,12 +172,18 @@ export function useRoom({
   settings,
   onRejected,
   now = Date.now,
+  presence = true,
 }: UseRoomOptions): UseRoomResult {
   const isHost = host !== undefined;
   const [room, setRoom] = React.useState<RoomState | null>(host ?? null);
   const roomRef = React.useRef<RoomState | null>(host ?? null);
   const latest = React.useRef({ settings, onRejected, code, now });
   latest.current = { settings, onRejected, code, now };
+  // A player's measure of the host's clock: recent (host send, local receive) pairs.
+  const samples = React.useRef<{ at: number; local: number }[]>([]);
+  const offset = React.useRef(0);
+  const leftOnPurpose = React.useRef(false);
+  const lastRejoin = React.useRef(-Infinity);
 
   const apply = React.useCallback(
     (event: RoomEvent, from: string) => {
@@ -173,7 +204,7 @@ export function useRoom({
       const next = applyRoomEvent(current, event, from, latest.current.settings);
       roomRef.current = next;
       setRoom(next);
-      transport?.send({ kind: 'state', state: next });
+      transport?.send({ kind: 'state', state: next, at: latest.current.now() });
     },
     [transport, selfId],
   );
@@ -190,13 +221,33 @@ export function useRoom({
             message.from,
           );
         } else if (message.kind === 'hello' && roomRef.current)
-          transport.send({ kind: 'state', state: roomRef.current });
+          transport.send({ kind: 'state', state: roomRef.current, at: latest.current.now() });
         return;
       }
       if (message.kind === 'state') {
         const current = roomRef.current;
         const want = latest.current.code;
         if (want && message.state.code !== want) return;
+        if (typeof message.at === 'number') {
+          const local = Date.now();
+          samples.current = [...samples.current.filter((s) => local - s.local < OFFSET_WINDOW_MS), { at: message.at, local }];
+          offset.current = clockOffset(samples.current);
+        }
+        // Shown away (the phone slept, or its leave crossed a reload): come back, unless we left.
+        const self = message.state.players.find((p) => p.id === selfId);
+        if (
+          presence &&
+          self &&
+          !self.connected &&
+          !leftOnPurpose.current &&
+          message.state.phase !== 'closed' &&
+          !message.state.removed.includes(selfId) &&
+          (typeof document === 'undefined' || document.visibilityState !== 'hidden') &&
+          Date.now() - lastRejoin.current > REJOIN_EVERY_MS
+        ) {
+          lastRejoin.current = Date.now();
+          transport.send({ kind: 'intent', from: selfId, event: { type: 'join', playerId: selfId, name: self.name } });
+        }
         if (current && current.code === message.state.code && message.state.seq <= current.seq) return;
         roomRef.current = message.state;
         setRoom(message.state);
@@ -205,22 +256,52 @@ export function useRoom({
       }
     });
     if (isHost) {
-      if (roomRef.current) transport.send({ kind: 'state', state: roomRef.current });
+      if (roomRef.current) transport.send({ kind: 'state', state: roomRef.current, at: latest.current.now() });
     } else {
       transport.send({ kind: 'hello', from: selfId });
     }
     return off;
-  }, [transport, isHost, selfId, apply]);
+  }, [transport, isHost, selfId, apply, presence]);
+
+  // A player's page: away when it is closed, and a fresh look at the room when it is seen again
+  // (a phone that slept missed messages; the answer may bring it back in, see above).
+  React.useEffect(() => {
+    if (isHost || !presence || !transport || typeof window === 'undefined') return;
+    const hide = (e: PageTransitionEvent) => {
+      // A page kept for back/forward is not gone; a closed one is.
+      if (e.persisted) return;
+      if (roomRef.current?.players.some((p) => p.id === selfId && p.connected))
+        transport.send({ kind: 'intent', from: selfId, event: { type: 'leave', playerId: selfId } });
+    };
+    const seen = () => {
+      if (document.visibilityState === 'visible') transport.send({ kind: 'hello', from: selfId });
+    };
+    window.addEventListener('pagehide', hide);
+    document.addEventListener('visibilitychange', seen);
+    return () => {
+      window.removeEventListener('pagehide', hide);
+      document.removeEventListener('visibilitychange', seen);
+    };
+  }, [isHost, presence, transport, selfId]);
 
   const send = React.useCallback(
     (event: RoomEvent) => {
       if (isHost) apply(event, selfId);
-      else transport?.send({ kind: 'intent', from: selfId, event });
+      else {
+        if (event.type === 'leave') leftOnPurpose.current = true;
+        else if (event.type === 'join') leftOnPurpose.current = false;
+        transport?.send({ kind: 'intent', from: selfId, event });
+      }
     },
     [isHost, apply, selfId, transport],
   );
 
-  return { room, isHost, send };
+  const corrected = React.useCallback(
+    () => (isHost ? latest.current.now() : Date.now() + offset.current),
+    [isHost],
+  );
+
+  return { room, isHost, send, now: corrected };
 }
 
 /**

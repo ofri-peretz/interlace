@@ -103,7 +103,7 @@ const RIGHT = 'C';
 
 function Phone({ hub, id, name }: { hub: ReturnType<typeof createMemoryRoomHub>; id: string; name: string }) {
   const [transport] = React.useState<RoomTransport>(() => hub.connect());
-  const { room, send } = useRoom({ transport, selfId: id, code: 'K7Q4MZ' });
+  const { room, send, now } = useRoom({ transport, selfId: id, code: 'K7Q4MZ' });
   const joined = room?.players.some((p) => p.id === id);
   let body: React.ReactNode;
   if (!room) body = <p className="text-muted-foreground">Connecting…</p>;
@@ -115,7 +115,7 @@ function Phone({ hub, id, name }: { hub: ReturnType<typeof createMemoryRoomHub>;
     );
   else if (room.phase === 'lobby')
     body = <LiveRoom.Lobby players={room.players} selfId={id} aria-label={`${name}'s lobby`} />;
-  else if (room.phase === 'countdown') body = <LiveRoom.Countdown startsAt={room.startsAt} />;
+  else if (room.phase === 'countdown') body = <LiveRoom.Countdown startsAt={room.startsAt} now={now} />;
   else if (room.phase === 'question' || room.phase === 'reveal') {
     // The round reaches the phone in room.prompt; its answer only in room.solution, at the reveal.
     const options = Array.isArray(room.prompt) ? (room.prompt as string[]) : OPTIONS;

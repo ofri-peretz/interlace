@@ -11,6 +11,7 @@ import {
   answerProgress,
   applyRoomEvent,
   cleanName,
+  clockOffset,
   connectedPlayers,
   createBroadcastRoomTransport,
   createMemoryRoomHub,
@@ -485,6 +486,82 @@ describe('useRoom', () => {
     );
   });
 
+  it('reads deadlines on the host clock: a phone whose clock is 90 s slow agrees', async () => {
+    const hub = createMemoryRoomHub();
+    const fake = hub.connect();
+    let player!: ReturnType<typeof useRoom>;
+    render(<Client hub={hub} id="p1" code="AAA" onRoom={(r) => (player = r)} />);
+    const base = createRoom({ code: 'AAA', hostId: HOST });
+    const real = Date.now();
+    // The host's clock runs 90 s ahead of this one; the two messages took 40 ms and 5 ms.
+    await act(async () => fake.send({ kind: 'state', state: { ...base, seq: 1 }, at: real + 90_000 - 40 }));
+    await act(async () => fake.send({ kind: 'state', state: { ...base, seq: 2 }, at: real + 90_000 - 5 }));
+    expect(player.now() - Date.now()).toBeGreaterThan(89_900);
+    expect(player.now() - Date.now()).toBeLessThanOrEqual(90_000);
+  });
+
+  it('host messages carry the host clock, and the host keeps its own', async () => {
+    const hub = createMemoryRoomHub();
+    const spy = hub.connect();
+    const seen: RoomMessage[] = [];
+    spy.subscribe((m) => seen.push(m));
+    let host!: ReturnType<typeof useRoom>;
+    render(<Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />);
+    await act(async () => host.send({ type: 'lock', locked: true }));
+    expect(seen.filter((m) => m.kind === 'state').every((m) => m.kind === 'state' && m.at === 4242)).toBe(true);
+    expect(host.now()).toBe(4242);
+  });
+
+  it('a phone shown away comes back by itself, but not after leaving on purpose', async () => {
+    const hub = createMemoryRoomHub();
+    let host!: ReturnType<typeof useRoom>;
+    let player!: ReturnType<typeof useRoom>;
+    render(
+      <>
+        <Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />
+        <Client hub={hub} id="p1" code="AAA" onRoom={(r) => (player = r)} />
+      </>,
+    );
+    await act(async () => {});
+    await act(async () => player.send(join('p1', 'Dana')));
+    // The phone slept and its leave reached the host (e.g. pagehide on a lock screen).
+    await act(async () => host.send({ type: 'leave', playerId: 'p1' }));
+    await act(async () => {});
+    expect(host.room?.players[0]).toMatchObject({ name: 'Dana', connected: true });
+
+    // Leaving on purpose sticks.
+    await act(async () => player.send({ type: 'leave', playerId: 'p1' }));
+    await act(async () => {});
+    expect(host.room?.players[0]?.connected).toBe(false);
+  });
+
+  it('says away when the page is closed, and asks again when it is seen', async () => {
+    const hub = createMemoryRoomHub();
+    let host!: ReturnType<typeof useRoom>;
+    let player!: ReturnType<typeof useRoom>;
+    render(
+      <>
+        <Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />
+        <Client hub={hub} id="p1" code="AAA" onRoom={(r) => (player = r)} />
+      </>,
+    );
+    await act(async () => {});
+    await act(async () => player.send(join('p1', 'Dana')));
+    const hidden = vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden');
+    await act(async () => {
+      window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: false }));
+    });
+    await act(async () => {});
+    expect(host.room?.players[0]?.connected).toBe(false);
+    hidden.mockReturnValue('visible');
+    await act(async () => {
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await act(async () => {});
+    expect(host.room?.players[0]?.connected).toBe(true);
+    hidden.mockRestore();
+  });
+
   it('does nothing without a transport', () => {
     let api!: ReturnType<typeof useRoom>;
     function NoNet() {
@@ -494,6 +571,14 @@ describe('useRoom', () => {
     render(<NoNet />);
     act(() => api.send(join('p')));
     expect(api.room).toBeNull();
+  });
+});
+
+describe('clockOffset', () => {
+  it('takes the largest lower bound, and 0 with nothing to go on', () => {
+    expect(clockOffset([])).toBe(0);
+    expect(clockOffset([{ at: 1000, local: 900 }, { at: 2000, local: 1850 }, { at: NaN, local: 1 }])).toBe(150);
+    expect(clockOffset([{ at: 100, local: 400 }])).toBe(-300);
   });
 });
 
