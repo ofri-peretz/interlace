@@ -10,6 +10,24 @@
  * every field at once as `FormData`.
  * Inspiration: Stripe Checkout's quiet steps, Cal.com's "confirm" screen.
  *
+ * ## Flow
+ *
+ * A flow (docs/philosophies/FLOW_PHILOSOPHY.md) with flat parts, because a
+ * server component can compose its steps. The app names the steps; the form
+ * owns moving between them. Every phase, the part that shows it, and what
+ * moves it on:
+ *
+ * | Phase   | Part                                       | Leaves by                                          |
+ * | ------- | ------------------------------------------ | -------------------------------------------------- |
+ * | step    | MultiStepFormStep (one per step, in order) | Continue, once the step checks out → the next step |
+ * | invalid | MultiStepFormStep, its error and focus     | the reader fixes the field → Continue again        |
+ * | review  | MultiStepFormSummary in the last step      | Change → that step; Submit → the app's `onSubmit`  |
+ * | sending | MultiStepForm with `submitting`            | the app clears `submitting`                        |
+ * | sent    | the app's own confirmation                 | —                                                  |
+ *
+ * Back, and a done step in the progress list, return to an earlier step
+ * from any phase without checking.
+ *
  * ## Anatomy
  *
  *   MultiStepForm                    (form — data-slot="multi-step-form", @container, data-min-viewport=320)
@@ -533,6 +551,10 @@ function MultiStepFormSummary({
     </dl>
   );
 }
+
+MultiStepForm.displayName = 'MultiStepForm';
+MultiStepFormStep.displayName = 'MultiStepFormStep';
+MultiStepFormSummary.displayName = 'MultiStepFormSummary';
 
 export { MultiStepForm, MultiStepFormStep, MultiStepFormSummary, useMultiStepForm };
 export type { MultiStepFormProps, MultiStepFormStepProps, MultiStepFormSummaryProps, SummaryItem };
