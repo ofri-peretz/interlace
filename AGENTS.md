@@ -6,13 +6,8 @@ every change is judged there.
 
 ## The craft
 
-The craft skill holds the design rules for building with Interlace: tokens and theming, the
-editorial look, layout and fluid rhythm, type, container-query responsiveness, the motion budget,
-accessibility, and do/don't examples. Read
-[.claude/skills/interlace-craft/SKILL.md](.claude/skills/interlace-craft/SKILL.md) before any UI
-work here. It is also published to consumers as
-`/.well-known/agent-skills/interlace-craft/SKILL.md` and leads `/llms-full.txt`; the agent-surface
-test holds its token and component names to the code.
+The `interlace-craft` skill holds the design rules (tokens, theming, layout, type, motion,
+accessibility). It is also what consumers' agents read, so a change to it ships.
 
 ## Standing rules
 
@@ -23,9 +18,7 @@ test holds its token and component names to the code.
   layout.
 - Prefer props, variants and compound parts over asking consumers for a class. A consumer who
   needs a class to get a reasonable case has found a gap in the component.
-- Motion is a first-class part of the system, and it is earned: it explains a change, keeps the
-  content in the server HTML, and does nothing under reduced motion.
-- AA contrast is the floor the locks enforce; aim for AAA on body text.
+- Motion is earned: it explains a change. Aim for AAA contrast on body text; the locks hold AA.
 
 ## Where the rules live
 
