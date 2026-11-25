@@ -310,6 +310,22 @@ describe('room-model', () => {
     expect(roomStandings(r).map((e) => [e.id, e.rank, e.score])).toEqual([['a', 1, 900]]);
   });
 
+  it('carries what a round asks to every screen, and its answer only at the reveal', () => {
+    let r = applyRoomEvent(roomWith('a'), { type: 'countdown', startsAt: 1 }, HOST);
+    expect(r).toMatchObject({ prompt: null, solution: null });
+    const prompt = { text: 'Which is larger?', choices: ['x', 'y'] };
+    r = applyRoomEvent(r, { type: 'question', endsAt: null, prompt }, HOST);
+    expect(r).toMatchObject({ prompt, solution: null });
+    r = applyRoomEvent(r, { type: 'reveal', points: {}, solution: 'y' }, HOST);
+    expect(r).toMatchObject({ prompt, solution: 'y' });
+    r = applyRoomEvent(r, { type: 'question', endsAt: null }, HOST);
+    expect(r).toMatchObject({ prompt: null, solution: null });
+    r = applyRoomEvent(r, { type: 'reveal', points: {} }, HOST);
+    expect(r.solution).toBeNull();
+    r = applyRoomEvent(applyRoomEvent(r, { type: 'question', endsAt: null, prompt }, HOST), { type: 'restart' }, HOST);
+    expect(r).toMatchObject({ prompt: null, solution: null });
+  });
+
   it('counts a player with no score yet from zero', () => {
     let r = { ...roomWith('a'), scores: {} };
     expect(roomStandings(r)[0]?.score).toBe(0);

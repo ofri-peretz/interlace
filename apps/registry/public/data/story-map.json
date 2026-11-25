@@ -49,6 +49,19 @@
     "previewDark": "primitives-alertdialog--dark",
     "skeleton": null
   },
+  "answer-pad": {
+    "title": "Games/AnswerPad",
+    "storyIds": [
+      "games-answerpad--default",
+      "games-answerpad--keys",
+      "games-answerpad--revealed-wrong",
+      "games-answerpad--revealed-right",
+      "games-answerpad--right-to-left"
+    ],
+    "preview": "games-answerpad--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "app-header": {
     "title": "Blocks/AppHeader",
     "storyIds": [

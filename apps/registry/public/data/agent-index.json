@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 224
+    "itemCount": 225
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 77,
       "pattern": 65,
       "effect": 27,
-      "game": 16,
+      "game": 17,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -50,8 +50,8 @@
       "decorative": 24,
       "navigation": 18,
       "feedback": 18,
-      "games": 16,
-      "game": 16,
+      "games": 17,
+      "game": 17,
       "chart": 14,
       "marketing": 14,
       "template": 13,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 113,
+      "client": 114,
       "server": 111
     },
     "keyboard": {
       "none": 176,
-      "handled": 48
+      "handled": 49
     },
     "loading": {
-      "none": 186,
+      "none": 187,
       "built-in": 38
     },
     "minViewport": {
-      "320": 143,
+      "320": 144,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -280,6 +280,83 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/alert.json",
       "item": "https://ds.interlace.tools/r/alert.json",
       "docs": "https://ds.interlace.tools/c/alert"
+    },
+    {
+      "name": "answer-pad",
+      "title": "Answer Pad",
+      "type": "registry:ui",
+      "summary": "The player's side of a live round: the question is on the big screen, and each phone shows big lettered tiles to pick from. The first pick is final and goes to the host; the pad then says the answer is in and waits. When the host reveals the round, the pad…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "AnswerPadState",
+          "values": [
+            "open",
+            "sent",
+            "closed",
+            "revealed"
+          ]
+        },
+        {
+          "name": "AnswerPadOutcome",
+          "values": [
+            "correct",
+            "wrong",
+            "missed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-disabled",
+          "aria-keyshortcuts",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/answer-pad.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/answer-pad.json",
+      "item": "https://ds.interlace.tools/r/answer-pad.json",
+      "docs": "https://ds.interlace.tools/c/answer-pad"
     },
     {
       "name": "app-header-edge",

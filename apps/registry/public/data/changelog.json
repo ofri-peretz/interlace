@@ -724,6 +724,19 @@
           "source": ".changeset/live-room-kit.md"
         },
         {
+          "summary": "Live rounds reach every phone. `games/room-model` gains `RoomState.prompt` and `RoomState.solution`: the host's `question` event can carry what the round asks (`prompt`) and its `reveal` the answer (`solution`), so every screen, and a player who joins mid-round, shows the same round without a second channel. Both are null in the lobby, cleared by the next question and by `restart`. `AnswerPad` is the player's side of a live round: big lettered tiles, the first pick final, \"Answer in\" while the host waits, then the right tile marked and the outcome in words. It never needs the right answer before the reveal, its state follows from `value`, `closed` and `correct` (so a reconnect shows the same thing), `display=\"keys\"` shows letters only for rooms that keep the words on the big screen, and `choiceKey(i)` gives the big screen the same letters. Keys A to Z and 1 to 9 pick a tile; motion is transform only.",
+          "components": [
+            "answer-pad",
+            "live-room",
+            "join-code"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-round-pad.md"
+        },
+        {
           "summary": "A mobile app shell. `AppShell` is the frame: a column at least `100dvh` tall with a sticky header, a `<main>` (the SkipLink target) and a sticky tab bar, nothing fixed-position, so the last line of content always clears the bar and an on-screen keyboard never drags a bar into the page. `TabBar` holds three to five links with an icon and a word; the current one (`currentHref`, which keeps a parent tab current on its child pages) gets `aria-current=\"page\"`, a filled pill that grows in from the middle and a heavier label, and a tab can carry a count or a dot with words for assistive tech. `hideFrom` hides it where a Topbar takes over. `AppHeader` is the view's bar: back, title and actions, sticky, clear of the notch, with its surface only once content scrolls under it; `largeTitle` sets the title big and moves it into the bar on scroll, read once. `AppHeaderBack` is the back link, its arrow mirrored in RTL. Every part pads itself by `env(safe-area-inset-*)` for a page added to a home screen (`viewport-fit=cover`). Under reduced motion the pill, surface and title simply change.",
           "components": [
             "app-shell",
