@@ -46,4 +46,4 @@ thread). They govern interlace.tools surfaces, not what a consumer's site must l
 
 Most design rules are lock tests in `packages/ui/__tests__/` (motion, contrast, container scale,
 breakpoints, theme contract, effects). When one fails, fix the component or the token, not the
-test. Generated registry files change only through `npm run registry:build`.
+test.

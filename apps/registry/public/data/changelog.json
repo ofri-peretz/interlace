@@ -454,6 +454,18 @@
           "source": ".changeset/dot-plot.md"
         },
         {
+          "summary": "New DrawOn and Marker, editorial motion for line drawings and emphasis. DrawOn wraps any inline SVG and draws its stroked shapes as it scrolls into view, one after another (`order=\"sequence\"`) or all at once, then fades in the fills. Marker is a `<mark>` whose highlighter stroke sweeps across a phrase from the inline-start edge, in `band`, `full` or `underline` shapes and `highlight` or `primary` tones. Both render the finished result on the server, run once, and are simply there under reduced motion.",
+          "components": [
+            "draw-on",
+            "marker"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/draw-on-marker.md"
+        },
+        {
           "summary": "New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.",
           "components": [
             "drawer"
@@ -687,6 +699,34 @@
           "source": ".changeset/list-markers.md"
         },
         {
+          "summary": "A live room kit for game nights on one big screen and everyone's phones. `QrCode` draws a join link as one SVG path from a dependency-free encoder (`games/qr-model`: byte mode, versions 1 to 40, levels L to H), and keeps dark-on-light on a dark page so every camera reads it. `JoinCode` shows the address, a code no one misreads (`makeJoinCode`, `normalizeJoinCode`, `formatJoinCode`) spelled out for screen readers, the QR and a copy-link button. `useRoom` keeps the host and every player on the same room: the host applies events with the pure rules in `games/room-model` (no joining a locked room, one answer a round, only the host starts) and sends the state to all, over any `RoomTransport`; an in-memory hub and a BroadcastChannel transport ship, and a realtime service is a small adapter in the app. `RoomLobby` (players pop in and are announced, the host can remove one), `RoomHostControls` (start, reveal, next, podium, lock, end, moving on by itself), `RoomCountdown` (3, 2, 1, Go to a host timestamp) and `Podium` (top three rising 3rd, 2nd, 1st with a burst for the winner, everyone else below) complete it. Every word goes through `labels`; all motion is transform or opacity and off under reduced motion.",
+          "components": [
+            "qr-code",
+            "join-code",
+            "live-room",
+            "podium"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-room-kit.md"
+        },
+        {
+          "summary": "A mobile app shell. `AppShell` is the frame: a column at least `100dvh` tall with a sticky header, a `<main>` (the SkipLink target) and a sticky tab bar, nothing fixed-position, so the last line of content always clears the bar and an on-screen keyboard never drags a bar into the page. `TabBar` holds three to five links with an icon and a word; the current one (`currentHref`, which keeps a parent tab current on its child pages) gets `aria-current=\"page\"`, a filled pill that grows in from the middle and a heavier label, and a tab can carry a count or a dot with words for assistive tech. `hideFrom` hides it where a Topbar takes over. `AppHeader` is the view's bar: back, title and actions, sticky, clear of the notch, with its surface only once content scrolls under it; `largeTitle` sets the title big and moves it into the bar on scroll, read once. `AppHeaderBack` is the back link, its arrow mirrored in RTL. Every part pads itself by `env(safe-area-inset-*)` for a page added to a home screen (`viewport-fit=cover`). Under reduced motion the pill, surface and title simply change.",
+          "components": [
+            "app-shell",
+            "app-header",
+            "app-header-edge",
+            "tab-bar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/mobile-app-shell.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"
@@ -698,6 +738,18 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
+          "summary": "New PointerSurface and UnderlineLink, motion that answers the reader. PointerSurface wraps a card so a soft `--primary` light follows the pointer, the card leans a few degrees toward it, or both (`effect`), and keyboard focus inside lights it from the centre; it only runs on a fine pointer that can hover and is still under reduced motion. UnderlineLink is a link whose underline draws in from the inline-start edge on hover and focus, keeps a thin line at rest by default so links are not told apart by colour alone, takes a router link through `render`, and needs no JavaScript.",
+          "components": [
+            "pointer-surface",
+            "underline-link"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/pointer-surface-underline-link.md"
+        },
+        {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
           "components": [
             "prose"
@@ -707,6 +759,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/prose-labels.md"
+        },
+        {
+          "summary": "Two more pieces for app-like pages. `PullToRefresh`: pull a list down from its top to load what is new. The pull is damped like a spring, arms at `threshold` (the arrow flips), and a spinner holds until `onRefresh` settles; \"Refreshing\", \"Updated\" or \"Could not refresh\" is said in a live region. It starts only at the top of the page, for one finger moving down more than across, and holds back the browser's own pull-to-refresh while it runs. The gesture always has a twin, a Refresh button, visible where the pointer is a mouse and reachable by keyboard and screen reader everywhere (`button=\"hidden\"` when the page has its own). Under reduced motion nothing moves. `InstallPrompt` offers to add the site to the home screen only where it can work: Install opens the browser's dialog (`beforeinstallprompt`), Safari on iPhone and iPad gets the Share then Add to Home Screen steps, and nothing shows in an installed app, after an install, or for `dismissDays` after Not now. `useInstallPrompt()` gives the same state to a control of your own. Every word goes through `labels`.",
+          "components": [
+            "pull-to-refresh",
+            "install-prompt"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/pull-to-refresh-install.md"
         },
         {
           "summary": "New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an \"On this page\" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.",
@@ -754,6 +818,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/scroll-area-fades.md"
+        },
+        {
+          "summary": "New ScrollText and FlipGroup. ScrollText is one large sentence the reader brings into focus by scrolling: its words go from `--muted-foreground` to `--foreground` in reading order on a ViewTimeline, so the browser drives it from the scroll position with no listener. It is read once by a screen reader, every word is always at AA contrast, and it is in full colour without ViewTimeline or under reduced motion. FlipGroup makes items glide to their new place when a list is sorted, filtered or reordered: give each a `data-flip-id`, render the new order, and it plays the difference (FLIP); new items fade in, `render` makes it the `ul` or `ol` itself, and under reduced motion items simply take their place.",
+          "components": [
+            "scroll-text",
+            "flip-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/scroll-text-flip-group.md"
         },
         {
           "summary": "`SeatChart` takes `labels` and `locale`. Every fixed word (the empty note, Vacant, No side, the table headers and caption, the majority caption and cell) can be replaced, and the screen-reader sentence is built by `labels.summary` from a `SeatSummary`, so it can be written in any language. Counts and shares are formatted with `Intl.NumberFormat` in the given locale. English stays the default.\n\n`ShareChart` takes `labels` too: the empty note, the legend's name, the table caption and row header, and the sentence read for each row. `describeShareRow` takes the same sentence function. `DotPlot`'s `rowSentence` now says that it words a missing value itself.",
@@ -873,6 +949,19 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/split-text.md"
+        },
+        {
+          "summary": "`StatCard` and `StatGroup` get a `surface` prop. `card` (the default) is the bordered tile. `plain` drops the tile for a hairline rule above the number, so a few headline figures can sit on a page or a brand band like a line in a report. A plain stat takes its colour from what it sits on, label included, so it stays readable on `bg-primary`, and its number reads a size up.\n\n`SectionHeader` gets `spacing=\"none\"` for a header inside a Stack that already owns the gap, so the header no longer floats away from an aside under it.",
+          "components": [
+            "stat-card",
+            "stat-group",
+            "section-header"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/stat-plain-surface.md"
         },
         {
           "summary": "New `StatusPills`: short facts about a page (\"9 facts\", \"38 sources quoted\") as a wrapping row of pills, made to sit on a brand band under a title. A default pill is an outline in the text colour around it, with no fill so its text keeps the band's contrast, so the same component reads on a dark band and on the page. `tone=\"ok\"` is a solid pill with a check in the success colour, for a passed check.",
@@ -995,6 +1084,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/topbar-motion.md"
+        },
+        {
+          "summary": "View transitions, made safe to reach for. `Morph` gives its one child a view-transition name (any string, cleaned into a valid identifier), so a card's image and the detail page's hero with the same name morph into each other: the card grows into its page. `useViewTransition()` runs a React state change inside a transition, flushed so the browser captures the new view, with optional `types`. `startViewTransition` does the same for code outside React. `PageTransitions` (once, in the root layout) is a server-safe `<style>`: the old page fades out, the new one rises in by half a rem, and `@view-transition` turns it on between documents; `pageTransitionsCss()` returns the same CSS. Where the browser has no View Transitions the update simply runs, and under reduced motion there is no transition at all. Opacity and transform only.",
+          "components": [
+            "view-transition"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/view-transitions.md"
         },
         {
           "summary": "`WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.",
