@@ -74,6 +74,8 @@ interface DuelInviteLabels {
   share?: string;
   /** @default 'Copy link' */
   copy?: string;
+  /** Name of the link field shown when copying fails. @default 'Challenge link' */
+  field?: string;
   /** @default 'Link copied.' */
   copied?: string;
   /** @default 'Copy failed. Select the link and copy it.' */
@@ -156,7 +158,7 @@ function DuelInvite({ href, message, onShare, labels, className, ...props }: Due
         <input
           readOnly
           value={href}
-          aria-label={labels?.copy ?? 'Copy link'}
+          aria-label={labels?.field ?? 'Challenge link'}
           onFocus={(e) => e.currentTarget.select()}
           className="border-input bg-background w-full rounded-lg border px-3 py-2 text-sm"
         />
@@ -335,6 +337,7 @@ function DuelCompare({
       clearTimeout(t);
       running.forEach((r) => r.cancel());
     };
+    // Once on mount: new a/b values update the bars in place and don't re-animate.
   }, [animate, reduced]);
 
   const verdict = (L.verdict ?? VERDICT)({

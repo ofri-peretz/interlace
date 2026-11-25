@@ -103,7 +103,7 @@ function clean(input: unknown): DuelChallenge | null {
     from: { name, rounds: (from.rounds as number[]).slice() },
   };
   if (typeof o.at === 'number' && Number.isFinite(o.at)) out.at = o.at;
-  if (typeof o.sig === 'string' && o.sig) out.sig = o.sig.slice(0, DUEL_LIMITS.sig);
+  if (typeof o.sig === 'string' && o.sig) out.sig = clip(o.sig, DUEL_LIMITS.sig);
   return out;
 }
 
@@ -130,7 +130,7 @@ export function decodeDuel(token: string | null | undefined): DuelChallenge | nu
 export function duelHref(base: string, token: string, param = 'duel'): string {
   const [path, hash = ''] = base.split('#');
   const sep = path!.includes('?') ? '&' : '?';
-  return `${path}${sep}${encodeURIComponent(param)}=${token}${hash ? `#${hash}` : ''}`;
+  return `${path}${sep}${encodeURIComponent(param)}=${encodeURIComponent(token)}${hash ? `#${hash}` : ''}`;
 }
 
 // --- Compare ----------------------------------------------------------------------

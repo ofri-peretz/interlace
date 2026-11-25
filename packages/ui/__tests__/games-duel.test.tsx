@@ -148,7 +148,7 @@ describe('DuelInvite', () => {
     vi.stubGlobal('navigator', { clipboard: { writeText: vi.fn().mockRejectedValue(new Error('no')) } });
     render(<DuelInvite href="https://example.com/?duel=T" />);
     await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Copy link' })));
-    const field = screen.getByRole('textbox', { name: 'Copy link' }) as HTMLInputElement;
+    const field = screen.getByRole('textbox', { name: 'Challenge link' }) as HTMLInputElement;
     expect(field.value).toBe('https://example.com/?duel=T');
     fireEvent.focus(field);
   });
