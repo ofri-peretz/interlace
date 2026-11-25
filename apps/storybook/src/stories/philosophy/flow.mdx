@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 {/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
     source: docs/philosophies/FLOW_PHILOSOPHY.md
-    hash: b6c6845d3cb5 */}
+    hash: b36b4fe2123b */}
 
 # Flow Philosophy
 
@@ -41,17 +41,32 @@ Escalate only when the step below cannot say what the surface needs:
 2. **Props and slots.** One or two places to insert a node: `<Callout title={…} kicker={…}>`.
 3. **Compound parts, flat.** Several parts of one interaction: `DialogTrigger`, `DialogContent`.
    This is the shadcn canon and stays flat (`CONVENTIONS.md`).
-4. **A flow namespace.** The test in section 1 says flow: `LiveRoom.Lobby`, `LiveRoom.Countdown`.
+4. **A flow.** The test in section 1 says flow. It gets a flow map and a journey (sections 5
+   and 6), and its parts are served in one of two shapes (section 3): a namespace
+   (`LiveRoom.Lobby`) or flat parts that share the flow's name (`MultiStepForm`,
+   `MultiStepFormStep`). A flow the app drives entirely through props (`SocialSignIn`) is
+   still a flow, with one part.
 
 Props carry configuration: variant, size, state, labels. Composition carries structure: what
 appears, and in what order. A prop that switches structure (`type="a" | "b"` that renders two
 different trees) is a missing part. A flow that leaves the app to assemble what Interlace
 should own is a missing flow.
 
-## 3. One namespace
+## 3. One spelling per part: a namespace, or flat parts
 
-A flow exports one value: its namespace. Type the name and a dot, and the editor lists the
-whole journey.
+Every part of a flow has exactly one name the consumer writes. Which shape that name takes is
+set by one question: **can a server component compose this flow?**
+
+React cannot read a property of a client module from a server component. Writing
+`<MultiStepForm.Step>` in a server page throws "You cannot dot into a client module from a
+server component". So:
+
+| The flow is composed…                                               | Shape          | Example                                         |
+| ------------------------------------------------------------------- | -------------- | ----------------------------------------------- |
+| only in a client component, because its state lives in a hook      | **namespace**  | `LiveRoom.Lobby` (the room needs `useRoom`)     |
+| possibly in a server component (fields, turns, steps as server JSX) | **flat parts** | `MultiStepForm`, `MultiStepFormStep`, `DialogueStep` |
+
+A namespace lists the whole journey when you type the name and a dot:
 
 ```tsx
 import { LiveRoom, useRoom } from '@/components/ui/games/live-room';
@@ -61,23 +76,28 @@ import { LiveRoom, useRoom } from '@/components/ui/games/live-room';
 <LiveRoom.HostControls room={room} send={send} />
 ```
 
-- **No second path.** A part is never also exported flat. Two spellings of one part become
-  two dialects across apps, and the flat one freezes the internals as public API.
+Flat parts share the flow's name as a prefix where they can, so the editor's completion still
+groups them, and the flow map lists them all.
+
+Either way:
+
+- **No second path.** A part is never exported both ways. Two spellings of one part become two
+  dialects across apps, and the extra one freezes the internals as public API.
 - **Hooks, models and types stay flat.** `useRoom`, `room-model.ts`, `LiveRoomLobbyProps` and
   the `*Labels` interfaces are not parts.
 - **The display name is what the consumer writes.** `LiveRoomLobby.displayName =
   'LiveRoom.Lobby'`, so React devtools and the Storybook source panel show the code as typed.
 - **Each part is written out.** No factory mints parts; "go to definition" lands on the code.
-- **Names say what the part is on the screen.** `.Lobby`, `.HostControls`, `.Podium`; never
-  `.Column`, `.Stack` or `.Wrapper`, and never a key that only re-exports a primitive. If a
+- **Names say what the part is on the screen.** `Lobby`, `HostControls`, `Summary`; never
+  `Column`, `Stack` or `Wrapper`, and never a part that only re-exports a primitive. If a
   reader cannot place the part on the screen from its name, rename it.
 - **A shared piece stays itself.** `Podium`, `TallyBars` and `QuizQuestion` are game
-  components that several flows use. The flow map names them; the namespace does not wrap
-  them. Wrap a shared piece only when the flow pins something about it (its defaults, its
-  wiring), and then name the key for that role.
+  components that several flows use. The flow map names them; the flow does not wrap them.
+  Wrap a shared piece only when the flow pins something about it (its defaults, its wiring),
+  and then name the part for that role.
 
-Changing a released flow's namespace, or a released component's export shape, is breaking:
-its own PR, a major changeset and a `Migration:` note.
+Changing a released flow's shape, or a released component's export shape, is breaking: a
+major changeset with a `Migration:` note.
 
 ## 4. Interlace owns the shape, the app owns the run
 
@@ -116,16 +136,13 @@ A part with no phase is surface nobody asked for.
 | Each part alone     | every part renders from a fixture state, with no flow around it  | the same test file, one `describe` per part |
 | A story per part    | each part on its own, checked by axe; the first in every mode    | `<Flow>.stories.tsx`, the visual matrix     |
 | The journey         | the whole flow, start to end, through real clicks                | the `Journey` story's `play` function       |
-| The contract        | one namespace, display names, the map, the journey exist        | `flow-contract-lock.test.ts`                |
+| The contract        | one spelling per part, display names, the map, the journey      | `flow-contract-lock.test.ts`                |
 
 Tests and analytics select by `data-slot` (`room-lobby`, `room-host-primary`) and by the
 state attributes a part sets (`data-phase`, `data-state`), never by class or DOM path. Every
 part spreads its props onto its root, so an app's own `data-testid` lands where it expects.
 
-## Flows not yet on this contract
+## What is not a flow
 
-These predate it and export flat parts. Each moves in its own PR:
-
-- `patterns/multi-step-form.tsx` (`MultiStepForm`, `MultiStepFormStep`, `MultiStepFormSummary`)
-- `patterns/dialogue-stepper.tsx`
-- `patterns/sign-in-methods.tsx` and `patterns/social-sign-in.tsx`
+`SignInMethods` (the list of linked sign-in methods on an account page) is one list with a
+confirm step per row: one phase, so it is a component.

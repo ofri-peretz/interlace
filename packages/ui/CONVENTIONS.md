@@ -27,7 +27,7 @@ inner-element customization — without the CSS-in-JS overhead.
 | Component file | `kebab-case.tsx` | `dropdown-menu.tsx` |
 | Exported component | `PascalCase` | `DropdownMenu` |
 | Compound subcomponents | flat `PascalCase` (no dot notation) | `DropdownMenuItem`, never `DropdownMenu.Item` |
-| Flow parts | one namespace, dot notation ([FLOW_PHILOSOPHY](../../docs/philosophies/FLOW_PHILOSOPHY.md)) | `LiveRoom.Lobby`, never `LiveRoomLobby` |
+| Flow parts | a namespace when only a client component can compose the flow, otherwise flat; never both ([FLOW_PHILOSOPHY](../../docs/philosophies/FLOW_PHILOSOPHY.md)) | `LiveRoom.Lobby`; `MultiStepFormStep` |
 | Boolean props | no `is*` prefix; use the meaning word | `disabled`, `open`, `checked` |
 | Event callbacks | `on<Event>` for DOM events; `on<Value>Change` for state | `onClick`, `onValueChange`, `onOpenChange` |
 | State props (controlled) | `value` / `onValueChange` or `open` / `onOpenChange` | matches MUI + Base UI |
