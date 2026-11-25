@@ -1,18 +1,9 @@
 {
-  "focus/blocks-focusgrid--default": [
-    "focus-visible"
-  ],
   "phone/charts-distribution--audience-clock": [
     "reflow"
   ],
   "phone/charts-metrictable--default": [
     "reflow"
-  ],
-  "phone/effects-scroller--default": [
-    "reflow"
-  ],
-  "phone/starters-mdx-starter--default": [
-    "scrollable-region-focusable"
   ],
   "text-150/charts-distribution--audience-clock": [
     "reflow"
@@ -20,19 +11,7 @@
   "text-150/charts-metrictable--default": [
     "reflow"
   ],
-  "text-150/effects-scroller--default": [
-    "reflow"
-  ],
   "text-150/primitives-statstrip--default": [
     "reflow"
-  ],
-  "text-150/starters-a11y-starter--default": [
-    "scrollable-region-focusable"
-  ],
-  "text-150/starters-layout-starter--default": [
-    "scrollable-region-focusable"
-  ],
-  "text-150/starters-mdx-starter--default": [
-    "scrollable-region-focusable"
   ]
 }
