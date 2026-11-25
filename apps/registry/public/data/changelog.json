@@ -687,6 +687,20 @@
           "source": ".changeset/list-markers.md"
         },
         {
+          "summary": "A live room kit for game nights on one big screen and everyone's phones. `QrCode` draws a join link as one SVG path from a dependency-free encoder (`games/qr-model`: byte mode, versions 1 to 40, levels L to H), and keeps dark-on-light on a dark page so every camera reads it. `JoinCode` shows the address, a code no one misreads (`makeJoinCode`, `normalizeJoinCode`, `formatJoinCode`) spelled out for screen readers, the QR and a copy-link button. `useRoom` keeps the host and every player on the same room: the host applies events with the pure rules in `games/room-model` (no joining a locked room, one answer a round, only the host starts) and sends the state to all, over any `RoomTransport`; an in-memory hub and a BroadcastChannel transport ship, and a realtime service is a small adapter in the app. `RoomLobby` (players pop in and are announced, the host can remove one), `RoomHostControls` (start, reveal, next, podium, lock, end, moving on by itself), `RoomCountdown` (3, 2, 1, Go to a host timestamp) and `Podium` (top three rising 3rd, 2nd, 1st with a burst for the winner, everyone else below) complete it. Every word goes through `labels`; all motion is transform or opacity and off under reduced motion.",
+          "components": [
+            "qr-code",
+            "join-code",
+            "live-room",
+            "podium"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-room-kit.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"

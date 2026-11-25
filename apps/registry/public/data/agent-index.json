@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 200
+    "itemCount": 204
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -33,8 +33,8 @@
       "pattern": 54,
       "effect": 20,
       "chart": 14,
+      "game": 14,
       "template": 13,
-      "game": 10,
       "util": 6,
       "starter": 3,
       "theme": 3
@@ -50,31 +50,31 @@
       "decorative": 18,
       "feedback": 15,
       "chart": 14,
+      "games": 14,
+      "game": 14,
       "marketing": 14,
       "navigation": 13,
       "template": 13,
       "overlay": 10,
-      "games": 10,
-      "game": 10,
       "util": 6,
       "a11y": 4,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "server": 104,
-      "client": 96
+      "server": 105,
+      "client": 99
     },
     "keyboard": {
-      "none": 154,
+      "none": 158,
       "handled": 46
     },
     "loading": {
-      "none": 162,
+      "none": 166,
       "built-in": 38
     },
     "minViewport": {
-      "320": 127,
+      "320": 131,
       "480": 7,
       "768": 1,
       "inherited": 65
@@ -4727,6 +4727,78 @@
       "docs": "https://ds.interlace.tools/c/interlace-weave"
     },
     {
+      "name": "join-code",
+      "title": "Join Code",
+      "type": "registry:ui",
+      "summary": "How people get into a live room: the address to visit, a code to type there, and a QR code that does both in one scan. Built for the host's big screen first (`size=\"stage\"`), and just as usable on a phone that wants to pass the room on, with a copy-link…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "JOIN_CODE_ALPHABET",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "qr-code"
+      ],
+      "installsTo": [
+        "components/ui/games/join-code.tsx",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/join-code.json",
+      "item": "https://ds.interlace.tools/r/join-code.json",
+      "docs": "https://ds.interlace.tools/c/join-code"
+    },
+    {
       "name": "kbd",
       "title": "Kbd",
       "type": "registry:ui",
@@ -5159,6 +5231,80 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/list.json",
       "item": "https://ds.interlace.tools/r/list.json",
       "docs": "https://ds.interlace.tools/c/list"
+    },
+    {
+      "name": "live-room",
+      "title": "Live Room",
+      "type": "registry:ui",
+      "summary": "A game night on one big screen and everyone's phones. The host opens a room and shows its JoinCode; players scan or type it and land in the lobby; the host starts, everyone sees the same countdown, plays the same rounds, and the night ends on a Podium. The…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group",
+          "timer"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "JOIN_CODE_ALPHABET",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/live-room.tsx",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/live-room.json",
+      "item": "https://ds.interlace.tools/r/live-room.json",
+      "docs": "https://ds.interlace.tools/c/live-room"
     },
     {
       "name": "mdx-starter",
@@ -5922,6 +6068,59 @@
       "docs": "https://ds.interlace.tools/c/pagination"
     },
     {
+      "name": "podium",
+      "title": "Podium",
+      "type": "registry:ui",
+      "summary": "The end of a game: the top three on steps, second and third rising first and the winner last, with a burst for first place. Below it, everyone else, so no one has to wonder where they came. Ranking is the leaderboard's (`rankEntries`), so ties share a…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "celebrate",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/podium.tsx",
+        "components/ui/games/leaderboard-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/podium.json",
+      "item": "https://ds.interlace.tools/r/podium.json",
+      "docs": "https://ds.interlace.tools/c/podium"
+    },
+    {
       "name": "poll",
       "title": "Poll",
       "type": "registry:ui",
@@ -6307,6 +6506,59 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/published-date.json",
       "item": "https://ds.interlace.tools/r/published-date.json",
       "docs": "https://ds.interlace.tools/c/published-date"
+    },
+    {
+      "name": "qr-code",
+      "title": "Qr Code",
+      "type": "registry:ui",
+      "summary": "A QR code for a link or a short text, drawn as one SVG path from the pure encoder in `qr-model.ts`. No dependency, no canvas, no image request: it renders on the server and stays sharp at any size, from a phone card to a projector.",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "img"
+        ],
+        "aria": [
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/qr-code.tsx",
+        "components/ui/games/qr-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/qr-code.json",
+      "item": "https://ds.interlace.tools/r/qr-code.json",
+      "docs": "https://ds.interlace.tools/c/qr-code"
     },
     {
       "name": "quiz-question",
