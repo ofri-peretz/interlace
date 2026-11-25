@@ -2758,6 +2758,24 @@
       }
     },
     {
+      "name": "recap",
+      "type": "registry:ui",
+      "title": "Recap",
+      "description": "What one person takes home from a session: what it covered, how they did, the one thing they picked for this week, what they asked to hear more about, and where to go next. Every section is optional and shows only when it has something in it, in the order…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "related-posts",
       "type": "registry:ui",
       "title": "Related Posts",
@@ -2827,6 +2845,24 @@
         "loading": false,
         "version": "1.3.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "session-composer",
+      "type": "registry:ui",
+      "title": "Session Composer",
+      "description": "Build a session out of modules: pick what goes in, put it in order, and see at every step how long it runs against the time you have. For a workshop host planning a morning, a community lead booking a session, a teacher putting a lesson together. Modules a…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {

@@ -15,6 +15,7 @@
  *     └─ div                       (data-slot="join-code-text")
  *         ├─ p                     (data-slot="join-code-where": "Join at example.com/play")
  *         ├─ p                     (data-slot="join-code-value": "K7Q 4MZ", read letter by letter)
+ *         ├─ p?                    (data-slot="join-code-expiry": "Works for 12 more minutes")
  *         ├─ Button                (data-slot="join-code-copy": copies the link)
  *         └─ span aria-live        (data-slot="join-code-status": "Link copied.")
  *
@@ -30,6 +31,14 @@
  * A container query, not the viewport: side by side from `@md` (28rem) of
  * its own width, stacked and centred below. In RTL the QR moves to the
  * inline start, like any other leading element; the code itself stays LTR.
+ *
+ * ## Expiry
+ *
+ * With `expiresAt` (the room's `codeExpiresAt`), a line says how many
+ * minutes the code still works, updated each minute. Once it has passed,
+ * `data-state="expired"`: the QR code goes, the code is struck through, and
+ * the line says so, announced once. Expiry is enforced by the room
+ * (`rejectRoomEvent` refuses new joins with `expired`); this only shows it.
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -66,6 +75,10 @@ interface JoinCodeLabels {
   copied?: string;
   /** @default 'Copy failed. Select the address and copy it.' */
   copyFailed?: string;
+  /** While the code works, in whole minutes rounded up. @default (minutes) => `Works for ${minutes} more minute(s)` */
+  expiresIn?: (minutes: number) => string;
+  /** After it stopped working. @default 'This code has expired.' */
+  expired?: string;
 }
 
 const SIZE = {
@@ -86,8 +99,31 @@ type JoinCodeProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   size?: keyof typeof SIZE;
   /** Show the copy-link button. @default true */
   copyable?: boolean;
+  /** When the code stops admitting new players, in ms: the room's `codeExpiresAt`. */
+  expiresAt?: number | null;
+  /** Your clock, corrected to the host's. @default Date.now */
+  now?: () => number;
   labels?: JoinCodeLabels;
 };
+
+const EXPIRES_IN: NonNullable<JoinCodeLabels['expiresIn']> = (m) =>
+  `Works for ${m} more ${m === 1 ? 'minute' : 'minutes'}`;
+
+/** Minutes left until `target`, rounded up, re-rendering when the number changes; -1 once passed, null with no target. */
+function useMinutesLeft(target: number | null | undefined, now: () => number): number | null {
+  const has = typeof target === 'number' && Number.isFinite(target);
+  const ms = has ? target - now() : 0;
+  const [, tick] = React.useState(0);
+  React.useEffect(() => {
+    if (!has || ms <= 0) return;
+    // Wake at the next whole-minute boundary, or when the code runs out.
+    const wait = ms % 60_000 || 60_000;
+    const t = setTimeout(() => tick((n) => n + 1), Math.min(wait, ms));
+    return () => clearTimeout(t);
+  });
+  if (!has) return null;
+  return ms > 0 ? Math.ceil(ms / 60_000) : -1;
+}
 
 function hostOf(href: string): string {
   try {
@@ -104,10 +140,14 @@ function JoinCode({
   group = 3,
   size = 'default',
   copyable = true,
+  expiresAt,
+  now = Date.now,
   labels,
   className,
   ...props
 }: JoinCodeProps) {
+  const minutes = useMinutesLeft(expiresAt, now);
+  const expired = minutes !== null && minutes < 0;
   const [copied, setCopied] = React.useState(false);
   const [status, setStatus] = React.useState('');
   const timer = React.useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -137,18 +177,21 @@ function JoinCode({
     <div
       data-slot="join-code"
       data-size={size}
+      data-state={expired ? 'expired' : 'live'}
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn('@container', className)}
       {...props}
     >
       <div className="flex flex-col items-center gap-5 text-center @md:flex-row @md:items-center @md:gap-8 @md:text-start">
-        <QrCode
-          data-slot="join-code-qr"
-          value={href}
-          label={labels?.qr ?? 'QR code to join the room'}
-          size={s.qr}
-          className="border-border border"
-        />
+        {expired ? null : (
+          <QrCode
+            data-slot="join-code-qr"
+            value={href}
+            label={labels?.qr ?? 'QR code to join the room'}
+            size={s.qr}
+            className="border-border border"
+          />
+        )}
         <div data-slot="join-code-text" className="flex min-w-0 flex-col items-center gap-2 @md:items-start">
           <p data-slot="join-code-where" className={cn('text-muted-foreground', s.where)}>
             {(labels?.where ?? ((w: string) => `Join at ${w}`))(place)}
@@ -158,11 +201,20 @@ function JoinCode({
             dir="ltr"
             role="img"
             aria-label={(labels?.code ?? ((sp: string) => `Room code ${sp}`))(spelled)}
-            className={cn('font-mono leading-none font-semibold tracking-widest tabular-nums', s.code)}
+            className={cn(
+              'font-mono leading-none font-semibold tracking-widest tabular-nums',
+              expired && 'text-muted-foreground line-through',
+              s.code,
+            )}
           >
             {formatJoinCode(code, group)}
           </p>
-          {copyable ? (
+          {minutes !== null ? (
+            <p data-slot="join-code-expiry" className={cn('text-muted-foreground', s.where)}>
+              {expired ? (labels?.expired ?? 'This code has expired.') : (labels?.expiresIn ?? EXPIRES_IN)(minutes)}
+            </p>
+          ) : null}
+          {copyable && !expired ? (
             <Button
               data-slot="join-code-copy"
               type="button"
@@ -176,7 +228,7 @@ function JoinCode({
             </Button>
           ) : null}
           <span data-slot="join-code-status" aria-live="polite" className="sr-only">
-            {status}
+            {expired ? (labels?.expired ?? 'This code has expired.') : status}
           </span>
         </div>
       </div>

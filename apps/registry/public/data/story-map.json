@@ -1272,6 +1272,8 @@
       "games-joincode--default",
       "games-joincode--stage",
       "games-joincode--numeric-pin",
+      "games-joincode--expiring",
+      "games-joincode--expired",
       "games-joincode--right-to-left"
     ],
     "preview": "games-joincode--default",
@@ -1843,6 +1845,17 @@
     "previewDark": "primitives-readingtime--dark",
     "skeleton": "primitives-readingtime--loading"
   },
+  "recap": {
+    "title": "Blocks/Recap",
+    "storyIds": [
+      "blocks-recap--default",
+      "blocks-recap--minimal",
+      "blocks-recap--right-to-left"
+    ],
+    "preview": "blocks-recap--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "registry-item-template": {
     "title": "Templates/RegistryItemTemplate",
     "storyIds": [
@@ -2113,6 +2126,19 @@
     ],
     "preview": "charts-seriestable--visible",
     "previewDark": "charts-seriestable--dark",
+    "skeleton": null
+  },
+  "session-composer": {
+    "title": "Blocks/SessionComposer",
+    "storyIds": [
+      "blocks-sessioncomposer--default",
+      "blocks-sessioncomposer--add-and-reorder",
+      "blocks-sessioncomposer--runs-over",
+      "blocks-sessioncomposer--no-limit",
+      "blocks-sessioncomposer--right-to-left"
+    ],
+    "preview": "blocks-sessioncomposer--default",
+    "previewDark": null,
     "skeleton": null
   },
   "settings-template": {
