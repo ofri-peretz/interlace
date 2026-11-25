@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { Dialogue } from '@interlace/ui/patterns/dialogue';
-import { DialogueStepper } from '@interlace/ui/patterns/dialogue-stepper';
+import { DialogueChoice, DialogueChoices, DialogueStep, DialogueStepper } from '@interlace/ui/patterns/dialogue-stepper';
 
 const meta = {
   title: 'Blocks/DialogueStepper',
@@ -36,36 +37,36 @@ const meta = {
   render: (args) => (
     <div className="max-w-prose">
       <DialogueStepper {...args} start="open">
-        <DialogueStepper.Step id="open" aria-label="The question">
+        <DialogueStep id="open" aria-label="The question">
           <Dialogue.Turn speaker="Neighbour">Why was the bridge closed for so long?</Dialogue.Turn>
-          <DialogueStepper.Choices>
-            <DialogueStepper.Choice next="answer">What do I say?</DialogueStepper.Choice>
-            <DialogueStepper.Choice next="months">They might say it was months</DialogueStepper.Choice>
-          </DialogueStepper.Choices>
-        </DialogueStepper.Step>
-        <DialogueStepper.Step id="answer" aria-label="The answer">
+          <DialogueChoices>
+            <DialogueChoice next="answer">What do I say?</DialogueChoice>
+            <DialogueChoice next="months">They might say it was months</DialogueChoice>
+          </DialogueChoices>
+        </DialogueStep>
+        <DialogueStep id="answer" aria-label="The answer">
           <Dialogue.Turn speaker="You" side="end" tone="inverse">
             Six weeks, from March to April. The notice has both dates.
           </Dialogue.Turn>
-          <DialogueStepper.Choices>
-            <DialogueStepper.Choice next="why">They might ask why</DialogueStepper.Choice>
-          </DialogueStepper.Choices>
-        </DialogueStepper.Step>
-        <DialogueStepper.Step id="months" aria-label="A different memory">
+          <DialogueChoices>
+            <DialogueChoice next="why">They might ask why</DialogueChoice>
+          </DialogueChoices>
+        </DialogueStep>
+        <DialogueStep id="months" aria-label="A different memory">
           <Dialogue.Turn speaker="Neighbour">My cousin said it was months.</Dialogue.Turn>
           <Dialogue.Turn speaker="You" side="end" tone="inverse">
             It felt like months, because the detour was slow. The dates say six weeks.
           </Dialogue.Turn>
-          <DialogueStepper.Choices>
-            <DialogueStepper.Choice next="why">So why so slow?</DialogueStepper.Choice>
-          </DialogueStepper.Choices>
-        </DialogueStepper.Step>
-        <DialogueStepper.Step id="why" aria-label="The reason">
+          <DialogueChoices>
+            <DialogueChoice next="why">So why so slow?</DialogueChoice>
+          </DialogueChoices>
+        </DialogueStep>
+        <DialogueStep id="why" aria-label="The reason">
           <Dialogue.Turn speaker="Neighbour">Why did it take six weeks?</Dialogue.Turn>
           <Dialogue.Turn speaker="You" side="end" tone="inverse">
             The bearings under the deck were replaced, and the parts came from abroad.
           </Dialogue.Turn>
-        </DialogueStepper.Step>
+        </DialogueStep>
       </DialogueStepper>
     </div>
   ),
@@ -82,3 +83,34 @@ export const SpeakersInside: Story = { args: { speakers: 'inside' } };
 
 /** Opens with the whole conversation shown; "Step through" switches to step mode. */
 export const WholeConversation: Story = { args: { defaultMode: 'all' } };
+
+/**
+ * The journey: a branch, the end of the talk, Back, the whole conversation,
+ * and Start over.
+ */
+export const Journey: Story = {
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('step: take the branch', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'They might say it was months' }));
+      await expect(canvas.getByRole('group', { name: 'A different memory' })).toBeTruthy();
+      await userEvent.click(canvas.getByRole('button', { name: 'So why so slow?' }));
+    });
+    await step('end: the last step, then Back', async () => {
+      await expect(canvas.getByRole('group', { name: 'The reason' })).toBeTruthy();
+      await expect(document.activeElement?.textContent).toBe('Back');
+      await userEvent.click(canvas.getByRole('button', { name: 'Back' }));
+      await expect(canvas.queryByRole('group', { name: 'The reason' })).toBeNull();
+    });
+    await step('whole: every step, then back to the path', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Show the whole conversation' }));
+      await expect(canvas.getByRole('group', { name: 'The answer' })).toBeTruthy();
+      await userEvent.click(canvas.getByRole('button', { name: 'Step through' }));
+    });
+    await step('start over', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Start over' }));
+      await expect(canvas.queryByRole('group', { name: 'A different memory' })).toBeNull();
+      await expect(canvas.getByRole('button', { name: 'What do I say?' })).toBeTruthy();
+    });
+  },
+};

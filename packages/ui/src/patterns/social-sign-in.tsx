@@ -37,6 +37,19 @@
  * one-colour marks and follow `currentColor`, so they work on dark themes.
  * Anything else is a `{ id, name, icon }` object; `id` is what gets submitted.
  *
+ * ## Flow
+ *
+ * A flow (docs/philosophies/FLOW_PHILOSOPHY.md) with one part: the app
+ * drives every phase through props, so there is nothing to compose.
+ *
+ * | Phase   | Part                                      | Leaves by                                       |
+ * | ------- | ----------------------------------------- | ----------------------------------------------- |
+ * | choose  | SocialSignIn (providers, email field)     | a provider, or the email link → pending         |
+ * | pending | SocialSignIn, the pressed button spinning | the app's promise settles, or `action` returns  |
+ * | error   | SocialSignIn with `error` (an alert)      | the reader tries again → pending                |
+ * | sent    | SocialSignIn with `sentTo` (a status)     | Use a different email → choose                  |
+ * | in      | the app's own signed-in page              | —                                               |
+ *
  * ## Anatomy
  *
  *   SocialSignIn                     (form — data-slot="social-sign-in")
@@ -419,6 +432,8 @@ export function SocialSignIn({
     </form>
   );
 }
+
+SocialSignIn.displayName = 'SocialSignIn';
 
 function LastUsedTag({ label }: { label: string }) {
   return (

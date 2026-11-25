@@ -27,12 +27,13 @@
  *
  * ## Server components
  *
- * Pass a step's choices through its `choices` prop, and import the named
- * parts (`DialogueStep`, `DialogueChoices`, `DialogueChoice`) rather than
- * `DialogueStepper.Step`. A server component holds only a reference to each
- * client part, so the dot form is undefined there and a `DialogueChoices`
- * child cannot be told apart from a turn. Choices written as children still
- * work when the whole tree renders on the client.
+ * Steps, turns and choices are often written in a server component, so the
+ * parts are flat (`DialogueStep`, `DialogueChoices`, `DialogueChoice`):
+ * React cannot dot into a client module from a server component. Pass a
+ * step's choices through its `choices` prop there, because a server
+ * component holds only a reference to each client part and a
+ * `DialogueChoices` child cannot be told apart from a turn. Choices written
+ * as children still work when the whole tree renders on the client.
  *
  * ## Focus and announcements
  *
@@ -44,6 +45,21 @@
  * `[hidden]` sits in a cascade layer, and its `!important` would beat it.
  * The step enters with a short fade and rise, behind
  * `motion-safe:`, so reduced motion shows it at once.
+ *
+ * ## Flow
+ *
+ * A flow (docs/philosophies/FLOW_PHILOSOPHY.md) with flat parts. The reader's
+ * path is the state; it starts at `start`. Every phase, the part that shows
+ * it, and what moves it on:
+ *
+ * | Phase  | Part                                          | Leaves by                                         |
+ * | ------ | --------------------------------------------- | ------------------------------------------------- |
+ * | step   | DialogueStep (current), DialogueChoices       | a DialogueChoice → its `next` step                |
+ * | end    | a DialogueStep with no choices                | Back → the step before; Start over → `start`      |
+ * | whole  | every DialogueStep, in order (`mode="all"`)   | Step through → back to the path                   |
+ * | no JS  | every DialogueStep, no choices or controls    | —                                                 |
+ *
+ * Back and Start over work from any step on the path.
  *
  * ## Anatomy
  *
@@ -351,11 +367,10 @@ function DialogueChoice({ next, className, onClick, ...props }: DialogueChoicePr
   );
 }
 
-const DialogueStepperWithParts = Object.assign(DialogueStepper, {
-  Step: DialogueStep,
-  Choices: DialogueChoices,
-  Choice: DialogueChoice,
-});
+DialogueStepper.displayName = 'DialogueStepper';
+DialogueStep.displayName = 'DialogueStep';
+DialogueChoices.displayName = 'DialogueChoices';
+DialogueChoice.displayName = 'DialogueChoice';
 
-export { DialogueStepperWithParts as DialogueStepper, DialogueStep, DialogueChoices, DialogueChoice };
+export { DialogueStepper, DialogueStep, DialogueChoices, DialogueChoice };
 export type { DialogueStepperProps, DialogueStepProps, DialogueChoicesProps, DialogueChoiceProps };
