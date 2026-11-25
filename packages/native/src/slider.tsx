@@ -46,9 +46,14 @@ export const Slider = memo(function Slider({
   const position = useSharedValue(toPosition(value, range));
   const last = useRef(value);
 
-  // A value or range set from outside (a reset, a new round, a narrower range) moves the thumb.
+  // A value or range set from outside (a reset, a new round, a narrower range) moves the thumb. A
+  // value the finger just produced does not: the thumb is already there, and snapping it back to
+  // the step from the JS thread would make it stutter behind the finger.
+  const lastRange = useRef(range);
   useEffect(() => {
+    if (value === last.current && range === lastRange.current) return;
     last.current = value;
+    lastRange.current = range;
     position.value = toPosition(value, range);
   }, [value, range, position]);
 
