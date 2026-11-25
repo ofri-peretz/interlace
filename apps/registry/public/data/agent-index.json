@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 212
+    "itemCount": 219
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,8 +30,8 @@
   "facets": {
     "tier": {
       "primitive": 77,
-      "pattern": 56,
-      "effect": 26,
+      "pattern": 62,
+      "effect": 27,
       "chart": 14,
       "game": 14,
       "template": 13,
@@ -41,19 +41,19 @@
     },
     "category": {
       "primitive": 77,
-      "pattern": 56,
+      "pattern": 62,
       "blog": 35,
       "data": 30,
       "foundation": 27,
-      "effect": 26,
+      "effect": 27,
       "form": 25,
       "decorative": 24,
-      "feedback": 16,
+      "navigation": 18,
+      "feedback": 18,
       "chart": 14,
       "games": 14,
       "game": 14,
       "marketing": 14,
-      "navigation": 13,
       "template": 13,
       "overlay": 10,
       "util": 6,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "server": 106,
-      "client": 106
+      "client": 110,
+      "server": 109
     },
     "keyboard": {
-      "none": 164,
+      "none": 171,
       "handled": 48
     },
     "loading": {
-      "none": 174,
+      "none": 181,
       "built-in": 38
     },
     "minViewport": {
-      "320": 133,
+      "320": 138,
       "480": 7,
       "768": 1,
-      "inherited": 71
+      "inherited": 73
     }
   },
   "items": [
@@ -280,6 +280,150 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/alert.json",
       "item": "https://ds.interlace.tools/r/alert.json",
       "docs": "https://ds.interlace.tools/c/alert"
+    },
+    {
+      "name": "app-header-edge",
+      "title": "App Header Edge",
+      "type": "registry:ui",
+      "summary": "The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "AppHeaderEdge"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-header-edge.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-header-edge.json",
+      "item": "https://ds.interlace.tools/r/app-header-edge.json",
+      "docs": "https://ds.interlace.tools/c/app-header-edge"
+    },
+    {
+      "name": "app-header",
+      "title": "App Header",
+      "type": "registry:ui",
+      "summary": "The bar at the top of an app-like view on a phone: a way back at the start, the view's title in the middle, one or two actions at the end. It sticks to the top, clears the notch or status bar (`env(safe-area-inset-top)`), and shows its surface and border…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "app-header-edge",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-header.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-header.json",
+      "item": "https://ds.interlace.tools/r/app-header.json",
+      "docs": "https://ds.interlace.tools/c/app-header"
+    },
+    {
+      "name": "app-shell",
+      "title": "App Shell",
+      "type": "registry:ui",
+      "summary": "The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/app-shell.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/app-shell.json",
+      "item": "https://ds.interlace.tools/r/app-shell.json",
+      "docs": "https://ds.interlace.tools/c/app-shell"
     },
     {
       "name": "article-card",
@@ -4761,6 +4905,57 @@
       "docs": "https://ds.interlace.tools/c/input"
     },
     {
+      "name": "install-prompt",
+      "title": "Install Prompt",
+      "type": "registry:ui",
+      "summary": "An offer to add the site to the home screen, made once, politely, and only where it can work. Browsers that support it hand over their install dialog (`beforeinstallprompt`), and the Install button opens it. Safari on an iPhone or iPad has no such dialog…",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/install-prompt.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/install-prompt.json",
+      "item": "https://ds.interlace.tools/r/install-prompt.json",
+      "docs": "https://ds.interlace.tools/c/install-prompt"
+    },
+    {
       "name": "interest-signal",
       "title": "Interest Signal",
       "type": "registry:ui",
@@ -6862,6 +7057,71 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/published-date.json",
       "item": "https://ds.interlace.tools/r/published-date.json",
       "docs": "https://ds.interlace.tools/c/published-date"
+    },
+    {
+      "name": "pull-to-refresh",
+      "title": "Pull To Refresh",
+      "type": "registry:ui",
+      "summary": "Pull a list down from its top to load what is new, the gesture a phone reader already knows. The pull is one finger and one path, so it always has a twin: a Refresh button that is visible wherever the pointer is a mouse, and reachable by keyboard and…",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PullToRefreshState",
+          "values": [
+            "idle",
+            "pulling",
+            "armed",
+            "refreshing",
+            "settling"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-busy"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "spinner",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/pull-to-refresh.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/pull-to-refresh.json",
+      "item": "https://ds.interlace.tools/r/pull-to-refresh.json",
+      "docs": "https://ds.interlace.tools/c/pull-to-refresh"
     },
     {
       "name": "qr-code",
@@ -10180,6 +10440,57 @@
       "docs": "https://ds.interlace.tools/c/switch"
     },
     {
+      "name": "tab-bar",
+      "title": "Tab Bar",
+      "type": "registry:ui",
+      "summary": "The row of three to five destinations at the bottom of a phone screen, where a thumb reaches. Each tab is a real link with an icon and a word; the current one says so to assistive tech (`aria-current=\"page\"`) and to the eye with a filled pill behind its…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/tab-bar.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/tab-bar.json",
+      "item": "https://ds.interlace.tools/r/tab-bar.json",
+      "docs": "https://ds.interlace.tools/c/tab-bar"
+    },
+    {
       "name": "tabs",
       "title": "Tabs",
       "type": "registry:ui",
@@ -12086,6 +12397,52 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/use-theme.json",
       "item": "https://ds.interlace.tools/r/use-theme.json",
       "docs": "https://ds.interlace.tools/c/use-theme"
+    },
+    {
+      "name": "view-transition",
+      "title": "View Transition",
+      "type": "registry:ui",
+      "summary": "The browser's View Transitions API, made safe to reach for: a card grows into its detail page, a list reorders in place, and a page change cross-fades instead of blinking. Interlace adds only what the API leaves to every app: a fallback where it is…",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/view-transition.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/view-transition.json",
+      "item": "https://ds.interlace.tools/r/view-transition.json",
+      "docs": "https://ds.interlace.tools/c/view-transition"
     },
     {
       "name": "visually-hidden",

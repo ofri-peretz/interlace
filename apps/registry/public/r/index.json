@@ -2056,6 +2056,24 @@
       }
     },
     {
+      "name": "view-transition",
+      "type": "registry:ui",
+      "title": "View Transition",
+      "description": "The browser's View Transitions API, made safe to reach for: a card grows into its detail page, a list reorders in place, and a page change cross-fades instead of blinking. Interlace adds only what the API leaves to every app: a fallback where it is…",
+      "categories": [
+        "navigation",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "weave-texture",
       "type": "registry:ui",
       "title": "Weave Texture",
@@ -2068,6 +2086,60 @@
         "tier": "effect",
         "client": false,
         "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "app-header-edge",
+      "type": "registry:ui",
+      "title": "App Header Edge",
+      "description": "The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "app-header",
+      "type": "registry:ui",
+      "title": "App Header",
+      "description": "The bar at the top of an app-like view on a phone: a way back at the start, the view's title in the middle, one or two actions at the end. It sticks to the top, clears the notch or status bar (`env(safe-area-inset-top)`), and shows its surface and border…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:ui",
+      "title": "App Shell",
+      "description": "The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
         "loading": false,
         "version": "1.0.0",
         "since": null
@@ -2506,6 +2578,24 @@
       }
     },
     {
+      "name": "install-prompt",
+      "type": "registry:ui",
+      "title": "Install Prompt",
+      "description": "An offer to add the site to the home screen, made once, politely, and only where it can work. Browsers that support it hand over their install dialog (`beforeinstallprompt`), and the Install button opens it. Safari on an iPhone or iPad has no such dialog…",
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "interest-signal",
       "type": "registry:ui",
       "title": "Interest Signal",
@@ -2629,6 +2719,24 @@
         "loading": true,
         "version": "2.2.1",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "pull-to-refresh",
+      "type": "registry:ui",
+      "title": "Pull To Refresh",
+      "description": "Pull a list down from its top to load what is new, the gesture a phone reader already knows. The pull is one finger and one path, so it always has a twin: a Refresh button that is visible wherever the pointer is a mouse, and reachable by keyboard and…",
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -2898,6 +3006,24 @@
         "minViewport": 320,
         "loading": false,
         "version": "1.0.1",
+        "since": null
+      }
+    },
+    {
+      "name": "tab-bar",
+      "type": "registry:ui",
+      "title": "Tab Bar",
+      "description": "The row of three to five destinations at the bottom of a phone screen, where a thumb reaches. Each tab is a real link with an icon and a word; the current one says so to assistive tech (`aria-current=\"page\"`) and to the eye with a filled pill behind its…",
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
         "since": null
       }
     },

@@ -283,7 +283,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 212 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 219 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -337,18 +337,18 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 106 server, 106 client
-- keyboard: 164 none, 48 handled
-- built-in loading state: 38 of 212
-- declared minViewport: 133 at 320, 7 at 480, 1 at 768, 71 at inherited
+- rendering: 110 client, 109 server
+- keyboard: 171 none, 48 handled
+- built-in loading state: 38 of 219
+- declared minViewport: 138 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 77 item(s)
-- tier `pattern` — 56 item(s)
-- tier `effect` — 26 item(s)
+- tier `pattern` — 62 item(s)
+- tier `effect` — 27 item(s)
 - tier `chart` — 14 item(s)
 - tier `game` — 14 item(s)
 - tier `template` — 13 item(s)
@@ -357,19 +357,19 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 77 item(s)
-- category `pattern` (Patterns) — 56 item(s)
+- category `pattern` (Patterns) — 62 item(s)
 - category `blog` (Blog & long-form) — 35 item(s)
 - category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
-- category `effect` (Effects) — 26 item(s)
+- category `effect` (Effects) — 27 item(s)
 - category `form` (Form & input) — 25 item(s)
 - category `decorative` (Decorative) — 24 item(s)
-- category `feedback` (Feedback) — 16 item(s)
+- category `navigation` (Navigation) — 18 item(s)
+- category `feedback` (Feedback) — 18 item(s)
 - category `chart` (Charts) — 14 item(s)
 - category `games` (Games) — 14 item(s)
 - category `game` (Games) — 14 item(s)
 - category `marketing` (Marketing) — 14 item(s)
-- category `navigation` (Navigation) — 13 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `overlay` (Overlay) — 10 item(s)
 - category `util` (Utilities) — 6 item(s)
@@ -625,6 +625,15 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 ## Items — tier `pattern`
 
+- [App Header](https://ds.interlace.tools/c/app-header): The bar at the top of an app-like view on a phone: a way back at the start, the view's title in the middle, one or two actions at the end. It sticks to the top, clears the notch or status bar (`env(safe-area-inset-top)`), and shows its surface and border…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/app-header.json`
+  - contract: server, min 320px, v1.0.0
+- [App Header Edge](https://ds.interlace.tools/c/app-header-edge): The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/app-header-edge.json`
+  - contract: client, v1.0.0
+- [App Shell](https://ds.interlace.tools/c/app-shell): The frame of an app-like page on a phone: a header that sticks to the top, the view's content, and a tab bar that sticks to the bottom. It is a column at least as tall as the screen (`100dvh`, so the browser's own bars coming and going never hide the tab…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/app-shell.json`
+  - contract: server, min 320px, v1.0.0
 - [Article Card](https://ds.interlace.tools/c/article-card): Two article tiles that share one focusable-anchor shell: `ArticleCard`, the stacked grid tile with the cover on top, and `FeaturedArticleCard`, the full-bleed hero whose copy sits on a gradient scrim over the image. Both read the same props.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/article-card.json`
   - contract: client, loading state, states stack|overlay, v3.1.0
@@ -697,6 +706,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Hero Cosmic](https://ds.interlace.tools/c/hero-cosmic): The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero-cosmic.json`
   - contract: client, min 320px, v5.1.0
+- [Install Prompt](https://ds.interlace.tools/c/install-prompt): An offer to add the site to the home screen, made once, politely, and only where it can work. Browsers that support it hand over their install dialog (`beforeinstallprompt`), and the Install button opens it. Safari on an iPhone or iPad has no such dialog…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/install-prompt.json`
+  - contract: client, min 320px, v1.0.0
 - [Interest Signal](https://ds.interlace.tools/c/interest-signal): "I want more on this": one tap that tells whoever runs the talk, the lesson or the page what people want to hear more about. The reader presses a toggle on a topic; the host sees every topic ranked by how many asked. It is the cheapest way to learn what an…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interest-signal.json`
   - contract: client, min 320px, v1.0.0
@@ -718,6 +730,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Pricing Table](https://ds.interlace.tools/c/pricing-table): 2-4 column pricing-tier grid. Each tier is a card with name, price, description, feature list, and a CTA button. The "Most popular" tier gets a highlight border. Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/pricing-table.json`
   - contract: server, min 320px, loading state, v2.2.1
+- [Pull To Refresh](https://ds.interlace.tools/c/pull-to-refresh): Pull a list down from its top to load what is new, the gesture a phone reader already knows. The pull is one finger and one path, so it always has a twin: a Refresh button that is visible wherever the pointer is a mouse, and reachable by keyboard and…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/pull-to-refresh.json`
+  - contract: client, min 320px, states idle|pulling|armed|refreshing|settling, v1.0.0
 - [Reading Layout](https://ds.interlace.tools/c/reading-layout): A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into a slim bar (`TocBar`) that sticks to the top of the column, names…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/reading-layout.json`
   - contract: server, min 320px, v1.0.0
@@ -763,6 +778,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Status Pills](https://ds.interlace.tools/c/status-pills): A row of short facts about the page, set as pills: "Reviewed", "9 facts", "38 sources", "4 min read". Built to sit on a brand band (`<Section tone="brand">`) under a title, and just as readable on the page background.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/status-pills.json`
   - contract: server, min 320px, states default|ok, v1.0.1
+- [Tab Bar](https://ds.interlace.tools/c/tab-bar): The row of three to five destinations at the bottom of a phone screen, where a thumb reaches. Each tab is a real link with an icon and a word; the current one says so to assistive tech (`aria-current="page"`) and to the eye with a filled pill behind its…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/tab-bar.json`
+  - contract: server, min 320px, v1.0.0
 - [Testimonial](https://ds.interlace.tools/c/testimonial): Quote + attribution surfaces. Single Testimonial cells render an blockquote with an author avatar; TestimonialGrid lays them out in a 1-3 column grid. Server components.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/testimonial.json`
   - contract: server, min 320px, loading state, v2.1.0
@@ -1003,6 +1021,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Underline Link](https://ds.interlace.tools/c/underline-link): A text link whose underline draws itself in when the reader points at it or tabs to it, from the start of the line to the end, and wraps across lines with the text. For links in running text, navigation and footers where a hard underline on every link…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/underline-link.json`
   - contract: server, keyboard via Base UI use-render, v1.0.0
+- [View Transition](https://ds.interlace.tools/c/view-transition): The browser's View Transitions API, made safe to reach for: a card grows into its detail page, a list reorders in place, and a page change cross-fades instead of blinking. Interlace adds only what the API leaves to every app: a fallback where it is…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/view-transition.json`
+  - contract: client, v1.0.0
 - [Weave Texture](https://ds.interlace.tools/c/weave-texture): A quiet woven cloth behind a section: warp threads in `--strand-a` and weft threads in `--strand-b`, passing over and under each other in a plain weave. It is texture, not glow: nothing moves, nothing shines, and at the default strength it sits just above…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/weave-texture.json`
   - contract: server, v1.0.0

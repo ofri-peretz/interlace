@@ -49,6 +49,37 @@
     "previewDark": "primitives-alertdialog--dark",
     "skeleton": null
   },
+  "app-header": {
+    "title": "Blocks/AppHeader",
+    "storyIds": [
+      "blocks-appheader--default",
+      "blocks-appheader--large-title",
+      "blocks-appheader--icon-only-back",
+      "blocks-appheader--right-to-left"
+    ],
+    "preview": "blocks-appheader--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "app-header-edge": {
+    "title": "Blocks/AppHeaderEdge",
+    "storyIds": [
+      "blocks-appheaderedge--default"
+    ],
+    "preview": "blocks-appheaderedge--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "app-shell": {
+    "title": "Blocks/AppShell",
+    "storyIds": [
+      "blocks-appshell--default",
+      "blocks-appshell--right-to-left"
+    ],
+    "preview": "blocks-appshell--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "article-card": {
     "title": "Blocks/ArticleCard",
     "storyIds": [
@@ -1202,6 +1233,17 @@
     "previewDark": "primitives-input--dark",
     "skeleton": "primitives-input--loading"
   },
+  "install-prompt": {
+    "title": "Blocks/InstallPrompt",
+    "storyIds": [
+      "blocks-installprompt--default",
+      "blocks-installprompt--labels",
+      "blocks-installprompt--right-to-left"
+    ],
+    "preview": "blocks-installprompt--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "interest-signal": {
     "title": "Blocks/InterestSignal",
     "storyIds": [
@@ -1669,6 +1711,17 @@
     "preview": "primitives-publisheddate--variants",
     "previewDark": "primitives-publisheddate--dark",
     "skeleton": "primitives-publisheddate--loading"
+  },
+  "pull-to-refresh": {
+    "title": "Blocks/PullToRefresh",
+    "storyIds": [
+      "blocks-pulltorefresh--default",
+      "blocks-pulltorefresh--refresh-button",
+      "blocks-pulltorefresh--right-to-left"
+    ],
+    "preview": "blocks-pulltorefresh--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "qr-code": {
     "title": "Games/QrCode",
@@ -2495,6 +2548,18 @@
     "previewDark": "primitives-switch--dark",
     "skeleton": "primitives-switch--loading"
   },
+  "tab-bar": {
+    "title": "Blocks/TabBar",
+    "storyIds": [
+      "blocks-tabbar--default",
+      "blocks-tabbar--three-tabs",
+      "blocks-tabbar--long-labels",
+      "blocks-tabbar--right-to-left"
+    ],
+    "preview": "blocks-tabbar--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "tabs": {
     "title": "Primitives/Tabs",
     "storyIds": [
@@ -2924,6 +2989,17 @@
     ],
     "preview": "utilities-usetheme--default",
     "previewDark": "utilities-usetheme--dark",
+    "skeleton": null
+  },
+  "view-transition": {
+    "title": "Effects/ViewTransition",
+    "storyIds": [
+      "effects-viewtransition--default",
+      "effects-viewtransition--open-and-back",
+      "effects-viewtransition--right-to-left"
+    ],
+    "preview": "effects-viewtransition--default",
+    "previewDark": null,
     "skeleton": null
   },
   "visually-hidden": {
