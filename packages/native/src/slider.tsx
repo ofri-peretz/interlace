@@ -51,7 +51,10 @@ export const Slider = memo(function Slider({
   // the step from the JS thread would make it stutter behind the finger.
   const lastRange = useRef(range);
   useEffect(() => {
-    if (value === last.current && range === lastRange.current) return;
+    const r = lastRange.current;
+    // Compared by value, so a range written inline (a new object each render) is not a change.
+    const sameRange = r.min === range.min && r.max === range.max && r.step === range.step && r.scale === range.scale;
+    if (value === last.current && sameRange) return;
     last.current = value;
     lastRange.current = range;
     position.value = toPosition(value, range);
