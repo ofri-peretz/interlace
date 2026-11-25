@@ -366,7 +366,7 @@
     "acme": 1,
     "across": 25,
     "act": 7,
-    "action": 40,
+    "action": 41,
     "activ": 18,
     "activat": 2,
     "activation": 6,
@@ -569,7 +569,7 @@
     "bandlabel": 1,
     "banner": 3,
     "bar": 45,
-    "bare": 15,
+    "bare": 16,
     "barrier": 1,
     "bas": 11,
     "base": 83,
@@ -928,7 +928,7 @@
     "consum": 5,
     "contact": 4,
     "contain": 13,
-    "container": 69,
+    "container": 72,
     "containervariant": 1,
     "content": 81,
     "contest": 1,
@@ -999,7 +999,7 @@
     "csr": 1,
     "cssvar": 1,
     "csv": 1,
-    "cta": 12,
+    "cta": 13,
     "ctasection": 2,
     "ctrl": 4,
     "cubic": 2,
@@ -1368,7 +1368,7 @@
     "fall": 35,
     "fallback": 15,
     "falloff": 1,
-    "fals": 47,
+    "fals": 49,
     "fami": 10,
     "familiar": 2,
     "fan": 1,
@@ -1493,7 +1493,8 @@
     "front": 3,
     "frontmatter": 1,
     "ful": 9,
-    "full": 73,
+    "full": 74,
+    "fullwidth": 3,
     "fumadoc": 3,
     "furnitur": 1,
     "fuse": 1,
@@ -2027,7 +2028,7 @@
     "mission": 1,
     "mix": 13,
     "mjs": 1,
-    "mobil": 7,
+    "mobil": 8,
     "mobilenav": 1,
     "mock": 1,
     "modal": 7,
@@ -2372,7 +2373,7 @@
     "precedenc": 4,
     "precis": 1,
     "pref": 1,
-    "prefer": 41,
+    "prefer": 42,
     "preferenc": 9,
     "prefill": 1,
     "prefix": 10,
@@ -2991,7 +2992,7 @@
     "streak": 4,
     "stream": 9,
     "strength": 8,
-    "stretch": 15,
+    "stretch": 18,
     "strip": 18,
     "strok": 13,
     "strong": 4,
@@ -3280,7 +3281,7 @@
     "unknown": 13,
     "unlabell": 3,
     "unless": 14,
-    "unlik": 4,
+    "unlik": 5,
     "unlink": 1,
     "unmeasur": 12,
     "unmount": 3,
@@ -3433,7 +3434,7 @@
     "wider": 6,
     "widest": 2,
     "widget": 1,
-    "width": 81,
+    "width": 82,
     "win": 26,
     "window": 16,
     "winner": 5,
@@ -3538,7 +3539,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "alert dialog overlay primitiv client responsiv min viewport 320 keyboard base confirm alertdialog cancel delet confirmation popup portal basealertdialog consequential backdrop destructiv structural pros sign distinct wai card action escap project center modal click description clos dismissal button inherit foreground max everywher part acknowledg affect alertdialogbackdrop alertdialogclos alertdialogdescription alertdialogpopup alertdialogportal alertdialogtitl alertdialogtrigger originat undon otherwis outsid disabl trigger graceful rgba text titl uncontroll container"
+      "terms": "alert dialog overlay primitiv client responsiv min viewport 320 keyboard base confirm alertdialog cancel delet confirmation popup portal basealertdialog consequential backdrop destructiv structural pros sign distinct wai card escap action project center modal click description clos dismissal button inherit foreground max everywher part acknowledg affect alertdialogbackdrop alertdialogclos alertdialogdescription alertdialogpopup alertdialogportal alertdialogtitl alertdialogtrigger originat undon otherwis outsid disabl trigger graceful rgba text titl uncontroll controll"
     },
     {
       "name": "alert",
@@ -3592,7 +3593,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "app header navigation pattern server rsc responsiv min viewport 320 bar titl larg view start scroll end appheaderback largetitl top back notch appheader env stick fade data arrow slot inset phon head small show ease parent border surfac area middl appheaderedg safe collaps status 250m beneath ellipsis action like 150m fals sticky clear name 4px framework rise word big router link main menu spread"
+      "terms": "app header navigation pattern server rsc responsiv min viewport 320 bar titl larg view start scroll end appheaderback largetitl top back notch appheader env stick fade data arrow slot inset phon head small show ease parent border surfac area middl appheaderedg safe collaps status 250m beneath ellipsis like action 150m sticky clear fals name 4px framework rise word big router link main menu spread"
     },
     {
       "name": "app-shell",
@@ -3655,7 +3656,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "articl list grid blog pattern server rsc load skeleton responsiv min viewport 320 articlecard featur proper tile section card col relatedpost overlay stream density big sidebar regular empty gap post priority padd track optional compos variant container index air articlelistgrid collection relax slot 56rem data 4xl statical reach styl 28rem custom dashboard count page stat landmark much scan compact runtim tailwind hero array collaps"
+      "terms": "articl list grid blog pattern server rsc load skeleton responsiv min viewport 320 articlecard featur proper tile section card col relatedpost overlay stream density big sidebar regular empty gap post priority padd track optional compos variant index container air articlelistgrid collection relax slot 56rem data 4xl statical reach styl 28rem custom dashboard count page stat landmark much scan compact runtim tailwind hero array collaps"
     },
     {
       "name": "article-template",
@@ -3675,7 +3676,7 @@
         "template",
         "blog"
       ],
-      "terms": "articl templat blog server rsc responsiv min viewport 320 sectionboundary prev authorbylin relat pros slug await body mdx async articletemplat next header compos prevnext shareurl post stream prevnextpost sharebutton suspend independent slowest shar relatedpost typography titl bylin page container section wrapp delegat reactnod provid full html name absoluteurl architectur flexibility getarticleheader getbody getprevnext getrelatedarticl incremental mdxrenderer nich landmark canonical pattern grid data either dangerouslysetinnerhtml"
+      "terms": "articl templat blog server rsc responsiv min viewport 320 sectionboundary prev authorbylin relat pros slug await body mdx async articletemplat next header compos prevnext shareurl post stream prevnextpost sharebutton suspend independent slowest shar relatedpost typography titl bylin page container section wrapp delegat reactnod provid html full name absoluteurl architectur flexibility getarticleheader getbody getprevnext getrelatedarticl incremental mdxrenderer nich landmark canonical pattern grid data either dangerouslysetinnerhtml"
     },
     {
       "name": "aspect-ratio",
@@ -3695,7 +3696,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "aspect ratio foundation primitiv server rsc responsiv min viewport 320 aspectratio video fram layout reserv emb parent async surround wrapper media spac stretch canius forwardref variabl width arriv runtim support hack jit unavoidabl number imag shift smallest singl portrait chart design global viabl block radix level carv except extra document pure offer relativ 2026 baselin accept object arbitrary iphon 320px dev ref cover parity"
+      "terms": "aspect ratio foundation primitiv server rsc responsiv min viewport 320 aspectratio video fram layout reserv emb parent async surround wrapper media spac canius forwardref variabl width arriv stretch runtim support hack jit unavoidabl number imag shift smallest singl portrait chart design global viabl block radix level carv except extra document pure offer relativ 2026 baselin accept object arbitrary iphon 320px dev ref cover parity"
     },
     {
       "name": "audio-player",
@@ -3715,7 +3716,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "audio player blog pattern server rsc responsiv min viewport 320 transcript detail audioplayer preload media operabl clip control speaker figur titl honour platform figcaption javascript summary audioprop listen onplay playback seek volum browser key fram length recommend metadata strong wcag nativ add keyboard everyon stretch url toggl ele border spoken around given screen data reader tech assistiv fail date r12 reus text every leav"
+      "terms": "audio player blog pattern server rsc responsiv min viewport 320 transcript detail audioplayer preload media operabl clip control speaker figur titl honour platform figcaption javascript summary audioprop listen onplay playback seek volum browser key fram length recommend metadata strong wcag nativ add keyboard everyon url toggl ele stretch border spoken around given screen data reader tech assistiv fail date r12 reus text every leav"
     },
     {
       "name": "auth-template",
@@ -3740,7 +3741,7 @@
         "template",
         "form"
       ],
-      "terms": "auth templat form server rsc responsiv min viewport 320 stat signin signup reset verify sectionboundary password sign account authtemplat forgot helper flow logo email page footer suppli main brand oauth centr middl represent already titl mark top description variant narrow full bottom overrid surfac name custom skeleton driv link column container layout load pros flight canonical ten rect silhouett inner pass rout four swap"
+      "terms": "auth templat form server rsc responsiv min viewport 320 stat signin signup reset verify sectionboundary password sign account authtemplat forgot helper flow logo email page footer suppli main brand oauth centr middl represent already titl mark top description variant narrow full bottom overrid surfac name custom skeleton driv link column layout load container pros flight canonical ten rect silhouett inner pass rout four swap"
     },
     {
       "name": "author-byline",
@@ -3782,7 +3783,7 @@
         "template",
         "blog"
       ],
-      "terms": "author templat blog server rsc responsiv min viewport 320 bio articlelistgrid social authortemplat profil articl slug grid header rout avatar multi typical page link role authorbylin skeleton card paragraph suppli load sectionboundary list flight post ten rect silhouett inner swap name cls hear neutral overrid status mirror r23 part render level region null announc titl shap real singl whol layout full next pass screen"
+      "terms": "author templat blog server rsc responsiv min viewport 320 bio articlelistgrid social authortemplat profil articl slug grid header rout avatar multi typical page link role authorbylin skeleton card paragraph suppli load sectionboundary list flight post ten rect silhouett inner swap name cls hear neutral overrid status mirror r23 part render level region null announc titl shap real singl whol layout next full pass screen"
     },
     {
       "name": "avatar",
@@ -3850,7 +3851,7 @@
         "pattern",
         "feedback"
       ],
-      "terms": "banner feedback pattern client responsiv min viewport 320 stat mut info success warn highlight messag dismiss button site tone dismissibl outag schedul clos link bar visibility optional thin accessibl releas region name new colour manag onopenchang written icon mean action pair app remember decorativ notic storag header carry depend fine whol data still text full width surfac foreground choic press controll alon neutral caller"
+      "terms": "banner feedback pattern client responsiv min viewport 320 stat mut info success warn highlight messag dismiss button site tone dismissibl outag schedul clos link bar visibility optional thin accessibl releas region name new colour manag onopenchang written icon mean pair action app remember decorativ notic storag header carry depend fine whol data still text full width surfac foreground choic press controll alon neutral caller"
     },
     {
       "name": "blog-home-template",
@@ -3870,7 +3871,7 @@
         "template",
         "blog"
       ],
-      "terms": "blog home templat server rsc responsiv min viewport 320 articlelistgrid bloghometemplat company greet personal newsletterform featur recent hero topbar shap optional signup index footer newsletter page reach skeleton load sectionboundary flight post surfac ten rect silhouett inner typical rout swap cls hear neutral articl overrid status mirror r23 level region every grid null announc header real singl whol layout full next role list pass"
+      "terms": "blog home templat server rsc responsiv min viewport 320 articlelistgrid bloghometemplat company greet personal newsletterform featur recent hero topbar shap optional signup index footer newsletter page reach skeleton load sectionboundary flight post surfac ten rect silhouett inner typical rout swap cls hear neutral articl overrid status mirror r23 level region every grid null announc header real singl whol layout next full role list pass"
     },
     {
       "name": "box",
@@ -3888,7 +3889,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "box foundation primitiv server rsc tokeniz mui curat polymorphic unopinionat reopen surfac altitud cva padd radius wrapper model pair lowest bgcolor boxvariant variantprop minus 1px magic variant layout problem revers ele 64px mirror corner 16px section rhythm card spac scal instead boolean set ref border token parity system runtim foreground hook compos accent data different articl philosophy isxxx fals round step ship reach api"
+      "terms": "box foundation primitiv server rsc tokeniz mui curat polymorphic unopinionat reopen surfac altitud cva padd radius wrapper model pair lowest bgcolor boxvariant variantprop minus 1px magic variant layout problem revers ele 64px mirror corner 16px section rhythm card spac scal instead boolean set ref border token parity system runtim foreground hook compos accent data different articl philosophy isxxx round step fals ship reach api"
     },
     {
       "name": "brand-logo",
@@ -3944,7 +3945,7 @@
         "primitive",
         "form"
       ],
-      "terms": "button variant form primitiv server rsc buttonvariant size composit cva apis icon contrast measur modul destructiv brandabl checkabl folklor client lock primary map consum ghost repo outlin noth else opaqu pagination str rather produc seven plain styl ring pure section record secondary backdrop nest link every failur surfac enum system direct separat tree com four dropp accent path safe design half highlight inherit onto"
+      "terms": "button variant form primitiv server rsc buttonvariant size composit cva apis icon contrast measur modul destructiv brandabl checkabl folklor fullwidth client lock primary map consum ghost repo outlin noth else opaqu pagination str rather produc seven plain styl ring pure section record secondary backdrop nest link boolean every failur stretch surfac enum system direct separat tree com four dropp accent path safe design half"
     },
     {
       "name": "button",
@@ -3965,7 +3966,7 @@
         "primitive",
         "form"
       ],
-      "terms": "button form primitiv client load skeleton keyboard base render buttonvariant variant dialog exercis spinner icon busy size compound polymorphism userender disabl composit counterpart passthrough submit minimal onclick focus surfac direct primary click contrast testid nativ secondary keep still ignor portal legacy mybutton reactel webkit ele variantprop measur invisibl parent aria reach modul paint event skill swallow text cva link replac destructiv brandabl checkabl clickabl"
+      "terms": "button form primitiv client load skeleton keyboard base render buttonvariant variant dialog exercis submit spinner icon busy size compound polymorphism userender disabl composit counterpart passthrough minimal onclick focus surfac direct nativ primary click contrast ele replac testid secondary keep still ignor portal legacy mybutton reactel webkit variantprop measur invisibl parent stretch aria fals reach modul paint event skill swallow text cva link destructiv brandabl"
     },
     {
       "name": "calendar-model",
@@ -4049,7 +4050,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "card foundation primitiv server rsc load skeleton cardlink link titl surfac radius action header cardaction cardtitl shadow border box stretch flex grid content description footer router column layout col part carddescription child cardcontent cardfooter cardheader participat padd shift instead whol target 1fr creat insid match aschild footprint text come round gap lift normal shap real relativ specific variant present data anywher render auto arriv"
+      "terms": "card foundation primitiv server rsc load skeleton cardlink link titl surfac radius action header cardaction cardtitl shadow border box flex stretch grid content description footer router column layout col part carddescription child cardcontent cardfooter cardheader participat padd shift instead whol target 1fr creat insid match aschild footprint text come round gap lift normal shap real relativ specific variant present data anywher render auto arriv"
     },
     {
       "name": "celebrate",
@@ -4329,7 +4330,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "command palett overlay primitiv client responsiv min viewport 320 keyboard base combobox dialog panel open input modal focus commandpalett setopen backdrop field highlight portal filter root popup inlin search escap list commanddialog clos activedescendant activeel dialogcontent filterabl fork supp indicator listbox virtual ring bubbl onopenchang assert surfac 2px trigger second aria padd fals role result uncontroll ele background accent controll hold lock positioner inherit"
+      "terms": "command palett overlay primitiv client responsiv min viewport 320 keyboard base combobox dialog panel open input modal focus commandpalett setopen backdrop field highlight portal filter root popup inlin search escap list commanddialog clos activedescendant activeel dialogcontent filterabl fork supp indicator listbox virtual ring bubbl onopenchang assert surfac 2px trigger second aria padd role result fals uncontroll ele background accent controll hold lock positioner inherit"
     },
     {
       "name": "commitment",
@@ -4376,7 +4377,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "container foundation primitiv server rsc keyboard base render size width wide userender pros directiv layout full four padd mapp ble edge 80rem accumulat containervariant hoc contract section band 64rem flagg heavy namespac oversight retir spac plus horizontal 42rem 65ch codebas usemergedref userenderel lock safe fail max philosophy 2xl content zero broken defin data tailwind breakpoint shadow nam rather guard retun token name call chosen"
+      "terms": "container foundation primitiv server rsc keyboard base render size width wide userender pros directiv layout four padd mapp full ble edge 80rem accumulat containervariant hoc contract section band 64rem flagg heavy namespac oversight retir spac plus horizontal 42rem 65ch codebas usemergedref userenderel lock safe fail max philosophy 2xl content zero broken defin data tailwind breakpoint shadow nam rather guard retun token name call chosen"
     },
     {
       "name": "context-menu",
@@ -4435,7 +4436,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "cta section market pattern server rsc load skeleton responsiv min viewport 320 action tint band card trial typography ctasection surfac description variant subtl align titl copy center ready background data search clipp tone sign width layer button centr gridfield slot shap start children tech assistiv neutral primary hidden labelledby stick brand stack land behind round box ship reach call decorativ ful form column contain"
+      "terms": "cta section market pattern server rsc load skeleton responsiv min viewport 320 tint action band card trial typography ctasection surfac description variant subtl align titl copy center ready background data search clipp tone sign width layer button centr gridfield slot shap start children tech assistiv neutral primary hidden labelledby stick brand stack land behind round box ship reach call decorativ ful form column contain"
     },
     {
       "name": "daily-puzzle",
@@ -4850,7 +4851,7 @@
         "pattern",
         "feedback"
       ],
-      "terms": "empty stat feedback pattern server rsc responsiv min viewport 320 emptystat adjust afterthought icon creat filter act lucid wherever search optional variant action emptystateprop factual typography flag zero yet first link philosophy surfac slot block describ usabl tabl often item cluster cta bug data load list devic headlin failur button noth row typical support quiet result usual description design mode match copy phon isxxx"
+      "terms": "empty stat feedback pattern server rsc responsiv min viewport 320 emptystat adjust afterthought icon creat filter act lucid wherever search optional variant action emptystateprop factual typography flag zero yet first link philosophy surfac slot block describ usabl tabl often item cluster bug cta data load list devic headlin failur button noth row typical support quiet result usual description design mode match copy phon isxxx"
     },
     {
       "name": "error-template",
@@ -4870,7 +4871,7 @@
         "template",
         "feedback"
       ],
-      "terms": "error templat feedback server rsc responsiv min viewport 320 contact 404 503 errortemplat retry 500 status action home generic description variant back centr support page titl full overrid button skeleton cluster cta column load sectionboundary flight display surfac ten rect silhouett inner typical pass rout four swap cls hear neutral pick mirror r23 level region null announc shap real singl whol layout next role"
+      "terms": "error templat feedback server rsc responsiv min viewport 320 contact 404 503 errortemplat retry 500 status action home generic description variant back centr support page titl full overrid button skeleton cluster column cta load sectionboundary flight display surfac ten rect silhouett inner typical pass rout four swap cls hear neutral pick mirror r23 level region null announc shap real singl whol layout next role"
     },
     {
       "name": "faq",
@@ -4912,7 +4913,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "featur grid market pattern server rsc load skeleton responsiv min viewport 320 col card icon section featuregrid cell padd titl density count mobil track description sidebar spell land 98px unqualifi gap 375px container data air collection relax slot 56rem small 4xl board statical hook desktop lucid reach 28rem clos dashboard shap cta column page every landmark width hidden much scan overflow compact runtim root"
+      "terms": "featur grid market pattern server rsc load skeleton responsiv min viewport 320 col card icon section featuregrid cell padd titl density count track mobil description sidebar spell land 98px unqualifi gap 375px data container air collection relax slot 56rem small 4xl board statical hook desktop lucid reach 28rem clos dashboard shap column cta page every landmark width hidden much scan overflow compact runtim root"
     },
     {
       "name": "featured-icon",
@@ -4970,7 +4971,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "flip card market pattern client responsiv min viewport 320 face front turn back answer flipcard question flipp expand button commit claim grid ask link guess inert stretch backfac defaultflipp demand onflippedchang perspectiv tabb control hidden arriv data inner plat press uncontroll controll rotation show aria noscript taller slot height side disclosur fluid initial equal tall fine children javascript reduc fact toggl motion border moment"
+      "terms": "flip card market pattern client responsiv min viewport 320 face front turn back answer flipcard question flipp expand button commit claim grid ask link guess inert backfac defaultflipp demand onflippedchang perspectiv tabb control hidden arriv stretch data inner plat press uncontroll controll rotation show aria noscript taller slot height side disclosur fluid initial equal tall fine children javascript reduc fact toggl motion border moment"
     },
     {
       "name": "flip-group",
@@ -5054,7 +5055,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "footer navigation pattern server rsc responsiv min viewport 320 copyright tail link social group row brand href sub site spa mark compos column target 20px 44px data list 28px taglin slot 8px head stack comfortabl external 24px logo mobil gap grid extra plain 4px blank tall left density rhythm internal children container primary landmark border least foreground utility nav wide icon sentenc map text"
+      "terms": "footer navigation pattern server rsc responsiv min viewport 320 copyright tail link social group row brand href sub site spa mark compos column target 20px 44px data list 28px taglin slot 8px head stack comfortabl external 24px logo gap grid extra mobil plain 4px blank tall left density rhythm internal children container primary landmark border least foreground utility nav wide icon sentenc map text"
     },
     {
       "name": "form",
@@ -5135,7 +5136,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar dissolv worksheet fade careful generator graph paper breath fad board slow var radial toward arrang strongest either event hundr thousand even column primary highlight laid motion hidden border choos glow mulberry32 like edge plac compet listener timelin row without behind fals mask measur ble fill browser none soft hold work section"
+      "terms": "grid field decorativ effect client gridfield cell lit pointer seed dot light squar dissolv worksheet fade careful generator graph paper breath fad board slow var radial toward arrang strongest either event hundr thousand even column primary highlight laid motion hidden border choos glow mulberry32 like edge plac compet listener timelin row without behind mask measur fals ble fill browser none soft hold work section"
     },
     {
       "name": "grid",
@@ -5153,7 +5154,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "grid foundation primitiv server rsc griditem r21 track spac union gap column mui flat kind stack bound breakpoint sibl framework scal container col thin analogu ergonomic lgspan mdspan meaningless variantprop clos item discret jit 96px discriminat size different set deviation hook rather jsx static nest object ele flex ref token parity r11 system inlin tailwind cell four styl safe mode new articl map render"
+      "terms": "grid foundation primitiv server rsc griditem r21 track spac union gap column mui flat kind stack bound breakpoint sibl framework scal col thin container analogu ergonomic lgspan mdspan meaningless variantprop clos item discret jit 96px discriminat size different set deviation hook rather jsx static nest object ele flex ref token parity r11 system inlin tailwind cell four styl safe mode new articl map render"
     },
     {
       "name": "guess-reveal",
@@ -5189,7 +5190,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "hero cosmic market pattern client responsiv min viewport 320 herocosmic star starfield meteor cta shoot twinkl headlin preset taglin eyebrow gradient effect layer shortest tun sky kit copy knob trust wir content decorativ sub testid palett longest canva deriv land 7xl additional foo herocosmiccta primarycta resolution secondarycta ref paint 0002 fork column container cod r21 reduc size clon laid motion height brand part render"
+      "terms": "hero cosmic market pattern client responsiv min viewport 320 herocosmic star starfield meteor cta shoot twinkl headlin preset taglin eyebrow gradient effect layer shortest tun sky kit copy knob trust wir content decorativ sub testid palett longest canva deriv land 7xl additional foo herocosmiccta primarycta resolution secondarycta ref paint 0002 fork column cod r21 container reduc size clon laid motion height brand part render"
     },
     {
       "name": "hero-strand",
@@ -5227,7 +5228,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "hero market pattern server rsc responsiv min viewport 320 media mediarol headlin section typography eyebrow cta technical confident secondary interactiv meaningful calm enforc fold voic panel comfortabl variant support primary imag accessibility retun decorativ slot cluster rhythm optional pros heroprop focusabl vertical tree orna subhead column 96px february safe max 900 useid video content fluid hid labelledby copy action stack button land reflow data"
+      "terms": "hero market pattern server rsc responsiv min viewport 320 media mediarol headlin section typography eyebrow cta technical confident secondary interactiv meaningful calm enforc fold voic panel comfortabl variant support primary imag accessibility retun decorativ slot cluster rhythm optional pros heroprop focusabl vertical tree orna subhead column 96px february safe max 900 useid video content fluid hid labelledby copy stack action button land reflow data"
     },
     {
       "name": "hover-card",
@@ -5286,7 +5287,7 @@
         "pattern",
         "feedback"
       ],
-      "terms": "install prompt feedback pattern client responsiv min viewport 320 ios dialog icon offer browser safari home shar beforeinstallprompt dismissday ipad useinstallprompt app dismiss screen sheet open add action iphon polit ipado standalon whether button event section support installprompt possibl quiet word appear data localstorag hand site 8px chromium labelledby recent page platform remember runn 200m sett 28rem storag work reader tap slot rise container"
+      "terms": "install prompt feedback pattern client responsiv min viewport 320 ios dialog icon offer browser safari home shar beforeinstallprompt dismissday ipad useinstallprompt app dismiss screen sheet open add action iphon polit ipado standalon whether button event section support installprompt possibl quiet word appear data localstorag hand site 8px chromium labelledby recent page platform remember runn 200m sett 28rem storag work reader tap slot rise accept"
     },
     {
       "name": "interest-signal",
@@ -5403,7 +5404,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "kbd foundation primitiv server rsc responsiv min viewport 320 kbdgroup chord key core ctrl esc margin sequenc kbdvariant press symbol whitespac hydrat nowrap command shadcn drawn group gap item narrowest nest run container data size nativ set variantprop border token character inlin cva reader wide minimum viabl mean text html input exact hold carry boolean insid mut enum wrap foreground noth hook never read"
+      "terms": "kbd foundation primitiv server rsc responsiv min viewport 320 kbdgroup chord key core ctrl esc margin sequenc kbdvariant press symbol whitespac hydrat nowrap command shadcn drawn group gap item narrowest nest run data container size nativ set variantprop border token character inlin cva reader wide minimum viabl mean text html input exact hold carry boolean insid mut enum wrap foreground noth hook never read"
     },
     {
       "name": "label",
@@ -5443,7 +5444,7 @@
         "template",
         "marketing"
       ],
-      "terms": "land templat market server rsc responsiv min viewport 320 optional section faq hero topbar landingtemplat footer ctasection featuregrid pricingtabl testimonialgrid sectionboundary page stream featur configur testimonial compos pric pass extra skeleton cta suppli load arbitrary flight surfac ten rect silhouett inner rout swap cls hear neutral overrid status mirror r23 render level region every requir null announc shap real singl whol layout full next"
+      "terms": "land templat market server rsc responsiv min viewport 320 optional section faq hero topbar landingtemplat footer ctasection featuregrid pricingtabl testimonialgrid sectionboundary page stream featur configur testimonial compos pric pass extra skeleton suppli cta load arbitrary flight surfac ten rect silhouett inner rout swap cls hear neutral overrid status mirror r23 render level region every requir null announc shap real singl whol layout next full"
     },
     {
       "name": "layout-starter",
@@ -5481,7 +5482,7 @@
         "game",
         "games"
       ],
-      "terms": "leaderboard game server rsc responsiv min viewport 320 rank board scor row player peopl play tie tabl enough top viewer entry hidden even group show shar stand minplayer fall desc outsid view caption kept name held limit data far stor mark alon model tied minimum slot crowd privat fals higher numberformat back tint taken equal bas move word found scop column weight whol truncat"
+      "terms": "leaderboard game server rsc responsiv min viewport 320 rank board scor row player peopl play tie tabl enough top viewer entry hidden even group show shar stand minplayer fall desc outsid view caption kept name held limit data far stor mark alon model tied minimum slot crowd privat higher numberformat fals back tint taken equal bas move word found scop column weight whol truncat"
     },
     {
       "name": "light-beam",
@@ -5919,7 +5920,7 @@
         "game",
         "games"
       ],
-      "terms": "poll game client responsiv min viewport 320 vote viewer option result choic vot percent tap count minvot shar countsincludevot total cast defaultvot onvot tapp question fals sum 100 remainder tal tallybar stor bar includ nobody grow data turn ids submit add everyon plac friday voter group largest nam moment plain button thank lead already slot uncontroll server whol controll footer quiz ask sentenc many"
+      "terms": "poll game client responsiv min viewport 320 vote viewer option result choic vot percent tap count minvot shar countsincludevot total cast defaultvot onvot tapp question sum 100 remainder fals tal tallybar stor bar includ nobody grow data turn ids submit add everyon plac friday voter group largest nam moment plain button thank lead already slot uncontroll server whol controll footer quiz ask sentenc many"
     },
     {
       "name": "popover",
@@ -5984,7 +5985,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "pric tabl market pattern server rsc load skeleton responsiv min viewport 320 tier popular density grid cta padd pricingtabl card section highlight featur col sidebar pricingcard pricingtier gap button track description container data air collection relax 56rem breath shell 4xl month statical 28rem sub slot dashboard rhythm count column list insid much scan border compact runtim array name collaps articl written map phon brand"
+      "terms": "pric tabl market pattern server rsc load skeleton responsiv min viewport 320 tier popular density grid padd cta pricingtabl card section highlight featur col sidebar pricingcard pricingtier gap button track description data container air collection relax 56rem breath shell 4xl month statical 28rem sub slot dashboard rhythm count column list insid much scan border compact runtim array name collaps articl written map phon brand"
     },
     {
       "name": "progress",
@@ -6028,7 +6029,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "pros blog primitiv client responsiv min viewport 320 stat articl main section pre tabl wrapper sideway descendant scroll gfm mdx overflow mode focusabl landmark typography body measur blockquot head cascad 17px gymnastic uselayouteffect zebra long read think variant 65ch tbody semantic ele img deep bound mapp contract insid reachabl token whos cap overrid stop block container drop accept text arbitrary name fit anchorabl auditabl"
+      "terms": "pros blog primitiv client responsiv min viewport 320 stat articl main section pre tabl wrapper sideway descendant scroll gfm mdx overflow mode focusabl landmark typography body measur blockquot head cascad 17px gymnastic uselayouteffect zebra long read think variant 65ch tbody semantic ele img deep bound mapp contract insid reachabl token whos cap overrid stop block drop accept container text arbitrary name fit anchorabl auditabl"
     },
     {
       "name": "published-date",
@@ -6188,7 +6189,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "read layout blog pattern server rsc responsiv min viewport 320 rail toc bar 4xl content tocbar sticky fold stick readinglayout column slim offset query scroll sheet narrow container view tabl data header scroller taller slot 56rem foot head besid margin long along name absent media progress narrowest titl top main sidebar stay text page show list window landmark variabl width split border jump nav"
+      "terms": "read layout blog pattern server rsc responsiv min viewport 320 rail toc bar 4xl content tocbar sticky fold stick readinglayout column slim offset query scroll sheet narrow view container tabl data header scroller taller slot 56rem foot head besid margin long along name absent media progress narrowest titl top main sidebar stay text page show list window landmark variabl width split border jump nav"
     },
     {
       "name": "reading-settings",
@@ -6204,7 +6205,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "read sett foundation primitiv client size press contrast reset button choic usereadingpref larger text remember control name smaller contrasttoggl readingsett textsizecontrol unpress toggl reader writ author stor attribut disabl script thrown translation current show stop visit accessibl html small translat group step outer label normal said data neither explicit otherwis tell either middl 100 alon turn labell ask icon overrid user page besid prefer"
+      "terms": "read sett foundation primitiv client size press contrast reset button choic usereadingpref larger text remember control name smaller contrasttoggl readingsett textsizecontrol unpress toggl reader writ author stor attribut disabl script thrown translation current show stop visit accessibl html small translat group step outer label normal said data neither explicit otherwis tell either middl 100 alon turn labell ask icon overrid user page besid body"
     },
     {
       "name": "reading-strand",
@@ -6300,7 +6301,7 @@
         "template",
         "blog"
       ],
-      "terms": "registry item templat blog server rsc responsiv min viewport 320 sectionboundary relat matrix name diagram codeblock install registryitemtemplat articl snippet cta description variant documentation header command page compos anatomy delegat reactnod tool container layout full 1024 bash dog eat food surfac grid back section issu cva singl data content slot fluid hard region mapp often trail extra api stream skeleton dep npx load driven"
+      "terms": "registry item templat blog server rsc responsiv min viewport 320 sectionboundary relat matrix name diagram codeblock install registryitemtemplat articl snippet description variant cta documentation header command page compos anatomy delegat reactnod tool layout container full 1024 bash dog eat food surfac grid back section issu cva singl data content slot fluid hard region mapp often trail extra api stream skeleton dep npx load driven"
     },
     {
       "name": "related-posts",
@@ -6570,7 +6571,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "section foundation primitiv server rsc band divider container padd overlap comfortabl children tone spac transition none depth vertical brand ble rhythm card philosophy inset abut hasdivider ismut laptop sectionvariant spacious step five unit escap background straddl overlapp full size bottom footer asid pull ride tight border fluid glid page wrap blur except mobil measur clear desktop retun chosen header alway curv gutter top hatch"
+      "terms": "section foundation primitiv server rsc band divider container padd overlap comfortabl children tone spac transition none depth vertical brand ble rhythm card philosophy inset abut hasdivider ismut laptop sectionvariant spacious step five unit escap background straddl overlapp full size bottom footer asid pull ride tight border fluid glid page wrap blur except measur clear desktop mobil retun chosen header alway curv gutter top hatch"
     },
     {
       "name": "select",
@@ -6612,7 +6613,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "separator foundation primitiv server rsc keyboard base orientation vertical axis horizontal geometry block height baseseparator defend border pixel role intrinsic toolbar wrap exact shrink semantic aria contain disagre full colour forward flex content invisibl parent well whatever slot switch visual typeof resolv r12 reus fix part measur plain draw announc form children container data insid width enum noth root row hook componentprop anatomy render"
+      "terms": "separator foundation primitiv server rsc keyboard base orientation vertical axis horizontal geometry block height baseseparator defend border pixel role intrinsic toolbar wrap exact shrink semantic aria contain disagre full colour forward flex content invisibl parent well whatever slot switch visual typeof resolv r12 reus fix part measur plain draw announc form children data container insid width enum noth root row hook componentprop anatomy render"
     },
     {
       "name": "series-table",
@@ -6677,7 +6678,7 @@
         "template",
         "form"
       ],
-      "terms": "sett templat form server rsc responsiv min viewport 480 section rail rout settingstemplat activ main tab friend account driven topbar settingssection content area page app render skeleton left load sectionboundary flight surfac ten rect silhouett inner swap horizontal current becom cls hear neutral overrid status match mirror r23 shown scroll level region null announc titl shap real singl whol layout full next role list"
+      "terms": "sett templat form server rsc responsiv min viewport 480 section rail rout settingstemplat activ main tab friend account driven topbar settingssection content area page app render skeleton left load sectionboundary flight surfac ten rect silhouett inner swap horizontal current becom cls hear neutral overrid status match mirror r23 shown scroll level region null announc titl shap real singl whol layout next full role list"
     },
     {
       "name": "share-buttons",
@@ -6700,7 +6701,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "shar button blog pattern client responsiv min viewport 320 stat twitter bluesky linkedin copy sharebutton ghost network cluster lucid icon clipboard prefill url size confirmation social variant flip affordanc briefcas resett sharebuttonsprop toggl writ compact cloud dominant writetext four plus target brief navigator aria new tab generic logo mobil tim usestat blank send open label link data glyph page iphon meet union canonical post"
+      "terms": "shar button blog pattern client responsiv min viewport 320 stat twitter bluesky linkedin copy sharebutton ghost network cluster lucid icon clipboard prefill url size confirmation social variant flip affordanc briefcas resett sharebuttonsprop toggl writ compact cloud dominant writetext four plus target brief navigator aria new tab generic logo tim mobil usestat blank send open label link data glyph page iphon meet union canonical post"
     },
     {
       "name": "share-card",
@@ -7016,7 +7017,7 @@
         "primitive",
         "a11y"
       ],
-      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl user corner anchor target tab satisfy lett keyboard emulator encounter physical skiplinkprop focusabl tabindex content moment utility past jump nav hash ele wcag block action pair position scroll activation earn aaa step ring work header whichever left interactiv mous move top data nativ devic whether href docu entir"
+      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl user corner anchor target tab satisfy lett keyboard emulator encounter physical skiplinkprop focusabl tabindex content moment utility past jump nav hash ele wcag block pair position action scroll activation earn aaa step ring work header whichever left interactiv mous move top data nativ devic whether href docu entir"
     },
     {
       "name": "sky-backdrop",
@@ -7075,7 +7076,7 @@
         "pattern",
         "form"
       ],
-      "terms": "social sign form pattern client responsiv min viewport 320 socialsignin provider email button sent googl featur pend submit appl continu icon inbox link alert promis divider address onproviderselect sentto useformstatus field name last facebook press mark front spin submitt data error everyth callback visitor choos flow action spinner full four slot width busy phas term different settl row check app order github guidelin interception"
+      "terms": "social sign form pattern client responsiv min viewport 320 socialsignin provider email button sent googl featur pend submit appl continu icon inbox link alert promis divider address onproviderselect sentto useformstatus field name last facebook press mark front spin submitt data error everyth callback visitor choos flow action spinner four full slot width busy phas term different settl row check app order github guidelin interception"
     },
     {
       "name": "sparkline",
@@ -7161,7 +7162,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "stack foundation primitiv server rsc keyboard base render gap cluster horizontal justify direction flex align userender chip row tag directiv layout mobil call spac scal consistent stackvariant sugar vertical grid wrap six distinguishabl flagg oversight children usemergedref userenderel whos safe wrapp philosophy 2xl nowrap site breath enum come button data center step desktop guard token clos section rhythm card form number cta hatch worth"
+      "terms": "stack foundation primitiv server rsc keyboard base render gap cluster horizontal justify direction flex align userender chip row tag directiv layout mobil call spac scal consistent stackvariant sugar vertical grid wrap six distinguishabl flagg oversight children usemergedref userenderel whos safe wrapp philosophy 2xl nowrap site breath enum come button data center step desktop guard token clos section rhythm card form number hatch worth cta"
     },
     {
       "name": "stagger-list",
@@ -7264,7 +7265,7 @@
         "pattern",
         "data"
       ],
-      "terms": "stat group data pattern server rsc load skeleton responsiv min viewport 320 card kpis statcard grid big col sidebar statcardprop gap hero page track win horizontal statgroup labell air collection relax 56rem 4xl statical hairlin reach 28rem tile dashboard density number count top much scan compact runtim row collaps written phon land every built clos key section r10 slot seam scal container layout full"
+      "terms": "stat group data pattern server rsc load skeleton responsiv min viewport 320 card kpis statcard grid big col sidebar statcardprop gap hero page track win horizontal statgroup labell air collection relax 56rem 4xl statical hairlin reach 28rem tile dashboard density number count top much scan compact runtim row collaps written phon land every built clos key section r10 slot seam scal layout container full"
     },
     {
       "name": "stat-strip",
@@ -7437,7 +7438,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "tab navigation primitiv client responsiv min viewport 320 keyboard base rais select list tablist tabpanel tabslist flex panel rov trigger pill wrap fit scrollabl bar face mut arrow selection basetab strategy tabscontent tabstrigger 320px long key assum grow horizontal whitespac lock focus nowrap problem data floor rather ring aria label container col truncat part upstream assert flow overflow overlay stor attribut root entir principl"
+      "terms": "tab navigation primitiv client responsiv min viewport 320 keyboard base rais select list tablist tabpanel tabslist flex panel rov trigger pill wrap fit scrollabl bar face mut arrow selection basetab strategy tabscontent tabstrigger 320px long key assum grow horizontal whitespac lock focus nowrap problem data floor rather ring aria label col truncat container part upstream assert flow overflow overlay stor attribut root entir principl"
     },
     {
       "name": "tag-template",
@@ -7457,7 +7458,7 @@
         "template",
         "blog"
       ],
-      "terms": "tag templat blog server rsc responsiv min viewport 320 tagg articlelistgrid tagtemplat articl slug post rout show filter header optional index match sibl skeleton cluster load sectionboundary page url flight ten rect silhouett inner typical chip lead swap navigation cls hear neutral overrid status mirror r23 render level region grid null announc titl shap real singl whol layout full next role pass screen name"
+      "terms": "tag templat blog server rsc responsiv min viewport 320 tagg articlelistgrid tagtemplat articl slug post rout show filter header optional index match sibl skeleton cluster load sectionboundary page url flight ten rect silhouett inner typical chip lead swap navigation cls hear neutral overrid status mirror r23 render level region grid null announc titl shap real singl whol layout next full role pass screen name"
     },
     {
       "name": "tag",
@@ -7500,7 +7501,7 @@
         "game",
         "games"
       ],
-      "terms": "tal bar game client responsiv min viewport 320 stat correct wrong viewer percent option quiz vote poll total count choic answer vot sum 100 data mark countsincludevot remainder shar tallybar whol nobody lead fals reload slot nam result track tap ids right word row depend spread everyon 204 verdict largest fill mount formatt includ mine question grow add true alon model label list feed"
+      "terms": "tal bar game client responsiv min viewport 320 stat correct wrong viewer percent option quiz vote poll total count choic answer vot sum 100 data mark countsincludevot remainder shar tallybar whol nobody lead reload slot nam result fals track tap ids right word row depend spread everyon 204 verdict largest fill mount formatt includ mine question grow add true alon model label list feed"
     },
     {
       "name": "testimonial",
@@ -7564,7 +7565,7 @@
         "util",
         "foundation"
       ],
-      "terms": "script flash bootstrap foundation util server rsc stat contrast storag key schem text size localstorag absent writ stor user head preferenc whit suppresshydrationwarn writabl system chosen page normal paint already html attribut appli scrollbar dark silent chos register read browser hold color host hydration stylesheet half app prefer wors 133 authoritativ decorator express henc iife minifi mutat polyfill synchronous vite throw selector light root"
+      "terms": "script flash bootstrap foundation util server rsc stat contrast storag key schem text size localstorag absent writ stor user head preferenc whit suppresshydrationwarn writabl system chosen page normal paint already html attribut appli scrollbar dark silent chos register read browser hold color host hydration stylesheet half app wors prefer 133 authoritativ decorator express henc iife minifi mutat polyfill synchronous vite throw selector light root"
     },
     {
       "name": "theme-switcher",
@@ -7854,7 +7855,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "timelin blog pattern server rsc responsiv min viewport 320 event vertical dot orientation date marker 13rem wide column 48rem titl side seven horizontal done record alway row said query stack come order 1968 council cramp squeez timelineitem least 64rem archiv dat filterabl handful sit switch container accent narrow city data highlight list bold vote timelinemap quot minut key short item word dens layout decoration"
+      "terms": "timelin blog pattern server rsc responsiv min viewport 320 event vertical dot orientation date marker 13rem wide column 48rem titl side seven horizontal done record alway row said query stack come order 1968 council cramp squeez timelineitem least 64rem archiv dat filterabl handful sit switch accent narrow city data container highlight list bold vote timelinemap quot minut key short item word dens layout decoration"
     },
     {
       "name": "timer-ring",
@@ -7936,7 +7937,7 @@
         "primitive",
         "form"
       ],
-      "terms": "toggl form primitiv client responsiv min viewport 320 keyboard base press pill togglegroupitem group size thereof togglegroup variant exclusiv mutual timelinemap floor strand filter stat 22px basetoggl extract togglevariant multi select surfac button chip cva accent target machinery radiogroup wash wcag height wrap 24px audit greyscal output tint ring tall thread aria clipp hue interactiv later weight data identity focus bare category role upstream"
+      "terms": "toggl form primitiv client responsiv min viewport 320 keyboard base press pill togglegroupitem group size thereof togglegroup variant exclusiv mutual timelinemap floor strand filter stat 22px basetoggl extract togglevariant multi select surfac button chip cva accent target machinery radiogroup wash wcag height wrap 24px audit greyscal output tint ring tall thread aria clipp hue interactiv later weight data identity focus category role bare upstream"
     },
     {
       "name": "toolbar",
@@ -7978,7 +7979,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "tooltip overlay primitiv client responsiv min viewport 320 keyboard base delay popup describedby trigger tooltipprovider provider hover open dangl race wherea tim govern hovercard emit 768 rich unlabell unmount portal neither aria label unlik short usabl role wir even wait appear announc root ignor stay focus primary part basetooltip tooltipcompos tooltipcontent 320px toggl referenc attribut mount context rout tooltiptrigger void node screen add touch"
+      "terms": "tooltip overlay primitiv client responsiv min viewport 320 keyboard base delay popup describedby trigger tooltipprovider provider hover open dangl race wherea tim govern hovercard emit 768 rich unlabell unmount portal neither aria label short unlik usabl role wir even wait appear announc root ignor stay focus primary part basetooltip tooltipcompos tooltipcontent 320px toggl referenc attribut mount context rout tooltiptrigger void node screen add touch"
     },
     {
       "name": "topbar-menu",
