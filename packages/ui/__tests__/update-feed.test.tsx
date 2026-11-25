@@ -22,6 +22,19 @@ describe('update-feed-model', () => {
   it('sorts newest first with ids breaking ties, unreadable dates last', () => {
     expect(sortUpdates([...ENTRIES, { id: 'x', date: 'soon' }]).map((e) => e.id)).toEqual(['a', 'c', 'b', 'd', 'x']);
   });
+  it('orders any input the same way, whatever it starts as', () => {
+    const odd = [
+      { id: 'x', date: 'soon' },
+      { id: 'b', date: '2026-01-01' },
+      { id: 'a', date: '2026-01-01' },
+      { id: 'a', date: '2026-01-01' },
+      { id: 'c', date: '2026-02-01' },
+      { id: 'y', date: 'later' },
+    ];
+    const order = (list: typeof odd) => sortUpdates(list).map((e) => `${e.id}${e.date}`);
+    expect(order(odd)).toEqual(order(odd.slice().reverse()));
+    expect(order(odd).slice(0, 4)).toEqual(['c2026-02-01', 'a2026-01-01', 'a2026-01-01', 'b2026-01-01']);
+  });
   it('groups by day or month and skips unreadable dates', () => {
     expect(groupUpdates([...ENTRIES, { id: 'x', date: '' }]).map((g) => [g.key, g.entries.length])).toEqual([
       ['2026-11-24', 2],
