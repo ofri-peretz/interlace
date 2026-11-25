@@ -10,4 +10,4 @@ rejoins by itself when shown away, unless the player left on purpose (`presence:
 Networks drop messages: a player's join or answer is sent again every 3s until the host's state
 shows it (5 tries), and the host no longer broadcasts a reply to a repeated or late answer.
 
-Components: live-room, room-model, timer-ring
+Components: live-room, timer-ring
