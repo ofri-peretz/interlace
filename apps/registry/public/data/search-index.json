@@ -761,7 +761,7 @@
     "chartfram": 1,
     "chat": 2,
     "cheapest": 2,
-    "check": 38,
+    "check": 36,
     "checkabl": 3,
     "checkbox": 9,
     "checkboxindicator": 1,
@@ -1355,7 +1355,7 @@
     "factual": 1,
     "fad": 6,
     "fade": 22,
-    "fail": 33,
+    "fail": 34,
     "failur": 17,
     "faint": 7,
     "fair": 3,
@@ -2775,7 +2775,6 @@
     "set": 77,
     "setopen": 1,
     "sett": 8,
-    "settimeout": 1,
     "settingssection": 1,
     "settingstemplat": 1,
     "settl": 11,
@@ -3710,7 +3709,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "audio player blog pattern server rsc responsiv min viewport 320 transcript detail audioplayer preload media operabl clip control speaker figur titl honour platform figcaption javascript summary audioprop listen onplay playback seek volum browser key fram length recommend metadata strong wcag nativ add keyboard everyon stretch url toggl ele border spoken around screen given reader data tech assistiv fail date r12 reus text every leav"
+      "terms": "audio player blog pattern server rsc responsiv min viewport 320 transcript detail audioplayer preload media operabl clip control speaker figur titl honour platform figcaption javascript summary audioprop listen onplay playback seek volum browser key fram length recommend metadata strong wcag nativ add keyboard everyon stretch url toggl ele border spoken around screen given reader data tech assistiv date fail r12 reus text every leav"
     },
     {
       "name": "auth-template",
@@ -3798,7 +3797,7 @@
         "primitive",
         "data"
       ],
-      "terms": "avatar data primitiv client load skeleton keyboard base fallback imag size machin avatarfallback circular face initial error decid baseavatar idiomatic involv overridden surfac avatarimag participat swap full mut aspect constraint footprint wrap root round clipp normal decision absenc layout object show url render stat upstream circl overflow squar entry break silhouett centr project yet given shift surviv win replac typeof different caller fail miss"
+      "terms": "avatar data primitiv client load skeleton keyboard base fallback imag size machin avatarfallback circular face initial error decid baseavatar idiomatic involv overridden surfac avatarimag participat swap full mut aspect constraint footprint wrap root round clipp normal decision absenc layout object show url render stat upstream circl overflow squar entry break silhouett centr project yet given shift surviv win replac typeof different caller miss fail"
     },
     {
       "name": "badge",
@@ -4371,7 +4370,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "container foundation primitiv server rsc keyboard base render size width wide userender pros directiv layout four full padd mapp ble edge 80rem accumulat containervariant hoc namespac contract section band 42rem 64rem flagg heavy oversight retir spac plus horizontal 65ch codebas usemergedref userenderel lock philosophy safe fail 2xl max content zero broken defin data tailwind breakpoint shadow nam token guard retun rather call name chosen"
+      "terms": "container foundation primitiv server rsc keyboard base render size width wide userender pros directiv layout four full padd mapp ble edge 80rem accumulat containervariant hoc namespac contract section band 42rem 64rem flagg heavy oversight retir spac plus horizontal 65ch codebas usemergedref userenderel lock philosophy safe 2xl fail max content zero broken defin data tailwind breakpoint shadow nam token guard retun rather call name chosen"
     },
     {
       "name": "context-menu",
@@ -5378,7 +5377,7 @@
         "game",
         "games"
       ],
-      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet host player room clock try minut expiry rank send scor board peopl round event address copy expir new wrong letter refus character admitt applyroomevent broadcastchannel realtim sender useroom link null stamp stopp big phon connect codeexpiresat makejoincod window group arriv tie screen outsid entry many row answer 4mz endsat"
+      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet host player room clock expiry try minut expir rank peopl send scor board new refus stamp round event address copy wrong letter character admitt applyroomevent broadcastchannel realtim sender useroom link null stopp big phon connect codeexpiresat makejoincod window group arriv tie screen outsid entry many row answer 4mz endsat"
     },
     {
       "name": "kbd",
@@ -5568,7 +5567,7 @@
         "game",
         "games"
       ],
-      "terms": "live room game client responsiv min viewport 320 stat lobby countdown question reveal podium clos join alphabet host player clock round send useroom try rank everyon event scor board answer start intent refus null joincod night realtim new play data wrong stamp app connect applyroomevent broadcastchannel expiry sender slot phon name arriv wait transport second count big end show timer roomcountdown roomhostcontrol roomlobby settimeout"
+      "terms": "live room game client responsiv min viewport 320 stat lobby countdown question reveal podium clos join alphabet host player clock round send useroom try rank refus stamp everyon event scor board answer new start intent null expiry joincod night realtim play data wrong app connect applyroomevent broadcastchannel expir sender slot count phon name arriv wait transport second big end show timer roomcountdown roomhostcontrol roomlobby"
     },
     {
       "name": "marker",
@@ -5733,7 +5732,7 @@
         "chart",
         "data"
       ],
-      "terms": "network graph data chart client load skeleton responsiv min viewport 320 keyboard golden angl networkgraph node edge converg heaviest pictur rank cap weight connection viz detail concentric given select panel radius forc connect ambient hairball simulation display sentenc formatt mean hundr yesterday plot tabl absenc whoever summary tail app reader carry scal low group layout caption produc limit today fail driv count many magnitud"
+      "terms": "network graph data chart client load skeleton responsiv min viewport 320 keyboard golden angl networkgraph node edge converg heaviest pictur rank cap weight connection viz detail concentric given select panel radius forc connect ambient hairball simulation display sentenc formatt mean hundr yesterday plot tabl absenc whoever summary tail app reader carry scal low group layout caption produc limit today driv fail count many magnitud"
     },
     {
       "name": "newsletter-form",
@@ -6163,7 +6162,7 @@
         "primitive",
         "form"
       ],
-      "terms": "radio group form primitiv client responsiv min viewport 320 keyboard base radiogroup readon rov select item radiogroupitem rootprop tabindex role aria exclusiv mutual dot option ring background defaultvalu onvaluechang arrow indicator conformant enlarg radioroot upstream ref allow composit critical uncontroll navigation controll attr overlapp pitch uncheck target blind unconditional border check 8px pseudo pair wrap input drill external control 24px built trust fill hit"
+      "terms": "radio group form primitiv client responsiv min viewport 320 keyboard base radiogroup readon rov select item radiogroupitem rootprop tabindex role aria exclusiv mutual dot option ring background defaultvalu onvaluechang arrow indicator conformant enlarg radioroot upstream ref allow composit critical uncontroll navigation controll attr overlapp pitch uncheck target blind unconditional check border 8px pseudo pair wrap input drill external control 24px built trust fill hit"
     },
     {
       "name": "reading-layout",
@@ -7559,7 +7558,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "switcher foundation primitiv client responsiv min viewport 320 themeswitcher menu lib themeschemetoggl dot dark schem appearanc menuitemradio toggl popup trigger dropdownmenutrigger press control harbor typeahead usethem light radiogroup src escap script system axis swatch serv click contract try base item aria genuin check user cooki flourish multiplicativ obvious permanent pretend themeswitchervariant writ paint axe four question definition represent schemepreferenc unusabl nav stat configurabl documentation"
+      "terms": "switcher foundation primitiv client responsiv min viewport 320 themeswitcher menu lib themeschemetoggl dot dark schem appearanc menuitemradio toggl popup trigger dropdownmenutrigger press control harbor typeahead usethem light radiogroup src escap script system axis swatch serv click contract try base item aria check genuin user cooki flourish multiplicativ obvious permanent pretend themeswitchervariant writ paint axe four question definition represent schemepreferenc unusabl nav stat configurabl documentation"
     },
     {
       "name": "theme-tokens",

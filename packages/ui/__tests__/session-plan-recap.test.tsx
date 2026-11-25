@@ -96,6 +96,7 @@ describe('recap-model', () => {
 
   it('keeps only fields that pass, and refuses what cannot be a recap', () => {
     expect(validRecap({ session: 's', at: -1, commitment: '', interests: ['a', 3], points: Number.NaN })).toEqual({ session: 's' });
+    expect(validRecap({ session: 's', at: 0, points: 0 })).toEqual({ session: 's', points: 0 });
     expect(validRecap({ session: '' })).toBeNull();
     expect(validRecap(null)).toBeNull();
     expect(validRecap('s')).toBeNull();

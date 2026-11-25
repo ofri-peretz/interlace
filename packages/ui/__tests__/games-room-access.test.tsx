@@ -37,8 +37,10 @@ describe('code expiry', () => {
     expect(inRoom.players).toHaveLength(1);
     expect(rejectRoomEvent(inRoom, join('ben', T), 'ben')).toBe('expired');
     expect(rejectRoomEvent(inRoom, join('ava', T + 60_000), 'ava')).toBeNull();
-    // Unstamped joins are not checked: the caller owns the clock.
-    expect(rejectRoomEvent(inRoom, join('ben'), 'ben')).toBeNull();
+    // An unstamped join fails closed while the room has an expiry; a reconnect still gets in.
+    expect(rejectRoomEvent(inRoom, join('ben'), 'ben')).toBe('expired');
+    expect(rejectRoomEvent(inRoom, join('ava'), 'ava')).toBeNull();
+    expect(codeExpired({ codeExpiresAt: T }, undefined)).toBe(true);
     expect(codeExpired({ codeExpiresAt: null }, T)).toBe(false);
   });
 

@@ -177,8 +177,8 @@ export type RoomPlayerEvent =
       /**
        * When the join arrived, in ms. `useRoom` stamps it with the host's clock,
        * so an expired code cannot be beaten by a phone with its clock set back;
-       * code that calls `applyRoomEvent` directly must stamp it too, or the
-       * code's expiry is not checked.
+       * code that calls `applyRoomEvent` directly must stamp it too. While the
+       * room has an expiry, an unstamped new join is refused as `expired`.
        */
       at?: number;
     }
@@ -249,9 +249,14 @@ const NEXT: Partial<Record<RoomEvent['type'], readonly RoomPhase[]>> = {
   restart: ['podium', 'reveal', 'question', 'countdown', 'lobby'],
 };
 
-/** True when a join at `at` (host clock) comes after the code stopped admitting new players. */
+/**
+ * True when a join at `at` (host clock) comes after the code stopped admitting new players.
+ * Fails closed: when the room has an expiry, a join without `at` counts as expired, so a server
+ * that forgets to stamp joins cannot let people in late. Stamp `join.at` with the host clock.
+ */
 export function codeExpired(state: Pick<RoomState, 'codeExpiresAt'>, at: number | undefined): boolean {
-  return state.codeExpiresAt !== null && at !== undefined && at >= state.codeExpiresAt;
+  if (state.codeExpiresAt === null) return false;
+  return at === undefined || at >= state.codeExpiresAt;
 }
 
 /** A display name, trimmed, inner spaces collapsed, and cut to `max` characters. */

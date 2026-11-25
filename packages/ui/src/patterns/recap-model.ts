@@ -55,7 +55,7 @@ export function validRecap(x: unknown): RecapData | null {
   const o = x as Record<string, unknown>;
   if (!isText(o.session, 120)) return null;
   const out: RecapData = { session: o.session };
-  if (isCount(o.at)) out.at = o.at;
+  if (isCount(o.at) && o.at > 0) out.at = o.at;
   if (isText(o.commitment, 280)) out.commitment = o.commitment;
   if (Array.isArray(o.interests) && o.interests.length <= 50 && o.interests.every((i) => isText(i, 80))) {
     out.interests = [...new Set(o.interests as string[])];
