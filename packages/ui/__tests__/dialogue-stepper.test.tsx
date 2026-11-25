@@ -20,28 +20,28 @@ import { Dialogue } from '../src/patterns/dialogue.js';
 function Talk(props: { defaultMode?: 'step' | 'all' }) {
   return (
     <DialogueStepper start="open" {...props}>
-      <DialogueStepper.Step id="open" aria-label="Opening">
+      <DialogueStep id="open" aria-label="Opening">
         <Dialogue.Turn speaker="Resident">Why was the bridge closed?</Dialogue.Turn>
-        <DialogueStepper.Choices>
-          <DialogueStepper.Choice next="answer">What do I say?</DialogueStepper.Choice>
-          <DialogueStepper.Choice next="aside">They might ask why it took so long</DialogueStepper.Choice>
-        </DialogueStepper.Choices>
-      </DialogueStepper.Step>
-      <DialogueStepper.Step id="answer">
+        <DialogueChoices>
+          <DialogueChoice next="answer">What do I say?</DialogueChoice>
+          <DialogueChoice next="aside">They might ask why it took so long</DialogueChoice>
+        </DialogueChoices>
+      </DialogueStep>
+      <DialogueStep id="answer">
         <Dialogue.Turn speaker="Engineer">The deck needed new bearings.</Dialogue.Turn>
-        <DialogueStepper.Choices>
-          <DialogueStepper.Choice next="close">And now?</DialogueStepper.Choice>
-        </DialogueStepper.Choices>
-      </DialogueStepper.Step>
-      <DialogueStepper.Step id="aside">
+        <DialogueChoices>
+          <DialogueChoice next="close">And now?</DialogueChoice>
+        </DialogueChoices>
+      </DialogueStep>
+      <DialogueStep id="aside">
         <Dialogue.Turn speaker="Engineer">The parts came from abroad.</Dialogue.Turn>
-        <DialogueStepper.Choices>
-          <DialogueStepper.Choice next="open">Back to the start</DialogueStepper.Choice>
-        </DialogueStepper.Choices>
-      </DialogueStepper.Step>
-      <DialogueStepper.Step id="close">
+        <DialogueChoices>
+          <DialogueChoice next="open">Back to the start</DialogueChoice>
+        </DialogueChoices>
+      </DialogueStep>
+      <DialogueStep id="close">
         <Dialogue.Turn speaker="Engineer">It reopened in April.</Dialogue.Turn>
-      </DialogueStepper.Step>
+      </DialogueStep>
     </DialogueStepper>
   );
 }
@@ -143,9 +143,9 @@ describe('DialogueStepper', () => {
   it('can open in all mode, and takes translated labels', () => {
     const { container } = render(
       <DialogueStepper start="a" defaultMode="all" labels={{ back: 'Zurück', reset: 'Neu' }}>
-        <DialogueStepper.Step id="a">
+        <DialogueStep id="a">
           <Dialogue.Turn speaker="A">Hallo</Dialogue.Turn>
-        </DialogueStepper.Step>
+        </DialogueStep>
       </DialogueStepper>,
     );
     expect(container.querySelector('[data-mode="all"]')).not.toBeNull();
@@ -156,17 +156,17 @@ describe('DialogueStepper', () => {
   it('a choice whose onClick prevents default does not move', () => {
     const { container } = render(
       <DialogueStepper start="a">
-        <DialogueStepper.Step id="a">
+        <DialogueStep id="a">
           <Dialogue.Turn speaker="A">One</Dialogue.Turn>
-          <DialogueStepper.Choices>
-            <DialogueStepper.Choice next="b" onClick={(e) => e.preventDefault()}>
+          <DialogueChoices>
+            <DialogueChoice next="b" onClick={(e) => e.preventDefault()}>
               Next
-            </DialogueStepper.Choice>
-          </DialogueStepper.Choices>
-        </DialogueStepper.Step>
-        <DialogueStepper.Step id="b">
+            </DialogueChoice>
+          </DialogueChoices>
+        </DialogueStep>
+        <DialogueStep id="b">
           <Dialogue.Turn speaker="B">Two</Dialogue.Turn>
-        </DialogueStepper.Step>
+        </DialogueStep>
       </DialogueStepper>,
     );
     act(() => fireEvent.click(screen.getByRole('button', { name: 'Next' })));
@@ -245,6 +245,6 @@ describe('DialogueStepper', () => {
   });
 
   it('throws outside a stepper', () => {
-    expect(() => render(<DialogueStepper.Choice next="x">x</DialogueStepper.Choice>)).toThrow(/inside <DialogueStepper>/);
+    expect(() => render(<DialogueChoice next="x">x</DialogueChoice>)).toThrow(/inside <DialogueStepper>/);
   });
 });

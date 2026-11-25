@@ -149,6 +149,60 @@ export const WithEmail: Story = {
   },
 };
 
+const brief = () => new Promise((r) => setTimeout(r, 300));
+
+const JourneyFlow = () => {
+  const [sentTo, setSentTo] = React.useState<string>();
+  const [error, setError] = React.useState<string>();
+  return (
+    <SocialSignIn
+      email
+      providers={["google", "apple"]}
+      onProviderSelect={async () => {
+        setError(undefined);
+        await brief();
+        setError("That sign-in was cancelled. Try again, or use another way in.");
+      }}
+      onEmailSubmit={async (address) => {
+        setError(undefined);
+        await brief();
+        setSentTo(address);
+      }}
+      sentTo={sentTo}
+      onUseAnotherEmail={() => setSentTo(undefined)}
+      error={error}
+    />
+  );
+};
+
+/**
+ * The journey: a provider that comes back cancelled, then the email link,
+ * the "check your inbox" note, and back to try another address.
+ */
+export const Journey: Story = {
+  render: () => <JourneyFlow />,
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step("pending, then error: the provider was cancelled", async () => {
+      const google = canvas.getByRole("button", { name: "Continue with Google" });
+      await userEvent.click(google);
+      await expect(google).toHaveAttribute("data-loading");
+      await expect(await canvas.findByRole("alert", {}, { timeout: 2000 })).toHaveTextContent("cancelled");
+    });
+    await step("sent: the email link went out", async () => {
+      await userEvent.type(canvas.getByLabelText("Email"), "parent@example.com");
+      await userEvent.click(canvas.getByRole("button", { name: "Email me a sign-in link" }));
+      await waitFor(() => expect(canvas.getByRole("status")).toHaveTextContent("parent@example.com"), {
+        timeout: 2000,
+      });
+    });
+    await step("choose: back to the form for another address", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "Use a different email" }));
+      await expect(canvas.getByRole("button", { name: "Continue with Google" })).toBeTruthy();
+    });
+  },
+};
+
 export const Sent: Story = {
   args: { email: true, sentTo: "parent@example.com", onUseAnotherEmail: () => {} },
 };
