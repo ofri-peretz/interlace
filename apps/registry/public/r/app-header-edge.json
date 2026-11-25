@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-header-edge",
+  "type": "registry:ui",
+  "title": "App Header Edge",
+  "description": "The client half of `AppHeader`. It marks the header `data-scrolled` once the page has moved off its top, so the bar gains its surface and border only when content passes beneath it. With a large title it also marks the header `data-collapsed` once that…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "navigation",
+    "pattern"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/patterns/app-header-edge.tsx",
+      "target": "components/ui/patterns/app-header-edge.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/app-header-edge v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/app-header-edge\n// What changed since: https://ds.interlace.tools/c/app-header-edge#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — AppHeaderEdge\n *\n * The client half of `AppHeader`. It marks the header `data-scrolled` once\n * the page has moved off its top, so the bar gains its surface and border\n * only when content passes beneath it. With a large title it also marks the\n * header `data-collapsed` once that title has scrolled up under the bar, so\n * the small title in the bar can take over. AppHeader renders it for you;\n * it draws nothing itself.\n *\n * | Rule | Concept          | Where in this file                    |\n * | ---- | ---------------- | ------------------------------------- |\n * | R6   | data-slot        | `app-header-edge`                     |\n * | R25  | Client component | one passive scroll listener on window |\n */\n\nexport interface AppHeaderEdgeProps {\n  /** Pixels of scroll before the header counts as scrolled. @default 4 */\n  threshold?: number;\n}\n\nexport function AppHeaderEdge({ threshold = 4 }: AppHeaderEdgeProps) {\n  const ref = React.useRef<HTMLSpanElement>(null);\n  React.useEffect(() => {\n    const header = ref.current?.closest<HTMLElement>('[data-slot=\"app-header\"]');\n    if (!header) return;\n    const next = header.nextElementSibling;\n    const large = next?.getAttribute('data-slot') === 'app-header-large' ? next : null;\n    const update = () => {\n      header.toggleAttribute('data-scrolled', window.scrollY > threshold);\n      if (large) {\n        header.toggleAttribute(\n          'data-collapsed',\n          large.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom,\n        );\n      }\n    };\n    update();\n    window.addEventListener('scroll', update, { passive: true });\n    window.addEventListener('resize', update, { passive: true });\n    return () => {\n      window.removeEventListener('scroll', update);\n      window.removeEventListener('resize', update);\n      header.removeAttribute('data-scrolled');\n      header.removeAttribute('data-collapsed');\n    };\n  }, [threshold]);\n  return <span ref={ref} hidden data-slot=\"app-header-edge\" />;\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "pattern",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/app-header-edge\n\nInstalled to `components/ui/patterns/app-header-edge.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/app-header-edge';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/app-header-edge\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}
