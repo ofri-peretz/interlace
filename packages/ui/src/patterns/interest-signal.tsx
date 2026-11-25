@@ -258,7 +258,7 @@ function InterestBoard({
   }, []);
 
   const notes = [
-    rows.length === 0 && held === 0 ? (labels?.empty ?? 'No one has asked for more yet.') : '',
+    rows.length === 0 && held === 0 && more === 0 ? (labels?.empty ?? 'No one has asked for more yet.') : '',
     held ? (labels?.held ?? HELD)(held, Math.max(1, Math.floor(minCount))) : '',
     more ? (labels?.more ?? MORE)(more) : '',
   ].filter(Boolean);
