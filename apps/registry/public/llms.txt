@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 221 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 223 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -54,28 +54,28 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 111 client, 110 server
-- keyboard: 173 none, 48 handled
-- built-in loading state: 38 of 221
-- declared minViewport: 140 at 320, 7 at 480, 1 at 768, 73 at inherited
+- rendering: 112 client, 111 server
+- keyboard: 175 none, 48 handled
+- built-in loading state: 38 of 223
+- declared minViewport: 142 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 77 item(s)
-- tier `pattern` — 64 item(s)
+- tier `pattern` — 65 item(s)
 - tier `effect` — 27 item(s)
+- tier `game` — 15 item(s)
 - tier `chart` — 14 item(s)
-- tier `game` — 14 item(s)
 - tier `template` — 13 item(s)
 - tier `util` — 6 item(s)
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 77 item(s)
-- category `pattern` (Patterns) — 64 item(s)
-- category `blog` (Blog & long-form) — 36 item(s)
+- category `pattern` (Patterns) — 65 item(s)
+- category `blog` (Blog & long-form) — 37 item(s)
 - category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
 - category `effect` (Effects) — 27 item(s)
@@ -83,9 +83,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `decorative` (Decorative) — 24 item(s)
 - category `navigation` (Navigation) — 18 item(s)
 - category `feedback` (Feedback) — 18 item(s)
+- category `games` (Games) — 15 item(s)
+- category `game` (Games) — 15 item(s)
 - category `chart` (Charts) — 14 item(s)
-- category `games` (Games) — 14 item(s)
-- category `game` (Games) — 14 item(s)
 - category `marketing` (Marketing) — 14 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `overlay` (Overlay) — 10 item(s)
@@ -531,6 +531,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Topbar Scroll Edge](https://ds.interlace.tools/c/topbar-scroll-edge): The client half of `Topbar edge="scroll"`: it marks the header `data-scrolled` once the page has moved off its top, so the bar can sit clear over a hero and gain its surface and border only when content passes beneath it. With `hide` it also marks the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-scroll-edge.json`
   - contract: client, v1.0.0
+- [Update Feed](https://ds.interlace.tools/c/update-feed): What is new, newest first: a product's changelog, a publication's latest pieces, a team's releases. Entries are grouped under their day or month, each with a kind ("Release", "Article"), a title that links to the thing itself and a line on what it is. Pass…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/update-feed.json`
+  - contract: server, min 320px, v1.0.0
 - [Wordmark](https://ds.interlace.tools/c/wordmark): A text logo of one or more stacked lines: a name over its tagline, or the same name in several languages or scripts. Each line is a `Wordmark.Line` with its own `lang` (and `dir` for a right-to-left script), so a screen reader, a hyphenator and the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/wordmark.json`
   - contract: server, min 320px, states framed|plain, v1.0.1
@@ -609,6 +612,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Quiz Question](https://ds.interlace.tools/c/quiz-question): A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/quiz-question.json`
   - contract: client, min 320px, states correct|wrong|timeout, v1.0.0
+- [Recall Card](https://ds.interlace.tools/c/recall-card): A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/recall-card.json`
+  - contract: client, min 320px, v1.0.0
 - [Share Card](https://ds.interlace.tools/c/share-card): How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-card.json`
   - contract: client, min 320px, v1.0.0
