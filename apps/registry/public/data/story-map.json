@@ -1198,6 +1198,18 @@
     "previewDark": null,
     "skeleton": null
   },
+  "join-code": {
+    "title": "Games/JoinCode",
+    "storyIds": [
+      "games-joincode--default",
+      "games-joincode--stage",
+      "games-joincode--numeric-pin",
+      "games-joincode--right-to-left"
+    ],
+    "preview": "games-joincode--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "kbd": {
     "title": "Primitives/Kbd",
     "storyIds": [
@@ -1292,6 +1304,19 @@
       "primitives-list--sizes"
     ],
     "preview": "primitives-list--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "live-room": {
+    "title": "Games/LiveRoom",
+    "storyIds": [
+      "games-liveroom--default",
+      "games-liveroom--player-lobby",
+      "games-liveroom--countdown",
+      "games-liveroom--game-night",
+      "games-liveroom--right-to-left"
+    ],
+    "preview": "games-liveroom--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1500,6 +1525,18 @@
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
   },
+  "podium": {
+    "title": "Games/Podium",
+    "storyIds": [
+      "games-podium--default",
+      "games-podium--you-won",
+      "games-podium--two-players",
+      "games-podium--right-to-left"
+    ],
+    "preview": "games-podium--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "pointer-surface": {
     "title": "Effects/PointerSurface",
     "storyIds": [
@@ -1606,6 +1643,18 @@
     "preview": "primitives-publisheddate--variants",
     "previewDark": "primitives-publisheddate--dark",
     "skeleton": "primitives-publisheddate--loading"
+  },
+  "qr-code": {
+    "title": "Games/QrCode",
+    "storyIds": [
+      "games-qrcode--default",
+      "games-qrcode--sizes",
+      "games-qrcode--error-correction",
+      "games-qrcode--right-to-left"
+    ],
+    "preview": "games-qrcode--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "quiz-question": {
     "title": "Games/QuizQuestion",
