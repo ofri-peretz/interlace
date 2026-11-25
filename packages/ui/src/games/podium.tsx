@@ -29,8 +29,9 @@
  * ## Motion
  *
  * On mount (or when `play` changes), the steps grow up from the floor,
- * 3rd, 2nd, then 1st, 350ms apart, each name fading in on its step, and a
- * Celebrate burst on the winner. Transform and opacity only. Under reduced
+ * 3rd, 2nd, then 1st, 350ms apart, each name rising onto its step, and a
+ * Celebrate burst on the winner. Transform only, so text never dips below
+ * contrast mid-animation. Under reduced
  * motion, or with `animate={false}`, the podium is simply there. The text
  * is in the server HTML from the start.
  *
@@ -157,10 +158,8 @@ function Podium({
       if (label && typeof label.animate === 'function') {
         running.push(
           label.animate(
-            [
-              { transform: 'translateY(0.5rem)', opacity: 0 },
-              { transform: 'translateY(0)', opacity: 1 },
-            ],
+            // Movement only: a fading name or score would dip below text contrast.
+            [{ transform: 'translateY(0.5rem)' }, { transform: 'translateY(0)' }],
             {
               duration: 300,
               delay: Math.max(0, delay) + 350,
