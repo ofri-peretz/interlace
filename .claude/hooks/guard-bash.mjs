@@ -165,7 +165,7 @@ const HOOK_FILE_TOOLS = new Set(["rm", "mv", "chmod", "unlink", "truncate", "ln"
 function removesHooks(words) {
   if (hasPhrase(words, "lefthook uninstall")) return true;
   const inHooks = (w) => /(^|\/)\.git\/hooks(\/|$)/.test(w.replace(/^>+/, ""));
-  if (words.some((w, i) => inHooks(w) && (/^>/.test(w) || /^>+$/.test(words[i - 1] ?? "")))) return true;
+  if (words.some((w, i) => inHooks(w) && (w.startsWith(">") || /^>+$/.test(words[i - 1] ?? "")))) return true;
   const tool = words.findIndex((w) => HOOK_FILE_TOOLS.has(w.split("/").pop()));
   return tool !== -1 && words.slice(tool + 1).some(inHooks);
 }
@@ -330,18 +330,10 @@ export function decideHooked(command, { timeout, run_in_background } = {}) {
 }
 
 /** `*` within a segment, `**` across segments, `?` one character. Paths use forward slashes. */
+const GLOB_TOKEN = /\*\*\/|\*\*|\*|\?|[.+^${}()|[\]\\]/g;
+const GLOB_PART = { "**/": "(?:.*/)?", "**": ".*", "*": "[^/]*", "?": "[^/]" };
 export function globToRegExp(glob) {
-  let re = "";
-  for (let i = 0; i < glob.length; i++) {
-    const ch = glob[i];
-    if (ch === "*" && glob[i + 1] === "*") {
-      re += glob[i + 2] === "/" ? "(?:.*/)?" : ".*";
-      i += glob[i + 2] === "/" ? 2 : 1;
-    } else if (ch === "*") re += "[^/]*";
-    else if (ch === "?") re += "[^/]";
-    else re += /[.+^${}()|[\]\\]/.test(ch) ? `\\${ch}` : ch;
-  }
-  return new RegExp(`^${re}$`);
+  return new RegExp(`^${glob.replace(GLOB_TOKEN, (token) => GLOB_PART[token] ?? `\\${token}`)}$`);
 }
 
 /** The verdict for an Edit/Write on `file` (relative to the repo), or null. */
@@ -453,7 +445,7 @@ export const CASES = {
     "git push -d origin x",
     "git push --mirror",
   ],
-  // decideHooked: [command, Bash input, denied?]
+  // decideHooked cases: the command, its Bash input, and whether it is denied.
   hooked: [
     ["git push origin main", {}, true],
     ["git -C repo commit -m x", { timeout: 120000 }, true],

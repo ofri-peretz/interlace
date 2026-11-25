@@ -80,7 +80,7 @@ jobs:
       # head that moved while it ran fails instead of going green.
       - name: Claude Code Review
         if: steps.rules.outputs.present == 'true'
-        uses: ofri-peretz/burgee/.github/actions/triggerlist-review@hookset@1.0.1
+        uses: ofri-peretz/burgee/.github/actions/triggerlist-review@hookset@1.1.0
         with:
           claude-code-oauth-token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           triggerlist: npx --yes triggerlist@1
