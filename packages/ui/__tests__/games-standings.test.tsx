@@ -50,6 +50,15 @@ describe('Standings', () => {
     expect(container.querySelector('[data-flip-id="a"]')!.textContent).toContain('down 1 place');
   });
 
+  it('shows no climbs or drops after the first round, when everyone started level', () => {
+    const first = [
+      { id: 'a', name: 'Avery', score: 0, gained: 0 },
+      { id: 'b', name: 'Blake', score: 900, gained: 900 },
+    ];
+    const { container } = render(<Standings caption="After round 1" entries={first} animate={false} />);
+    expect(container.querySelector('[data-slot="standings-moved"]')).toBeNull();
+  });
+
   it('is in its final order at once without motion, and names itself', () => {
     const { container, getByRole } = render(
       <Standings caption="Standings" showCaption={false} entries={ROUND} animate={false} currentId="c" />,

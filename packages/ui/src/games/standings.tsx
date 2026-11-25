@@ -141,6 +141,8 @@ function Standings({
   );
   const shown = React.useMemo(() => pick(now, limit, currentId), [now, limit, currentId]);
   const beforeRank = React.useMemo(() => new Map(before.map((e) => [e.id, e.rank])), [before]);
+  // Before anyone scored, everyone was level: a climb or a drop would mean nothing.
+  const firstRound = before.every((e) => e.score === 0);
 
   // A new round's figures start the beats again.
   const roundKey = entries.map((e) => `${e.id}:${e.score}`).join('|');
@@ -201,7 +203,7 @@ function Standings({
           const gained = gainedOf.get(final.id) ?? 0;
           const moved = (beforeRank.get(final.id) ?? final.rank) - final.rank;
           const current = final.id === currentId;
-          const showMoved = phase === 'after' && moved !== 0;
+          const showMoved = phase === 'after' && moved !== 0 && !firstRound;
           return (
             <li
               key={final.id}
