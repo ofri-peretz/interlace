@@ -283,7 +283,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 204 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 206 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -337,17 +337,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 105 server, 99 client
-- keyboard: 158 none, 46 handled
-- built-in loading state: 38 of 204
-- declared minViewport: 131 at 320, 7 at 480, 1 at 768, 65 at inherited
+- rendering: 105 server, 101 client
+- keyboard: 160 none, 46 handled
+- built-in loading state: 38 of 206
+- declared minViewport: 133 at 320, 7 at 480, 1 at 768, 65 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 77 item(s)
-- tier `pattern` — 54 item(s)
+- tier `pattern` — 56 item(s)
 - tier `effect` — 20 item(s)
 - tier `chart` — 14 item(s)
 - tier `game` — 14 item(s)
@@ -357,14 +357,14 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 77 item(s)
-- category `pattern` (Patterns) — 54 item(s)
+- category `pattern` (Patterns) — 56 item(s)
 - category `blog` (Blog & long-form) — 35 item(s)
 - category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
-- category `form` (Form & input) — 24 item(s)
+- category `form` (Form & input) — 25 item(s)
 - category `effect` (Effects) — 20 item(s)
 - category `decorative` (Decorative) — 18 item(s)
-- category `feedback` (Feedback) — 15 item(s)
+- category `feedback` (Feedback) — 16 item(s)
 - category `chart` (Charts) — 14 item(s)
 - category `games` (Games) — 14 item(s)
 - category `game` (Games) — 14 item(s)
@@ -652,6 +652,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Code Window](https://ds.interlace.tools/c/code-window): macOS-style window chrome for wrapping editor, terminal, or code-preview content: a bordered `bg-card` box plus an optional title bar with the three traffic-light dots, a centred monospace filename, and an actions slot.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/code-window.json`
   - contract: client, v3.0.0
+- [Commitment](https://ds.interlace.tools/c/commitment): The end of a session, and a week later. `CommitmentPicker` asks each person to pick one thing to do this week, from a short list or in their own words, and says when they will be asked about it. `CommitmentCheckIn` is that question, on the follow-up link…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/commitment.json`
+  - contract: client, min 320px, states done|partly|not-yet, v1.0.0
 - [Cta Section](https://ds.interlace.tools/c/cta-section): Call-to-action section. Title + description + 1-2 action buttons in a centred column on a tinted surface. The shape every landing page reaches for ("Ready to ship?" / "Start your trial" / "Read the docs"). Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/cta-section.json`
   - contract: server, min 320px, loading state, v2.1.0
@@ -694,6 +697,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Hero Cosmic](https://ds.interlace.tools/c/hero-cosmic): The cosmic landing hero: a full-height gradient surface carrying a twinkling starfield, shooting stars and meteors behind an eyebrow / headline / tagline / two-CTA column. A preset, not a kit — pass copy and CTAs and the decorative layer is already wired.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hero-cosmic.json`
   - contract: client, min 320px, v5.1.0
+- [Interest Signal](https://ds.interlace.tools/c/interest-signal): "I want more on this": one tap that tells whoever runs the talk, the lesson or the page what people want to hear more about. The reader presses a toggle on a topic; the host sees every topic ranked by how many asked. It is the cheapest way to learn what an…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/interest-signal.json`
+  - contract: client, min 320px, v1.0.0
 - [Lint Playground](https://ds.interlace.tools/c/lint-playground): LintPlayground — paste code, watch analysis light it up.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/lint-playground.json`
   - contract: client, states linting|ready|failed, v2.0.0

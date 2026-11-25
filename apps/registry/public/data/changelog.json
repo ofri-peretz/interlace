@@ -805,6 +805,18 @@
           "source": ".changeset/section-brand-overlap.md"
         },
         {
+          "summary": "After-session feedback, in two patterns. `InterestSignal` is \"I want more on this\": a toggle (`aria-pressed`, a name that never changes) with a status line that says \"Noted\" and how many others asked. `InterestBoard` is the host's view, ranked by `patterns/interest-model` (`rankInterest`): most-asked first, bars drawn against the top topic, the viewer's asks marked, and `minCount` holding back topics too small to be anonymous. `CommitmentPicker` asks each person to pick one thing to do this week, in one tap or in their own words, and says when they will be asked; `CommitmentCheckIn` is that question a week later (yes, partly, not yet). `patterns/commitment-model` says when the follow-up is due (`followUpAt`, `followUpState`) and what a room's answers add up to (`commitmentImpact`). Every word goes through `labels`; the only motion is a 200ms scale on the icon and a one-time bar growth, both off under reduced motion.",
+          "components": [
+            "interest-signal",
+            "commitment"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/session-feedback.md"
+        },
+        {
           "summary": "New `ShareChart`: how a whole splits into parts, one bar per row on one shared scale. `layout=\"stacked\"` runs every bar from the same edge to 100%; `layout=\"diverging\"` puts an ordered scale around a zero line shared by every row, with a `neutral` category across it and each side's total printed at its end. Values become shares of the row's total (the sum, or `total`), so counts and percentages both work. Stacked categories take the five chart hues in order; diverging ones take two `poles`, strongest at the ends. Hovering a segment or a legend entry, or focusing one, dims the other categories and prints that share on every row; a click pins it. Every row carries a sentence with every share, and a table of values sits behind the picture (`showTable` shows it). On first view each bar grows out of its zero line once; nothing moves under reduced motion. Labels sit beside the bars when the chart's own box is wide enough and above them when it is not, and the bars mirror in right-to-left pages. `shareOf`, `shareLayout`, `shareFills` and `describeShareRow` are exported and pure.",
           "components": [
             "share-chart"

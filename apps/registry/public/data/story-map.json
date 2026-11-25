@@ -573,6 +573,19 @@
     "previewDark": "primitives-commandpalette--dark",
     "skeleton": null
   },
+  "commitment": {
+    "title": "Blocks/Commitment",
+    "storyIds": [
+      "blocks-commitment--default",
+      "blocks-commitment--committed",
+      "blocks-commitment--own-words",
+      "blocks-commitment--check-in",
+      "blocks-commitment--right-to-left"
+    ],
+    "preview": "blocks-commitment--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "container": {
     "title": "Primitives/Container",
     "storyIds": [
@@ -1168,6 +1181,19 @@
     "preview": "primitives-input--default",
     "previewDark": "primitives-input--dark",
     "skeleton": "primitives-input--loading"
+  },
+  "interest-signal": {
+    "title": "Blocks/InterestSignal",
+    "storyIds": [
+      "blocks-interestsignal--default",
+      "blocks-interestsignal--on-each-topic",
+      "blocks-interestsignal--board",
+      "blocks-interestsignal--board-empty",
+      "blocks-interestsignal--right-to-left"
+    ],
+    "preview": "blocks-interestsignal--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "interlace-weave": {
     "title": "Effects/InterlaceWeave",
