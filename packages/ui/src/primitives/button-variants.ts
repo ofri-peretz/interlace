@@ -12,8 +12,9 @@
  * ## Anatomy
  *
  *   buttonVariants({ variant, size })
- *     ├─ variant  default | highlight | destructive | outline | secondary | ghost | link
- *     └─ size     default | xs | sm | lg | icon | icon-xs | icon-sm | icon-lg
+ *     ├─ variant    default | highlight | destructive | outline | secondary | ghost | link
+ *     ├─ size       default | xs | sm | lg | icon | icon-xs | icon-sm | icon-lg
+ *     └─ fullWidth  boolean — stretches to its container (default false)
  *
  * Defaults are `variant: 'default'`, `size: 'default'`. `pagination.tsx` is
  * the in-repo example of styling an element rather than nesting a Button: its
@@ -130,10 +131,17 @@ const buttonVariants = cva(
         'icon-sm': 'size-control-sm',
         'icon-lg': 'size-control-lg',
       },
+      // R8: a boolean, default false, no `is` prefix. Replaces `className="w-full"`
+      // at call sites (sign-in-form, newsletter-form) — MUI `fullWidth`, Primer `block`.
+      fullWidth: {
+        true: 'w-full',
+        false: '',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      fullWidth: false,
     },
   },
 );
