@@ -3550,6 +3550,24 @@
       }
     },
     {
+      "name": "duel",
+      "type": "registry:ui",
+      "title": "Duel",
+      "description": "Two players, one game, by link. The first player finishes and sends a challenge (`DuelInvite`); the second opens it and sees who they are up against (`DuelCard`); after playing the same game, both see the rounds side by side (`DuelCompare`). The challenge…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "join-code",
       "type": "registry:ui",
       "title": "Join Code",

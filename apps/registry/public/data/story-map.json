@@ -917,6 +917,21 @@
     "previewDark": "primitives-dropdownmenu--dark",
     "skeleton": "primitives-dropdownmenu--loading"
   },
+  "duel": {
+    "title": "Games/Duel",
+    "storyIds": [
+      "games-duel--default",
+      "games-duel--you-won",
+      "games-duel--tie",
+      "games-duel--invite",
+      "games-duel--challenged",
+      "games-duel--by-link",
+      "games-duel--right-to-left"
+    ],
+    "preview": "games-duel--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "edge-glow": {
     "title": "Effects/EdgeGlow",
     "storyIds": [

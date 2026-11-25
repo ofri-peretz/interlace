@@ -477,6 +477,17 @@
           "source": ".changeset/drawer.md"
         },
         {
+          "summary": "Duel by link: two players, one game, no accounts. `DuelInvite` sends the same game to a friend (the share sheet where there is one, copy link everywhere, the link to copy by hand when the clipboard fails). `DuelCard` is what the friend sees: who challenged them and the score to beat. `DuelCompare` shows both results round by round, with a verdict in words (\"You won by 50 points.\"), a \"Won\" tag, rounds won, and bars growing out from the middle; a Celebrate burst marks the viewer's win. The challenge travels in the link: `games/duel-model` encodes the game, its seed and the first player's rounds as a base64url token (`encodeDuel`, `duelHref`), and `decodeDuel` reads it back as untrusted input, capped and cleaned, null when malformed. `compareDuel` gives each round's winner, the totals and the margin, with `order: 'asc'` for games where less is better. Every word goes through `labels`; motion is transform only and off under reduced motion.",
+          "components": [
+            "duel"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/duel-by-link.md"
+        },
+        {
           "summary": "The editorial look is one line: `@theme { --font-heading: var(--font-serif); }` gives serif headings over the sans body. `CardTitle` now reads `font-heading` like every other heading in the kit, so card titles follow too; with the default `--font-heading` (your body face) nothing changes. `interlace-foundation` names a serif stack (Source Serif 4, then the system serifs) for `--font-serif`. A new Storybook story, Foundations/Typography/Editorial Headings, shows it.",
           "components": [
             "card"
