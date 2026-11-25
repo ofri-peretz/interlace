@@ -44,6 +44,13 @@ const FLOWS: readonly Flow[] = [
     stories: 'blocks/MultiStepForm.stories.tsx',
   },
   {
+    source: 'patterns/dialogue-stepper.tsx',
+    shape: 'flat',
+    name: 'DialogueStepper',
+    parts: ['DialogueStepper', 'DialogueStep', 'DialogueChoices', 'DialogueChoice'],
+    stories: 'blocks/DialogueStepper.stories.tsx',
+  },
+  {
     source: 'patterns/social-sign-in.tsx',
     shape: 'flat',
     name: 'SocialSignIn',
