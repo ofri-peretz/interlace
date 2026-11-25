@@ -864,6 +864,17 @@
     "previewDark": "charts-dotplot--dark",
     "skeleton": "charts-dotplot--loading"
   },
+  "draw-on": {
+    "title": "Effects/DrawOn",
+    "storyIds": [
+      "effects-drawon--default",
+      "effects-drawon--together",
+      "effects-drawon--on-scroll"
+    ],
+    "preview": "effects-drawon--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "drawer": {
     "title": "Primitives/Drawer",
     "storyIds": [
@@ -1003,6 +1014,15 @@
     ],
     "preview": "blocks-flipcard--default",
     "previewDark": "blocks-flipcard--dark",
+    "skeleton": null
+  },
+  "flip-group": {
+    "title": "Effects/FlipGroup",
+    "storyIds": [
+      "effects-flipgroup--default"
+    ],
+    "preview": "effects-flipgroup--default",
+    "previewDark": null,
     "skeleton": null
   },
   "focus-grid": {
@@ -1342,6 +1362,17 @@
     "previewDark": null,
     "skeleton": null
   },
+  "marker": {
+    "title": "Effects/Marker",
+    "storyIds": [
+      "effects-marker--default",
+      "effects-marker--variants",
+      "effects-marker--right-to-left"
+    ],
+    "preview": "effects-marker--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "mdx-starter": {
     "title": "Starters/MDX Starter",
     "storyIds": [
@@ -1545,6 +1576,16 @@
       "games-podium--right-to-left"
     ],
     "preview": "games-podium--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "pointer-surface": {
+    "title": "Effects/PointerSurface",
+    "storyIds": [
+      "effects-pointersurface--default",
+      "effects-pointersurface--grid"
+    ],
+    "preview": "effects-pointersurface--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1900,6 +1941,16 @@
     ],
     "preview": "blocks-scrollstory--default",
     "previewDark": "blocks-scrollstory--dark",
+    "skeleton": null
+  },
+  "scroll-text": {
+    "title": "Effects/ScrollText",
+    "storyIds": [
+      "effects-scrolltext--default",
+      "effects-scrolltext--on-scroll"
+    ],
+    "preview": "effects-scrolltext--default",
+    "previewDark": null,
     "skeleton": null
   },
   "scroller": {
@@ -2876,6 +2927,17 @@
     ],
     "preview": "primitives-typography--default",
     "previewDark": "primitives-typography--dark",
+    "skeleton": null
+  },
+  "underline-link": {
+    "title": "Effects/UnderlineLink",
+    "storyIds": [
+      "effects-underlinelink--default",
+      "effects-underlinelink--navigation",
+      "effects-underlinelink--right-to-left"
+    ],
+    "preview": "effects-underlinelink--default",
+    "previewDark": null,
     "skeleton": null
   },
   "use-reduced-motion": {

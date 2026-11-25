@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T02:36:01.058Z",
+  "generatedAt": "2026-11-25T02:51:35.653Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -6632,6 +6632,19 @@
         "inGate": true
       }
     },
+    "draw-on": {
+      "sourcePath": "packages/ui/src/effects/draw-on.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "drawer": {
       "sourcePath": "packages/ui/src/primitives/drawer.tsx",
       "keyboard": {
@@ -7329,6 +7342,19 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "flip-group": {
+      "sourcePath": "packages/ui/src/effects/flip-group.tsx",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -9566,6 +9592,19 @@
         "inGate": false
       }
     },
+    "marker": {
+      "sourcePath": "packages/ui/src/effects/marker.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "mdx-starter": {
       "sourcePath": null,
       "keyboard": null,
@@ -11105,6 +11144,19 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "pointer-surface": {
+      "sourcePath": "packages/ui/src/effects/pointer-surface.tsx",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -13066,6 +13118,19 @@
       "textAlternative": {
         "kind": null,
         "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "scroll-text": {
+      "sourcePath": "packages/ui/src/effects/scroll-text.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {
@@ -19897,6 +19962,58 @@
       "states": [],
       "coverage": {
         "inGate": true
+      }
+    },
+    "underline-link": {
+      "sourcePath": "packages/ui/src/effects/underline-link.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "use-reading-prefs": {

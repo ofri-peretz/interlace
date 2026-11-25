@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "underline-link",
+  "type": "registry:ui",
+  "title": "Underline Link",
+  "description": "A text link whose underline draws itself in when the reader points at it or tabs to it, from the start of the line to the end, and wraps across lines with the text. For links in running text, navigation and footers where a hard underline on every link…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/effects/underline-link.tsx",
+      "target": "components/ui/effects/underline-link.tsx",
+      "type": "registry:ui",
+      "content": "import { useRender } from '@base-ui/react/use-render';\n\n// @interlace/underline-link v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/underline-link\n// What changed since: https://ds.interlace.tools/c/underline-link#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — UnderlineLink\n *\n * A text link whose underline draws itself in when the reader points at it\n * or tabs to it, from the start of the line to the end, and wraps across\n * lines with the text. For links in running text, navigation and footers\n * where a hard underline on every link would be loud.\n *\n * ## Content first\n *\n * It is an `<a>` (or your router's link, through `render`), so it behaves as\n * a link everywhere: middle-click, copy link, a screen reader's link list. At\n * rest it keeps a thin underline by default (`rest=\"thin\"`), because a link\n * must not be told apart by colour alone (WCAG 1.4.1); `rest=\"none\"` is for\n * places where every item is plainly a link, like a nav bar.\n *\n * ## Motion\n *\n * One CSS transition of `background-size`, timed by the motion tokens. The\n * underline grows from the inline-start edge, so it runs right to left in a\n * right-to-left line. Under `prefers-reduced-motion: reduce` the preflight\n * clamp makes it appear at once. It needs no JavaScript and runs as a server\n * component.\n *\n * ## Tokens\n *\n * The line takes `currentColor`, so it follows the link's own colour.\n * `tone=\"primary\"` colours the text with `--primary`.\n *\n * ## Composition\n *\n *   UnderlineLink                       (a — data-slot=\"underline-link\", data-rest, data-tone)\n *\n * | Rule | Concept                 | Where in this file                                   |\n * | ---- | ----------------------- | ---------------------------------------------------- |\n * | R4   | Extends native el       | `a` props                                            |\n * | R6   | data-slot per part      | underline-link                                       |\n * | R7   | cn + ...rest            | `cn(…, className)` + `{...props}` + `useRender`      |\n * | R8   | Enums, not booleans     | `rest`, `tone`                                       |\n * | R13  | Ecosystem first         | `useRender` for a router link                        |\n * | R19  | Tokens only             | `--primary`, `--ring`, `--duration-*`, `--ease-*`    |\n * | R26  | A11y from native el     | a real link, underlined at rest by default           |\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\n\nconst REST = {\n  /** A hairline at rest that thickens and fills as the link is pointed at. */\n  thin: '[--underline-rest:100%_1px]',\n  /** No line at rest; for places where every item is plainly a link. */\n  none: '[--underline-rest:0%_0.08em]',\n} as const;\n\nconst TONES = {\n  inherit: 'text-inherit',\n  primary: 'text-primary',\n} as const;\n\nexport type UnderlineLinkRest = keyof typeof REST;\nexport type UnderlineLinkTone = keyof typeof TONES;\n\nexport interface UnderlineLinkProps extends React.ComponentPropsWithoutRef<'a'> {\n  /** What shows at rest: a `thin` underline, or `none`. @default 'thin' */\n  rest?: UnderlineLinkRest;\n  /** The text colour: the surrounding text's, or `primary`. @default 'inherit' */\n  tone?: UnderlineLinkTone;\n  /** Replace the rendered element, e.g. with a router link. */\n  render?: useRender.RenderProp;\n}\n\n/** The default element. Written out, so the href and the text are plainly on the link. */\nfunction renderAnchor(props: React.HTMLAttributes<HTMLElement>) {\n  const { href, children, ...rest } = props as React.ComponentPropsWithoutRef<'a'>;\n  return (\n    <a href={href} {...rest}>\n      {children}\n    </a>\n  );\n}\n\nexport function UnderlineLink({ rest = 'thin', tone = 'inherit', render, className, ...props }: UnderlineLinkProps) {\n  return useRender({\n    // A function rather than `<a />`: the href and the text arrive through the props.\n    render: render ?? renderAnchor,\n    props: {\n      'data-slot': 'underline-link',\n      'data-rest': rest,\n      'data-tone': tone,\n      className: cn(\n        'rounded-[0.125rem] bg-no-repeat no-underline [background-image:linear-gradient(currentColor,currentColor)] [background-size:var(--underline-rest)] bg-[position:0_100%] rtl:bg-[position:100%_100%] [box-decoration-break:slice]',\n        'transition-[background-size] duration-(--duration-slow) ease-(--ease-move)',\n        'hover:[background-size:100%_0.08em] focus-visible:[background-size:100%_0.08em]',\n        'focus-visible:outline-ring focus-visible:outline-2 focus-visible:outline-offset-2',\n        'forced-colors:underline',\n        REST[rest],\n        TONES[tone],\n        className,\n      ),\n      ...props,\n    },\n  });\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": false,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/underline-link\n\nInstalled to `components/ui/effects/underline-link.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/underline-link';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/underline-link\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}
