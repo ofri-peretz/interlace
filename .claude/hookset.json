@@ -9,6 +9,6 @@
     "apps/registry/public/tokens/**": "npm run prebuild --workspace=registry"
   },
   "context": {
-    "tokens": 403
+    "tokens": 371
   }
 }
