@@ -27,7 +27,7 @@ import {
 } from '../src/games/room-model.js';
 import { QrCode } from '../src/games/qr-code.js';
 import { JoinCode } from '../src/games/join-code.js';
-import { RoomCountdown, RoomHostControls, RoomLobby, useRoom, useSecondsLeft } from '../src/games/live-room.js';
+import { LiveRoom, useRoom, useSecondsLeft } from '../src/games/live-room.js';
 import { Podium } from '../src/games/podium.js';
 
 afterEach(() => {
@@ -534,23 +534,23 @@ describe('JoinCode', () => {
   });
 });
 
-describe('RoomLobby', () => {
+describe('LiveRoom.Lobby', () => {
   const players = [
     { id: 'a', name: 'Dana', connected: true },
     { id: 'b', name: 'Sam', connected: false },
   ];
 
   it('takes its name from aria-label when given, for pages with more than one lobby', () => {
-    const { container, rerender } = render(<RoomLobby players={players} />);
+    const { container, rerender } = render(<LiveRoom.Lobby players={players} />);
     const section = container.querySelector('section')!;
     expect(section.getAttribute('aria-labelledby')).toBeTruthy();
-    rerender(<RoomLobby players={players} aria-label="Host lobby" />);
+    rerender(<LiveRoom.Lobby players={players} aria-label="Host lobby" />);
     expect(section.hasAttribute('aria-labelledby')).toBe(false);
     expect(screen.getByRole('region', { name: 'Host lobby' })).toBeTruthy();
   });
 
   it('lists players, marks you and who is away, and waits for the host', () => {
-    render(<RoomLobby players={players} selfId="a" />);
+    render(<LiveRoom.Lobby players={players} selfId="a" />);
     expect(screen.getByRole('heading', { name: '1 player' })).toBeTruthy();
     const items = screen.getAllByRole('listitem');
     expect(items[0]?.textContent).toBe('DanaYou');
@@ -560,10 +560,10 @@ describe('RoomLobby', () => {
 
   it('shows the empty state, hides the away, and lets the host remove', () => {
     const onRemove = vi.fn();
-    const { rerender } = render(<RoomLobby players={[]} actions={<button type="button">Start</button>} />);
+    const { rerender } = render(<LiveRoom.Lobby players={[]} actions={<button type="button">Start</button>} />);
     expect(screen.getByText('Waiting for players to join.')).toBeTruthy();
     expect(screen.getByRole('heading', { name: '0 players' })).toBeTruthy();
-    rerender(<RoomLobby players={players} hideAway onRemove={onRemove} selfId="x" />);
+    rerender(<LiveRoom.Lobby players={players} hideAway onRemove={onRemove} selfId="x" />);
     expect(screen.getAllByRole('listitem')).toHaveLength(1);
     fireEvent.click(screen.getByRole('button', { name: 'Remove Dana' }));
     expect(onRemove).toHaveBeenCalledWith('a');
@@ -572,31 +572,31 @@ describe('RoomLobby', () => {
   it('announces and animates new players, but not the first render', () => {
     const animate = vi.fn();
     HTMLElement.prototype.animate = animate as unknown as HTMLElement['animate'];
-    const { rerender, container } = render(<RoomLobby players={players.slice(0, 1)} />);
+    const { rerender, container } = render(<LiveRoom.Lobby players={players.slice(0, 1)} />);
     const announce = () => container.querySelector('[data-slot="room-lobby-announce"]')?.textContent;
     expect(announce()).toBe('');
-    rerender(<RoomLobby players={players} />);
+    rerender(<LiveRoom.Lobby players={players} />);
     expect(announce()).toBe('Sam joined');
     expect(animate).toHaveBeenCalledTimes(1);
     rerender(
-      <RoomLobby
+      <LiveRoom.Lobby
         players={[...players, { id: 'c', name: 'Kim', connected: true }, { id: 'd', name: 'Lee', connected: true }]}
       />,
     );
     expect(announce()).toBe('2 players joined');
-    rerender(<RoomLobby players={[...players]} />);
+    rerender(<LiveRoom.Lobby players={[...players]} />);
     expect(announce()).toBe('2 players joined');
     // @ts-expect-error cleanup of the stub
     delete HTMLElement.prototype.animate;
   });
 });
 
-describe('RoomCountdown', () => {
+describe('LiveRoom.Countdown', () => {
   it('counts to Go, announces twice and calls onDone once', () => {
     vi.useFakeTimers();
     vi.setSystemTime(10_000);
     const onDone = vi.fn();
-    const { container, rerender } = render(<RoomCountdown startsAt={13_000} onDone={onDone} />);
+    const { container, rerender } = render(<LiveRoom.Countdown startsAt={13_000} onDone={onDone} />);
     const timer = screen.getByRole('timer', { name: 'Starting in' });
     const value = () => container.querySelector('[data-slot="room-countdown-value"]')?.textContent;
     const said = () => container.querySelector('[data-slot="room-countdown-announce"]')?.textContent;
@@ -609,20 +609,20 @@ describe('RoomCountdown', () => {
     expect(value()).toBe('Go');
     expect(said()).toBe('Go');
     expect(timer.getAttribute('data-state')).toBe('done');
-    rerender(<RoomCountdown startsAt={13_000} onDone={onDone} />);
+    rerender(<LiveRoom.Countdown startsAt={13_000} onDone={onDone} />);
     expect(onDone).toHaveBeenCalledTimes(1);
-    rerender(<RoomCountdown startsAt={null} />);
+    rerender(<LiveRoom.Countdown startsAt={null} />);
     expect(screen.getByRole('timer').getAttribute('data-state')).toBe('idle');
   });
 });
 
-describe('RoomHostControls', () => {
+describe('LiveRoom.HostControls', () => {
   function Harness({
     initial,
     ...props
-  }: { initial: RoomState } & Partial<React.ComponentProps<typeof RoomHostControls>>) {
+  }: { initial: RoomState } & Partial<React.ComponentProps<typeof LiveRoom.HostControls>>) {
     const [room, setRoom] = React.useState(initial);
-    return <RoomHostControls room={room} send={(e) => setRoom((r) => applyRoomEvent(r, e, HOST))} {...props} />;
+    return <LiveRoom.HostControls room={room} send={(e) => setRoom((r) => applyRoomEvent(r, e, HOST))} {...props} />;
   }
 
   it('walks a game from the lobby to the podium and back', () => {

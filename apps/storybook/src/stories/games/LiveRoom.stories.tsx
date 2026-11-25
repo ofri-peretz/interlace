@@ -4,7 +4,7 @@ import { expect, userEvent, within } from 'storybook/test';
 import { Button } from '@interlace/ui/button';
 import { JoinCode } from '@interlace/ui/games/join-code';
 import { Podium } from '@interlace/ui/games/podium';
-import { RoomCountdown, RoomHostControls, RoomLobby, useRoom } from '@interlace/ui/games/live-room';
+import { LiveRoom, useRoom } from '@interlace/ui/games/live-room';
 import {
   applyRoomEvent,
   createMemoryRoomHub,
@@ -29,7 +29,7 @@ function lobby(count: number): RoomState {
 
 const meta = {
   title: 'Games/LiveRoom',
-  component: RoomLobby,
+  component: LiveRoom.Lobby,
   tags: ['autodocs'],
   parameters: {
     layout: 'padded',
@@ -38,13 +38,13 @@ const meta = {
         component:
           'A game night on one big screen and everyone’s phones. `useRoom` keeps every client on the same room: the host applies events with the pure rules in `games/room-model` (no joining a locked room, one answer a round, only the host starts) and sends the state to all, with `seq` so an old message never wins.\n\n' +
           '**Any network.** A `RoomTransport` is two functions, `send` and `subscribe`. The kit ships an in-memory hub (tests, demos, this page) and a BroadcastChannel transport (tabs on one device); a WebSocket or hosted realtime service is a small adapter in the app. No vendor is built in.\n\n' +
-          '**The pieces.** `RoomLobby` (players pop in and are announced; the host can remove one), `RoomHostControls` (start, reveal, next, podium, lock, end; moves on by itself when the countdown or the clock runs out, or everyone has answered), `RoomCountdown` (3, 2, 1, Go to a host timestamp), with `JoinCode` and `Podium`.\n\n' +
+          '**The pieces.** `LiveRoom.Lobby` (players pop in and are announced; the host can remove one), `LiveRoom.HostControls` (start, reveal, next, podium, lock, end; moves on by itself when the countdown or the clock runs out, or everyone has answered), `LiveRoom.Countdown` (3, 2, 1, Go to a host timestamp), with `JoinCode` and `Podium`.\n\n' +
           '**Time.** Deadlines are host timestamps; pass `now` corrected for clock drift and every phone agrees to the second.',
       },
     },
   },
   args: { players: lobby(8).players, selfId: undefined },
-} satisfies Meta<typeof RoomLobby>;
+} satisfies Meta<typeof LiveRoom.Lobby>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -54,11 +54,11 @@ export const Default: Story = {
   render: (args) => {
     const room = lobby(8);
     return (
-      <RoomLobby
+      <LiveRoom.Lobby
         {...args}
         join={<JoinCode code={room.code} href={HREF} where="example.com/play" />}
         onRemove={() => {}}
-        actions={<RoomHostControls room={room} send={() => {}} minPlayers={2} />}
+        actions={<LiveRoom.HostControls room={room} send={() => {}} minPlayers={2} />}
       />
     );
   },
@@ -74,7 +74,7 @@ export const PlayerLobby: Story = {
   args: { selfId: 'p1' },
   render: (args) => (
     <div className="max-w-prose">
-      <RoomLobby {...args} />
+      <LiveRoom.Lobby {...args} />
     </div>
   ),
 };
@@ -84,7 +84,7 @@ function CountdownDemo() {
   const [at, setAt] = React.useState<number | null>(null);
   return (
     <div className="flex flex-col items-center gap-6">
-      <RoomCountdown startsAt={at} size="stage" />
+      <LiveRoom.Countdown startsAt={at} size="stage" />
       <Button type="button" variant="outline" onClick={() => setAt(Date.now() + 3000)}>
         Count down again
       </Button>
@@ -112,8 +112,8 @@ function Phone({ hub, id, name }: { hub: ReturnType<typeof createMemoryRoomHub>;
       </Button>
     );
   else if (room.phase === 'lobby')
-    body = <RoomLobby players={room.players} selfId={id} aria-label={`${name}'s lobby`} />;
-  else if (room.phase === 'countdown') body = <RoomCountdown startsAt={room.startsAt} />;
+    body = <LiveRoom.Lobby players={room.players} selfId={id} aria-label={`${name}'s lobby`} />;
+  else if (room.phase === 'countdown') body = <LiveRoom.Countdown startsAt={room.startsAt} />;
   else if (room.phase === 'question')
     body =
       id in room.answers ? (
@@ -149,10 +149,11 @@ function Host({ hub }: { hub: ReturnType<typeof createMemoryRoomHub> }) {
   const { room, send } = useRoom({ transport, selfId: 'host', host: initial });
   if (!room) return null;
   const controls = (
-    <RoomHostControls
+    <LiveRoom.HostControls
       room={room}
       send={send}
       roundSeconds={15}
+      countdownSeconds={1}
       score={(r) =>
         Object.fromEntries(Object.entries(r.answers).map(([pid, a]) => [pid, a.value === RIGHT ? 1000 : 0]))
       }
@@ -161,7 +162,7 @@ function Host({ hub }: { hub: ReturnType<typeof createMemoryRoomHub> }) {
   return (
     <section aria-label="Host screen" className="border-border flex flex-col gap-4 rounded-2xl border p-5">
       {room.phase === 'lobby' ? (
-        <RoomLobby
+        <LiveRoom.Lobby
           players={room.players}
           aria-label="Host lobby"
           join={<JoinCode code={room.code} href={HREF} where="example.com/play" />}
@@ -170,7 +171,7 @@ function Host({ hub }: { hub: ReturnType<typeof createMemoryRoomHub> }) {
         />
       ) : (
         <>
-          {room.phase === 'countdown' ? <RoomCountdown startsAt={room.startsAt} size="stage" /> : null}
+          {room.phase === 'countdown' ? <LiveRoom.Countdown startsAt={room.startsAt} size="stage" /> : null}
           {room.phase === 'question' ? (
             <p className="text-2xl font-semibold">Round {room.round}: which letter is third?</p>
           ) : null}
@@ -197,13 +198,44 @@ function GameNightDemo() {
   );
 }
 
-export const GameNight: Story = {
+/**
+ * The journey: every phase of the flow, in order, on the host and both phones.
+ * Lobby, countdown, two rounds of question and reveal, the podium, then the end.
+ */
+export const Journey: Story = {
   render: () => <GameNightDemo />,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(await canvas.findByRole('button', { name: 'Join as Avery' }));
-    const host = within(await canvas.findByRole('region', { name: 'Host lobby' }));
-    await expect(await host.findByRole('heading', { name: '1 player' }, { timeout: 2000 })).toBeTruthy();
+    const wait = { timeout: 4000 };
+    const answer = async (name: string) => {
+      const pick = within(await canvas.findByRole('group', { name: `${name}: pick an answer` }, wait));
+      await userEvent.click(pick.getByRole('button', { name: RIGHT }));
+    };
+    await step('lobby: both phones join', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: 'Join as Avery' }));
+      await userEvent.click(await canvas.findByRole('button', { name: 'Join as Blake' }));
+      const host = within(await canvas.findByRole('region', { name: 'Host lobby' }));
+      await expect(await host.findByRole('heading', { name: '2 players' }, wait)).toBeTruthy();
+    });
+    await step('countdown, then round 1', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: 'Start' }));
+      await expect(await canvas.findAllByRole('timer')).not.toHaveLength(0);
+      await answer('Avery');
+      await answer('Blake');
+    });
+    await step('reveal, then round 2', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: 'Next round' }, wait));
+      await answer('Avery');
+      await answer('Blake');
+    });
+    await step('podium', async () => {
+      await userEvent.click(await canvas.findByRole('button', { name: 'Show the podium' }, wait));
+      await expect(await canvas.findByRole('button', { name: 'Play again' }, wait)).toBeTruthy();
+    });
+    await step('closed', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'End the game' }));
+      await expect(await canvas.findByText('The game has ended.')).toBeTruthy();
+    });
   },
 };
 
