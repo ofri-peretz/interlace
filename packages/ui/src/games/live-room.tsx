@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * @interlace/ui — LiveRoom: useRoom, RoomLobby, RoomCountdown, RoomHostControls
+ * @interlace/ui — LiveRoom: useRoom and the LiveRoom flow (Lobby, Countdown, HostControls)
  *
  * A game night on one big screen and everyone's phones. The host opens a
  * room and shows its JoinCode; players scan or type it and land in the
@@ -10,11 +10,29 @@
  * `room-model.ts` (pure), and the network is whatever `RoomTransport` the
  * app passes, so no realtime vendor is built in.
  *
+ * ## Flow
+ *
+ * A flow (docs/philosophies/FLOW_PHILOSOPHY.md): one namespace, `LiveRoom`,
+ * and the app holds the room through `useRoom`. Every phase of
+ * `RoomPhase`, the part that shows it, and what moves it on:
+ *
+ * | Phase     | Host screen                       | Player phone         | Leaves by (event)                        |
+ * | --------- | --------------------------------- | -------------------- | ---------------------------------------- |
+ * | lobby     | LiveRoom.Lobby with JoinCode      | LiveRoom.Lobby       | Start → `countdown`                      |
+ * | countdown | LiveRoom.Countdown                | LiveRoom.Countdown   | its deadline → `question`                |
+ * | question  | LiveRoom.HostControls             | QuizQuestion or Poll | all answered or the clock → `reveal`     |
+ * | reveal    | LiveRoom.HostControls, TallyBars  | TallyBars            | Next → `countdown`, or Podium → `podium` |
+ * | podium    | Podium, LiveRoom.HostControls     | Podium               | Play again → `restart`, or End → `close` |
+ * | closed    | the app's own end screen          | the app's own screen | —                                        |
+ *
+ * QuizQuestion, Poll, TallyBars and Podium are game components in their
+ * own right, so the flow names them rather than wrapping them.
+ *
  * ## Anatomy
  *
  *   useRoom({ transport, selfId, host? })  → { room, isHost, send }
  *
- *   RoomLobby                      (section — data-slot="room-lobby", data-count)
+ *   LiveRoom.Lobby                 (section — data-slot="room-lobby", data-count)
  *     ├─ div                       (data-slot="room-lobby-join": your JoinCode, when given)
  *     ├─ h2                        (data-slot="room-lobby-count": "8 players")
  *     ├─ ul                        (data-slot="room-lobby-players")
@@ -24,11 +42,11 @@
  *     ├─ div                       (data-slot="room-lobby-actions": host controls, or "Waiting for the host")
  *     └─ span aria-live            (data-slot="room-lobby-announce": "Dana joined")
  *
- *   RoomCountdown                  (div role="timer" — data-slot="room-countdown", data-state)
+ *   LiveRoom.Countdown             (div role="timer" — data-slot="room-countdown", data-state)
  *     ├─ span                      (data-slot="room-countdown-value": 3, 2, 1, then "Go")
  *     └─ span aria-live            (data-slot="room-countdown-announce")
  *
- *   RoomHostControls               (div role="group" — data-slot="room-host-controls", data-phase)
+ *   LiveRoom.HostControls          (div role="group" — data-slot="room-host-controls", data-phase)
  *     ├─ p aria-live               (data-slot="room-host-status": "5 of 8 answered")
  *     ├─ Button                    (data-slot="room-host-primary": Start / Reveal / Next / Podium / Play again)
  *     ├─ Button                    (data-slot="room-host-lock": lock or unlock)
@@ -220,9 +238,9 @@ export function useSecondsLeft(target: number | null, now: () => number = Date.n
   return left;
 }
 
-// --- RoomLobby ------------------------------------------------------------------
+// --- LiveRoomLobby ------------------------------------------------------------------
 
-export interface RoomLobbyLabels {
+export interface LiveRoomLobbyLabels {
   /** The heading. @default (n) => n === 1 ? '1 player' : `${n} players` */
   count?: (n: number) => string;
   /** @default 'Waiting for players to join.' */
@@ -246,7 +264,7 @@ export interface RoomLobbyLabels {
  * on a page (a host screen beside a preview), give each its own `aria-label`,
  * which then names the landmark instead.
  */
-type RoomLobbyProps = Omit<React.ComponentProps<'section'>, 'children'> & {
+type LiveRoomLobbyProps = Omit<React.ComponentProps<'section'>, 'children'> & {
   players: readonly RoomPlayer[];
   /** The viewer's id, to mark their chip. */
   selfId?: string;
@@ -258,13 +276,13 @@ type RoomLobbyProps = Omit<React.ComponentProps<'section'>, 'children'> & {
   onRemove?: (playerId: string) => void;
   /** Hide players who dropped out. @default false */
   hideAway?: boolean;
-  labels?: RoomLobbyLabels;
+  labels?: LiveRoomLobbyLabels;
 };
 
 const COUNT = (n: number) => (n === 1 ? '1 player' : `${n} players`);
 const JOINED = (names: string[]) => (names.length === 1 ? `${names[0]} joined` : `${names.length} players joined`);
 
-function RoomLobby({
+function LiveRoomLobby({
   players,
   selfId,
   join,
@@ -274,7 +292,7 @@ function RoomLobby({
   labels,
   className,
   ...props
-}: RoomLobbyProps) {
+}: LiveRoomLobbyProps) {
   const reduced = useReducedMotion();
   const listRef = React.useRef<HTMLUListElement>(null);
   const seen = React.useRef<Set<string> | null>(null);
@@ -384,11 +402,11 @@ function RoomLobby({
     </section>
   );
 }
-RoomLobby.displayName = 'RoomLobby';
+LiveRoomLobby.displayName = 'LiveRoom.Lobby';
 
-// --- RoomCountdown --------------------------------------------------------------
+// --- LiveRoomCountdown --------------------------------------------------------------
 
-export interface RoomCountdownLabels {
+export interface LiveRoomCountdownLabels {
   /** Names the timer. @default 'Starting in' */
   name?: string;
   /** Spoken once, when the countdown appears. @default (s) => `Starting in ${s} seconds` */
@@ -397,7 +415,7 @@ export interface RoomCountdownLabels {
   go?: string;
 }
 
-type RoomCountdownProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+type LiveRoomCountdownProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   /** When it reaches 0, in ms (host clock). null: idle. */
   startsAt: number | null;
   /** Your clock, corrected to the host's. @default Date.now */
@@ -406,7 +424,7 @@ type RoomCountdownProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   onDone?: () => void;
   /** @default 'default' */
   size?: 'default' | 'stage';
-  labels?: RoomCountdownLabels;
+  labels?: LiveRoomCountdownLabels;
 };
 
 const COUNTDOWN_SIZE = {
@@ -414,7 +432,7 @@ const COUNTDOWN_SIZE = {
   stage: 'size-44 text-7xl',
 } as const;
 
-function RoomCountdown({
+function LiveRoomCountdown({
   startsAt,
   now = Date.now,
   onDone,
@@ -422,7 +440,7 @@ function RoomCountdown({
   labels,
   className,
   ...props
-}: RoomCountdownProps) {
+}: LiveRoomCountdownProps) {
   const reduced = useReducedMotion();
   const left = useSecondsLeft(startsAt, now);
   const valueRef = React.useRef<HTMLSpanElement>(null);
@@ -484,11 +502,11 @@ function RoomCountdown({
     </div>
   );
 }
-RoomCountdown.displayName = 'RoomCountdown';
+LiveRoomCountdown.displayName = 'LiveRoom.Countdown';
 
-// --- RoomHostControls -----------------------------------------------------------
+// --- LiveRoomHostControls -----------------------------------------------------------
 
-export interface RoomHostControlsLabels {
+export interface LiveRoomHostControlsLabels {
   /** @default 'Host controls' */
   group?: string;
   /** @default 'Start' */
@@ -521,7 +539,7 @@ export interface RoomHostControlsLabels {
   closed?: string;
 }
 
-type RoomHostControlsProps = Omit<React.ComponentProps<'div'>, 'children'> & {
+type LiveRoomHostControlsProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   room: RoomState;
   /** `send` from the host's `useRoom`. */
   send: (event: RoomHostEvent) => void;
@@ -540,12 +558,12 @@ type RoomHostControlsProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   autoAdvance?: boolean;
   /** @default Date.now */
   now?: () => number;
-  labels?: RoomHostControlsLabels;
+  labels?: LiveRoomHostControlsLabels;
 };
 
 const NO_POINTS = () => ({});
 
-function RoomHostControls({
+function LiveRoomHostControls({
   room,
   send,
   minPlayers = 1,
@@ -557,7 +575,7 @@ function RoomHostControls({
   labels,
   className,
   ...props
-}: RoomHostControlsProps) {
+}: LiveRoomHostControlsProps) {
   const L = labels ?? {};
   const live = connectedPlayers(room).length;
   const { answered, total } = answerProgress(room);
@@ -694,7 +712,17 @@ function RoomHostControls({
     </div>
   );
 }
-RoomHostControls.displayName = 'RoomHostControls';
+LiveRoomHostControls.displayName = 'LiveRoom.HostControls';
 
-export { RoomLobby, RoomCountdown, RoomHostControls };
-export type { RoomLobbyProps, RoomCountdownProps, RoomHostControlsProps };
+/**
+ * The live room flow. One import; every part is `LiveRoom.<Part>`, named for
+ * what it is on the screen. The hook, the labels and the props stay flat.
+ */
+const LiveRoom = {
+  Lobby: LiveRoomLobby,
+  Countdown: LiveRoomCountdown,
+  HostControls: LiveRoomHostControls,
+} as const;
+
+export { LiveRoom };
+export type { LiveRoomLobbyProps, LiveRoomCountdownProps, LiveRoomHostControlsProps };
