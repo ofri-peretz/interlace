@@ -3,7 +3,7 @@
 # Commands
 
 - `npm run ci:local` mirrors the entire pre-push gate (`lefthook run pre-push --all-files`); it is
-  the only check that matches CI exactly. Wait on CI with `pr-blockers watch`.
+  the only check that matches CI exactly.
 
 # Gotchas
 
