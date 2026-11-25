@@ -33,12 +33,17 @@ export default [
       ...Object.fromEntries(
         Object.keys(guidance.rules).map((rule) => [rule, "error"]),
       ),
-      // Budgets held near this repo's sizes on 2026-11-25, well under the
-      // preset's 4096 bytes and 1024 description chars. Lower them as files
+      // Budgets held near this repo's sizes, well under the preset's 4096
+      // bytes and 1024 description chars. A file already over them is pinned
+      // in .guidance-budget.json, which may only shrink. Lower them as files
       // shrink; raise one only by decision.
       "conventions/guidance-budget": [
         "error",
-        { memoryBytes: 3000, descriptionChars: 250 },
+        {
+          memoryBytes: 800,
+          descriptionChars: 250,
+          ratchetFile: ".guidance-budget.json",
+        },
       ],
     },
   },
