@@ -283,7 +283,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 219 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 221 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -337,17 +337,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 110 client, 109 server
-- keyboard: 171 none, 48 handled
-- built-in loading state: 38 of 219
-- declared minViewport: 138 at 320, 7 at 480, 1 at 768, 73 at inherited
+- rendering: 111 client, 110 server
+- keyboard: 173 none, 48 handled
+- built-in loading state: 38 of 221
+- declared minViewport: 140 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 77 item(s)
-- tier `pattern` — 62 item(s)
+- tier `pattern` — 64 item(s)
 - tier `effect` — 27 item(s)
 - tier `chart` — 14 item(s)
 - tier `game` — 14 item(s)
@@ -357,12 +357,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 77 item(s)
-- category `pattern` (Patterns) — 62 item(s)
-- category `blog` (Blog & long-form) — 35 item(s)
+- category `pattern` (Patterns) — 64 item(s)
+- category `blog` (Blog & long-form) — 36 item(s)
 - category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
 - category `effect` (Effects) — 27 item(s)
-- category `form` (Form & input) — 25 item(s)
+- category `form` (Form & input) — 26 item(s)
 - category `decorative` (Decorative) — 24 item(s)
 - category `navigation` (Navigation) — 18 item(s)
 - category `feedback` (Feedback) — 18 item(s)
@@ -736,6 +736,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Reading Layout](https://ds.interlace.tools/c/reading-layout): A long read with its table of contents: the text column, and beside it a `Toc` rail that stays in view as the reader scrolls. When the layout is too narrow for a rail, the contents fold into a slim bar (`TocBar`) that sticks to the top of the column, names…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/reading-layout.json`
   - contract: server, min 320px, v1.0.0
+- [Recap](https://ds.interlace.tools/c/recap): What one person takes home from a session: what it covered, how they did, the one thing they picked for this week, what they asked to hear more about, and where to go next. Every section is optional and shows only when it has something in it, in the order…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/recap.json`
+  - contract: server, min 320px, v1.0.0
 - [Related Posts](https://ds.interlace.tools/c/related-posts): "Keep reading" surface that sits at the foot of an article page (or any long-form route). Renders an h3 section heading followed by a responsive grid of ArticleCards: one column on phones, two from `md` up, three from `lg` up — the same 1/2/3 cadence the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/related-posts.json`
   - contract: server, min 480px, loading state, v2.1.0
@@ -748,6 +751,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Section Header](https://ds.interlace.tools/c/section-header): The "section intro" block — optional eyebrow, a heading, and a `max-w-prose` tagline — with the bottom margin, the alignment and the type rhythm owned in one place instead of being re-typed as `text-center mb-12` on every section.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/section-header.json`
   - contract: server, v1.3.0
+- [Session Composer](https://ds.interlace.tools/c/session-composer): Build a session out of modules: pick what goes in, put it in order, and see at every step how long it runs against the time you have. For a workshop host planning a morning, a community lead booking a session, a teacher putting a lesson together. Modules a…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/session-composer.json`
+  - contract: client, min 320px, v1.0.0
 - [Share Buttons](https://ds.interlace.tools/c/share-buttons): A compact "share this page" cluster: one ghost icon-button per social network plus a copy-link affordance. Each share button opens its network's prefilled share URL in a new tab; the copy button writes the URL to the clipboard and flips its icon +…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-buttons.json`
   - contract: client, min 320px, states twitter|bluesky|linkedin|copy, v1.1.0

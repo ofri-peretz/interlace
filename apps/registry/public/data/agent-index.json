@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 219
+    "itemCount": 221
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 77,
-      "pattern": 62,
+      "pattern": 64,
       "effect": 27,
       "chart": 14,
       "game": 14,
@@ -41,12 +41,12 @@
     },
     "category": {
       "primitive": 77,
-      "pattern": 62,
-      "blog": 35,
+      "pattern": 64,
+      "blog": 36,
       "data": 30,
       "foundation": 27,
       "effect": 27,
-      "form": 25,
+      "form": 26,
       "decorative": 24,
       "navigation": 18,
       "feedback": 18,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 110,
-      "server": 109
+      "client": 111,
+      "server": 110
     },
     "keyboard": {
-      "none": 171,
+      "none": 173,
       "handled": 48
     },
     "loading": {
-      "none": 181,
+      "none": 183,
       "built-in": 38
     },
     "minViewport": {
-      "320": 138,
+      "320": 140,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7595,6 +7595,59 @@
       "docs": "https://ds.interlace.tools/c/reading-time"
     },
     {
+      "name": "recap",
+      "title": "Recap",
+      "type": "registry:ui",
+      "summary": "What one person takes home from a session: what it covered, how they did, the one thing they picked for this week, what they asked to hear more about, and where to go next. Every section is optional and shows only when it has something in it, in the order…",
+      "topics": [],
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden",
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/recap.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/recap.json",
+      "item": "https://ds.interlace.tools/r/recap.json",
+      "docs": "https://ds.interlace.tools/c/recap"
+    },
+    {
       "name": "registry-item-template",
       "title": "Registry Item Template",
       "type": "registry:block",
@@ -8577,6 +8630,68 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/series-table.json",
       "item": "https://ds.interlace.tools/r/series-table.json",
       "docs": "https://ds.interlace.tools/c/series-table"
+    },
+    {
+      "name": "session-composer",
+      "title": "Session Composer",
+      "type": "registry:ui",
+      "summary": "Build a session out of modules: pick what goes in, put it in order, and see at every step how long it runs against the time you have. For a workshop host planning a morning, a community lead booking a session, a teacher putting a lesson together. Modules a…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "meter",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/session-composer.tsx",
+        "components/ui/patterns/session-plan-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/session-composer.json",
+      "item": "https://ds.interlace.tools/r/session-composer.json",
+      "docs": "https://ds.interlace.tools/c/session-composer"
     },
     {
       "name": "settings-template",

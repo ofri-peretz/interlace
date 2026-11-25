@@ -197,6 +197,11 @@ describe('InterestBoard', () => {
     expect(screen.getByText('1 more topic shows once 2 people ask. And 1 more.')).toBeTruthy();
   });
 
+  it('does not say nobody asked when topics are only cut by top', () => {
+    render(<InterestBoard topics={topics} counts={{ logs: 2 }} top={0} animate={false} />);
+    expect(screen.queryByText('No one has asked for more yet.')).toBeNull();
+  });
+
   it('says when nobody asked yet, and uses label overrides', () => {
     render(<InterestBoard topics={topics} titleAs="h3" title="T" labels={{ empty: 'Nothing yet' }} animate={false} />);
     expect(screen.getByText('Nothing yet')).toBeTruthy();

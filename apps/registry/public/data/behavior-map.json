@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T05:31:30.257Z",
+  "generatedAt": "2026-11-25T06:29:45.118Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -27,7 +27,7 @@
       ",\n        // Booking: the slot picker",
       "src/patterns/time-slot-model.ts",
       "src/patterns/share-image-model.ts",
-      "src/patterns/{interest-model,commitment-model}.ts",
+      "src/patterns/{interest-model,commitment-model,session-plan-model,recap-model}.ts",
       "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
       "src/patterns/{lint-playground,multi-step-form,share-image,thread-steps,tab-bar,app-header,app-header-edge,app-shell,pull-to-refresh,install-prompt}.tsx",
       "src/effects/{weave-texture,view-transition}.tsx"
@@ -13161,6 +13161,115 @@
         "inGate": true
       }
     },
+    "recap": {
+      "sourcePath": "packages/ui/src/patterns/recap.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "muted",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a muted surface",
+          "ratios": [
+            8.81,
+            10.48,
+            7.34,
+            8.64
+          ],
+          "worst": 7.34,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "registry-item-template": {
       "sourcePath": "packages/ui/src/templates/registry-item-template.tsx",
       "keyboard": null,
@@ -14246,6 +14355,115 @@
       "textAlternative": {
         "kind": "series-table",
         "detail": "This IS the shared sr-only table primitive — a real <table> with <caption> and scoped headers, rendered sr-only by default."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
+      }
+    },
+    "session-composer": {
+      "sourcePath": "packages/ui/src/patterns/session-composer.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {

@@ -96,6 +96,12 @@ export interface RoomState {
   phase: RoomPhase;
   /** No new players while locked. Players already in can still reconnect. */
   locked: boolean;
+  /**
+   * When the join code stops letting new players in, in ms (host clock), or
+   * null for a code that lasts as long as the room. Players already in can
+   * still reconnect after it.
+   */
+  codeExpiresAt: number | null;
   /** In the order they joined. */
   players: RoomPlayer[];
   /** Players the host removed; they cannot join again with the same id. */
@@ -134,12 +140,19 @@ export interface RoomSettings {
   maxNameLength?: number;
 }
 
-export function createRoom(init: { code: string; hostId: string; rounds?: number | null }): RoomState {
+export function createRoom(init: {
+  code: string;
+  hostId: string;
+  rounds?: number | null;
+  /** When the code stops admitting new players, in ms (host clock). */
+  codeExpiresAt?: number | null;
+}): RoomState {
   return {
     code: init.code,
     hostId: init.hostId,
     phase: 'lobby',
     locked: false,
+    codeExpiresAt: init.codeExpiresAt ?? null,
     players: [],
     removed: [],
     round: 0,
@@ -157,7 +170,18 @@ export function createRoom(init: { code: string; hostId: string; rounds?: number
 
 /** Events a player sends about themselves. */
 export type RoomPlayerEvent =
-  | { type: 'join'; playerId: string; name: string }
+  | {
+      type: 'join';
+      playerId: string;
+      name: string;
+      /**
+       * When the join arrived, in ms. `useRoom` stamps it with the host's clock,
+       * so an expired code cannot be beaten by a phone with its clock set back;
+       * code that calls `applyRoomEvent` directly must stamp it too. While the
+       * room has an expiry, an unstamped new join is refused as `expired`.
+       */
+      at?: number;
+    }
   | { type: 'leave'; playerId: string }
   | {
       type: 'answer';
@@ -174,6 +198,8 @@ export type RoomPlayerEvent =
 /** Events only the host sends. */
 export type RoomHostEvent =
   | { type: 'lock'; locked: boolean }
+  /** Moves the code's expiry: later to let latecomers in, null for no expiry. */
+  | { type: 'extend-code'; expiresAt: number | null }
   | { type: 'remove'; playerId: string }
   /** Starts the countdown to the first round (or the next one). */
   | { type: 'countdown'; startsAt: number }
@@ -193,6 +219,7 @@ export type RoomRejection =
   | 'not-you'
   | 'closed'
   | 'locked'
+  | 'expired'
   | 'full'
   | 'removed'
   | 'name-empty'
@@ -203,6 +230,7 @@ export type RoomRejection =
 
 const HOST_EVENTS = new Set<RoomEvent['type']>([
   'lock',
+  'extend-code',
   'remove',
   'countdown',
   'question',
@@ -220,6 +248,16 @@ const NEXT: Partial<Record<RoomEvent['type'], readonly RoomPhase[]>> = {
   podium: ['reveal', 'question'],
   restart: ['podium', 'reveal', 'question', 'countdown', 'lobby'],
 };
+
+/**
+ * True when a join at `at` (host clock) comes after the code stopped admitting new players.
+ * Fails closed: when the room has an expiry, a join without `at` counts as expired, so a server
+ * that forgets to stamp joins cannot let people in late. Stamp `join.at` with the host clock.
+ */
+export function codeExpired(state: Pick<RoomState, 'codeExpiresAt'>, at: number | undefined): boolean {
+  if (state.codeExpiresAt === null) return false;
+  return at === undefined || at >= state.codeExpiresAt;
+}
 
 /** A display name, trimmed, inner spaces collapsed, and cut to `max` characters. */
 export function cleanName(name: string, max = 24): string {
@@ -258,6 +296,7 @@ export function rejectRoomEvent(
       if (state.players.some((p) => p.id !== event.playerId && sameName(p.name, name))) return 'name-taken';
       if (known) return null; // a reconnect, even when locked
       if (state.locked) return 'locked';
+      if (codeExpired(state, event.at)) return 'expired';
       if (state.players.length >= (settings.maxPlayers ?? 200)) return 'full';
       return null;
     }
@@ -317,6 +356,8 @@ export function applyRoomEvent(
       });
     case 'lock':
       return next({ locked: event.locked });
+    case 'extend-code':
+      return next({ codeExpiresAt: event.expiresAt });
     case 'remove': {
       const { [event.playerId]: _score, ...scores } = state.scores;
       const { [event.playerId]: _answer, ...answers } = state.answers;
@@ -372,6 +413,94 @@ export function applyRoomEvent(
         scores: Object.fromEntries(state.players.map((p) => [p.id, 0])),
       });
   }
+}
+
+// --- Guessing codes -------------------------------------------------------------
+
+/*
+ * Stops people guessing their way into a room. Every wrong code counts
+ * against where it came from (a network, a device, whatever key your server
+ * trusts) and against the room as a whole; past either limit, more tries are
+ * refused until the window moves on. A six-character code from
+ * `makeJoinCode` has about 600 million values, so five tries per source and
+ * thirty per room leave a guesser nowhere, while a person who mistyped twice
+ * is never stopped. Pure and serialisable: keep the state wherever the code
+ * is checked (a server, an edge function, the host), call `checkJoinAttempt`
+ * before comparing the code and `recordJoinAttempt` after.
+ */
+
+export interface JoinGuardOptions {
+  /** Wrong tries one source may make in the window. @default 5 */
+  perSource?: number;
+  /** Wrong tries the whole room accepts in the window, across sources. @default 30 */
+  total?: number;
+  /** How far back wrong tries count, in ms. @default 10 minutes */
+  windowMs?: number;
+}
+
+export interface JoinGuardState {
+  /** Wrong tries, oldest first. */
+  failures: { source: string; at: number }[];
+}
+
+export type JoinGuardVerdict =
+  | { allowed: true; left: number }
+  | {
+      allowed: false;
+      /** `source`: this source used its tries. `room`: the room stopped taking guesses. */
+      reason: 'source' | 'room';
+      /** When the oldest counted try leaves the window and one more is allowed, in ms. */
+      retryAt: number;
+    };
+
+const DEFAULTS = { perSource: 5, total: 30, windowMs: 10 * 60_000 };
+
+const settings = (o: JoinGuardOptions) => ({
+  perSource: Math.max(1, Math.floor(o.perSource ?? DEFAULTS.perSource)),
+  total: Math.max(1, Math.floor(o.total ?? DEFAULTS.total)),
+  windowMs: Math.max(1, o.windowMs ?? DEFAULTS.windowMs),
+});
+
+export function createJoinGuard(): JoinGuardState {
+  return { failures: [] };
+}
+
+/** Drops wrong tries older than the window. */
+export function pruneJoinGuard(state: JoinGuardState, now: number, options: JoinGuardOptions = {}): JoinGuardState {
+  const { windowMs } = settings(options);
+  const failures = state.failures.filter((f) => now - f.at < windowMs);
+  return failures.length === state.failures.length ? state : { failures };
+}
+
+/** May `source` try a code now? Ask before comparing the code, so a blocked source learns nothing. */
+export function checkJoinAttempt(
+  state: JoinGuardState,
+  source: string,
+  now: number,
+  options: JoinGuardOptions = {},
+): JoinGuardVerdict {
+  const { perSource, total, windowMs } = settings(options);
+  const recent = pruneJoinGuard(state, now, options).failures;
+  const mine = recent.filter((f) => f.source === source);
+  if (recent.length >= total) {
+    return { allowed: false, reason: 'room', retryAt: recent[recent.length - total]!.at + windowMs };
+  }
+  if (mine.length >= perSource) {
+    return { allowed: false, reason: 'source', retryAt: mine[mine.length - perSource]!.at + windowMs };
+  }
+  return { allowed: true, left: Math.min(perSource - mine.length, total - recent.length) };
+}
+
+/** The guard after a try: a wrong code is counted, a right one changes nothing. */
+export function recordJoinAttempt(
+  state: JoinGuardState,
+  source: string,
+  correct: boolean,
+  now: number,
+  options: JoinGuardOptions = {},
+): JoinGuardState {
+  const pruned = pruneJoinGuard(state, now, options);
+  return correct ? pruned : { failures: [...pruned.failures, { source, at: now }] };
 }
 
 // --- Reading the state ----------------------------------------------------------

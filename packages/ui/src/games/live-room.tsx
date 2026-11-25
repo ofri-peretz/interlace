@@ -107,7 +107,7 @@ export interface UseRoomOptions {
   settings?: RoomSettings;
   /** A player's intent (or the host's own event) was refused. */
   onRejected?: (reason: RoomRejection, event: RoomEvent['type']) => void;
-  /** The host's clock, which stamps each answer as it arrives. @default Date.now */
+  /** The host's clock, which stamps each answer and join as it arrives. @default Date.now */
   now?: () => number;
 }
 
@@ -163,9 +163,12 @@ export function useRoom({
     const off = transport.subscribe((message) => {
       if (isHost) {
         if (message.kind === 'intent') {
-          // The host's clock decides when an answer arrived, never the sender's.
+          // The host's clock decides when an answer or a join arrived, never the sender's.
           const event = message.event;
-          apply(event.type === 'answer' ? { ...event, at: latest.current.now() } : event, message.from);
+          apply(
+            event.type === 'answer' || event.type === 'join' ? { ...event, at: latest.current.now() } : event,
+            message.from,
+          );
         } else if (message.kind === 'hello' && roomRef.current)
           transport.send({ kind: 'state', state: roomRef.current });
         return;

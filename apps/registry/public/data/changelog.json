@@ -809,6 +809,18 @@
           "source": ".changeset/reveal.md"
         },
         {
+          "summary": "Live rooms close the door on time and on guessers. `createRoom` takes `codeExpiresAt`: after it, the room refuses new players with `expired` while anyone already in can still reconnect, and the host moves it with an `extend-code` event. `useRoom` now stamps each join with the host's clock, like answers, so a phone cannot beat the expiry by setting its clock back, and a join that arrives unstamped while the room has an expiry is refused. `checkJoinAttempt` / `recordJoinAttempt` (games/room-model) cap wrong codes per source (5) and per room (30) in a sliding window (10 minutes), so a six-character code cannot be guessed while a person who mistyped is never stopped. `JoinCode` takes `expiresAt` and says how many minutes the code still works; once it has expired the QR goes, the code is struck through and the change is announced.",
+          "components": [
+            "live-room",
+            "join-code"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/room-access.md"
+        },
+        {
           "summary": "ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says \"there is more\" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade=\"none\"` for hard edges.",
           "components": [
             "scroll-area"
@@ -877,6 +889,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/session-feedback.md"
+        },
+        {
+          "summary": "Plan a session, then send each person their recap. `SessionComposer` builds a session from modules: add, remove and reorder with named controls, a meter of minutes against `maxMinutes` that turns and says by how much when the plan runs long, `seen` modules marked for a group that had them before, and `required` modules (an opening, a close) that stay in place. Its rules live in `patterns/session-plan-model` (`cleanPlan`, `summarizePlan`, `fitsPlan`, `addToPlan`, `removeFromPlan`, `movePlan`, `canMove`), so a server checks a submitted plan the same way. `Recap` is one person's take-home page: what it covered, their numbers, their one thing this week, what they asked more about, and where to go next, each section shown only when it has something. `patterns/recap-model` (`encodeRecap`, `decodeRecap`) puts the per-person part in the link as versioned, validated base64url JSON, so a recap page needs no account and stores nothing.",
+          "components": [
+            "session-composer",
+            "recap"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/session-plan-recap.md"
         },
         {
           "summary": "New `ShareChart`: how a whole splits into parts, one bar per row on one shared scale. `layout=\"stacked\"` runs every bar from the same edge to 100%; `layout=\"diverging\"` puts an ordered scale around a zero line shared by every row, with a `neutral` category across it and each side's total printed at its end. Values become shares of the row's total (the sum, or `total`), so counts and percentages both work. Stacked categories take the five chart hues in order; diverging ones take two `poles`, strongest at the ends. Hovering a segment or a legend entry, or focusing one, dims the other categories and prints that share on every row; a click pins it. Every row carries a sentence with every share, and a table of values sits behind the picture (`showTable` shows it). On first view each bar grows out of its zero line once; nothing moves under reduced motion. Labels sit beside the bars when the chart's own box is wide enough and above them when it is not, and the bars mirror in right-to-left pages. `shareOf`, `shareLayout`, `shareFills` and `describeShareRow` are exported and pure.",
