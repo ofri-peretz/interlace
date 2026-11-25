@@ -454,6 +454,18 @@
           "source": ".changeset/dot-plot.md"
         },
         {
+          "summary": "New DrawOn and Marker, editorial motion for line drawings and emphasis. DrawOn wraps any inline SVG and draws its stroked shapes as it scrolls into view, one after another (`order=\"sequence\"`) or all at once, then fades in the fills. Marker is a `<mark>` whose highlighter stroke sweeps across a phrase from the inline-start edge, in `band`, `full` or `underline` shapes and `highlight` or `primary` tones. Both render the finished result on the server, run once, and are simply there under reduced motion.",
+          "components": [
+            "draw-on",
+            "marker"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/draw-on-marker.md"
+        },
+        {
           "summary": "New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.",
           "components": [
             "drawer"
@@ -712,6 +724,18 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
+          "summary": "New PointerSurface and UnderlineLink, motion that answers the reader. PointerSurface wraps a card so a soft `--primary` light follows the pointer, the card leans a few degrees toward it, or both (`effect`), and keyboard focus inside lights it from the centre; it only runs on a fine pointer that can hover and is still under reduced motion. UnderlineLink is a link whose underline draws in from the inline-start edge on hover and focus, keeps a thin line at rest by default so links are not told apart by colour alone, takes a router link through `render`, and needs no JavaScript.",
+          "components": [
+            "pointer-surface",
+            "underline-link"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/pointer-surface-underline-link.md"
+        },
+        {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
           "components": [
             "prose"
@@ -768,6 +792,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/scroll-area-fades.md"
+        },
+        {
+          "summary": "New ScrollText and FlipGroup. ScrollText is one large sentence the reader brings into focus by scrolling: its words go from `--muted-foreground` to `--foreground` in reading order on a ViewTimeline, so the browser drives it from the scroll position with no listener. It is read once by a screen reader, every word is always at AA contrast, and it is in full colour without ViewTimeline or under reduced motion. FlipGroup makes items glide to their new place when a list is sorted, filtered or reordered: give each a `data-flip-id`, render the new order, and it plays the difference (FLIP); new items fade in, `render` makes it the `ul` or `ol` itself, and under reduced motion items simply take their place.",
+          "components": [
+            "scroll-text",
+            "flip-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/scroll-text-flip-group.md"
         },
         {
           "summary": "`SeatChart` takes `labels` and `locale`. Every fixed word (the empty note, Vacant, No side, the table headers and caption, the majority caption and cell) can be replaced, and the screen-reader sentence is built by `labels.summary` from a `SeatSummary`, so it can be written in any language. Counts and shares are formatted with `Intl.NumberFormat` in the given locale. English stays the default.\n\n`ShareChart` takes `labels` too: the empty note, the legend's name, the table caption and row header, and the sentence read for each row. `describeShareRow` takes the same sentence function. `DotPlot`'s `rowSentence` now says that it words a missing value itself.",

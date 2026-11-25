@@ -1660,10 +1660,46 @@
       }
     },
     {
+      "name": "draw-on",
+      "type": "registry:ui",
+      "title": "Draw On",
+      "description": "A line drawing that draws itself as it scrolls into view: an illustration, a diagram, an arrow that points at the next thing, a signature. Wrap any inline SVG; every stroked shape inside traces its own line, one after another in document order, and filled…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "edge-glow",
       "type": "registry:ui",
       "title": "Edge Glow",
       "description": "A light that runs around the edge of its parent: the plan you recommend, the card that is live right now. Drop it inside a positioned element:",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "flip-group",
+      "type": "registry:ui",
+      "title": "Flip Group",
+      "description": "Items that glide to their new place when a list is sorted, filtered or reordered, instead of jumping there: a leaderboard that re-ranks, results that narrow as a filter is typed, cards that swap. The motion tells the reader where each item went, which a…",
       "categories": [
         "decorative",
         "effect"
@@ -1768,6 +1804,42 @@
       }
     },
     {
+      "name": "marker",
+      "type": "registry:ui",
+      "title": "Marker",
+      "description": "A highlighter stroke across the one phrase in a paragraph a reader should not miss. The first time the phrase scrolls into view, the stroke sweeps across it from the start of the line to the end, the way a pen would, and wraps across lines with the text.…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "pointer-surface",
+      "type": "registry:ui",
+      "title": "Pointer Surface",
+      "description": "A surface that answers the pointer: a soft light that follows it across a card, a slight tilt toward it, or both. It is the feel of picking a card up off a table, for a grid of choices a reader is weighing (plans, sessions, topics), not for every box on a…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "reveal",
       "type": "registry:ui",
       "title": "Reveal",
@@ -1800,6 +1872,24 @@
         "minViewport": null,
         "loading": false,
         "version": "2.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "scroll-text",
+      "type": "registry:ui",
+      "title": "Scroll Text",
+      "description": "A statement that the reader brings into focus by scrolling: its words go from the muted text colour to the full one, in reading order, as the paragraph moves up the screen. For one large sentence a page is built around (a mission, a finding, a promise)…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -1941,6 +2031,24 @@
       "meta": {
         "tier": "effect",
         "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "underline-link",
+      "type": "registry:ui",
+      "title": "Underline Link",
+      "description": "A text link whose underline draws itself in when the reader points at it or tabs to it, from the start of the line to the end, and wraps across lines with the text. For links in running text, navigation and footers where a hard underline on every link…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": false,
         "minViewport": null,
         "loading": false,
         "version": "1.0.0",

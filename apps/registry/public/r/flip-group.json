@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flip-group",
+  "type": "registry:ui",
+  "title": "Flip Group",
+  "description": "Items that glide to their new place when a list is sorted, filtered or reordered, instead of jumping there: a leaderboard that re-ranks, results that narrow as a filter is typed, cards that swap. The motion tells the reader where each item went, which a…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "decorative",
+    "effect"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json",
+    "https://ds.interlace.tools/r/use-reduced-motion.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/effects/flip-group.tsx",
+      "target": "components/ui/effects/flip-group.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport { useRender } from '@base-ui/react/use-render';\n\n// @interlace/flip-group v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/flip-group\n// What changed since: https://ds.interlace.tools/c/flip-group#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — FlipGroup\n *\n * Items that glide to their new place when a list is sorted, filtered or\n * reordered, instead of jumping there: a leaderboard that re-ranks, results\n * that narrow as a filter is typed, cards that swap. The motion tells the\n * reader where each item went, which a jump hides.\n *\n * ## How to use it\n *\n * Wrap the list and give each moving item a stable `data-flip-id` (its key is\n * a good choice). Render the list in its new order as you normally would;\n * FlipGroup measures where each item was and where it is now, and plays the\n * difference. Items that are new fade in where they land.\n *\n *   <FlipGroup render={<ol />}>\n *     {rows.map((row) => <li key={row.id} data-flip-id={row.id}>…</li>)}\n *   </FlipGroup>\n *\n * ## Content first\n *\n * The list is the list: its markup, order and semantics are yours, and the\n * DOM order is the new order the moment React commits, so a screen reader\n * and Tab follow the real order while the eye follows the glide.\n *\n * ## Motion\n *\n * FLIP (first, last, invert, play): one layout read per item before paint,\n * then a Web Animations API `transform` from the old place to none, which the\n * compositor runs. A move that is interrupted by the next change settles and\n * glides again from its last resting place. Under `prefers-reduced-motion: reduce`,\n * or without `element.animate`, items simply take their new place.\n *\n * ## Composition\n *\n *   FlipGroup                           (div by default, or `render` — data-slot=\"flip-group\")\n *     └─ [data-flip-id] × n             (your items)\n *\n * | Rule | Concept                 | Where in this file                                   |\n * | ---- | ----------------------- | ---------------------------------------------------- |\n * | R4   | Extends native el       | `div` props                                          |\n * | R6   | data-slot per part      | flip-group                                           |\n * | R7   | cn + ...rest            | `cn(className)` + `{...props}` + `useRender`         |\n * | R13  | Ecosystem first         | `useRender` to be the `ul`/`ol` itself               |\n * | R25  | Client component        | measures layout in the browser                       |\n * | R26  | A11y from native el     | DOM order is the new order                           |\n */\n\nimport * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { useReducedMotion } from '@/hooks/use-reduced-motion';\n\nexport interface FlipGroupProps extends React.ComponentPropsWithoutRef<'div'> {\n  /** Milliseconds each glide takes. @default 400 */\n  duration?: number;\n  /** Replace the rendered element, e.g. `<ul />` or `<ol />`, so the group is the list itself. */\n  render?: useRender.RenderProp;\n}\n\nconst EASE = 'cubic-bezier(0.65, 0, 0.35, 1)';\n\nfunction items(root: HTMLElement): HTMLElement[] {\n  return Array.from(root.querySelectorAll<HTMLElement>('[data-flip-id]'));\n}\n\nexport function FlipGroup({ duration = 400, render, className, ...props }: FlipGroupProps) {\n  const reduced = useReducedMotion();\n  const ref = React.useRef<HTMLElement>(null);\n  const last = React.useRef(new Map<string, DOMRect>());\n  // Only the glides this group started: a consumer's own transitions on an item are left alone.\n  const glides = React.useRef(new Map<string, Animation>());\n\n  // Every commit: compare each item's place now with its place at the last\n  // commit, play the difference, then remember where everything is.\n  React.useLayoutEffect(() => {\n    const root = ref.current;\n    if (!root) return;\n    const before = last.current;\n    const now = new Map<string, DOMRect>();\n    for (const el of items(root)) {\n      // Measure the layout, not a glide still in flight from the last change.\n      const id = el.dataset.flipId!;\n      glides.current.get(id)?.cancel();\n      glides.current.delete(id);\n      now.set(id, el.getBoundingClientRect());\n    }\n    last.current = now;\n    if (reduced || before.size === 0 || typeof root.animate !== 'function') return;\n\n    for (const el of items(root)) {\n      const id = el.dataset.flipId!;\n      const to = now.get(id)!;\n      const from = before.get(id);\n      if (!from) {\n        glides.current.set(id, el.animate([{ opacity: 0 }, { opacity: 1 }], { duration, easing: EASE }));\n        continue;\n      }\n      const dx = from.left - to.left;\n      const dy = from.top - to.top;\n      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) continue;\n      glides.current.set(\n        id,\n        el.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], {\n          duration,\n          easing: EASE,\n        }),\n      );\n    }\n  });\n\n  return useRender({\n    render: render ?? <div />,\n    ref,\n    props: {\n      'data-slot': 'flip-group',\n      className: cn(className),\n      ...props,\n    },\n  });\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "effect",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/flip-group\n\nInstalled to `components/ui/effects/flip-group.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/flip-group';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/flip-group\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}
