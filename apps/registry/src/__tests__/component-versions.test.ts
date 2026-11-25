@@ -52,9 +52,9 @@ describe('applyBump', () => {
 describe('deriveVersions', () => {
   const sourcePaths = new Map([
     ['badge', ['packages/ui/src/primitives/badge.tsx']],
-    ['button', [
-      'packages/ui/src/primitives/button.tsx',
-      'packages/ui/src/primitives/button-variants.ts',
+    ['interest-signal', [
+      'packages/ui/src/patterns/interest-signal.tsx',
+      'packages/ui/src/patterns/interest-model.ts',
     ]],
   ]);
 
@@ -66,7 +66,7 @@ describe('deriveVersions', () => {
       body: '',
       files: [
         'packages/ui/src/primitives/badge.tsx',
-        'packages/ui/src/primitives/button.tsx',
+        'packages/ui/src/patterns/interest-signal.tsx',
       ],
     },
     {
@@ -79,14 +79,14 @@ describe('deriveVersions', () => {
     {
       hash: 'c',
       date: '2026-03-01',
-      subject: 'feat(ui): a new button variant',
+      subject: 'feat(ui): a new interest model rule',
       body: '',
-      files: ['packages/ui/src/primitives/button-variants.ts'],
+      files: ['packages/ui/src/patterns/interest-model.ts'],
     },
   ];
 
   const derived = deriveVersions({
-    names: ['badge', 'button'],
+    names: ['badge', 'interest-signal'],
     sourcePaths,
     commits,
     tags: [],
@@ -106,9 +106,9 @@ describe('deriveVersions', () => {
   });
 
   it('bumps a component when a COMPANION file changes', () => {
-    // `button-variants.ts` is not a component of its own — a consumer installs
-    // it inside button. Missing this is exactly how a hand-kept version rots.
-    expect(byName.button.version).toBe('1.1.0');
+    // `interest-model.ts` is not an item of its own — a consumer installs it
+    // inside interest-signal. Missing this is exactly how a hand-kept version rots.
+    expect(byName['interest-signal'].version).toBe('1.1.0');
   });
 
   it('does not bump for a chore commit', () => {
