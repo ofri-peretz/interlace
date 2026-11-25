@@ -102,6 +102,8 @@ export const CloserGame = memo(function CloserGame({
         <Text variant="caption" tone="muted">
           {labels.guess}
         </Text>
+        {/* Android reads the guess as it changes; on iOS the slider itself (adjustable) speaks each
+            step, and VoiceOver has no live regions. */}
         <Text variant="numeral" tabular align="center" accessibilityLiveRegion="polite">
           {formatValue(guess)}
         </Text>

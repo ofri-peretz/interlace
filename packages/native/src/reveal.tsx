@@ -46,7 +46,13 @@ export const Reveal = memo(function Reveal({
     <View style={{ gap: 16 }}>
       {children}
       {open ? (
-        <Animated.View entering={ENTER} accessibilityLiveRegion="polite" style={{ gap: 12 }}>
+        <Animated.View
+          entering={ENTER}
+          // One announcement only: `announce` speaks on both platforms; without it, Android's live
+          // region reads the new content (iOS has no live regions).
+          accessibilityLiveRegion={announce ? undefined : 'polite'}
+          style={{ gap: 12 }}
+        >
           {hidden}
         </Animated.View>
       ) : (

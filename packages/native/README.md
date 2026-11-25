@@ -21,21 +21,20 @@ tokens and the same game rules as `@interlace/ui`, rendered as native views.
 A consumer brands Interlace through tokens. It never edits a component.
 
 ```tsx
-<InterlaceProvider
-  scheme="system"
-  overrides={{
-    light: { primary: '#1f4fd1', background: '#faf8f4' },
-    dark: { primary: '#9db6ff' },
-    radius: 10,
-    fonts: { display: 'MySerif-Bold' },
-  }}
->
+// At module scope, so the theme is built once, not on every render.
+const BRAND: ThemeOverrides = {
+  light: { primary: '#1f4fd1', background: '#faf8f4' },
+  dark: { primary: '#9db6ff' },
+  radius: 10,
+  fonts: { display: 'MySerif-Bold' },
+};
+
+<InterlaceProvider scheme="system" overrides={BRAND}>
   <App />
-</InterlaceProvider>
+</InterlaceProvider>;
 ```
 
 The overrides take the camelCased `--interlace-*` names (`primaryForeground`, `mutedForeground`).
-Pass a stable object, such as a module constant, so the theme is built once.
 
 ## Performance
 
@@ -57,5 +56,5 @@ npm run tokens:check -w @interlace/native    # fail on drift (the test script ru
 ## Peer dependencies
 
 `react`, `react-native` 0.81 or later (New Architecture), `react-native-reanimated` 4,
-`react-native-worklets`, `react-native-gesture-handler` 3 and `react-native-safe-area-context` 5.
+`react-native-worklets`, `react-native-gesture-handler` 3.3 or later (for its hook API), and `react-native-safe-area-context` 5.
 Expo SDK 54 and later ship them all.
