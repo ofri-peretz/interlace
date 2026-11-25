@@ -819,7 +819,8 @@
     "storyIds": [
       "blocks-dialoguestepper--default",
       "blocks-dialoguestepper--speakers-inside",
-      "blocks-dialoguestepper--whole-conversation"
+      "blocks-dialoguestepper--whole-conversation",
+      "blocks-dialoguestepper--journey"
     ],
     "preview": "blocks-dialoguestepper--default",
     "previewDark": null,
@@ -1383,7 +1384,7 @@
       "games-liveroom--default",
       "games-liveroom--player-lobby",
       "games-liveroom--countdown",
-      "games-liveroom--game-night",
+      "games-liveroom--journey",
       "games-liveroom--right-to-left"
     ],
     "preview": "games-liveroom--default",
@@ -1484,7 +1485,7 @@
     "title": "Blocks/MultiStepForm",
     "storyIds": [
       "blocks-multistepform--default",
-      "blocks-multistepform--walk-through",
+      "blocks-multistepform--journey",
       "blocks-multistepform--summary",
       "blocks-multistepform--needs-an-answer",
       "blocks-multistepform--narrow-column",
@@ -1844,6 +1845,20 @@
     "preview": "primitives-readingtime--variants",
     "previewDark": "primitives-readingtime--dark",
     "skeleton": "primitives-readingtime--loading"
+  },
+  "recall-card": {
+    "title": "Games/RecallCard",
+    "storyIds": [
+      "games-recallcard--default",
+      "games-recallcard--revealed",
+      "games-recallcard--rated",
+      "games-recallcard--interaction",
+      "games-recallcard--three-ratings",
+      "games-recallcard--right-to-left"
+    ],
+    "preview": "games-recallcard--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "recap": {
     "title": "Blocks/Recap",
@@ -2350,6 +2365,7 @@
       "blocks-socialsignin--all-providers",
       "blocks-socialsignin--last-used",
       "blocks-socialsignin--with-email",
+      "blocks-socialsignin--journey",
       "blocks-socialsignin--sent",
       "blocks-socialsignin--with-error",
       "blocks-socialsignin--dark",
@@ -2989,6 +3005,20 @@
       "effects-underlinelink--right-to-left"
     ],
     "preview": "effects-underlinelink--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "update-feed": {
+    "title": "Blocks/UpdateFeed",
+    "storyIds": [
+      "blocks-updatefeed--default",
+      "blocks-updatefeed--first-visit",
+      "blocks-updatefeed--by-month",
+      "blocks-updatefeed--narrow",
+      "blocks-updatefeed--empty",
+      "blocks-updatefeed--right-to-left"
+    ],
+    "preview": "blocks-updatefeed--default",
     "previewDark": null,
     "skeleton": null
   },

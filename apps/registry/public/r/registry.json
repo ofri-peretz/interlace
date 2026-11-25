@@ -3226,6 +3226,24 @@
       }
     },
     {
+      "name": "update-feed",
+      "type": "registry:ui",
+      "title": "Update Feed",
+      "description": "What is new, newest first: a product's changelog, a publication's latest pieces, a team's releases. Entries are grouped under their day or month, each with a kind (\"Release\", \"Article\"), a title that links to the thing itself and a line on what it is. Pass…",
+      "categories": [
+        "blog",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "wordmark",
       "type": "registry:ui",
       "title": "Wordmark",
@@ -3662,6 +3680,24 @@
       "type": "registry:ui",
       "title": "Quiz Question",
       "description": "A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "recall-card",
+      "type": "registry:ui",
+      "title": "Recall Card",
+      "description": "A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…",
       "categories": [
         "games",
         "game"

@@ -96,6 +96,7 @@ const CATEGORIES: Category[] = [
       'data-table',
       'visualization',
       'form',
+      'flow',
     ],
   },
   {

@@ -74,7 +74,7 @@ interface ShareCardLabels {
   streak?: (n: string) => string;
 }
 
-type ShareCardProps = Omit<React.ComponentProps<'div'>, 'title'> &
+type ShareCardProps = Omit<React.ComponentProps<'div'>, 'title' | 'results'> &
   ShareTextInput & {
     /** Words for each result key, read in place of the marks. */
     bandLabels?: Readonly<Record<string, string>>;
