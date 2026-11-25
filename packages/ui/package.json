@@ -488,6 +488,34 @@
       "types": "./dist/games/recall-card.d.ts",
       "default": "./dist/games/recall-card.js"
     },
+    "./games/goal-ring": {
+      "types": "./dist/games/goal-ring.d.ts",
+      "default": "./dist/games/goal-ring.js"
+    },
+    "./games/level-meter": {
+      "types": "./dist/games/level-meter.d.ts",
+      "default": "./dist/games/level-meter.js"
+    },
+    "./games/milestones": {
+      "types": "./dist/games/milestones.d.ts",
+      "default": "./dist/games/milestones.js"
+    },
+    "./games/round-summary": {
+      "types": "./dist/games/round-summary.d.ts",
+      "default": "./dist/games/round-summary.js"
+    },
+    "./games/reminder-offer": {
+      "types": "./dist/games/reminder-offer.d.ts",
+      "default": "./dist/games/reminder-offer.js"
+    },
+    "./games/progress-model": {
+      "types": "./dist/games/progress-model.d.ts",
+      "default": "./dist/games/progress-model.js"
+    },
+    "./games/reminder-model": {
+      "types": "./dist/games/reminder-model.d.ts",
+      "default": "./dist/games/reminder-model.js"
+    },
     "./games/poll": {
       "types": "./dist/games/poll.d.ts",
       "default": "./dist/games/poll.js"
