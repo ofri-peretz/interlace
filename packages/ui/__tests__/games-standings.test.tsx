@@ -19,6 +19,19 @@ afterEach(() => {
 });
 
 describe('Standings', () => {
+  it('counts in whole points, never "587.685"', () => {
+    let frame: FrameRequestCallback | null = null;
+    const raf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => ((frame = cb), 1));
+    const { container } = render(<Standings caption="After round 1" entries={ROUND} countMs={900} locale="en-US" />);
+    act(() => frame?.(1));
+    act(() => frame?.(400));
+    const digits = [...container.querySelectorAll('[data-slot="standings-score"] [aria-hidden]')].map(
+      (n) => n.textContent,
+    );
+    expect(digits.some((d) => /\.\d/.test(d ?? ''))).toBe(false);
+    raf.mockRestore();
+  });
+
   it('starts in the old order, then takes the new one after the count', () => {
     vi.useFakeTimers();
     const { container } = render(<Standings caption="After round 2" entries={ROUND} countMs={900} locale="en-US" />);

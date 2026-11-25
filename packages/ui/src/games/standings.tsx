@@ -269,6 +269,7 @@ function Standings({
                     value={final.score}
                     from={final.score - gained}
                     duration={countMs}
+                    format={{ maximumFractionDigits: 0 }}
                     start="mount"
                     locale={locale}
                   />
