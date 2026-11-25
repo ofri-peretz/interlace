@@ -929,6 +929,11 @@ const libDepsOf = (files) => {
   return [...found];
 };
 
+const companionContent = (content, companion, sourceDir) =>
+  sourceDir === PRIMITIVES_DIR
+    ? stampVersionBanner(content, companion, versionInfoFor(companion).version)
+    : content;
+
 const buildItem = async (filePath, fileName, tier = null) => {
   const source = await readFile(filePath, 'utf8');
   const name = fileName.replace(/\.tsx?$/, '');
@@ -975,13 +980,23 @@ const buildItem = async (filePath, fileName, tier = null) => {
         path: `registry/interlace-ui/${subdir}${companion}.ts`,
         target: `components/ui/${subdir}${companion}.ts`,
         type: itemType,
-        // No banner on a companion (see above), but it keeps its own header —
-        // that is the file's documentation, not a repeated stamp.
-        content: relocateDocHeader(
-          rewriteImportsForConsumer(
-            await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8'),
-            subdir,
+        // No banner of THIS item on a companion (see above), but it keeps its
+        // own header — that is the file's documentation, not a repeated stamp.
+        // A companion that is also published as an item of its own (every
+        // `.ts` in primitives/, see buildAll) carries that item's banner, so
+        // both items write the same bytes to the same target. Without it,
+        // `button` shipped `button-variants.ts` unbannered while
+        // `button-variants` shipped it bannered, and the consumer's copy
+        // depended on which one installed last.
+        content: companionContent(
+          relocateDocHeader(
+            rewriteImportsForConsumer(
+              await readFile(path.join(sourceDir, `${companion}.ts`), 'utf8'),
+              subdir,
+            ),
           ),
+          companion,
+          sourceDir,
         ),
       })),
     )),
@@ -1511,10 +1526,32 @@ const assertRegistryContract = (items) => {
           const bare = spec.replace(/^@\//, '');
           const shipsItself =
             ownTargets.has(`${bare}.ts`) || ownTargets.has(`${bare}.tsx`);
-          if (!shipsItself && !names.has(spec.split('/').pop())) {
+          const dep = spec.split('/').pop();
+          if (!shipsItself && !names.has(dep)) {
             errors.push(`${item.name}: import "${spec}" names no item`);
+          } else if (!shipsItself && !declared.has(dep)) {
+            errors.push(
+              `${item.name}: imports "${spec}" in ${file.target} but does not declare registry dependency "${dep}"`,
+            );
           }
         }
+      }
+    }
+  }
+  // One target, one content. `shadcn add` writes each file to its `target`; two
+  // items that write the same target with different bytes make the consumer's
+  // copy depend on install order, and the upgrade diff then reads whichever
+  // banner (or none) happened to land last.
+  const byTarget = new Map();
+  for (const item of items) {
+    for (const file of item.files ?? []) {
+      if (!file.target) continue;
+      const seen = byTarget.get(file.target);
+      if (!seen) byTarget.set(file.target, { item: item.name, content: file.content });
+      else if (seen.content !== file.content) {
+        errors.push(
+          `${item.name}: writes ${file.target} with different content than ${seen.item} — a shared file must ship the same bytes from every item`,
+        );
       }
     }
   }
