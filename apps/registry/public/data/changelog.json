@@ -1448,6 +1448,29 @@
           "source": ".changeset/button-transition-trim.md"
         },
         {
+          "summary": "`Callout` reads better on phones. Below `sm` a `kicker` sits above the body instead of beside it, so a long body keeps the full width rather than a column narrowed by the kicker, and the inset drops from `p-6` to `p-4`. From `sm` up nothing changes. The root carries `data-kicker` when a kicker is set.",
+          "components": [
+            "callout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/callout-phone-kicker.md"
+        },
+        {
+          "summary": "`Topbar` and `Footer` take `Container`'s gutters (`px-4 xs:px-6 lg:px-8`) instead of a flat `px-6`, so the logo and the footer line up with the page content at every width. On a 320px phone the topbar row also fits a logo and two actions on one line again (gap `x-3` below `xs`), instead of wrapping to a second row.",
+          "components": [
+            "topbar",
+            "footer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/chrome-gutters.md"
+        },
+        {
           "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
           "components": [
             "claim-card"

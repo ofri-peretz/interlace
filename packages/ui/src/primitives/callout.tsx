@@ -22,6 +22,8 @@
  * `kicker` replaces the icon with a word or two set in bold at the start
  * ("Straight talk", or a word in another script with its own `lang`). It is
  * text, so it is read aloud before the body; the icon it replaces never is.
+ * Below `sm` it sits above the body rather than beside it, so a long body keeps
+ * the full width on a phone.
  *
  * ## Anatomy
  *
@@ -46,7 +48,7 @@
  * | R10  | Composition seam                 | `title` + `kicker` slots + `children`                       |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
  * | R18  | Tailwind only                    | zero inline `style`; cva classes + Lucide via className     |
- * | R19  | Tokens only                      | `p-6` / `rounded-lg` / `border-s-*` widths via spacing + radius tokens; colors via semantic tokens |
+ * | R19  | Tokens only                      | `p-4 sm:p-6` / `rounded-lg` / `border-s-*` widths via spacing + radius tokens; colors via semantic tokens |
  * | R20  | AA contrast                      | tones map to AA-cleared semantic tokens (primary/destructive/foreground/muted-foreground) + neutral surface |
  * | R25  | Server component                 | no hooks → no `'use client'`                                |
  * | R26  | A11y from native el              | `role="note"` on the div; lucide icon marked `aria-hidden`  |
@@ -82,7 +84,12 @@ const calloutVariants = cva(
   // and the callout sets its own text colour instead of inheriting the band's.
   [
     'flex items-start gap-4 text-foreground',
-    'rounded-lg border border-border border-s-4 bg-background bg-linear-to-r from-card/40 to-card/40 p-6',
+    // Phones get the smaller inset: inside a padded page column, p-6 left a body
+    // narrower than the paragraphs around it.
+    'rounded-lg border border-border border-s-4 bg-background bg-linear-to-r from-card/40 to-card/40 p-4 sm:p-6',
+    // A kicker is a word, not a 20px icon, so beside the body it took a column the
+    // whole height of the callout. Below sm it sits above the body instead.
+    'data-[kicker]:max-sm:flex-col data-[kicker]:max-sm:gap-1',
     '[&_[data-slot=callout-icon]]:size-5 [&_[data-slot=callout-icon]]:shrink-0',
   ].join(' '),
   {
@@ -168,13 +175,14 @@ const Callout = React.forwardRef<HTMLDivElement, CalloutProps>(
         data-slot="callout"
         data-min-viewport={String(MIN_VIEWPORT)}
         data-tone={resolvedTone}
+        data-kicker={kicker ? '' : undefined}
         className={cn(calloutVariants({ tone }), className)}
         {...props}
       >
         {kicker ? (
           <span
             data-slot="callout-kicker"
-            className="font-heading text-foreground shrink-0 font-bold"
+            className="font-heading text-foreground shrink-0 self-start font-bold"
           >
             {kicker}
           </span>
