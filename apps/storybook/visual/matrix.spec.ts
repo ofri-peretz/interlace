@@ -26,7 +26,7 @@ test.skip(
   'Visual baselines run only in the pinned image: npm run visual:docker',
 );
 
-for (const mode of MODES) {
+for (const mode of MODES.filter((m) => !m.axeOnly)) {
   test.describe(mode.name, () => {
     for (const story of storiesFor(mode)) {
       test(`${story.title} › ${story.name}`, async ({ page }) => {

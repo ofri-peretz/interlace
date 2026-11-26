@@ -49,6 +49,15 @@ export async function stage(page: Page, id: string, mode: Mode): Promise<void> {
     throw new Error(`Story ${id} failed to render: ${error ?? 'unknown error'}`);
   }
   await expect(page.locator('#storybook-root')).toBeAttached();
+  // The theme addon writes `.dark` from an effect, after the story has
+  // rendered. Wait for <html> to carry the scheme the mode asks for, so the
+  // colour change it sets off is over before anything is measured, rather
+  // than caught a frame in with the light colours still showing. (The other
+  // conditions are written during render, and a story may override them.)
+  await page.waitForFunction(
+    (dark) => document.documentElement.classList.contains('dark') === dark,
+    mode.globals.theme === 'dark',
+  );
   await page.evaluate(async () => {
     await document.fonts.ready;
     // Two frames: one for layout effects, one for whatever they scheduled.
