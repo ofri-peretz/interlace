@@ -19,9 +19,10 @@
  * Re-runs as part of the registry build script's prebuild step. Safe to
  * run standalone: `node apps/registry/scripts/build-semantics-catalog.mjs`.
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeGeneratedSync } from './lib/write-generated.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -157,8 +158,7 @@ const catalogue = {
   },
 };
 
-mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
-writeFileSync(OUTPUT_PATH, JSON.stringify(catalogue, null, 2) + '\n');
+writeGeneratedSync(OUTPUT_PATH, JSON.stringify(catalogue, null, 2) + '\n');
 
 const totalBrand = Object.keys(catalogue.brand.light).length;
 const totalSemantics = Object.keys(catalogue.semantics.light).length;

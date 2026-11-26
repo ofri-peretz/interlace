@@ -31,9 +31,10 @@
  * fails the build instead of shipping a dead link.
  */
 
-import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { writeGenerated } from './lib/write-generated.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -293,8 +294,7 @@ const main = async () => {
     return;
   }
 
-  await mkdir(path.dirname(OUT_FILE), { recursive: true });
-  await writeFile(OUT_FILE, serialised, 'utf8');
+  await writeGenerated(OUT_FILE, serialised);
   const entries = payload.releases.reduce((n, r) => n + r.entries.length, 0);
   console.log(
     `build-changelog: ${payload.releases.length} release(s), ${entries} entr(ies) → apps/registry/public/data/changelog.json`,

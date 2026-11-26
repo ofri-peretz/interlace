@@ -67,8 +67,8 @@ function ScorecardRow({
       )}
       {...props}
     >
-      <header className="flex items-center justify-between gap-4">
-        <div className="flex flex-col gap-2">
+      <header className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex min-w-0 flex-col gap-2">
           <Typography variant="h4" as="h2">
             {name}
           </Typography>
