@@ -9,6 +9,7 @@
  * the rendered text rather than a mock that asserts we called console.log.
  */
 
+import type { Result, Status, Summary } from './check.js';
 import { DEFAULT_REGISTRY } from './plan.js';
 
 export type IndexItem = {
@@ -122,10 +123,12 @@ Commands
   add <name...>        install one or more components
   list, ls             list every component in the registry
   info <name>          show a component's dependencies, files and install command
+  check                tell whether your copied components still match a release
 
 Options
   --registry <url>     registry origin (default ${DEFAULT_REGISTRY})
   --dry-run            print the shadcn command instead of running it
+  check: --json  --strict  --allow <file>  --cwd <dir>  --config <file>  --item <name>
   -h, --help           show this help
   -v, --version        print the version
 
@@ -140,3 +143,62 @@ registry item, so the equivalent command always works too:
 
   npx shadcn@latest add ${DEFAULT_REGISTRY}/r/button.json
 `.trimStart();
+
+const STATUS_LABEL: Record<Status, string> = {
+  match: 'matches a release',
+  behind: 'behind the release',
+  modified: 'modified locally',
+  ahead: 'ahead of any release',
+  missing: 'missing',
+};
+
+/** The report `check` prints for people: one line per file that is not a plain match, then the totals. */
+export const renderCheck = (
+  results: readonly Result[],
+  summary: Summary,
+  options: { registry: string; strict: boolean },
+): string => {
+  if (results.length === 0) return 'No file in this project comes from the Interlace registry.';
+  const lines: string[] = [];
+  const shown = results.filter((r) => r.status !== 'match');
+  const width = Math.max(0, ...shown.map((r) => r.file.length));
+  for (const r of shown) {
+    const version =
+      r.localVersion && r.releasedVersion ? `  (${r.localVersion}, release ${r.releasedVersion})` : '';
+    const allowed = r.allowed ? `  [allowed${r.reason ? `: ${r.reason}` : ''}]` : '';
+    lines.push(`${pad(r.file, width)}  ${STATUS_LABEL[r.status]}${version}${allowed}`);
+  }
+  for (const file of summary.stale) lines.push(`note: ${file} now matches a release; remove it from the allow list`);
+  const c = summary.counts;
+  if (lines.length) lines.push('');
+  lines.push(
+    `${results.length} files from ${options.registry}: ${c.match} match, ${c.behind} behind, ` +
+      `${c.modified} modified, ${c.ahead} ahead, ${c.missing} missing`,
+  );
+  if (summary.ok) {
+    lines.push(c.behind && !options.strict ? 'No drift. (Files behind the release are not drift; --strict counts them.)' : 'No drift.');
+  } else {
+    lines.push(`Drift in ${summary.failing.length} file${summary.failing.length === 1 ? '' : 's'}. A change to a component belongs in Interlace;`);
+    lines.push('to keep a difference on purpose, add the file with --allow or to the allow list.');
+  }
+  return lines.join('\n');
+};
+
+/** The same report as JSON, for CI and for agents. */
+export const renderCheckJson = (
+  results: readonly Result[],
+  summary: Summary,
+  registry: string,
+): string =>
+  `${JSON.stringify(
+    {
+      registry,
+      ok: summary.ok,
+      counts: summary.counts,
+      failing: summary.failing.map((r) => r.file),
+      stale: summary.stale,
+      results,
+    },
+    null,
+    2,
+  )}\n`;
