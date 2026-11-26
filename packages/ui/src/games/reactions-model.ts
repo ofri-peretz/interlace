@@ -75,7 +75,11 @@ export interface HandState {
 export type HandEvent =
   | { type: 'raise'; by: string; name: string; at: number }
   | { type: 'lower'; by: string }
-  /** Calls on `by`, or the first in line when left out. */
+  /**
+   * Calls on `by`, or the first in line when left out. Resolve the first in
+   * line on the host and send `by` over the wire, so a call delivered twice
+   * calls one person, not two.
+   */
   | { type: 'call'; by?: string }
   /** The speaker is finished. */
   | { type: 'done' }

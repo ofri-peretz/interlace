@@ -502,7 +502,7 @@
     "around": 26,
     "arrang": 1,
     "array": 25,
-    "arriv": 19,
+    "arriv": 20,
     "arrival": 10,
     "arrow": 33,
     "arrowleft": 1,
@@ -2199,7 +2199,7 @@
     "official": 1,
     "offlin": 1,
     "offset": 14,
-    "often": 7,
+    "often": 8,
     "oklch": 3,
     "old": 7,
     "oldest": 11,
@@ -2612,7 +2612,7 @@
     "receiv": 9,
     "recent": 6,
     "recommend": 3,
-    "reconnect": 2,
+    "reconnect": 3,
     "record": 10,
     "recovery": 1,
     "rect": 21,
@@ -2637,6 +2637,7 @@
     "reinvent": 2,
     "reject": 1,
     "rejection": 3,
+    "rejectroomevent": 2,
     "relat": 4,
     "relatedpost": 4,
     "relatedpostsprop": 1,
@@ -2683,7 +2684,7 @@
     "resident": 1,
     "resiz": 6,
     "resolution": 1,
-    "resolv": 30,
+    "resolv": 31,
     "resolvecolor": 1,
     "resolver": 4,
     "respect": 1,
@@ -2695,7 +2696,7 @@
     "restyl": 2,
     "result": 26,
     "retir": 2,
-    "retry": 3,
+    "retry": 4,
     "retryboundary": 1,
     "retun": 8,
     "reus": 39,
@@ -3326,7 +3327,7 @@
     "turnout": 1,
     "tutorial": 1,
     "tweak": 1,
-    "twic": 25,
+    "twic": 26,
     "twin": 3,
     "twinkl": 1,
     "twitter": 2,
@@ -3525,7 +3526,7 @@
     "windowm": 1,
     "winner": 6,
     "wir": 8,
-    "wire": 8,
+    "wire": 9,
     "within": 19,
     "without": 106,
     "women": 1,
@@ -4562,7 +4563,7 @@
         "template",
         "data"
       ],
-      "terms": "dashboard templat data server rsc responsiv min viewport 480 persistent main sidebar dashboardtemplat logg saa application area standard nav topbar hamburger content shap link layout page drawer app wire sheet reach skeleton top left menu load children sectionboundary flight surfac ten rect silhouett inner typical rout swap cls hear neutral collaps overrid mirror r23 status head region every level null announc singl real full"
+      "terms": "dashboard templat data server rsc responsiv min viewport 480 persistent main sidebar dashboardtemplat logg saa application area standard nav topbar hamburger content shap link layout page drawer app sheet wire reach skeleton top left menu load children sectionboundary flight surfac ten rect silhouett inner typical rout swap cls hear neutral collaps overrid mirror r23 status head region every level null announc singl real full"
     },
     {
       "name": "data-state-model",
@@ -4980,7 +4981,7 @@
         "template",
         "feedback"
       ],
-      "terms": "error templat feedback server rsc responsiv min viewport 320 contact 404 503 errortemplat retry 500 status action generic home description variant back centr support titl page full overrid button skeleton column cluster cta load sectionboundary flight surfac display ten rect silhouett inner typical rout four pass swap cls hear neutral mirror r23 pick region level null announc shap singl real layout whol next role"
+      "terms": "error templat feedback server rsc responsiv min viewport 320 contact 404 503 errortemplat 500 retry status action generic home description variant back centr support titl page full overrid button skeleton column cluster cta load sectionboundary flight surfac display ten rect silhouett inner typical rout four pass swap cls hear neutral mirror r23 pick region level null announc shap singl real layout whol next role"
     },
     {
       "name": "faq",
@@ -5080,7 +5081,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "flip card market pattern client responsiv min viewport 320 face front turn back answer flipcard question flipp expand button commit claim grid link guess ask inert backfac defaultflipp demand onflippedchang perspectiv tabb control stretch arriv hidden data inner plat press uncontroll rotation controll noscript taller aria show height disclosur fluid side slot initial equal tall children javascript fact reduc fine toggl motion border away"
+      "terms": "flip card market pattern client responsiv min viewport 320 face front turn back answer flipcard question flipp expand button commit claim grid link guess ask inert backfac defaultflipp demand onflippedchang perspectiv tabb control stretch hidden arriv data inner plat press uncontroll rotation controll noscript taller aria show height disclosur fluid side slot initial equal tall children javascript fact reduc fine toggl motion border away"
     },
     {
       "name": "flip-group",
@@ -5517,7 +5518,7 @@
         "game",
         "games"
       ],
-      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet host player room clock expiry try minut expir rank send stamp scor board peopl new round copy event refus address wrong letter character admitt applyroomevent broadcastchannel realtim useroom link sender null stopp big phon connect codeexpiresat makejoincod group window arriv outsid tie screen row 4mz endsat joincod k7q reconnect"
+      "terms": "join game client responsiv min viewport 320 stat lobby countdown question reveal podium clos alphabet host player room clock expiry try minut expir rank send stamp scor board peopl new round copy event refus address wrong letter character admitt applyroomevent broadcastchannel realtim useroom link sender null stopp big phon connect codeexpiresat makejoincod group window arriv outsid tie screen row 4mz endsat joincod k7q rejectroomevent"
     },
     {
       "name": "kbd",
@@ -5727,7 +5728,7 @@
         "game",
         "games"
       ],
-      "terms": "live room game client responsiv min viewport 320 stat lobby countdown question reveal podium clos join alphabet host player liveroom clock round useroom send try hostcontrol rank stamp joincod event refus answer start everyon play intent scor board app null new expiry night realtim data wrong phon flow connect screen applyroomevent broadcastchannel expir name end slot sender transport arriv count wait second tallybar show"
+      "terms": "live room game client responsiv min viewport 320 stat lobby countdown question reveal podium clos join alphabet host player liveroom clock round useroom send try hostcontrol rank stamp joincod event refus answer start everyon play intent scor board app null new expiry night realtim data wrong phon flow connect screen applyroomevent broadcastchannel expir name end slot sender transport count wait arriv second tallybar show"
     },
     {
       "name": "marker",
@@ -5743,7 +5744,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "marker decorativ effect client phras strok across sweep highlighter pen underlin paragraph tone emphasis colour letter highlight mark start millisecond thick lower band 700 full miss half wash animation text html scroll view 150 intersectionobserver retun background strength first reader crawler wait time end right left variant finish mix transparent data forc primary reduc size toward motion wrap fade twic web without dropp animat"
+      "terms": "marker decorativ effect client phras strok across sweep highlighter pen underlin paragraph tone emphasis colour letter highlight mark start millisecond thick lower band 700 full miss half wash animation text html scroll view 150 intersectionobserver retun background strength first reader crawler wait time end right left variant finish mix transparent data forc primary reduc size toward motion wrap fade web without twic dropp animat"
     },
     {
       "name": "mdx-starter",
@@ -5761,7 +5762,7 @@
         "starter",
         "blog"
       ],
-      "terms": "mdx starter blog server rsc pipelin callout pros tag codeblock taglist aspectratio fenc shiki typographic articl additiv alt gett wir wire annotation info danger tool baselin install spread http figur warn success badg caption imag wrapper copy body start base button render"
+      "terms": "mdx starter blog server rsc pipelin callout pros tag codeblock taglist aspectratio fenc shiki typographic articl additiv alt gett wir annotation info wire danger tool baselin install spread http figur warn success badg caption imag wrapper copy body start base button render"
     },
     {
       "name": "meter-scale",
@@ -5938,7 +5939,7 @@
         "pattern",
         "marketing"
       ],
-      "terms": "newsletter form market pattern server rsc load skeleton responsiv min viewport 320 newsletterform consent checkbox email websit submit typography field honeypot input signup subscrib titl auth primitiv wire description footer optional block structur bot consentlabel i18n newsletterformprop reject canonical button typical cms embedd spam submission variant fieldcontrol fieldlabel policy privacy unsubscrib composition human naiv unreachabl describedby slot copy action render association useful bespok name"
+      "terms": "newsletter form market pattern server rsc load skeleton responsiv min viewport 320 newsletterform consent checkbox email websit submit typography field honeypot input signup subscrib titl auth primitiv description wire footer optional block structur bot consentlabel i18n newsletterformprop reject canonical button typical cms embedd spam submission variant fieldcontrol fieldlabel policy privacy unsubscrib composition human naiv unreachabl describedby slot copy action render association useful bespok name"
     },
     {
       "name": "number-field",
@@ -6393,7 +6394,7 @@
         "game",
         "games"
       ],
-      "terms": "reaction game client responsiv min viewport 320 rais hand raisehand speak handqueu reactionbar reactionstream float tap person queu host tal call kind budget someon room first allowreaction puls lower window name allow recent talk screen shar stream done button send ask count peopl next 3000 applyhandevent cheap giv maxfloat perwindow placeinlin tallyreaction windowm plac everyon motion let event transform word onchang pop data reduc"
+      "terms": "reaction game client responsiv min viewport 320 rais hand raisehand speak handqueu reactionbar reactionstream person float host tap queu call tal kind budget someon first room allowreaction send puls lower window name allow recent talk screen shar stream done button ask count peopl next 3000 applyhandevent cheap giv maxfloat perwindow placeinlin tallyreaction windowm plac everyon motion let event transform word onchang pop data reduc"
     },
     {
       "name": "reading-layout",
@@ -6505,7 +6506,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "recap blog pattern server rsc responsiv min viewport 320 section person session cover week data often slot ask pick next decoderecap encoderecap home 36rem titl footer hear articl order list topic account commit interest quot header meta optional going link later show ran stor four happen read date model mean pair head phon check part stat plac every level none sit real width motion"
+      "terms": "recap blog pattern server rsc responsiv min viewport 320 section person session cover week data slot often ask pick next decoderecap encoderecap home 36rem titl footer hear articl order list topic account commit interest quot header meta optional going link later show ran stor four happen read date model mean pair head phon check part stat plac every level none sit real width motion"
     },
     {
       "name": "registry-item-template",
@@ -6525,7 +6526,7 @@
         "template",
         "blog"
       ],
-      "terms": "registry item templat blog server rsc responsiv min viewport 320 sectionboundary relat matrix name diagram codeblock install registryitemtemplat articl snippet variant cta description documentation header command page compos anatomy delegat reactnod tool layout full container 1024 bash dog eat surfac grid back food issu cva section singl data content fluid slot hard region mapp often trail api skeleton dep extra stream npx load driven"
+      "terms": "registry item templat blog server rsc responsiv min viewport 320 sectionboundary relat matrix name diagram codeblock install registryitemtemplat articl snippet variant cta description documentation header command page compos anatomy delegat reactnod tool layout full container 1024 bash dog eat surfac grid back food issu cva section singl data content fluid slot hard region mapp trail often api skeleton dep extra stream npx load driven"
     },
     {
       "name": "related-posts",
@@ -7039,7 +7040,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "sheen text decorativ effect client sheentext gradient grad word colour travell primary phras activ promis slow var forc headlin behind ton across still animation motion view body second paint hold short clipp carry keyfram paus glyph decoration fallback schem reduc surfac allow system slid pass twic web dropp even never mode stop prefer fals api background browser back seam add real run true set"
+      "terms": "sheen text decorativ effect client sheentext gradient grad word colour travell primary phras activ promis slow var forc headlin behind ton across still animation motion view body second paint hold short clipp carry keyfram paus glyph decoration fallback schem reduc surfac allow system slid pass web twic dropp even never mode stop prefer fals api background browser back seam add real run true set"
     },
     {
       "name": "sheen",
@@ -8526,7 +8527,7 @@
         "game",
         "games"
       ],
-      "terms": "word cloud game client responsiv min viewport 320 stat empty long many link contact block break sent room wordentry rank wordcloud send biggest band entry count refus coffe middl letter foldtext typ fold phon centr match data among buildcloud cloudorder onword order spell list slot character model blocklist show viewer form plac mark flipgroup safety run step alternat lowercas shar screen mine sit check"
+      "terms": "word cloud game client responsiv min viewport 320 stat empty long many link contact block break sent room wordentry rank wordcloud entry count send biggest band refus coffe middl letter foldtext typ fold phon centr match data among buildcloud cloudorder onword order spell list slot character model blocklist show viewer form plac mark flipgroup reconnect safety sender run step alternat lowercas shar screen mine"
     },
     {
       "name": "wordmark",

@@ -9,7 +9,9 @@
  *
  * Two entries are the same word when their `foldText` forms match, so
  * "Coffee", "coffee " and "COFFEE" land on one word. The cloud shows the
- * spelling most people used (ties go to the first one sent). Stop words the
+ * spelling most people used (ties go to the first one sent). A sender (`by`)
+ * counts once per word, and an entry with an `id` counts once however often
+ * it arrives, so a reconnect that resends the room's words changes nothing. Stop words the
  * consumer passes are dropped; Interlace ships none, because they depend on
  * the language of the room.
  *
@@ -32,8 +34,10 @@ import { foldText, tidyText } from './text-safety-model.js';
 export interface CloudEntry {
   /** What was typed. */
   text: string;
-  /** Who sent it, so `mine` can be marked. Optional. */
+  /** Who sent it, so `mine` can be marked. A person counts once per word. Optional. */
   by?: string;
+  /** The entry's own id. An entry delivered twice (a reconnect, a retry) counts once. Optional. */
+  id?: string;
 }
 
 export interface CloudWord {
@@ -75,13 +79,24 @@ export function buildCloud(entries: readonly (CloudEntry | string)[], options: C
   const { max = 50, steps = 5, stopwords, viewer } = options;
   const stop = new Set((stopwords ?? []).map(foldText));
   const groups = new Map<string, { first: number; count: number; spellings: Map<string, number>; mine: boolean }>();
+  const seenIds = new Set<string>();
+  const seenVotes = new Set<string>();
   let total = 0;
 
   entries.forEach((entry, i) => {
-    const e = typeof entry === 'string' ? { text: entry } : entry;
+    const e: CloudEntry = typeof entry === 'string' ? { text: entry } : entry;
     const text = tidyText(e.text);
     const key = foldText(text);
     if (!key || stop.has(key)) return;
+    if (e.id !== undefined) {
+      if (seenIds.has(e.id)) return;
+      seenIds.add(e.id);
+    }
+    if (e.by !== undefined) {
+      const vote = `${e.by}\u0000${key}`;
+      if (seenVotes.has(vote)) return;
+      seenVotes.add(vote);
+    }
     total++;
     let g = groups.get(key);
     if (!g) {
