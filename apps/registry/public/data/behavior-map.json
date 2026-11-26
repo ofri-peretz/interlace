@@ -10948,6 +10948,19 @@
         "inGate": false
       }
     },
+    "motion-token": {
+      "sourcePath": "packages/ui/src/lib/motion-token.ts",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "multi-step-form": {
       "sourcePath": "packages/ui/src/patterns/multi-step-form.tsx",
       "keyboard": null,
