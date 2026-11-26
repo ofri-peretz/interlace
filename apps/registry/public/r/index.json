@@ -4000,6 +4000,24 @@
       }
     },
     {
+      "name": "word-cloud",
+      "type": "registry:ui",
+      "title": "Word Cloud",
+      "description": "The room's words, live. Phones send a word or two with `WordEntry`; the shared screen shows them as a `WordCloud` in which the words the room repeats grow, the biggest sit in the middle, and every change moves into place rather than jumping there. Anyone…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "article-template",
       "type": "registry:block",
       "title": "Article Template",

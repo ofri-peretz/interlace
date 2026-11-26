@@ -31,6 +31,8 @@ component at once and, where a computer can check it, adds a lock so it stays fi
 | 4 | Motion | Hard-coded durations and easings (`duration-150`, `duration-[180ms]`, `ease-out`) that a brand cannot retune | toast, select, combobox, command palette, progress, flip card, guess reveal, social sign-in, focus grid, article card | Closed: tokens everywhere, plus `motion-token-lock` |
 | 5 | Focus | Four ring recipes (`ring-ring/50`, `ring-ring/60`, `ring-2` with offset, `outline-2`), two of them at partial strength that may fall under 3:1 | inputs, tabs, accordion, dialog close, buttons | Closed: one 2px full-strength ring with a 2px gap, plus `focus-ring-strength-lock` |
 | 6 | Right-to-left | Sheet and drawer only open from a physical edge; no `start` or `end` side that follows the page | sheet, drawer | Closed: `start` and `end` resolve from `DirectionProvider`, pinned by `logical-edge.test` |
+| 7 | Text size | At 150% text on a 390px phone, fixed rem widths (`w-80`, `max-w-80`, `w-11` boxes, `px-10`) grew past the screen and the page scrolled sideways | hover card, OTP field, scorecard row, dashboard and scorecard templates, Storybook's centered stage | Closed: widths cap at the space available; 14 entries left `a11y-known.json`. Stat strip and charts remain, with the data components work |
+| 8 | Keyboard | The focus grid's link showed no change of its own when focused (the ring sits on the card), the scroller's viewport grew to its track on a phone, and starter install commands scrolled in a region no key could reach | focus grid, scroller, starter stories | Closed: the link underlines on focus, the viewport stretches to its row, install commands wrap; 7 more entries left `a11y-known.json` |
 
 ## Out of scope here
 
