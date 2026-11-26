@@ -1,6 +1,9 @@
-# Intent: interlace.tools is the front door to all of Ofri's open source
+# Intent — interlace.tools is the front door to all of Ofri's open source
 
-Status: accepted by Ofri 2026-10-11 ("lets apply the changes") — built in the same PR
+**Status:** shipped · **Opened:** `2026-10-11` · **Owner:** `@ofri-peretz`
+
+Accepted by Ofri 2026-10-11 ("lets apply the changes") and built in the same PR. The design is
+[design.md](design.md).
 
 ## What is wanted
 
@@ -36,47 +39,18 @@ no startup-speak. Every sentence says what a thing does.
 Burgee's own research (`.sdlc/research/docs-traffic-2026-10.md`) already says discovery, not
 docs, is the bottleneck: 155 views across ten sites in 30 days, Google 0.
 
-## One rule for all three front pages
+## Constraints
 
-Above the fold, every product front page shows, in this order:
-1. What it is, in one plain sentence.
-2. One measured number (from its existing source: manifest, README "Measured" table, ratchet).
-3. One install command.
-4. One button to the next step.
+- Plain language only: every sentence says what a thing does. No slogans, no "enterprise-grade".
+- Numbers on the page are read from `interlace-numbers.json` or the ratchet, never hand-typed.
+- The positioning rule holds: values and what we build. Benchmarks and comparisons stay on the
+  product sites.
+- Mobile-first: the hero and the first product card read at 375 px.
 
-No slogans, no "enterprise-grade", no "level up". This intent changes interlace.tools; the
-eslint and burgee heroes get their own intents in their own repos, held to the same rule.
+## Success criteria
 
-## What the page must do (acceptance)
-
-- Hero names the products in plain words and shows the total-downloads number, read from
-  the ratchet / numbers manifest — never hand-typed.
-- burgee appears as **Shipping**, linking to burgee.interlace.tools.
-- Every product card has one action: "Go to <product> →" (its own site). Secondary: npm, GitHub.
-- Product counts render from `interlace-numbers.json` (existing lock test pattern).
-- Outbound product-card clicks are captured in PostHog so conversion = card clicks / visitors
-  is measurable. Today it is not.
-- Stays within the positioning rule: values + what we build. No benchmarks or comparisons
-  on this site — those live on the product sites.
-- Mobile-first: the hero and the first product card are readable at 375 px without scrolling
-  past a badge pill.
-
-## Success measure (Maintain band)
+The Maintain band:
 
 - Baseline: 13 visitors / 30 d, 85% bounce, product-click rate unknown.
 - Target after 30 days live: bounce < 60%, product-card click-through ≥ 30% of visitors.
 - Breach → new intent.
-
-## Out of scope
-
-- Traffic acquisition (LinkedIn/Dev.to posting) — separate work.
-- Redesigning product sites.
-- The design system (ds.interlace.tools) as a headline product — it stays listed, lower
-  on the page, because it serves builders of these sites more than users of the tools.
-
-## Open decisions for Ofri
-
-1. Order of products on the page. Default: ESLint plugins, burgee, Serverless, Design system.
-2. Whether the download number is one total or per product. Default: one total in the hero.
-3. Whether the "Built by Ofri Peretz" footer becomes a short "Who builds this" block with a
-   link to ofriperetz.dev. Default: yes — a person behind it converts better than a brand.

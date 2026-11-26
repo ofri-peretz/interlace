@@ -158,7 +158,7 @@ function CTASection({
             <div
               data-slot="cta-section-background"
               aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10"
+              className="pointer-events-none absolute inset-0 z-backdrop"
             >
               {background}
             </div>

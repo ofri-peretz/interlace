@@ -54,7 +54,7 @@ const LINKS: NavLink[] = [
 
 export function SiteNav() {
   return (
-    <header className="border-b border-border bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-10">
+    <header className="border-b border-border bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60 sticky top-0 z-header">
       <div className="mx-auto flex min-h-14 max-w-wide flex-wrap items-center justify-between gap-x-6 gap-y-1 px-6 py-2 xs:py-0">
         <Link href="/" className="flex items-center gap-2">
           <BrandLogo />

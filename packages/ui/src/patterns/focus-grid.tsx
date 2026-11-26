@@ -136,7 +136,7 @@ function FocusGridItem({
       >
         <div
           data-slot="focus-grid-media"
-          className="absolute inset-0 -z-10 [&>*]:size-full [&>img]:object-cover [&>video]:object-cover"
+          className="absolute inset-0 z-backdrop [&>*]:size-full [&>img]:object-cover [&>video]:object-cover"
         >
           {media}
         </div>

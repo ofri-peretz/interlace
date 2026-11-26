@@ -31,6 +31,9 @@
  *   archive"), so the reader sees who backs the line before opening anything.
  *   Use it when the publisher's name is itself the evidence. The pill text
  *   defaults to the publishers, joined with " · "; set `chipLabel` to shorten.
+ *   A label longer than the pill ends in an ellipsis; the popover names every
+ *   source in full. The pill caps at `--citation-chip-max-width` (default
+ *   24ch): raise it where your publishers' names run longer.
  *
  * ## Safety
  *
@@ -222,7 +225,7 @@ function Citation({
                 under comfortable density) without moving text. */}
             <PopoverTrigger
               data-slot="citation-trigger"
-              className="bg-primary/10 text-primary hover:bg-primary/15 relative inline-flex max-w-[min(24ch,100%)] items-center rounded-md px-1.5 py-0.5 align-baseline text-xs leading-none font-semibold whitespace-nowrap after:absolute after:top-1/2 after:left-1/2 after:min-h-target after:min-w-target after:size-full after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']"
+              className="bg-primary/10 text-primary hover:bg-primary/15 relative inline-flex max-w-[min(var(--citation-chip-max-width,24ch),100%)] items-center rounded-md px-1.5 py-0.5 align-baseline text-xs leading-none font-semibold whitespace-nowrap after:absolute after:top-1/2 after:left-1/2 after:min-h-target after:min-w-target after:size-full after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']"
             >
               {/* A long publisher list ends in an ellipsis instead of widening
                   the page; the whole text stays in the name and the popover. */}

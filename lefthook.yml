@@ -8,6 +8,7 @@
 #               npm run lint:guidance                   agent guidance lint (local step below)
 #               npm run hook:test-integrity             truepass diff --base origin/main: weakened
 #                                                       assertions, unexplained snapshots
+#               npm run intent:check                    provedone intent shape (local step below)
 #
 # `npm run ci:local` runs the pre-push battery over every file, as CI does.
 remotes:
@@ -22,9 +23,12 @@ pre-push:
   commands:
     guidance:
       run: npm run lint:guidance
+    intents:
+      run: npm run intent:check
 
-# A merge resolves registry output with the `interlace-generated` driver (see .gitattributes), so
-# rebuild it from the merged sources before the merge is pushed.
+# Rebuild the registry output from the merged sources, so the local site, e2e and tests see them.
+# A feature branch does not commit that output (the `registry (no generated output in PRs)` gate
+# fails one that does), so leave what this rewrites unstaged: only the release commit carries it.
 post-merge:
   commands:
     registry:
