@@ -26,7 +26,7 @@
  *
  * ## Motion
  *
- * A new group on the phone rises in (200ms) and its names follow within
+ * A changed group on the phone rises in (200ms; the first one is simply there) and its names follow within
  * 150ms in total. On the screen, a reshuffle glides each name from its old
  * group to its new one (FlipGroup, 400ms). Under reduced motion everything
  * is simply in place.
@@ -81,7 +81,11 @@ type GroupCardProps = Omit<React.ComponentProps<'section'>, 'children'> & {
 
 function useRiseIn(key: string, reduced: boolean) {
   const ref = React.useRef<HTMLElement | null>(null);
+  // The group shown on mount is already the state: only a change rises in.
+  const shown = React.useRef(key);
   React.useEffect(() => {
+    if (shown.current === key) return;
+    shown.current = key;
     const el = ref.current;
     if (!el || reduced || typeof el.animate !== 'function') return;
     el.animate(

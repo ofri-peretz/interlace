@@ -130,6 +130,9 @@ export const RaisedHands: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: 'Raise your hand' }));
     await expect(canvas.getByText('You are number 3 in line.')).toBeTruthy();
+    // Alex and Sam raised first: two calls later, you are next.
+    await userEvent.click(canvas.getByRole('button', { name: 'Call next' }));
+    await expect(canvas.getByText('You are number 2 in line.')).toBeTruthy();
     await userEvent.click(canvas.getByRole('button', { name: 'Call next' }));
     await expect(canvas.getByText('You are next.')).toBeTruthy();
   },

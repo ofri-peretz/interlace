@@ -135,6 +135,8 @@ export const Room: Story = {
     await expect(canvas.getByText('Sent. A moderator will check it before it shows.')).toBeTruthy();
     await userEvent.click(canvas.getByRole('button', { name: 'Approve' }));
     await expect(canvas.getAllByText('Does the oven need a stone?').length).toBeGreaterThan(1);
+    // Let the new question finish arriving before the contrast check reads it.
+    await Promise.all(canvasElement.getAnimations({ subtree: true }).map((a) => a.finished));
   },
 };
 

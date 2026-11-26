@@ -126,10 +126,13 @@ describe('GroupCard', () => {
     expect(screen.getByRole('timer', { name: 'Time to talk' })).toBeTruthy();
   });
 
-  it('rises in with the names following, and stays still under reduced motion', () => {
+  it('rises in with the names following when the group changes, and stays still under reduced motion', () => {
     const animate = vi.fn(() => ({ cancel: () => undefined }));
     Object.defineProperty(HTMLElement.prototype, 'animate', { value: animate, configurable: true });
-    const { rerender } = render(<GroupCard label="Team 2" members={['A', 'B', 'C']} />);
+    const { rerender } = render(<GroupCard label="Team 2" members={['X']} />);
+    // The group shown on mount is simply there.
+    expect(animate).not.toHaveBeenCalled();
+    rerender(<GroupCard label="Team 2" members={['A', 'B', 'C']} />);
     // The card, then three names spread over 150ms.
     expect(animate).toHaveBeenCalledTimes(4);
     expect(animate.mock.calls.map((c) => (c as unknown[])[1])).toEqual([
@@ -146,7 +149,8 @@ describe('GroupCard', () => {
     cleanup();
     animate.mockClear();
     reduced.value = true;
-    render(<GroupCard label="Team 2" members={['A']} />);
+    const again = render(<GroupCard label="Team 2" members={['A']} />);
+    again.rerender(<GroupCard label="Team 2" members={['B']} />);
     expect(animate).not.toHaveBeenCalled();
   });
 });
