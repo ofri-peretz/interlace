@@ -67,6 +67,7 @@ import { Check, X } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -191,12 +192,11 @@ function AnswerPad({
   // The reveal plays when `correct` arrives; a phone that reconnects into the reveal sees it too.
   React.useEffect(() => {
     if (!revealed || reduced) return;
-    const ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
     const hit = correct ? tiles.current.get(correct) : undefined;
     if (hit && typeof hit.animate === 'function')
       hit.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.04)', offset: 0.45 }, { transform: 'scale(1)' }], {
         duration: 420,
-        easing: ease,
+        easing: motionEase(hit, 'enter'),
       });
     const chip = hit?.querySelector<HTMLElement>('[data-slot="answer-pad-points"]');
     if (chip && typeof chip.animate === 'function')
@@ -206,7 +206,7 @@ function AnswerPad({
           { transform: 'translateY(-4px) scale(1.08)', offset: 0.6 },
           { transform: 'translateY(0) scale(1)' },
         ],
-        { duration: 560, delay: 160, easing: ease, fill: 'backwards' },
+        { duration: 560, delay: 160, easing: motionEase(chip, 'enter'), fill: 'backwards' },
       );
     const miss = value !== null && value !== correct ? tiles.current.get(value) : undefined;
     if (miss && typeof miss.animate === 'function')

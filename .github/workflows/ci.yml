@@ -70,6 +70,26 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run build
 
+  # ─── Gate 5a: a feature PR carries sources only ────────────────────────
+  # Registry output under apps/registry/public is rebuilt from source, so
+  # committed in a feature PR it conflicts with every other PR whenever main
+  # moves (GitHub's "Update branch" ignores the merge driver). It is committed
+  # once, by the release (Version Packages) commit, and rebuilt by every build
+  # and deploy in between. The release branch is the one exemption.
+  registry-no-generated:
+    name: registry (no generated output in PRs)
+    if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch the base branch
+        run: git fetch --no-tags origin ${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+      - name: The diff against the merge base holds no generated file
+        run: node apps/registry/scripts/check-no-generated-output.mjs origin/${{ github.base_ref }}
+
   # ─── Gate 5: registry drift ────────────────────────────────────────────
   # `apps/registry/scripts/build-registry.mjs --check` rebuilds every item
   # in memory and diffs against the committed `public/r/*.json`. Catches the
@@ -86,6 +106,16 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci --no-audit --no-fund
+      # The committed output is the last release's, so a feature PR (which no
+      # longer commits it) and main between releases are checked the other way
+      # round: regenerate from the sources under test, then run every check
+      # below against what the generators wrote. A generator that throws, writes
+      # invalid items or is not deterministic fails here. Only the release
+      # branch, whose commit carries the output, is checked against its
+      # committed files with no regeneration first.
+      - name: Regenerate the registry output from these sources
+        if: ${{ !startsWith(github.head_ref, 'changeset-release/') }}
+        run: npm run generate --workspace=registry
       - name: Check registry items match sources
         run: node apps/registry/scripts/build-registry.mjs --check
       - name: Validate items against the official shadcn schemas
@@ -163,6 +193,11 @@ jobs:
       # registry bug and is a missing build step.
       - name: Build @interlace/ui (the registry app resolves it via dist/)
         run: npm run build --workspace=@interlace/ui
+      # The installed items must be the ones these sources produce, not the
+      # last release's committed copy.
+      - name: Regenerate the registry output from these sources
+        if: ${{ !startsWith(github.head_ref, 'changeset-release/') }}
+        run: npm run generate --workspace=registry
       - name: Install every registry item into a scratch Next.js app
         run: npm run registry:e2e --workspace=registry
       - name: Upload results

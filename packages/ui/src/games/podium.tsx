@@ -52,6 +52,7 @@ import * as React from 'react';
 import { Celebrate } from '../effects/celebrate.js';
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 import { rankEntries, type LeaderboardEntry, type RankedEntry } from './leaderboard-model.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -108,7 +109,6 @@ const STEP = [
 ] as const;
 const RISE_ORDER = [2, 1, 0];
 const GAP = 350;
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
 function Podium({
   entries,
@@ -150,7 +150,7 @@ function Podium({
           step.animate([{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], {
             duration: 500,
             delay: Math.max(0, delay),
-            easing: EASE,
+            easing: motionEase(step, 'enter'),
             fill: 'backwards',
           }),
         );
@@ -163,7 +163,7 @@ function Podium({
             {
               duration: 300,
               delay: Math.max(0, delay) + 350,
-              easing: EASE,
+              easing: motionEase(label, 'enter'),
               fill: 'backwards',
             },
           ),

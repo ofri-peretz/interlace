@@ -89,6 +89,7 @@ import { CheckIcon } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -343,7 +344,7 @@ const MultiStepForm = React.forwardRef<HTMLFormElement, MultiStepFormProps>(func
         { transform: `translateX(${(rtl ? -dir : dir) * 1}rem)`, opacity: 0 },
         { transform: 'translateX(0)', opacity: 1 },
       ],
-      { duration: 200, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+      { duration: 200, easing: motionEase(section, 'enter') },
     );
   }, [current, reduced]);
 
