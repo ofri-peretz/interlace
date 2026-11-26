@@ -7,6 +7,8 @@
     "prebuild": "node scripts/build-registry.mjs && node scripts/build-behavior-map.mjs && node scripts/build-concepts.mjs && node scripts/build-tokens.mjs",
     "build": "next build",
     "build:check": "node scripts/build-registry.mjs --check && node scripts/validate-registry.mjs && node scripts/build-changelog.mjs --check && node scripts/build-agent-surface.mjs --check && node scripts/build-behavior-map.mjs --check && node scripts/build-concepts.mjs --check && node scripts/build-tokens.mjs --check",
+    "generate": "npm run prebuild && npm run agents:build && npm run changelog:build",
+    "generated:check-pr": "node scripts/check-no-generated-output.mjs",
     "agents:build": "node scripts/build-agent-surface.mjs",
     "agents:check": "node scripts/build-agent-surface.mjs --check",
     "behavior:build": "node scripts/build-behavior-map.mjs",
