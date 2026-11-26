@@ -90,7 +90,7 @@ export const NarrowColumn: Story = {
 export const BelowStickyHeader: Story = {
   render: (args) => (
     <div className="[--reading-offset:3.5rem]">
-      <header className="bg-background border-border sticky top-0 z-20 flex h-14 items-center border-b px-4 font-semibold">
+      <header className="bg-background border-border sticky top-0 z-header flex h-14 items-center border-b px-4 font-semibold">
         Acme
       </header>
       <ReadingLayout {...args} className="pt-6">

@@ -66,3 +66,7 @@ jobs:
         run: npx --no turbo run lint:eslint --affected --output-logs=new-only
       - name: eslint (agent guidance)
         run: npm run lint:guidance
+      # Stage 1's shape check from burgee's provedone, the one burgee and eslint run on their
+      # intents: title, status, sections, success criteria, and the design.md an approved intent owes.
+      - name: intents (provedone intent check)
+        run: npm run intent:check

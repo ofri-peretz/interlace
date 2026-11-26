@@ -207,7 +207,7 @@ export function GridField({
     <div
       ref={rootRef}
       data-slot="grid-field"
-      className={cn('pointer-events-none absolute inset-0 -z-10 overflow-hidden', FADE[fade], className)}
+      className={cn('pointer-events-none absolute inset-0 z-backdrop overflow-hidden', FADE[fade], className)}
       {...props}
       aria-hidden
     >

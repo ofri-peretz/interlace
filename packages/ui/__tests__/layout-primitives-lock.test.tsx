@@ -197,7 +197,7 @@ describe("Section: tone + divider (LAYOUT §8)", () => {
     ] as const) {
       const html = render(<Section overlap={depth}>x</Section>);
       expect(html).toContain(pull);
-      expect(html).toContain("z-10");
+      expect(html).toContain("z-raised");
       // One pt-0 beats the single fluid py-section-* at every width.
       expect(html).toMatch(/(^|\s)pt-0(\s|")/);
       expect(html).toContain(`data-overlap="${depth}"`);
