@@ -126,11 +126,13 @@ describe('msUntilNextDay', () => {
 describe('streaks', () => {
   // 2026-11-21 is a Saturday.
   const SAT = { weekdays: [6] };
+  // Without a protection rule there are no shields to hold or earn.
+  const NO_SHIELDS = { shields: 0, shieldsUsed: 0, nextShieldIn: null };
 
   it('counts a run that ends today or yesterday, with today still open', () => {
     const played = ['2026-11-20', '2026-11-21', '2026-11-22', '2026-11-23'];
-    expect(summarizeStreak(played, '2026-11-23')).toEqual({ current: 4, best: 4, status: 'played', total: 4 });
-    expect(summarizeStreak(played, '2026-11-24')).toEqual({ current: 4, best: 4, status: 'pending', total: 4 });
+    expect(summarizeStreak(played, '2026-11-23')).toEqual({ current: 4, best: 4, status: 'played', total: 4, ...NO_SHIELDS });
+    expect(summarizeStreak(played, '2026-11-24')).toEqual({ current: 4, best: 4, status: 'pending', total: 4, ...NO_SHIELDS });
     expect(summarizeStreak(played, '2026-11-25')).toMatchObject({ current: 0, best: 4, status: 'none' });
   });
 
@@ -146,8 +148,8 @@ describe('streaks', () => {
   it('says when today is a rest day', () => {
     expect(summarizeStreak(['2026-11-20'], '2026-11-21', SAT)).toMatchObject({ current: 1, status: 'resting' });
     expect(summarizeStreak(['2026-11-10'], '2026-11-21', SAT)).toMatchObject({ current: 0, status: 'none' });
-    expect(summarizeStreak([], '2026-11-21', SAT)).toEqual({ current: 0, best: 0, status: 'resting', total: 0 });
-    expect(summarizeStreak([], '2026-11-24')).toEqual({ current: 0, best: 0, status: 'none', total: 0 });
+    expect(summarizeStreak([], '2026-11-21', SAT)).toEqual({ current: 0, best: 0, status: 'resting', total: 0, ...NO_SHIELDS });
+    expect(summarizeStreak([], '2026-11-24')).toEqual({ current: 0, best: 0, status: 'none', total: 0, ...NO_SHIELDS });
   });
 
   it('ignores duplicates, bad keys and days after today', () => {
@@ -156,6 +158,7 @@ describe('streaks', () => {
       best: 1,
       status: 'played',
       total: 1,
+      ...NO_SHIELDS,
     });
   });
 

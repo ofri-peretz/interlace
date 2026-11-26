@@ -630,6 +630,23 @@
           "source": ".changeset/games-habit-batch.md"
         },
         {
+          "summary": "A sense of progress for daily games, without nagging. Streak gains `protection`: every few days played earns a shield (up to a cap) that covers one missed day, worked out from the played days alone so every device agrees; a covered day is marked with a shield and the strip says how many are held or how far the next is. New pure models: `progress-model` (XP and levels on a gentle curve, a daily goal, goal days, milestones crossed) and `reminder-model` (a daily .ics reminder the player keeps in their own calendar).\n\nNew components: GoalRing (a meter ring for today's goal), LevelMeter (level, XP bar that fills from before a gain, the gain chip), Milestones (reached, next and a few ahead), RoundSummary (the end-of-round moment: XP counted up, goal, streak kept, news, then the next step; celebrates once) and ReminderOffer (a quiet calendar nudge that sends nothing). ShareCard takes a `note` for a milestone share and leaves out an empty marks row.",
+          "components": [
+            "streak",
+            "share-card",
+            "goal-ring",
+            "level-meter",
+            "milestones",
+            "round-summary",
+            "reminder-offer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/games-progress.md"
+        },
+        {
           "summary": "New `games` tier, the engine of a daily game, starting with `Streak`: a player's run of days, a sentence on where today stands (\"Play today to keep your streak.\") and a strip of recent days marked played, rest, missed or still open. Rest days are a setting, not a special case: `rest={{ weekdays: [6], dates: ['2026-12-25'] }}` names days that never break a run, and a rest day the player plays anyway still counts. Today never ends a run while it is still open. Each mark pairs its colour with a shape and an icon, and every day is read out with its date and state; `variant=\"compact\"` is one chip for a header. No hooks, so it renders on the server. The arithmetic ships beside it and is exported: `games/daily` (day keys in a time zone, puzzle numbers, a seeded puzzle-of-the-day that never repeats inside a cycle, time to the next day) and `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`).",
           "components": [
             "streak"
