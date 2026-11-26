@@ -256,6 +256,10 @@
       "types": "./dist/primitives/checkbox.d.ts",
       "default": "./dist/primitives/checkbox.js"
     },
+    "./choice-card": {
+      "types": "./dist/primitives/choice-card.d.ts",
+      "default": "./dist/primitives/choice-card.js"
+    },
     "./radio-group": {
       "types": "./dist/primitives/radio-group.d.ts",
       "default": "./dist/primitives/radio-group.js"

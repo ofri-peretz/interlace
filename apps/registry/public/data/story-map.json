@@ -423,6 +423,16 @@
     "previewDark": "primitives-checkbox--dark",
     "skeleton": "primitives-checkbox--loading"
   },
+  "choice-card": {
+    "title": "Primitives/ChoiceCard",
+    "storyIds": [
+      "primitives-choicecard--default",
+      "primitives-choicecard--one-pick"
+    ],
+    "preview": "primitives-choicecard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "choropleth-map": {
     "title": "Charts/ChoroplethMap",
     "storyIds": [

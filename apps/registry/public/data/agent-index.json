@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 225
+    "itemCount": 226
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 78,
+      "primitive": 79,
       "pattern": 65,
       "effect": 28,
       "game": 15,
@@ -40,7 +40,7 @@
       "theme": 3
     },
     "category": {
-      "primitive": 78,
+      "primitive": 79,
       "pattern": 65,
       "blog": 37,
       "data": 30,
@@ -59,22 +59,23 @@
       "util": 6,
       "a11y": 5,
       "starter": 3,
-      "theme": 3
+      "theme": 3,
+      "other": 1
     },
     "rendering": {
-      "client": 114,
+      "client": 115,
       "server": 111
     },
     "keyboard": {
       "none": 175,
-      "handled": 50
+      "handled": 51
     },
     "loading": {
-      "none": 187,
+      "none": 188,
       "built-in": 38
     },
     "minViewport": {
-      "320": 143,
+      "320": 144,
       "480": 7,
       "768": 1,
       "inherited": 74
@@ -1776,6 +1777,72 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/checkbox.json",
       "item": "https://ds.interlace.tools/r/checkbox.json",
       "docs": "https://ds.interlace.tools/c/checkbox"
+    },
+    {
+      "name": "choice-card",
+      "title": "Choice Card",
+      "type": "registry:ui",
+      "summary": "Big, tappable tiles for picking: one answer to a question, the topics a reader cares about, the kind of session a group wants. A tile carries a title, an optional line of description and an optional picture or icon, and the whole tile is the control, so a…",
+      "topics": [],
+      "categories": [
+        "other",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "checkbox",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ChoiceCardLayout",
+          "values": [
+            "grid",
+            "list"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "checkbox",
+          "radio"
+        ],
+        "aria": [
+          "aria-hidden",
+          "aria-invalid",
+          "aria-readonly"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/choice-card.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/choice-card.json",
+      "item": "https://ds.interlace.tools/r/choice-card.json",
+      "docs": "https://ds.interlace.tools/c/choice-card"
     },
     {
       "name": "choropleth-map",

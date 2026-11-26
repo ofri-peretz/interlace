@@ -131,7 +131,8 @@ export default defineConfig({
         // file is in at 100 or it is out, and joining is a one-line diff.
         'src/patterns/{lint-playground,multi-step-form,share-image,thread-steps,tab-bar,app-header,app-header-edge,app-shell,pull-to-refresh,install-prompt}.tsx',
         // Effects with full render coverage, on the same rule.
-        'src/effects/{weave-texture,view-transition}.tsx',
+        'src/effects/{weave-texture,view-transition,presence}.tsx',
+        'src/primitives/choice-card.tsx',
       ],
       exclude: ['**/*.stories.tsx', '**/*.meta.json'],
       thresholds: { lines: 100, statements: 100, functions: 100, branches: 100 },

@@ -313,6 +313,17 @@
           "source": ".changeset/chart-labels.md"
         },
         {
+          "summary": "New ChoiceCard: big, tappable tiles for picking an answer, the topics a reader cares about or the kind of session a group wants. The whole tile is the control. `ChoiceCardGroup type=\"single\"` is a radio group (arrow keys move the pick) and `type=\"multiple\"` a group of checkboxes (Space toggles each); both take `value` / `onValueChange` / `defaultValue` and post with a form through `name`. Each `ChoiceCard` has a `title` (its accessible name), an optional `description` (its accessible description) and `media`. `layout=\"grid\"` fills the row with tiles at least `--choice-card-min` wide; `layout=\"list\"` stacks full-width rows. The pick never rests on colour alone, and a tile presses in while held except under reduced motion.",
+          "components": [
+            "choice-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/choice-card.md"
+        },
+        {
           "summary": "New `ChoroplethMap`: a value per area as shades of one colour. You pass the shapes as projected SVG paths, so Interlace ships no geography and decides no borders. Values fall into a few classes (quantile, equal or your own breaks) with a legend a reader can match; missing areas are hatched and labelled \"No data\", never drawn as the lowest shade. Every area is reachable by keyboard and announced with its value, and a table view carries the same numbers.",
           "components": [
             "choropleth-map"
