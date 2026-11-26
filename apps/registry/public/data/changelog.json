@@ -209,17 +209,6 @@
           "source": ".changeset/theme-split.md"
         },
         {
-          "summary": "A running order for live sessions. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over in the warning tone and in words, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and Back, Pause, Add a minute and Next. With `shortcuts`, a presentation remote moves it on (Page Down, Page Up, arrows, `p`), except while typing. `AgendaNow` is the room's view of the same state: what is on, the time left and what comes next, with `size=\"stage\"` for a shared screen. The state is pure and made of timestamps (`games/agenda-model`: `createAgenda`, `applyAgendaEvent`, `agendaStatus`, `formatClock`), so a refreshed tab or a late screen reads the right clock at once, and `next` and `back` name the item they move from, so an event delivered twice moves once. The bar empties in one linear transform animation; under reduced motion nothing moves.",
-          "components": [
-            "agenda"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/agenda.md"
-        },
-        {
           "summary": "feat(ui): Badge gets `size=\"sm\"` (the caption step for dense tag lists and counts) and `variant=\"scrim\"` (a translucent face for badges over images and video). One in three Badges in the DS was re-sizing itself with `text-caption tracking-normal …`, and article-card hand-built the over-cover look with a seven-class chain; both now use the props.",
           "components": [
             "badge",
@@ -523,17 +512,6 @@
           "source": ".changeset/dot-plot.md"
         },
         {
-          "summary": "Brainstorm, then choose. `DotVote` gives each person a few dots to spread across a brainstorm's ideas, two on one idea if they feel strongly, then ranks the ideas as the room's dots arrive, each glide explaining a change of rank. Every button names its idea, the dots left are announced, and the viewer's own dots are named in the results. `games/dot-vote-model` makes a ballot valid (`cleanBallot`: known ideas, whole counts, a cap per idea and in all), counts what is left (`dotsLeft`), and ranks ballots keyed by person (`tallyDots`), so a ballot sent twice counts once and ties keep the ideas' order on every screen.",
-          "components": [
-            "dot-vote"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/dot-vote.md"
-        },
-        {
           "summary": "New DrawOn and Marker, editorial motion for line drawings and emphasis. DrawOn wraps any inline SVG and draws its stroked shapes as it scrolls into view, one after another (`order=\"sequence\"`) or all at once, then fades in the fills. Marker is a `<mark>` whose highlighter stroke sweeps across a phrase from the inline-start edge, in `band`, `full` or `underline` shapes and `highlight` or `primary` tones. Both render the finished result on the server, run once, and are simply there under reduced motion.",
           "components": [
             "draw-on",
@@ -678,17 +656,6 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/games-streak.md"
-        },
-        {
-          "summary": "Pairs, small groups and teams from one model. `games/groups-model` splits a room into balanced groups (sizes never differ by more than one, an odd pair becomes a trio), gives the same groups for the same seed so a refreshed host and a server agree, avoids putting the same people together again (`avoid`), adds late joiners to the smallest group and takes leavers out without a reshuffle, and totals team scores by sum or mean for `Leaderboard` (`teamTotals`). `GroupCard` is the phone's view: the group's name, who you are with (read as one sentence), what to talk about and an optional TimerRing. `GroupGrid` is the shared screen: every group with its people, where a reshuffle glides each name to its new group. A new group rises in on the phone within 200ms, names following within 150ms; under reduced motion everything is in place.",
-          "components": [
-            "groups"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/groups.md"
         },
         {
           "summary": "GuessReveal: a one-question quiz. Two to four answers as buttons; the pick is marked right or wrong in words and with a short movement, the right answer is always shown, and an explanation opens. `onAnswer` lets the consumer record the pick. The status is a polite live region, the options stay focusable after the pick, and without JavaScript a details element holds the answer.",
@@ -895,15 +862,40 @@
           "source": ".changeset/mobile-app-shell.md"
         },
         {
-          "summary": "A shared board of sticky notes in columns. `NoteBoard` holds a retrospective (\"Keep / Change / Try\"), an affinity sort or a \"before / during / after\" map: people post a note into a column after the room's text checks, and the room sorts notes by moving them between columns. Each note's move buttons name the column they lead to, focus stays on the note that moved, the move is announced, and the note glides to its new place. `games/note-board-model` folds posts and moves into the board (`foldBoard`), so every screen agrees whatever order events arrive in and however often one is delivered.",
+          "summary": "Animations started from script now follow the brand's `--ease-*` and `--duration-*` tokens, like the CSS does. A new `motion-token` lib item reads them from the element that moves.",
           "components": [
-            "note-board"
+            "motion-token",
+            "calendar",
+            "time-slot-picker",
+            "multi-step-form",
+            "commitment",
+            "interest-signal",
+            "session-composer",
+            "guess-reveal",
+            "quiz-question",
+            "duel",
+            "order-game",
+            "podium",
+            "live-room",
+            "word-cloud",
+            "answer-pad",
+            "tally-bars",
+            "standings",
+            "closer-game",
+            "stagger-list",
+            "flip-group",
+            "reveal",
+            "celebrate",
+            "split-text",
+            "marker",
+            "rotating-text",
+            "draw-on"
           ],
           "componentsDeclared": true,
           "kind": "Added",
           "bump": "minor",
           "migration": null,
-          "source": ".changeset/note-board.md"
+          "source": ".changeset/motion-script-tokens.md"
         },
         {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
@@ -917,28 +909,6 @@
           "source": ".changeset/oklch-tokens.md"
         },
         {
-          "summary": "A picture guess. `PictureReveal` hides a picture under tiles that come away a few at a time as the presenter moves `step`, in a seeded order spread across the picture, so every screen uncovers the same tiles. Tiles leaving together fade and shrink with a 150ms stagger in all; under reduced motion they are simply gone. Each step can carry a text clue, shown and announced with the tiles, so someone who cannot see the picture plays the same round; the image has no text alternative until the reveal, when it gets `alt` and the answer is said. `games/picture-reveal-model` gives the order (`revealOrder`), the tiles off per step (`tilesAt`) and points that favour an early right guess (`guessPoints`). Phones guess with `TypeAnswer`.",
-          "components": [
-            "picture-reveal"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/picture-reveal.md"
-        },
-        {
-          "summary": "A pin on a picture. `PinDrop` lets each person place one pin on a map, floor plan or diagram by tap, drag or arrow keys, and says the pin in words (by the picture's named `regions` when given), so a screen reader user places the same pin. With an `answer` it is \"Where is it?\": on the reveal the answer scales in, a line joins it to the viewer's pin, and the points say how close it was; without one, the room's pins are the result. `PinMap` is the shared screen. `games/pin-drop-model` measures distance in widths of the picture, corrected for its shape (`pinDistance`), scores it (`pinPoints`), names a region (`regionOf`), moves a pin by key (`nudgePin`) and sums up the room (`pinSpread`).",
-          "components": [
-            "pin-drop"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/pin-drop.md"
-        },
-        {
           "summary": "New PointerSurface and UnderlineLink, motion that answers the reader. PointerSurface wraps a card so a soft `--primary` light follows the pointer, the card leans a few degrees toward it, or both (`effect`), and keyboard focus inside lights it from the centre; it only runs on a fine pointer that can hover and is still under reduced motion. UnderlineLink is a link whose underline draws in from the inline-start edge on hover and focus, keeps a thin line at rest by default so links are not told apart by colour alone, takes a router link through `render`, and needs no JavaScript.",
           "components": [
             "pointer-surface",
@@ -949,28 +919,6 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/pointer-surface-underline-link.md"
-        },
-        {
-          "summary": "Spend a budget of points across options. `PointsSplit` gives each option a minus and a plus (named per option), a bar for its share of the budget and a live count of points left; Send unlocks once the budget is spent, or earlier with `partial`. `PointsTotals` shows the room's points per option, most first, each row read as one line, gliding to its new rank. The rules are pure (`games/points-model`: `checkSplit`, `totalPoints`, `nudge`, `spentOf`); a split that breaks them is left out of the room's totals. Bars move by transform; under reduced motion they just change.",
-          "components": [
-            "points-split"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/points-split.md"
-        },
-        {
-          "summary": "Call it before it happens. `Prediction` lets each person lock in one outcome (\"Who wins the next round?\") and keeps the room's calls hidden until the host settles it, so every call is the person's own read. Once settled it says in words whether the viewer called it, with the points, and shows how the room called it with the outcome marked. `games/prediction-model` settles calls keyed by person (`settlePredictions`), so a duplicate or late message changes nothing and an unknown option is dropped, and `predictionPoints` can pay a call few people made up to twice as much (`reward: 'bold'`).",
-          "components": [
-            "prediction"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/prediction.md"
         },
         {
           "summary": "Prose tables read like an editorial table instead of a Markdown grid. The cell boxes, the shaded header and the zebra rows are gone: a firm rule sits under the header, a hairline between rows, body cells keep the reading size, the first cell carries the row's weight, figures line up, and a GFM column alignment is honoured. A `<span data-status=\"success|warning|info|destructive|neutral\">` in a cell reads as a quiet status pill whose dot repeats the word. On a phone, a table with a header row stacks into one card per row, each value under its column name, with no sideways scrolling: Prose names each body cell after its column (`data-label`, which server-rendered markup can ship itself to skip a flash) and pins the table roles a screen reader would otherwise lose.",
@@ -1005,61 +953,6 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/pull-to-refresh-install.md"
-        },
-        {
-          "summary": "A 2 x 2 grid: two questions at once. `Quadrant` is the phone: a square pad where the viewer places one dot by tapping, dragging or the arrow keys (Shift for fine steps, Home and End for the ends of the horizontal axis, Page Up and Page Down for the vertical), with the dot's place said in words as it changes and mirrored in right to left. Once placed, it shows the room on the same grid: where dots crowd, how many sit in each quarter, the room's middle travelling from the viewer's dot to where the room is, and an earlier round as a dashed ring; the picture is hidden from assistive tech and told in one focused sentence. `QuadrantMap` is the same picture for a shared screen. `games/quadrant-model` cleans and bins the dots (`summarizeQuadrant`), finds the leading quarter (none on a tie), measures how far the middle moved (`quadrantShift`) and moves a dot by key (`nudgePoint`).",
-          "components": [
-            "quadrant"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/quadrant.md"
-        },
-        {
-          "summary": "Questions from the room, ranked by the room. `QuestionAsk` lets a phone send a question of up to `maxLength` characters (default 200) with a live counter, refuses unsafe text through `text-safety-model` with a reason, and thanks the asker differently when the room is moderated. `QuestionBoard` lists live questions, the pinned one first and marked \"Answering now\", with a vote toggle (`aria-pressed`, the count in its name) that is off for the viewer's own question; questions glide to their new rank when votes change and the count rises into place. `QuestionQueue` gives a moderator review, live and done lists with approve, dismiss, pin, answered and restore, each sending one event. The state is pure and exported from `games/question-board-model`: `createBoard`, `applyBoardEvent` (review → live → answered or dismissed, one vote per person, never on your own, per-person limits) and `rankQuestions` (pinned, then votes, then oldest).",
-          "components": [
-            "question-board"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/question-board.md"
-        },
-        {
-          "summary": "Rank by preference, as a room. `RankChoices` starts every phone from the same seeded order (so no item is favoured by where it was printed) and moves rows with named up and down buttons or the arrow keys, Home and End on each row's handle, announcing each move and keeping focus on the moved row; rows glide with FlipGroup. `RankResults` shows the room's order with each item's average place, read as one line per row, gliding as answers arrive. `games/ranking-model` tallies places into the room's order (`tallyRankings`, a Borda count with ties broken by first places) and says how much the room agrees with it (`roomAgreement`); a ranking that is not every item once is left out. For a round with a right order, `OrderGame` stays the tool.",
-          "components": [
-            "ranking"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/ranking.md"
-        },
-        {
-          "summary": "A scale question for a room. `Rating` lets each person pick one step (a radio group: arrow keys move, each step has a name) and send it, then shows the room's answers on the same scale with their own step in the accent, the room's average in one focused sentence, a dashed outline for an earlier round (`before`), and for a 0 to 10 scale the recommend score. `faces` swaps the numbers for icons with names, for a mood check. `minResponses` keeps the room hidden until enough have answered. The rules are pure (`games/rating-model`: `summarizeRatings`, `ratingShift`, `ratingSteps`, `cleanRatings`) and drop answers off the scale. The bars grow from the baseline in 250ms; under reduced motion the chart is simply there.",
-          "components": [
-            "rating"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/rating.md"
-        },
-        {
-          "summary": "The room's pulse while someone talks. `ReactionBar` gives a phone one round button per reaction kind (a neutral `DEFAULT_REACTIONS` set: love it, agree, funny, new to me, lost me; pass your own `kinds`), each popping on tap. `ReactionStream` lets every new reaction float up a shared screen with a slight drift and fade (1.6s, Web Animations, at most `maxFloating` at once, nothing on first load), and keeps a per-kind tally that screen readers read and that is the whole view under reduced motion. `RaiseHand` is a toggle that says the person's place in line and when it is their turn; `HandQueue` gives the host the line in order with call next, call on a named person, lower a hand and done. The rules are pure in `games/reactions-model`: `allowReaction` (a sliding per-person budget, 6 in 3 seconds by default), `tallyReactions`, and `createHands` / `applyHandEvent` / `placeInLine` (first raised, first called; lowering and raising again goes to the back).",
-          "components": [
-            "reactions"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/reactions.md"
         },
         {
           "summary": "New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an \"On this page\" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.",
@@ -1099,17 +992,6 @@
           "source": ".changeset/recall-card-update-feed.md"
         },
         {
-          "summary": "A quiet minute in a loud room. `ReflectionCard` asks one prompt and keeps the answer private by default, saying so under the field. When the session allows it (`shareable`), the writer can tick to share it with the room without their name; only then is it checked like other room text (links, contact details, the blocklist), and a reflection that cannot be shared is still saved, with the reason said in words. With `Rating` before it, it makes an exit ticket.",
-          "components": [
-            "reflection-card"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/reflection-card.md"
-        },
-        {
           "summary": "New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.",
           "components": [
             "reveal"
@@ -1131,17 +1013,6 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/room-access.md"
-        },
-        {
-          "summary": "One goal for the whole room. `RoomGoal` is a shared meter with named milestones on the way and, when given, how many rounds in a row most of the room got right; a milestone the room passes lifts once and is announced once, and the meter reads as a labelled `meter` with its value in words. `games/room-goal-model` adds up contributions (`tallyRoomGoal`), counting each person once per round whatever order or how many times messages arrive, with an optional cap per person so the room gets there together, and counts rounds in a row above a bar (`roomStreak`).",
-          "components": [
-            "room-goal"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/room-goal.md"
         },
         {
           "summary": "Live rooms hold up on real phones. Every state the host sends carries its clock, and `useRoom`\nreturns `now`, this device's clock corrected to the host's (`clockOffset` in room-model), so a\nphone whose clock is off still counts down to the host's deadline; `TimerRing` takes `now` too.\nA player's page now says it is away on `pagehide`, asks for the room again when it is seen, and\nrejoins by itself when shown away, unless the player left on purpose (`presence: false` turns it off).\nNetworks drop messages: a player's join or answer is sent again every 3s until the host's state\nshows it (5 tries), and the host no longer broadcasts a reply to a repeated or late answer.",
@@ -1312,17 +1183,6 @@
           "source": ".changeset/social-sign-in.md"
         },
         {
-          "summary": "`Spectrum`: where does a room stand between two poles? A statement, two pole labels and a slider (Base UI keyboard and drag, its value read in words: \"Closer to …\", \"In the middle\"). Placing the dot fires `onPlace` once and turns the slider into the room's picture on the same line: bars per bin with the viewer's bin in the accent, a marker for the room's middle that slides from the viewer's dot to the room's, and, with `before`, a dashed marker where the middle was in an earlier round. One sentence says it all for a screen reader and takes focus. `minResponses` hides the room until enough dots are in. The numbers are pure in `games/spectrum-model`: `summarizeSpectrum` (bins, median, middle half, mean), `spectrumShift`, `binOf`, `cleanValues`.",
-          "components": [
-            "spectrum"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/spectrum.md"
-        },
-        {
           "summary": "`Spinner`: the shadcn core `spinner` item in Interlace tokens. An inline SVG in `currentColor` with `sm` (default), `md` and `lg` sizes. Announced once as a status named by `label` (\"Loading\" by default, so it can be translated); `decorative` hides it inside something that already says it is busy. It turns only under `motion-safe`. Server component.",
           "components": [
             "spinner"
@@ -1382,17 +1242,6 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/target-sizes-and-card-link.md"
-        },
-        {
-          "summary": "A wall of the room's short answers for a shared screen. `TextWall` shows posts newest first, row by row, in a grid that follows its own width, with a count read as text (not a live region, so a screen reader user reads at their pace) and an optional `spotlight` that lifts one post above the rest, large. Posts already on the wall when it loads stay still; each later one rises in at the top (200ms) while the others glide one place along, and a post moved into the spotlight scales in (250ms); under reduced motion they simply appear. `max` caps the wall (40 by default) while the count stays the whole room. Phones send with `QuestionAsk`, relabelled, and posts go through the Q&A board's checks and moderation queue, so nothing unreviewed reaches the screen.",
-          "components": [
-            "text-wall"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/text-wall.md"
         },
         {
           "summary": "`ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.",
@@ -1491,15 +1340,15 @@
           "source": ".changeset/topbar-motion.md"
         },
         {
-          "summary": "A quiz round where people type the answer. `TypeAnswer` takes every accepted spelling, forgives case, accents, punctuation and a slip of a letter in a longer word (and spells the answer out when it did), and never forgives a different number. It runs on the same clock rules as `QuizQuestion`, with \"Stop the clock\", and running out sends whatever was typed. The reveal marks the field, says the outcome in a focused sentence, and shows what the room typed, folded together, with the right answer always given a row. `games/typed-answer-model` folds and matches answers (`normalizeAnswer`, `matchAnswer`, `editDistance`), scores them like a multiple-choice answer (`scoreTyped`) so both kinds of round share a leaderboard, and groups the room's answers (`groupTyped`).",
+          "summary": "User intent: typed events for what a person meant to do, sent to whichever analytics tool the app uses.\n\n`IntentProvider` takes one `onIntent` adapter. Below it, `useActivateIntent` (every activation, with keyboard, mouse, touch or pen), `useViewIntent` (half the element visible for a second), `useDwellIntent` (a pointer or keyboard focus resting for half a second), `useCommitIntent` (a typed value settled, reported as its length), `useDisclosureIntent` (an overlay opened or closed, and why) and `useFormIntent` (started, submitted, or abandoned by cancel or page leave) all report to it. Any element with `data-intent=\"name\"` reports its clicks with no hook, so server components can declare intent too. Given a `page`, the provider reports `page_view` and `page_leave` with visible time and read depth, and it reports rage clicks: three quick clicks on one spot.\n\nEvents carry names, numbers and enums only: never typed text, element text, or anything about who the person is. A failing adapter is caught, so analytics never breaks a page.",
           "components": [
-            "type-answer"
+            "intent"
           ],
           "componentsDeclared": true,
           "kind": "Added",
           "bump": "minor",
           "migration": null,
-          "source": ".changeset/type-answer.md"
+          "source": ".changeset/user-intent.md"
         },
         {
           "summary": "View transitions, made safe to reach for. `Morph` gives its one child a view-transition name (any string, cleaned into a valid identifier), so a card's image and the detail page's hero with the same name morph into each other: the card grows into its page. `useViewTransition()` runs a React state change inside a transition, flushed so the browser captures the new view, with optional `types`. `startViewTransition` does the same for code outside React. `PageTransitions` (once, in the root layout) is a server-safe `<style>`: the old page fades out, the new one rises in by half a rem, and `@view-transition` turns it on between documents; `pageTransitionsCss()` returns the same CSS. Where the browser has no View Transitions the update simply runs, and under reduced motion there is no transition at all. Opacity and transform only.",
@@ -2049,18 +1898,6 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/reflow-at-large-text.md"
-        },
-        {
-          "summary": "Room activities hold up after a reconnect. `buildCloud` counts an entry with an `id` once however often it arrives, and counts a sender (`by`) once per word, so a resent batch of words changes nothing. The hand queue's docs say to send `call` with `by`, so a call delivered twice calls one person. New tests replay a busy room of 60 with every event doubled, restore a board from a saved snapshot (a late joiner or a refreshed host), flood the reaction stream after a refresh, and place a spectrum dot with the keyboard alone.",
-          "components": [
-            "word-cloud",
-            "reactions"
-          ],
-          "componentsDeclared": true,
-          "kind": "Changed",
-          "bump": "patch",
-          "migration": null,
-          "source": ".changeset/room-hardening.md"
         },
         {
           "summary": "`SeatChart`'s default colours for lists six to eleven alternate deeper and paler shades of the five hues (then a pale grey), instead of deepening all five. Neighbouring hues in the second round now differ in lightness too, so eleven lists stay apart at seat size in light and dark. Every colour keeps 3:1 against the page.",

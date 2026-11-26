@@ -56,17 +56,18 @@ to claim. Read it before writing props; the props table on
 same render the accessibility gate asserts against, including the loading and
 dark variants.
 
-## Worked example — `agenda`
+## Worked example — `answer-pad`
 
 ```
 rendering    client
 minViewport  320
-keyboard     ArrowLeft, ArrowRight, PageDown, PageUp
-states       AgendaPhase = before | running | paused | over | finished
+keyboard     none of its own
+states       AnswerPadState = open | sent | closed | revealed
+             AnswerPadOutcome = correct | wrong | missed
 exports      MIN_VIEWPORT
 ```
 
-The running order of a session. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and the…
+The player's side of a live round: the question is on the big screen, and each phone shows big lettered tiles to pick from. The first pick is final and goes to the host; the pad then says the answer is in and waits. When the host reveals the round, the pad…
 
 ## The rule
 

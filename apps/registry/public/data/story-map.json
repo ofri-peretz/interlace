@@ -23,21 +23,6 @@
     "previewDark": "primitives-accordion--dark",
     "skeleton": null
   },
-  "agenda": {
-    "title": "Games/Agenda",
-    "storyIds": [
-      "games-agenda--default",
-      "games-agenda--controls",
-      "games-agenda--live",
-      "games-agenda--over",
-      "games-agenda--before",
-      "games-agenda--room-screen",
-      "games-agenda--right-to-left"
-    ],
-    "preview": "games-agenda--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "alert": {
     "title": "Primitives/Alert",
     "storyIds": [
@@ -919,18 +904,6 @@
     "previewDark": "charts-dotplot--dark",
     "skeleton": "charts-dotplot--loading"
   },
-  "dot-vote": {
-    "title": "Games/DotVote",
-    "storyIds": [
-      "games-dotvote--default",
-      "games-dotvote--voting",
-      "games-dotvote--live",
-      "games-dotvote--right-to-left"
-    ],
-    "preview": "games-dotvote--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "draw-on": {
     "title": "Effects/DrawOn",
     "storyIds": [
@@ -1219,19 +1192,6 @@
       "effects-gridfield--chosen-cells"
     ],
     "preview": "effects-gridfield--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "groups": {
-    "title": "Games/Groups",
-    "storyIds": [
-      "games-groups--default",
-      "games-groups--waiting",
-      "games-groups--screen",
-      "games-groups--team-standings",
-      "games-groups--right-to-left"
-    ],
-    "preview": "games-groups--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1644,19 +1604,6 @@
     "previewDark": "blocks-newsletterform--dark",
     "skeleton": "blocks-newsletterform--loading"
   },
-  "note-board": {
-    "title": "Games/NoteBoard",
-    "storyIds": [
-      "games-noteboard--default",
-      "games-noteboard--read-only",
-      "games-noteboard--live",
-      "games-noteboard--stage",
-      "games-noteboard--right-to-left"
-    ],
-    "preview": "games-noteboard--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "number-field": {
     "title": "Primitives/NumberField",
     "storyIds": [
@@ -1726,32 +1673,6 @@
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
   },
-  "picture-reveal": {
-    "title": "Games/PictureReveal",
-    "storyIds": [
-      "games-picturereveal--default",
-      "games-picturereveal--presenter",
-      "games-picturereveal--revealed",
-      "games-picturereveal--right-to-left"
-    ],
-    "preview": "games-picturereveal--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "pin-drop": {
-    "title": "Games/PinDrop",
-    "storyIds": [
-      "games-pindrop--default",
-      "games-pindrop--placing",
-      "games-pindrop--live",
-      "games-pindrop--no-answer",
-      "games-pindrop--screen",
-      "games-pindrop--right-to-left"
-    ],
-    "preview": "games-pindrop--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "podium": {
     "title": "Games/Podium",
     "storyIds": [
@@ -1771,18 +1692,6 @@
       "effects-pointersurface--grid"
     ],
     "preview": "effects-pointersurface--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "points-split": {
-    "title": "Games/PointsSplit",
-    "storyIds": [
-      "games-pointssplit--default",
-      "games-pointssplit--spending",
-      "games-pointssplit--room-totals",
-      "games-pointssplit--right-to-left"
-    ],
-    "preview": "games-pointssplit--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -1811,21 +1720,6 @@
     ],
     "preview": "primitives-popover--placement",
     "previewDark": "primitives-popover--dark",
-    "skeleton": null
-  },
-  "prediction": {
-    "title": "Games/Prediction",
-    "storyIds": [
-      "games-prediction--default",
-      "games-prediction--live",
-      "games-prediction--choosing",
-      "games-prediction--locked",
-      "games-prediction--missed",
-      "games-prediction--closed",
-      "games-prediction--right-to-left"
-    ],
-    "preview": "games-prediction--default",
-    "previewDark": null,
     "skeleton": null
   },
   "prev-next-post": {
@@ -1921,32 +1815,6 @@
     "previewDark": null,
     "skeleton": null
   },
-  "quadrant": {
-    "title": "Games/Quadrant",
-    "storyIds": [
-      "games-quadrant--default",
-      "games-quadrant--placing",
-      "games-quadrant--keyboard",
-      "games-quadrant--screen",
-      "games-quadrant--right-to-left"
-    ],
-    "preview": "games-quadrant--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "question-board": {
-    "title": "Games/QuestionBoard",
-    "storyIds": [
-      "games-questionboard--default",
-      "games-questionboard--empty",
-      "games-questionboard--room",
-      "games-questionboard--stage",
-      "games-questionboard--right-to-left"
-    ],
-    "preview": "games-questionboard--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "quiz-question": {
     "title": "Games/QuizQuestion",
     "storyIds": [
@@ -2004,43 +1872,6 @@
     ],
     "preview": "foundations-radius--default",
     "previewDark": "foundations-radius--dark",
-    "skeleton": null
-  },
-  "ranking": {
-    "title": "Games/Ranking",
-    "storyIds": [
-      "games-ranking--default",
-      "games-ranking--keyboard",
-      "games-ranking--room-results",
-      "games-ranking--right-to-left"
-    ],
-    "preview": "games-ranking--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "rating": {
-    "title": "Games/Rating",
-    "storyIds": [
-      "games-rating--default",
-      "games-rating--choosing",
-      "games-rating--mood",
-      "games-rating--recommend",
-      "games-rating--right-to-left"
-    ],
-    "preview": "games-rating--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "reactions": {
-    "title": "Games/Reactions",
-    "storyIds": [
-      "games-reactions--default",
-      "games-reactions--live",
-      "games-reactions--raised-hands",
-      "games-reactions--right-to-left"
-    ],
-    "preview": "games-reactions--default",
-    "previewDark": null,
     "skeleton": null
   },
   "reading-layout": {
@@ -2117,19 +1948,6 @@
     "previewDark": null,
     "skeleton": null
   },
-  "reflection-card": {
-    "title": "Games/ReflectionCard",
-    "storyIds": [
-      "games-reflectioncard--default",
-      "games-reflectioncard--private",
-      "games-reflectioncard--sharing",
-      "games-reflectioncard--exit-ticket",
-      "games-reflectioncard--right-to-left"
-    ],
-    "preview": "games-reflectioncard--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "registry-item-template": {
     "title": "Templates/RegistryItemTemplate",
     "storyIds": [
@@ -2201,18 +2019,6 @@
       "effects-reveal--sequenced"
     ],
     "preview": "effects-reveal--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "room-goal": {
-    "title": "Games/RoomGoal",
-    "storyIds": [
-      "games-roomgoal--default",
-      "games-roomgoal--live",
-      "games-roomgoal--done",
-      "games-roomgoal--right-to-left"
-    ],
-    "preview": "games-roomgoal--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -2702,19 +2508,6 @@
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
   },
-  "spectrum": {
-    "title": "Games/Spectrum",
-    "storyIds": [
-      "games-spectrum--default",
-      "games-spectrum--placing",
-      "games-spectrum--keyboard",
-      "games-spectrum--private",
-      "games-spectrum--right-to-left"
-    ],
-    "preview": "games-spectrum--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "spinner": {
     "title": "Primitives/Spinner",
     "storyIds": [
@@ -2987,19 +2780,6 @@
     "preview": "blocks-testimonial--default",
     "previewDark": "blocks-testimonial--dark",
     "skeleton": "blocks-testimonial--loading"
-  },
-  "text-wall": {
-    "title": "Games/TextWall",
-    "storyIds": [
-      "games-textwall--default",
-      "games-textwall--live",
-      "games-textwall--phone",
-      "games-textwall--empty",
-      "games-textwall--right-to-left"
-    ],
-    "preview": "games-textwall--default",
-    "previewDark": null,
-    "skeleton": null
   },
   "textarea": {
     "title": "Primitives/Textarea",
@@ -3315,18 +3095,6 @@
       "blocks-topbarscrolledge--default"
     ],
     "preview": "blocks-topbarscrolledge--default",
-    "previewDark": null,
-    "skeleton": null
-  },
-  "type-answer": {
-    "title": "Games/TypeAnswer",
-    "storyIds": [
-      "games-typeanswer--default",
-      "games-typeanswer--asking",
-      "games-typeanswer--typing",
-      "games-typeanswer--right-to-left"
-    ],
-    "preview": "games-typeanswer--default",
     "previewDark": null,
     "skeleton": null
   },

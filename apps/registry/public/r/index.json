@@ -148,6 +148,24 @@
       }
     },
     {
+      "name": "motion-token",
+      "type": "registry:lib",
+      "title": "Motion token reader",
+      "description": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "theme-tokens",
       "type": "registry:lib",
       "title": "Theme token manifest",
@@ -188,6 +206,24 @@
       "type": "registry:lib",
       "title": "useReadingPrefs hook",
       "description": "@interlace/ui — reads and writes the reader's text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "intent",
+      "type": "registry:lib",
+      "title": "User intent hooks and provider",
+      "description": "@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.",
       "categories": [
         "foundation",
         "util"
@@ -3532,24 +3568,6 @@
       }
     },
     {
-      "name": "agenda",
-      "type": "registry:ui",
-      "title": "Agenda",
-      "description": "The running order of a session. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and the…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "answer-pad",
       "type": "registry:ui",
       "title": "Answer Pad",
@@ -3604,24 +3622,6 @@
       }
     },
     {
-      "name": "dot-vote",
-      "type": "registry:ui",
-      "title": "Dot Vote",
-      "description": "After a brainstorm, the room chooses: each person spreads a few dots across the ideas (two on one idea means \"this one, really\"), sends them, and watches the ideas rank themselves as everyone's dots come in. It pairs with `TextWall` or `QuestionBoard` for…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "duel",
       "type": "registry:ui",
       "title": "Duel",
@@ -3651,24 +3651,6 @@
       "meta": {
         "tier": "game",
         "client": false,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "groups",
-      "type": "registry:ui",
-      "title": "Groups",
-      "description": "Pairs, small groups and teams. `GroupCard` is what one person's phone shows: which group they are in, who they are with, what to talk about and for how long. `GroupGrid` is the shared screen: every group with its people, where a reshuffle glides each name…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
         "minViewport": 320,
         "loading": false,
         "version": "1.0.0",
@@ -3766,64 +3748,10 @@
       }
     },
     {
-      "name": "note-board",
-      "type": "registry:ui",
-      "title": "Note Board",
-      "description": "A shared board of sticky notes in columns: a retrospective (\"Keep / Change / Try\"), an affinity sort, a \"before / during / after\" map. People post a note into a column, and the room sorts them by moving notes between columns. Every screen folds the same…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "order-game",
       "type": "registry:ui",
       "title": "Order Game",
       "description": "Put a handful of items in order: events from earliest to latest, places from smallest to largest. The player drags rows by their handle, or moves them with the arrow keys or the up and down buttons, then locks in. The rows then glide into the right order…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "picture-reveal",
-      "type": "registry:ui",
-      "title": "Picture Reveal",
-      "description": "A picture under tiles that come away a few at a time while the room guesses. The presenter moves `step`; every screen uncovers the same tiles in the same seeded order, spread across the picture. Phones guess with `TypeAnswer` (or `QuizQuestion`), and…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "pin-drop",
-      "type": "registry:ui",
-      "title": "Pin Drop",
-      "description": "A pin on a picture (a map, a floor plan, a diagram). On a phone, `PinDrop` lets each person place one pin by tap, drag or arrow keys. With an `answer` it is \"Where is it?\": once the host reveals, the answer appears, a line joins it to the viewer's pin, and…",
       "categories": [
         "games",
         "game"
@@ -3856,46 +3784,10 @@
       }
     },
     {
-      "name": "points-split",
-      "type": "registry:ui",
-      "title": "Points Split",
-      "description": "Spend a budget of points across options. `PointsSplit` is a phone: each option has a minus and a plus, a bar shows how much of the budget sits on it, and a counter says what is left; Send unlocks when the budget is spent. `PointsTotals` is the screen: the…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "poll",
       "type": "registry:ui",
       "title": "Poll",
       "description": "One question, one tap. The options are plain buttons; tapping one casts the vote, and the options turn into the results in place, with the bars growing to everyone's shares and the viewer's choice named. There is no submit step, because a poll that asks…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "prediction",
-      "type": "registry:ui",
-      "title": "Prediction",
-      "description": "\"Who will win?\" on a phone: the room calls an outcome before it happens, locks it in, and waits. Nobody sees how the room called it until the host settles it, so a call is the person's own read. Then the room's spread appears with the outcome marked, and…",
       "categories": [
         "games",
         "game"
@@ -3928,100 +3820,10 @@
       }
     },
     {
-      "name": "quadrant",
-      "type": "registry:ui",
-      "title": "Quadrant",
-      "description": "A 2 x 2 grid: two questions at once (\"how hard / how important\"). Each person places one dot on a square pad, by tapping, dragging or the arrow keys, then sees the room on the same grid: where the dots crowd, how many sit in each quarter, the room's…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "question-board",
-      "type": "registry:ui",
-      "title": "Question Board",
-      "description": "Questions from the room, ranked by the room. People ask from their phone (`QuestionAsk`), vote up the questions they want answered (`QuestionBoard`), and a moderator approves, pins, answers or hides them (`QuestionQueue`) before anything typed reaches a…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "quiz-question",
       "type": "registry:ui",
       "title": "Quiz Question",
       "description": "A multiple-choice question with the energy of a live quiz and the manners of a form: big answer tiles you can tap, click or pick with a number key, an optional clock that rewards speed, and a reveal that marks the right answer, says in words how you did…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "ranking",
-      "type": "registry:ui",
-      "title": "Ranking",
-      "description": "A room ranks the same items by preference. `RankChoices` is a phone: the items in a seeded starting order (so nobody's first item is favoured by where it was printed), moved with up and down buttons or the arrow keys on each row's handle, then sent.…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "rating",
-      "type": "registry:ui",
-      "title": "Rating",
-      "description": "A scale question for a room: how familiar, how likely to recommend, how are you feeling. Each person picks one step and sends it; then they see the room's answers on the same scale, their own step marked, the room's average, and, when the question was…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "reactions",
-      "type": "registry:ui",
-      "title": "Reactions",
-      "description": "The room's pulse while someone talks. Phones tap a reaction (`ReactionBar`) and the shared screen lets it float up (`ReactionStream`); someone who wants to speak raises a hand (`RaiseHand`) and the host calls on people in the order they asked (`HandQueue`).",
       "categories": [
         "games",
         "game"
@@ -4054,46 +3856,10 @@
       }
     },
     {
-      "name": "reflection-card",
-      "type": "registry:ui",
-      "title": "Reflection Card",
-      "description": "A quiet minute in a loud room: one prompt (\"What surprised you today?\"), a field, and a promise that the answer is yours. It is private by default; when the session allows it, the writer can choose to share it with the room without their name, and only…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "reminder-offer",
       "type": "registry:ui",
       "title": "Reminder Offer",
       "description": "A quiet offer of a daily nudge that the player keeps in their own calendar: pick a time, add it, done. It downloads an .ics file with one event that repeats daily (`reminder-model.ts`), so nothing is sent, no address is asked for, and the player removes it…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "room-goal",
-      "type": "registry:ui",
-      "title": "Room Goal",
-      "description": "One meter for the whole room: a shared target, named milestones on the way (\"Bonus round\", \"Group photo\"), and, when given, how many rounds in a row most of the room got right. Built for the shared screen; it reads the same on a phone.",
       "categories": [
         "games",
         "game"
@@ -4130,24 +3896,6 @@
       "type": "registry:ui",
       "title": "Share Card",
       "description": "How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "spectrum",
-      "type": "registry:ui",
-      "title": "Spectrum",
-      "description": "Where do you stand? A statement, two poles, and a line between them. Each person places one dot, then sees the whole room spread along the same line, their own bin marked, the room's middle drawn, and, when the statement was asked before, where the middle…",
       "categories": [
         "games",
         "game"
@@ -4216,46 +3964,10 @@
       }
     },
     {
-      "name": "text-wall",
-      "type": "registry:ui",
-      "title": "Text Wall",
-      "description": "The room's short answers on a shared screen: \"what would you ask someone your age who lives there?\". New posts rise in at the top; the presenter can put one in the spotlight, large, above the rest. Phones send with `QuestionAsk` (relabelled: \"Your answer\"…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "timer-ring",
       "type": "registry:ui",
       "title": "Timer Ring",
       "description": "A countdown drawn as a ring that empties, with the seconds left in the middle. It counts to a deadline (a timestamp), not from a start, so a page that reloads, or several players in one room, all see the same clock.",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "type-answer",
-      "type": "registry:ui",
-      "title": "Type Answer",
-      "description": "A quiz round where people type the answer. Harder than picking, and fairer than it looks: case, accents, punctuation and a slip of a letter in a long word are forgiven, while a different number never is (see `typed-answer-model`). The reveal marks the…",
       "categories": [
         "games",
         "game"

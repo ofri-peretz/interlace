@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 251
+    "itemCount": 235
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,24 +31,24 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 42,
       "effect": 27,
+      "game": 24,
       "chart": 14,
       "template": 13,
-      "util": 6,
+      "util": 8,
       "starter": 3,
       "theme": 3
     },
     "category": {
       "primitive": 78,
       "pattern": 65,
-      "games": 42,
-      "game": 42,
       "blog": 37,
       "data": 30,
-      "foundation": 27,
+      "foundation": 29,
       "effect": 27,
       "form": 26,
+      "games": 24,
+      "game": 24,
       "decorative": 24,
       "navigation": 18,
       "feedback": 18,
@@ -56,28 +56,28 @@
       "marketing": 14,
       "template": 13,
       "overlay": 10,
-      "util": 6,
+      "util": 8,
       "a11y": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "client": 137,
-      "server": 114
+      "client": 120,
+      "server": 115
     },
     "keyboard": {
-      "none": 195,
-      "handled": 56
+      "none": 185,
+      "handled": 50
     },
     "loading": {
-      "none": 213,
+      "none": 197,
       "built-in": 38
     },
     "minViewport": {
-      "320": 170,
+      "320": 152,
       "480": 7,
       "768": 1,
-      "inherited": 73
+      "inherited": 75
     }
   },
   "items": [
@@ -180,81 +180,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/accordion.json",
       "item": "https://ds.interlace.tools/r/accordion.json",
       "docs": "https://ds.interlace.tools/c/accordion"
-    },
-    {
-      "name": "agenda",
-      "title": "Agenda",
-      "type": "registry:ui",
-      "summary": "The running order of a session. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and the…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": null,
-        "keys": [
-          "ArrowLeft",
-          "ArrowRight",
-          "PageDown",
-          "PageUp"
-        ],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "AgendaPhase",
-          "values": [
-            "before",
-            "running",
-            "paused",
-            "over",
-            "finished"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [
-          "timer"
-        ],
-        "aria": [
-          "aria-current",
-          "aria-label",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/agenda.tsx",
-        "components/ui/games/agenda-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/agenda.json",
-      "item": "https://ds.interlace.tools/r/agenda.json",
-      "docs": "https://ds.interlace.tools/c/agenda"
     },
     {
       "name": "alert-dialog",
@@ -426,6 +351,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1647,6 +1573,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1813,6 +1740,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -2171,6 +2099,7 @@
         "cn",
         "input",
         "interlace-base",
+        "motion-token",
         "slider",
         "use-reduced-motion"
       ],
@@ -2617,6 +2546,7 @@
         "cn",
         "input",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3744,64 +3674,6 @@
       "docs": "https://ds.interlace.tools/c/dot-plot"
     },
     {
-      "name": "dot-vote",
-      "title": "Dot Vote",
-      "type": "registry:ui",
-      "summary": "After a brainstorm, the room chooses: each person spreads a few dots across the ideas (two on one idea means \"this one, really\"), sends them, and watches the ideas rank themselves as everyone's dots come in. It pairs with `TextWall` or `QuestionBoard` for…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "flip-group",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/dot-vote.tsx",
-        "components/ui/games/dot-vote-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-vote.json",
-      "item": "https://ds.interlace.tools/r/dot-vote.json",
-      "docs": "https://ds.interlace.tools/c/dot-vote"
-    },
-    {
       "name": "draw-on",
       "title": "Draw On",
       "type": "registry:ui",
@@ -3849,6 +3721,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4030,6 +3903,7 @@
         "celebrate",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4498,6 +4372,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4991,60 +4866,6 @@
       "docs": "https://ds.interlace.tools/c/grid"
     },
     {
-      "name": "groups",
-      "title": "Groups",
-      "type": "registry:ui",
-      "summary": "Pairs, small groups and teams. `GroupCard` is what one person's phone shows: which group they are in, who they are with, what to talk about and for how long. `GroupGrid` is the shared screen: every group with its people, where a reshuffle glides each name…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-current",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "flip-group",
-        "interlace-base",
-        "timer-ring",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/groups.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/groups.json",
-      "item": "https://ds.interlace.tools/r/groups.json",
-      "docs": "https://ds.interlace.tools/c/groups"
-    },
-    {
       "name": "guess-reveal",
       "title": "Guess Reveal",
       "type": "registry:ui",
@@ -5091,6 +4912,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -5407,6 +5229,68 @@
       "docs": "https://ds.interlace.tools/c/install-prompt"
     },
     {
+      "name": "intent",
+      "title": "User intent hooks and provider",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "IntentInput",
+          "values": [
+            "keyboard",
+            "mouse",
+            "touch",
+            "pen"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "COMMIT_INTENT_DELAY_MS",
+        "DWELL_INTENT_DELAY_MS",
+        "IntentProvider",
+        "RAGE_CLICK_COUNT",
+        "RAGE_CLICK_RADIUS_PX",
+        "RAGE_CLICK_WINDOW_MS",
+        "VIEW_INTENT_DELAY_MS",
+        "VIEW_INTENT_THRESHOLD"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [],
+      "installsTo": [
+        "hooks/use-intent.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/intent.json",
+      "item": "https://ds.interlace.tools/r/intent.json",
+      "docs": "https://ds.interlace.tools/c/intent"
+    },
+    {
       "name": "interest-signal",
       "title": "Interest Signal",
       "type": "registry:ui",
@@ -5455,6 +5339,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6248,6 +6133,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6299,6 +6185,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6677,6 +6564,49 @@
       "docs": "https://ds.interlace.tools/c/milestones"
     },
     {
+      "name": "motion-token",
+      "title": "Motion token reader",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [],
+      "installsTo": [
+        "lib/motion-token.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/motion-token.json",
+      "item": "https://ds.interlace.tools/r/motion-token.json",
+      "docs": "https://ds.interlace.tools/c/motion-token"
+    },
+    {
       "name": "multi-step-form",
       "title": "Multi Step Form",
       "type": "registry:ui",
@@ -6729,6 +6659,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6863,79 +6794,6 @@
       "docs": "https://ds.interlace.tools/c/newsletter-form"
     },
     {
-      "name": "note-board",
-      "title": "Note Board",
-      "type": "registry:ui",
-      "summary": "A shared board of sticky notes in columns: a retrospective (\"Keep / Change / Try\"), an affinity sort, a \"before / during / after\" map. People post a note into a column, and the room sorts them by moving notes between columns. Every screen folds the same…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "TextRefusal",
-          "values": [
-            "empty",
-            "too-long",
-            "too-many-words",
-            "link",
-            "contact",
-            "blocked"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-describedby",
-          "aria-invalid",
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "none",
-          "declaresPreference": false,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "flip-group",
-        "input",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/games/note-board.tsx",
-        "components/ui/games/note-board-model.ts",
-        "components/ui/games/text-safety-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/note-board.json",
-      "item": "https://ds.interlace.tools/r/note-board.json",
-      "docs": "https://ds.interlace.tools/c/note-board"
-    },
-    {
       "name": "number-field",
       "title": "Number Field",
       "type": "registry:ui",
@@ -7038,6 +6896,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -7210,127 +7069,6 @@
       "docs": "https://ds.interlace.tools/c/pagination"
     },
     {
-      "name": "picture-reveal",
-      "title": "Picture Reveal",
-      "type": "registry:ui",
-      "summary": "A picture under tiles that come away a few at a time while the room guesses. The presenter moves `step`; every screen uncovers the same tiles in the same seeded order, spread across the picture. Phones guess with `TypeAnswer` (or `QuizQuestion`), and…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-hidden",
-          "aria-label",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "none",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/games/picture-reveal.tsx",
-        "components/ui/games/daily.ts",
-        "components/ui/games/picture-reveal-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/picture-reveal.json",
-      "item": "https://ds.interlace.tools/r/picture-reveal.json",
-      "docs": "https://ds.interlace.tools/c/picture-reveal"
-    },
-    {
-      "name": "pin-drop",
-      "title": "Pin Drop",
-      "type": "registry:ui",
-      "summary": "A pin on a picture (a map, a floor plan, a diagram). On a phone, `PinDrop` lets each person place one pin by tap, drag or arrow keys. With an `answer` it is \"Where is it?\": once the host reveals, the answer appears, a line joins it to the viewer's pin, and…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": null,
-        "keys": [
-          "ArrowDown",
-          "ArrowLeft",
-          "ArrowRight",
-          "ArrowUp",
-          "End",
-          "Home",
-          "PageDown",
-          "PageUp"
-        ],
-        "ownHandler": true
-      },
-      "states": [],
-      "a11y": {
-        "roles": [
-          "group"
-        ],
-        "aria": [
-          "aria-describedby",
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/pin-drop.tsx",
-        "components/ui/games/pin-drop-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/pin-drop.json",
-      "item": "https://ds.interlace.tools/r/pin-drop.json",
-      "docs": "https://ds.interlace.tools/c/pin-drop"
-    },
-    {
       "name": "podium",
       "title": "Podium",
       "type": "registry:ui",
@@ -7373,6 +7111,7 @@
         "celebrate",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -7442,73 +7181,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/pointer-surface.json",
       "item": "https://ds.interlace.tools/r/pointer-surface.json",
       "docs": "https://ds.interlace.tools/c/pointer-surface"
-    },
-    {
-      "name": "points-split",
-      "title": "Points Split",
-      "type": "registry:ui",
-      "summary": "Spend a budget of points across options. `PointsSplit` is a phone: each option has a minus and a plus, a bar shows how much of the budget sits on it, and a counter says what is left; Send unlocks when the budget is spent. `PointsTotals` is the screen: the…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "SplitRefusal",
-          "values": [
-            "unknown-option",
-            "not-a-step",
-            "negative",
-            "over-budget",
-            "under-budget"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-label",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "flip-group",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/games/points-split.tsx",
-        "components/ui/games/points-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/points-split.json",
-      "item": "https://ds.interlace.tools/r/points-split.json",
-      "docs": "https://ds.interlace.tools/c/points-split"
     },
     {
       "name": "poll",
@@ -7615,73 +7287,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/popover.json",
       "item": "https://ds.interlace.tools/r/popover.json",
       "docs": "https://ds.interlace.tools/c/popover"
-    },
-    {
-      "name": "prediction",
-      "title": "Prediction",
-      "type": "registry:ui",
-      "summary": "\"Who will win?\" on a phone: the room calls an outcome before it happens, locks it in, and waits. Nobody sees how the room called it until the host settles it, so a call is the person's own read. Then the room's spread appears with the outcome marked, and…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": "radio",
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "PredictionReward",
-          "values": [
-            "flat",
-            "bold"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "@base-ui/react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "tally-bars",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/prediction.tsx",
-        "components/ui/games/prediction-model.ts",
-        "components/ui/games/tally-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/prediction.json",
-      "item": "https://ds.interlace.tools/r/prediction.json",
-      "docs": "https://ds.interlace.tools/c/prediction"
     },
     {
       "name": "prev-next-post",
@@ -8083,168 +7688,6 @@
       "docs": "https://ds.interlace.tools/c/qr-code"
     },
     {
-      "name": "quadrant",
-      "title": "Quadrant",
-      "type": "registry:ui",
-      "summary": "A 2 x 2 grid: two questions at once (\"how hard / how important\"). Each person places one dot on a square pad, by tapping, dragging or the arrow keys, then sees the room on the same grid: where the dots crowd, how many sit in each quarter, the room's…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": null,
-        "keys": [
-          "ArrowDown",
-          "ArrowLeft",
-          "ArrowRight",
-          "ArrowUp",
-          "End",
-          "Home",
-          "PageDown",
-          "PageUp"
-        ],
-        "ownHandler": true
-      },
-      "states": [
-        {
-          "name": "Quarter",
-          "values": [
-            "top-start",
-            "top-end",
-            "bottom-start",
-            "bottom-end"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [
-          "group"
-        ],
-        "aria": [
-          "aria-describedby",
-          "aria-hidden",
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT",
-        "QUARTERS"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/quadrant.tsx",
-        "components/ui/games/quadrant-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/quadrant.json",
-      "item": "https://ds.interlace.tools/r/quadrant.json",
-      "docs": "https://ds.interlace.tools/c/quadrant"
-    },
-    {
-      "name": "question-board",
-      "title": "Question Board",
-      "type": "registry:ui",
-      "summary": "Questions from the room, ranked by the room. People ask from their phone (`QuestionAsk`), vote up the questions they want answered (`QuestionBoard`), and a moderator approves, pins, answers or hides them (`QuestionQueue`) before anything typed reaches a…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "QuestionStatus",
-          "values": [
-            "review",
-            "live",
-            "answered",
-            "dismissed"
-          ]
-        },
-        {
-          "name": "TextRefusal",
-          "values": [
-            "empty",
-            "too-long",
-            "too-many-words",
-            "link",
-            "contact",
-            "blocked"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-describedby",
-          "aria-invalid",
-          "aria-label",
-          "aria-labelledby",
-          "aria-live",
-          "aria-pressed"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "flip-group",
-        "interlace-base",
-        "textarea"
-      ],
-      "installsTo": [
-        "components/ui/games/question-board.tsx",
-        "components/ui/games/question-board-model.ts",
-        "components/ui/games/text-safety-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/question-board.json",
-      "item": "https://ds.interlace.tools/r/question-board.json",
-      "docs": "https://ds.interlace.tools/c/question-board"
-    },
-    {
       "name": "quiz-question",
       "title": "Quiz Question",
       "type": "registry:ui",
@@ -8304,6 +7747,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "tally-bars",
         "timer-ring",
         "use-reduced-motion"
@@ -8449,188 +7893,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json",
       "item": "https://ds.interlace.tools/r/radio-group.json",
       "docs": "https://ds.interlace.tools/c/radio-group"
-    },
-    {
-      "name": "ranking",
-      "title": "Ranking",
-      "type": "registry:ui",
-      "summary": "A room ranks the same items by preference. `RankChoices` is a phone: the items in a seeded starting order (so nobody's first item is favoured by where it was printed), moved with up and down buttons or the arrow keys on each row's handle, then sent.…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": null,
-        "keys": [
-          "ArrowDown",
-          "ArrowUp",
-          "End",
-          "Home"
-        ],
-        "ownHandler": true
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "flip-group",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/games/ranking.tsx",
-        "components/ui/games/daily.ts",
-        "components/ui/games/order-model.ts",
-        "components/ui/games/ranking-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/ranking.json",
-      "item": "https://ds.interlace.tools/r/ranking.json",
-      "docs": "https://ds.interlace.tools/c/ranking"
-    },
-    {
-      "name": "rating",
-      "title": "Rating",
-      "type": "registry:ui",
-      "summary": "A scale question for a room: how familiar, how likely to recommend, how are you feeling. Each person picks one step and sends it; then they see the room's answers on the same scale, their own step marked, the room's average, and, when the question was…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": "radio",
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "@base-ui/react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/rating.tsx",
-        "components/ui/games/rating-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/rating.json",
-      "item": "https://ds.interlace.tools/r/rating.json",
-      "docs": "https://ds.interlace.tools/c/rating"
-    },
-    {
-      "name": "reactions",
-      "title": "Reactions",
-      "type": "registry:ui",
-      "summary": "The room's pulse while someone talks. Phones tap a reaction (`ReactionBar`) and the shared screen lets it float up (`ReactionStream`); someone who wants to speak raises a hand (`RaiseHand`) and the host calls on people in the order they asked (`HandQueue`).",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [
-          "group"
-        ],
-        "aria": [
-          "aria-label",
-          "aria-labelledby",
-          "aria-live",
-          "aria-pressed"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "DEFAULT_REACTIONS",
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/reactions.tsx",
-        "components/ui/games/reactions-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reactions.json",
-      "item": "https://ds.interlace.tools/r/reactions.json",
-      "docs": "https://ds.interlace.tools/c/reactions"
     },
     {
       "name": "reading-layout",
@@ -8956,74 +8218,6 @@
       "docs": "https://ds.interlace.tools/c/recap"
     },
     {
-      "name": "reflection-card",
-      "title": "Reflection Card",
-      "type": "registry:ui",
-      "summary": "A quiet minute in a loud room: one prompt (\"What surprised you today?\"), a field, and a promise that the answer is yours. It is private by default; when the session allows it, the writer can choose to share it with the room without their name, and only…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "TextRefusal",
-          "values": [
-            "empty",
-            "too-long",
-            "too-many-words",
-            "link",
-            "contact",
-            "blocked"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-describedby",
-          "aria-invalid",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "none",
-          "declaresPreference": false,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "button",
-        "checkbox",
-        "cn",
-        "interlace-base",
-        "textarea"
-      ],
-      "installsTo": [
-        "components/ui/games/reflection-card.tsx",
-        "components/ui/games/text-safety-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reflection-card.json",
-      "item": "https://ds.interlace.tools/r/reflection-card.json",
-      "docs": "https://ds.interlace.tools/c/reflection-card"
-    },
-    {
       "name": "registry-item-template",
       "title": "Registry Item Template",
       "type": "registry:block",
@@ -9233,6 +8427,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -9241,67 +8436,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/reveal.json",
       "item": "https://ds.interlace.tools/r/reveal.json",
       "docs": "https://ds.interlace.tools/c/reveal"
-    },
-    {
-      "name": "room-goal",
-      "title": "Room Goal",
-      "type": "registry:ui",
-      "summary": "One meter for the whole room: a shared target, named milestones on the way (\"Bonus round\", \"Group photo\"), and, when given, how many rounds in a row most of the room got right. Built for the shared screen; it reads the same on a phone.",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [
-          "meter"
-        ],
-        "aria": [
-          "aria-labelledby",
-          "aria-live",
-          "aria-valuemax",
-          "aria-valuemin",
-          "aria-valuenow",
-          "aria-valuetext"
-        ],
-        "motion": {
-          "driver": "both",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/room-goal.tsx",
-        "components/ui/games/room-goal-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/room-goal.json",
-      "item": "https://ds.interlace.tools/r/room-goal.json",
-      "docs": "https://ds.interlace.tools/c/room-goal"
     },
     {
       "name": "rotating-text",
@@ -9343,6 +8477,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -10233,6 +9368,7 @@
         "cn",
         "interlace-base",
         "meter",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -11364,61 +10500,6 @@
       "docs": "https://ds.interlace.tools/c/sparkline"
     },
     {
-      "name": "spectrum",
-      "title": "Spectrum",
-      "type": "registry:ui",
-      "summary": "Where do you stand? A statement, two poles, and a line between them. Each person places one dot, then sees the whole room spread along the same line, their own bin marked, the room's middle drawn, and, when the statement was asked before, where the middle…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "slider",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/spectrum.tsx",
-        "components/ui/games/spectrum-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/spectrum.json",
-      "item": "https://ds.interlace.tools/r/spectrum.json",
-      "docs": "https://ds.interlace.tools/c/spectrum"
-    },
-    {
       "name": "spinner",
       "title": "Spinner",
       "type": "registry:ui",
@@ -11512,6 +10593,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -11610,6 +10692,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -11724,6 +10807,7 @@
         "count-up",
         "flip-group",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -12489,6 +11573,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -12552,56 +11637,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/testimonial.json",
       "item": "https://ds.interlace.tools/r/testimonial.json",
       "docs": "https://ds.interlace.tools/c/testimonial"
-    },
-    {
-      "name": "text-wall",
-      "title": "Text Wall",
-      "type": "registry:ui",
-      "summary": "The room's short answers on a shared screen: \"what would you ask someone your age who lives there?\". New posts rise in at the top; the presenter can put one in the spotlight, large, above the rest. Phones send with `QuestionAsk` (relabelled: \"Your answer\"…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "cn",
-        "flip-group",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/text-wall.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/text-wall.json",
-      "item": "https://ds.interlace.tools/r/text-wall.json",
-      "docs": "https://ds.interlace.tools/c/text-wall"
     },
     {
       "name": "textarea",
@@ -13317,6 +12352,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "radio-group",
         "use-reduced-motion"
       ],
@@ -13995,85 +13031,6 @@
       "docs": "https://ds.interlace.tools/c/topbar"
     },
     {
-      "name": "type-answer",
-      "title": "Type Answer",
-      "type": "registry:ui",
-      "summary": "A quiz round where people type the answer. Harder than picking, and fairer than it looks: case, accents, punctuation and a slip of a letter in a long word are forgiven, while a different number never is (see `typed-answer-model`). The reveal marks the…",
-      "topics": [],
-      "categories": [
-        "games",
-        "game"
-      ],
-      "tier": "game",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "QuizOutcome",
-          "values": [
-            "correct",
-            "wrong",
-            "timeout"
-          ]
-        },
-        {
-          "name": "TypedOutcome",
-          "values": [
-            "exact",
-            "close",
-            "wrong",
-            "empty"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [],
-        "aria": [
-          "aria-describedby",
-          "aria-label",
-          "aria-labelledby",
-          "aria-live"
-        ],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "input",
-        "interlace-base",
-        "tally-bars",
-        "timer-ring",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/games/type-answer.tsx",
-        "components/ui/games/quiz-model.ts",
-        "components/ui/games/tally-model.ts",
-        "components/ui/games/typed-answer-model.ts"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/type-answer.json",
-      "item": "https://ds.interlace.tools/r/type-answer.json",
-      "docs": "https://ds.interlace.tools/c/type-answer"
-    },
-    {
       "name": "typography",
       "title": "Typography",
       "type": "registry:ui",
@@ -14571,6 +13528,7 @@
         "flip-group",
         "input",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
