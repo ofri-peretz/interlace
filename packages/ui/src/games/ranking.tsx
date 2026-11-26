@@ -238,8 +238,8 @@ RankChoices.displayName = 'RankChoices';
 // --- RankResults (screen) --------------------------------------------------------
 
 interface RankResultsLabels {
-  /** One row, read whole. @default English: 'Music: place 1, average place 1.8, first for 4 people' */
-  row?: (r: { place: number; label: string; mean: string; firsts: string }) => string;
+  /** One row, read whole; `mean` is null while nobody has ranked. @default English: 'Music: place 1, average place 1.8, first for 4 people' */
+  row?: (r: { place: number; label: string; mean: string | null; firsts: string }) => string;
   /** The visible average. @default (mean) => `avg ${mean}` */
   mean?: (mean: string) => string;
 }
@@ -270,7 +270,7 @@ function RankResults({ items, options, size = 'default', locale, labels, classNa
     >
       {items.map((r, i) => {
         const label = names.get(r.id) ?? r.id;
-        const mean = one.format(r.meanPlace);
+        const mean = r.meanPlace === null ? null : one.format(r.meanPlace);
         const firsts = nf.format(r.firsts);
         return (
           <li key={r.id} data-flip-id={r.id} className="grid gap-1">
@@ -278,15 +278,17 @@ function RankResults({ items, options, size = 'default', locale, labels, classNa
               {(
                 labels?.row ??
                 ((x) =>
-                  `${x.label}: place ${x.place}, average place ${x.mean}, first for ${x.firsts} ${x.firsts === '1' ? 'person' : 'people'}`)
+                  `${x.label}: place ${x.place}${x.mean === null ? '' : `, average place ${x.mean}`}, first for ${x.firsts} ${x.firsts === '1' ? 'person' : 'people'}`)
               )({ place: i + 1, label, mean, firsts })}
             </span>
             <div aria-hidden className={cn('flex items-baseline gap-3', stage ? 'text-lg' : 'text-sm')}>
               <span className="text-muted-foreground w-5 font-semibold tabular-nums">{i + 1}</span>
               <span className="min-w-0 flex-1 font-medium">{label}</span>
-              <span className="text-muted-foreground tabular-nums">
-                {(labels?.mean ?? ((m: string) => `avg ${m}`))(mean)}
-              </span>
+              {mean === null ? null : (
+                <span className="text-muted-foreground tabular-nums">
+                  {(labels?.mean ?? ((m: string) => `avg ${m}`))(mean)}
+                </span>
+              )}
             </div>
             <span aria-hidden className={cn('bg-muted ms-8 block overflow-hidden rounded-full', stage ? 'h-3' : 'h-2')}>
               <span

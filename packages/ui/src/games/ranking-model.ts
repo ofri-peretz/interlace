@@ -19,8 +19,8 @@ export interface RankedItem {
   id: string;
   /** Borda points, summed over people. */
   points: number;
-  /** Average place, 1 for first. */
-  meanPlace: number;
+  /** Average place, 1 for first; null while nobody has ranked. */
+  meanPlace: number | null;
   /** People who put it first. */
   firsts: number;
 }
@@ -34,7 +34,7 @@ export function isFullRanking(order: readonly string[], items: readonly string[]
 
 /**
  * The room's order, most preferred first. Ties go to more first places,
- * then to the items' given order. `meanPlace` is 0 when nobody has ranked.
+ * then to the items' given order. `meanPlace` is null while nobody has ranked.
  */
 export function tallyRankings(
   rankings: Readonly<Record<string, readonly string[]>>,
@@ -59,7 +59,7 @@ export function tallyRankings(
       id,
       points,
       firsts,
-      meanPlace: people === 0 ? 0 : places / people,
+      meanPlace: people === 0 ? null : places / people,
     }));
   return { items: ranked, people };
 }

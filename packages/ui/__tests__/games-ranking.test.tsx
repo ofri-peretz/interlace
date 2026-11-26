@@ -52,9 +52,9 @@ describe('ranking-model', () => {
       'b',
     ]);
     expect(tallyRankings({}, ids).items.map((r) => [r.id, r.meanPlace])).toEqual([
-      ['a', 0],
-      ['b', 0],
-      ['c', 0],
+      ['a', null],
+      ['b', null],
+      ['c', null],
     ]);
   });
 
@@ -163,5 +163,12 @@ describe('RankResults', () => {
     );
     expect(screen.getByText('ø 1')).toBeTruthy();
     expect(document.querySelector('li .sr-only')?.textContent).toBe('z: place 1, average place 1, first for 1 person');
+  });
+
+  it('says no average while nobody has ranked', () => {
+    const { items } = tallyRankings({}, ids);
+    const { container } = render(<RankResults items={items} options={options} locale="en-US" />);
+    expect(container.querySelector('li .sr-only')?.textContent).toBe('Food: place 1, first for 0 people');
+    expect(container.textContent).not.toContain('avg');
   });
 });
