@@ -32,7 +32,7 @@ const meta = {
     locale: 'en-US',
   },
   render: (args) => (
-    <div className="max-w-md">
+    <div className="max-w-112">
       <Rating {...args} />
     </div>
   ),

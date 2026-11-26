@@ -47,7 +47,7 @@ const meta = {
   },
   args: { items: ITEMS, state: MID, frozenAt: NOW, onEvent: fn(), locale: 'en-US' },
   render: (args) => (
-    <div className="max-w-xl">
+    <div className="max-w-144">
       <Agenda {...args} />
     </div>
   ),
@@ -80,7 +80,7 @@ export const Live: Story = {
   render: (args) => {
     const [state, setState] = React.useState(createAgenda());
     return (
-      <div className="grid max-w-xl gap-10">
+      <div className="grid max-w-144 gap-10">
         <Agenda {...args} state={state} onEvent={(e) => setState((s) => applyAgendaEvent(ITEMS, s, e))} />
         <div className="rounded-lg border p-6">
           <AgendaNow items={ITEMS} state={state} />

@@ -8,7 +8,7 @@
  * (`QuestionBoard`), and a moderator approves, pins, answers or hides them
  * (`QuestionQueue`) before anything typed reaches a shared screen.
  *
- * ## Flow
+ * ## Who uses which part
  *
  * | Phase            | Who        | Part                                   |
  * | ---------------- | ---------- | -------------------------------------- |

@@ -50,7 +50,7 @@ const meta = {
     onAnswer: fn(),
   },
   render: (args) => (
-    <div className="max-w-lg">
+    <div className="max-w-128">
       <TypeAnswer {...args} />
     </div>
   ),

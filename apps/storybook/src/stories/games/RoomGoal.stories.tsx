@@ -33,7 +33,7 @@ const meta = {
     locale: 'en-US',
   },
   render: (args) => (
-    <div className="max-w-2xl">
+    <div className="max-w-168">
       <RoomGoal {...args} />
     </div>
   ),
@@ -51,7 +51,7 @@ export const Live: Story = {
   render: (args) => {
     const [value, setValue] = React.useState(args.value);
     return (
-      <div className="grid max-w-3xl gap-4">
+      <div className="grid max-w-192 gap-4">
         <button type="button" className="justify-self-start text-sm underline" onClick={() => setValue((v) => v + 900)}>
           A round ends: +900
         </button>

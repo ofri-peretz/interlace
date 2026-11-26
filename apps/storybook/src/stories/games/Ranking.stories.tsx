@@ -44,7 +44,7 @@ const meta = {
     onSend: fn(),
   },
   render: (args) => (
-    <div className="max-w-sm">
+    <div className="max-w-96">
       <RankChoices {...args} />
     </div>
   ),
@@ -74,7 +74,7 @@ export const RoomResults: Story = {
     const [room, setRoom] = React.useState(ROOM);
     const { items } = tallyRankings(room, IDS);
     return (
-      <div className="grid max-w-md gap-4">
+      <div className="grid max-w-112 gap-4">
         <button
           type="button"
           className="justify-self-start text-sm underline"

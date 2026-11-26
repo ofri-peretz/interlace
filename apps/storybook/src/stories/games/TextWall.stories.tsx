@@ -77,7 +77,7 @@ export const Phone: Story = {
   render: () => {
     const onAsk = React.useMemo(() => fn(), []);
     return (
-      <div className="max-w-sm">
+      <div className="max-w-96">
         <QuestionAsk
           onAsk={onAsk}
           maxLength={120}

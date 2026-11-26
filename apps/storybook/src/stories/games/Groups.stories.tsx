@@ -35,7 +35,7 @@ const meta = {
     locale: 'en-US',
   },
   render: (args) => (
-    <div className="max-w-sm">
+    <div className="max-w-96">
       <GroupCard {...args} />
     </div>
   ),
@@ -85,7 +85,7 @@ export const TeamStandings: Story = {
     const groups = makeGroups(NAMES, { count: 4, seed: 'teams' });
     const scores = Object.fromEntries(NAMES.map((n, i) => [n, (i * 37) % 100]));
     return (
-      <div className="max-w-md">
+      <div className="max-w-112">
         <Leaderboard
           caption="Team standings"
           showCaption

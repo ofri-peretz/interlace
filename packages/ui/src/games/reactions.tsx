@@ -9,7 +9,7 @@
  * (`RaiseHand`) and the host calls on people in the order they asked
  * (`HandQueue`).
  *
- * ## Flow
+ * ## Who uses which part
  *
  * | Phase           | Who       | Part             |
  * | --------------- | --------- | ---------------- |

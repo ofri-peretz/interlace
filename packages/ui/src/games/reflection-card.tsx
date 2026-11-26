@@ -161,7 +161,7 @@ function ReflectionCard({
       data-min-viewport={String(MIN_VIEWPORT)}
       noValidate
       onSubmit={submit}
-      className={cn('bg-card grid max-w-xl gap-3 rounded-xl border p-5', className)}
+      className={cn('bg-card grid max-w-144 gap-3 rounded-xl border p-5', className)}
       {...props}
     >
       {meta ? (

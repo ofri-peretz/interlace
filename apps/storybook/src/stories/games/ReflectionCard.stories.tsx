@@ -51,7 +51,7 @@ export const Sharing: Story = {
 /** An exit ticket: a rating, then a reflection. */
 export const ExitTicket: Story = {
   render: (args) => (
-    <div className="grid max-w-xl gap-8">
+    <div className="grid max-w-144 gap-8">
       <Rating question="How useful was today?" min={1} max={5} ends={['Not at all', 'Very']} />
       <ReflectionCard {...args} meta="2 of 2" defaultValue="" />
     </div>

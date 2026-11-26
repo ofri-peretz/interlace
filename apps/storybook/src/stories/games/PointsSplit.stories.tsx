@@ -44,7 +44,7 @@ const meta = {
     locale: 'en-US',
   },
   render: (args) => (
-    <div className="max-w-sm">
+    <div className="max-w-96">
       <PointsSplit {...args} />
     </div>
   ),
@@ -77,7 +77,7 @@ export const RoomTotals: Story = {
     const [room, setRoom] = React.useState(ROOM);
     const { totals } = totalPoints(room, IDS);
     return (
-      <div className="grid max-w-md gap-4">
+      <div className="grid max-w-112 gap-4">
         <button
           type="button"
           className="justify-self-start text-sm underline"

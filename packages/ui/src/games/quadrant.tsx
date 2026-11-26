@@ -373,7 +373,7 @@ function Quadrant({
       data-slot="quadrant"
       data-state={placed === null ? 'placing' : 'placed'}
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('grid max-w-md gap-4', className)}
+      className={cn('grid max-w-112 gap-4', className)}
       {...props}
     >
       <p id={promptId} data-slot="quadrant-prompt" className="font-heading text-lg font-semibold text-balance">
@@ -497,7 +497,7 @@ function QuadrantMap({
     <div
       data-slot="quadrant-map"
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('grid gap-3', stage ? 'max-w-2xl' : 'max-w-md', className)}
+      className={cn('grid gap-3', stage ? 'max-w-168' : 'max-w-112', className)}
       {...props}
     >
       <QuadrantChart

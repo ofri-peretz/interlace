@@ -45,7 +45,7 @@ const meta = {
     clues: CLUES,
   },
   render: (args) => (
-    <div className="max-w-xl">
+    <div className="max-w-144">
       <PictureReveal {...args} />
     </div>
   ),
@@ -64,7 +64,7 @@ export const Presenter: Story = {
     const [step, setStep] = React.useState(0);
     const [revealed, setRevealed] = React.useState(false);
     return (
-      <div className="grid max-w-2xl gap-4">
+      <div className="grid max-w-168 gap-4">
         <div className="flex gap-4 text-sm">
           <button type="button" className="underline" onClick={() => setStep((s) => Math.min(s + 1, args.steps ?? 8))}>
             Next step
