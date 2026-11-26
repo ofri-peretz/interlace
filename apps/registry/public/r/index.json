@@ -3586,6 +3586,24 @@
       }
     },
     {
+      "name": "dot-vote",
+      "type": "registry:ui",
+      "title": "Dot Vote",
+      "description": "After a brainstorm, the room chooses: each person spreads a few dots across the ideas (two on one idea means \"this one, really\"), sends them, and watches the ideas rank themselves as everyone's dots come in. It pairs with `TextWall` or `QuestionBoard` for…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "goal-ring",
       "type": "registry:ui",
       "title": "Goal Ring",

@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 245
+    "itemCount": 246
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 36,
+      "game": 37,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -42,9 +42,9 @@
     "category": {
       "primitive": 78,
       "pattern": 65,
+      "games": 37,
+      "game": 37,
       "blog": 37,
-      "games": 36,
-      "game": 36,
       "data": 30,
       "foundation": 27,
       "effect": 27,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 131,
+      "client": 132,
       "server": 114
     },
     "keyboard": {
-      "none": 191,
+      "none": 192,
       "handled": 54
     },
     "loading": {
-      "none": 207,
+      "none": 208,
       "built-in": 38
     },
     "minViewport": {
-      "320": 164,
+      "320": 165,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -3663,6 +3663,64 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-plot.json",
       "item": "https://ds.interlace.tools/r/dot-plot.json",
       "docs": "https://ds.interlace.tools/c/dot-plot"
+    },
+    {
+      "name": "dot-vote",
+      "title": "Dot Vote",
+      "type": "registry:ui",
+      "summary": "After a brainstorm, the room chooses: each person spreads a few dots across the ideas (two on one idea means \"this one, really\"), sends them, and watches the ideas rank themselves as everyone's dots come in. It pairs with `TextWall` or `QuestionBoard` for…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/dot-vote.tsx",
+        "components/ui/games/dot-vote-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-vote.json",
+      "item": "https://ds.interlace.tools/r/dot-vote.json",
+      "docs": "https://ds.interlace.tools/c/dot-vote"
     },
     {
       "name": "draw-on",

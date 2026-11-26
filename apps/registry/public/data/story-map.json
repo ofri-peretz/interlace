@@ -906,6 +906,18 @@
     "previewDark": "charts-dotplot--dark",
     "skeleton": "charts-dotplot--loading"
   },
+  "dot-vote": {
+    "title": "Games/DotVote",
+    "storyIds": [
+      "games-dotvote--default",
+      "games-dotvote--voting",
+      "games-dotvote--live",
+      "games-dotvote--right-to-left"
+    ],
+    "preview": "games-dotvote--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "draw-on": {
     "title": "Effects/DrawOn",
     "storyIds": [

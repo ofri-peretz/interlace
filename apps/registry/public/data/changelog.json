@@ -523,6 +523,17 @@
           "source": ".changeset/dot-plot.md"
         },
         {
+          "summary": "Brainstorm, then choose. `DotVote` gives each person a few dots to spread across a brainstorm's ideas, two on one idea if they feel strongly, then ranks the ideas as the room's dots arrive, each glide explaining a change of rank. Every button names its idea, the dots left are announced, and the viewer's own dots are named in the results. `games/dot-vote-model` makes a ballot valid (`cleanBallot`: known ideas, whole counts, a cap per idea and in all), counts what is left (`dotsLeft`), and ranks ballots keyed by person (`tallyDots`), so a ballot sent twice counts once and ties keep the ideas' order on every screen.",
+          "components": [
+            "dot-vote"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/dot-vote.md"
+        },
+        {
           "summary": "New DrawOn and Marker, editorial motion for line drawings and emphasis. DrawOn wraps any inline SVG and draws its stroked shapes as it scrolls into view, one after another (`order=\"sequence\"`) or all at once, then fades in the fills. Marker is a `<mark>` whose highlighter stroke sweeps across a phrase from the inline-start edge, in `band`, `full` or `underline` shapes and `highlight` or `primary` tones. Both render the finished result on the server, run once, and are simply there under reduced motion.",
           "components": [
             "draw-on",
