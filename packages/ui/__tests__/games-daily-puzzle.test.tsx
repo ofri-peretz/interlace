@@ -46,7 +46,9 @@ describe('DailyPuzzle', () => {
         x
       </DailyPuzzle>,
     );
-    expect(title().className).toContain('text-section');
+    // The same step as Typography's h1, so it matches every other page's title.
+    expect(title().className).toContain('text-h1');
+    expect(title().className).toContain('tracking-display');
     expect(title().className).not.toContain('text-h3');
     expect(screen.getByRole('region').getAttribute('data-size')).toBe('page');
   });

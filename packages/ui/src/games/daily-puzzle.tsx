@@ -69,8 +69,8 @@ type DailyPuzzleProps = Omit<React.ComponentProps<'section'>, 'title'> & {
   /** @default 2 */
   headingLevel?: 1 | 2 | 3;
   /**
-   * `default` sets the title at `text-h3`, for a puzzle inside a page. `page` sets it at
-   * `text-section`, the step page titles use, for a page whose content is the puzzle.
+   * `default` sets the title at `text-h3`, for a puzzle inside a page. `page` sets it as
+   * Typography's `h1` does (`text-h1`), for a page whose content is the puzzle.
    * Visual only: pair it with `headingLevel={1}`.
    * @default 'default'
    */
@@ -143,7 +143,7 @@ function DailyPuzzle({
             data-slot="daily-puzzle-title"
             className={cn(
               'font-heading text-balance',
-              size === 'page' ? 'text-section tracking-heading font-bold' : 'text-h3 font-semibold',
+              size === 'page' ? 'text-h1 tracking-display font-bold' : 'text-h3 font-semibold',
             )}
           >
             {title}
