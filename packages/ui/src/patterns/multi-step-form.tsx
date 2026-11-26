@@ -47,8 +47,10 @@
  *
  * Continue checks the current step first: every native constraint on its
  * fields (`required`, `type="email"`, `pattern` …), then the step's own
- * `validate`. The first problem takes focus, and a message from `validate`
- * shows under the step and is read out. Back never checks. A step already
+ * `validate`. The first problem takes focus and a message shows under the
+ * step and is read out: the field's name and the browser's own words for a
+ * native check (`labels.invalid` rewords it), or what `validate` returned.
+ * A field that fails a native check is `aria-invalid` until it is edited. Back never checks. A step already
  * done is a link in the progress list, so the reader can jump back to it;
  * steps ahead cannot be skipped to. `MultiStepFormSummary` lists answers
  * with a Change button that goes straight to the step that asked.
@@ -108,6 +110,11 @@ export interface MultiStepFormLabels {
   complete?: string;
   /** The summary's link back to a step. @default 'Change' */
   edit?: string;
+  /**
+   * The message for a field that fails its native check (`required`, `type="email"` …).
+   * @default (field, message) => `${field}: ${message}`, with the browser's own message
+   */
+  invalid?: (field: string, message: string) => string;
 }
 
 const DEFAULT_LABELS: Required<MultiStepFormLabels> = {
@@ -119,7 +126,19 @@ const DEFAULT_LABELS: Required<MultiStepFormLabels> = {
   progress: 'Progress',
   complete: 'Done',
   edit: 'Change',
+  invalid: (field, message) => (field ? `${field}: ${message}` : message),
 };
+
+/** A control's visible name: its <label>, else what aria-labelledby points at. */
+function nameOf(control: HTMLElement): string {
+  const label = (control as HTMLInputElement).labels?.[0]?.textContent;
+  if (label) return label.trim();
+  const ids = control.getAttribute('aria-labelledby')?.split(/\s+/) ?? [];
+  return ids
+    .map((id) => control.ownerDocument.getElementById(id)?.textContent?.trim() ?? '')
+    .filter(Boolean)
+    .join(' ');
+}
 
 interface StepInfo {
   id: string;
@@ -338,6 +357,14 @@ const MultiStepForm = React.forwardRef<HTMLFormElement, MultiStepFormProps>(func
       const invalid = controls.filter((c) => !c.disabled && !c.checkValidity());
       if (invalid.length > 0) {
         const first = invalid[0]!;
+        // Say what is wrong, not only where: focus alone leaves a sighted reader guessing. Each
+        // failing field is marked invalid until it is edited.
+        for (const c of invalid) {
+          if (c.type === 'hidden') continue;
+          c.setAttribute('aria-invalid', 'true');
+          c.addEventListener('input', () => c.removeAttribute('aria-invalid'), { once: true });
+        }
+        setErrors((prev) => ({ ...prev, [current]: labels.invalid(nameOf(first), first.validationMessage || 'Check this answer.') }));
         // A hidden input (a radio group's value) cannot take focus: its group can.
         const target =
           first.type === 'hidden' || first.getAttribute('aria-hidden') === 'true'
@@ -524,7 +551,10 @@ function MultiStepFormSummary({
             <dt id={`${id}-${i}`} className="text-muted-foreground w-full text-sm @md:w-32 @md:shrink-0">
               {item.label}
             </dt>
-            <dd className={cn('min-w-0 flex-1 text-sm font-medium', empty && 'text-muted-foreground font-normal')}>
+            <dd
+              // A long word (an email, a name) wraps instead of pushing the page sideways.
+              className={cn('min-w-0 flex-1 text-sm font-medium wrap-anywhere', empty && 'text-muted-foreground font-normal')}
+            >
               {empty ? emptyText : item.value}
             </dd>
             {item.step && ctx && (
