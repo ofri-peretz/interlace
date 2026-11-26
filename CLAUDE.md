@@ -2,10 +2,10 @@
 
 # Commands
 
-- `npm run ci:local` mirrors the entire pre-push gate (`lefthook run pre-push --all-files`); it is
-  the only check that matches CI exactly.
+- `npm run ci:local` (`lefthook run pre-push --all-files`) is the only check that matches CI
+  exactly.
 
 # Gotchas
 
-- This repo dogfoods its own ESLint plugins alongside oxlint via turbo `--affected`. A lint
-  failure here can mean the rule changed, not that the code is wrong: check which linter spoke.
+- Lint runs our own ESLint plugins beside oxlint (turbo `--affected`): a failure can mean the rule
+  changed, not the code. Check which linter spoke.
