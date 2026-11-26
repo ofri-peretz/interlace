@@ -2023,6 +2023,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "reflection-card": {
+    "title": "Games/ReflectionCard",
+    "storyIds": [
+      "games-reflectioncard--default",
+      "games-reflectioncard--private",
+      "games-reflectioncard--sharing",
+      "games-reflectioncard--exit-ticket",
+      "games-reflectioncard--right-to-left"
+    ],
+    "preview": "games-reflectioncard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "registry-item-template": {
     "title": "Templates/RegistryItemTemplate",
     "storyIds": [

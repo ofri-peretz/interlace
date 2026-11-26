@@ -287,7 +287,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 241 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 242 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -341,10 +341,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 127 client, 114 server
-- keyboard: 188 none, 53 handled
-- built-in loading state: 38 of 241
-- declared minViewport: 160 at 320, 7 at 480, 1 at 768, 73 at inherited
+- rendering: 128 client, 114 server
+- keyboard: 189 none, 53 handled
+- built-in loading state: 38 of 242
+- declared minViewport: 161 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
@@ -352,7 +352,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - tier `primitive` — 78 item(s)
 - tier `pattern` — 65 item(s)
-- tier `game` — 32 item(s)
+- tier `game` — 33 item(s)
 - tier `effect` — 27 item(s)
 - tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
@@ -363,8 +363,8 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `primitive` (Primitives) — 78 item(s)
 - category `pattern` (Patterns) — 65 item(s)
 - category `blog` (Blog & long-form) — 37 item(s)
-- category `games` (Games) — 32 item(s)
-- category `game` (Games) — 32 item(s)
+- category `games` (Games) — 33 item(s)
+- category `game` (Games) — 33 item(s)
 - category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
 - category `effect` (Effects) — 27 item(s)
@@ -938,6 +938,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Recall Card](https://ds.interlace.tools/c/recall-card): A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/recall-card.json`
   - contract: client, min 320px, v1.0.0
+- [Reflection Card](https://ds.interlace.tools/c/reflection-card): A quiet minute in a loud room: one prompt ("What surprised you today?"), a field, and a promise that the answer is yours. It is private by default; when the session allows it, the writer can choose to share it with the room without their name, and only…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/reflection-card.json`
+  - contract: client, min 320px, states empty|too-long|too-many-words|link|contact|blocked, v1.0.0
 - [Reminder Offer](https://ds.interlace.tools/c/reminder-offer): A quiet offer of a daily nudge that the player keeps in their own calendar: pick a time, add it, done. It downloads an .ics file with one event that repeats daily (`reminder-model.ts`), so nothing is sent, no address is asked for, and the player removes it…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/reminder-offer.json`
   - contract: client, min 320px, v1.0.0

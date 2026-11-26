@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 241
+    "itemCount": 242
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 32,
+      "game": 33,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -43,8 +43,8 @@
       "primitive": 78,
       "pattern": 65,
       "blog": 37,
-      "games": 32,
-      "game": 32,
+      "games": 33,
+      "game": 33,
       "data": 30,
       "foundation": 27,
       "effect": 27,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 127,
+      "client": 128,
       "server": 114
     },
     "keyboard": {
-      "none": 188,
+      "none": 189,
       "handled": 53
     },
     "loading": {
-      "none": 203,
+      "none": 204,
       "built-in": 38
     },
     "minViewport": {
-      "320": 160,
+      "320": 161,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -8487,6 +8487,74 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/recap.json",
       "item": "https://ds.interlace.tools/r/recap.json",
       "docs": "https://ds.interlace.tools/c/recap"
+    },
+    {
+      "name": "reflection-card",
+      "title": "Reflection Card",
+      "type": "registry:ui",
+      "summary": "A quiet minute in a loud room: one prompt (\"What surprised you today?\"), a field, and a promise that the answer is yours. It is private by default; when the session allows it, the writer can choose to share it with the room without their name, and only…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TextRefusal",
+          "values": [
+            "empty",
+            "too-long",
+            "too-many-words",
+            "link",
+            "contact",
+            "blocked"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-invalid",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "cn",
+        "interlace-base",
+        "textarea"
+      ],
+      "installsTo": [
+        "components/ui/games/reflection-card.tsx",
+        "components/ui/games/text-safety-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reflection-card.json",
+      "item": "https://ds.interlace.tools/r/reflection-card.json",
+      "docs": "https://ds.interlace.tools/c/reflection-card"
     },
     {
       "name": "registry-item-template",

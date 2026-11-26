@@ -996,6 +996,17 @@
           "source": ".changeset/recall-card-update-feed.md"
         },
         {
+          "summary": "A quiet minute in a loud room. `ReflectionCard` asks one prompt and keeps the answer private by default, saying so under the field. When the session allows it (`shareable`), the writer can tick to share it with the room without their name; only then is it checked like other room text (links, contact details, the blocklist), and a reflection that cannot be shared is still saved, with the reason said in words. With `Rating` before it, it makes an exit ticket.",
+          "components": [
+            "reflection-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/reflection-card.md"
+        },
+        {
           "summary": "New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.",
           "components": [
             "reveal"

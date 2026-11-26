@@ -620,6 +620,10 @@
       "types": "./dist/games/type-answer.d.ts",
       "default": "./dist/games/type-answer.js"
     },
+    "./games/reflection-card": {
+      "types": "./dist/games/reflection-card.d.ts",
+      "default": "./dist/games/reflection-card.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"
