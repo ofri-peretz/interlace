@@ -1,4 +1,12 @@
-import { mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import {
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  utimesSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -42,8 +50,10 @@ describe('writeGenerated', () => {
   it('leaves a file alone when the content is the same', async () => {
     const file = join(dir, 'same.json');
     writeFileSync(file, '{}\n');
+    // Date the file in the past, so any write at all would move its mtime.
+    const past = new Date('2020-01-01T00:00:00Z');
+    utimesSync(file, past, past);
     const before = statSync(file).mtimeMs;
-    await new Promise((r) => setTimeout(r, 20));
     expect(await writeGenerated(file, '{}\n')).toBe(false);
     expect(writeGeneratedSync(file, '{}\n')).toBe(false);
     expect(statSync(file).mtimeMs).toBe(before);
