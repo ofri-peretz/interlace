@@ -123,7 +123,8 @@ function Footer({
     >
       <div
         className={cn(
-          'mx-auto px-6 py-12 md:py-16',
+          // Container's gutters, so the footer lines up with the page above it.
+          'mx-auto px-4 py-12 xs:px-6 md:py-16 lg:px-8',
           CONTAINER_CLASSES[containerSize],
         )}
       >
