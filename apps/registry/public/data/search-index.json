@@ -1449,7 +1449,7 @@
     "focusringprop": 1,
     "fold": 5,
     "folklor": 3,
-    "follow": 55,
+    "follow": 56,
     "followupat": 1,
     "followupstat": 1,
     "font": 16,
@@ -2250,7 +2250,7 @@
     "paginationnext": 1,
     "paginationprevious": 1,
     "paint": 54,
-    "pair": 40,
+    "pair": 41,
     "pale": 1,
     "paler": 1,
     "palett": 11,
@@ -2782,7 +2782,7 @@
     "sery": 14,
     "session": 5,
     "sessioncomposer": 1,
-    "set": 77,
+    "set": 78,
     "setopen": 1,
     "sett": 8,
     "settingssection": 1,
@@ -3280,7 +3280,7 @@
     "universal": 2,
     "unknown": 13,
     "unlabell": 3,
-    "unless": 14,
+    "unless": 15,
     "unlik": 5,
     "unlink": 1,
     "unmeasur": 12,
@@ -3851,7 +3851,7 @@
         "pattern",
         "feedback"
       ],
-      "terms": "banner feedback pattern client responsiv min viewport 320 stat mut info success warn highlight messag dismiss button site tone dismissibl outag schedul clos link bar visibility optional thin accessibl releas region name new colour manag onopenchang written icon mean pair action app remember decorativ notic storag header carry depend fine whol data still text full width surfac foreground choic press controll alon neutral caller"
+      "terms": "banner feedback pattern client responsiv min viewport 320 stat mut info success warn highlight messag dismiss button site tone dismissibl outag schedul clos link bar visibility optional thin accessibl releas region name new colour manag onopenchang written icon mean action app pair remember decorativ notic storag header carry depend fine whol data still text full width surfac foreground choic press controll alon neutral caller"
     },
     {
       "name": "blog-home-template",
@@ -4070,7 +4070,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect ring hit send mark chang unless player nearby browser mount draw short support 300m yesterday animat 600m new replay motion tone hidden dashoffset answer small noth data drawn round nam api job untouch arrival tap slot right count idle loop strok"
+      "terms": "celebrat decorativ effect client stat primary success highlight haptic burst ray play celebratecheck vibrat vibration earn check streak mileston truthy time moment perfect ring hit send mark chang player unless nearby browser mount draw short support 300m yesterday animat 600m new replay motion tone hidden dashoffset answer small noth data drawn round nam api job untouch arrival tap slot right count idle loop strok"
     },
     {
       "name": "chart-frame",
@@ -4933,7 +4933,7 @@
         "primitive",
         "data"
       ],
-      "terms": "featur icon data primitiv server rsc responsiv min viewport 320 featuredicon tint tone mix highlight loos squar shap ring soft outer weight glyph head primary set featurediconvariant stand circl img background foreground card mark alon size different 5rem alpha mean text invers round 2rem opaqu step rather strength shar decorativ section siz unless role mut hidden align surfac row whatever cva slot read name"
+      "terms": "featur icon data primitiv server rsc responsiv min viewport 320 featuredicon tint tone mix highlight loos squar shap ring soft outer weight glyph head primary featurediconvariant stand set circl img background foreground card mark alon size different 5rem alpha mean text invers round 2rem opaqu step rather strength shar decorativ section siz unless role mut hidden align surfac row whatever cva slot read name"
     },
     {
       "name": "figure",
@@ -4990,7 +4990,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "flip group decorativ effect client keyboard base render flipgroup glid item new filter order list plac reorder went leaderboard jump userender play typ interrupt rank motion tell sort row differenc swap result narrow compositor invert 400 dom commit data old measur first follow reader last key markup eye normal settl card instead good millisecond layout reduc ele moment choic fade transform web hide animat"
+      "terms": "flip group decorativ effect client keyboard base render flipgroup glid item new filter order list plac reorder went leaderboard jump userender play typ interrupt rank motion tell sort row differenc swap result narrow compositor invert 400 dom commit data old measur first reader follow last key markup eye normal settl card instead good millisecond layout reduc ele moment choic fade transform web hide animat"
     },
     {
       "name": "focus-grid",
@@ -5902,7 +5902,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "pointer surfac decorativ effect client stat light tilt pointersurfac slight weigh soft toward plan feel session topic degre card ease follow choic across reader wash motion hidden pick answer edge data tabl faint grid leav box retun lift move duration fine mix transparent children keyboard reduc focus cost primary devic insid enough flat variabl writ content activ less comput purpos layer centr event hover"
+      "terms": "pointer surfac decorativ effect client stat light tilt pointersurfac slight weigh soft toward plan feel session topic degre card ease choic follow across reader wash motion hidden pick answer edge data tabl faint grid leav box retun lift move duration fine mix transparent children keyboard reduc focus cost primary devic insid enough flat variabl writ content activ less comput purpos layer centr event hover"
     },
     {
       "name": "poll",
@@ -6436,7 +6436,7 @@
         "pattern",
         "data"
       ],
-      "terms": "scroll story data pattern client responsiv min viewport 320 scrollstory scrollstorystep step chart graphic activ side chang sticky tall told card screen sery stay read order 2014 biggest business watcher reader point draw end time district dotplot rose text slot start column 48rem tied view besid wider intersectionobserver narrower back year reach follow hold header move sit watch came far offset weight page show"
+      "terms": "scroll story data pattern client responsiv min viewport 320 scrollstory scrollstorystep step chart graphic activ side chang sticky tall told card screen sery stay read order 2014 biggest business watcher reader point draw end time district dotplot rose text slot start column 48rem tied view besid wider intersectionobserver narrower back year reach hold follow header move sit watch came far offset weight page show"
     },
     {
       "name": "scroll-text",
@@ -6592,7 +6592,7 @@
         "primitive",
         "form"
       ],
-      "terms": "select form primitiv client responsiv min viewport 320 keyboard base listbox typeahead popup trigger combobox item portall popover home onvaluechang positioner highlight focus role selectcontent selectgroup selectgrouplabel selectitem selectscrolldownbutton selectscrollupbutton selectseparator selecttrigger selectvalu foreground end composit clos anchor uncontroll navigation accent controll throughout arrow chevron esc pair text part commit drill interfac carv built exempt ring background defaultvalu inactiv provider selection singl verifi data"
+      "terms": "select form primitiv client responsiv min viewport 320 keyboard base listbox typeahead popup trigger combobox item portall popover home onvaluechang positioner highlight focus role selectcontent selectgroup selectgrouplabel selectitem selectscrolldownbutton selectscrollupbutton selectseparator selecttrigger selectvalu foreground end composit clos anchor uncontroll navigation accent controll throughout arrow chevron esc text pair part commit drill interfac carv built exempt ring background defaultvalu inactiv provider selection singl verifi data"
     },
     {
       "name": "separator",
@@ -6863,7 +6863,7 @@
         "pattern",
         "form"
       ],
-      "terms": "sign form pattern server rsc responsiv min viewport 320 signinform password submit email typography auth field titl input fieldcontrol fieldlabel onsubmit primitiv wire button specific link block action structur signinformprop canonical typical forgot subtitl slot composition beneath describedby brand account association prompt reset name bespok provider narrowest optional suppli variant data set headlin allow layer root pass support smallest target r13 ecosystem footer label"
+      "terms": "sign form pattern server rsc responsiv min viewport 320 signinform password submit email typography auth field titl input fieldcontrol fieldlabel onsubmit primitiv wire button specific link block action structur signinformprop canonical typical forgot subtitl slot composition beneath describedby brand account association prompt reset name bespok provider narrowest optional suppli variant data headlin set allow layer root pass support smallest target r13 ecosystem footer label"
     },
     {
       "name": "sign-in-methods",
@@ -7017,7 +7017,7 @@
         "primitive",
         "a11y"
       ],
-      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl user corner anchor target tab satisfy lett keyboard emulator encounter physical skiplinkprop focusabl tabindex content moment utility past jump nav hash ele wcag block pair position action scroll activation earn aaa step ring work header whichever left interactiv mous move top data nativ devic whether href docu entir"
+      "terms": "skip link a11y primitiv server rsc responsiv min viewport 320 skiplink main focus bypass pop visibl user corner anchor target tab satisfy lett keyboard emulator encounter physical skiplinkprop focusabl tabindex content moment utility past jump nav hash ele wcag block position action pair scroll activation earn aaa step ring work header whichever left interactiv mous move top data nativ devic whether href docu entir"
     },
     {
       "name": "sky-backdrop",
@@ -8145,7 +8145,7 @@
         "util",
         "foundation"
       ],
-      "terms": "reduc motion usereducedmotion hook foundation util client fram reducemotion usesyncexternalstor gate preferenc animation mount usestat paint hydration duration packag user javascript first csr dramatical getserversnapshot ill precis requestanimationfram fals clos heavy satisfi unavoidabl useeffect vercel animat brief driver matchmedia snap late bounc ssr timer ship reset linear mui static interactiv mid live transition genuin true driven render set flight every honest canonical invisibl split"
+      "terms": "reduc motion usereducedmotion hook foundation util client fram reducemotion usesyncexternalstor gate preferenc animation mount usestat paint hydration duration packag user javascript first csr dramatical getserversnapshot ill precis requestanimationfram fals clos heavy satisfi unavoidabl useeffect vercel animat brief driver matchmedia snap late bounc ssr timer ship reset linear mui static interactiv mid live transition genuin true driven render flight set every honest canonical invisibl split"
     },
     {
       "name": "use-theme",
@@ -8161,7 +8161,7 @@
         "util",
         "foundation"
       ],
-      "terms": "usethem hook foundation util client schem persist localstorag switcher preferenc storag broadcast system user writ provider dark chos script docu instanc repaint read resolv safari sync rather follow forever access choos stor html privat scrollbar whit click preview usestat absent stylesheet different right exist bug page 3kb avoid brows colorschem conflat coordination ember enablecolorschem forcedthem initialiser insist mislead nonc outliv ping subscription unsupport wake"
+      "terms": "usethem hook foundation util client schem persist localstorag switcher preferenc storag broadcast system user writ provider dark chos script docu instanc repaint read resolv safari sync rather forever follow access choos stor html privat scrollbar whit click preview usestat absent stylesheet different right exist bug page 3kb avoid brows colorschem conflat coordination ember enablecolorschem forcedthem initialiser insist mislead nonc outliv ping subscription unsupport wake"
     },
     {
       "name": "view-transition",

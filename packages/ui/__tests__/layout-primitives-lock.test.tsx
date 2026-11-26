@@ -164,10 +164,27 @@ describe("Section: tone + divider (LAYOUT §8)", () => {
     expect(html).toContain("backdrop-blur-sm");
   });
 
-  it('tone="brand" is the brand band: bg-primary with its own foreground', () => {
+  it('tone="brand" is the brand band: the band pair, not the primary pair', () => {
     const html = render(<Section tone="brand">x</Section>);
-    expect(html).toContain("bg-primary text-primary-foreground");
+    expect(html).toContain("bg-band text-band-foreground");
     expect(html).toContain('data-tone="brand"');
+  });
+
+  it("the band follows the primary pair unless set, and more-contrast resets it", () => {
+    const css = readFileSync(
+      resolve(__dirname, "../styles/semantics.css"),
+      "utf8",
+    );
+    expect(css).toContain("--band: var(--interlace-band, var(--primary));");
+    expect(css).toContain(
+      "--band-foreground: var(--interlace-band-foreground, var(--primary-foreground));",
+    );
+    expect(css).toContain("--color-band: var(--band);");
+    // Both more-contrast copies (the switch and the media query) put it back on primary.
+    expect(css.match(/--band: var\(--primary\) !important;/g)).toHaveLength(2);
+    expect(
+      css.match(/--band-foreground: var\(--primary-foreground\) !important;/g),
+    ).toHaveLength(2);
   });
 
   it("overlap pulls up by the depth, drops its own top padding, and stacks above", () => {
