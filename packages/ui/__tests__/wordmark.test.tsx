@@ -89,4 +89,35 @@ describe('Wordmark', () => {
     expect(row?.className).toContain('min-h-14');
     expect(row?.className).not.toMatch(/(^|\s)h-14(\s|$)/);
   });
+  it('is md by default and steps down on a phone when responsive', () => {
+    const { container, rerender } = render(
+      <Wordmark href="/" label="Hello, home">
+        {lines}
+      </Wordmark>,
+    );
+    const root = () => container.querySelector('[data-slot="wordmark"]')!;
+    expect(root().getAttribute('data-size')).toBe('md');
+    expect(root().className).toContain('px-5');
+    rerender(
+      <Wordmark href="/" label="Hello, home" size="responsive">
+        {lines}
+      </Wordmark>,
+    );
+    expect(root().getAttribute('data-size')).toBe('responsive');
+    expect(root().className).toContain('px-3');
+    expect(root().className).toContain('md:px-5');
+    const line = container.querySelector('[data-slot="wordmark-line"]')!;
+    expect(line.className).toContain('max-md:group-data-[size=responsive]/wordmark:text-xs');
+  });
+
+  it('keeps a plain lockup bare at every size', () => {
+    const { container } = render(
+      <Wordmark label="Hello" variant="plain" size="sm">
+        {lines}
+      </Wordmark>,
+    );
+    const root = container.querySelector('[data-slot="wordmark"]')!;
+    expect(root.className).not.toContain('px-3');
+    expect(root.className).not.toContain('outline-2');
+  });
 });

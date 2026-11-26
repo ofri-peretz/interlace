@@ -7335,7 +7335,7 @@
       "name": "prose",
       "title": "Prose",
       "type": "registry:ui",
-      "summary": "The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer. Think MDX-target…",
+      "summary": "The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `figure`/`figcaption`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer.…",
       "topics": [],
       "categories": [
         "blog",
@@ -13361,6 +13361,14 @@
           "values": [
             "framed",
             "plain"
+          ]
+        },
+        {
+          "name": "WordmarkSize",
+          "values": [
+            "md",
+            "sm",
+            "responsive"
           ]
         }
       ],

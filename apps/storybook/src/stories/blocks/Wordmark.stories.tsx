@@ -30,7 +30,8 @@ const meta = {
         component:
           'A text logo of stacked lines: a name over its tagline, or one name in several scripts, each line ' +
           'with its own `lang` and `dir`. `variant="framed"` is a plate with an inset rule in the brand colour; ' +
-          '`plain` is the lines alone in the text colour. With `href` it is one link named by `label`; without, ' +
+          '`plain` is the lines alone in the text colour. `size="sm"` is about two thirds; `responsive` is `sm` on a phone, ' +
+          '`md` from the `md` breakpoint, for a sticky topbar. With `href` it is one link named by `label`; without, ' +
           'an image of text. Lines use `--font-heading`: add a font for another script to that stack and the ' +
           'browser picks one per glyph. It fits `Topbar`’s `logo` slot, which grows to hold it.',
       },
@@ -42,6 +43,11 @@ const meta = {
       control: 'inline-radio',
       options: ['framed', 'plain'],
       table: { category: 'Appearance', defaultValue: { summary: 'framed' } },
+    },
+    size: {
+      control: 'inline-radio',
+      options: ['md', 'sm', 'responsive'],
+      table: { category: 'Appearance', defaultValue: { summary: 'md' } },
     },
     children: { control: false },
   },
@@ -65,6 +71,18 @@ export const OnABrandBand: Story = {
         <Wordmark {...args} variant="plain" />
       </div>
     </Section>
+  ),
+};
+
+/** The three sizes side by side. `responsive` is `sm` below the `md` breakpoint, `md` from it. */
+export const Sizes: Story = {
+  args: { children: SCRIPTS },
+  render: (args) => (
+    <div className="flex items-center gap-8">
+      <Wordmark {...args} size="md" />
+      <Wordmark {...args} size="sm" />
+      <Wordmark {...args} size="responsive" />
+    </div>
   ),
 };
 
