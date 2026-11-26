@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T23:58:56.464Z",
+  "generatedAt": "2026-11-26T01:03:59.388Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -29,7 +29,7 @@
       "src/patterns/time-slot-model.ts",
       "src/patterns/share-image-model.ts",
       "src/patterns/{interest-model,commitment-model,session-plan-model,recap-model}.ts",
-      "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
+      "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,direction,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
       "src/patterns/{lint-playground,multi-step-form,share-image,thread-steps,tab-bar,app-header,app-header-edge,app-shell,pull-to-refresh,install-prompt}.tsx",
       "src/effects/{weave-texture,view-transition}.tsx"
     ]
@@ -6411,6 +6411,19 @@
       "states": [],
       "coverage": {
         "inGate": false
+      }
+    },
+    "direction": {
+      "sourcePath": "packages/ui/src/primitives/direction.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
       }
     },
     "distribution": {

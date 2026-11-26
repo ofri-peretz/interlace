@@ -829,6 +829,16 @@
     "previewDark": null,
     "skeleton": null
   },
+  "direction": {
+    "title": "Primitives/Direction",
+    "storyIds": [
+      "primitives-direction--right-to-left",
+      "primitives-direction--left-to-right"
+    ],
+    "preview": "primitives-direction--right-to-left",
+    "previewDark": null,
+    "skeleton": null
+  },
   "distribution": {
     "title": "Charts/Distribution",
     "storyIds": [

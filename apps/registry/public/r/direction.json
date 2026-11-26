@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "direction",
+  "type": "registry:ui",
+  "title": "Direction",
+  "description": "Sets the reading direction once, for both halves of a component: the CSS and the keyboard.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "a11y",
+    "primitive"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/direction.tsx",
+      "target": "components/ui/direction.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/direction v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/direction\n// What changed since: https://ds.interlace.tools/c/direction#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — DirectionProvider\n *\n * Sets the reading direction once, for both halves of a component: the CSS\n * and the keyboard.\n *\n * `dir=\"rtl\"` on an element is enough for layout. Logical sides (`ps-*`,\n * `border-s`, `start-*`) and the `rtl:` variant follow it. It is not enough\n * for behaviour. Base UI reads direction from React context, not from the\n * DOM, so without a provider a slider still grows to the right, ArrowRight\n * still moves to the next tab, and ArrowRight still opens a submenu that\n * opens to the left. This component sets both from one prop, so they cannot\n * disagree.\n *\n * Put it at the root of the app, next to `<html dir>`, or around any subtree\n * written in the other direction (a quote in Arabic inside an English page).\n *\n * ## Anatomy\n *\n *   DirectionProvider               (div · display: contents · dir · data-min-viewport=320)\n *     └─ children                   (Base UI composites read the same direction)\n *\n * The wrapper is `display: contents`, so it adds no box: it never changes\n * layout, a grid's tracks or a flex row.\n *\n * ## MIN_VIEWPORT — 320\n *\n * Direction is a property of the language, not of the screen.\n *\n * | Rule | Concept                          | Where in this file                                          |\n * | ---- | -------------------------------- | ----------------------------------------------------------- |\n * | R4   | Extends native el                | `React.ComponentProps<'div'> & DirectionProviderProps`      |\n * | R6   | data-slot on root                | `data-slot=\"direction\"`                                     |\n * | R7   | className merged + ...rest       | `cn('contents', className)` + `{...props}`                  |\n * | R8   | Enum, not boolean                | `direction = 'ltr' \\| 'rtl'`                                |\n * | R13  | Ecosystem first                  | Wraps Base UI's `DirectionProvider`; re-exports `useDirection` |\n * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |\n * | R18  | Tailwind only                    | Zero inline `style`                                          |\n * | R26  | A11y                             | `dir` on a real element, so assistive tech and the bidi algorithm see it |\n */\n\nimport {\n  DirectionProvider as BaseDirectionProvider,\n  useDirection,\n  type TextDirection,\n} from '@base-ui/react/direction-provider';\n\nimport { cn } from '@/lib/utils';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ntype DirectionProviderProps = Omit<React.ComponentProps<'div'>, 'dir'> & {\n  /** The reading direction of everything inside. @default 'ltr' */\n  direction?: TextDirection;\n};\n\nfunction DirectionProvider({\n  direction = 'ltr',\n  className,\n  children,\n  ...props\n}: DirectionProviderProps) {\n  return (\n    <BaseDirectionProvider direction={direction}>\n      <div\n        dir={direction}\n        data-slot=\"direction\"\n        data-min-viewport={String(MIN_VIEWPORT)}\n        className={cn('contents', className)}\n        {...props}\n      >\n        {children}\n      </div>\n    </BaseDirectionProvider>\n  );\n}\n\nexport { DirectionProvider, useDirection };\nexport type { DirectionProviderProps, TextDirection };\n"
+    }
+  ],
+  "meta": {
+    "tier": "primitive",
+    "client": true,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/direction\n\nInstalled to `components/ui/direction.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/direction';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/direction\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

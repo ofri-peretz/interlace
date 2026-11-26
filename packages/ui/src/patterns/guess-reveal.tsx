@@ -248,7 +248,7 @@ function GuessReveal({
           data-slot="guess-reveal-explanation"
           className={cn(
             "grid",
-            "motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-300 motion-safe:ease-out",
+            "motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-(--duration-medium) motion-safe:ease-enter",
             answered
               ? "grid-rows-[1fr] opacity-100"
               : "grid-rows-[0fr] opacity-0",
