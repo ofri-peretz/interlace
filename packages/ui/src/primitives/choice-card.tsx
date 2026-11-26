@@ -170,7 +170,7 @@ const CARD =
   'transition-[border-color,background-color,box-shadow,scale] duration-(--duration-fast) ease-enter motion-safe:active:scale-[0.97] ' +
   'hover:border-ring/60 hover:bg-muted/40 ' +
   'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ' +
-  'data-[checked]:border-primary data-[checked]:bg-primary/[0.06] data-[checked]:shadow-[inset_0_0_0_1px_var(--primary)] ' +
+  'data-[checked]:border-primary data-[checked]:bg-primary/6 data-[checked]:shadow-[inset_0_0_0_1px_var(--primary)] ' +
   'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 data-[disabled]:motion-safe:active:scale-100 ' +
   'aria-invalid:border-destructive';
 
