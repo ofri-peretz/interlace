@@ -1331,6 +1331,17 @@
           "source": ".changeset/button-transition-trim.md"
         },
         {
+          "summary": "`Callout` reads better on phones. Below `sm` a `kicker` sits above the body instead of beside it, so a long body keeps the full width rather than a column narrowed by the kicker, and the inset drops from `p-6` to `p-4`. From `sm` up nothing changes. The root carries `data-kicker` when a kicker is set.",
+          "components": [
+            "callout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/callout-phone-kicker.md"
+        },
+        {
           "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
           "components": [
             "claim-card"
