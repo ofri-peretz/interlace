@@ -32,10 +32,55 @@ this package never writes component files itself.
 | `add <name...>` | Installs one or more components |
 | `list`, `ls` | Lists every item in the registry, grouped by kind |
 | `info <name>` | Shows a component's dependencies, files and install command |
+| `check` | Tells whether the components you copied still match a release |
 
 Options: `--registry <url>` (install from a branch deploy or a mirror),
 `--dry-run` (print the shadcn command instead of running it), `--help`,
 `--version`.
+
+### Check that your copies still match
+
+Components are copied into your tree, so they can drift: edited in place, reformatted, or
+copied from a branch that was never released. `check` reads your `components.json`, finds every
+file that came from the registry, fetches the released items from the registry and says, for
+each file:
+
+| Status | Meaning |
+| --- | --- |
+| matches a release | the bytes equal the current release (line endings are ignored, nothing else) |
+| behind the release | its banner names an older release. Only the current release is published, so this cannot be checked byte for byte. **It does not fail the check by default**; pass `--strict` to make it fail |
+| modified locally | its banner names the current release, or it has none, and the bytes differ |
+| ahead of any release | its banner names a release the registry does not have: copied from a branch or an unreleased pull request |
+| missing | the component is installed (one of its files is here) and this file is not |
+
+```bash
+npx interlace-ui check
+npx interlace-ui check --json              # for CI and for agents
+npx interlace-ui check --allow components/ui/card.tsx
+```
+
+It exits `0` when there is no drift, `1` when a file is modified, ahead or missing (and, with
+`--strict`, behind), and `2` when it could not check (no `components.json`, an unreadable allow
+list, the registry unreachable). Files may be in the project root or under `src/`, and wherever the
+`aliases` in your `components.json` put them.
+
+A file that is different on purpose goes in the allow list: `--allow <file>` (repeatable), or a
+`.interlace-check.json` in the project (or `--config <file>`):
+
+```json
+{ "allow": { "components/ui/card.tsx": "taken from interlace#227, delete when released" } }
+```
+
+An allowed file is reported but never fails the check, and once it matches a release again the
+check tells you to remove it from the list. Options: `--json`, `--strict`, `--allow <file>`,
+`--cwd <dir>`, `--config <file>`, `--item <name>` (only that component, repeatable), `--registry <url>`.
+
+In CI:
+
+```yaml
+- name: Interlace components still match a release
+  run: npx interlace-ui check
+```
 
 ### Any flag it does not recognise goes to shadcn
 
