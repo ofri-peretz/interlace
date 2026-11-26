@@ -52,6 +52,10 @@
       "types": "./dist/primitives/button-variants.d.ts",
       "default": "./dist/primitives/button-variants.js"
     },
+    "./file-drop": {
+      "types": "./dist/primitives/file-drop.d.ts",
+      "default": "./dist/primitives/file-drop.js"
+    },
     "./calendar": {
       "types": "./dist/primitives/calendar.d.ts",
       "default": "./dist/primitives/calendar.js"

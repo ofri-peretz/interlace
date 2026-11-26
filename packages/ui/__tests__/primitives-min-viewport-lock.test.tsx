@@ -151,6 +151,7 @@ const PRIMITIVES = [
   // `Combobox.Root` renders nothing.
   { name: 'combobox', viewport: 320, tier: 'client' },
   { name: 'command-palette', viewport: 320, tier: 'client' },
+  { name: 'file-drop', viewport: 320, tier: 'client' },
 ] as const;
 
 /**
