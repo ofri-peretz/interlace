@@ -122,12 +122,19 @@ export default function Article() {
 }`}</code>
     </pre>
 
-    <h3>GFM tables — zebra rows + horizontal overflow</h3>
+    <h3>Tables read like an editorial table</h3>
+    <p>
+      No cell grid and no zebra fill: a firm rule under the header, a hairline
+      between rows, figures lined up. A{' '}
+      <code>{'<span data-status="success">'}</code> in a cell reads as a quiet
+      status pill. On a phone the rows stack into one card each.
+    </p>
     <table>
       <thead>
         <tr>
           <th>Token</th>
-          <th>Value</th>
+          <th align="right">Size</th>
+          <th>Status</th>
           <th>Notes</th>
         </tr>
       </thead>
@@ -136,34 +143,33 @@ export default function Article() {
           <td>
             <code>--text-body</code>
           </td>
-          <td>16px / 1.6</td>
+          <td align="right">16px</td>
+          <td>
+            <span data-status="success">stable</span>
+          </td>
           <td>Default reading contract.</td>
         </tr>
         <tr>
           <td>
             <code>--text-long</code>
           </td>
-          <td>17px / 1.7</td>
+          <td align="right">17px</td>
           <td>
-            Long-form reading contract — used by{' '}
-            <code>variant="long"</code>.
+            <span data-status="warning">in review</span>
+          </td>
+          <td>
+            Long-form reading contract, used by <code>variant="long"</code>.
           </td>
         </tr>
         <tr>
           <td>
             <code>--container-prose</code>
           </td>
-          <td>65ch</td>
+          <td align="right">65ch</td>
+          <td>
+            <span data-status="neutral">planned</span>
+          </td>
           <td>Measure ceiling per TYPOGRAPHY_PHILOSOPHY.</td>
-        </tr>
-        <tr>
-          <td>
-            <code>--spacing-xl</code>
-          </td>
-          <td>64px</td>
-          <td>
-            <code>scroll-margin-top</code> for heading anchors.
-          </td>
         </tr>
       </tbody>
     </table>

@@ -56,11 +56,12 @@
  */
 
 import { execFileSync } from 'node:child_process';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { buildAll, SOURCE_PATHS } from './build-registry.mjs';
+import { writeGenerated } from './lib/write-generated.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -405,10 +406,9 @@ const main = async () => {
     packageVersion,
   });
   const { merged, clamped } = mergeWithPrevious(derived, previous, packageVersion);
-  await writeFile(
+  await writeGenerated(
     MANIFEST,
     JSON.stringify(manifestPayload(merged, packageVersion), null, 2) + '\n',
-    'utf8',
   );
   for (const line of clamped) console.warn(`kept published version — ${line}`);
   console.log(
