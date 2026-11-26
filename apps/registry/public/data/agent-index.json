@@ -12792,6 +12792,14 @@
             "framed",
             "plain"
           ]
+        },
+        {
+          "name": "WordmarkSize",
+          "values": [
+            "md",
+            "sm",
+            "responsive"
+          ]
         }
       ],
       "a11y": {
