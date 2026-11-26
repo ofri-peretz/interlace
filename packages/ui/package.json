@@ -528,6 +528,18 @@
       "types": "./dist/games/poll.d.ts",
       "default": "./dist/games/poll.js"
     },
+    "./games/text-safety-model": {
+      "types": "./dist/games/text-safety-model.d.ts",
+      "default": "./dist/games/text-safety-model.js"
+    },
+    "./games/word-cloud-model": {
+      "types": "./dist/games/word-cloud-model.d.ts",
+      "default": "./dist/games/word-cloud-model.js"
+    },
+    "./games/word-cloud": {
+      "types": "./dist/games/word-cloud.d.ts",
+      "default": "./dist/games/word-cloud.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"
