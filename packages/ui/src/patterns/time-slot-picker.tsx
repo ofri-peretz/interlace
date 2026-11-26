@@ -136,7 +136,7 @@ type TimeSlotPickerProps = Omit<React.ComponentProps<'div'>, 'defaultValue' | 'o
 };
 
 const TILE =
-  'relative flex min-h-control-lg w-full min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg border px-3 py-2 text-center text-sm font-medium tabular-nums outline-none transition-[color,background-color,border-color,box-shadow,scale] duration-(--duration-fast) ease-enter focus-visible:ring-ring/50 focus-visible:ring-[3px]';
+  'relative flex min-h-control-lg w-full min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg border px-3 py-2 text-center text-sm font-medium tabular-nums outline-none transition-[color,background-color,border-color,box-shadow,scale] duration-(--duration-fast) ease-enter focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 const TimeSlotPicker = React.forwardRef<HTMLDivElement, TimeSlotPickerProps>(
   function TimeSlotPicker(

@@ -37,7 +37,7 @@ describe('ScrollArea edge fades', () => {
 
   it('keeps the focus ring classes', () => {
     render(<ScrollArea>content</ScrollArea>);
-    expect(viewport().className).toContain('focus-visible:ring-[3px]');
+    expect(viewport().className).toContain('focus-visible:ring-2');
   });
 
   it('fade="none" has no mask', () => {

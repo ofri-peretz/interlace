@@ -79,7 +79,7 @@ function Wordmark({ label, variant = 'framed', href, className, children, ...pro
     'font-heading inline-flex shrink-0 flex-col items-center leading-[1.05] whitespace-nowrap',
     VARIANT[variant],
     // The focus ring is a box-shadow, so the framed plate keeps its inset rule.
-    href && 'focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+    href && 'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
     href && variant === 'plain' && 'outline-none',
     className,
   );

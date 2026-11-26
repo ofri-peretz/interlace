@@ -1,21 +1,24 @@
 import * as React from 'react';
 import type { Decorator } from '@storybook/react-vite';
+import { DirectionProvider } from '@interlace/ui/direction';
 
 /**
  * Shared story decorators that surface the cross-cutting design
  * philosophies in Storybook itself.
  *
- *   - `withRtl`        — wraps a story in `dir="rtl"`. Surfaces baked-in
- *                        left/right asymmetry per `I18N_PHILOSOPHY.md`.
+ *   - `withRtl`        — wraps a story in a right-to-left `DirectionProvider`,
+ *                        so both the CSS and Base UI's arrow keys flip.
+ *                        Surfaces baked-in left/right asymmetry per
+ *                        `I18N_PHILOSOPHY.md`.
  *   - `withReducedMotion` — injects the same animation-kill CSS used by
  *                        `@media (prefers-reduced-motion: reduce)`
  *                        in `preview.css`, so designers see what a
  *                        reduce user sees per `MOTION_PHILOSOPHY.md`.
  */
 export const withRtl: Decorator = (Story) => (
-  <div dir="rtl" lang="ar">
+  <DirectionProvider direction="rtl" lang="ar">
     <Story />
-  </div>
+  </DirectionProvider>
 );
 
 const REDUCED_MOTION_CSS = `
