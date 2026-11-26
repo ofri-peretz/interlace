@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 232
+    "itemCount": 233
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 23,
+      "game": 24,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -48,8 +48,8 @@
       "effect": 27,
       "form": 26,
       "decorative": 24,
-      "games": 23,
-      "game": 23,
+      "games": 24,
+      "game": 24,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 118,
+      "client": 119,
       "server": 114
     },
     "keyboard": {
-      "none": 183,
+      "none": 184,
       "handled": 49
     },
     "loading": {
-      "none": 194,
+      "none": 195,
       "built-in": 38
     },
     "minViewport": {
-      "320": 151,
+      "320": 152,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -10370,6 +10370,61 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/sparkline.json",
       "item": "https://ds.interlace.tools/r/sparkline.json",
       "docs": "https://ds.interlace.tools/c/sparkline"
+    },
+    {
+      "name": "spectrum",
+      "title": "Spectrum",
+      "type": "registry:ui",
+      "summary": "Where do you stand? A statement, two poles, and a line between them. Each person places one dot, then sees the whole room spread along the same line, their own bin marked, the room's middle drawn, and, when the statement was asked before, where the middle…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "slider",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/spectrum.tsx",
+        "components/ui/games/spectrum-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/spectrum.json",
+      "item": "https://ds.interlace.tools/r/spectrum.json",
+      "docs": "https://ds.interlace.tools/c/spectrum"
     },
     {
       "name": "spinner",

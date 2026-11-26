@@ -2504,6 +2504,19 @@
     "previewDark": "charts-sparkline--dark",
     "skeleton": "charts-sparkline--loading"
   },
+  "spectrum": {
+    "title": "Games/Spectrum",
+    "storyIds": [
+      "games-spectrum--default",
+      "games-spectrum--placed",
+      "games-spectrum--keyboard",
+      "games-spectrum--private",
+      "games-spectrum--right-to-left"
+    ],
+    "preview": "games-spectrum--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "spinner": {
     "title": "Primitives/Spinner",
     "storyIds": [

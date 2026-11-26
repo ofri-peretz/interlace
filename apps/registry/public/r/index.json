@@ -3874,6 +3874,24 @@
       }
     },
     {
+      "name": "spectrum",
+      "type": "registry:ui",
+      "title": "Spectrum",
+      "description": "Where do you stand? A statement, two poles, and a line between them. Each person places one dot, then sees the whole room spread along the same line, their own bin marked, the room's middle drawn, and, when the statement was asked before, where the middle…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "streak",
       "type": "registry:ui",
       "title": "Streak",

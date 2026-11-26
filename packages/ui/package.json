@@ -552,6 +552,14 @@
       "types": "./dist/games/reactions.d.ts",
       "default": "./dist/games/reactions.js"
     },
+    "./games/spectrum-model": {
+      "types": "./dist/games/spectrum-model.d.ts",
+      "default": "./dist/games/spectrum-model.js"
+    },
+    "./games/spectrum": {
+      "types": "./dist/games/spectrum.d.ts",
+      "default": "./dist/games/spectrum.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

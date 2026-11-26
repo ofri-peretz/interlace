@@ -1097,6 +1097,17 @@
           "source": ".changeset/social-sign-in.md"
         },
         {
+          "summary": "`Spectrum`: where does a room stand between two poles? A statement, two pole labels and a slider (Base UI keyboard and drag, its value read in words: \"Closer to …\", \"In the middle\"). Placing the dot fires `onPlace` once and turns the slider into the room's picture on the same line: bars per bin with the viewer's bin in the accent, a marker for the room's middle that slides from the viewer's dot to the room's, and, with `before`, a dashed marker where the middle was in an earlier round. One sentence says it all for a screen reader and takes focus. `minResponses` hides the room until enough dots are in. The numbers are pure in `games/spectrum-model`: `summarizeSpectrum` (bins, median, middle half, mean), `spectrumShift`, `binOf`, `cleanValues`.",
+          "components": [
+            "spectrum"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/spectrum.md"
+        },
+        {
           "summary": "`Spinner`: the shadcn core `spinner` item in Interlace tokens. An inline SVG in `currentColor` with `sm` (default), `md` and `lg` sizes. Announced once as a status named by `label` (\"Loading\" by default, so it can be translated); `decorative` hides it inside something that already says it is busy. It turns only under `motion-safe`. Server component.",
           "components": [
             "spinner"
