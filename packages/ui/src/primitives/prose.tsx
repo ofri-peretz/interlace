@@ -298,7 +298,10 @@ const TABLE_ROLES: Record<string, string> = {
  * with merged cells or no header row is left as it is.
  */
 function labelTableCells(table: HTMLTableElement) {
-  if (table.querySelector("[colspan], [rowspan]")) return;
+  const merged = Array.from(
+    table.querySelectorAll<HTMLTableCellElement>("th, td"),
+  ).some((cell) => cell.colSpan > 1 || cell.rowSpan > 1);
+  if (merged) return;
   const headRow = table.tHead?.rows[0];
   if (!headRow) return;
   if (!table.querySelector("td[data-label]")) {

@@ -115,4 +115,28 @@ describe("Prose tables", () => {
       expect(table.querySelector("td")!.hasAttribute("data-label")).toBe(false);
     }
   });
+  it("treats a span of one as a plain cell, as some Markdown renderers emit it", () => {
+    const { container } = render(
+      <Prose>
+        <table>
+          <thead>
+            <tr>
+              <th colSpan={1}>Card</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowSpan={1}>a</td>
+            </tr>
+          </tbody>
+        </table>
+      </Prose>,
+    );
+    expect(container.querySelector("td")?.getAttribute("data-label")).toBe(
+      "Card",
+    );
+    expect(container.querySelector("table")?.getAttribute("role")).toBe(
+      "table",
+    );
+  });
 });
