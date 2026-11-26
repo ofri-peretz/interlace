@@ -540,4 +540,21 @@ describe("Footer", () => {
       screen.getByText("Answers with their sources.").getAttribute("data-slot"),
     ).toBe("footer-tagline");
   });
+
+  it("sets link groups two to a row on a phone, with the brand across the row", () => {
+    const { container } = render(
+      <Footer
+        brand="Site"
+        groups={[
+          { title: "Answers", links: [{ href: "/a", label: "All" }] },
+          { title: "About", links: [{ href: "/b", label: "Us" }] },
+        ]}
+      />,
+    );
+    const brand = container.querySelector('[data-slot="footer-brand"]')!;
+    expect(brand.parentElement!.className).toContain("grid-cols-2");
+    expect(brand.parentElement!.className).toContain("md:grid-cols-[1fr_1fr_1fr]");
+    expect(brand.className).toContain("col-span-2");
+    expect(brand.className).toContain("md:col-span-1");
+  });
 });
