@@ -37,6 +37,10 @@
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
+    },
+    "interlace-ui#test": {
+      "dependsOn": ["^build", "build"],
+      "outputs": ["coverage/**"]
     }
   }
 }
