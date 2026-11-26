@@ -105,7 +105,10 @@ function ClaimCardAnswer({ className, ...props }: React.ComponentProps<'p'>) {
 type ClaimCardSectionProps = Omit<React.ComponentProps<'details'>, 'title'> & {
   /** The summary line: "Facts and sources", "Who says this". */
   title: React.ReactNode;
-  /** Shown after the title in muted text, e.g. a count or "3 of 4 sourced". */
+  /**
+   * Shown after the title in muted text, e.g. a count or "3 of 4 sourced". It wraps with the
+   * title as one run of text, and drops to the next line whole rather than break inside.
+   */
   meta?: React.ReactNode;
 };
 
@@ -125,8 +128,16 @@ function ClaimCardSection({ title, meta, className, children, ...props }: ClaimC
           aria-hidden="true"
           className="text-muted-foreground size-4 shrink-0 -rotate-90 transition-transform group-open:rotate-0 motion-reduce:transition-none"
         />
-        <span>{title}</span>
-        {meta != null ? <span className="text-muted-foreground font-normal">({meta})</span> : null}
+        {/* One run of text, so a narrow card wraps it like a sentence. */}
+        <span data-slot="claim-card-section-label" className="min-w-0">
+          {title}
+          {meta != null ? (
+            <>
+              {' '}
+              <span className="text-muted-foreground font-normal whitespace-nowrap">({meta})</span>
+            </>
+          ) : null}
+        </span>
       </summary>
       <div data-slot="claim-card-section-body" className="space-y-3 pt-3 pb-1 ps-6 text-sm">
         {children}
