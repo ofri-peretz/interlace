@@ -1,0 +1,39 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ofri-peretz/ui-nightly/v1/schema.json",
+  "storybook": { "dir": "apps/storybook/storybook-static" },
+  "browsers": ["chromium", "firefox", "webkit"],
+  "variants": {
+    "light": { "colorScheme": "light", "globals": { "theme": "light" } },
+    "dark": { "colorScheme": "dark", "globals": { "theme": "dark" }, "viewports": ["phone", "desktop"] },
+    "contrast": {
+      "colorScheme": "light",
+      "contrast": "more",
+      "globals": { "theme": "light", "interlaceContrast": "more" },
+      "viewports": ["desktop"],
+      "browsers": ["chromium"]
+    },
+    "rtl": {
+      "colorScheme": "light",
+      "globals": { "theme": "light", "interlaceDir": "rtl" },
+      "viewports": ["phone"],
+      "browsers": ["chromium"]
+    },
+    "text150": {
+      "colorScheme": "light",
+      "globals": { "theme": "light", "interlaceTextSize": "2xl" },
+      "viewports": ["phone"],
+      "browsers": ["chromium"]
+    },
+    "zoom200": {
+      "colorScheme": "light",
+      "zoom": 2,
+      "globals": { "theme": "light" },
+      "viewports": ["desktop"],
+      "browsers": ["chromium"]
+    }
+  },
+  "shotsPerShard": 300,
+  "compat": {
+    "browserslist": ["chrome >= 111", "edge >= 111", "firefox >= 128", "safari >= 16.4", "ios_saf >= 16.4"]
+  }
+}
