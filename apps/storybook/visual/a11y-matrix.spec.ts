@@ -56,7 +56,7 @@ async function axeFindings(page: Page, mode: Mode): Promise<Finding[]> {
   // Scoped to the story root, like the story-by-story gate. Known gap: an
   // overlay portalled to <body> (an open dialog, menu or tooltip) is outside
   // it and is not scanned by either gate. Default stories render closed.
-  const extra = mode.name === 'contrast-more' ? ['color-contrast-enhanced'] : [];
+  const extra = mode.globals.interlaceContrast === 'more' ? ['color-contrast-enhanced'] : [];
   const violations = await page.evaluate(
     async ({ tags, extra }) => {
       // @ts-expect-error: injected above
