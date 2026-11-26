@@ -1254,6 +1254,17 @@
           "source": ".changeset/weave-texture.md"
         },
         {
+          "summary": "A live word cloud for rooms. `WordEntry` lets a phone send up to `maxWords` words (default 3), each checked before `onWord` fires; a refused word says why, and the viewer's sent words show as chips. `WordCloud` groups what the room sent by its folded form (case, accents and marks), shows the spelling most people used, sizes words on a square-root scale in five steps and puts the biggest in the middle, while the DOM stays in rank order with each word read with its count. Words glide to their new places through FlipGroup and a word that gained a vote pulses once; under reduced motion they simply take their place. `size=\"stage\"` is for a shared screen. The rules are pure and exported: `games/word-cloud-model` (`buildCloud`, `centerOut`) and `games/text-safety-model` (`checkText`, `foldText`, `isBlocked`), which refuses empty text, overlong text, links, email addresses, phone numbers and words on the consumer's `blocklist` (whole words, through letter swaps and spelled-out letters). Interlace ships no word list.",
+          "components": [
+            "word-cloud"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/word-cloud.md"
+        },
+        {
           "summary": "New `Wordmark`: a text logo of stacked lines (a name over its tagline, or one name in several scripts), with each `Wordmark.Line` carrying its own `lang` and `dir`. `variant=\"framed\"` is a page-coloured plate with an inset rule in the brand colour; `plain` is the lines alone in the text colour. With `href` the whole lockup is one link named by `label`; without, it is an image of text. Lines use `--font-heading`; for another script, add its font to that stack and the browser picks per glyph. `Topbar`'s row is now at least 3.5rem and grows to fit a taller logo instead of clipping it.",
           "components": [
             "wordmark",
