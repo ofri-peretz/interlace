@@ -8,7 +8,7 @@
  * `img`) get DS-token-mapped typography without per-element class
  * gymnastics in the consumer. Think MDX-target wrapper: drop a stream of
  * Markdown / MDX inside and it reads like a published article — measure
- * bounded, GFM tables zebra-striped, headings deep-link-anchorable.
+ * bounded, GFM tables ruled like an editorial table, headings deep-link-anchorable.
  *
  * The descendant cascade lives on the wrapper itself via Tailwind
  * arbitrary-variant utilities (`[&_h1]:…`) so the whole contract is
@@ -38,9 +38,11 @@
  * ## MIN_VIEWPORT — 320
  *
  * Long-form reading is one of the failure modes that MUST work on the
- * narrowest phone. Headings and measure all collapse cleanly at 320 CSS-px;
- * tables get `overflow-x: auto` (`[&_table]:block [&_table]:overflow-x-auto`)
- * so wide GFM tables scroll horizontally instead of breaking the page.
+ * narrowest phone. Headings and measure all collapse cleanly at 320 CSS-px.
+ * A table with a header row stacks into one card per row below the `sm`
+ * breakpoint; any other table gets `overflow-x: auto`
+ * (`[&_table]:block [&_table]:overflow-x-auto`) and scrolls sideways
+ * instead of breaking the page.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -81,9 +83,9 @@ type ProseElement = 'article' | 'div' | 'main' | 'section';
  * sizes from `--text-h*`, weights from the 400/500/600/700 ladder, spacing
  * from `--spacing-*`, colors from semantic tokens. Headings carry
  * `scroll-margin-top` (xl ≈ 64px) so deep-link anchors clear a sticky
- * header instead of hiding under it. GFM tables zebra-stripe via
- * `[&_tbody_tr:nth-child(even)]:bg-muted/40` and scroll horizontally on
- * narrow viewports.
+ * header instead of hiding under it. GFM tables read as editorial tables
+ * (rules between rows, no cell grid), and on a phone a table whose cells
+ * carry `data-label` stacks into one card per row.
  */
 const PROSE_CASCADE = [
   // Headings — type scale + scroll-margin for deep-link anchors.
@@ -133,13 +135,45 @@ const PROSE_CASCADE = [
   // shows on keyboard focus.
   '[&_pre]:my-6 [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-none [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
 
-  // Tables — GFM zebra rows; block + overflow-x for narrow viewports (R14).
-  // Same keyboard-focus contract as <pre>.
-  '[&_table]:my-6 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:text-ui [&_table:focus-visible]:outline-none [&_table:focus-visible]:ring-2 [&_table:focus-visible]:ring-ring [&_table:focus-visible]:ring-offset-2',
-  '[&_thead]:bg-muted',
-  '[&_th]:border [&_th]:border-border [&_th]:px-4 [&_th]:py-2 [&_th]:font-semibold [&_th]:text-start',
-  '[&_td]:border [&_td]:border-border [&_td]:px-4 [&_td]:py-2',
-  '[&_tbody_tr:nth-child(even)]:bg-muted/40',
+  // Tables — an editorial table, not a spreadsheet grid: no cell boxes, no
+  // zebra fill, a firm rule under the header and a hairline between rows,
+  // so the eye runs along the row. Body cells keep the reading size (a table
+  // in an article is read, not scanned like a dashboard); headers are the
+  // quieter UI size. Figures line up (tabular-nums), and a GFM column
+  // alignment (`align` on th/td) is honoured. Block + overflow-x keeps a wide
+  // table inside the column (R14), with the same keyboard-focus contract as
+  // <pre>.
+  '[&_table]:my-8 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:tabular-nums [&_table:focus-visible]:outline-none [&_table:focus-visible]:ring-2 [&_table:focus-visible]:ring-ring [&_table:focus-visible]:ring-offset-2',
+  '[&_caption]:mb-3 [&_caption]:text-start [&_caption]:text-ui [&_caption]:text-muted-foreground',
+  '[&_th]:border-b-2 [&_th]:border-foreground [&_th]:px-3 [&_th]:pt-0 [&_th]:pb-2 [&_th]:align-bottom [&_th]:text-ui [&_th]:font-semibold [&_th]:text-muted-foreground [&_th:not([align])]:text-start',
+  '[&_td]:border-b [&_td]:border-border [&_td]:px-3 [&_td]:py-4 [&_td]:align-top',
+  '[&_:is(th,td):first-child]:ps-0 [&_:is(th,td):last-child]:pe-0',
+  // The first cell names the row, so it carries the weight a row header would.
+  '[&_tbody_td:first-child]:font-medium',
+
+  // Status in a cell — `<span data-status="success|warning|info|destructive|neutral">`
+  // reads as a quiet pill with a coloured dot. The word carries the meaning;
+  // the dot only repeats it, so colour is never the only signal (WCAG 1.4.1).
+  '[&_[data-status]]:inline-flex [&_[data-status]]:items-center [&_[data-status]]:gap-2 [&_[data-status]]:whitespace-nowrap [&_[data-status]]:rounded-full [&_[data-status]]:border [&_[data-status]]:border-border [&_[data-status]]:bg-background [&_[data-status]]:px-3 [&_[data-status]]:text-ui [&_[data-status]]:font-medium [&_[data-status]]:text-foreground',
+  '[&_[data-status]]:before:size-2 [&_[data-status]]:before:shrink-0 [&_[data-status]]:before:rounded-full [&_[data-status]]:before:bg-muted-foreground [&_[data-status]]:before:content-[""]',
+  // Two attribute selectors, so a tone outranks the neutral dot above.
+  '[&_[data-status][data-status=success]]:before:bg-success [&_[data-status][data-status=warning]]:before:bg-warning [&_[data-status][data-status=info]]:before:bg-info [&_[data-status][data-status=destructive]]:before:bg-destructive',
+
+  // Narrow screens — a table whose cells carry `data-label` (Prose adds it
+  // from the header row; server-rendered markup can ship it to skip a
+  // flash) stacks into one card per row: the first cell is the card's
+  // title, every other cell shows its column name above its value, and an
+  // empty cell drops out. Nothing scrolls sideways on a phone. The roles
+  // Prose sets keep the table semantics a screen reader would otherwise
+  // lose when the cells stop being table cells.
+  'max-sm:[&_table:has(td[data-label])]:overflow-visible',
+  'max-sm:[&_table:has(td[data-label])_thead]:sr-only',
+  'max-sm:[&_table:has(td[data-label])_:is(tbody,tr,td)]:block',
+  'max-sm:[&_tr:has(>td[data-label])]:border-b max-sm:[&_tr:has(>td[data-label])]:border-border max-sm:[&_tr:has(>td[data-label])]:py-4',
+  'max-sm:[&_td[data-label]]:border-0 max-sm:[&_td[data-label]]:px-0 max-sm:[&_td[data-label]]:py-1',
+  'max-sm:[&_td[data-label]:not(:first-child)]:before:block max-sm:[&_td[data-label]:not(:first-child)]:before:text-ui max-sm:[&_td[data-label]:not(:first-child)]:before:font-semibold max-sm:[&_td[data-label]:not(:first-child)]:before:text-muted-foreground max-sm:[&_td[data-label]:not(:first-child)]:before:content-[attr(data-label)]',
+  'max-sm:[&_td[data-label]:first-child]:pb-2 max-sm:[&_td[data-label]:first-child]:font-heading max-sm:[&_td[data-label]:first-child]:text-h5 max-sm:[&_td[data-label]:first-child]:font-semibold',
+  'max-sm:[&_td[data-label]:empty]:hidden',
 
   // Images — block layout + bounded radius + measure-respecting width.
   '[&_img]:my-6 [&_img]:block [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg',
@@ -192,7 +226,8 @@ const DEFAULT_PROSE_LABELS: ProseLabels = {
   code: 'Code, scrolls sideways',
 };
 
-interface ProseProps extends React.ComponentProps<'article'>, VariantProps<typeof proseVariants> {
+interface ProseProps
+  extends React.ComponentProps<'article'>, VariantProps<typeof proseVariants> {
   /**
    * Override the rendered element. Defaults to `article` — the natural
    * semantic for an article-body wrapper. Use `main` when this is the page's
@@ -231,7 +266,8 @@ function claimScrollRegion(el: HTMLElement, label: string) {
     el.setAttribute('role', 'region');
     el.setAttribute('data-prose-role', '');
   }
-  const named = el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby');
+  const named =
+    el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby');
   if (!named && !(isTable && el.querySelector('caption'))) {
     el.setAttribute('aria-label', label);
     el.setAttribute('data-prose-label', '');
@@ -249,6 +285,50 @@ function releaseScrollRegion(el: HTMLElement) {
       el.removeAttribute(attr);
       el.removeAttribute(marker);
     }
+  }
+}
+
+/** The ARIA role each part of a table keeps once a narrow screen stacks it. */
+const TABLE_ROLES: Record<string, string> = {
+  TABLE: 'table',
+  THEAD: 'rowgroup',
+  TBODY: 'rowgroup',
+  TR: 'row',
+  TH: 'columnheader',
+  TD: 'cell',
+};
+
+/**
+ * Give every body cell of a simple table its column name (`data-label`), so
+ * the narrow-screen cascade can stack the rows into cards, and pin the table
+ * roles, which some screen readers drop once a cell is no longer
+ * `display: table-cell`. Labels the author already wrote are kept; a table
+ * with merged cells or no header row is left as it is.
+ */
+function labelTableCells(table: HTMLTableElement) {
+  const merged = Array.from(
+    table.querySelectorAll<HTMLTableCellElement>('th, td'),
+  ).some((cell) => cell.colSpan > 1 || cell.rowSpan > 1);
+  if (merged) return;
+  const headRow = table.tHead?.rows[0];
+  if (!headRow) return;
+  if (!table.querySelector('td[data-label]')) {
+    const names = Array.from(headRow.cells, (c) => c.textContent?.trim() ?? '');
+    for (const body of Array.from(table.tBodies)) {
+      for (const row of Array.from(body.rows)) {
+        Array.from(row.cells).forEach((cell, i) => {
+          if (cell.tagName === 'TD' && names[i])
+            cell.setAttribute('data-label', names[i]);
+        });
+      }
+    }
+  }
+  for (const el of [
+    table,
+    ...table.querySelectorAll<HTMLElement>('thead, tbody, tr, th, td'),
+  ]) {
+    const role = TABLE_ROLES[el.tagName];
+    if (role && !el.hasAttribute('role')) el.setAttribute('role', role);
   }
 }
 
@@ -289,6 +369,8 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
     React.useLayoutEffect(() => {
       const root = localRef.current;
       if (!root) return;
+      for (const table of root.querySelectorAll('table'))
+        labelTableCells(table);
       const sync = () => {
         for (const el of root.querySelectorAll<HTMLElement>('pre, table')) {
           syncScrollRegion(el, el.tagName === 'TABLE' ? tableLabel : codeLabel);
@@ -305,7 +387,8 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
       (node: HTMLElement | null) => {
         localRef.current = node;
         if (typeof ref === 'function') ref(node);
-        else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+        else if (ref)
+          (ref as React.MutableRefObject<HTMLElement | null>).current = node;
       },
       [ref],
     );
@@ -317,7 +400,11 @@ const Prose = React.forwardRef<HTMLElement, ProseProps>(
         data-min-viewport={String(MIN_VIEWPORT)}
         data-variant={variant ?? undefined}
         data-width={width ?? undefined}
-        className={cn(proseVariants({ variant, width }), 'prose-interlace', className)}
+        className={cn(
+          proseVariants({ variant, width }),
+          'prose-interlace',
+          className,
+        )}
         {...props}
       >
         {children}
