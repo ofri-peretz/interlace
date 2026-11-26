@@ -287,7 +287,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 238 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 239 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -341,10 +341,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 124 client, 114 server
-- keyboard: 186 none, 52 handled
-- built-in loading state: 38 of 238
-- declared minViewport: 157 at 320, 7 at 480, 1 at 768, 73 at inherited
+- rendering: 125 client, 114 server
+- keyboard: 187 none, 52 handled
+- built-in loading state: 38 of 239
+- declared minViewport: 158 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
@@ -352,7 +352,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - tier `primitive` — 78 item(s)
 - tier `pattern` — 65 item(s)
-- tier `game` — 29 item(s)
+- tier `game` — 30 item(s)
 - tier `effect` — 27 item(s)
 - tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
@@ -363,9 +363,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `primitive` (Primitives) — 78 item(s)
 - category `pattern` (Patterns) — 65 item(s)
 - category `blog` (Blog & long-form) — 37 item(s)
+- category `games` (Games) — 30 item(s)
+- category `game` (Games) — 30 item(s)
 - category `data` (Data display) — 30 item(s)
-- category `games` (Games) — 29 item(s)
-- category `game` (Games) — 29 item(s)
 - category `foundation` (Foundation) — 27 item(s)
 - category `effect` (Effects) — 27 item(s)
 - category `form` (Form & input) — 26 item(s)
@@ -953,6 +953,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Tally Bars](https://ds.interlace.tools/c/tally-bars): How everyone answered, as one bar per option with its whole percent: the results of a poll, or the spread of answers after a quiz question. The viewer's own choice is named in words, and a quiz can mark the right option, so nothing depends on colour alone.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/tally-bars.json`
   - contract: client, min 320px, states correct|wrong, v1.0.0
+- [Text Wall](https://ds.interlace.tools/c/text-wall): The room's short answers on a shared screen: "what would you ask someone your age who lives there?". New posts rise in at the top; the presenter can put one in the spotlight, large, above the rest. Phones send with `QuestionAsk` (relabelled: "Your answer"…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/text-wall.json`
+  - contract: client, min 320px, v1.0.0
 - [Timer Ring](https://ds.interlace.tools/c/timer-ring): A countdown drawn as a ring that empties, with the seconds left in the middle. It counts to a deadline (a timestamp), not from a start, so a page that reloads, or several players in one room, all see the same clock.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/timer-ring.json`
   - contract: client, min 320px, v1.0.0

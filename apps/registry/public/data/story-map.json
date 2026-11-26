@@ -2842,6 +2842,19 @@
     "previewDark": "blocks-testimonial--dark",
     "skeleton": "blocks-testimonial--loading"
   },
+  "text-wall": {
+    "title": "Games/TextWall",
+    "storyIds": [
+      "games-textwall--default",
+      "games-textwall--live",
+      "games-textwall--phone",
+      "games-textwall--empty",
+      "games-textwall--right-to-left"
+    ],
+    "preview": "games-textwall--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "textarea": {
     "title": "Primitives/Textarea",
     "storyIds": [

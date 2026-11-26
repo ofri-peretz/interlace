@@ -600,6 +600,10 @@
       "types": "./dist/games/ranking.d.ts",
       "default": "./dist/games/ranking.js"
     },
+    "./games/text-wall": {
+      "types": "./dist/games/text-wall.d.ts",
+      "default": "./dist/games/text-wall.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

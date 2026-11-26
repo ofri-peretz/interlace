@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 238
+    "itemCount": 239
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 29,
+      "game": 30,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -43,9 +43,9 @@
       "primitive": 78,
       "pattern": 65,
       "blog": 37,
+      "games": 30,
+      "game": 30,
       "data": 30,
-      "games": 29,
-      "game": 29,
       "foundation": 27,
       "effect": 27,
       "form": 26,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 124,
+      "client": 125,
       "server": 114
     },
     "keyboard": {
-      "none": 186,
+      "none": 187,
       "handled": 52
     },
     "loading": {
-      "none": 200,
+      "none": 201,
       "built-in": 38
     },
     "minViewport": {
-      "320": 157,
+      "320": 158,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -11823,6 +11823,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/testimonial.json",
       "item": "https://ds.interlace.tools/r/testimonial.json",
       "docs": "https://ds.interlace.tools/c/testimonial"
+    },
+    {
+      "name": "text-wall",
+      "title": "Text Wall",
+      "type": "registry:ui",
+      "summary": "The room's short answers on a shared screen: \"what would you ask someone your age who lives there?\". New posts rise in at the top; the presenter can put one in the spotlight, large, above the rest. Phones send with `QuestionAsk` (relabelled: \"Your answer\"…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/text-wall.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/text-wall.json",
+      "item": "https://ds.interlace.tools/r/text-wall.json",
+      "docs": "https://ds.interlace.tools/c/text-wall"
     },
     {
       "name": "textarea",

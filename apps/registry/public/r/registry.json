@@ -4018,6 +4018,24 @@
       }
     },
     {
+      "name": "text-wall",
+      "type": "registry:ui",
+      "title": "Text Wall",
+      "description": "The room's short answers on a shared screen: \"what would you ask someone your age who lives there?\". New posts rise in at the top; the presenter can put one in the spotlight, large, above the rest. Phones send with `QuestionAsk` (relabelled: \"Your answer\"…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "timer-ring",
       "type": "registry:ui",
       "title": "Timer Ring",
