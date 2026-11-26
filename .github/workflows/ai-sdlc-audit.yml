@@ -1,0 +1,41 @@
+name: ai-sdlc-audit
+
+# Weekly: every ofri-peretz repo against docs/ai-sdlc/AI-SDLC.md. Fails, and files one issue,
+# when a repo runs Claude review before its context is ready. Not a PR check: the state it
+# reads lives in other repos.
+#
+# GITHUB_TOKEN reads public repos only, and cannot list secrets (the audit treats that as
+# "review on" so the check never goes vacuous). Private repos read as empty until an
+# AI_SDLC_AUDIT_TOKEN with repo:read is added.
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+  pull_request:
+    paths: ['scripts/ai-sdlc/**', '.github/workflows/ai-sdlc-audit.yml']
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.AI_SDLC_AUDIT_TOKEN || secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
+        with:
+          node-version-file: .nvmrc
+      - run: node --test scripts/ai-sdlc/ai-sdlc.test.mjs
+      - id: audit
+        run: node scripts/ai-sdlc/audit.mjs --check | tee -a "$GITHUB_STEP_SUMMARY"
+      - if: failure() && steps.audit.outcome == 'failure' && github.event_name != 'pull_request'
+        run: |
+          title="AI-SDLC: Claude review is on before context is ready"
+          body="$(node scripts/ai-sdlc/audit.mjs)"$'\n\n'"Fix the repo's context or turn its review off. See docs/ai-sdlc/AI-SDLC.md. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          n=$(gh issue list --state open --search "in:title \"$title\"" --json number -q '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body "$body"; else gh issue create --title "$title" --body "$body"; fi
