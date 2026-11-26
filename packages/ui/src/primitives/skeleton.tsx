@@ -286,23 +286,24 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
         </div>
       );
     case 'prev-next-post':
-      // Two bordered link cards, each a kicker line over a title line —
-      // and the same `grid-cols-1 md:grid-cols-2` cadence the real block
-      // uses, so the article footer doesn't reflow when the pair arrives.
+      // Two bordered link cards, each a kicker line over a title line, on
+      // the real block's own tracks, so the footer doesn't reflow when the pair arrives.
       return (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {['items-start', 'items-end'].map((align) => (
-            <div
-              key={align}
-              className={cn(
-                'flex flex-col gap-1 rounded-xl border border-border p-6',
-                align,
-              )}
-            >
-              <div className="bg-muted-foreground/10 h-3 w-20 rounded-sm" />
-              <div className="bg-muted-foreground/10 h-5 w-3/4 rounded-sm" />
-            </div>
-          ))}
+        <div className="@container">
+          <div className="grid grid-cols-1 gap-6 @xl:grid-cols-2">
+            {['items-start', 'items-end'].map((align) => (
+              <div
+                key={align}
+                className={cn(
+                  'flex flex-col gap-1 rounded-xl border border-border p-6',
+                  align,
+                )}
+              >
+                <div className="bg-muted-foreground/10 h-3 w-20 rounded-sm" />
+                <div className="bg-muted-foreground/10 h-5 w-3/4 rounded-sm" />
+              </div>
+            ))}
+          </div>
         </div>
       );
     case 'stat-card':
@@ -484,16 +485,18 @@ function CompositeBody({ variant }: { variant: SkeletonVariant }) {
       // Four label/value pairs on the strip's own two-track mobile grid, so
       // the placeholder reflows at exactly the breakpoints the real strip does.
       return (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-5 xs:grid-cols-3 lg:grid-cols-4">
-          {[0, 1, 2, 3].map((cell) => (
-            <div
-              key={cell}
-              className="border-muted-foreground/10 flex min-w-0 flex-col gap-1 border-s-2 ps-2"
-            >
-              <div className="bg-muted-foreground/10 h-3 w-3/4 rounded-sm" />
-              <div className="bg-muted-foreground/10 h-5 w-1/2 rounded-sm" />
-            </div>
-          ))}
+        <div className="@container w-full">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-5 @md:grid-cols-3 @4xl:grid-cols-4">
+            {[0, 1, 2, 3].map((cell) => (
+              <div
+                key={cell}
+                className="border-muted-foreground/10 flex min-w-0 flex-col gap-1 border-s-2 ps-2"
+              >
+                <div className="bg-muted-foreground/10 h-3 w-3/4 rounded-sm" />
+                <div className="bg-muted-foreground/10 h-5 w-1/2 rounded-sm" />
+              </div>
+            ))}
+          </div>
         </div>
       );
     default:
