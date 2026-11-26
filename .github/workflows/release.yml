@@ -77,7 +77,12 @@ jobs:
           #   interlace-ui   published to npm (the CLI is a tool, not a second
           #                  copy of the components — VERSIONING_PHILOSOPHY § 2)
           publish: npm run release
-          commit: 'chore(release): version packages'
+          # The commit-msg hook (provedone) runs in CI too, and rejects a commit with no
+          # Verified-by line. The version commit is mechanical, so it says what proves it.
+          commit: |
+            chore(release): version packages
+
+            Verified-by: none (changesets/action output; the version PR runs full CI before merge)
           title: 'chore(release): version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
