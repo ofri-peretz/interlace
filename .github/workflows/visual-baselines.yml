@@ -1,0 +1,70 @@
+name: visual-baselines
+
+# Renders the screenshot baselines that are missing on a branch, in the same pinned Playwright
+# image the `storybook (visual)` checks use (`apps/storybook/scripts/visual-docker.sh`), and
+# commits only the new PNGs back to that branch. For a machine that cannot run the image.
+#
+# Run it from the Actions tab (or `gh workflow run visual-baselines.yml -f ref=<branch>`).
+# It never touches main, and it only writes files that do not exist yet: a baseline that
+# already exists is never rewritten here (`--update-snapshots=missing`); an intended change to
+# one is still `npm run visual:docker:update` and a reviewed diff.
+#
+# A push made with GITHUB_TOKEN does not start other workflows, so push an empty commit to the
+# branch afterwards to run the checks over the new baselines.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch to add missing baselines to (not main)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: visual-baselines-${{ inputs.ref }}
+  cancel-in-progress: false
+
+jobs:
+  baselines:
+    name: baselines (${{ inputs.ref }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      REF: ${{ inputs.ref }}
+      TURBO_TELEMETRY_DISABLED: 1
+    steps:
+      - name: Refuse the default branch
+        run: |
+          case "$REF" in
+            main|master|refs/heads/main|refs/heads/master|"")
+              echo "Refusing to write baselines to '$REF'. Give a feature branch." >&2
+              exit 1
+              ;;
+          esac
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npx turbo run build-storybook --filter=@interlace/storybook
+      - name: Render the missing baselines in the pinned Playwright image
+        working-directory: apps/storybook
+        run: bash scripts/visual-docker.sh --project=matrix --update-snapshots=missing
+      - name: Commit the new PNGs to the branch
+        run: |
+          git add apps/storybook/visual/baselines
+          if git diff --cached --quiet; then
+            echo "No baseline was missing."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "test(ui): baselines for new stories, rendered by CI" \
+            -m "Verified-by: none (baselines rendered by CI run ${GITHUB_RUN_ID})"
+          git push origin "HEAD:refs/heads/${REF}"
