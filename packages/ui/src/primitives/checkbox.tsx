@@ -33,7 +33,7 @@
  * | indeterminate `bg-primary` on `--background`       | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | glyph `text-primary-foreground` on `bg-primary`    | 8.80:1 | 11.79:1 | 3:1 (SC 1.4.11) |
  * | `aria-invalid:border-destructive` on `--background`| 8.31:1 | 10.43:1  | 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring/60` on `--background`     | 3.23:1 | 4.73:1  | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background`     | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
  *
  * `disabled:opacity-50` is exempt — SC 1.4.11 carves out inactive
  * user-interface components.
@@ -77,7 +77,7 @@ const Checkbox = React.forwardRef<
       data-slot="checkbox"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'peer border-input bg-background data-[checked]:bg-primary data-[checked]:text-primary-foreground dark:data-[checked]:bg-primary data-[checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/60 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
+        'peer border-input bg-background data-[checked]:bg-primary data-[checked]:text-primary-foreground dark:data-[checked]:bg-primary data-[checked]:border-primary focus-visible:border-ring focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
         // Indeterminate needs its own fill: Base UI emits ONLY
         // `data-indeterminate` in that state — neither `data-checked` nor
         // `data-unchecked` (see useStateAttributesMapping upstream). Without

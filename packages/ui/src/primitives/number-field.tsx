@@ -34,8 +34,8 @@
  * | value text `--foreground` on `bg-background`    | 19.65:1 | 16.97:1 | 4.5:1 (SC 1.4.3)|
  * | `focus-within:ring-ring` on `--background`      | 8.80:1  | 11.79:1 | 3:1 (SC 2.4.13) |
  *
- * The ring here is full-opacity (not the `/60` alpha the flat-surface
- * controls use), so it clears the focus floor with room to spare.
+ * The ring is full-opacity, like every focus ring, so it clears the focus
+ * floor with room to spare.
  * `disabled:opacity-50` is exempt (inactive component).
  *
  * | Rule | Concept                          | Where in this file                                          |

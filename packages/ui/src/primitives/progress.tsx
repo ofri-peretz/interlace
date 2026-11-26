@@ -171,7 +171,7 @@ const ProgressIndicator = React.forwardRef<
         progressIndicatorVariants({ tone }),
         // Width-only transition. Omitted entirely when the user has
         // prefers-reduced-motion: reduce — no easing, no duration.
-        reduceMotion ? undefined : 'transition-[width] duration-200 ease-out',
+        reduceMotion ? undefined : 'transition-[width] duration-(--duration-medium) ease-move',
         className,
       )}
       {...props}
