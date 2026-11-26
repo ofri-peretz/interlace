@@ -245,6 +245,27 @@ describe('MultiStepForm', () => {
     expect(document.activeElement).toBe(screen.getByRole('radio', { name: 'One' }));
   });
 
+  it("names a failing radio group by the group's label", () => {
+    render(
+      <MultiStepForm>
+        <MultiStepFormStep id="a" title="A">
+          <span id="g">Topic</span>
+          <div role="radiogroup" aria-labelledby="g">
+            <input type="hidden" required name="x" value="" aria-hidden="true" readOnly />
+            <button type="button" role="radio" aria-checked="false">
+              One
+            </button>
+          </div>
+        </MultiStepFormStep>
+        <MultiStepFormStep id="b" title="B" />
+      </MultiStepForm>,
+    );
+    const hidden = document.querySelector<HTMLInputElement>('input[name="x"]')!;
+    hidden.checkValidity = () => false;
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('alert').textContent).toMatch(/^Topic: /);
+  });
+
   it('slides the new step in from its side, and not under reduced motion', () => {
     const animate = vi.fn();
     (HTMLElement.prototype as unknown as { animate: unknown }).animate = animate;

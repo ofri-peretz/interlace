@@ -112,7 +112,8 @@ export interface MultiStepFormLabels {
   edit?: string;
   /**
    * The message for a field that fails its native check (`required`, `type="email"` …).
-   * @default (field, message) => `${field}: ${message}`, with the browser's own message
+   * `field` is the control's visible name, or '' when it has none.
+   * @default (field, message) => (field ? `${field}: ${message}` : message), with the browser's own message
    */
   invalid?: (field: string, message: string) => string;
 }
@@ -364,12 +365,18 @@ const MultiStepForm = React.forwardRef<HTMLFormElement, MultiStepFormProps>(func
           c.setAttribute('aria-invalid', 'true');
           c.addEventListener('input', () => c.removeAttribute('aria-invalid'), { once: true });
         }
-        setErrors((prev) => ({ ...prev, [current]: labels.invalid(nameOf(first), first.validationMessage || 'Check this answer.') }));
-        // A hidden input (a radio group's value) cannot take focus: its group can.
-        const target =
-          first.type === 'hidden' || first.getAttribute('aria-hidden') === 'true'
-            ? (first.parentElement?.querySelector<HTMLElement>('[role="radio"]') ?? first)
-            : first;
+        // A hidden input (a radio group's value) cannot take focus or carry a name: its group can.
+        const hidden = first.type === 'hidden' || first.getAttribute('aria-hidden') === 'true';
+        const radio = hidden ? first.parentElement?.querySelector<HTMLElement>('[role="radio"]') : null;
+        const target = radio ?? first;
+        const group = radio?.closest<HTMLElement>('[role="radiogroup"]');
+        // Browsers always fill validationMessage for a failed check; the fallback is for
+        // environments that don't (jsdom), so a custom `invalid` never gets an empty message.
+        const message = first.validationMessage || 'Check this answer.';
+        setErrors((prev) => ({
+          ...prev,
+          [current]: labels.invalid(group ? nameOf(group) : nameOf(target), message),
+        }));
         target.focus();
         return false;
       }
