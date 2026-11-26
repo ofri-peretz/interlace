@@ -4117,7 +4117,7 @@
       "blurb": "A row of cards the reader swipes through: today's updates, featured answers, the games to play next. On a phone it is the shape people already know from every feed; on a wide screen it shows several cards at once and two buttons page through the rest.",
       "tier": "pattern",
       "categories": [
-        "other",
+        "data",
         "pattern"
       ],
       "facets": [
@@ -4125,9 +4125,9 @@
         "responsive",
         "min-viewport-320",
         "pattern",
-        "other"
+        "data"
       ],
-      "terms": "carousel pattern client responsiv min viewport 320 carouselcontent carouselitem carouselnext carouselprevious card scroll snap featur roledescription next row swip answer button item previous view feed announc updat wide peopl tab data phon play today page several 1rem 20rem answercard fake friction peek subpixel trackpad wheel disabl game slid browser absorb pag end slot direction know screen name reader index start arrow set aria apg"
+      "terms": "carousel data pattern client responsiv min viewport 320 carouselcontent carouselitem carouselnext carouselprevious card scroll snap featur roledescription next row swip answer button item previous view feed announc updat wide peopl tab phon play today page several 1rem 20rem answercard fake friction peek subpixel trackpad wheel disabl game slid browser absorb pag end slot direction know screen name reader index start arrow set aria apg"
     },
     {
       "name": "celebrate",
@@ -4194,7 +4194,7 @@
       "blurb": "Big, tappable tiles for picking: one answer to a question, the topics a reader cares about, the kind of session a group wants. A tile carries a title, an optional line of description and an optional picture or icon, and the whole tile is the control, so a…",
       "tier": "primitive",
       "categories": [
-        "other",
+        "form",
         "primitive"
       ],
       "facets": [
@@ -4208,9 +4208,9 @@
         "grid",
         "list",
         "primitive",
-        "other"
+        "form"
       ],
-      "terms": "choic card primitiv client responsiv min viewport 320 keyboard base checkbox stat grid list tile pick radio group description multipl titl indicator choicecard tappabl media care data pictur accessibl alt session topic layout role tint optional row icon big choicecardgroup name answer slot duration toggl post ref ease kind fill 12rem question thicken primary radiogroup border wrap check stack keep fast quiz drill thumb"
+      "terms": "choic card form primitiv client responsiv min viewport 320 keyboard base checkbox stat grid list tile pick radio group description multipl titl indicator choicecard tappabl media care data pictur accessibl alt session topic layout role tint optional row icon big choicecardgroup name answer slot duration toggl post ref ease kind fill 12rem question thicken primary radiogroup border wrap check stack keep fast quiz drill"
     },
     {
       "name": "choropleth-map",

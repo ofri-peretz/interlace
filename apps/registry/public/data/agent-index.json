@@ -43,10 +43,10 @@
       "primitive": 79,
       "pattern": 66,
       "blog": 37,
-      "data": 30,
+      "data": 31,
       "effect": 28,
       "foundation": 27,
-      "form": 26,
+      "form": 27,
       "decorative": 25,
       "games": 20,
       "game": 20,
@@ -59,8 +59,7 @@
       "util": 6,
       "a11y": 5,
       "starter": 3,
-      "theme": 3,
-      "other": 2
+      "theme": 3
     },
     "rendering": {
       "client": 118,
@@ -1613,7 +1612,7 @@
       "summary": "A row of cards the reader swipes through: today's updates, featured answers, the games to play next. On a phone it is the shape people already know from every feed; on a wide screen it shows several cards at once and two buttons page through the rest.",
       "topics": [],
       "categories": [
-        "other",
+        "data",
         "pattern"
       ],
       "tier": "pattern",
@@ -1849,7 +1848,7 @@
       "summary": "Big, tappable tiles for picking: one answer to a question, the topics a reader cares about, the kind of session a group wants. A tile carries a title, an optional line of description and an optional picture or icon, and the whole tile is the control, so a…",
       "topics": [],
       "categories": [
-        "other",
+        "form",
         "primitive"
       ],
       "tier": "primitive",

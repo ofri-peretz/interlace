@@ -495,7 +495,7 @@
       "title": "Choice Card",
       "description": "Big, tappable tiles for picking: one answer to a question, the topics a reader cares about, the kind of session a group wants. A tile carries a title, an optional line of description and an optional picture or icon, and the whole tile is the control, so a…",
       "categories": [
-        "other",
+        "form",
         "primitive"
       ],
       "meta": {
@@ -2313,7 +2313,7 @@
       "title": "Carousel",
       "description": "A row of cards the reader swipes through: today's updates, featured answers, the games to play next. On a phone it is the shape people already know from every feed; on a wide screen it shows several cards at once and two buttons page through the rest.",
       "categories": [
-        "other",
+        "data",
         "pattern"
       ],
       "meta": {
