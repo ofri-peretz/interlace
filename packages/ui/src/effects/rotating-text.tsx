@@ -37,6 +37,7 @@ import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 
 export interface RotatingTextProps
   extends Omit<React.ComponentPropsWithoutRef<'span'>, 'children'> {
@@ -104,7 +105,7 @@ export function RotatingText({
         { opacity: 0, transform: 'translateY(0.35em)', filter: 'blur(3px)' },
         { opacity: 1, transform: 'none', filter: 'none' },
       ],
-      { duration: 320, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
+      { duration: 320, easing: motionEase(node, 'enter') },
     );
   }, [index, reduced]);
 

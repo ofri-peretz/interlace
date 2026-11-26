@@ -224,6 +224,17 @@ describe('ScrollStory', () => {
     expect(screen.getByTestId('graphic').textContent).toBe('step 0');
   });
 
+  it('rests a step card at the foot of a narrow screen, clear of the chart, and centres it when wide', () => {
+    const { container } = render(story());
+    const step = container.querySelector('[data-slot="scroll-story-step"]')!.className.split(/\s+/);
+    expect(step).toContain('justify-end');
+    expect(step).toContain('@3xl/story:justify-center');
+    expect(step).not.toContain('justify-center');
+    // The first card sits right under the chart on a narrow screen, so the opening screen is not empty.
+    expect(step).toContain('first:justify-start');
+    expect(step).toContain('@3xl/story:first:justify-center');
+  });
+
   it('puts the chart in the start column when asked', () => {
     const { container } = render(
       <ScrollStory side="start" graphic={() => null}>

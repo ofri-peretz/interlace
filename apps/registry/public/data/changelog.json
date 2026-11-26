@@ -862,6 +862,42 @@
           "source": ".changeset/mobile-app-shell.md"
         },
         {
+          "summary": "Animations started from script now follow the brand's `--ease-*` and `--duration-*` tokens, like the CSS does. A new `motion-token` lib item reads them from the element that moves.",
+          "components": [
+            "motion-token",
+            "calendar",
+            "time-slot-picker",
+            "multi-step-form",
+            "commitment",
+            "interest-signal",
+            "session-composer",
+            "guess-reveal",
+            "quiz-question",
+            "duel",
+            "order-game",
+            "podium",
+            "live-room",
+            "word-cloud",
+            "answer-pad",
+            "tally-bars",
+            "standings",
+            "closer-game",
+            "stagger-list",
+            "flip-group",
+            "reveal",
+            "celebrate",
+            "split-text",
+            "marker",
+            "rotating-text",
+            "draw-on"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/motion-script-tokens.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"
@@ -1445,6 +1481,20 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/claim-heading-font.md"
+        },
+        {
+          "summary": "Previous and next post links, the guess-reveal choices and the recall card ratings now pick their columns from their own width, not the window's, so a narrow column on a wide screen stacks them. The stat strip and prev/next skeletons use the same tracks as the real blocks, so nothing reflows when content arrives.",
+          "components": [
+            "prev-next-post",
+            "guess-reveal",
+            "recall-card",
+            "skeleton"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/collections-follow-container.md"
         },
         {
           "summary": "Shorter comments in the focus grid and scroller. No change to behaviour.",

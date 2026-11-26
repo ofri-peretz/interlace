@@ -53,6 +53,7 @@ import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 
 export type CelebrateTone = 'primary' | 'success' | 'highlight';
 
@@ -110,7 +111,7 @@ function Celebrate({ play, tone = 'primary', rays = 12, haptic = false, classNam
     const box = root.getBoundingClientRect();
     const r0 = Math.max(box.width, box.height) / 2;
     const ring = root.querySelector<HTMLElement>('[data-slot="celebrate-ring"]');
-    const easing = 'cubic-bezier(0.16, 1, 0.3, 1)';
+    const easing = motionEase(root, 'enter');
     if (ring && typeof ring.animate === 'function') {
       ring.animate(
         [
@@ -189,7 +190,9 @@ function CelebrateCheck({ label, animate = true, tone = 'success', size = 'defau
   React.useEffect(() => {
     if (!animate || reduced) return;
     const [circle, tick] = Array.from(svgRef.current?.querySelectorAll<SVGElement>('circle, path') ?? []);
-    const easing = 'cubic-bezier(0.16, 1, 0.3, 1)';
+    const svg = svgRef.current;
+    if (!svg) return;
+    const easing = motionEase(svg, 'enter');
     if (circle && typeof circle.animate === 'function') {
       circle.animate([{ strokeDashoffset: `${CIRCLE}` }, { strokeDashoffset: '0' }], { duration: 300, easing });
     }

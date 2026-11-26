@@ -147,7 +147,7 @@ function TimelineItem({
         aria-hidden
         data-slot="timeline-dot"
         className={cn(
-          "absolute start-px top-1 z-[1] size-[1.125rem] rounded-full border-4",
+          "absolute start-px top-1 z-raised size-[1.125rem] rounded-full border-4",
           "@3xl/timeline:top-[0.4375rem] @3xl/timeline:start-0",
           DOT[marker],
         )}

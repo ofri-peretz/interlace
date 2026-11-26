@@ -1,9 +1,10 @@
-# Registry output: every file below is rebuilt from source by `npm run prebuild -w registry`, so
-# a merge conflict in one is never a decision. The `interlace-generated` driver keeps this
-# branch's copy (`npm install` registers it) and the post-merge hook rebuilds from the merged
-# sources; the `registry (drift)` gate fails a push that skips the rebuild. GitHub ignores
-# custom drivers, so its "Update branch" button can still stop on these files: merge main
-# locally instead.
+# Registry output: every file below is rebuilt from source by `npm run generate -w registry`.
+# A feature pull request does not commit it (the `registry (no generated output in PRs)` gate
+# fails one that does); the release commit does. So a merge conflict in one of these files can only
+# come from the release branch or an old branch, and is never a decision: the `interlace-generated`
+# driver keeps this branch's copy (`npm install` registers it), and the next build rewrites it.
+# GitHub ignores custom drivers, so its "Update branch" button can still stop on these files for a
+# branch that carries them: put them back with the command the gate prints.
 apps/registry/public/r/** merge=interlace-generated linguist-generated=true
 apps/registry/public/data/** merge=interlace-generated linguist-generated=true
 apps/registry/public/.well-known/** merge=interlace-generated linguist-generated=true
