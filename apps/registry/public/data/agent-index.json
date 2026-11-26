@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 240
+    "itemCount": 241
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 31,
+      "game": 32,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -43,8 +43,8 @@
       "primitive": 78,
       "pattern": 65,
       "blog": 37,
-      "games": 31,
-      "game": 31,
+      "games": 32,
+      "game": 32,
       "data": 30,
       "foundation": 27,
       "effect": 27,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 126,
+      "client": 127,
       "server": 114
     },
     "keyboard": {
-      "none": 187,
+      "none": 188,
       "handled": 53
     },
     "loading": {
-      "none": 202,
+      "none": 203,
       "built-in": 38
     },
     "minViewport": {
-      "320": 159,
+      "320": 160,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -13343,6 +13343,85 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar.json",
       "item": "https://ds.interlace.tools/r/topbar.json",
       "docs": "https://ds.interlace.tools/c/topbar"
+    },
+    {
+      "name": "type-answer",
+      "title": "Type Answer",
+      "type": "registry:ui",
+      "summary": "A quiz round where people type the answer. Harder than picking, and fairer than it looks: case, accents, punctuation and a slip of a letter in a long word are forgiven, while a different number never is (see `typed-answer-model`). The reveal marks the…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "QuizOutcome",
+          "values": [
+            "correct",
+            "wrong",
+            "timeout"
+          ]
+        },
+        {
+          "name": "TypedOutcome",
+          "values": [
+            "exact",
+            "close",
+            "wrong",
+            "empty"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "tally-bars",
+        "timer-ring",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/type-answer.tsx",
+        "components/ui/games/quiz-model.ts",
+        "components/ui/games/tally-model.ts",
+        "components/ui/games/typed-answer-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/type-answer.json",
+      "item": "https://ds.interlace.tools/r/type-answer.json",
+      "docs": "https://ds.interlace.tools/c/type-answer"
     },
     {
       "name": "typography",

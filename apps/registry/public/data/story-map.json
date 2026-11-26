@@ -3185,6 +3185,18 @@
     "previewDark": null,
     "skeleton": null
   },
+  "type-answer": {
+    "title": "Games/TypeAnswer",
+    "storyIds": [
+      "games-typeanswer--default",
+      "games-typeanswer--asking",
+      "games-typeanswer--typing",
+      "games-typeanswer--right-to-left"
+    ],
+    "preview": "games-typeanswer--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "typography": {
     "title": "Primitives/Typography",
     "storyIds": [

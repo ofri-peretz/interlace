@@ -612,6 +612,14 @@
       "types": "./dist/games/quadrant.d.ts",
       "default": "./dist/games/quadrant.js"
     },
+    "./games/typed-answer-model": {
+      "types": "./dist/games/typed-answer-model.d.ts",
+      "default": "./dist/games/typed-answer-model.js"
+    },
+    "./games/type-answer": {
+      "types": "./dist/games/type-answer.d.ts",
+      "default": "./dist/games/type-answer.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

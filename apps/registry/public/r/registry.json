@@ -4072,6 +4072,24 @@
       }
     },
     {
+      "name": "type-answer",
+      "type": "registry:ui",
+      "title": "Type Answer",
+      "description": "A quiz round where people type the answer. Harder than picking, and fairer than it looks: case, accents, punctuation and a slip of a letter in a long word are forgiven, while a different number never is (see `typed-answer-model`). The reveal marks the…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "word-cloud",
       "type": "registry:ui",
       "title": "Word Cloud",
