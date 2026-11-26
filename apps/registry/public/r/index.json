@@ -3604,6 +3604,24 @@
       }
     },
     {
+      "name": "groups",
+      "type": "registry:ui",
+      "title": "Groups",
+      "description": "Pairs, small groups and teams. `GroupCard` is what one person's phone shows: which group they are in, who they are with, what to talk about and for how long. `GroupGrid` is the shared screen: every group with its people, where a reshuffle glides each name…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "join-code",
       "type": "registry:ui",
       "title": "Join Code",

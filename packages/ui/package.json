@@ -568,6 +568,14 @@
       "types": "./dist/games/agenda.d.ts",
       "default": "./dist/games/agenda.js"
     },
+    "./games/groups-model": {
+      "types": "./dist/games/groups-model.d.ts",
+      "default": "./dist/games/groups-model.js"
+    },
+    "./games/groups": {
+      "types": "./dist/games/groups.d.ts",
+      "default": "./dist/games/groups.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

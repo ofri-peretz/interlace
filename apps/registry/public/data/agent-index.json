@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 234
+    "itemCount": 235
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 25,
+      "game": 26,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -46,9 +46,9 @@
       "data": 30,
       "foundation": 27,
       "effect": 27,
+      "games": 26,
+      "game": 26,
       "form": 26,
-      "games": 25,
-      "game": 25,
       "decorative": 24,
       "navigation": 18,
       "feedback": 18,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 120,
+      "client": 121,
       "server": 114
     },
     "keyboard": {
-      "none": 184,
+      "none": 185,
       "handled": 50
     },
     "loading": {
-      "none": 196,
+      "none": 197,
       "built-in": 38
     },
     "minViewport": {
-      "320": 153,
+      "320": 154,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -4784,6 +4784,60 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/grid.json",
       "item": "https://ds.interlace.tools/r/grid.json",
       "docs": "https://ds.interlace.tools/c/grid"
+    },
+    {
+      "name": "groups",
+      "title": "Groups",
+      "type": "registry:ui",
+      "summary": "Pairs, small groups and teams. `GroupCard` is what one person's phone shows: which group they are in, who they are with, what to talk about and for how long. `GroupGrid` is the shared screen: every group with its people, where a reshuffle glides each name…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "timer-ring",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/groups.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/groups.json",
+      "item": "https://ds.interlace.tools/r/groups.json",
+      "docs": "https://ds.interlace.tools/c/groups"
     },
     {
       "name": "guess-reveal",

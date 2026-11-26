@@ -1182,6 +1182,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "groups": {
+    "title": "Games/Groups",
+    "storyIds": [
+      "games-groups--default",
+      "games-groups--waiting",
+      "games-groups--screen",
+      "games-groups--team-standings",
+      "games-groups--right-to-left"
+    ],
+    "preview": "games-groups--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "guess-reveal": {
     "title": "Blocks/GuessReveal",
     "storyIds": [
