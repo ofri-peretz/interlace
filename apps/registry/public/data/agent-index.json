@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 224
+    "itemCount": 225
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -35,7 +35,7 @@
       "game": 15,
       "chart": 14,
       "template": 13,
-      "util": 6,
+      "util": 7,
       "starter": 3,
       "theme": 3
     },
@@ -44,7 +44,7 @@
       "pattern": 65,
       "blog": 37,
       "data": 30,
-      "foundation": 27,
+      "foundation": 28,
       "effect": 27,
       "form": 26,
       "decorative": 24,
@@ -56,28 +56,28 @@
       "marketing": 14,
       "template": 13,
       "overlay": 10,
-      "util": 6,
+      "util": 7,
       "a11y": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "client": 113,
+      "client": 114,
       "server": 111
     },
     "keyboard": {
-      "none": 175,
+      "none": 176,
       "handled": 49
     },
     "loading": {
-      "none": 186,
+      "none": 187,
       "built-in": 38
     },
     "minViewport": {
       "320": 143,
       "480": 7,
       "768": 1,
-      "inherited": 73
+      "inherited": 74
     }
   },
   "items": [
@@ -5004,6 +5004,68 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/install-prompt.json",
       "item": "https://ds.interlace.tools/r/install-prompt.json",
       "docs": "https://ds.interlace.tools/c/install-prompt"
+    },
+    {
+      "name": "intent",
+      "title": "User intent hooks and provider",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "IntentInput",
+          "values": [
+            "keyboard",
+            "mouse",
+            "touch",
+            "pen"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "COMMIT_INTENT_DELAY_MS",
+        "DWELL_INTENT_DELAY_MS",
+        "IntentProvider",
+        "RAGE_CLICK_COUNT",
+        "RAGE_CLICK_RADIUS_PX",
+        "RAGE_CLICK_WINDOW_MS",
+        "VIEW_INTENT_DELAY_MS",
+        "VIEW_INTENT_THRESHOLD"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [],
+      "installsTo": [
+        "hooks/use-intent.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/intent.json",
+      "item": "https://ds.interlace.tools/r/intent.json",
+      "docs": "https://ds.interlace.tools/c/intent"
     },
     {
       "name": "interest-signal",
