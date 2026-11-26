@@ -3748,6 +3748,24 @@
       }
     },
     {
+      "name": "question-board",
+      "type": "registry:ui",
+      "title": "Question Board",
+      "description": "Questions from the room, ranked by the room. People ask from their phone (`QuestionAsk`), vote up the questions they want answered (`QuestionBoard`), and a moderator approves, pins, answers or hides them (`QuestionQueue`) before anything typed reaches a…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "quiz-question",
       "type": "registry:ui",
       "title": "Quiz Question",

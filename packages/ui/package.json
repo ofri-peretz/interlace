@@ -536,6 +536,14 @@
       "types": "./dist/games/word-cloud.d.ts",
       "default": "./dist/games/word-cloud.js"
     },
+    "./games/question-board-model": {
+      "types": "./dist/games/question-board-model.d.ts",
+      "default": "./dist/games/question-board-model.js"
+    },
+    "./games/question-board": {
+      "types": "./dist/games/question-board.d.ts",
+      "default": "./dist/games/question-board.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 230
+    "itemCount": 231
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 21,
+      "game": 22,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -48,8 +48,8 @@
       "effect": 27,
       "form": 26,
       "decorative": 24,
-      "games": 21,
-      "game": 21,
+      "games": 22,
+      "game": 22,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 116,
+      "client": 117,
       "server": 114
     },
     "keyboard": {
-      "none": 181,
+      "none": 182,
       "handled": 49
     },
     "loading": {
-      "none": 192,
+      "none": 193,
       "built-in": 38
     },
     "minViewport": {
-      "320": 149,
+      "320": 150,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7418,6 +7418,89 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/qr-code.json",
       "item": "https://ds.interlace.tools/r/qr-code.json",
       "docs": "https://ds.interlace.tools/c/qr-code"
+    },
+    {
+      "name": "question-board",
+      "title": "Question Board",
+      "type": "registry:ui",
+      "summary": "Questions from the room, ranked by the room. People ask from their phone (`QuestionAsk`), vote up the questions they want answered (`QuestionBoard`), and a moderator approves, pins, answers or hides them (`QuestionQueue`) before anything typed reaches a…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "QuestionStatus",
+          "values": [
+            "review",
+            "live",
+            "answered",
+            "dismissed"
+          ]
+        },
+        {
+          "name": "TextRefusal",
+          "values": [
+            "empty",
+            "too-long",
+            "too-many-words",
+            "link",
+            "contact",
+            "blocked"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-invalid",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "textarea"
+      ],
+      "installsTo": [
+        "components/ui/games/question-board.tsx",
+        "components/ui/games/question-board-model.ts",
+        "components/ui/games/text-safety-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/question-board.json",
+      "item": "https://ds.interlace.tools/r/question-board.json",
+      "docs": "https://ds.interlace.tools/c/question-board"
     },
     {
       "name": "quiz-question",

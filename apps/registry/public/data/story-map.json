@@ -1787,6 +1787,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "question-board": {
+    "title": "Games/QuestionBoard",
+    "storyIds": [
+      "games-questionboard--default",
+      "games-questionboard--empty",
+      "games-questionboard--room",
+      "games-questionboard--stage",
+      "games-questionboard--right-to-left"
+    ],
+    "preview": "games-questionboard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "quiz-question": {
     "title": "Games/QuizQuestion",
     "storyIds": [
