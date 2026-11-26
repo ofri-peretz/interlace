@@ -220,6 +220,24 @@
       }
     },
     {
+      "name": "intent",
+      "type": "registry:lib",
+      "title": "User intent hooks and provider",
+      "description": "@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "theme-script",
       "type": "registry:lib",
       "title": "No-flash theme bootstrap script",
