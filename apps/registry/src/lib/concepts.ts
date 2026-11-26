@@ -36,7 +36,6 @@ export type ConceptPage = {
 };
 
 export type ConceptsDoc = {
-  generatedAt: string;
   source: string;
   pages: ConceptPage[];
 };

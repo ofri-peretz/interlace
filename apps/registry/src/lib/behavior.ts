@@ -79,7 +79,6 @@ export type DataStateFacet = {
 };
 
 export type BehaviorMap = {
-  generatedAt: string;
   sources: {
     keyboard: string;
     keyboardLock: string;
