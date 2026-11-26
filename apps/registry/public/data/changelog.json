@@ -478,6 +478,17 @@
           "source": ".changeset/dialogue-transcript.md"
         },
         {
+          "summary": "New `DirectionProvider` sets the reading direction once for both layout and keyboard. `dir=\"rtl\"` alone flips the CSS but not Base UI's behaviour, so sliders kept growing to the right and ArrowRight kept moving to the next tab in Hebrew and Arabic pages. Wrap the app (or a subtree in the other direction) in `<DirectionProvider direction=\"rtl\">` and both follow. It renders a `display: contents` wrapper with `dir`, so it never changes layout, and re-exports `useDirection` for your own components.",
+          "components": [
+            "direction"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/direction-provider.md"
+        },
+        {
           "summary": "`Distribution` and `NetworkGraph` can be shown in any language. `Distribution` takes `labels` (the unnamed value and reference words, the empty note, the readout's \"not measured\", the keyboard instructions, the table caption and empty cell, and the spoken summary) and a `locale`. `NetworkGraph` takes `labels` (the error and empty notes, the header counts, the cap buttons, the keyboard instructions, the selection hint, the table caption and headers, the \"None\" group, the node hover titles, the below-cap note and the spoken summary) and a `locale`. `describeDistribution` and `describeGraph` build their sentences from new `DistributionSummary` and `GraphSummary` types, with `distributionSentence` and `graphSentence` as the English defaults. English output is unchanged, except that the graph's counts now use thousands separators. `compact` documents why its suffixes stay k, M and B in every locale.\n\nFixed: `Distribution` no longer crashes when new, shorter data arrives while the keyboard cursor is past its end.",
           "components": [
             "distribution",
@@ -769,6 +780,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/live-room-kit.md"
+        },
+        {
+          "summary": "Sheet `side` and Drawer `direction` take `start` and `end`. They follow the reading direction from `DirectionProvider`: `start` opens from the left in English and from the right in Hebrew or Arabic, with the swipe to dismiss matching.",
+          "components": [
+            "sheet",
+            "drawer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/logical-edges.md"
         },
         {
           "summary": "A mobile app shell. `AppShell` is the frame: a column at least `100dvh` tall with a sticky header, a `<main>` (the SkipLink target) and a sticky tab bar, nothing fixed-position, so the last line of content always clears the bar and an on-screen keyboard never drags a bar into the page. `TabBar` holds three to five links with an icon and a word; the current one (`currentHref`, which keeps a parent tab current on its child pages) gets `aria-current=\"page\"`, a filled pill that grows in from the middle and a heavier label, and a tab can carry a count or a dot with words for assistive tech. `hideFrom` hides it where a Topbar takes over. `AppHeader` is the view's bar: back, title and actions, sticky, clear of the notch, with its surface only once content scrolls under it; `largeTitle` sets the title big and moves it into the bar on scroll, read once. `AppHeaderBack` is the back link, its arrow mirrored in RTL. Every part pads itself by `env(safe-area-inset-*)` for a page added to a home screen (`viewport-fit=cover`). Under reduced motion the pill, surface and title simply change.",
@@ -1386,6 +1409,42 @@
           "source": ".changeset/flows-two-shapes.md"
         },
         {
+          "summary": "Focus rings are drawn at full strength with one recipe: a 2px ring in `--ring` with a 2px gap in the page colour, the same weight as the preflight outline. Before, most controls drew a 3px ring at 50% or 60% of `--ring`, which measured 2.5:1 against the light themes (WCAG 1.4.11 asks 3:1), and a destructive button focused at 20%, which measured 1.4:1. Inputs, selects, buttons, tabs, checkboxes, switches, dialogs, sheets, drawers, toasts, menus and the patterns built on them now all focus alike, and the ring sits outside the control instead of over its edge.",
+          "components": [
+            "accordion",
+            "badge",
+            "banner",
+            "button",
+            "checkbox",
+            "combobox",
+            "command-palette",
+            "dialog",
+            "dialogue",
+            "dialogue-stepper",
+            "drawer",
+            "focus-grid",
+            "input",
+            "otp-field",
+            "radio-group",
+            "scroll-area",
+            "scroller",
+            "select",
+            "sheet",
+            "switch",
+            "tabs",
+            "textarea",
+            "toast",
+            "toolbar",
+            "topbar-menu",
+            "wordmark"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/focus-ring-strength.md"
+        },
+        {
           "summary": "Every focus ring is visible, whole, and clear of the text.\n\nA keyboard audit of every story found three kinds of gap, now fixed:\n\n- No visible focus: CollapsibleTrigger and a focusable TabsContent now show the system ring, 2px clear of the element. CodeEditor's textarea fills a clipping frame, so its ring is now inset, inside the padding and off the code. CodeWindow shows the ring on its frame when its body (a `<pre tabIndex={0}>`) has focus.\n- Clipped rings: the ReadingLayout contents rail, SettingsTemplate's section nav, Scroller's viewport and GuessReveal's explanation scroll or clip their content, and cut the top and bottom off a focused link. Each now keeps a 4px margin for the ring, with no change to layout.",
           "components": [
             "collapsible",
@@ -1487,6 +1546,26 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/logical-sides.md"
+        },
+        {
+          "summary": "Every primitive and pattern now times its transitions with the motion tokens, so a brand that retunes `--duration-*` or `--ease-*` retunes all of them. Before, the toast, select and combobox popups, command palette and combobox rows, progress bar, article card image, flip card, guess reveal, social sign-in and focus grid kept literal timings (`duration-150`, `duration-[180ms]`, `ease-out`). With the default tokens the change is a few milliseconds: the flip card turns in 400ms instead of 500ms and the toast arrives in 150ms instead of 180ms.",
+          "components": [
+            "article-card",
+            "combobox",
+            "command-palette",
+            "flip-card",
+            "focus-grid",
+            "guess-reveal",
+            "progress",
+            "select",
+            "social-sign-in",
+            "toast"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/motion-tokens.md"
         },
         {
           "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",

@@ -84,7 +84,7 @@ import { cn } from '../lib/cn.js';
 import { Skeleton } from './skeleton.js';
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
+  'inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
   {
     variants: {
       variant: {
@@ -105,7 +105,7 @@ const badgeVariants = cva(
         // knocking it to 60% pulls it TOWARD the page and drops the label
         // to 4.27:1 — under AA. Caught by composite-contrast-lock.
         destructive:
-          'bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
+          'bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive',
         // `bg-background` is NOT decoration — it is what makes `text-foreground`
         // mean anything. Transparent, this variant declared a foreground over
         // a surface it did not paint, so a badge in a `bg-primary` section

@@ -66,7 +66,7 @@ export function TopbarMenu({
       <DrawerTrigger
         data-slot="topbar-menu-trigger"
         className={cn(
-          "text-foreground hover:bg-muted focus-visible:ring-ring inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-medium focus-visible:ring-[3px] focus-visible:outline-hidden",
+          "text-foreground hover:bg-muted focus-visible:ring-ring inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-hidden",
           className,
         )}
       >

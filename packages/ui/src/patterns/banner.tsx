@@ -126,7 +126,7 @@ export function Banner({
               if (openProp === undefined) setOpenState(false);
               onOpenChange?.(false);
             }}
-            className="focus-visible:ring-ring -my-1 ms-auto inline-flex size-8 shrink-0 items-center justify-center rounded-md opacity-80 hover:opacity-100 focus-visible:ring-[3px] focus-visible:outline-hidden"
+            className="focus-visible:ring-ring -my-1 ms-auto inline-flex size-8 shrink-0 items-center justify-center rounded-md opacity-80 hover:opacity-100 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-hidden"
           >
             <XIcon aria-hidden className="size-4" />
           </button>
