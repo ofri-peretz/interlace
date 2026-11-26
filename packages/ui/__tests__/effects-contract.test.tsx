@@ -693,7 +693,7 @@ describe("SheenText", () => {
 describe("Sheen and EdgeGlow", () => {
   it("Sheen sits under the label and is gone under reduced motion", () => {
     const { container, rerender } = render(<Sheen />);
-    expect(container.firstElementChild!.className).toContain("-z-10");
+    expect(container.firstElementChild!.className).toContain("z-backdrop");
     reduced.value = true;
     rerender(<Sheen />);
     expect(container.firstElementChild).toBeNull();

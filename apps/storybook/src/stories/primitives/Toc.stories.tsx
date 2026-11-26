@@ -226,7 +226,7 @@ export const Bar: Story = {
   parameters: { viewport: { defaultViewport: 'mobile1' } },
   render: () => (
     <div className="bg-background text-foreground">
-      <div className="sticky top-0 z-10 border-b border-border bg-background px-4">
+      <div className="sticky top-0 z-sticky border-b border-border bg-background px-4">
         <TocBar items={ITEMS} />
       </div>
       <ArticleMock items={ITEMS} />

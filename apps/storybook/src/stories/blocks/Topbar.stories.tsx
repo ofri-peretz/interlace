@@ -135,7 +135,7 @@ const meta: Meta<typeof Topbar> = {
     className: {
       control: "text",
       description:
-        "Merged onto the `<header>`. This is where `sticky top-0 z-10` lives — raise the z-index here if the page has an overlay that must sit under the bar.",
+        "Merged onto the `<header>`. This is where `sticky top-0 z-header` lives. To move the bar in the stacking order, retune `--z-index-header` on `:root` rather than adding a number here.",
       table: { type: { summary: "string" }, category: "Appearance" },
     },
   },
