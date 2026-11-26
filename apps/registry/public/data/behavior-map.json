@@ -14769,65 +14769,7 @@
     "section": {
       "sourcePath": "packages/ui/src/primitives/section.tsx",
       "keyboard": null,
-      "contrast": [
-        {
-          "fg": "primary",
-          "bg": "background",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "text-primary on the page",
-          "ratios": [
-            8.52,
-            11.63,
-            8.39,
-            10.03
-          ],
-          "worst": 8.39,
-          "worstAt": {
-            "theme": "harbor",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
-          "fg": "primary-foreground",
-          "bg": "primary",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "copy on a primary face",
-          "ratios": [
-            8.8,
-            11.79,
-            8.86,
-            10.03
-          ],
-          "worst": 8.8,
-          "worstAt": {
-            "theme": "interlace",
-            "scheme": "light"
-          },
-          "passes": true
-        },
-        {
-          "fg": "primary",
-          "bg": "card",
-          "kind": "text",
-          "floor": 4.5,
-          "why": "text-primary in a card",
-          "ratios": [
-            8.8,
-            10.92,
-            8.86,
-            9.1
-          ],
-          "worst": 8.8,
-          "worstAt": {
-            "theme": "interlace",
-            "scheme": "light"
-          },
-          "passes": true
-        }
-      ],
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null

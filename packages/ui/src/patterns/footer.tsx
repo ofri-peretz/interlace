@@ -16,7 +16,8 @@
  *
  * ## MIN_VIEWPORT — 320
  *
- * Link groups stack on mobile, grid out on md+. The tail row stacks too.
+ * Link groups sit two to a row on a phone (the brand spans the row), and grid
+ * out on md+. The tail row stacks.
  *
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
@@ -122,14 +123,16 @@ function Footer({
     >
       <div
         className={cn(
-          'mx-auto px-6 py-16',
+          'mx-auto px-6 py-12 md:py-16',
           CONTAINER_CLASSES[containerSize],
         )}
       >
         {brand || tagline || groups.length > 0 ? (
           <div
             className={cn(
-              'grid gap-10',
+              // Two columns of link groups on a phone, so a footer of 44px touch-target
+              // rows is not taller than the page above it; the brand spans both.
+              'grid grid-cols-2 gap-x-6 gap-y-10',
               groups.length === 1 && 'md:grid-cols-[1fr_1fr]',
               groups.length === 2 && 'md:grid-cols-[1fr_1fr_1fr]',
               groups.length === 3 && 'md:grid-cols-[1.5fr_1fr_1fr_1fr]',
@@ -137,7 +140,7 @@ function Footer({
             )}
           >
             {brand || tagline ? (
-              <div data-slot="footer-brand" className="flex flex-col gap-3">
+              <div data-slot="footer-brand" className="col-span-2 flex flex-col gap-3 md:col-span-1">
                 {brand}
                 {tagline ? (
                   <p data-slot="footer-tagline" className="text-muted-foreground max-w-prose text-sm text-pretty">
