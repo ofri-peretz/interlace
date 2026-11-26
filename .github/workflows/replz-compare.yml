@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Differential (replz compare)
+
+# The interlace-ui CLI's argv -> plan module (packages/cli/src/plan.ts) is run on the PR's base and
+# on its head (.sdlc/replz/compare.yaml): a plan that changes fails the run, unless `approved` there
+# names that exact change with a reason. The unit tests pin chosen cases; this pins every case in
+# .sdlc/replz/compare-inputs against the code it replaces.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'packages/cli/src/plan.ts'
+      - '.sdlc/replz/**'
+      - '.github/workflows/replz-compare.yml'
+
+concurrency:
+  group: replz-compare-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    name: replz compare
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Full history: the base commit is checked out as a worktree beside this one.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # Node 24 runs plan.ts directly (type stripping), so there is nothing to install.
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: Compare base and head
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        # The checkout is the PR merged into the base's tip, so the base's tip is the right other
+        # side: whatever differs between them is this PR's change.
+        run: |
+          set -o pipefail
+          npx --yes replz@1.1.0 compare --base "$BASE_SHA" 2>&1 | tee "$RUNNER_TEMP/compare.log"
+
+      - name: Summary
+        if: always()
+        run: |
+          { echo '## replz compare'; echo; echo '```'; cat "$RUNNER_TEMP/compare.log" || echo '(no output)'; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
