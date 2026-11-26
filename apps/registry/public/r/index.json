@@ -3784,6 +3784,24 @@
       }
     },
     {
+      "name": "reactions",
+      "type": "registry:ui",
+      "title": "Reactions",
+      "description": "The room's pulse while someone talks. Phones tap a reaction (`ReactionBar`) and the shared screen lets it float up (`ReactionStream`); someone who wants to speak raises a hand (`RaiseHand`) and the host calls on people in the order they asked (`HandQueue`).",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "recall-card",
       "type": "registry:ui",
       "title": "Recall Card",

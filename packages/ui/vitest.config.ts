@@ -114,7 +114,7 @@ export default defineConfig({
       include: [
         'src/charts/**/*.{ts,tsx}',
         // The games' pure cores: day keys, puzzle order, streak arithmetic.
-        'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model,tally-model,quiz-model,order-model,qr-model,room-model,progress-model,reminder-model,text-safety-model,word-cloud-model,question-board-model}.ts',
+        'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model,tally-model,quiz-model,order-model,qr-model,room-model,progress-model,reminder-model,text-safety-model,word-cloud-model,question-board-model,reactions-model}.ts',
         'src/patterns/update-feed-model.ts',
         'src/lib/**/*.{ts,tsx}',
         // The five pure variant/model modules.

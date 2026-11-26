@@ -544,6 +544,14 @@
       "types": "./dist/games/question-board.d.ts",
       "default": "./dist/games/question-board.js"
     },
+    "./games/reactions-model": {
+      "types": "./dist/games/reactions-model.d.ts",
+      "default": "./dist/games/reactions-model.js"
+    },
+    "./games/reactions": {
+      "types": "./dist/games/reactions.d.ts",
+      "default": "./dist/games/reactions.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

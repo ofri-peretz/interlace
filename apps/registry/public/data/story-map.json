@@ -1859,6 +1859,18 @@
     "previewDark": "foundations-radius--dark",
     "skeleton": null
   },
+  "reactions": {
+    "title": "Games/Reactions",
+    "storyIds": [
+      "games-reactions--default",
+      "games-reactions--live",
+      "games-reactions--raised-hands",
+      "games-reactions--right-to-left"
+    ],
+    "preview": "games-reactions--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "reading-layout": {
     "title": "Blocks/ReadingLayout",
     "storyIds": [

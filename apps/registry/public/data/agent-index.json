@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 231
+    "itemCount": 232
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 22,
+      "game": 23,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -48,8 +48,8 @@
       "effect": 27,
       "form": 26,
       "decorative": 24,
-      "games": 22,
-      "game": 22,
+      "games": 23,
+      "game": 23,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 117,
+      "client": 118,
       "server": 114
     },
     "keyboard": {
-      "none": 182,
+      "none": 183,
       "handled": 49
     },
     "loading": {
-      "none": 193,
+      "none": 194,
       "built-in": 38
     },
     "minViewport": {
-      "320": 150,
+      "320": 151,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7707,6 +7707,67 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json",
       "item": "https://ds.interlace.tools/r/radio-group.json",
       "docs": "https://ds.interlace.tools/c/radio-group"
+    },
+    {
+      "name": "reactions",
+      "title": "Reactions",
+      "type": "registry:ui",
+      "summary": "The room's pulse while someone talks. Phones tap a reaction (`ReactionBar`) and the shared screen lets it float up (`ReactionStream`); someone who wants to speak raises a hand (`RaiseHand`) and the host calls on people in the order they asked (`HandQueue`).",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_REACTIONS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/reactions.tsx",
+        "components/ui/games/reactions-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reactions.json",
+      "item": "https://ds.interlace.tools/r/reactions.json",
+      "docs": "https://ds.interlace.tools/c/reactions"
     },
     {
       "name": "reading-layout",
