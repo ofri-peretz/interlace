@@ -535,6 +535,17 @@
           "source": ".changeset/drawer.md"
         },
         {
+          "summary": "Duel by link: two players, one game, no accounts. `DuelInvite` sends the same game to a friend (the share sheet where there is one, copy link everywhere, the link to copy by hand when the clipboard fails). `DuelCard` is what the friend sees: who challenged them and the score to beat. `DuelCompare` shows both results round by round, with a verdict in words (\"You won by 50 points.\"), a \"Won\" tag, rounds won, and bars growing out from the middle; a Celebrate burst marks the viewer's win. The challenge travels in the link: `games/duel-model` encodes the game, its seed and the first player's rounds as a base64url token (`encodeDuel`, `duelHref`), and `decodeDuel` reads it back as untrusted input, capped and cleaned, null when malformed. `compareDuel` gives each round's winner, the totals and the margin, with `order: 'asc'` for games where less is better. Every word goes through `labels`; motion is transform only and off under reduced motion.",
+          "components": [
+            "duel"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/duel-by-link.md"
+        },
+        {
           "summary": "The editorial look is one line: `@theme { --font-heading: var(--font-serif); }` gives serif headings over the sans body. `CardTitle` now reads `font-heading` like every other heading in the kit, so card titles follow too; with the default `--font-heading` (your body face) nothing changes. `interlace-foundation` names a serif stack (Source Serif 4, then the system serifs) for `--font-serif`. A new Storybook story, Foundations/Typography/Editorial Headings, shows it.",
           "components": [
             "card"
@@ -799,6 +810,32 @@
           "source": ".changeset/live-room-kit.md"
         },
         {
+          "summary": "Live rounds move. `AnswerPad` plays the reveal: the right tile lands, the tiles nobody needs step\nback, a wrong pick gives one small nudge, and a right pick's points rise from its tile (transform\nand opacity only; nothing moves under reduced motion). New `Standings`, the board between rounds:\neach player's points pop in, totals count up from where they were (CountUp), then the rows glide\nto their new places (FlipGroup) with places gained in words. An ordered list, ranks shared on ties.",
+          "components": [
+            "answer-pad",
+            "standings",
+            "live-room"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-room-motion.md"
+        },
+        {
+          "summary": "Live rounds reach every phone. `games/room-model` gains `RoomState.prompt` and `RoomState.solution`: the host's `question` event can carry what the round asks (`prompt`) and its `reveal` the answer (`solution`), so every screen, and a player who joins mid-round, shows the same round without a second channel. Both are null in the lobby, cleared by the next question and by `restart`. `AnswerPad` is the player's side of a live round: big lettered tiles, the first pick final, \"Answer in\" while the host waits, then the right tile marked and the outcome in words. It never needs the right answer before the reveal, its state follows from `value`, `closed` and `correct` (so a reconnect shows the same thing), `display=\"keys\"` shows letters only for rooms that keep the words on the big screen, and `choiceKey(i)` gives the big screen the same letters. Keys A to Z and 1 to 9 pick a tile; motion is transform only.",
+          "components": [
+            "answer-pad",
+            "live-room",
+            "join-code"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-round-pad.md"
+        },
+        {
           "summary": "Sheet `side` and Drawer `direction` take `start` and `end`. They follow the reading direction from `DirectionProvider`: `start` opens from the left in English and from the right in Hebrew or Arabic, with the swipe to dismiss matching.",
           "components": [
             "sheet",
@@ -929,6 +966,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/room-access.md"
+        },
+        {
+          "summary": "Live rooms hold up on real phones. Every state the host sends carries its clock, and `useRoom`\nreturns `now`, this device's clock corrected to the host's (`clockOffset` in room-model), so a\nphone whose clock is off still counts down to the host's deadline; `TimerRing` takes `now` too.\nA player's page now says it is away on `pagehide`, asks for the room again when it is seen, and\nrejoins by itself when shown away, unless the player left on purpose (`presence: false` turns it off).\nNetworks drop messages: a player's join or answer is sent again every 3s until the host's state\nshows it (5 tries), and the host no longer broadcasts a reply to a repeated or late answer.",
+          "components": [
+            "live-room",
+            "timer-ring"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/rooms-clock-presence.md"
         },
         {
           "summary": "ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says \"there is more\" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade=\"none\"` for hard edges.",
@@ -1617,6 +1666,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/motion-tokens.md"
+        },
+        {
+          "summary": "MultiStepForm says what is wrong when a field fails its native check, not only where: the field's name (a radio group's own label) and the browser's message under the step (reworded with `labels.invalid`), and `aria-invalid` on the field until it is edited. Before, Continue only moved focus, so a sighted reader saw nothing happen. `MultiStepFormSummary` wraps a long answer (an email, a name) instead of pushing the page sideways at 320px.",
+          "components": [
+            "multi-step-form"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/multi-step-form-says-why.md"
         },
         {
           "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",

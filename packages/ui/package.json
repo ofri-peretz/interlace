@@ -580,6 +580,22 @@
       "types": "./dist/games/podium.d.ts",
       "default": "./dist/games/podium.js"
     },
+    "./games/duel-model": {
+      "types": "./dist/games/duel-model.d.ts",
+      "default": "./dist/games/duel-model.js"
+    },
+    "./games/answer-pad": {
+      "types": "./dist/games/answer-pad.d.ts",
+      "default": "./dist/games/answer-pad.js"
+    },
+    "./games/standings": {
+      "types": "./dist/games/standings.d.ts",
+      "default": "./dist/games/standings.js"
+    },
+    "./games/duel": {
+      "types": "./dist/games/duel.d.ts",
+      "default": "./dist/games/duel.js"
+    },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",
       "default": "./dist/charts/delta.js"
