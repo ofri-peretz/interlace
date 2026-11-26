@@ -1616,6 +1616,19 @@
     "previewDark": "blocks-newsletterform--dark",
     "skeleton": "blocks-newsletterform--loading"
   },
+  "note-board": {
+    "title": "Games/NoteBoard",
+    "storyIds": [
+      "games-noteboard--default",
+      "games-noteboard--read-only",
+      "games-noteboard--live",
+      "games-noteboard--stage",
+      "games-noteboard--right-to-left"
+    ],
+    "preview": "games-noteboard--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "number-field": {
     "title": "Primitives/NumberField",
     "storyIds": [

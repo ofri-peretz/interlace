@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 247
+    "itemCount": 248
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 38,
+      "game": 39,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -42,8 +42,8 @@
     "category": {
       "primitive": 78,
       "pattern": 65,
-      "games": 38,
-      "game": 38,
+      "games": 39,
+      "game": 39,
       "blog": 37,
       "data": 30,
       "foundation": 27,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 133,
+      "client": 134,
       "server": 114
     },
     "keyboard": {
-      "none": 192,
+      "none": 193,
       "handled": 55
     },
     "loading": {
-      "none": 209,
+      "none": 210,
       "built-in": 38
     },
     "minViewport": {
-      "320": 166,
+      "320": 167,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -6713,6 +6713,79 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/newsletter-form.json",
       "item": "https://ds.interlace.tools/r/newsletter-form.json",
       "docs": "https://ds.interlace.tools/c/newsletter-form"
+    },
+    {
+      "name": "note-board",
+      "title": "Note Board",
+      "type": "registry:ui",
+      "summary": "A shared board of sticky notes in columns: a retrospective (\"Keep / Change / Try\"), an affinity sort, a \"before / during / after\" map. People post a note into a column, and the room sorts them by moving notes between columns. Every screen folds the same…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TextRefusal",
+          "values": [
+            "empty",
+            "too-long",
+            "too-many-words",
+            "link",
+            "contact",
+            "blocked"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-invalid",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "input",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/note-board.tsx",
+        "components/ui/games/note-board-model.ts",
+        "components/ui/games/text-safety-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/note-board.json",
+      "item": "https://ds.interlace.tools/r/note-board.json",
+      "docs": "https://ds.interlace.tools/c/note-board"
     },
     {
       "name": "number-field",

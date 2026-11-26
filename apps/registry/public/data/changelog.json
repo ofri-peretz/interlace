@@ -858,6 +858,17 @@
           "source": ".changeset/mobile-app-shell.md"
         },
         {
+          "summary": "A shared board of sticky notes in columns. `NoteBoard` holds a retrospective (\"Keep / Change / Try\"), an affinity sort or a \"before / during / after\" map: people post a note into a column after the room's text checks, and the room sorts notes by moving them between columns. Each note's move buttons name the column they lead to, focus stays on the note that moved, the move is announced, and the note glides to its new place. `games/note-board-model` folds posts and moves into the board (`foldBoard`), so every screen agrees whatever order events arrive in and however often one is delivered.",
+          "components": [
+            "note-board"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/note-board.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"

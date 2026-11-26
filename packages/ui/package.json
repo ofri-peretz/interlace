@@ -664,6 +664,14 @@
       "types": "./dist/games/pin-drop-model.d.ts",
       "default": "./dist/games/pin-drop-model.js"
     },
+    "./games/note-board": {
+      "types": "./dist/games/note-board.d.ts",
+      "default": "./dist/games/note-board.js"
+    },
+    "./games/note-board-model": {
+      "types": "./dist/games/note-board-model.d.ts",
+      "default": "./dist/games/note-board-model.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"
