@@ -862,6 +862,42 @@
           "source": ".changeset/mobile-app-shell.md"
         },
         {
+          "summary": "Animations started from script now follow the brand's `--ease-*` and `--duration-*` tokens, like the CSS does. A new `motion-token` lib item reads them from the element that moves.",
+          "components": [
+            "motion-token",
+            "calendar",
+            "time-slot-picker",
+            "multi-step-form",
+            "commitment",
+            "interest-signal",
+            "session-composer",
+            "guess-reveal",
+            "quiz-question",
+            "duel",
+            "order-game",
+            "podium",
+            "live-room",
+            "word-cloud",
+            "answer-pad",
+            "tally-bars",
+            "standings",
+            "closer-game",
+            "stagger-list",
+            "flip-group",
+            "reveal",
+            "celebrate",
+            "split-text",
+            "marker",
+            "rotating-text",
+            "draw-on"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/motion-script-tokens.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"
@@ -883,6 +919,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/pointer-surface-underline-link.md"
+        },
+        {
+          "summary": "Prose tables read like an editorial table instead of a Markdown grid. The cell boxes, the shaded header and the zebra rows are gone: a firm rule sits under the header, a hairline between rows, body cells keep the reading size, the first cell carries the row's weight, figures line up, and a GFM column alignment is honoured. A `<span data-status=\"success|warning|info|destructive|neutral\">` in a cell reads as a quiet status pill whose dot repeats the word. On a phone, a table with a header row stacks into one card per row, each value under its column name, with no sideways scrolling: Prose names each body cell after its column (`data-label`, which server-rendered markup can ship itself to skip a flash) and pins the table roles a screen reader would otherwise lose.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/prose-editorial-tables.md"
         },
         {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
@@ -1293,6 +1340,17 @@
           "source": ".changeset/topbar-motion.md"
         },
         {
+          "summary": "User intent: typed events for what a person meant to do, sent to whichever analytics tool the app uses.\n\n`IntentProvider` takes one `onIntent` adapter. Below it, `useActivateIntent` (every activation, with keyboard, mouse, touch or pen), `useViewIntent` (half the element visible for a second), `useDwellIntent` (a pointer or keyboard focus resting for half a second), `useCommitIntent` (a typed value settled, reported as its length), `useDisclosureIntent` (an overlay opened or closed, and why) and `useFormIntent` (started, submitted, or abandoned by cancel or page leave) all report to it. Any element with `data-intent=\"name\"` reports its clicks with no hook, so server components can declare intent too. Given a `page`, the provider reports `page_view` and `page_leave` with visible time and read depth, and it reports rage clicks: three quick clicks on one spot.\n\nEvents carry names, numbers and enums only: never typed text, element text, or anything about who the person is. A failing adapter is caught, so analytics never breaks a page.",
+          "components": [
+            "intent"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/user-intent.md"
+        },
+        {
           "summary": "View transitions, made safe to reach for. `Morph` gives its one child a view-transition name (any string, cleaned into a valid identifier), so a card's image and the detail page's hero with the same name morph into each other: the card grows into its page. `useViewTransition()` runs a React state change inside a transition, flushed so the browser captures the new view, with optional `types`. `startViewTransition` does the same for code outside React. `PageTransitions` (once, in the root layout) is a server-safe `<style>`: the old page fades out, the new one rises in by half a rem, and `@view-transition` turns it on between documents; `pageTransitionsCss()` returns the same CSS. Where the browser has no View Transitions the update simply runs, and under reduced motion there is no transition at all. Opacity and transform only.",
           "components": [
             "view-transition"
@@ -1313,6 +1371,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/weave-texture.md"
+        },
+        {
+          "summary": "A live word cloud for rooms. `WordEntry` lets a phone send up to `maxWords` words (default 3), each checked before `onWord` fires; a refused word says why, and the viewer's sent words show as chips. `WordCloud` groups what the room sent by its folded form (case, accents and marks), shows the spelling most people used, sizes words on a square-root scale in five steps and puts the biggest in the middle, while the DOM stays in rank order with each word read with its count. Words glide to their new places through FlipGroup and a word that gained a vote pulses once; under reduced motion they simply take their place. `size=\"stage\"` is for a shared screen. The rules are pure and exported: `games/word-cloud-model` (`buildCloud`, `centerOut`) and `games/text-safety-model` (`checkText`, `foldText`, `isBlocked`), which refuses empty text, overlong text, links, email addresses, phone numbers and words on the consumer's `blocklist` (whole words, through letter swaps and spelled-out letters). Interlace ships no word list.",
+          "components": [
+            "word-cloud"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/word-cloud.md"
         },
         {
           "summary": "Wordmark gains `size`: `md` (the default, unchanged), `sm` (about two thirds: text a step down, a thinner plate) and `responsive` (`sm` below the `md` breakpoint, `md` from it). A stacked three-line lockup in a sticky topbar took about a fifth of a phone's screen; `size=\"responsive\"` gives that height back to the page.",
@@ -1380,6 +1449,29 @@
           "source": ".changeset/button-transition-trim.md"
         },
         {
+          "summary": "`Callout` reads better on phones. Below `sm` a `kicker` sits above the body instead of beside it, so a long body keeps the full width rather than a column narrowed by the kicker, and the inset drops from `p-6` to `p-4`. From `sm` up nothing changes. The root carries `data-kicker` when a kicker is set.",
+          "components": [
+            "callout"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/callout-phone-kicker.md"
+        },
+        {
+          "summary": "`Topbar` and `Footer` take `Container`'s gutters (`px-4 xs:px-6 lg:px-8`) instead of a flat `px-6`, so the logo and the footer line up with the page content at every width. On a 320px phone the topbar row also fits a logo and two actions on one line again (gap `x-3` below `xs`), instead of wrapping to a second row.",
+          "components": [
+            "topbar",
+            "footer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/chrome-gutters.md"
+        },
+        {
           "summary": "ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.",
           "components": [
             "claim-card"
@@ -1389,6 +1481,18 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/claim-heading-font.md"
+        },
+        {
+          "summary": "Shorter comments in the focus grid and scroller. No change to behaviour.",
+          "components": [
+            "focus-grid",
+            "scroller"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/comment-trim.md"
         },
         {
           "summary": "Grids of repeated items now pick their column count from their own width, not the screen's. FeatureGrid, StatGroup, ArticleListGrid, PricingTable, RelatedPosts and StatStrip each set a CSS container on their root: one track below 28rem, two from 28rem, and the `cols` you asked for from 56rem. A grid placed in a sidebar or a dashboard card now collapses as it would on a phone, with no `className` override. At full page width the layout is the same as before.",
@@ -1585,6 +1689,18 @@
           "source": ".changeset/hero-media-readable.md"
         },
         {
+          "summary": "A focus grid card's title link now underlines when it takes keyboard focus, so focus shows on the element itself as well as the card's ring. The scroller's viewport stretches to the width of its row on phones instead of growing to its whole track, so the page no longer scrolls sideways.",
+          "components": [
+            "focus-grid",
+            "scroller"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/keyboard-reach.md"
+        },
+        {
           "summary": "fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).",
           "components": [
             "card",
@@ -1756,6 +1872,20 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/radio-dot-centred.md"
+        },
+        {
+          "summary": "Nothing scrolls sideways at 150% text on a phone any more for the hover card, OTP field, scorecard row and dashboard template. Widths set in rem grow with the reader's text size, so a `max-w-80` hover card reached 480px on a 390px screen. The hover card now caps at the space Base UI reports (`--available-width`), OTP boxes shrink to share the row, the scorecard header wraps its score under the name, and the dashboard template pads `px-4` on phones and `px-10` from `sm`.",
+          "components": [
+            "hover-card",
+            "otp-field",
+            "scorecard-row",
+            "dashboard-template"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/reflow-at-150.md"
         },
         {
           "summary": "Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.",

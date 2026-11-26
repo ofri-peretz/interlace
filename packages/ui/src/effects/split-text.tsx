@@ -48,6 +48,7 @@ import * as React from "react";
 
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
+import { motionEase } from "../lib/motion-token.js";
 
 const FROM = {
   fade: { opacity: 0 },
@@ -137,7 +138,7 @@ export function SplitText({
           piece.animate([FROM[effect], TO[effect]], {
             duration,
             delay: delay + i * gap,
-            easing: "cubic-bezier(0.2, 0, 0, 1)",
+            easing: motionEase(piece, 'enter'),
             fill: "backwards",
           });
         });

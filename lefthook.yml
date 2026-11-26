@@ -12,7 +12,7 @@
 # `npm run ci:local` runs the pre-push battery over every file, as CI does.
 remotes:
   - git_url: https://github.com/ofri-peretz/burgee
-    ref: hookset@1.1.0
+    ref: hookset@1.4.0
     configs:
       - packages/hookset/presets/lefthook/commit-msg.yml
       - packages/hookset/presets/lefthook/pre-commit.yml
@@ -23,8 +23,9 @@ pre-push:
     guidance:
       run: npm run lint:guidance
 
-# A merge resolves registry output with the `interlace-generated` driver (see .gitattributes), so
-# rebuild it from the merged sources before the merge is pushed.
+# Rebuild the registry output from the merged sources, so the local site, e2e and tests see them.
+# A feature branch does not commit that output (the `registry (no generated output in PRs)` gate
+# fails one that does), so leave what this rewrites unstaged: only the release commit carries it.
 post-merge:
   commands:
     registry:

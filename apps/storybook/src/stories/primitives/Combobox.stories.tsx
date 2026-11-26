@@ -152,7 +152,7 @@ export const Default: Story = {
     autoHighlight: false,
   },
   render: (args) => (
-    <div className="flex w-72 flex-col gap-1.5">
+    <div className="flex w-72 max-w-full flex-col gap-1.5">
       <Label htmlFor="plugin-combobox">Plugin</Label>
       <Combobox {...args} items={PLUGINS}>
         <ComboboxControl>
@@ -182,7 +182,7 @@ export const Default: Story = {
 export const Compose: Story = {
   render: () => (
     <ComboboxCompose
-      className="w-72"
+      className="w-72 max-w-full"
       items={PLUGINS}
       aria-label="Plugin"
       placeholder="Search plugins…"
@@ -198,7 +198,7 @@ export const Compose: Story = {
  */
 export const WithTrigger: Story = {
   render: () => (
-    <div className="w-72">
+    <div className="w-72 max-w-full">
       <Combobox items={PLUGINS}>
         <ComboboxControl>
           <ComboboxInput
@@ -245,7 +245,7 @@ const GROUPED = [
  */
 export const Grouped: Story = {
   render: () => (
-    <div className="w-72">
+    <div className="w-72 max-w-full">
       <Combobox items={GROUPED}>
         <ComboboxControl>
           <ComboboxInput
@@ -347,7 +347,7 @@ export const AsyncStatus: Story = {
     }, [query]);
 
     return (
-      <div className="w-72">
+      <div className="w-72 max-w-full">
         <Combobox items={results} filter={null} onInputValueChange={setQuery}>
           <ComboboxControl>
             <ComboboxInput
@@ -389,7 +389,7 @@ export const AsyncStatus: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <div className="w-72">
+    <div className="w-72 max-w-full">
       <Combobox items={PLUGINS}>
         <ComboboxControl>
           <ComboboxInput
@@ -483,7 +483,7 @@ export const KeyboardFlow: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className="w-72">
+    <div className="w-72 max-w-full">
       <Combobox items={PLUGINS} disabled>
         <ComboboxControl>
           <ComboboxInput aria-label="Plugin" placeholder="Unavailable" />
@@ -504,7 +504,7 @@ export const Disabled: Story = {
 
 export const Invalid: Story = {
   render: () => (
-    <div className="flex w-72 flex-col gap-1">
+    <div className="flex w-72 max-w-full flex-col gap-1">
       <Combobox items={PLUGINS}>
         <ComboboxControl>
           <ComboboxInput
@@ -567,7 +567,7 @@ const RTL_ITEMS = [
 
 export const RTL: Story = {
   render: () => (
-    <div className="w-72">
+    <div className="w-72 max-w-full">
       <Combobox items={RTL_ITEMS}>
         <ComboboxControl>
           <ComboboxInput aria-label="الإضافة" placeholder="ابحث…" className="pr-9" />
@@ -597,7 +597,7 @@ export const ReducedMotion: Story = {
 /** Loading placeholder — reserves the 36px control height (CLS=0). */
 export const Loading: Story = {
   render: () => (
-    <div className="w-72">
+    <div className="w-72 max-w-full">
       <Skeleton variant="select" />
     </div>
   ),

@@ -34,13 +34,14 @@
  * Run with `--check` to validate without writing (used by CI drift check).
  */
 
-import { readFile, readdir, writeFile, mkdir, stat } from 'node:fs/promises';
+import { readFile, readdir, mkdir, stat } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 import { AUTHOR, HOMEPAGE, itemRef } from '../registry.config.mjs';
 import { collectThemeClaims, collisionMarkdown } from '../token-namespace.mjs';
 import { describeFrom } from '../blurb.mjs';
+import { writeGenerated } from './lib/write-generated.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -598,6 +599,14 @@ const LIB_FILES = [
   // them the switcher installs with dangling relative imports — which is
   // exactly what `assertRegistryContract` reported.
   {
+    name: 'motion-token',
+    sourceFile: 'motion-token.ts',
+    target: 'lib/motion-token.ts',
+    title: 'Motion token reader',
+    description:
+      '@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.',
+  },
+  {
     name: 'theme-tokens',
     sourceFile: 'theme-tokens.ts',
     target: 'lib/theme-tokens.ts',
@@ -620,6 +629,14 @@ const LIB_FILES = [
     title: 'useReadingPrefs hook',
     description:
       '@interlace/ui — reads and writes the reader\'s text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.',
+  },
+  {
+    name: 'intent',
+    sourceFile: 'intent.ts',
+    target: 'hooks/use-intent.ts',
+    title: 'User intent hooks and provider',
+    description:
+      '@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.',
   },
   {
     name: 'theme-script',
@@ -1331,11 +1348,9 @@ const buildStyleItems = async () => [
 const writeRawStyleFiles = async () => {
   for (const name of ALL_STYLE_FILES) {
     const outPath = path.join(STYLES_OUT_DIR, name);
-    // `brand/harbor.css` nests, so the mkdir has to follow the file, not
-    // just the root.
-    await mkdir(path.dirname(outPath), { recursive: true });
+    // `brand/harbor.css` nests; writeGenerated makes each file's directory.
     const content = await readFile(path.join(STYLES_DIR, name), 'utf8');
-    await writeFile(outPath, content, 'utf8');
+    await writeGenerated(outPath, content);
   }
 };
 
@@ -1611,10 +1626,9 @@ const main = async () => {
 
   await mkdir(OUT_DIR, { recursive: true });
   for (const item of built.items) {
-    await writeFile(
+    await writeGenerated(
       path.join(OUT_DIR, `${item.name}.json`),
       JSON.stringify(item, null, 2) + '\n',
-      'utf8',
     );
   }
   await writeRawStyleFiles();
@@ -1623,8 +1637,8 @@ const main = async () => {
   // and the shadcn registry directory requires it at the registry root: "a flat
   // registry ... `/registry.json` and `/component-name.json` files are expected
   // to be in the root". `index.json` stays as the alias src/lib/registry.ts reads.
-  await writeFile(path.join(OUT_DIR, 'registry.json'), indexJson, 'utf8');
-  await writeFile(path.join(OUT_DIR, 'index.json'), indexJson, 'utf8');
+  await writeGenerated(path.join(OUT_DIR, 'registry.json'), indexJson);
+  await writeGenerated(path.join(OUT_DIR, 'index.json'), indexJson);
 
   // Auto-regenerate the semantics catalogue JSON read by
   // apps/registry/src/app/semantics-catalog/page.tsx. Keeping it here

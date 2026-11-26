@@ -28,6 +28,10 @@
       "types": "./dist/lib/theme-tokens.d.ts",
       "default": "./dist/lib/theme-tokens.js"
     },
+    "./intent": {
+      "types": "./dist/lib/intent.d.ts",
+      "default": "./dist/lib/intent.js"
+    },
     "./use-reading-prefs": {
       "types": "./dist/lib/use-reading-prefs.d.ts",
       "default": "./dist/lib/use-reading-prefs.js"
@@ -523,6 +527,18 @@
     "./games/poll": {
       "types": "./dist/games/poll.d.ts",
       "default": "./dist/games/poll.js"
+    },
+    "./games/text-safety-model": {
+      "types": "./dist/games/text-safety-model.d.ts",
+      "default": "./dist/games/text-safety-model.js"
+    },
+    "./games/word-cloud-model": {
+      "types": "./dist/games/word-cloud-model.d.ts",
+      "default": "./dist/games/word-cloud-model.js"
+    },
+    "./games/word-cloud": {
+      "types": "./dist/games/word-cloud.d.ts",
+      "default": "./dist/games/word-cloud.js"
     },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",

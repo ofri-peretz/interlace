@@ -36,9 +36,10 @@
  * of silently serving a stale contract.
  */
 
-import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeGenerated } from './lib/write-generated.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -964,8 +965,7 @@ const main = async () => {
     return;
   }
 
-  await mkdir(path.dirname(OUT_FILE), { recursive: true });
-  await writeFile(OUT_FILE, JSON.stringify(map, null, 2) + '\n', 'utf8');
+  await writeGenerated(OUT_FILE, JSON.stringify(map, null, 2) + '\n');
 
   const withKeyboard = Object.values(map.components).filter(
     (c) => c.keyboard,

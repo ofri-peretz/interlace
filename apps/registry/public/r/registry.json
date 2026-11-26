@@ -148,6 +148,24 @@
       }
     },
     {
+      "name": "motion-token",
+      "type": "registry:lib",
+      "title": "Motion token reader",
+      "description": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "theme-tokens",
       "type": "registry:lib",
       "title": "Theme token manifest",
@@ -188,6 +206,24 @@
       "type": "registry:lib",
       "title": "useReadingPrefs hook",
       "description": "@interlace/ui — reads and writes the reader's text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "intent",
+      "type": "registry:lib",
+      "title": "User intent hooks and provider",
+      "description": "@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.",
       "categories": [
         "foundation",
         "util"
@@ -3932,6 +3968,24 @@
       "type": "registry:ui",
       "title": "Timer Ring",
       "description": "A countdown drawn as a ring that empties, with the seconds left in the middle. It counts to a deadline (a timestamp), not from a start, so a page that reloads, or several players in one room, all see the same clock.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "word-cloud",
+      "type": "registry:ui",
+      "title": "Word Cloud",
+      "description": "The room's words, live. Phones send a word or two with `WordEntry`; the shared screen shows them as a `WordCloud` in which the words the room repeats grow, the biggest sit in the middle, and every change moves into place rather than jumping there. Anyone…",
       "categories": [
         "games",
         "game"
