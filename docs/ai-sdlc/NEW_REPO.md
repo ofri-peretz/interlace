@@ -26,8 +26,8 @@ gh repo edit ofri-peretz/<name> --enable-auto-merge --delete-branch-on-merge \
 Agents merge their own PRs with `gh pr merge --auto --squash` once checks are green, so auto-merge
 must be on.
 
-Proof: `gh repo view ofri-peretz/<name> --json autoMergeAllowed,deleteBranchOnMerge` prints `true`
-for both.
+Proof: `gh api repos/ofri-peretz/<name> --jq '.allow_auto_merge, .delete_branch_on_merge'` prints
+`true` twice.
 
 ## 2. Node, commit messages and git hooks
 
