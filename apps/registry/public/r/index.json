@@ -3820,6 +3820,24 @@
       }
     },
     {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "A scale question for a room: how familiar, how likely to recommend, how are you feeling. Each person picks one step and sends it; then they see the room's answers on the same scale, their own step marked, the room's average, and, when the question was…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "reactions",
       "type": "registry:ui",
       "title": "Reactions",

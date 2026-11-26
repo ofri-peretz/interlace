@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 235
+    "itemCount": 236
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,8 +31,8 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
+      "game": 27,
       "effect": 27,
-      "game": 26,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -44,10 +44,10 @@
       "pattern": 65,
       "blog": 37,
       "data": 30,
+      "games": 27,
+      "game": 27,
       "foundation": 27,
       "effect": 27,
-      "games": 26,
-      "game": 26,
       "form": 26,
       "decorative": 24,
       "navigation": 18,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 121,
+      "client": 122,
       "server": 114
     },
     "keyboard": {
       "none": 185,
-      "handled": 50
+      "handled": 51
     },
     "loading": {
-      "none": 197,
+      "none": 198,
       "built-in": 38
     },
     "minViewport": {
-      "320": 154,
+      "320": 155,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7836,6 +7836,63 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json",
       "item": "https://ds.interlace.tools/r/radio-group.json",
       "docs": "https://ds.interlace.tools/c/radio-group"
+    },
+    {
+      "name": "rating",
+      "title": "Rating",
+      "type": "registry:ui",
+      "summary": "A scale question for a room: how familiar, how likely to recommend, how are you feeling. Each person picks one step and sends it; then they see the room's answers on the same scale, their own step marked, the room's average, and, when the question was…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/rating.tsx",
+        "components/ui/games/rating-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/rating.json",
+      "item": "https://ds.interlace.tools/r/rating.json",
+      "docs": "https://ds.interlace.tools/c/rating"
     },
     {
       "name": "reactions",

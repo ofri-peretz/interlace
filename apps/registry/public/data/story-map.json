@@ -1887,6 +1887,19 @@
     "previewDark": "foundations-radius--dark",
     "skeleton": null
   },
+  "rating": {
+    "title": "Games/Rating",
+    "storyIds": [
+      "games-rating--default",
+      "games-rating--choosing",
+      "games-rating--mood",
+      "games-rating--recommend",
+      "games-rating--right-to-left"
+    ],
+    "preview": "games-rating--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "reactions": {
     "title": "Games/Reactions",
     "storyIds": [

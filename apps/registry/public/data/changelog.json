@@ -904,6 +904,17 @@
           "source": ".changeset/question-board.md"
         },
         {
+          "summary": "A scale question for a room. `Rating` lets each person pick one step (a radio group: arrow keys move, each step has a name) and send it, then shows the room's answers on the same scale with their own step in the accent, the room's average in one focused sentence, a dashed outline for an earlier round (`before`), and for a 0 to 10 scale the recommend score. `faces` swaps the numbers for icons with names, for a mood check. `minResponses` keeps the room hidden until enough have answered. The rules are pure (`games/rating-model`: `summarizeRatings`, `ratingShift`, `ratingSteps`, `cleanRatings`) and drop answers off the scale. The bars grow from the baseline in 250ms; under reduced motion the chart is simply there.",
+          "components": [
+            "rating"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/rating.md"
+        },
+        {
           "summary": "The room's pulse while someone talks. `ReactionBar` gives a phone one round button per reaction kind (a neutral `DEFAULT_REACTIONS` set: love it, agree, funny, new to me, lost me; pass your own `kinds`), each popping on tap. `ReactionStream` lets every new reaction float up a shared screen with a slight drift and fade (1.6s, Web Animations, at most `maxFloating` at once, nothing on first load), and keeps a per-kind tally that screen readers read and that is the whole view under reduced motion. `RaiseHand` is a toggle that says the person's place in line and when it is their turn; `HandQueue` gives the host the line in order with call next, call on a named person, lower a hand and done. The rules are pure in `games/reactions-model`: `allowReaction` (a sliding per-person budget, 6 in 3 seconds by default), `tallyReactions`, and `createHands` / `applyHandEvent` / `placeInLine` (first raised, first called; lowering and raising again goes to the back).",
           "components": [
             "reactions"
