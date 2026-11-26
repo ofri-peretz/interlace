@@ -1,53 +1,53 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Prose, MIN_VIEWPORT } from '@interlace/ui/prose';
-import { withRtl } from '@/decorators';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Prose, MIN_VIEWPORT } from "@interlace/ui/prose";
+import { withRtl } from "@/decorators";
 
 const meta = {
-  title: 'Primitives/Prose',
+  title: "Primitives/Prose",
   component: Prose,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
         component:
-          'The landing surface for author-controlled markup — MDX pages, rendered Markdown, a CMS body. One descendant cascade maps every `h1`–`h6`, `p`, `a`, list, `blockquote`, `code`/`pre`, `table` and `img` to DS tokens, so content nobody added classes to still reads like a published article, with the measure bounded to 65ch. Use it only around body content: applying it to a page shell would restyle the UI chrome inside it too.',
+          "The landing surface for author-controlled markup — MDX pages, rendered Markdown, a CMS body. One descendant cascade maps every `h1`–`h6`, `p`, `a`, list, `blockquote`, `code`/`pre`, `table` and `img` to DS tokens, so content nobody added classes to still reads like a published article, with the measure bounded to 65ch. Use it only around body content: applying it to a page shell would restyle the UI chrome inside it too.",
       },
     },
   },
   argTypes: {
     variant: {
-      control: 'inline-radio',
-      options: ['default', 'long'],
+      control: "inline-radio",
+      options: ["default", "long"],
       description:
-        'Reading contract. `default` is the 16px / 1.6 body used for docs and changelogs; `long` moves to 17px / 1.7, which is what a multi-screen article wants.',
+        "Reading contract. `default` is the 16px / 1.6 body used for docs and changelogs; `long` moves to 17px / 1.7, which is what a multi-screen article wants.",
       table: {
         type: { summary: "'default' | 'long'" },
-        defaultValue: { summary: 'default' },
-        category: 'Appearance',
+        defaultValue: { summary: "default" },
+        category: "Appearance",
       },
     },
     as: {
-      control: 'select',
-      options: ['article', 'div', 'main', 'section'],
+      control: "select",
+      options: ["article", "div", "main", "section"],
       description:
-        'Rendered element. `article` is the default; use `main` when this is the page\'s primary landmark, `section` inside a larger landmark, and `div` when the surrounding container already owns the landmark — two landmarks for one body is a screen-reader smell.',
+        "Rendered element. `article` is the default; use `main` when this is the page's primary landmark, `section` inside a larger landmark, and `div` when the surrounding container already owns the landmark — two landmarks for one body is a screen-reader smell.",
       table: {
         type: { summary: "'article' | 'div' | 'main' | 'section'" },
-        defaultValue: { summary: 'article' },
-        category: 'Structure',
+        defaultValue: { summary: "article" },
+        category: "Structure",
       },
     },
     children: {
       control: false,
       description:
-        'The body markup. Plain elements, not DS components — the cascade targets tag names, so `<h2>` is styled but `<Heading>` is not.',
-      table: { type: { summary: 'ReactNode' }, category: 'Slots' },
+        "The body markup. Plain elements, not DS components — the cascade targets tag names, so `<h2>` is styled but `<Heading>` is not.",
+      table: { type: { summary: "ReactNode" }, category: "Slots" },
     },
     className: {
-      control: 'text',
+      control: "text",
       description:
-        'Merged after the cascade. The one override worth knowing: `max-w-none` releases the 65ch measure when the wrapper sits inside a column that already bounds it.',
-      table: { type: { summary: 'string' }, category: 'Appearance' },
+        "Merged after the cascade. The one override worth knowing: `max-w-none` releases the 65ch measure when the wrapper sits inside a column that already bounds it.",
+      table: { type: { summary: "string" }, category: "Appearance" },
     },
   },
 } satisfies Meta<typeof Prose>;
@@ -59,18 +59,17 @@ const SampleArticle = () => (
   <>
     <h1>The article wrapper, in practice</h1>
     <p>
-      The <code>Prose</code> primitive is the surface every MDX page lands
-      on. It bounds the measure to <code>--container-prose</code> (65ch) and
-      maps every descendant element to a DS token so the article reads the
-      same in docs, the blog, and the registry — no per-page typography
-      drift.
+      The <code>Prose</code> primitive is the surface every MDX page lands on.
+      It bounds the measure to <code>--container-prose</code> (65ch) and maps
+      every descendant element to a DS token so the article reads the same in
+      docs, the blog, and the registry — no per-page typography drift.
     </p>
 
     <h2>Headings carry scroll-margin</h2>
     <p>
-      Deep links to <code>#headings-carry-scroll-margin</code> clear a
-      sticky header thanks to <code>scroll-margin-top</code> set on every
-      heading (xl ≈ 64px). Try clicking{' '}
+      Deep links to <code>#headings-carry-scroll-margin</code> clear a sticky
+      header thanks to <code>scroll-margin-top</code> set on every heading (xl ≈
+      64px). Try clicking{" "}
       <a href="#headings-carry-scroll-margin">this anchor</a> and notice the
       heading does not slide under a fixed top bar.
     </p>
@@ -79,9 +78,8 @@ const SampleArticle = () => (
     <p>The cascade covers the long tail of Markdown:</p>
     <ul>
       <li>
-        Unordered lists like this one — <strong>bold</strong>,{' '}
-        <em>italic</em>, and{' '}
-        <a href="#lists-and-inline-marks">inline links</a> all inherit the
+        Unordered lists like this one — <strong>bold</strong>, <em>italic</em>,
+        and <a href="#lists-and-inline-marks">inline links</a> all inherit the
         token contract.
       </li>
       <li>
@@ -99,15 +97,15 @@ const SampleArticle = () => (
 
     <h3>Block quotes</h3>
     <blockquote>
-      The product is the proof. The article wrapper is just the stage that
-      lets the proof read like a published article.
+      The product is the proof. The article wrapper is just the stage that lets
+      the proof read like a published article.
     </blockquote>
 
     <h3>Code blocks</h3>
     <p>
-      Fenced code lives inside <code>pre &gt; code</code>; the chip styles
-      on inline <code>code</code> are cleared inside <code>pre</code> so the
-      block renders flat:
+      Fenced code lives inside <code>pre &gt; code</code>; the chip styles on
+      inline <code>code</code> are cleared inside <code>pre</code> so the block
+      renders flat:
     </p>
     <pre>
       <code>{`import { Prose } from '@interlace/ui/prose';
@@ -122,12 +120,19 @@ export default function Article() {
 }`}</code>
     </pre>
 
-    <h3>GFM tables — zebra rows + horizontal overflow</h3>
+    <h3>Tables read like an editorial table</h3>
+    <p>
+      No cell grid and no zebra fill: a firm rule under the header, a hairline
+      between rows, figures lined up. A{" "}
+      <code>{'<span data-status="success">'}</code> in a cell reads as a quiet
+      status pill. On a phone the rows stack into one card each.
+    </p>
     <table>
       <thead>
         <tr>
           <th>Token</th>
-          <th>Value</th>
+          <th align="right">Size</th>
+          <th>Status</th>
           <th>Notes</th>
         </tr>
       </thead>
@@ -136,54 +141,53 @@ export default function Article() {
           <td>
             <code>--text-body</code>
           </td>
-          <td>16px / 1.6</td>
+          <td align="right">16px</td>
+          <td>
+            <span data-status="success">stable</span>
+          </td>
           <td>Default reading contract.</td>
         </tr>
         <tr>
           <td>
             <code>--text-long</code>
           </td>
-          <td>17px / 1.7</td>
+          <td align="right">17px</td>
           <td>
-            Long-form reading contract — used by{' '}
-            <code>variant="long"</code>.
+            <span data-status="warning">in review</span>
+          </td>
+          <td>
+            Long-form reading contract, used by <code>variant="long"</code>.
           </td>
         </tr>
         <tr>
           <td>
             <code>--container-prose</code>
           </td>
-          <td>65ch</td>
+          <td align="right">65ch</td>
+          <td>
+            <span data-status="neutral">planned</span>
+          </td>
           <td>Measure ceiling per TYPOGRAPHY_PHILOSOPHY.</td>
-        </tr>
-        <tr>
-          <td>
-            <code>--spacing-xl</code>
-          </td>
-          <td>64px</td>
-          <td>
-            <code>scroll-margin-top</code> for heading anchors.
-          </td>
         </tr>
       </tbody>
     </table>
 
     <h3>Images</h3>
     <p>
-      Images get a sensible default: block layout, bounded radius, and a
-      width that respects the measure so figures never blow out the column.
+      Images get a sensible default: block layout, bounded radius, and a width
+      that respects the measure so figures never blow out the column.
     </p>
 
     <h4>Smaller subsections still get rhythm</h4>
     <p>
-      Right down to <code>h6</code>, every heading has its own spacing slot
-      so the document outline reads cleanly even at depth.
+      Right down to <code>h6</code>, every heading has its own spacing slot so
+      the document outline reads cleanly even at depth.
     </p>
   </>
 );
 
 export const Default: Story = {
-  args: { variant: 'default', as: 'article' },
+  args: { variant: "default", as: "article" },
   render: (args) => (
     <Prose {...args}>
       <SampleArticle />
@@ -210,8 +214,8 @@ export const Variants: Story = {
             short-to-medium articles, doc pages, and changelogs.
           </p>
           <p>
-            A second paragraph to show paragraph rhythm and the underline
-            offset on <a href="#">an inline link</a>.
+            A second paragraph to show paragraph rhythm and the underline offset
+            on <a href="#">an inline link</a>.
           </p>
         </Prose>
       </section>
@@ -222,9 +226,9 @@ export const Variants: Story = {
         <Prose variant="long">
           <h2>Long-form reading contract</h2>
           <p>
-            17px body at 1.7 line-height. Switch to this on long-form
-            articles and blog posts — the extra leading reduces fatigue
-            over multi-screen reads.
+            17px body at 1.7 line-height. Switch to this on long-form articles
+            and blog posts — the extra leading reduces fatigue over multi-screen
+            reads.
           </p>
           <p>
             A second paragraph to compare the rhythm against the default
@@ -258,7 +262,7 @@ export const FillWidth: Story = {
 
 export const Dark: Story = {
   ...Default,
-  globals: { theme: 'dark' },
+  globals: { theme: "dark" },
 };
 
 export const RTL: Story = {
@@ -282,9 +286,9 @@ export const BelowMinViewport: Story = {
       <Prose>
         <h1>Narrow viewport</h1>
         <p>
-          Below <code>{MIN_VIEWPORT}</code>px the preflight outline appears
-          but the article keeps reading. Tables scroll horizontally so
-          wide rows don't blow out the column:
+          Below <code>{MIN_VIEWPORT}</code>px the preflight outline appears but
+          the article keeps reading. Tables scroll horizontally so wide rows
+          don't blow out the column:
         </p>
         <table>
           <thead>
@@ -318,8 +322,8 @@ export const BelowMinViewport: Story = {
       // Promote the body flag for this story so the preflight selector matches.
       <div
         ref={(node) => {
-          if (node && typeof document !== 'undefined') {
-            document.body.setAttribute('data-interlace-dev', '');
+          if (node && typeof document !== "undefined") {
+            document.body.setAttribute("data-interlace-dev", "");
           }
         }}
       >

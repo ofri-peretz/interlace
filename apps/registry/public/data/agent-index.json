@@ -6961,17 +6961,7 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [
-        {
-          "name": "ProseElement",
-          "values": [
-            "article",
-            "div",
-            "main",
-            "section"
-          ]
-        }
-      ],
+      "states": [],
       "a11y": {
         "roles": [],
         "aria": [],
