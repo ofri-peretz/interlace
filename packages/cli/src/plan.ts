@@ -49,9 +49,25 @@ export type Plan =
   | { kind: 'list'; registry: string }
   | { kind: 'info'; registry: string; name: string }
   | { kind: 'shadcn'; registry: string; argv: string[]; dryRun: boolean; alias: boolean }
+  | {
+      kind: 'check';
+      registry: string;
+      /** Print JSON instead of text. */
+      json: boolean;
+      /** `behind` counts as drift. */
+      strict: boolean;
+      /** Files allowed to differ, from `--allow`. */
+      allow: string[];
+      /** The project to check. @default the current directory */
+      cwd?: string;
+      /** The allow-list file. @default `.interlace-check.json` in the project, when it exists */
+      config?: string;
+      /** Check only these items. */
+      items: string[];
+    }
   | { kind: 'error'; message: string };
 
-const COMMANDS = new Set(['init', 'add', 'list', 'ls', 'info', 'help']);
+const COMMANDS = new Set(['init', 'add', 'list', 'ls', 'info', 'check', 'help']);
 
 /**
  * True when `token` names a component in OUR registry rather than somebody
@@ -149,6 +165,56 @@ const parse = (argv: readonly string[]): Parsed => {
   return out;
 };
 
+/**
+ * The options `check` owns. They are read from what is left after the shared ones, and only for
+ * `check`: `add` sends every flag it does not know to shadcn, and `--cwd` is one of them there.
+ */
+const parseCheck = (
+  registry: string,
+  rest: readonly string[],
+): Extract<Plan, { kind: 'check' }> | { kind: 'error'; message: string } => {
+  const plan: Extract<Plan, { kind: 'check' }> = { kind: 'check', registry, json: false, strict: false, allow: [], items: [] };
+  const VALUE = new Set(['--allow', '--cwd', '--config', '--item']);
+  for (let i = 0; i < rest.length; i += 1) {
+    const token = rest[i]!;
+    if (token === '--json') plan.json = true;
+    else if (token === '--strict') plan.strict = true;
+    else if (VALUE.has(token) || [...VALUE].some((f) => token.startsWith(`${f}=`))) {
+      const flag = token.includes('=') ? token.slice(0, token.indexOf('=')) : token;
+      const value = token.includes('=') ? token.slice(token.indexOf('=') + 1) : rest[++i];
+      if (!value || value.startsWith('-')) return { kind: 'error', message: `${flag} needs a value` };
+      if (flag === '--allow') plan.allow.push(value);
+      else if (flag === '--item') plan.items.push(value);
+      else if (flag === '--cwd') plan.cwd = value;
+      else plan.config = value;
+    } else return { kind: 'error', message: `check does not take ${token}` };
+  }
+  return plan;
+};
+
+/**
+ * Flags of shadcn that take a value. The value is a folder, not a component, so it is passed on
+ * exactly as typed and is never read as a name: `add button --cwd ./web` is `--cwd ./web`.
+ */
+const SHADCN_VALUE_FLAGS = new Set(['--cwd', '-c', '--path', '-p']);
+
+/** `add`'s arguments for shadcn, and how many of them name a component. */
+const passThrough = (registry: string, rest: readonly string[]): { argv: string[]; names: number } => {
+  const argv: string[] = [];
+  let names = 0;
+  for (let i = 0; i < rest.length; i += 1) {
+    const token = rest[i]!;
+    if (SHADCN_VALUE_FLAGS.has(token)) {
+      argv.push(token);
+      if (i + 1 < rest.length) argv.push(rest[++i]!);
+    } else {
+      if (!token.startsWith('-')) names += 1;
+      argv.push(resolveToken(registry, token));
+    }
+  }
+  return { argv, names };
+};
+
 export const planFromArgv = (argv: readonly string[]): Plan => {
   const parsed = parse(argv);
   if (parsed.error) return { kind: 'error', message: parsed.error };
@@ -178,6 +244,8 @@ export const planFromArgv = (argv: readonly string[]): Plan => {
     return { kind: 'info', registry, name };
   }
 
+  if (command === 'check') return parseCheck(registry, rest);
+
   if (command === 'init') {
     // `alias` asks the caller to write the `@interlace` entry into
     // components.json once shadcn has created it — that is what makes plain
@@ -187,13 +255,14 @@ export const planFromArgv = (argv: readonly string[]): Plan => {
   }
 
   // add
-  if (rest.every((t) => t.startsWith('-'))) {
+  const { argv: args, names } = passThrough(registry, rest);
+  if (names === 0) {
     return { kind: 'error', message: 'add needs at least one component name' };
   }
   return {
     kind: 'shadcn',
     registry,
-    argv: ['add', ...rest.map((t) => resolveToken(registry, t))],
+    argv: ['add', ...args],
     dryRun,
     alias: false,
   };
