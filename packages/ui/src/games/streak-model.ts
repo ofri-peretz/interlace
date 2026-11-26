@@ -19,6 +19,16 @@
  * run ends only when a whole working day passes without a game. `status`
  * says which of these states the player is in, so a component can say
  * "play today to keep it" without working that out again.
+ *
+ * ## Shields
+ *
+ * `Protection` lets a player earn their way past a missed day. Every
+ * `every` days played in a run earns one shield, up to `max` held. A
+ * missed working day with a shield in hand spends it: the day is
+ * `shielded`, and the run carries on (it does not grow). Shields are worked
+ * out from the played days alone, never stored, so every device and a
+ * server reach the same count. Shields outlive a broken run: what was
+ * earned stays earned.
  */
 
 import { addDays, daysBetween, isDayKey, weekdayOf, type DayKey } from './daily.js';
@@ -39,7 +49,15 @@ export interface RestRule {
 export type StreakStatus = 'played' | 'pending' | 'resting' | 'none';
 
 /** What one day was: played, rested, missed, today with no game yet, or not yet come. */
-export type StreakDayState = 'played' | 'rest' | 'missed' | 'open' | 'future';
+export type StreakDayState = 'played' | 'rest' | 'shielded' | 'missed' | 'open' | 'future';
+
+/** How a player earns protection for a missed day. */
+export interface Protection {
+  /** Days played in a run that earn one shield. */
+  every: number;
+  /** Shields a player can hold at once. */
+  max: number;
+}
 
 export interface StreakDay {
   day: DayKey;
@@ -56,6 +74,12 @@ export interface StreakSummary {
   status: StreakStatus;
   /** Total distinct days played up to today. */
   total: number;
+  /** Shields held now (0 without `Protection`). */
+  shields: number;
+  /** Missed days a shield has covered, ever. */
+  shieldsUsed: number;
+  /** Days still to play in this run to earn the next shield; null when none can be earned. */
+  nextShieldIn: number | null;
 }
 
 /** True when the rule makes `day` a rest day. */
@@ -74,30 +98,71 @@ function playedSet(played: Iterable<DayKey>, today: DayKey): Set<DayKey> {
   return set;
 }
 
+interface Walk {
+  run: number;
+  best: number;
+  shields: number;
+  shieldsUsed: number;
+  /** Days earned toward the next shield in the current run. */
+  toward: number;
+  shieldedDays: Set<DayKey>;
+}
+
+function validProtection(p?: Protection): Protection | undefined {
+  if (!p || !(p.every >= 1) || !(p.max >= 1)) return undefined;
+  return { every: Math.floor(p.every), max: Math.floor(p.max) };
+}
+
+// One pass from the first game to today. A missed working day spends a
+// shield or resets the run; today never does, because it is still open.
+function walk(days: Set<DayKey>, today: DayKey, rest?: RestRule, protection?: Protection): Walk {
+  const out: Walk = { run: 0, best: 0, shields: 0, shieldsUsed: 0, toward: 0, shieldedDays: new Set() };
+  if (days.size === 0) return out;
+  const p = validProtection(protection);
+  const first = [...days].sort()[0] as DayKey;
+  const span = daysBetween(first, today);
+  for (let i = 0; i <= span; i++) {
+    const day = addDays(first, i);
+    if (days.has(day)) {
+      out.run += 1;
+      if (p) {
+        out.toward += 1;
+        if (out.toward >= p.every) {
+          out.toward = 0;
+          out.shields = Math.min(p.max, out.shields + 1);
+        }
+      }
+    } else if (day !== today && !isRestDay(day, rest)) {
+      if (out.shields > 0 && out.run > 0) {
+        out.shields -= 1;
+        out.shieldsUsed += 1;
+        out.shieldedDays.add(day);
+      } else {
+        out.run = 0;
+        out.toward = 0;
+      }
+    }
+    out.best = Math.max(out.best, out.run);
+  }
+  return out;
+}
+
 /** The player's current and best run, and where today stands. */
 export function summarizeStreak(
   played: Iterable<DayKey>,
   today: DayKey,
   rest?: RestRule,
+  protection?: Protection,
 ): StreakSummary {
   const days = playedSet(played, today);
+  const p = validProtection(protection);
+  const w = walk(days, today, rest, p);
+  const nextShieldIn = p && w.shields < p.max ? p.every - w.toward : null;
+  const base = { shields: w.shields, shieldsUsed: w.shieldsUsed, nextShieldIn };
   if (days.size === 0) {
-    return { current: 0, best: 0, status: isRestDay(today, rest) ? 'resting' : 'none', total: 0 };
+    return { current: 0, best: 0, status: isRestDay(today, rest) ? 'resting' : 'none', total: 0, ...base };
   }
-
-  // One pass from the first game to today. A missed working day resets the
-  // run; today never does, because it is still open.
-  const first = [...days].sort()[0] as DayKey;
-  const span = daysBetween(first, today);
-  let run = 0;
-  let best = 0;
-  for (let i = 0; i <= span; i++) {
-    const day = addDays(first, i);
-    if (days.has(day)) run += 1;
-    else if (day !== today && !isRestDay(day, rest)) run = 0;
-    best = Math.max(best, run);
-  }
-
+  const run = w.run;
   const playedToday = days.has(today);
   const status: StreakStatus = playedToday
     ? 'played'
@@ -108,7 +173,7 @@ export function summarizeStreak(
       : run > 0
         ? 'pending'
         : 'none';
-  return { current: run, best, status, total: days.size };
+  return { current: run, best: w.best, status, total: days.size, ...base };
 }
 
 /**
@@ -119,10 +184,11 @@ export function summarizeStreak(
 export function streakDays(
   played: Iterable<DayKey>,
   today: DayKey,
-  options: { length?: number; after?: number; rest?: RestRule } = {},
+  options: { length?: number; after?: number; rest?: RestRule; protection?: Protection } = {},
 ): StreakDay[] {
-  const { length = 7, after = 0, rest } = options;
+  const { length = 7, after = 0, rest, protection } = options;
   const days = playedSet(played, today);
+  const { shieldedDays } = walk(days, today, rest, protection);
   const out: StreakDay[] = [];
   for (let i = -(length - 1); i <= after; i++) {
     const day = addDays(today, i);
@@ -133,7 +199,9 @@ export function streakDays(
           ? 'played'
           : isRestDay(day, rest)
             ? 'rest'
-            : i === 0
+            : shieldedDays.has(day)
+              ? 'shielded'
+              : i === 0
               ? 'open'
               : 'missed';
     out.push({ day, state, today: i === 0 });

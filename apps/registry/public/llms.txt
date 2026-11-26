@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 227 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 232 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -54,10 +54,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 116 client, 111 server
-- keyboard: 176 none, 51 handled
-- built-in loading state: 38 of 227
-- declared minViewport: 145 at 320, 7 at 480, 1 at 768, 74 at inherited
+- rendering: 118 client, 114 server
+- keyboard: 181 none, 51 handled
+- built-in loading state: 38 of 232
+- declared minViewport: 150 at 320, 7 at 480, 1 at 768, 74 at inherited
 
 ## Taxonomy
 
@@ -66,7 +66,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `primitive` — 79 item(s)
 - tier `pattern` — 66 item(s)
 - tier `effect` — 28 item(s)
-- tier `game` — 15 item(s)
+- tier `game` — 20 item(s)
 - tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
 - tier `util` — 6 item(s)
@@ -81,10 +81,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `foundation` (Foundation) — 27 item(s)
 - category `form` (Form & input) — 26 item(s)
 - category `decorative` (Decorative) — 25 item(s)
+- category `games` (Games) — 20 item(s)
+- category `game` (Games) — 20 item(s)
 - category `navigation` (Navigation) — 18 item(s)
 - category `feedback` (Feedback) — 18 item(s)
-- category `games` (Games) — 15 item(s)
-- category `game` (Games) — 15 item(s)
 - category `chart` (Charts) — 14 item(s)
 - category `marketing` (Marketing) — 14 item(s)
 - category `template` (Templates) — 13 item(s)
@@ -598,15 +598,24 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Daily Puzzle](https://ds.interlace.tools/c/daily-puzzle): The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/daily-puzzle.json`
   - contract: client, min 320px, v1.0.0
+- [Goal Ring](https://ds.interlace.tools/c/goal-ring): How far today is toward a daily goal: a ring that fills as points come in, the count in its middle, and a check once the goal is met. It is a `meter`, so assistive tech reads "15 of 20 XP" without the ring.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/goal-ring.json`
+  - contract: server, min 320px, states sm|default|lg, v1.0.0
 - [Join Code](https://ds.interlace.tools/c/join-code): How people get into a live room: the address to visit, a code to type there, and a QR code that does both in one scan. Built for the host's big screen first (`size="stage"`), and just as usable on a phone that wants to pass the room on, with a copy-link…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/join-code.json`
   - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.0.0
 - [Leaderboard](https://ds.interlace.tools/c/leaderboard): A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/leaderboard.json`
   - contract: server, min 320px, v1.0.0
+- [Level Meter](https://ds.interlace.tools/c/level-meter): A player's level and how far they are into the next: the level, a bar of XP, the XP still to go, and, right after a round, the XP just earned. The arithmetic is `levelFor` / `gainXp` in `progress-model.ts`, exported so a server shows the same level.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/level-meter.json`
+  - contract: server, min 320px, v1.0.0
 - [Live Room](https://ds.interlace.tools/c/live-room): A game night on one big screen and everyone's phones. The host opens a room and shows its JoinCode; players scan or type it and land in the lobby; the host starts, everyone sees the same countdown, plays the same rounds, and the night ends on a Podium. The…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/live-room.json`
   - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.0.0
+- [Milestones](https://ds.interlace.tools/c/milestones): The marks along a path a player is on (a 3, 7 and 30-day streak; levels 5, 10 and 20): the ones reached, the next one with how far is left, and a few beyond. It shows where the player is going, not a wall of locked trophies, so only a window around the…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/milestones.json`
+  - contract: server, min 320px, states reached|next|ahead, v1.0.0
 - [Order Game](https://ds.interlace.tools/c/order-game): Put a handful of items in order: events from earliest to latest, places from smallest to largest. The player drags rows by their handle, or moves them with the arrow keys or the up and down buttons, then locks in. The rows then glide into the right order…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/order-game.json`
   - contract: client, min 320px, keys ArrowDown/ArrowUp/End/Home, v1.0.0
@@ -624,6 +633,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, states correct|wrong|timeout, v1.0.0
 - [Recall Card](https://ds.interlace.tools/c/recall-card): A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/recall-card.json`
+  - contract: client, min 320px, v1.0.0
+- [Reminder Offer](https://ds.interlace.tools/c/reminder-offer): A quiet offer of a daily nudge that the player keeps in their own calendar: pick a time, add it, done. It downloads an .ics file with one event that repeats daily (`reminder-model.ts`), so nothing is sent, no address is asked for, and the player removes it…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/reminder-offer.json`
+  - contract: client, min 320px, v1.0.0
+- [Round Summary](https://ds.interlace.tools/c/round-summary): The moment a round ends: what the player earned, where today's goal stands, the streak it kept, and anything new they reached (a milestone, a level). Then the next step, which the app passes as children: share, play on, come back tomorrow. It celebrates…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/round-summary.json`
   - contract: client, min 320px, v1.0.0
 - [Share Card](https://ds.interlace.tools/c/share-card): How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-card.json`
