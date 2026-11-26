@@ -9,4 +9,6 @@ other rule lives: [CONTRIBUTING.md](CONTRIBUTING.md#where-the-rules-live).
 - A consumer who needs a class for a reasonable case has found a gap: add a prop or variant.
 - Motion explains a change. Aim for AAA contrast on body text; the locks hold AA.
 
+How we work with Claude: [AI-SDLC](docs/ai-sdlc/AI-SDLC.md).
+
 The rest is a lock test or hook whose failure names the fix.
