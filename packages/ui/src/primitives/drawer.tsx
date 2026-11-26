@@ -142,7 +142,7 @@ function DrawerOverlay({
         // theme-paired token would invert in dark mode and light the page.
         // It thins as the panel is dragged away, and follows the finger
         // with no transition while it does.
-        'fixed inset-0 z-50 min-h-dvh bg-black/50 opacity-[calc(1-var(--drawer-swipe-progress,0))]',
+        'fixed inset-0 z-overlay min-h-dvh bg-black/50 opacity-[calc(1-var(--drawer-swipe-progress,0))]',
         'ease-enter transition-opacity duration-(--duration-slow) motion-reduce:transition-none',
         'data-[starting-style]:opacity-0 data-[ending-style]:opacity-0 data-[swiping]:duration-0',
         'data-[ending-style]:ease-exit data-[ending-style]:duration-[calc(var(--drawer-swipe-strength,1)*var(--duration-medium))]',
@@ -228,7 +228,7 @@ function DrawerContent({ className, children, ...props }: DrawerContentProps) {
       <DrawerOverlay />
       <BaseDrawer.Viewport
         data-slot="drawer-viewport"
-        className={cn('fixed inset-0 z-50 flex', VIEWPORT[direction])}
+        className={cn('fixed inset-0 z-modal flex', VIEWPORT[direction])}
       >
         <BaseDrawer.Popup
           data-slot="drawer-content"

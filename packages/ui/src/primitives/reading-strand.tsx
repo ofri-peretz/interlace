@@ -127,7 +127,7 @@ export function ReadingStrand({
       aria-valuemax={100}
       aria-valuenow={Math.round(progress * 100)}
       className={cn(
-        'pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5',
+        'pointer-events-none fixed inset-x-0 top-0 z-indicator h-0.5',
         className,
       )}
       {...rest}
