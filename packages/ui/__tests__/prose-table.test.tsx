@@ -1,7 +1,7 @@
-import * as React from "react";
-import { cleanup, render } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
-import { Prose } from "../src/primitives/prose.js";
+import * as React from 'react';
+import { cleanup, render } from '@testing-library/react';
+import { afterEach, describe, expect, it } from 'vitest';
+import { Prose } from '../src/primitives/prose.js';
 
 afterEach(cleanup);
 
@@ -26,40 +26,40 @@ const Simple = () => (
   </table>
 );
 
-describe("Prose tables", () => {
-  it("names each body cell after its column, so a phone can stack the rows", () => {
+describe('Prose tables', () => {
+  it('names each body cell after its column, so a phone can stack the rows', () => {
     const { container } = render(
       <Prose>
         <Simple />
       </Prose>,
     );
-    const cells = container.querySelectorAll("td");
-    expect(cells[0].getAttribute("data-label")).toBe("Question");
-    expect(cells[1].getAttribute("data-label")).toBe("State");
+    const cells = container.querySelectorAll('td');
+    expect(cells[0].getAttribute('data-label')).toBe('Question');
+    expect(cells[1].getAttribute('data-label')).toBe('State');
     // A column with no name gets no label.
-    expect(cells[2].hasAttribute("data-label")).toBe(false);
+    expect(cells[2].hasAttribute('data-label')).toBe(false);
   });
 
-  it("pins the table roles that a stacked layout would otherwise lose", () => {
+  it('pins the table roles that a stacked layout would otherwise lose', () => {
     const { container } = render(
       <Prose>
         <Simple />
       </Prose>,
     );
-    expect(container.querySelector("table")?.getAttribute("role")).toBe(
-      "table",
+    expect(container.querySelector('table')?.getAttribute('role')).toBe(
+      'table',
     );
-    expect(container.querySelector("thead")?.getAttribute("role")).toBe(
-      "rowgroup",
+    expect(container.querySelector('thead')?.getAttribute('role')).toBe(
+      'rowgroup',
     );
-    expect(container.querySelector("tr")?.getAttribute("role")).toBe("row");
-    expect(container.querySelector("th")?.getAttribute("role")).toBe(
-      "columnheader",
+    expect(container.querySelector('tr')?.getAttribute('role')).toBe('row');
+    expect(container.querySelector('th')?.getAttribute('role')).toBe(
+      'columnheader',
     );
-    expect(container.querySelector("td")?.getAttribute("role")).toBe("cell");
+    expect(container.querySelector('td')?.getAttribute('role')).toBe('cell');
   });
 
-  it("keeps labels and roles the author wrote", () => {
+  it('keeps labels and roles the author wrote', () => {
     const { container } = render(
       <Prose>
         <table role="grid">
@@ -78,13 +78,13 @@ describe("Prose tables", () => {
         </table>
       </Prose>,
     );
-    const cells = container.querySelectorAll("td");
-    expect(cells[0].getAttribute("data-label")).toBe("Which card");
-    expect(cells[1].hasAttribute("data-label")).toBe(false);
-    expect(container.querySelector("table")?.getAttribute("role")).toBe("grid");
+    const cells = container.querySelectorAll('td');
+    expect(cells[0].getAttribute('data-label')).toBe('Which card');
+    expect(cells[1].hasAttribute('data-label')).toBe(false);
+    expect(container.querySelector('table')?.getAttribute('role')).toBe('grid');
   });
 
-  it("leaves tables with merged cells or no header row alone", () => {
+  it('leaves tables with merged cells or no header row alone', () => {
     const { container } = render(
       <Prose>
         <table id="merged">
@@ -109,13 +109,13 @@ describe("Prose tables", () => {
         </table>
       </Prose>,
     );
-    for (const id of ["merged", "headless"]) {
+    for (const id of ['merged', 'headless']) {
       const table = container.querySelector(`#${id}`)!;
-      expect(table.hasAttribute("role")).toBe(false);
-      expect(table.querySelector("td")!.hasAttribute("data-label")).toBe(false);
+      expect(table.hasAttribute('role')).toBe(false);
+      expect(table.querySelector('td')!.hasAttribute('data-label')).toBe(false);
     }
   });
-  it("treats a span of one as a plain cell, as some Markdown renderers emit it", () => {
+  it('treats a span of one as a plain cell, as some Markdown renderers emit it', () => {
     const { container } = render(
       <Prose>
         <table>
@@ -132,11 +132,11 @@ describe("Prose tables", () => {
         </table>
       </Prose>,
     );
-    expect(container.querySelector("td")?.getAttribute("data-label")).toBe(
-      "Card",
+    expect(container.querySelector('td')?.getAttribute('data-label')).toBe(
+      'Card',
     );
-    expect(container.querySelector("table")?.getAttribute("role")).toBe(
-      "table",
+    expect(container.querySelector('table')?.getAttribute('role')).toBe(
+      'table',
     );
   });
 });
