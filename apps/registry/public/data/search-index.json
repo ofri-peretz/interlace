@@ -2982,7 +2982,7 @@
     "start": 73,
     "starter": 3,
     "startviewtransition": 1,
-    "stat": 154,
+    "stat": 155,
     "statcard": 3,
     "statcardprop": 1,
     "statcardvariant": 1,
@@ -3547,7 +3547,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "accordion navigation primitiv client responsiv min viewport 320 keyboard base trigger chevron panel disclosur header open accordioncontent construction multipl stack inner shrink piec wrap 320px accordionitem accordiontrigger baseaccordion chevrondownicon flex border ring clos row padd item divider whos rotat unreachabl model content head data every push box emit last clipp aria instead singl column full stat forward upstream insid width pin overflow button root"
+      "terms": "accordion navigation primitiv client responsiv min viewport 320 keyboard base trigger chevron panel disclosur header open accordioncontent construction multipl stack inner shrink piec wrap 320px accordionitem accordiontrigger baseaccordion chevrondownicon flex border ring clos row padd item divider whos rotat unreachabl model content head data every push box emit last clipp aria instead singl column full forward upstream stat insid width pin overflow button root"
     },
     {
       "name": "alert-dialog",
@@ -3833,7 +3833,7 @@
         "primitive",
         "data"
       ],
-      "terms": "avatar data primitiv client load skeleton keyboard base fallback imag size machin avatarfallback circular face initial error decid baseavatar idiomatic involv overridden surfac avatarimag participat swap full aspect constraint mut footprint wrap root round clipp normal decision absenc layout object url show render stat upstream circl overflow squar silhouett break centr project entry given yet shift win surviv typeof replac different miss fail caller"
+      "terms": "avatar data primitiv client load skeleton keyboard base fallback imag size machin avatarfallback circular face initial error decid baseavatar idiomatic involv overridden surfac avatarimag participat swap full aspect constraint mut footprint wrap root round clipp normal decision absenc layout object url show render upstream stat circl overflow squar silhouett break centr project entry given yet shift win surviv typeof replac different miss fail caller"
     },
     {
       "name": "badge",
@@ -4317,7 +4317,7 @@
         "primitive",
         "navigation"
       ],
-      "terms": "collapsibl navigation primitiv client responsiv min viewport 320 keyboard base trigger panel disclosur preflight expand machin aria radix wir surfac singl part 01m basecollapsibl collapsiblepanel collapsibletrigger renderabl dev control root constrain uncontroll controll enter reduc inherit mode global content motion alia friend honour renam outlin free prod tim medium semantic bespok clos open affordanc interactiv siz spac offer vocabulary data focus page iphon stat"
+      "terms": "collapsibl navigation primitiv client responsiv min viewport 320 keyboard base trigger panel disclosur preflight expand machin aria radix wir surfac singl part 01m basecollapsibl collapsiblepanel collapsibletrigger renderabl dev control root constrain uncontroll controll enter reduc inherit mode global content motion alia friend honour renam outlin free prod tim medium semantic bespok clos open affordanc interactiv siz spac offer vocabulary data focus page iphon font"
     },
     {
       "name": "combobox",
@@ -6139,10 +6139,15 @@
         "client",
         "responsive",
         "min-viewport-320",
+        "states",
+        "article",
+        "div",
+        "main",
+        "section",
         "primitive",
         "blog"
       ],
-      "terms": "pros blog primitiv client responsiv min viewport 320 tabl pre articl wrapper sideway descendant cell overflow mdx scroll cascad body mode focusabl landmark typography measur blockquot main head read 17px gfm gymnastic uselayouteffect long think variant 65ch editorial whos semantic ele section drop card author img stack deep row bound mapp contract reachabl token insid name data label cap overrid stop block phon accept"
+      "terms": "pros blog primitiv client responsiv min viewport 320 stat articl main section tabl pre wrapper sideway descendant cell overflow mdx scroll cascad body mode focusabl landmark typography measur blockquot head read 17px gfm gymnastic uselayouteffect long think variant 65ch editorial whos semantic ele drop card author img stack deep row bound mapp contract reachabl token insid name data label cap overrid stop block phon"
     },
     {
       "name": "published-date",
@@ -8152,7 +8157,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "topbar menu navigation pattern client topbarmenu panel drawer open edge finger clos button link drag toward trigger menus nav render right screen compos half site side small gestur back trap follow header dismissal extra inert focus landmark insid outsid escap row rout anchor press usual bottom label caller new r12 phon reus accessibl page stat nativ visibl come behind leav hold already titl left"
+      "terms": "topbar menu navigation pattern client topbarmenu panel drawer open edge finger clos button link drag toward trigger menus nav render right screen compos half site side small gestur back trap follow header dismissal extra inert focus landmark insid outsid escap row rout anchor press usual bottom label caller new r12 phon reus accessibl page nativ stat visibl come behind leav hold already titl left"
     },
     {
       "name": "topbar-nav",

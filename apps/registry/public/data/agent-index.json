@@ -7204,7 +7204,17 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "ProseElement",
+          "values": [
+            "article",
+            "div",
+            "main",
+            "section"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [],
