@@ -1697,6 +1697,20 @@
     "previewDark": null,
     "skeleton": null
   },
+  "pin-drop": {
+    "title": "Games/PinDrop",
+    "storyIds": [
+      "games-pindrop--default",
+      "games-pindrop--placing",
+      "games-pindrop--live",
+      "games-pindrop--no-answer",
+      "games-pindrop--screen",
+      "games-pindrop--right-to-left"
+    ],
+    "preview": "games-pindrop--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "podium": {
     "title": "Games/Podium",
     "storyIds": [

@@ -880,6 +880,17 @@
           "source": ".changeset/picture-reveal.md"
         },
         {
+          "summary": "A pin on a picture. `PinDrop` lets each person place one pin on a map, floor plan or diagram by tap, drag or arrow keys, and says the pin in words (by the picture's named `regions` when given), so a screen reader user places the same pin. With an `answer` it is \"Where is it?\": on the reveal the answer scales in, a line joins it to the viewer's pin, and the points say how close it was; without one, the room's pins are the result. `PinMap` is the shared screen. `games/pin-drop-model` measures distance in widths of the picture, corrected for its shape (`pinDistance`), scores it (`pinPoints`), names a region (`regionOf`), moves a pin by key (`nudgePin`) and sums up the room (`pinSpread`).",
+          "components": [
+            "pin-drop"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/pin-drop.md"
+        },
+        {
           "summary": "New PointerSurface and UnderlineLink, motion that answers the reader. PointerSurface wraps a card so a soft `--primary` light follows the pointer, the card leans a few degrees toward it, or both (`effect`), and keyboard focus inside lights it from the centre; it only runs on a fine pointer that can hover and is still under reduced motion. UnderlineLink is a link whose underline draws in from the inline-start edge on hover and focus, keeps a thin line at rest by default so links are not told apart by colour alone, takes a router link through `render`, and needs no JavaScript.",
           "components": [
             "pointer-surface",

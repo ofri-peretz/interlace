@@ -3766,6 +3766,24 @@
       }
     },
     {
+      "name": "pin-drop",
+      "type": "registry:ui",
+      "title": "Pin Drop",
+      "description": "A pin on a picture (a map, a floor plan, a diagram). On a phone, `PinDrop` lets each person place one pin by tap, drag or arrow keys. With an `answer` it is \"Where is it?\": once the host reveals, the answer appears, a line joins it to the viewer's pin, and…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "podium",
       "type": "registry:ui",
       "title": "Podium",

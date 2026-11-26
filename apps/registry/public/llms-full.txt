@@ -287,7 +287,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 246 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 247 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -341,10 +341,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 132 client, 114 server
-- keyboard: 192 none, 54 handled
-- built-in loading state: 38 of 246
-- declared minViewport: 165 at 320, 7 at 480, 1 at 768, 73 at inherited
+- rendering: 133 client, 114 server
+- keyboard: 192 none, 55 handled
+- built-in loading state: 38 of 247
+- declared minViewport: 166 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
@@ -352,7 +352,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - tier `primitive` — 78 item(s)
 - tier `pattern` — 65 item(s)
-- tier `game` — 37 item(s)
+- tier `game` — 38 item(s)
 - tier `effect` — 27 item(s)
 - tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
@@ -362,8 +362,8 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - category `primitive` (Primitives) — 78 item(s)
 - category `pattern` (Patterns) — 65 item(s)
-- category `games` (Games) — 37 item(s)
-- category `game` (Games) — 37 item(s)
+- category `games` (Games) — 38 item(s)
+- category `game` (Games) — 38 item(s)
 - category `blog` (Blog & long-form) — 37 item(s)
 - category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
@@ -911,6 +911,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Picture Reveal](https://ds.interlace.tools/c/picture-reveal): A picture under tiles that come away a few at a time while the room guesses. The presenter moves `step`; every screen uncovers the same tiles in the same seeded order, spread across the picture. Phones guess with `TypeAnswer` (or `QuizQuestion`), and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/picture-reveal.json`
   - contract: client, min 320px, v1.0.0
+- [Pin Drop](https://ds.interlace.tools/c/pin-drop): A pin on a picture (a map, a floor plan, a diagram). On a phone, `PinDrop` lets each person place one pin by tap, drag or arrow keys. With an `answer` it is "Where is it?": once the host reveals, the answer appears, a line joins it to the viewer's pin, and…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/pin-drop.json`
+  - contract: client, min 320px, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, v1.0.0
 - [Podium](https://ds.interlace.tools/c/podium): The end of a game: the top three on steps, second and third rising first and the winner last, with a burst for first place. Below it, everyone else, so no one has to wonder where they came. Ranking is the leaderboard's (`rankEntries`), so ties share a…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/podium.json`
   - contract: client, min 320px, v1.0.0
