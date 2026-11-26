@@ -198,7 +198,7 @@ function Specimen() {
           way the bundle expects — tab through it, and the tab ORDER is the
           demonstration.
         </Typography>
-        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
+        <pre className="whitespace-pre-wrap break-words rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code">
             npx shadcn add @interlace/a11y-starter
           </code>
