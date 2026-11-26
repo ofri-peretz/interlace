@@ -2148,6 +2148,7 @@
       "primitives-section--spacing-scale",
       "primitives-section--tone-variants",
       "primitives-section--brand-band-with-overlap",
+      "primitives-section--deep-band-in-dark",
       "primitives-section--fields-on-brand-band",
       "primitives-section--fields-on-brand-band-dark",
       "primitives-section--dark",
@@ -3192,6 +3193,7 @@
       "blocks-wordmark--default",
       "blocks-wordmark--several-scripts",
       "blocks-wordmark--on-ab-rand-band",
+      "blocks-wordmark--sizes",
       "blocks-wordmark--in-the-topbar"
     ],
     "preview": "blocks-wordmark--default",
