@@ -1,0 +1,12 @@
+# Registry output: every file below is rebuilt from source by `npm run prebuild -w registry`, so
+# a merge conflict in one is never a decision. The `interlace-generated` driver keeps this
+# branch's copy (`npm install` registers it) and the post-merge hook rebuilds from the merged
+# sources; the `registry (drift)` gate fails a push that skips the rebuild. GitHub ignores
+# custom drivers, so its "Update branch" button can still stop on these files: merge main
+# locally instead.
+apps/registry/public/r/** merge=interlace-generated linguist-generated=true
+apps/registry/public/data/** merge=interlace-generated linguist-generated=true
+apps/registry/public/.well-known/** merge=interlace-generated linguist-generated=true
+apps/registry/public/tokens/** merge=interlace-generated linguist-generated=true
+apps/registry/public/llms.txt merge=interlace-generated linguist-generated=true
+apps/registry/public/llms-full.txt merge=interlace-generated linguist-generated=true
