@@ -114,6 +114,15 @@ export interface RoomState {
   startsAt: number | null;
   /** When the current question closes, in ms (host clock). null: no clock. */
   endsAt: number | null;
+  /**
+   * What the current round asks, as the host sent it with `question`: whatever
+   * the game needs (a prompt and its choices, a number to guess). Every phone
+   * and a player who joins late see the same round. null in the lobby.
+   * Keep the answer out of it until `reveal`.
+   */
+  prompt: unknown;
+  /** The round's answer, as the host sent it with `reveal`. null until then. */
+  solution: unknown;
   /** Total points per player id. */
   scores: Record<string, number>;
   /** This round's answers per player id. Cleared when a new round starts. */
@@ -159,6 +168,8 @@ export function createRoom(init: {
     rounds: init.rounds ?? null,
     startsAt: null,
     endsAt: null,
+    prompt: null,
+    solution: null,
     scores: {},
     answers: {},
     lastPoints: {},
@@ -203,10 +214,10 @@ export type RoomHostEvent =
   | { type: 'remove'; playerId: string }
   /** Starts the countdown to the first round (or the next one). */
   | { type: 'countdown'; startsAt: number }
-  /** Opens a round. `endsAt` null for no clock. */
-  | { type: 'question'; endsAt: number | null }
-  /** Closes the round and adds each player's points. */
-  | { type: 'reveal'; points: Record<string, number> }
+  /** Opens a round. `endsAt` null for no clock. `prompt`: what the round asks (see `RoomState.prompt`). */
+  | { type: 'question'; endsAt: number | null; prompt?: unknown }
+  /** Closes the round and adds each player's points. `solution`: the round's answer, for every screen. */
+  | { type: 'reveal'; points: Record<string, number>; solution?: unknown }
   | { type: 'podium' }
   | { type: 'close' }
   /** Back to the lobby with the same players, scores at zero and the room open again. */
@@ -379,6 +390,8 @@ export function applyRoomEvent(
         phase: 'question',
         round: state.round + 1,
         endsAt: event.endsAt,
+        prompt: event.prompt ?? null,
+        solution: null,
         answers: {},
         lastPoints: {},
       });
@@ -390,7 +403,7 @@ export function applyRoomEvent(
         lastPoints[p.id] = won;
         scores[p.id] = (scores[p.id] ?? 0) + won;
       }
-      return next({ phase: 'reveal', scores, lastPoints, endsAt: null });
+      return next({ phase: 'reveal', scores, lastPoints, endsAt: null, solution: event.solution ?? null });
     }
     case 'podium':
       return next({ phase: 'podium', endsAt: null });
@@ -408,6 +421,8 @@ export function applyRoomEvent(
         round: 0,
         startsAt: null,
         endsAt: null,
+        prompt: null,
+        solution: null,
         answers: {},
         lastPoints: {},
         scores: Object.fromEntries(state.players.map((p) => [p.id, 0])),
@@ -505,6 +520,18 @@ export function recordJoinAttempt(
 
 // --- Reading the state ----------------------------------------------------------
 
+/**
+ * How far the host's clock is ahead of this one, in ms, from `{ at, local }` pairs: the host's
+ * send time and this client's receive time. A message can only arrive after it was sent, so each
+ * `at - local` is a lower bound on the true offset and the largest is the closest. Pass the recent
+ * samples only, so a host whose clock is reset is followed. 0 with no samples.
+ */
+export function clockOffset(samples: readonly { at: number; local: number }[]): number {
+  let best = -Infinity;
+  for (const s of samples) if (Number.isFinite(s.at) && Number.isFinite(s.local)) best = Math.max(best, s.at - s.local);
+  return best === -Infinity ? 0 : best;
+}
+
 /** Players still connected. */
 export function connectedPlayers(state: RoomState): RoomPlayer[] {
   return state.players.filter((p) => p.connected);
@@ -540,7 +567,12 @@ export type RoomMessage =
   /** A player asks the host to apply an event. */
   | { kind: 'intent'; from: string; event: RoomEvent }
   /** The host's room, after every change. */
-  | { kind: 'state'; state: RoomState }
+  | {
+      kind: 'state';
+      state: RoomState;
+      /** The host's clock when it sent this, in ms. Phones use it to read deadlines on the host's time. */
+      at?: number;
+    }
   /** A client that just arrived asks for the current state. */
   | { kind: 'hello'; from: string }
   /** The host refused a player's intent, and why. */
