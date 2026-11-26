@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 226
+    "itemCount": 227
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 79,
-      "pattern": 65,
+      "pattern": 66,
       "effect": 28,
       "game": 15,
       "chart": 14,
@@ -41,7 +41,7 @@
     },
     "category": {
       "primitive": 79,
-      "pattern": 65,
+      "pattern": 66,
       "blog": 37,
       "data": 30,
       "effect": 28,
@@ -60,22 +60,22 @@
       "a11y": 5,
       "starter": 3,
       "theme": 3,
-      "other": 1
+      "other": 2
     },
     "rendering": {
-      "client": 115,
+      "client": 116,
       "server": 111
     },
     "keyboard": {
-      "none": 175,
+      "none": 176,
       "handled": 51
     },
     "loading": {
-      "none": 188,
+      "none": 189,
       "built-in": 38
     },
     "minViewport": {
-      "320": 144,
+      "320": 145,
       "480": 7,
       "768": 1,
       "inherited": 74
@@ -1605,6 +1605,70 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/card.json",
       "item": "https://ds.interlace.tools/r/card.json",
       "docs": "https://ds.interlace.tools/c/card"
+    },
+    {
+      "name": "carousel",
+      "title": "Carousel",
+      "type": "registry:ui",
+      "summary": "A row of cards the reader swipes through: today's updates, featured answers, the games to play next. On a phone it is the shape people already know from every feed; on a wide screen it shows several cards at once and two buttons page through the rest.",
+      "topics": [],
+      "categories": [
+        "other",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-controls",
+          "aria-hidden",
+          "aria-label",
+          "aria-roledescription"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselNext",
+        "CarouselPrevious",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/carousel.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/carousel.json",
+      "item": "https://ds.interlace.tools/r/carousel.json",
+      "docs": "https://ds.interlace.tools/c/carousel"
     },
     {
       "name": "celebrate",

@@ -279,6 +279,17 @@
           "source": ".changeset/callout-highlight.md"
         },
         {
+          "summary": "New Carousel: a row of cards the reader swipes through (updates, featured answers, what to play next). The row is the browser's own scroll with snap points, so touch, trackpad, wheel and the arrow keys all work at the device's own feel; `CarouselPrevious` and `CarouselNext` page by one view, switch off at either end and are not shown when every card fits. Every card is in the server HTML, announced as \"slide, 2 of 6\" in a region announced as a carousel (`positionLabel` translates it); nothing rotates on its own and nothing is cloned. Right to left, Next moves left and the arrows turn; under reduced motion a page jumps. `--carousel-item-size` and `--carousel-gap` size the cards. Part names follow shadcn's carousel.",
+          "components": [
+            "carousel"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/carousel.md"
+        },
+        {
           "summary": "New `Celebrate` effect for a moment someone earned: wrap the thing that earned it (a streak count, a score) and a ring and a burst of rays go out from it each time `play` changes, never on first render, so a restored page does not replay it. `CelebrateCheck` is a check mark that draws itself, and `vibrate` gives an opt-in matching tap (`tap`, `success`, `milestone`, `miss`) where the browser supports it. 600ms and 300ms, transform, opacity and stroke only, and nothing plays under reduced motion.",
           "components": [
             "celebrate"

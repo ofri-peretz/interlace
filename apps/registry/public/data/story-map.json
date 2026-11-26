@@ -382,6 +382,16 @@
     "previewDark": "primitives-card--dark",
     "skeleton": "primitives-card--loading"
   },
+  "carousel": {
+    "title": "Blocks/Carousel",
+    "storyIds": [
+      "blocks-carousel--default",
+      "blocks-carousel--right-to-left"
+    ],
+    "preview": "blocks-carousel--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "celebrate": {
     "title": "Effects/Celebrate",
     "storyIds": [
