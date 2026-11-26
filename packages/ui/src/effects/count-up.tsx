@@ -27,7 +27,9 @@
  * `format` takes any `Intl.NumberFormatOptions` (decimals, compact notation,
  * percent, currency, units) and `locale` picks the locale. Every frame is
  * formatted with the same formatter, so "4.8k" counts as "1.2k, 2.5k…" and
- * never shows a raw "4812.3".
+ * never shows a raw "4812.3". Unless `format` sets its own fraction digits,
+ * each frame is rounded to the decimals of `value` and `from`: a count to 40
+ * reads 12, 27, 38, never 39.815.
  *
  * ## Motion
  *
@@ -68,6 +70,9 @@ export interface CountUpProps extends Omit<React.ComponentPropsWithoutRef<'span'
 /** Fast at first, settling into the final value. */
 const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
 
+/** How many decimals a number is written with: 40 has 0, 4.8 has 1. */
+const decimalsOf = (n: number) => (String(n).split('.')[1] ?? '').length;
+
 export function CountUp({
   value,
   from = 0,
@@ -94,13 +99,21 @@ export function CountUp({
     [localeKey, formatKey],
   );
   const finalText = formatter.format(value);
+  // A frame between two whole numbers is a whole number, unless `format` asks for decimals.
+  const ownsDecimals =
+    format?.minimumFractionDigits !== undefined || format?.maximumFractionDigits !== undefined;
+  const places = Math.max(decimalsOf(value), decimalsOf(from));
+  const frameText = React.useCallback(
+    (n: number) => formatter.format(ownsDecimals ? n : Number(n.toFixed(places))),
+    [formatter, ownsDecimals, places],
+  );
 
   // Before paint: drop the visible digits to the starting value.
   React.useLayoutEffect(() => {
     const digits = digitsRef.current;
     if (!digits || reduced) return;
-    digits.textContent = formatter.format(from);
-  }, [formatter, from, reduced]);
+    digits.textContent = frameText(from);
+  }, [frameText, from, reduced]);
 
   React.useEffect(() => {
     const root = rootRef.current;
@@ -116,7 +129,7 @@ export function CountUp({
     const tick = (now: number) => {
       if (!started) started = now;
       const t = Math.min((now - started) / duration, 1);
-      digits.textContent = formatter.format(from + (value - from) * easeOutCubic(t));
+      digits.textContent = frameText(from + (value - from) * easeOutCubic(t));
       if (t < 1) frame = requestAnimationFrame(tick);
       else digits.textContent = finalText;
     };
@@ -143,7 +156,7 @@ export function CountUp({
       io.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [formatter, finalText, from, value, duration, start, reduced]);
+  }, [frameText, finalText, from, value, duration, start, reduced]);
 
   return (
     <span
