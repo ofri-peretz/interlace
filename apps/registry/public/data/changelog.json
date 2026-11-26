@@ -870,6 +870,17 @@
           "source": ".changeset/pointer-surface-underline-link.md"
         },
         {
+          "summary": "Spend a budget of points across options. `PointsSplit` gives each option a minus and a plus (named per option), a bar for its share of the budget and a live count of points left; Send unlocks once the budget is spent, or earlier with `partial`. `PointsTotals` shows the room's points per option, most first, each row read as one line, gliding to its new rank. The rules are pure (`games/points-model`: `checkSplit`, `totalPoints`, `nudge`, `spentOf`); a split that breaks them is left out of the room's totals. Bars move by transform; under reduced motion they just change.",
+          "components": [
+            "points-split"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/points-split.md"
+        },
+        {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
           "components": [
             "prose"

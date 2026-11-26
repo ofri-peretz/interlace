@@ -1695,6 +1695,18 @@
     "previewDark": null,
     "skeleton": null
   },
+  "points-split": {
+    "title": "Games/PointsSplit",
+    "storyIds": [
+      "games-pointssplit--default",
+      "games-pointssplit--spending",
+      "games-pointssplit--room-totals",
+      "games-pointssplit--right-to-left"
+    ],
+    "preview": "games-pointssplit--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "poll": {
     "title": "Games/Poll",
     "storyIds": [

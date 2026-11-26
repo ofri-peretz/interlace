@@ -584,6 +584,14 @@
       "types": "./dist/games/rating.d.ts",
       "default": "./dist/games/rating.js"
     },
+    "./games/points-model": {
+      "types": "./dist/games/points-model.d.ts",
+      "default": "./dist/games/points-model.js"
+    },
+    "./games/points-split": {
+      "types": "./dist/games/points-split.d.ts",
+      "default": "./dist/games/points-split.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"
