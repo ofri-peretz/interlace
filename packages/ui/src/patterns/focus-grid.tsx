@@ -145,9 +145,7 @@ function FocusGridItem({
           className="from-scrim/85 text-scrim-foreground absolute inset-x-0 bottom-0 bg-linear-to-t to-transparent p-4 pt-12"
         >
           <Heading className="font-heading text-lg leading-snug font-semibold text-balance">
-            {/* The ring is on the card, outside the link's own box. The
-                underline marks the focused element itself, so a reader zoomed
-                in on the title still sees where focus is. */}
+            {/* The ring is on the card; the underline marks focus on the link itself. */}
             {href ? (
               <a
                 href={href}
