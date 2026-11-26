@@ -128,6 +128,8 @@ export default defineConfig({
         // Files: the pick-and-drop rules, the drop field, and the profile photo.
         'src/primitives/{file-model.ts,file-drop.tsx}',
         'src/patterns/avatar-upload.tsx',
+        // A new member's first steps.
+        'src/patterns/setup-checklist.tsx',
         // The 37 components with real render coverage. See the ledger above.
         'src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,direction,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx',
         // Patterns with full render coverage — the same ledger rule: a
