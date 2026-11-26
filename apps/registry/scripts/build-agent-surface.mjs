@@ -41,12 +41,13 @@
  * Usage: `node scripts/build-agent-surface.mjs [--check]`
  */
 
-import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 import { HOMEPAGE } from '../registry.config.mjs';
 import { docBlocks, headerFrom } from '../blurb.mjs';
+import { writeGenerated } from './lib/write-generated.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -1095,8 +1096,7 @@ const emit = async (artefacts) => {
         errors.push(`${rel}: stale — run \`npm run agents:build\``);
       continue;
     }
-    await mkdir(path.dirname(abs), { recursive: true });
-    await writeFile(abs, content, 'utf8');
+    await writeGenerated(abs, content);
   }
   return errors;
 };

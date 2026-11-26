@@ -86,13 +86,53 @@ describe('MultiStepForm', () => {
     render(<Flow />);
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     expect(heading(/Step 1 of 3/)).toBeTruthy();
-    expect(document.activeElement).toBe(screen.getByRole('textbox', { name: 'Name' }));
+    const name = screen.getByRole('textbox', { name: 'Name' });
+    expect(document.activeElement).toBe(name);
+    // It says what is wrong, not only where, and marks the field until it is edited.
+    expect(screen.getByRole('alert').textContent).toMatch(/^Name: \S/);
+    expect(name.getAttribute('aria-invalid')).toBe('true');
+    fireEvent.input(name, { target: { value: 'S' } });
+    expect(name.hasAttribute('aria-invalid')).toBe(false);
     fireEvent.change(screen.getByRole('textbox', { name: 'Name' }), { target: { value: 'Sam' } });
     act(() => {
       fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     });
     expect(document.activeElement).toBe(heading(/Step 2 of 3/));
     expect(document.querySelectorAll('li')[0]!.dataset.state).toBe('complete');
+  });
+
+  it('rewords the native message through labels.invalid', () => {
+    render(<Flow labels={{ invalid: (field) => `${field} is needed` }} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('alert').textContent).toBe('Name is needed');
+  });
+
+  it('names a field labelled by aria-labelledby, and says the message alone for an unnamed one', () => {
+    render(
+      <MultiStepForm>
+        <MultiStepFormStep id="a" title="A">
+          <span id="email-label">Email</span>
+          <input name="email" required aria-labelledby="email-label missing" />
+        </MultiStepFormStep>
+        <MultiStepFormStep id="b" title="B">
+          <input name="code" required />
+        </MultiStepFormStep>
+      </MultiStepForm>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('alert').textContent).toMatch(/^Email: \S/);
+    fireEvent.change(screen.getByRole('textbox', { name: 'Email' }), { target: { value: 'a@b.c' } });
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
+    expect(screen.getByRole('alert').textContent).not.toMatch(/^:/);
+  });
+
+  it('wraps a long answer in the summary instead of pushing the page sideways', () => {
+    render(<Flow defaultStep="c" />);
+    const answer = screen.getByText('Sam');
+    expect(answer.className).toContain('wrap-anywhere');
   });
 
   it("shows the step's own message, reads it out, and clears it once fixed", () => {
@@ -203,6 +243,27 @@ describe('MultiStepForm', () => {
     hidden.checkValidity = () => false;
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     expect(document.activeElement).toBe(screen.getByRole('radio', { name: 'One' }));
+  });
+
+  it("names a failing radio group by the group's label", () => {
+    render(
+      <MultiStepForm>
+        <MultiStepFormStep id="a" title="A">
+          <span id="g">Topic</span>
+          <div role="radiogroup" aria-labelledby="g">
+            <input type="hidden" required name="x" value="" aria-hidden="true" readOnly />
+            <button type="button" role="radio" aria-checked="false">
+              One
+            </button>
+          </div>
+        </MultiStepFormStep>
+        <MultiStepFormStep id="b" title="B" />
+      </MultiStepForm>,
+    );
+    const hidden = document.querySelector<HTMLInputElement>('input[name="x"]')!;
+    hidden.checkValidity = () => false;
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('alert').textContent).toMatch(/^Topic: /);
   });
 
   it('slides the new step in from its side, and not under reduced motion', () => {

@@ -191,7 +191,7 @@ function Specimen() {
           figure and a tag row share one vertical rhythm when they are stacked
           in prose.
         </Typography>
-        <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
+        <pre className="whitespace-pre-wrap break-words rounded-lg border border-border bg-muted/40 p-4">
           <code className="font-mono text-code">
             npx shadcn add @interlace/mdx-starter
           </code>
@@ -224,7 +224,7 @@ function Specimen() {
               , so unwrap it once here instead of in every article.
             </Typography>
           </Stack>
-          <pre className="overflow-x-auto rounded-lg border border-border bg-muted/40 p-4">
+          <pre className="whitespace-pre-wrap break-words rounded-lg border border-border bg-muted/40 p-4">
             <code className="font-mono text-code">
               {MDX_COMPONENTS_SNIPPET}
             </code>
