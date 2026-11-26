@@ -61,7 +61,7 @@ function DashboardTemplate({
           </SectionBoundary>
         </aside>
 
-        <main className="flex-1 px-10 py-10">
+        <main className="min-w-0 flex-1 px-4 py-6 sm:px-10 sm:py-10">
           {header ? (
             <SectionBoundary
               name="dashboard-header"
@@ -117,7 +117,7 @@ function DashboardTemplateSkeleton({
         <div className="border-border hidden w-60 shrink-0 border-e p-6 md:block">
           <Skeleton variant="text" count={6} label={null} />
         </div>
-        <div className="flex-1 px-10 py-10">
+        <div className="min-w-0 flex-1 px-4 py-6 sm:px-10 sm:py-10">
           <Stack gap="lg">
             <Skeleton variant="page-header" label={null} />
             <Skeleton variant="card" count={2} label={null} />

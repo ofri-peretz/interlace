@@ -885,6 +885,17 @@
           "source": ".changeset/pointer-surface-underline-link.md"
         },
         {
+          "summary": "Prose tables read like an editorial table instead of a Markdown grid. The cell boxes, the shaded header and the zebra rows are gone: a firm rule sits under the header, a hairline between rows, body cells keep the reading size, the first cell carries the row's weight, figures line up, and a GFM column alignment is honoured. A `<span data-status=\"success|warning|info|destructive|neutral\">` in a cell reads as a quiet status pill whose dot repeats the word. On a phone, a table with a header row stacks into one card per row, each value under its column name, with no sideways scrolling: Prose names each body cell after its column (`data-label`, which server-rendered markup can ship itself to skip a flash) and pins the table roles a screen reader would otherwise lose.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/prose-editorial-tables.md"
+        },
+        {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
           "components": [
             "prose"
@@ -1333,6 +1344,17 @@
           "source": ".changeset/weave-texture.md"
         },
         {
+          "summary": "A live word cloud for rooms. `WordEntry` lets a phone send up to `maxWords` words (default 3), each checked before `onWord` fires; a refused word says why, and the viewer's sent words show as chips. `WordCloud` groups what the room sent by its folded form (case, accents and marks), shows the spelling most people used, sizes words on a square-root scale in five steps and puts the biggest in the middle, while the DOM stays in rank order with each word read with its count. Words glide to their new places through FlipGroup and a word that gained a vote pulses once; under reduced motion they simply take their place. `size=\"stage\"` is for a shared screen. The rules are pure and exported: `games/word-cloud-model` (`buildCloud`, `centerOut`) and `games/text-safety-model` (`checkText`, `foldText`, `isBlocked`), which refuses empty text, overlong text, links, email addresses, phone numbers and words on the consumer's `blocklist` (whole words, through letter swaps and spelled-out letters). Interlace ships no word list.",
+          "components": [
+            "word-cloud"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/word-cloud.md"
+        },
+        {
           "summary": "Wordmark gains `size`: `md` (the default, unchanged), `sm` (about two thirds: text a step down, a thinner plate) and `responsive` (`sm` below the `md` breakpoint, `md` from it). A stacked three-line lockup in a sticky topbar took about a fifth of a phone's screen; `size=\"responsive\"` gives that height back to the page.",
           "components": [
             "wordmark"
@@ -1407,6 +1429,18 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/claim-heading-font.md"
+        },
+        {
+          "summary": "Shorter comments in the focus grid and scroller. No change to behaviour.",
+          "components": [
+            "focus-grid",
+            "scroller"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/comment-trim.md"
         },
         {
           "summary": "Grids of repeated items now pick their column count from their own width, not the screen's. FeatureGrid, StatGroup, ArticleListGrid, PricingTable, RelatedPosts and StatStrip each set a CSS container on their root: one track below 28rem, two from 28rem, and the `cols` you asked for from 56rem. A grid placed in a sidebar or a dashboard card now collapses as it would on a phone, with no `className` override. At full page width the layout is the same as before.",
@@ -1603,6 +1637,18 @@
           "source": ".changeset/hero-media-readable.md"
         },
         {
+          "summary": "A focus grid card's title link now underlines when it takes keyboard focus, so focus shows on the element itself as well as the card's ring. The scroller's viewport stretches to the width of its row on phones instead of growing to its whole track, so the page no longer scrolls sideways.",
+          "components": [
+            "focus-grid",
+            "scroller"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/keyboard-reach.md"
+        },
+        {
           "summary": "fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).",
           "components": [
             "card",
@@ -1774,6 +1820,20 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/radio-dot-centred.md"
+        },
+        {
+          "summary": "Nothing scrolls sideways at 150% text on a phone any more for the hover card, OTP field, scorecard row and dashboard template. Widths set in rem grow with the reader's text size, so a `max-w-80` hover card reached 480px on a 390px screen. The hover card now caps at the space Base UI reports (`--available-width`), OTP boxes shrink to share the row, the scorecard header wraps its score under the name, and the dashboard template pads `px-4` on phones and `px-10` from `sm`.",
+          "components": [
+            "hover-card",
+            "otp-field",
+            "scorecard-row",
+            "dashboard-template"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/reflow-at-150.md"
         },
         {
           "summary": "Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.",

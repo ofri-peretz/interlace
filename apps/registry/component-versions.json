@@ -142,7 +142,7 @@
     },
     {
       "name": "breakout-room",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -562,7 +562,7 @@
     },
     {
       "name": "interlace-base",
-      "version": "4.13.0",
+      "version": "4.14.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -580,7 +580,7 @@
     },
     {
       "name": "join-code",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -640,7 +640,7 @@
     },
     {
       "name": "live-room",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -730,7 +730,7 @@
     },
     {
       "name": "pair-talk",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -760,7 +760,7 @@
     },
     {
       "name": "presenter-notes",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -886,7 +886,7 @@
     },
     {
       "name": "room-clock",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -1216,7 +1216,7 @@
     },
     {
       "name": "team-board",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "since": null,
       "updated": "2026-11-26"
     },
@@ -1417,6 +1417,12 @@
       "version": "1.0.0",
       "since": null,
       "updated": "2026-11-23"
+    },
+    {
+      "name": "word-cloud",
+      "version": "1.0.0",
+      "since": null,
+      "updated": null
     },
     {
       "name": "wordmark",

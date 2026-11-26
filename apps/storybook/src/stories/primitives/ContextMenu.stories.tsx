@@ -144,7 +144,7 @@ export const Default: Story = {
     closeParentOnEsc: true,
   },
   render: (args) => (
-    <div className="flex h-48 w-80 items-center justify-center">
+    <div className="flex h-48 w-80 max-w-full items-center justify-center">
       <ContextMenu {...args}>
         <ContextMenuTrigger className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-lg border border-dashed">
           Right-click anywhere here
@@ -181,7 +181,7 @@ export const Default: Story = {
  */
 export const Compose: Story = {
   render: () => (
-    <div className="flex h-48 w-80 items-center justify-center">
+    <div className="flex h-48 w-80 max-w-full items-center justify-center">
       <ContextMenu.Compose
         trigger={
           <div className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-lg border border-dashed">
@@ -203,7 +203,7 @@ export const Compose: Story = {
  */
 export const KeyboardFlow: Story = {
   render: () => (
-    <div className="flex h-48 w-80 items-center justify-center">
+    <div className="flex h-48 w-80 max-w-full items-center justify-center">
       <ContextMenu.Compose
         trigger={
           <div className="border-border bg-card text-card-foreground flex h-32 w-64 items-center justify-center rounded-lg border border-dashed">

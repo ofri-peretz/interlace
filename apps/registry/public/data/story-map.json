@@ -3277,6 +3277,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "word-cloud": {
+    "title": "Games/WordCloud",
+    "storyIds": [
+      "games-wordcloud--default",
+      "games-wordcloud--empty",
+      "games-wordcloud--live-stage",
+      "games-wordcloud--entry",
+      "games-wordcloud--right-to-left"
+    ],
+    "preview": "games-wordcloud--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "wordmark": {
     "title": "Blocks/Wordmark",
     "storyIds": [
