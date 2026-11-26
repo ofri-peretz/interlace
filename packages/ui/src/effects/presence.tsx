@@ -110,7 +110,6 @@ function ms(value: string): number | undefined {
 
 /** The brand's motion tokens as they stand when the animation starts. */
 function motionTiming(el: Element, phase: Phase): KeyframeAnimationOptions {
-  if (typeof getComputedStyle !== 'function') return { ...FALLBACK[phase] };
   // The element's own value first (a brand can retune a subtree), then the page's.
   const scopes = [getComputedStyle(el), getComputedStyle(el.ownerDocument.documentElement)];
   const read = (name: string) =>
@@ -338,10 +337,9 @@ export function Swap({
 
   // The new content is in: clear the leave's end state, play the arrival, hand focus over.
   React.useLayoutEffect(() => {
-    if (!arriving.current) return;
-    arriving.current = false;
     const el = ref.current;
-    if (!el) return;
+    if (!arriving.current || !el) return;
+    arriving.current = false;
     ended.current?.cancel();
     ended.current = null;
     if (!reduced && canAnimate(el)) {

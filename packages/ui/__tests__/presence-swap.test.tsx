@@ -102,6 +102,60 @@ describe('Presence', () => {
     expect(last().options).toEqual({ duration: 400, easing: 'linear' });
   });
 
+  it('takes a token in milliseconds, and falls back when a token is not a time', () => {
+    document.documentElement.style.setProperty('--duration-medium', '320ms');
+    const first = render(
+      <Presence show appear>
+        Ms
+      </Presence>,
+    );
+    expect(last().options).toMatchObject({ duration: 320 });
+    first.unmount();
+    document.documentElement.style.setProperty('--duration-medium', '2em');
+    render(
+      <Presence show appear>
+        Em
+      </Presence>,
+    );
+    expect(last().options).toMatchObject({ duration: 250 });
+  });
+
+  it('forgets an arrival once it has finished, so a later leave starts clean', () => {
+    const { rerender } = render(
+      <Presence show appear>
+        Done
+      </Presence>,
+    );
+    const arrival = last();
+    arrival.finish();
+    rerender(
+      <Presence show={false} appear>
+        Done
+      </Presence>,
+    );
+    expect(arrival.cancel).not.toHaveBeenCalled();
+    expect(last()).not.toBe(arrival);
+  });
+
+  it('ignores an arrival that ends after a leave took over', () => {
+    const { rerender } = render(
+      <Presence show appear>
+        Late
+      </Presence>,
+    );
+    const arrival = last();
+    rerender(
+      <Presence show={false} appear>
+        Late
+      </Presence>,
+    );
+    const leave = last();
+    arrival.finish();
+    expect(screen.getByText('Late').dataset.state).toBe('closed');
+    leave.finish();
+    expect(screen.queryByText('Late')).toBeNull();
+  });
+
   it('stays, inert and hidden, while it leaves, then goes and reports it', () => {
     const onExited = vi.fn();
     const { rerender } = render(
@@ -277,6 +331,17 @@ describe('Swap', () => {
     expect(wrapper.tabIndex).toBe(-1);
     fireEvent.blur(wrapper);
     expect(wrapper.hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('passes blur through to the app', () => {
+    const onBlur = vi.fn();
+    render(
+      <Swap swapKey={1} onBlur={onBlur}>
+        <button type="button">Inside</button>
+      </Swap>,
+    );
+    fireEvent.blur(screen.getByRole('button', { name: 'Inside' }));
+    expect(onBlur).toHaveBeenCalledTimes(1);
   });
 
   it('leaves focus alone when it was elsewhere', () => {
