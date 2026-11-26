@@ -11,6 +11,7 @@ import {
   answerProgress,
   applyRoomEvent,
   cleanName,
+  clockOffset,
   connectedPlayers,
   createBroadcastRoomTransport,
   createMemoryRoomHub,
@@ -310,6 +311,22 @@ describe('room-model', () => {
     expect(roomStandings(r).map((e) => [e.id, e.rank, e.score])).toEqual([['a', 1, 900]]);
   });
 
+  it('carries what a round asks to every screen, and its answer only at the reveal', () => {
+    let r = applyRoomEvent(roomWith('a'), { type: 'countdown', startsAt: 1 }, HOST);
+    expect(r).toMatchObject({ prompt: null, solution: null });
+    const prompt = { text: 'Which is larger?', choices: ['x', 'y'] };
+    r = applyRoomEvent(r, { type: 'question', endsAt: null, prompt }, HOST);
+    expect(r).toMatchObject({ prompt, solution: null });
+    r = applyRoomEvent(r, { type: 'reveal', points: {}, solution: 'y' }, HOST);
+    expect(r).toMatchObject({ prompt, solution: 'y' });
+    r = applyRoomEvent(r, { type: 'question', endsAt: null }, HOST);
+    expect(r).toMatchObject({ prompt: null, solution: null });
+    r = applyRoomEvent(r, { type: 'reveal', points: {} }, HOST);
+    expect(r.solution).toBeNull();
+    r = applyRoomEvent(applyRoomEvent(r, { type: 'question', endsAt: null, prompt }, HOST), { type: 'restart' }, HOST);
+    expect(r).toMatchObject({ prompt: null, solution: null });
+  });
+
   it('counts a player with no score yet from zero', () => {
     let r = { ...roomWith('a'), scores: {} };
     expect(roomStandings(r)[0]?.score).toBe(0);
@@ -469,6 +486,154 @@ describe('useRoom', () => {
     );
   });
 
+  it('reads deadlines on the host clock: a phone whose clock is 90 s slow agrees', async () => {
+    const hub = createMemoryRoomHub();
+    const fake = hub.connect();
+    let player!: ReturnType<typeof useRoom>;
+    render(<Client hub={hub} id="p1" code="AAA" onRoom={(r) => (player = r)} />);
+    const base = createRoom({ code: 'AAA', hostId: HOST });
+    const real = Date.now();
+    // The host's clock runs 90 s ahead of this one; the two messages took 40 ms and 5 ms.
+    await act(async () => fake.send({ kind: 'state', state: { ...base, seq: 1 }, at: real + 90_000 - 40 }));
+    await act(async () => fake.send({ kind: 'state', state: { ...base, seq: 2 }, at: real + 90_000 - 5 }));
+    expect(player.now() - Date.now()).toBeGreaterThan(89_900);
+    expect(player.now() - Date.now()).toBeLessThanOrEqual(90_000);
+  });
+
+  it('host messages carry the host clock, and the host keeps its own', async () => {
+    const hub = createMemoryRoomHub();
+    const spy = hub.connect();
+    const seen: RoomMessage[] = [];
+    spy.subscribe((m) => seen.push(m));
+    let host!: ReturnType<typeof useRoom>;
+    render(<Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />);
+    await act(async () => host.send({ type: 'lock', locked: true }));
+    expect(seen.filter((m) => m.kind === 'state').every((m) => m.kind === 'state' && m.at === 4242)).toBe(true);
+    expect(host.now()).toBe(4242);
+  });
+
+  it('a phone shown away comes back by itself, but not after leaving on purpose', async () => {
+    const hub = createMemoryRoomHub();
+    let host!: ReturnType<typeof useRoom>;
+    let player!: ReturnType<typeof useRoom>;
+    render(
+      <>
+        <Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />
+        <Client hub={hub} id="p1" code="AAA" onRoom={(r) => (player = r)} />
+      </>,
+    );
+    await act(async () => {});
+    await act(async () => player.send(join('p1', 'Dana')));
+    // The phone slept and its leave reached the host (e.g. pagehide on a lock screen).
+    await act(async () => host.send({ type: 'leave', playerId: 'p1' }));
+    await act(async () => {});
+    expect(host.room?.players[0]).toMatchObject({ name: 'Dana', connected: true });
+
+    // Leaving on purpose sticks.
+    await act(async () => player.send({ type: 'leave', playerId: 'p1' }));
+    await act(async () => {});
+    expect(host.room?.players[0]?.connected).toBe(false);
+  });
+
+  it('says away when the page is closed, and asks again when it is seen', async () => {
+    const hub = createMemoryRoomHub();
+    let host!: ReturnType<typeof useRoom>;
+    let player!: ReturnType<typeof useRoom>;
+    render(
+      <>
+        <Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />
+        <Client hub={hub} id="p1" code="AAA" onRoom={(r) => (player = r)} />
+      </>,
+    );
+    await act(async () => {});
+    await act(async () => player.send(join('p1', 'Dana')));
+    const hidden = vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden');
+    await act(async () => {
+      window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: false }));
+    });
+    await act(async () => {});
+    expect(host.room?.players[0]?.connected).toBe(false);
+    hidden.mockReturnValue('visible');
+    await act(async () => {
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await act(async () => {});
+    expect(host.room?.players[0]?.connected).toBe(true);
+    hidden.mockRestore();
+  });
+
+  it('sends a lost answer again until the host shows it, then stops', async () => {
+    vi.useFakeTimers();
+    const sent: RoomMessage[] = [];
+    let listener: ((m: RoomMessage) => void) | null = null;
+    const transport = {
+      send: (m: RoomMessage) => void sent.push(m),
+      subscribe: (l: (m: RoomMessage) => void) => ((listener = l), () => (listener = null)),
+    };
+    let player!: ReturnType<typeof useRoom>;
+    function Phone() {
+      player = useRoom({ transport, selfId: 'p1', code: 'AAA' });
+      return null;
+    }
+    render(<Phone />);
+    let state = applyRoomEvent(createRoom({ code: 'AAA', hostId: HOST }), join('p1', 'Dana'), 'p1');
+    state = applyRoomEvent(state, { type: 'countdown', startsAt: 0 }, HOST);
+    state = applyRoomEvent(state, { type: 'question', endsAt: null }, HOST);
+    act(() => listener!({ kind: 'state', state }));
+    act(() => player.send({ type: 'answer', playerId: 'p1', value: 'x', at: 0 }));
+    const answers = () => sent.filter((m) => m.kind === 'intent' && m.event.type === 'answer').length;
+    expect(answers()).toBe(1);
+    // The first one was lost: no state shows it, so it goes again.
+    act(() => void vi.advanceTimersByTime(3_000));
+    expect(answers()).toBe(2);
+    // The host has it now.
+    act(() =>
+      listener!({
+        kind: 'state',
+        state: applyRoomEvent(state, { type: 'answer', playerId: 'p1', value: 'x', at: 1 }, 'p1'),
+      }),
+    );
+    act(() => void vi.advanceTimersByTime(9_000));
+    expect(answers()).toBe(2);
+    vi.useRealTimers();
+  });
+
+  it('gives up after a few tries, and does not reply to a repeated answer', async () => {
+    vi.useFakeTimers();
+    const sent: RoomMessage[] = [];
+    const transport = { send: (m: RoomMessage) => void sent.push(m), subscribe: () => () => {} };
+    let player!: ReturnType<typeof useRoom>;
+    function Phone() {
+      player = useRoom({ transport, selfId: 'p1', code: 'AAA' });
+      return null;
+    }
+    render(<Phone />);
+    act(() => player.send(join('p1', 'Dana')));
+    act(() => void vi.advanceTimersByTime(60_000));
+    expect(sent.filter((m) => m.kind === 'intent').length).toBe(6);
+    vi.useRealTimers();
+
+    const hub = createMemoryRoomHub();
+    const spy = hub.connect();
+    const seen: RoomMessage[] = [];
+    spy.subscribe((m) => seen.push(m));
+    let host!: ReturnType<typeof useRoom>;
+    render(<Client hub={hub} id={HOST} host={createRoom({ code: 'AAA', hostId: HOST })} onRoom={(r) => (host = r)} />);
+    await act(async () => host.send(join('p1', 'Dana')));
+    await act(async () => host.send({ type: 'countdown', startsAt: 0 }));
+    await act(async () => host.send({ type: 'question', endsAt: null }));
+    const answer = {
+      kind: 'intent',
+      from: 'p1',
+      event: { type: 'answer', playerId: 'p1', value: 'x', at: 0 },
+    } as const;
+    await act(async () => spy.send(answer));
+    await act(async () => spy.send(answer));
+    expect(seen.some((m) => m.kind === 'rejected')).toBe(false);
+    await act(async () => spy.send({ kind: 'intent', from: 'p2', event: { type: 'lock', locked: true } }));
+    expect(seen.some((m) => m.kind === 'rejected' && m.reason === 'not-host')).toBe(true);
+  });
+
   it('does nothing without a transport', () => {
     let api!: ReturnType<typeof useRoom>;
     function NoNet() {
@@ -478,6 +643,20 @@ describe('useRoom', () => {
     render(<NoNet />);
     act(() => api.send(join('p')));
     expect(api.room).toBeNull();
+  });
+});
+
+describe('clockOffset', () => {
+  it('takes the largest lower bound, and 0 with nothing to go on', () => {
+    expect(clockOffset([])).toBe(0);
+    expect(
+      clockOffset([
+        { at: 1000, local: 900 },
+        { at: 2000, local: 1850 },
+        { at: NaN, local: 1 },
+      ]),
+    ).toBe(150);
+    expect(clockOffset([{ at: 100, local: 400 }])).toBe(-300);
   });
 });
 
