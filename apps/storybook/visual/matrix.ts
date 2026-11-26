@@ -22,6 +22,11 @@ export type Mode = {
   globals: Record<string, string>;
   /** Reference pages (tokens, contracts) are shot in this mode too. */
   reference?: boolean;
+  /**
+   * Checked by axe only, never shot. For a condition whose layout another
+   * mode already pins, where only the colours can differ.
+   */
+  axeOnly?: boolean;
 };
 
 const WIDE = { width: 1280, height: 800 };
@@ -35,6 +40,14 @@ export const MODES: readonly Mode[] = [
   // 150% on a phone: the size and the width where reflow breaks first.
   { name: 'text-150', viewport: PHONE, globals: { theme: 'light', interlaceTextSize: '2xl' } },
   { name: 'contrast-more', viewport: WIDE, globals: { theme: 'light', interlaceContrast: 'more' } },
+  // The same AAA promise in the dark scheme. Its layout is contrast-more's,
+  // so it is held by axe alone, not by a second set of screenshots.
+  {
+    name: 'contrast-more-dark',
+    viewport: WIDE,
+    globals: { theme: 'dark', interlaceContrast: 'more' },
+    axeOnly: true,
+  },
 ];
 
 type IndexEntry = {
@@ -53,8 +66,8 @@ export type Story = { id: string; title: string; name: string; reference: boolea
 /**
  * Sections that document the system rather than ship a component: token
  * tables, variant catalogues, utility demos. They change whenever any token
- * does, so they are shot once, in light. Every component gets all six
- * conditions.
+ * does, so they are shot once, in light. Every component gets every
+ * condition.
  */
 const REFERENCE_SECTIONS = new Set(['Foundations', 'Tokens', 'Utilities', 'Contracts']);
 
