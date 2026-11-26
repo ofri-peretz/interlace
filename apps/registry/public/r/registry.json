@@ -3982,6 +3982,24 @@
       }
     },
     {
+      "name": "room-goal",
+      "type": "registry:ui",
+      "title": "Room Goal",
+      "description": "One meter for the whole room: a shared target, named milestones on the way (\"Bonus round\", \"Group photo\"), and, when given, how many rounds in a row most of the room got right. Built for the shared screen; it reads the same on a phone.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "round-summary",
       "type": "registry:ui",
       "title": "Round Summary",

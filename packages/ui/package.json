@@ -632,6 +632,14 @@
       "types": "./dist/games/picture-reveal.d.ts",
       "default": "./dist/games/picture-reveal.js"
     },
+    "./games/room-goal-model": {
+      "types": "./dist/games/room-goal-model.d.ts",
+      "default": "./dist/games/room-goal-model.js"
+    },
+    "./games/room-goal": {
+      "types": "./dist/games/room-goal.d.ts",
+      "default": "./dist/games/room-goal.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

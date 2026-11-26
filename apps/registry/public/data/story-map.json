@@ -2122,6 +2122,18 @@
     "previewDark": null,
     "skeleton": null
   },
+  "room-goal": {
+    "title": "Games/RoomGoal",
+    "storyIds": [
+      "games-roomgoal--default",
+      "games-roomgoal--live",
+      "games-roomgoal--done",
+      "games-roomgoal--right-to-left"
+    ],
+    "preview": "games-roomgoal--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "rotating-text": {
     "title": "Effects/RotatingText",
     "storyIds": [

@@ -1041,6 +1041,17 @@
           "source": ".changeset/room-access.md"
         },
         {
+          "summary": "One goal for the whole room. `RoomGoal` is a shared meter with named milestones on the way and, when given, how many rounds in a row most of the room got right; a milestone the room passes lifts once and is announced once, and the meter reads as a labelled `meter` with its value in words. `games/room-goal-model` adds up contributions (`tallyRoomGoal`), counting each person once per round whatever order or how many times messages arrive, with an optional cap per person so the room gets there together, and counts rounds in a row above a bar (`roomStreak`).",
+          "components": [
+            "room-goal"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/room-goal.md"
+        },
+        {
           "summary": "ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says \"there is more\" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade=\"none\"` for hard edges.",
           "components": [
             "scroll-area"
