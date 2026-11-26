@@ -99,6 +99,20 @@ describe('TextWall', () => {
     expect(rises()).toBe(1);
   });
 
+  it('keeps a spotlight that is there at load still, and scales in the next one', () => {
+    // A fade from opacity 0 at load is what an axe scan or a screenshot catches mid-way: the
+    // spotlight read at 2.33:1 contrast in Storybook's a11y run.
+    const animate = vi.fn();
+    Object.defineProperty(HTMLElement.prototype, 'animate', { value: animate, configurable: true });
+    const { rerender } = render(<TextWall posts={posts} spotlight="c" />);
+    expect(animate).not.toHaveBeenCalled();
+    rerender(<TextWall posts={posts} spotlight="a" />);
+    const scales = animate.mock.calls.filter(([frames]) =>
+      String((frames as Keyframe[])[0]?.transform).startsWith('scale('),
+    );
+    expect(scales).toHaveLength(1);
+  });
+
   it('keeps still under reduced motion', () => {
     const animate = vi.fn();
     Object.defineProperty(HTMLElement.prototype, 'animate', { value: animate, configurable: true });

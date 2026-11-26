@@ -1,0 +1,37 @@
+# Nightly visual and CSS-compatibility check of every Storybook story: phone, tablet and desktop,
+# light, dark, right-to-left, 150% text, more contrast and 200% zoom, in Chromium, Firefox and
+# WebKit, against baselines kept on the `ui-baselines` branch. Reusable workflow from
+# ofri-peretz/ui-nightly (config: .ui-nightly.json).
+#
+# First run: no baselines exist, so every screenshot is new; the run passes and writes them.
+# An intended change: run this workflow by hand with "update-baselines" ticked, after reading the
+# report. A red night opens (or updates) one issue labelled ui-nightly and closes it when green.
+name: ui-nightly
+
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+    inputs:
+      update-baselines:
+        description: Accept every changed screenshot as the new baseline
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ui-nightly
+  cancel-in-progress: false
+
+jobs:
+  ui:
+    uses: ofri-peretz/ui-nightly/.github/workflows/nightly.yml@v1
+    permissions:
+      contents: write
+      issues: write
+    with:
+      node-version: '24'
+      build-command: npx turbo run build-storybook --filter=@interlace/storybook
+      update-baselines: ${{ inputs.update-baselines || false }}
