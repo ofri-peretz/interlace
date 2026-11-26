@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 232
+    "itemCount": 233
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 23,
+      "game": 24,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -47,9 +47,9 @@
       "foundation": 27,
       "effect": 27,
       "form": 26,
+      "games": 24,
+      "game": 24,
       "decorative": 24,
-      "games": 23,
-      "game": 23,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 118,
+      "client": 119,
       "server": 114
     },
     "keyboard": {
-      "none": 182,
+      "none": 183,
       "handled": 50
     },
     "loading": {
-      "none": 194,
+      "none": 195,
       "built-in": 38
     },
     "minViewport": {
-      "320": 151,
+      "320": 152,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -13336,6 +13336,80 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/weave-texture.json",
       "item": "https://ds.interlace.tools/r/weave-texture.json",
       "docs": "https://ds.interlace.tools/c/weave-texture"
+    },
+    {
+      "name": "word-cloud",
+      "title": "Word Cloud",
+      "type": "registry:ui",
+      "summary": "The room's words, live. Phones send a word or two with `WordEntry`; the shared screen shows them as a `WordCloud` in which the words the room repeats grow, the biggest sit in the middle, and every change moves into place rather than jumping there. Anyone…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TextRefusal",
+          "values": [
+            "empty",
+            "too-long",
+            "too-many-words",
+            "link",
+            "contact",
+            "blocked"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "presentation"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-invalid",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "CLOUD_BREAKS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "input",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/word-cloud.tsx",
+        "components/ui/games/text-safety-model.ts",
+        "components/ui/games/word-cloud-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/word-cloud.json",
+      "item": "https://ds.interlace.tools/r/word-cloud.json",
+      "docs": "https://ds.interlace.tools/c/word-cloud"
     },
     {
       "name": "wordmark",
