@@ -49,6 +49,12 @@ describe('text-safety-model', () => {
     expect(checkText('see https://example.com')).toEqual({ ok: false, reason: 'link' });
     expect(checkText('example.com')).toEqual({ ok: false, reason: 'link' });
     expect(checkText('mail me a@b.co')).toEqual({ ok: false, reason: 'contact' });
+    expect(checkText('a@b')).toEqual({ ok: true, text: 'a@b' });
+    expect(checkText('me@x..y').ok).toBe(true);
+    // A long run with no address stays fast (no quadratic backtracking).
+    const t0 = performance.now();
+    expect(checkText('!'.repeat(50_000), { maxLength: 100_000 }).ok).toBe(true);
+    expect(performance.now() - t0).toBeLessThan(500);
     expect(checkText('call 555 123 4567')).toEqual({ ok: false, reason: 'contact' });
     expect(checkText('  Good   food ')).toEqual({ ok: true, text: 'Good food' });
     expect(checkText('see example.com', { allowLinks: true })).toEqual({ ok: true, text: 'see example.com' });

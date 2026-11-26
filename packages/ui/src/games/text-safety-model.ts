@@ -94,7 +94,10 @@ export function foldText(input: string): string {
 
 const LINK =
   /(?:https?:\/\/|www\.)\S+|\b[\p{L}\p{N}-]+\.(?:com|net|org|io|co|me|ly|gg|app|dev|info|xyz|tv|link|site|online)\b/iu;
-const EMAIL = /[^\s@]+@[^\s@]+\.[^\s@]+/u;
+// Matched per word and anchored, with classes that cannot overlap, so a long
+// run of one character costs linear time, not quadratic.
+const EMAIL_WORD = /^[^@]+@[^@.]+(?:\.[^@.]+)+$/u;
+const hasEmail = (text: string) => text.split(' ').some((word) => EMAIL_WORD.test(word));
 // Seven or more digits, allowing the usual separators between them.
 const PHONE = /(?:\+?\d[\s().-]*){7,}/u;
 
@@ -110,7 +113,7 @@ export function checkText(input: string, rules: TextRules = {}): TextCheck {
   const text = tidyText(input);
   if (!text) return { ok: false, reason: 'empty' };
   if (visibleLength(text) > maxLength) return { ok: false, reason: 'too-long' };
-  if (!allowContact && (EMAIL.test(text) || PHONE.test(text))) return { ok: false, reason: 'contact' };
+  if (!allowContact && (hasEmail(text) || PHONE.test(text))) return { ok: false, reason: 'contact' };
   if (!allowLinks && LINK.test(text)) return { ok: false, reason: 'link' };
   if (blocklist && blocklist.length > 0 && isBlocked(text, blocklist)) return { ok: false, reason: 'blocked' };
   if (wordsOf(text).length > maxWords) return { ok: false, reason: 'too-many-words' };
