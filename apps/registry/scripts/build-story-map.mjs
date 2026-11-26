@@ -21,9 +21,10 @@
  * ignored, so reaching for it as a read-only probe silently REWROTE the file.
  */
 
-import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { writeGenerated } from './lib/write-generated.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -439,8 +440,7 @@ const main = async () => {
     return;
   }
 
-  await mkdir(path.dirname(OUT_FILE), { recursive: true });
-  await writeFile(OUT_FILE, serialized, 'utf8');
+  await writeGenerated(OUT_FILE, serialized);
 
   const entries = Object.values(map);
   const total = entries.reduce((n, e) => n + e.storyIds.length, 0);
