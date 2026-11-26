@@ -34,7 +34,9 @@
  * Run with `--check` to validate without writing (used by CI drift check).
  */
 
-import { readFile, readdir, writeFile, mkdir, stat } from 'node:fs/promises';
+import { readFile, readdir, mkdir, stat } from 'node:fs/promises';
+// Atomic, so registry tests running beside prebuild never read half a file.
+import { writeFile } from './write-atomic.mjs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 

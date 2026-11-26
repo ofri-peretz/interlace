@@ -36,7 +36,9 @@
  * of silently serving a stale contract.
  */
 
-import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readdir, readFile, mkdir } from 'node:fs/promises';
+// Atomic, so registry tests running beside prebuild never read half a file.
+import { writeFile } from './write-atomic.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
