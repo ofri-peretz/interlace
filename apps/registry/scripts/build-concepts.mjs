@@ -345,12 +345,13 @@ export const buildConcepts = async () => {
   );
 
   return {
-    generatedAt: new Date().toISOString(),
     source: rel(CONCEPTS_DIR),
     pages,
   };
 };
 
+// No timestamp is written (it made every rebuilding branch conflict with main);
+// one left in an older file is ignored so it still passes `--check`.
 const withoutTimestamp = (doc) => {
   const { generatedAt: _generatedAt, ...rest } = doc;
   return JSON.stringify(rest, null, 2);
