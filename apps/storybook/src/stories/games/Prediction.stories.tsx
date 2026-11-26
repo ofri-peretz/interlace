@@ -46,7 +46,7 @@ export const Default: Story = {
 
 /** The whole round: choose, lock in, then the host settles it. */
 export const Live: Story = {
-  render: (args) => {
+  render: function Render(args) {
     const [outcome, setOutcome] = React.useState<string | null>(null);
     return (
       <div className="grid max-w-112 gap-4">

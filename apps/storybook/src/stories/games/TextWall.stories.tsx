@@ -43,7 +43,7 @@ export const Default: Story = {};
 /** A shared screen: add a post to watch it rise in, or spotlight the newest. */
 export const Live: Story = {
   args: { size: 'stage', spotlight: null },
-  render: (args) => {
+  render: function Render(args) {
     const [posts, setPosts] = React.useState(POSTS);
     const [spot, setSpot] = React.useState<string | null>(null);
     return (
@@ -74,7 +74,7 @@ export const Live: Story = {
 /** The phone: `QuestionAsk`, relabelled for an answer. */
 export const Phone: Story = {
   args: { posts: [] },
-  render: () => {
+  render: function Render() {
     const onAsk = React.useMemo(() => fn(), []);
     return (
       <div className="max-w-96">

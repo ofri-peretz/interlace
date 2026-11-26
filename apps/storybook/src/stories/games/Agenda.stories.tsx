@@ -77,7 +77,7 @@ export const Controls: Story = {
 /** Live: a working console with its own state and a running clock. */
 export const Live: Story = {
   args: { frozenAt: undefined, shortcuts: true },
-  render: (args) => {
+  render: function Render(args) {
     const [state, setState] = React.useState(createAgenda());
     return (
       <div className="grid max-w-144 gap-10">

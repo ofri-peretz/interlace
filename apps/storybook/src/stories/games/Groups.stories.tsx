@@ -57,7 +57,7 @@ export const Waiting: Story = { args: { members: [], prompt: undefined, deadline
 
 /** The shared screen: reshuffle and watch the names glide to their new groups. */
 export const Screen: Story = {
-  render: () => {
+  render: function Render() {
     const [round, setRound] = React.useState(1);
     const groups = makeGroups(NAMES, { count: 4, seed: `round-${round}` });
     return (
@@ -81,7 +81,7 @@ export const Screen: Story = {
 
 /** Team standings: `teamTotals` into `Leaderboard`, by mean so team size is fair. */
 export const TeamStandings: Story = {
-  render: () => {
+  render: function Render() {
     const groups = makeGroups(NAMES, { count: 4, seed: 'teams' });
     const scores = Object.fromEntries(NAMES.map((n, i) => [n, (i * 37) % 100]));
     return (

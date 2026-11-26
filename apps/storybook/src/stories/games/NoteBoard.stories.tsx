@@ -57,7 +57,7 @@ export const ReadOnly: Story = {};
 
 /** The room sorts and adds: move a note with its arrows, or add one to any column. */
 export const Live: Story = {
-  render: (args) => {
+  render: function Render(args) {
     const [notes, setNotes] = React.useState(NOTES);
     const [moves, setMoves] = React.useState<BoardMove[]>([]);
     return (

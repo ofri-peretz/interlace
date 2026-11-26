@@ -60,7 +60,7 @@ export const Default: Story = {};
 /** The presenter's controls: one step at a time, then the reveal. */
 export const Presenter: Story = {
   args: { size: 'stage' },
-  render: (args) => {
+  render: function Render(args) {
     const [step, setStep] = React.useState(0);
     const [revealed, setRevealed] = React.useState(false);
     return (

@@ -7,6 +7,7 @@ import {
   applyHandEvent,
   createHands,
   placeInLine,
+  type HandEvent,
   type ReactionBudget,
 } from '@interlace/ui/games/reactions-model';
 import { withRtl } from '@/decorators';
@@ -86,10 +87,12 @@ export const Live: Story = { render: () => <LiveDemo /> };
 
 function HandsDemo() {
   const [hands, setHands] = React.useState(() =>
-    [
-      { type: 'raise', by: 'a', name: 'Alex', at: 1 },
-      { type: 'raise', by: 'b', name: 'Sam', at: 2 },
-    ].reduce(applyHandEvent, createHands()),
+    (
+      [
+        { type: 'raise', by: 'a', name: 'Alex', at: 1 },
+        { type: 'raise', by: 'b', name: 'Sam', at: 2 },
+      ] satisfies HandEvent[]
+    ).reduce(applyHandEvent, createHands()),
   );
   const raised = placeInLine(hands, 'me') !== null;
   return (

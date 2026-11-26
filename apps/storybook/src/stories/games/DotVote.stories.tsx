@@ -60,7 +60,7 @@ export const Voting: Story = {};
 
 /** The room keeps voting after this viewer sent: ideas glide to their new rank. */
 export const Live: Story = {
-  render: (args) => {
+  render: function Render(args) {
     const [ballots, setBallots] = React.useState<Record<string, Record<string, number>>>({
       p1: { breaks: 2, walk: 1 },
     });

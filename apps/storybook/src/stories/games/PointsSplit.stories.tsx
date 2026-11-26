@@ -73,7 +73,7 @@ export const Spending: Story = {
 
 /** The room's totals; add a person to watch the order change. */
 export const RoomTotals: Story = {
-  render: () => {
+  render: function Render() {
     const [room, setRoom] = React.useState(ROOM);
     const { totals } = totalPoints(room, IDS);
     return (

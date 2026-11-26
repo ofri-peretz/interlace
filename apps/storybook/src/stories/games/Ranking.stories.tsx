@@ -70,7 +70,7 @@ export const Keyboard: Story = {
 
 /** The room's order on a shared screen; add a person to watch it change. */
 export const RoomResults: Story = {
-  render: () => {
+  render: function Render() {
     const [room, setRoom] = React.useState(ROOM);
     const { items } = tallyRankings(room, IDS);
     return (

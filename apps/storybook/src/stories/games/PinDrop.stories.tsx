@@ -81,7 +81,7 @@ export const Placing: Story = {};
 
 /** The whole round: place, then the host reveals. */
 export const Live: Story = {
-  render: (args) => {
+  render: function Render(args) {
     const [revealed, setRevealed] = React.useState(false);
     return (
       <div className="grid max-w-128 gap-4">

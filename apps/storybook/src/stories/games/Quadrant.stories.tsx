@@ -67,7 +67,7 @@ export const Keyboard: Story = {
 
 /** The room on a shared screen; add people to watch it fill. */
 export const Screen: Story = {
-  render: () => {
+  render: function Render() {
     const [n, setN] = React.useState(12);
     return (
       <div className="grid gap-4">

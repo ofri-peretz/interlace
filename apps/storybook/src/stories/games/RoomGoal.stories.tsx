@@ -48,7 +48,7 @@ export const Default: Story = {};
 /** On a shared screen: add a round's points to watch it move. */
 export const Live: Story = {
   args: { size: 'stage', value: 1200, streak: 0 },
-  render: (args) => {
+  render: function Render(args) {
     const [value, setValue] = React.useState(args.value);
     return (
       <div className="grid max-w-192 gap-4">
