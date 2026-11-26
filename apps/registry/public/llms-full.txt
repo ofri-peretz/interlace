@@ -287,7 +287,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 238 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 239 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -341,10 +341,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 124 client, 114 server
-- keyboard: 186 none, 52 handled
-- built-in loading state: 38 of 238
-- declared minViewport: 157 at 320, 7 at 480, 1 at 768, 73 at inherited
+- rendering: 125 client, 114 server
+- keyboard: 187 none, 52 handled
+- built-in loading state: 38 of 239
+- declared minViewport: 157 at 320, 7 at 480, 1 at 768, 74 at inherited
 
 ## Taxonomy
 
@@ -356,7 +356,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `effect` — 27 item(s)
 - tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
-- tier `util` — 6 item(s)
+- tier `util` — 7 item(s)
 - tier `starter` — 3 item(s)
 - tier `theme` — 3 item(s)
 
@@ -366,7 +366,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `data` (Data display) — 30 item(s)
 - category `games` (Games) — 29 item(s)
 - category `game` (Games) — 29 item(s)
-- category `foundation` (Foundation) — 27 item(s)
+- category `foundation` (Foundation) — 28 item(s)
 - category `effect` (Effects) — 27 item(s)
 - category `form` (Form & input) — 26 item(s)
 - category `decorative` (Decorative) — 24 item(s)
@@ -376,7 +376,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `marketing` (Marketing) — 14 item(s)
 - category `template` (Templates) — 13 item(s)
 - category `overlay` (Overlay) — 10 item(s)
-- category `util` (Utilities) — 6 item(s)
+- category `util` (Utilities) — 7 item(s)
 - category `a11y` (A11y) — 5 item(s)
 - category `starter` (Starters) — 3 item(s)
 - category `theme` (Theme) — 3 item(s)
@@ -433,7 +433,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, v1.0.0
 - [Callout](https://ds.interlace.tools/c/callout): Inline-prose annotation. The "stop and read this" surface that punctuates long-form content (docs, MDX, READMEs). Distinct from `Alert` — Alert is an out-of-band runtime banner ("your save failed"), Callout is an in-band authored aside ("note: this rule is…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/callout.json`
-  - contract: server, min 320px, v2.1.2
+  - contract: server, min 320px, v2.1.3
 - [Card](https://ds.interlace.tools/c/card): A bordered, rounded content surface with header / title / description / action / content / footer parts. The surface, radius and border come from `Box`; the card owns only its column layout, its padding and its shadow.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/card.json`
   - contract: server, loading state, v2.3.0
@@ -496,7 +496,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, v2.0.2
 - [Hover Card](https://ds.interlace.tools/c/hover-card): A rich, non-modal overlay that opens on pointer-hover (and keyboard focus) of its trigger, used to preview the *contents* of a target — author cards, repo cards, link previews. Distinct from `Tooltip` (short, one-line, no interactive content) and `Popover`…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/hover-card.json`
-  - contract: client, min 768px, keyboard via Base UI preview-card, v2.0.0
+  - contract: client, min 768px, keyboard via Base UI preview-card, v2.0.1
 - [Input](https://ds.interlace.tools/c/input): Single-line text input. A pure surface primitive with no controlled-state machinery: the native `<input>` already owns selection, IME, undo/redo and `onChange`, so we add structure (surface, border, focus + invalid rings) without wrapping a single native…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/input.json`
   - contract: server, min 320px, v2.2.0
@@ -520,7 +520,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI number-field, v2.2.0
 - [Otp Field](https://ds.interlace.tools/c/otp-field): A one-time code typed into a row of boxes, one character each: the "enter the 6-digit code we emailed you" field. Built on Base UI's OTPField, which owns the hard parts: paste of the whole code into any box, the phone's "from Messages" autofill…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/otp-field.json`
-  - contract: client, min 320px, keyboard via Base UI otp-field, v1.1.0
+  - contract: client, min 320px, keyboard via Base UI otp-field, v1.1.1
 - [Pagination](https://ds.interlace.tools/c/pagination): The page-navigation bar: a `<nav aria-label="pagination">` of anchor links with previous / next / ellipsis parts. It is presentation only — it computes no page numbers and knows no total.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/pagination.json`
   - contract: server, min 320px, v2.1.1
@@ -532,7 +532,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keyboard via Base UI progress, v1.1.0
 - [Prose](https://ds.interlace.tools/c/prose): The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `figure`/`figcaption`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer.…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/prose.json`
-  - contract: client, min 320px, states article|div|main|section, v3.5.0
+  - contract: client, min 320px, states article|div|main|section, v3.6.0
 - [Published Date](https://ds.interlace.tools/c/published-date): Article publish-date stamp. A pure surface primitive that renders a semantic `<time dateTime={iso}>` with a human-readable label produced by `Intl.DateTimeFormat` at render time. The native element owns the machine value (the `dateTime` attribute is what…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/published-date.json`
   - contract: server, min 320px, loading state, states long|short, v1.1.0
@@ -700,10 +700,10 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, v1.2.0
 - [Focus Grid](https://ds.interlace.tools/c/focus-grid): A grid of picture cards where the one you point at or tab to stays bright and the others step back. It helps a reader compare a few visual options (destinations, case studies, chapters) without the grid feeling busy.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/focus-grid.json`
-  - contract: server, min 320px, v1.2.0
+  - contract: server, min 320px, v1.2.1
 - [Footer](https://ds.interlace.tools/c/footer): Site footer with grouped link columns + copyright row. Composes with a primary brand mark, 1-4 link groups (each a sub-heading + list of links), and a tail row for copyright + social. Server component.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/footer.json`
-  - contract: server, min 320px, v2.3.0
+  - contract: server, min 320px, v2.3.1
 - [Guess Reveal](https://ds.interlace.tools/c/guess-reveal): A one-question quiz: a question, two to four answers as buttons, and an explanation that opens once the reader picks. The pick is marked right or wrong with a short movement, the right answer is always shown, and the consumer hears about it through…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/guess-reveal.json`
   - contract: client, min 320px, v1.2.0
@@ -751,7 +751,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 480px, loading state, v2.1.0
 - [Scorecard Row](https://ds.interlace.tools/c/scorecard-row): A single dimension row in a scorecard: name + GradeBadge + numeric score + optional details. Used by ScorecardTemplate to render each scored category (Performance, Coverage, Adoption, ...).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/scorecard-row.json`
-  - contract: server, min 320px, loading state, v2.0.0
+  - contract: server, min 320px, loading state, v2.0.1
 - [Scroll Story](https://ds.interlace.tools/c/scroll-story): A chart that stays in view while the story beside it scrolls: each step of text the reader reaches changes the chart, one point at a time. The story is told in the steps; the chart shows it.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/scroll-story.json`
   - contract: client, min 320px, v1.0.0
@@ -811,7 +811,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, keys ArrowLeft/ArrowRight/End/Home, v2.0.0
 - [Topbar](https://ds.interlace.tools/c/topbar): Site-wide horizontal navigation. The first pattern every landing / docs / dashboard surface needs: logo (left), primary nav (middle/right), action cluster (right). One row, sticky to the top, semi-transparent backdrop blur so content scrolls visibly…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar.json`
-  - contract: server, min 320px, v2.6.1
+  - contract: server, min 320px, v2.6.2
 - [Topbar Menu](https://ds.interlace.tools/c/topbar-menu): The small-screen half of `Topbar`: a "Menu" button that opens the site's links in a panel at the edge of the screen. Topbar renders it for you below `md`; it is exported on its own for headers that compose their own row.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/topbar-menu.json`
   - contract: client, v2.3.0
@@ -844,7 +844,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v2.0.0
 - [Dashboard Template](https://ds.interlace.tools/c/dashboard-template): Application dashboard surface. Topbar at top, persistent left sidebar (nav links), main content area (children). The standard "logged-in app" layout: every SaaS dashboard reaches for this shape.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dashboard-template.json`
-  - contract: server, min 480px, v2.0.1
+  - contract: server, min 480px, v2.0.2
 - [Docs Page Template](https://ds.interlace.tools/c/docs-page-template): Documentation page surface. Topbar at top, optional sidebar nav on the left (md+), main content in the centre with a `<Prose>` wrapper, and an optional TOC rail on the right (xl+).
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/docs-page-template.json`
   - contract: server, min 320px, v2.0.1
@@ -1057,7 +1057,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, states p|h1|h2|h3|blockquote|div, v1.0.0
 - [Scroller](https://ds.interlace.tools/c/scroller): A row (or column) of items that glides past on a loop: logos of the organisations you work with, short quotes, headlines. The items are real content, so the component treats them that way first and as motion second.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/scroller.json`
-  - contract: client, v1.2.0
+  - contract: client, v1.2.1
 - [Sheen](https://ds.interlace.tools/c/sheen): A soft band of light that crosses its parent every few seconds. Drop it inside the one button or card a page most wants pressed:
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/sheen.json`
   - contract: client, v1.0.0
@@ -1093,19 +1093,22 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - [A11y Starter](https://ds.interlace.tools/c/a11y-starter): @interlace/ui — the three a11y primitives + the reduced-motion hook every consumer should install on day one.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/a11y-starter.json`
-  - contract: server, v5.5.1
+  - contract: server, v5.5.2
 - [Layout Starter](https://ds.interlace.tools/c/layout-starter): @interlace/ui — the six layout primitives that compose every page. One install, the LAYOUT_PHILOSOPHY contract is satisfied.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/layout-starter.json`
-  - contract: server, v5.5.1
+  - contract: server, v5.5.2
 - [MDX Starter](https://ds.interlace.tools/c/mdx-starter): @interlace/ui — the components most MDX pipelines need (Callout, Prose, CodeBlock, Tag), wired through a default mdx-components.tsx.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/mdx-starter.json`
-  - contract: server, v5.5.1
+  - contract: server, v5.5.2
 
 ## Items — tier `util`
 
 - [cn — class-name merge utility](https://ds.interlace.tools/c/cn): @interlace/ui — the cn() helper, alias-compatible with shadcn. Merges Tailwind class lists deterministically.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/cn.json`
   - contract: server, v2.1.0
+- [User intent hooks and provider](https://ds.interlace.tools/c/intent): @interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/intent.json`
+  - contract: client, states keyboard|mouse|touch|pen, v1.0.0
 - [No-flash theme bootstrap script](https://ds.interlace.tools/c/theme-script): @interlace/ui — the inline `<head>` script that applies the stored theme before first paint. Without it every page load flashes the default theme.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/theme-script.json`
   - contract: server, states default|lg|xl, v1.1.0
