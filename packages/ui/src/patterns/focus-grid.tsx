@@ -124,11 +124,11 @@ function FocusGridItem({
   return (
     <li
       data-slot="focus-grid-item"
-      className="motion-safe:transition-[opacity,filter,transform] motion-safe:duration-300 transition-opacity"
+      className="motion-safe:transition-[opacity,filter,transform] motion-safe:duration-(--duration-medium) transition-opacity"
     >
       <article
         className={cn(
-          'focus-within:ring-ring relative isolate overflow-hidden rounded-xl focus-within:ring-[3px]',
+          'focus-within:ring-ring relative isolate overflow-hidden rounded-xl focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-background',
           ASPECT[aspect],
           className,
         )}

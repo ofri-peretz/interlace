@@ -452,7 +452,7 @@ const MultiStepForm = React.forwardRef<HTMLFormElement, MultiStepFormProps>(func
                     <button
                       type="button"
                       onClick={() => goTo(s.id)}
-                      className="hover:text-primary focus-visible:ring-ring/50 -m-1 flex w-[calc(100%+0.5rem)] min-w-0 items-center gap-2 rounded-md p-1 text-start outline-none transition-colors duration-(--duration-fast) ease-enter focus-visible:ring-[3px]"
+                      className="hover:text-primary -m-1 flex w-[calc(100%+0.5rem)] min-w-0 items-center gap-2 rounded-md p-1 text-start outline-none transition-colors duration-(--duration-fast) ease-enter focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     >
                       {marker}
                     </button>

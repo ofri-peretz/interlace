@@ -43,7 +43,7 @@
  * | R26  | A11y from headless primitive     | role / aria-live / focus-trap inherited from Base UI Root   |
  *
  * Motion contract (DESIGN_PRINCIPLES #7, MOTION_PHILOSOPHY): slide-from-right
- * + fade-in over 180ms ease-out on open; reverse on close. `useReducedMotion`
+ * + fade-in over `--duration-base` with `ease-enter` on open; reverse on close. `useReducedMotion`
  * gates the slide so reduced-motion users get a fade-only transition (still
  * ≤200ms, no transform).
  */
@@ -101,7 +101,7 @@ const toastVariants = cva(
 // envelope.
 // ─────────────────────────────────────────────────────────────────
 const ANIMATE_BASE =
-  'transition-[transform,opacity] duration-[180ms] ease-out will-change-[transform,opacity]';
+  'transition-[transform,opacity] duration-(--duration-base) ease-enter will-change-[transform,opacity]';
 const ANIMATE_FULL =
   'data-[starting-style]:translate-x-full data-[starting-style]:opacity-0 data-[ending-style]:translate-x-full data-[ending-style]:opacity-0 ' +
   // In a right-to-left page the viewport sits on the left edge, so the toast comes in from there.
@@ -316,7 +316,7 @@ const ToastClose = React.forwardRef<HTMLButtonElement, ToastCloseProps>(
         className={cn(
           'ms-auto inline-flex size-6 shrink-0 items-center justify-center rounded-sm',
           'text-muted-foreground hover:text-foreground',
-          'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring',
           'transition-colors',
           className,
         )}

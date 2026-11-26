@@ -43,7 +43,7 @@
  * | Composite                                            | Light  | Dark    | Floor           |
  * | ---------------------------------------------------- | ------ | ------- | --------------- |
  * | trigger `border-input` on `--background`             | 3.62:1 | 3.35:1  | 3:1 (SC 1.4.11) |
- * | `focus-visible:ring-ring/60` on `--background`       | 3.23:1 | 4.73:1  | 3:1 (SC 2.4.13) |
+ * | `focus-visible:ring-ring` on `--background`       | 8.80:1 | 11.79:1 | 3:1 (SC 2.4.13) |
  * | item `text-popover-foreground` on `--popover`        | 19.65:1| 15.71:1  | 4.5:1 (SC 1.4.3)|
  * | highlighted `text-accent-foreground` on `--accent`   | 8.98:1 | 10.46:1 | 4.5:1 (SC 1.4.3)|
  * | selected `text-primary-foreground` on `--primary`    | 8.80:1 | 11.79:1 | 4.5:1 (SC 1.4.3)|
@@ -112,9 +112,7 @@ function SelectTrigger({
       className={cn(
         'flex w-fit items-center justify-between gap-2 rounded-lg border border-input bg-background px-3 py-2 text-sm whitespace-nowrap shadow-sm transition-[color,box-shadow] outline-none',
         'hover:bg-accent hover:text-accent-foreground',
-        // /60 not /50 — 50%-alpha primary composites to 2.57:1 on white,
-        // under the 3:1 focus-indicator floor (SC 2.4.13).
-        'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/60',
+        'focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring',
         'data-popup-open:border-ring',
         'disabled:cursor-not-allowed disabled:opacity-50',
         'data-[size=default]:h-control data-[size=sm]:h-control-sm',
@@ -156,7 +154,7 @@ function SelectContent({
             'origin-(--transform-origin)',
             'data-starting-style:opacity-0 data-starting-style:scale-95',
             'data-ending-style:opacity-0 data-ending-style:scale-95',
-            'transition-[opacity,scale] duration-150',
+            'transition-[opacity,scale] duration-(--duration-base) ease-enter',
             'p-1',
             popupClassName,
           )}
