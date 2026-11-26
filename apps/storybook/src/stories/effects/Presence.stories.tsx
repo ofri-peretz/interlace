@@ -85,5 +85,7 @@ export const Default: Story = {
     await expect(await canvas.findByText('Now count the sides of a square.')).toBeInTheDocument();
     await userEvent.click(canvas.getByRole('button', { name: 'Back' }));
     await expect(await canvas.findByText('Count the sides of a triangle.')).toBeInTheDocument();
+    // Let the arrival finish, so checks after the play see the card at rest, not half faded in.
+    await Promise.allSettled(canvasElement.getAnimations({ subtree: true }).map((animation) => animation.finished));
   },
 };
