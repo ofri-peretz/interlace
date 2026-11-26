@@ -128,6 +128,11 @@ export const WholeGame: Story = {
   },
 };
 
+/** The puzzle as a whole page: `size="page"` titles it at the page-title step, as an h1. */
+export const PageTitle: Story = {
+  args: { size: 'page', headingLevel: 1 },
+};
+
 /** Right to left, with the date and number in the locale. */
 export const RightToLeft: Story = {
   decorators: [withRtl],

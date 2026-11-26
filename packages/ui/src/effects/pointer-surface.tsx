@@ -153,7 +153,7 @@ export function PointerSurface({
         <span
           aria-hidden="true"
           data-slot="pointer-surface-light"
-          className="pointer-events-none absolute inset-0 z-10 rounded-[inherit] opacity-0 transition-opacity duration-(--duration-medium) ease-(--ease-move) [--pointer-light:color-mix(in_oklch,var(--primary)_10%,transparent)] [background:radial-gradient(28rem_circle_at_calc(var(--pointer-x)*100%)_calc(var(--pointer-y)*100%),var(--pointer-light),transparent_60%)] group-data-[active]/pointer:opacity-100"
+          className="pointer-events-none absolute inset-0 z-raised rounded-[inherit] opacity-0 transition-opacity duration-(--duration-medium) ease-(--ease-move) [--pointer-light:color-mix(in_oklch,var(--primary)_10%,transparent)] [background:radial-gradient(28rem_circle_at_calc(var(--pointer-x)*100%)_calc(var(--pointer-y)*100%),var(--pointer-light),transparent_60%)] group-data-[active]/pointer:opacity-100"
         />
       ) : null}
       {children}

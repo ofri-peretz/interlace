@@ -158,12 +158,12 @@ function ContextMenuContent({
         side={side}
         sideOffset={sideOffset}
         align={align}
-        className="z-50"
+        className="z-popover"
       >
         <BaseContextMenu.Popup
           data-slot="context-menu-content"
           className={cn(
-            'bg-popover text-popover-foreground data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 min-w-32 origin-(--transform-origin) overflow-hidden rounded-lg border p-1 shadow-md outline-hidden',
+            'bg-popover text-popover-foreground data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 min-w-32 origin-(--transform-origin) overflow-hidden rounded-lg border p-1 shadow-md outline-hidden',
             className,
           )}
           {...props}

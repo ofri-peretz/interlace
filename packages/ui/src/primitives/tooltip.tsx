@@ -149,20 +149,20 @@ function TooltipContent({
   const describedById = React.useContext(TooltipDescriptionContext);
   return (
     <BaseTooltip.Portal>
-      <BaseTooltip.Positioner side={side} sideOffset={sideOffset}>
+      <BaseTooltip.Positioner side={side} sideOffset={sideOffset} className="z-tooltip">
         <BaseTooltip.Popup
           data-slot="tooltip-content"
           data-min-viewport={String(MIN_VIEWPORT)}
           id={describedById}
           role="tooltip"
           className={cn(
-            'bg-primary text-primary-foreground animate-in ease-enter duration-(--duration-base) fade-in-0 zoom-in-95 data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[closed]:zoom-out-95 z-50 w-fit origin-(--transform-origin) rounded-lg px-3 py-1.5 text-xs text-balance',
+            'bg-primary text-primary-foreground animate-in ease-enter duration-(--duration-base) fade-in-0 zoom-in-95 data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[closed]:zoom-out-95 w-fit origin-(--transform-origin) rounded-lg px-3 py-1.5 text-xs text-balance',
             className,
           )}
           {...props}
         >
           {children}
-          <BaseTooltip.Arrow className="bg-primary fill-primary z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]" />
+          <BaseTooltip.Arrow className="bg-primary fill-primary z-raised size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]" />
         </BaseTooltip.Popup>
       </BaseTooltip.Positioner>
     </BaseTooltip.Portal>

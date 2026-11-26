@@ -18,7 +18,7 @@
  *
  * ## Out of the way
  *
- * `aria-hidden`, `pointer-events-none`, and painted at `z-index: -1` inside
+ * `aria-hidden`, `pointer-events-none`, and painted at `z-backdrop` inside
  * the parent's own stacking context: above the parent's background, under
  * its label. So it never dims the text, never takes a click and never
  * changes the accessible name. The default
@@ -102,7 +102,7 @@ export function Sheen({
   return (
     <span
       data-slot="sheen"
-      className={cn('pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-[inherit]', className)}
+      className={cn('pointer-events-none absolute inset-0 z-backdrop overflow-hidden rounded-[inherit]', className)}
       style={style}
       {...props}
       aria-hidden
