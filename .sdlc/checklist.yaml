@@ -30,12 +30,16 @@ items:
     check: node scripts/require-changeset.mjs
     sources: [scripts/require-changeset.mjs, .github/pull_request_template.md]
 
-  - id: registry-rebuilt
+  - id: registry-sources-only
     trigger:
-      paths: ["packages/ui/src/**", "apps/registry/public/r/**"]
-    question: Was the registry output rebuilt with `npm run registry:build` rather than edited by hand or left stale?
-    check: node apps/registry/scripts/build-registry.mjs --check
-    sources: [AGENTS.md, .github/workflows/ci.yml]
+      paths: ["packages/ui/src/**", "apps/registry/**"]
+    question: Does a feature PR change registry sources only, leaving the generated output under `apps/registry/public` to the release commit?
+    check: node apps/registry/scripts/check-no-generated-output.mjs origin/main
+    sources:
+      [
+        apps/registry/scripts/check-no-generated-output.mjs,
+        .github/workflows/ci.yml,
+      ]
 
   - id: motion-earned
     trigger:

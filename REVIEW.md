@@ -7,7 +7,7 @@ The reviewer is shown only the rules whose triggers fire on the diff (`triggerli
 
 - `brand-neutral` Does a consumer's product name, copy, colour, font or script ship inside a component, story default or token, instead of arriving through cssVars and props? ([why](AGENTS.md))
 - `changeset-for-ui-change` Does a change to the design system carry a changeset, the only upgrade path a consumer of copied source has? ([why](scripts/require-changeset.mjs))
-- `registry-rebuilt` Was the registry output rebuilt with `npm run registry:build` rather than edited by hand or left stale? ([why](AGENTS.md))
+- `registry-sources-only` Does a feature PR change registry sources only, leaving the generated output under `apps/registry/public` to the release commit? ([why](apps/registry/scripts/check-no-generated-output.mjs))
 - `motion-earned` Does new motion explain a change, keep the content in the server HTML, and do nothing under reduced motion? ([why](AGENTS.md))
 - `css-layer-order` Does a stylesheet read only the layer before it (brand, semantics, structure, page), so a consumer's classes still win? ([why](packages/ui/DESIGN_SYSTEM_LAYERS.md))
 - `contrast-floor` Does a new token value or tinted composite still clear AA contrast on the surface it sits on? ([why](AGENTS.md))
