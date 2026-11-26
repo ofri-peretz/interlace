@@ -4,7 +4,8 @@
  * A player's run of days: the count, a line on where today stands, and a
  * strip of recent days, each marked played, rested, missed or still open.
  * Rest days come from a `RestRule` (weekdays and dates that never break a
- * run), so a habit does not punish a day off. The arithmetic lives in
+ * run), so a habit does not punish a day off. `protection` lets a player
+ * earn shields that cover a missed day (see `streak-model.ts`). The arithmetic lives in
  * `streak-model.ts` and is exported, so a server can store and check the
  * same numbers this shows.
  *
@@ -15,7 +16,8 @@
  *     ├─ p                         (data-slot="streak-status": where today stands)
  *     ├─ ol                        (data-slot="streak-days", labelled)
  *     │   └─ li × length           (data-slot="streak-day", data-state=played|rest|missed|open|future)
- *     └─ p                         (data-slot="streak-best")
+ *     ├─ p                         (data-slot="streak-best")
+ *     └─ p                         (data-slot="streak-shields": shields held, or days to the next one — with `protection`)
  *
  *   variant="compact" renders one inline chip (data-slot="streak") with the
  *   count and a full sentence for assistive tech, for a header or a toolbar.
@@ -23,7 +25,8 @@
  * ## Never colour alone
  *
  * A played day is a filled mark with a check, a rest day a dashed ring with
- * a moon, a missed day an empty ring, today an open ring with a dot. Each
+ * a moon, a shielded day a tinted mark with a shield, a missed day an empty
+ * ring, today an open ring with a dot. Each
  * day also carries its full date and state as text for screen readers.
  *
  * ## Motion
@@ -53,13 +56,14 @@
  */
 
 import * as React from 'react';
-import { Check, Flame, Moon } from 'lucide-react';
+import { Check, Flame, Moon, Shield, ShieldCheck } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { dayKey, dayKeyToDate, type DayKey } from './daily.js';
 import {
   streakDays,
   summarizeStreak,
+  type Protection,
   type RestRule,
   type StreakDayState,
   type StreakStatus,
@@ -78,6 +82,10 @@ interface StreakLabels {
   days?: string;
   /** Each day's state, read after its date. */
   state?: Partial<Record<StreakDayState, string>>;
+  /** Shields held. @default n => `${n} streak shield(s) ready` */
+  shields?: (held: number) => string;
+  /** Days to the next shield, when none is held. @default n => `${n} more day(s) earns a streak shield` */
+  nextShield?: (days: number) => string;
 }
 
 type StreakProps = Omit<React.ComponentProps<'div'>, 'children'> & {
@@ -89,6 +97,8 @@ type StreakProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   timeZone?: string;
   /** Days that never break a run. */
   rest?: RestRule;
+  /** Shields a player earns to cover a missed day. */
+  protection?: Protection;
   /** Days in the strip, ending today. @default 7 */
   length?: number;
   /** Days after today to show as still to come. @default 0 */
@@ -112,6 +122,7 @@ const STATUS: Record<StreakStatus, string> = {
 const STATE: Record<StreakDayState, string> = {
   played: 'played',
   rest: 'rest day',
+  shielded: 'missed, covered by a shield',
   missed: 'missed',
   open: 'not played yet',
   future: 'still to come',
@@ -141,6 +152,12 @@ function DayMark({ state, today }: { state: StreakDayState; today: boolean }) {
           <Moon aria-hidden />
         </span>
       );
+    case 'shielded':
+      return (
+        <span className={cn(MARK, 'bg-primary/15 text-primary')}>
+          <ShieldCheck aria-hidden />
+        </span>
+      );
     case 'open':
       return (
         <span className={cn(MARK, 'border-primary border-2')}>
@@ -160,6 +177,7 @@ function Streak({
   today: todayProp,
   timeZone,
   rest,
+  protection,
   length = 7,
   after = 0,
   variant = 'full',
@@ -170,10 +188,11 @@ function Streak({
   ...props
 }: StreakProps) {
   const today = todayProp ?? dayKey(new Date(), timeZone);
-  const summary = summarizeStreak(played, today, rest);
+  const summary = summarizeStreak(played, today, rest, protection);
   const unit = labels?.unit ?? 'day streak';
   const status = labels?.status?.[summary.status] ?? STATUS[summary.status];
-  const count = new Intl.NumberFormat(locale).format(summary.current);
+  const nf = new Intl.NumberFormat(locale);
+  const count = nf.format(summary.current);
 
   if (variant === 'compact') {
     return (
@@ -200,7 +219,7 @@ function Streak({
     );
   }
 
-  const days = streakDays(played, today, { length, after, rest });
+  const days = streakDays(played, today, { length, after, rest, protection });
   const short = new Intl.DateTimeFormat(locale, { weekday: 'narrow', timeZone: 'UTC' });
   const long = new Intl.DateTimeFormat(locale, {
     weekday: 'long',
@@ -259,6 +278,18 @@ function Streak({
       {showBest && summary.best > 0 ? (
         <p data-slot="streak-best" className="text-muted-foreground text-sm">
           {best(summary.best)}
+        </p>
+      ) : null}
+      {protection && (summary.shields > 0 || summary.nextShieldIn !== null) ? (
+        <p data-slot="streak-shields" className="text-muted-foreground flex items-center gap-1.5 text-sm">
+          <Shield aria-hidden className={cn('size-4 shrink-0', summary.shields > 0 && 'text-primary')} />
+          {summary.shields > 0
+            ? (labels?.shields ??
+                ((n: number) => `${nf.format(n)} streak ${n === 1 ? 'shield' : 'shields'} ready`))(summary.shields)
+            : (labels?.nextShield ??
+                ((n: number) => `${nf.format(n)} more ${n === 1 ? 'day earns' : 'days earn'} a streak shield`))(
+                summary.nextShieldIn!,
+              )}
         </p>
       ) : null}
     </div>
