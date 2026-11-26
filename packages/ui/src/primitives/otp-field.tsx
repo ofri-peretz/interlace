@@ -81,8 +81,8 @@ const SLOT =
   'disabled:cursor-not-allowed disabled:opacity-50';
 
 const SIZE = {
-  sm: 'h-10 w-9 text-base',
-  default: 'h-12 w-11 text-xl',
+  sm: 'h-10 w-9 min-w-0 shrink text-base',
+  default: 'h-12 w-11 min-w-0 shrink text-xl',
 } as const;
 
 function OtpField({
@@ -122,7 +122,7 @@ function OtpField({
       data-slot="otp-field"
       data-size={size}
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('flex items-center gap-2', className)}
+      className={cn('flex max-w-full items-center gap-2', className)}
       {...props}
     >
       {slots}
