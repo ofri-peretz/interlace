@@ -1475,6 +1475,17 @@
           "source": ".changeset/contrast-more-authoritative.md"
         },
         {
+          "summary": "CountUp: frames are rounded to the decimals of the target, so a count to 40 never shows 39.815.\nA `format` with its own fraction digits keeps them.",
+          "components": [
+            "count-up"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/count-up-whole-frames.md"
+        },
+        {
           "summary": "CTASection: the section is named by its title (`aria-labelledby`), so it is announced as a region with that name.",
           "components": [
             "cta-section"
@@ -1851,6 +1862,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/reflow-at-large-text.md"
+        },
+        {
+          "summary": "ScrollStory: on a narrow screen a step card rests at the foot of the screen, so a tall graphic pinned\nat the top stays readable instead of sitting under the card. The first card sits right under the\ngraphic, so the opening screen shows where to start.",
+          "components": [
+            "scroll-story"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/scroll-story-card-foot.md"
         },
         {
           "summary": "`SeatChart`'s default colours for lists six to eleven alternate deeper and paler shades of the five hues (then a pale grey), instead of deepening all five. Neighbouring hues in the second round now differ in lightness too, so eleven lists stay apart at seat size in light and dark. Every colour keeps 3:1 against the page.",
