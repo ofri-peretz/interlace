@@ -1745,7 +1745,8 @@
   "presence": {
     "title": "Effects/Presence",
     "storyIds": [
-      "effects-presence--default"
+      "effects-presence--default",
+      "effects-presence--step-through"
     ],
     "preview": "effects-presence--default",
     "previewDark": null,

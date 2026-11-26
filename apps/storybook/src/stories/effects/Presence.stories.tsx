@@ -75,8 +75,16 @@ function Demo() {
   );
 }
 
-/** Toggle the hint, and step through the cards: the old one leaves before the next arrives. */
+/** A hint that comes and goes, and a card that swaps: the old one leaves before the next arrives. */
 export const Default: Story = {
+  render: () => <Demo />,
+};
+
+/**
+ * Step forward and back. Kept apart from `Default`, which the screenshot matrix shoots: a play
+ * still clicking when the camera fires would make that picture depend on timing.
+ */
+export const StepThrough: Story = {
   render: () => <Demo />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
