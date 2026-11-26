@@ -912,7 +912,6 @@ export const buildBehaviorMap = async () => {
   }
 
   return {
-    generatedAt: new Date().toISOString(),
     sources: {
       keyboard: 'apps/storybook/src/stories/**/*.stories.tsx',
       keyboardLock: escapeLock.file,
@@ -930,8 +929,9 @@ export const buildBehaviorMap = async () => {
   };
 };
 
-// The timestamp is the one field that changes on every run, so `--check`
-// compares everything else — otherwise the drift gate would fail on the clock.
+// The map carries no timestamp: a per-run field made every branch that rebuilt
+// it conflict with main. `generatedAt` is still dropped here so a file written
+// before the field was removed passes `--check`.
 const withoutTimestamp = (map) => {
   const { generatedAt: _generatedAt, ...rest } = map;
   return JSON.stringify(rest, null, 2);
