@@ -52,6 +52,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import {
@@ -169,7 +170,7 @@ function QuadrantChart({ points, axes, mine, before, stage, arrive, locale, labe
     if (!arrive || !chart || typeof chart.animate !== 'function') return;
     chart
       .querySelector<HTMLElement>('[data-slot="quadrant-dots"]')
-      ?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+      ?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, easing: motionEase(chart, 'enter') });
     const marker = chart.querySelector<HTMLElement>('[data-slot="quadrant-middle"]');
     if (!marker || !mine || !room.median) return;
     const box = chart.getBoundingClientRect();
@@ -178,7 +179,7 @@ function QuadrantChart({ points, axes, mine, before, stage, arrive, locale, labe
     const dy = ((room.median.y - mine.y) / 100) * box.height;
     marker.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }], {
       duration: 400,
-      easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+      easing: motionEase(marker, 'move'),
     });
     // Once, when the picture arrives.
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -49,6 +49,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import { Slider, SliderControl, SliderIndicator, SliderThumb, SliderTrack } from '../primitives/slider.js';
@@ -151,7 +152,7 @@ function Spectrum({
       if (typeof bar.animate !== 'function') return;
       bar.animate([{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], {
         duration: 400,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(bar, 'enter'),
       });
     });
     const marker = chart?.querySelector<HTMLElement>('[data-slot="spectrum-middle"]');
@@ -160,7 +161,7 @@ function Spectrum({
       const from = ((placed - room.median) / 100) * width;
       marker.animate([{ transform: `translateX(${from}px)` }, { transform: 'translateX(0)' }], {
         duration: 400,
-        easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+        easing: motionEase(marker, 'move'),
       });
     }
     // Once, when this viewer's dot lands.

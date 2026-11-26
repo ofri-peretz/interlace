@@ -55,6 +55,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import {
@@ -153,7 +154,7 @@ function PinField({ src, aspect, pins, mine, answer, arrive, stage, answerLabel 
     if (mark && typeof mark.animate === 'function') {
       mark.animate([{ transform: 'translate(-50%, -50%) scale(0)' }, { transform: 'translate(-50%, -50%) scale(1)' }], {
         duration: 200,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(mark, 'enter'),
       });
     }
     if (line && typeof line.animate === 'function') {
@@ -319,7 +320,7 @@ function PinDrop({
           { transform: 'translate(-50%, calc(-50% - 12px))', opacity: 0 },
           { transform: 'translate(-50%, -50%)', opacity: 1 },
         ],
-        { duration: 200, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+        { duration: 200, easing: motionEase(mine, 'enter') },
       );
     }
   }, [placedHere, reduced]);

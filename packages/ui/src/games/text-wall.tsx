@@ -44,6 +44,7 @@ import * as React from 'react';
 
 import { FlipGroup } from '../effects/flip-group.js';
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -88,7 +89,7 @@ function Post({ id, text, enter }: { id: string; text: string; enter: boolean })
       ],
       {
         duration: 200,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(el, 'enter'),
       },
     );
   }, []);
@@ -131,7 +132,7 @@ function TextWall({
       ],
       {
         duration: 250,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(el, 'enter'),
       },
     );
   }, [featured?.id, reduced]);

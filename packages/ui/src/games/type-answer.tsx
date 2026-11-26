@@ -49,6 +49,7 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import { Input } from '../primitives/input.js';
@@ -184,7 +185,7 @@ function TypeAnswer({
     if (!active || active === document.body || fieldRef.current?.form?.contains(active)) resultRef.current?.focus();
     const field = fieldRef.current;
     if (reduced || !field || typeof field.animate !== 'function') return;
-    const timing = { duration: 250, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' };
+    const timing = { duration: 250, easing: motionEase(field, 'move') };
     if (result.outcome === 'correct') {
       field.animate([{ transform: 'none' }, { transform: 'translateY(-3px)' }, { transform: 'none' }], timing);
     } else if (result.outcome === 'wrong') {

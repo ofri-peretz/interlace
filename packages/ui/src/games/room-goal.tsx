@@ -39,6 +39,7 @@ import * as React from 'react';
 import { Check } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import type { RoomMilestone } from './room-goal-model.js';
 
@@ -116,7 +117,7 @@ function RoomGoal({
       if (el && typeof el.animate === 'function') {
         el.animate([{ transform: 'none' }, { transform: 'translateY(-4px) scale(1.04)' }, { transform: 'none' }], {
           duration: 250,
-          easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+          easing: motionEase(el, 'move'),
         });
       }
     }

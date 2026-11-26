@@ -68,6 +68,7 @@ import { Check, ChevronLeft, ChevronRight, Pause, Play, Plus } from 'lucide-reac
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import {
@@ -235,7 +236,7 @@ function Rise({ id, reduced, children }: { id: string | undefined; reduced: bool
       ],
       {
         duration: 200,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(el, 'enter'),
       },
     );
   }, [id, reduced]);

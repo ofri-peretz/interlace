@@ -53,6 +53,7 @@ import { Hand, Heart, Laugh, Lightbulb, CircleHelp, Mic, ThumbsUp } from 'lucide
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import { tallyReactions, type RaisedHand } from './reactions-model.js';
@@ -100,7 +101,7 @@ function ReactionBar({
     if (reduced || typeof el.animate !== 'function') return;
     el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }], {
       duration: 250,
-      easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      easing: motionEase(el, 'enter'),
     });
   };
   return (
@@ -177,7 +178,7 @@ function FloatIcon({ float, icon, onDone }: { float: Float; icon: React.ReactNod
         { transform: `translate(${drift * 0.3}px, -20%) scale(1.1)`, opacity: 1, offset: 0.15 },
         { transform: `translate(${drift}px, -420%) scale(1)`, opacity: 0 },
       ],
-      { duration: 1600, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' },
+      { duration: 1600, easing: motionEase(el, 'enter'), fill: 'forwards' },
     );
     let live = true;
     anim.finished.then(

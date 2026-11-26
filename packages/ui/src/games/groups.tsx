@@ -47,6 +47,7 @@ import * as React from 'react';
 
 import { FlipGroup } from '../effects/flip-group.js';
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { TimerRing } from './timer-ring.js';
 
@@ -95,7 +96,7 @@ function useRiseIn(key: string, reduced: boolean) {
       ],
       {
         duration: 200,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(el, 'enter'),
       },
     );
     const chips = el.querySelectorAll<HTMLElement>('[data-slot="group-card-member"]');
@@ -111,7 +112,7 @@ function useRiseIn(key: string, reduced: boolean) {
         {
           duration: 200,
           delay: Math.round(i * step),
-          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          easing: motionEase(chip, 'enter'),
           fill: 'backwards',
         },
       );

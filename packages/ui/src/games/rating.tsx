@@ -50,6 +50,7 @@ import { RadioGroup } from '@base-ui/react/radio-group';
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import { ratingSteps, summarizeRatings } from './rating-model.js';
@@ -163,7 +164,7 @@ function Rating({
       if (typeof bar.animate !== 'function') return;
       bar.animate([{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], {
         duration: 250,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(bar, 'enter'),
       });
     });
     // Once, when this viewer's rating lands.

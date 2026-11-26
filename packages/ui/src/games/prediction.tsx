@@ -46,6 +46,7 @@ import { RadioGroup } from '@base-ui/react/radio-group';
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import { predictionPoints, type PredictionReward } from './prediction-model.js';
@@ -155,7 +156,7 @@ function Prediction({
         { transform: `translateY(${right ? 12 : 8}px)`, opacity: 0 },
         { transform: 'translateY(0)', opacity: 1 },
       ],
-      { duration: 200, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+      { duration: 200, easing: motionEase(el, 'enter') },
     );
     // Once per outcome.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -167,7 +168,7 @@ function Prediction({
     if (!reduced && chosen && typeof chosen.animate === 'function') {
       chosen.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.96)' }, { transform: 'scale(1)' }], {
         duration: 150,
-        easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+        easing: motionEase(chosen, 'move'),
       });
     }
     if (valueProp === undefined) setOwn(draft);

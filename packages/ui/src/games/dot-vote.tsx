@@ -43,6 +43,7 @@ import { Minus, Plus } from 'lucide-react';
 
 import { FlipGroup } from '../effects/flip-group.js';
 import { cn } from '../lib/cn.js';
+import { motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
 import { cleanBallot, dotsLeft, tallyDots, type DotBallot } from './dot-vote-model.js';
@@ -137,7 +138,7 @@ function DotVote({
       if (typeof bar.animate !== 'function') return;
       bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], {
         duration: 400,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        easing: motionEase(bar, 'enter'),
       });
     });
     // Once, when this viewer's dots land.
