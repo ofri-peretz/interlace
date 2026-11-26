@@ -1657,6 +1657,17 @@
           "source": ".changeset/motion-tokens.md"
         },
         {
+          "summary": "MultiStepForm says what is wrong when a field fails its native check, not only where: the field's name (a radio group's own label) and the browser's message under the step (reworded with `labels.invalid`), and `aria-invalid` on the field until it is edited. Before, Continue only moved focus, so a sighted reader saw nothing happen. `MultiStepFormSummary` wraps a long answer (an email, a name) instead of pushing the page sideways at 320px.",
+          "components": [
+            "multi-step-form"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/multi-step-form-says-why.md"
+        },
+        {
           "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",
           "components": [
             "grid",

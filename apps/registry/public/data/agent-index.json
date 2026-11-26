@@ -6513,7 +6513,8 @@
       "a11y": {
         "roles": [
           "alert",
-          "radio"
+          "radio",
+          "radiogroup"
         ],
         "aria": [
           "aria-busy",
