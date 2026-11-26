@@ -59,6 +59,7 @@ import { CountUp } from '../effects/count-up.js';
 import { FlipGroup } from '../effects/flip-group.js';
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 import { rankEntries, type RankedEntry } from './leaderboard-model.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -103,7 +104,6 @@ type StandingsProps = Omit<React.ComponentProps<'section'>, 'children'> & {
   labels?: StandingsLabels;
 };
 
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
 /** The rows to show: the top `limit` by the new ranking, plus the viewer's own. */
 function pick(now: RankedEntry[], limit: number, currentId?: string): Set<string> {
@@ -159,7 +159,7 @@ function Standings({
       if (typeof chip.animate === 'function')
         chip.animate(
           [{ transform: 'scale(0.4)' }, { transform: 'scale(1.12)', offset: 0.6 }, { transform: 'scale(1)' }],
-          { duration: 420, delay: i * 40, easing: EASE, fill: 'backwards' },
+          { duration: 420, delay: i * 40, easing: motionEase(chip, 'enter'), fill: 'backwards' },
         );
     });
     // Beat three, once the totals have counted: the glide.

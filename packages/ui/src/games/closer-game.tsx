@@ -59,6 +59,7 @@ import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { Input } from '../primitives/input.js';
 import { Slider, SliderControl, SliderIndicator, SliderThumb, SliderTrack } from '../primitives/slider.js';
@@ -201,7 +202,7 @@ function CloserGame({
     const rtl = getComputedStyle(mark).direction === 'rtl';
     const track = mark.parentElement?.getBoundingClientRect().width ?? 0;
     const dx = ((guessPos - answerPos) / 100) * track * (rtl ? -1 : 1);
-    const timing = { duration: 400, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' };
+    const timing = { duration: motionDuration(mark, 'slow'), easing: motionEase(mark, 'move') };
     mark.animate([{ transform: `translateX(${dx}px)` }, { transform: 'translateX(0)' }], timing);
     gap?.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], timing);
   }, [revealed, reduced, guessPos, answerPos]);
