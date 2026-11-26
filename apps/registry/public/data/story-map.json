@@ -1746,6 +1746,21 @@
     "previewDark": "primitives-popover--dark",
     "skeleton": null
   },
+  "prediction": {
+    "title": "Games/Prediction",
+    "storyIds": [
+      "games-prediction--default",
+      "games-prediction--live",
+      "games-prediction--choosing",
+      "games-prediction--locked",
+      "games-prediction--missed",
+      "games-prediction--closed",
+      "games-prediction--right-to-left"
+    ],
+    "preview": "games-prediction--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "prev-next-post": {
     "title": "Blocks/PrevNextPost",
     "storyIds": [

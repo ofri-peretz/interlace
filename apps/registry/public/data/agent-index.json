@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 244
+    "itemCount": 245
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 35,
+      "game": 36,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -43,8 +43,8 @@
       "primitive": 78,
       "pattern": 65,
       "blog": 37,
-      "games": 35,
-      "game": 35,
+      "games": 36,
+      "game": 36,
       "data": 30,
       "foundation": 27,
       "effect": 27,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 130,
+      "client": 131,
       "server": 114
     },
     "keyboard": {
       "none": 191,
-      "handled": 53
+      "handled": 54
     },
     "loading": {
-      "none": 206,
+      "none": 207,
       "built-in": 38
     },
     "minViewport": {
-      "320": 163,
+      "320": 164,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7269,6 +7269,73 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/popover.json",
       "item": "https://ds.interlace.tools/r/popover.json",
       "docs": "https://ds.interlace.tools/c/popover"
+    },
+    {
+      "name": "prediction",
+      "title": "Prediction",
+      "type": "registry:ui",
+      "summary": "\"Who will win?\" on a phone: the room calls an outcome before it happens, locks it in, and waits. Nobody sees how the room called it until the host settles it, so a call is the person's own read. Then the room's spread appears with the outcome marked, and…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PredictionReward",
+          "values": [
+            "flat",
+            "bold"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "tally-bars",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/prediction.tsx",
+        "components/ui/games/prediction-model.ts",
+        "components/ui/games/tally-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/prediction.json",
+      "item": "https://ds.interlace.tools/r/prediction.json",
+      "docs": "https://ds.interlace.tools/c/prediction"
     },
     {
       "name": "prev-next-post",

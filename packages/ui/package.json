@@ -640,6 +640,14 @@
       "types": "./dist/games/room-goal.d.ts",
       "default": "./dist/games/room-goal.js"
     },
+    "./games/prediction": {
+      "types": "./dist/games/prediction.d.ts",
+      "default": "./dist/games/prediction.js"
+    },
+    "./games/prediction-model": {
+      "types": "./dist/games/prediction-model.d.ts",
+      "default": "./dist/games/prediction-model.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

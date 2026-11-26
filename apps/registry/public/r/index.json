@@ -3802,6 +3802,24 @@
       }
     },
     {
+      "name": "prediction",
+      "type": "registry:ui",
+      "title": "Prediction",
+      "description": "\"Who will win?\" on a phone: the room calls an outcome before it happens, locks it in, and waits. Nobody sees how the room called it until the host settles it, so a call is the person's own read. Then the room's spread appears with the outcome marked, and…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "qr-code",
       "type": "registry:ui",
       "title": "Qr Code",
