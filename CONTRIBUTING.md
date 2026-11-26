@@ -31,7 +31,8 @@ A new primitive lands as one PR with:
 3. An entry in `PRIMITIVES` in `packages/ui/__tests__/primitives-min-viewport-lock.test.tsx`.
 4. The export entry in `packages/ui/package.json`.
 5. A category in `apps/registry/registry-categories.json`.
-6. The rebuilt registry output: `npm run registry:build`, then commit `apps/registry/public/r/`.
+6. No generated output: leave `apps/registry/public/` out of the PR. Every build regenerates it,
+   and only the release commit carries it (CI's `registry (no generated output in PRs)` job).
 7. A changeset: `npm run changeset`.
 
 Patterns, templates and charts follow the same shape in their own folders.
