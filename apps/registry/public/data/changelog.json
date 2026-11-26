@@ -978,6 +978,18 @@
           "source": ".changeset/seat-chart.md"
         },
         {
+          "summary": "Section's `brand` band paints from new `--band` / `--band-foreground` tokens (`bg-band`, `text-band-foreground`). They follow the primary pair unless set, so nothing changes by default; a dark scheme can now keep its band deep while its primary is lightened for links and buttons. More-contrast mode puts the band back on its primary pair.",
+          "components": [
+            "section",
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/section-band-token.md"
+        },
+        {
           "summary": "`Section` gets a `brand` tone, the full-bleed brand band (`bg-primary` with `text-primary-foreground`), and a new `overlap` axis (`none`, `sm`, `md`, `lg`). A Section with `overlap` drops its own top padding, pulls up by that depth and stacks above the band before it, so a card can straddle the edge of a brand band with no custom class: two Sections, the second with `overlap=\"md\"`.",
           "components": [
             "section"
@@ -1254,6 +1266,17 @@
           "source": ".changeset/weave-texture.md"
         },
         {
+          "summary": "Wordmark gains `size`: `md` (the default, unchanged), `sm` (about two thirds: text a step down, a thinner plate) and `responsive` (`sm` below the `md` breakpoint, `md` from it). A stacked three-line lockup in a sticky topbar took about a fifth of a phone's screen; `size=\"responsive\"` gives that height back to the page.",
+          "components": [
+            "wordmark"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/wordmark-size.md"
+        },
+        {
           "summary": "New `Wordmark`: a text logo of stacked lines (a name over its tagline, or one name in several scripts), with each `Wordmark.Line` carrying its own `lang` and `dir`. `variant=\"framed\"` is a page-coloured plate with an inset rule in the brand colour; `plain` is the lines alone in the text colour. With `href` the whole lockup is one link named by `label`; without, it is an image of text. Lines use `--font-heading`; for another script, add its font to that stack and the browser picks per glyph. `Topbar`'s row is now at least 3.5rem and grows to fit a taller logo instead of clipping it.",
           "components": [
             "wordmark",
@@ -1469,6 +1492,17 @@
           "source": ".changeset/focus-sweep.md"
         },
         {
+          "summary": "Footer sets its link groups two to a row on a phone, with the brand across the row, and trims its phone padding to py-12. With 44px touch-target rows, a stacked footer of three groups was taller than a short page above it.",
+          "components": [
+            "footer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/footer-phone-columns.md"
+        },
+        {
           "summary": "`Grid`'s column gap never takes more than one track's share of the width (100% / cols). Gaps are in rem and grow with a reader's text size; at 150% on a 390px phone, eleven 36px gaps in a 12-column grid came to 396px in a 342px column and pushed every section sideways. The row gap and every step's value are unchanged, and on a phone at 100% the cap never bites. On wider screens it trims `xl` and `2xl` only where eleven of their gaps would overflow. A `gap-*` className still replaces it.",
           "components": [
             "grid"
@@ -1642,6 +1676,17 @@
           "source": ".changeset/pricing-tier-density.md"
         },
         {
+          "summary": "Prose styles `figure` / `figcaption`: a quote's caption sits under it, indented to the quote's text, in the small muted UI size. Before, the attribution rendered at body size and outweighed the quote it named.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/prose-figure-caption.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"
@@ -1762,6 +1807,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/spotlight-motion-fx.md"
+        },
+        {
+          "summary": "StatGroup with `cols={3}` goes from one track straight to three at a 36rem container, instead of two from 28rem and three from 56rem. On a tablet the two-track step left the third stat alone on its own row, which read as a missing one.",
+          "components": [
+            "stat-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/stat-group-three.md"
         },
         {
           "summary": "Text alignment follows the writing direction everywhere.\n\nTypography's `align`, Accordion triggers, the Dialog header, Prose table headers, PrevNextPost cards, SeriesTable and MetricTable used `text-left` and `text-right`, which put text against the wrong edge in a right-to-left page. They now use `text-start` and `text-end`, so the same markup is correct in English, Hebrew and Arabic. Left-to-right pages render exactly as before. A new lock keeps physical alignment out of the components.",

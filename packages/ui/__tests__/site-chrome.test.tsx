@@ -491,6 +491,33 @@ describe("Prose", () => {
     expect(classes).toContain("[&_h2]:font-heading");
     expect(classes).not.toContain("font-body");
   });
+
+  it("sets a figure's caption under its quote, small and muted", () => {
+    const { container } = render(<Prose>x</Prose>);
+    const classes = container.firstElementChild!.className;
+    expect(classes).toContain("[&_figure:not([data-slot])>blockquote]:my-0");
+    expect(classes).toContain("[&_figure:not([data-slot])>figcaption]:text-ui-sm");
+    // A component's own figure (data-slot) keeps its caption.
+    expect(classes).not.toContain("[&_figcaption]:");
+  });
+});
+
+describe("StatGroup tracks", () => {
+  it("takes three stats straight to three tracks, never two and an orphan", () => {
+    const { container } = render(
+      <StatGroup
+        cols={3}
+        stats={[
+          { value: "4", label: "a" },
+          { value: "36", label: "b" },
+          { value: "0", label: "c" },
+        ]}
+      />,
+    );
+    const grid = container.querySelector('[data-slot="grid"]')!;
+    expect(grid.className).toContain("@xl:grid-cols-3");
+    expect(grid.className).not.toContain("grid-cols-2");
+  });
 });
 
 describe("StatCard", () => {
@@ -530,5 +557,22 @@ describe("Footer", () => {
     expect(
       screen.getByText("Answers with their sources.").getAttribute("data-slot"),
     ).toBe("footer-tagline");
+  });
+
+  it("sets link groups two to a row on a phone, with the brand across the row", () => {
+    const { container } = render(
+      <Footer
+        brand="Site"
+        groups={[
+          { title: "Answers", links: [{ href: "/a", label: "All" }] },
+          { title: "About", links: [{ href: "/b", label: "Us" }] },
+        ]}
+      />,
+    );
+    const brand = container.querySelector('[data-slot="footer-brand"]')!;
+    expect(brand.parentElement!.className).toContain("grid-cols-2");
+    expect(brand.parentElement!.className).toContain("md:grid-cols-[1fr_1fr_1fr]");
+    expect(brand.className).toContain("col-span-2");
+    expect(brand.className).toContain("md:col-span-1");
   });
 });
