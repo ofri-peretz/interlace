@@ -111,6 +111,7 @@ import { Lock, LockOpen, X } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import {
   answerProgress,
@@ -129,7 +130,6 @@ import {
 
 export const MIN_VIEWPORT = 320 as const;
 
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
 // --- useRoom --------------------------------------------------------------------
 
@@ -453,7 +453,7 @@ function LiveRoomLobby({
         el.animate(
           // Scale only: a fading name would dip below text contrast mid-entrance.
           [{ transform: 'scale(0.6)' }, { transform: 'scale(1)' }],
-          { duration: 240, easing: EASE },
+          { duration: 240, easing: motionEase(el, 'enter') },
         );
       }
     }
@@ -609,7 +609,7 @@ function LiveRoomCountdown({
     el.animate(
       // Scale only, like the chips: a fading number would dip below text contrast.
       [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
-      { duration: 400, easing: EASE },
+      { duration: motionDuration(el, 'slow'), easing: motionEase(el, 'enter') },
     );
   }, [left, reduced]);
 

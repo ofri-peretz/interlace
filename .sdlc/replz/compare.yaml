@@ -1,0 +1,7 @@
+# replz compare: the interlace-ui CLI's pure argv -> plan module, run on frozen inputs at the PR's
+# base and at its head. A consumer types these argvs; the plan is the shadcn command we spawn for
+# them. A changed line fails the PR until it is approved below with a reason.
+command: >-
+  INTERLACE_SHADCN_SPEC=shadcn@latest node --no-warnings --input-type=module -e "const p=await import(process.cwd()+'/packages/cli/src/plan.ts');let s='';for await(const c of process.stdin)s+=c;for(const l of s.split('\n').filter(Boolean)){const j=JSON.parse(l);let label,out;try{if(Array.isArray(j)){label='argv '+l;out=JSON.stringify(p.planFromArgv(j))}else if(j.args===null){label=j.fn;out=JSON.stringify(p[j.fn])}else{label=j.fn+' '+JSON.stringify(j.args);out=JSON.stringify(p[j.fn](...j.args))}}catch(e){out='throws '+e.message}console.log(label+' => '+out)}"
+inputs: .sdlc/replz/compare-inputs
+approved: []

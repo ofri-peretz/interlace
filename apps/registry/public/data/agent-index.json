@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 234
+    "itemCount": 235
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -35,7 +35,7 @@
       "game": 24,
       "chart": 14,
       "template": 13,
-      "util": 7,
+      "util": 8,
       "starter": 3,
       "theme": 3
     },
@@ -44,7 +44,7 @@
       "pattern": 65,
       "blog": 37,
       "data": 30,
-      "foundation": 28,
+      "foundation": 29,
       "effect": 27,
       "form": 26,
       "games": 24,
@@ -56,28 +56,28 @@
       "marketing": 14,
       "template": 13,
       "overlay": 10,
-      "util": 7,
+      "util": 8,
       "a11y": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
       "client": 120,
-      "server": 114
+      "server": 115
     },
     "keyboard": {
-      "none": 184,
+      "none": 185,
       "handled": 50
     },
     "loading": {
-      "none": 196,
+      "none": 197,
       "built-in": 38
     },
     "minViewport": {
       "320": 152,
       "480": 7,
       "768": 1,
-      "inherited": 74
+      "inherited": 75
     }
   },
   "items": [
@@ -351,6 +351,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1572,6 +1573,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1738,6 +1740,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -2096,6 +2099,7 @@
         "cn",
         "input",
         "interlace-base",
+        "motion-token",
         "slider",
         "use-reduced-motion"
       ],
@@ -2542,6 +2546,7 @@
         "cn",
         "input",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3716,6 +3721,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3897,6 +3903,7 @@
         "celebrate",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4365,6 +4372,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4904,6 +4912,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -5330,6 +5339,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6123,6 +6133,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6174,6 +6185,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6552,6 +6564,49 @@
       "docs": "https://ds.interlace.tools/c/milestones"
     },
     {
+      "name": "motion-token",
+      "title": "Motion token reader",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [],
+      "installsTo": [
+        "lib/motion-token.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/motion-token.json",
+      "item": "https://ds.interlace.tools/r/motion-token.json",
+      "docs": "https://ds.interlace.tools/c/motion-token"
+    },
+    {
       "name": "multi-step-form",
       "title": "Multi Step Form",
       "type": "registry:ui",
@@ -6604,6 +6659,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6840,6 +6896,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -7054,6 +7111,7 @@
         "celebrate",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -7689,6 +7747,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "tally-bars",
         "timer-ring",
         "use-reduced-motion"
@@ -8368,6 +8427,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -8417,6 +8477,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -9307,6 +9368,7 @@
         "cn",
         "interlace-base",
         "meter",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -10531,6 +10593,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -10629,6 +10692,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -10743,6 +10807,7 @@
         "count-up",
         "flip-group",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -11508,6 +11573,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -12286,6 +12352,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "radio-group",
         "use-reduced-motion"
       ],
@@ -13461,6 +13528,7 @@
         "flip-group",
         "input",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [

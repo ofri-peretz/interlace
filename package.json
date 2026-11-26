@@ -38,7 +38,7 @@
     "ai-sdlc:test": "node --test scripts/ai-sdlc/ai-sdlc.test.mjs",
     "changeset": "changeset",
     "changeset:check": "node scripts/require-changeset.mjs",
-    "version-packages": "changeset version && npm run versions:derive && npm run registry:build && npm install --package-lock-only --ignore-scripts",
+    "version-packages": "changeset version && npm run versions:derive && npm run generate --workspace=registry && npm install --package-lock-only --ignore-scripts",
     "release": "node scripts/release-tag.mjs && node scripts/release-cli.mjs",
     "versions:derive": "node apps/registry/scripts/derive-component-versions.mjs",
     "versions:check": "node apps/registry/scripts/derive-component-versions.mjs --check",

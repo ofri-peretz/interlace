@@ -68,6 +68,7 @@ import { Check, X } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { scoreAnswer, type QuizOutcome, type QuizResult, type QuizScoreOptions } from './quiz-model.js';
 import { TallyBars, type TallyBarsLabels, type TallyMark } from './tally-bars.js';
@@ -210,7 +211,8 @@ function QuizQuestion({
     const group = groupRef.current;
     const right = group?.querySelector<HTMLElement>('[data-mark="correct"]');
     const wrong = group?.querySelector<HTMLElement>('[data-mark="wrong"]');
-    const timing = { duration: 250, easing: 'cubic-bezier(0.65, 0, 0.35, 1)' };
+    if (!group) return;
+    const timing = { duration: motionDuration(group, 'medium'), easing: motionEase(group, 'move') };
     if (right && typeof right.animate === 'function') {
       right.animate([{ transform: 'none' }, { transform: 'translateY(-3px) scale(1.02)' }, { transform: 'none' }], timing);
     }
