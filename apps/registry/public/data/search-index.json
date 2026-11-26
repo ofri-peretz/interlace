@@ -1397,9 +1397,9 @@
     "fieldlabel": 3,
     "fieldvalidity": 1,
     "fifth": 2,
-    "figcaption": 10,
+    "figcaption": 11,
     "fight": 1,
-    "figur": 17,
+    "figur": 18,
     "figurecaption": 1,
     "filenam": 2,
     "fill": 52,
@@ -4089,7 +4089,7 @@
         "chart",
         "data"
       ],
-      "terms": "chart fram data client responsiv min viewport 320 chartfram csv download footer tabl spreadsheet number mailto figur updat header subtitl utf figcaption view titl find offer came slot byte address reader script learn tab word row date relativ link read schem url order 2025 4180 apostroph crlf doubt formula resident tocsv http measur print plain languag away publish fresh hunt origin publisher page click"
+      "terms": "chart fram data client responsiv min viewport 320 chartfram csv download footer tabl spreadsheet number mailto figur updat header subtitl utf view titl figcaption find offer came slot byte address reader script learn tab word row date relativ link read schem url order 2025 4180 apostroph crlf doubt formula resident tocsv http measur print plain languag away publish fresh hunt origin publisher page click"
     },
     {
       "name": "checkbox",
@@ -4134,7 +4134,7 @@
         "chart",
         "data"
       ],
-      "terms": "choropleth map data chart client load skeleton responsiv min viewport 320 keyboard stat quantil equal choroplethmap max bin area legend shad readout tabl path solar edge svg lowest many binn county legendlabel lightest mapbin rainfall turnout sentenc tone home languag coordinat district mix interval rang viewbox showtabl figur slot panel live break box seven ladder reader figcaption miss highest plot never shown polit 800"
+      "terms": "choropleth map data chart client load skeleton responsiv min viewport 320 keyboard stat quantil equal choroplethmap max bin area legend shad readout tabl path solar edge svg lowest many binn county legendlabel lightest mapbin rainfall turnout sentenc tone home languag coordinat district mix interval rang viewbox showtabl figur slot panel live break box seven ladder reader miss figcaption highest plot never shown polit 800"
     },
     {
       "name": "citation",
@@ -6012,7 +6012,7 @@
     {
       "name": "prose",
       "title": "Prose",
-      "blurb": "The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer. Think MDX-target…",
+      "blurb": "The article-body wrapper. Renders an `<article>` whose descendants (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `figure`/`figcaption`, `code`/`pre`, `table`, `img`) get DS-token-mapped typography without per-element class gymnastics in the consumer.…",
       "tier": "primitive",
       "categories": [
         "blog",
@@ -6030,7 +6030,7 @@
         "primitive",
         "blog"
       ],
-      "terms": "pros blog primitiv client responsiv min viewport 320 stat articl main section pre tabl wrapper sideway descendant scroll gfm mdx overflow mode focusabl landmark typography body measur blockquot head cascad 17px gymnastic uselayouteffect zebra long read think variant 65ch tbody semantic ele img deep bound mapp contract insid reachabl token whos cap overrid stop block drop accept container text arbitrary name fit anchorabl auditabl"
+      "terms": "pros blog primitiv client responsiv min viewport 320 stat articl main section pre tabl wrapper sideway descendant scroll gfm overflow mode focusabl landmark typography body measur blockquot mdx head cascad 17px gymnastic uselayouteffect zebra long read variant 65ch tbody semantic ele img deep bound mapp contract insid reachabl token whos cap figcaption overrid stop block drop accept container text arbitrary name fit anchorabl auditabl"
     },
     {
       "name": "published-date",
@@ -6340,7 +6340,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "reveal decorativ effect client arriv block rise littl blur fade quot focus grow notic depend millisecond view figur content sharpen animat enter compositor reader ele 600 head come scroll visibl without intersectionobserver receiv sibl browser ful wait section arrival crawler lift card run loop keyfram sequenc reduc show filter size every motion invisibl much remov straight handl script noth away transform opacity web hide"
+      "terms": "reveal decorativ effect client arriv block rise littl blur fade quot focus grow notic depend millisecond view content figur sharpen animat enter compositor reader ele 600 head come scroll visibl without intersectionobserver receiv sibl browser ful wait section arrival crawler lift card run loop keyfram sequenc reduc show filter size every motion invisibl much remov straight handl script noth away transform opacity web hide"
     },
     {
       "name": "rotating-text",

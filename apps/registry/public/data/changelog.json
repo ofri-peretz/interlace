@@ -1558,6 +1558,17 @@
           "source": ".changeset/pricing-tier-density.md"
         },
         {
+          "summary": "Prose styles `figure` / `figcaption`: a quote's caption sits under it, indented to the quote's text, in the small muted UI size. Before, the attribution rendered at body size and outweighed the quote it named.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/prose-figure-caption.md"
+        },
+        {
           "summary": "Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.",
           "components": [
             "prose"

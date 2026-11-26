@@ -491,6 +491,15 @@ describe("Prose", () => {
     expect(classes).toContain("[&_h2]:font-heading");
     expect(classes).not.toContain("font-body");
   });
+
+  it("sets a figure's caption under its quote, small and muted", () => {
+    const { container } = render(<Prose>x</Prose>);
+    const classes = container.firstElementChild!.className;
+    expect(classes).toContain("[&_figure:not([data-slot])>blockquote]:my-0");
+    expect(classes).toContain("[&_figure:not([data-slot])>figcaption]:text-ui-sm");
+    // A component's own figure (data-slot) keeps its caption.
+    expect(classes).not.toContain("[&_figcaption]:");
+  });
 });
 
 describe("StatCard", () => {
