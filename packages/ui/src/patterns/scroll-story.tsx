@@ -139,7 +139,7 @@ export const ScrollStory = React.forwardRef<HTMLDivElement, ScrollStoryProps>(fu
       data-step={step}
       data-side={side}
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('@container/story', className)}
+      className={cn('@container/story isolate', className)}
       {...props}
     >
       <div
@@ -153,7 +153,7 @@ export const ScrollStory = React.forwardRef<HTMLDivElement, ScrollStoryProps>(fu
         <div
           data-slot="scroll-story-graphic"
           className={cn(
-            'bg-background sticky top-[var(--scroll-story-offset,0px)] z-0 py-4 @3xl/story:row-start-1 @3xl/story:flex @3xl/story:min-h-[calc(100svh-var(--scroll-story-offset,0px))] @3xl/story:flex-col @3xl/story:justify-center @3xl/story:self-start',
+            'bg-background sticky top-[var(--scroll-story-offset,0px)] z-base py-4 @3xl/story:row-start-1 @3xl/story:flex @3xl/story:min-h-[calc(100svh-var(--scroll-story-offset,0px))] @3xl/story:flex-col @3xl/story:justify-center @3xl/story:self-start',
             side === 'end' ? '@3xl/story:col-start-2' : '@3xl/story:col-start-1',
           )}
         >
@@ -164,7 +164,7 @@ export const ScrollStory = React.forwardRef<HTMLDivElement, ScrollStoryProps>(fu
           ref={stepsRef}
           data-slot="scroll-story-steps"
           className={cn(
-            'relative z-10 flex flex-col @3xl/story:row-start-1',
+            'relative z-raised flex flex-col @3xl/story:row-start-1',
             side === 'end' ? '@3xl/story:col-start-1' : '@3xl/story:col-start-2',
           )}
         >

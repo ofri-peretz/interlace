@@ -193,7 +193,7 @@ export const HeroCosmic = React.forwardRef<HTMLDivElement, HeroCosmicProps>(
           <Container
             size="content"
             data-slot="hero-cosmic-body"
-            className="relative z-10 py-10 text-center md:py-16 lg:py-24"
+            className="relative z-raised py-10 text-center md:py-16 lg:py-24"
           >
             {eyebrow ? (
               <div

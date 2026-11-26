@@ -754,7 +754,7 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
       {...rest}
     >
       <div className="relative grid w-max grid-cols-[10rem_max-content]">
-        <div className="sticky left-0 z-10 border-b border-border bg-card" />
+        <div className="sticky left-0 z-raised border-b border-border bg-card" />
         <svg
           data-slot="timeline-map-axis"
           viewBox={`0 0 ${stripWidth} 20`}
@@ -789,7 +789,7 @@ function TimelineMapChart({ className, ...rest }: TimelineMapChartProps) {
           <React.Fragment key={lane.name}>
             <div
               className={cn(
-                'sticky left-0 z-10 flex h-11 items-center justify-between gap-2 border-b border-border/60 bg-card pr-3 text-[11px] font-medium leading-tight text-foreground',
+                'sticky left-0 z-raised flex h-11 items-center justify-between gap-2 border-b border-border/60 bg-card pr-3 text-[11px] font-medium leading-tight text-foreground',
                 laneIdx % 2 === 1 && 'bg-muted/40',
               )}
             >

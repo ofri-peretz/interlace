@@ -96,7 +96,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 ## Items — tier `theme`
 
-- [Interlace Base](https://ds.interlace.tools/c/interlace-base): @interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.
+- [Interlace Base](https://ds.interlace.tools/c/interlace-base): @interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, a named z-index layer scale, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/interlace-base.json`
   - contract: server, v4.11.1
 - [Interlace Foundation](https://ds.interlace.tools/c/interlace-foundation): @interlace/ui — opt-in page-level styling: Inter and JetBrains Mono on font-sans / font-mono, the preflight (body colours, WCAG 2.2 focus ring, media reset, scrollbars), and the fumadocs colour bridge. Restyles the host app by design.

@@ -140,6 +140,7 @@ function PopoverContent({
   return (
     <BasePopover.Portal>
       <BasePopover.Positioner
+        className="z-popover"
         side={side}
         sideOffset={sideOffset}
         align={align}
@@ -151,7 +152,7 @@ function PopoverContent({
           data-slot="popover-content"
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'bg-popover text-popover-foreground data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 w-72 origin-(--transform-origin) rounded-lg border p-4 shadow-md outline-hidden',
+            'bg-popover text-popover-foreground data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 w-72 origin-(--transform-origin) rounded-lg border p-4 shadow-md outline-hidden',
             className,
           )}
           {...props}

@@ -90,9 +90,9 @@ const sectionVariants = cva('relative', {
     // band's own padding.
     overlap: {
       none: '',
-      sm: 'z-10 -mt-6 pt-0',
-      md: 'z-10 -mt-8 pt-0 md:-mt-10',
-      lg: 'z-10 -mt-12 pt-0 md:-mt-16',
+      sm: 'z-raised -mt-6 pt-0',
+      md: 'z-raised -mt-8 pt-0 md:-mt-10',
+      lg: 'z-raised -mt-12 pt-0 md:-mt-16',
     },
   },
   defaultVariants: {

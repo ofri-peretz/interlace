@@ -92,7 +92,7 @@ function ReadingLayout({
         {hasToc ? (
           <div
             data-slot="reading-layout-bar"
-            className="border-border bg-background sticky top-[var(--reading-offset,0px)] z-10 -mt-2 border-b @4xl/reading:hidden"
+            className="border-border bg-background sticky top-[var(--reading-offset,0px)] z-sticky -mt-2 border-b @4xl/reading:hidden"
           >
             <TocBar items={toc} label={tocLabel} triggerLabel={triggerLabel} />
           </div>

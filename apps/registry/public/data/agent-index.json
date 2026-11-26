@@ -5018,7 +5018,7 @@
       "name": "interlace-base",
       "title": "Interlace Base",
       "type": "registry:style",
-      "summary": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.",
+      "summary": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, a named z-index layer scale, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.",
       "topics": [],
       "categories": [
         "foundation",
@@ -5060,6 +5060,7 @@
         "styles/interlace/structure/type.css",
         "styles/interlace/structure/layout.css",
         "styles/interlace/structure/radius.css",
+        "styles/interlace/structure/layer.css",
         "styles/interlace/structure/motion.css",
         "styles/interlace/structure/scheme.css",
         "styles/interlace/structure/focus.css",

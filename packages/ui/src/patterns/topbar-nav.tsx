@@ -150,7 +150,7 @@ export function TopbarNav({
           ref={pillRef}
           aria-hidden
           data-slot="topbar-nav-pill"
-          className="bg-foreground/6 pointer-events-none absolute inset-y-0 left-0 -z-10 w-(--pill-w) translate-x-(--pill-x) rounded-md opacity-0 data-visible:opacity-100 motion-safe:transition-[translate,width,opacity] motion-safe:duration-(--duration-medium) motion-safe:ease-move motion-safe:data-instant:transition-opacity"
+          className="bg-foreground/6 pointer-events-none absolute inset-y-0 left-0 z-backdrop w-(--pill-w) translate-x-(--pill-x) rounded-md opacity-0 data-visible:opacity-100 motion-safe:transition-[translate,width,opacity] motion-safe:duration-(--duration-medium) motion-safe:ease-move motion-safe:data-instant:transition-opacity"
         />
         <NavigationMenu.List className="flex items-center gap-1">
           {entries.map((entry) =>
@@ -205,7 +205,7 @@ export function TopbarNav({
           sideOffset={12}
           align="start"
           collisionPadding={16}
-          className="z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) motion-safe:transition-[top,left,right,bottom] motion-safe:duration-(--duration-base) motion-safe:ease-enter data-instant:transition-none"
+          className="z-popover h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) motion-safe:transition-[top,left,right,bottom] motion-safe:duration-(--duration-base) motion-safe:ease-enter data-instant:transition-none"
         >
           <NavigationMenu.Popup
             data-slot="topbar-nav-popup"

@@ -467,7 +467,7 @@ function Topbar({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-edge={edge}
       className={cn(
-        "sticky top-0 z-10 border-b data-hidden:-translate-y-full",
+        "sticky top-0 z-header border-b data-hidden:-translate-y-full",
         "motion-safe:transition-[background-color,border-color,translate] motion-safe:duration-(--duration-medium) motion-safe:ease-move",
         edge === "always"
           ? "border-border bg-background/80 supports-backdrop-filter:bg-background/60 backdrop-blur"

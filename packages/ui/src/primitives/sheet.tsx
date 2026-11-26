@@ -101,7 +101,7 @@ function SheetOverlay({
       className={cn(
         // See dialog.tsx — `bg-black/50` is the deliberate scrim colour; a
         // theme-paired token would invert in dark mode.
-        'data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 fixed inset-0 z-50 bg-black/50',
+        'data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 fixed inset-0 z-overlay bg-black/50',
         className,
       )}
       {...props}
@@ -129,7 +129,7 @@ function SheetContent({
         className={cn(
           // A panel this size enters in the medium band and leaves faster:
           // the reader asked it to go, so it should not linger.
-          'bg-background data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-medium) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-base) fixed z-50 flex flex-col gap-4 shadow-lg',
+          'bg-background data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-medium) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-base) fixed z-modal flex flex-col gap-4 shadow-lg',
           side === 'right' &&
             'data-[closed]:slide-out-to-right data-[open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l xs:max-w-96',
           side === 'left' &&

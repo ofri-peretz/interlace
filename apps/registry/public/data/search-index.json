@@ -555,7 +555,7 @@
     "axe": 23,
     "axis": 21,
     "back": 50,
-    "backdrop": 11,
+    "backdrop": 12,
     "backfac": 1,
     "background": 54,
     "backspac": 2,
@@ -2067,7 +2067,7 @@
     "mybutton": 1,
     "mystery": 1,
     "naiv": 4,
-    "nam": 48,
+    "nam": 49,
     "name": 111,
     "namespac": 2,
     "narrativ": 1,
@@ -2502,7 +2502,7 @@
     "raf": 2,
     "rail": 12,
     "rainfall": 1,
-    "rais": 3,
+    "rais": 4,
     "ramp": 4,
     "ran": 18,
     "random": 3,
@@ -3945,7 +3945,7 @@
         "primitive",
         "form"
       ],
-      "terms": "button variant form primitiv server rsc buttonvariant size composit cva apis icon contrast measur modul destructiv brandabl checkabl folklor fullwidth client lock primary map consum ghost repo outlin noth else opaqu pagination str rather produc seven plain styl ring pure section record secondary backdrop nest link boolean every failur stretch surfac enum system direct separat tree com four dropp accent path safe design half"
+      "terms": "button variant form primitiv server rsc buttonvariant size composit cva apis icon contrast measur modul destructiv brandabl checkabl folklor fullwidth client lock primary map consum ghost repo outlin noth else opaqu pagination str rather produc seven plain styl ring pure section record secondary nest backdrop link boolean every failur stretch surfac enum system direct separat tree com four dropp accent path safe design half"
     },
     {
       "name": "button",
@@ -4050,7 +4050,7 @@
         "primitive",
         "foundation"
       ],
-      "terms": "card foundation primitiv server rsc load skeleton cardlink link titl surfac radius action header cardaction cardtitl shadow border box flex stretch grid content description footer router column layout col part carddescription child cardcontent cardfooter cardheader participat padd shift instead whol target 1fr creat insid match aschild footprint text come round gap lift normal shap real relativ specific variant present data anywher render auto arriv"
+      "terms": "card foundation primitiv server rsc load skeleton cardlink link titl surfac radius action header cardaction cardtitl shadow border box flex stretch grid content description footer router column layout col part carddescription child cardcontent cardfooter cardheader participat padd shift instead whol target 1fr creat insid rais match aschild footprint text come round gap lift normal shap real relativ specific variant present data anywher render auto"
     },
     {
       "name": "celebrate",
@@ -4330,7 +4330,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "command palett overlay primitiv client responsiv min viewport 320 keyboard base combobox dialog panel open input modal focus commandpalett setopen backdrop field highlight portal filter root popup inlin search escap list commanddialog clos activedescendant activeel dialogcontent filterabl fork supp indicator listbox virtual ring bubbl onopenchang assert surfac 2px trigger second aria padd role result fals uncontroll ele background accent controll hold lock positioner inherit"
+      "terms": "command palett overlay primitiv client responsiv min viewport 320 keyboard base combobox dialog panel open input modal focus commandpalett setopen field backdrop highlight portal filter root popup inlin search escap list commanddialog clos activedescendant activeel dialogcontent filterabl fork supp indicator listbox virtual ring bubbl onopenchang assert surfac 2px trigger second aria padd role result fals uncontroll ele background accent controll hold lock positioner inherit"
     },
     {
       "name": "commitment",
@@ -4815,7 +4815,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "dropdown menu overlay primitiv client responsiv min viewport 320 keyboard base popup dropdownmenu item grouplabel onselect typeahead positioner trigger compos 160px dropdownmenucontent dropdownmenugroup dropdownmenuitem dropdownmenulabel dropdownmenuseparator shorthand submenus separator array command radio node plus availabl checkbox destructiv portal position capp dom basemenu dropdownmenucheckboxitem dropdownmenucompos dropdownmenuradiogroup dropdownmenushortcut dropdownmenusub independenc radioitem sideoffset subcontent submenuroot subtrigger wrap entry root open dropdownmenutrigger semantical wrapper shift onclick lock focus"
+      "terms": "dropdown menu overlay primitiv client responsiv min viewport 320 keyboard base popup dropdownmenu item grouplabel onselect typeahead positioner trigger compos 160px dropdownmenucontent dropdownmenugroup dropdownmenuitem dropdownmenulabel dropdownmenuseparator shorthand submenus separator array command radio node plus availabl checkbox destructiv popover portal position capp dom basemenu dropdownmenucheckboxitem dropdownmenucompos dropdownmenuradiogroup dropdownmenushortcut dropdownmenusub independenc radioitem sideoffset subcontent submenuroot subtrigger wrap entry root open dropdownmenutrigger semantical wrapper shift onclick lock"
     },
     {
       "name": "edge-glow",
@@ -5310,7 +5310,7 @@
     {
       "name": "interlace-base",
       "title": "Interlace Base",
-      "blurb": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.",
+      "blurb": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, a named z-index layer scale, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.",
       "tier": "theme",
       "categories": [
         "foundation",
@@ -5323,7 +5323,7 @@
         "theme",
         "foundation"
       ],
-      "terms": "base foundation server rsc radius oklch additiv breakpoint host baselin deriv schem layer color match brand app dark control token semantic follow already scal chang container colour motion width noth styl nativ every"
+      "terms": "base foundation server rsc layer radius oklch additiv breakpoint host scal baselin deriv schem color index match brand app dark control nam token semantic follow already chang container colour motion width noth styl nativ every"
     },
     {
       "name": "interlace-foundation",
@@ -6795,7 +6795,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "sheen decorativ effect client band parent button second cross soft sweep primary smudg light pointer isolat press insid hidden bright buttonvariant drop foreground dim low corner never strength var clip card paus relativ variant inert reduc colour motion surfac layer rest event pass context minus web click look name color index aria label repeat animation accessibl like stack page prefer else every control browser"
+      "terms": "sheen decorativ effect client band parent button second cross soft sweep primary smudg light pointer isolat press insid hidden bright buttonvariant drop foreground dim low corner never strength var clip card backdrop paus relativ variant inert reduc colour motion surfac layer rest event pass context minus web click look name color aria label repeat animation accessibl like stack page prefer else every control browser"
     },
     {
       "name": "sheet",
@@ -6816,7 +6816,7 @@
         "primitive",
         "overlay"
       ],
-      "terms": "sheet overlay primitiv client responsiv min viewport 320 keyboard base dialog scrim sheetoverlay sheetportal sheetcontent modal trap panel dismissal black inert drawer popup side 240px pane auto escap node focus nav anchor sett clos lock bottom backdrop clip right portal filter iphon dom edge sheetcompos sheetdescription sheetfooter sheetheader sheettitl sheettrigger geometry outsid slid root trigger basedialog task page left render press top invert asid"
+      "terms": "sheet overlay primitiv client responsiv min viewport 320 keyboard base dialog scrim sheetoverlay sheetportal sheetcontent modal trap panel dismissal black inert drawer popup side 240px pane auto escap node focus nav anchor sett clos lock bottom clip right backdrop portal filter iphon dom edge sheetcompos sheetdescription sheetfooter sheetheader sheettitl sheettrigger geometry outsid slid root trigger basedialog task page left render press top invert asid"
     },
     {
       "name": "side-by-side",
@@ -6843,7 +6843,7 @@
         "pattern",
         "blog"
       ],
-      "terms": "side blog pattern server rsc responsiv min viewport 320 stat neutral success warn info destructiv highlight sidebysid column record useid account tone said head sidebysidecolumn compar section titl another narrow show comparison stack bar top next order set support screen data reader hear bottom labell mean outlin nativ fit level nam grid token card live optional children still boolean colour border enum root read"
+      "terms": "side blog pattern server rsc responsiv min viewport 320 stat neutral success warn info destructiv highlight sidebysid column record useid account tone said head sidebysidecolumn compar section titl another narrow show comparison stack bar top next order set support screen data reader hear bottom labell mean outlin nativ fit level grid nam token card live optional children still boolean colour border enum root read"
     },
     {
       "name": "sign-in-form",
@@ -7501,7 +7501,7 @@
         "game",
         "games"
       ],
-      "terms": "tal bar game client responsiv min viewport 320 stat correct wrong viewer percent option quiz vote poll total count choic answer vot sum 100 data mark countsincludevot remainder shar tallybar whol nobody lead reload slot nam result fals track tap ids right word row depend spread everyon 204 verdict largest fill mount formatt includ mine question grow add true alon model label list feed"
+      "terms": "tal bar game client responsiv min viewport 320 stat correct wrong viewer percent option quiz vote poll total count choic answer vot sum 100 data mark countsincludevot remainder shar tallybar whol nobody lead reload slot result fals nam track tap ids right word row depend spread everyon 204 verdict largest fill mount formatt includ mine question grow add true alon model label list feed"
     },
     {
       "name": "testimonial",
@@ -8050,7 +8050,7 @@
         "pattern",
         "navigation"
       ],
-      "terms": "topbar navigation pattern server rsc responsiv min viewport 320 menu link collapsebelow logo mobilenav panel group nav scroll current small href blur open item row topbarmenu action 1024px swipeabl screen 1280px topbarnav topbarscrolledg page backdrop cluster right bar 768 bring wordmark plain label labell wide underlin section site surfac top button external receiv sticky semi description 4px suit border header wrap dashboard framework visib"
+      "terms": "topbar navigation pattern server rsc responsiv min viewport 320 menu link collapsebelow logo mobilenav panel group nav scroll current small href blur open item row topbarmenu action 1024px swipeabl screen 1280px topbarnav topbarscrolledg page cluster right backdrop bar 768 bring wordmark plain label labell wide underlin section site surfac top button external receiv sticky semi description 4px suit border header wrap dashboard framework visib"
     },
     {
       "name": "typography",
@@ -8215,7 +8215,7 @@
         "effect",
         "decorative"
       ],
-      "terms": "weav textur decorativ effect server rsc weavetextur cloth thread strand warp weft glow shin strength woven section cell tile top far checkerboard dress edg genr material stand behind parent plain noth absolut pixel beam isolat particl quiet page cross alternat survey useid svg like shad light fill host backdrop density spac move sit relativ toward inset identity thin viewbox colour flow let squar fade"
+      "terms": "weav textur decorativ effect server rsc weavetextur cloth thread strand warp weft glow shin strength woven section cell tile top far checkerboard dress edg genr material stand behind parent plain noth absolut pixel beam isolat particl quiet page cross alternat survey useid svg like shad light fill host density spac move sit backdrop relativ toward inset identity thin viewbox colour flow let squar fade"
     },
     {
       "name": "wordmark",
