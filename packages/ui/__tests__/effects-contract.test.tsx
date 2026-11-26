@@ -376,6 +376,29 @@ describe("CountUp", () => {
     expect(raf).not.toHaveBeenCalled();
   });
 
+  it("counts in whole numbers to a whole number, and in the target's decimals otherwise", () => {
+    const frames: FrameRequestCallback[] = [];
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+      frames.push(cb);
+      return frames.length;
+    });
+    const at = (value: number, format?: Intl.NumberFormatOptions) => {
+      frames.length = 0;
+      const { container, unmount } = render(
+        <CountUp value={value} start="mount" duration={1000} format={format} locale="en-US" />,
+      );
+      act(() => frames.shift()!(1000)); // first frame sets the clock
+      act(() => frames.shift()!(1300)); // 30% of the way, eased
+      const text = container.querySelector('[data-slot="count-up-digits"]')!.textContent;
+      unmount();
+      return text;
+    };
+    expect(at(40)).toMatch(/^\d+$/);
+    expect(at(4.8)).toMatch(/^\d\.\d$/);
+    expect(at(40, { maximumFractionDigits: 2 })).toMatch(/^\d+\.\d{1,2}$/);
+    expect(at(40, { minimumFractionDigits: 1 })).toMatch(/^\d+\.\d+$/);
+  });
+
   it("shows the final value at once under reduced motion", () => {
     reduced.value = true;
     const raf = vi.spyOn(window, "requestAnimationFrame");
