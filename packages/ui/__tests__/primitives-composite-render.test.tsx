@@ -162,6 +162,16 @@ describe('Callout', () => {
     expect(slot(container, 'callout')!.className).not.toContain('from-card/40');
   });
 
+  it('stacks a kicker above the body on phones, and only when there is one', () => {
+    const { container } = render(<Callout kicker="Bref">body</Callout>);
+    const root = slot(container, 'callout')!;
+    expect(root.hasAttribute('data-kicker')).toBe(true);
+    expect(root.className).toContain('data-[kicker]:max-sm:flex-col');
+    expect(slot(container, 'callout-kicker')!.className).toContain('self-start');
+    const plain = render(<Callout>body</Callout>).container;
+    expect(slot(plain, 'callout')!.hasAttribute('data-kicker')).toBe(false);
+  });
+
   it('has an opaque surface and its own text colour, so it reads on a brand band', () => {
     for (const tone of ['info', 'highlight'] as const) {
       const { container } = render(<Callout tone={tone}>body</Callout>);
