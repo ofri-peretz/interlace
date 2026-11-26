@@ -831,6 +831,17 @@
           "source": ".changeset/pointer-surface-underline-link.md"
         },
         {
+          "summary": "New Presence and Swap, for content that arrives and leaves instead of popping in and out. `Presence` keeps a block on the page while it leaves (`show`, `effect` fade / rise / scale / blur, `appear`, `onExited`); `Swap` trades one version of its content for the next when `swapKey` changes (a quiz question for the next one, one step for another): the old one leaves, then the new one arrives, never both at once. `slide` moves along the reading direction and flips in a right-to-left page. Leaving content is `inert` and hidden from assistive technology, and when it held the focus, Swap hands focus to the new content. Only `opacity`, `transform` and `filter` move, timed by the brand's `--duration-*` and `--ease-*` tokens when they play; under reduced motion content simply appears and goes.",
+          "components": [
+            "presence"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/presence-swap.md"
+        },
+        {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
           "components": [
             "prose"

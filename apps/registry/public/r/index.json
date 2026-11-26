@@ -1858,6 +1858,24 @@
       }
     },
     {
+      "name": "presence",
+      "type": "registry:ui",
+      "title": "Presence",
+      "description": "Content that arrives and leaves instead of popping in and out. `Presence` keeps a block on the page for the moment it takes to leave, so a hint, a result or a \"you got it\" note fades away rather than vanishing. `Swap` trades one piece of content for the…",
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "meta": {
+        "tier": "effect",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "reveal",
       "type": "registry:ui",
       "title": "Reveal",

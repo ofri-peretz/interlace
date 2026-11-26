@@ -1658,6 +1658,15 @@
     "previewDark": "primitives-popover--dark",
     "skeleton": null
   },
+  "presence": {
+    "title": "Effects/Presence",
+    "storyIds": [
+      "effects-presence--default"
+    ],
+    "preview": "effects-presence--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "prev-next-post": {
     "title": "Blocks/PrevNextPost",
     "storyIds": [

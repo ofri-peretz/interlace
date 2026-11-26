@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 224
+    "itemCount": 225
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "effect": 27,
+      "effect": 28,
       "game": 15,
       "chart": 14,
       "template": 13,
@@ -44,10 +44,10 @@
       "pattern": 65,
       "blog": 37,
       "data": 30,
+      "effect": 28,
       "foundation": 27,
-      "effect": 27,
       "form": 26,
-      "decorative": 24,
+      "decorative": 25,
       "navigation": 18,
       "feedback": 18,
       "games": 15,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "client": 113,
+      "client": 114,
       "server": 111
     },
     "keyboard": {
       "none": 175,
-      "handled": 49
+      "handled": 50
     },
     "loading": {
-      "none": 186,
+      "none": 187,
       "built-in": 38
     },
     "minViewport": {
       "320": 143,
       "480": 7,
       "768": 1,
-      "inherited": 73
+      "inherited": 74
     }
   },
   "items": [
@@ -6826,6 +6826,75 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/popover.json",
       "item": "https://ds.interlace.tools/r/popover.json",
       "docs": "https://ds.interlace.tools/c/popover"
+    },
+    {
+      "name": "presence",
+      "title": "Presence",
+      "type": "registry:ui",
+      "summary": "Content that arrives and leaves instead of popping in and out. `Presence` keeps a block on the page for the moment it takes to leave, so a hint, a result or a \"you got it\" note fades away rather than vanishing. `Swap` trades one piece of content for the…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "use-render",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PresenceEffect",
+          "values": [
+            "fade",
+            "rise",
+            "scale",
+            "blur"
+          ]
+        },
+        {
+          "name": "SwapDirection",
+          "values": [
+            "forward",
+            "back"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "Presence",
+        "Swap"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/presence.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/presence.json",
+      "item": "https://ds.interlace.tools/r/presence.json",
+      "docs": "https://ds.interlace.tools/c/presence"
     },
     {
       "name": "prev-next-post",
