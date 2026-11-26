@@ -115,9 +115,11 @@ export function PrevNextPost({
       data-testid={testId}
       data-min-viewport={String(MIN_VIEWPORT)}
       aria-label={ariaLabel}
-      className={cn('grid grid-cols-1 gap-6 md:grid-cols-2', className)}
+      className={cn('@container', className)}
       {...props}
     >
+      {/* Two cards once the nav itself is wide enough, not the window: a 300px column stacks them. */}
+      <div className="grid grid-cols-1 gap-6 @xl:grid-cols-2">
       {prev ? (
         <a
           href={prev.href}
@@ -134,8 +136,8 @@ export function PrevNextPost({
           </span>
         </a>
       ) : (
-        // Empty cell keeps the next card right-aligned on md+ when prev is absent.
-        <span aria-hidden className="hidden md:block" />
+        // Empty cell keeps the next card on the end side when prev is absent.
+        <span aria-hidden className="hidden @xl:block" />
       )}
 
       {next ? (
@@ -143,7 +145,7 @@ export function PrevNextPost({
           href={next.href}
           data-slot="prev-next-next"
           data-testid={`${testId}-next`}
-          className={cn(CARD_BASE, 'items-end text-end md:col-start-2')}
+          className={cn(CARD_BASE, 'items-end text-end @xl:col-start-2')}
         >
           <span className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
             {next.kicker ?? 'Next'}
@@ -154,6 +156,7 @@ export function PrevNextPost({
           </span>
         </a>
       ) : null}
+      </div>
     </nav>
   );
 }
