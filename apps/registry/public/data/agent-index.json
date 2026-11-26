@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 224
+    "itemCount": 229
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 15,
+      "game": 20,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -48,10 +48,10 @@
       "effect": 27,
       "form": 26,
       "decorative": 24,
+      "games": 20,
+      "game": 20,
       "navigation": 18,
       "feedback": 18,
-      "games": 15,
-      "game": 15,
       "chart": 14,
       "marketing": 14,
       "template": 13,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 113,
-      "server": 111
+      "client": 115,
+      "server": 114
     },
     "keyboard": {
-      "none": 175,
+      "none": 180,
       "handled": 49
     },
     "loading": {
-      "none": 186,
+      "none": 191,
       "built-in": 38
     },
     "minViewport": {
-      "320": 143,
+      "320": 148,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -4435,6 +4435,73 @@
       "docs": "https://ds.interlace.tools/c/form"
     },
     {
+      "name": "goal-ring",
+      "title": "Goal Ring",
+      "type": "registry:ui",
+      "summary": "How far today is toward a daily goal: a ring that fills as points come in, the count in its middle, and a check once the goal is met. It is a `meter`, so assistive tech reads \"15 of 20 XP\" without the ring.",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "GoalRingSize",
+          "values": [
+            "sm",
+            "default",
+            "lg"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "meter"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-valuemax",
+          "aria-valuemin",
+          "aria-valuenow",
+          "aria-valuetext"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/goal-ring.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/goal-ring.json",
+      "item": "https://ds.interlace.tools/r/goal-ring.json",
+      "docs": "https://ds.interlace.tools/c/goal-ring"
+    },
+    {
       "name": "grade-badge",
       "title": "Grade Badge",
       "type": "registry:ui",
@@ -5548,6 +5615,66 @@
       "docs": "https://ds.interlace.tools/c/leaderboard"
     },
     {
+      "name": "level-meter",
+      "title": "Level Meter",
+      "type": "registry:ui",
+      "summary": "A player's level and how far they are into the next: the level, a bar of XP, the XP still to go, and, right after a round, the XP just earned. The arithmetic is `levelFor` / `gainXp` in `progress-model.ts`, exported so a server shows the same level.",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "meter"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-valuemax",
+          "aria-valuemin",
+          "aria-valuenow",
+          "aria-valuetext"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_LEVEL_CURVE",
+        "DEFAULT_STREAK_MILESTONES",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/level-meter.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/progress-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/level-meter.json",
+      "item": "https://ds.interlace.tools/r/level-meter.json",
+      "docs": "https://ds.interlace.tools/c/level-meter"
+    },
+    {
       "name": "light-beam",
       "title": "Light Beam",
       "type": "registry:ui",
@@ -6148,6 +6275,72 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/metric-table.json",
       "item": "https://ds.interlace.tools/r/metric-table.json",
       "docs": "https://ds.interlace.tools/c/metric-table"
+    },
+    {
+      "name": "milestones",
+      "title": "Milestones",
+      "type": "registry:ui",
+      "summary": "The marks along a path a player is on (a 3, 7 and 30-day streak; levels 5, 10 and 20): the ones reached, the next one with how far is left, and a few beyond. It shows where the player is going, not a wall of locked trophies, so only a window around the…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "server",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "MilestoneState",
+          "values": [
+            "reached",
+            "next",
+            "ahead"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_LEVEL_CURVE",
+        "DEFAULT_STREAK_MILESTONES",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/milestones.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/progress-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/milestones.json",
+      "item": "https://ds.interlace.tools/r/milestones.json",
+      "docs": "https://ds.interlace.tools/c/milestones"
     },
     {
       "name": "multi-step-form",
@@ -7870,6 +8063,62 @@
       "docs": "https://ds.interlace.tools/c/related-posts"
     },
     {
+      "name": "reminder-offer",
+      "title": "Reminder Offer",
+      "type": "registry:ui",
+      "summary": "A quiet offer of a daily nudge that the player keeps in their own calendar: pick a time, add it, done. It downloads an .ics file with one event that repeats daily (`reminder-model.ts`), so nothing is sent, no address is asked for, and the player removes it…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/reminder-offer.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/reminder-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reminder-offer.json",
+      "item": "https://ds.interlace.tools/r/reminder-offer.json",
+      "docs": "https://ds.interlace.tools/c/reminder-offer"
+    },
+    {
       "name": "reveal",
       "title": "Reveal",
       "type": "registry:ui",
@@ -7966,6 +8215,63 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/rotating-text.json",
       "item": "https://ds.interlace.tools/r/rotating-text.json",
       "docs": "https://ds.interlace.tools/c/rotating-text"
+    },
+    {
+      "name": "round-summary",
+      "title": "Round Summary",
+      "type": "registry:ui",
+      "summary": "The moment a round ends: what the player earned, where today's goal stands, the streak it kept, and anything new they reached (a milestone, a level). Then the next step, which the app passes as children: share, play on, come back tomorrow. It celebrates…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "celebrate",
+        "cn",
+        "count-up",
+        "goal-ring",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/round-summary.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/round-summary.json",
+      "item": "https://ds.interlace.tools/r/round-summary.json",
+      "docs": "https://ds.interlace.tools/c/round-summary"
     },
     {
       "name": "scorecard-row",
@@ -10582,6 +10888,7 @@
           "values": [
             "played",
             "rest",
+            "shielded",
             "missed",
             "open",
             "future"

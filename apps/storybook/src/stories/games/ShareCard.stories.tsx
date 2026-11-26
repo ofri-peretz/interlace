@@ -51,6 +51,14 @@ export const RightOrWrong: Story = {
   args: { results: ['right', 'right', 'wrong', 'right', 'wrong'], score: 3, maxScore: 5, streak: undefined },
 };
 
+/** A milestone to share: no rounds, one line of news, nothing spoiled. */
+export const Milestone: Story = {
+  args: { results: [], score: undefined, maxScore: undefined, note: 'A 30-day streak', streak: undefined },
+  play: async ({ canvasElement }) => {
+    await expect(within(canvasElement).getByText('A 30-day streak')).toBeTruthy();
+  },
+};
+
 export const RightToLeft: Story = {
   decorators: [withRtl],
   args: {
