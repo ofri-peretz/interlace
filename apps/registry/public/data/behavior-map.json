@@ -9428,6 +9428,19 @@
         "inGate": true
       }
     },
+    "intent": {
+      "sourcePath": "packages/ui/src/lib/intent.ts",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "interest-signal": {
       "sourcePath": "packages/ui/src/patterns/interest-signal.tsx",
       "keyboard": null,
@@ -10942,6 +10955,19 @@
       "textAlternative": {
         "kind": "sr-only-copy",
         "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "motion-token": {
+      "sourcePath": "packages/ui/src/lib/motion-token.ts",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
       },
       "states": [],
       "coverage": {

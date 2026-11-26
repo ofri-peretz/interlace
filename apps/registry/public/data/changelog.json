@@ -862,6 +862,42 @@
           "source": ".changeset/mobile-app-shell.md"
         },
         {
+          "summary": "Animations started from script now follow the brand's `--ease-*` and `--duration-*` tokens, like the CSS does. A new `motion-token` lib item reads them from the element that moves.",
+          "components": [
+            "motion-token",
+            "calendar",
+            "time-slot-picker",
+            "multi-step-form",
+            "commitment",
+            "interest-signal",
+            "session-composer",
+            "guess-reveal",
+            "quiz-question",
+            "duel",
+            "order-game",
+            "podium",
+            "live-room",
+            "word-cloud",
+            "answer-pad",
+            "tally-bars",
+            "standings",
+            "closer-game",
+            "stagger-list",
+            "flip-group",
+            "reveal",
+            "celebrate",
+            "split-text",
+            "marker",
+            "rotating-text",
+            "draw-on"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/motion-script-tokens.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"
@@ -1302,6 +1338,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/topbar-motion.md"
+        },
+        {
+          "summary": "User intent: typed events for what a person meant to do, sent to whichever analytics tool the app uses.\n\n`IntentProvider` takes one `onIntent` adapter. Below it, `useActivateIntent` (every activation, with keyboard, mouse, touch or pen), `useViewIntent` (half the element visible for a second), `useDwellIntent` (a pointer or keyboard focus resting for half a second), `useCommitIntent` (a typed value settled, reported as its length), `useDisclosureIntent` (an overlay opened or closed, and why) and `useFormIntent` (started, submitted, or abandoned by cancel or page leave) all report to it. Any element with `data-intent=\"name\"` reports its clicks with no hook, so server components can declare intent too. Given a `page`, the provider reports `page_view` and `page_leave` with visible time and read depth, and it reports rage clicks: three quick clicks on one spot.\n\nEvents carry names, numbers and enums only: never typed text, element text, or anything about who the person is. A failing adapter is caught, so analytics never breaks a page.",
+          "components": [
+            "intent"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/user-intent.md"
         },
         {
           "summary": "View transitions, made safe to reach for. `Morph` gives its one child a view-transition name (any string, cleaned into a valid identifier), so a card's image and the detail page's hero with the same name morph into each other: the card grows into its page. `useViewTransition()` runs a React state change inside a transition, flushed so the browser captures the new view, with optional `types`. `startViewTransition` does the same for code outside React. `PageTransitions` (once, in the root layout) is a server-safe `<style>`: the old page fades out, the new one rises in by half a rem, and `@view-transition` turns it on between documents; `pageTransitionsCss()` returns the same CSS. Where the browser has no View Transitions the update simply runs, and under reduced motion there is no transition at all. Opacity and transform only.",

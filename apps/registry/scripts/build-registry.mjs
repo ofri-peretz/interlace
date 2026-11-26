@@ -599,6 +599,14 @@ const LIB_FILES = [
   // them the switcher installs with dangling relative imports — which is
   // exactly what `assertRegistryContract` reported.
   {
+    name: 'motion-token',
+    sourceFile: 'motion-token.ts',
+    target: 'lib/motion-token.ts',
+    title: 'Motion token reader',
+    description:
+      '@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.',
+  },
+  {
     name: 'theme-tokens',
     sourceFile: 'theme-tokens.ts',
     target: 'lib/theme-tokens.ts',
@@ -621,6 +629,14 @@ const LIB_FILES = [
     title: 'useReadingPrefs hook',
     description:
       '@interlace/ui — reads and writes the reader\'s text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.',
+  },
+  {
+    name: 'intent',
+    sourceFile: 'intent.ts',
+    target: 'hooks/use-intent.ts',
+    title: 'User intent hooks and provider',
+    description:
+      '@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.',
   },
   {
     name: 'theme-script',
