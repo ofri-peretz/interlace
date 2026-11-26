@@ -209,6 +209,17 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "A running order for live sessions. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over in the warning tone and in words, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and Back, Pause, Add a minute and Next. With `shortcuts`, a presentation remote moves it on (Page Down, Page Up, arrows, `p`), except while typing. `AgendaNow` is the room's view of the same state: what is on, the time left and what comes next, with `size=\"stage\"` for a shared screen. The state is pure and made of timestamps (`games/agenda-model`: `createAgenda`, `applyAgendaEvent`, `agendaStatus`, `formatClock`), so a refreshed tab or a late screen reads the right clock at once, and `next` and `back` name the item they move from, so an event delivered twice moves once. The bar empties in one linear transform animation; under reduced motion nothing moves.",
+          "components": [
+            "agenda"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/agenda.md"
+        },
+        {
           "summary": "feat(ui): Badge gets `size=\"sm\"` (the caption step for dense tag lists and counts) and `variant=\"scrim\"` (a translucent face for badges over images and video). One in three Badges in the DS was re-sizing itself with `text-caption tracking-normal …`, and article-card hand-built the over-cover look with a seven-class chain; both now use the props.",
           "components": [
             "badge",

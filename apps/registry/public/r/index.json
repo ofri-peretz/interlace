@@ -3532,6 +3532,24 @@
       }
     },
     {
+      "name": "agenda",
+      "type": "registry:ui",
+      "title": "Agenda",
+      "description": "The running order of a session. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and the…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "closer-game",
       "type": "registry:ui",
       "title": "Closer Game",

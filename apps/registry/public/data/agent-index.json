@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 233
+    "itemCount": 234
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 24,
+      "game": 25,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -47,9 +47,9 @@
       "foundation": 27,
       "effect": 27,
       "form": 26,
+      "games": 25,
+      "game": 25,
       "decorative": 24,
-      "games": 24,
-      "game": 24,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 119,
+      "client": 120,
       "server": 114
     },
     "keyboard": {
       "none": 184,
-      "handled": 49
+      "handled": 50
     },
     "loading": {
-      "none": 195,
+      "none": 196,
       "built-in": 38
     },
     "minViewport": {
-      "320": 152,
+      "320": 153,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -180,6 +180,81 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/accordion.json",
       "item": "https://ds.interlace.tools/r/accordion.json",
       "docs": "https://ds.interlace.tools/c/accordion"
+    },
+    {
+      "name": "agenda",
+      "title": "Agenda",
+      "type": "registry:ui",
+      "summary": "The running order of a session. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and the…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowLeft",
+          "ArrowRight",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "AgendaPhase",
+          "values": [
+            "before",
+            "running",
+            "paused",
+            "over",
+            "finished"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "timer"
+        ],
+        "aria": [
+          "aria-current",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/agenda.tsx",
+        "components/ui/games/agenda-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/agenda.json",
+      "item": "https://ds.interlace.tools/r/agenda.json",
+      "docs": "https://ds.interlace.tools/c/agenda"
     },
     {
       "name": "alert-dialog",

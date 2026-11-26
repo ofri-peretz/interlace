@@ -56,17 +56,17 @@ to claim. Read it before writing props; the props table on
 same render the accessibility gate asserts against, including the loading and
 dark variants.
 
-## Worked example — `calendar`
+## Worked example — `agenda`
 
 ```
 rendering    client
 minViewport  320
-keyboard     ArrowDown, ArrowLeft, ArrowRight, ArrowUp, End, Home, PageDown, PageUp
-states       DayState = open | today | selected | unavailable | outside
+keyboard     ArrowLeft, ArrowRight, PageDown, PageUp
+states       AgendaPhase = before | running | paused | over | finished
 exports      MIN_VIEWPORT
 ```
 
-One month of days to pick one from: the date grid of a booking page, a date field's popup, a "when" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.
+The running order of a session. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and the…
 
 ## The rule
 

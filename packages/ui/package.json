@@ -560,6 +560,14 @@
       "types": "./dist/games/spectrum.d.ts",
       "default": "./dist/games/spectrum.js"
     },
+    "./games/agenda-model": {
+      "types": "./dist/games/agenda-model.d.ts",
+      "default": "./dist/games/agenda-model.js"
+    },
+    "./games/agenda": {
+      "types": "./dist/games/agenda.d.ts",
+      "default": "./dist/games/agenda.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

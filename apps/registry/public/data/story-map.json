@@ -23,6 +23,21 @@
     "previewDark": "primitives-accordion--dark",
     "skeleton": null
   },
+  "agenda": {
+    "title": "Games/Agenda",
+    "storyIds": [
+      "games-agenda--default",
+      "games-agenda--controls",
+      "games-agenda--live",
+      "games-agenda--over",
+      "games-agenda--before",
+      "games-agenda--room-screen",
+      "games-agenda--right-to-left"
+    ],
+    "preview": "games-agenda--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "alert": {
     "title": "Primitives/Alert",
     "storyIds": [
