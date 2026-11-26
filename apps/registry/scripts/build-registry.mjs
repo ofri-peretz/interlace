@@ -624,6 +624,14 @@ const LIB_FILES = [
       '@interlace/ui — reads and writes the reader\'s text size (`data-text-size`) and contrast (`data-contrast`) on <html>, persists both, and follows `prefers-contrast` when no choice is stored.',
   },
   {
+    name: 'intent',
+    sourceFile: 'intent.ts',
+    target: 'hooks/use-intent.ts',
+    title: 'User intent hooks and provider',
+    description:
+      '@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.',
+  },
+  {
     name: 'theme-script',
     sourceFile: 'theme-script.ts',
     target: 'lib/theme-script.ts',
