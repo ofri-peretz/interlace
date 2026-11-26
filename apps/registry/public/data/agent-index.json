@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 242
+    "itemCount": 243
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 33,
+      "game": 34,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -43,8 +43,8 @@
       "primitive": 78,
       "pattern": 65,
       "blog": 37,
-      "games": 33,
-      "game": 33,
+      "games": 34,
+      "game": 34,
       "data": 30,
       "foundation": 27,
       "effect": 27,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 128,
+      "client": 129,
       "server": 114
     },
     "keyboard": {
-      "none": 189,
+      "none": 190,
       "handled": 53
     },
     "loading": {
-      "none": 204,
+      "none": 205,
       "built-in": 38
     },
     "minViewport": {
-      "320": 161,
+      "320": 162,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -6929,6 +6929,60 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/pagination.json",
       "item": "https://ds.interlace.tools/r/pagination.json",
       "docs": "https://ds.interlace.tools/c/pagination"
+    },
+    {
+      "name": "picture-reveal",
+      "title": "Picture Reveal",
+      "type": "registry:ui",
+      "summary": "A picture under tiles that come away a few at a time while the room guesses. The presenter moves `step`; every screen uncovers the same tiles in the same seeded order, spread across the picture. Phones guess with `TypeAnswer` (or `QuizQuestion`), and…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/picture-reveal.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/picture-reveal-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/picture-reveal.json",
+      "item": "https://ds.interlace.tools/r/picture-reveal.json",
+      "docs": "https://ds.interlace.tools/c/picture-reveal"
     },
     {
       "name": "podium",

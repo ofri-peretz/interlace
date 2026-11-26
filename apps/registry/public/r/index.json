@@ -3730,6 +3730,24 @@
       }
     },
     {
+      "name": "picture-reveal",
+      "type": "registry:ui",
+      "title": "Picture Reveal",
+      "description": "A picture under tiles that come away a few at a time while the room guesses. The presenter moves `step`; every screen uncovers the same tiles in the same seeded order, spread across the picture. Phones guess with `TypeAnswer` (or `QuizQuestion`), and…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "podium",
       "type": "registry:ui",
       "title": "Podium",

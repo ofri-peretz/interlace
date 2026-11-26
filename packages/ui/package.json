@@ -624,6 +624,14 @@
       "types": "./dist/games/reflection-card.d.ts",
       "default": "./dist/games/reflection-card.js"
     },
+    "./games/picture-reveal-model": {
+      "types": "./dist/games/picture-reveal-model.d.ts",
+      "default": "./dist/games/picture-reveal-model.js"
+    },
+    "./games/picture-reveal": {
+      "types": "./dist/games/picture-reveal.d.ts",
+      "default": "./dist/games/picture-reveal.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

@@ -1673,6 +1673,18 @@
     "previewDark": "primitives-pagination--dark",
     "skeleton": "primitives-pagination--loading"
   },
+  "picture-reveal": {
+    "title": "Games/PictureReveal",
+    "storyIds": [
+      "games-picturereveal--default",
+      "games-picturereveal--presenter",
+      "games-picturereveal--revealed",
+      "games-picturereveal--right-to-left"
+    ],
+    "preview": "games-picturereveal--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "podium": {
     "title": "Games/Podium",
     "storyIds": [
