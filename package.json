@@ -20,7 +20,7 @@
     "node": "24.x"
   },
   "scripts": {
-    "prepare": "[ -d .git ] && lefthook install || true",
+    "prepare": "[ -d .git ] && git config merge.interlace-generated.driver true && lefthook install || true",
     "hook:staged": "oxlint -c .oxlintrc.json --no-error-on-unmatched-pattern",
     "hook:verify": "turbo run typecheck test build --output-logs=errors-only",
     "hook:provedone": "provedone gate --mode enforce",
@@ -33,6 +33,9 @@
     "lint": "turbo run lint",
     "lint:guidance": "eslint --config eslint.guidance.config.mjs --no-warn-ignored --suppressions-location .guidance-suppressions.json .",
     "ci:local": "lefthook run pre-push --all-files --force",
+    "ai-sdlc:audit": "node scripts/ai-sdlc/audit.mjs",
+    "ai-sdlc:score": "node scripts/ai-sdlc/scorecard.mjs",
+    "ai-sdlc:test": "node --test scripts/ai-sdlc/ai-sdlc.test.mjs",
     "changeset": "changeset",
     "changeset:check": "node scripts/require-changeset.mjs",
     "version-packages": "changeset version && npm run versions:derive && npm run registry:build && npm install --package-lock-only --ignore-scripts",
