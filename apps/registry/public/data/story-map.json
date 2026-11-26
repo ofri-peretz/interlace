@@ -1899,6 +1899,18 @@
     "previewDark": "foundations-radius--dark",
     "skeleton": null
   },
+  "ranking": {
+    "title": "Games/Ranking",
+    "storyIds": [
+      "games-ranking--default",
+      "games-ranking--keyboard",
+      "games-ranking--room-results",
+      "games-ranking--right-to-left"
+    ],
+    "preview": "games-ranking--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "rating": {
     "title": "Games/Rating",
     "storyIds": [

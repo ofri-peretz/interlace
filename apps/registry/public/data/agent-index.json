@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 237
+    "itemCount": 238
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 28,
+      "game": 29,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -44,8 +44,8 @@
       "pattern": 65,
       "blog": 37,
       "data": 30,
-      "games": 28,
-      "game": 28,
+      "games": 29,
+      "game": 29,
       "foundation": 27,
       "effect": 27,
       "form": 26,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 123,
+      "client": 124,
       "server": 114
     },
     "keyboard": {
       "none": 186,
-      "handled": 51
+      "handled": 52
     },
     "loading": {
-      "none": 199,
+      "none": 200,
       "built-in": 38
     },
     "minViewport": {
-      "320": 156,
+      "320": 157,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7903,6 +7903,70 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json",
       "item": "https://ds.interlace.tools/r/radio-group.json",
       "docs": "https://ds.interlace.tools/c/radio-group"
+    },
+    {
+      "name": "ranking",
+      "title": "Ranking",
+      "type": "registry:ui",
+      "summary": "A room ranks the same items by preference. `RankChoices` is a phone: the items in a seeded starting order (so nobody's first item is favoured by where it was printed), moved with up and down buttons or the arrow keys on each row's handle, then sent.…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowUp",
+          "End",
+          "Home"
+        ],
+        "ownHandler": true
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/ranking.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/order-model.ts",
+        "components/ui/games/ranking-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/ranking.json",
+      "item": "https://ds.interlace.tools/r/ranking.json",
+      "docs": "https://ds.interlace.tools/c/ranking"
     },
     {
       "name": "rating",

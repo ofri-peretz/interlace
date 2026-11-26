@@ -592,6 +592,14 @@
       "types": "./dist/games/points-split.d.ts",
       "default": "./dist/games/points-split.js"
     },
+    "./games/ranking-model": {
+      "types": "./dist/games/ranking-model.d.ts",
+      "default": "./dist/games/ranking-model.js"
+    },
+    "./games/ranking": {
+      "types": "./dist/games/ranking.d.ts",
+      "default": "./dist/games/ranking.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

@@ -3838,6 +3838,24 @@
       }
     },
     {
+      "name": "ranking",
+      "type": "registry:ui",
+      "title": "Ranking",
+      "description": "A room ranks the same items by preference. `RankChoices` is a phone: the items in a seeded starting order (so nobody's first item is favoured by where it was printed), moved with up and down buttons or the arrow keys on each row's handle, then sent.…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "rating",
       "type": "registry:ui",
       "title": "Rating",
