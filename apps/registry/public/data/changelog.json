@@ -1702,6 +1702,17 @@
           "source": ".changeset/spotlight-motion-fx.md"
         },
         {
+          "summary": "StatGroup with `cols={3}` goes from one track straight to three at a 36rem container, instead of two from 28rem and three from 56rem. On a tablet the two-track step left the third stat alone on its own row, which read as a missing one.",
+          "components": [
+            "stat-group"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/stat-group-three.md"
+        },
+        {
           "summary": "Text alignment follows the writing direction everywhere.\n\nTypography's `align`, Accordion triggers, the Dialog header, Prose table headers, PrevNextPost cards, SeriesTable and MetricTable used `text-left` and `text-right`, which put text against the wrong edge in a right-to-left page. They now use `text-start` and `text-end`, so the same markup is correct in English, Hebrew and Arabic. Left-to-right pages render exactly as before. A new lock keeps physical alignment out of the components.",
           "components": [
             "typography",

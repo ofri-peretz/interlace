@@ -502,6 +502,24 @@ describe("Prose", () => {
   });
 });
 
+describe("StatGroup tracks", () => {
+  it("takes three stats straight to three tracks, never two and an orphan", () => {
+    const { container } = render(
+      <StatGroup
+        cols={3}
+        stats={[
+          { value: "4", label: "a" },
+          { value: "36", label: "b" },
+          { value: "0", label: "c" },
+        ]}
+      />,
+    );
+    const grid = container.querySelector('[data-slot="grid"]')!;
+    expect(grid.className).toContain("@xl:grid-cols-3");
+    expect(grid.className).not.toContain("grid-cols-2");
+  });
+});
+
 describe("StatCard", () => {
   it("puts the number first in value-first layout", () => {
     const { container } = render(
