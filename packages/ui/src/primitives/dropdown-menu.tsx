@@ -14,7 +14,7 @@
  *
  *   DropdownMenu                     (Menu.Root — renders no DOM node)
  *     ├─ DropdownMenuTrigger         (Menu.Trigger)
- *     └─ DropdownMenuContent         (Portal → Positioner(z-50) → Popup — data-min-viewport=320)
+ *     └─ DropdownMenuContent         (Portal → Positioner(z-popover) → Popup — data-min-viewport=320)
  *          ├─ DropdownMenuLabel      (a plain div — see below)
  *          ├─ DropdownMenuGroup      (Menu.Group)
  *          ├─ DropdownMenuItem       (Menu.Item — variant default | destructive)
@@ -112,7 +112,7 @@ function DropdownMenuContent({
         side={side}
         sideOffset={sideOffset}
         align={align}
-        className="z-50"
+        className="z-popover"
       >
         <BaseMenu.Popup
           data-slot="dropdown-menu-content"
@@ -312,11 +312,11 @@ function DropdownMenuSubContent({
 }: React.ComponentProps<typeof BaseMenu.Popup>) {
   return (
     <BaseMenu.Portal>
-      <BaseMenu.Positioner>
+      <BaseMenu.Positioner className="z-popover">
         <BaseMenu.Popup
           data-slot="dropdown-menu-sub-content"
           className={cn(
-            'bg-popover text-popover-foreground data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 z-50 min-w-[8rem] origin-(--transform-origin) overflow-hidden rounded-lg border p-1 shadow-lg',
+            'bg-popover text-popover-foreground data-[open]:animate-in data-[open]:ease-enter data-[open]:duration-(--duration-base) data-[closed]:animate-out data-[closed]:ease-exit data-[closed]:duration-(--duration-fast) data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 min-w-[8rem] origin-(--transform-origin) overflow-hidden rounded-lg border p-1 shadow-lg',
             className,
           )}
           {...props}

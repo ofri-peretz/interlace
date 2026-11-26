@@ -27,7 +27,7 @@
  * keeps one accessible name (the title) and screen readers hear one link,
  * not a card of text. The focus ring and a quiet border lift move to the
  * card itself. Another control inside a linked card (a button, a second
- * link) needs `relative z-10` to sit above the stretched link.
+ * link) needs `relative z-raised` to sit above the stretched link.
  *
  * The header is a one-column grid until a `CardAction` is present:
  * `has-data-[slot=card-action]` switches it to `[1fr_auto]`, so the action

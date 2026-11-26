@@ -297,7 +297,7 @@ function PullToRefresh({
         aria-hidden
         data-slot="pull-to-refresh-indicator"
         className={cn(
-          'pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-center',
+          'pointer-events-none absolute inset-x-0 top-0 z-raised flex justify-center',
           reduced ? 'translate-y-2' : 'translate-y-[calc(var(--pull)-2.75rem)]',
           state === 'idle' || state === 'settling' ? 'opacity-0' : 'opacity-100',
           !moving && 'motion-safe:transition-[translate,opacity] motion-safe:duration-(--duration-medium) motion-safe:ease-move',

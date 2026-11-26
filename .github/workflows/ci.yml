@@ -55,6 +55,12 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci --no-audit --no-fund
+      # Some tests read the published files (the craft skill, llms.txt). A
+      # feature PR no longer commits them, so regenerate from the sources under
+      # test first, as registry (drift) does. The release branch keeps its own.
+      - name: Regenerate the registry output from these sources
+        if: ${{ !startsWith(github.head_ref, 'changeset-release/') }}
+        run: npm run generate --workspace=registry
       - run: npm test
 
   build:
