@@ -45,7 +45,9 @@
  * quicker, `--duration-base` on `--ease-exit`. Both read the brand's motion
  * tokens when they play, so a brand that retunes motion retunes these too.
  * `slide` moves along the reading direction, and flips in a right-to-left
- * page. A change that comes back before the leave has finished turns the
+ * page. It travels 1.5rem past the block's edge, so a Swap as wide as its
+ * page needs a container with `overflow-x: clip`, or the page scrolls
+ * sideways for the length of the slide. A change that comes back before the leave has finished turns the
  * leave around instead of starting over. Under `prefers-reduced-motion:
  * reduce`, or without `element.animate`, content simply appears and goes.
  *

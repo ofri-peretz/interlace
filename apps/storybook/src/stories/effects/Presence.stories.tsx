@@ -53,7 +53,8 @@ function Demo() {
         </Presence>
       </section>
 
-      <section className="flex flex-col gap-3">
+      {/* The slide travels past the card's edge: clip it, so a phone-wide card can't scroll the page sideways. */}
+      <section className="flex flex-col gap-3 overflow-x-clip [overflow-clip-margin:0.25rem]">
         <Swap
           swapKey={current.id}
           effect="slide"
