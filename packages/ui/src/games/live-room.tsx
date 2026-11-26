@@ -16,17 +16,19 @@
  * and the app holds the room through `useRoom`. Every phase of
  * `RoomPhase`, the part that shows it, and what moves it on:
  *
- * | Phase     | Host screen                       | Player phone         | Leaves by (event)                        |
- * | --------- | --------------------------------- | -------------------- | ---------------------------------------- |
- * | lobby     | LiveRoom.Lobby with JoinCode      | LiveRoom.Lobby       | Start → `countdown`                      |
- * | countdown | LiveRoom.Countdown                | LiveRoom.Countdown   | its deadline → `question`                |
- * | question  | LiveRoom.HostControls             | QuizQuestion or Poll | all answered or the clock → `reveal`     |
- * | reveal    | LiveRoom.HostControls, TallyBars  | TallyBars            | Next → `countdown`, or Podium → `podium` |
- * | podium    | Podium, LiveRoom.HostControls     | Podium               | Play again → `restart`, or End → `close` |
- * | closed    | the app's own end screen          | the app's own screen | —                                        |
+ * | Phase     | Host screen                                 | Player phone         | Leaves by (event)                        |
+ * | --------- | ------------------------------------------- | -------------------- | ---------------------------------------- |
+ * | lobby     | LiveRoom.Lobby with JoinCode                | LiveRoom.Lobby       | Start → `countdown`                      |
+ * | countdown | LiveRoom.Countdown                          | LiveRoom.Countdown   | its deadline → `question`                |
+ * | question  | LiveRoom.HostControls                       | AnswerPad, or Poll   | all answered or the clock → `reveal`     |
+ * | reveal    | TallyBars, Standings, LiveRoom.HostControls | AnswerPad (revealed) | Next → `countdown`, or Podium → `podium` |
+ * | podium    | Podium, LiveRoom.HostControls               | Podium               | Play again → `restart`, or End → `close` |
+ * | closed    | the app's own end screen                    | the app's own screen | —                                        |
  *
- * QuizQuestion, Poll, TallyBars and Podium are game components in their
- * own right, so the flow names them rather than wrapping them.
+ * AnswerPad, Poll, TallyBars, Standings and Podium are game components in their
+ * own right, so the flow names them rather than wrapping them. The round's
+ * prompt reaches the phones in `room.prompt` and its answer in
+ * `room.solution` (see room-model), so AnswerPad never needs the answer early.
  *
  * ## Anatomy
  *
@@ -62,10 +64,27 @@
  *
  * ## Time
  *
- * Deadlines are timestamps from the host's clock. Pass `now` (yours, minus
- * a measured offset) where phones' clocks drift; the countdown and the host
- * controls then agree to the second. Timing uses `setTimeout` to the next
- * whole second, never a frame loop.
+ * Deadlines are timestamps from the host's clock. Every state the host sends
+ * carries its clock (`at`), and `useRoom` returns `now`: this device's clock
+ * corrected to the host's. Pass it to `LiveRoom.Countdown`, `TimerRing` and
+ * `useSecondsLeft`, and a phone whose clock is a minute off still shows the
+ * host's deadline. Timing uses `setTimeout` to the next whole second, never
+ * a frame loop.
+ *
+ * ## Delivery
+ *
+ * Networks drop messages. A player's join or answer is sent again every 3s
+ * until the host's state shows it (5 tries at most); the host applies it
+ * once, and a repeated or late answer gets no reply, since a reply would go
+ * to every phone. The host's last state is the truth: a transport may send
+ * it again when quiet so a phone that missed one catches up.
+ *
+ * ## Presence
+ *
+ * A player's page says it is away on `pagehide` and asks for the room again
+ * when it is seen (a phone that slept missed messages). Shown away while
+ * still here, it rejoins by itself under the same id and name, scores kept;
+ * a player who sends `leave` stays out. Turn it off with `presence: false`.
  *
  * ## Motion
  *
@@ -96,6 +115,7 @@ import { Button } from '../primitives/button.js';
 import {
   answerProgress,
   applyRoomEvent,
+  clockOffset,
   connectedPlayers,
   rejectRoomEvent,
   type RoomEvent,
@@ -127,6 +147,12 @@ export interface UseRoomOptions {
   onRejected?: (reason: RoomRejection, event: RoomEvent['type']) => void;
   /** The host's clock, which stamps each answer and join as it arrives. @default Date.now */
   now?: () => number;
+  /**
+   * A player only: say "away" when the page is closed or hidden for good (`pagehide`), and come
+   * back by itself when the page is seen again or the host shows this player away. A player who
+   * sends `leave` themselves stays out. @default true
+   */
+  presence?: boolean;
 }
 
 export interface UseRoomResult {
@@ -135,6 +161,26 @@ export interface UseRoomResult {
   isHost: boolean;
   /** Apply (host) or ask the host to apply (player). */
   send: (event: RoomEvent) => void;
+  /**
+   * This client's clock, corrected to the host's: pass it as `now` to `LiveRoom.Countdown`,
+   * `TimerRing` and `useSecondsLeft`, so every phone shows the host's deadline, whatever its own
+   * clock says. On the host it is `now`.
+   */
+  now: () => number;
+}
+
+const OFFSET_WINDOW_MS = 60_000;
+const REJOIN_EVERY_MS = 3_000;
+/** A player's join or answer is sent again this often until the host's state shows it. */
+const RESEND_EVERY_MS = 3_000;
+const RESEND_TRIES = 5;
+
+/** True once `state` shows the player's `event` (or it can no longer count). */
+function settled(state: RoomState, event: RoomEvent, round: number): boolean {
+  if (event.type === 'join') return state.players.some((p) => p.id === event.playerId && p.connected);
+  if (event.type === 'answer')
+    return state.phase !== 'question' || state.round !== round || event.playerId in state.answers;
+  return true;
 }
 
 export function useRoom({
@@ -145,12 +191,21 @@ export function useRoom({
   settings,
   onRejected,
   now = Date.now,
+  presence = true,
 }: UseRoomOptions): UseRoomResult {
   const isHost = host !== undefined;
   const [room, setRoom] = React.useState<RoomState | null>(host ?? null);
   const roomRef = React.useRef<RoomState | null>(host ?? null);
   const latest = React.useRef({ settings, onRejected, code, now });
   latest.current = { settings, onRejected, code, now };
+  // A player's measure of the host's clock: recent (host send, local receive) pairs.
+  const samples = React.useRef<{ at: number; local: number }[]>([]);
+  const offset = React.useRef(0);
+  const leftOnPurpose = React.useRef(false);
+  const lastRejoin = React.useRef(-Infinity);
+  // A player's join or answer, until the host's state shows it: networks drop messages.
+  const pending = React.useRef<{ event: RoomEvent; round: number; tries: number } | null>(null);
+  const [pendingTick, setPendingTick] = React.useState(0);
 
   const apply = React.useCallback(
     (event: RoomEvent, from: string) => {
@@ -159,7 +214,9 @@ export function useRoom({
       const reason = rejectRoomEvent(current, event, from, latest.current.settings);
       if (reason) {
         if (from === selfId) latest.current.onRejected?.(reason, event.type);
-        else
+        // A refused answer (a repeat, or one that arrived after the reveal) gets no reply: it
+        // would go to every phone, and the state already tells the player what counted.
+        else if (event.type !== 'answer')
           transport?.send({
             kind: 'rejected',
             to: from,
@@ -171,7 +228,7 @@ export function useRoom({
       const next = applyRoomEvent(current, event, from, latest.current.settings);
       roomRef.current = next;
       setRoom(next);
-      transport?.send({ kind: 'state', state: next });
+      transport?.send({ kind: 'state', state: next, at: latest.current.now() });
     },
     [transport, selfId],
   );
@@ -188,37 +245,115 @@ export function useRoom({
             message.from,
           );
         } else if (message.kind === 'hello' && roomRef.current)
-          transport.send({ kind: 'state', state: roomRef.current });
+          transport.send({ kind: 'state', state: roomRef.current, at: latest.current.now() });
         return;
       }
       if (message.kind === 'state') {
         const current = roomRef.current;
         const want = latest.current.code;
         if (want && message.state.code !== want) return;
+        if (typeof message.at === 'number') {
+          const local = Date.now();
+          samples.current = [
+            ...samples.current.filter((s) => local - s.local < OFFSET_WINDOW_MS),
+            { at: message.at, local },
+          ];
+          offset.current = clockOffset(samples.current);
+        }
+        // Shown away (the phone slept, or its leave crossed a reload): come back, unless we left.
+        const self = message.state.players.find((p) => p.id === selfId);
+        if (
+          presence &&
+          self &&
+          !self.connected &&
+          !leftOnPurpose.current &&
+          message.state.phase !== 'closed' &&
+          !message.state.removed.includes(selfId) &&
+          (typeof document === 'undefined' || document.visibilityState !== 'hidden') &&
+          Date.now() - lastRejoin.current > REJOIN_EVERY_MS
+        ) {
+          lastRejoin.current = Date.now();
+          transport.send({ kind: 'intent', from: selfId, event: { type: 'join', playerId: selfId, name: self.name } });
+        }
         if (current && current.code === message.state.code && message.state.seq <= current.seq) return;
         roomRef.current = message.state;
         setRoom(message.state);
+        const wait = pending.current;
+        if (wait && settled(message.state, wait.event, wait.round)) pending.current = null;
       } else if (message.kind === 'rejected' && message.to === selfId) {
+        if (pending.current?.event.type === message.event) pending.current = null;
         latest.current.onRejected?.(message.reason, message.event);
       }
     });
     if (isHost) {
-      if (roomRef.current) transport.send({ kind: 'state', state: roomRef.current });
+      if (roomRef.current) transport.send({ kind: 'state', state: roomRef.current, at: latest.current.now() });
     } else {
       transport.send({ kind: 'hello', from: selfId });
     }
     return off;
-  }, [transport, isHost, selfId, apply]);
+  }, [transport, isHost, selfId, apply, presence]);
+
+  // A player's page: away when it is closed, and a fresh look at the room when it is seen again
+  // (a phone that slept missed messages; the answer may bring it back in, see above).
+  React.useEffect(() => {
+    if (isHost || !presence || !transport || typeof window === 'undefined') return;
+    const hide = (e: PageTransitionEvent) => {
+      // A page kept for back/forward is not gone; a closed one is.
+      if (e.persisted) return;
+      if (roomRef.current?.players.some((p) => p.id === selfId && p.connected))
+        transport.send({ kind: 'intent', from: selfId, event: { type: 'leave', playerId: selfId } });
+    };
+    const seen = () => {
+      if (document.visibilityState === 'visible') transport.send({ kind: 'hello', from: selfId });
+    };
+    window.addEventListener('pagehide', hide);
+    document.addEventListener('visibilitychange', seen);
+    return () => {
+      window.removeEventListener('pagehide', hide);
+      document.removeEventListener('visibilitychange', seen);
+    };
+  }, [isHost, presence, transport, selfId]);
 
   const send = React.useCallback(
     (event: RoomEvent) => {
       if (isHost) apply(event, selfId);
-      else transport?.send({ kind: 'intent', from: selfId, event });
+      else {
+        if (event.type === 'leave') leftOnPurpose.current = true;
+        else if (event.type === 'join') leftOnPurpose.current = false;
+        if (event.type === 'join' || event.type === 'answer') {
+          pending.current = { event, round: roomRef.current?.round ?? 0, tries: 0 };
+          setPendingTick((n) => n + 1);
+        }
+        transport?.send({ kind: 'intent', from: selfId, event });
+      }
     },
     [isHost, apply, selfId, transport],
   );
 
-  return { room, isHost, send };
+  // Send a waiting join or answer again until the host's state shows it, a few times at most.
+  React.useEffect(() => {
+    if (isHost || !transport) return;
+    const timer = setInterval(() => {
+      const wait = pending.current;
+      if (!wait) return clearInterval(timer);
+      const current = roomRef.current;
+      if (current && settled(current, wait.event, wait.round)) {
+        pending.current = null;
+        return clearInterval(timer);
+      }
+      if (wait.tries >= RESEND_TRIES) {
+        pending.current = null;
+        return clearInterval(timer);
+      }
+      wait.tries++;
+      transport.send({ kind: 'intent', from: selfId, event: wait.event });
+    }, RESEND_EVERY_MS);
+    return () => clearInterval(timer);
+  }, [isHost, transport, selfId, pendingTick]);
+
+  const corrected = React.useCallback(() => (isHost ? latest.current.now() : Date.now() + offset.current), [isHost]);
+
+  return { room, isHost, send, now: corrected };
 }
 
 /**

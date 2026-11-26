@@ -64,6 +64,19 @@
     "previewDark": "primitives-alertdialog--dark",
     "skeleton": null
   },
+  "answer-pad": {
+    "title": "Games/AnswerPad",
+    "storyIds": [
+      "games-answerpad--default",
+      "games-answerpad--keys",
+      "games-answerpad--revealed-wrong",
+      "games-answerpad--revealed-right",
+      "games-answerpad--right-to-left"
+    ],
+    "preview": "games-answerpad--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "app-header": {
     "title": "Blocks/AppHeader",
     "storyIds": [
@@ -957,6 +970,21 @@
     "preview": "primitives-dropdownmenu--default",
     "previewDark": "primitives-dropdownmenu--dark",
     "skeleton": "primitives-dropdownmenu--loading"
+  },
+  "duel": {
+    "title": "Games/Duel",
+    "storyIds": [
+      "games-duel--default",
+      "games-duel--you-won",
+      "games-duel--tie",
+      "games-duel--invite",
+      "games-duel--challenged",
+      "games-duel--by-link",
+      "games-duel--right-to-left"
+    ],
+    "preview": "games-duel--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "edge-glow": {
     "title": "Effects/EdgeGlow",
@@ -2740,6 +2768,19 @@
       "blocks-stancelist--default"
     ],
     "preview": "blocks-stancelist--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "standings": {
+    "title": "Games/Standings",
+    "storyIds": [
+      "games-standings--default",
+      "games-standings--on-ap-hone",
+      "games-standings--still",
+      "games-standings--replay",
+      "games-standings--right-to-left"
+    ],
+    "preview": "games-standings--default",
     "previewDark": null,
     "skeleton": null
   },
