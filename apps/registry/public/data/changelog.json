@@ -904,6 +904,17 @@
           "source": ".changeset/pull-to-refresh-install.md"
         },
         {
+          "summary": "A 2 x 2 grid: two questions at once. `Quadrant` is the phone: a square pad where the viewer places one dot by tapping, dragging or the arrow keys (Shift for fine steps, Home and End for the ends of the horizontal axis, Page Up and Page Down for the vertical), with the dot's place said in words as it changes and mirrored in right to left. Once placed, it shows the room on the same grid: where dots crowd, how many sit in each quarter, the room's middle travelling from the viewer's dot to where the room is, and an earlier round as a dashed ring; the picture is hidden from assistive tech and told in one focused sentence. `QuadrantMap` is the same picture for a shared screen. `games/quadrant-model` cleans and bins the dots (`summarizeQuadrant`), finds the leading quarter (none on a tie), measures how far the middle moved (`quadrantShift`) and moves a dot by key (`nudgePoint`).",
+          "components": [
+            "quadrant"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/quadrant.md"
+        },
+        {
           "summary": "Questions from the room, ranked by the room. `QuestionAsk` lets a phone send a question of up to `maxLength` characters (default 200) with a live counter, refuses unsafe text through `text-safety-model` with a reason, and thanks the asker differently when the room is moderated. `QuestionBoard` lists live questions, the pinned one first and marked \"Answering now\", with a vote toggle (`aria-pressed`, the count in its name) that is off for the viewer's own question; questions glide to their new rank when votes change and the count rises into place. `QuestionQueue` gives a moderator review, live and done lists with approve, dismiss, pin, answered and restore, each sending one event. The state is pure and exported from `games/question-board-model`: `createBoard`, `applyBoardEvent` (review → live → answered or dismissed, one vote per person, never on your own, per-person limits) and `rankQuestions` (pinned, then votes, then oldest).",
           "components": [
             "question-board"

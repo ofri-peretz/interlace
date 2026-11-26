@@ -3802,6 +3802,24 @@
       }
     },
     {
+      "name": "quadrant",
+      "type": "registry:ui",
+      "title": "Quadrant",
+      "description": "A 2 x 2 grid: two questions at once (\"how hard / how important\"). Each person places one dot on a square pad, by tapping, dragging or the arrow keys, then sees the room on the same grid: where the dots crowd, how many sit in each quarter, the room's…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "question-board",
       "type": "registry:ui",
       "title": "Question Board",

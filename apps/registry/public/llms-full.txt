@@ -287,7 +287,7 @@ the neutral rows above.
 
 # Interlace Design System — component registry
 
-> 239 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 240 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -341,10 +341,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 125 client, 114 server
-- keyboard: 187 none, 52 handled
-- built-in loading state: 38 of 239
-- declared minViewport: 158 at 320, 7 at 480, 1 at 768, 73 at inherited
+- rendering: 126 client, 114 server
+- keyboard: 187 none, 53 handled
+- built-in loading state: 38 of 240
+- declared minViewport: 159 at 320, 7 at 480, 1 at 768, 73 at inherited
 
 ## Taxonomy
 
@@ -352,7 +352,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - tier `primitive` — 78 item(s)
 - tier `pattern` — 65 item(s)
-- tier `game` — 30 item(s)
+- tier `game` — 31 item(s)
 - tier `effect` — 27 item(s)
 - tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
@@ -363,8 +363,8 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - category `primitive` (Primitives) — 78 item(s)
 - category `pattern` (Patterns) — 65 item(s)
 - category `blog` (Blog & long-form) — 37 item(s)
-- category `games` (Games) — 30 item(s)
-- category `game` (Games) — 30 item(s)
+- category `games` (Games) — 31 item(s)
+- category `game` (Games) — 31 item(s)
 - category `data` (Data display) — 30 item(s)
 - category `foundation` (Foundation) — 27 item(s)
 - category `effect` (Effects) — 27 item(s)
@@ -917,6 +917,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Qr Code](https://ds.interlace.tools/c/qr-code): A QR code for a link or a short text, drawn as one SVG path from the pure encoder in `qr-model.ts`. No dependency, no canvas, no image request: it renders on the server and stays sharp at any size, from a phone card to a projector.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/qr-code.json`
   - contract: server, min 320px, v1.0.0
+- [Quadrant](https://ds.interlace.tools/c/quadrant): A 2 x 2 grid: two questions at once ("how hard / how important"). Each person places one dot on a square pad, by tapping, dragging or the arrow keys, then sees the room on the same grid: where the dots crowd, how many sit in each quarter, the room's…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/quadrant.json`
+  - contract: client, min 320px, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/End/Home/PageDown/PageUp, states top-start|top-end|bottom-start|bottom-end, v1.0.0
 - [Question Board](https://ds.interlace.tools/c/question-board): Questions from the room, ranked by the room. People ask from their phone (`QuestionAsk`), vote up the questions they want answered (`QuestionBoard`), and a moderator approves, pins, answers or hides them (`QuestionQueue`) before anything typed reaches a…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/question-board.json`
   - contract: client, min 320px, states review|live|answered|dismissed, v1.0.0

@@ -604,6 +604,14 @@
       "types": "./dist/games/text-wall.d.ts",
       "default": "./dist/games/text-wall.js"
     },
+    "./games/quadrant-model": {
+      "types": "./dist/games/quadrant-model.d.ts",
+      "default": "./dist/games/quadrant-model.js"
+    },
+    "./games/quadrant": {
+      "types": "./dist/games/quadrant.d.ts",
+      "default": "./dist/games/quadrant.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"

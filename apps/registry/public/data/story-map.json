@@ -1827,6 +1827,19 @@
     "previewDark": null,
     "skeleton": null
   },
+  "quadrant": {
+    "title": "Games/Quadrant",
+    "storyIds": [
+      "games-quadrant--default",
+      "games-quadrant--placing",
+      "games-quadrant--keyboard",
+      "games-quadrant--screen",
+      "games-quadrant--right-to-left"
+    ],
+    "preview": "games-quadrant--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "question-board": {
     "title": "Games/QuestionBoard",
     "storyIds": [

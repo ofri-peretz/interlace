@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 239
+    "itemCount": 240
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 78,
       "pattern": 65,
-      "game": 30,
+      "game": 31,
       "effect": 27,
       "chart": 14,
       "template": 13,
@@ -43,8 +43,8 @@
       "primitive": 78,
       "pattern": 65,
       "blog": 37,
-      "games": 30,
-      "game": 30,
+      "games": 31,
+      "game": 31,
       "data": 30,
       "foundation": 27,
       "effect": 27,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 125,
+      "client": 126,
       "server": 114
     },
     "keyboard": {
       "none": 187,
-      "handled": 52
+      "handled": 53
     },
     "loading": {
-      "none": 201,
+      "none": 202,
       "built-in": 38
     },
     "minViewport": {
-      "320": 158,
+      "320": 159,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -7614,6 +7614,85 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/qr-code.json",
       "item": "https://ds.interlace.tools/r/qr-code.json",
       "docs": "https://ds.interlace.tools/c/qr-code"
+    },
+    {
+      "name": "quadrant",
+      "title": "Quadrant",
+      "type": "registry:ui",
+      "summary": "A 2 x 2 grid: two questions at once (\"how hard / how important\"). Each person places one dot on a square pad, by tapping, dragging or the arrow keys, then sees the room on the same grid: where the dots crowd, how many sit in each quarter, the room's…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "Quarter",
+          "values": [
+            "top-start",
+            "top-end",
+            "bottom-start",
+            "bottom-end"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "QUARTERS"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/quadrant.tsx",
+        "components/ui/games/quadrant-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/quadrant.json",
+      "item": "https://ds.interlace.tools/r/quadrant.json",
+      "docs": "https://ds.interlace.tools/c/quadrant"
     },
     {
       "name": "question-board",
