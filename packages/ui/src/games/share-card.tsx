@@ -14,6 +14,7 @@
  *   ShareCard                      (div — data-slot="share-card")
  *     ├─ p                         (data-slot="share-card-title": name and number)
  *     ├─ p                         (data-slot="share-card-marks": the marks, hidden from AT; a sentence beside them)
+ *     ├─ p                         (data-slot="share-card-note": one line of news, with `note`)
  *     ├─ p                         (data-slot="share-card-score")
  *     ├─ div                       (data-slot="share-card-actions": Share, Copy)
  *     └─ p aria-live="polite"      (data-slot="share-card-status": "Copied.")
@@ -35,7 +36,7 @@
  * | Rule | Concept                   | Where in this file                              |
  * | ---- | ------------------------- | ----------------------------------------------- |
  * | R4   | Extends native el         | `React.ComponentProps<'div'>`                   |
- * | R6   | data-slot per part        | share-card / -title / -marks / -score / -actions / -status |
+ * | R6   | data-slot per part        | share-card / -title / -marks / -note / -score / -actions / -status |
  * | R7   | cn + ...rest              | `cn(…, className)` + `{...props}`               |
  * | R14  | Declares min viewport     | `data-min-viewport` + exported const            |
  * | R19  | Tokens only               | card, border, muted-foreground                  |
@@ -90,6 +91,7 @@ function ShareCard({
   results,
   score,
   maxScore,
+  note,
   streak,
   url,
   symbols = DEFAULT_SYMBOLS,
@@ -107,7 +109,7 @@ function ShareCard({
   const [manual, setManual] = React.useState(false);
   const [canShare, setCanShare] = React.useState(false);
   const fieldRef = React.useRef<HTMLTextAreaElement>(null);
-  const text = shareText({ title, number, results, score, maxScore, streak, url, symbols, fallback, numberLabel, streakSymbol });
+  const text = shareText({ title, number, results, score, maxScore, note, streak, url, symbols, fallback, numberLabel, streakSymbol });
   const nf = new Intl.NumberFormat(locale);
 
   React.useEffect(() => {
@@ -172,10 +174,17 @@ function ShareCard({
       <p data-slot="share-card-title" className="font-heading font-semibold">
         {head}
       </p>
-      <p data-slot="share-card-marks" className="text-2xl leading-none tracking-[0.2em]">
-        <span aria-hidden>{shareMarks(results, symbols, fallback)}</span>
-        <span className="sr-only">{sentence}</span>
-      </p>
+      {results.length ? (
+        <p data-slot="share-card-marks" className="text-2xl leading-none tracking-[0.2em]">
+          <span aria-hidden>{shareMarks(results, symbols, fallback)}</span>
+          <span className="sr-only">{sentence}</span>
+        </p>
+      ) : null}
+      {note ? (
+        <p data-slot="share-card-note" className="font-medium">
+          {note}
+        </p>
+      ) : null}
       {scoreText || streak ? (
         <p data-slot="share-card-score" className="text-muted-foreground text-sm tabular-nums">
           {scoreText}

@@ -22,3 +22,17 @@ export { Reveal, type RevealProps } from './reveal';
 export { Slider, type SliderProps } from './slider';
 export { CloserGame, DEFAULT_CLOSER_LABELS, type CloserGameProps, type CloserLabels } from './games/closer-game';
 export { StreakStrip, DEFAULT_STREAK_LABELS, type StreakStripProps, type StreakStripLabels } from './games/streak-strip';
+export {
+  LevelMeter,
+  GoalMeter,
+  RoundSummary,
+  DEFAULT_LEVEL_LABELS,
+  DEFAULT_GOAL_LABELS,
+  DEFAULT_ROUND_SUMMARY_LABELS,
+  type LevelMeterProps,
+  type LevelMeterLabels,
+  type GoalMeterProps,
+  type GoalMeterLabels,
+  type RoundSummaryProps,
+  type RoundSummaryLabels,
+} from './games/progress';
