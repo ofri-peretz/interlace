@@ -65,6 +65,15 @@
     --destructive-foreground: var(--interlace-destructive-foreground);
     --radius: var(--interlace-radius);
 
+    /* Band: the full-bleed brand band (Section tone="brand"). It follows
+     * the primary pair unless a theme or a consumer sets its own, which a
+     * dark scheme usually wants: a primary lightened for links and buttons
+     * on a dark page makes a glaring band, and the band can stay deep. Set
+     * `--band` / `--band-foreground` on :root or .dark, or
+     * `--interlace-band` / `--interlace-band-foreground` in a theme. */
+    --band: var(--interlace-band, var(--primary));
+    --band-foreground: var(--interlace-band-foreground, var(--primary-foreground));
+
     /* Status semantics — NEW. Surfaces success / warning / info as
      * shadcn-bare token names so consumers reach for `bg-success`,
      * `text-warning`, `bg-info` instead of `bg-emerald-700` /
@@ -196,6 +205,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-band: var(--band);
+  --color-band-foreground: var(--band-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -331,6 +342,8 @@
     --secondary-foreground: var(--foreground) !important;
     --primary: var(--contrast-primary, var(--foreground)) !important;
     --primary-foreground: var(--contrast-primary-foreground, var(--background)) !important;
+    --band: var(--primary) !important;
+    --band-foreground: var(--primary-foreground) !important;
     --border: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
     --input: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
     --ring: var(--foreground) !important;
@@ -359,6 +372,8 @@
       --secondary-foreground: var(--foreground) !important;
       --primary: var(--contrast-primary, var(--foreground)) !important;
       --primary-foreground: var(--contrast-primary-foreground, var(--background)) !important;
+      --band: var(--primary) !important;
+      --band-foreground: var(--primary-foreground) !important;
       --border: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
       --input: color-mix(in srgb, var(--foreground) 55%, var(--background)) !important;
       --ring: var(--foreground) !important;
