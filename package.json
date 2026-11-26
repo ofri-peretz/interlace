@@ -36,6 +36,8 @@
     "ai-sdlc:audit": "node scripts/ai-sdlc/audit.mjs",
     "ai-sdlc:score": "node scripts/ai-sdlc/scorecard.mjs",
     "ai-sdlc:test": "node --test scripts/ai-sdlc/ai-sdlc.test.mjs",
+    "ai-sdlc:install": "node scripts/ai-sdlc/install.mjs",
+    "ai-sdlc:next": "node scripts/ai-sdlc/next.mjs",
     "changeset": "changeset",
     "changeset:check": "node scripts/require-changeset.mjs",
     "version-packages": "changeset version && npm run versions:derive && npm run registry:build && npm install --package-lock-only --ignore-scripts",

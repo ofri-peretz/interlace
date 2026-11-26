@@ -16,8 +16,10 @@ node "${TMPDIR:-/tmp}/next.mjs" <repo> <slug>…   # exit 1: agent work, the fir
 
 ## Start
 
-1. One intent per outcome the user asked for: `.sdlc/intents/<slug>/intent.md` from the repo's
-   `_template` (or `docs/intents/` where the repo keeps them). Commit them.
+1. One intent per outcome the user asked for: `.sdlc/intents/<slug>/intent.md` (or `docs/intents/`
+   where the repo keeps them), from the repo's `_template`, else from interlace's
+   `docs/ai-sdlc/templates/` (`git -C ~/repos/ofriperetz.dev/interlace show origin/main:docs/ai-sdlc/templates/intent.md`).
+   The spec template carries the `**Check:**` line. Commit them.
 2. Arm the loop with the built-in `/goal`, naming only these slugs:
    `/goal node "${TMPDIR:-/tmp}/next.mjs" <repo> <slugs> exits 0, stop after 30 turns`
 

@@ -106,3 +106,16 @@ test('next.mjs runs as a command from a symlinked temp dir, the way the skill ca
   assert.equal(r.status, 1, 'a draft intent is agent work');
   assert.match(r.stdout, /1 Plan/);
 });
+
+test('install reports a user skill that is missing or edited, and none once copied', async () => {
+  const { mkdtempSync, cpSync, writeFileSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { drift, SKILLS } = await import('./install.mjs');
+  const dest = mkdtempSync(join(tmpdir(), 'skills-'));
+  assert.deepEqual(drift(dest), SKILLS, 'all missing');
+  for (const n of SKILLS) cpSync(new URL(`../../.claude/skills/${n}`, import.meta.url), join(dest, n), { recursive: true });
+  assert.deepEqual(drift(dest), []);
+  writeFileSync(join(dest, SKILLS[0], 'SKILL.md'), 'edited by hand');
+  assert.deepEqual(drift(dest), [SKILLS[0]]);
+});

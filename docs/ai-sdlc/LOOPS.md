@@ -67,6 +67,44 @@ or when everything has shipped, and says which.
 11. **When a result misses the bar, fix the system, not only the instance.** A new check, a
     skill, or a hook, so the next loop cannot repeat it (rule 4, [E-31](EVIDENCE.md#e-31)).
 
+## Hooks and checks never stall a loop
+
+A loop is only as fast as its slowest gate, and a gate that hangs ends the loop knowing
+nothing. Measured on burgee's pre-push, 2026-11-26: 6+ min before, 73 s after. All of these
+ship in `hookset` presets, so a repo gets them by adopting hookset.
+
+1. **Every hook has a time limit.** Git hook steps carry `timeout:` (30 s to 5 min). Claude
+   Code hooks carry `timeout` (10 to 30 s). A stuck step is killed and fails; it never hangs.
+2. **Stop at the first failure.** Pre-push is `piped: true`, so the first red step ends the
+   push and says why, instead of running the rest.
+3. **Check what changed, not everything.** Pre-push type-checks and tests only the packages a
+   push touches (`turbo --affected`, `vitest --changed`). CI still runs the whole battery on the
+   PR. A change to hook or CI config reruns every lock that reads it
+   (`forceRerunTriggers`), because `--changed` follows imports and those locks read text.
+4. **One process, not hundreds.** Every process start and new file costs time under an
+   endpoint scanner. Batch work in-process (esbuild's `buildSync`, output kept in memory)
+   instead of one CLI call per item.
+5. **A hook judges only what its session did.** `verify-before-stop` tracks the files this
+   session wrote, so another session's edits never send this one's turn back.
+6. **Wake on events; never hand-roll a polling loop.** `guard-bash` blocks `until …; sleep`
+   loops. Use `gh pr checks --watch`, a background command that exits on the condition, or
+   `/loop` with a long fallback heartbeat.
+7. **Count false alarms.** A hook that blocks wrongly costs a turn every time. Each block is
+   a data point for the harness-simplification rule above.
+
+## Install
+
+The loop skills live here and are installed for every repo on a machine:
+
+```bash
+npm run ai-sdlc:install           # copies .claude/skills/{ai-sdlc-loop,morning-briefing,pr-review,docs-drift} to ~/.claude/skills
+npm run ai-sdlc:install -- --check   # exit 1 when a user copy has drifted from this repo
+```
+
+A repo needs nothing more to run the loop. Intents go in its `.sdlc/intents/`, from its own
+`_template` or from [templates/](templates/). The spec template carries the `**Check:**` line
+the Build stage runs on.
+
 ## Scheduled loops (Stage 6 and recurring work)
 
 Start with `/loop` in a session to find what works. Promote it to a desktop scheduled task
