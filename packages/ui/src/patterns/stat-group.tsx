@@ -44,13 +44,16 @@ interface StatGroupProps extends React.ComponentProps<'section'> {
 /**
  * Track counts per `cols`, keyed on the width of this component (it is the
  * `@container`), not the viewport: the same grid in a sidebar or a card
- * collapses as it would on a phone. Two tracks from 28rem, the full count
- * from 56rem. Written out statically because Tailwind cannot scan a
- * runtime-built `@4xl:grid-cols-${n}`.
+ * collapses as it would on a phone. Two and four go one, two, then the full
+ * count (two from 28rem, four from 56rem). Three skips the two-track step and
+ * goes straight to three at 36rem: two tracks would leave the third stat
+ * alone on a row of its own, which reads as a missing one. Written out
+ * statically because Tailwind cannot scan a runtime-built
+ * `@4xl:grid-cols-${n}`.
  */
 const STAT_GRID_COLS: Record<2 | 3 | 4, string> = {
   2: 'grid-cols-1 @md:grid-cols-2',
-  3: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-3',
+  3: 'grid-cols-1 @xl:grid-cols-3',
   4: 'grid-cols-1 @md:grid-cols-2 @4xl:grid-cols-4',
 };
 

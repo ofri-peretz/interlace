@@ -4,7 +4,7 @@
  * @interlace/ui — Prose
  *
  * The article-body wrapper. Renders an `<article>` whose descendants
- * (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `code`/`pre`, `table`,
+ * (`h1`–`h6`, `p`, `a`, `ul`/`ol`/`li`, `blockquote`, `figure`/`figcaption`, `code`/`pre`, `table`,
  * `img`) get DS-token-mapped typography without per-element class
  * gymnastics in the consumer. Think MDX-target wrapper: drop a stream of
  * Markdown / MDX inside and it reads like a published article — measure
@@ -111,6 +111,14 @@ const PROSE_CASCADE = [
 
   // Blockquote — quiet left rule with muted body.
   '[&_blockquote]:my-6 [&_blockquote]:border-s-4 [&_blockquote]:border-border [&_blockquote]:ps-6 [&_blockquote]:text-muted-foreground [&_blockquote]:italic',
+
+  // Figure — a quote with who said it. The caption sits under the quote,
+  // indented to the quote's text (the 4px rule plus ps-6), small and muted, so
+  // the words lead and the attribution follows instead of outweighing them.
+  // Only a bare figure: a component's own (Figure, a chart, Testimonial)
+  // carries a data-slot and keeps its caption.
+  '[&_figure:not([data-slot])]:my-6 [&_figure:not([data-slot])>blockquote]:my-0',
+  '[&_figure:not([data-slot])>figcaption]:mt-2 [&_figure:not([data-slot])>figcaption]:ps-7 [&_figure:not([data-slot])>figcaption]:text-ui-sm [&_figure:not([data-slot])>figcaption]:text-muted-foreground',
 
   // Inline code — chip pill on muted surface. The vertical padding is the
   // one arbitrary value in this chain and stays arbitrary on purpose: an
