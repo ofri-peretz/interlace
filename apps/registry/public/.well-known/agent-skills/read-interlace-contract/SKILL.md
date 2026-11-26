@@ -56,17 +56,18 @@ to claim. Read it before writing props; the props table on
 same render the accessibility gate asserts against, including the loading and
 dark variants.
 
-## Worked example — `calendar`
+## Worked example — `answer-pad`
 
 ```
 rendering    client
 minViewport  320
-keyboard     ArrowDown, ArrowLeft, ArrowRight, ArrowUp, End, Home, PageDown, PageUp
-states       DayState = open | today | selected | unavailable | outside
+keyboard     none of its own
+states       AnswerPadState = open | sent | closed | revealed
+             AnswerPadOutcome = correct | wrong | missed
 exports      MIN_VIEWPORT
 ```
 
-One month of days to pick one from: the date grid of a booking page, a date field's popup, a "when" step. Days are plain `YYYY-MM-DD` strings (see `calendar-model`), so the day a reader picks is the day the server stores, in every time zone.
+The player's side of a live round: the question is on the big screen, and each phone shows big lettered tiles to pick from. The first pick is final and goes to the host; the pad then says the answer is in and waits. When the host reveals the round, the pad…
 
 ## The rule
 
