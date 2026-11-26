@@ -22,6 +22,8 @@ pre-push:
   commands:
     guidance:
       run: npm run lint:guidance
+    intents:
+      run: npm run intent:check
 
 # A merge resolves registry output with the `interlace-generated` driver (see .gitattributes), so
 # rebuild it from the merged sources before the merge is pushed.
