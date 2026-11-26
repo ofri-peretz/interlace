@@ -98,8 +98,22 @@ const LINK =
 // run of one character costs linear time, not quadratic.
 const EMAIL_WORD = /^[^@]+@[^@.]+(?:\.[^@.]+)+$/u;
 const hasEmail = (text: string) => text.split(' ').some((word) => EMAIL_WORD.test(word));
-// Seven or more digits, allowing the usual separators between them.
-const PHONE = /(?:\+?\d[\s().-]*){7,}/u;
+// Seven or more digits, allowing the usual separators (spaces, dots,
+// dashes, brackets, a leading plus) between them. A single pass, so no input
+// can make it slow.
+const PHONE_SEPARATORS = new Set([' ', '\t', '\n', '(', ')', '.', '-', '+']);
+function hasPhone(text: string): boolean {
+  let digits = 0;
+  for (const ch of text) {
+    if (ch >= '0' && ch <= '9') {
+      digits += 1;
+      if (digits >= 7) return true;
+    } else if (!PHONE_SEPARATORS.has(ch)) {
+      digits = 0;
+    }
+  }
+  return false;
+}
 
 /** Runs every rule and says the first one the text breaks. */
 export function checkText(input: string, rules: TextRules = {}): TextCheck {
@@ -113,14 +127,19 @@ export function checkText(input: string, rules: TextRules = {}): TextCheck {
   const text = tidyText(input);
   if (!text) return { ok: false, reason: 'empty' };
   if (visibleLength(text) > maxLength) return { ok: false, reason: 'too-long' };
-  if (!allowContact && (hasEmail(text) || PHONE.test(text))) return { ok: false, reason: 'contact' };
+  if (!allowContact && (hasEmail(text) || hasPhone(text))) return { ok: false, reason: 'contact' };
   if (!allowLinks && LINK.test(text)) return { ok: false, reason: 'link' };
   if (blocklist && blocklist.length > 0 && isBlocked(text, blocklist)) return { ok: false, reason: 'blocked' };
   if (wordsOf(text).length > maxWords) return { ok: false, reason: 'too-many-words' };
   return { ok: true, text };
 }
 
-/** True when any whole word, or run of words, of `text` is on the list. */
+/**
+ * True when any whole word, or run of words, of `text` is on the list.
+ * Letters spelled out with spaces ("b a d") fold back into a word anywhere in
+ * the text. Other splits ("ba d") are caught only when they are the whole
+ * text, so a moderation queue still matters for open text.
+ */
 export function isBlocked(text: string, blocklist: readonly string[]): boolean {
   const hay = ` ${foldText(text)} `;
   const squeezed = ` ${hay.replace(/\s+/g, '')} `;
