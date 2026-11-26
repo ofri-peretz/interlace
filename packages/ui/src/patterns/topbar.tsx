@@ -481,7 +481,10 @@ function Topbar({
       ) : null}
       <div
         className={cn(
-          "mx-auto flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-2",
+          // Gutters are Container's (px-4 xs:px-6 lg:px-8), so the logo lines up with the page
+          // below it. A flat px-6 sat 8px in from the content on a phone, and the extra
+          // width pushed a logo plus two actions onto a second row at 390px.
+          "mx-auto flex min-h-14 flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-2 xs:gap-x-4 xs:px-6 lg:px-8",
           CONTAINER_CLASSES[containerSize],
         )}
       >
@@ -517,7 +520,7 @@ function Topbar({
           aria-label="Primary"
           data-slot="topbar-wrap-nav"
           className={cn(
-            "flex flex-wrap items-center gap-x-5 px-6 pb-1 text-sm",
+            "flex flex-wrap items-center gap-x-5 px-4 pb-1 text-sm xs:px-6 lg:px-8",
             at.small,
           )}
         >
