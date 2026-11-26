@@ -3586,6 +3586,24 @@
       }
     },
     {
+      "name": "goal-ring",
+      "type": "registry:ui",
+      "title": "Goal Ring",
+      "description": "How far today is toward a daily goal: a ring that fills as points come in, the count in its middle, and a check once the goal is met. It is a `meter`, so assistive tech reads \"15 of 20 XP\" without the ring.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "join-code",
       "type": "registry:ui",
       "title": "Join Code",
@@ -3622,6 +3640,24 @@
       }
     },
     {
+      "name": "level-meter",
+      "type": "registry:ui",
+      "title": "Level Meter",
+      "description": "A player's level and how far they are into the next: the level, a bar of XP, the XP still to go, and, right after a round, the XP just earned. The arithmetic is `levelFor` / `gainXp` in `progress-model.ts`, exported so a server shows the same level.",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": false,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "live-room",
       "type": "registry:ui",
       "title": "Live Room",
@@ -3633,6 +3669,24 @@
       "meta": {
         "tier": "game",
         "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "milestones",
+      "type": "registry:ui",
+      "title": "Milestones",
+      "description": "The marks along a path a player is on (a 3, 7 and 30-day streak; levels 5, 10 and 20): the ones reached, the next one with how far is left, and a few beyond. It shows where the player is going, not a wall of locked trophies, so only a window around the…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": false,
         "minViewport": 320,
         "loading": false,
         "version": "1.0.0",
@@ -3734,6 +3788,42 @@
       "type": "registry:ui",
       "title": "Recall Card",
       "description": "A prompt the player answers in their head, then checks: they think of their answer, reveal the real one, and say honestly how they did. No typing and no multiple choice, so it fits anything with an answer longer than a word: a definition, a reply to a…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "reminder-offer",
+      "type": "registry:ui",
+      "title": "Reminder Offer",
+      "description": "A quiet offer of a daily nudge that the player keeps in their own calendar: pick a time, add it, done. It downloads an .ics file with one event that repeats daily (`reminder-model.ts`), so nothing is sent, no address is asked for, and the player removes it…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "round-summary",
+      "type": "registry:ui",
+      "title": "Round Summary",
+      "description": "The moment a round ends: what the player earned, where today's goal stands, the streak it kept, and anything new they reached (a milestone, a level). Then the next step, which the app passes as children: share, play on, come back tomorrow. It celebrates…",
       "categories": [
         "games",
         "game"
