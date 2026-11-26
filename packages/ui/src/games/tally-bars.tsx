@@ -46,6 +46,7 @@ import { Check, X } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import type { TallyRow } from './tally-model.js';
 
 export const MIN_VIEWPORT = 320 as const;
@@ -102,8 +103,8 @@ function TallyBars({
     fills?.forEach((fill) => {
       if (typeof fill.animate !== 'function') return;
       fill.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], {
-        duration: 400,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        duration: motionDuration(fill, 'slow'),
+        easing: motionEase(fill, 'enter'),
       });
     });
     // Mount only: later count changes move the bars without a replay.

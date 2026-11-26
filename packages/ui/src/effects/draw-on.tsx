@@ -47,11 +47,11 @@ import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 
 /** The SVG shapes that have a length to draw. */
 const SHAPES = 'path, line, polyline, polygon, circle, ellipse, rect';
 
-const EASE = 'cubic-bezier(0.65, 0, 0.35, 1)';
 
 export type DrawOnOrder = 'sequence' | 'together';
 
@@ -149,7 +149,7 @@ export function DrawOn({
         const line = el.animate([{ strokeDashoffset: `${length}` }, { strokeDashoffset: '0' }], {
           duration,
           delay: start,
-          easing: EASE,
+          easing: motionEase(el, 'move'),
           fill: 'both',
         });
         line.onfinish = () => {
@@ -162,7 +162,7 @@ export function DrawOn({
           el.animate([{ fillOpacity: 0 }, { fillOpacity: 1 }], {
             duration: duration / 2,
             delay: start + duration / 2,
-            easing: EASE,
+            easing: motionEase(el, 'move'),
             fill: 'backwards',
           });
         }
@@ -172,7 +172,7 @@ export function DrawOn({
         el.animate([{ opacity: 0 }, { opacity: 1 }], {
           duration: Math.min(duration, 600),
           delay: Math.max(wait, end - Math.min(duration, 600)),
-          easing: EASE,
+          easing: motionEase(el, 'move'),
           fill: 'backwards',
         });
       }
