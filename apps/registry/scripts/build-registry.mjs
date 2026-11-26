@@ -599,6 +599,14 @@ const LIB_FILES = [
   // them the switcher installs with dangling relative imports — which is
   // exactly what `assertRegistryContract` reported.
   {
+    name: 'motion-token',
+    sourceFile: 'motion-token.ts',
+    target: 'lib/motion-token.ts',
+    title: 'Motion token reader',
+    description:
+      '@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.',
+  },
+  {
     name: 'theme-tokens',
     sourceFile: 'theme-tokens.ts',
     target: 'lib/theme-tokens.ts',

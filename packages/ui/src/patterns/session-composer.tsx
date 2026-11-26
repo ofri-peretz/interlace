@@ -64,6 +64,7 @@ import { ArrowDown, ArrowUp, Check, Plus, X } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { Meter } from '../primitives/meter.js';
 import {
@@ -79,7 +80,6 @@ import {
 
 export const MIN_VIEWPORT = 320 as const;
 
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
 interface SessionModule {
   id: string;
@@ -194,7 +194,7 @@ function SessionComposer({
     if (id && !reduced) {
       const el = stepEl(id);
       if (el && typeof el.animate === 'function') {
-        el.animate([{ transform: 'scale(0.92)' }, { transform: 'scale(1)' }], { duration: 240, easing: EASE });
+        el.animate([{ transform: 'scale(0.92)' }, { transform: 'scale(1)' }], { duration: 240, easing: motionEase(el, 'enter') });
       }
     }
     const f = focusAfter.current;

@@ -59,12 +59,12 @@ import { Check, Plus } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { rankInterest } from './interest-model.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
 interface InterestSignalLabels {
   /** The button. It stays the same when pressed. @default 'I want more on this' */
@@ -122,7 +122,7 @@ function InterestSignal({
     pressedHere.current = false;
     const el = iconRef.current;
     if (reduced || !el || typeof el.animate !== 'function') return;
-    el.animate([{ transform: 'scale(0.5)' }, { transform: 'scale(1)' }], { duration: 200, easing: EASE });
+    el.animate([{ transform: 'scale(0.5)' }, { transform: 'scale(1)' }], { duration: 200, easing: motionEase(el, 'enter') });
   }, [pressed, reduced]);
 
   const toggle = () => {
@@ -251,7 +251,7 @@ function InterestBoard({
     const bars = listRef.current?.querySelectorAll<HTMLElement>('[data-slot="interest-board-fill"]') ?? [];
     for (const el of bars) {
       if (typeof el.animate !== 'function') continue;
-      el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 400, easing: EASE });
+      el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: motionDuration(el, 'slow'), easing: motionEase(el, 'enter') });
     }
     // Mount only: a count that moves later should not redraw the whole board.
     // eslint-disable-next-line react-features/hooks-exhaustive-deps

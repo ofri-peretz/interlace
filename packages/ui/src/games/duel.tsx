@@ -58,12 +58,12 @@ import { Copy, Share2, Swords } from 'lucide-react';
 import { Celebrate } from '../effects/celebrate.js';
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { compareDuel, type DuelPlayer, type DuelSide } from './duel-model.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
 // --- DuelInvite -------------------------------------------------------------------
 
@@ -325,9 +325,9 @@ function DuelCompare({
       if (typeof bar.animate !== 'function') return;
       running.push(
         bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], {
-          duration: 400,
+          duration: motionDuration(bar, 'slow'),
           delay: Math.floor(i / 2) * 40,
-          easing: EASE,
+          easing: motionEase(bar, 'enter'),
           fill: 'backwards',
         }),
       );

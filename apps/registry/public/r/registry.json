@@ -148,6 +148,24 @@
       }
     },
     {
+      "name": "motion-token",
+      "type": "registry:lib",
+      "title": "Motion token reader",
+      "description": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "theme-tokens",
       "type": "registry:lib",
       "title": "Theme token manifest",
