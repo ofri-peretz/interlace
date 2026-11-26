@@ -968,6 +968,24 @@
           "source": ".changeset/room-access.md"
         },
         {
+          "summary": "Four ways to run a live workshop, on the room's own state and transport. `PresenterNotes` is the presenter's second screen: notes per section, an agenda with the time planned and the time used, a clock, and a gentle over-time signal said in words and spoken once (never a flash or a sound). Space, the arrows, N, P and + drive it, and can be switched off; `useAgenda` keeps one window in control and any number showing the same agenda, applies a repeated tap once and drops one made against an older screen, and `createAgendaStore` restores it after a refresh with the clock still counting. `TeamBoard`, `TeamScoreboard` and `TeamBadge` make teams, balance them fairly (sizes within one; with scores the strongest players are dealt across teams), move a player by hand with a native select, and rank teams by average so a bigger team has no edge. `BreakoutHost` and `BreakoutCard` split the room into groups with a timer, send one message to every group (spoken once, whatever order states arrive in) and recall everyone. `PairHost` and `PairCard` pair everyone (a group of three when odd), deal each pair a card, and swap partners with the fewest repeats. `RoomClock` counts a host timestamp in minutes and seconds and speaks only a minute left, ten seconds and time up.\n\n`RoomState` gains `shared`, named extras the host sets with a new `share` event, so teams, groups and pairs inherit the room's guarantees: the newest `seq` wins, a late joiner and a reconnecting phone get them with the state, and a restored host restores them. `serializeRoom`, `restoreRoom` and `createRoomStore` keep a room across the host's refresh (everyone comes back `away` and rejoins by themselves, `seq` moves ahead so phones take the saved room as the newest). `RoomTransport` and the in-memory and BroadcastChannel transports take a message type, so a presenter's windows reuse them. New tokens `--team-1` to `--team-5` (and `bg-team-N`, `border-team-N`) alias the chart palette and can be forked alone.",
+          "components": [
+            "presenter-notes",
+            "team-board",
+            "breakout-room",
+            "pair-talk",
+            "room-clock",
+            "live-room",
+            "join-code",
+            "interlace-base"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/room-facilitation.md"
+        },
+        {
           "summary": "Live rooms hold up on real phones. Every state the host sends carries its clock, and `useRoom`\nreturns `now`, this device's clock corrected to the host's (`clockOffset` in room-model), so a\nphone whose clock is off still counts down to the host's deadline; `TimerRing` takes `now` too.\nA player's page now says it is away on `pagehide`, asks for the room again when it is seen, and\nrejoins by itself when shown away, unless the player left on purpose (`presence: false` turns it off).\nNetworks drop messages: a player's join or answer is sent again every 3s until the host's state\nshows it (5 tries), and the host no longer broadcasts a reply to a repeated or late answer.",
           "components": [
             "live-room",
