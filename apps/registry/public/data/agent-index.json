@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 229
+    "itemCount": 232
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -32,7 +32,7 @@
       "primitive": 78,
       "pattern": 65,
       "effect": 27,
-      "game": 20,
+      "game": 23,
       "chart": 14,
       "template": 13,
       "util": 6,
@@ -48,8 +48,8 @@
       "effect": 27,
       "form": 26,
       "decorative": 24,
-      "games": 20,
-      "game": 20,
+      "games": 23,
+      "game": 23,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 115,
+      "client": 118,
       "server": 114
     },
     "keyboard": {
-      "none": 180,
-      "handled": 49
+      "none": 182,
+      "handled": 50
     },
     "loading": {
-      "none": 191,
+      "none": 194,
       "built-in": 38
     },
     "minViewport": {
-      "320": 148,
+      "320": 151,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -280,6 +280,85 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/alert.json",
       "item": "https://ds.interlace.tools/r/alert.json",
       "docs": "https://ds.interlace.tools/c/alert"
+    },
+    {
+      "name": "answer-pad",
+      "title": "Answer Pad",
+      "type": "registry:ui",
+      "summary": "The player's side of a live round: the question is on the big screen, and each phone shows big lettered tiles to pick from. The first pick is final and goes to the host; the pad then says the answer is in and waits. When the host reveals the round, the pad…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "AnswerPadState",
+          "values": [
+            "open",
+            "sent",
+            "closed",
+            "revealed"
+          ]
+        },
+        {
+          "name": "AnswerPadOutcome",
+          "values": [
+            "correct",
+            "wrong",
+            "missed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-disabled",
+          "aria-hidden",
+          "aria-keyshortcuts",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/answer-pad.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/answer-pad.json",
+      "item": "https://ds.interlace.tools/r/answer-pad.json",
+      "docs": "https://ds.interlace.tools/c/answer-pad"
     },
     {
       "name": "app-header-edge",
@@ -3759,6 +3838,74 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dropdown-menu.json",
       "item": "https://ds.interlace.tools/r/dropdown-menu.json",
       "docs": "https://ds.interlace.tools/c/dropdown-menu"
+    },
+    {
+      "name": "duel",
+      "title": "Duel",
+      "type": "registry:ui",
+      "summary": "Two players, one game, by link. The first player finishes and sends a challenge (`DuelInvite`); the second opens it and sees who they are up against (`DuelCard`); after playing the same game, both see the rounds side by side (`DuelCompare`). The challenge…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "DuelSide",
+          "values": [
+            "a",
+            "b",
+            "tie"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DUEL_LIMITS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "celebrate",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/duel.tsx",
+        "components/ui/games/duel-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/duel.json",
+      "item": "https://ds.interlace.tools/r/duel.json",
+      "docs": "https://ds.interlace.tools/c/duel"
     },
     {
       "name": "edge-glow",
@@ -10490,6 +10637,60 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/stance-list.json",
       "item": "https://ds.interlace.tools/r/stance-list.json",
       "docs": "https://ds.interlace.tools/c/stance-list"
+    },
+    {
+      "name": "standings",
+      "title": "Standings",
+      "type": "registry:ui",
+      "summary": "The board between rounds of a live game: who is where now, and how they got there. Each player's points from this round pop up beside their name, their total counts up from where it was, and then the rows glide to their new places, with the places gained…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "count-up",
+        "flip-group",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/standings.tsx",
+        "components/ui/games/leaderboard-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/standings.json",
+      "item": "https://ds.interlace.tools/r/standings.json",
+      "docs": "https://ds.interlace.tools/c/standings"
     },
     {
       "name": "starfield",

@@ -2,14 +2,17 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { Button } from '@interlace/ui/button';
+import { AnswerPad } from '@interlace/ui/games/answer-pad';
 import { JoinCode } from '@interlace/ui/games/join-code';
 import { Podium } from '@interlace/ui/games/podium';
+import { Standings } from '@interlace/ui/games/standings';
 import { LiveRoom, useRoom } from '@interlace/ui/games/live-room';
 import {
   applyRoomEvent,
   createMemoryRoomHub,
   createRoom,
   roomStandings,
+  type RoomHostEvent,
   type RoomState,
   type RoomTransport,
 } from '@interlace/ui/games/room-model';
@@ -101,7 +104,7 @@ const RIGHT = 'C';
 
 function Phone({ hub, id, name }: { hub: ReturnType<typeof createMemoryRoomHub>; id: string; name: string }) {
   const [transport] = React.useState<RoomTransport>(() => hub.connect());
-  const { room, send } = useRoom({ transport, selfId: id, code: 'K7Q4MZ' });
+  const { room, send, now } = useRoom({ transport, selfId: id, code: 'K7Q4MZ' });
   const joined = room?.players.some((p) => p.id === id);
   let body: React.ReactNode;
   if (!room) body = <p className="text-muted-foreground">Connecting…</p>;
@@ -113,28 +116,23 @@ function Phone({ hub, id, name }: { hub: ReturnType<typeof createMemoryRoomHub>;
     );
   else if (room.phase === 'lobby')
     body = <LiveRoom.Lobby players={room.players} selfId={id} aria-label={`${name}'s lobby`} />;
-  else if (room.phase === 'countdown') body = <LiveRoom.Countdown startsAt={room.startsAt} />;
-  else if (room.phase === 'question')
-    body =
-      id in room.answers ? (
-        <p>Answer in. Waiting for the others.</p>
-      ) : (
-        <div role="group" aria-label={`${name}: pick an answer`} className="grid grid-cols-2 gap-2">
-          {OPTIONS.map((o) => (
-            <Button
-              key={o}
-              type="button"
-              variant="outline"
-              size="lg"
-              onClick={() => send({ type: 'answer', playerId: id, value: o, at: Date.now() })}
-            >
-              {o}
-            </Button>
-          ))}
-        </div>
-      );
-  else if (room.phase === 'reveal') body = <p>+{room.lastPoints[id] ?? 0} points</p>;
-  else body = <Podium entries={roomStandings(room)} currentId={id} showRest={false} />;
+  else if (room.phase === 'countdown') body = <LiveRoom.Countdown startsAt={room.startsAt} now={now} />;
+  else if (room.phase === 'question' || room.phase === 'reveal') {
+    // The round reaches the phone in room.prompt; its answer only in room.solution, at the reveal.
+    const options = Array.isArray(room.prompt) ? (room.prompt as string[]) : OPTIONS;
+    const mine = room.answers[id]?.value;
+    body = (
+      <AnswerPad
+        choices={options.map((o) => ({ id: o, label: o }))}
+        value={typeof mine === 'string' ? mine : null}
+        correct={room.phase === 'reveal' && typeof room.solution === 'string' ? room.solution : null}
+        points={room.phase === 'reveal' ? (room.lastPoints[id] ?? 0) : null}
+        display="keys"
+        labels={{ group: `${name}: pick an answer` }}
+        onPick={(o) => send({ type: 'answer', playerId: id, value: o, at: Date.now() })}
+      />
+    );
+  } else body = <Podium entries={roomStandings(room)} currentId={id} showRest={false} />;
   return (
     <section aria-label={`${name}'s phone`} className="border-border flex flex-col gap-3 rounded-2xl border p-4">
       <p className="text-muted-foreground text-sm">{name}&rsquo;s phone</p>
@@ -147,11 +145,23 @@ function Host({ hub }: { hub: ReturnType<typeof createMemoryRoomHub> }) {
   const [transport] = React.useState<RoomTransport>(() => hub.connect());
   const [initial] = React.useState(() => createRoom({ code: 'K7Q4MZ', hostId: 'host', rounds: 2 }));
   const { room, send } = useRoom({ transport, selfId: 'host', host: initial });
+  // The host's round travels with its events: the options with `question`, the answer with `reveal`.
+  const sendRound = React.useCallback(
+    (event: RoomHostEvent) =>
+      send(
+        event.type === 'question'
+          ? { ...event, prompt: OPTIONS }
+          : event.type === 'reveal'
+            ? { ...event, solution: RIGHT }
+            : event,
+      ),
+    [send],
+  );
   if (!room) return null;
   const controls = (
     <LiveRoom.HostControls
       room={room}
-      send={send}
+      send={sendRound}
       roundSeconds={15}
       countdownSeconds={1}
       score={(r) =>
@@ -175,7 +185,16 @@ function Host({ hub }: { hub: ReturnType<typeof createMemoryRoomHub> }) {
           {room.phase === 'question' ? (
             <p className="text-2xl font-semibold">Round {room.round}: which letter is third?</p>
           ) : null}
-          {room.phase === 'reveal' ? <p className="text-2xl font-semibold">It was {RIGHT}.</p> : null}
+          {room.phase === 'reveal' ? (
+            <>
+              <p className="text-2xl font-semibold">It was {RIGHT}.</p>
+              <Standings
+                caption={`After round ${room.round}`}
+                entries={roomStandings(room).map((e) => ({ ...e, gained: room.lastPoints[e.id] ?? 0 }))}
+                locale="en-US"
+              />
+            </>
+          ) : null}
           {room.phase === 'podium' ? <Podium entries={roomStandings(room)} /> : null}
           {controls}
         </>
@@ -209,7 +228,7 @@ export const Journey: Story = {
     const wait = { timeout: 4000 };
     const answer = async (name: string) => {
       const pick = within(await canvas.findByRole('group', { name: `${name}: pick an answer` }, wait));
-      await userEvent.click(pick.getByRole('button', { name: RIGHT }));
+      await userEvent.click(pick.getByRole('button', { name: `${RIGHT}: ${RIGHT}` }));
     };
     await step('lobby: both phones join', async () => {
       await userEvent.click(await canvas.findByRole('button', { name: 'Join as Avery' }));
