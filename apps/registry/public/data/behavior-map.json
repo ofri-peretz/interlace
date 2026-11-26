@@ -9428,6 +9428,19 @@
         "inGate": true
       }
     },
+    "intent": {
+      "sourcePath": "packages/ui/src/lib/intent.ts",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "interest-signal": {
       "sourcePath": "packages/ui/src/patterns/interest-signal.tsx",
       "keyboard": null,
