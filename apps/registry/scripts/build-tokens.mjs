@@ -21,11 +21,10 @@
  * package, which pins that against Chromium).
  */
 
-import { readFile, mkdir } from 'node:fs/promises';
-// Atomic, so registry tests running beside prebuild never read half a file.
-import { writeFile } from './write-atomic.mjs';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeGenerated } from './lib/write-generated.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REGISTRY_ROOT = path.resolve(SCRIPT_DIR, '..');
@@ -166,9 +165,8 @@ const main = async () => {
     console.log(`build-tokens --check: up to date`);
     return;
   }
-  await mkdir(path.dirname(OUT_FILE), { recursive: true });
-  await writeFile(OUT_FILE, next);
-  console.log(`build-tokens: wrote ${rel(OUT_FILE)}`);
+  const wrote = await writeGenerated(OUT_FILE, next);
+  console.log(`build-tokens: ${wrote ? 'wrote' : 'up to date'} ${rel(OUT_FILE)}`);
 };
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

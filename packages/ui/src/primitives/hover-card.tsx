@@ -154,7 +154,7 @@ const HoverCardPopup = React.forwardRef<
       data-slot="hover-card-popup"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'rounded-lg border bg-card text-card-foreground p-(--spacing-md) max-w-80 shadow-lg',
+        'rounded-lg border bg-card text-card-foreground p-(--spacing-md) max-w-[min(20rem,var(--available-width))] shadow-lg',
         className,
       )}
       {...props}

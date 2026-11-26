@@ -1596,6 +1596,18 @@
           "source": ".changeset/hero-media-readable.md"
         },
         {
+          "summary": "A focus grid card's title link now underlines when it takes keyboard focus, so focus shows on the element itself as well as the card's ring. The scroller's viewport stretches to the width of its row on phones instead of growing to its whole track, so the page no longer scrolls sideways.",
+          "components": [
+            "focus-grid",
+            "scroller"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/keyboard-reach.md"
+        },
+        {
           "summary": "fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).",
           "components": [
             "card",
@@ -1767,6 +1779,20 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/radio-dot-centred.md"
+        },
+        {
+          "summary": "Nothing scrolls sideways at 150% text on a phone any more for the hover card, OTP field, scorecard row and dashboard template. Widths set in rem grow with the reader's text size, so a `max-w-80` hover card reached 480px on a 390px screen. The hover card now caps at the space Base UI reports (`--available-width`), OTP boxes shrink to share the row, the scorecard header wraps its score under the name, and the dashboard template pads `px-4` on phones and `px-10` from `sm`.",
+          "components": [
+            "hover-card",
+            "otp-field",
+            "scorecard-row",
+            "dashboard-template"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/reflow-at-150.md"
         },
         {
           "summary": "Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.",
