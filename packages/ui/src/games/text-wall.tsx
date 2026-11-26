@@ -121,9 +121,14 @@ function TextWall({
   const loaded = React.useRef<Set<string> | null>(null);
   if (loaded.current === null) loaded.current = new Set(posts.map((p) => p.id));
   const spotRef = React.useRef<HTMLElement>(null);
+  // The spotlight on the wall at load stays still, like the posts: only a later one scales in.
+  const firstSpot = React.useRef<string | undefined | null>(null);
+  if (firstSpot.current === null) firstSpot.current = featured?.id;
 
   React.useEffect(() => {
     const el = spotRef.current;
+    if (featured?.id === firstSpot.current) return;
+    firstSpot.current = undefined;
     if (!el || !featured || reduced || typeof el.animate !== 'function') return;
     el.animate(
       [
