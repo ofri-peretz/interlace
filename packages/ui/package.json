@@ -296,6 +296,10 @@
       "types": "./dist/primitives/stack.d.ts",
       "default": "./dist/primitives/stack.js"
     },
+    "./direction": {
+      "types": "./dist/primitives/direction.d.ts",
+      "default": "./dist/primitives/direction.js"
+    },
     "./skip-link": {
       "types": "./dist/primitives/skip-link.d.ts",
       "default": "./dist/primitives/skip-link.js"

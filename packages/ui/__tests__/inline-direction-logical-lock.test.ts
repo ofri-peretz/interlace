@@ -37,11 +37,11 @@ const AXIS_DIRS = [`charts${sep}`];
 const ALLOWED: Record<string, { classes: string[]; why: string }> = {
   'primitives/sheet.tsx': {
     classes: ['right-0', 'left-0', 'border-l', 'border-r'],
-    why: '`side="left" | "right"` names a screen edge; the border faces the page',
+    why: 'the classes are the resolved screen edge; `side="start" | "end"` maps to one from `DirectionProvider`, because the popup is portalled out of any `dir` wrapper',
   },
   'primitives/drawer.tsx': {
     classes: ['border-l', 'border-r', 'after:left-full', 'after:right-full'],
-    why: '`direction="left" | "right"` names a screen edge and a swipe direction',
+    why: 'the classes are the resolved screen edge and swipe; `direction="start" | "end"` maps to one from `DirectionProvider`, because the panel is portalled',
   },
   'patterns/topbar-nav.tsx': {
     classes: ['left-0'],

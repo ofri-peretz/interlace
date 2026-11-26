@@ -84,7 +84,7 @@ import { cn } from '../lib/cn.js';
 import { Skeleton } from './skeleton.js';
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
+  'inline-flex items-center justify-center rounded-full border border-transparent px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
   {
     variants: {
       variant: {
@@ -105,7 +105,7 @@ const badgeVariants = cva(
         // knocking it to 60% pulls it TOWARD the page and drops the label
         // to 4.27:1 — under AA. Caught by composite-contrast-lock.
         destructive:
-          'bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
+          'bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive',
         // `bg-background` is NOT decoration — it is what makes `text-foreground`
         // mean anything. Transparent, this variant declared a foreground over
         // a surface it did not paint, so a badge in a `bg-primary` section
@@ -122,10 +122,24 @@ const badgeVariants = cva(
         // Same 1.00:1-on-`bg-primary` defect, same fix: inherit the colour,
         // underline at rest so the affordance is not the hue.
         link: 'underline underline-offset-4 decoration-from-font [a&]:hover:decoration-2',
+        // Over a consumer's image or video (an article cover, a hero). The scrim
+        // pair is exempt in composite-contrast-lock because the image under it
+        // is not a DS surface; the translucent face plus blur is what keeps the
+        // label legible there. Replaces the hand-built class chain article-card
+        // carried for its cover tags.
+        scrim:
+          'border-scrim-foreground/30 bg-scrim-foreground/15 text-scrim-foreground backdrop-blur-sm [a&]:hover:bg-scrim-foreground/25',
+      },
+      // Dense lists (tags on a card, counts) use `sm`: the caption type step at
+      // normal tracking. Replaces `className="text-caption tracking-normal …"`.
+      size: {
+        default: '',
+        sm: 'text-caption tracking-normal',
       },
     },
     defaultVariants: {
       variant: 'default',
+      size: 'default',
     },
   },
 );
@@ -141,9 +155,17 @@ type BadgeProps = React.ComponentProps<'span'> &
     loading?: boolean;
   };
 
+const pickIdentityProps = (props: Record<string, unknown>) =>
+  Object.fromEntries(
+    Object.entries(props).filter(
+      ([k]) => k.startsWith('data-') || k.startsWith('aria-') || k === 'id',
+    ),
+  );
+
 function Badge({
   className,
   variant = 'default',
+  size = 'default',
   render,
   loading,
   ...props
@@ -164,14 +186,19 @@ function Badge({
     props: {
       'data-slot': 'badge',
       'data-variant': variant ?? undefined,
-      className: cn(badgeVariants({ variant }), className),
+      'data-size': size ?? undefined,
+      className: cn(badgeVariants({ variant, size }), className),
       ...props,
     },
   });
 
   if (loading) {
     return (
+      // Keep what identifies the badge (data-testid, data-*, aria-*, id) so a
+      // test or a screen reader still finds it while it loads. Only those: the
+      // rest are <span> props and the skeleton is a <div>.
       <Skeleton
+        {...pickIdentityProps(props)}
         variant="badge"
         data-slot="badge"
         className={className}

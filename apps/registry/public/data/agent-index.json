@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 226
+    "itemCount": 227
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,7 +29,7 @@
   },
   "facets": {
     "tier": {
-      "primitive": 77,
+      "primitive": 78,
       "pattern": 65,
       "effect": 27,
       "game": 18,
@@ -40,7 +40,7 @@
       "theme": 3
     },
     "category": {
-      "primitive": 77,
+      "primitive": 78,
       "pattern": 65,
       "blog": 37,
       "data": 30,
@@ -57,24 +57,24 @@
       "template": 13,
       "overlay": 10,
       "util": 6,
-      "a11y": 4,
+      "a11y": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "client": 115,
+      "client": 116,
       "server": 111
     },
     "keyboard": {
       "none": 177,
-      "handled": 49
+      "handled": 50
     },
     "loading": {
-      "none": 188,
+      "none": 189,
       "built-in": 38
     },
     "minViewport": {
-      "320": 145,
+      "320": 146,
       "480": 7,
       "768": 1,
       "inherited": 73
@@ -3418,6 +3418,56 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dialogue.json",
       "item": "https://ds.interlace.tools/r/dialogue.json",
       "docs": "https://ds.interlace.tools/c/dialogue"
+    },
+    {
+      "name": "direction",
+      "title": "Direction",
+      "type": "registry:ui",
+      "summary": "Sets the reading direction once, for both halves of a component: the CSS and the keyboard.",
+      "topics": [],
+      "categories": [
+        "a11y",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "direction-provider",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/direction.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/direction.json",
+      "item": "https://ds.interlace.tools/r/direction.json",
+      "docs": "https://ds.interlace.tools/c/direction"
     },
     {
       "name": "distribution",
@@ -7061,7 +7111,7 @@
         ],
         "aria": [],
         "motion": {
-          "driver": "css",
+          "driver": "none",
           "declaresPreference": true,
           "stylesheetCannotReach": false
         },
@@ -8692,7 +8742,7 @@
         ],
         "aria": [],
         "motion": {
-          "driver": "css",
+          "driver": "none",
           "declaresPreference": false,
           "stylesheetCannotReach": false
         },
@@ -9320,7 +9370,19 @@
         "keys": [],
         "ownHandler": false
       },
-      "states": [],
+      "states": [
+        {
+          "name": "SheetSide",
+          "values": [
+            "top",
+            "right",
+            "bottom",
+            "left",
+            "start",
+            "end"
+          ]
+        }
+      ],
       "a11y": {
         "roles": [],
         "aria": [],

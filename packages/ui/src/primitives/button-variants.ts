@@ -12,8 +12,9 @@
  * ## Anatomy
  *
  *   buttonVariants({ variant, size })
- *     ├─ variant  default | highlight | destructive | outline | secondary | ghost | link
- *     └─ size     default | xs | sm | lg | icon | icon-xs | icon-sm | icon-lg
+ *     ├─ variant    default | highlight | destructive | outline | secondary | ghost | link
+ *     ├─ size       default | xs | sm | lg | icon | icon-xs | icon-sm | icon-lg
+ *     └─ fullWidth  boolean — stretches to its container (default false)
  *
  * Defaults are `variant: 'default'`, `size: 'default'`. `pagination.tsx` is
  * the in-repo example of styling an element rather than nesting a Button: its
@@ -35,7 +36,7 @@
  * | Rule | Concept                          | Where in this file                                          |
  * | ---- | -------------------------------- | ----------------------------------------------------------- |
  * | R8   | Enums, no booleans               | `variant` and `size` are closed string enums                |
- * | R19  | Tokens only                      | `bg-primary`, `bg-destructive`, `bg-accent`, `ring-ring/50` |
+ * | R19  | Tokens only                      | `bg-primary`, `bg-destructive`, `bg-accent`, `ring-ring` |
  * | R20  | AA contrast                      | every pair composited by `composite-contrast-lock`          |
  * | R25  | Server-safe                      | no React import, no hooks, no `'use client'`                |
  */
@@ -48,7 +49,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-  "relative isolate inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[color,background-color,border-color,box-shadow,scale] duration-(--duration-fast) ease-enter motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "relative isolate inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[color,background-color,border-color,box-shadow,scale] duration-(--duration-fast) ease-enter motion-safe:active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -63,7 +64,7 @@ const buttonVariants = cva(
         // red tuned for AAA on near-black; muting it to 60% drops the label
         // to 4.27:1, under AA. Caught by composite-contrast-lock.
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive',
         // `text-foreground` is NOT redundant, and neither is the ABSENCE of
         // stock shadcn's `dark:bg-input/30` / `dark:hover:bg-input/50`. Both
         // halves of that come from the same shipped defect, found twice.
@@ -130,10 +131,17 @@ const buttonVariants = cva(
         'icon-sm': 'size-control-sm',
         'icon-lg': 'size-control-lg',
       },
+      // R8: a boolean, default false, no `is` prefix. Replaces `className="w-full"`
+      // at call sites (sign-in-form, newsletter-form) — MUI `fullWidth`, Primer `block`.
+      fullWidth: {
+        true: 'w-full',
+        false: '',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      fullWidth: false,
     },
   },
 );

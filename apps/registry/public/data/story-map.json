@@ -248,6 +248,8 @@
       "primitives-badge--default",
       "primitives-badge--loading",
       "primitives-badge--variants",
+      "primitives-badge--sizes",
+      "primitives-badge--over-media",
       "primitives-badge--dark",
       "primitives-badge--rtl"
     ],
@@ -330,6 +332,7 @@
       "primitives-button--variants",
       "primitives-button--sizes",
       "primitives-button--disabled",
+      "primitives-button--full-width",
       "primitives-button--dark",
       "primitives-button--loading",
       "primitives-button--loading-flow",
@@ -836,6 +839,16 @@
       "blocks-dialoguestepper--journey"
     ],
     "preview": "blocks-dialoguestepper--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "direction": {
+    "title": "Primitives/Direction",
+    "storyIds": [
+      "primitives-direction--right-to-left",
+      "primitives-direction--left-to-right"
+    ],
+    "preview": "primitives-direction--right-to-left",
     "previewDark": null,
     "skeleton": null
   },

@@ -5,6 +5,17 @@
       "unreleased": true,
       "entries": [
         {
+          "summary": "feat(ui): Button no longer submits a form by default. A bare `<button>` is `type=\"submit\"`, so a Cancel or \"Show more\" Button inside a `<form>` submitted it; the Settings template shipped exactly that bug. Button now defaults to `type=\"button\"` (as MUI, Chakra and Primer do) and a submit action says so with `type=\"submit\"`. A Button rendered through `render` (a link) gets no `type` unless you pass one.",
+          "components": [
+            "button"
+          ],
+          "componentsDeclared": true,
+          "kind": "Breaking",
+          "bump": "minor",
+          "migration": "in your copy of `button.tsx`, take `type` out of the props and pass `type: type ?? (render ? undefined : 'button')` to `useRender`. Then search your app for Buttons inside a `<form>` that submit it without a `type` and add `type=\"submit\"` to each (e.g. `<Button>Save</Button>` → `<Button type=\"submit\">Save</Button>`). Buttons that should not submit need no change.",
+          "source": ".changeset/button-type-button-default.md"
+        },
+        {
           "summary": "The stylesheets are now four layers, one directory each, and your classes always beat them. Page preflight used to sit in a custom `interlace.preflight` cascade layer, which ranks above Tailwind's utilities: `img { height: auto }` beat a call-site `h-10`, and `svg { display: block }` beat `inline`. Preflight now sits in Tailwind's `base` layer, prose and animation classes in `components`, and the three named Interlace layers hold custom properties only. A new lock (`css-layer-lock.test.ts`) keeps each layer reading only the one before it.",
           "components": [
             "interlace-base",
@@ -198,6 +209,18 @@
           "source": ".changeset/theme-split.md"
         },
         {
+          "summary": "feat(ui): Badge gets `size=\"sm\"` (the caption step for dense tag lists and counts) and `variant=\"scrim\"` (a translucent face for badges over images and video). One in three Badges in the DS was re-sizing itself with `text-caption tracking-normal …`, and article-card hand-built the over-cover look with a seven-class chain; both now use the props.",
+          "components": [
+            "badge",
+            "article-card"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/badge-size-and-scrim.md"
+        },
+        {
           "summary": "Two pieces for booking pages. `Calendar`: one month of days to pick one from, as the WAI-ARIA date grid (one tab stop; arrows by a day or a week, mirrored in RTL; Home and End; Page Up and Page Down by a month, with Shift by a year). Days are plain `YYYY-MM-DD` strings, so the day a reader picks is the day a server stores in every time zone. `min` and `max` bound it, `isDateUnavailable` strikes a day through and says so, `isDateMarked` dots the days that have room, and today carries `aria-current=\"date\"`. Names come from `Intl` in `locale`, and the week starts where the locale starts it. A new month slides in from its side, six rows always, nothing below moves. `TimeSlotPicker`: the times open on one day as tiles on Base UI's radio group, read from `HH:MM` or ISO instants in `timeZone`, with `groupBy=\"period\"`, a loading state and words for an empty day. The date arithmetic is pure and exported from `calendar-model`, the slot hours from `patterns/time-slot-model`. Every word goes through `labels`; every motion is transform or opacity and is off under reduced motion.",
           "components": [
             "calendar",
@@ -219,6 +242,19 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/booking-multi-step-form.md"
+        },
+        {
+          "summary": "feat(ui): `Button fullWidth` stretches to its container. It replaces `className=\"w-full\"`, which sign-in-form, newsletter-form and consumers were passing by hand — the component API carries the intent, not a utility class.",
+          "components": [
+            "button",
+            "sign-in-form",
+            "newsletter-form"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/button-full-width.md"
         },
         {
           "summary": "Button takes `loading`. The button keeps its place, its width and keyboard focus while the reader's action runs: the label keeps its space but stops painting, a spinner sits over the middle in the label's own colour, and nothing beside it moves. It sets `aria-busy` and `aria-disabled` rather than `disabled`, so focus is not dropped to the page, and it ignores clicks (a form submit included) until `loading` is false, so a double press cannot send twice. The spinner stands still under reduced motion. LOADING_PHILOSOPHY gains a \"busy button\" section.",
@@ -440,6 +476,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/dialogue-transcript.md"
+        },
+        {
+          "summary": "New `DirectionProvider` sets the reading direction once for both layout and keyboard. `dir=\"rtl\"` alone flips the CSS but not Base UI's behaviour, so sliders kept growing to the right and ArrowRight kept moving to the next tab in Hebrew and Arabic pages. Wrap the app (or a subtree in the other direction) in `<DirectionProvider direction=\"rtl\">` and both follow. It renders a `display: contents` wrapper with `dir`, so it never changes layout, and re-exports `useDirection` for your own components.",
+          "components": [
+            "direction"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/direction-provider.md"
         },
         {
           "summary": "`Distribution` and `NetworkGraph` can be shown in any language. `Distribution` takes `labels` (the unnamed value and reference words, the empty note, the readout's \"not measured\", the keyboard instructions, the table caption and empty cell, and the spoken summary) and a `locale`. `NetworkGraph` takes `labels` (the error and empty notes, the header counts, the cap buttons, the keyboard instructions, the selection hint, the table caption and headers, the \"None\" group, the node hover titles, the below-cap note and the spoken summary) and a `locale`. `describeDistribution` and `describeGraph` build their sentences from new `DistributionSummary` and `GraphSummary` types, with `distributionSentence` and `graphSentence` as the English defaults. English output is unchanged, except that the graph's counts now use thousands separators. `compact` documents why its suffixes stay k, M and B in every locale.\n\nFixed: `Distribution` no longer crashes when new, shorter data arrives while the keyboard cursor is past its end.",
@@ -770,6 +817,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/live-round-pad.md"
+        },
+        {
+          "summary": "Sheet `side` and Drawer `direction` take `start` and `end`. They follow the reading direction from `DirectionProvider`: `start` opens from the left in English and from the right in Hebrew or Arabic, with the swipe to dismiss matching.",
+          "components": [
+            "sheet",
+            "drawer"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/logical-edges.md"
         },
         {
           "summary": "A mobile app shell. `AppShell` is the frame: a column at least `100dvh` tall with a sticky header, a `<main>` (the SkipLink target) and a sticky tab bar, nothing fixed-position, so the last line of content always clears the bar and an on-screen keyboard never drags a bar into the page. `TabBar` holds three to five links with an icon and a word; the current one (`currentHref`, which keeps a parent tab current on its child pages) gets `aria-current=\"page\"`, a filled pill that grows in from the middle and a heavier label, and a tab can carry a count or a dot with words for assistive tech. `hideFrom` hides it where a Topbar takes over. `AppHeader` is the view's bar: back, title and actions, sticky, clear of the notch, with its surface only once content scrolls under it; `largeTitle` sets the title big and moves it into the bar on scroll, read once. `AppHeaderBack` is the back link, its arrow mirrored in RTL. Every part pads itself by `env(safe-area-inset-*)` for a page added to a home screen (`viewport-fit=cover`). Under reduced motion the pill, surface and title simply change.",
@@ -1388,6 +1447,42 @@
           "source": ".changeset/flows-two-shapes.md"
         },
         {
+          "summary": "Focus rings are drawn at full strength with one recipe: a 2px ring in `--ring` with a 2px gap in the page colour, the same weight as the preflight outline. Before, most controls drew a 3px ring at 50% or 60% of `--ring`, which measured 2.5:1 against the light themes (WCAG 1.4.11 asks 3:1), and a destructive button focused at 20%, which measured 1.4:1. Inputs, selects, buttons, tabs, checkboxes, switches, dialogs, sheets, drawers, toasts, menus and the patterns built on them now all focus alike, and the ring sits outside the control instead of over its edge.",
+          "components": [
+            "accordion",
+            "badge",
+            "banner",
+            "button",
+            "checkbox",
+            "combobox",
+            "command-palette",
+            "dialog",
+            "dialogue",
+            "dialogue-stepper",
+            "drawer",
+            "focus-grid",
+            "input",
+            "otp-field",
+            "radio-group",
+            "scroll-area",
+            "scroller",
+            "select",
+            "sheet",
+            "switch",
+            "tabs",
+            "textarea",
+            "toast",
+            "toolbar",
+            "topbar-menu",
+            "wordmark"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/focus-ring-strength.md"
+        },
+        {
           "summary": "Every focus ring is visible, whole, and clear of the text.\n\nA keyboard audit of every story found three kinds of gap, now fixed:\n\n- No visible focus: CollapsibleTrigger and a focusable TabsContent now show the system ring, 2px clear of the element. CodeEditor's textarea fills a clipping frame, so its ring is now inset, inside the padding and off the code. CodeWindow shows the ring on its frame when its body (a `<pre tabIndex={0}>`) has focus.\n- Clipped rings: the ReadingLayout contents rail, SettingsTemplate's section nav, Scroller's viewport and GuessReveal's explanation scroll or clip their content, and cut the top and bottom off a focused link. Each now keeps a 4px margin for the ring, with no change to layout.",
           "components": [
             "collapsible",
@@ -1439,6 +1534,18 @@
           "source": ".changeset/hero-media-readable.md"
         },
         {
+          "summary": "fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).",
+          "components": [
+            "card",
+            "badge"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/loading-keeps-identity.md"
+        },
+        {
           "summary": "Right-to-left pages now get the same layout as left-to-right ones, mirrored. Menus, select and combobox put their check marks before the label, callouts, blockquotes, code-editor findings and toasts draw their accent on the start edge, dialog and sheet close buttons sit at the end, and the number field's dividers follow its buttons. \"Next\" chevrons and arrows in pagination, breadcrumbs, prev/next links and submenus point forward, the switch thumb slides toward the end, and toasts enter from the edge they live on. In a left-to-right page nothing moves.",
           "components": [
             "article-card",
@@ -1477,6 +1584,26 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/logical-sides.md"
+        },
+        {
+          "summary": "Every primitive and pattern now times its transitions with the motion tokens, so a brand that retunes `--duration-*` or `--ease-*` retunes all of them. Before, the toast, select and combobox popups, command palette and combobox rows, progress bar, article card image, flip card, guess reveal, social sign-in and focus grid kept literal timings (`duration-150`, `duration-[180ms]`, `ease-out`). With the default tokens the change is a few milliseconds: the flip card turns in 400ms instead of 500ms and the toast arrives in 150ms instead of 180ms.",
+          "components": [
+            "article-card",
+            "combobox",
+            "command-palette",
+            "flip-card",
+            "focus-grid",
+            "guess-reveal",
+            "progress",
+            "select",
+            "social-sign-in",
+            "toast"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/motion-tokens.md"
         },
         {
           "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",
