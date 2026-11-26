@@ -3550,6 +3550,24 @@
       }
     },
     {
+      "name": "answer-pad",
+      "type": "registry:ui",
+      "title": "Answer Pad",
+      "description": "The player's side of a live round: the question is on the big screen, and each phone shows big lettered tiles to pick from. The first pick is final and goes to the host; the pad then says the answer is in and waits. When the host reveals the round, the pad…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "closer-game",
       "type": "registry:ui",
       "title": "Closer Game",
@@ -3572,6 +3590,24 @@
       "type": "registry:ui",
       "title": "Daily Puzzle",
       "description": "The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "duel",
+      "type": "registry:ui",
+      "title": "Duel",
+      "description": "Two players, one game, by link. The first player finishes and sends a challenge (`DuelInvite`); the second opens it and sees who they are up against (`DuelCard`); after playing the same game, both see the rounds side by side (`DuelCompare`). The challenge…",
       "categories": [
         "games",
         "game"
@@ -3842,6 +3878,24 @@
       "type": "registry:ui",
       "title": "Share Card",
       "description": "How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
+      "name": "standings",
+      "type": "registry:ui",
+      "title": "Standings",
+      "description": "The board between rounds of a live game: who is where now, and how they got there. Each player's points from this round pop up beside their name, their total counts up from where it was, and then the rows glide to their new places, with the places gained…",
       "categories": [
         "games",
         "game"
