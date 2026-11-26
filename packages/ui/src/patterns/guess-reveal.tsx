@@ -182,7 +182,7 @@ function GuessReveal({
         role="group"
         aria-labelledby={questionId}
         data-slot="guess-reveal-options"
-        className="xs:grid-cols-2 grid gap-2"
+        className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,max(13rem,calc(50%_-_0.25rem))),1fr))] gap-2"
       >
         {options.map((option) => {
           const result = !answered
