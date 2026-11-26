@@ -232,7 +232,7 @@ export function FileDrop({
           'border-input bg-background text-foreground flex cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed px-4 py-8 text-center',
           'transition-[border-color,background-color] duration-(--duration-fast) ease-enter hover:border-ring/60 hover:bg-muted/40',
           'has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-ring has-[input:focus-visible]:ring-offset-2 has-[input:focus-visible]:ring-offset-background',
-          'data-[dragging]:border-primary data-[dragging]:bg-primary/[0.06]',
+          'data-[dragging]:border-primary data-[dragging]:bg-primary/6',
           'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
         )}
       >
