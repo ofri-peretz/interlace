@@ -56,6 +56,12 @@ describe('text-safety-model', () => {
     expect(checkText('!'.repeat(50_000), { maxLength: 100_000 }).ok).toBe(true);
     expect(performance.now() - t0).toBeLessThan(500);
     expect(checkText('call 555 123 4567')).toEqual({ ok: false, reason: 'contact' });
+    expect(checkText('+1 (555) 123-4567')).toEqual({ ok: false, reason: 'contact' });
+    expect(checkText('123 abc 4567').ok).toBe(true);
+    // Digits split by long separator runs stay fast too.
+    const t1 = performance.now();
+    expect(checkText(`${'1      '.repeat(6)}!`.repeat(2_000), { maxLength: 100_000 }).ok).toBe(true);
+    expect(performance.now() - t1).toBeLessThan(500);
     expect(checkText('  Good   food ')).toEqual({ ok: true, text: 'Good food' });
     expect(checkText('see example.com', { allowLinks: true })).toEqual({ ok: true, text: 'see example.com' });
     expect(checkText('a@b.co', { allowContact: true, allowLinks: true }).ok).toBe(true);

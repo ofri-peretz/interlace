@@ -1,0 +1,95 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Philosophy/Ai Sdlc" />
+
+{/* AUTO-GENERATED — run `npm run sync:philosophies` after editing the source.
+    source: docs/philosophies/AI_SDLC_PHILOSOPHY.md
+    hash: 44938ca94995 */}
+
+# AI-SDLC philosophy: follow Anthropic, prove it
+
+Interlace OSS builds with coding agents. We do not invent our own doctrine for that. We follow
+what Anthropic publishes about verifying agent work, building evaluations, keeping agent memory
+and learning from incidents. We then hold each concept to one test: **a file, check or number in
+a repository shows we do it.** A concept without a proof is marked as a gap. It is never written
+up as done.
+
+Sources, read 2026-11-25:
+
+- [Claude Code best practices](https://code.claude.com/docs/en/best-practices) (verification)
+- [Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations) (E)
+- [Components of agent memory](https://www.anthropic.com/research/components-of-agent-memory) (M)
+- [April 23 postmortem](https://www.anthropic.com/research/april-23-postmortem) (P)
+
+Status: **Held** = a proof exists and is enforced · **Partial** = a proof exists but has a gap ·
+**Gap** = nothing yet. Paths are in [ofri-peretz/eslint](https://github.com/ofri-peretz/eslint)
+unless noted.
+
+## 1. Verification: the agent proves its own work
+
+| Concept                                                  | Our practice                                                                                                  | Proof                                                                                                                         | Status |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Give the agent one pass/fail check it can run            | `npm run ci:local`, affected tests in `AGENTS.md`                                                             | `AGENTS.md` Commands block                                                                                                    | Held   |
+| Enforce "test before done" with a Stop hook              | The turn is sent back when uncommitted code has no passing run                                                | `.claude/hooks/verify-before-stop.mjs` (`--self-test`)                                                                        | Held   |
+| Stop after repeated failure and ask                      | The third failed test run in a row ends the turn                                                              | `.claude/hooks/stop-after-3.mjs`                                                                                              | Held   |
+| "Never" rules are hooks or permissions, not prose        | Hook bypass and CI polling are denied, `.env` reads are denied                                                | `.claude/hooks/guard-bash.mjs`, `.claude/settings.json` `permissions.deny`, `scripts/__tests__/review-checklist-lock.test.ts` | Held   |
+| A fresh reviewer that did not write the code             | The required `review` check runs Claude on the diff and is shown only the checklist items whose triggers fire | `.github/workflows/claude-code-review.yml`, `.sdlc/checklist.yaml` → `REVIEW.md`                                              | Held   |
+| The reviewer does only what programs cannot              | Lint, types, tests, CodeQL, mutation and changesets are named and excluded from the review                    | the prompt in `claude-code-review.yml`, held by `review-checklist-lock.test.ts`                                               | Held   |
+| A fix carries a test that fails when the fix is reverted | A merge gate on `fix` PRs, plus a revert proof                                                                | `scripts/check-fix-carries-test.ts`, `npm run check:lock-proofs`                                                              | Held   |
+| Tests that bite, not only pass                           | Mutation testing with a ratchet                                                                               | `docs/MUTATION_TESTING.md`, `.agent/mutation-baseline.json`                                                                   | Held   |
+| Evidence, not "all tests pass"                           | Each commit carries `Verified-by: <command> -> exit 0`, checked on commit                                     | `provedone` commit-msg hook (hookset)                                                                                         | Held   |
+
+## 2. Evaluations: measuring rules and reviewers (E)
+
+Anthropic's evaluation lessons apply directly to how we score lint rules (true and false
+positives) and our AI reviewer (findings acted on).
+
+| Concept                                                 | Our practice                                                                                  | Proof                                                                                      | Status                                                  |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
+| Measure over-refusal as well as harmful compliance (E6) | A rule is scored on false positives and false negatives, never on one alone                   | `distribution/EVALUATION_METRICS.md`, `benchmarks/BASELINE_MATRIX.md`                      | Held                                                    |
+| Measure the right construct (E4)                        | The reviewer is scored on findings only a reader could make, not on comment count             | `docs/review-hit-rate/README.md` (judgment / gate / noise)                                 | Held                                                    |
+| Ground cases in real usage and keep adding them (E9)    | Rules are scanned against a real-code corpus every Monday, and against chosen repos on demand | `.github/workflows/weekly-corpus-scan.yml`, `real-source-scan.yml` (manual)                | Held                                                    |
+| Keep tasks free of saturation and contamination (E11)   | Corpus fixtures should reflect current APIs                                                   | The CWE-089 corpus lacks the `pg` import its evidence-gated rule needs, so it scores 0     | **Partial**                                             |
+| Validate graders against humans (E12)                   | Reviewer findings are labelled by a fresh model reader                                        | No human-labelled sample checks that reader's agreement                                    | **Gap**                                                 |
+| Adequate samples and stated uncertainty (E13, E14)      | The reviewer baseline is 20 findings over 23 PRs                                              | No confidence interval, and the planned 10-PR comparison is too small to tell 40% from 50% | **Gap**                                                 |
+| Compare only like with like (E15)                       | The comparison uses the same script, labelling method and definitions as the baseline         | `docs/review-hit-rate/baseline-2026-11-25.jsonl` (labels per row)                          | Partial: the reviewer model is not pinned in the record |
+| Run evaluations continuously (E16)                      | Benchmarks run on a schedule; a 2σ breach of a control band opens a PR with a new intent      | `.github/workflows/control-bands.yml`, `benchmark.yml`                                     | Held                                                    |
+
+## 3. Agent memory (M)
+
+| Concept                                                            | Our practice                                                                                   | Proof                                                                       | Status  |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------- |
+| A small always-loaded index; detail pushed down and linked (M9)    | `MEMORY.md` is one line per memory, at most 150 characters, with content in topic files        | Rules at the top of `MEMORY.md`; Claude Code loads only its first 200 lines | Held    |
+| Store derived knowledge, not state the repo already holds (M3, M4) | Memories hold decisions and their why; code, paths and git history are excluded                | The "never store" rule in `MEMORY.md`                                       | Held    |
+| State what memory is for; no narrow recording rule (M5)            | Typed memories (`user`, `feedback`, `project`, `reference`) with a purpose each                | `MEMORY.md` header                                                          | Held    |
+| Keep agent instructions short (M9)                                 | Each plugin's `AGENTS.md` has a measured byte budget, and `.claude` context has a token budget | `.guidance-budget.json`, `.claude/hookset.json` `context.tokens`            | Held    |
+| Consolidate by checking notes against the source (M6, M11)         | A consolidation skill exists                                                                   | No scheduled run, and no record of corrections made                         | **Gap** |
+| Measure memory on and off (M2)                                     | None                                                                                           | No score with and without memory on a fixed task set                        | **Gap** |
+| Hand off through files, not chat                                   | Intent → spec → build, with each decision in a committed file                                  | `docs/intents/`, `scripts/check-intent.ts`                                  | Held    |
+
+## 4. Changes that can quietly cost quality (P)
+
+| Concept                                                          | Our practice                                                                                      | Proof                                                                     | Status                             |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------- |
+| A prompt or default change is measured before and after (P1, P3) | The reviewer-prompt change shipped with a baseline, a scheduled comparison and a revert criterion | `docs/review-hit-rate/README.md` ("revert if signal share does not rise") | Partial: one model, not each model |
+| Context and caching changes get multi-turn regression tests (P2) | Hooks have self-tests                                                                             | No test of agent behaviour across turns                                   | **Gap**                            |
+| Dogfood the build users get (P4)                                 | Our plugins lint our own source                                                                   | `npm run lint:dogfood`, `.github/workflows/oxlint-parity.yml`             | Held                               |
+| Stage risky changes (P5)                                         | Releases go through a Changesets PR; nothing reaches npm without it                               | `changesets-pr.yml`, `release.yml`                                        | Partial: no canary or soak window  |
+| User reports are a detection channel (P6)                        | Issues are swept on a schedule                                                                    | `.github/workflows/issue-sweep.yml`                                       | Held                               |
+
+## Gaps, ordered by what they would change
+
+1. **The reviewer comparison is underpowered (E13, E14).** Ten PRs cannot separate 40% from
+   50% signal. Report a confidence interval, and extend the comparison window until it can
+   decide.
+2. **No human check of the model labeller (E12).** Hand-label 20 findings and report agreement
+   with the model labels before trusting either number.
+3. **The stale CWE-089 corpus (E11).** Add the missing import, so the flagship benchmark scores
+   the current package.
+4. **Memory is never measured or consolidated (M2, M6).** Schedule the consolidation skill, and
+   record what it corrected.
+5. **No multi-turn regression test for hooks (P2).** Replay a recorded session through the Stop
+   hooks and assert the decisions.
+
+Each gap closes the way everything above did: with a file, check or number that someone else can
+re-run, and a test that fails without it.
