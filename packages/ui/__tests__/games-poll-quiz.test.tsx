@@ -166,6 +166,15 @@ describe('TimerRing', () => {
     expect(onExpire).toHaveBeenCalledTimes(1);
   });
 
+  it('counts on the clock it is given (a deadline set by another device)', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(0);
+    // The host's clock is 90 s ahead: its deadline 100 s reads as 10 s left here.
+    render(<TimerRing seconds={20} deadline={100_000} now={() => Date.now() + 90_000} />);
+    expect(screen.getByRole('timer').textContent).toContain('10');
+    vi.useRealTimers();
+  });
+
   it('sits idle and full with no deadline', () => {
     render(<TimerRing seconds={0} deadline={null} size="sm" labels={{ name: 'Clock' }} />);
     expect(screen.getByRole('timer', { name: 'Clock' }).getAttribute('data-state')).toBe('idle');
