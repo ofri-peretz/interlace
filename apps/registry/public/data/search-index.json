@@ -1290,6 +1290,7 @@
     "duelcompar": 1,
     "duelhref": 1,
     "duelinvit": 1,
+    "duplicat": 4,
     "duration": 18,
     "dusk": 1,
     "dynamic": 3,
@@ -2719,7 +2720,7 @@
     "receiv": 13,
     "recent": 8,
     "recommend": 4,
-    "reconnect": 5,
+    "reconnect": 6,
     "record": 11,
     "recovery": 1,
     "rect": 21,
@@ -2789,6 +2790,7 @@
     "request": 14,
     "requestanimationfram": 1,
     "requir": 51,
+    "resend": 2,
     "reserv": 16,
     "reset": 10,
     "resett": 1,
@@ -3121,7 +3123,7 @@
     "spectrum": 1,
     "spectrumshift": 1,
     "spell": 20,
-    "spend": 5,
+    "spend": 6,
     "spent": 1,
     "spin": 3,
     "spinner": 6,
@@ -3847,7 +3849,7 @@
         "game",
         "games"
       ],
-      "terms": "answer pad game client responsiv min viewport 320 keyboard stat open sent clos reveal correct wrong miss tile pick letter big host choic key player right round screen answerpad data prompt wait word final display status ran outcom phon slot press show result point question time mark 420m choicekey onpick group aria eas keyshortcut shar transform competitiv compositor nudg tapp live reconnect goe sentenc"
+      "terms": "answer pad game client responsiv min viewport 320 keyboard stat open sent clos reveal correct wrong miss tile pick letter big host choic key player right round screen answerpad data prompt wait word final display status ran outcom phon slot press show result point question time mark 420m choicekey onpick group aria eas keyshortcut shar transform competitiv compositor nudg tapp live goe sentenc side"
     },
     {
       "name": "app-header-edge",
@@ -6425,7 +6427,7 @@
         "game",
         "games"
       ],
-      "terms": "point split game client responsiv min viewport 320 stat unknown option step negativ budget spent pointssplit pointstotal send spend left valid fieldset totalpoint person unlock room sent bar counter across flipgroup data choos total glid checksplit whol slot label much rank minus plus onsend skew shar screen 100 question onchang controll show partial poll phon latest thank 150m shrink strength vote known preferenc delta"
+      "terms": "point split game client responsiv min viewport 320 stat unknown option step negativ budget spent pointssplit pointstotal send left spend valid fieldset totalpoint person unlock room sent bar counter across flipgroup data choos total glid checksplit whol slot label much rank minus plus onsend skew shar screen 100 question onchang controll show partial poll phon latest thank 150m shrink strength vote known preferenc delta"
     },
     {
       "name": "poll",
@@ -6827,7 +6829,7 @@
         "game",
         "games"
       ],
-      "terms": "reaction game client responsiv min viewport 320 rais hand raisehand speak float handqueu reactionbar reactionstream host tap call person tal queu kind budget someon first allowreaction room puls lower window send allow name recent talk screen stream done button shar ask 3000 applyhandevent cheap giv maxfloat perwindow placeinlin tallyreaction windowm next count plac motion everyon let peopl event data transform information starter word fair"
+      "terms": "reaction game client responsiv min viewport 320 rais hand raisehand speak float handqueu reactionbar reactionstream host person tap call tal budget queu kind someon first allowreaction room puls lower window send allow name recent talk screen stream done button shar ask 3000 applyhandevent cheap giv maxfloat perwindow placeinlin tallyreaction windowm next new count plac show motion resend everyon let peopl event data transform duplicat"
     },
     {
       "name": "reading-layout",
@@ -9064,7 +9066,7 @@
         "game",
         "games"
       ],
-      "terms": "word cloud game client responsiv min viewport 320 stat empty long many link contact block break sent wordentry room rank wordcloud entry count band biggest send refus letter coffe middl fold typ spell foldtext centr phon data match among buildcloud cloudorder onword list order slot character text form show sender mark model plac run alternat blocklist step reconnect safety viewer screen lowercas sit shar"
+      "terms": "word cloud game client responsiv min viewport 320 stat empty long many link contact block break sent wordentry room rank wordcloud entry count band biggest send refus letter coffe middl fold typ spell foldtext centr phon data match among buildcloud cloudorder onword list order slot character text form show sender mark model plac run alternat blocklist step safety viewer screen lowercas reconnect sit shar"
     },
     {
       "name": "wordmark",

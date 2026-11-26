@@ -11,7 +11,9 @@
  * A tap is cheap to send and a crowd taps fast, so every person gets a
  * budget: `perWindow` reactions in any `windowMs` (default 6 in 3 seconds).
  * `allowReaction` says yes or no and returns the new budget state; a screen
- * shows only what was allowed. `tallyReactions` counts by kind, for a
+ * shows only what was allowed. The same person's reaction at the same time
+ * is one reaction, so a reconnect that resends it shows nothing new and
+ * spends no budget (`duplicate: true`). `tallyReactions` counts by kind, for a
  * recap or for the reduced-motion view.
  *
  * ## Raised hands
@@ -38,8 +40,9 @@ export function allowReaction(
   by: string,
   at: number,
   options: ReactionLimitOptions = {},
-): { ok: boolean; budget: ReactionBudget } {
+): { ok: boolean; budget: ReactionBudget; duplicate?: true } {
   const { perWindow = 6, windowMs = 3000 } = options;
+  if (budget[by]?.includes(at)) return { ok: false, budget, duplicate: true };
   const recent = (budget[by] ?? []).filter((t) => at - t < windowMs);
   if (recent.length >= perWindow) return { ok: false, budget: { ...budget, [by]: recent } };
   return { ok: true, budget: { ...budget, [by]: [...recent, at] } };

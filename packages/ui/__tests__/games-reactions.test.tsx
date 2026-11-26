@@ -35,6 +35,14 @@ describe('reactions-model', () => {
     expect(allowReaction({}, 'p', 0).budget).toEqual({ p: [0] });
   });
 
+  it('counts a resent reaction once and spends no budget on it', () => {
+    const first = allowReaction({}, 'p', 1000);
+    const again = allowReaction(first.budget, 'p', 1000);
+    expect(again).toEqual({ ok: false, budget: first.budget, duplicate: true });
+    // Another person at the same moment is a different reaction.
+    expect(allowReaction(first.budget, 'q', 1000).ok).toBe(true);
+  });
+
   it('tallies by kind in the listed order and ignores unknown kinds', () => {
     expect(tallyReactions(['a', 'b'], [{ kind: 'b' }, { kind: 'x' }, { kind: 'b' }])).toEqual([
       { kind: 'a', count: 0 },
