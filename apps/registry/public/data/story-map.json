@@ -829,6 +829,16 @@
     "previewDark": null,
     "skeleton": null
   },
+  "direction": {
+    "title": "Primitives/Direction",
+    "storyIds": [
+      "primitives-direction--right-to-left",
+      "primitives-direction--left-to-right"
+    ],
+    "preview": "primitives-direction--right-to-left",
+    "previewDark": null,
+    "skeleton": null
+  },
   "distribution": {
     "title": "Charts/Distribution",
     "storyIds": [
@@ -1094,6 +1104,18 @@
     "previewDark": "primitives-form--dark",
     "skeleton": "primitives-form--loading"
   },
+  "goal-ring": {
+    "title": "Games/GoalRing",
+    "storyIds": [
+      "games-goalring--default",
+      "games-goalring--met",
+      "games-goalring--sizes",
+      "games-goalring--right-to-left"
+    ],
+    "preview": "games-goalring--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "grade-badge": {
     "title": "Primitives/GradeBadge",
     "storyIds": [
@@ -1347,6 +1369,18 @@
     "previewDark": null,
     "skeleton": null
   },
+  "level-meter": {
+    "title": "Games/LevelMeter",
+    "storyIds": [
+      "games-levelmeter--default",
+      "games-levelmeter--after-ag-ain",
+      "games-levelmeter--level-up",
+      "games-levelmeter--right-to-left"
+    ],
+    "preview": "games-levelmeter--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "light-beam": {
     "title": "Effects/LightBeam",
     "storyIds": [
@@ -1469,6 +1503,18 @@
     "preview": "charts-metrictable--default",
     "previewDark": "charts-metrictable--dark",
     "skeleton": "charts-metrictable--loading"
+  },
+  "milestones": {
+    "title": "Games/Milestones",
+    "storyIds": [
+      "games-milestones--default",
+      "games-milestones--first-day",
+      "games-milestones--all-reached",
+      "games-milestones--right-to-left"
+    ],
+    "preview": "games-milestones--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "motion": {
     "title": "Foundations/Motion",
@@ -1905,6 +1951,16 @@
     "previewDark": "blocks-relatedposts--dark",
     "skeleton": "blocks-relatedposts--loading"
   },
+  "reminder-offer": {
+    "title": "Games/ReminderOffer",
+    "storyIds": [
+      "games-reminderoffer--default",
+      "games-reminderoffer--right-to-left"
+    ],
+    "preview": "games-reminderoffer--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "remote-markdown-skeleton": {
     "title": "Fumadocs/RemoteMarkdownSkeleton",
     "storyIds": [
@@ -1945,6 +2001,18 @@
       "effects-rotatingtext--slow"
     ],
     "preview": "effects-rotatingtext--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "round-summary": {
+    "title": "Games/RoundSummary",
+    "storyIds": [
+      "games-roundsummary--default",
+      "games-roundsummary--plain",
+      "games-roundsummary--celebrating",
+      "games-roundsummary--right-to-left"
+    ],
+    "preview": "games-roundsummary--default",
     "previewDark": null,
     "skeleton": null
   },
@@ -2190,6 +2258,7 @@
     "storyIds": [
       "games-sharecard--default",
       "games-sharecard--right-or-wrong",
+      "games-sharecard--milestone",
       "games-sharecard--right-to-left"
     ],
     "preview": "games-sharecard--default",
@@ -2567,6 +2636,7 @@
       "games-streak--played-today",
       "games-streak--resting-today",
       "games-streak--broken",
+      "games-streak--shields",
       "games-streak--empty",
       "games-streak--two-weeks",
       "games-streak--compact",

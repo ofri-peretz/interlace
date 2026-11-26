@@ -20,7 +20,8 @@ const meta = {
           'A player’s run of days: the count, a sentence on where today stands, and a strip of recent days.\n\n' +
           '**Rest days.** `rest` names weekdays and dates that never break a run. A rest day the player skips is passed over; one they play counts. A habit that punishes a day off teaches people to quit.\n\n' +
           '**Today is open.** Not having played yet today never ends a run. `data-status` is `played`, `pending`, `resting` or `none`, and the sentence follows it.\n\n' +
-          '**Never colour alone.** Played is a filled mark with a check, rest a dashed ring with a moon, missed an empty ring, today an open ring with a dot, and every day is read out with its date and state.\n\n' +
+          '**Shields.** `protection` lets a player earn their way past a missed day: every `every` days played earns one, up to `max`. A missed day with one in hand is covered and the run carries on. Worked out from the played days alone, never stored.\n\n' +
+          '**Never colour alone.** Played is a filled mark with a check, rest a dashed ring with a moon, a covered day a tinted mark with a shield, missed an empty ring, today an open ring with a dot, and every day is read out with its date and state.\n\n' +
           '**Server first.** No state or hooks. The arithmetic is exported from `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`), so a server can store and check the same numbers.\n\n' +
           '**Motion.** Today’s check scales in once when it appears; nothing else moves, and nothing at all under reduced motion.',
       },
@@ -31,6 +32,7 @@ const meta = {
     played: { control: 'object', description: 'Every day played, as `YYYY-MM-DD` keys.', table: { category: 'Data' } },
     today: { control: 'text', description: 'Today in the player’s time zone. Pass it when the page renders on a server.', table: { category: 'Data' } },
     rest: { control: 'object', description: '`{ weekdays?: number[]; dates?: string[] }`: days that never break a run (0 is Sunday).', table: { category: 'Data' } },
+    protection: { control: 'object', description: '`{ every, max }`: every `every` days played earns a shield (up to `max`) that covers one missed day.', table: { category: 'Data' } },
     length: { control: { type: 'number', min: 3, max: 14 }, table: { category: 'Layout', defaultValue: { summary: '7' } } },
     after: { control: { type: 'number', min: 0, max: 6 }, description: 'Days after today, shown as still to come.', table: { category: 'Layout', defaultValue: { summary: '0' } } },
     variant: { control: 'inline-radio', options: ['full', 'compact'], table: { category: 'Appearance', defaultValue: { summary: 'full' } } },
@@ -65,6 +67,20 @@ export const RestingToday: Story = {
 /** A missed working day ended the run; the best one stays on record. */
 export const Broken: Story = {
   args: { played: ['2026-11-12', '2026-11-13', '2026-11-14', '2026-11-16', '2026-11-17', '2026-11-18', '2026-11-19'] },
+};
+
+/** Shields: every 3 days played earns one; a missed day spends it and the run carries on. */
+export const Shields: Story = {
+  args: {
+    rest: undefined,
+    protection: { every: 3, max: 2 },
+    played: ['2026-11-18', '2026-11-19', '2026-11-20', '2026-11-22', '2026-11-23', '2026-11-24'],
+    today: '2026-11-24',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('1 streak shield ready')).toBeTruthy();
+  },
 };
 
 /** No games yet. */

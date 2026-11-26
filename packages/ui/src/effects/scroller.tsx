@@ -227,7 +227,7 @@ export function Scroller({
           aria-pressed={paused}
           aria-label={paused ? playLabel : pauseLabel}
           onClick={() => setPaused((p) => !p)}
-          className="border-border bg-background text-foreground hover:bg-muted focus-visible:ring-ring inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md border px-3 text-sm font-medium focus-visible:ring-[3px] focus-visible:outline-hidden"
+          className="border-border bg-background text-foreground hover:bg-muted focus-visible:ring-ring inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md border px-3 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-hidden"
         >
           {paused ? <PlayIcon aria-hidden className="size-4" /> : <PauseIcon aria-hidden className="size-4" />}
           {paused ? playLabel : pauseLabel}

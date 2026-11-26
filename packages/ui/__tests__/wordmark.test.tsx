@@ -30,7 +30,7 @@ describe('Wordmark', () => {
     expect(link.getAttribute('href')).toBe('/');
     expect(link.getAttribute('data-variant')).toBe('framed');
     expect(link.getAttribute('data-min-viewport')).toBe(String(MIN_VIEWPORT));
-    expect(link.className).toContain('focus-visible:ring-[3px]');
+    expect(link.className).toContain('focus-visible:ring-2');
     expect(link.className).not.toContain('outline-none');
     const langs = [...container.querySelectorAll('[data-slot="wordmark-line"]')].map((l) => [
       l.getAttribute('lang'),

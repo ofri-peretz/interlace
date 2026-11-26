@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T06:29:45.118Z",
+  "generatedAt": "2026-11-26T01:03:59.388Z",
   "sources": {
     "keyboard": "apps/storybook/src/stories/**/*.stories.tsx",
     "keyboardLock": "packages/ui/__tests__/overlay-nav-keyboard-lock.test.ts",
@@ -23,12 +23,13 @@
       "src/charts/**/*.{ts,tsx}",
       " pure cores: day keys, puzzle order, streak arithmetic.\n        ",
       ",\n        ",
+      ",\n        ",
       ",\n        // The five pure variant/model modules.\n        ",
       ",\n        // Booking: the slot picker",
       "src/patterns/time-slot-model.ts",
       "src/patterns/share-image-model.ts",
       "src/patterns/{interest-model,commitment-model,session-plan-model,recap-model}.ts",
-      "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
+      "src/primitives/{alert,aspect-ratio,avatar,badge,box,breadcrumb,button,callout,card,checkbox,code-editor,container,data-state,direction,focus-ring,grade-badge,grid,input,kbd,label,list,meter,pagination,published-date,reading-time,section,section-boundary,separator,skip-link,spinner,stack,stat-strip,tag,textarea,thread-mark,typography,visually-hidden}.tsx",
       "src/patterns/{lint-playground,multi-step-form,share-image,thread-steps,tab-bar,app-header,app-header-edge,app-shell,pull-to-refresh,install-prompt}.tsx",
       "src/effects/{weave-texture,view-transition}.tsx"
     ]
@@ -6412,6 +6413,19 @@
         "inGate": false
       }
     },
+    "direction": {
+      "sourcePath": "packages/ui/src/primitives/direction.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": true
+      }
+    },
     "distribution": {
       "sourcePath": "packages/ui/src/charts/distribution.tsx",
       "keyboard": {
@@ -7805,6 +7819,96 @@
           "worst": 8.25,
           "worstAt": {
             "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "goal-ring": {
+      "sourcePath": "packages/ui/src/games/goal-ring.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
             "scheme": "light"
           },
           "passes": true
@@ -9452,6 +9556,115 @@
         "inGate": false
       }
     },
+    "level-meter": {
+      "sourcePath": "packages/ui/src/games/level-meter.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "light-beam": {
       "sourcePath": "packages/ui/src/effects/light-beam.tsx",
       "keyboard": null,
@@ -10179,6 +10392,172 @@
       ],
       "coverage": {
         "inGate": true
+      }
+    },
+    "milestones": {
+      "sourcePath": "packages/ui/src/games/milestones.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
       }
     },
     "multi-step-form": {
@@ -13161,6 +13540,172 @@
         "inGate": true
       }
     },
+    "recall-card": {
+      "sourcePath": "packages/ui/src/games/recall-card.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "muted",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a muted surface",
+          "ratios": [
+            8.81,
+            10.48,
+            7.34,
+            8.64
+          ],
+          "worst": 7.34,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary-foreground",
+          "bg": "primary",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy on a primary face",
+          "ratios": [
+            8.8,
+            11.79,
+            8.86,
+            10.03
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "body copy",
+          "ratios": [
+            19.02,
+            16.73,
+            17.74,
+            16.19
+          ],
+          "worst": 16.19,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "recap": {
       "sourcePath": "packages/ui/src/patterns/recap.tsx",
       "keyboard": null,
@@ -13296,6 +13841,153 @@
         "inGate": false
       }
     },
+    "reminder-offer": {
+      "sourcePath": "packages/ui/src/games/reminder-offer.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "input",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border inside a card",
+          "ratios": [
+            3.62,
+            3.11,
+            3.62,
+            3.85
+          ],
+          "worst": 3.11,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "input",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "control border (SC 1.4.11)",
+          "ratios": [
+            3.5,
+            3.31,
+            3.43,
+            4.25
+          ],
+          "worst": 3.31,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "dark"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "card-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "copy in a card",
+          "ratios": [
+            19.65,
+            15.71,
+            18.72,
+            14.69
+          ],
+          "worst": 14.69,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "dark"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "reveal": {
       "sourcePath": "packages/ui/src/effects/reveal.tsx",
       "keyboard": null,
@@ -13313,6 +14005,96 @@
       "sourcePath": "packages/ui/src/effects/rotating-text.tsx",
       "keyboard": null,
       "contrast": [],
+      "textAlternative": {
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "round-summary": {
+      "sourcePath": "packages/ui/src/games/round-summary.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
       "textAlternative": {
         "kind": "sr-only-copy",
         "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
@@ -20443,6 +21225,96 @@
       "sourcePath": "packages/ui/src/effects/underline-link.tsx",
       "keyboard": null,
       "contrast": [
+        {
+          "fg": "primary",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary on the page",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "primary",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "text-primary in a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "update-feed": {
+      "sourcePath": "packages/ui/src/patterns/update-feed.tsx",
+      "keyboard": null,
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
         {
           "fg": "primary",
           "bg": "background",
