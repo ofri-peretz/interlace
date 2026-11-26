@@ -36,7 +36,10 @@
  * side by side and the chart stays put in its column (`side` picks which
  * column, start or end, and follows the page's direction). Narrower, the
  * chart stays at the top of the screen and the steps pass over it as cards.
- * Each step is a screen tall, so one step is read at a time. A page with
+ * Each step is a screen tall, so one step is read at a time, and its card
+ * rests at the foot of the screen, so a tall chart above it stays in view
+ * while the card is read instead of sitting under it. The first card sits
+ * right under the chart, so the opening screen shows where to start. A page with
  * its own sticky header sets `--scroll-story-offset` to that header's
  * height, and the chart sits below it.
  *
@@ -198,7 +201,10 @@ export const ScrollStoryStep = React.forwardRef<HTMLDivElement, ScrollStoryStepP
       data-slot="scroll-story-step"
       data-index={index}
       data-active={isActive ? '' : undefined}
-      className="flex min-h-[calc(100svh-var(--scroll-story-offset,0px))] flex-col justify-center py-10"
+      // Narrow: the card rests at the foot of the screen, clear of the chart pinned at the top;
+      // the first card sits right under the chart, so the opening screen shows where to read.
+      // Wide: the chart has its own column, so every card sits in the middle.
+      className="flex min-h-[calc(100svh-var(--scroll-story-offset,0px))] flex-col justify-end pt-10 pb-6 first:justify-start first:pt-4 @3xl/story:justify-center @3xl/story:py-10 @3xl/story:first:justify-center @3xl/story:first:py-10"
     >
       <div
         data-slot="scroll-story-card"
