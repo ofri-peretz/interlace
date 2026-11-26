@@ -36,7 +36,7 @@
  * | R7   | cn + ...rest                     | `cn('…', className)` + `{...props}` on every part           |
  * | R12  | Reuse over wrap                  | Base UI owns selection, roving focus and ARIA               |
  * | R14  | Declares min viewport            | `data-min-viewport={String(MIN_VIEWPORT)}` + exported const |
- * | R19  | Tokens only                      | `bg-muted`, `text-muted-foreground`, `ring-ring/50`         |
+ * | R19  | Tokens only                      | `bg-muted`, `text-muted-foreground`, `ring-ring`         |
  * | R25  | Client component                 | Required — Base UI Tabs ships client hooks                  |
  * | R26  | Keyboard contract                | arrow-key flow asserted by `Tabs.stories.tsx`, locked by `overlay-nav-keyboard-lock` |
  */
@@ -92,7 +92,7 @@ function TabsTrigger({
     <BaseTabs.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "data-[selected]:bg-background dark:data-[selected]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[selected]:border-input dark:data-[selected]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex min-h-target flex-1 items-center justify-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[selected]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-[selected]:bg-background dark:data-[selected]:text-foreground focus-visible:border-ring focus-visible:ring-ring focus-visible:outline-ring dark:data-[selected]:border-input dark:data-[selected]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex min-h-target flex-1 items-center justify-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[selected]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
