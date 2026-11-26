@@ -5,6 +5,9 @@ on:
     branches: [main]
   push:
     branches: [main]
+  # The merge queue runs the required checks (typecheck, test, build) on the queued commit.
+  merge_group:
+    types: [checks_requested]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
