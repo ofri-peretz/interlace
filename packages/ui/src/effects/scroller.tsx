@@ -199,8 +199,8 @@ export function Scroller({
       <div
         data-slot="scroller-viewport"
         className={cn(
-          // -m-1 p-1: a scroll container clips, so give focus rings room.
-          '-m-1 min-w-0 flex-1 p-1',
+          // -m-1 p-1 leaves rings room to show; self-stretch keeps the w-max track off the phone page.
+          '-m-1 min-w-0 flex-1 self-stretch p-1 sm:self-auto',
           moving ? 'overflow-hidden' : vertical ? 'overflow-y-auto' : 'overflow-x-auto',
           edges === 'fade' && FADE[axis],
         )}

@@ -22,7 +22,7 @@ const meta: Meta<typeof Sheen> = {
     rest: { control: { type: 'number', min: 0, step: 0.5 }, table: { defaultValue: { summary: '3' } } },
   },
   render: (args) => (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap gap-3">
       <Button size="lg">
         <Sheen {...args} />
         Get started

@@ -535,6 +535,17 @@
           "source": ".changeset/drawer.md"
         },
         {
+          "summary": "Duel by link: two players, one game, no accounts. `DuelInvite` sends the same game to a friend (the share sheet where there is one, copy link everywhere, the link to copy by hand when the clipboard fails). `DuelCard` is what the friend sees: who challenged them and the score to beat. `DuelCompare` shows both results round by round, with a verdict in words (\"You won by 50 points.\"), a \"Won\" tag, rounds won, and bars growing out from the middle; a Celebrate burst marks the viewer's win. The challenge travels in the link: `games/duel-model` encodes the game, its seed and the first player's rounds as a base64url token (`encodeDuel`, `duelHref`), and `decodeDuel` reads it back as untrusted input, capped and cleaned, null when malformed. `compareDuel` gives each round's winner, the totals and the margin, with `order: 'asc'` for games where less is better. Every word goes through `labels`; motion is transform only and off under reduced motion.",
+          "components": [
+            "duel"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/duel-by-link.md"
+        },
+        {
           "summary": "The editorial look is one line: `@theme { --font-heading: var(--font-serif); }` gives serif headings over the sans body. `CardTitle` now reads `font-heading` like every other heading in the kit, so card titles follow too; with the default `--font-heading` (your body face) nothing changes. `interlace-foundation` names a serif stack (Source Serif 4, then the system serifs) for `--font-serif`. A new Storybook story, Foundations/Typography/Editorial Headings, shows it.",
           "components": [
             "card"
@@ -799,6 +810,32 @@
           "source": ".changeset/live-room-kit.md"
         },
         {
+          "summary": "Live rounds move. `AnswerPad` plays the reveal: the right tile lands, the tiles nobody needs step\nback, a wrong pick gives one small nudge, and a right pick's points rise from its tile (transform\nand opacity only; nothing moves under reduced motion). New `Standings`, the board between rounds:\neach player's points pop in, totals count up from where they were (CountUp), then the rows glide\nto their new places (FlipGroup) with places gained in words. An ordered list, ranks shared on ties.",
+          "components": [
+            "answer-pad",
+            "standings",
+            "live-room"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-room-motion.md"
+        },
+        {
+          "summary": "Live rounds reach every phone. `games/room-model` gains `RoomState.prompt` and `RoomState.solution`: the host's `question` event can carry what the round asks (`prompt`) and its `reveal` the answer (`solution`), so every screen, and a player who joins mid-round, shows the same round without a second channel. Both are null in the lobby, cleared by the next question and by `restart`. `AnswerPad` is the player's side of a live round: big lettered tiles, the first pick final, \"Answer in\" while the host waits, then the right tile marked and the outcome in words. It never needs the right answer before the reveal, its state follows from `value`, `closed` and `correct` (so a reconnect shows the same thing), `display=\"keys\"` shows letters only for rooms that keep the words on the big screen, and `choiceKey(i)` gives the big screen the same letters. Keys A to Z and 1 to 9 pick a tile; motion is transform only.",
+          "components": [
+            "answer-pad",
+            "live-room",
+            "join-code"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/live-round-pad.md"
+        },
+        {
           "summary": "Sheet `side` and Drawer `direction` take `start` and `end`. They follow the reading direction from `DirectionProvider`: `start` opens from the left in English and from the right in Hebrew or Arabic, with the swipe to dismiss matching.",
           "components": [
             "sheet",
@@ -846,6 +883,17 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/pointer-surface-underline-link.md"
+        },
+        {
+          "summary": "Prose tables read like an editorial table instead of a Markdown grid. The cell boxes, the shaded header and the zebra rows are gone: a firm rule sits under the header, a hairline between rows, body cells keep the reading size, the first cell carries the row's weight, figures line up, and a GFM column alignment is honoured. A `<span data-status=\"success|warning|info|destructive|neutral\">` in a cell reads as a quiet status pill whose dot repeats the word. On a phone, a table with a header row stacks into one card per row, each value under its column name, with no sideways scrolling: Prose names each body cell after its column (`data-label`, which server-rendered markup can ship itself to skip a flash) and pins the table roles a screen reader would otherwise lose.",
+          "components": [
+            "prose"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/prose-editorial-tables.md"
         },
         {
           "summary": "`Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.",
@@ -929,6 +977,18 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/room-access.md"
+        },
+        {
+          "summary": "Live rooms hold up on real phones. Every state the host sends carries its clock, and `useRoom`\nreturns `now`, this device's clock corrected to the host's (`clockOffset` in room-model), so a\nphone whose clock is off still counts down to the host's deadline; `TimerRing` takes `now` too.\nA player's page now says it is away on `pagehide`, asks for the room again when it is seen, and\nrejoins by itself when shown away, unless the player left on purpose (`presence: false` turns it off).\nNetworks drop messages: a player's join or answer is sent again every 3s until the host's state\nshows it (5 tries), and the host no longer broadcasts a reply to a repeated or late answer.",
+          "components": [
+            "live-room",
+            "timer-ring"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/rooms-clock-presence.md"
         },
         {
           "summary": "ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says \"there is more\" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade=\"none\"` for hard edges.",
@@ -1266,6 +1326,17 @@
           "source": ".changeset/weave-texture.md"
         },
         {
+          "summary": "A live word cloud for rooms. `WordEntry` lets a phone send up to `maxWords` words (default 3), each checked before `onWord` fires; a refused word says why, and the viewer's sent words show as chips. `WordCloud` groups what the room sent by its folded form (case, accents and marks), shows the spelling most people used, sizes words on a square-root scale in five steps and puts the biggest in the middle, while the DOM stays in rank order with each word read with its count. Words glide to their new places through FlipGroup and a word that gained a vote pulses once; under reduced motion they simply take their place. `size=\"stage\"` is for a shared screen. The rules are pure and exported: `games/word-cloud-model` (`buildCloud`, `centerOut`) and `games/text-safety-model` (`checkText`, `foldText`, `isBlocked`), which refuses empty text, overlong text, links, email addresses, phone numbers and words on the consumer's `blocklist` (whole words, through letter swaps and spelled-out letters). Interlace ships no word list.",
+          "components": [
+            "word-cloud"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/word-cloud.md"
+        },
+        {
           "summary": "Wordmark gains `size`: `md` (the default, unchanged), `sm` (about two thirds: text a step down, a thinner plate) and `responsive` (`sm` below the `md` breakpoint, `md` from it). A stacked three-line lockup in a sticky topbar took about a fifth of a phone's screen; `size=\"responsive\"` gives that height back to the page.",
           "components": [
             "wordmark"
@@ -1340,6 +1411,18 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/claim-heading-font.md"
+        },
+        {
+          "summary": "Shorter comments in the focus grid and scroller. No change to behaviour.",
+          "components": [
+            "focus-grid",
+            "scroller"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/comment-trim.md"
         },
         {
           "summary": "Grids of repeated items now pick their column count from their own width, not the screen's. FeatureGrid, StatGroup, ArticleListGrid, PricingTable, RelatedPosts and StatStrip each set a CSS container on their root: one track below 28rem, two from 28rem, and the `cols` you asked for from 56rem. A grid placed in a sidebar or a dashboard card now collapses as it would on a phone, with no `className` override. At full page width the layout is the same as before.",
@@ -1536,6 +1619,18 @@
           "source": ".changeset/hero-media-readable.md"
         },
         {
+          "summary": "A focus grid card's title link now underlines when it takes keyboard focus, so focus shows on the element itself as well as the card's ring. The scroller's viewport stretches to the width of its row on phones instead of growing to its whole track, so the page no longer scrolls sideways.",
+          "components": [
+            "focus-grid",
+            "scroller"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/keyboard-reach.md"
+        },
+        {
           "summary": "fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).",
           "components": [
             "card",
@@ -1606,6 +1701,17 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/motion-tokens.md"
+        },
+        {
+          "summary": "MultiStepForm says what is wrong when a field fails its native check, not only where: the field's name (a radio group's own label) and the browser's message under the step (reworded with `labels.invalid`), and `aria-invalid` on the field until it is edited. Before, Continue only moved focus, so a sighted reader saw nothing happen. `MultiStepFormSummary` wraps a long answer (an email, a name) instead of pushing the page sideways at 320px.",
+          "components": [
+            "multi-step-form"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/multi-step-form-says-why.md"
         },
         {
           "summary": "- `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.\n- `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.\n- `Citation` `marker=\"chip\"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.",
@@ -1696,6 +1802,20 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/radio-dot-centred.md"
+        },
+        {
+          "summary": "Nothing scrolls sideways at 150% text on a phone any more for the hover card, OTP field, scorecard row and dashboard template. Widths set in rem grow with the reader's text size, so a `max-w-80` hover card reached 480px on a 390px screen. The hover card now caps at the space Base UI reports (`--available-width`), OTP boxes shrink to share the row, the scorecard header wraps its score under the name, and the dashboard template pads `px-4` on phones and `px-10` from `sm`.",
+          "components": [
+            "hover-card",
+            "otp-field",
+            "scorecard-row",
+            "dashboard-template"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/reflow-at-150.md"
         },
         {
           "summary": "Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.",
