@@ -43,3 +43,24 @@ export function flakyReceiver<M>(inner: RoomTransport<M>): FlakyReceiver<M> {
     },
   };
 }
+
+/** What a client sends, with the first `n` messages lost on the way: for a phone on a bad connection. */
+export function lossySender<M>(inner: RoomTransport<M>): { transport: RoomTransport<M>; drop(n: number): void; sent(): M[] } {
+  let dropping = 0;
+  const sent: M[] = [];
+  return {
+    transport: {
+      send(message) {
+        sent.push(message);
+        if (dropping > 0) dropping -= 1;
+        else inner.send(message);
+      },
+      subscribe: (listener) => inner.subscribe(listener),
+      close: () => inner.close?.(),
+    },
+    drop(n) {
+      dropping = n;
+    },
+    sent: () => sent.slice(),
+  };
+}
