@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 262
+    "itemCount": 266
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -31,7 +31,7 @@
     "tier": {
       "primitive": 79,
       "pattern": 68,
-      "game": 46,
+      "game": 50,
       "effect": 28,
       "chart": 14,
       "template": 13,
@@ -42,8 +42,8 @@
     "category": {
       "primitive": 79,
       "pattern": 68,
-      "games": 46,
-      "game": 46,
+      "games": 50,
+      "game": 50,
       "blog": 37,
       "data": 31,
       "foundation": 29,
@@ -62,19 +62,19 @@
       "theme": 3
     },
     "rendering": {
-      "client": 147,
+      "client": 151,
       "server": 115
     },
     "keyboard": {
-      "none": 202,
-      "handled": 60
+      "none": 203,
+      "handled": 63
     },
     "loading": {
-      "none": 224,
+      "none": 228,
       "built-in": 38
     },
     "minViewport": {
-      "320": 177,
+      "320": 181,
       "480": 7,
       "768": 1,
       "inherited": 77
@@ -1450,6 +1450,16 @@
             "podium",
             "closed"
           ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
         }
       ],
       "a11y": {
@@ -1469,6 +1479,7 @@
         "focusRing": true
       },
       "exports": [
+        "ACK_KEEP",
         "BREAKOUTS_KEY",
         "JOIN_CODE_ALPHABET",
         "MAX_GROUPS",
@@ -1477,7 +1488,7 @@
         "MIN_VIEWPORT",
         "RESTORE_SEQ_JUMP"
       ],
-      "version": "1.4.0",
+      "version": "1.5.0",
       "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -2023,6 +2034,92 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/chart-frame.json",
       "item": "https://ds.interlace.tools/r/chart-frame.json",
       "docs": "https://ds.interlace.tools/c/chart-frame"
+    },
+    {
+      "name": "check-in",
+      "title": "Check In",
+      "type": "registry:ui",
+      "summary": "\"How are you arriving?\" Pick the face that fits. Everyone answers in one tap, in the lobby while the room fills or at the start of a session, and the room's mood shows as a spread: how many chose each, the one most chose, and, when the same question was…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ACK_KEEP",
+        "CHECK_IN_KEY",
+        "DEFAULT_MOODS",
+        "JOIN_CODE_ALPHABET",
+        "MAX_ROUNDS",
+        "MAX_SHARED_SIZE",
+        "MIN_VIEWPORT",
+        "RESTORE_SEQ_JUMP"
+      ],
+      "version": "1.6.0",
+      "since": "2.2.0",
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/check-in.tsx",
+        "components/ui/games/check-in-model.ts",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-activity-kit.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/check-in.json",
+      "item": "https://ds.interlace.tools/r/check-in.json",
+      "docs": "https://ds.interlace.tools/c/check-in"
     },
     {
       "name": "checkbox",
@@ -3090,7 +3187,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.1",
+      "version": "1.2.2",
       "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3404,6 +3501,94 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/data-table.json",
       "item": "https://ds.interlace.tools/r/data-table.json",
       "docs": "https://ds.interlace.tools/c/data-table"
+    },
+    {
+      "name": "debate-corners",
+      "title": "Debate Corners",
+      "type": "registry:ui",
+      "summary": "Pick a corner, then defend it. A statement with two to four positions, one for each corner of the room: each person stands in the corner they pick, can move until the host locks the corners, and the host calls one corner at a time to defend its position.…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ACK_KEEP",
+        "CORNERS_KEY",
+        "JOIN_CODE_ALPHABET",
+        "MAX_CORNERS",
+        "MAX_SHARED_SIZE",
+        "MIN_CORNERS",
+        "MIN_VIEWPORT",
+        "RESTORE_SEQ_JUMP"
+      ],
+      "version": "1.6.0",
+      "since": "2.2.0",
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/debate-corners.tsx",
+        "components/ui/games/debate-corners-model.ts",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-activity-kit.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/debate-corners.json",
+      "item": "https://ds.interlace.tools/r/debate-corners.json",
+      "docs": "https://ds.interlace.tools/c/debate-corners"
     },
     {
       "name": "decode-text",
@@ -4417,6 +4602,100 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/error-template.json",
       "item": "https://ds.interlace.tools/r/error-template.json",
       "docs": "https://ds.interlace.tools/c/error-template"
+    },
+    {
+      "name": "exit-ticket",
+      "title": "Exit Ticket",
+      "type": "registry:ui",
+      "summary": "Three quick questions as people leave, while it is fresh: how likely to recommend (0 to 10, grouped the standard way into promoters, passives and detractors), a rating on a short scale, and a choice. Answers go in with one button and can be changed until…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "NpsBand",
+          "values": [
+            "promoter",
+            "passive",
+            "detractor"
+          ]
+        },
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "ACK_KEEP",
+        "EXIT_TICKET_KEY",
+        "JOIN_CODE_ALPHABET",
+        "MAX_QUESTIONS",
+        "MAX_SHARED_SIZE",
+        "MIN_VIEWPORT",
+        "RESTORE_SEQ_JUMP"
+      ],
+      "version": "1.6.0",
+      "since": "2.2.0",
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/exit-ticket.tsx",
+        "components/ui/games/exit-ticket-model.ts",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-activity-kit.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/exit-ticket.json",
+      "item": "https://ds.interlace.tools/r/exit-ticket.json",
+      "docs": "https://ds.interlace.tools/c/exit-ticket"
     },
     {
       "name": "faq",
@@ -5937,6 +6216,16 @@
             "podium",
             "closed"
           ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
         }
       ],
       "a11y": {
@@ -5955,12 +6244,13 @@
         "focusRing": false
       },
       "exports": [
+        "ACK_KEEP",
         "JOIN_CODE_ALPHABET",
         "MAX_SHARED_SIZE",
         "MIN_VIEWPORT",
         "RESTORE_SEQ_JUMP"
       ],
-      "version": "1.4.0",
+      "version": "1.5.0",
       "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -6505,6 +6795,16 @@
             "podium",
             "closed"
           ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
         }
       ],
       "a11y": {
@@ -6525,12 +6825,13 @@
         "focusRing": false
       },
       "exports": [
+        "ACK_KEEP",
         "JOIN_CODE_ALPHABET",
         "MAX_SHARED_SIZE",
         "MIN_VIEWPORT",
         "RESTORE_SEQ_JUMP"
       ],
-      "version": "1.5.0",
+      "version": "1.6.0",
       "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -7578,6 +7879,16 @@
             "podium",
             "closed"
           ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
         }
       ],
       "a11y": {
@@ -7596,6 +7907,7 @@
         "focusRing": true
       },
       "exports": [
+        "ACK_KEEP",
         "JOIN_CODE_ALPHABET",
         "MAX_PROMPT",
         "MAX_SHARED_SIZE",
@@ -7603,7 +7915,7 @@
         "PAIRS_KEY",
         "RESTORE_SEQ_JUMP"
       ],
-      "version": "1.4.0",
+      "version": "1.5.0",
       "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7766,7 +8078,7 @@
         "PROCESSING_DEFAULTS",
         "PhotoUploadError"
       ],
-      "version": "1.0.0",
+      "version": "1.0.1",
       "since": "2.1.0",
       "npmDependencies": [
         "lucide-react"
@@ -12022,6 +12334,59 @@
       "docs": "https://ds.interlace.tools/c/social-sign-in"
     },
     {
+      "name": "sound-cue-toggle",
+      "title": "Sound Cue Toggle",
+      "type": "registry:ui",
+      "summary": "The switch for a room's sound cues, and the words for them. Sound is off until a person turns it on (a browser keeps a page silent until a tap, and a hall should not start making noise on its own). Every cue that plays is also written as a plain phrase…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "switch"
+        ],
+        "aria": [
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.2.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "switch"
+      ],
+      "installsTo": [
+        "components/ui/games/sound-cue-toggle.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/sound-cue-toggle.json",
+      "item": "https://ds.interlace.tools/r/sound-cue-toggle.json",
+      "docs": "https://ds.interlace.tools/c/sound-cue-toggle"
+    },
+    {
       "name": "sparkline",
       "title": "Sparkline",
       "type": "registry:ui",
@@ -13269,6 +13634,16 @@
             "podium",
             "closed"
           ]
+        },
+        {
+          "name": "ActivityRefusal",
+          "values": [
+            "not-host",
+            "wrong-phase",
+            "full",
+            "rate-limited",
+            "bad-action"
+          ]
         }
       ],
       "a11y": {
@@ -13288,6 +13663,7 @@
         "focusRing": true
       },
       "exports": [
+        "ACK_KEEP",
         "JOIN_CODE_ALPHABET",
         "MAX_SHARED_SIZE",
         "MAX_TEAMS",
@@ -13296,7 +13672,7 @@
         "TEAMS_KEY",
         "TEAM_COLORS"
       ],
-      "version": "1.4.0",
+      "version": "1.5.0",
       "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
