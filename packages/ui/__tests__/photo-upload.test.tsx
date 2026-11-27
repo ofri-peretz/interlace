@@ -325,7 +325,10 @@ describe('states and parts', () => {
   it('has a visible label, a real input in the tab order, and a message for each state', async () => {
     const { input } = setup({ labels: { label: 'Gallery' } });
     expect(screen.getByRole('group', { name: 'Gallery' })).toBeTruthy();
-    expect(input().className).toContain('sr-only');
+    // The real input stays focusable and in the accessibility tree: laid over its label, not `display: none`.
+    expect(input().className).toContain('opacity-0');
+    expect(input().className).not.toMatch(/(^| )hidden( |$)/);
+    expect(input().hasAttribute('aria-hidden')).toBe(false);
     expect(input().closest('label')).toBeTruthy();
     expect(screen.getByRole('group').getAttribute('data-state')).toBe('empty');
     await userEvent.upload(input(), fileOf(jpeg(), 'a.jpg'));

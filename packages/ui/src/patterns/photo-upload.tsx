@@ -14,7 +14,7 @@
  *   PhotoUpload                    (div role=group — data-slot="photo-upload", data-state, data-count)
  *     ├─ span                      (data-slot="photo-upload-label": the visible name)
  *     ├─ div                       (data-slot="photo-upload-dropzone", data-drag idle|over, data-full)
- *     │   ├─ label > input file    (data-slot="photo-upload-pick": the real control, sr-only but focusable)
+ *     │   ├─ label > input file    (data-slot="photo-upload-pick": the real control, laid over its label at opacity 0 so it stays focusable)
  *     │   ├─ label > input file    (data-slot="photo-upload-camera": touch devices only, after mount)
  *     │   └─ p                     (data-slot="photo-upload-hint")
  *     ├─ p role=status             (data-slot="photo-upload-rejections")
@@ -269,7 +269,7 @@ function DefaultItem({ item, index, total, labels, actions, message, altText }: 
       data-slot="photo-upload-item"
       data-status={item.status}
       data-id={item.id}
-      className="border-border bg-background grid grid-cols-[3.5rem_1fr] gap-x-3 gap-y-2 rounded-lg border p-3 motion-safe:animate-in motion-safe:fade-in-0 motion-safe:duration-(--duration-base)"
+      className="border-border bg-background grid grid-cols-[3.5rem_1fr] gap-x-3 gap-y-2 rounded-lg border p-3 motion-safe:animate-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-(--duration-base)"
     >
       {item.previewUrl ? (
         <img
@@ -801,7 +801,7 @@ function PhotoUpload({
         <div className="flex flex-wrap items-center justify-center gap-2">
           <label
             data-slot="photo-upload-pick"
-            className="has-[:focus-visible]:ring-ring border-input bg-background hover:bg-accent inline-flex h-control cursor-pointer items-center gap-2 rounded-lg border px-4 text-sm font-medium has-[:focus-visible]:ring-2 has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50"
+            className="has-[:focus-visible]:ring-ring relative border-input bg-background hover:bg-accent inline-flex h-control cursor-pointer items-center gap-2 rounded-lg border px-4 text-sm font-medium has-[:focus-visible]:ring-2 has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50"
           >
             <ImagePlusIcon aria-hidden="true" className="size-4" />
             {words.choose}
@@ -813,13 +813,13 @@ function PhotoUpload({
               multiple={maxFiles > 1}
               disabled={disabled || readOnly || fullNow}
               onChange={onPick}
-              className="sr-only"
+              className="absolute inset-0 size-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
             />
           </label>
           {capture && touch ? (
             <label
               data-slot="photo-upload-camera"
-              className="has-[:focus-visible]:ring-ring border-input bg-background hover:bg-accent inline-flex h-control cursor-pointer items-center gap-2 rounded-lg border px-4 text-sm font-medium has-[:focus-visible]:ring-2 has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50"
+              className="has-[:focus-visible]:ring-ring relative border-input bg-background hover:bg-accent inline-flex h-control cursor-pointer items-center gap-2 rounded-lg border px-4 text-sm font-medium has-[:focus-visible]:ring-2 has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50"
             >
               <CameraIcon aria-hidden="true" className="size-4" />
               {words.camera}
@@ -829,7 +829,7 @@ function PhotoUpload({
                 capture={capture}
                 disabled={disabled || readOnly || fullNow}
                 onChange={onPick}
-                className="sr-only"
+                className="absolute inset-0 size-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
               />
             </label>
           ) : null}
