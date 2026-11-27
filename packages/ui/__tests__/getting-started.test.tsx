@@ -275,6 +275,19 @@ describe('celebrations and announcements', () => {
   });
 });
 
+describe('the burst itself', () => {
+  it('draws nothing under reduced motion, even if something mounts it', async () => {
+    const { default: Burst } = await import('../src/games/getting-started-burst.js');
+    reduced.value = true;
+    const { container, unmount } = render(<Burst />);
+    expect(container.firstChild).toBeNull();
+    unmount();
+    reduced.value = false;
+    const again = render(<Burst />);
+    expect(again.container.querySelectorAll('[data-slot="getting-started-burst"] > span')).toHaveLength(16);
+  });
+});
+
 describe('optional steps, dismissing and pace', () => {
   it('skips and un-skips an optional step, and a skipped one still reads as skipped', async () => {
     view();

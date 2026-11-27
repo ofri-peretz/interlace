@@ -12,15 +12,17 @@
 import * as React from 'react';
 
 import { motionEase } from '../lib/motion-token.js';
+import { useReducedMotion } from '../lib/use-reduced-motion.js';
 
 const MARKS = 16;
 const DURATION_MS = 1200;
 
 export default function GettingStartedBurst() {
+  const reduced = useReducedMotion();
   const ref = React.useRef<HTMLSpanElement>(null);
   React.useEffect(() => {
     const root = ref.current;
-    if (!root || typeof root.animate !== 'function') return;
+    if (reduced || !root || typeof root.animate !== 'function') return;
     const easing = motionEase(root, 'enter');
     const animations = Array.from(root.children).map((mark, i) => {
       const angle = (i / MARKS) * Math.PI * 2;
@@ -34,7 +36,9 @@ export default function GettingStartedBurst() {
       );
     });
     return () => animations.forEach((a) => a.cancel());
-  }, []);
+  }, [reduced]);
+  // Under reduced motion there is nothing to show: the banner says it in words.
+  if (reduced) return null;
   return (
     <span
       ref={ref}
