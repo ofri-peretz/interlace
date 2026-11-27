@@ -592,6 +592,26 @@
       "types": "./dist/games/use-live-activities.d.ts",
       "default": "./dist/games/use-live-activities.js"
     },
+    "./games/room-activity-kit": {
+      "types": "./dist/games/room-activity-kit.d.ts",
+      "default": "./dist/games/room-activity-kit.js"
+    },
+    "./games/live-collect-model": {
+      "types": "./dist/games/live-collect-model.d.ts",
+      "default": "./dist/games/live-collect-model.js"
+    },
+    "./games/live-text-model": {
+      "types": "./dist/games/live-text-model.d.ts",
+      "default": "./dist/games/live-text-model.js"
+    },
+    "./games/live-host-model": {
+      "types": "./dist/games/live-host-model.d.ts",
+      "default": "./dist/games/live-host-model.js"
+    },
+    "./games/use-room-activities": {
+      "types": "./dist/games/use-room-activities.d.ts",
+      "default": "./dist/games/use-room-activities.js"
+    },
     "./games/groups-model": {
       "types": "./dist/games/groups-model.d.ts",
       "default": "./dist/games/groups-model.js"

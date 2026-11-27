@@ -114,7 +114,7 @@ export default defineConfig({
       include: [
         'src/charts/**/*.{ts,tsx}',
         // The games' pure cores: day keys, puzzle order, streak arithmetic.
-        'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model,tally-model,quiz-model,order-model,qr-model,room-model,duel-model,progress-model,reminder-model,text-safety-model,word-cloud-model,question-board-model,reactions-model,spectrum-model,agenda-model,agenda-sync-model,live-activities-model,groups-model,rating-model,points-model,ranking-model,quadrant-model,typed-answer-model,picture-reveal-model,room-goal-model,prediction-model,dot-vote-model,pin-drop-model,note-board-model,group-model,team-model,breakout-model,pair-model}.ts',
+        'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model,tally-model,quiz-model,order-model,qr-model,room-model,duel-model,progress-model,reminder-model,text-safety-model,word-cloud-model,question-board-model,reactions-model,spectrum-model,agenda-model,agenda-sync-model,live-activities-model,groups-model,rating-model,points-model,ranking-model,quadrant-model,typed-answer-model,picture-reveal-model,room-goal-model,prediction-model,dot-vote-model,pin-drop-model,note-board-model,group-model,team-model,breakout-model,pair-model,room-activity-kit,live-collect-model,live-text-model,live-host-model}.ts',
         'src/patterns/update-feed-model.ts',
         'src/lib/**/*.{ts,tsx}',
         // The five pure variant/model modules.
