@@ -32,6 +32,18 @@
       "types": "./dist/lib/intent.d.ts",
       "default": "./dist/lib/intent.js"
     },
+    "./error-report": {
+      "types": "./dist/lib/error-report.d.ts",
+      "default": "./dist/lib/error-report.js"
+    },
+    "./error-report-model": {
+      "types": "./dist/lib/error-report-model.d.ts",
+      "default": "./dist/lib/error-report-model.js"
+    },
+    "./use-recent-errors": {
+      "types": "./dist/lib/use-recent-errors.d.ts",
+      "default": "./dist/lib/use-recent-errors.js"
+    },
     "./use-reading-prefs": {
       "types": "./dist/lib/use-reading-prefs.d.ts",
       "default": "./dist/lib/use-reading-prefs.js"
@@ -959,6 +971,7 @@
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
     "@vitest/coverage-v8": "^4.1.10",
+    "axe-core": "^4.11.4",
     "jsdom": "^25.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

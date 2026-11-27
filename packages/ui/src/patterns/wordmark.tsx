@@ -33,15 +33,31 @@
  *
  * ## Name
  *
- * With `href` the wordmark is a link, and `label` is its accessible name
- * ("Acme, home"), read once instead of every line in a row.
- * Without `href` it is an image of text: `role="img"` with `label` as its
- * name.
+ * A link's name must contain the words printed on it (WCAG 2.5.3, Label in
+ * Name), or a person who speaks the words to a voice control finds nothing.
+ * A wordmark prints every `Wordmark.Line`, so:
+ *
+ * - **One language or a tagline:** `label` must contain the lines, for
+ *   example "Acme Field notes, home".
+ * - **Several scripts:** leave `label` out. The link is then named by its
+ *   lines, each in its own `lang`, and `hint=", home"` says where it goes
+ *   (visually hidden, after the lines). Do not write one translated name in
+ *   `label`: it will not contain the other lines.
+ * - **Check it:** run axe with `label-content-name-mismatch` enabled on the
+ *   page that holds the logo.
+ *
+ * In development a `label` that does not contain every line logs one
+ * warning; it is silent in production. `hint` is ignored when `label` is
+ * given, and is not allowed without `href`.
+ *
+ * Without `href` the wordmark is an image of text: `role="img"` with `label`
+ * (required) as its name.
  *
  * ## Anatomy
  *
  *   Wordmark                 (a | span — data-slot="wordmark", data-variant, data-size)
- *     └─ WordmarkLine × n    (span — lang, dir)
+ *     ├─ WordmarkLine × n    (span — lang, dir)
+ *     └─ hint                (span — data-slot="wordmark-hint", sr-only; link only)
  *
  * ## MIN_VIEWPORT — 320
  *
@@ -50,7 +66,7 @@
  * | Rule | Concept                 | Where in this file                                       |
  * | ---- | ----------------------- | -------------------------------------------------------- |
  * | R4   | Extends native el       | `a` / `span` props                                       |
- * | R6   | data-slot per part      | wordmark / wordmark-line                                 |
+ * | R6   | data-slot per part      | wordmark / wordmark-line / wordmark-hint                                |
  * | R7   | cn + ...rest            | `cn(…, className)` + `{...props}`                        |
  * | R8   | Enums, not booleans     | `variant`, `size`                                        |
  * | R14  | Declares min viewport   | `data-min-viewport` on the root + exported const         |
@@ -62,6 +78,9 @@
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+
+// Bundlers replace `process.env.NODE_ENV` at build time; this only types it, with no @types/node.
+declare const process: { env: { NODE_ENV?: string } };
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -86,9 +105,7 @@ const FRAME: Record<WordmarkSize, string> = {
   responsive: `${SM_FRAME} md:rounded-lg md:border-[3px] md:px-5 md:pt-2 md:pb-1.5 md:outline-[3px] md:outline-offset-[-7px]`,
 };
 
-type WordmarkProps = Omit<React.ComponentProps<'a'>, 'children'> & {
-  /** The name, read once: "Acme" or "Acme, home". */
-  label: string;
+type WordmarkCommon = {
   /** @default 'framed' */
   variant?: WordmarkVariant;
   /** `sm` is about two thirds the size; `responsive` is `sm` below the `md` breakpoint. @default 'md' */
@@ -97,7 +114,63 @@ type WordmarkProps = Omit<React.ComponentProps<'a'>, 'children'> & {
   children: React.ReactNode;
 };
 
-function Wordmark({ label, variant = 'framed', size = 'md', href, className, children, ...props }: WordmarkProps) {
+type WordmarkLinkProps = Omit<React.ComponentProps<'a'>, 'children'> &
+  WordmarkCommon & {
+    href: string;
+    /**
+     * The link's name, replacing its lines. Leave it out and the link is named by its lines. When given
+     * it must contain every line ("Acme Field notes, home"): WCAG 2.5.3, Label in Name.
+     */
+    label?: string;
+    /** Words only a screen reader needs, after the lines: ", home". Ignored when `label` is given. */
+    hint?: string;
+  };
+
+type WordmarkImageProps = Omit<React.ComponentProps<'span'>, 'children'> &
+  WordmarkCommon & {
+    href?: undefined;
+    /** The image's name, read once: "Acme". */
+    label: string;
+    hint?: never;
+  };
+
+type WordmarkProps = WordmarkLinkProps | WordmarkImageProps;
+
+// The text of each line that is a plain string, in order, looking through fragments. A line
+// built from elements is skipped: its text is only known after render, so nothing is claimed.
+function lineTexts(children: React.ReactNode): string[] {
+  const texts: string[] = [];
+  React.Children.forEach(children, (child) => {
+    if (!React.isValidElement<{ children?: React.ReactNode }>(child)) return;
+    if (child.type === React.Fragment) {
+      texts.push(...lineTexts(child.props.children));
+    } else if (child.type === WordmarkLine) {
+      const parts = React.Children.toArray(child.props.children);
+      if (parts.every((part) => typeof part === 'string' || typeof part === 'number')) {
+        const text = parts.join('').trim();
+        if (text) texts.push(text);
+      }
+    }
+  });
+  return texts;
+}
+
+const squash = (text: string) => text.replace(/\s+/g, ' ').trim().toLowerCase();
+
+function warnIfLabelMissesLines(label: string, children: React.ReactNode) {
+  if (process.env.NODE_ENV === 'production') return;
+  const name = squash(label);
+  const missing = lineTexts(children).filter((line) => !name.includes(squash(line)));
+  if (missing.length > 0) {
+    console.warn(
+      `Wordmark: label "${label}" does not contain the visible ${missing.length === 1 ? 'line' : 'lines'} ` +
+        `${missing.map((m) => `"${m}"`).join(', ')} (WCAG 2.5.3, Label in Name). ` +
+        'Leave `label` out to name the link by its lines, or write a label that contains them.',
+    );
+  }
+}
+
+function Wordmark({ label, hint, variant = 'framed', size = 'md', href, className, children, ...props }: WordmarkProps) {
   const classes = cn(
     'group/wordmark font-heading inline-flex shrink-0 flex-col items-center leading-[1.05] whitespace-nowrap',
     VARIANT[variant],
@@ -114,14 +187,23 @@ function Wordmark({ label, variant = 'framed', size = 'md', href, className, chi
     'data-min-viewport': String(MIN_VIEWPORT),
     className: classes,
   };
-  return href ? (
-    <a href={href} aria-label={label} {...shared} {...props}>
+  if (href === undefined) {
+    return (
+      <span role="img" aria-label={label} {...shared} {...(props as React.ComponentProps<'span'>)}>
+        {children}
+      </span>
+    );
+  }
+  if (label !== undefined) warnIfLabelMissesLines(label, children);
+  return (
+    <a href={href} aria-label={label} {...shared} {...(props as React.ComponentProps<'a'>)}>
       {children}
+      {label === undefined && hint ? (
+        <span data-slot="wordmark-hint" className="sr-only">
+          {hint}
+        </span>
+      ) : null}
     </a>
-  ) : (
-    <span role="img" aria-label={label} {...shared} {...(props as React.ComponentProps<'span'>)}>
-      {children}
-    </span>
   );
 }
 
@@ -130,7 +212,9 @@ type WordmarkLineProps = React.ComponentProps<'span'> & {
   lang: string;
 };
 
-function WordmarkLine({ className, ...props }: WordmarkLineProps) {
+function WordmarkLine({ className, children, ...props }: WordmarkLineProps) {
+  // A trailing space (collapsed, so invisible) separates this line from the next in the name a
+  // browser computes and in the text axe reads, in any CSS: "ACME アクメ أكمي", not "ACMEアクメأكمي".
   return (
     <span
       data-slot="wordmark-line"
@@ -142,11 +226,13 @@ function WordmarkLine({ className, ...props }: WordmarkLineProps) {
         className,
       )}
       {...props}
-    />
+    >
+      {children}{' '}
+    </span>
   );
 }
 
 const WordmarkWithLine = Object.assign(Wordmark, { Line: WordmarkLine });
 
 export { WordmarkWithLine as Wordmark, WordmarkLine };
-export type { WordmarkProps, WordmarkLineProps };
+export type { WordmarkProps, WordmarkLinkProps, WordmarkImageProps, WordmarkLineProps };

@@ -45,3 +45,19 @@ export {
   type RoundSummaryProps,
   type RoundSummaryLabels,
 } from './games/progress';
+export { ErrorFallback, type ErrorFallbackProps } from './error-fallback';
+export { installNativeErrorHandler } from './error-handler';
+// The same error log as the web, imported not copied: one place per failure, one reporter seam.
+export {
+  reportError,
+  setReporter,
+  recentErrors,
+  restoreRecent,
+  installErrorLog,
+  formatReports,
+  type ErrorReport,
+  type ErrorStore,
+  type ErrorFallbackLabels,
+  type Reporter,
+} from '@interlace/ui/error-report';
+export { useRecentErrors } from '@interlace/ui/use-recent-errors';

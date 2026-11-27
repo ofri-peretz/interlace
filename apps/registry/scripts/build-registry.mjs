@@ -639,6 +639,32 @@ const LIB_FILES = [
     description:
       '@interlace/ui — typed, vendor-neutral user intent: activate, view, dwell, commit, disclosure and form hooks, `data-intent` for server components, rage clicks and page view/leave, all reported through one `IntentProvider` adapter. Sends nothing that identifies a person.',
   },
+  // The error-report trio: what `ErrorFallback` imports. `error-report` re-exports the model, so the
+  // model ships as its own item and is the one `@interlace/native` imports too.
+  {
+    name: 'error-report-model',
+    sourceFile: 'error-report-model.ts',
+    target: 'lib/error-report-model.ts',
+    title: 'Error report rules',
+    description:
+      '@interlace/ui — the pure rules of error reporting: a typed report, a flood counted not repeated, a redaction hook, restore from untrusted storage, text for a diagnostics screen. No DOM, no network, no storage library.',
+  },
+  {
+    name: 'error-report',
+    sourceFile: 'error-report.ts',
+    target: 'lib/error-report.ts',
+    title: 'reportError',
+    description:
+      '@interlace/ui — `reportError(error, where)`, one function every caught failure goes through, with a pluggable reporter, a device-only crash log and global handlers. Sends nothing unless you set a reporter.',
+  },
+  {
+    name: 'use-recent-errors',
+    sourceFile: 'use-recent-errors.ts',
+    target: 'hooks/use-recent-errors.ts',
+    title: 'useRecentErrors hook',
+    description:
+      '@interlace/ui — the reports kept so far, as a list that re-renders when one arrives, for a diagnostics screen.',
+  },
   {
     name: 'theme-script',
     sourceFile: 'theme-script.ts',

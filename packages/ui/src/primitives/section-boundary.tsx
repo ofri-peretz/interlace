@@ -68,7 +68,7 @@ import { Skeleton, type SkeletonVariant } from './skeleton.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
-interface SectionBoundaryProps extends React.ComponentProps<'section'> {
+interface SectionBoundaryProps extends Omit<React.ComponentProps<'section'>, 'onError'> {
   /**
    * Telemetry-grade name for this section ("article-header",
    * "registry-item-variants"). Required so error reporters / Sentry
@@ -99,6 +99,12 @@ interface SectionBoundaryProps extends React.ComponentProps<'section'> {
    * patterns, wrap children in a key-based forced remount.
    */
   error?: React.ReactNode;
+  /**
+   * Called once when a descendant throws, with the error and the section's `name`. This is where
+   * the boundary reports: `onError={(error, name) => reportError(error, `section: ${name}`)}`.
+   * The boundary does not import the error log; a reporter that throws is contained.
+   */
+  onError?: (error: Error, name: string) => void;
   children: React.ReactNode;
 }
 
@@ -107,6 +113,7 @@ function SectionBoundary({
   skeleton,
   skeletonVariant,
   error,
+  onError,
   children,
   className,
   ...props
@@ -132,7 +139,7 @@ function SectionBoundary({
       className={cn('contents', className)}
       {...props}
     >
-      <SectionErrorBoundary fallback={errorFallback} name={name}>
+      <SectionErrorBoundary fallback={errorFallback} name={name} onError={onError}>
         <React.Suspense fallback={fallback}>{children}</React.Suspense>
       </SectionErrorBoundary>
     </section>
@@ -151,6 +158,7 @@ SectionBoundary.displayName = 'SectionBoundary';
 interface SectionErrorBoundaryProps {
   fallback: React.ReactNode;
   name: string;
+  onError?: (error: Error, name: string) => void;
   children: React.ReactNode;
 }
 
@@ -179,6 +187,11 @@ class SectionErrorBoundary extends React.Component<
       error,
       info.componentStack,
     );
+    try {
+      this.props.onError?.(error, this.props.name);
+    } catch {
+      // Reporting must never become the next crash.
+    }
   }
 
   render(): React.ReactNode {
