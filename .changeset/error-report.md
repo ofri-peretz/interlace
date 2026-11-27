@@ -1,0 +1,8 @@
+---
+'@interlace/ui': minor
+'@interlace/native': minor
+---
+
+Nothing fails silently, and a crash never leaves a blank screen. `reportError(error, where)` is one function every caught failure goes through: it builds a typed report (the place you name, a message and a stack, redacted then trimmed, a count, a random id), keeps the last 25 in memory, counts a flood of the same failure in one second as one report, and hands each to a pluggable reporter. The default reporter writes one development console line and sends nothing; a crash service is one `setReporter` call, and a reporter that throws, or reports from inside itself, is contained. `installErrorLog(store)` keeps the last reports on the device in an adapter the app passes (`load` and `save`), so a problem from an earlier session can be read on a diagnostics screen (`useRecentErrors()`, `formatReports()`); a store that fails is silent by design. `installGlobalHandlers()` reports `error` and `unhandledrejection` in the browser; `installNativeErrorHandler()` does the same for React Native and then calls the platform's own handler, so a production crash still crashes. `ErrorFallback` is what a screen shows when it crashes: plain words, Try again, a way out, a short reference to quote; it reports once on mount, moves focus to its title, is announced as an alert, never shows the message or the stack, and takes the `{ error, reset }` of Next and Remix or the `{ error, retry }` of Expo Router without importing a router. `SectionBoundary` gains an optional `onError(error, name)`. No dependency, no network call, no personal data.
+
+Components: error-fallback, error-report, error-report-model, use-recent-errors, section-boundary

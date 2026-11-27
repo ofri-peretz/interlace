@@ -18,6 +18,7 @@ on:
     paths:
       - "packages/ui/src/games/**"
       - "packages/ui/src/patterns/**"
+      - "packages/ui/src/lib/**"
       - "packages/ui/__tests__/**"
       - "packages/ui/mutation/**"
       - "packages/ui/oxmutate.config.json"

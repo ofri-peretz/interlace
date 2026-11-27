@@ -3,7 +3,8 @@
   "mutate": [
     "src/games/*-model.ts",
     "src/games/daily.ts",
-    "src/patterns/*-model.ts"
+    "src/patterns/*-model.ts",
+    "src/lib/*-model.ts"
   ],
   "thresholds": { "high": 90, "low": 70, "break": 0 },
   "reporters": ["clear-text", "json", "html", "sarif"],
