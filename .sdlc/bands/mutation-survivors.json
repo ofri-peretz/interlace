@@ -108,6 +108,24 @@
       "class": "equivalent",
       "reason": "A refusal that fell through would go to JSON.stringify(slice ?? null), which is 'null', and be returned unchanged: the early return is the type checker's narrowing, not a behaviour.",
       "since": "2026-11-27"
+    },
+    {
+      "id": "ae44522571cc67f8",
+      "file": "src/patterns/account-menu-model.ts",
+      "line": 81,
+      "mutator": "ConditionalExpression",
+      "class": "equivalent",
+      "reason": "The origin check cannot fail after the whitespace, control-character and backslash rule and the single-slash start: a string of that shape resolves to the fake origin. It is defence in depth, kept in case the regular expression is ever loosened (the property test would then reach it).",
+      "since": "2026-11-27"
+    },
+    {
+      "id": "337b75577e873364",
+      "file": "src/patterns/account-menu-model.ts",
+      "line": 103,
+      "mutator": "ObjectLiteral",
+      "class": "equivalent",
+      "reason": "Intl.Segmenter's default granularity is 'grapheme', so { granularity: 'grapheme' } and {} segment alike; the option only says it out loud.",
+      "since": "2026-11-27"
     }
   ]
 }
