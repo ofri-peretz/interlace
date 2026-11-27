@@ -159,7 +159,7 @@ function TabBar({
       data-min-viewport={String(MIN_VIEWPORT)}
       aria-label={ariaLabel}
       className={cn(
-        'border-border bg-background/90 supports-backdrop-filter:bg-background/75 sticky bottom-0 z-10 border-t backdrop-blur',
+        'border-border bg-background/90 supports-backdrop-filter:bg-background/75 sticky bottom-0 z-header border-t backdrop-blur',
         'px-[max(env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] pb-[env(safe-area-inset-bottom,0px)]',
         HIDE_FROM[hideFrom],
         className,

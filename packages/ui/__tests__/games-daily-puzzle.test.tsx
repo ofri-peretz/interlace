@@ -35,6 +35,24 @@ describe('DailyPuzzle', () => {
     expect(screen.getByText('Round body')).toBeTruthy();
   });
 
+  it('sets the title at the page-title step when it is the page title, and at h3 inside a page', () => {
+    const { rerender } = render(<DailyPuzzle title="Sample game">x</DailyPuzzle>);
+    const title = () => screen.getByRole('heading', { name: 'Sample game' });
+    expect(title().className).toContain('text-h3');
+    expect(screen.getByRole('region').getAttribute('data-size')).toBe('default');
+    // A page whose whole content is the puzzle titles it like any other page.
+    rerender(
+      <DailyPuzzle title="Sample game" size="page" headingLevel={1}>
+        x
+      </DailyPuzzle>,
+    );
+    // The same step as Typography's h1, so it matches every other page's title.
+    expect(title().className).toContain('text-h1');
+    expect(title().className).toContain('tracking-display');
+    expect(title().className).not.toContain('text-h3');
+    expect(screen.getByRole('region').getAttribute('data-size')).toBe('page');
+  });
+
   it('says when today is done, with labels and a heading level', () => {
     const { container, rerender } = render(
       <DailyPuzzle

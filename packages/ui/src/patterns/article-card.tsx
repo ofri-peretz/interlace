@@ -475,7 +475,7 @@ interface BodyProps extends Omit<ArticleCardBaseProps, 'title' | 'data-testid'> 
  * scale's floor. The old `text-[10px]` was below every readable minimum.
  */
 const OVER_COVER_CHIP =
-  'absolute top-3 z-10 flex items-center gap-1 rounded-lg bg-scrim/70 px-2 py-1 text-caption font-bold tracking-wider text-scrim-foreground uppercase backdrop-blur-sm';
+  'absolute top-3 z-raised flex items-center gap-1 rounded-lg bg-scrim/70 px-2 py-1 text-caption font-bold tracking-wider text-scrim-foreground uppercase backdrop-blur-sm';
 
 /** Top-right chip used to attribute the source of the article (e.g., "Dev.to"). */
 function SourceChip({ label, testId }: { label: string; testId: string }) {
@@ -844,7 +844,7 @@ function OverlayBody({
       <FeaturedChip testId={testId} />
       {sourceLabel ? <SourceChip label={sourceLabel} testId={testId} /> : null}
 
-      <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-10">
+      <div className="absolute inset-x-0 bottom-0 z-raised p-6 md:p-10">
         {visibleTags.length > 0 ? (
           <div
             data-slot="article-card-tags"
@@ -937,7 +937,7 @@ function OverlayBody({
         </div>
       </div>
 
-      <span className="absolute top-3 end-14 z-10 opacity-0 transition-opacity group-hover:opacity-100">
+      <span className="absolute top-3 end-14 z-raised opacity-0 transition-opacity group-hover:opacity-100">
         <ExternalLink className="h-5 w-5 text-scrim-foreground drop-shadow" aria-hidden />
       </span>
     </>

@@ -115,7 +115,8 @@ describe('Citation', () => {
       </Citation>,
     );
     const button = screen.getByRole('button', { name: new RegExp(`^${long} ?, Sources`) });
-    expect(button.className).toContain('max-w-[min(24ch,100%)]');
+    // 24ch unless the consumer sets --citation-chip-max-width for longer publisher names.
+    expect(button.className).toContain('max-w-[min(var(--citation-chip-max-width,24ch),100%)]');
     const label = button.querySelector('[data-slot="citation-chip-label"]')!;
     expect(label.className).toContain('truncate');
     expect(label.textContent).toBe(long);

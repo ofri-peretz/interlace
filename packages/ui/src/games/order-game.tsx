@@ -379,7 +379,7 @@ function OrderGame({
               data-place={revealed ? (right ? 'right' : 'wrong') : undefined}
               className={cn(
                 'bg-card text-card-foreground relative flex min-h-12 items-center gap-2 rounded-lg border py-1.5 ps-1.5 pe-1.5',
-                dragging === id && 'border-primary z-10 shadow-lg',
+                dragging === id && 'border-primary z-raised shadow-lg',
                 revealed && (right ? 'border-success' : 'border-border'),
               )}
             >
