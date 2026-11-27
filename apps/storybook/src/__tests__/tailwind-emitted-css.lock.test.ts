@@ -45,7 +45,7 @@ const REQUIRED_UTILITIES = [
   // Overlay + Dialog positioning (Base UI portals)
   'fixed',
   'inset-0',
-  'z-50',
+  'z-modal',
   // Backdrop (escaped slash in CSS)
   'bg-black\\/50',
   // tw-animate-css data-state animations (Dialog / Popover / DropdownMenu)

@@ -17,7 +17,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "4.14.0",
+        "version": "4.11.1",
         "since": null
       }
     },
@@ -71,7 +71,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "5.5.2",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -89,7 +89,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "5.5.2",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -107,7 +107,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "5.5.2",
+        "version": "5.2.0",
         "since": "1.0.0"
       }
     },
@@ -145,6 +145,24 @@
         "loading": false,
         "version": "3.0.0",
         "since": "1.0.0"
+      }
+    },
+    {
+      "name": "motion-token",
+      "type": "registry:lib",
+      "title": "Motion token reader",
+      "description": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
       }
     },
     {
@@ -233,7 +251,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.1",
         "since": "1.0.0"
       }
     },
@@ -251,7 +269,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.3.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -341,7 +359,7 @@
         "client": false,
         "minViewport": null,
         "loading": true,
-        "version": "1.6.0",
+        "version": "1.3.0",
         "since": "1.0.0"
       }
     },
@@ -377,7 +395,7 @@
         "client": false,
         "minViewport": 480,
         "loading": false,
-        "version": "2.1.2",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -395,7 +413,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "3.5.0",
+        "version": "3.3.0",
         "since": "1.0.0"
       }
     },
@@ -413,7 +431,7 @@
         "client": true,
         "minViewport": null,
         "loading": true,
-        "version": "3.6.0",
+        "version": "3.4.0",
         "since": "1.0.0"
       }
     },
@@ -449,7 +467,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -467,7 +485,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.3",
+        "version": "2.1.1",
         "since": "1.0.0"
       }
     },
@@ -485,7 +503,7 @@
         "client": false,
         "minViewport": null,
         "loading": true,
-        "version": "2.3.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -503,7 +521,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.0.1",
         "since": "1.0.0"
       }
     },
@@ -521,7 +539,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.1",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -539,7 +557,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.1.1",
+        "version": "2.0.0",
         "since": "1.2.0"
       }
     },
@@ -557,7 +575,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -575,7 +593,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.2.0",
+        "version": "3.1.0",
         "since": "1.1.0"
       }
     },
@@ -593,7 +611,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.1.0",
+        "version": "3.0.0",
         "since": "1.1.0"
       }
     },
@@ -629,7 +647,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.1",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -683,7 +701,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.3.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -719,7 +737,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -737,7 +755,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.1",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -827,7 +845,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.2",
+        "version": "2.0.1",
         "since": "1.0.0"
       }
     },
@@ -845,7 +863,7 @@
         "client": true,
         "minViewport": 768,
         "loading": false,
-        "version": "2.0.1",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -863,7 +881,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.2.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -971,7 +989,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.2.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -989,7 +1007,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.1",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -1007,7 +1025,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.1",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1043,7 +1061,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": "1.0.0"
       }
     },
@@ -1061,7 +1079,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.6.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },
@@ -1097,7 +1115,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.3.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -1169,7 +1187,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -1223,7 +1241,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.5.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -1241,7 +1259,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.3.0",
+        "version": "2.2.0",
         "since": "1.0.0"
       }
     },
@@ -1277,7 +1295,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.2.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1313,7 +1331,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.1",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1331,7 +1349,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.1",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -1349,7 +1367,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -1403,7 +1421,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.1.1",
+        "version": "2.1.0",
         "since": "1.1.0"
       }
     },
@@ -1421,7 +1439,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.3.0",
+        "version": "1.1.0",
         "since": "1.0.0"
       }
     },
@@ -1439,7 +1457,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.4.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1457,7 +1475,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "1.4.0",
+        "version": "1.3.0",
         "since": "1.0.0"
       }
     },
@@ -1475,7 +1493,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "3.1.0",
+        "version": "3.0.1",
         "since": "1.0.0"
       }
     },
@@ -1529,7 +1547,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -1547,7 +1565,7 @@
         "client": true,
         "minViewport": 480,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.0.1",
         "since": "1.0.0"
       }
     },
@@ -1583,7 +1601,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "3.6.0",
+        "version": "3.4.0",
         "since": null
       }
     },
@@ -1619,7 +1637,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "2.2.0",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -1943,7 +1961,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "1.2.1",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -2195,7 +2213,7 @@
         "client": true,
         "minViewport": null,
         "loading": true,
-        "version": "3.3.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },
@@ -2267,7 +2285,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -2303,7 +2321,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.1",
+        "version": "1.2.0",
         "since": null
       }
     },
@@ -2321,7 +2339,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2339,7 +2357,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "3.1.1",
+        "version": "3.0.0",
         "since": "1.0.0"
       }
     },
@@ -2357,7 +2375,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -2411,7 +2429,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2429,7 +2447,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.3.0",
+        "version": "1.2.0",
         "since": null
       }
     },
@@ -2519,7 +2537,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2537,7 +2555,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.1",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -2555,7 +2573,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.3.1",
+        "version": "2.1.0",
         "since": "1.0.0"
       }
     },
@@ -2573,7 +2591,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -2645,7 +2663,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -2663,7 +2681,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.0.1",
+        "version": "2.0.0",
         "since": "1.2.0"
       }
     },
@@ -2681,7 +2699,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.1",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -2699,7 +2717,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.1.0",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -2735,7 +2753,7 @@
         "client": false,
         "minViewport": 480,
         "loading": true,
-        "version": "2.1.1",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -2753,7 +2771,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.2.2",
+        "version": "2.2.1",
         "since": "1.0.0"
       }
     },
@@ -2789,7 +2807,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -2843,7 +2861,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.0.1",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -2879,7 +2897,7 @@
         "client": false,
         "minViewport": null,
         "loading": false,
-        "version": "1.6.0",
+        "version": "1.3.0",
         "since": "1.0.0"
       }
     },
@@ -2969,7 +2987,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.3.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -3005,7 +3023,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "2.1.0",
+        "version": "1.1.0",
         "since": null
       }
     },
@@ -3041,7 +3059,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "3.2.0",
+        "version": "3.1.0",
         "since": "1.0.0"
       }
     },
@@ -3059,7 +3077,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "2.5.0",
+        "version": "2.3.0",
         "since": "1.0.0"
       }
     },
@@ -3131,7 +3149,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.1",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3149,7 +3167,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.2.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3203,7 +3221,7 @@
         "client": true,
         "minViewport": null,
         "loading": false,
-        "version": "2.3.0",
+        "version": "2.2.0",
         "since": null
       }
     },
@@ -3257,7 +3275,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.6.2",
+        "version": "2.6.0",
         "since": "1.0.0"
       }
     },
@@ -3293,7 +3311,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.0",
+        "version": "1.0.1",
         "since": null
       }
     },
@@ -3329,7 +3347,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3347,7 +3365,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -3365,7 +3383,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "2.2.0",
+        "version": "2.0.0",
         "since": "1.1.0"
       }
     },
@@ -3383,7 +3401,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.2.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3401,7 +3419,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "2.3.0",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -3419,7 +3437,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "2.1.0",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -3437,7 +3455,7 @@
         "client": false,
         "minViewport": null,
         "loading": true,
-        "version": "2.2.0",
+        "version": "2.0.0",
         "since": "1.2.0"
       }
     },
@@ -3455,7 +3473,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.2.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3473,7 +3491,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.5.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -3491,7 +3509,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3509,7 +3527,7 @@
         "client": false,
         "minViewport": 320,
         "loading": true,
-        "version": "1.4.0",
+        "version": "1.2.0",
         "since": "1.0.0"
       }
     },
@@ -3527,7 +3545,7 @@
         "client": true,
         "minViewport": 320,
         "loading": true,
-        "version": "2.2.0",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -3568,24 +3586,6 @@
       }
     },
     {
-      "name": "breakout-room",
-      "type": "registry:ui",
-      "title": "Breakout Room",
-      "description": "Breakouts for a live room: the host splits the room into groups with a timer, sends one message to every group, and calls everyone back; each phone shows its group, who is in it, the time left and the latest message. The rules are `games/breakout-model`…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.4.0",
-        "since": null
-      }
-    },
-    {
       "name": "closer-game",
       "type": "registry:ui",
       "title": "Closer Game",
@@ -3599,7 +3599,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3617,7 +3617,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3671,7 +3671,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3707,7 +3707,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3725,7 +3725,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.5.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3743,7 +3743,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3761,25 +3761,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
-        "since": null
-      }
-    },
-    {
-      "name": "pair-talk",
-      "type": "registry:ui",
-      "title": "Pair Talk",
-      "description": "Pair talk for a live room: the host pairs everyone (a group of three when the room is odd), each pair gets a prompt card and a timer, and \"swap partners\" pairs everyone again with someone new. Each phone shows who its partner is, the card and the time…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.4.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3797,7 +3779,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3816,24 +3798,6 @@
         "minViewport": 320,
         "loading": false,
         "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
-      "name": "presenter-notes",
-      "type": "registry:ui",
-      "title": "Presenter Notes",
-      "description": "The presenter's own view of a session: the notes for the section being presented, an agenda with the time planned and the time used for each section, a clock for the section and a gentle signal when it runs over. It is made for a second screen (a laptop…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.4.0",
         "since": null
       }
     },
@@ -3905,25 +3869,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
-        "since": null
-      }
-    },
-    {
-      "name": "room-clock",
-      "type": "registry:ui",
-      "title": "Room Clock",
-      "description": "A countdown to a host timestamp, in minutes and seconds (\"7:42\"), for the timers that run for minutes: a breakout, a round of pair talk. (`TimerRing` counts the seconds of a quiz round; a ring that says 600 is a poor way to say ten minutes.) The deadline…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.4.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3959,7 +3905,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3977,7 +3923,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -3995,7 +3941,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -4018,24 +3964,6 @@
       }
     },
     {
-      "name": "team-board",
-      "type": "registry:ui",
-      "title": "Team Board",
-      "description": "Team mode for a live room. The host sets up teams, balances them (or moves a player by hand), and everyone sees whose team they are on and how the teams score. The rules are `games/team-model`; the teams ride in the room (`RoomState.shared`), so a phone…",
-      "categories": [
-        "games",
-        "game"
-      ],
-      "meta": {
-        "tier": "game",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.4.0",
-        "since": null
-      }
-    },
-    {
       "name": "timer-ring",
       "type": "registry:ui",
       "title": "Timer Ring",
@@ -4049,7 +3977,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.1.0",
+        "version": "1.0.0",
         "since": null
       }
     },
@@ -4157,7 +4085,7 @@
         "client": false,
         "minViewport": 480,
         "loading": false,
-        "version": "2.0.2",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -4175,7 +4103,7 @@
         "client": false,
         "minViewport": 320,
         "loading": false,
-        "version": "2.0.1",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },
@@ -4265,7 +4193,7 @@
         "client": false,
         "minViewport": 480,
         "loading": false,
-        "version": "2.1.0",
+        "version": "2.0.0",
         "since": "1.0.0"
       }
     },

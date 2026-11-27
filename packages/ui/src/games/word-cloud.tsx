@@ -56,6 +56,7 @@ import * as React from 'react';
 import { FlipGroup } from '../effects/flip-group.js';
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { Input } from '../primitives/input.js';
 import { checkText, type TextRefusal, type TextRules } from './text-safety-model.js';
@@ -143,8 +144,8 @@ function WordCloud({
       );
       if (!el || typeof el.animate !== 'function') continue;
       el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(1)' }], {
-        duration: 250,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        duration: motionDuration(el, 'medium'),
+        easing: motionEase(el, 'enter'),
       });
     }
   }, [cloud.words, reduced]);

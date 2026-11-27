@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-token",
+  "type": "registry:lib",
+  "title": "Motion token reader",
+  "description": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "foundation",
+    "util"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/interlace-ui/lib/motion-token.ts",
+      "target": "lib/motion-token.ts",
+      "type": "registry:lib",
+      "content": "const EASE = {\n  enter: 'cubic-bezier(0.16, 1, 0.3, 1)',\n  exit: 'cubic-bezier(0.5, 0, 0.75, 0)',\n  move: 'cubic-bezier(0.65, 0, 0.35, 1)',\n} as const;\n\nconst DURATION = { fast: 100, base: 150, medium: 250, slow: 400 } as const;\n\nexport type MotionEase = keyof typeof EASE;\nexport type MotionDuration = keyof typeof DURATION;\n\n/** Called where an animation starts, which is always in the browser. */\nconst read = (el: Element, name: string): string => getComputedStyle(el).getPropertyValue(name).trim();\n\n/** The brand's `--ease-{name}` on `el`, for a Web Animations `easing`. */\nexport function motionEase(el: Element, name: MotionEase): string {\n  return read(el, `--ease-${name}`) || EASE[name];\n}\n\n/** The brand's `--duration-{name}` on `el`, in milliseconds. */\nexport function motionDuration(el: Element, name: MotionDuration): number {\n  const value = read(el, `--duration-${name}`);\n  const match = /^(\\d+(?:\\.\\d+)?|\\.\\d+)(ms|s)$/.exec(value);\n  if (!match) return DURATION[name];\n  return Number(match[1]) * (match[2] === 's' ? 1000 : 1);\n}\n\n/**\n * The motion tokens, read where JavaScript starts an animation.\n *\n * A Tailwind class like `ease-enter` follows the brand's `--ease-enter`, but a\n * Web Animations call takes a plain string, so a curve typed into it stays the\n * same when a brand retunes the CSS. These read the token from the element the\n * animation runs on, so the brand's value (and any value scoped to a subtree)\n * wins. The fallbacks are Interlace's defaults, used before the stylesheet\n * loads or where no token is defined.\n */\n\n// @interlace/motion-token v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/motion-token\n// What changed since: https://ds.interlace.tools/c/motion-token#history\n// Generated banner — keep it, the upgrade diff reads this version.\n"
+    }
+  ],
+  "meta": {
+    "tier": "util",
+    "client": false,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": null
+  },
+  "docs": "## @interlace/motion-token\n\nInstalled to `lib/motion-token.ts`.\n\n```tsx\nimport { /* … */ } from '@/lib/motion-token';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/motion-token"
+}

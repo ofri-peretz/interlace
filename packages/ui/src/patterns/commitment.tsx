@@ -61,13 +61,13 @@ import { Check } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { Input } from '../primitives/input.js';
 import { CHECK_IN_ANSWERS, followUpAt, type CheckInAnswer } from './commitment-model.js';
 
 export const MIN_VIEWPORT = 320 as const;
 
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 const OWN_MAX = 120;
 
 /** Moves focus to `ref` after a render that replaced the control the reader was on. */
@@ -90,7 +90,7 @@ function usePop(when: boolean, reduced: boolean) {
     armed.current = false;
     const el = ref.current;
     if (reduced || !el || typeof el.animate !== 'function') return;
-    el.animate([{ transform: 'scale(0.5)' }, { transform: 'scale(1)' }], { duration: 200, easing: EASE });
+    el.animate([{ transform: 'scale(0.5)' }, { transform: 'scale(1)' }], { duration: 200, easing: motionEase(el, 'enter') });
   }, [when, reduced]);
   return [ref, armed] as const;
 }

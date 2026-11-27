@@ -66,6 +66,7 @@ import { ArrowDown, ArrowUp, Check, GripVertical, X } from 'lucide-react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { Button } from '../primitives/button.js';
 import { dealOrder, moveItem, scoreOrder, type OrderResult, type OrderScoreOptions } from './order-model.js';
 
@@ -163,7 +164,7 @@ function useFlip(listRef: React.RefObject<HTMLOListElement | null>, order: reado
       if (Math.abs(dy) < 1) return;
       el.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], {
         duration: duration.current,
-        easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+        easing: motionEase(el, 'move'),
       });
     });
   }, [order, listRef, reduced]);
@@ -324,7 +325,7 @@ function OrderGame({
     const current = row.style.transform;
     row.style.transform = '';
     if (!reduced && current && typeof row.animate === 'function') {
-      row.animate([{ transform: current }, { transform: 'none' }], { duration: 150, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+      row.animate([{ transform: current }, { transform: 'none' }], { duration: motionDuration(row, 'base'), easing: motionEase(row, 'enter') });
     }
     const item = byId.get(d.id);
     if (item) setAnnounce(words.moved(textOf(item), draft.indexOf(d.id) + 1, draft.length));
@@ -378,7 +379,7 @@ function OrderGame({
               data-place={revealed ? (right ? 'right' : 'wrong') : undefined}
               className={cn(
                 'bg-card text-card-foreground relative flex min-h-12 items-center gap-2 rounded-lg border py-1.5 ps-1.5 pe-1.5',
-                dragging === id && 'border-primary z-10 shadow-lg',
+                dragging === id && 'border-primary z-raised shadow-lg',
                 revealed && (right ? 'border-success' : 'border-border'),
               )}
             >

@@ -540,6 +540,150 @@
       "types": "./dist/games/word-cloud.d.ts",
       "default": "./dist/games/word-cloud.js"
     },
+    "./games/question-board-model": {
+      "types": "./dist/games/question-board-model.d.ts",
+      "default": "./dist/games/question-board-model.js"
+    },
+    "./games/question-board": {
+      "types": "./dist/games/question-board.d.ts",
+      "default": "./dist/games/question-board.js"
+    },
+    "./games/reactions-model": {
+      "types": "./dist/games/reactions-model.d.ts",
+      "default": "./dist/games/reactions-model.js"
+    },
+    "./games/reactions": {
+      "types": "./dist/games/reactions.d.ts",
+      "default": "./dist/games/reactions.js"
+    },
+    "./games/spectrum-model": {
+      "types": "./dist/games/spectrum-model.d.ts",
+      "default": "./dist/games/spectrum-model.js"
+    },
+    "./games/spectrum": {
+      "types": "./dist/games/spectrum.d.ts",
+      "default": "./dist/games/spectrum.js"
+    },
+    "./games/agenda-model": {
+      "types": "./dist/games/agenda-model.d.ts",
+      "default": "./dist/games/agenda-model.js"
+    },
+    "./games/agenda": {
+      "types": "./dist/games/agenda.d.ts",
+      "default": "./dist/games/agenda.js"
+    },
+    "./games/agenda-sync-model": {
+      "types": "./dist/games/agenda-sync-model.d.ts",
+      "default": "./dist/games/agenda-sync-model.js"
+    },
+    "./games/use-agenda-sync": {
+      "types": "./dist/games/use-agenda-sync.d.ts",
+      "default": "./dist/games/use-agenda-sync.js"
+    },
+    "./games/groups-model": {
+      "types": "./dist/games/groups-model.d.ts",
+      "default": "./dist/games/groups-model.js"
+    },
+    "./games/groups": {
+      "types": "./dist/games/groups.d.ts",
+      "default": "./dist/games/groups.js"
+    },
+    "./games/rating-model": {
+      "types": "./dist/games/rating-model.d.ts",
+      "default": "./dist/games/rating-model.js"
+    },
+    "./games/rating": {
+      "types": "./dist/games/rating.d.ts",
+      "default": "./dist/games/rating.js"
+    },
+    "./games/points-model": {
+      "types": "./dist/games/points-model.d.ts",
+      "default": "./dist/games/points-model.js"
+    },
+    "./games/points-split": {
+      "types": "./dist/games/points-split.d.ts",
+      "default": "./dist/games/points-split.js"
+    },
+    "./games/ranking-model": {
+      "types": "./dist/games/ranking-model.d.ts",
+      "default": "./dist/games/ranking-model.js"
+    },
+    "./games/ranking": {
+      "types": "./dist/games/ranking.d.ts",
+      "default": "./dist/games/ranking.js"
+    },
+    "./games/text-wall": {
+      "types": "./dist/games/text-wall.d.ts",
+      "default": "./dist/games/text-wall.js"
+    },
+    "./games/quadrant-model": {
+      "types": "./dist/games/quadrant-model.d.ts",
+      "default": "./dist/games/quadrant-model.js"
+    },
+    "./games/quadrant": {
+      "types": "./dist/games/quadrant.d.ts",
+      "default": "./dist/games/quadrant.js"
+    },
+    "./games/typed-answer-model": {
+      "types": "./dist/games/typed-answer-model.d.ts",
+      "default": "./dist/games/typed-answer-model.js"
+    },
+    "./games/type-answer": {
+      "types": "./dist/games/type-answer.d.ts",
+      "default": "./dist/games/type-answer.js"
+    },
+    "./games/reflection-card": {
+      "types": "./dist/games/reflection-card.d.ts",
+      "default": "./dist/games/reflection-card.js"
+    },
+    "./games/picture-reveal-model": {
+      "types": "./dist/games/picture-reveal-model.d.ts",
+      "default": "./dist/games/picture-reveal-model.js"
+    },
+    "./games/picture-reveal": {
+      "types": "./dist/games/picture-reveal.d.ts",
+      "default": "./dist/games/picture-reveal.js"
+    },
+    "./games/room-goal-model": {
+      "types": "./dist/games/room-goal-model.d.ts",
+      "default": "./dist/games/room-goal-model.js"
+    },
+    "./games/room-goal": {
+      "types": "./dist/games/room-goal.d.ts",
+      "default": "./dist/games/room-goal.js"
+    },
+    "./games/prediction": {
+      "types": "./dist/games/prediction.d.ts",
+      "default": "./dist/games/prediction.js"
+    },
+    "./games/prediction-model": {
+      "types": "./dist/games/prediction-model.d.ts",
+      "default": "./dist/games/prediction-model.js"
+    },
+    "./games/dot-vote": {
+      "types": "./dist/games/dot-vote.d.ts",
+      "default": "./dist/games/dot-vote.js"
+    },
+    "./games/dot-vote-model": {
+      "types": "./dist/games/dot-vote-model.d.ts",
+      "default": "./dist/games/dot-vote-model.js"
+    },
+    "./games/pin-drop": {
+      "types": "./dist/games/pin-drop.d.ts",
+      "default": "./dist/games/pin-drop.js"
+    },
+    "./games/pin-drop-model": {
+      "types": "./dist/games/pin-drop-model.d.ts",
+      "default": "./dist/games/pin-drop-model.js"
+    },
+    "./games/note-board": {
+      "types": "./dist/games/note-board.d.ts",
+      "default": "./dist/games/note-board.js"
+    },
+    "./games/note-board-model": {
+      "types": "./dist/games/note-board-model.d.ts",
+      "default": "./dist/games/note-board-model.js"
+    },
     "./games/quiz-model": {
       "types": "./dist/games/quiz-model.d.ts",
       "default": "./dist/games/quiz-model.js"
@@ -627,14 +771,6 @@
     "./games/pair-talk": {
       "types": "./dist/games/pair-talk.d.ts",
       "default": "./dist/games/pair-talk.js"
-    },
-    "./games/agenda-model": {
-      "types": "./dist/games/agenda-model.d.ts",
-      "default": "./dist/games/agenda-model.js"
-    },
-    "./games/presenter-notes": {
-      "types": "./dist/games/presenter-notes.d.ts",
-      "default": "./dist/games/presenter-notes.js"
     },
     "./games/room-clock": {
       "types": "./dist/games/room-clock.d.ts",

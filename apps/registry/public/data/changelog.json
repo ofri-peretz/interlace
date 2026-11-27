@@ -862,6 +862,42 @@
           "source": ".changeset/mobile-app-shell.md"
         },
         {
+          "summary": "Animations started from script now follow the brand's `--ease-*` and `--duration-*` tokens, like the CSS does. A new `motion-token` lib item reads them from the element that moves.",
+          "components": [
+            "motion-token",
+            "calendar",
+            "time-slot-picker",
+            "multi-step-form",
+            "commitment",
+            "interest-signal",
+            "session-composer",
+            "guess-reveal",
+            "quiz-question",
+            "duel",
+            "order-game",
+            "podium",
+            "live-room",
+            "word-cloud",
+            "answer-pad",
+            "tally-bars",
+            "standings",
+            "closer-game",
+            "stagger-list",
+            "flip-group",
+            "reveal",
+            "celebrate",
+            "split-text",
+            "marker",
+            "rotating-text",
+            "draw-on"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": ".changeset/motion-script-tokens.md"
+        },
+        {
           "summary": "The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.",
           "components": [
             "interlace-base"
@@ -977,24 +1013,6 @@
           "bump": "minor",
           "migration": null,
           "source": ".changeset/room-access.md"
-        },
-        {
-          "summary": "Four ways to run a live workshop, on the room's own state and transport. `PresenterNotes` is the presenter's second screen: notes per section, an agenda with the time planned and the time used, a clock, and a gentle over-time signal said in words and spoken once (never a flash or a sound). Space, the arrows, N, P and + drive it, and can be switched off; `useAgenda` keeps one window in control and any number showing the same agenda, applies a repeated tap once and drops one made against an older screen, and `createAgendaStore` restores it after a refresh with the clock still counting. `TeamBoard`, `TeamScoreboard` and `TeamBadge` make teams, balance them fairly (sizes within one; with scores the strongest players are dealt across teams), move a player by hand with a native select, and rank teams by average so a bigger team has no edge. `BreakoutHost` and `BreakoutCard` split the room into groups with a timer, send one message to every group (spoken once, whatever order states arrive in) and recall everyone. `PairHost` and `PairCard` pair everyone (a group of three when odd), deal each pair a card, and swap partners with the fewest repeats. `RoomClock` counts a host timestamp in minutes and seconds and speaks only a minute left, ten seconds and time up.\n\n`RoomState` gains `shared`, named extras the host sets with a new `share` event, so teams, groups and pairs inherit the room's guarantees: the newest `seq` wins, a late joiner and a reconnecting phone get them with the state, and a restored host restores them. `serializeRoom`, `restoreRoom` and `createRoomStore` keep a room across the host's refresh (everyone comes back `away` and rejoins by themselves, `seq` moves ahead so phones take the saved room as the newest). `RoomTransport` and the in-memory and BroadcastChannel transports take a message type, so a presenter's windows reuse them. New tokens `--team-1` to `--team-5` (and `bg-team-N`, `border-team-N`) alias the chart palette and can be forked alone.",
-          "components": [
-            "presenter-notes",
-            "team-board",
-            "breakout-room",
-            "pair-talk",
-            "room-clock",
-            "live-room",
-            "join-code",
-            "interlace-base"
-          ],
-          "componentsDeclared": true,
-          "kind": "Added",
-          "bump": "minor",
-          "migration": null,
-          "source": ".changeset/room-facilitation.md"
         },
         {
           "summary": "Live rooms hold up on real phones. Every state the host sends carries its clock, and `useRoom`\nreturns `now`, this device's clock corrected to the host's (`clockOffset` in room-model), so a\nphone whose clock is off still counts down to the host's deadline; `TimerRing` takes `now` too.\nA player's page now says it is away on `pagehide`, asks for the room again when it is seen, and\nrejoins by itself when shown away, unless the player left on purpose (`presence: false` turns it off).\nNetworks drop messages: a player's join or answer is sent again every 3s until the host's state\nshows it (5 tries), and the host no longer broadcasts a reply to a repeated or late answer.",
@@ -1463,6 +1481,20 @@
           "bump": "patch",
           "migration": null,
           "source": ".changeset/claim-heading-font.md"
+        },
+        {
+          "summary": "Previous and next post links, the guess-reveal choices and the recall card ratings now pick their columns from their own width, not the window's, so a narrow column on a wide screen stacks them. The stat strip and prev/next skeletons use the same tracks as the real blocks, so nothing reflows when content arrives.",
+          "components": [
+            "prev-next-post",
+            "guess-reveal",
+            "recall-card",
+            "skeleton"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": ".changeset/collections-follow-container.md"
         },
         {
           "summary": "Shorter comments in the focus grid and scroller. No change to behaviour.",
