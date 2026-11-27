@@ -90,12 +90,18 @@ describe('qr-model', () => {
     }
   });
 
-  it('covers every version, with version info from 7 and the odd step of 32', () => {
-    for (const v of [1, 2, 6, 7, 14, 32, 40]) {
+  // One test per version: each encode (v40 is a 177 x 177 grid, tried under 8 masks) gets its own
+  // timeout budget, so a slow coverage-instrumented CI runner cannot add them up past the default.
+  it.each([1, 2, 6, 7, 14, 32, 40])(
+    'builds version %i (version info from 7, odd alignment step at 32)',
+    (v) => {
       const m = encodeQr('v', { minVersion: v });
       expect(m.version).toBe(v);
       expect(m.modules).toHaveLength(v * 4 + 17);
-    }
+    },
+  );
+
+  it('clamps the minimum version into 1 to 40', () => {
     expect(encodeQr('v', { minVersion: 99 }).version).toBe(40);
     expect(encodeQr('v', { minVersion: -3 }).version).toBe(1);
   });
