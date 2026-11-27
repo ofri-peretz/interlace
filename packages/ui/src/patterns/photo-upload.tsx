@@ -492,8 +492,9 @@ function PhotoUpload({
         if (!decoded) return fail('unsupported-format');
         let blob: Blob;
         let outType: PhotoMime = type;
-        let width = decoded.width;
-        let height = decoded.height;
+        // Both branches below assign these before they are read.
+        let width: number;
+        let height: number;
         let removed = stripped.removed;
         const strippedBlob = new Blob([stripped.bytes as BlobPart], { type });
         if (plan.kind === 'strip-only') {
