@@ -58,6 +58,8 @@ jobs:
           npm run mutate:ratchet:test
           npm run mutate:scope-lock
       - name: The weak test must fail the gate and name a survivor
+        # Seconds when it runs in this folder; minutes means npx climbed to packages/ui (no package.json here).
+        timeout-minutes: 3
         working-directory: packages/ui/mutation/control
         run: |
           set +e
@@ -67,6 +69,8 @@ jobs:
           test "$code" -eq 1 || { echo "the weak test exited $code, not 1: the gate did not go red"; exit 1; }
           grep -q 'Survivors' /tmp/weak.txt || { echo "the weak run named no survivor"; exit 1; }
       - name: The strong test must pass the gate
+        # Seconds when it runs in this folder; minutes means npx climbed to packages/ui (no package.json here).
+        timeout-minutes: 3
         working-directory: packages/ui/mutation/control
         run: CONTROL=strong npx oxmutate run --break 100
 
