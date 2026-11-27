@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 237
+    "itemCount": 235
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,52 +29,52 @@
   },
   "facets": {
     "tier": {
-      "primitive": 79,
-      "pattern": 66,
-      "effect": 28,
+      "primitive": 78,
+      "pattern": 65,
+      "effect": 27,
       "game": 24,
       "chart": 14,
       "template": 13,
-      "util": 7,
+      "util": 8,
       "starter": 3,
       "theme": 3
     },
     "category": {
-      "primitive": 79,
-      "pattern": 66,
+      "primitive": 78,
+      "pattern": 65,
       "blog": 37,
-      "data": 31,
-      "foundation": 28,
-      "effect": 28,
-      "form": 27,
-      "decorative": 25,
+      "data": 30,
+      "foundation": 29,
+      "effect": 27,
+      "form": 26,
       "games": 24,
       "game": 24,
+      "decorative": 24,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
       "marketing": 14,
       "template": 13,
       "overlay": 10,
-      "util": 7,
+      "util": 8,
       "a11y": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "client": 123,
-      "server": 114
+      "client": 120,
+      "server": 115
     },
     "keyboard": {
       "none": 185,
-      "handled": 52
+      "handled": 50
     },
     "loading": {
-      "none": 199,
+      "none": 197,
       "built-in": 38
     },
     "minViewport": {
-      "320": 154,
+      "320": 152,
       "480": 7,
       "768": 1,
       "inherited": 75
@@ -351,6 +351,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1572,6 +1573,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1685,70 +1687,6 @@
       "docs": "https://ds.interlace.tools/c/card"
     },
     {
-      "name": "carousel",
-      "title": "Carousel",
-      "type": "registry:ui",
-      "summary": "A row of cards the reader swipes through: today's updates, featured answers, the games to play next. On a phone it is the shape people already know from every feed; on a wide screen it shows several cards at once and two buttons page through the rest.",
-      "topics": [],
-      "categories": [
-        "data",
-        "pattern"
-      ],
-      "tier": "pattern",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": false,
-        "baseUi": null,
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [],
-      "a11y": {
-        "roles": [
-          "group"
-        ],
-        "aria": [
-          "aria-controls",
-          "aria-hidden",
-          "aria-label",
-          "aria-roledescription"
-        ],
-        "motion": {
-          "driver": "none",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "Carousel",
-        "CarouselContent",
-        "CarouselItem",
-        "CarouselNext",
-        "CarouselPrevious",
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/patterns/carousel.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/carousel.json",
-      "item": "https://ds.interlace.tools/r/carousel.json",
-      "docs": "https://ds.interlace.tools/c/carousel"
-    },
-    {
       "name": "celebrate",
       "title": "Celebrate",
       "type": "registry:ui",
@@ -1802,6 +1740,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -1919,72 +1858,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/checkbox.json",
       "item": "https://ds.interlace.tools/r/checkbox.json",
       "docs": "https://ds.interlace.tools/c/checkbox"
-    },
-    {
-      "name": "choice-card",
-      "title": "Choice Card",
-      "type": "registry:ui",
-      "summary": "Big, tappable tiles for picking: one answer to a question, the topics a reader cares about, the kind of session a group wants. A tile carries a title, an optional line of description and an optional picture or icon, and the whole tile is the control, so a…",
-      "topics": [],
-      "categories": [
-        "form",
-        "primitive"
-      ],
-      "tier": "primitive",
-      "rendering": "client",
-      "minViewport": 320,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": "checkbox",
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "ChoiceCardLayout",
-          "values": [
-            "grid",
-            "list"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [
-          "checkbox",
-          "radio"
-        ],
-        "aria": [
-          "aria-hidden",
-          "aria-invalid",
-          "aria-readonly"
-        ],
-        "motion": {
-          "driver": "css",
-          "declaresPreference": true,
-          "stylesheetCannotReach": false
-        },
-        "focusRing": true
-      },
-      "exports": [
-        "MIN_VIEWPORT"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "@base-ui/react",
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base"
-      ],
-      "installsTo": [
-        "components/ui/choice-card.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/choice-card.json",
-      "item": "https://ds.interlace.tools/r/choice-card.json",
-      "docs": "https://ds.interlace.tools/c/choice-card"
     },
     {
       "name": "choropleth-map",
@@ -2226,6 +2099,7 @@
         "cn",
         "input",
         "interlace-base",
+        "motion-token",
         "slider",
         "use-reduced-motion"
       ],
@@ -2672,6 +2546,7 @@
         "cn",
         "input",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -3846,6 +3721,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4027,6 +3903,7 @@
         "celebrate",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -4495,6 +4372,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -5034,6 +4912,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -5460,6 +5339,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6253,6 +6133,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6304,6 +6185,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6682,6 +6564,49 @@
       "docs": "https://ds.interlace.tools/c/milestones"
     },
     {
+      "name": "motion-token",
+      "title": "Motion token reader",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "topics": [],
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": null,
+      "npmDependencies": [],
+      "registryDependencies": [],
+      "installsTo": [
+        "lib/motion-token.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/motion-token.json",
+      "item": "https://ds.interlace.tools/r/motion-token.json",
+      "docs": "https://ds.interlace.tools/c/motion-token"
+    },
+    {
       "name": "multi-step-form",
       "title": "Multi Step Form",
       "type": "registry:ui",
@@ -6734,6 +6659,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -6970,6 +6896,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -7184,6 +7111,7 @@
         "celebrate",
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -7359,75 +7287,6 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/popover.json",
       "item": "https://ds.interlace.tools/r/popover.json",
       "docs": "https://ds.interlace.tools/c/popover"
-    },
-    {
-      "name": "presence",
-      "title": "Presence",
-      "type": "registry:ui",
-      "summary": "Content that arrives and leaves instead of popping in and out. `Presence` keeps a block on the page for the moment it takes to leave, so a hint, a result or a \"you got it\" note fades away rather than vanishing. `Swap` trades one piece of content for the…",
-      "topics": [],
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "tier": "effect",
-      "rendering": "client",
-      "minViewport": null,
-      "loadingState": false,
-      "keyboard": {
-        "handled": true,
-        "baseUi": "use-render",
-        "keys": [],
-        "ownHandler": false
-      },
-      "states": [
-        {
-          "name": "PresenceEffect",
-          "values": [
-            "fade",
-            "rise",
-            "scale",
-            "blur"
-          ]
-        },
-        {
-          "name": "SwapDirection",
-          "values": [
-            "forward",
-            "back"
-          ]
-        }
-      ],
-      "a11y": {
-        "roles": [],
-        "aria": [],
-        "motion": {
-          "driver": "js",
-          "declaresPreference": true,
-          "stylesheetCannotReach": true
-        },
-        "focusRing": false
-      },
-      "exports": [
-        "Presence",
-        "Swap"
-      ],
-      "version": "1.0.0",
-      "since": null,
-      "npmDependencies": [
-        "@base-ui/react"
-      ],
-      "registryDependencies": [
-        "cn",
-        "interlace-base",
-        "use-reduced-motion"
-      ],
-      "installsTo": [
-        "components/ui/effects/presence.tsx"
-      ],
-      "install": "npx shadcn@latest add https://ds.interlace.tools/r/presence.json",
-      "item": "https://ds.interlace.tools/r/presence.json",
-      "docs": "https://ds.interlace.tools/c/presence"
     },
     {
       "name": "prev-next-post",
@@ -7888,6 +7747,7 @@
         "button",
         "cn",
         "interlace-base",
+        "motion-token",
         "tally-bars",
         "timer-ring",
         "use-reduced-motion"
@@ -8567,6 +8427,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -8616,6 +8477,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -9506,6 +9368,7 @@
         "cn",
         "interlace-base",
         "meter",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -10730,6 +10593,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -10828,6 +10692,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -10942,6 +10807,7 @@
         "count-up",
         "flip-group",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -11707,6 +11573,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [
@@ -12485,6 +12352,7 @@
       "registryDependencies": [
         "cn",
         "interlace-base",
+        "motion-token",
         "radio-group",
         "use-reduced-motion"
       ],
@@ -13660,6 +13528,7 @@
         "flip-group",
         "input",
         "interlace-base",
+        "motion-token",
         "use-reduced-motion"
       ],
       "installsTo": [

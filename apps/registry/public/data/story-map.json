@@ -395,16 +395,6 @@
     "previewDark": "primitives-card--dark",
     "skeleton": "primitives-card--loading"
   },
-  "carousel": {
-    "title": "Blocks/Carousel",
-    "storyIds": [
-      "blocks-carousel--default",
-      "blocks-carousel--right-to-left"
-    ],
-    "preview": "blocks-carousel--default",
-    "previewDark": null,
-    "skeleton": null
-  },
   "celebrate": {
     "title": "Effects/Celebrate",
     "storyIds": [
@@ -445,16 +435,6 @@
     "preview": "primitives-checkbox--default",
     "previewDark": "primitives-checkbox--dark",
     "skeleton": "primitives-checkbox--loading"
-  },
-  "choice-card": {
-    "title": "Primitives/ChoiceCard",
-    "storyIds": [
-      "primitives-choicecard--default",
-      "primitives-choicecard--one-pick"
-    ],
-    "preview": "primitives-choicecard--default",
-    "previewDark": null,
-    "skeleton": null
   },
   "choropleth-map": {
     "title": "Charts/ChoroplethMap",
@@ -1740,16 +1720,6 @@
     ],
     "preview": "primitives-popover--placement",
     "previewDark": "primitives-popover--dark",
-    "skeleton": null
-  },
-  "presence": {
-    "title": "Effects/Presence",
-    "storyIds": [
-      "effects-presence--default",
-      "effects-presence--step-through"
-    ],
-    "preview": "effects-presence--default",
-    "previewDark": null,
     "skeleton": null
   },
   "prev-next-post": {

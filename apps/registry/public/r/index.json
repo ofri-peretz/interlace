@@ -148,6 +148,24 @@
       }
     },
     {
+      "name": "motion-token",
+      "type": "registry:lib",
+      "title": "Motion token reader",
+      "description": "@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.",
+      "categories": [
+        "foundation",
+        "util"
+      ],
+      "meta": {
+        "tier": "util",
+        "client": false,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": null
+      }
+    },
+    {
       "name": "theme-tokens",
       "type": "registry:lib",
       "title": "Theme token manifest",
@@ -505,24 +523,6 @@
         "loading": false,
         "version": "2.0.1",
         "since": "1.0.0"
-      }
-    },
-    {
-      "name": "choice-card",
-      "type": "registry:ui",
-      "title": "Choice Card",
-      "description": "Big, tappable tiles for picking: one answer to a question, the topics a reader cares about, the kind of session a group wants. A tile carries a title, an optional line of description and an optional picture or icon, and the whole tile is the control, so a…",
-      "categories": [
-        "form",
-        "primitive"
-      ],
-      "meta": {
-        "tier": "primitive",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
       }
     },
     {
@@ -1894,24 +1894,6 @@
       }
     },
     {
-      "name": "presence",
-      "type": "registry:ui",
-      "title": "Presence",
-      "description": "Content that arrives and leaves instead of popping in and out. `Presence` keeps a block on the page for the moment it takes to leave, so a hint, a result or a \"you got it\" note fades away rather than vanishing. `Swap` trades one piece of content for the…",
-      "categories": [
-        "decorative",
-        "effect"
-      ],
-      "meta": {
-        "tier": "effect",
-        "client": true,
-        "minViewport": null,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
-      }
-    },
-    {
       "name": "reveal",
       "type": "registry:ui",
       "title": "Reveal",
@@ -2323,24 +2305,6 @@
         "loading": false,
         "version": "2.0.0",
         "since": "1.0.0"
-      }
-    },
-    {
-      "name": "carousel",
-      "type": "registry:ui",
-      "title": "Carousel",
-      "description": "A row of cards the reader swipes through: today's updates, featured answers, the games to play next. On a phone it is the shape people already know from every feed; on a wide screen it shows several cards at once and two buttons page through the rest.",
-      "categories": [
-        "data",
-        "pattern"
-      ],
-      "meta": {
-        "tier": "pattern",
-        "client": true,
-        "minViewport": 320,
-        "loading": false,
-        "version": "1.0.0",
-        "since": null
       }
     },
     {
