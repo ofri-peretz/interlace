@@ -768,6 +768,22 @@
       "types": "./dist/patterns/hero-cosmic.d.ts",
       "default": "./dist/patterns/hero-cosmic.js"
     },
+    "./games/getting-started": {
+      "types": "./dist/games/getting-started.d.ts",
+      "default": "./dist/games/getting-started.js"
+    },
+    "./games/getting-started-model": {
+      "types": "./dist/games/getting-started-model.d.ts",
+      "default": "./dist/games/getting-started-model.js"
+    },
+    "./games/getting-started-store": {
+      "types": "./dist/games/getting-started-store.d.ts",
+      "default": "./dist/games/getting-started-store.js"
+    },
+    "./games/getting-started-burst": {
+      "types": "./dist/games/getting-started-burst.d.ts",
+      "default": "./dist/games/getting-started-burst.js"
+    },
     "./mdx/mermaid": {
       "types": "./dist/mdx/mermaid.d.ts",
       "default": "./dist/mdx/mermaid.js"
