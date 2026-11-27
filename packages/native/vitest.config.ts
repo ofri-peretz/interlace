@@ -14,7 +14,7 @@ export default defineConfig({
     coverage: {
       enabled: true,
       provider: 'v8',
-      include: ['src/{contrast,reading-prefs,scale,theme-model,tokens.generated}.ts'],
+      include: ['src/{contrast,error-handler,reading-prefs,scale,theme-model,tokens.generated}.ts'],
       thresholds: { lines: 100, statements: 100, functions: 100, branches: 100 },
       reportsDirectory: './coverage',
       reporter: ['text-summary'],

@@ -453,6 +453,24 @@
       "updated": "2026-11-22"
     },
     {
+      "name": "error-fallback",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-27"
+    },
+    {
+      "name": "error-report",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-27"
+    },
+    {
+      "name": "error-report-model",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-27"
+    },
+    {
       "name": "error-template",
       "version": "2.0.0",
       "since": "1.0.0",
@@ -1555,6 +1573,12 @@
       "version": "1.0.0",
       "since": "2.0.0",
       "updated": "2026-11-23"
+    },
+    {
+      "name": "use-recent-errors",
+      "version": "1.0.0",
+      "since": null,
+      "updated": "2026-11-27"
     },
     {
       "name": "use-reduced-motion",
