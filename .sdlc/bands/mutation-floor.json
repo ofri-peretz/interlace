@@ -32,6 +32,14 @@
       "timeouts": null,
       "ignored": null
     },
+    "src/games/check-in-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
     "src/games/closer-model.ts": {
       "floor": null,
       "mutants": null,
@@ -48,6 +56,14 @@
       "timeouts": null,
       "ignored": null
     },
+    "src/games/debate-corners-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
     "src/games/dot-vote-model.ts": {
       "floor": null,
       "mutants": null,
@@ -57,6 +73,14 @@
       "ignored": null
     },
     "src/games/duel-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/exit-ticket-model.ts": {
       "floor": null,
       "mutants": null,
       "killed": null,
@@ -265,6 +289,14 @@
       "ignored": null
     },
     "src/games/share-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/sound-cues-model.ts": {
       "floor": null,
       "mutants": null,
       "killed": null,
