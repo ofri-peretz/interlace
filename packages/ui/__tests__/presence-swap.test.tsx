@@ -91,11 +91,10 @@ describe('Presence', () => {
     expect(last().options).toEqual({ duration: 250, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
   });
 
+  // jsdom does not inherit custom properties, so the tokens sit on the block itself.
   it('reads the brand motion tokens when it plays', () => {
-    document.documentElement.style.setProperty('--duration-medium', '0.4s');
-    document.documentElement.style.setProperty('--ease-enter', 'linear');
     render(
-      <Presence show appear>
+      <Presence show appear style={{ '--duration-medium': '0.4s', '--ease-enter': 'linear' } as React.CSSProperties}>
         Tuned
       </Presence>,
     );
@@ -103,17 +102,15 @@ describe('Presence', () => {
   });
 
   it('takes a token in milliseconds, and falls back when a token is not a time', () => {
-    document.documentElement.style.setProperty('--duration-medium', '320ms');
     const first = render(
-      <Presence show appear>
+      <Presence show appear style={{ '--duration-medium': '320ms' } as React.CSSProperties}>
         Ms
       </Presence>,
     );
     expect(last().options).toMatchObject({ duration: 320 });
     first.unmount();
-    document.documentElement.style.setProperty('--duration-medium', '2em');
     render(
-      <Presence show appear>
+      <Presence show appear style={{ '--duration-medium': '2em' } as React.CSSProperties}>
         Em
       </Presence>,
     );

@@ -74,6 +74,7 @@ import { useRender } from '@base-ui/react/use-render';
 import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
+import { motionDuration, motionEase } from '../lib/motion-token.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 
 export type PresenceEffect = 'fade' | 'rise' | 'scale' | 'blur';
@@ -95,32 +96,13 @@ const HERE = {
   blur: { opacity: 1, filter: 'none' },
 } as const satisfies Record<PresenceEffect, Keyframe>;
 
-/** The token values `structure/motion.css` ships, for a page that loaded none. */
-const FALLBACK = {
-  enter: { duration: 250, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
-  exit: { duration: 150, easing: 'cubic-bezier(0.5, 0, 0.75, 0)' },
-} as const;
+type Phase = 'enter' | 'exit';
 
-type Phase = keyof typeof FALLBACK;
-
-function ms(value: string): number | undefined {
-  const v = value.trim();
-  const n = Number.parseFloat(v);
-  if (!Number.isFinite(n)) return undefined;
-  return v.endsWith('ms') ? n : v.endsWith('s') ? n * 1000 : undefined;
-}
-
-/** The brand's motion tokens as they stand when the animation starts. */
+/** The brand's motion tokens as they stand when the animation starts: arrival is slower than leaving. */
 function motionTiming(el: Element, phase: Phase): KeyframeAnimationOptions {
-  // The element's own value first (a brand can retune a subtree), then the page's.
-  const scopes = [getComputedStyle(el), getComputedStyle(el.ownerDocument.documentElement)];
-  const read = (name: string) =>
-    scopes.map((style) => style.getPropertyValue(name).trim()).find(Boolean) ?? '';
-  const duration = ms(read(phase === 'enter' ? '--duration-medium' : '--duration-base'));
-  const easing = read(phase === 'enter' ? '--ease-enter' : '--ease-exit').trim();
   return {
-    duration: duration ?? FALLBACK[phase].duration,
-    easing: easing || FALLBACK[phase].easing,
+    duration: motionDuration(el, phase === 'enter' ? 'medium' : 'base'),
+    easing: motionEase(el, phase),
   };
 }
 
@@ -131,7 +113,10 @@ function canAnimate(el: HTMLElement | null): el is HTMLElement {
 function slide(el: Element, offset: 1 | -1): [Keyframe, Keyframe] {
   const rtl = el.closest('[dir]')?.getAttribute('dir') === 'rtl';
   const x = `${(rtl ? -offset : offset) * 1.5}rem`;
-  return [{ opacity: 0, transform: `translateX(${x})` }, { opacity: 1, transform: 'none' }];
+  return [
+    { opacity: 0, transform: `translateX(${x})` },
+    { opacity: 1, transform: 'none' },
+  ];
 }
 
 /* -------------------------------------------------------------------------- */
