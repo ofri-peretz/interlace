@@ -31,14 +31,8 @@ const walk = (dir: string): string[] =>
 
 const FILES = walk(SRC);
 
-/**
- * Files that still carry `outline-none`, each with the reason. Shrinks only. The
- * wordmark is changed by open PR #283; it moves to `outline-hidden` after that
- * merges, so the two PRs do not collide.
- */
-const KNOWN: Record<string, string> = {
-  'patterns/wordmark.tsx': 'after #283 merges',
-};
+/** Files that still carry `outline-none`, each with the reason. Empty; shrinks only. */
+const KNOWN: Record<string, string> = {};
 
 /** `outline-none` in class strings, with any variant prefix, comments removed. */
 const hidden = (source: string): string[] => {

@@ -38,7 +38,7 @@ describe('Wordmark', () => {
     expect(link.getAttribute('data-variant')).toBe('framed');
     expect(link.getAttribute('data-min-viewport')).toBe(String(MIN_VIEWPORT));
     expect(link.className).toContain('focus-visible:ring-2');
-    expect(link.className).not.toContain('outline-none');
+    expect(link.className).not.toContain('outline-hidden');
     const langs = [...container.querySelectorAll('[data-slot="wordmark-line"]')].map((l) => [
       l.getAttribute('lang'),
       l.getAttribute('dir'),
@@ -69,7 +69,7 @@ describe('Wordmark', () => {
         {lines}
       </Wordmark>,
     );
-    expect(screen.getByRole('link').className).toContain('outline-none');
+    expect(screen.getByRole('link').className).toContain('focus-visible:outline-hidden');
   });
 
   it('uses the heading font stack and special-cases no language', () => {
