@@ -30,7 +30,7 @@
     "minViewport": 320,
     "loading": false,
     "version": "1.0.1",
-    "since": null
+    "since": "2.0.0"
   },
   "docs": "## @interlace/status-pills\n\nInstalled to `components/ui/patterns/status-pills.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/patterns/status-pills';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/status-pills\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
 }
