@@ -161,3 +161,8 @@ packages/*/src/**/*.d.ts
 !.claude/skills/
 # MCP server indexes, rebuilt per session by .claude/hooks (hookset)
 .codegraph/
+
+# Mutation testing runs and caches
+reports/
+**/reports/mutation/
+.oxmutate/

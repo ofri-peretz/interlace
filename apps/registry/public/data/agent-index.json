@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 260
+    "itemCount": 262
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,7 +30,7 @@
   "facets": {
     "tier": {
       "primitive": 79,
-      "pattern": 66,
+      "pattern": 68,
       "game": 46,
       "effect": 28,
       "chart": 14,
@@ -41,14 +41,14 @@
     },
     "category": {
       "primitive": 79,
-      "pattern": 66,
+      "pattern": 68,
       "games": 46,
       "game": 46,
       "blog": 37,
       "data": 31,
       "foundation": 29,
+      "form": 29,
       "effect": 28,
-      "form": 27,
       "decorative": 25,
       "navigation": 18,
       "feedback": 18,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "client": 145,
+      "client": 147,
       "server": 115
     },
     "keyboard": {
-      "none": 201,
-      "handled": 59
+      "none": 202,
+      "handled": 60
     },
     "loading": {
-      "none": 222,
+      "none": 224,
       "built-in": 38
     },
     "minViewport": {
-      "320": 176,
+      "320": 177,
       "480": 7,
       "768": 1,
-      "inherited": 76
+      "inherited": 77
     }
   },
   "items": [
@@ -7624,6 +7624,167 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/pair-talk.json",
       "item": "https://ds.interlace.tools/r/pair-talk.json",
       "docs": "https://ds.interlace.tools/c/pair-talk"
+    },
+    {
+      "name": "photo-upload-crop",
+      "title": "Photo Upload Crop",
+      "type": "registry:ui",
+      "summary": "The crop and turn dialog PhotoUpload opens for one photo. Lazy-loaded, so a form that never crops never loads it. Everything pointer-only has a keyboard twin: drag the frame or press the arrows (Shift for ten times as far), zoom with the range or `+` /…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "Enter"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "MetadataKind",
+          "values": [
+            "exif",
+            "gps",
+            "xmp",
+            "iptc",
+            "text",
+            "thumbnail"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "application"
+        ],
+        "aria": [
+          "aria-hidden",
+          "aria-label"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "DEFAULT_ACCEPT",
+        "DEFAULT_ERROR_TEXT",
+        "HEAD_BYTES",
+        "PROCESSING_DEFAULTS",
+        "PhotoUploadError"
+      ],
+      "version": "1.0.0",
+      "since": "2.1.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "dialog",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/patterns/photo-upload-crop.tsx",
+        "components/ui/patterns/photo-upload-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/photo-upload-crop.json",
+      "item": "https://ds.interlace.tools/r/photo-upload-crop.json",
+      "docs": "https://ds.interlace.tools/c/photo-upload-crop"
+    },
+    {
+      "name": "photo-upload",
+      "title": "Photo Upload",
+      "type": "registry:ui",
+      "summary": "Photos from the five places people get them (pick, drag, paste, camera), made small and clean on the device, then handed to ONE function the app provides, `onUpload`. The component never opens a connection: it has no `fetch`, no `XMLHttpRequest`, no…",
+      "topics": [],
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "MetadataKind",
+          "values": [
+            "exif",
+            "gps",
+            "xmp",
+            "iptc",
+            "text",
+            "thumbnail"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group",
+          "status"
+        ],
+        "aria": [
+          "aria-atomic",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-valuetext"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_ACCEPT",
+        "DEFAULT_ERROR_TEXT",
+        "HEAD_BYTES",
+        "MIN_VIEWPORT",
+        "PROCESSING_DEFAULTS",
+        "PhotoUploadError"
+      ],
+      "version": "1.0.0",
+      "since": "2.1.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "progress"
+      ],
+      "installsTo": [
+        "components/ui/patterns/photo-upload.tsx",
+        "components/ui/patterns/photo-upload-model.ts",
+        "components/ui/patterns/photo-upload-runtime.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/photo-upload.json",
+      "item": "https://ds.interlace.tools/r/photo-upload.json",
+      "docs": "https://ds.interlace.tools/c/photo-upload"
     },
     {
       "name": "picture-reveal",

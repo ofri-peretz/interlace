@@ -1,0 +1,25 @@
+{
+  "$comment": "What mutation testing covers: the pure models of the room and game logic. Read by oxmutate.config.json's `mutate`, by scripts/mutation-ratchet.mjs and its scope lock. A file is in at a floor or out with a written reason; the number of exclusions only falls.",
+  "include": [
+    "src/games/*-model.ts",
+    "src/games/daily.ts",
+    "src/patterns/*-model.ts"
+  ],
+  "exclude": [
+    {
+      "file": "src/charts/time-slider-model.ts",
+      "reason": "not room or game logic: primitives/ and charts/ are outside this intent's scope (docs/intents/mutation-testing-room-logic, Left out); a later scope decision per file, on evidence",
+      "decidedBy": "intent"
+    },
+    {
+      "file": "src/primitives/calendar-model.ts",
+      "reason": "not room or game logic: primitives/ and charts/ are outside this intent's scope (docs/intents/mutation-testing-room-logic, Left out); a later scope decision per file, on evidence",
+      "decidedBy": "intent"
+    },
+    {
+      "file": "src/primitives/data-state-model.ts",
+      "reason": "not room or game logic: primitives/ and charts/ are outside this intent's scope (docs/intents/mutation-testing-room-logic, Left out); a later scope decision per file, on evidence",
+      "decidedBy": "intent"
+    }
+  ]
+}

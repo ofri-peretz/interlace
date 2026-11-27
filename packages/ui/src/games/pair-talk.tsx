@@ -300,7 +300,7 @@ PairHost.displayName = 'PairHost';
 // --- PairCard -------------------------------------------------------------------
 
 export interface PairCardLabels {
-  /** Names the card. @default 'Pair talk' */
+  /** Names the card. The host's screen is 'Pair talk', so the two are distinct landmarks when a page shows both. @default 'Your pair' */
   name?: string;
   /** @default (round) => `Round ${round}` */
   round?: (round: number) => string;
@@ -353,7 +353,7 @@ function PairCard({ room, selfId, now = Date.now, labels, className, ...props }:
 
   return (
     <section
-      aria-label={L.name ?? 'Pair talk'}
+      aria-label={L.name ?? 'Your pair'}
       data-slot="pair-card"
       data-state={found && found.partners.length ? 'paired' : 'waiting'}
       data-min-viewport={String(MIN_VIEWPORT)}
