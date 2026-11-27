@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 260 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 262 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -54,17 +54,17 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 145 client, 115 server
-- keyboard: 201 none, 59 handled
-- built-in loading state: 38 of 260
-- declared minViewport: 176 at 320, 7 at 480, 1 at 768, 76 at inherited
+- rendering: 147 client, 115 server
+- keyboard: 202 none, 60 handled
+- built-in loading state: 38 of 262
+- declared minViewport: 177 at 320, 7 at 480, 1 at 768, 77 at inherited
 
 ## Taxonomy
 
 Two axes, both on every item. **Tier** is the DS layer (composition runs upward only). **Category** is intent.
 
 - tier `primitive` — 79 item(s)
-- tier `pattern` — 66 item(s)
+- tier `pattern` — 68 item(s)
 - tier `game` — 46 item(s)
 - tier `effect` — 28 item(s)
 - tier `chart` — 14 item(s)
@@ -74,14 +74,14 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - tier `theme` — 3 item(s)
 
 - category `primitive` (Primitives) — 79 item(s)
-- category `pattern` (Patterns) — 66 item(s)
+- category `pattern` (Patterns) — 68 item(s)
 - category `games` (Games) — 46 item(s)
 - category `game` (Games) — 46 item(s)
 - category `blog` (Blog & long-form) — 37 item(s)
 - category `data` (Data display) — 31 item(s)
 - category `foundation` (Foundation) — 29 item(s)
+- category `form` (Form & input) — 29 item(s)
 - category `effect` (Effects) — 28 item(s)
-- category `form` (Form & input) — 27 item(s)
 - category `decorative` (Decorative) — 25 item(s)
 - category `navigation` (Navigation) — 18 item(s)
 - category `feedback` (Feedback) — 18 item(s)
@@ -450,6 +450,12 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Page Header](https://ds.interlace.tools/c/page-header): The header band at the top of admin / docs / settings pages. Carries a breadcrumb (optional), title, optional description, and a right-aligned actions slot (typically a primary CTA + an optional menu). Renders a `<header>` landmark for screen-reader…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/page-header.json`
   - contract: server, min 480px, loading state, v2.0.0
+- [Photo Upload](https://ds.interlace.tools/c/photo-upload): Photos from the five places people get them (pick, drag, paste, camera), made small and clean on the device, then handed to ONE function the app provides, `onUpload`. The component never opens a connection: it has no `fetch`, no `XMLHttpRequest`, no…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/photo-upload.json`
+  - contract: client, min 320px, states exif|gps|xmp|iptc|text|thumbnail, v1.0.0
+- [Photo Upload Crop](https://ds.interlace.tools/c/photo-upload-crop): The crop and turn dialog PhotoUpload opens for one photo. Lazy-loaded, so a form that never crops never loads it. Everything pointer-only has a keyboard twin: drag the frame or press the arrows (Shift for ten times as far), zoom with the range or `+` /…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/photo-upload-crop.json`
+  - contract: client, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/Enter, states exif|gps|xmp|iptc|text|thumbnail, v1.0.0
 - [Prev Next Post](https://ds.interlace.tools/c/prev-next-post): Paired previous / next link cards rendered at the foot of an article. The canonical "what to read next" surface — improves session depth, reduces bounce, and gives keyboard / screen-reader users a deterministic exit ramp from long-form content. Wrapped in…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/prev-next-post.json`
   - contract: server, min 480px, loading state, v2.1.2
