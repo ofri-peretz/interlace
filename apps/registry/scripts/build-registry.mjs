@@ -494,6 +494,7 @@ const STYLE_ITEMS = [
       'structure/type.css',
       'structure/layout.css',
       'structure/radius.css',
+      'structure/layer.css',
       'structure/motion.css',
       'structure/scheme.css',
       'structure/focus.css',
@@ -501,7 +502,7 @@ const STYLE_ITEMS = [
     ],
     requires: [],
     description:
-      '@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.',
+      '@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, a named z-index layer scale, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.',
   },
   {
     name: FOUNDATION_ITEM,
@@ -598,6 +599,14 @@ const LIB_FILES = [
   // Phase 8.3. These three are what `theme-switcher.tsx` imports, so without
   // them the switcher installs with dangling relative imports — which is
   // exactly what `assertRegistryContract` reported.
+  {
+    name: 'motion-token',
+    sourceFile: 'motion-token.ts',
+    target: 'lib/motion-token.ts',
+    title: 'Motion token reader',
+    description:
+      '@interlace/ui — reads the `--ease-*` and `--duration-*` tokens from an element, so animations started from script retune with the brand like the CSS does.',
+  },
   {
     name: 'theme-tokens',
     sourceFile: 'theme-tokens.ts',

@@ -299,7 +299,7 @@ function ComboboxContent({
       <BaseCombobox.Positioner
         data-slot="combobox-positioner"
         sideOffset={sideOffset}
-        className={cn('z-50', className)}
+        className={cn('z-popover', className)}
         {...props}
       >
         <BaseCombobox.Popup

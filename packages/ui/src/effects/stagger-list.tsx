@@ -42,6 +42,7 @@ import * as React from 'react';
 
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
+import { motionEase } from '../lib/motion-token.js';
 
 const GAP = { none: 'gap-0', sm: 'gap-2', md: 'gap-4', lg: 'gap-6' } as const;
 
@@ -85,7 +86,7 @@ export function StaggerList({
           { opacity: 0, transform: 'translateY(0.5rem)' },
           { opacity: 1, transform: 'none' },
         ],
-        { duration, delay, easing: 'cubic-bezier(0.2, 0, 0, 1)', fill: 'backwards' },
+        { duration, delay, easing: motionEase(item, 'enter'), fill: 'backwards' },
       );
     };
     const onFocus = (event: FocusEvent) => {

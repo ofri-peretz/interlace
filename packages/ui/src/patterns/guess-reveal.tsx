@@ -57,6 +57,7 @@ import * as React from "react";
 
 import { cn } from "../lib/cn.js";
 import { useReducedMotion } from "../lib/use-reduced-motion.js";
+import { motionEase } from "../lib/motion-token.js";
 
 export const MIN_VIEWPORT = 320 as const;
 
@@ -158,7 +159,7 @@ function GuessReveal({
         ];
     el.animate(keyframes, {
       duration: pickedRight ? 320 : 360,
-      easing: "cubic-bezier(0.2, 0, 0, 1)",
+      easing: motionEase(el, 'enter'),
     });
   }, [answer, pickedRight, reduced]);
 
@@ -181,7 +182,7 @@ function GuessReveal({
         role="group"
         aria-labelledby={questionId}
         data-slot="guess-reveal-options"
-        className="xs:grid-cols-2 grid gap-2"
+        className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,max(13rem,calc(50%_-_0.25rem))),1fr))] gap-2"
       >
         {options.map((option) => {
           const result = !answered

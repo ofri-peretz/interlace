@@ -93,7 +93,7 @@ function AppHeader({
         data-min-viewport={String(MIN_VIEWPORT)}
         data-edge={edge}
         className={cn(
-          'group/app-header sticky top-0 z-10 border-b pt-[env(safe-area-inset-top,0px)]',
+          'group/app-header sticky top-0 z-header border-b pt-[env(safe-area-inset-top,0px)]',
           'px-[max(env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))]',
           'motion-safe:transition-[background-color,border-color] motion-safe:duration-(--duration-medium) motion-safe:ease-move',
           edge === 'always'
