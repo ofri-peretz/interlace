@@ -1,6 +1,13 @@
-# Intent: a facilitator can run a whole live workshop from the room kit
+# Intent — a facilitator can run a whole live workshop from the room kit
 
-Status: asked for by Ofri in chat (2026-11-26); built in the PR that adds this file
+**Status:** review · **Opened:** `2026-11-26`
+
+Asked for by Ofri in chat; built in the PR that adds this file.
+
+## Why now
+
+#243 landed eighteen live activities, but each is a piece on its own: nothing runs a workshop across
+teams, breakouts and pairs, and nothing keeps a second presenter screen right through a refresh.
 
 ## What is wanted
 
@@ -18,9 +25,14 @@ back, people talking in pairs. Four activities, on the room's own state and tran
    everyone.
 4. **Pair talk.** Pair players, a prompt card for each pair, swap partners, a timer.
 
-## What must hold for every one of them
+## Constraints
 
-Reconnect, a late joiner, a host that refreshes, 30+ players, a network that delays, repeats and
+Neutral (no product's name, copy or colours), packages never services, and no second implementation of
+what #243 already shipped (its `Agenda` and group dealing are used, not copied).
+
+## Success criteria
+
+For every one of them: reconnect, a late joiner, a host that refreshes, 30+ players, a network that delays, repeats and
 reorders messages, a keyboard alone, a screen reader (live regions), reduced motion. Each is a
 test, and each test was shown failing against a deliberately broken version first (the PR lists
 the breaks).
