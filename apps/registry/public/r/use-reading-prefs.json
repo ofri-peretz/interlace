@@ -27,7 +27,7 @@
     "minViewport": null,
     "loading": false,
     "version": "1.0.0",
-    "since": null
+    "since": "2.0.0"
   },
   "docs": "## @interlace/use-reading-prefs\n\nInstalled to `hooks/use-reading-prefs.ts`.\n\n```tsx\nimport { /* … */ } from '@/hooks/use-reading-prefs';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/use-reading-prefs"
 }

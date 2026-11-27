@@ -1,5 +1,1063 @@
 # @interlace/ui
 
+## 2.0.0
+
+### Major Changes
+
+- cc488ed: The stylesheets are now four layers, one directory each, and your classes always beat them. Page preflight used to sit in a custom `interlace.preflight` cascade layer, which ranks above Tailwind's utilities: `img { height: auto }` beat a call-site `h-10`, and `svg { display: block }` beat `inline`. Preflight now sits in Tailwind's `base` layer, prose and animation classes in `components`, and the three named Interlace layers hold custom properties only. A new lock (`css-layer-lock.test.ts`) keeps each layer reading only the one before it.
+
+  Components: interlace-base, interlace-foundation
+
+  Kind: Breaking
+
+  Migration: Only deep imports move; `styles/index.css` and `styles/base.css` are unchanged.
+
+  - `styles/interlace-theme.css` → `styles/brand/interlace.css` (values) and `styles/semantics.css` (bindings)
+  - `styles/themes/harbor.css` → `styles/brand/harbor.css`
+  - `styles/tokens.css` → `styles/structure/motion.css`
+  - `styles/foundation.css` → `styles/structure/type.css`, `structure/layout.css`, `structure/radius.css`
+  - `styles/fonts.css`, `styles/preflight.css` → `styles/page/fonts.css`, `styles/page/preflight.css`
+  - `styles/theme.css` → `styles/page/fumadocs.css` and `styles/page/shiki.css`
+
+  The layers `interlace.primitives`, `interlace.foundation` and `interlace.preflight` no longer exist. If you overrode one of them, move the rule into your own CSS; it no longer needs a layer to win.
+
+- 662079d: `DialogueStepper` drops its dot aliases (`DialogueStepper.Step`, `DialogueStepper.Choices`, `DialogueStepper.Choice`). Its parts were already exported flat, and the dot form throws when a server component writes it, so there is now one spelling, the one that works everywhere. The file header gains a flow map and the stories a `Journey` that walks a branch, the end of the talk, Back, the whole conversation and Start over.
+
+  Components: dialogue-stepper
+
+  Kind: Breaking
+
+  Migration: replace `DialogueStepper.Step` with `DialogueStep`, `DialogueStepper.Choices` with `DialogueChoices` and `DialogueStepper.Choice` with `DialogueChoice`, and import them from the same file as `DialogueStepper`.
+
+- 1e12b5d: Interlace's own effects replace the backdrop set that was modelled on another library. Each one is written from scratch, coloured from theme tokens, still under reduced motion, hidden from assistive tech, and self-contained (no keyframes to add to your stylesheet):
+
+  - `Starfield`: stars, shooting stars and meteors on one canvas with one frame loop that sleeps out of view.
+  - `GradientMesh`: drifting glows of theme colour behind a hero or feature band.
+  - `ThreadLines`: a seeded bundle of crossing threads in the two strand colours, with a travelling glint.
+  - `SkyBackdrop`: a daytime sky with a sun glow and drifting clouds, turning to dusk in the dark scheme.
+  - `LightBeam`: a static cone of light, rendered on the server.
+  - `RotatingText`: a rotating headline word with no layout shift and one stable label for screen readers.
+  - `FocusGrid` (pattern): picture cards where the hovered or focused one stays bright, in pure CSS.
+
+  `HeroCosmic` now draws its sky with `Starfield`. Its `effects` bag is simpler: `starDensity`, `twinkleProbability`, `shootingStars` (`[min, max]` seconds, or `false`), `meteorCount` and `meteorDuration` (`[min, max]` seconds).
+
+  Components: starfield, gradient-mesh, thread-lines, sky-backdrop, light-beam, rotating-text, focus-grid, hero-cosmic, spotlight, background-beams-with-collision, background-gradient-animation, background-lines, cloud-particles, flip-words, focus-cards, stars-background, sunny-background, meteors
+
+  Kind: Breaking
+
+  Migration: The `@interlace/ui/aceternity/*` entry points, the `meteors` primitive and their registry items are removed. Replace `StarsBackground`, `ShootingStars` and `Meteors` with one `Starfield` (`density`, `twinkle`, `shootingStars`, `meteors`, `meteorDuration`). Replace `BackgroundGradientAnimation` with `GradientMesh` (`colors`, `intensity`, `spread`), `BackgroundLines` with `ThreadLines`, `SunnyBackground` and `CloudParticles` with `SkyBackdrop`, `Spotlight` with `LightBeam`, `FlipWords` with `RotatingText` (`words`, `interval`), and `FocusCards` with `FocusGrid` and `FocusGrid.Item` (`media`, `title`, `description`, `href`). `BackgroundBeamsWithCollision` has no replacement. In `HeroCosmic`, `minTwinkleSpeed`, `maxTwinkleSpeed`, the `shooting*` speed and delay keys and `meteorMinDuration` / `meteorMaxDuration` are replaced by `shootingStars` and `meteorDuration`.
+
+- ed9596a: The last borrowed motion components are replaced with Interlace's own, written from scratch. Content that moves now renders in full on the server and is announced once; decoration is a layer you drop inside any component, so a button stays a `Button` and a card stays a `Card`:
+
+  - `CountUp`: a number that counts to its value when it scrolls into view. The server renders the final figure, the box never shifts, and `format` takes any `Intl.NumberFormat` options.
+  - `Scroller`: a looping row of items. Each item is announced and tabbed to once, a visible Pause button sits beside it, and under reduced motion it becomes a plain scrollable row.
+  - `StaggerList`: a real `ul` or `ol` whose items arrive one by one, once. Focus shows an item at once.
+  - `SheenText`: a few words painted with a slow travelling gradient, on text-grade tokens, with a forced-colours fallback.
+  - `Sheen`: a band of light that crosses its parent. Put it inside a `Button`; it sits under the label.
+  - `EdgeGlow`: a light that runs around the edge of a `Card` or any positioned element.
+  - `GridField`: graph-paper lines or a dot grid, with a few seeded (or chosen) cells that light up and fade, and with `interactive`, the cell under the pointer.
+
+  `Button` is now `relative isolate` and `Card` is `relative`, so `Sheen` and `EdgeGlow` work inside them with no extra classes.
+
+  Components: count-up, scroller, stagger-list, sheen-text, sheen, edge-glow, grid-field, button, card, number-ticker, marquee, animated-list, animated-gradient-text, shimmer-button, border-beam, animated-grid-pattern, interactive-grid-pattern, grid-pattern, dot-pattern, particles
+
+  Kind: Breaking
+
+  Migration: The `@interlace/ui/magicui/*` entry points and their registry items are removed. Replace `NumberTicker` with `CountUp` (`value`, `from`, `duration`, and `format` for decimals or compact notation), `Marquee` with `Scroller` (`direction`, `duration`, `gap`, `pauseOnHover`; children become list items), `AnimatedList` with `StaggerList` (it reveals once and does not loop), `AnimatedGradientText` with `SheenText` (`from`, `to`, `duration`), `ShimmerButton` with a `Button` that contains a `<Sheen />`, `BorderBeam` with `EdgeGlow` (`from`, `to`, `width`, `length`, `duration`), `AnimatedGridPattern`, `InteractiveGridPattern`, `GridPattern` and `DotPattern` with `GridField` (`mark="lines" | "dots"`, `cell`, `lit` or `cells`, `seed`, `fade`, `interactive`; `GridPattern`'s `squares` become `cells`), and `Particles` with `Starfield`.
+
+- 0877dfc: Interlace no longer rewrites the host app's Tailwind theme. Installing one component used to redefine `max-w-sm` (24rem became 1rem), move `sm:` from 640px to 480px, delete `2xl:` and change every `rounded-sm|md|lg`. Spacing is now Tailwind's numeric scale, which follows `--spacing`. Radius derives from `--radius` exactly as shadcn derives it. The only breakpoint Interlace declares is a new `xs:` tier at 480px, which Tailwind doesn't use. Components render pixel-for-pixel as before.
+
+  Components: accordion, alert, alert-dialog, article-card, article-list-grid, article-template, auth-template, author-byline, author-template, blog-home-template, box, breadcrumb, button, button-variants, callout, checkbox, code-block, code-editor, code-window, combobox, command-palette, container, context-menu, cta-section, dashboard-template, data-table, dialog, distribution, docs-page-template, dropdown-menu, empty-state, error-template, faq, feature-grid, figure, focus-cards, focus-ring, footer, grade-badge, grid, hero, hero-cosmic, hover-card, input, landing-template, lint-playground, metric-table, network-graph, newsletter-form, number-field, page-header, pagination, popover, prev-next-post, pricing-table, prose, radial-weave, registry-item-template, related-posts, scorecard-row, scorecard-template, section-boundary, select, settings-template, sheet, shimmer-button, skeleton, skeleton-variants, skip-link, stack, stat-card, stat-group, stat-strip, stats-template, sunny-background, tabs, tag-template, testimonial, textarea, theme, theme-switcher, theme-tokens, time-series, timeline-map, toast, toc, toggle, tooltip, topbar
+
+  Kind: Breaking
+
+  Migration: Only code you wrote against Interlace's tokens is affected. Already-installed component files keep working once you reinstall them.
+
+  1. Named spacing to numeric: `xs` → `2`, `sm` → `4`, `md` → `6`, `lg` → `10`, `xl` → `16`, `2xl` → `24` (`gap-md` → `gap-6`, `-mt-xl` → `-mt-16`). This also applies to `max-w-*`, `w-*` and `h-*` with those names, since they resolved to spacing values.
+  2. Radius, to keep the same pixels: `rounded-md` → `rounded-lg`, `rounded-lg` → `rounded-xl`, `rounded-xl` → `rounded-lg`, `rounded-2xl` → `rounded-xl`. `rounded-sm` is unchanged. To change every radius at once, set `--radius` (Interlace's default is 0.75rem).
+  3. Breakpoints: `sm:` meaning 480px → `xs:`, including `max-sm:` → `max-xs:`. `sm:`, `md:`, `lg:`, `xl:` and `2xl:` are now Tailwind's own tiers.
+  4. `var(--spacing-md)` → `--spacing(6)`, and `--interlace-radius-sm|md|lg` → `--interlace-radius` (the one base value).
+
+- cc9dd1c: Adding a component no longer restyles your app. Every component used to depend on `theme`, which swapped your `font-sans` and `font-mono` for Inter and JetBrains Mono, set `img { display: block }`, drew an outline on every focusable element and recoloured `body`. Components now depend on `interlace-base`, which only adds tokens. A test compiles a stock shadcn `globals.css` with and without it and checks the app's own utilities come out the same. The Interlace look is now opt-in: `theme` is a `registry:theme` that writes shadcn cssVars into your `:root` and `.dark`, and `interlace-foundation` carries the fonts, the page preflight and the fumadocs bridge. Interlace's `animate-accordion-down/up` no longer replace tw-animate-css's versions.
+
+  Components: interlace-base, theme, interlace-foundation
+
+  Kind: Breaking
+
+  Migration: Your `globals.css` decides how much of Interlace you get.
+
+  1. Components only, with your own look: `@import "./styles/interlace/base.css";` after `@import "tailwindcss";`. This is what the CLI installs with every component.
+  2. Add the Interlace palette and radius: `npx shadcn add @interlace/theme`. The CLI writes the variables into your `:root` and `.dark`.
+  3. Keep the full Interlace page (what `theme` gave you before): `npx shadcn add @interlace/interlace-foundation` and import `./styles/interlace/index.css` instead of `base.css`. Load Inter and JetBrains Mono yourself, as before.
+
+### Minor Changes
+
+- 1c9b80d: A running order for live sessions. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over in the warning tone and in words, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and Back, Pause, Add a minute and Next. With `shortcuts`, a presentation remote moves it on (Page Down, Page Up, arrows, `p`), except while typing. `AgendaNow` is the room's view of the same state: what is on, the time left and what comes next, with `size="stage"` for a shared screen. The state is pure and made of timestamps (`games/agenda-model`: `createAgenda`, `applyAgendaEvent`, `agendaStatus`, `formatClock`), so a refreshed tab or a late screen reads the right clock at once, and `next` and `back` name the item they move from, so an event delivered twice moves once. The bar empties in one linear transform animation; under reduced motion nothing moves.
+
+  Components: agenda
+
+- d932ef0: feat(ui): Badge gets `size="sm"` (the caption step for dense tag lists and counts) and `variant="scrim"` (a translucent face for badges over images and video). One in three Badges in the DS was re-sizing itself with `text-caption tracking-normal …`, and article-card hand-built the over-cover look with a seven-class chain; both now use the props.
+
+  Components: badge, article-card
+
+  Kind: Added
+
+- 0c57b91: Two pieces for booking pages. `Calendar`: one month of days to pick one from, as the WAI-ARIA date grid (one tab stop; arrows by a day or a week, mirrored in RTL; Home and End; Page Up and Page Down by a month, with Shift by a year). Days are plain `YYYY-MM-DD` strings, so the day a reader picks is the day a server stores in every time zone. `min` and `max` bound it, `isDateUnavailable` strikes a day through and says so, `isDateMarked` dots the days that have room, and today carries `aria-current="date"`. Names come from `Intl` in `locale`, and the week starts where the locale starts it. A new month slides in from its side, six rows always, nothing below moves. `TimeSlotPicker`: the times open on one day as tiles on Base UI's radio group, read from `HH:MM` or ISO instants in `timeZone`, with `groupBy="period"`, a loading state and words for an empty day. The date arithmetic is pure and exported from `calendar-model`, the slot hours from `patterns/time-slot-model`. Every word goes through `labels`; every motion is transform or opacity and is off under reduced motion.
+
+  Components: calendar, time-slot-picker
+
+- 4dfe49a: `MultiStepForm`: one form in a few steps with a last look before it is sent, for a booking, a sign-up or a request. Every `MultiStepFormStep` is part of one real `<form>`, kept in the page while hidden, so answers survive going back and the submit posts every field as `FormData`. Continue runs the step's native constraints and then its `validate`; the first problem takes focus and the message is read out. Done steps are buttons in the progress list, which is one line and a segmented bar in a narrow column and names every step from 32rem. `MultiStepFormSummary` lists the answers, each with a Change button back to the step that asked. Focus moves to each new step's heading ("Step 2 of 3"). The new step slides in from its side (200ms, mirrored in RTL) and is simply there under reduced motion. `useMultiStepForm` gives a step the form's state. Every word goes through `labels`.
+
+  Components: multi-step-form
+
+- d932ef0: feat(ui): `Button fullWidth` stretches to its container. It replaces `className="w-full"`, which sign-in-form, newsletter-form and consumers were passing by hand — the component API carries the intent, not a utility class.
+
+  Components: button, sign-in-form, newsletter-form
+
+  Kind: Added
+
+- abddace: Button takes `loading`. The button keeps its place, its width and keyboard focus while the reader's action runs: the label keeps its space but stops painting, a spinner sits over the middle in the label's own colour, and nothing beside it moves. It sets `aria-busy` and `aria-disabled` rather than `disabled`, so focus is not dropped to the page, and it ignores clicks (a form submit included) until `loading` is false, so a double press cannot send twice. The spinner stands still under reduced motion. LOADING_PHILOSOPHY gains a "busy button" section.
+
+  Components: button
+  Kind: Feature
+
+- d932ef0: feat(ui): Button no longer submits a form by default. A bare `<button>` is `type="submit"`, so a Cancel or "Show more" Button inside a `<form>` submitted it; the Settings template shipped exactly that bug. Button now defaults to `type="button"` (as MUI, Chakra and Primer do) and a submit action says so with `type="submit"`. A Button rendered through `render` (a link) gets no `type` unless you pass one.
+
+  Components: button
+
+  Kind: Breaking
+
+  Migration: in your copy of `button.tsx`, take `type` out of the props and pass `type: type ?? (render ? undefined : 'button')` to `useRender`. Then search your app for Buttons inside a `<form>` that submit it without a `type` and add `type="submit"` to each (e.g. `<Button>Save</Button>` → `<Button type="submit">Save</Button>`). Buttons that should not submit need no change.
+
+- 8e65d26: `Callout` gets a sixth tone, `highlight`, for the one line a page wants remembered: a highlighter wash behind the body and a highlighter rule on the left, with the body still in `text-foreground`. A new `kicker` slot puts a word or two in bold where the icon was ("In short", or a word in another script with its own `lang`). The kicker is text, so it is read before the body.
+
+  Components: callout
+  Kind: Feature
+
+- 9ea68ce: New Carousel: a row of cards the reader swipes through (updates, featured answers, what to play next). The row is the browser's own scroll with snap points, so touch, trackpad, wheel and the arrow keys all work at the device's own feel; `CarouselPrevious` and `CarouselNext` page by one view, switch off at either end and are not shown when every card fits. Every card is in the server HTML, announced as "slide, 2 of 6" in a region announced as a carousel (`positionLabel` translates it); nothing rotates on its own and nothing is cloned. Right to left, Next moves left and the arrows turn; under reduced motion a page jumps. `--carousel-item-size` and `--carousel-gap` size the cards. Part names follow shadcn's carousel.
+
+  Components: carousel
+  Kind: Feature
+
+- 6660849: New `Celebrate` effect for a moment someone earned: wrap the thing that earned it (a streak count, a score) and a ring and a burst of rays go out from it each time `play` changes, never on first render, so a restored page does not replay it. `CelebrateCheck` is a check mark that draws itself, and `vibrate` gives an opt-in matching tap (`tap`, `success`, `milestone`, `miss`) where the browser supports it. 600ms and 300ms, transform, opacity and stroke only, and nothing plays under reduced motion.
+
+  Components: celebrate
+
+- 0c23558: New `ChartFrame`: the frame a published chart sits in. A `title` that states the finding (at the `headingLevel` the page needs) and a `subtitle` on what is measured sit above any chart; the footer names every `source` (linked when it has an address), a `note` on how to read the numbers and when they were `updated`, all as plain HTML under the chart. Pass `table` and the frame offers Chart and Table views as tabs, both kept in the server HTML. `download` writes the rows as a UTF-8 CSV into a link at render time, so it works before scripts load, and prefixes cells a spreadsheet would run as a formula. Every fixed word comes from `labels`, and the date goes through `Intl` in `locale`. `toCsv` and `csvHref` are exported and pure.
+
+  Components: chart-frame
+
+- dcd3055: `ChoroplethMap` and `DotPlot` take a `labels` prop for every fixed word a reader meets: "No data", the legend and table names, the empty and hint lines, and the sentences read to screen readers. Sentences are functions, so a language can order and inflect them its own way. `describeMap` and `describeDotRow` take the same sentence function. English stays the default. In `DotPlot`'s table, a missing value now reads "No data" instead of a dash.
+
+  Components: choropleth-map, dot-plot
+
+- 9ea68ce: New ChoiceCard: big, tappable tiles for picking an answer, the topics a reader cares about or the kind of session a group wants. The whole tile is the control. `ChoiceCardGroup type="single"` is a radio group (arrow keys move the pick) and `type="multiple"` a group of checkboxes (Space toggles each); both take `value` / `onValueChange` / `defaultValue` and post with a form through `name`. Each `ChoiceCard` has a `title` (its accessible name), an optional `description` (its accessible description) and `media`. `layout="grid"` fills the row with tiles at least `--choice-card-min` wide; `layout="list"` stacks full-width rows. The pick never rests on colour alone, and a tile presses in while held except under reduced motion.
+
+  Components: choice-card
+  Kind: Feature
+
+- b7b9ceb: New `ChoroplethMap`: a value per area as shades of one colour. You pass the shapes as projected SVG paths, so Interlace ships no geography and decides no borders. Values fall into a few classes (quantile, equal or your own breaks) with a legend a reader can match; missing areas are hatched and labelled "No data", never drawn as the lowest shade. Every area is reachable by keyboard and announced with its value, and a table view carries the same numbers.
+
+  Components: choropleth-map
+
+- 5451062: feat(ui): Citation's `chip` pill caps at `--citation-chip-max-width` (default `24ch`, unchanged). A consumer whose publisher names run long, such as "Counter Extremism Project", raises it so the pill shows the whole name instead of an ellipsis one letter short. The popover still names every source in full.
+
+  Components: citation
+
+- 8e65d26: `Citation` takes `marker="chip"`: a small pill after the claim names the source ("UN", "City archive"), so the reader sees who backs a line before opening anything. The pill opens the same popover of sources and quotes. Its text defaults to the publishers, each once, joined with " · "; `chipLabel` shortens it. The visible text starts the accessible name, so voice users can say what they see.
+
+  Components: citation
+  Kind: Feature
+
+- 96d5ca2: New `Citation` pattern: an inline source marker for a sentence that makes a claim. A footnote number (or a dotted underline on the phrase itself) opens a popover listing every source behind the claim, with the publisher linked, the kind of source, and the quote as a blockquote. Several sources stack in one popover. Only `https:` URLs become links. Keyboard and touch work out of the box, Escape closes it, and the claim text is in the server HTML. An optional `status` shows "Enough sources" or a warning "Short of sources".
+
+  Components: citation
+
+  Kind: Feature
+
+- 96d5ca2: New `ClaimCard` pattern: one claim, examined. A status row for badges, the claim quoted in serif, a short answer that can carry `Citation` markers, collapsible sections for the evidence (facts and sources, who says this, where it is contested, what it does not claim, what could not be verified, or any section you name), and a footer. Every part is a slot. Sections are native `<details>`, so the card renders on the server, opens without JavaScript, and its closed sections still show up in find-in-page.
+
+  Components: claim-card
+
+  Kind: Feature
+
+- f7dfe4f: `density` on the collections: `FeatureGrid`, `PricingTable`, `ArticleListGrid` and `StatGroup` take `compact`, `default` or `relaxed`. It sets the gap between items, the section's padding and each card's padding together, so a page tightens or opens up without a custom className. `default` renders exactly as before.
+
+  Components: feature-grid, pricing-table, article-list-grid, stat-group
+
+  Kind: Feature
+
+- 2b5aa05: Grids of repeated items now pick their column count from their own width, not the screen's. FeatureGrid, StatGroup, ArticleListGrid, PricingTable, RelatedPosts and StatStrip each set a CSS container on their root: one track below 28rem, two from 28rem, and the `cols` you asked for from 56rem. A grid placed in a sidebar or a dashboard card now collapses as it would on a phone, with no `className` override. At full page width the layout is the same as before.
+
+  Components: feature-grid, stat-group, article-list-grid, pricing-table, related-posts, stat-strip
+  Kind: Changed
+
+- 96d5ca2: Four patterns for writing that shows its work, all server components:
+
+  - `StanceList`: who holds which position, each with a toned badge and a sentence. The label is text; the page picks the tone.
+  - `SideBySide`: two or three accounts next to each other ("what you hear" / "what the record shows"), stacking below `md`; each column is a labelled region.
+  - `Dialogue`: a written conversation with named speakers on opposite edges.
+  - `AudioPlayer`: a titled clip on the browser's own `<audio controls>`, with a transcript in a native `<details>`.
+
+  Components: stance-list, side-by-side, dialogue, audio-player
+
+  Kind: Feature
+
+- a7ad8bb: More contrast: an AAA reading mode on top of every theme.
+
+  Interlace is AA in every theme. For readers who find that hard to read, the base CSS now carries a more-contrast mode, which lifts every text pair to 7:1 and every line to 3:1, on any theme and in both schemes. It turns on by itself when the reader's system asks for more contrast (`prefers-contrast: more`), or when the page sets `data-contrast="more"` on `<html>` or on any region. `data-contrast="normal"` opts a page out of the automatic switch.
+
+  - Secondary text takes the full foreground.
+  - Muted, accent and secondary surfaces become a faint tint of the foreground.
+  - Primary becomes foreground on background. To keep a brand colour, re-point `--primary` inside `[data-contrast='more']` with a pair measured at 7:1.
+  - Status colours deepen until their text clears 7:1, both as text and as a filled chip.
+  - Borders and inputs darken, and the focus ring takes the foreground. With `data-contrast="more"` it becomes a 3px outline, 2px outside the element.
+
+  A new lock, `contrast-more-lock`, recomputes every pair for every theme.
+
+  Components: interlace-base
+
+  Kind: Feature
+
+- cae6c2f: Control heights are tokens now, with an opt-in comfortable density.
+
+  Button, Input, Select, Combobox, Toggle, Tabs, NumberField and ThemeSwitcher take their height from `--spacing-control-xs`, `-sm`, `--spacing-control` and `-lg`, through the new `h-control` and `size-control` utilities. The defaults are unchanged: 24, 32, 36 and 40px. Put `data-density="comfortable"` on `<html>` or on any region, and they become 32, 40, 44 and 48px, so the default control meets the 44px touch target. A brand can also re-point a single token, for example `:root { --spacing-control: 2.5rem; }`.
+
+  Components: button, input, select, combobox, toggle, tabs, number-field, theme-switcher, toolbar, pagination, skeleton
+
+  Kind: Feature
+
+- e72b888: CTASection gets `variant="card"` (a contained rounded card inside the content width), `align="start"`, a decorative `background` slot clipped to the surface, and `children` under the actions for a search box or a form. The title moves to the fluid `text-section` size and the padding to `py-section-comfortable`.
+
+  Components: cta-section
+  Kind: Feature
+
+- c2c428e: feat(ui): DailyPuzzle takes `size="page"` for a page whose content is the puzzle. The title then sits at `text-section`, the step page titles use, instead of `text-h3`, so a daily-game page no longer opens with a heading smaller than every other page's. `size="default"` is unchanged. The section carries `data-size`.
+
+  Components: daily-puzzle
+
+- 6b77704: Two pieces for telling a story with data. `TimeSlider` steps any chart through time: a play button, a slider with one stop per frame and the frame printed beside it; the chart is drawn by `children(frame, index)`, the server HTML holds the opening frame, play is started and stopped by the reader (and stops when the slider is touched), the thumb speaks the frame, and time runs right to left in an RTL page. Its pure steps (`nextFrame`, `playStart`, `clampFrame`, `formatFrame`) live in `charts/time-slider-model`. `ScrollStory` keeps a chart in view while the steps beside it scroll; `graphic(step)` redraws it when a step crosses the middle of the screen, never in proportion to scroll. Side by side from 48rem of its own box, the chart on top with the steps passing over it as cards below that, and every step in the server HTML.
+
+  Components: time-slider, scroll-story
+
+- 4865cca: Comfortable density now reaches the patterns too.
+
+  The Topbar row items, DialogueStepper's Back / Show the whole conversation / Start over, and Dialogue and DialogueStepper choices take their minimum height from `--spacing-control`, so they stay 36px by default and grow to 44px under `data-density="comfortable"`. Citation's number and chip markers keep their size in the line, and an invisible pad of the new `--spacing-target` token takes the tap: 24px by default (WCAG 2.5.8), 44px when comfortable. The underline marker is the phrase itself, inside a sentence, so it is unchanged.
+
+  Components: topbar, topbar-nav, dialogue, dialogue-stepper, citation, interlace-base
+
+  Kind: Feature
+
+- 51e6e43: New `DialogueStepper`: a `Dialogue` the reader steps through, one step of turns at a time. Each `DialogueStepper.Step` ends in `DialogueStepper.Choices`; a `Choice` reveals the step its `next` names, so a talk can branch, and choosing a step already on the path goes back to it. Back, "Show the whole conversation" and "Start over" sit below, with `labels` for another language. After a choice, focus moves to the new step's first choice (or to Back at the end) and the new turns are read out once through a polite live region; the step enters with a short fade behind `motion-safe:`. The server renders every step, and without JavaScript a `<noscript>` style shows the whole conversation with no controls.
+
+  Components: dialogue-stepper
+  Kind: Feature
+
+- 8e65d26: `Dialogue` reads as a chat transcript when you want it to. `speakers="inside"` sets each speaker's name as the first line of its bubble (one element, read once, in order). A turn's `tone` picks its bubble: `muted` and `accent` stay the defaults by side, and `inverse` is a high-contrast bubble in which a `Citation` chip flips to a light pill. New `Dialogue.Suggestions` and `Dialogue.Suggestion` give the row of follow-up pills under a transcript: a link with `href`, a button without, or your own element with `asChild`.
+
+  Components: dialogue
+  Kind: Feature
+
+- 4b97904: New `DirectionProvider` sets the reading direction once for both layout and keyboard. `dir="rtl"` alone flips the CSS but not Base UI's behaviour, so sliders kept growing to the right and ArrowRight kept moving to the next tab in Hebrew and Arabic pages. Wrap the app (or a subtree in the other direction) in `<DirectionProvider direction="rtl">` and both follow. It renders a `display: contents` wrapper with `dir`, so it never changes layout, and re-exports `useDirection` for your own components.
+
+  Components: direction
+
+- 5ba4000: `Distribution` and `NetworkGraph` can be shown in any language. `Distribution` takes `labels` (the unnamed value and reference words, the empty note, the readout's "not measured", the keyboard instructions, the table caption and empty cell, and the spoken summary) and a `locale`. `NetworkGraph` takes `labels` (the error and empty notes, the header counts, the cap buttons, the keyboard instructions, the selection hint, the table caption and headers, the "None" group, the node hover titles, the below-cap note and the spoken summary) and a `locale`. `describeDistribution` and `describeGraph` build their sentences from new `DistributionSummary` and `GraphSummary` types, with `distributionSentence` and `graphSentence` as the English defaults. English output is unchanged, except that the graph's counts now use thousands separators. `compact` documents why its suffixes stay k, M and B in every locale.
+
+  Fixed: `Distribution` no longer crashes when new, shorter data arrives while the keyboard cursor is past its end.
+
+  Components: distribution, network-graph
+
+- 7f7378b: New `DotPlot`: one dot per value on a shared axis, one row per thing compared. With two or more series a line joins each row's dots, so the line's length is the gap and its direction is the change. The axis need not start at zero, ticks are round numbers that stay text-sized at any width, and the first series is a hollow ring so series differ in shape as well as colour. Each row reads as a sentence, a legend entry picks out a series, and a table carries the same numbers.
+
+  Components: dot-plot
+
+- 1c9b80d: Brainstorm, then choose. `DotVote` gives each person a few dots to spread across a brainstorm's ideas, two on one idea if they feel strongly, then ranks the ideas as the room's dots arrive, each glide explaining a change of rank. Every button names its idea, the dots left are announced, and the viewer's own dots are named in the results. `games/dot-vote-model` makes a ballot valid (`cleanBallot`: known ideas, whole counts, a cap per idea and in all), counts what is left (`dotsLeft`), and ranks ballots keyed by person (`tallyDots`), so a ballot sent twice counts once and ties keep the ideas' order on every screen.
+
+  Components: dot-vote
+
+- 07d4fe9: New DrawOn and Marker, editorial motion for line drawings and emphasis. DrawOn wraps any inline SVG and draws its stroked shapes as it scrolls into view, one after another (`order="sequence"`) or all at once, then fades in the fills. Marker is a `<mark>` whose highlighter stroke sweeps across a phrase from the inline-start edge, in `band`, `full` or `underline` shapes and `highlight` or `primary` tones. Both render the finished result on the server, run once, and are simply there under reduced motion.
+
+  Components: draw-on, marker
+  Kind: Feature
+
+- 3c2dd5d: New Drawer: a panel that slides in from an edge and follows the finger, built on Base UI's Drawer. Drag it toward its edge to dismiss it, let go early and it settles back, flick it and it leaves faster; the scrim thins as it goes. Bottom by default, with `direction` for top, right and left, and `snapPoints` for a bottom sheet that rests at a peek and at full height. Escape, a tap outside and a close button dismiss it too, focus is trapped and returned to the trigger, the body pads for the phone's home indicator, and the open and close slides are instant under reduced motion. Same part names as shadcn's Drawer.
+
+  Components: drawer
+  Kind: Feature
+
+- 822b29f: Duel by link: two players, one game, no accounts. `DuelInvite` sends the same game to a friend (the share sheet where there is one, copy link everywhere, the link to copy by hand when the clipboard fails). `DuelCard` is what the friend sees: who challenged them and the score to beat. `DuelCompare` shows both results round by round, with a verdict in words ("You won by 50 points."), a "Won" tag, rounds won, and bars growing out from the middle; a Celebrate burst marks the viewer's win. The challenge travels in the link: `games/duel-model` encodes the game, its seed and the first player's rounds as a base64url token (`encodeDuel`, `duelHref`), and `decodeDuel` reads it back as untrusted input, capped and cleaned, null when malformed. `compareDuel` gives each round's winner, the totals and the margin, with `order: 'asc'` for games where less is better. Every word goes through `labels`; motion is transform only and off under reduced motion.
+
+  Components: duel
+
+- 06c6cd7: The editorial look is one line: `@theme { --font-heading: var(--font-serif); }` gives serif headings over the sans body. `CardTitle` now reads `font-heading` like every other heading in the kit, so card titles follow too; with the default `--font-heading` (your body face) nothing changes. `interlace-foundation` names a serif stack (Source Serif 4, then the system serifs) for `--font-serif`. A new Storybook story, Foundations/Typography/Editorial Headings, shows it.
+
+  Components: card
+  Kind: Feature
+
+- 1cc887b: FeaturedIcon: an icon in a tinted rounded square or circle with a soft outer ring, for the head of a feature card, a step or a section. Sizes `sm` to `xl`, tones `primary`, `highlight`, `neutral` and `inverse`, every surface opaque. Decorative by default; `label` makes it a named image.
+
+  Components: featured-icon
+  Kind: Feature
+
+- 9cfdea4: FlipCard: a card with a front that asks and a back that answers, turned over in 3D by a tap, a click or Enter. Both faces stay in the DOM and the card is as tall as its taller face, so a grid stays aligned. The turned-away face is inert and focus follows the turn; without JavaScript both faces show, and under reduced motion the faces cross-fade.
+
+  Components: flip-card
+  Kind: Feature
+
+- 662079d: `MultiStepForm`, `DialogueStepper` and `SocialSignIn` are now flows under the flow standard: each file's header carries a flow map (every phase, the part that shows it, and what moves it on), each part's `displayName` is the name you write, and each has a `Journey` story that walks every phase. The standard now has two shapes, because React cannot read a property of a client module from a server component: a flow only a client component can compose ships a namespace (`LiveRoom.Lobby`), and a flow a server component can compose keeps flat parts (`MultiStepFormStep`, `DialogueStep`). Their names do not change.
+
+  Components: multi-step-form, social-sign-in
+
+  Kind: Changed
+
+- 36ba657: Section padding and the h2 and h3 sizes are now fluid. They grow on one smooth curve from a 360px phone to a 1024px laptop, instead of jumping at the `md` and `lg` breakpoints.
+
+  - **New tokens:** `--spacing-section-tight`, `--spacing-section-comfortable` and `--spacing-section-spacious`. They generate `py-section-*`, which `Section`'s `spacing` prop now uses.
+    - tight: 48px to 80px
+    - comfortable: 64px to 96px
+    - spacious: 80px to 128px
+    - Each step still clears the layout floors: 40px or more on a phone, and 64px or more by 768px.
+    - A brand retunes the rhythm by re-pointing one variable, such as `:root { --spacing-section-comfortable: 5rem; }`.
+  - **Headings:**
+    - `--text-h2` runs from 24px to 30px. It was a fixed 30px.
+    - `--text-h3` runs from 22px to 24px, so it stays above h4 on a phone.
+    - h4 and smaller, and body text, stay fixed.
+    - Every clamp keeps a rem term, so sizes still scale with zoom and the user's font size.
+  - **Overlap:** the `overlap` variants on `Section` need a single `pt-0` now, not one per breakpoint.
+
+  Components: section, typography
+  Kind: Feature
+
+- 9819afc: New `CloserGame` in the games tier: guess a number by sliding to it (or typing it), lock it in, and the answer slides out from the guess to where it really is, with the gap shaded and said in words ("You said 450. The answer is 500, 50 off. Close. 90 points."). Distance is a share of the range, so the same rule works for 0 to 100 and 0 to 100,000; `range.scale = 'log'` handles answers that span orders of magnitude. Numbers go through `Intl.NumberFormat` (`format`, `locale`), every word through `labels`. `guess` / `defaultGuess` restore a stored guess as the revealed state, and `onGuess` fires once with the scored result. The answer travels in 400ms on the reveal and is simply in place under reduced motion. Scoring is pure and exported from `games/closer-model` (`scoreGuess`, `toPosition`, `fromPosition`, `snap`), so a server can score the same guess and a share card can draw the band without the number.
+
+  Components: closer-game
+
+- 6ea351e: Three more pieces in the games tier.
+
+  - `DailyPuzzle`: the frame around a daily game. Its name, today's number and date ("No. 42 · Tuesday, November 24"), progress through the rounds in words ("Round 2 of 3", announced politely), an `aside` for a compact Streak, and the round itself as children, rising in once per round. `DailyPuzzleCountdown` says "Next puzzle at midnight" in the server HTML, then the time left in the player's zone, and calls `onNextDay` when the day turns.
+  - `ShareCard`: how the player did without spoiling it, one mark per round (a band, never the answer), the score and the streak. Share opens the device's share sheet where there is one; Copy always works and falls back to a selected field. The marks are read as a sentence for assistive tech. `games/share-model` exports `shareText` and `shareMarks`, so a server can build the same text.
+  - `Leaderboard`: a group's board as a captioned table. Ties share a rank ("=2"), the viewer's row says "You" and stays visible below the top rows, and `minPlayers` holds the board back until no score stands alone. `games/leaderboard-model` exports `rankEntries` and `buildBoard`.
+
+  Components: daily-puzzle, share-card, leaderboard
+
+- 6660849: Four new pieces for daily games and live quizzes. `Poll`: one question, one tap; the options turn into the results in place, bars growing to everyone's shares, the viewer's choice named, and `minVotes` keeping small polls private. `QuizQuestion`: big answer tiles you tap or pick with keys 1 to 9, an optional `timeLimit` drawn by the new `TimerRing` (with a "Stop the clock" button that always works and never pays more than racing), and a reveal that marks the right tile, says how you did and shows how everyone answered in the new `TallyBars`. `OrderGame`: put items in order by dragging a handle, the arrow keys or up and down buttons, then watch the rows travel to their right places with each value and where you had it. Dealing and scoring are pure and exported from `games/tally-model` (`tally`, `wholePercents`: percents that sum to 100), `games/quiz-model` (`scoreAnswer`) and `games/order-model` (`dealOrder`, `scoreOrder`, `moveItem`), so a server repeats them. Every word goes through `labels`; every motion is transform or opacity and is off under reduced motion.
+
+  Components: poll, quiz-question, timer-ring, tally-bars, order-game
+
+- 825739e: A sense of progress for daily games, without nagging. Streak gains `protection`: every few days played earns a shield (up to a cap) that covers one missed day, worked out from the played days alone so every device agrees; a covered day is marked with a shield and the strip says how many are held or how far the next is. New pure models: `progress-model` (XP and levels on a gentle curve, a daily goal, goal days, milestones crossed) and `reminder-model` (a daily .ics reminder the player keeps in their own calendar).
+
+  New components: GoalRing (a meter ring for today's goal), LevelMeter (level, XP bar that fills from before a gain, the gain chip), Milestones (reached, next and a few ahead), RoundSummary (the end-of-round moment: XP counted up, goal, streak kept, news, then the next step; celebrates once) and ReminderOffer (a quiet calendar nudge that sends nothing). ShareCard takes a `note` for a milestone share and leaves out an empty marks row.
+
+  Components: streak, share-card, goal-ring, level-meter, milestones, round-summary, reminder-offer
+  Kind: Feature
+
+- 27a34e3: New `games` tier, the engine of a daily game, starting with `Streak`: a player's run of days, a sentence on where today stands ("Play today to keep your streak.") and a strip of recent days marked played, rest, missed or still open. Rest days are a setting, not a special case: `rest={{ weekdays: [6], dates: ['2026-12-25'] }}` names days that never break a run, and a rest day the player plays anyway still counts. Today never ends a run while it is still open. Each mark pairs its colour with a shape and an icon, and every day is read out with its date and state; `variant="compact"` is one chip for a header. No hooks, so it renders on the server. The arithmetic ships beside it and is exported: `games/daily` (day keys in a time zone, puzzle numbers, a seeded puzzle-of-the-day that never repeats inside a cycle, time to the next day) and `games/streak-model` (`summarizeStreak`, `streakDays`, `isRestDay`).
+
+  Components: streak
+
+- 1c9b80d: Pairs, small groups and teams from one model. `games/groups-model` splits a room into balanced groups (sizes never differ by more than one, an odd pair becomes a trio), gives the same groups for the same seed so a refreshed host and a server agree, avoids putting the same people together again (`avoid`), adds late joiners to the smallest group and takes leavers out without a reshuffle, and totals team scores by sum or mean for `Leaderboard` (`teamTotals`). `GroupCard` is the phone's view: the group's name, who you are with (read as one sentence), what to talk about and an optional TimerRing. `GroupGrid` is the shared screen: every group with its people, where a reshuffle glides each name to its new group. A new group rises in on the phone within 200ms, names following within 150ms; under reduced motion everything is in place.
+
+  Components: groups
+
+- e2e084a: GuessReveal: a one-question quiz. Two to four answers as buttons; the pick is marked right or wrong in words and with a short movement, the right answer is always shown, and an explanation opens. `onAnswer` lets the consumer record the pick. The status is a polite live region, the options stay focusable after the pick, and without JavaScript a details element holds the answer.
+
+  Components: guess-reveal
+  Kind: Feature
+
+- 96d5ca2: Three additions for content sites. A `--highlight` / `--highlight-foreground` colour pair (amber, AAA text in both schemes and in Harbor) with a `highlight` Button variant, for the warm call-to-action that is not the brand primary. Badge gains `success`, `warning`, `info` and `highlight` tones. And a `--font-heading` token: Typography h1–h6 and the hero headings read it, it falls back to `--font-body`, and `--font-body` now follows the app's own `--font-sans`, so a shadcn app's typeface reaches Interlace components with no setup. Set `--font-heading: var(--font-serif)` to give headings a serif without touching body text.
+
+  Components: button, badge, typography, hero, hero-cosmic, interlace-base, interlace-foundation, theme
+
+  Kind: Feature
+
+- e6ce81d: Motion tokens and a press, hover and overlay standard.
+
+  - New tokens in `structure/motion.css`: `--ease-enter`, `--ease-exit`, `--ease-move` (Tailwind utilities `ease-enter`, `ease-exit`, `ease-move`) and `--duration-fast` / `-base` / `-medium` / `-slow` (100 / 150 / 250 / 400ms, used as `duration-(--duration-fast)`). Override any of them on `:root` and the whole system follows.
+  - `Button` and `Toggle` answer a press: they scale to 0.97 while pressed (not under reduced motion), and time hover, focus and press with `--duration-fast`. A `link` button keeps its size.
+  - Dialog, AlertDialog, Sheet, Popover, Tooltip, DropdownMenu and ContextMenu ease in with `ease-enter` and leave faster with `ease-exit`. Sheet now opens in 250ms (was 500ms) and closes in 150ms (was 300ms).
+  - View transitions (`startViewTransition`, React `<ViewTransition>`, cross-document) take the tokens: 250ms with `ease-move`. Under reduced motion they are removed entirely, which the `*` clamp never reached. These are global rules, so they ship in `page/preflight.css` (part of `index.css`), not `base.css`.
+  - No component transitions every property any more: Switch, Accordion, Select, ArticleCard and HeroCosmic name the properties they animate.
+
+  Components: button, toggle, dialog, alert-dialog, sheet, popover, tooltip, dropdown-menu, context-menu, switch, accordion, select, article-card, hero-cosmic
+  Kind: Feature
+
+- 33d5b2e: FocusGrid and TestimonialGrid now pick their column count from their own width, not the screen's. TestimonialGrid sets a CSS container like the other collections: one quote per row below 28rem, two from 28rem, three from 56rem, so a quote card no longer squeezes to 210px on a 480px phone. FocusGrid uses intrinsic tracks with no breakpoint: a column drops when a card would fall below 16rem, 14rem or 12rem (for 2, 3 or 4 columns), and `columns` is now the most it shows. Both collapse inside a sidebar or a card with no `className` override.
+
+  Components: focus-grid, testimonial
+  Kind: Feature
+
+- 0a557aa: `Kbd` and `KbdGroup`: the shadcn core `kbd` item in Interlace tokens. `Kbd` is a native `<kbd>` with `sm` (default) and `md` sizes; `KbdGroup` nests keys inside one `<kbd>` for a chord (`⌘ K`) or a sequence (`G` then `I`). Server component.
+
+  Components: kbd
+
+  Kind: Feature
+
+- b6ab07c: Layout fixes found on a real wide-screen page:
+
+  - Timeline: in a wide column each event gets at least 13rem. More events than fit wrap onto a second row with its own rule, instead of squeezing into thin strips.
+  - Container: `prose`, `content` and `wide` read `--container-prose`, `--container-content` and `--container-wide`, the same tokens as Topbar and Footer, so retuning a token moves every edge together.
+  - Topbar: row links never wrap onto two lines, and a new `collapseBelow` prop (`md`, `lg`, `xl`; default `md`) sets the width below which the links move into the menu.
+
+  Components: timeline, container, topbar
+  Kind: Fix
+
+- 40d764d: Any element can now force the light scheme with `data-scheme="light"`, the mirror of `class="dark"`. A light panel inside a dark page gets the light palette, the light semantic colours and `color-scheme: light`, so its scrollbars and form controls match. This works for every theme, Harbor included.
+
+  Components: interlace-base
+
+- 164eda0: The line charts can be shown in any language. `TimeSeries` and `RadialWeave` take `labels` (a shared `TimeSeriesLabels` set: the unnamed-series word, the empty note, the readout's missing word, the "more not plotted" note, the keyboard instructions, the table caption, date header and empty cell, the spoken summary and the comparison's words) and a `locale` for their numbers. `Delta` takes `labels` for its empty note and spoken sentence, and a `locale`. `Sparkline` takes `summary` and `locale`. `SeriesTable` takes `noDataLabel` and `locale`. `describeSeries` builds its sentence from a new `SeriesSummary`, with `seriesSentence` as the English default, and `compact` takes a locale. English output is unchanged. `SeatChart`'s `seatsLabel` doc now says the spoken sentence has its own words.
+
+  Components: time-series, radial-weave, delta, sparkline, series-table, seat-chart
+
+- 8e65d26: New `List` primitive with markers that carry the voice of the page: `bullet`, `number` (a real `ol`, numbered by the browser in a filled circle), `check` and `cross`. Markers are drawn in CSS, so they centre on the first line whatever the item holds (rich text, inline `Citation` chips) and are never read aloud; `start` and `reversed` work as on any ordered list. `density` sets the space between items.
+
+  Components: list
+  Kind: Feature
+
+- a0eeb54: The live room is now a flow with one namespace: `LiveRoom.Lobby`, `LiveRoom.Countdown` and `LiveRoom.HostControls`, so typing `LiveRoom.` lists the whole journey and every app writes it the same way. `useRoom`, `useSecondsLeft`, the label and prop types stay flat (now `LiveRoomLobbyProps`, `LiveRoomLobbyLabels` and so on). The header carries a flow map: each phase of the room, the part that shows it on the host screen and on a phone, and the event that moves it on. The live room has not been released yet, so the flat `RoomLobby`, `RoomCountdown` and `RoomHostControls` names go without a deprecation step. The rules for flows are in `docs/philosophies/FLOW_PHILOSOPHY.md`, and a new lock test holds them.
+
+  Components: live-room
+
+- 9dbbd0e: A live room kit for game nights on one big screen and everyone's phones. `QrCode` draws a join link as one SVG path from a dependency-free encoder (`games/qr-model`: byte mode, versions 1 to 40, levels L to H), and keeps dark-on-light on a dark page so every camera reads it. `JoinCode` shows the address, a code no one misreads (`makeJoinCode`, `normalizeJoinCode`, `formatJoinCode`) spelled out for screen readers, the QR and a copy-link button. `useRoom` keeps the host and every player on the same room: the host applies events with the pure rules in `games/room-model` (no joining a locked room, one answer a round, only the host starts) and sends the state to all, over any `RoomTransport`; an in-memory hub and a BroadcastChannel transport ship, and a realtime service is a small adapter in the app. `RoomLobby` (players pop in and are announced, the host can remove one), `RoomHostControls` (start, reveal, next, podium, lock, end, moving on by itself), `RoomCountdown` (3, 2, 1, Go to a host timestamp) and `Podium` (top three rising 3rd, 2nd, 1st with a burst for the winner, everyone else below) complete it. Every word goes through `labels`; all motion is transform or opacity and off under reduced motion.
+
+  Components: qr-code, join-code, live-room, podium
+
+- 822b29f: Live rounds move. `AnswerPad` plays the reveal: the right tile lands, the tiles nobody needs step
+  back, a wrong pick gives one small nudge, and a right pick's points rise from its tile (transform
+  and opacity only; nothing moves under reduced motion). New `Standings`, the board between rounds:
+  each player's points pop in, totals count up from where they were (CountUp), then the rows glide
+  to their new places (FlipGroup) with places gained in words. An ordered list, ranks shared on ties.
+
+  Components: answer-pad, standings, live-room
+
+- 822b29f: Live rounds reach every phone. `games/room-model` gains `RoomState.prompt` and `RoomState.solution`: the host's `question` event can carry what the round asks (`prompt`) and its `reveal` the answer (`solution`), so every screen, and a player who joins mid-round, shows the same round without a second channel. Both are null in the lobby, cleared by the next question and by `restart`. `AnswerPad` is the player's side of a live round: big lettered tiles, the first pick final, "Answer in" while the host waits, then the right tile marked and the outcome in words. It never needs the right answer before the reveal, its state follows from `value`, `closed` and `correct` (so a reconnect shows the same thing), `display="keys"` shows letters only for rooms that keep the words on the big screen, and `choiceKey(i)` gives the big screen the same letters. Keys A to Z and 1 to 9 pick a tile; motion is transform only.
+
+  Components: answer-pad, live-room, join-code
+
+- 4b97904: Sheet `side` and Drawer `direction` take `start` and `end`. They follow the reading direction from `DirectionProvider`: `start` opens from the left in English and from the right in Hebrew or Arabic, with the swipe to dismiss matching.
+
+  Components: sheet, drawer
+
+- 21dc6c8: A mobile app shell. `AppShell` is the frame: a column at least `100dvh` tall with a sticky header, a `<main>` (the SkipLink target) and a sticky tab bar, nothing fixed-position, so the last line of content always clears the bar and an on-screen keyboard never drags a bar into the page. `TabBar` holds three to five links with an icon and a word; the current one (`currentHref`, which keeps a parent tab current on its child pages) gets `aria-current="page"`, a filled pill that grows in from the middle and a heavier label, and a tab can carry a count or a dot with words for assistive tech. `hideFrom` hides it where a Topbar takes over. `AppHeader` is the view's bar: back, title and actions, sticky, clear of the notch, with its surface only once content scrolls under it; `largeTitle` sets the title big and moves it into the bar on scroll, read once. `AppHeaderBack` is the back link, its arrow mirrored in RTL. Every part pads itself by `env(safe-area-inset-*)` for a page added to a home screen (`viewport-fit=cover`). Under reduced motion the pill, surface and title simply change.
+
+  Components: app-shell, app-header, app-header-edge, tab-bar
+
+- 1705983: Animations started from script now follow the brand's `--ease-*` and `--duration-*` tokens, like the CSS does. A new `motion-token` lib item reads them from the element that moves.
+
+  Components: motion-token, calendar, time-slot-picker, multi-step-form, commitment, interest-signal, session-composer, guess-reveal, quiz-question, duel, order-game, podium, live-room, word-cloud, answer-pad, tally-bars, standings, closer-game, stagger-list, flip-group, reveal, celebrate, split-text, marker, rotating-text, draw-on
+
+- 1c9b80d: A shared board of sticky notes in columns. `NoteBoard` holds a retrospective ("Keep / Change / Try"), an affinity sort or a "before / during / after" map: people post a note into a column after the room's text checks, and the room sorts notes by moving them between columns. Each note's move buttons name the column they lead to, focus stays on the note that moved, the move is announced, and the note glides to its new place. `games/note-board-model` folds posts and moves into the board (`foldBoard`), so every screen agrees whatever order events arrive in and however often one is delivered.
+
+  Components: note-board
+
+- e66f824: The brand palette is now written in `oklch()`, native controls follow the colour scheme, and the palette ships as a design-token file. Every `--interlace-*` colour was converted to the `oklch()` value that paints the same 8-bit sRGB pixel, checked in Chromium, so nothing on screen and no contrast ratio changes. A new `structure/scheme.css` sets `color-scheme` on `:root` and on `.dark` / `[data-scheme='dark']`, so scrollbars, form controls and `light-dark()` follow your theme. `ds.interlace.tools/tokens/interlace.tokens.json` carries both themes and schemes in the Design Tokens Community Group format for Figma, Tokens Studio and Style Dictionary, generated from the CSS and checked in CI.
+
+  Components: interlace-base
+
+  Migration: None. If your own code parsed `--interlace-*` values as hex, parse `oklch()` as well; the hex each value paints is in the token file.
+
+- 1c9b80d: A picture guess. `PictureReveal` hides a picture under tiles that come away a few at a time as the presenter moves `step`, in a seeded order spread across the picture, so every screen uncovers the same tiles. Tiles leaving together fade and shrink with a 150ms stagger in all; under reduced motion they are simply gone. Each step can carry a text clue, shown and announced with the tiles, so someone who cannot see the picture plays the same round; the image has no text alternative until the reveal, when it gets `alt` and the answer is said. `games/picture-reveal-model` gives the order (`revealOrder`), the tiles off per step (`tilesAt`) and points that favour an early right guess (`guessPoints`). Phones guess with `TypeAnswer`.
+
+  Components: picture-reveal
+
+- 1c9b80d: A pin on a picture. `PinDrop` lets each person place one pin on a map, floor plan or diagram by tap, drag or arrow keys, and says the pin in words (by the picture's named `regions` when given), so a screen reader user places the same pin. With an `answer` it is "Where is it?": on the reveal the answer scales in, a line joins it to the viewer's pin, and the points say how close it was; without one, the room's pins are the result. `PinMap` is the shared screen. `games/pin-drop-model` measures distance in widths of the picture, corrected for its shape (`pinDistance`), scores it (`pinPoints`), names a region (`regionOf`), moves a pin by key (`nudgePin`) and sums up the room (`pinSpread`).
+
+  Components: pin-drop
+
+- 07d4fe9: New PointerSurface and UnderlineLink, motion that answers the reader. PointerSurface wraps a card so a soft `--primary` light follows the pointer, the card leans a few degrees toward it, or both (`effect`), and keyboard focus inside lights it from the centre; it only runs on a fine pointer that can hover and is still under reduced motion. UnderlineLink is a link whose underline draws in from the inline-start edge on hover and focus, keeps a thin line at rest by default so links are not told apart by colour alone, takes a router link through `render`, and needs no JavaScript.
+
+  Components: pointer-surface, underline-link
+  Kind: Feature
+
+- 1c9b80d: Spend a budget of points across options. `PointsSplit` gives each option a minus and a plus (named per option), a bar for its share of the budget and a live count of points left; Send unlocks once the budget is spent, or earlier with `partial`. `PointsTotals` shows the room's points per option, most first, each row read as one line, gliding to its new rank. The rules are pure (`games/points-model`: `checkSplit`, `totalPoints`, `nudge`, `spentOf`); a split that breaks them is left out of the room's totals. Bars move by transform; under reduced motion they just change.
+
+  Components: points-split
+
+- 1c9b80d: Call it before it happens. `Prediction` lets each person lock in one outcome ("Who wins the next round?") and keeps the room's calls hidden until the host settles it, so every call is the person's own read. Once settled it says in words whether the viewer called it, with the points, and shows how the room called it with the outcome marked. `games/prediction-model` settles calls keyed by person (`settlePredictions`), so a duplicate or late message changes nothing and an unknown option is dropped, and `predictionPoints` can pay a call few people made up to twice as much (`reward: 'bold'`).
+
+  Components: prediction
+
+- 9ea68ce: New Presence and Swap, for content that arrives and leaves instead of popping in and out. `Presence` keeps a block on the page while it leaves (`show`, `effect` fade / rise / scale / blur, `appear`, `onExited`); `Swap` trades one version of its content for the next when `swapKey` changes (a quiz question for the next one, one step for another): the old one leaves, then the new one arrives, never both at once. `slide` moves along the reading direction and flips in a right-to-left page. Leaving content is `inert` and hidden from assistive technology, and when it held the focus, Swap hands focus to the new content. Only `opacity`, `transform` and `filter` move, timed by the brand's `--duration-*` and `--ease-*` tokens when they play; under reduced motion content simply appears and goes.
+
+  Components: presence
+  Kind: Feature
+
+- ad10dc3: Prose tables read like an editorial table instead of a Markdown grid. The cell boxes, the shaded header and the zebra rows are gone: a firm rule sits under the header, a hairline between rows, body cells keep the reading size, the first cell carries the row's weight, figures line up, and a GFM column alignment is honoured. A `<span data-status="success|warning|info|destructive|neutral">` in a cell reads as a quiet status pill whose dot repeats the word. On a phone, a table with a header row stacks into one card per row, each value under its column name, with no sideways scrolling: Prose names each body cell after its column (`data-label`, which server-rendered markup can ship itself to skip a flash) and pins the table roles a screen reader would otherwise lose.
+
+  Components: prose
+  Kind: Feature
+
+- 974e1f0: `Prose` takes a `labels` prop (`{ table, code }`) for the names it gives a table or code block that scrolls sideways, so a site in Hebrew, Arabic or any other language no longer gets English screen-reader names. Pass part of the set and the rest keep the English default. A change of labels, such as a language switch, renames blocks already marked. The per-element logic moved into small helpers; behaviour is otherwise unchanged.
+
+  Components: prose
+
+- 21dc6c8: Two more pieces for app-like pages. `PullToRefresh`: pull a list down from its top to load what is new. The pull is damped like a spring, arms at `threshold` (the arrow flips), and a spinner holds until `onRefresh` settles; "Refreshing", "Updated" or "Could not refresh" is said in a live region. It starts only at the top of the page, for one finger moving down more than across, and holds back the browser's own pull-to-refresh while it runs. The gesture always has a twin, a Refresh button, visible where the pointer is a mouse and reachable by keyboard and screen reader everywhere (`button="hidden"` when the page has its own). Under reduced motion nothing moves. `InstallPrompt` offers to add the site to the home screen only where it can work: Install opens the browser's dialog (`beforeinstallprompt`), Safari on iPhone and iPad gets the Share then Add to Home Screen steps, and nothing shows in an installed app, after an install, or for `dismissDays` after Not now. `useInstallPrompt()` gives the same state to a control of your own. Every word goes through `labels`.
+
+  Components: pull-to-refresh, install-prompt
+
+- 1c9b80d: A 2 x 2 grid: two questions at once. `Quadrant` is the phone: a square pad where the viewer places one dot by tapping, dragging or the arrow keys (Shift for fine steps, Home and End for the ends of the horizontal axis, Page Up and Page Down for the vertical), with the dot's place said in words as it changes and mirrored in right to left. Once placed, it shows the room on the same grid: where dots crowd, how many sit in each quarter, the room's middle travelling from the viewer's dot to where the room is, and an earlier round as a dashed ring; the picture is hidden from assistive tech and told in one focused sentence. `QuadrantMap` is the same picture for a shared screen. `games/quadrant-model` cleans and bins the dots (`summarizeQuadrant`), finds the leading quarter (none on a tie), measures how far the middle moved (`quadrantShift`) and moves a dot by key (`nudgePoint`).
+
+  Components: quadrant
+
+- 1c9b80d: Questions from the room, ranked by the room. `QuestionAsk` lets a phone send a question of up to `maxLength` characters (default 200) with a live counter, refuses unsafe text through `text-safety-model` with a reason, and thanks the asker differently when the room is moderated. `QuestionBoard` lists live questions, the pinned one first and marked "Answering now", with a vote toggle (`aria-pressed`, the count in its name) that is off for the viewer's own question; questions glide to their new rank when votes change and the count rises into place. `QuestionQueue` gives a moderator review, live and done lists with approve, dismiss, pin, answered and restore, each sending one event. The state is pure and exported from `games/question-board-model`: `createBoard`, `applyBoardEvent` (review → live → answered or dismissed, one vote per person, never on your own, per-person limits) and `rankQuestions` (pinned, then votes, then oldest).
+
+  Components: question-board
+
+- 1c9b80d: Rank by preference, as a room. `RankChoices` starts every phone from the same seeded order (so no item is favoured by where it was printed) and moves rows with named up and down buttons or the arrow keys, Home and End on each row's handle, announcing each move and keeping focus on the moved row; rows glide with FlipGroup. `RankResults` shows the room's order with each item's average place, read as one line per row, gliding as answers arrive. `games/ranking-model` tallies places into the room's order (`tallyRankings`, a Borda count with ties broken by first places) and says how much the room agrees with it (`roomAgreement`); a ranking that is not every item once is left out. For a round with a right order, `OrderGame` stays the tool.
+
+  Components: ranking
+
+- 1c9b80d: A scale question for a room. `Rating` lets each person pick one step (a radio group: arrow keys move, each step has a name) and send it, then shows the room's answers on the same scale with their own step in the accent, the room's average in one focused sentence, a dashed outline for an earlier round (`before`), and for a 0 to 10 scale the recommend score. `faces` swaps the numbers for icons with names, for a mood check. `minResponses` keeps the room hidden until enough have answered. The rules are pure (`games/rating-model`: `summarizeRatings`, `ratingShift`, `ratingSteps`, `cleanRatings`) and drop answers off the scale. The bars grow from the baseline in 250ms; under reduced motion the chart is simply there.
+
+  Components: rating
+
+- 1c9b80d: The room's pulse while someone talks. `ReactionBar` gives a phone one round button per reaction kind (a neutral `DEFAULT_REACTIONS` set: love it, agree, funny, new to me, lost me; pass your own `kinds`), each popping on tap. `ReactionStream` lets every new reaction float up a shared screen with a slight drift and fade (1.6s, Web Animations, at most `maxFloating` at once, nothing on first load), and keeps a per-kind tally that screen readers read and that is the whole view under reduced motion. `RaiseHand` is a toggle that says the person's place in line and when it is their turn; `HandQueue` gives the host the line in order with call next, call on a named person, lower a hand and done. The rules are pure in `games/reactions-model`: `allowReaction` (a sliding per-person budget, 6 in 3 seconds by default), `tallyReactions`, and `createHands` / `applyHandEvent` / `placeInLine` (first raised, first called; lowering and raising again goes to the back).
+
+  Components: reactions
+
+- 35c2cc9: New `ReadingLayout`: a long read with its table of contents. When the layout is at least 56rem wide, a `Toc` rail sits beside the text and stays in view (it scrolls on its own when taller than the screen). Narrower, the contents fold into an "On this page" `TocPopover` on a bar that sticks to the top of the column. The switch is a container query on the layout's own width, so it folds inside a narrow column or beside a sidebar with no prop. A page with a sticky header sets `--reading-offset` to the header's height, and the rail, the bar and every heading jump clear it.
+
+  Components: reading-layout
+  Kind: Feature
+
+- cb53b41: Reading settings for the reader: a text size control and a More contrast toggle.
+
+  `TextSizeControl` is a labelled group of three buttons: smaller, the current size (which resets), and larger. It sets the root font size to 100, 112, 125 or 150% of the browser's own default through `data-text-size` on `<html>`, so type, spacing, control heights and containers all grow together and the layout holds. At the ends the buttons stay focusable, so a keyboard user is never dropped to the top of the page.
+
+  `ContrastToggle` turns More contrast on or off. Off stores an explicit `normal`, which also overrides `prefers-contrast: more`.
+
+  `useReadingPrefs` is the hook behind both: it persists the choices, keeps every control in the document and every open tab in step, and follows the OS when nothing is stored. `THEME_SCRIPT` now restores both choices before first paint, so a returning reader never sees the page reflow. Every word in both controls is a prop.
+
+  Components: reading-settings, use-reading-prefs, theme-script, interlace-base
+
+  Kind: Feature
+
+- d592fe9: RecallCard: a prompt the player answers in their head, then checks. Reveal opens the answer and moves focus to it; the ratings ("I had it", "Not yet", or your own two to four) appear only then, pressed and said in words. Controlled or uncontrolled; a details element holds the answer without JavaScript.
+
+  UpdateFeed: what is new, newest first, grouped by day or month under real time headings, each entry with a kind, a linked title and a line on what it is. Pass `since` and the entries after it are tagged "New" with a one-line count; a first visit marks nothing. Container-query layout, a `renderLink` seam for routers, and a pure model (`update-feed-model`) that sorts, groups and counts new entries for a badge.
+
+  Components: recall-card, update-feed
+  Kind: Feature
+
+- 1c9b80d: A quiet minute in a loud room. `ReflectionCard` asks one prompt and keeps the answer private by default, saying so under the field. When the session allows it (`shareable`), the writer can tick to share it with the room without their name; only then is it checked like other room text (links, contact details, the blocklist), and a reflection that cannot be shared is still saved, with the reason said in words. With `Rating` before it, it makes an exit ticket.
+
+  Components: reflection-card
+
+- b8e6cd9: New Reveal: any block arrives as it scrolls into view, once. `effect` picks how: `rise` (default) lifts it a line, `fade` fades it where it stands, `blur` brings it into focus, and `scale` grows it to size. `delay` sequences siblings and `amount` sets how much must be visible first. The content is in the server HTML, focus inside shows it at once, and under reduced motion it is simply there.
+
+  Components: reveal
+  Kind: Feature
+
+- d898eed: Live rooms close the door on time and on guessers. `createRoom` takes `codeExpiresAt`: after it, the room refuses new players with `expired` while anyone already in can still reconnect, and the host moves it with an `extend-code` event. `useRoom` now stamps each join with the host's clock, like answers, so a phone cannot beat the expiry by setting its clock back, and a join that arrives unstamped while the room has an expiry is refused. `checkJoinAttempt` / `recordJoinAttempt` (games/room-model) cap wrong codes per source (5) and per room (30) in a sliding window (10 minutes), so a six-character code cannot be guessed while a person who mistyped is never stopped. `JoinCode` takes `expiresAt` and says how many minutes the code still works; once it has expired the QR goes, the code is struck through and the change is announced.
+
+  Components: live-room, join-code
+
+- 5e1b7e9: Ways to run a live workshop, on the room's own state and transport. `useAgendaSync` keeps the existing `Agenda` and `AgendaNow` right across a presenter's windows: one window controls, any number show it over a `RoomTransport<AgendaMessage>`, a repeated tap is applied once, one made against an older screen is dropped and that screen is brought up to date, the controlling window's clock times everything (`Agenda` and `AgendaNow` gain an optional `now`), and `createAgendaStore` restores the agenda after a refresh with the clock still counting. `TeamBoard`, `TeamScoreboard` and `TeamBadge` make teams, balance them fairly (sizes within one; with scores the strongest players are dealt across teams), move a player by hand with a native select, and rank teams by average so a bigger team has no edge. `BreakoutHost` and `BreakoutCard` split the room into groups with a timer, send one message to every group (spoken once, whatever order states arrive in) and recall everyone. `PairHost` and `PairCard` pair everyone (a group of three when odd), deal each pair a card, and swap partners with the fewest repeats. `RoomClock` counts a host timestamp in minutes and seconds and speaks only a minute left, ten seconds and time up.
+
+  `RoomState` gains `shared`, named extras the host sets with a new `share` event, so teams, groups and pairs inherit the room's guarantees: the newest `seq` wins, a late joiner and a reconnecting phone get them with the state, and a restored host restores them. `serializeRoom`, `restoreRoom` and `createRoomStore` keep a room across the host's refresh (everyone comes back `away` and rejoins by themselves, `seq` moves ahead so phones take the saved room as the newest). `RoomTransport` and the in-memory and BroadcastChannel transports take a message type, so a presenter's windows reuse them. New tokens `--team-1` to `--team-5` (and `bg-team-N`, `border-team-N`) alias the chart palette and can be forked alone.
+
+  Components: agenda, team-board, breakout-room, pair-talk, room-clock, live-room, join-code, interlace-base
+
+- 1c9b80d: One goal for the whole room. `RoomGoal` is a shared meter with named milestones on the way and, when given, how many rounds in a row most of the room got right; a milestone the room passes lifts once and is announced once, and the meter reads as a labelled `meter` with its value in words. `games/room-goal-model` adds up contributions (`tallyRoomGoal`), counting each person once per round whatever order or how many times messages arrive, with an optional cap per person so the room gets there together, and counts rounds in a row above a bar (`roomStreak`).
+
+  Components: room-goal
+
+- 822b29f: Live rooms hold up on real phones. Every state the host sends carries its clock, and `useRoom`
+  returns `now`, this device's clock corrected to the host's (`clockOffset` in room-model), so a
+  phone whose clock is off still counts down to the host's deadline; `TimerRing` takes `now` too.
+  A player's page now says it is away on `pagehide`, asks for the room again when it is seen, and
+  rejoins by itself when shown away, unless the player left on purpose (`presence: false` turns it off).
+  Networks drop messages: a player's join or answer is sent again every 3s until the host's state
+  shows it (5 tries), and the host no longer broadcasts a reply to a repeated or late answer.
+
+  Components: live-room, timer-ring
+
+- e98e380: ScrollArea now fades its top or bottom edge while there is more to scroll that way, so a box says "there is more" before anyone scrolls, also on systems that hide scrollbars. The fade is a mask driven by Base UI's own overflow measurements: it grows over the first 2rem of travel and is gone at each end, so the first and last lines are never hidden at rest, and it works on any background. It drops while the region has keyboard focus so the focus ring stays whole. Pass `fade="none"` for hard edges.
+
+  Components: scroll-area
+  Kind: Feature
+
+- 07d4fe9: New ScrollText and FlipGroup. ScrollText is one large sentence the reader brings into focus by scrolling: its words go from `--muted-foreground` to `--foreground` in reading order on a ViewTimeline, so the browser drives it from the scroll position with no listener. It is read once by a screen reader, every word is always at AA contrast, and it is in full colour without ViewTimeline or under reduced motion. FlipGroup makes items glide to their new place when a list is sorted, filtered or reordered: give each a `data-flip-id`, render the new order, and it plays the difference (FLIP); new items fade in, `render` makes it the `ul` or `ol` itself, and under reduced motion items simply take their place.
+
+  Components: scroll-text, flip-group
+  Kind: Feature
+
+- c83d2b4: `SeatChart` takes `labels` and `locale`. Every fixed word (the empty note, Vacant, No side, the table headers and caption, the majority caption and cell) can be replaced, and the screen-reader sentence is built by `labels.summary` from a `SeatSummary`, so it can be written in any language. Counts and shares are formatted with `Intl.NumberFormat` in the given locale. English stays the default.
+
+  `ShareChart` takes `labels` too: the empty note, the legend's name, the table caption and row header, and the sentence read for each row. `describeShareRow` takes the same sentence function. `DotPlot`'s `rowSentence` now says that it words a missing value itself.
+
+  Components: seat-chart, share-chart, dot-plot
+
+- e4b7f60: New `SeatChart`: how an assembly divides its seats, as a half-circle of dots filled group by group from left to right, with the majority marked at the top and a caption under the arc ("61 needed for a majority", or `majorityLabel`). By default every group gets its own colour: the five chart hues, then the same hues deepened, then neutral, so eleven lists stay apart in light and dark. Groups can also sit on `sides` (government and opposition, say): each side has one tone, its groups take shades of it, the first side fills from the left and the last from the right, and `tally` puts big side or leader totals above the arc. Hovering or focusing a group dims the rest and shows its count; a click pins it. The legend prints every count, the picture carries a sentence naming the total, each group and the distance to a majority, and a table sits behind it (`showTable` shows it). Seats no group holds are outlines counted as vacant. On first view the seats fill in once, under a second; nothing moves under reduced motion. `SeatChartCompare` sets two or three charts side by side by its own width. `seatLayout`, `placeGroups` and `describeSeats` are exported and pure.
+
+  Components: seat-chart
+
+- 1607778: Section's `brand` band paints from new `--band` / `--band-foreground` tokens (`bg-band`, `text-band-foreground`). They follow the primary pair unless set, so nothing changes by default; a dark scheme can now keep its band deep while its primary is lightened for links and buttons. More-contrast mode puts the band back on its primary pair.
+
+  Components: section, interlace-base
+
+  Kind: Added
+
+- 8e65d26: `Section` gets a `brand` tone, the full-bleed brand band (`bg-primary` with `text-primary-foreground`), and a new `overlap` axis (`none`, `sm`, `md`, `lg`). A Section with `overlap` drops its own top padding, pulls up by that depth and stacks above the band before it, so a card can straddle the edge of a brand band with no custom class: two Sections, the second with `overlap="md"`.
+
+  Components: section
+  Kind: Feature
+
+- 7db345b: SectionHeader sets its title on the fluid type scale instead of stepped `text-3xl md:text-4xl lg:text-5xl`, and takes its bottom gap from the section rhythm tokens instead of `mb-12` / `mb-16`. New `size="display"` for a page's loudest line, `eyebrowStyle="pill"` for a chip-style label, and `align="start"` now follows the writing direction. Two new type tokens, `--text-section` (28 → 40px) and `--text-display` (44 → 64px), are registered with `cn` so a colour never strips them.
+
+  Components: section-header
+  Kind: Changed
+
+- 6e9afbf: After-session feedback, in two patterns. `InterestSignal` is "I want more on this": a toggle (`aria-pressed`, a name that never changes) with a status line that says "Noted" and how many others asked. `InterestBoard` is the host's view, ranked by `patterns/interest-model` (`rankInterest`): most-asked first, bars drawn against the top topic, the viewer's asks marked, and `minCount` holding back topics too small to be anonymous. `CommitmentPicker` asks each person to pick one thing to do this week, in one tap or in their own words, and says when they will be asked; `CommitmentCheckIn` is that question a week later (yes, partly, not yet). `patterns/commitment-model` says when the follow-up is due (`followUpAt`, `followUpState`) and what a room's answers add up to (`commitmentImpact`). Every word goes through `labels`; the only motion is a 200ms scale on the icon and a one-time bar growth, both off under reduced motion.
+
+  Components: interest-signal, commitment
+
+- d898eed: Plan a session, then send each person their recap. `SessionComposer` builds a session from modules: add, remove and reorder with named controls, a meter of minutes against `maxMinutes` that turns and says by how much when the plan runs long, `seen` modules marked for a group that had them before, and `required` modules (an opening, a close) that stay in place. Its rules live in `patterns/session-plan-model` (`cleanPlan`, `summarizePlan`, `fitsPlan`, `addToPlan`, `removeFromPlan`, `movePlan`, `canMove`), so a server checks a submitted plan the same way. `Recap` is one person's take-home page: what it covered, their numbers, their one thing this week, what they asked more about, and where to go next, each section shown only when it has something. `patterns/recap-model` (`encodeRecap`, `decodeRecap`) puts the per-person part in the link as versioned, validated base64url JSON, so a recap page needs no account and stores nothing.
+
+  Components: session-composer, recap
+
+- 4dfb4d2: New `ShareChart`: how a whole splits into parts, one bar per row on one shared scale. `layout="stacked"` runs every bar from the same edge to 100%; `layout="diverging"` puts an ordered scale around a zero line shared by every row, with a `neutral` category across it and each side's total printed at its end. Values become shares of the row's total (the sum, or `total`), so counts and percentages both work. Stacked categories take the five chart hues in order; diverging ones take two `poles`, strongest at the ends. Hovering a segment or a legend entry, or focusing one, dims the other categories and prints that share on every row; a click pins it. Every row carries a sentence with every share, and a table of values sits behind the picture (`showTable` shows it). On first view each bar grows out of its zero line once; nothing moves under reduced motion. Labels sit beside the bars when the chart's own box is wide enough and above them when it is not, and the bars mirror in right-to-left pages. `shareOf`, `shareLayout`, `shareFills` and `describeShareRow` are exported and pure.
+
+  Components: share-chart
+
+- dba7011: `ShareImage`: the picture a link unfurls into on X, LinkedIn, Facebook, WhatsApp, iMessage and Slack, as a tree Satori (Next's `ImageResponse`) paints, at 1200 × 630 or 1200 × 1200 (`size="square"`). A kicker, the title, a line of description, your mark and a label at the top, your address and a footnote at the foot, and one optional piece of evidence: a `stat`, up to five `bars`, or your own `visual`. The title steps down with its length and the room left, and the description is cut at a word. Image renderers cannot read CSS variables, so `patterns/share-image-model` reads your own theme file instead (`themeFromCss`: `:root` shadcn tokens, `var()` resolved, `oklch()` turned into hex), and `shareMeta()` writes the `openGraph` and `twitter` metadata with every image's size, type and alt. Satori has no bidi algorithm, so right-to-left text is broken into lines and put in drawing order before it sees it (`visualRtlLine`): Hebrew reads correctly, numbers and Latin runs keep their order, brackets mirror, and Arabic is shaped by the font engine (Cairo works; Noto Naskh Arabic throws in Satori). The card mirrors in right to left. A still: no motion.
+
+  Components: share-image
+
+- 3dced5c: OtpField: a one-time code typed into a row of boxes, on Base UI's OTP field. Paste the whole code into any box or let the phone fill it from a message; `groupSize` adds a dash between groups, `invalid` marks every box.
+
+  SignInMethods: an account page's list of ways to sign in, each with Connect or Disconnect. Disconnecting asks once more in place, and the last connected method is locked with the reason beside it, so nobody locks themselves out. Built-in providers take their name and mark from SocialSignIn.
+
+  Components: otp-field, sign-in-methods
+  Kind: Feature
+
+- 7124e14: Site chrome that needs no custom classes:
+
+  - `Topbar` keeps its links on small screens. By default they move behind a Menu button that opens a side sheet (new `TopbarMenu`); `mobileNav="wrap"` shows them as a second row. `currentHref` marks the current page with `aria-current="page"` and a visible style, and `renderLink` now receives `aria-current` to forward.
+  - New `Banner`: a thin full-width bar for a site-wide message, in muted, info, success, warning and highlight tones, with an optional action and close button.
+  - `Prose` headings now use `--font-heading` (they used `--font-body` before), like Typography. If you set the two to different faces, Prose headings change to the heading face. New `width="fill"` drops the 65ch cap for prose inside a card or panel.
+  - `StatCard` and `StatGroup` take `layout="value-first"` (the number, then what it counts) next to the default label-first.
+  - `Footer` takes a `tagline` shown under the brand.
+
+  Components: topbar, topbar-menu, banner, prose, stat-card, stat-group, footer
+
+  Kind: Feature
+
+- 6c929b1: SocialSignIn: "Continue with Google / Apple / Facebook / X / TikTok / Microsoft / LinkedIn / GitHub", or any provider you describe, plus an optional email link, in one form. The first providers get full-width buttons and the rest a row of 44px icon buttons; the one used last time moves first with a tag. Without JavaScript it submits `provider=<id>` to your action; with callbacks, the pressed button spins until its promise settles. Once the email link is sent it becomes a "check your inbox" note. It knows nothing about any auth library.
+
+  Components: social-sign-in
+  Kind: Feature
+
+- 1c9b80d: `Spectrum`: where does a room stand between two poles? A statement, two pole labels and a slider (Base UI keyboard and drag, its value read in words: "Closer to …", "In the middle"). Placing the dot fires `onPlace` once and turns the slider into the room's picture on the same line: bars per bin with the viewer's bin in the accent, a marker for the room's middle that slides from the viewer's dot to the room's, and, with `before`, a dashed marker where the middle was in an earlier round. One sentence says it all for a screen reader and takes focus. `minResponses` hides the room until enough dots are in. The numbers are pure in `games/spectrum-model`: `summarizeSpectrum` (bins, median, middle half, mean), `spectrumShift`, `binOf`, `cleanValues`.
+
+  Components: spectrum
+
+- c3da7d6: `Spinner`: the shadcn core `spinner` item in Interlace tokens. An inline SVG in `currentColor` with `sm` (default), `md` and `lg` sizes. Announced once as a status named by `label` ("Loading" by default, so it can be translated); `decorative` hides it inside something that already says it is busy. It turns only under `motion-safe`. Server component.
+
+  Components: spinner
+
+  Kind: Feature
+
+- e2231c0: New SplitText: a headline that arrives a word, or a letter, at a time the first time it scrolls into view. `by` picks words or letters, `effect` is `rise` (default), `fade` or `blur`, and `step` sets the pace. The whole line is in the server HTML and read once from a visually hidden copy, so a screen reader never spells a word out. Letters keep emoji and combining marks whole, words never break mid-line, RTL arrives from the right, and under reduced motion the line is simply there.
+
+  Components: split-text
+  Kind: Feature
+
+- 29dc56b: `StatCard` and `StatGroup` get a `surface` prop. `card` (the default) is the bordered tile. `plain` drops the tile for a hairline rule above the number, so a few headline figures can sit on a page or a brand band like a line in a report. A plain stat takes its colour from what it sits on, label included, so it stays readable on `bg-primary`, and its number reads a size up.
+
+  `SectionHeader` gets `spacing="none"` for a header inside a Stack that already owns the gap, so the header no longer floats away from an aside under it.
+
+  Components: stat-card, stat-group, section-header
+  Kind: Feature
+
+- 8e65d26: New `StatusPills`: short facts about a page ("9 facts", "38 sources quoted") as a wrapping row of pills, made to sit on a brand band under a title. A default pill is an outline in the text colour around it, with no fill so its text keeps the band's contrast, so the same component reads on a dark band and on the page. `tone="ok"` is a solid pill with a check in the success colour, for a passed check.
+
+  Components: status-pills
+  Kind: Feature
+
+- d5e0419: Comfortable density reaches the small links, and Card gets a whole-card link. Under `data-density="comfortable"`, Tag and Breadcrumb links keep their size but take the tap through an invisible pad of `--spacing-target` (44px), the ClaimCard section summary and Footer links grow to 44px rows, and the default density stays at the same rhythm. New `CardLink`: wrap the card's title text in it and the whole card becomes the target through a stretched `::after`, with one accessible name, the focus ring on the card and a quiet border lift on hover. `asChild` takes a router link.
+
+  Components: card, tag, breadcrumb, footer, claim-card
+  Kind: Feature
+
+- 1c9b80d: A wall of the room's short answers for a shared screen. `TextWall` shows posts newest first, row by row, in a grid that follows its own width, with a count read as text (not a live region, so a screen reader user reads at their pace) and an optional `spotlight` that lifts one post above the rest, large. Posts already on the wall when it loads stay still; each later one rises in at the top (200ms) while the others glide one place along, and a post moved into the spotlight scales in (250ms); under reduced motion they simply appear. `max` caps the wall (40 by default) while the count stays the whole room. Phones send with `QuestionAsk`, relabelled, and posts go through the Q&A board's checks and moderation queue, so nothing unreviewed reaches the screen.
+
+  Components: text-wall
+
+- 6344d71: `ThreadMark`: Interlace's thread drawn as a state, in place of a spinner, an empty-box icon or a warning triangle. `woven` means done or connected, `drawing` loops the woven pair for loading, `loose` is one strand trailing off untied for an empty state, and `cut` is one strand snapped in two for an error. Sizes `sm`, `md` and `lg`. The mark is always hidden from assistive tech, so the words beside it carry the meaning; under reduced motion `drawing` rests fully woven. Pair it with `EmptyState` through the `icon` slot.
+
+  Components: thread-mark
+
+  Kind: Feature
+
+- 7d58a59: `ThreadSteps`: an ordered sequence held together by Interlace's woven thread. Each step has a knot, and two strands cross to the next knot, drawing in as the reader reaches the step. Use it plain for "how it works" or "how we checked this". Set `state` (`complete`, `current`, `upcoming`) to make it a progress tracker: complete steps are woven, the current knot is ringed and marked `aria-current="step"`, and the thread ahead is a loose dotted strand. Every state is also in words for assistive tech. The server HTML is fully drawn; reduced motion keeps it that way.
+
+  Components: thread-steps
+
+  Kind: Feature
+
+- 8e65d26: New `Timeline`: a short record in date order, where each event has a date, a title, what was said and where it comes from. Once the timeline itself is 48rem wide the events sit in one row on a single rule; below that they stack down a vertical rule. The switch keys on the timeline's own width, not the viewport. `orientation="vertical"` always stacks, and `marker="accent"` fills one event's dot in the highlight colour.
+
+  Components: timeline
+  Kind: Feature
+
+- c41e12c: Toc: the table of contents now follows the reader. A section stays current from the moment its heading crosses the reading line until the next one does, so the rail never goes blank; a marker slides to the current entry and the track fills as you read; long outlines (over 10 entries, or `collapse`) show sub-headings only under the current section; a pick holds its entry while the page scrolls there. New `title` prop for a visible heading. New `TocBar` for narrow layouts: a slim bar that names the current section, shows the page's progress along its foot, and opens the list in a bottom sheet that closes on a pick with focus on the heading. ReadingLayout uses `TocBar` below `@4xl` and titles its rail with `triggerLabel`. All motion is `motion-safe`.
+
+  Components: toc, reading-layout
+
+- 225e553: New Toolbar: a row of controls that is one stop in the Tab order. Tab enters on the control used last and the next Tab leaves the whole bar; inside, the arrow keys move between controls, Home and End jump to the ends, and focus wraps, so a keyboard user no longer Tabs through every button of a formatting bar or a table's bulk actions. Built on Base UI's Toolbar: buttons take Button's `variant` and `size` (ghost, icon-sm by default), any trigger joins through `render` (`<ToolbarButton render={<Toggle />} />`), a disabled button stays reachable so its label can be read, and the bar wraps at 320px. Parts: Toolbar, ToolbarButton, ToolbarLink, ToolbarGroup, ToolbarSeparator, ToolbarInput.
+
+  Components: toolbar
+  Kind: Feature
+
+- 2154bf8: `Topbar` takes link groups, a quiet edge and a full-screen phone menu.
+
+  - **Link groups.** An entry of `links` can be `{ label, items }`, where each item is a link with an optional `description` and `icon`. From `collapseBelow` up, a group is a button that opens a panel of its items, built on Base UI NavigationMenu: arrow keys move between triggers, Enter opens a panel and focuses its first item, Escape closes it and returns focus, hover opens it after a short delay and the panel slides between groups. Following a link closes it. Below `collapseBelow`, each group is a labelled section of the menu, and `mobileNav="wrap"` opens groups out into the row. Plain links work as before.
+  - **`edge="scroll"`.** The bar sits clear over the top of the page, with no surface or border, and fades them in once the page scrolls under it. The default, `edge="always"`, is unchanged.
+  - **`menuSide="full"`.** The small-screen menu covers the whole screen, dropping from the top, with larger links.
+
+  New parts, installed with Topbar: `TopbarNav` (the wide row with groups) and `TopbarScrollEdge` (marks the header `data-scrolled`).
+
+  Components: topbar, topbar-menu, topbar-nav, topbar-scroll-edge
+
+  Kind: Feature
+
+- e3581d4: TopbarMenu now opens its links in a Drawer instead of a Sheet: on a phone a finger drags the panel back toward its edge to close it, and the panel follows the finger. Focus trap, Escape, press-outside and close-on-navigate are unchanged. A new `side` prop (`right`, `left`, `bottom`; default `right`) picks the edge, and `Topbar` passes it through as `menuSide` (an RTL page passes `left`).
+
+  Components: topbar-menu, topbar
+  Kind: Feature
+
+- 2154bf8: `Topbar` motion and focus polish.
+
+  - **Hover pill.** A soft pill slides under whichever row item the pointer is over, and rests under an open group's trigger.
+  - **Panels slide between groups.** Moving from one group to the next, the panel resizes and its content slides in the direction of travel. The items cascade in, 20ms apart, inside the 150ms stagger window.
+  - **`hideOnScroll`.** The bar slides away while the reader scrolls down and returns on the first scroll up. It stays put while focus or an open panel is inside it.
+  - **Menu cascade.** The small-screen menu's links fade in a quick cascade.
+  - **Focus ring.** Every row item is now a padded box, so the focus ring sits 2px outside it on the page colour and never touches the words. Rows of plain links now render through `TopbarNav` too, so they get the same pill and ring.
+
+  Everything that moves is behind `motion-safe`. Under reduced motion the pill and panels still appear, without moving.
+
+  Components: topbar, topbar-nav, topbar-menu, topbar-scroll-edge
+
+  Kind: Feature
+
+- 1c9b80d: A quiz round where people type the answer. `TypeAnswer` takes every accepted spelling, forgives case, accents, punctuation and a slip of a letter in a longer word (and spells the answer out when it did), and never forgives a different number. It runs on the same clock rules as `QuizQuestion`, with "Stop the clock", and running out sends whatever was typed. The reveal marks the field, says the outcome in a focused sentence, and shows what the room typed, folded together, with the right answer always given a row. `games/typed-answer-model` folds and matches answers (`normalizeAnswer`, `matchAnswer`, `editDistance`), scores them like a multiple-choice answer (`scoreTyped`) so both kinds of round share a leaderboard, and groups the room's answers (`groupTyped`).
+
+  Components: type-answer
+
+- 4bab726: User intent: typed events for what a person meant to do, sent to whichever analytics tool the app uses.
+
+  `IntentProvider` takes one `onIntent` adapter. Below it, `useActivateIntent` (every activation, with keyboard, mouse, touch or pen), `useViewIntent` (half the element visible for a second), `useDwellIntent` (a pointer or keyboard focus resting for half a second), `useCommitIntent` (a typed value settled, reported as its length), `useDisclosureIntent` (an overlay opened or closed, and why) and `useFormIntent` (started, submitted, or abandoned by cancel or page leave) all report to it. Any element with `data-intent="name"` reports its clicks with no hook, so server components can declare intent too. Given a `page`, the provider reports `page_view` and `page_leave` with visible time and read depth, and it reports rage clicks: three quick clicks on one spot.
+
+  Events carry names, numbers and enums only: never typed text, element text, or anything about who the person is. A failing adapter is caught, so analytics never breaks a page.
+
+  Components: intent
+
+  Kind: Feature
+
+- 21dc6c8: View transitions, made safe to reach for. `Morph` gives its one child a view-transition name (any string, cleaned into a valid identifier), so a card's image and the detail page's hero with the same name morph into each other: the card grows into its page. `useViewTransition()` runs a React state change inside a transition, flushed so the browser captures the new view, with optional `types`. `startViewTransition` does the same for code outside React. `PageTransitions` (once, in the root layout) is a server-safe `<style>`: the old page fades out, the new one rises in by half a rem, and `@view-transition` turns it on between documents; `pageTransitionsCss()` returns the same CSS. Where the browser has no View Transitions the update simply runs, and under reduced motion there is no transition at all. Opacity and transform only.
+
+  Components: view-transition
+
+- 10bc71f: The Interlace page is warm paper now, not screen white. In light mode `--background` is #fdfbf8 and cards and popovers stay white, so they lift off the page the way a sheet lifts off a desk. In dark mode the page is a warm near-black (#0e0c0a) instead of a neutral one, matching the warm cards. Every text pair keeps its contrast floor: primary measures 8.52:1 on the paper and 7.23:1 on its own 10% tint, and `--input` 3.50:1 still clears SC 1.4.11. To keep a white page, set `--interlace-background: oklch(1 0 0)` in your own brand layer.
+
+  Components: interlace-base
+  Kind: Changed
+
+- f0212ac: `WeaveTexture`: a quiet woven cloth behind a section, in Interlace's two strand colours. Warp and weft cross in a plain weave, with the thread on top edged in the page colour so the crossing reads without shading. Nothing moves or shines: it is texture, not glow, and at the default strength text on top keeps its full contrast. Choose `density` (`fine`, `default`, `coarse`), `strength` (`faint`, `default`, `strong`) and `fade` (`none`, `edges`, `bottom`). A server component: one SVG pattern, nothing to hydrate.
+
+  Components: weave-texture
+
+  Kind: Feature
+
+- 8990974: A live word cloud for rooms. `WordEntry` lets a phone send up to `maxWords` words (default 3), each checked before `onWord` fires; a refused word says why, and the viewer's sent words show as chips. `WordCloud` groups what the room sent by its folded form (case, accents and marks), shows the spelling most people used, sizes words on a square-root scale in five steps and puts the biggest in the middle, while the DOM stays in rank order with each word read with its count. Words glide to their new places through FlipGroup and a word that gained a vote pulses once; under reduced motion they simply take their place. `size="stage"` is for a shared screen. The rules are pure and exported: `games/word-cloud-model` (`buildCloud`, `centerOut`) and `games/text-safety-model` (`checkText`, `foldText`, `isBlocked`), which refuses empty text, overlong text, links, email addresses, phone numbers and words on the consumer's `blocklist` (whole words, through letter swaps and spelled-out letters). Interlace ships no word list.
+
+  Components: word-cloud
+
+- 1607778: Wordmark gains `size`: `md` (the default, unchanged), `sm` (about two thirds: text a step down, a thinner plate) and `responsive` (`sm` below the `md` breakpoint, `md` from it). A stacked three-line lockup in a sticky topbar took about a fifth of a phone's screen; `size="responsive"` gives that height back to the page.
+
+  Components: wordmark
+
+  Kind: Added
+
+- 8e65d26: New `Wordmark`: a text logo of stacked lines (a name over its tagline, or one name in several scripts), with each `Wordmark.Line` carrying its own `lang` and `dir`. `variant="framed"` is a page-coloured plate with an inset rule in the brand colour; `plain` is the lines alone in the text colour. With `href` the whole lockup is one link named by `label`; without, it is an image of text. Lines use `--font-heading`; for another script, add its font to that stack and the browser picks per glyph. `Topbar`'s row is now at least 3.5rem and grows to fit a taller logo instead of clipping it.
+
+  Components: wordmark, topbar
+  Kind: Feature
+
+- 8009356: Interlace has one named z-index scale. `interlace-base` adds `--z-index-*` steps, so `z-backdrop`, `z-base`, `z-raised`, `z-sticky`, `z-header`, `z-indicator`, `z-overlay`, `z-modal`, `z-popover`, `z-toast`, `z-tooltip` and `z-skip-link` are utilities, and an app retunes the order with `--z-index-*` on `:root`. Every component now uses a name instead of a number. Topbar, AppHeader and TabBar sit on `z-header`, above anything inside the page: before, they were `z-10` like a Section overlap band, ScrollStory steps and a Dialogue speaker, which tied and painted over the sticky header while scrolling. ScrollStory and Dialogue isolate their own layers. Popover and Tooltip set their layer on the positioner, so it reaches the page, and a select or menu inside a dialog opens above it. Numeric `z-10` and friends still work in your app. Decorative backdrops (Sheen, GradientMesh, GridField, SkyBackdrop, CtaSection and FocusGrid media, the TopbarNav pill) move from `-z-10` to `z-backdrop` (-1): if you placed your own layer between -10 and -1 behind one of them, it now paints below the backdrop.
+
+  Components: interlace-base, topbar, app-header, tab-bar, section, scroll-story, dialogue, reading-layout, article-card, timeline, timeline-map, topbar-nav, pull-to-refresh, cta-section, focus-grid, hero-cosmic, sheen, pointer-surface, sky-backdrop, grid-field, gradient-mesh, tooltip, drawer, dropdown-menu, toast, dialog, alert-dialog, combobox, sheet, popover, context-menu, select, reading-strand, card, skip-link, order-game
+
+### Patch Changes
+
+- a3a9028: The brand-neutral lock now also fails when shipped code names the flagship consumer site, under any of its spellings, or the name of its identity. No component changes.
+
+  Components: none
+  Kind: Fix
+
+- e20e1ae: AuthorTemplate's doc comment no longer names a consumer in its example (`title="By the author"`). A new lock fails when a component, style or token under `packages/ui` names a site or product that consumes Interlace.
+
+  Components: author-template
+  Kind: Fix
+
+- a9642f2: `Breadcrumb` reads on a brand band. Inside `Section tone="brand"` the trail, the current page and the separators take the band's own text colour instead of the page's greys, which sat at about 1.2:1 on the primary fill. Measured on the house theme: 8.8:1 light, 11.8:1 dark, and over 16:1 under More contrast. The current page keeps its weight, and a link underlines on hover instead of changing colour. Outside a band nothing changes.
+
+  Components: breadcrumb
+
+- 51e6e43: `Button` no longer lists `text-decoration-color` in its transition: no variant changes it, so the entry did nothing.
+
+  Components: button
+  Kind: Fix
+
+- 3b62dd8: `Callout` reads better on phones. Below `sm` a `kicker` sits above the body instead of beside it, so a long body keeps the full width rather than a column narrowed by the kicker, and the inset drops from `p-6` to `p-4`. From `sm` up nothing changes. The root carries `data-kicker` when a kicker is set.
+
+  Components: callout
+
+- 3b62dd8: `Topbar` and `Footer` take `Container`'s gutters (`px-4 xs:px-6 lg:px-8`) instead of a flat `px-6`, so the logo and the footer line up with the page content at every width. On a 320px phone the topbar row also fits a logo and two actions on one line again (gap `x-3` below `xs`), instead of wrapping to a second row.
+
+  Components: topbar, footer
+
+- 7cf9693: fix(ui): A ClaimCard section's title and meta wrap as one run of text. On a narrow card they were two flex items, so "Facts and sources (8 of 10 fully sourced)" split into two squeezed columns; the meta now follows the title and drops to the next line whole.
+
+  Components: claim-card
+
+- 7124e14: ClaimCard.Claim now uses `font-heading` instead of `font-serif`, so an app that sets only `--font-heading` gets its heading face on the claim too.
+
+  Components: claim-card
+
+  Kind: Fix
+
+- 0e93219: Previous and next post links, the guess-reveal choices and the recall card ratings now pick their columns from their own width, not the window's, so a narrow column on a wide screen stacks them. The stat strip and prev/next skeletons use the same tracks as the real blocks, so nothing reflows when content arrives.
+
+  Components: prev-next-post, guess-reveal, recall-card, skeleton
+
+- 7d45224: Shorter comments in the focus grid and scroller. No change to behaviour.
+
+  Components: focus-grid, scroller
+
+- db18442: More contrast now wins over a branded app. Brands declare their tokens unlayered on `:root`, as the guide says, and an unlayered rule beats any layered one, so on a branded site the mode quietly did nothing: grey secondary text and the brand's own primary stayed. Every token the mode sets is now `!important` inside `@layer interlace.semantics`, which beats unlayered rules, so a reader who asks for more contrast always gets it. A brand that wants to keep its accent in the mode sets `--contrast-primary` and `--contrast-primary-foreground` to a pair it measured at 7:1, and checks the tinted surfaces built from it (`text-primary` on `bg-primary/10`). contrast-more-lock now also checks that every mode declaration is important. The craft skill covers More contrast, density, and the focus ring's room.
+
+  Components: interlace-base
+  Kind: Fix
+
+- 9af5748: CountUp: frames are rounded to the decimals of the target, so a count to 40 never shows 39.815.
+  A `format` with its own fraction digits keeps them.
+
+  Components: count-up
+
+- e72b888: CTASection: the section is named by its title (`aria-labelledby`), so it is announced as a region with that name.
+
+  Components: cta-section
+  Kind: Fix
+
+- 3ab892e: fix(ui): DailyPuzzle `size="page"` sets the title at `text-h1 tracking-display`, as Typography's `h1` does, so a daily-game page's title matches every other page title. It was `text-section tracking-heading`, one step smaller. `size="default"` is unchanged.
+
+  Components: daily-puzzle
+
+- 4ce11e8: DialogueStepper works when a server component renders it, and its no-JS fallback shows every step.
+
+  - `DialogueStep` takes its choices through a new `choices` prop. A server component holds only a reference to each client part, so a `DialogueChoices` child could not be told apart from a turn: it landed inside the list of turns and stayed after the reader moved on. Use the named exports (`DialogueStep`, `DialogueChoices`, `DialogueChoice`) from a server component, since the dot form is undefined there.
+  - `DialogueChoices` now hides itself once its step is past, wherever it renders, and the stepper warns when choices land inside a list of turns.
+  - Pending steps hide with a class instead of the `hidden` attribute. Tailwind's preflight rule for `[hidden]` is `!important` in a cascade layer, which beat the no-JS style, so only the first step showed with scripting off.
+
+  Components: dialogue-stepper
+  Kind: Fix
+
+- ed9596a: Fixes in the new backdrops. `Starfield` tints stars and meteors correctly when given an `oklch()` or `color-mix()` colour. `SkyBackdrop` rests every cloud fully inside the sky, so a cloud never jumps where it can be seen when its loop wraps. `GradientMesh` and `SkyBackdrop` add no content wrapper when `children` is `null`.
+
+  Components: starfield, sky-backdrop, gradient-mesh
+
+  Kind: Fix
+
+  Migration: none.
+
+- c3b71c6: FeaturedIcon: the neutral ring is an opaque mix with the background, like the other tones, so it looks the same on a tinted band.
+
+  Components: featured-icon
+  Kind: Fix
+
+- e2e084a: FlipCard: focus follows a turn only when the card lands on the side the press asked for. A controlled parent that refuses a turn and later changes `flipped` on its own no longer pulls focus. The card also fills its grid cell (`h-full`), so a row of cards with different amounts of text lines up.
+
+  Components: flip-card
+  Kind: Fix
+
+- 4b97904: Focus rings are drawn at full strength with one recipe: a 2px ring in `--ring` with a 2px gap in the page colour, the same weight as the preflight outline. Before, most controls drew a 3px ring at 50% or 60% of `--ring`, which measured 2.5:1 against the light themes (WCAG 1.4.11 asks 3:1), and a destructive button focused at 20%, which measured 1.4:1. Inputs, selects, buttons, tabs, checkboxes, switches, dialogs, sheets, drawers, toasts, menus and the patterns built on them now all focus alike, and the ring sits outside the control instead of over its edge.
+
+  Components: accordion, badge, banner, button, checkbox, combobox, command-palette, dialog, dialogue, dialogue-stepper, drawer, focus-grid, input, otp-field, radio-group, scroll-area, scroller, select, sheet, switch, tabs, textarea, toast, toolbar, topbar-menu, wordmark
+
+- d5e0419: Every focus ring is visible, whole, and clear of the text.
+
+  A keyboard audit of every story found three kinds of gap, now fixed:
+
+  - No visible focus: CollapsibleTrigger and a focusable TabsContent now show the system ring, 2px clear of the element. CodeEditor's textarea fills a clipping frame, so its ring is now inset, inside the padding and off the code. CodeWindow shows the ring on its frame when its body (a `<pre tabIndex={0}>`) has focus.
+  - Clipped rings: the ReadingLayout contents rail, SettingsTemplate's section nav, Scroller's viewport and GuessReveal's explanation scroll or clip their content, and cut the top and bottom off a focused link. Each now keeps a 4px margin for the ring, with no change to layout.
+
+  Components: collapsible, tabs, code-editor, code-window, reading-layout, settings-template, scroller, guess-reveal
+
+  Kind: Fix
+
+- 1607778: Footer sets its link groups two to a row on a phone, with the brand across the row, and trims its phone padding to py-12. With 44px touch-target rows, a stacked footer of three groups was taller than a short page above it.
+
+  Components: footer
+
+  Kind: Changed
+
+- 9e17613: `Grid`'s column gap never takes more than one track's share of the width (100% / cols). Gaps are in rem and grow with a reader's text size; at 150% on a 390px phone, eleven 36px gaps in a 12-column grid came to 396px in a 342px column and pushed every section sideways. The row gap and every step's value are unchanged, and on a phone at 100% the cap never bites. On wider screens it trims `xl` and `2xl` only where eleven of their gaps would overflow. A `gap-*` className still replaces it.
+
+  Components: grid
+
+- e72b888: Hero: the section is named by its headline (`aria-labelledby` on the h1), so it is announced as a region with that name.
+
+  Components: hero
+  Kind: Fix
+
+- c3b71c6: Hero no longer hides its media slot from screen readers. It used to set `aria-hidden` on any non-string media, which hid an interactive panel or a form while leaving it focusable. The media is now read by default; pass `mediaRole="decorative"` for ornament. The vertical padding moves to `py-section-comfortable`, the same fluid curve as Section.
+
+  Components: hero
+  Kind: Fix
+
+- 5e2dd0d: A focus grid card's title link now underlines when it takes keyboard focus, so focus shows on the element itself as well as the card's ring. The scroller's viewport stretches to the width of its row on phones instead of growing to its whole track, so the page no longer scrolls sideways.
+
+  Components: focus-grid, scroller
+
+- d932ef0: fix(ui): A loading Card or Badge keeps its `data-testid` and ARIA. The `loading` branch rendered a Skeleton with only `className`, so an E2E selector or an `aria-label` vanished for exactly as long as the content was loading. Card forwards all its props; Badge forwards `data-*`, `aria-*` and `id` (the rest are `<span>` props and the skeleton is a `<div>`).
+
+  Components: card, badge
+
+  Kind: Changed
+
+- ad6ac95: Right-to-left pages now get the same layout as left-to-right ones, mirrored. Menus, select and combobox put their check marks before the label, callouts, blockquotes, code-editor findings and toasts draw their accent on the start edge, dialog and sheet close buttons sit at the end, and the number field's dividers follow its buttons. "Next" chevrons and arrows in pagination, breadcrumbs, prev/next links and submenus point forward, the switch thumb slides toward the end, and toasts enter from the edge they live on. In a left-to-right page nothing moves.
+
+  Components: article-card, banner, breadcrumb, callout, citation, code-block, code-editor, code-window, combobox, context-menu, dashboard-template, dialog, docs-page-template, dropdown-menu, lint-playground, number-field, pagination, prev-next-post, pricing-table, prose, scroll-area, scroller, select, sheet, skeleton, skip-link, stat-strip, switch, thread-steps, toast
+
+- 4b97904: Every primitive and pattern now times its transitions with the motion tokens, so a brand that retunes `--duration-*` or `--ease-*` retunes all of them. Before, the toast, select and combobox popups, command palette and combobox rows, progress bar, article card image, flip card, guess reveal, social sign-in and focus grid kept literal timings (`duration-150`, `duration-[180ms]`, `ease-out`). With the default tokens the change is a few milliseconds: the flip card turns in 400ms instead of 500ms and the toast arrives in 150ms instead of 180ms.
+
+  Components: article-card, combobox, command-palette, flip-card, focus-grid, guess-reveal, progress, select, social-sign-in, toast
+
+- f893ac2: MultiStepForm says what is wrong when a field fails its native check, not only where: the field's name (a radio group's own label) and the browser's message under the step (reworded with `labels.invalid`), and `aria-invalid` on the field until it is edited. Before, Continue only moved focus, so a sighted reader saw nothing happen. `MultiStepFormSummary` wraps a long answer (an email, a name) instead of pushing the page sideways at 320px.
+
+  Components: multi-step-form
+
+- 06c8961: - `Grid`: the `lg`, `xl` and `2xl` gaps cap their column gap below `md` (rows keep the full gap), so a 12-column grid no longer scrolls sideways on a phone.
+  - `Callout`: the surface is opaque (the tint is laid over a solid page-colour fill) and the callout sets its own text colour, so it reads the same on a brand band, an image or the page.
+  - `Citation` `marker="chip"`: the pill is capped at 24 characters (or the line) and ends in an ellipsis; the whole text stays in its accessible name and the popover.
+
+  Components: grid, callout, citation
+  Kind: Fix
+
+- af0ed33: `button`, `toolbar`, `skeleton`, `calendar`, `data-state`, `meter` and `stat-strip` ship their `.ts` helper (`button-variants.ts`, `skeleton-variants.ts`, `calendar-model.ts`, `data-state-model.ts`, `meter-scale.ts`) with the helper's version banner, byte for byte what the helper's own item ships. The inlined copy used to have no banner, so the file in your tree depended on which item you installed last and the upgrade diff could not date it. The build now fails when two items write one target with different content.
+
+  Components: button, toolbar, skeleton, calendar, data-state, meter, stat-strip
+  Kind: Fix
+
+- ddef0e3: Form fields paint their own opaque face and text colour, so they read on a brand band, an image or a dark hero. `Input`, `Textarea`, `Combobox` (input and chips), `Checkbox` and `RadioGroup` now use `bg-background` in both schemes instead of `bg-transparent` / `dark:bg-input/30`, and the text fields (and `NumberField`'s group) set `text-foreground` rather than inheriting the band's foreground. `ComboboxCompose` now warns once, naming them, when two items share a `value` (each value keys a row, so filtering and selection broke with no error).
+
+  Components: input, textarea, combobox, checkbox, radio-group, number-field
+  Kind: Fix
+
+- 79d09a4: `PricingTable`: the space inside a tier (between its sections, and above its CTA) now follows `density` too, so a `compact` tier's inside never breathes more than its 16px shell. `default` renders exactly as before.
+
+  Components: pricing-table
+
+  Kind: Fix
+
+- 1607778: Prose styles `figure` / `figcaption`: a quote's caption sits under it, indented to the quote's text, in the small muted UI size. Before, the attribution rendered at body size and outweighed the quote it named.
+
+  Components: prose
+
+  Kind: Fixed
+
+- cc9dd1c: Prose headings keep their 4rem scroll offset again, so a linked heading no longer lands under a sticky header. The 2.0 spacing change left them on `scroll-mt-xl`, which no longer exists and compiled to nothing.
+
+  Components: prose
+
+- 146bc42: `RadioGroup`: the picked dot sits in the centre of its circle. Base UI renders the radio as a span, so the indicator had no height and the dot sat on the circle's top edge; the indicator now fills the circle.
+
+  Components: radio-group
+
+- 5e2dd0d: Nothing scrolls sideways at 150% text on a phone any more for the hover card, OTP field, scorecard row and dashboard template. Widths set in rem grow with the reader's text size, so a `max-w-80` hover card reached 480px on a 390px screen. The hover card now caps at the space Base UI reports (`--available-width`), OTP boxes shrink to share the row, the scorecard header wraps its score under the name, and the dashboard template pads `px-4` on phones and `px-10` from `sm`.
+
+  Components: hover-card, otp-field, scorecard-row, dashboard-template
+
+- a9642f2: Pages reflow at 150% text size on a phone (WCAG 1.4.10). `text-display` and `text-h1` also stop at a share of their container (12.5cqi and 11.5cqi), so one long word in a hero no longer runs past a 390px screen when the reader enlarges text; at 100% the cap never bites from 360px up. `Topbar` wraps its actions to a second line when the logo and actions don't fit on one, instead of pushing the row past the screen edge.
+
+  Components: interlace-base, topbar
+
+- 1c9b80d: Room activities hold up after a reconnect. `buildCloud` counts an entry with an `id` once however often it arrives, and counts a sender (`by`) once per word, so a resent batch of words changes nothing. The hand queue's docs say to send `call` with `by`, so a call delivered twice calls one person. New tests replay a busy room of 60 with every event doubled, restore a board from a saved snapshot (a late joiner or a refreshed host), flood the reaction stream after a refresh, and place a spectrum dot with the keyboard alone.
+
+  Components: word-cloud, reactions
+
+- 9af5748: ScrollStory: on a narrow screen a step card rests at the foot of the screen, so a tall graphic pinned
+  at the top stays readable instead of sitting under the card. The first card sits right under the
+  graphic, so the opening screen shows where to start.
+
+  Components: scroll-story
+
+- 6171138: `SeatChart`'s default colours for lists six to eleven alternate deeper and paler shades of the five hues (then a pale grey), instead of deepening all five. Neighbouring hues in the second round now differ in lightness too, so eleven lists stay apart at seat size in light and dark. Every colour keeps 3:1 against the page.
+
+  Components: seat-chart
+
+- 1cc887b: SectionHeader: the default title tracks like a heading (`tracking-heading`) and only the display title uses the tighter `tracking-display`, since the section size floors below 32px.
+
+  Components: section-header
+  Kind: Fix
+
+- 197f529: `ShareCard` puts the select-and-copy field away once a later copy works.
+
+  Components: share-card
+
+- 6ea351e: `ShareCard` says "Copied." again on a second copy: the status clears and refills, so screen readers announce it each time.
+
+  Components: share-card
+
+- d592fe9: ShareCard: `results` typechecks as the array of result keys. The props took a `div`'s own attributes too, and React types a `div`'s `results` as a number, so passing `results={['right']}` failed to compile in a consumer's app. The div's `results` is now left out.
+
+  Components: share-card
+  Kind: Fix
+
+- 6b77704: `Slider` draws its focus ring on keyboard focus again. Base UI puts focus on a hidden input inside the thumb, so the thumb's own `focus-visible` ring never showed; the ring now also follows `has-[:focus-visible]`. Every slider gains it, including `CloserGame` and `TimeSlider`.
+
+  Components: slider
+
+- 3fb51e0: fix(ui): Spotlight type-checks against motion 14. motion 14 added an `fx` boolean prop to every motion element, which clashes with the SVG `fx` focal-point attribute Spotlight inherited from its native `<svg>` props; installing Spotlight next to the latest motion failed `next build`'s type check. `fx` is now omitted from the native props, like the animation handlers and `values` before it.
+
+  Components: spotlight
+
+- 1607778: StatGroup with `cols={3}` goes from one track straight to three at a 36rem container, instead of two from 28rem and three from 56rem. On a tablet the two-track step left the third stat alone on its own row, which read as a missing one.
+
+  Components: stat-group
+
+  Kind: Changed
+
+- d5e0419: Text alignment follows the writing direction everywhere.
+
+  Typography's `align`, Accordion triggers, the Dialog header, Prose table headers, PrevNextPost cards, SeriesTable and MetricTable used `text-left` and `text-right`, which put text against the wrong edge in a right-to-left page. They now use `text-start` and `text-end`, so the same markup is correct in English, Hebrew and Arabic. Left-to-right pages render exactly as before. A new lock keeps physical alignment out of the components.
+
+  Components: typography, accordion, dialog, prose, prev-next-post, series-table, metric-table, section-header
+
+  Kind: Fix
+
+- 15bdb18: TextWall: a spotlight that is on the wall at load no longer fades in from opacity 0; only a later spotlight scales in, as the posts already did. The fade at load was what Storybook's axe run caught mid-way (2.33:1 contrast on the RightToLeft story).
+
+  Components: text-wall
+
+  Kind: Fixed
+
+- 56f8763: TocPopover works on a narrow screen with a long outline.
+
+  - The popover's height is capped at the room the screen has left (`--available-height`), and the list scrolls inside it. Before, an outline of 18 headings ran 906px tall and the later links fell off the bottom of a phone screen.
+  - Picking a link closes the popover, so it no longer covers the text it just scrolled to. Focus stays on the heading.
+  - `Toc` gives a heading `tabindex="-1"` before focusing it, unless the heading already has a tabindex. Before, the focus call did nothing on a plain heading. `Toc` also takes a new `onNavigate(id)` callback.
+
+  Components: toc
+  Kind: Fix
+
+- 0778cf7: Touch targets and scrolling regions. `TabsTrigger` is at least `min-h-target` (24px, 44px under `data-density="comfortable"`) and `TabsList` grows to hold it. `SliderThumb`'s invisible hit area is now `size-target` centred on the knob, so it reaches 44px under comfortable density; the 20px knob looks the same. `Prose` makes a `<pre>` or `<table>` keyboard-focusable only when it actually scrolls sideways, names it (a table's `<caption>`, or a short label), re-checks on resize, and takes the attributes back when it fits. Attributes the author set always win.
+
+  Components: tabs, slider, prose
+
 ## 1.2.0
 
 ### Minor Changes

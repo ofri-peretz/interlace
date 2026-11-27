@@ -41,7 +41,8 @@ npx shadcn@latest add https://ds.interlace.tools/r/button.json           # any c
 ```
 
 `interlace-base` adds motion tokens, the type scale, container widths, the `xs` breakpoint, radius
-steps derived from `--radius`, the colour layers and `color-scheme`. It changes nothing the host
+steps derived from `--radius`, the layer (z-index) scale, the colour layers and `color-scheme`. It
+changes nothing the host
 app already styles. `theme` is optional: components work with the host app's own shadcn theme.
 
 ## Brand it with tokens
@@ -120,6 +121,11 @@ foreground or accent colour, never stock imagery.
   `2xl` 96 px). On raw elements the same six steps are `gap-2 / 4 / 6 / 10 / 16 / 24`.
 - `SectionHeader` opens a band: `eyebrow`, `title`, `tagline`, `align` (`center` or `start`),
   `size` (`default` or `display`). It renders an h2; the page's one h1 belongs to the hero.
+- Stacking comes from the layer scale, never a number. Inside a component: `z-backdrop`, `z-base`,
+  `z-raised` (a component that layers parts puts `isolate` on its root). On the page, bottom to top:
+  `z-sticky`, `z-header`, `z-indicator`, `z-overlay`, `z-modal`, `z-popover`, `z-toast`,
+  `z-tooltip`, `z-skip-link`. Two parts that each pick `z-10` tie, and the later one paints over
+  the header. Retune the order with `--z-index-*` on `:root`.
 
 ## Type
 
@@ -274,6 +280,7 @@ the neutral rows above.
 - [ ] No raw colour, pixel size or duration in the diff; every value is a token or a scale step.
 - [ ] One accent per view; status colours only for status.
 - [ ] Width from `Container`, bands from `Section`, gaps from the six steps.
+- [ ] Every z-index is a layer name (`z-raised`, `z-header`, `z-modal`…), never a number.
 - [ ] Renders at 320px without sideways scroll; collections keyed to their container.
 - [ ] Works in light, dark and `dir="rtl"`; contrast measured, not assumed.
 - [ ] Keyboard only: every action reachable, focus visible, Escape closes what opened.
