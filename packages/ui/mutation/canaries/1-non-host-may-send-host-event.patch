@@ -1,0 +1,11 @@
+diff --git a/packages/ui/src/games/room-model.ts b/packages/ui/src/games/room-model.ts
+index 8ae40fb9..d9d15d53 100644
+--- a/packages/ui/src/games/room-model.ts
++++ b/packages/ui/src/games/room-model.ts
+@@ -290,5 +290,5 @@ export function rejectRoomEvent(
+   const isHost = from === state.hostId;
+   if (HOST_EVENTS.has(event.type)) {
+-    if (!isHost) return 'not-host';
++    if (false) return 'not-host';
+   } else if (!isHost && (event as RoomPlayerEvent).playerId !== from) {
+     return 'not-you';

@@ -55,6 +55,8 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci --no-audit --no-fund
+      # The mutation ratchet's own tests (scripts/mutation-ratchet.mjs): no dependencies, a second.
+      - run: npm run mutate:ratchet:test
       # Some tests read the published files (the craft skill, llms.txt). A
       # feature PR no longer commits them, so regenerate from the sources under
       # test first, as registry (drift) does. The release branch keeps its own.

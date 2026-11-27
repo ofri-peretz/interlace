@@ -1,0 +1,10 @@
+diff --git a/packages/ui/src/games/room-model.ts b/packages/ui/src/games/room-model.ts
+index 8ae40fb9..648dfe31 100644
+--- a/packages/ui/src/games/room-model.ts
++++ b/packages/ui/src/games/room-model.ts
+@@ -317,5 +317,4 @@ export function rejectRoomEvent(
+       if (state.phase !== 'question') return 'wrong-phase';
+       if (!state.players.some((p) => p.id === event.playerId)) return 'unknown-player';
+-      if (event.playerId in state.answers) return 'already-answered';
+       return null;
+     case 'remove':
