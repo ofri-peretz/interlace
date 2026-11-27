@@ -29,7 +29,7 @@
  *     │   ├─ p                     (data-slot="getting-started-pace")
  *     │   ├─ p                     (data-slot="getting-started-streak": only with `streak`)
  *     │   └─ p role=status         (data-slot="getting-started-save": empty until a save fails)
- *     ├─ ol × groups               (data-slot="getting-started-list")
+ *     ├─ GettingStartedList        (a steps list, or one `GettingStartedGroup` per group; data-slot="getting-started-list")
  *     │   └─ GettingStartedStep    (li — data-slot="getting-started-step", data-state=todo|done|skipped|locked|next)
  *     ├─ GettingStartedCelebration (data-slot="getting-started-celebration", role=status)
  *     │   └─ span aria-hidden      (data-slot="getting-started-burst": `full` only, never under reduced motion)
@@ -606,6 +606,8 @@ function GettingStartedList() {
     </div>
   );
 }
+
+GettingStartedList.displayName = 'GettingStartedList';
 
 function GettingStartedGroup({ id, children, className, ...props }: { id: string } & Omit<React.ComponentPropsWithoutRef<'div'>, 'id'>) {
   const ctx = useGettingStarted('GettingStartedGroup');

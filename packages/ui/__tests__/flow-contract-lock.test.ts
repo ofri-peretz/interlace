@@ -51,6 +51,20 @@ const FLOWS: readonly Flow[] = [
     stories: 'blocks/DialogueStepper.stories.tsx',
   },
   {
+    source: 'games/getting-started.tsx',
+    shape: 'flat',
+    name: 'GettingStarted',
+    parts: [
+      'GettingStarted',
+      'GettingStartedHeader',
+      'GettingStartedList',
+      'GettingStartedGroup',
+      'GettingStartedStep',
+      'GettingStartedCelebration',
+    ],
+    stories: 'games/GettingStarted.stories.tsx',
+  },
+  {
     source: 'patterns/social-sign-in.tsx',
     shape: 'flat',
     name: 'SocialSignIn',

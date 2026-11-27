@@ -13,6 +13,7 @@ import {
   complete,
   emptySnapshot,
   markCelebrated,
+  skip,
   type ChecklistDef,
   type ChecklistSnapshot,
 } from '@interlace/ui/games/getting-started-model';
@@ -46,6 +47,8 @@ const now = () => NOW;
 /** The steps done, in order, on consecutive minutes of the fixed day. */
 function progress(ids: string[], at = NOW - 2 * DAY): ChecklistSnapshot {
   let s = emptySnapshot();
+  // "Rehearse once" waits for the optional slides, so a list that got that far has skipped them.
+  if (ids.includes('rehearse')) s = skip(DEF, s, 'slides', at - 1);
   ids.forEach((id, i) => (s = complete(DEF, s, id, at + i * 60_000, 'UTC')));
   return markCelebrated(s, celebrationsFor(DEF, emptySnapshot(), s));
 }
@@ -69,7 +72,7 @@ const meta = {
   },
   args: { 'data-testid': 'gs', definition: DEF, now, timeZone: 'UTC' },
   render: (args) => (
-    <div className="max-w-xl">
+    <div className="max-w-144">
       <GettingStarted {...args} />
     </div>
   ),
@@ -87,7 +90,7 @@ export const Default: Story = {
     defaultOpen: 'next',
   },
   render: (args) => (
-    <div className="max-w-xl">
+    <div className="max-w-144">
       <GettingStarted {...args} />
     </div>
   ),
@@ -148,8 +151,7 @@ export const SaveFailing: Story = {
   args: { store: { load: () => null, save: () => Promise.reject(new Error('offline')) } satisfies ChecklistStore },
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    const boxes = canvasElement.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-    await userEvent.click(boxes[0] as HTMLInputElement);
+    await userEvent.click((await c.findAllByRole('checkbox'))[0] as HTMLElement);
     await waitFor(() => expect(c.getByText('Not saved yet. Your progress is kept on this page.')).toBeTruthy(), { timeout: 3000 });
   },
 };
@@ -157,7 +159,7 @@ export const SaveFailing: Story = {
 /** The step's action is the app's own button; the list renders no link of its own. */
 export const WithActions: Story = {
   render: (args) => (
-    <div className="max-w-xl">
+    <div className="max-w-144">
       <GettingStarted {...args}>
         <GettingStartedHeader />
         <ol className="grid gap-2">
@@ -174,7 +176,7 @@ export const WithActions: Story = {
 export const Dismissible: Story = {
   args: { defaultValue: progress(['date', 'agenda', 'invite', 'test', 'rehearse', 'run']), dismissible: true },
   render: (args) => (
-    <div className="max-w-xl">
+    <div className="max-w-144">
       <GettingStarted {...args} />
       <a href="#after" className="mt-4 inline-block underline">
         Back to the page
@@ -188,8 +190,7 @@ export const CompleteFull: Story = {
   args: { defaultValue: progress(['date', 'agenda', 'invite', 'test', 'rehearse']), celebrate: 'full' },
   play: async ({ canvasElement }) => {
     const c = within(canvasElement);
-    const boxes = canvasElement.querySelectorAll<HTMLInputElement>('[data-step="run"] input[type="checkbox"]');
-    await userEvent.click(boxes[0] as HTMLInputElement);
+    await userEvent.click(c.getByRole('checkbox', { name: /Run the day/ }));
     await waitFor(() => expect(c.getByText('All set. You are ready.')).toBeTruthy());
   },
 };
@@ -221,4 +222,45 @@ export const Mobile320: Story = {
 export const Rtl: Story = {
   decorators: [withRtl],
   args: { defaultValue: progress(['date', 'agenda']) },
+};
+
+/**
+ * The whole flow, by keyboard where it matters: a locked step says what it waits for and moves
+ * nothing, the steps are done in order, the optional one is skipped, and the list finishes.
+ */
+export const Journey: Story = {
+  args: { celebrate: 'quiet' },
+  play: async ({ canvasElement, step }) => {
+    const c = within(canvasElement);
+    const box = (name: RegExp) => c.getByRole('checkbox', { name });
+    await step('loading to active: the first step is next, the rest wait', async () => {
+      await expect(c.getByRole('progressbar').getAttribute('aria-valuetext')).toBe('0 of 6 steps done');
+      await expect(box(/Write the agenda/).getAttribute('aria-disabled')).toBe('true');
+    });
+    await step('locked: pressing it says what it waits for and moves nothing', async () => {
+      box(/Write the agenda/).focus();
+      await userEvent.keyboard('{Enter}');
+      await waitFor(() => expect(canvasElement.querySelector('[data-slot="getting-started-announce"]')?.textContent).toMatch(/Pick a date first/));
+      await expect(box(/Write the agenda/).getAttribute('aria-checked')).toBe('false');
+    });
+    await step('active: the steps in order, with the space bar', async () => {
+      for (const name of [/Pick a date/, /Write the agenda/, /Invite people/, /Test the room/]) {
+        box(name).focus();
+        await userEvent.keyboard(' ');
+        await waitFor(() => expect(box(name).getAttribute('aria-checked')).toBe('true'));
+      }
+    });
+    await step('optional: skip it, and what waited for it opens', async () => {
+      await userEvent.click(c.getByRole('button', { name: 'Skip' }));
+      await waitFor(() => expect(box(/Rehearse once/).hasAttribute('aria-disabled')).toBe(false));
+    });
+    await step('complete: the last required steps, then the finish in words', async () => {
+      for (const name of [/Rehearse once/, /Run the day/]) {
+        await userEvent.click(box(name));
+        await waitFor(() => expect(box(name).getAttribute('aria-checked')).toBe('true'));
+      }
+      await waitFor(() => expect(c.getByText('All set. You are ready.')).toBeTruthy());
+      await expect(canvasElement.querySelector('[data-slot="getting-started"]')?.getAttribute('data-state')).toBe('complete');
+    });
+  },
 };
