@@ -110,7 +110,10 @@ export function parseChecklist(raw: unknown): ParsedChecklist {
       continue;
     }
     ids.add(s.id);
-    if (typeof s.title !== 'string' || !s.title.trim()) errors.push(`Step "${s.id}" needs a title.`);
+    if (typeof s.title !== 'string' || !s.title.trim()) {
+      errors.push(`Step "${s.id}" needs a title.`);
+      continue;
+    }
     if (s.weight !== undefined && (!finite(s.weight) || s.weight <= 0)) errors.push(`Step "${s.id}" has a weight that is not above zero.`);
     if (s.after !== undefined && (!Array.isArray(s.after) || s.after.some((a) => typeof a !== 'string'))) {
       errors.push(`Step "${s.id}" has an \`after\` that is not a list of ids.`);
@@ -120,7 +123,7 @@ export function parseChecklist(raw: unknown): ParsedChecklist {
     }
     steps.push({
       id: s.id,
-      title: typeof s.title === 'string' ? s.title : '',
+      title: s.title,
       ...(typeof s.description === 'string' ? { description: s.description } : {}),
       ...(s.optional === true ? { optional: true } : {}),
       ...(Array.isArray(s.after) ? { after: s.after.filter((a): a is string => typeof a === 'string') } : {}),
@@ -352,7 +355,7 @@ export function complete(def: ChecklistDef, snapshot: ChecklistSnapshot, id: str
 /** The step open again. Never removes a day from `activeDays` or a key from `celebrated`. */
 export function uncomplete(def: ChecklistDef, snapshot: ChecklistSnapshot, id: string, now: number): ChecklistSnapshot {
   if (stateOf(def, snapshot, id)?.state !== 'done') return snapshot;
-  return { ...snapshot, cleared: { ...snapshot.cleared, [id]: Math.max(now, snapshot.done[id] ?? 0) }, at: Math.max(snapshot.at, now) };
+  return { ...snapshot, cleared: { ...snapshot.cleared, [id]: Math.max(now, snapshot.done[id] as number) }, at: Math.max(snapshot.at, now) };
 }
 
 /** An optional step skipped; it then satisfies the steps that wait for it. Anything else is no change. */
@@ -366,7 +369,7 @@ export function skip(def: ChecklistDef, snapshot: ChecklistSnapshot, id: string,
 /** A skipped step open again ("Do this step"). */
 export function unskip(def: ChecklistDef, snapshot: ChecklistSnapshot, id: string, now: number): ChecklistSnapshot {
   if (stateOf(def, snapshot, id)?.state !== 'skipped') return snapshot;
-  return { ...snapshot, cleared: { ...snapshot.cleared, [id]: Math.max(now, snapshot.skipped[id] ?? 0) }, at: Math.max(snapshot.at, now) };
+  return { ...snapshot, cleared: { ...snapshot.cleared, [id]: Math.max(now, snapshot.skipped[id] as number) }, at: Math.max(snapshot.at, now) };
 }
 
 /** The list hidden (or shown again). */
@@ -487,7 +490,8 @@ export function announcementFor(
 ): string | null {
   const a = deriveChecklist(def, before);
   const b = deriveChecklist(def, after);
-  const title = (id: string) => def.steps.find((s) => s.id === id)?.title ?? id;
+  const titles = new Map(def.steps.map((s) => [s.id, s.title]));
+  const title = (id: string) => titles.get(id) as string;
   const changed = b.steps.filter((s, i) => s.state !== (a.steps[i] as DerivedStep).state);
   const before_ = (s: DerivedStep) => (a.steps[b.steps.indexOf(s)] as DerivedStep).state;
   const nowDone = changed.filter((s) => s.state === 'done');
