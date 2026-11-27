@@ -10,6 +10,7 @@
     ".": "./src/index.ts",
     "./theme-model": "./src/theme-model.ts",
     "./contrast": "./src/contrast.ts",
+    "./reading-prefs": "./src/reading-prefs.ts",
     "./tokens": "./src/tokens.generated.ts"
   },
   "files": [
