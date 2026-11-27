@@ -346,7 +346,7 @@ renders at most the changed row, the header and the live region (a render-count 
 Budgets to be **recorded at first build, then ratcheted**: gzip size of model + component, render
 count per change at 7 and 50 steps. No number is published before it has a command and a date.
 
-## 11. Out of scope
+## Out of scope
 
 Step auto-detection, tours, tooltips, spotlight overlays, notifications, email, a server store,
 XP and levels, badges, leaderboards, reset-with-confirm, drag-to-reorder, analytics events (the app
