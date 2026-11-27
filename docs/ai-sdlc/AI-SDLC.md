@@ -65,6 +65,11 @@ Each stage hands off through one committed Markdown file. Stage 6 writes back a 
 | 5 Deploy   | merged PR                                   | A separate, skeptical evaluator ([E-9](EVIDENCE.md#e-9)); hooks gate actions ([E-8](EVIDENCE.md#e-8))                                                    | REVIEW.md, checklist, Claude review                               |
 | 6 Maintain | breach → new `intent.md`                    | Run quality evals continuously and tie each change to its metrics ([E-21](EVIDENCE.md#e-21))                                                             | control bands                                                     |
 
+**Running it as a loop.** "Create intents, design plans, then execute" is one goal-based
+loop: the `ai-sdlc-loop` skill drives it, and `node scripts/ai-sdlc/next.mjs <repo> <slugs>`
+decides each next step and is the stop condition. It pauses at the two human gates.
+[LOOPS.md](LOOPS.md) maps each stage to its loop and lists the practices every loop follows.
+
 Stage detail (templates, the Jev and Quint gates, σ bands): `burgee/.sdlc/` is the reference
 implementation, and `eslint/scripts/control-bands.ts` is the reference watcher.
 

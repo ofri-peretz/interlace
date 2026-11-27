@@ -70,3 +70,52 @@ test('a plugin pinned below its latest major is reported', async () => {
   const pkg = JSON.stringify({ devDependencies: { 'eslint-plugin-secure-coding': '^3.2.0', 'eslint-plugin-jwt': '^4.0.0', eslint: '^9' } });
   assert.deepEqual(lagging(pkg, { 'eslint-plugin-secure-coding': 6, 'eslint-plugin-jwt': 4 }), ['secure-coding@^3.2.0→6']);
 });
+
+import { step, statusOf, checkOf } from './next.mjs';
+
+test('the stage machine walks an intent from draft to done, with a human at both gates', () => {
+  const at = (o) => step({ slug: 's', spec: null, branchOpen: false, ...o });
+  assert.equal(at({ status: 'draft' }).stage, '1 Plan');
+  assert.equal(at({ status: 'review' }).who, 'agent');
+  assert.equal(at({ status: 'review', spec: '# spec' }).who, 'human');
+  assert.match(at({ status: 'approved', spec: '**Check:** `npm test`' }).next, /^\/goal `npm test` exits 0/);
+  assert.match(at({ status: 'approved', spec: '# no check' }).next, /names no \*\*Check:\*\*/);
+  assert.equal(at({ status: 'approved', spec: 'x', branchOpen: true }).who, 'human');
+  assert.equal(at({ status: 'shipped' }).who, null);
+  assert.equal(at({ status: 'dropped' }).who, null);
+});
+
+test('status and check are read from both intent spellings in use', () => {
+  assert.equal(statusOf('**Status:** approved · **Opened:** 2026-09-07'), 'approved');
+  assert.equal(statusOf('Author: x. Status: review.'), 'review');
+  assert.equal(statusOf('# no status line'), 'draft');
+  assert.equal(checkOf('**Check:** `npx vitest run`'), 'npx vitest run');
+  assert.equal(checkOf(null), null);
+});
+
+test('next.mjs runs as a command from a symlinked temp dir, the way the skill calls it', async () => {
+  const { mkdtempSync, copyFileSync, mkdirSync, writeFileSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { spawnSync } = await import('node:child_process');
+  const dir = mkdtempSync(join(tmpdir(), 'next-')); // macOS: /var/… is a symlink to /private/var/…
+  copyFileSync(new URL('./next.mjs', import.meta.url), join(dir, 'next.mjs'));
+  mkdirSync(join(dir, 'repo/.sdlc/intents/x'), { recursive: true });
+  writeFileSync(join(dir, 'repo/.sdlc/intents/x/intent.md'), '**Status:** draft\n');
+  const r = spawnSync(process.execPath, [join(dir, 'next.mjs'), join(dir, 'repo'), 'x'], { encoding: 'utf8' });
+  assert.equal(r.status, 1, 'a draft intent is agent work');
+  assert.match(r.stdout, /1 Plan/);
+});
+
+test('install reports a user skill that is missing or edited, and none once copied', async () => {
+  const { mkdtempSync, cpSync, writeFileSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { drift, SKILLS } = await import('./install.mjs');
+  const dest = mkdtempSync(join(tmpdir(), 'skills-'));
+  assert.deepEqual(drift(dest), SKILLS, 'all missing');
+  for (const n of SKILLS) cpSync(new URL(`../../docs/ai-sdlc/skills/${n}`, import.meta.url), join(dest, n), { recursive: true });
+  assert.deepEqual(drift(dest), []);
+  writeFileSync(join(dest, SKILLS[0], 'SKILL.md'), 'edited by hand');
+  assert.deepEqual(drift(dest), [SKILLS[0]]);
+});

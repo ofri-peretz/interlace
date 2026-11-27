@@ -37,6 +37,8 @@
     "ai-sdlc:audit": "node scripts/ai-sdlc/audit.mjs",
     "ai-sdlc:score": "node scripts/ai-sdlc/scorecard.mjs",
     "ai-sdlc:test": "node --test scripts/ai-sdlc/ai-sdlc.test.mjs",
+    "ai-sdlc:install": "node scripts/ai-sdlc/install.mjs",
+    "ai-sdlc:next": "node scripts/ai-sdlc/next.mjs",
     "mutate": "cd packages/ui && oxmutate run",
     "mutate:since": "cd packages/ui && oxmutate run --since origin/main",
     "mutate:ratchet": "node scripts/mutation-ratchet.mjs --check",
