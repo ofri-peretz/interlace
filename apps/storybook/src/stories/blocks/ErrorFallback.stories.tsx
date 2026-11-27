@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import { ErrorFallback } from '@interlace/ui/patterns/error-fallback';
 import type { ErrorReport } from '@interlace/ui/error-report-model';
 import { withRtl } from '@/decorators';
@@ -56,7 +56,10 @@ export const Default: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const heading = await canvas.findByRole('heading', { name: 'Something went wrong here' });
-    await expect(document.activeElement).toBe(heading);
+    // Focus moves in a mount effect, which can run just after the heading is found. Waiting for it
+    // still fails if focus never lands, and a failed play leaves the a11y addon's axe run going,
+    // which the test runner then reports as "Axe is already running" instead of this assertion.
+    await waitFor(() => expect(document.activeElement).toBe(heading));
     await userEvent.tab();
     const retry = canvas.getByRole('button', { name: 'Try again' });
     await expect(document.activeElement).toBe(retry);

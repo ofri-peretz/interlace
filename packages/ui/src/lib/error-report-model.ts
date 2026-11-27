@@ -109,8 +109,7 @@ export function trimMessage(text: string, max: number): string {
 
 /** Keep the first `maxLines` lines. */
 export function trimStack(text: string, maxLines: number): string {
-  const lines = text.split('\n');
-  return lines.length <= maxLines ? text : lines.slice(0, maxLines).join('\n');
+  return text.split('\n').slice(0, maxLines).join('\n');
 }
 
 function printable(value: unknown): string {
@@ -166,19 +165,18 @@ export function parseReports(
   const maxStackLines = limits.maxStackLines ?? DEFAULT_MAX_STACK_LINES;
   const kept: ErrorReport[] = [];
   for (const row of rows as unknown[]) {
-    if (typeof row !== 'object' || row === null) continue;
-    const r = row as Record<string, unknown>;
-    if (typeof r.at !== 'number' || !Number.isFinite(r.at)) continue;
+    // A row that is not an object has no `at`, `where` or `message` of its own and is dropped below.
+    const r = (row ?? {}) as Record<string, unknown>;
+    if (!Number.isFinite(r.at)) continue;
     if (typeof r.where !== 'string' || typeof r.message !== 'string') continue;
     if (typeof r.fatal !== 'boolean') continue;
     const report: ErrorReport = {
       id: typeof r.id === 'string' && r.id !== '' ? r.id : makeId(),
-      at: r.at,
+      at: r.at as number,
       where: r.where,
       message: trimMessage(r.message, maxMessage),
       fatal: r.fatal,
-      count:
-        typeof r.count === 'number' && Number.isInteger(r.count) && r.count >= 1 ? r.count : 1,
+      count: Number.isInteger(r.count) ? Math.max(1, r.count as number) : 1,
     };
     if (typeof r.stack === 'string' && r.stack !== '') {
       report.stack = trimStack(r.stack, maxStackLines);
@@ -248,8 +246,8 @@ export function createErrorLog(options: ErrorLogOptions = {}): ErrorLog {
         return kept;
       } catch {
         // A clock or an id maker that throws: the report is lost, the app is not.
-        return undefined;
       }
+      return undefined;
     },
     recent: () => reports,
     restore(earlier) {
@@ -301,11 +299,10 @@ export async function installErrorLog(store: ErrorStore, log: ErrorLog): Promise
     // Nothing was kept, or it could not be read: start empty.
   }
   if (persistence.get(log) !== entry) return; // a newer install took over while this one waited
-  if (Array.isArray(earlier)) log.restore(earlier);
+  log.restore(earlier as readonly unknown[]); // untrusted: anything that is not a list restores nothing
   entry.off = log.subscribe(() => {
     try {
-      const done = store.save(log.recent());
-      if (done && typeof done.then === 'function') done.then(undefined, () => undefined);
+      Promise.resolve(store.save(log.recent())).catch(() => undefined);
     } catch {
       // Failing to store an error is not an error to report.
     }
@@ -414,14 +411,6 @@ export interface ErrorFallbackLabels {
   referenceLine: (reference: string) => string;
 }
 
-export const DEFAULT_ERROR_FALLBACK_LABELS: ErrorFallbackLabels = {
-  title: 'Something went wrong here',
-  description: 'Try again, or go back.',
-  retry: 'Try again',
-  back: 'Go back',
-  referenceLine: (reference) => `Reference: ${reference}`,
-};
-
 /** Said when the screen has no way to retry and none to leave: no instruction it cannot honour. */
 const DESCRIPTIONS = {
   both: 'Try again, or go back.',
@@ -429,6 +418,14 @@ const DESCRIPTIONS = {
   back: 'Go back and try something else.',
   neither: 'Please come back in a moment.',
 } as const;
+
+export const DEFAULT_ERROR_FALLBACK_LABELS: ErrorFallbackLabels = {
+  title: 'Something went wrong here',
+  description: DESCRIPTIONS.both, // `resolveFallbackLabels` picks the one that fits the actions
+  retry: 'Try again',
+  back: 'Go back',
+  referenceLine: (reference) => `Reference: ${reference}`,
+};
 
 /**
  * The words on a fallback. A `description` the app wrote is used as given; otherwise the default
