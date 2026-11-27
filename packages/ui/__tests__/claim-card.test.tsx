@@ -57,4 +57,16 @@ describe('ClaimCard', () => {
     expect((sections[1] as HTMLDetailsElement).open).toBe(false);
     expect(sections[0].querySelector('summary')?.textContent).toContain('(2 of 2 sourced)');
   });
+
+  it('wraps the meta with the title as one run of text, never as a column beside it', () => {
+    const { container } = render(<Example />);
+    const summary = container.querySelector('details[data-slot="claim-card-section"] summary');
+    // The chevron and one text run: as two flex items, a narrow card split them into two
+    // squeezed columns ("Facts and" | "(8 of 10 fully").
+    const label = summary?.querySelector('[data-slot="claim-card-section-label"]');
+    expect(label?.textContent).toBe('Facts and sources (2 of 2 sourced)');
+    expect(summary?.querySelectorAll(':scope > span')).toHaveLength(1);
+    // The meta moves to the next line whole rather than breaking inside its brackets.
+    expect(label?.querySelector('span')?.className).toContain('whitespace-nowrap');
+  });
 });

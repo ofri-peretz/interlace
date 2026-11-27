@@ -75,7 +75,7 @@ function Dialogue({ speakers = 'above', className, ...props }: DialogueProps) {
       data-slot="dialogue"
       data-speakers={speakers}
       data-min-viewport={String(MIN_VIEWPORT)}
-      className={cn('group/dialogue flex flex-col gap-4', className)}
+      className={cn('group/dialogue isolate flex flex-col gap-4', className)}
       {...props}
     />
   );
@@ -104,7 +104,7 @@ const SPEAKER_INSIDE: Record<DialogueTone, string> = {
 const INSIDE_LI =
   "group-data-[speakers=inside]/dialogue:grid group-data-[speakers=inside]/dialogue:[grid-template-areas:'turn']";
 const INSIDE_SPEAKER =
-  'group-data-[speakers=inside]/dialogue:z-10 group-data-[speakers=inside]/dialogue:[grid-area:turn] group-data-[speakers=inside]/dialogue:self-start group-data-[speakers=inside]/dialogue:justify-self-start group-data-[speakers=inside]/dialogue:px-4 group-data-[speakers=inside]/dialogue:pt-3 group-data-[speakers=inside]/dialogue:font-bold group-data-[speakers=inside]/dialogue:text-(--dialogue-speaker)';
+  'group-data-[speakers=inside]/dialogue:z-raised group-data-[speakers=inside]/dialogue:[grid-area:turn] group-data-[speakers=inside]/dialogue:self-start group-data-[speakers=inside]/dialogue:justify-self-start group-data-[speakers=inside]/dialogue:px-4 group-data-[speakers=inside]/dialogue:pt-3 group-data-[speakers=inside]/dialogue:font-bold group-data-[speakers=inside]/dialogue:text-(--dialogue-speaker)';
 const INSIDE_BUBBLE =
   'group-data-[speakers=inside]/dialogue:[grid-area:turn] group-data-[speakers=inside]/dialogue:pt-8';
 

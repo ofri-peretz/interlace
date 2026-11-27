@@ -4,9 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prebuild": "node scripts/build-registry.mjs && node scripts/build-behavior-map.mjs && node scripts/build-concepts.mjs && node scripts/build-tokens.mjs",
+    "prebuild": "node scripts/build-registry.mjs && node scripts/build-behavior-map.mjs && node scripts/build-concepts.mjs && node scripts/build-tokens.mjs && node scripts/build-agent-surface.mjs && node scripts/build-changelog.mjs",
     "build": "next build",
     "build:check": "node scripts/build-registry.mjs --check && node scripts/validate-registry.mjs && node scripts/build-changelog.mjs --check && node scripts/build-agent-surface.mjs --check && node scripts/build-behavior-map.mjs --check && node scripts/build-concepts.mjs --check && node scripts/build-tokens.mjs --check",
+    "generate": "npm run prebuild",
+    "generated:check-pr": "node scripts/check-no-generated-output.mjs",
     "agents:build": "node scripts/build-agent-surface.mjs",
     "agents:check": "node scripts/build-agent-surface.mjs --check",
     "behavior:build": "node scripts/build-behavior-map.mjs",
@@ -24,7 +26,7 @@
     "lint": "npm run lint:eslint && npm run lint:oxlint",
     "lint:eslint": "eslint .",
     "lint:oxlint": "oxlint -c ../../.oxlintrc.json .",
-    "test": "vitest run",
+    "test": "npm run prebuild && vitest run",
     "consumer:check": "node scripts/check-consumer.mjs"
   },
   "dependencies": {

@@ -143,7 +143,7 @@ function SelectContent({
       <BaseSelect.Positioner
         data-slot="select-positioner"
         sideOffset={sideOffset}
-        className={cn('z-50', className)}
+        className={cn('z-popover', className)}
         {...props}
       >
         <SelectScrollUpButton />

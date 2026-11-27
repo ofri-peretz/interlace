@@ -164,7 +164,7 @@ export function SkyBackdrop({
       style={{ background: `linear-gradient(to bottom, ${skyColor}, var(--background))` }}
       {...props}
     >
-      <div ref={layerRef} aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+      <div ref={layerRef} aria-hidden className="pointer-events-none absolute inset-0 z-backdrop">
         {sun !== 'none' ? (
           <span
             data-slot="sky-backdrop-sun"

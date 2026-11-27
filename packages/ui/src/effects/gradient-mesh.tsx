@@ -127,7 +127,7 @@ export function GradientMesh({
         ref={glowsRef}
         aria-hidden
         data-slot="gradient-mesh-glows"
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 z-backdrop"
       >
         {palette.map((color, i) => {
           const path = PATHS[i]!;
