@@ -336,6 +336,15 @@ describe('states and parts', () => {
     expect(screen.getByRole('group').getAttribute('data-state')).toBe('all-done');
   });
 
+  it('keeps its hint at full strength when disabled or full: only the controls dim, so the hint stays readable', () => {
+    const { input } = setup({ disabled: true });
+    const hint = screen.getByText(/drag photos here/i);
+    expect(hint.getAttribute('data-slot')).toBe('photo-upload-hint');
+    for (let el: Element | null = hint; el && el !== document.body; el = el.parentElement) expect(el.className).not.toMatch(/(^|\s)opacity-/);
+    expect(input().disabled).toBe(true);
+    expect(input().closest('label')!.className).toContain('has-[:disabled]:opacity-50');
+  });
+
   it('is disabled and read-only without add, remove or crop', async () => {
     const value: PhotoItem[] = [
       {
