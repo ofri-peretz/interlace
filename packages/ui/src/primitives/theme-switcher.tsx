@@ -120,7 +120,7 @@ const themeSwitcherVariants = cva(
     // `focus-visible:`, never bare `focus:` — a ring painted on mouse clicks
     // trains reviewers to read "ring present" as "keyboard affordance
     // present", and it is the first thing trimmed for looking noisy.
-    'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+    'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden',
     'disabled:pointer-events-none disabled:opacity-50',
     'data-[popup-open]:bg-accent data-[popup-open]:text-accent-foreground',
     '[&_svg]:pointer-events-none [&_svg]:shrink-0',

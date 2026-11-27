@@ -86,7 +86,7 @@ export const FocusRing = React.forwardRef<HTMLSpanElement, FocusRingProps>(
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
         'inline-block rounded-lg',
-        'focus-within:outline-none focus-within:ring-2 focus-within:ring-ring',
+        'focus-within:outline-hidden focus-within:ring-2 focus-within:ring-ring',
         OFFSET[offset],
         'transition-shadow',
         className,

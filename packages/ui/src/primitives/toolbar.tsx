@@ -147,7 +147,7 @@ function ToolbarLink({ className, ...props }: React.ComponentProps<typeof BaseTo
       className={cn(
         // Inherits its colour and is underlined at rest, like Button's
         // `link` variant: a toolbar sits on surfaces the DS does not paint.
-        'rounded-md px-2 py-1 text-sm underline decoration-from-font underline-offset-4 outline-none hover:decoration-2',
+        'rounded-md px-2 py-1 text-sm underline decoration-from-font underline-offset-4 focus-visible:outline-hidden hover:decoration-2',
         'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         className,
       )}
@@ -195,7 +195,7 @@ function ToolbarInput({ className, ...props }: React.ComponentProps<typeof BaseT
     <BaseToolbar.Input
       data-slot="toolbar-input"
       className={cn(
-        'border-input bg-background text-foreground placeholder:text-muted-foreground h-control-sm min-w-0 rounded-lg border px-2.5 text-sm shadow-xs outline-none',
+        'border-input bg-background text-foreground placeholder:text-muted-foreground h-control-sm min-w-0 rounded-lg border px-2.5 text-sm shadow-xs focus-visible:outline-hidden',
         'focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         'disabled:cursor-not-allowed disabled:opacity-50',
         className,

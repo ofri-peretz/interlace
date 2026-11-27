@@ -85,7 +85,7 @@ import {
 export const MIN_VIEWPORT = 320 as const;
 
 const SELECT =
-  'border-input bg-background text-foreground h-control-sm max-w-full min-w-0 rounded-lg border ps-2 pe-1 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  'border-input bg-background text-foreground h-control-sm max-w-full min-w-0 rounded-lg border ps-2 pe-1 text-sm focus-visible:outline-hidden focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 /** A team's colour as a custom property, so a class can paint with it (`bg-(--team)`). */
 const teamStyle = (index: number) => ({ '--team': teamColor(index) }) as React.CSSProperties;

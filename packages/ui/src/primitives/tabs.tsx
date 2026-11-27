@@ -109,7 +109,7 @@ function TabsContent({
       data-slot="tabs-content"
       className={cn(
         // The panel takes focus (Tab from the list lands here), so it shows it.
-        'flex-1 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+        'flex-1 rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         className,
       )}
       {...props}

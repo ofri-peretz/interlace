@@ -163,7 +163,7 @@ function DialogueSuggestions({ className, ...props }: React.ComponentProps<'div'
 }
 
 const SUGGESTION =
-  'border-primary text-primary hover:bg-primary/10 focus-visible:ring-ring inline-flex min-h-control items-center rounded-full border-2 px-4 py-1.5 text-sm font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  'border-primary text-primary hover:bg-primary/10 focus-visible:ring-ring inline-flex min-h-control items-center rounded-full border-2 px-4 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 type DialogueSuggestionProps = React.ComponentProps<'a'> & {
   /**

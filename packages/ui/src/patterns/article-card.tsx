@@ -290,7 +290,7 @@ function CardShell({
       data-slot="article-card"
       data-testid={testId}
       className={cn(
-        'group focus-visible:ring-ring block h-full rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+        'group focus-visible:ring-ring block h-full rounded-xl focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2',
         className,
       )}
     >

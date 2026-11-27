@@ -74,7 +74,7 @@ export const SkipLink = React.forwardRef<HTMLAnchorElement, SkipLinkProps>(
         'focus-visible:bg-background focus-visible:px-4 focus-visible:py-2',
         'focus-visible:text-sm focus-visible:font-medium focus-visible:text-foreground',
         'focus-visible:shadow-lg',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
         className,
       )}
       {...props}

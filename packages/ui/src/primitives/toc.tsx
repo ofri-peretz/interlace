@@ -440,7 +440,7 @@ const TocView = React.forwardRef<HTMLElement, TocProps & TocInternals>(
                         'block rounded-sm py-1.5 pe-2 leading-snug',
                         LEVEL_INDENT[item.level],
                         'text-muted-foreground hover:text-foreground motion-safe:transition-colors motion-safe:duration-(--duration-fast)',
-                        'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                        'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden',
                         'data-[active]:text-foreground data-[active]:font-medium',
                       )}
                     >
@@ -528,7 +528,7 @@ export function TocBar({
           data-slot="toc-bar-trigger"
           className={cn(
             'group/bar flex min-h-12 w-full items-center gap-3 rounded-md px-1 py-1 text-start',
-            'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+            'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden',
           )}
         >
           <span className="flex min-w-0 flex-1 flex-col">
@@ -623,7 +623,7 @@ export function TocPopover({
         className={cn(
           'inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-ui-sm',
           'text-foreground hover:bg-accent hover:text-accent-foreground',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+          'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
           triggerClassName,
         )}
       >

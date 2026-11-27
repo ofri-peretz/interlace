@@ -102,7 +102,7 @@ const PROSE_CASCADE = [
   // Links — primary color, underline-offset for legibility, focus-ring contract.
   '[&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4 [&_a]:decoration-from-font',
   '[&_a:hover]:text-primary [&_a:hover]:opacity-90',
-  '[&_a:focus-visible]:outline-none [&_a:focus-visible]:ring-2 [&_a:focus-visible]:ring-ring [&_a:focus-visible]:ring-offset-2 [&_a:focus-visible]:rounded-sm',
+  '[&_a:focus-visible]:outline-hidden [&_a:focus-visible]:ring-2 [&_a:focus-visible]:ring-ring [&_a:focus-visible]:ring-offset-2 [&_a:focus-visible]:rounded-sm',
 
   // Lists.
   '[&_ul]:my-4 [&_ul]:ps-6 [&_ul]:list-disc',
@@ -133,7 +133,7 @@ const PROSE_CASCADE = [
   // Pairs with the focus-visible ring contract: Prose adds `tabIndex={0}`
   // itself when a block overflows (the sync effect in Prose), so the ring
   // shows on keyboard focus.
-  '[&_pre]:my-6 [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-none [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
+  '[&_pre]:my-6 [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-border [&_pre]:bg-muted [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:font-mono [&_pre]:text-code [&_pre:focus-visible]:outline-hidden [&_pre:focus-visible]:ring-2 [&_pre:focus-visible]:ring-ring [&_pre:focus-visible]:ring-offset-2',
 
   // Tables — an editorial table, not a spreadsheet grid: no cell boxes, no
   // zebra fill, a firm rule under the header and a hairline between rows,
@@ -143,7 +143,7 @@ const PROSE_CASCADE = [
   // alignment (`align` on th/td) is honoured. Block + overflow-x keeps a wide
   // table inside the column (R14), with the same keyboard-focus contract as
   // <pre>.
-  '[&_table]:my-8 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:tabular-nums [&_table:focus-visible]:outline-none [&_table:focus-visible]:ring-2 [&_table:focus-visible]:ring-ring [&_table:focus-visible]:ring-offset-2',
+  '[&_table]:my-8 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:tabular-nums [&_table:focus-visible]:outline-hidden [&_table:focus-visible]:ring-2 [&_table:focus-visible]:ring-ring [&_table:focus-visible]:ring-offset-2',
   '[&_caption]:mb-3 [&_caption]:text-start [&_caption]:text-ui [&_caption]:text-muted-foreground',
   '[&_th]:border-b-2 [&_th]:border-foreground [&_th]:px-3 [&_th]:pt-0 [&_th]:pb-2 [&_th]:align-bottom [&_th]:text-ui [&_th]:font-semibold [&_th]:text-muted-foreground [&_th:not([align])]:text-start',
   '[&_td]:border-b [&_td]:border-border [&_td]:px-3 [&_td]:py-4 [&_td]:align-top',

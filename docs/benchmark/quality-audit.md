@@ -19,6 +19,7 @@ component at once and, where a computer can check it, adds a lock so it stays fi
 | Text size | At 150% text on a 320px phone nothing clips, overlaps or scrolls sideways. |
 | Dark and more contrast | Every token pair holds AA in both schemes; `prefers-contrast: more` reaches AAA on text. |
 | Motion | Every duration and easing is a token a brand can retune; nothing moves under reduced motion. |
+| Forced colours | In Windows Contrast themes every focused control still shows where focus is, in a system colour. |
 | Responsive | Collections answer to their container; chrome answers to the viewport. |
 
 ## Open and closed
@@ -36,6 +37,7 @@ component at once and, where a computer can check it, adds a lock so it stays fi
 | 9 | Dark and more contrast | The AAA promise of `prefers-contrast: more` was measured by axe in light only; the dark scheme with more contrast had token math but no rendered check, and Storybook's late `.dark` class let a check catch colours mid-change | the axe matrix, every component | Closed: a `contrast-more-dark` axe mode (no screenshots; its layout is `contrast-more`'s), and the stage waits for the scheme before measuring. All 220 stories pass |
 | 10 | Motion | Animations started from script (`el.animate`) typed their curves by hand, so a brand that retuned `--ease-enter` or `--ease-move` changed every class but not the calendar's month slide, a game's reveal or a celebration; two components each kept a private copy of the token reader | 25 components across primitives, patterns, games and effects | Closed: a `motion-token` lib item reads `--ease-*` and `--duration-*` from the element that moves, plus `motion-script-token-lock`. Charts remain, with the data components work |
 | 11 | Responsive | Four collections picked their columns from the window: in a 300px column on a wide screen the previous and next links sat as two 138px cards, and two skeletons used other breakpoints than the blocks they stand in for, so the page reflowed when content arrived | prev/next post, guess reveal, recall card, stat strip and prev/next skeletons | Closed: container queries or intrinsic tracks, plus `viewport-track-lock`. Footer and hero are page chrome and stay on the viewport; the network graph stays with the data components work |
+| 12 | Forced colours | Focus rings are box-shadows, and forced colours mode drops box-shadows. Controls also set `outline-none`, which Tailwind v4 made `outline-style: none` in every mode (v3's meaning moved to `outline-hidden`), so a keyboard user in a Contrast theme saw no focus at all | 50 files: buttons, inputs, select, combobox, tabs, switch, slider, menus, toasts, charts, room games | Closed: `focus-visible:outline-hidden`, a 2px system-colour outline on keyboard focus in forced colours only, plus `forced-colors-focus-lock`. Wordmark follows once #283 merges |
 
 ## Out of scope here
 

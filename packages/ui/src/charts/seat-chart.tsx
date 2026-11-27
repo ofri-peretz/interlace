@@ -719,7 +719,7 @@ export const SeatChart = React.forwardRef<HTMLElement, SeatChartProps>(function 
         className={cn(
           '-mx-1.5 flex min-h-target w-[calc(100%+0.75rem)] min-w-0 items-baseline gap-2 rounded-md px-1.5 py-0.5 text-start',
           'hover:bg-muted data-[active]:bg-muted aria-pressed:bg-muted',
-          'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none',
+          'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-hidden',
         )}
       >
         <Swatch className={fillOf(g)} />

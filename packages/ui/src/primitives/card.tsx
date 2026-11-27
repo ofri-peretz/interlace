@@ -181,7 +181,7 @@ type CardLinkProps = React.ComponentProps<'a'> & {
 };
 
 const CARD_LINK =
-  "hover:underline underline-offset-4 focus-visible:outline-none after:absolute after:inset-0 after:rounded-lg after:content-['']";
+  "hover:underline underline-offset-4 focus-visible:outline-hidden after:absolute after:inset-0 after:rounded-lg after:content-['']";
 
 function CardLink({ asChild, className, children, ...props }: CardLinkProps) {
   if (asChild && React.isValidElement(children)) {
