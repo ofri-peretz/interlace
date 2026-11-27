@@ -1,0 +1,364 @@
+{
+  "$comment": "Floors only rise. `node scripts/mutation-ratchet.mjs --check` fails a lower floor, a removed file, or a higher ignoreBudget, against origin/main. Every null is 'recorded when measured': the first full nightly run fills them (`--write`), each floor being that run's per-file score rounded down.",
+  "measured": {
+    "command": null,
+    "date": null,
+    "tool": null,
+    "node": null
+  },
+  "ignoreBudget": null,
+  "files": {
+    "src/games/agenda-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/agenda-sync-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/breakout-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/closer-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/daily.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/dot-vote-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/duel-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/group-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/groups-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/leaderboard-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/note-board-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/order-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/pair-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/picture-reveal-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/pin-drop-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/points-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/prediction-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/progress-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/qr-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/quadrant-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/question-board-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/quiz-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/ranking-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/rating-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/reactions-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/reminder-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/room-goal-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/room-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/share-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/spectrum-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/streak-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/tally-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/team-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/text-safety-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/typed-answer-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/word-cloud-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/commitment-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/data-table-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/interest-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/recap-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/session-plan-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/share-image-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/time-slot-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/patterns/update-feed-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    }
+  }
+}
