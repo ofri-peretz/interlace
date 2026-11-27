@@ -38,6 +38,10 @@
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
+    "registry#test": {
+      "dependsOn": ["^build", "registry#build"],
+      "outputs": ["coverage/**"]
+    },
     "interlace-ui#test": {
       "dependsOn": ["^build", "build"],
       "outputs": ["coverage/**"]
