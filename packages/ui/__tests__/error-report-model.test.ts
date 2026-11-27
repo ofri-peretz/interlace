@@ -141,6 +141,8 @@ describe('toReport', () => {
     expect(trimMessage('abcd', 0)).toBe('…');
     expect(trimStack('a\nb', 2)).toBe('a\nb');
     expect(trimStack('a\nb\nc', 2)).toBe('a\nb');
+    expect(trimStack('a\nb', 3)).toBe('a\nb');
+    expect(trimStack('a', 1)).toBe('a');
   });
 });
 
@@ -213,6 +215,32 @@ describe('createErrorLog', () => {
     log.report('b', 'w');
     log.report('a', 'w');
     expect(log.recent().map((r) => r.count)).toEqual([1, 1, 1]);
+  });
+
+  it('keeps coalescing the newest report when older ones are kept before it', () => {
+    const { log, advance } = fixture();
+    log.report('first', 'w');
+    advance(5000);
+    log.report('second', 'w');
+    advance(10);
+    log.report('second', 'w');
+    expect(log.recent().map((r) => [r.message, r.count])).toEqual([
+      ['first', 1],
+      ['second', 2],
+    ]);
+  });
+
+  it('repeats of a non-fatal report stay non-fatal', () => {
+    const { log } = fixture();
+    log.report('same', 'w');
+    expect(log.report('same', 'w')?.fatal).toBe(false);
+  });
+
+  it('uses its own stack length', () => {
+    const { log } = fixture({ maxStackLines: 2 });
+    const err = new Error('x');
+    err.stack = 'a\nb\nc\nd';
+    expect(log.report(err, 'w')?.stack).toBe('a\nb');
   });
 
   it('keeps fatal once any of the repeats was fatal', () => {
@@ -365,6 +393,32 @@ describe('createErrorLog', () => {
   });
 });
 
+describe('defaultMakeId, in a fresh module', () => {
+  async function fresh() {
+    vi.resetModules();
+    return (await import('../src/lib/error-report-model.js')).defaultMakeId;
+  }
+
+  it('counts from 1: the first id ends in 1, the next in 2', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const make = await fresh();
+    expect(make()).toBe('0000001');
+    expect(make()).toBe('0000002');
+  });
+
+  it('is six random base-36 characters and then the count', async () => {
+    const make = await fresh();
+    vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    expect(make()).toBe(`${Math.floor(0.5 * 36 ** 6).toString(36)}1`);
+    vi.spyOn(Math, 'random').mockReturnValue(0.9999999999);
+    const top = make();
+    expect(top).toHaveLength(7);
+    expect(top.startsWith('zzzzzz')).toBe(true);
+    vi.spyOn(Math, 'random').mockReturnValue(0.000001);
+    expect(make()).toMatch(/^00[0-9a-z]{4}3$/);
+  });
+});
+
 describe('defaultMakeId', () => {
   it('is a base-36 string of at least four characters, and differs each call', () => {
     const ids = new Set(Array.from({ length: 50 }, () => defaultMakeId()));
@@ -448,10 +502,11 @@ describe('parseReports and restore', () => {
   });
 
   it('repairs a missing count and a missing id; ignores a bad stack', () => {
-    const [a, b, c, d, e] = parseReports(
+    const [a, b, neg, c, d, e] = parseReports(
       [
         row({ count: undefined, id: undefined }),
         row({ count: 0 }),
+        row({ count: -4 }),
         row({ count: 1.5 }),
         row({ count: '3', id: '' }),
         row({ stack: 9 }),
@@ -460,6 +515,7 @@ describe('parseReports and restore', () => {
     );
     expect(a).toMatchObject({ count: 1, id: 'made1' });
     expect(b.count).toBe(1);
+    expect(neg.count).toBe(1);
     expect(c.count).toBe(1);
     expect(d).toMatchObject({ count: 1, id: 'made2' });
     expect(e).not.toHaveProperty('stack');
@@ -710,9 +766,9 @@ describe('attachGlobalHandlers', () => {
     attachGlobalHandlers(t.target as never, log);
     t.fire('unhandledrejection', { reason: 'a string reason' });
     t.fire('unhandledrejection', { reason: new Error('an error reason') });
-    expect(log.recent().map((r) => [r.where, r.message])).toEqual([
-      ['unhandled rejection', 'a string reason'],
-      ['unhandled rejection', 'an error reason'],
+    expect(log.recent().map((r) => [r.where, r.message, r.fatal])).toEqual([
+      ['unhandled rejection', 'a string reason', false],
+      ['unhandled rejection', 'an error reason', false],
     ]);
   });
 
