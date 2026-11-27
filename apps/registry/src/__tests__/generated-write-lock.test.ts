@@ -10,9 +10,51 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it, vi } from 'vitest';
 
 import { writeGenerated, writeGeneratedSync } from '../../scripts/lib/write-generated.mjs';
+
+/**
+ * A write that pauses halfway, so the test can look at the target file at the one moment a reader
+ * could catch it torn. No clock and no loop: while `target` is set, every write to ANY path goes
+ * in two halves, and between them the target is read and recorded. A writer that goes through a
+ * temp file leaves the target whole at that moment; one that writes the target itself does not.
+ */
+const probe = vi.hoisted(() => ({ target: '', seen: [] as string[] }));
+
+vi.mock('node:fs/promises', async (importOriginal) => {
+  const real = await importOriginal<typeof import('node:fs/promises')>();
+  return {
+    ...real,
+    writeFile: async (path: string, data: string, enc: BufferEncoding) => {
+      if (!probe.target) return real.writeFile(path, data, enc);
+      const half = Math.floor(data.length / 2);
+      await real.writeFile(path, data.slice(0, half), enc);
+      probe.seen.push(await real.readFile(probe.target, 'utf8').catch(() => '<missing>'));
+      await real.appendFile(path, data.slice(half), enc);
+    },
+  };
+});
+
+vi.mock('node:fs', async (importOriginal) => {
+  const real = await importOriginal<typeof import('node:fs')>();
+  return {
+    ...real,
+    writeFileSync: (path: string, data: string, enc: BufferEncoding) => {
+      if (!probe.target) return real.writeFileSync(path, data, enc);
+      const half = Math.floor(data.length / 2);
+      real.writeFileSync(path, data.slice(0, half), enc);
+      let now = '<missing>';
+      try {
+        now = real.readFileSync(probe.target, 'utf8');
+      } catch {
+        /* the target does not exist yet */
+      }
+      probe.seen.push(now);
+      real.appendFileSync(path, data.slice(half), enc);
+    },
+  };
+});
 
 /**
  * The pre-push runs `registry#build` (whose prebuild regenerates public/) at the
@@ -68,21 +110,39 @@ describe('writeGenerated', () => {
     expect(readdirSync(join(dir, 'nested'))).toEqual(['changed.json']);
   });
 
-  it('never shows a reader a partial file while it rewrites', async () => {
-    const file = join(dir, 'big.json');
-    const versions = ['a', 'b'].map((c) => `${JSON.stringify(c.repeat(2_000_000))}\n`);
-    await writeGenerated(file, versions[0]);
-    let writing = true;
-    const seen = new Set<number>();
-    const reader = (async () => {
-      while (writing) {
-        seen.add(readFileSync(file, 'utf8').length);
-        await new Promise((r) => setImmediate(r));
-      }
-    })();
-    for (let i = 1; i <= 20; i++) await writeGenerated(file, versions[i % 2]);
-    writing = false;
-    await reader;
-    expect([...seen]).toEqual([versions[0].length]);
+  const OLD = `${JSON.stringify('a'.repeat(1000))}\n`;
+  const NEW = `${JSON.stringify('b'.repeat(1000))}\n`;
+
+  it.each([
+    ['writeGenerated', (f: string, c: string) => writeGenerated(f, c)],
+    ['writeGeneratedSync', async (f: string, c: string) => writeGeneratedSync(f, c)],
+  ])('%s: halfway through a rewrite the target is still the whole old file', async (_name, write) => {
+    const file = join(dir, `${_name}.json`);
+    await write(file, OLD);
+    probe.target = file;
+    probe.seen = [];
+    try {
+      await write(file, NEW);
+    } finally {
+      probe.target = '';
+    }
+    expect(probe.seen).toEqual([OLD]);
+    expect(readFileSync(file, 'utf8')).toBe(NEW);
+  });
+
+  it.each([
+    ['writeGenerated', (f: string, c: string) => writeGenerated(f, c)],
+    ['writeGeneratedSync', async (f: string, c: string) => writeGeneratedSync(f, c)],
+  ])('%s: a file written for the first time does not exist until it is whole', async (_name, write) => {
+    const file = join(dir, `first-${_name}.json`);
+    probe.target = file;
+    probe.seen = [];
+    try {
+      await write(file, NEW);
+    } finally {
+      probe.target = '';
+    }
+    expect(probe.seen).toEqual(['<missing>']);
+    expect(readFileSync(file, 'utf8')).toBe(NEW);
   });
 });
