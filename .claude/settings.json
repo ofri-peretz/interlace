@@ -112,12 +112,8 @@
       }
     ]
   },
-  "enabledMcpjsonServers": [
-    "codegraph"
-  ],
+  "enabledMcpjsonServers": ["codegraph"],
   "permissions": {
-    "allow": [
-      "mcp__codegraph__codegraph_explore"
-    ]
+    "allow": ["mcp__codegraph__codegraph_explore"]
   }
 }
