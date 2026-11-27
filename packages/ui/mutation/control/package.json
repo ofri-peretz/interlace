@@ -1,0 +1,6 @@
+{
+  "name": "mutation-control",
+  "private": true,
+  "type": "module",
+  "description": "The mutation gate's control. This file makes this folder the project root for `npx oxmutate`: npx runs from the nearest package.json, which without it is packages/ui, so the control mutated the whole room suite and ran out of time in CI."
+}

@@ -1,0 +1,11 @@
+{
+  "$comment": "Mutation testing of the room and game logic. `mutate` is the scope in mutation/scope.json (keep them equal: the ratchet's scope lock reads the file, oxmutate reads this). The gate is the per-file floor in .sdlc/bands, not `thresholds.break`. oxmutate runs the project's own Vitest and switches coverage off for its runs itself, so vitest.config.ts is untouched.",
+  "mutate": [
+    "src/games/*-model.ts",
+    "src/games/daily.ts",
+    "src/patterns/*-model.ts"
+  ],
+  "thresholds": { "high": 90, "low": 70, "break": 0 },
+  "reporters": ["clear-text", "json", "html", "sarif"],
+  "coverageAnalysis": "perTest"
+}
