@@ -97,6 +97,10 @@ describe('signInHref', () => {
     expect(signInHref('/sign-in/', '/sign-in')).toBe('/sign-in/');
     expect(signInHref('/sign-in', '/sign-in?next=%2Fa')).toBe('/sign-in');
     expect(signInHref('/', '/')).toBe('/');
+    expect(signInHref('/a/b', '/a/b///')).toBe('/a/b');
+    expect(signInHref('/a/b///', '/a/b')).toBe('/a/b///');
+    expect(signInHref('/a/b', '/a/b/c/')).toBe('/a/b?next=%2Fa%2Fb%2Fc%2F');
+    expect(signInHref('/sign-in', '/sign-in#top')).toBe('/sign-in');
   });
   it('carries the page, encoded, with its query and hash', () => {
     expect(signInHref('/sign-in', '/a/b?x=1&y=2#top')).toBe('/sign-in?next=%2Fa%2Fb%3Fx%3D1%26y%3D2%23top');
