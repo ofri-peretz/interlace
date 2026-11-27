@@ -1778,6 +1778,36 @@
     "previewDark": null,
     "skeleton": null
   },
+  "photo-upload": {
+    "title": "Blocks/PhotoUpload",
+    "storyIds": [
+      "blocks-photoupload--default",
+      "blocks-photoupload--empty",
+      "blocks-photoupload--full",
+      "blocks-photoupload--manual",
+      "blocks-photoupload--alt-text",
+      "blocks-photoupload--disabled",
+      "blocks-photoupload--read-only",
+      "blocks-photoupload--with-crop",
+      "blocks-photoupload--mobile-320",
+      "blocks-photoupload--rtl",
+      "blocks-photoupload--file-drop-only"
+    ],
+    "preview": "blocks-photoupload--default",
+    "previewDark": null,
+    "skeleton": null
+  },
+  "photo-upload-crop": {
+    "title": "Blocks/PhotoUploadCrop",
+    "storyIds": [
+      "blocks-photouploadcrop--default",
+      "blocks-photouploadcrop--round",
+      "blocks-photouploadcrop--free-aspect"
+    ],
+    "preview": "blocks-photouploadcrop--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "picture-reveal": {
     "title": "Games/PictureReveal",
     "storyIds": [
