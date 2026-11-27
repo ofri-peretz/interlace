@@ -576,6 +576,14 @@
       "types": "./dist/games/agenda.d.ts",
       "default": "./dist/games/agenda.js"
     },
+    "./games/agenda-sync-model": {
+      "types": "./dist/games/agenda-sync-model.d.ts",
+      "default": "./dist/games/agenda-sync-model.js"
+    },
+    "./games/use-agenda-sync": {
+      "types": "./dist/games/use-agenda-sync.d.ts",
+      "default": "./dist/games/use-agenda-sync.js"
+    },
     "./games/groups-model": {
       "types": "./dist/games/groups-model.d.ts",
       "default": "./dist/games/groups-model.js"
@@ -739,6 +747,38 @@
     "./games/duel": {
       "types": "./dist/games/duel.d.ts",
       "default": "./dist/games/duel.js"
+    },
+    "./games/group-model": {
+      "types": "./dist/games/group-model.d.ts",
+      "default": "./dist/games/group-model.js"
+    },
+    "./games/team-model": {
+      "types": "./dist/games/team-model.d.ts",
+      "default": "./dist/games/team-model.js"
+    },
+    "./games/team-board": {
+      "types": "./dist/games/team-board.d.ts",
+      "default": "./dist/games/team-board.js"
+    },
+    "./games/breakout-model": {
+      "types": "./dist/games/breakout-model.d.ts",
+      "default": "./dist/games/breakout-model.js"
+    },
+    "./games/breakout-room": {
+      "types": "./dist/games/breakout-room.d.ts",
+      "default": "./dist/games/breakout-room.js"
+    },
+    "./games/pair-model": {
+      "types": "./dist/games/pair-model.d.ts",
+      "default": "./dist/games/pair-model.js"
+    },
+    "./games/pair-talk": {
+      "types": "./dist/games/pair-talk.d.ts",
+      "default": "./dist/games/pair-talk.js"
+    },
+    "./games/room-clock": {
+      "types": "./dist/games/room-clock.d.ts",
+      "default": "./dist/games/room-clock.js"
     },
     "./charts/delta": {
       "types": "./dist/charts/delta.d.ts",

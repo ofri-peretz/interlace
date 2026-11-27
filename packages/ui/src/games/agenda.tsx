@@ -136,21 +136,28 @@ const PACE: NonNullable<AgendaLabels['pace']> = ({ drift, endsAt }) => {
 };
 
 /** The clock for a state, re-read on each whole second while it runs. */
-function useAgendaClock(items: readonly AgendaItem[], state: AgendaState, frozen?: number): AgendaStatus {
-  const [now, setNow] = React.useState(() => Date.now());
+function useAgendaClock(
+  items: readonly AgendaItem[],
+  state: AgendaState,
+  frozen?: number,
+  clock: () => number = Date.now,
+): AgendaStatus {
+  const read = React.useRef(clock);
+  read.current = clock;
+  const [now, setNow] = React.useState(() => clock());
   const ticking = frozen === undefined && state.current >= 0 && state.current < items.length && state.pausedAt === null;
   React.useEffect(() => {
-    setNow(Date.now());
+    setNow(read.current());
     if (!ticking || state.startedAt === null) return;
     const startedAt = state.startedAt;
     let timer: ReturnType<typeof setTimeout>;
     const tick = () => {
-      const t = Date.now();
+      const t = read.current();
       setNow(t);
       const into = (t - startedAt) % 1000;
       timer = setTimeout(tick, 1000 - into + 5);
     };
-    timer = setTimeout(tick, 1000 - ((Date.now() - startedAt) % 1000) + 5);
+    timer = setTimeout(tick, 1000 - ((read.current() - startedAt) % 1000) + 5);
     return () => clearTimeout(timer);
   }, [ticking, state.startedAt]);
   return agendaStatus(items, state, frozen ?? (ticking ? now : (state.pausedAt ?? now)));
@@ -256,6 +263,11 @@ type AgendaProps = Omit<React.ComponentProps<'section'>, 'children'> & {
   onEvent: (event: AgendaEvent) => void;
   /** Show the session at this moment and stop the clock: a recap, a print view, a test. */
   frozenAt?: number;
+  /**
+   * The clock the presenter's events are stamped with and the countdown reads. A second screen passes the
+   * controlling window's clock (`useAgendaSync().now`) so both agree. @default Date.now
+   */
+  now?: () => number;
   /** Presentation-remote keys (Page Up/Down, arrows, p). @default false */
   shortcuts?: boolean;
   locale?: string;
@@ -267,6 +279,7 @@ function Agenda({
   state,
   onEvent,
   frozenAt,
+  now: clock = Date.now,
   shortcuts = false,
   locale,
   labels,
@@ -274,7 +287,7 @@ function Agenda({
   ...props
 }: AgendaProps) {
   const reduced = useReducedMotion();
-  const status = useAgendaClock(items, state, frozenAt);
+  const status = useAgendaClock(items, state, frozenAt, clock);
   const announce = useAnnouncements(status, labels);
   const time = React.useMemo(() => new Intl.DateTimeFormat(locale, { timeStyle: 'short' }), [locale]);
   const minutes = labels?.minutes ?? ((m: number) => `${m} min`);
@@ -285,6 +298,8 @@ function Agenda({
   send.current = onEvent;
   const where = React.useRef({ phase, index });
   where.current = { phase, index };
+  const stamp = React.useRef(clock);
+  stamp.current = clock;
 
   React.useEffect(() => {
     if (!shortcuts) return;
@@ -293,7 +308,7 @@ function Agenda({
       if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
       if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
       const { phase: p, index: i } = where.current;
-      const at = Date.now();
+      const at = stamp.current();
       if (e.key === 'PageDown' || e.key === 'ArrowRight') {
         e.preventDefault();
         send.current(p === 'before' ? { type: 'start', at } : { type: 'next', from: i, at });
@@ -378,7 +393,7 @@ function Agenda({
 
       <div data-slot="agenda-controls" className="flex flex-wrap gap-2">
         {phase === 'before' ? (
-          <Button size="lg" disabled={items.length === 0} onClick={() => onEvent({ type: 'start', at: Date.now() })}>
+          <Button size="lg" disabled={items.length === 0} onClick={() => onEvent({ type: 'start', at: clock() })}>
             <Play aria-hidden />
             {labels?.start ?? 'Start'}
           </Button>
@@ -387,7 +402,7 @@ function Agenda({
             <Button
               variant="outline"
               disabled={index < 1}
-              onClick={() => onEvent({ type: 'back', from: index, at: Date.now() })}
+              onClick={() => onEvent({ type: 'back', from: index, at: clock() })}
             >
               <ChevronLeft aria-hidden className="rtl:rotate-180" />
               {labels?.back ?? 'Back'}
@@ -396,7 +411,7 @@ function Agenda({
               <>
                 <Button
                   variant="outline"
-                  onClick={() => onEvent({ type: phase === 'paused' ? 'resume' : 'pause', at: Date.now() })}
+                  onClick={() => onEvent({ type: phase === 'paused' ? 'resume' : 'pause', at: clock() })}
                 >
                   {phase === 'paused' ? <Play aria-hidden /> : <Pause aria-hidden />}
                   {phase === 'paused' ? (labels?.resume ?? 'Resume') : (labels?.pause ?? 'Pause')}
@@ -405,7 +420,7 @@ function Agenda({
                   <Plus aria-hidden />
                   {labels?.extend ?? 'Add a minute'}
                 </Button>
-                <Button className="ms-auto" onClick={() => onEvent({ type: 'next', from: index, at: Date.now() })}>
+                <Button className="ms-auto" onClick={() => onEvent({ type: 'next', from: index, at: clock() })}>
                   {isLast ? (labels?.finish ?? 'Finish') : (labels?.forward ?? 'Next')}
                   <ChevronRight aria-hidden className="rtl:rotate-180" />
                 </Button>
@@ -464,6 +479,8 @@ type AgendaNowProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   state: AgendaState;
   /** Show the session at this moment and stop the clock. */
   frozenAt?: number;
+  /** The clock the countdown reads. @default Date.now */
+  now?: () => number;
   /** Hide the time left from the room. @default true */
   showTime?: boolean;
   /** `stage` for a shared screen. @default 'default' */
@@ -475,6 +492,7 @@ function AgendaNow({
   items,
   state,
   frozenAt,
+  now: clock = Date.now,
   showTime = true,
   size = 'default',
   labels,
@@ -482,7 +500,7 @@ function AgendaNow({
   ...props
 }: AgendaNowProps) {
   const reduced = useReducedMotion();
-  const status = useAgendaClock(items, state, frozenAt);
+  const status = useAgendaClock(items, state, frozenAt, clock);
   const { phase } = status;
   const stage = size === 'stage';
   const title =
