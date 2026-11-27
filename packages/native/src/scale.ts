@@ -48,6 +48,30 @@ export const TYPE = {
 } as const;
 export type TypeRole = keyof typeof TYPE;
 
+export interface TypeStyle {
+  fontSize: number;
+  lineHeight: number;
+  fontWeight: '400' | '600' | '700';
+  letterSpacing: number;
+  font: 'display' | 'text';
+}
+export type TypeRamp = Record<TypeRole, TypeStyle>;
+
+/** The type ramp at a reader's text size: size, line height and tracking grow together. */
+export function scaleType(type: TypeRamp, factor: number): TypeRamp {
+  const out = {} as TypeRamp;
+  for (const role of Object.keys(type) as TypeRole[]) {
+    const r = type[role];
+    out[role] = {
+      ...r,
+      fontSize: Math.round(r.fontSize * factor),
+      lineHeight: Math.round(r.lineHeight * factor),
+      letterSpacing: Math.round(r.letterSpacing * factor * 100) / 100,
+    };
+  }
+  return out;
+}
+
 /**
  * Dynamic Type and Android font scale grow text up to this multiple. Uncapped, a 3.5x setting
  * breaks a game board; capped at 2, body text still reaches 34pt.
