@@ -116,6 +116,8 @@ export default defineConfig({
         // The games' pure cores: day keys, puzzle order, streak arithmetic.
         'src/games/{daily,streak-model,closer-model,share-model,leaderboard-model,tally-model,quiz-model,order-model,qr-model,room-model,duel-model,progress-model,reminder-model,text-safety-model,word-cloud-model,question-board-model,reactions-model,spectrum-model,agenda-model,agenda-sync-model,live-activities-model,groups-model,rating-model,points-model,ranking-model,quadrant-model,typed-answer-model,picture-reveal-model,room-goal-model,prediction-model,dot-vote-model,pin-drop-model,note-board-model,group-model,team-model,breakout-model,pair-model,room-activity-kit,live-collect-model,live-text-model,live-host-model}.ts',
         'src/patterns/update-feed-model.ts',
+        // Photo upload: what a file is, what it says about its owner, the plan, the reducer.
+        'src/patterns/photo-upload-model.ts',
         'src/lib/**/*.{ts,tsx}',
         // The five pure variant/model modules.
         'src/primitives/{button-variants,calendar-model,data-state-model,meter-scale,skeleton-variants}.ts',

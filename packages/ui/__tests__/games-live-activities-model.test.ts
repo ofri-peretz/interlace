@@ -5,11 +5,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  BOARD_KEY,
-  HANDS_KEY,
   RECENT_REACTIONS,
-  REACTIONS_KEY,
-  SPECTRUM_KEY,
   boardActivity,
   handsActivity,
   reactionsActivity,
