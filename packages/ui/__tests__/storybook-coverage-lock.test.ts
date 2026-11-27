@@ -46,6 +46,9 @@ const NON_COMPONENT_FILES = new Set([
   // Calendar's pure date arithmetic (`YYYY-MM-DD` days, the month grid, the
   // grid's keyboard moves). Proved by `calendar.test.tsx`, not by a story.
   'calendar-model.ts',
+  // FileDrop's pick-and-drop rules (accept, size, count) and byte sizes.
+  // Proved by `file-drop.test.tsx`, not by a story.
+  'file-model.ts',
 ]);
 
 const kebabToPascal = (name: string) =>
