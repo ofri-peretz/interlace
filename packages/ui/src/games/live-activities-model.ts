@@ -54,7 +54,7 @@ const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'obj
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
 /** A key that is safe to use on a plain object (`__proto__` would set its prototype). */
 const safe = (k: string) => k !== '__proto__';
-const isStr = (v: unknown, max = 200): v is string => typeof v === 'string' && v.length > 0 && v.length <= max;
+const isStr = (v: unknown, max: number): v is string => typeof v === 'string' && v.length > 0 && v.length <= max;
 
 /** `submit` for `key`: what a phone (or the host) sends. `id` must be unique per move. */
 export function submitEvent(
@@ -128,7 +128,7 @@ export function readBoard(room: Pick<RoomState, 'shared' | 'players'> | null | u
 /** The board as an activity. `rules` are the text rules and limits (see `BoardRules`). */
 export function boardActivity(rules: BoardRules = {}): ActivityReducer {
   return (slice, action, ctx) => {
-    if (!isRecord(action) || typeof action.type !== 'string') return { refuse: 'bad-action' };
+    if (!isRecord(action)) return { refuse: 'bad-action' };
     const board = decodeBoard(slice);
     if (action.type === 'begin') {
       if (!ctx.host) return { refuse: 'not-host' };
@@ -136,7 +136,7 @@ export function boardActivity(rules: BoardRules = {}): ActivityReducer {
     }
     if (!board) return { refuse: 'wrong-phase' };
     let event: BoardEvent;
-    if (PLAYER_BOARD.has(action.type)) {
+    if (PLAYER_BOARD.has(action.type as string)) {
       if (ctx.host) return { refuse: 'bad-action' };
       if (action.type === 'ask') {
         if (typeof action.text !== 'string') return { refuse: 'bad-action' };
@@ -145,7 +145,7 @@ export function boardActivity(rules: BoardRules = {}): ActivityReducer {
         if (!isStr(action.id, 64)) return { refuse: 'bad-action' };
         event = { type: action.type as 'vote' | 'unvote', id: action.id, by: ctx.playerId };
       }
-    } else if (HOST_BOARD.has(action.type)) {
+    } else if (HOST_BOARD.has(action.type as string)) {
       if (!ctx.host) return { refuse: 'not-host' };
       if (action.type === 'moderate' || action.type === 'open') {
         if (typeof action.on !== 'boolean') return { refuse: 'bad-action' };
@@ -217,12 +217,13 @@ export function reactionsActivity(options: ReactionsOptions): ActivityReducer {
   const { kinds, ...limits } = options;
   const empty = (): ReactionsState => ({ totals: Object.fromEntries(kinds.map((k) => [k, 0])), recent: [], n: 0, budget: {} });
   return (slice, action, ctx) => {
-    if (!isRecord(action) || typeof action.type !== 'string') return { refuse: 'bad-action' };
+    if (!isRecord(action)) return { refuse: 'bad-action' };
     if (action.type === 'start' || action.type === 'clear') return ctx.host ? { slice: empty() } : { refuse: 'not-host' };
     if (action.type !== 'react' || ctx.host) return { refuse: 'bad-action' };
     const state = decodeReactions(slice);
     if (!state) return { refuse: 'wrong-phase' };
-    if (typeof action.kind !== 'string' || !kinds.includes(action.kind)) return { refuse: 'bad-action' };
+    const kind = action.kind as string; // anything that is not one of `kinds` (a number, say) is not in the list
+    if (!kinds.includes(kind)) return { refuse: 'bad-action' };
     const spent = allowReaction(state.budget, ctx.playerId, ctx.at, limits);
     if (!spent.ok) return { refuse: 'rate-limited' };
     // Only players with a time in the window stay in the budget, so it does not grow with the room's history.
@@ -235,8 +236,8 @@ export function reactionsActivity(options: ReactionsOptions): ActivityReducer {
     const n = state.n + 1;
     return {
       slice: {
-        totals: { ...state.totals, [action.kind]: (state.totals[action.kind] ?? 0) + 1 },
-        recent: [...state.recent, { id: `r${n}`, kind: action.kind, by: ctx.playerId, at: ctx.at }].slice(-RECENT_REACTIONS),
+        totals: { ...state.totals, [kind]: (state.totals[kind] ?? 0) + 1 },
+        recent: [...state.recent, { id: `r${n}`, kind, by: ctx.playerId, at: ctx.at }].slice(-RECENT_REACTIONS),
         n,
         budget,
       } satisfies ReactionsState,
@@ -259,7 +260,7 @@ function decodeHands(raw: unknown): HandState | null {
       hands.push(r);
     }
   }
-  return { hands, speaking: raw.speaking === null ? null : hand(raw.speaking) };
+  return { hands, speaking: hand(raw.speaking) };
 }
 
 /** The raised hands, without anyone no longer in the room. Null before the host starts them. */
@@ -275,7 +276,7 @@ export function readHands(room: Pick<RoomState, 'shared' | 'players'> | null | u
 
 /** Raised hands as an activity: the host starts, calls, finishes and clears; a phone raises and lowers its own. */
 export const handsActivity: ActivityReducer = (slice, action, ctx) => {
-  if (!isRecord(action) || typeof action.type !== 'string') return { refuse: 'bad-action' };
+  if (!isRecord(action)) return { refuse: 'bad-action' };
   if (action.type === 'start') return ctx.host ? { slice: createHands() } : { refuse: 'not-host' };
   const state = decodeHands(slice);
   if (!state) return { refuse: 'wrong-phase' };
@@ -334,7 +335,7 @@ export function readSpectrum(
 /** The spectrum as an activity: the host starts, closes and clears it; a phone places its own dot. */
 export function spectrumActivity(options: SpectrumOptions = {}): ActivityReducer {
   return (slice, action, ctx) => {
-    if (!isRecord(action) || typeof action.type !== 'string') return { refuse: 'bad-action' };
+    if (!isRecord(action)) return { refuse: 'bad-action' };
     if (action.type === 'start' || action.type === 'clear') {
       return ctx.host ? { slice: { placed: {}, open: true } satisfies SpectrumState } : { refuse: 'not-host' };
     }
