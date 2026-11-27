@@ -27,12 +27,12 @@ concurrency:
 
 jobs:
   ui:
-    uses: ofri-peretz/ui-nightly/.github/workflows/nightly.yml@591d0d52789ea6c93bb9ad26e755d40c1231bcd1 # v1.0.1
+    uses: ofri-peretz/ui-nightly/.github/workflows/nightly.yml@4172bff64331b6fe408c690c1ddc03dff419d7df # v1.0.2
     permissions:
       contents: write
       issues: write
     with:
-      tool-ref: 591d0d52789ea6c93bb9ad26e755d40c1231bcd1
+      tool-ref: 4172bff64331b6fe408c690c1ddc03dff419d7df
       node-version: '24'
       build-command: npx turbo run build-storybook --filter=@interlace/storybook
       update-baselines: ${{ inputs.update-baselines || false }}
