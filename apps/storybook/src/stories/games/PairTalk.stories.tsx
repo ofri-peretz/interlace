@@ -92,7 +92,9 @@ export const Card: Story = {
 export const CardGroupOfThree: Story = {
   render: () => {
     const room = pairedRoom();
-    const trio = JSON.parse(JSON.stringify(room.shared!.pairs)).pairs.find((p: { members: string[] }) => p.members.length === 3).members[0];
+    const trio = JSON.parse(JSON.stringify(room.shared!.pairs)).pairs.find(
+      (p: { members: string[] }) => p.members.length === 3,
+    ).members[0];
     return (
       <div className="max-w-96">
         <PairCard room={room} selfId={trio} now={now} />
@@ -118,7 +120,15 @@ function Host({ transport }: { transport: RoomTransport }) {
   if (!room) return null;
   return (
     <section aria-label="Host screen">
-      <PairHost room={room} send={send} prompts={CARDS} now={clock} random={seededRandom(2)} />
+      {/* Two pair-talk regions on one page each need their own name, as a host and a phone would in one app. */}
+      <PairHost
+        room={room}
+        send={send}
+        prompts={CARDS}
+        now={clock}
+        random={seededRandom(2)}
+        labels={{ name: 'Pair talk, host' }}
+      />
     </section>
   );
 }
@@ -130,9 +140,13 @@ function Phone({ transport }: { transport: RoomTransport }) {
   return (
     <section aria-label="Avery's phone">
       {joined ? (
-        <PairCard room={room} selfId="p0" now={clock} />
+        <PairCard room={room} selfId="p0" now={clock} labels={{ name: 'Avery’s pair talk' }} />
       ) : (
-        <button type="button" className="bg-primary text-primary-foreground rounded-lg px-4 py-2" onClick={() => send({ type: 'join', playerId: 'p0', name: 'Avery' })}>
+        <button
+          type="button"
+          className="bg-primary text-primary-foreground rounded-lg px-4 py-2"
+          onClick={() => send({ type: 'join', playerId: 'p0', name: 'Avery' })}
+        >
           Join as Avery
         </button>
       )}
