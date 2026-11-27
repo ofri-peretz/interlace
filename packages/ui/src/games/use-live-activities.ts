@@ -36,7 +36,7 @@ const uid = () =>
     : `${Date.now().toString(36)}-${(counter++).toString(36)}`;
 
 /** Sends `action` to the activity under `key` as `selfId`, with a fresh id. */
-function useSubmit(api: Pick<UseRoomResult, 'send'>, selfId: string, key: string) {
+export function useSubmit(api: Pick<UseRoomResult, 'send'>, selfId: string, key: string) {
   const send = React.useRef(api.send);
   send.current = api.send;
   return React.useCallback(

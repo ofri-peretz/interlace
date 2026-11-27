@@ -592,6 +592,50 @@
       "types": "./dist/games/use-live-activities.d.ts",
       "default": "./dist/games/use-live-activities.js"
     },
+    "./games/room-activity-kit": {
+      "types": "./dist/games/room-activity-kit.d.ts",
+      "default": "./dist/games/room-activity-kit.js"
+    },
+    "./games/debate-corners-model": {
+      "types": "./dist/games/debate-corners-model.d.ts",
+      "default": "./dist/games/debate-corners-model.js"
+    },
+    "./games/debate-corners": {
+      "types": "./dist/games/debate-corners.d.ts",
+      "default": "./dist/games/debate-corners.js"
+    },
+    "./games/exit-ticket-model": {
+      "types": "./dist/games/exit-ticket-model.d.ts",
+      "default": "./dist/games/exit-ticket-model.js"
+    },
+    "./games/exit-ticket": {
+      "types": "./dist/games/exit-ticket.d.ts",
+      "default": "./dist/games/exit-ticket.js"
+    },
+    "./games/check-in-model": {
+      "types": "./dist/games/check-in-model.d.ts",
+      "default": "./dist/games/check-in-model.js"
+    },
+    "./games/check-in": {
+      "types": "./dist/games/check-in.d.ts",
+      "default": "./dist/games/check-in.js"
+    },
+    "./games/sound-cues-model": {
+      "types": "./dist/games/sound-cues-model.d.ts",
+      "default": "./dist/games/sound-cues-model.js"
+    },
+    "./games/use-sound-cues": {
+      "types": "./dist/games/use-sound-cues.d.ts",
+      "default": "./dist/games/use-sound-cues.js"
+    },
+    "./games/sound-cue-toggle": {
+      "types": "./dist/games/sound-cue-toggle.d.ts",
+      "default": "./dist/games/sound-cue-toggle.js"
+    },
+    "./games/use-workshop-activities": {
+      "types": "./dist/games/use-workshop-activities.d.ts",
+      "default": "./dist/games/use-workshop-activities.js"
+    },
     "./games/groups-model": {
       "types": "./dist/games/groups-model.d.ts",
       "default": "./dist/games/groups-model.js"
