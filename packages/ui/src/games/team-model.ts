@@ -64,7 +64,7 @@ export function decodeTeams(raw: unknown): TeamsState | null {
     teams.push({ id: t.id, name: cleanName(t.name, MAX_NAME) || `Team ${teams.length + 1}` });
   }
   const members = Object.entries(isRecord(raw.members) ? raw.members : {}).filter(
-    ([, team]) => typeof team === 'string' && teams.some((t) => t.id === team),
+    ([id, team]) => id !== '__proto__' && typeof team === 'string' && teams.some((t) => t.id === team),
   ) as [string, string][];
   return { teams, members: Object.fromEntries(members) };
 }
