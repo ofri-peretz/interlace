@@ -57,6 +57,24 @@ function Wired({ start, extra }: { start: RoomState; extra?: Partial<React.Compo
 }
 const stateOut = () => JSON.parse(screen.getByTestId('state').textContent!) as PairsState | null;
 
+describe('PairHost and PairCard on one page', () => {
+  it('are two landmarks with different names, so a page that shows both (the host\'s demo, a teacher\'s second window) has unique landmarks', async () => {
+    const { room } = paired(6);
+    const { container } = render(
+      <>
+        <PairHost room={room} send={() => undefined} prompts={DECK} now={() => NOW} random={seededRandom(2)} />
+        <PairCard room={room} selfId="p0" now={() => NOW} />
+      </>,
+    );
+    const names = screen.getAllByRole('region').map((r) => r.getAttribute('aria-label'));
+    expect(names).toContain('Pair talk');
+    expect(names).toContain('Your pair');
+    expect(new Set(names).size).toBe(names.length);
+    const result = await axe.run(container, { runOnly: ['landmark-unique'] });
+    expect(result.violations).toEqual([]);
+  });
+});
+
 describe('PairHost', () => {
   it('starts pairing for the players who are here, with the time chosen', async () => {
     const send = vi.fn();
