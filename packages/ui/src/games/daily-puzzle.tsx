@@ -25,7 +25,9 @@
  * `rounds` is how many there are and `round` the one in play (1-based).
  * The progress line is a polite live region, so moving on is announced.
  * When `done`, every mark fills and the line says so. Each new round's body
- * rises in once (150ms, `motion-safe:` only).
+ * rises in once (150ms, `motion-safe:` only). The first round does not: it is
+ * what the page opens on, often its largest paint, so it is there at first
+ * paint and only the rounds after it arrive.
  *
  * ## The countdown
  *
@@ -108,6 +110,10 @@ function DailyPuzzle({
   ...props
 }: DailyPuzzleProps) {
   const titleId = React.useId();
+  // The entry transition is for one round giving way to the next. On first paint the
+  // body is the page's content (often its LCP), so it must not start from opacity 0.
+  const [entered, setEntered] = React.useState(false);
+  React.useEffect(() => setEntered(true), []);
   const Heading = `h${headingLevel}` as const;
   const meta: string[] = [];
   if (number !== undefined) {
@@ -202,7 +208,10 @@ function DailyPuzzle({
       <div
         key={done ? 'done' : current}
         data-slot="daily-puzzle-body"
-        className="motion-safe:transition-[translate,opacity] motion-safe:duration-(--duration-base) motion-safe:ease-enter motion-safe:starting:translate-y-2 motion-safe:starting:opacity-0"
+        className={cn(
+          'motion-safe:transition-[translate,opacity] motion-safe:duration-(--duration-base) motion-safe:ease-enter',
+          entered && 'motion-safe:starting:translate-y-2 motion-safe:starting:opacity-0',
+        )}
       >
         {children}
       </div>

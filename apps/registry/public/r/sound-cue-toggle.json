@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sound-cue-toggle",
+  "type": "registry:ui",
+  "title": "Sound Cue Toggle",
+  "description": "The switch for a room's sound cues, and the words for them. Sound is off until a person turns it on (a browser keeps a page silent until a tap, and a hall should not start making noise on its own). Every cue that plays is also written as a plain phrase…",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "games",
+    "game"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/interlace-base.json",
+    "https://ds.interlace.tools/r/cn.json",
+    "https://ds.interlace.tools/r/switch.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/games/sound-cue-toggle.tsx",
+      "target": "components/ui/games/sound-cue-toggle.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/sound-cue-toggle v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/sound-cue-toggle\n// What changed since: https://ds.interlace.tools/c/sound-cue-toggle#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui — SoundCueToggle\n *\n * The switch for a room's sound cues, and the words for them. Sound is off until a person turns it\n * on (a browser keeps a page silent until a tap, and a hall should not start making noise on its\n * own). Every cue that plays is also written as a plain phrase beside the switch (\"Answer\n * revealed\"), announced politely, so a person who cannot hear it still knows it happened.\n *\n * ## Anatomy\n *\n *   SoundCueToggle                   (div — data-slot=\"sound-cue-toggle\", data-state=on|off|unsupported)\n *     ├─ label                       (data-slot=\"sound-cue-label\": the switch and its name)\n *     │    └─ Switch                 (role=\"switch\", Space toggles)\n *     └─ p aria-live                 (data-slot=\"sound-cue-caption\": the last cue in words)\n *\n * Wire it with `useSoundCues`: `<SoundCueToggle {...cues.toggleProps} />`.\n *\n * ## Motion\n *\n * None. A cue is sound, and the caption changes in place.\n *\n * ## MIN_VIEWPORT — 320\n *\n * | Rule | Concept                   | Where in this file                              |\n * | ---- | ------------------------- | ----------------------------------------------- |\n * | R4   | Extends native el         | `div` props                                     |\n * | R6   | data-slot per part        | sound-cue-toggle / -label / -caption            |\n * | R7   | cn + ...rest              | `cn(…, className)` + `{...props}`               |\n * | R14  | Declares min viewport     | `data-min-viewport` + exported const            |\n * | R26  | A11y                      | a named switch; cues written out, announced     |\n */\n\nimport { cn } from '@/lib/utils';\nimport { Switch } from '@/components/ui/switch';\n\nexport const MIN_VIEWPORT = 320 as const;\n\ntype SoundCueToggleProps = Omit<React.ComponentProps<'div'>, 'children' | 'onChange'> & {\n  enabled: boolean;\n  /** False where the browser has no audio: the switch is disabled and says so. @default true */\n  supported?: boolean;\n  onChange: (on: boolean) => void;\n  /** The last cue in words; it is announced when it changes. */\n  caption?: string;\n  labels?: {\n    /** @default 'Sound cues' */\n    name?: string;\n    /** @default 'This browser cannot play sound.' */\n    unsupported?: string;\n  };\n};\n\nfunction SoundCueToggle({ enabled, supported = true, onChange, caption = '', labels, className, ...props }: SoundCueToggleProps) {\n  return (\n    <div\n      data-slot=\"sound-cue-toggle\"\n      data-state={!supported ? 'unsupported' : enabled ? 'on' : 'off'}\n      data-min-viewport={String(MIN_VIEWPORT)}\n      className={cn('grid gap-1', className)}\n      {...props}\n    >\n      <label data-slot=\"sound-cue-label\" className=\"flex min-h-11 items-center gap-3 text-sm font-medium\">\n        <Switch checked={enabled && supported} disabled={!supported} onCheckedChange={(on) => onChange(Boolean(on))} />\n        <span>{labels?.name ?? 'Sound cues'}</span>\n      </label>\n      <p data-slot=\"sound-cue-caption\" aria-live=\"polite\" className=\"text-muted-foreground text-sm empty:hidden\">\n        {supported ? (enabled ? caption : '') : (labels?.unsupported ?? 'This browser cannot play sound.')}\n      </p>\n    </div>\n  );\n}\nSoundCueToggle.displayName = 'SoundCueToggle';\n\nexport { SoundCueToggle };\nexport type { SoundCueToggleProps };\n"
+    }
+  ],
+  "meta": {
+    "tier": "game",
+    "client": true,
+    "minViewport": 320,
+    "loading": false,
+    "version": "1.0.0",
+    "since": "2.2.0"
+  },
+  "docs": "## @interlace/sound-cue-toggle\n\nInstalled to `components/ui/games/sound-cue-toggle.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/games/sound-cue-toggle';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/sound-cue-toggle\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
+}

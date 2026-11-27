@@ -129,6 +129,20 @@ export interface RoomState {
   answers: Record<string, RoomAnswer>;
   /** Points each player won in the last revealed round. */
   lastPoints: Record<string, number>;
+  /**
+   * Room-wide extras the host shares with every screen, by name: team assignments, breakout
+   * groups, pairs (see `team-model`, `breakout-model`, `pair-model`). They ride in the room, so
+   * they inherit its guarantees: the newest `seq` wins, a late joiner and a phone that reconnects
+   * get them with the state, and a host that restores the room (`restoreRoom`) restores them.
+   * Written by the host's `share` event; read with `readShared`, which treats them as untrusted.
+   * Absent until the first `share`.
+   */
+  shared?: Record<string, unknown>;
+  /**
+   * The ids of each player's most recent `submit` events, so a message the network delivers twice
+   * (or a player's own resend) is applied once, and a player can see theirs was taken.
+   */
+  acked?: Record<string, string[]>;
   /** Bumped on every change, so a client keeps only the newest state. */
   seq: number;
 }
@@ -142,7 +156,34 @@ export interface RoomAnswer {
   at: number;
 }
 
+/** Why an activity refuses a move. */
+export type ActivityRefusal = 'not-host' | 'wrong-phase' | 'full' | 'rate-limited' | 'bad-action';
+
+export interface ActivityContext {
+  /** Who made the move: a player's id, or the host's. */
+  playerId: string;
+  /** True when the host made it. */
+  host: boolean;
+  /** When it arrived, in ms (host clock). */
+  at: number;
+  /** Everyone in the room now. */
+  players: readonly RoomPlayer[];
+}
+
+/**
+ * An activity's rule: its slice of `RoomState.shared` (anything, or null before it starts: read it
+ * as untrusted), one move, and who made it. Returns the new slice (null removes it) or why not.
+ * Pure: the host runs it to decide and again to apply, so it must give the same answer twice.
+ */
+export type ActivityReducer = (
+  slice: unknown,
+  action: unknown,
+  ctx: ActivityContext,
+) => { slice: unknown } | { refuse: ActivityRefusal };
+
 export interface RoomSettings {
+  /** The activities this room runs, by the key of their slice. */
+  activities?: Record<string, ActivityReducer>;
   /** The most players the room takes. @default 200 */
   maxPlayers?: number;
   /** The longest name, in characters. @default 24 */
@@ -194,6 +235,27 @@ export type RoomPlayerEvent =
       at?: number;
     }
   | { type: 'leave'; playerId: string }
+  /**
+   * A player's move in an activity that takes input from everyone (a question, a vote, a reaction, a
+   * raised hand, a spot on a line). `key` names the activity (`RoomState.shared[key]`), `action` is
+   * what it takes, and `id` is unique per move: the host applies a move once however often it
+   * arrives. The host may send one too (`playerId` its own id), for what only it may do. Which
+   * moves an activity allows is its reducer's rule (`RoomSettings.activities`).
+   */
+  | {
+      type: 'submit';
+      playerId: string;
+      id: string;
+      key: string;
+      action: unknown;
+      /**
+       * When it arrived, in ms (host clock). `useRoom` stamps it; code that calls `applyRoomEvent`
+       * directly must too. A `submit` without it is refused.
+       */
+      at?: number;
+      /** Send it again until the host's state shows it. @default true. Off for moves that go stale (a reaction). */
+      retry?: boolean;
+    }
   | {
       type: 'answer';
       playerId: string;
@@ -221,7 +283,9 @@ export type RoomHostEvent =
   | { type: 'podium' }
   | { type: 'close' }
   /** Back to the lobby with the same players, scores at zero and the room open again. */
-  | { type: 'restart' };
+  | { type: 'restart' }
+  /** Sets one named extra for every screen (`RoomState.shared`); `value` null removes it. */
+  | { type: 'share'; key: string; value: unknown };
 
 export type RoomEvent = RoomPlayerEvent | RoomHostEvent;
 
@@ -237,7 +301,17 @@ export type RoomRejection =
   | 'name-taken'
   | 'wrong-phase'
   | 'already-answered'
-  | 'unknown-player';
+  | 'unknown-player'
+  /** A `share` with a key that is not a short lowercase name, or a value that is not JSON or too big. */
+  | 'bad-share'
+  /** A `submit` for an activity this room does not run. */
+  | 'unknown-activity'
+  /** A `submit` the activity cannot take (nonsense, or not allowed now). */
+  | 'bad-action'
+  /** A `submit` with an id the host already applied: said nothing to, never counted twice. */
+  | 'duplicate'
+  /** Too many moves too fast from this player, or from the room. */
+  | 'rate-limited';
 
 const HOST_EVENTS = new Set<RoomEvent['type']>([
   'lock',
@@ -249,7 +323,13 @@ const HOST_EVENTS = new Set<RoomEvent['type']>([
   'podium',
   'close',
   'restart',
+  'share',
 ]);
+
+/** Names of `shared` entries: lowercase, digits and dashes, so no key can be `__proto__`. */
+const SHARE_KEY = /^[a-z][a-z0-9-]{0,31}$/;
+/** The most a room's extras may weigh as JSON, in characters: every state message carries them. */
+export const MAX_SHARED_SIZE = 60_000;
 
 /** Which phases each host step may follow. */
 const NEXT: Partial<Record<RoomEvent['type'], readonly RoomPhase[]>> = {
@@ -276,6 +356,42 @@ export function cleanName(name: string, max = 24): string {
 }
 
 const sameName = (a: string, b: string) => a.localeCompare(b, undefined, { sensitivity: 'base' }) === 0;
+
+/** How many ids of a player's `submit` moves the room remembers. */
+export const ACK_KEEP = 16;
+
+type SubmitEvent = Extract<RoomEvent, { type: 'submit' }>;
+
+/** What a `submit` would do, or why it may not: the same call decides and applies. */
+function runSubmit(
+  state: RoomState,
+  event: SubmitEvent,
+  settings: RoomSettings,
+): { slice: unknown } | { refuse: RoomRejection } {
+  if (event.playerId !== state.hostId && !state.players.some((p) => p.id === event.playerId))
+    return { refuse: 'unknown-player' };
+  if (typeof event.id !== 'string' || !event.id || event.id.length > 64 || typeof event.at !== 'number' || !Number.isFinite(event.at))
+    return { refuse: 'bad-action' };
+  if (Object.hasOwn(state.acked ?? {}, event.playerId) && (state.acked as Record<string, string[]>)[event.playerId]!.includes(event.id))
+    return { refuse: 'duplicate' };
+  const reducer = SHARE_KEY.test(event.key) && settings.activities && Object.hasOwn(settings.activities, event.key) ? settings.activities[event.key] : undefined;
+  if (!reducer) return { refuse: 'unknown-activity' };
+  const slice = state.shared && Object.hasOwn(state.shared, event.key) ? state.shared[event.key] : null;
+  let result: ReturnType<ActivityReducer>;
+  try {
+    result = reducer(slice, event.action, { playerId: event.playerId, host: event.playerId === state.hostId, at: event.at, players: state.players });
+  } catch {
+    return { refuse: 'bad-action' };
+  }
+  if ('refuse' in result) return result;
+  const json = JSON.stringify(result.slice ?? null);
+  return json === undefined || json.length > MAX_SHARED_SIZE ? { refuse: 'full' } : result;
+}
+
+function rejectSubmit(state: RoomState, event: SubmitEvent, settings: RoomSettings): RoomRejection | null {
+  const result = runSubmit(state, event, settings);
+  return 'refuse' in result ? result.refuse : null;
+}
 
 /**
  * Why `from` may not apply `event` to `state`, or null when they may. The
@@ -320,6 +436,13 @@ export function rejectRoomEvent(
       return null;
     case 'remove':
       return state.players.some((p) => p.id === event.playerId) ? null : 'unknown-player';
+    case 'submit':
+      return rejectSubmit(state, event, settings);
+    case 'share': {
+      if (!SHARE_KEY.test(event.key)) return 'bad-share';
+      const json = JSON.stringify(event.value);
+      return json === undefined || json.length > MAX_SHARED_SIZE ? 'bad-share' : null;
+    }
     default:
       return null;
   }
@@ -372,7 +495,9 @@ export function applyRoomEvent(
     case 'remove': {
       const { [event.playerId]: _score, ...scores } = state.scores;
       const { [event.playerId]: _answer, ...answers } = state.answers;
+      const { [event.playerId]: _acks, ...acked } = state.acked ?? {};
       return next({
+        acked,
         players: state.players.filter((p) => p.id !== event.playerId),
         removed: [...state.removed, event.playerId],
         scores,
@@ -414,6 +539,19 @@ export function applyRoomEvent(
         startsAt: null,
         endsAt: null,
       });
+    case 'submit': {
+      const result = runSubmit(state, event, settings) as { slice: unknown };
+      const { [event.key]: _old, ...rest } = state.shared ?? {};
+      const mine = Object.hasOwn(state.acked ?? {}, event.playerId) ? (state.acked as Record<string, string[]>)[event.playerId]! : [];
+      return next({
+        shared: result.slice === null ? rest : { ...rest, [event.key]: result.slice },
+        acked: { ...state.acked, [event.playerId]: [...mine, event.id].slice(-ACK_KEEP) },
+      });
+    }
+    case 'share': {
+      const { [event.key]: _old, ...rest } = state.shared ?? {};
+      return next({ shared: event.value === null ? rest : { ...rest, [event.key]: event.value } });
+    }
     case 'restart':
       return next({
         phase: 'lobby',
@@ -560,6 +698,166 @@ export function roomStandings(state: RoomState): RankedEntry[] {
   );
 }
 
+/**
+ * One named extra from `RoomState.shared`, read as untrusted: `decode` gets whatever is there
+ * (anything, from an older version of the app or a bad client) and returns the value or null.
+ * Null too when it is absent, or when `decode` throws, so a screen shows "nothing set" rather
+ * than breaking.
+ */
+export function readShared<T>(
+  state: Pick<RoomState, 'shared'> | null | undefined,
+  key: string,
+  decode: (raw: unknown) => T | null,
+): T | null {
+  const shared = state?.shared;
+  if (!shared || !Object.hasOwn(shared, key)) return null;
+  try {
+    return decode(shared[key]);
+  } catch {
+    return null;
+  }
+}
+
+// --- Keeping a room across a refresh -------------------------------------------------
+
+/**
+ * How far `restoreRoom` moves `seq` ahead. A host that restores a save written just before its
+ * last few changes would otherwise send states the phones already hold newer ones of, and every
+ * phone would ignore them.
+ */
+export const RESTORE_SEQ_JUMP = 1_000;
+
+const PHASES: readonly RoomPhase[] = ['lobby', 'countdown', 'question', 'reveal', 'podium', 'closed'];
+
+const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+const isNum = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+const nullableNum = (v: unknown): number | null | undefined => (v === null ? null : isNum(v) ? v : undefined);
+const isCount = (v: unknown): v is number => isNum(v) && Number.isInteger(v) && v >= 0;
+
+/** A record read from JSON, as plain own properties (a `__proto__` key stays data), values checked. */
+function cleanRecord<T>(raw: unknown, ok: (v: unknown) => T | undefined): Record<string, T> {
+  const out: [string, T][] = [];
+  if (isRecord(raw)) {
+    for (const [k, v] of Object.entries(raw)) {
+      const value = ok(v);
+      if (value !== undefined) out.push([k, value]);
+    }
+  }
+  return Object.fromEntries(out);
+}
+
+/** The room as text, to keep in `localStorage` or on a server, so a host that refreshes can go on. */
+export function serializeRoom(state: RoomState): string {
+  return JSON.stringify(state);
+}
+
+/**
+ * The room from text written by `serializeRoom`, or null when it is not one (absent, damaged, from
+ * another host). Everything is checked and rebuilt, never trusted. Nobody is known to be here yet:
+ * each player comes back `away`, and a phone that is still open says so by itself (it sees itself
+ * away and joins again), so the host never shows someone present who left while it was down.
+ * Scores, answers, rounds, clocks and the room's extras are kept, and `seq` moves ahead by
+ * `RESTORE_SEQ_JUMP` so phones take the restored state as the newest.
+ *
+ * Pass `hostId` to refuse a room saved by someone else.
+ */
+export function restoreRoom(text: string | null | undefined, options: { hostId?: string } = {}): RoomState | null {
+  if (!text) return null;
+  let raw: unknown;
+  try {
+    raw = JSON.parse(text);
+  } catch {
+    return null;
+  }
+  if (!isRecord(raw)) return null;
+  const { code, hostId, phase, players, seq, round } = raw;
+  if (typeof code !== 'string' || !code || typeof hostId !== 'string' || !hostId) return null;
+  if (options.hostId !== undefined && hostId !== options.hostId) return null;
+  if (!PHASES.includes(phase as RoomPhase) || !Array.isArray(players) || !isCount(seq) || !isCount(round)) return null;
+  const seen = new Set<string>();
+  const kept: RoomPlayer[] = [];
+  for (const p of players) {
+    if (!isRecord(p) || typeof p.id !== 'string' || typeof p.name !== 'string') return null;
+    if (seen.has(p.id)) continue;
+    seen.add(p.id);
+    kept.push({ id: p.id, name: p.name, connected: false });
+  }
+  const rounds = raw.rounds === null || raw.rounds === undefined ? null : isCount(raw.rounds) ? raw.rounds : undefined;
+  const startsAt = nullableNum(raw.startsAt ?? null);
+  const endsAt = nullableNum(raw.endsAt ?? null);
+  const codeExpiresAt = nullableNum(raw.codeExpiresAt ?? null);
+  if (rounds === undefined || startsAt === undefined || endsAt === undefined || codeExpiresAt === undefined) return null;
+  const num = (v: unknown) => (isNum(v) ? v : undefined);
+  const answer = (v: unknown) => (isRecord(v) && isNum(v.at) ? { value: v.value, at: v.at } : undefined);
+  const state: RoomState = {
+    code,
+    hostId,
+    phase: phase as RoomPhase,
+    locked: raw.locked === true,
+    codeExpiresAt,
+    players: kept,
+    removed: Array.isArray(raw.removed) ? raw.removed.filter((id): id is string => typeof id === 'string') : [],
+    round,
+    rounds,
+    startsAt,
+    endsAt,
+    prompt: raw.prompt ?? null,
+    solution: raw.solution ?? null,
+    scores: cleanRecord(raw.scores, num),
+    answers: cleanRecord(raw.answers, answer),
+    lastPoints: cleanRecord(raw.lastPoints, num),
+    seq: seq + RESTORE_SEQ_JUMP,
+  };
+  const acked = cleanRecord(raw.acked, (v) =>
+    Array.isArray(v) ? v.filter((id): id is string => typeof id === 'string' && id.length > 0 && id.length <= 64).slice(-ACK_KEEP) : undefined,
+  );
+  if (Object.keys(acked).length) state.acked = acked;
+  if (isRecord(raw.shared)) state.shared = Object.fromEntries(Object.entries(raw.shared).filter(([k]) => SHARE_KEY.test(k)));
+  return state;
+}
+
+/** Where a host keeps its room between page loads. `Storage` fits (`localStorage`, `sessionStorage`). */
+export interface RoomStorage {
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+}
+
+/**
+ * A room kept in `storage` under `key`. Storage that is missing, full or blocked (a private window,
+ * a storage-less embed) never throws: `load` finds nothing and `save` does nothing, and the room
+ * carries on in memory. Call `save` after every change, `clear` when the game ends.
+ */
+export function createRoomStore(
+  storage: RoomStorage | null | undefined,
+  key: string,
+  options: { hostId?: string } = {},
+): { load(): RoomState | null; save(state: RoomState): void; clear(): void } {
+  return {
+    load() {
+      try {
+        return restoreRoom(storage?.getItem(key), options);
+      } catch {
+        return null;
+      }
+    },
+    save(state) {
+      try {
+        storage?.setItem(key, serializeRoom(state));
+      } catch {
+        /* a full or blocked store must not stop the game */
+      }
+    },
+    clear() {
+      try {
+        storage?.removeItem(key);
+      } catch {
+        /* nothing to clear */
+      }
+    },
+  };
+}
+
 // --- Transport ------------------------------------------------------------------
 
 /** What travels between the host and the players. */
@@ -581,6 +879,8 @@ export type RoomMessage =
       to: string;
       event: RoomEvent['type'];
       reason: RoomRejection;
+      /** For a refused `submit`: its id, so the player stops sending that move. */
+      id?: string;
     };
 
 /**
@@ -588,9 +888,9 @@ export type RoomMessage =
  * sender); `subscribe` returns an unsubscribe. Wrap any realtime service in
  * these two functions.
  */
-export interface RoomTransport {
-  send(message: RoomMessage): void;
-  subscribe(listener: (message: RoomMessage) => void): () => void;
+export interface RoomTransport<M = RoomMessage> {
+  send(message: M): void;
+  subscribe(listener: (message: M) => void): () => void;
   /** Optional: release the connection. */
   close?(): void;
 }
@@ -600,16 +900,16 @@ export interface RoomTransport {
  * the next microtask, like a network would deliver them. For tests, demos
  * and a host and players on one screen.
  */
-export function createMemoryRoomHub(): { connect(): RoomTransport } {
-  const clients = new Set<(message: RoomMessage) => void>();
+export function createMemoryRoomHub<M = RoomMessage>(): { connect(): RoomTransport<M> } {
+  const clients = new Set<(message: M) => void>();
   return {
     connect() {
-      const own = new Set<(message: RoomMessage) => void>();
-      const deliver = (message: RoomMessage) => own.forEach((l) => l(message));
+      const own = new Set<(message: M) => void>();
+      const deliver = (message: M) => own.forEach((l) => l(message));
       clients.add(deliver);
       return {
         send(message) {
-          const copy = JSON.parse(JSON.stringify(message)) as RoomMessage;
+          const copy = JSON.parse(JSON.stringify(message)) as M;
           queueMicrotask(() => clients.forEach((c) => c !== deliver && c(copy)));
         },
         subscribe(listener) {
@@ -630,13 +930,13 @@ export function createMemoryRoomHub(): { connect(): RoomTransport } {
  * device that opens the same `name` is in the room. Null where the browser
  * has no BroadcastChannel.
  */
-export function createBroadcastRoomTransport(name: string): RoomTransport | null {
+export function createBroadcastRoomTransport<M = RoomMessage>(name: string): RoomTransport<M> | null {
   if (typeof BroadcastChannel === 'undefined') return null;
   const channel = new BroadcastChannel(name);
   return {
     send: (message) => channel.postMessage(message),
     subscribe(listener) {
-      const handle = (e: MessageEvent<RoomMessage>) => listener(e.data);
+      const handle = (e: MessageEvent<M>) => listener(e.data);
       channel.addEventListener('message', handle);
       return () => channel.removeEventListener('message', handle);
     },

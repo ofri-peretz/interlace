@@ -1,6 +1,6 @@
 {
   "name": "@interlace/native",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Interlace for React Native: the same tokens and craft as @interlace/ui, rendered as native views.",
   "type": "module",
@@ -10,6 +10,7 @@
     ".": "./src/index.ts",
     "./theme-model": "./src/theme-model.ts",
     "./contrast": "./src/contrast.ts",
+    "./reading-prefs": "./src/reading-prefs.ts",
     "./tokens": "./src/tokens.generated.ts"
   },
   "files": [

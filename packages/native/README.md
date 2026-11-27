@@ -36,6 +36,26 @@ const BRAND: ThemeOverrides = {
 
 The overrides take the camelCased `--interlace-*` names (`primaryForeground`, `mutedForeground`).
 
+## Reading settings
+
+A text size and a More contrast mode, the same as the web kit's `useReadingPrefs`. The package stores
+nothing: your app keeps the choice (`serializeReadingPrefs`, `parseReadingPrefs`) and passes it in.
+
+```tsx
+<InterlaceProvider textSize={prefs.textSize} contrast={prefs.contrast} overrides={BRAND}>
+  <TextSizeControl value={prefs.textSize} onChange={(textSize) => save({ ...prefs, textSize })} />
+  <ContrastToggle value={prefs.contrast} onChange={(contrast) => save({ ...prefs, contrast })} />
+</InterlaceProvider>
+```
+
+- **Text size** (100%, 112%, 125%, 150%) multiplies every type role on top of the device's own text size,
+  so a reader who raised it in system settings keeps that. `MAX_FONT_SCALE` still caps the growth.
+- **More contrast** is an AAA palette painted over any theme and any brand: text becomes the
+  foreground (7:1), surfaces a faint tint of it, primary the foreground, status colours darkened,
+  borders and the ring clear. `contrast="system"` follows iOS Increase Contrast; `more` and `normal`
+  override it. A brand may name its own primary pair with `overrides.moreContrast`, and must hold it to
+  `auditPalette(palette, 'AAA')` in its own tests.
+
 ## Performance
 
 - Motion is transform and opacity only, on the UI thread. Under Reduce Motion it becomes a dim, or nothing.

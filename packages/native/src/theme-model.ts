@@ -6,7 +6,8 @@
  * editing a component. `overrides.light` and `overrides.dark` take any colour token (the
  * camelCased `--interlace-*` names), `radius` moves every corner, and `fonts` names the families.
  */
-import { CONTROL, MAX_FONT_SCALE, MOTION, SPACE, TYPE, radii } from './scale';
+import { CONTROL, MAX_FONT_SCALE, MOTION, SPACE, TYPE, radii, scaleType, type TypeRamp } from './scale';
+import { moreContrastPalette, textScaleOf, type MoreContrastBrand, type TextSize } from './reading-prefs';
 import { THEME_PALETTES, type NativeThemeName, type Palette } from './tokens.generated';
 
 export type Scheme = 'light' | 'dark';
@@ -25,6 +26,11 @@ export interface ThemeOverrides {
   /** Base corner in points. */
   radius?: number;
   fonts?: ThemeFonts;
+  /**
+   * The brand's primary pair when More contrast is on, per scheme. Each pair must be measured at
+   * 7:1 on the page (`auditPalette(palette, 'AAA')`); without one, primary is the foreground.
+   */
+  moreContrast?: { light?: MoreContrastBrand; dark?: MoreContrastBrand };
 }
 
 export interface ThemeInput {
@@ -32,6 +38,10 @@ export interface ThemeInput {
   theme?: NativeThemeName;
   scheme: Scheme;
   overrides?: ThemeOverrides;
+  /** The reader's text size, multiplying every type role. @default 'default' */
+  textSize?: TextSize;
+  /** Paint the AAA More contrast palette over the theme and the brand. @default false */
+  moreContrast?: boolean;
 }
 
 export interface Theme {
@@ -40,11 +50,15 @@ export interface Theme {
   colors: Palette;
   space: typeof SPACE;
   radius: ReturnType<typeof radii>;
-  type: typeof TYPE;
+  type: TypeRamp;
   fonts: ThemeFonts;
   motion: typeof MOTION;
   control: typeof CONTROL;
   maxFontScale: number;
+  /** The reader's text size multiplier (1 by default), already applied to `type`. */
+  textScale: number;
+  /** Whether the More contrast palette is painted. */
+  moreContrast: boolean;
 }
 
 /** The scheme to paint: an explicit choice wins; `system` follows the device, light when unknown. */
@@ -59,25 +73,30 @@ export function isNativeThemeName(name: unknown): name is NativeThemeName {
 }
 
 /** The theme a component reads. Unknown override keys are ignored, so a typo cannot add a token. */
-export function createTheme({ theme = 'interlace', scheme, overrides }: ThemeInput): Theme {
+export function createTheme({ theme = 'interlace', scheme, overrides, textSize, moreContrast = false }: ThemeInput): Theme {
   if (!isNativeThemeName(theme)) throw new RangeError(`Unknown Interlace theme: ${String(theme)}`);
   const base = THEME_PALETTES[theme];
-  const colors = { ...base[scheme] } as Palette;
+  let colors = { ...base[scheme] } as Palette;
   const patch = overrides?.[scheme] ?? {};
   for (const key of Object.keys(colors) as (keyof Palette)[]) {
     const value = patch[key];
     if (typeof value === 'string') colors[key] = value;
   }
+  // The reader's request comes last: it outranks the brand, as it does on the web.
+  if (moreContrast) colors = moreContrastPalette(colors, overrides?.moreContrast?.[scheme]);
+  const textScale = textScaleOf(textSize);
   return {
     name: theme,
     scheme,
     colors,
     space: SPACE,
     radius: radii(overrides?.radius ?? base.radius),
-    type: TYPE,
+    type: textScale === 1 ? TYPE : scaleType(TYPE, textScale),
     fonts: { ...overrides?.fonts },
     motion: MOTION,
     control: CONTROL,
     maxFontScale: MAX_FONT_SCALE,
+    textScale,
+    moreContrast,
   };
 }

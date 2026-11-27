@@ -2,6 +2,7 @@
  * DailyPuzzle: the frame around a daily game, and its countdown.
  */
 import * as React from 'react';
+import { renderToString } from 'react-dom/server';
 import { act, cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -33,6 +34,34 @@ describe('DailyPuzzle', () => {
     ]);
     expect(screen.getByText('chip')).toBeTruthy();
     expect(screen.getByText('Round body')).toBeTruthy();
+  });
+
+  it('shows the first round at first paint, and brings later rounds in', () => {
+    const body = (c: HTMLElement) => c.querySelector('[data-slot="daily-puzzle-body"]') as HTMLElement;
+    // The server HTML is the first paint. The first round is what the page opens on (often
+    // its LCP): never from opacity 0.
+    const html = renderToString(
+      <DailyPuzzle title="T" rounds={3} round={1}>
+        <p>one</p>
+      </DailyPuzzle>,
+    );
+    expect(html).toContain('data-slot="daily-puzzle-body"');
+    expect(html).not.toContain('starting:');
+    const { container, rerender } = render(
+      <DailyPuzzle title="T" rounds={3} round={1}>
+        <p>one</p>
+      </DailyPuzzle>,
+    );
+    const first = body(container);
+    rerender(
+      <DailyPuzzle title="T" rounds={3} round={2}>
+        <p>two</p>
+      </DailyPuzzle>,
+    );
+    // The next round is a new element that rises in.
+    expect(body(container)).not.toBe(first);
+    expect(body(container).className).toContain('motion-safe:starting:opacity-0');
+    expect(body(container).className).toContain('motion-safe:starting:translate-y-2');
   });
 
   it('sets the title at the page-title step when it is the page title, and at h3 inside a page', () => {

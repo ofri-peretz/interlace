@@ -31,6 +31,18 @@ function luminance([r, g, b]: RGB): number {
   return 0.2126 * R + 0.7152 * G + 0.0722 * B;
 }
 
+/**
+ * `a` mixed with `b`, `amount` of `a` (0 to 1), channel by channel in sRGB: the same result as CSS
+ * `color-mix(in srgb, a <amount>, b)`. Returns `#rrggbb`. Throws on a value that is not hex.
+ */
+export function mixHex(a: string, b: string, amount: number): string {
+  const ca = parseHex(a);
+  const cb = parseHex(b);
+  if (!ca || !cb) throw new Error(`mixHex: not a hex colour: ${ca ? b : a}`);
+  const channel = (i: number) => Math.round(ca[i] * amount + cb[i] * (1 - amount));
+  return `#${[0, 1, 2].map((i) => channel(i).toString(16).padStart(2, '0')).join('')}`;
+}
+
 /** The WCAG contrast ratio of two hex colours, 1 to 21. Throws on a value that is not hex. */
 export function contrastRatio(a: string, b: string): number {
   const ca = parseHex(a);
@@ -68,9 +80,15 @@ export const CONTRAST_PAIRS: readonly { fg: ColorToken; bg: ColorToken; min: num
 
 export type ContrastFailure = { fg: ColorToken; bg: ColorToken; ratio: number; min: number };
 
-/** Every pair in `CONTRAST_PAIRS` that the palette fails. An empty list is a pass. */
-export function auditPalette(palette: Palette): ContrastFailure[] {
-  return CONTRAST_PAIRS.flatMap(({ fg, bg, min }) => {
+export type ContrastLevel = 'AA' | 'AAA';
+
+/**
+ * Every pair in `CONTRAST_PAIRS` that the palette fails. An empty list is a pass. At `AAA` text
+ * pairs must reach 7:1; a control's outline stays at 3:1, because WCAG sets no higher floor there.
+ */
+export function auditPalette(palette: Palette, level: ContrastLevel = 'AA'): ContrastFailure[] {
+  return CONTRAST_PAIRS.flatMap(({ fg, bg, min: aa }) => {
+    const min = level === 'AAA' && aa === 4.5 ? 7 : aa;
     const ratio = contrastRatio(palette[fg], palette[bg]);
     return ratio + 1e-9 < min ? [{ fg, bg, min, ratio: Math.round(ratio * 100) / 100 }] : [];
   });

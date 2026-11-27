@@ -34,7 +34,7 @@
     "minViewport": 320,
     "loading": false,
     "version": "1.0.0",
-    "since": null
+    "since": "2.0.0"
   },
   "docs": "## @interlace/qr-code\n\nInstalled to `components/ui/games/qr-code.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/games/qr-code';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/qr-code\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
 }

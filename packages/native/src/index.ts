@@ -8,11 +8,20 @@
 export * from './theme-model';
 export * from './contrast';
 export * from './scale';
+export * from './reading-prefs';
 export { COLOR_TOKENS, THEME_PALETTES, type ColorToken, type NativeThemeName, type Palette } from './tokens.generated';
 export { InterlaceProvider, useTheme, useThemedStyles, type InterlaceProviderProps } from './theme';
 export { Text, type TextProps, type TextTone } from './text';
 export { PressableScale, type PressableScaleProps } from './pressable-scale';
 export { Button, type ButtonProps, type ButtonVariant } from './button';
+export {
+  TextSizeControl,
+  ContrastToggle,
+  type TextSizeControlProps,
+  type TextSizeLabels,
+  type ContrastToggleProps,
+} from './reading-settings';
+export { useSystemMoreContrast } from './system-contrast';
 export { Stack, type StackProps } from './stack';
 export { Card, type CardProps, type CardTone } from './card';
 export { Badge, type BadgeProps, type BadgeTone } from './badge';

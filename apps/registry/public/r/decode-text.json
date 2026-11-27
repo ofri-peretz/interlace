@@ -29,7 +29,7 @@
     "minViewport": null,
     "loading": false,
     "version": "3.0.0",
-    "since": null
+    "since": "2.0.0"
   },
   "docs": "## @interlace/decode-text\n\nInstalled to `components/ui/effects/decode-text.tsx`.\n\n```tsx\nimport { /* … */ } from '@/components/ui/effects/decode-text';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/decode-text\n\nRequires the `@interlace/interlace-base` CSS baseline (installed automatically as a registry dependency). For the Interlace look, also add `@interlace/theme`."
 }
