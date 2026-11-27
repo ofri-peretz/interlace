@@ -57,6 +57,13 @@ const FLOWS: readonly Flow[] = [
     parts: ['SocialSignIn'],
     stories: 'blocks/SocialSignIn.stories.tsx',
   },
+  {
+    source: 'patterns/account-menu.tsx',
+    shape: 'flat',
+    name: 'AccountMenu',
+    parts: ['AccountMenu'],
+    stories: 'blocks/AccountMenu.stories.tsx',
+  },
 ];
 
 const read = (path: string) => readFileSync(path, 'utf8');

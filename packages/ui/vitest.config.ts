@@ -118,6 +118,9 @@ export default defineConfig({
         'src/patterns/update-feed-model.ts',
         // Photo upload: what a file is, what it says about its owner, the plan, the reducer.
         'src/patterns/photo-upload-model.ts',
+        // The account control: names and initials, the return-path check, the reducer, the hook, the menu.
+        'src/patterns/{account-menu-model,use-account}.ts',
+        'src/patterns/account-menu.tsx',
         'src/lib/**/*.{ts,tsx}',
         // The five pure variant/model modules.
         'src/primitives/{button-variants,calendar-model,data-state-model,meter-scale,skeleton-variants}.ts',
