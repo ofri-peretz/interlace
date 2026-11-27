@@ -2,6 +2,7 @@
 name: docs-drift
 description: Find docs that no longer match the code in this repo and open a draft PR with the corrections. Weekly via /loop 7d, a scheduled task, or /schedule.
 model: sonnet
+disable-model-invocation: true
 argument-hint: [days back, default 7]
 ---
 

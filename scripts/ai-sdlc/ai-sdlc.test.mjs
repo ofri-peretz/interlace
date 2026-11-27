@@ -114,7 +114,7 @@ test('install reports a user skill that is missing or edited, and none once copi
   const { drift, SKILLS } = await import('./install.mjs');
   const dest = mkdtempSync(join(tmpdir(), 'skills-'));
   assert.deepEqual(drift(dest), SKILLS, 'all missing');
-  for (const n of SKILLS) cpSync(new URL(`../../.claude/skills/${n}`, import.meta.url), join(dest, n), { recursive: true });
+  for (const n of SKILLS) cpSync(new URL(`../../docs/ai-sdlc/skills/${n}`, import.meta.url), join(dest, n), { recursive: true });
   assert.deepEqual(drift(dest), []);
   writeFileSync(join(dest, SKILLS[0], 'SKILL.md'), 'edited by hand');
   assert.deepEqual(drift(dest), [SKILLS[0]]);

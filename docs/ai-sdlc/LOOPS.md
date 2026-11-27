@@ -97,7 +97,7 @@ ship in `hookset` presets, so a repo gets them by adopting hookset.
 The loop skills live here and are installed for every repo on a machine:
 
 ```bash
-npm run ai-sdlc:install           # copies .claude/skills/{ai-sdlc-loop,morning-briefing,pr-review,docs-drift} to ~/.claude/skills
+npm run ai-sdlc:install           # copies docs/ai-sdlc/skills/* to ~/.claude/skills
 npm run ai-sdlc:install -- --check   # exit 1 when a user copy has drifted from this repo
 ```
 
@@ -110,7 +110,7 @@ the Build stage runs on.
 Start with `/loop` in a session to find what works. Promote it to a desktop scheduled task
 when it must survive a restart. Promote it to a `/schedule` routine when it must run with the
 laptop closed ([E-31](EVIDENCE.md#e-31)). Our recurring recipes are skills in
-`.claude/skills/`, so a routine's prompt is one line: "use the `morning-briefing` skill".
+[skills/](skills/), installed to `~/.claude/skills`, so a routine's prompt is one line: "use the `morning-briefing` skill".
 
 | Skill | Cadence | Does |
 | :-- | :-- | :-- |

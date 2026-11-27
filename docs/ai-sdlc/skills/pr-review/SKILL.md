@@ -2,6 +2,7 @@
 name: pr-review
 description: First-pass review of open PRs across ofri-peretz repos — correctness, security, CLAUDE.md rules — posted as one comment per PR. Made for /loop, a scheduled task, or a GitHub-triggered routine.
 model: sonnet
+disable-model-invocation: true
 argument-hint: [repo or PR URL; default every open non-draft PR updated in 24h]
 ---
 

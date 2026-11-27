@@ -2,6 +2,7 @@
 name: morning-briefing
 description: Overnight digest of the ofri-peretz repos — red main CI, new issues, PRs waiting on you. Read-only. Made to run from /loop, a desktop scheduled task, or /schedule.
 model: sonnet
+disable-model-invocation: true
 argument-hint: [hours back, default 24]
 ---
 
