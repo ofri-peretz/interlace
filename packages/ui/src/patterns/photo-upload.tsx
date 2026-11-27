@@ -795,7 +795,7 @@ function PhotoUpload({
         className={cn(
           'border-border bg-muted/40 grid min-h-32 place-items-center gap-2 rounded-lg border border-dashed p-4 text-center motion-safe:transition-colors',
           drag === 'over' && 'border-primary bg-primary/10',
-          (disabled || fullNow) && 'opacity-60',
+          // Only the controls dim (has-[:disabled]:opacity-50 on them): dimming the whole zone took the hint below 4.5:1.
           dropzoneProps?.className,
         )}
       >
