@@ -1,0 +1,67 @@
+/*
+ * @interlace/ui — STRUCTURE / layer: the one z-index scale.
+ *
+ * Layer 3 of 4 (brand → semantics → structure → page). Brand-invariant.
+ *
+ * Every z-index in Interlace is a name from this scale, never a number:
+ * `z-raised`, `z-header`, `z-modal`… A number says nothing about what it
+ * must beat, so two parts that each picked `z-10` tie, and the one later in
+ * the page wins: a card scrolls over the sticky header. A name says which
+ * layer the part belongs to, and the order between layers is decided here,
+ * once. `packages/ui/__tests__/z-index-lock.test.ts` fails a numeric
+ * z-index anywhere in packages/ui/src.
+ *
+ * Two kinds of layer:
+ *
+ *   Inside a component (backdrop, base, raised). These order the parts of
+ *   ONE component: a glow behind its content, a chip over its cover. They
+ *   all sit below `sticky`, so no part of a component can paint over the
+ *   page's chrome. A component that layers several parts puts `isolate` on
+ *   its root, so its layers never interleave with its neighbours'.
+ *
+ *   On the page (sticky and up). These order the page's chrome: sticky
+ *   bars, the header, and everything portalled to <body>. Each step leaves
+ *   room (10 apart) for a consumer's own layer between two of ours.
+ *
+ * Every step is a CSS variable, so an app with its own scale maps ours onto
+ * it in one place: `:root { --z-index-header: 100; }`.
+ *
+ * Tailwind v4 reads `--z-index-*` as the `z-*` namespace, so each name below
+ * is a utility. The numeric `z-10` and friends keep working for the host
+ * app: defining names adds utilities and replaces none.
+ */
+@theme {
+  /* ── Inside a component ──────────────────────────────────────────── */
+
+  /* Decoration painted behind the component's content: glows, grids,
+     meshes, a hover pill. */
+  --z-index-backdrop: -1;
+  /* The component's own content, stated where it must be explicit. */
+  --z-index-base: 0;
+  /* A part lifted over its siblings: a chip over a cover, a control over a
+     stretched link, a dragged item, a band pulled over the one above. */
+  --z-index-raised: 1;
+
+  /* ── On the page ─────────────────────────────────────────────────── */
+
+  /* Sticky bars inside the content: a table-of-contents bar, a frozen
+     column. They pass under the page header. */
+  --z-index-sticky: 10;
+  /* The page's chrome: the top bar, the app header, the bottom tab bar. */
+  --z-index-header: 20;
+  /* Thin indicators drawn over the chrome: the reading progress strand. */
+  --z-index-indicator: 30;
+  /* The dimmed page behind a dialog, sheet or drawer. */
+  --z-index-overlay: 40;
+  /* Dialogs, alert dialogs, sheets and drawers. */
+  --z-index-modal: 50;
+  /* Menus, selects, comboboxes and popovers. Above modal, so a select
+     inside a dialog opens over it. */
+  --z-index-popover: 60;
+  /* Toasts, over an open dialog so a result is never hidden. */
+  --z-index-toast: 70;
+  /* Tooltips, over everything they can describe. */
+  --z-index-tooltip: 80;
+  /* The skip link, the first thing a keyboard reaches, over everything. */
+  --z-index-skip-link: 90;
+}
