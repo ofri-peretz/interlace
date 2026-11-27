@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-report",
+  "type": "registry:lib",
+  "title": "reportError",
+  "description": "@interlace/ui — `reportError(error, where)`, one function every caught failure goes through, with a pluggable reporter, a device-only crash log and global handlers. Sends nothing unless you set a reporter.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "feedback",
+    "util"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/error-report-model.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/lib/error-report.ts",
+      "target": "lib/error-report.ts",
+      "type": "registry:lib",
+      "content": "import {\n  attachGlobalHandlers,\n  createErrorLog,\n  installErrorLog as installOn,\n  type ErrorLog,\n  type ErrorStore,\n} from '@/lib/error-report-model';\n\n// @interlace/error-report v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/error-report\n// What changed since: https://ds.interlace.tools/c/error-report#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui: `reportError`, the one function every caught failure goes through.\n *\n *   import { reportError } from '@interlace/ui/error-report';\n *\n *   try { await save(draft); } catch (error) { reportError(error, 'checkout: save'); }\n *\n * It builds a typed report, keeps the last few in memory, and hands each to a reporter. The\n * default reporter is a development console line and nothing else: no report leaves the device\n * unless the app calls `setReporter` with a function of its own. Nothing here calls `fetch`.\n *\n *   setReporter((report) => crashService.capture(report));   // the whole vendor seam\n *   void installErrorLog(store);                              // keep the last reports on the device\n *   installGlobalHandlers();                                  // browser: error + unhandledrejection\n *\n * This file is the default log as plain functions; `createErrorLog()` (in `error-report-model`)\n * makes another for a test or for an app that wants two. See `ErrorFallback` for the screen.\n */\n\nexport * from '@/lib/error-report-model';\n\n/** The module's own log: one import at every call site. */\nexport const defaultErrorLog: ErrorLog = createErrorLog();\n\nexport const reportError: ErrorLog['report'] = (error, where, fatal) =>\n  defaultErrorLog.report(error, where, fatal);\nexport const recentErrors: ErrorLog['recent'] = () => defaultErrorLog.recent();\nexport const setReporter: ErrorLog['setReporter'] = (next) => defaultErrorLog.setReporter(next);\nexport const restoreRecent: ErrorLog['restore'] = (earlier) => defaultErrorLog.restore(earlier);\nexport const subscribeErrors: ErrorLog['subscribe'] = (listener) =>\n  defaultErrorLog.subscribe(listener);\n\n/** Keep the default log (or `log`) on the device, in the app's own storage. */\nexport function installErrorLog(store: ErrorStore, log: ErrorLog = defaultErrorLog): Promise<void> {\n  return installOn(store, log);\n}\n\n/**\n * Report `error` and `unhandledrejection` on the page (or on `target`). Idempotent; returns the\n * remover. It does not call `preventDefault`, so the browser console still logs. On a server,\n * where there is no `window`, it does nothing.\n */\nexport function installGlobalHandlers(\n  target?: Parameters<typeof attachGlobalHandlers>[0],\n  log: ErrorLog = defaultErrorLog,\n): () => void {\n  const where = target ?? (typeof window === 'undefined' ? undefined : window);\n  return where ? attachGlobalHandlers(where, log) : () => undefined;\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "util",
+    "client": false,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": "2.3.0"
+  },
+  "docs": "## @interlace/error-report\n\nInstalled to `lib/error-report.ts`.\n\n```tsx\nimport { /* … */ } from '@/lib/error-report';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/error-report"
+}

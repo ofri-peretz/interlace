@@ -23,6 +23,8 @@
       " pure cores: day keys, puzzle order, streak arithmetic.\n        ",
       ",\n        ",
       ",\n        // Photo upload: what a file is, what it says about its owner, the plan, the reducer.\n        ",
+      ",\n        // The account control: names and initials, the return-path check, the reducer, the hook, the menu.\n        ",
+      ",\n        ",
       ",\n        ",
       ",\n        // The five pure variant/model modules.\n        ",
       ",\n        // Booking: the slot picker",
@@ -211,6 +213,96 @@
         ],
         "escapeLocked": false
       },
+      "contrast": [
+        {
+          "fg": "muted-foreground",
+          "bg": "background",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy",
+          "ratios": [
+            9.11,
+            11.16,
+            7.82,
+            9.52
+          ],
+          "worst": 7.82,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "muted-foreground",
+          "bg": "card",
+          "kind": "text",
+          "floor": 4.5,
+          "why": "secondary copy in a card",
+          "ratios": [
+            9.41,
+            10.48,
+            8.25,
+            8.64
+          ],
+          "worst": 8.25,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "background",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring (SC 2.4.13)",
+          "ratios": [
+            8.52,
+            11.63,
+            8.39,
+            10.03
+          ],
+          "worst": 8.39,
+          "worstAt": {
+            "theme": "harbor",
+            "scheme": "light"
+          },
+          "passes": true
+        },
+        {
+          "fg": "ring",
+          "bg": "card",
+          "kind": "non-text",
+          "floor": 3,
+          "why": "focus ring inside a card",
+          "ratios": [
+            8.8,
+            10.92,
+            8.86,
+            9.1
+          ],
+          "worst": 8.8,
+          "worstAt": {
+            "theme": "interlace",
+            "scheme": "light"
+          },
+          "passes": true
+        }
+      ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "account-menu": {
+      "sourcePath": "packages/ui/src/patterns/account-menu.tsx",
+      "keyboard": null,
       "contrast": [
         {
           "fg": "muted-foreground",
@@ -8629,6 +8721,45 @@
           "passes": true
         }
       ],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "error-fallback": {
+      "sourcePath": "packages/ui/src/patterns/error-fallback.tsx",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "error-report-model": {
+      "sourcePath": "packages/ui/src/lib/error-report-model.ts",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
+    "error-report": {
+      "sourcePath": "packages/ui/src/lib/error-report.ts",
+      "keyboard": null,
+      "contrast": [],
       "textAlternative": {
         "kind": null,
         "detail": null
@@ -26152,6 +26283,19 @@
         "inGate": false
       }
     },
+    "use-recent-errors": {
+      "sourcePath": "packages/ui/src/lib/use-recent-errors.ts",
+      "keyboard": null,
+      "contrast": [],
+      "textAlternative": {
+        "kind": null,
+        "detail": null
+      },
+      "states": [],
+      "coverage": {
+        "inGate": false
+      }
+    },
     "use-reduced-motion": {
       "sourcePath": "packages/ui/src/lib/use-reduced-motion.ts",
       "keyboard": null,
@@ -26446,8 +26590,8 @@
         }
       ],
       "textAlternative": {
-        "kind": null,
-        "detail": null
+        "kind": "sr-only-copy",
+        "detail": "Ships sr-only copy for what the visual carries by position, colour or icon alone — a label, not a full data equivalent."
       },
       "states": [],
       "coverage": {
