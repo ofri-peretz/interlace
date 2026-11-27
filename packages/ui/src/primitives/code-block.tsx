@@ -252,7 +252,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
               className={cn(
                 'inline-flex items-center gap-2 rounded-lg px-2 py-2',
                 'text-ui-sm text-muted-foreground hover:text-foreground',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                 'transition-colors',
               )}
             >
@@ -275,7 +275,7 @@ const CodeBlock = React.forwardRef<HTMLElement, CodeBlockProps>(
           className={cn(
             'overflow-x-auto p-6',
             'text-code font-mono text-foreground',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset',
+            'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset',
             NOTATION_LINES,
           )}
         >

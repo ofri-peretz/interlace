@@ -77,7 +77,7 @@ const Switch = React.forwardRef<
       data-slot="switch"
       data-min-viewport={String(MIN_VIEWPORT)}
       className={cn(
-        'peer data-[checked]:bg-primary data-[unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-[background-color,border-color,box-shadow] duration-(--duration-base) ease-move outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+        'peer data-[checked]:bg-primary data-[unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-[background-color,border-color,box-shadow] duration-(--duration-base) ease-move focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
         // SC 2.5.8 — transparent 32×24 hit area centred on the 18.4px track.
         "relative before:absolute before:top-1/2 before:start-0 before:h-6 before:w-full before:-translate-y-1/2 before:content-['']",
         className,

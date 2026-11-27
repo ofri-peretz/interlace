@@ -235,7 +235,7 @@ function DrawerContent({ className, children, ...props }: DrawerContentProps) {
           data-direction={direction}
           data-min-viewport={String(MIN_VIEWPORT)}
           className={cn(
-            'bg-background text-foreground relative flex min-h-0 flex-col shadow-lg outline-none',
+            'bg-background text-foreground relative flex min-h-0 flex-col shadow-lg focus-visible:outline-hidden',
             // Opening takes the slow band and leaves in the medium one, faster
             // still after a flick. While a finger drags, no transition: the
             // panel is wherever the finger is.
@@ -256,7 +256,7 @@ function DrawerContent({ className, children, ...props }: DrawerContentProps) {
             tabIndex={0}
             className={cn(
               'flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain',
-              'focus-visible:ring-ring outline-none focus-visible:ring-2 focus-visible:ring-inset',
+              'focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset',
               vertical && 'touch-auto',
               BODY[direction],
             )}

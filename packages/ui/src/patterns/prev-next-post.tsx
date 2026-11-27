@@ -82,7 +82,7 @@ type PrevNextPostProps = Omit<React.ComponentProps<'nav'>, 'aria-label'> & {
 };
 
 const CARD_BASE =
-  'group flex flex-col gap-1 rounded-xl border border-border p-6 no-underline transition-colors hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
+  'group flex flex-col gap-1 rounded-xl border border-border p-6 no-underline transition-colors hover:border-primary/60 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
 
 export function PrevNextPost({
   className,

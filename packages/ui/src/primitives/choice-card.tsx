@@ -166,7 +166,7 @@ const NameContext = React.createContext<string | undefined>(undefined);
 
 const CARD =
   // Base UI renders a span with the role; every part inside is a span too, so the markup stays valid.
-  'group/choice-card relative flex min-h-11 cursor-pointer flex-col items-start gap-1 rounded-xl border border-border bg-card p-4 pe-11 text-start text-card-foreground outline-none ' +
+  'group/choice-card relative flex min-h-11 cursor-pointer flex-col items-start gap-1 rounded-xl border border-border bg-card p-4 pe-11 text-start text-card-foreground focus-visible:outline-hidden ' +
   'transition-[border-color,background-color,box-shadow,scale] duration-(--duration-fast) ease-enter motion-safe:active:scale-[0.97] ' +
   'hover:border-ring/60 hover:bg-muted/40 ' +
   'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ' +

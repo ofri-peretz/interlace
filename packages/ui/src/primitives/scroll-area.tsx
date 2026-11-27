@@ -99,7 +99,7 @@ function ScrollArea({ className, children, fade = 'edges', ...props }: ScrollAre
         data-slot="scroll-area-viewport"
         data-fade={fade}
         className={cn(
-          'focus-visible:ring-ring size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-1',
+          'focus-visible:ring-ring size-full rounded-[inherit] transition-[color,box-shadow] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-1',
           FADE[fade],
         )}
       >

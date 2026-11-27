@@ -110,7 +110,7 @@ function SelectTrigger({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-size={size}
       className={cn(
-        'flex w-fit items-center justify-between gap-2 rounded-lg border border-input bg-background px-3 py-2 text-sm whitespace-nowrap shadow-sm transition-[color,box-shadow] outline-none',
+        'flex w-fit items-center justify-between gap-2 rounded-lg border border-input bg-background px-3 py-2 text-sm whitespace-nowrap shadow-sm transition-[color,box-shadow] focus-visible:outline-hidden',
         'hover:bg-accent hover:text-accent-foreground',
         'focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring',
         'data-popup-open:border-ring',

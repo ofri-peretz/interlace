@@ -280,7 +280,7 @@ function CommandPaletteInput({
           // shears the top of the ring off — a 2px clip that reads as a
           // rendering glitch and cannot be seen in jsdom, where every box is
           // 0×0. Measured in Chromium.
-          'placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground h-10 w-full min-w-0 bg-transparent text-base outline-none md:text-sm',
+          'placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground h-10 w-full min-w-0 bg-transparent text-base focus-visible:outline-hidden md:text-sm',
           'disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
@@ -298,7 +298,7 @@ function CommandPaletteList({
     <BaseCombobox.List
       data-slot="command-palette-list"
       className={cn(
-        'flex max-h-80 flex-col overflow-x-hidden overflow-y-auto p-1 outline-none',
+        'flex max-h-80 flex-col overflow-x-hidden overflow-y-auto p-1 focus-visible:outline-hidden',
         className,
       )}
       {...props}

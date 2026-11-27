@@ -140,7 +140,7 @@ function RoundSummary({
           id={`${id}-title`}
           tabIndex={focusOnMount ? -1 : undefined}
           data-slot="round-summary-title"
-          className="font-heading text-h2 font-semibold text-balance outline-none"
+          className="font-heading text-h2 font-semibold text-balance focus-visible:outline-hidden"
         >
           {title}
         </Heading>

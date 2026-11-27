@@ -168,7 +168,7 @@ export default function PhotoCropper({ item, aspect, shape, labels, onApply, onC
               drag.current = null;
             }}
             className={cn(
-              'border-primary focus-visible:ring-ring absolute cursor-move touch-none border-2 focus-visible:ring-2 focus-visible:outline-none forced-colors:border-[Highlight]',
+              'border-primary focus-visible:ring-ring absolute cursor-move touch-none border-2 focus-visible:ring-2 focus-visible:outline-hidden forced-colors:border-[Highlight]',
               shape === 'round' && 'rounded-full',
             )}
             style={{

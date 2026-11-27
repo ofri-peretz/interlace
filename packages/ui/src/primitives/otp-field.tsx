@@ -73,7 +73,7 @@ type OtpFieldProps = Omit<
 };
 
 const SLOT =
-  'border-input bg-background text-foreground rounded-lg border text-center font-medium tabular-nums shadow-xs outline-none ' +
+  'border-input bg-background text-foreground rounded-lg border text-center font-medium tabular-nums shadow-xs focus-visible:outline-hidden ' +
   'transition-[border-color,box-shadow,transform] duration-(--duration-fast) ' +
   'data-filled:border-foreground/40 motion-safe:data-filled:scale-[1.04] ' +
   'focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:scale-100 ' +

@@ -299,7 +299,7 @@ export const ChartFrame = React.forwardRef<HTMLElement, ChartFrameProps>(functio
                     {link ? (
                       <a
                         href={link}
-                        className="text-foreground underline decoration-border underline-offset-2 hover:decoration-current focus-visible:ring-ring focus-visible:ring-offset-background rounded-sm focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
+                        className="text-foreground underline decoration-border underline-offset-2 hover:decoration-current focus-visible:ring-ring focus-visible:ring-offset-background rounded-sm focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-hidden"
                       >
                         {source.label}
                       </a>
@@ -331,7 +331,7 @@ export const ChartFrame = React.forwardRef<HTMLElement, ChartFrameProps>(functio
                   data-slot="chart-frame-download"
                   href={href}
                   download={filename}
-                  className="text-foreground inline-flex min-h-target items-center gap-1.5 rounded-sm font-medium underline decoration-border underline-offset-2 hover:decoration-current focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
+                  className="text-foreground inline-flex min-h-target items-center gap-1.5 rounded-sm font-medium underline decoration-border underline-offset-2 hover:decoration-current focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-hidden"
                 >
                   <svg aria-hidden viewBox="0 0 16 16" className="size-3.5 fill-none stroke-current" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
                     <path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10" />

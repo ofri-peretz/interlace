@@ -557,7 +557,7 @@ export const ShareChart = React.forwardRef<HTMLElement, ShareChartProps>(functio
               className={cn(
                 '-mx-1.5 flex min-h-target items-center gap-2 rounded-md px-1.5 py-0.5 text-start',
                 'hover:bg-muted data-[active]:bg-muted aria-pressed:bg-muted',
-                'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none',
+                'focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-hidden',
               )}
             >
               <svg aria-hidden viewBox="0 0 12 12" className="size-3 shrink-0">

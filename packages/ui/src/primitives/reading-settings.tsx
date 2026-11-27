@@ -40,7 +40,7 @@ import { Toggle } from './toggle.js';
 const STEP = cn(
   'inline-flex h-control-sm min-w-control-sm items-center justify-center rounded-md px-2 text-ui-sm font-medium',
   'text-foreground transition-colors hover:bg-accent hover:text-accent-foreground',
-  'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none',
+  'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-hidden',
   'aria-disabled:pointer-events-none aria-disabled:opacity-40',
 );
 

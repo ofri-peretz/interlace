@@ -187,7 +187,7 @@ export function CarouselContent({ className, children, onScroll, ...props }: Car
       }}
       className={cn(
         'col-span-3 row-start-2 -mx-1 flex snap-x snap-mandatory gap-(--carousel-gap) overflow-x-auto overscroll-x-contain px-1 py-2 scroll-px-1 motion-safe:scroll-smooth',
-        'rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+        'rounded-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         className,
       )}
       {...props}

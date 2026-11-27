@@ -88,7 +88,7 @@ const CollapsibleTrigger = React.forwardRef<
       ref={ref}
       data-slot="collapsible-trigger"
       className={cn(
-        'text-ui rounded-sm font-medium outline-none disabled:pointer-events-none disabled:opacity-50',
+        'text-ui rounded-sm font-medium focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50',
         // The trigger is often a bare row of text: a ring 2px clear of it
         // marks focus without touching the words.
         'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',

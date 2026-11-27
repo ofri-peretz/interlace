@@ -75,7 +75,7 @@ import {
 export const MIN_VIEWPORT = 320 as const;
 
 const SELECT =
-  'border-input bg-background text-foreground h-control-sm max-w-full min-w-0 rounded-lg border ps-2 pe-1 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  'border-input bg-background text-foreground h-control-sm max-w-full min-w-0 rounded-lg border ps-2 pe-1 text-sm focus-visible:outline-hidden focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 /** The minutes the host can choose from; 0 is no timer. */
 const MINUTES = [0, 1, 2, 3, 5, 10] as const;

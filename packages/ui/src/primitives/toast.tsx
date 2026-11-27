@@ -139,7 +139,7 @@ const ToastViewport = React.forwardRef<HTMLDivElement, ToastViewportProps>(
           className={cn(
             'fixed inset-x-0 bottom-0 z-toast flex w-full flex-col gap-4 p-6',
             'xs:inset-x-auto xs:end-0 xs:bottom-0 xs:max-w-float',
-            'outline-none',
+            'focus-visible:outline-hidden',
             className,
           )}
           {...props}
@@ -316,7 +316,7 @@ const ToastClose = React.forwardRef<HTMLButtonElement, ToastCloseProps>(
         className={cn(
           'ms-auto inline-flex size-6 shrink-0 items-center justify-center rounded-sm',
           'text-muted-foreground hover:text-foreground',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring',
+          'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-ring',
           'transition-colors',
           className,
         )}

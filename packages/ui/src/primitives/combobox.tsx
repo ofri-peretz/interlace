@@ -185,7 +185,7 @@ function ComboboxInput({
       data-min-viewport={String(MIN_VIEWPORT)}
       data-size={size}
       className={cn(
-        'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground w-full min-w-0 rounded-lg border bg-background text-foreground px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
+        'border-input placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground w-full min-w-0 rounded-lg border bg-background text-foreground px-3 py-1 text-base shadow-xs transition-[color,box-shadow] focus-visible:outline-hidden md:text-sm',
         'data-[size=default]:h-control data-[size=sm]:h-control-sm',
         'focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
@@ -211,7 +211,7 @@ function ComboboxTrigger({
     <BaseCombobox.Trigger
       data-slot="combobox-trigger"
       className={cn(
-        'text-muted-foreground hover:text-foreground absolute end-1 flex size-7 items-center justify-center rounded-sm transition-colors outline-none',
+        'text-muted-foreground hover:text-foreground absolute end-1 flex size-7 items-center justify-center rounded-sm transition-colors focus-visible:outline-hidden',
         'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         'disabled:pointer-events-none disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -259,7 +259,7 @@ function ComboboxClear({
     <BaseCombobox.Clear
       data-slot="combobox-clear"
       className={cn(
-        'text-muted-foreground hover:text-foreground absolute end-1 flex size-7 items-center justify-center rounded-sm transition-colors outline-none',
+        'text-muted-foreground hover:text-foreground absolute end-1 flex size-7 items-center justify-center rounded-sm transition-colors focus-visible:outline-hidden',
         // Step aside when a trigger follows. Both affordances dock at
         // `end-1`, so a call site that renders BOTH — which the
         // compositional API permits and `ComboboxCompose` happens never
@@ -328,7 +328,7 @@ function ComboboxList({
   return (
     <BaseCombobox.List
       data-slot="combobox-list"
-      className={cn('flex flex-col outline-none', className)}
+      className={cn('flex flex-col focus-visible:outline-hidden', className)}
       {...props}
     />
   );
@@ -497,7 +497,7 @@ function ComboboxChip({
     <BaseCombobox.Chip
       data-slot="combobox-chip"
       className={cn(
-        'bg-secondary text-secondary-foreground flex h-7 items-center gap-1 rounded-lg pe-1 ps-2 text-sm outline-none',
+        'bg-secondary text-secondary-foreground flex h-7 items-center gap-1 rounded-lg pe-1 ps-2 text-sm focus-visible:outline-hidden',
         'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
         className,
       )}
@@ -517,7 +517,7 @@ function ComboboxChipRemove({
       className={cn(
         // 24px square — exactly the SC 2.5.8 floor. Do not shrink it to
         // match the icon; the icon is 12px and the target is not the icon.
-        'flex size-6 items-center justify-center rounded-sm transition-colors outline-none',
+        'flex size-6 items-center justify-center rounded-sm transition-colors focus-visible:outline-hidden',
         'hover:bg-accent hover:text-accent-foreground',
         'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",

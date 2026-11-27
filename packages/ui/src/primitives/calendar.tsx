@@ -464,7 +464,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(function Calend
                       onKeyDown={(e) => onDayKeyDown(e, date)}
                       onFocus={() => setFocused(date)}
                       className={cn(
-                        'relative mx-auto flex aspect-square w-full max-w-11 min-w-0 items-center justify-center rounded-lg text-sm tabular-nums outline-none',
+                        'relative mx-auto flex aspect-square w-full max-w-11 min-w-0 items-center justify-center rounded-lg text-sm tabular-nums focus-visible:outline-hidden',
                         'transition-[color,background-color,box-shadow,scale] duration-(--duration-fast) ease-enter',
                         'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                         state === 'open' && 'hover:bg-accent hover:text-accent-foreground',

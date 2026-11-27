@@ -149,7 +149,7 @@ function FocusGridItem({
             {href ? (
               <a
                 href={href}
-                className="decoration-2 underline-offset-4 outline-none after:absolute after:inset-0 focus-visible:underline"
+                className="decoration-2 underline-offset-4 focus-visible:outline-hidden after:absolute after:inset-0 focus-visible:underline"
               >
                 {title}
               </a>
