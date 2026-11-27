@@ -33,6 +33,11 @@
  * The row is at least 3.5rem tall and grows to fit a taller logo, such as a
  * stacked multi-script `Wordmark`, so the logo slot never clips.
  *
+ * A `logo` that is a link must be named by the words printed on it (WCAG 2.5.3,
+ * Label in Name). For a multi-script `Wordmark`, leave its `label` out and pass
+ * `hint=", home"`: the link is then named by its lines, each in its own `lang`.
+ * See the `Wordmark` "Name" section.
+ *
  * ## Groups
  *
  * An entry with `items` is a group. From `collapseBelow` up it is a button
