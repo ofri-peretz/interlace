@@ -2794,6 +2794,42 @@
       }
     },
     {
+      "name": "photo-upload-crop",
+      "type": "registry:ui",
+      "title": "Photo Upload Crop",
+      "description": "The crop and turn dialog PhotoUpload opens for one photo. Lazy-loaded, so a form that never crops never loads it. Everything pointer-only has a keyboard twin: drag the frame or press the arrows (Shift for ten times as far), zoom with the range or `+` /…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": null,
+        "loading": false,
+        "version": "1.0.0",
+        "since": "2.1.0"
+      }
+    },
+    {
+      "name": "photo-upload",
+      "type": "registry:ui",
+      "title": "Photo Upload",
+      "description": "Photos from the five places people get them (pick, drag, paste, camera), made small and clean on the device, then handed to ONE function the app provides, `onUpload`. The component never opens a connection: it has no `fetch`, no `XMLHttpRequest`, no…",
+      "categories": [
+        "form",
+        "pattern"
+      ],
+      "meta": {
+        "tier": "pattern",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": "2.1.0"
+      }
+    },
+    {
       "name": "prev-next-post",
       "type": "registry:ui",
       "title": "Prev Next Post",
