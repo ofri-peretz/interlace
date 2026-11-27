@@ -138,6 +138,11 @@ export interface RoomState {
    * Absent until the first `share`.
    */
   shared?: Record<string, unknown>;
+  /**
+   * The ids of each player's most recent `submit` events, so a message the network delivers twice
+   * (or a player's own resend) is applied once, and a player can see theirs was taken.
+   */
+  acked?: Record<string, string[]>;
   /** Bumped on every change, so a client keeps only the newest state. */
   seq: number;
 }
@@ -151,7 +156,34 @@ export interface RoomAnswer {
   at: number;
 }
 
+/** Why an activity refuses a move. */
+export type ActivityRefusal = 'not-host' | 'wrong-phase' | 'full' | 'rate-limited' | 'bad-action';
+
+export interface ActivityContext {
+  /** Who made the move: a player's id, or the host's. */
+  playerId: string;
+  /** True when the host made it. */
+  host: boolean;
+  /** When it arrived, in ms (host clock). */
+  at: number;
+  /** Everyone in the room now. */
+  players: readonly RoomPlayer[];
+}
+
+/**
+ * An activity's rule: its slice of `RoomState.shared` (anything, or null before it starts: read it
+ * as untrusted), one move, and who made it. Returns the new slice (null removes it) or why not.
+ * Pure: the host runs it to decide and again to apply, so it must give the same answer twice.
+ */
+export type ActivityReducer = (
+  slice: unknown,
+  action: unknown,
+  ctx: ActivityContext,
+) => { slice: unknown } | { refuse: ActivityRefusal };
+
 export interface RoomSettings {
+  /** The activities this room runs, by the key of their slice. */
+  activities?: Record<string, ActivityReducer>;
   /** The most players the room takes. @default 200 */
   maxPlayers?: number;
   /** The longest name, in characters. @default 24 */
@@ -203,6 +235,27 @@ export type RoomPlayerEvent =
       at?: number;
     }
   | { type: 'leave'; playerId: string }
+  /**
+   * A player's move in an activity that takes input from everyone (a question, a vote, a reaction, a
+   * raised hand, a spot on a line). `key` names the activity (`RoomState.shared[key]`), `action` is
+   * what it takes, and `id` is unique per move: the host applies a move once however often it
+   * arrives. The host may send one too (`playerId` its own id), for what only it may do. Which
+   * moves an activity allows is its reducer's rule (`RoomSettings.activities`).
+   */
+  | {
+      type: 'submit';
+      playerId: string;
+      id: string;
+      key: string;
+      action: unknown;
+      /**
+       * When it arrived, in ms (host clock). `useRoom` stamps it; code that calls `applyRoomEvent`
+       * directly must too. A `submit` without it is refused.
+       */
+      at?: number;
+      /** Send it again until the host's state shows it. @default true. Off for moves that go stale (a reaction). */
+      retry?: boolean;
+    }
   | {
       type: 'answer';
       playerId: string;
@@ -250,7 +303,15 @@ export type RoomRejection =
   | 'already-answered'
   | 'unknown-player'
   /** A `share` with a key that is not a short lowercase name, or a value that is not JSON or too big. */
-  | 'bad-share';
+  | 'bad-share'
+  /** A `submit` for an activity this room does not run. */
+  | 'unknown-activity'
+  /** A `submit` the activity cannot take (nonsense, or not allowed now). */
+  | 'bad-action'
+  /** A `submit` with an id the host already applied: said nothing to, never counted twice. */
+  | 'duplicate'
+  /** Too many moves too fast from this player, or from the room. */
+  | 'rate-limited';
 
 const HOST_EVENTS = new Set<RoomEvent['type']>([
   'lock',
@@ -296,6 +357,42 @@ export function cleanName(name: string, max = 24): string {
 
 const sameName = (a: string, b: string) => a.localeCompare(b, undefined, { sensitivity: 'base' }) === 0;
 
+/** How many ids of a player's `submit` moves the room remembers. */
+export const ACK_KEEP = 16;
+
+type SubmitEvent = Extract<RoomEvent, { type: 'submit' }>;
+
+/** What a `submit` would do, or why it may not: the same call decides and applies. */
+function runSubmit(
+  state: RoomState,
+  event: SubmitEvent,
+  settings: RoomSettings,
+): { slice: unknown } | { refuse: RoomRejection } {
+  if (event.playerId !== state.hostId && !state.players.some((p) => p.id === event.playerId))
+    return { refuse: 'unknown-player' };
+  if (typeof event.id !== 'string' || !event.id || event.id.length > 64 || typeof event.at !== 'number' || !Number.isFinite(event.at))
+    return { refuse: 'bad-action' };
+  if (Object.hasOwn(state.acked ?? {}, event.playerId) && (state.acked as Record<string, string[]>)[event.playerId]!.includes(event.id))
+    return { refuse: 'duplicate' };
+  const reducer = SHARE_KEY.test(event.key) && settings.activities && Object.hasOwn(settings.activities, event.key) ? settings.activities[event.key] : undefined;
+  if (!reducer) return { refuse: 'unknown-activity' };
+  const slice = state.shared && Object.hasOwn(state.shared, event.key) ? state.shared[event.key] : null;
+  let result: ReturnType<ActivityReducer>;
+  try {
+    result = reducer(slice, event.action, { playerId: event.playerId, host: event.playerId === state.hostId, at: event.at, players: state.players });
+  } catch {
+    return { refuse: 'bad-action' };
+  }
+  if ('refuse' in result) return result;
+  const json = JSON.stringify(result.slice ?? null);
+  return json === undefined || json.length > MAX_SHARED_SIZE ? { refuse: 'full' } : result;
+}
+
+function rejectSubmit(state: RoomState, event: SubmitEvent, settings: RoomSettings): RoomRejection | null {
+  const result = runSubmit(state, event, settings);
+  return 'refuse' in result ? result.refuse : null;
+}
+
 /**
  * Why `from` may not apply `event` to `state`, or null when they may. The
  * host's own id may send any event; a player may send only their own.
@@ -339,6 +436,8 @@ export function rejectRoomEvent(
       return null;
     case 'remove':
       return state.players.some((p) => p.id === event.playerId) ? null : 'unknown-player';
+    case 'submit':
+      return rejectSubmit(state, event, settings);
     case 'share': {
       if (!SHARE_KEY.test(event.key)) return 'bad-share';
       const json = JSON.stringify(event.value);
@@ -396,7 +495,9 @@ export function applyRoomEvent(
     case 'remove': {
       const { [event.playerId]: _score, ...scores } = state.scores;
       const { [event.playerId]: _answer, ...answers } = state.answers;
+      const { [event.playerId]: _acks, ...acked } = state.acked ?? {};
       return next({
+        acked,
         players: state.players.filter((p) => p.id !== event.playerId),
         removed: [...state.removed, event.playerId],
         scores,
@@ -438,6 +539,15 @@ export function applyRoomEvent(
         startsAt: null,
         endsAt: null,
       });
+    case 'submit': {
+      const result = runSubmit(state, event, settings) as { slice: unknown };
+      const { [event.key]: _old, ...rest } = state.shared ?? {};
+      const mine = Object.hasOwn(state.acked ?? {}, event.playerId) ? (state.acked as Record<string, string[]>)[event.playerId]! : [];
+      return next({
+        shared: result.slice === null ? rest : { ...rest, [event.key]: result.slice },
+        acked: { ...state.acked, [event.playerId]: [...mine, event.id].slice(-ACK_KEEP) },
+      });
+    }
     case 'share': {
       const { [event.key]: _old, ...rest } = state.shared ?? {};
       return next({ shared: event.value === null ? rest : { ...rest, [event.key]: event.value } });
@@ -698,6 +808,10 @@ export function restoreRoom(text: string | null | undefined, options: { hostId?:
     lastPoints: cleanRecord(raw.lastPoints, num),
     seq: seq + RESTORE_SEQ_JUMP,
   };
+  const acked = cleanRecord(raw.acked, (v) =>
+    Array.isArray(v) ? v.filter((id): id is string => typeof id === 'string' && id.length > 0 && id.length <= 64).slice(-ACK_KEEP) : undefined,
+  );
+  if (Object.keys(acked).length) state.acked = acked;
   if (isRecord(raw.shared)) state.shared = Object.fromEntries(Object.entries(raw.shared).filter(([k]) => SHARE_KEY.test(k)));
   return state;
 }
@@ -765,6 +879,8 @@ export type RoomMessage =
       to: string;
       event: RoomEvent['type'];
       reason: RoomRejection;
+      /** For a refused `submit`: its id, so the player stops sending that move. */
+      id?: string;
     };
 
 /**

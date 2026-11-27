@@ -584,6 +584,14 @@
       "types": "./dist/games/use-agenda-sync.d.ts",
       "default": "./dist/games/use-agenda-sync.js"
     },
+    "./games/live-activities-model": {
+      "types": "./dist/games/live-activities-model.d.ts",
+      "default": "./dist/games/live-activities-model.js"
+    },
+    "./games/use-live-activities": {
+      "types": "./dist/games/use-live-activities.d.ts",
+      "default": "./dist/games/use-live-activities.js"
+    },
     "./games/groups-model": {
       "types": "./dist/games/groups-model.d.ts",
       "default": "./dist/games/groups-model.js"
