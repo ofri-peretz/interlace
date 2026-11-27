@@ -3,7 +3,7 @@
 **Status:** shipped · **Opened:** `2026-11-26` · **Shipped in:** #253
 
 Proposed by the coordinator on the merge train night; accepted when #253 merged. The options
-weighed, the decision and its consequence are in [design.md](./design.md).
+weighed, the decision and its consequence are in [spec.md](./spec.md).
 
 ## What is wanted
 
