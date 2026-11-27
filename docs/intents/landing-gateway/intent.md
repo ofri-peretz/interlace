@@ -3,7 +3,7 @@
 **Status:** shipped · **Opened:** `2026-10-11` · **Owner:** `@ofri-peretz`
 
 Accepted by Ofri 2026-10-11 ("lets apply the changes") and built in the same PR. The design is
-[design.md](design.md).
+[spec.md](spec.md).
 
 ## What is wanted
 
