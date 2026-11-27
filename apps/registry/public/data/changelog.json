@@ -1,6 +1,61 @@
 {
   "releases": [
     {
+      "version": "2.3.0",
+      "unreleased": false,
+      "entries": [
+        {
+          "summary": "Add the account control for a top bar. `AccountMenu` sits at the end of a `Topbar`'s `actions` slot in the three states every app with accounts has: unknown (it keeps the room the answer will take, shows nothing, says nothing and cannot be focused, so the bar does not move when the session is read), signed out (a Sign in link that carries the current page as `?next=`, and nothing on the sign-in page) and signed in (a photo or initials as a menu button named \"Account menu for Dana\", a header with the name and email, the app's links, and Sign out, which may take a moment and may fail: a failure closes the menu, returns focus to the button, says so in a polite live region and calls `onError`). `useAccount(adapter)` builds the state from any sign-in service through `{ read, subscribe }`; the kit never reads or writes a session. `patterns/account-menu-model` adds `accountDisplayName`, `accountInitials` (by grapheme, so Hebrew, Han and emoji names are whole), `signInHref` and `safeReturnPath`, which keeps only a path on this site: it refuses anything that does not start with a single `/`, and any whitespace, control character or backslash anywhere in it (a browser deletes a tab or newline from an address, so `/\\t/host` is `//host`), then parses the rest. An encoded slash (`/%2F%2Fhost`) is a path on this site and is kept.",
+          "components": [
+            "account-menu"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#2.3.0"
+        },
+        {
+          "summary": "Nothing fails silently, and a crash never leaves a blank screen. `reportError(error, where)` is one function every caught failure goes through: it builds a typed report (the place you name, a message and a stack, redacted then trimmed, a count, a random id), keeps the last 25 in memory, counts a flood of the same failure in one second as one report, and hands each to a pluggable reporter. The default reporter writes one development console line and sends nothing; a crash service is one `setReporter` call, and a reporter that throws, or reports from inside itself, is contained. `installErrorLog(store)` keeps the last reports on the device in an adapter the app passes (`load` and `save`), so a problem from an earlier session can be read on a diagnostics screen (`useRecentErrors()`, `formatReports()`); a store that fails is silent by design. `installGlobalHandlers()` reports `error` and `unhandledrejection` in the browser; `installNativeErrorHandler()` does the same for React Native and then calls the platform's own handler, so a production crash still crashes. `ErrorFallback` is what a screen shows when it crashes: plain words, Try again, a way out, a short reference to quote; it reports once on mount, moves focus to its title, is announced as an alert, never shows the message or the stack, and takes the `{ error, reset }` of Next and Remix or the `{ error, retry }` of Expo Router without importing a router. `SectionBoundary` gains an optional `onError(error, name)`. No dependency, no network call, no personal data.",
+          "components": [
+            "error-fallback",
+            "error-report",
+            "error-report-model",
+            "use-recent-errors",
+            "section-boundary"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#2.3.0"
+        },
+        {
+          "summary": "`Wordmark` with an `href` can now be named by its lines. `label` is optional on a link: leave it out and the link's accessible name is the `Wordmark.Line`s in order, each read in its own `lang`, with an optional visually hidden `hint` (\", home\") after them. A multi-script wordmark whose `label` did not contain its lines failed WCAG 2.5.3 (Label in Name; axe `label-content-name-mismatch`), and the `SeveralScripts` story and unit test used exactly that form. A `label` that does not contain every line now logs one development warning. Without `href` nothing changes: `label` is required and names the `role=\"img\"`. The `Wordmark` \"Name\" section and the `Topbar` `logo` note state the rule.",
+          "components": [
+            "wordmark",
+            "topbar"
+          ],
+          "componentsDeclared": true,
+          "kind": "Added",
+          "bump": "minor",
+          "migration": null,
+          "source": "CHANGELOG.md#2.3.0"
+        },
+        {
+          "summary": "The error-report rules are now held by tests at a mutation score of 100 percent. Two helpers lost a branch that could not change the result (`trimStack`, the stored-row `count`), the device log awaits `save` through `Promise.resolve` instead of a hand-written thenable check, and an id, the stack length option and the order of kept reports now have tests of their own. No behaviour change.",
+          "components": [
+            "error-report-model"
+          ],
+          "componentsDeclared": true,
+          "kind": "Changed",
+          "bump": "patch",
+          "migration": null,
+          "source": "CHANGELOG.md#2.3.0"
+        }
+      ]
+    },
+    {
       "version": "2.2.0",
       "unreleased": false,
       "entries": [

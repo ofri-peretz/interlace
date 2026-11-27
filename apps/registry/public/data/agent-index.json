@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 266
+    "itemCount": 271
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -30,18 +30,18 @@
   "facets": {
     "tier": {
       "primitive": 79,
-      "pattern": 68,
+      "pattern": 70,
       "game": 50,
       "effect": 28,
       "chart": 14,
       "template": 13,
-      "util": 8,
+      "util": 11,
       "starter": 3,
       "theme": 3
     },
     "category": {
       "primitive": 79,
-      "pattern": 68,
+      "pattern": 70,
       "games": 50,
       "game": 50,
       "blog": 37,
@@ -50,34 +50,34 @@
       "form": 29,
       "effect": 28,
       "decorative": 25,
-      "navigation": 18,
-      "feedback": 18,
+      "feedback": 22,
+      "navigation": 19,
       "chart": 14,
       "marketing": 14,
       "template": 13,
+      "util": 11,
       "overlay": 10,
-      "util": 8,
       "a11y": 5,
       "starter": 3,
       "theme": 3
     },
     "rendering": {
-      "client": 151,
-      "server": 115
+      "client": 154,
+      "server": 117
     },
     "keyboard": {
-      "none": 203,
+      "none": 208,
       "handled": 63
     },
     "loading": {
-      "none": 228,
+      "none": 233,
       "built-in": 38
     },
     "minViewport": {
-      "320": 181,
+      "320": 183,
       "480": 7,
       "768": 1,
-      "inherited": 77
+      "inherited": 80
     }
   },
   "items": [
@@ -113,7 +113,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "5.7.0",
+      "version": "5.8.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -180,6 +180,69 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/accordion.json",
       "item": "https://ds.interlace.tools/r/accordion.json",
       "docs": "https://ds.interlace.tools/c/accordion"
+    },
+    {
+      "name": "account-menu",
+      "title": "Account Menu",
+      "type": "registry:ui",
+      "summary": "The account control at the right end of a `Topbar`'s `actions` slot, for any sign-in service. It has the three states every app with accounts has:",
+      "topics": [],
+      "categories": [
+        "navigation",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-hidden",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "DEFAULT_FALLBACK_NAME",
+        "DEFAULT_LABELS",
+        "MIN_VIEWPORT",
+        "UNKNOWN"
+      ],
+      "version": "1.0.0",
+      "since": "2.3.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "avatar",
+        "button-variants",
+        "cn",
+        "dropdown-menu",
+        "interlace-base",
+        "visually-hidden"
+      ],
+      "installsTo": [
+        "components/ui/patterns/account-menu.tsx",
+        "components/ui/patterns/account-menu-model.ts",
+        "components/ui/patterns/use-account.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/account-menu.json",
+      "item": "https://ds.interlace.tools/r/account-menu.json",
+      "docs": "https://ds.interlace.tools/c/account-menu"
     },
     {
       "name": "agenda",
@@ -4546,6 +4609,158 @@
       "docs": "https://ds.interlace.tools/c/empty-state"
     },
     {
+      "name": "error-fallback",
+      "title": "Error Fallback",
+      "type": "registry:ui",
+      "summary": "What a screen shows when it crashes, instead of a blank page or a red box. Plain words, a Try again button, a way out, and a short reference a person can quote. It reports the error once, on mount, through `reportError` (or the `report` you pass), and…",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "alert"
+        ],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "ErrorBoundary",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.3.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "error-report",
+        "error-report-model",
+        "interlace-base",
+        "typography"
+      ],
+      "installsTo": [
+        "components/ui/patterns/error-fallback.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/error-fallback.json",
+      "item": "https://ds.interlace.tools/r/error-fallback.json",
+      "docs": "https://ds.interlace.tools/c/error-fallback"
+    },
+    {
+      "name": "error-report-model",
+      "title": "Error report rules",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — the pure rules of error reporting: a typed report, a flood counted not repeated, a redaction hook, restore from untrusted storage, text for a diagnostics screen. No DOM, no network, no storage library.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_COALESCE_MS",
+        "DEFAULT_ERROR_FALLBACK_LABELS",
+        "DEFAULT_MAX",
+        "DEFAULT_MAX_MESSAGE",
+        "DEFAULT_MAX_STACK_LINES",
+        "ELLIPSIS",
+        "REDACTION_FAILED",
+        "UNPRINTABLE"
+      ],
+      "version": "1.0.1",
+      "since": "2.3.0",
+      "npmDependencies": [],
+      "registryDependencies": [],
+      "installsTo": [
+        "lib/error-report-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/error-report-model.json",
+      "item": "https://ds.interlace.tools/r/error-report-model.json",
+      "docs": "https://ds.interlace.tools/c/error-report-model"
+    },
+    {
+      "name": "error-report",
+      "title": "reportError",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — `reportError(error, where)`, one function every caught failure goes through, with a pluggable reporter, a device-only crash log and global handlers. Sends nothing unless you set a reporter.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "server",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": "2.3.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "error-report-model"
+      ],
+      "installsTo": [
+        "lib/error-report.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/error-report.json",
+      "item": "https://ds.interlace.tools/r/error-report.json",
+      "docs": "https://ds.interlace.tools/c/error-report"
+    },
+    {
       "name": "error-template",
       "title": "Error Template",
       "type": "registry:block",
@@ -6459,7 +6674,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "5.7.0",
+      "version": "5.8.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6934,7 +7149,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "5.7.0",
+      "version": "5.8.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -10889,7 +11104,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -15173,7 +15388,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.7.0",
+      "version": "2.8.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -15472,6 +15687,52 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/use-reading-prefs.json",
       "item": "https://ds.interlace.tools/r/use-reading-prefs.json",
       "docs": "https://ds.interlace.tools/c/use-reading-prefs"
+    },
+    {
+      "name": "use-recent-errors",
+      "title": "useRecentErrors hook",
+      "type": "registry:lib",
+      "summary": "@interlace/ui — the reports kept so far, as a list that re-renders when one arrives, for a diagnostics screen.",
+      "topics": [],
+      "categories": [
+        "feedback",
+        "util"
+      ],
+      "tier": "util",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [],
+      "version": "1.0.0",
+      "since": "2.3.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "error-report",
+        "error-report-model"
+      ],
+      "installsTo": [
+        "hooks/use-recent-errors.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/use-recent-errors.json",
+      "item": "https://ds.interlace.tools/r/use-recent-errors.json",
+      "docs": "https://ds.interlace.tools/c/use-recent-errors"
     },
     {
       "name": "use-reduced-motion",
@@ -15834,7 +16095,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "1.3.0",
       "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [

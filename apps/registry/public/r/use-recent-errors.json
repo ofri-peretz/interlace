@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-recent-errors",
+  "type": "registry:lib",
+  "title": "useRecentErrors hook",
+  "description": "@interlace/ui — the reports kept so far, as a list that re-renders when one arrives, for a diagnostics screen.",
+  "author": "ofri-peretz <https://github.com/ofri-peretz>",
+  "categories": [
+    "feedback",
+    "util"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "https://ds.interlace.tools/r/error-report.json",
+    "https://ds.interlace.tools/r/error-report-model.json"
+  ],
+  "files": [
+    {
+      "path": "registry/interlace-ui/lib/use-recent-errors.ts",
+      "target": "hooks/use-recent-errors.ts",
+      "type": "registry:lib",
+      "content": "'use client';\n\nimport * as React from 'react';\n\n// @interlace/use-recent-errors v1.0.0 — Interlace design system.\n// Docs, props and live preview: https://ds.interlace.tools/c/use-recent-errors\n// What changed since: https://ds.interlace.tools/c/use-recent-errors#history\n// Generated banner — keep it, the upgrade diff reads this version.\n\n/**\n * @interlace/ui: `useRecentErrors`, the reports kept so far, for a diagnostics screen.\n *\n *   const reports = useRecentErrors();\n *   <pre>{formatReports(reports)}</pre>\n *\n * It re-renders when a report arrives, is restored from the device, or the log is cleared. On the\n * server it is an empty list, so the markup matches the first client render.\n */\n\nimport { defaultErrorLog } from '@/lib/error-report';\nimport type { ErrorLog, ErrorReport } from '@/lib/error-report-model';\n\nconst NONE: readonly ErrorReport[] = [];\n\nexport function useRecentErrors(log: ErrorLog = defaultErrorLog): readonly ErrorReport[] {\n  return React.useSyncExternalStore(log.subscribe, log.recent, () => NONE);\n}\n"
+    }
+  ],
+  "meta": {
+    "tier": "util",
+    "client": true,
+    "minViewport": null,
+    "loading": false,
+    "version": "1.0.0",
+    "since": "2.3.0"
+  },
+  "docs": "## @interlace/use-recent-errors\n\nInstalled to `hooks/use-recent-errors.ts`.\n\n```tsx\nimport { /* … */ } from '@/hooks/use-recent-errors';\n```\n\nProps, a11y contract, live preview and source: https://ds.interlace.tools/c/use-recent-errors"
+}
