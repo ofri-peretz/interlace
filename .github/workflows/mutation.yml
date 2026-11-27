@@ -1,0 +1,193 @@
+name: mutation
+
+# Mutation testing of the room and game logic (docs/intents/mutation-testing-room-logic).
+#
+# Coverage says a line ran; this says a test would notice the line being wrong. It changes the pure
+# models one small step at a time and fails when no test notices, against per-file floors that only
+# rise (.sdlc/bands/mutation-floor.json) and a ledger of triaged survivors.
+#
+# It is CPU-heavy, so it never runs in a hook: pull requests mutate the changed lines only, the full
+# run is nightly and sharded, and a human runs one file at a time, by hand.
+#
+# These are NEW checks and are not required: making `mutation / pr` required is a branch-protection
+# change, an owner's step at Deploy.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "packages/ui/src/games/**"
+      - "packages/ui/src/patterns/**"
+      - "packages/ui/__tests__/**"
+      - "packages/ui/mutation/**"
+      - "packages/ui/oxmutate.config.json"
+      - ".sdlc/bands/mutation-*"
+      - "scripts/mutation-*"
+      - ".github/workflows/mutation.yml"
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: mutation-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+
+jobs:
+  # The control: a twenty-line gate with a weak test and a strong one. The weak one must fail and
+  # name its survivors; the strong one must pass. A gate that cannot go red is not a gate.
+  control:
+    name: mutation / control
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: The ratchet's own tests, and the scope lock
+        run: |
+          npm run mutate:ratchet:test
+          npm run mutate:scope-lock
+      - name: The weak test must fail the gate and name a survivor
+        working-directory: packages/ui/mutation/control
+        run: |
+          set +e
+          CONTROL=weak npx oxmutate run --break 100 | tee /tmp/weak.txt
+          code=${PIPESTATUS[0]}
+          set -e
+          test "$code" -eq 1 || { echo "the weak test exited $code, not 1: the gate did not go red"; exit 1; }
+          grep -q 'Survivors' /tmp/weak.txt || { echo "the weak run named no survivor"; exit 1; }
+      - name: The strong test must pass the gate
+        working-directory: packages/ui/mutation/control
+        run: CONTROL=strong npx oxmutate run --break 100
+
+  # Pull requests: the changed lines only, and whether the change weakened its own tests.
+  pr:
+    name: mutation / pr
+    if: github.event_name == 'pull_request'
+    needs: control
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: "Monotone and shaped: no floor lowered, no file dropped, no exclusion added, no untriaged survivor"
+        run: node scripts/mutation-ratchet.mjs --check --base origin/${{ github.base_ref }}
+      - name: Mutate the changed lines; fail a change that weakened its own tests
+        working-directory: packages/ui
+        run: >
+          npx oxmutate run
+          --since origin/${{ github.base_ref }}
+          --frozen-oracle origin/${{ github.base_ref }}
+          --reporter clear-text,json,sarif,html
+          --report-dir ../../reports/mutation
+      - name: No survivor outside the ledger
+        if: always()
+        run: |
+          touched=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | tr '\n' ',')
+          node scripts/mutation-ratchet.mjs --check --base origin/${{ github.base_ref }} \
+            --lane pr --report reports/mutation/mutation.json --touched "$touched" --summary
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always() && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        with:
+          sarif_file: reports/mutation/mutation.sarif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mutation-pr-report
+          path: reports/mutation
+          if-no-files-found: warn
+
+  # Nightly: the whole scope in four shards. A mutant's shard is a hash of its id, so the shards
+  # partition the run exactly and do not move when unrelated code does.
+  shard:
+    name: mutation / nightly (shard ${{ matrix.shard }} of 4)
+    if: github.event_name != 'pull_request'
+    needs: control
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: packages/ui/.oxmutate
+          key: oxmutate-${{ hashFiles('package-lock.json') }}-${{ hashFiles('packages/ui/src/games/**', 'packages/ui/src/patterns/**', 'packages/ui/__tests__/**') }}-${{ matrix.shard }}
+          restore-keys: oxmutate-${{ hashFiles('package-lock.json') }}-
+      - name: Mutate this shard
+        working-directory: packages/ui
+        run: >
+          npx oxmutate run
+          --shard ${{ matrix.shard }}/4
+          --incremental
+          --reporter clear-text,json,sarif,html
+          --report-dir ../../reports/shard-${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mutation-shard-${{ matrix.shard }}
+          path: reports/shard-${{ matrix.shard }}
+          if-no-files-found: error
+
+  # The floors, held every night. A file below its floor, a file that scored nothing, a survivor
+  # nobody triaged: red. Until the first full run is recorded the floors read "recorded when
+  # measured" and this job prints the table to record.
+  floors:
+    name: mutation / nightly floors
+    if: github.event_name != 'pull_request' && always()
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: mutation-shard-*
+          path: reports
+      - name: Floors, survivors, mutant counts, against what is recorded
+        run: |
+          reports=$(ls reports/mutation-shard-*/mutation.json | tr '\n' ',')
+          node scripts/mutation-ratchet.mjs --check --base origin/main --report "${reports%,}" --summary
+
+  # Five hand-written breaks of the room's authority rules. Each must turn the room tests red, so a
+  # misconfigured scope that scores 100% on nothing cannot hide a broken gate.
+  canaries:
+    name: mutation / canaries
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run mutate:canaries

@@ -1,0 +1,10 @@
+diff --git a/packages/ui/src/games/room-model.ts b/packages/ui/src/games/room-model.ts
+index 8ae40fb9..0aa6a45b 100644
+--- a/packages/ui/src/games/room-model.ts
++++ b/packages/ui/src/games/room-model.ts
+@@ -308,5 +308,4 @@ export function rejectRoomEvent(
+       if (known) return null; // a reconnect, even when locked
+       if (state.locked) return 'locked';
+-      if (codeExpired(state, event.at)) return 'expired';
+       if (state.players.length >= (settings.maxPlayers ?? 200)) return 'full';
+       return null;
