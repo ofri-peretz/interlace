@@ -88,8 +88,15 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: "Monotone and shaped: no floor lowered, no file dropped, no exclusion added, no untriaged survivor"
         run: node scripts/mutation-ratchet.mjs --check --base origin/${{ github.base_ref }}
+      # `--since` reads `git diff` paths, which are relative to the repository, while the project root
+      # here is packages/ui: without `diff.relative` no changed line ever matches a file and the lane
+      # scores 0 mutants and passes. Found by running it (0 mutants), fixed by this setting.
       - name: Mutate the changed lines; fail a change that weakened its own tests
         working-directory: packages/ui
+        env:
+          GIT_CONFIG_COUNT: 1
+          GIT_CONFIG_KEY_0: diff.relative
+          GIT_CONFIG_VALUE_0: true
         run: >
           npx oxmutate run
           --since origin/${{ github.base_ref }}

@@ -13,6 +13,11 @@ Read on 2026-11-26 from the npm registry and the published `oxmutate@2.19.0` tar
 | Ignore syntax | `// Stryker disable next-line <Mutator>: <reason>` and `// oxmutate disable <Mutator>: <reason>` ranges are read from the source (`dist/directives.js`); a `disable` **without a reason is an error** ("fix: add `: <why these mutants cannot be killed>`"). Config-level: `ignore: [{ call: "console.*", reason: "..." }]`. The spec's default stands: prefer a ledger `equivalent` entry, and use an inline comment only with its reason. |
 | Flags the lanes use | All present in 2.19.0: `--since <ref>`, `--frozen-oracle <ref>`, `--shard i/n`, `--incremental`, `--break`, `--reporter clear-text,json,sarif,html`, `--report-dir`, `--config`, `survivors --json`, `--mcp`. There is **no** `--vitest-config` flag and none is needed. |
 
+## Found by running it
+
+- **`--since` scores nothing in a monorepo subdirectory.** `oxmutate run --since <ref>` matches `git diff` paths (relative to the repository: `packages/ui/src/...`) against files relative to the project root (`src/...`), so with the project at `packages/ui` no changed line matches and the run reports **0 mutants and exits 0**, twice, on a committed change to a scoped file. Setting git's `diff.relative=true` (here through `GIT_CONFIG_COUNT/KEY/VALUE` in the workflow step) makes the diff paths relative to the working directory and the lane finds the mutants. To report upstream; until then the setting is load-bearing and the workflow says so.
+- A dry run that fails exits **3** and writes no report: the ratchet then reports "no report: the run did not finish", never a pass (seen when a deliberate behaviour change broke a test).
+
 ## Things the README says that matter here
 
 - The README's own decision `D-20261101-no-mutation-in-gha` is about publishing benchmark numbers (they are taken on a quiet machine); it does not stop a project using the tool in CI, and the README shows a CI workflow for it. It does mean: no score from a shared runner is quoted as a benchmark of the tool.
