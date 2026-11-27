@@ -1,6 +1,6 @@
 # Interlace Design System — component registry
 
-> 262 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
+> 266 installable React components served over the shadcn registry protocol. Every item publishes its contract — the React Server Component boundary, a declared minimum viewport, the keyboard path, the state union it models, and its own semver — so a machine can choose a component on facts instead of on a screenshot.
 
 Install copies source into the consumer tree; there is no runtime package to depend on. MIT. Built on Base UI and Tailwind CSS v4.
 
@@ -54,10 +54,10 @@ Filter `agent-index.json` on the contract, not on the name. The fields that deci
 
 Current distribution across the catalogue:
 
-- rendering: 147 client, 115 server
-- keyboard: 202 none, 60 handled
-- built-in loading state: 38 of 262
-- declared minViewport: 177 at 320, 7 at 480, 1 at 768, 77 at inherited
+- rendering: 151 client, 115 server
+- keyboard: 203 none, 63 handled
+- built-in loading state: 38 of 266
+- declared minViewport: 181 at 320, 7 at 480, 1 at 768, 77 at inherited
 
 ## Taxonomy
 
@@ -65,7 +65,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - tier `primitive` — 79 item(s)
 - tier `pattern` — 68 item(s)
-- tier `game` — 46 item(s)
+- tier `game` — 50 item(s)
 - tier `effect` — 28 item(s)
 - tier `chart` — 14 item(s)
 - tier `template` — 13 item(s)
@@ -75,8 +75,8 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 
 - category `primitive` (Primitives) — 79 item(s)
 - category `pattern` (Patterns) — 68 item(s)
-- category `games` (Games) — 46 item(s)
-- category `game` (Games) — 46 item(s)
+- category `games` (Games) — 50 item(s)
+- category `game` (Games) — 50 item(s)
 - category `blog` (Blog & long-form) — 37 item(s)
 - category `data` (Data display) — 31 item(s)
 - category `foundation` (Foundation) — 29 item(s)
@@ -452,7 +452,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 480px, loading state, v2.0.0
 - [Photo Upload](https://ds.interlace.tools/c/photo-upload): Photos from the five places people get them (pick, drag, paste, camera), made small and clean on the device, then handed to ONE function the app provides, `onUpload`. The component never opens a connection: it has no `fetch`, no `XMLHttpRequest`, no…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/photo-upload.json`
-  - contract: client, min 320px, states exif|gps|xmp|iptc|text|thumbnail, v1.0.0
+  - contract: client, min 320px, states exif|gps|xmp|iptc|text|thumbnail, v1.0.1
 - [Photo Upload Crop](https://ds.interlace.tools/c/photo-upload-crop): The crop and turn dialog PhotoUpload opens for one photo. Lazy-loaded, so a form that never crops never loads it. Everything pointer-only has a keyboard twin: drag the frame or press the arrows (Shift for ten times as far), zoom with the range or `+` /…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/photo-upload-crop.json`
   - contract: client, keys ArrowDown/ArrowLeft/ArrowRight/ArrowUp/Enter, states exif|gps|xmp|iptc|text|thumbnail, v1.0.0
@@ -605,19 +605,28 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, states open|sent|closed|revealed, v1.0.1
 - [Breakout Room](https://ds.interlace.tools/c/breakout-room): Breakouts for a live room: the host splits the room into groups with a timer, sends one message to every group, and calls everyone back; each phone shows its group, who is in it, the time left and the latest message. The rules are `games/breakout-model`…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/breakout-room.json`
-  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.4.0
+  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.5.0
+- [Check In](https://ds.interlace.tools/c/check-in): "How are you arriving?" Pick the face that fits. Everyone answers in one tap, in the lobby while the room fills or at the start of a session, and the room's mood shows as a spread: how many chose each, the one most chose, and, when the same question was…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/check-in.json`
+  - contract: client, min 320px, keyboard via Base UI radio, states lobby|countdown|question|reveal|podium|closed, v1.6.0
 - [Closer Game](https://ds.interlace.tools/c/closer-game): Guess a number by sliding to it. The player sets a value on a slider (or types it), locks it in, and the answer slides out from their guess to where it really is, with the gap between them shaded and said in words: "900 off. Close." Scoring lives in…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/closer-game.json`
   - contract: client, min 320px, states exact|close|near|far, v1.1.1
 - [Daily Puzzle](https://ds.interlace.tools/c/daily-puzzle): The frame around a daily game: its name, today's number and date, how far through the rounds the player is, and, once they finish, a countdown to the next one. The game itself is the children, so any round (a CloserGame, a GuessReveal, your own) sits…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/daily-puzzle.json`
-  - contract: client, min 320px, v1.2.1
+  - contract: client, min 320px, v1.2.2
+- [Debate Corners](https://ds.interlace.tools/c/debate-corners): Pick a corner, then defend it. A statement with two to four positions, one for each corner of the room: each person stands in the corner they pick, can move until the host locks the corners, and the host calls one corner at a time to defend its position.…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/debate-corners.json`
+  - contract: client, min 320px, keyboard via Base UI radio, states lobby|countdown|question|reveal|podium|closed, v1.6.0
 - [Dot Vote](https://ds.interlace.tools/c/dot-vote): After a brainstorm, the room chooses: each person spreads a few dots across the ideas (two on one idea means "this one, really"), sends them, and watches the ideas rank themselves as everyone's dots come in. It pairs with `TextWall` or `QuestionBoard` for…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/dot-vote.json`
   - contract: client, min 320px, v1.0.0
 - [Duel](https://ds.interlace.tools/c/duel): Two players, one game, by link. The first player finishes and sends a challenge (`DuelInvite`); the second opens it and sees who they are up against (`DuelCard`); after playing the same game, both see the rounds side by side (`DuelCompare`). The challenge…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/duel.json`
   - contract: client, min 320px, states a|b|tie, v1.0.1
+- [Exit Ticket](https://ds.interlace.tools/c/exit-ticket): Three quick questions as people leave, while it is fresh: how likely to recommend (0 to 10, grouped the standard way into promoters, passives and detractors), a rating on a short scale, and a choice. Answers go in with one button and can be changed until…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/exit-ticket.json`
+  - contract: client, min 320px, keyboard via Base UI radio, states promoter|passive|detractor, v1.6.0
 - [Goal Ring](https://ds.interlace.tools/c/goal-ring): How far today is toward a daily goal: a ring that fills as points come in, the count in its middle, and a check once the goal is met. It is a `meter`, so assistive tech reads "15 of 20 XP" without the ring.
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/goal-ring.json`
   - contract: server, min 320px, states sm|default|lg, v1.0.0
@@ -626,7 +635,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, v1.0.0
 - [Join Code](https://ds.interlace.tools/c/join-code): How people get into a live room: the address to visit, a code to type there, and a QR code that does both in one scan. Built for the host's big screen first (`size="stage"`), and just as usable on a phone that wants to pass the room on, with a copy-link…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/join-code.json`
-  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.4.0
+  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.5.0
 - [Leaderboard](https://ds.interlace.tools/c/leaderboard): A group's board for a game: rank, name and score, ties sharing a rank, the viewing player's row marked (and kept even when it falls below the top rows), and the whole board held back until enough people have played that no one's score stands alone. Ranking…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/leaderboard.json`
   - contract: server, min 320px, v1.0.0
@@ -635,7 +644,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: server, min 320px, v1.1.0
 - [Live Room](https://ds.interlace.tools/c/live-room): A game night on one big screen and everyone's phones. The host opens a room and shows its JoinCode; players scan or type it and land in the lobby; the host starts, everyone sees the same countdown, plays the same rounds, and the night ends on a Podium. The…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/live-room.json`
-  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.5.0
+  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.6.0
 - [Milestones](https://ds.interlace.tools/c/milestones): The marks along a path a player is on (a 3, 7 and 30-day streak; levels 5, 10 and 20): the ones reached, the next one with how far is left, and a few beyond. It shows where the player is going, not a wall of locked trophies, so only a window around the…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/milestones.json`
   - contract: server, min 320px, states reached|next|ahead, v1.1.0
@@ -647,7 +656,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, keys ArrowDown/ArrowUp/End/Home, v1.2.0
 - [Pair Talk](https://ds.interlace.tools/c/pair-talk): Pair talk for a live room: the host pairs everyone (a group of three when the room is odd), each pair gets a prompt card and a timer, and "swap partners" pairs everyone again with someone new. Each phone shows who its partner is, the card and the time…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/pair-talk.json`
-  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.4.0
+  - contract: client, min 320px, states lobby|countdown|question|reveal|podium|closed, v1.5.0
 - [Picture Reveal](https://ds.interlace.tools/c/picture-reveal): A picture under tiles that come away a few at a time while the room guesses. The presenter moves `step`; every screen uncovers the same tiles in the same seeded order, spread across the picture. Phones guess with `TypeAnswer` (or `QuizQuestion`), and…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/picture-reveal.json`
   - contract: client, min 320px, v1.1.0
@@ -708,6 +717,9 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
 - [Share Card](https://ds.interlace.tools/c/share-card): How the player did today, ready to share without spoiling it: one mark per round (a band, never the answer), the score and the streak, with a Share button that opens the device's share sheet and a Copy button that puts the same text on the clipboard. The…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/share-card.json`
   - contract: client, min 320px, v1.2.0
+- [Sound Cue Toggle](https://ds.interlace.tools/c/sound-cue-toggle): The switch for a room's sound cues, and the words for them. Sound is off until a person turns it on (a browser keeps a page silent until a tap, and a hall should not start making noise on its own). Every cue that plays is also written as a plain phrase…
+  - install: `npx shadcn@latest add https://ds.interlace.tools/r/sound-cue-toggle.json`
+  - contract: client, min 320px, v1.0.0
 - [Spectrum](https://ds.interlace.tools/c/spectrum): Where do you stand? A statement, two poles, and a line between them. Each person places one dot, then sees the whole room spread along the same line, their own bin marked, the room's middle drawn, and, when the statement was asked before, where the middle…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/spectrum.json`
   - contract: client, min 320px, v1.0.0
@@ -722,7 +734,7 @@ Two axes, both on every item. **Tier** is the DS layer (composition runs upward 
   - contract: client, min 320px, states correct|wrong, v1.0.1
 - [Team Board](https://ds.interlace.tools/c/team-board): Team mode for a live room. The host sets up teams, balances them (or moves a player by hand), and everyone sees whose team they are on and how the teams score. The rules are `games/team-model`; the teams ride in the room (`RoomState.shared`), so a phone…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/team-board.json`
-  - contract: client, min 320px, keys Enter/Escape, states lobby|countdown|question|reveal|podium|closed, v1.4.0
+  - contract: client, min 320px, keys Enter/Escape, states lobby|countdown|question|reveal|podium|closed, v1.5.0
 - [Text Wall](https://ds.interlace.tools/c/text-wall): The room's short answers on a shared screen: "what would you ask someone your age who lives there?". New posts rise in at the top; the presenter can put one in the spotlight, large, above the rest. Phones send with `QuestionAsk` (relabelled: "Your answer"…
   - install: `npx shadcn@latest add https://ds.interlace.tools/r/text-wall.json`
   - contract: client, min 320px, v1.0.1

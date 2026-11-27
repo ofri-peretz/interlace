@@ -462,6 +462,20 @@
     "previewDark": "charts-chartframe--dark",
     "skeleton": null
   },
+  "check-in": {
+    "title": "Games/CheckIn",
+    "storyIds": [
+      "games-checkin--default",
+      "games-checkin--choosing",
+      "games-checkin--keyboard",
+      "games-checkin--private",
+      "games-checkin--closed",
+      "games-checkin--right-to-left"
+    ],
+    "preview": "games-checkin--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "checkbox": {
     "title": "Primitives/Checkbox",
     "storyIds": [
@@ -832,6 +846,21 @@
     "previewDark": "blocks-datatable--dark",
     "skeleton": "blocks-datatable--loading"
   },
+  "debate-corners": {
+    "title": "Games/DebateCorners",
+    "storyIds": [
+      "games-debatecorners--default",
+      "games-debatecorners--choosing",
+      "games-debatecorners--keyboard",
+      "games-debatecorners--locked",
+      "games-debatecorners--private",
+      "games-debatecorners--two-corners",
+      "games-debatecorners--right-to-left"
+    ],
+    "preview": "games-debatecorners--default",
+    "previewDark": null,
+    "skeleton": null
+  },
   "decode-text": {
     "title": "Effects/DecodeText",
     "storyIds": [
@@ -1068,6 +1097,20 @@
     "preview": "templates-errortemplate--not-found",
     "previewDark": "templates-errortemplate--dark",
     "skeleton": "templates-errortemplate--page-skeleton"
+  },
+  "exit-ticket": {
+    "title": "Games/ExitTicket",
+    "storyIds": [
+      "games-exitticket--default",
+      "games-exitticket--sent",
+      "games-exitticket--keyboard",
+      "games-exitticket--private",
+      "games-exitticket--closed",
+      "games-exitticket--right-to-left"
+    ],
+    "preview": "games-exitticket--default",
+    "previewDark": null,
+    "skeleton": null
   },
   "faq": {
     "title": "Blocks/FAQ",
@@ -2774,6 +2817,19 @@
     ],
     "preview": "blocks-socialsignin--default",
     "previewDark": "blocks-socialsignin--dark",
+    "skeleton": null
+  },
+  "sound-cue-toggle": {
+    "title": "Games/SoundCueToggle",
+    "storyIds": [
+      "games-soundcuetoggle--default",
+      "games-soundcuetoggle--on",
+      "games-soundcuetoggle--keyboard",
+      "games-soundcuetoggle--unsupported",
+      "games-soundcuetoggle--right-to-left"
+    ],
+    "preview": "games-soundcuetoggle--default",
+    "previewDark": null,
     "skeleton": null
   },
   "spacing": {

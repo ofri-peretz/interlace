@@ -2825,7 +2825,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.0.0",
+        "version": "1.0.1",
         "since": "2.1.0"
       }
     },
@@ -3707,8 +3707,26 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.5.0",
         "since": "2.0.0"
+      }
+    },
+    {
+      "name": "check-in",
+      "type": "registry:ui",
+      "title": "Check In",
+      "description": "\"How are you arriving?\" Pick the face that fits. Everyone answers in one tap, in the lobby while the room fills or at the start of a session, and the room's mood shows as a spread: how many chose each, the one most chose, and, when the same question was…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.6.0",
+        "since": "2.2.0"
       }
     },
     {
@@ -3743,8 +3761,26 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.2.1",
+        "version": "1.2.2",
         "since": "2.0.0"
+      }
+    },
+    {
+      "name": "debate-corners",
+      "type": "registry:ui",
+      "title": "Debate Corners",
+      "description": "Pick a corner, then defend it. A statement with two to four positions, one for each corner of the room: each person stands in the corner they pick, can move until the host locks the corners, and the host calls one corner at a time to defend its position.…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.6.0",
+        "since": "2.2.0"
       }
     },
     {
@@ -3781,6 +3817,24 @@
         "loading": false,
         "version": "1.0.1",
         "since": "2.0.0"
+      }
+    },
+    {
+      "name": "exit-ticket",
+      "type": "registry:ui",
+      "title": "Exit Ticket",
+      "description": "Three quick questions as people leave, while it is fresh: how likely to recommend (0 to 10, grouped the standard way into promoters, passives and detractors), a rating on a short scale, and a choice. Answers go in with one button and can be changed until…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.6.0",
+        "since": "2.2.0"
       }
     },
     {
@@ -3833,7 +3887,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.5.0",
         "since": "2.0.0"
       }
     },
@@ -3887,7 +3941,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.5.0",
+        "version": "1.6.0",
         "since": "2.0.0"
       }
     },
@@ -3959,7 +4013,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.5.0",
         "since": "2.0.0"
       }
     },
@@ -4324,6 +4378,24 @@
       }
     },
     {
+      "name": "sound-cue-toggle",
+      "type": "registry:ui",
+      "title": "Sound Cue Toggle",
+      "description": "The switch for a room's sound cues, and the words for them. Sound is off until a person turns it on (a browser keeps a page silent until a tap, and a hall should not start making noise on its own). Every cue that plays is also written as a plain phrase…",
+      "categories": [
+        "games",
+        "game"
+      ],
+      "meta": {
+        "tier": "game",
+        "client": true,
+        "minViewport": 320,
+        "loading": false,
+        "version": "1.0.0",
+        "since": "2.2.0"
+      }
+    },
+    {
       "name": "spectrum",
       "type": "registry:ui",
       "title": "Spectrum",
@@ -4409,7 +4481,7 @@
         "client": true,
         "minViewport": 320,
         "loading": false,
-        "version": "1.4.0",
+        "version": "1.5.0",
         "since": "2.0.0"
       }
     },
