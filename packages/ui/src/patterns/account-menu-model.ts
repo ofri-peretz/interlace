@@ -120,12 +120,8 @@ export function accountInitials(
   return letters ? letters.toLocaleUpperCase() : '?';
 }
 
-/** The path of an address: no query, no fragment, no trailing slash (but `/` stays `/`). */
-function pagePath(address: string): string {
-  const end = address.search(/[?#]/);
-  const path = end < 0 ? address : address.slice(0, end);
-  return path.length > 1 ? path.replace(/\/+$/, '') : path;
-}
+/** The path of an address: no query, no fragment, no trailing slash (the root becomes empty). */
+const pagePath = (address: string): string => address.split(/[?#]/, 1)[0]!.replace(/\/+$/, '');
 
 /**
  * The sign-in address with a safe `?next=`. `signIn` comes back unchanged when `here` is absent,

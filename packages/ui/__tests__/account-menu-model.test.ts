@@ -31,6 +31,9 @@ describe('accountDisplayName', () => {
     expect(accountDisplayName({ firstName: '   ', email: 'dana@example.com' })).toBe('dana');
     expect(accountDisplayName({ firstName: null, email: ' dana@example.com ' })).toBe('dana');
   });
+  it('trims the start of the email too', () => {
+    expect(accountDisplayName({ email: 'dana @example.com' })).toBe('dana');
+  });
   it('uses a whole email that has no @', () => {
     expect(accountDisplayName({ email: 'dana' })).toBe('dana');
   });
