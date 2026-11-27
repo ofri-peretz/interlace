@@ -8,7 +8,10 @@
  * a live room runs, and `readExitTicket` reads what the room holds back as untrusted data.
  *
  * Answers are kept for the session by player id so one person's second send replaces their first;
- * nothing here ever shows who said what (`summarizeTicket` takes answers, not names).
+ * nothing here ever shows who said what (`summarizeTicket` takes answers, not names). It is not
+ * anonymous, though: the room holds the answers by player id, so the host, and a client reading the
+ * room's state, can see who sent which. Aggregating on the host would not fix that (the state is
+ * broadcast, and every change would show whose answer moved the counts), so the component says so.
  */
 
 import type { ActivityReducer, RoomState } from './room-model.js';

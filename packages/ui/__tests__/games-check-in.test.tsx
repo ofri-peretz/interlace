@@ -145,6 +145,17 @@ describe('CheckIn', () => {
     expect(container.querySelector('[data-slot="check-in"]')?.getAttribute('data-state')).toBe('choosing');
   });
 
+  it('says plainly, before the pick, that the host can see who chose what, and can be told otherwise', () => {
+    const { container, rerender } = render(<CheckIn prompt="Q" moods={DEFAULT_MOODS} />);
+    expect(container.querySelector('[data-slot="check-in-privacy"]')?.textContent).toBe('The host can see who chose which face.');
+    fireEvent.click(screen.getByRole('radio', { name: 'Good' }));
+    expect(container.querySelector('[data-slot="check-in-privacy"]')).toBeNull(); // they have read it; the room now speaks
+    rerender(<CheckIn prompt="Q" moods={DEFAULT_MOODS} labels={{ privacy: 'Counted by the organiser only.' }} defaultValue={null} value={null} />);
+    expect(container.querySelector('[data-slot="check-in-privacy"]')?.textContent).toBe('Counted by the organiser only.');
+    rerender(<CheckIn prompt="Q" moods={DEFAULT_MOODS} labels={{ privacy: '' }} value={null} />);
+    expect(container.querySelector('[data-slot="check-in-privacy"]')).toBeNull();
+  });
+
   it('picks, shows the spread, and says in one sentence what the room chose', () => {
     const onPick = vi.fn();
     const { container } = render(<CheckIn prompt="Q" moods={DEFAULT_MOODS} picks={picks} onPick={onPick} />);

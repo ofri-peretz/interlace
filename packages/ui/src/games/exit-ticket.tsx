@@ -9,6 +9,12 @@
  * numbers are shown as plain sentences, never as who said what, and only once enough people have sent
  * theirs.
  *
+ * ## Not anonymous
+ *
+ * On a live room each person's answers are held by their id (so they can be changed), which the host,
+ * and anyone reading the room's state directly, can see. The screens never show names, and the
+ * component says so to the person (`labels.privacy`); it is not a promise of anonymity.
+ *
  * ## Anatomy
  *
  *   ExitTicket                       (div — data-slot="exit-ticket", data-state=answering|sent|closed)
@@ -66,6 +72,13 @@ interface ExitTicketLabels {
   closed?: string;
   /** Under the send button until one question is answered. @default 'Answer at least one question.' */
   needOne?: string;
+  /**
+   * What a person is told about who can see their answers. The room holds each person's answers by
+   * their id so they can change them, so the host can see who sent what: this says so. Set it to ''
+   * only when your own server aggregates the answers and the host cannot.
+   * @default 'The host can see who sent which answers.'
+   */
+  privacy?: string;
 }
 
 type ExitTicketProps = Omit<React.ComponentProps<'div'>, 'children' | 'defaultValue' | 'onChange'> & {
@@ -164,6 +177,8 @@ function ExitTicket({
     onSend?.(draft);
   };
 
+  const privacy = labels?.privacy ?? 'The host can see who sent which answers.';
+
   const status = closed
     ? (labels?.closed ?? 'The exit ticket is closed.')
     : sent !== null && !changing
@@ -220,6 +235,11 @@ function ExitTicket({
               </div>
             );
           })}
+          {privacy ? (
+            <p data-slot="exit-ticket-privacy" className="text-muted-foreground text-sm">
+              {privacy}
+            </p>
+          ) : null}
           <div className="flex flex-wrap items-center gap-3">
             <Button type="submit" size="lg" disabled={!answered} data-slot="exit-ticket-send">
               {labels?.send ?? 'Send'}

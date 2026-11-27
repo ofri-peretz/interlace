@@ -9,6 +9,12 @@
  * since. People can change their pick until the host closes it. Every face has a word, so nothing
  * depends on seeing a drawing.
  *
+ * ## Not anonymous
+ *
+ * On a live room each pick is held by the person's id (so they can change it), which the host, and
+ * anyone reading the room's state directly, can see. The screens never show names, and the
+ * component says so before the person picks (`labels.privacy`); it is not a promise of anonymity.
+ *
  * ## Anatomy
  *
  *   CheckIn                          (div — data-slot="check-in", data-state=choosing|picked|closed)
@@ -63,6 +69,13 @@ interface CheckInLabels {
   pending?: (min: number) => string;
   /** Once the host closes it. @default 'The check-in is closed.' */
   closed?: string;
+  /**
+   * What a person is told about who can see their pick. The room holds each pick by the person's id
+   * so they can change it, so the host can see who chose what: this says so. Set it to '' only when
+   * your own server aggregates the picks and the host cannot.
+   * @default 'The host can see who chose which face.'
+   */
+  privacy?: string;
 }
 
 type CheckInProps = Omit<React.ComponentProps<'div'>, 'children' | 'defaultValue' | 'onChange'> & {
@@ -188,6 +201,12 @@ function CheckIn({
             />
           ))}
         </div>
+      ) : null}
+
+      {mine === null && (labels?.privacy ?? 'The host can see who chose which face.') ? (
+        <p data-slot="check-in-privacy" className="text-muted-foreground text-sm">
+          {labels?.privacy ?? 'The host can see who chose which face.'}
+        </p>
       ) : null}
 
       <p data-slot="check-in-status" aria-live="polite" className="text-sm empty:hidden">

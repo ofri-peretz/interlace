@@ -176,6 +176,15 @@ describe('ExitTicket', () => {
     expect(screen.getByText('Not at all likely')).toBeTruthy();
   });
 
+  it('says plainly that the host can see who sent what, and lets a consumer who aggregates elsewhere hide it', () => {
+    const { container, rerender } = render(<ExitTicket questions={QUESTIONS} />);
+    expect(container.querySelector('[data-slot="exit-ticket-privacy"]')?.textContent).toBe('The host can see who sent which answers.');
+    rerender(<ExitTicket questions={QUESTIONS} labels={{ privacy: 'Only the organiser sees these.' }} />);
+    expect(container.querySelector('[data-slot="exit-ticket-privacy"]')?.textContent).toBe('Only the organiser sees these.');
+    rerender(<ExitTicket questions={QUESTIONS} labels={{ privacy: '' }} />);
+    expect(container.querySelector('[data-slot="exit-ticket-privacy"]')).toBeNull();
+  });
+
   it('sends the answers once, thanks the person in a focused live region, and shows the room', () => {
     const onSend = vi.fn();
     const { container } = render(<ExitTicket questions={QUESTIONS} onSend={onSend} summary={summary} count={3} />);

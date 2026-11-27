@@ -5,7 +5,8 @@
  * session so the room can see whether it moved. It works in the lobby, so early arrivals have
  * something to do. Each mood has a plain word (the face is never the only signal) and a value from
  * -2 to 2, so the room's mood and its shift between two rounds are numbers a recap can repeat.
- * Pure; `checkInActivity` is the same thing as a rule a live room runs and `readCheckIn` reads what
+ * Not anonymous: picks are held by player id so a person can change theirs, which the host and a
+ * client reading the room's state can see (`CheckIn` says so). Pure; `checkInActivity` is the same thing as a rule a live room runs and `readCheckIn` reads what
  * the room holds back as untrusted data.
  */
 

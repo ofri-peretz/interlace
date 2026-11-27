@@ -40,9 +40,14 @@ on from a tap; every cue has a word (`CUE_LABELS`) written in a polite live regi
 ## 4. Privacy
 
 Picks and answers are held by player id in the room's `shared` state so a person can move or resend.
-Screens show counts, never names. The state is visible to a client that reads it directly; hiding who
-chose what from a determined phone would need a server, which this package does not have (stated, not
-solved).
+Screens show counts, never names, but **the exit ticket and the check-in are not anonymous**: the host
+and any client reading the room's state can see who chose what, and both components say so to the
+person (`labels.privacy`).
+
+Aggregating on the host instead was considered and rejected: the room's state is broadcast to every
+phone after every move, so a phone watching two consecutive states sees whose move changed which
+count, and one vote per person cannot be enforced without remembering who voted. Real anonymity needs
+a host-private part of the room, or a server that aggregates; neither is in this package.
 
 ## 5. Risks
 
@@ -60,3 +65,4 @@ solved).
 - One shared "choice" rule behind all three activities: corners lock and call, the ticket takes a
   whole set of answers, the check-in keeps rounds. A shared rule would have needed a flag for each.
 - Emoji glyphs for the faces: they draw differently on every platform. The faces are the consumer's.
+- Aggregating answers on the host to make the exit ticket and check-in anonymous (see section 4).
