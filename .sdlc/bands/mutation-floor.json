@@ -16,6 +16,22 @@
       "timeouts": null,
       "ignored": null
     },
+    "src/games/agenda-sync-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/breakout-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
     "src/games/closer-model.ts": {
       "floor": null,
       "mutants": null,
@@ -48,6 +64,14 @@
       "timeouts": null,
       "ignored": null
     },
+    "src/games/group-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
     "src/games/groups-model.ts": {
       "floor": null,
       "mutants": null,
@@ -73,6 +97,14 @@
       "ignored": null
     },
     "src/games/order-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/pair-model.ts": {
       "floor": null,
       "mutants": null,
       "killed": null,
@@ -225,6 +257,14 @@
       "ignored": null
     },
     "src/games/tally-model.ts": {
+      "floor": null,
+      "mutants": null,
+      "killed": null,
+      "survived": null,
+      "timeouts": null,
+      "ignored": null
+    },
+    "src/games/team-model.ts": {
       "floor": null,
       "mutants": null,
       "killed": null,
