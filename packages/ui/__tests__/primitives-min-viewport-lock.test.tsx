@@ -98,6 +98,7 @@ const PRIMITIVES = [
   { name: 'otp-field', viewport: 320, tier: 'client' },
   { name: 'label', viewport: 320, tier: 'server' },
   { name: 'checkbox', viewport: 320, tier: 'client' },
+  { name: 'choice-card', viewport: 320, tier: 'client' },
   { name: 'radio-group', viewport: 320, tier: 'client' },
   { name: 'calendar', viewport: 320, tier: 'client' },
   { name: 'select', viewport: 320, tier: 'client' },
