@@ -29,6 +29,9 @@ export default [
   { plugins: { markdown } },
   {
     ...guidance,
+    // Interlace keeps its installable skills in docs/ai-sdlc/skills (scripts/ai-sdlc/install.mjs
+    // copies them to ~/.claude/skills), outside the preset's .claude/skills glob.
+    files: [...guidance.files, "docs/ai-sdlc/skills/**/SKILL.md"],
     rules: {
       ...Object.fromEntries(
         Object.keys(guidance.rules).map((rule) => [rule, "error"]),

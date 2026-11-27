@@ -43,6 +43,8 @@ Review this ledger when a new post appears. A new practice with a measured resul
 | <a id="e-28"></a>E-28 | [Contextual retrieval](https://www.anthropic.com/news/contextual-retrieval) (2024-09-19) | Contextual chunks; prompt caching for repeated context | Retrieval failures −67% with reranking; caching: latency >2× lower, cost up to 90% lower (no method given) | ✅ cache hit tracked by the scorecard |
 | <a id="e-29"></a>E-29 | [The "think" tool](https://www.anthropic.com/engineering/claude-think-tool) (2025-03-20) | A think tool for policy-heavy tool chains | τ-Bench airline 0.370 → 0.570 (+54%) | — (extended thinking now preferred) |
 | <a id="e-30"></a>E-30 | [SWE-bench Verified with Claude 3.5 Sonnet](https://www.anthropic.com/engineering/swe-bench-sonnet) (2025-01-06) | Minimal scaffolding; error-proof tools (absolute paths) | 49% vs prior SOTA 45% | 🟡 |
+| <a id="e-31"></a>E-31 | [Getting started with loops](https://claude.com/resources/articles/getting-started-with-loops) (2026) | Four loop kinds (turn-, goal-, time-based, proactive); a deterministic stop condition; a fresh-context reviewer; the cheapest model that does the job; no routine faster than what it watches changes | No measurement | ✅ [LOOPS.md](LOOPS.md), `next.mjs` is the stop condition |
+| <a id="e-32"></a>E-32 | [Measuring agent autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) (2026) | Design for monitoring and intervention, not per-action approval; keep approval for irreversible actions | 99.9th-percentile turn rose from <25 to >45 min; auto-approve ~20% of sessions for new users → >40% by 750 sessions; 0.8% of tool calls irreversible | ✅ gates only at Design→Build and Deploy (rule 3) |
 
 ## Measured on our repos
 
