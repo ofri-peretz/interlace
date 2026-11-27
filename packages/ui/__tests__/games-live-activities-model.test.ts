@@ -196,6 +196,23 @@ describe('reactions', () => {
     expect(got.n).toBe(3);
   });
 
+  it('counts a kind the slice has not seen yet, as when the room started with fewer kinds', () => {
+    const fewer = chain(reactionsActivity({ kinds: ['clap'] }), [[HOST, { type: 'start' }]]);
+    expect(readReactions(room({ reactions: fewer }))?.totals).toEqual({ clap: 0 });
+    const got = readReactions(room({ reactions: run(reactions, fewer, { type: 'react', kind: 'heart' }, 'ann') }))!;
+    expect(got.totals).toEqual({ clap: 0, heart: 1 });
+  });
+
+  it('uses a three second window by default', () => {
+    const plain = reactionsActivity({ kinds });
+    const s0 = chain(plain, [[HOST, { type: 'start' }]]);
+    const one = (plain(s0, { type: 'react', kind: 'clap' }, ctx('ann', 10_000)) as { slice: unknown }).slice;
+    const two = (plain(one, { type: 'react', kind: 'clap' }, ctx('bo', 12_000)) as { slice: unknown }).slice;
+    expect(readReactions(room({ reactions: two }))?.budget).toEqual({ ann: [10_000], bo: [12_000] });
+    const three = (plain(two, { type: 'react', kind: 'clap' }, ctx('cy', 13_500)) as { slice: unknown }).slice;
+    expect(readReactions(room({ reactions: three }))?.budget).toEqual({ bo: [12_000], cy: [13_500] }); // ann's 10s is out of the window
+  });
+
   it('slows a person who reacts too fast, and lets them again after the window', () => {
     const start = started();
     const one = reactions(start, { type: 'react', kind: 'clap' }, ctx('ann', 10_000)) as { slice: unknown };
