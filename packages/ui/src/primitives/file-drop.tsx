@@ -42,7 +42,7 @@
  *
  *   FileDrop                      (div — data-slot="file-drop", data-min-viewport=320)
  *     ├─ label                    (data-slot="file-drop-area", data-dragging, data-disabled)
- *     │   ├─ input[type=file]     (sr-only, focus ring drawn on the area)
+ *     │   ├─ input[type=file]     (unseen, laid over the area, which draws its focus ring)
  *     │   ├─ icon                 (aria-hidden)
  *     │   ├─ label text           (data-slot="file-drop-label")
  *     │   └─ hint?                (data-slot="file-drop-hint": what it takes, linked as the description)
@@ -229,7 +229,7 @@ export function FileDrop({
           add(Array.from(event.dataTransfer.files));
         }}
         className={cn(
-          'border-input bg-background text-foreground flex cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed px-4 py-8 text-center',
+          'border-input bg-background text-foreground relative flex cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed px-4 py-8 text-center',
           'transition-[border-color,background-color] duration-(--duration-fast) ease-enter hover:border-ring/60 hover:bg-muted/40',
           'has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-ring has-[input:focus-visible]:ring-offset-2 has-[input:focus-visible]:ring-offset-background',
           'data-[dragging]:border-primary data-[dragging]:bg-primary/6',
@@ -245,7 +245,9 @@ export function FileDrop({
           disabled={disabled}
           required={required && files.length === 0}
           aria-describedby={cn(hintId, status ? statusId : undefined) || undefined}
-          className="sr-only"
+          // Laid over the whole area, unseen, so the area's ring is the field's own focus ring and a
+          // check that looks around the focused element finds it.
+          className="absolute inset-0 size-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
           onChange={(event) => {
             const picked = Array.from(event.currentTarget.files ?? []);
             if (picked.length > 0) add(picked);

@@ -46,6 +46,27 @@ export const Default: Story = {
       locale="en"
     />
   ),
+};
+
+/**
+ * Remove a file and see focus move to the next one. Kept apart from `Default`, which the screenshot
+ * matrix shoots: a click still running when the camera fires would make that picture depend on timing.
+ */
+export const RemoveFile: Story = {
+  render: () => (
+    <FileDrop
+      className="max-w-prose"
+      label="Drop files here, or choose them"
+      hint="Text or PDF, up to 5 MB each, at most 4 files"
+      name="attachments"
+      multiple
+      accept=".txt,.pdf,text/plain,application/pdf"
+      maxSize={5_000_000}
+      maxFiles={4}
+      defaultValue={sample()}
+      locale="en"
+    />
+  ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByLabelText(/Drop files here/)).toHaveAttribute('type', 'file');

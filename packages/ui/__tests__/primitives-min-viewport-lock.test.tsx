@@ -175,26 +175,22 @@ const TEMPLATES = [
   { name: 'scorecard-template', viewport: 320, tier: 'server' },
 ] as const;
 
+/**
+ * Patterns that own MIN_VIEWPORT. These live under `packages/ui/src/patterns/`.
+ */
+const PATTERNS = [
+  { name: 'carousel', viewport: 320, tier: 'client' },
+  { name: 'avatar-upload', viewport: 320, tier: 'client' },
+  { name: 'setup-checklist', viewport: 320, tier: 'client' },
+] as const;
+
 // Allowed viewport floors. Keep in lock-step with DESIGN_PRINCIPLES #14.
 const ALLOWED_VIEWPORTS = [320, 480, 768] as const;
 
-const readPrimitive = (name: string): string => {
-  const absolute = resolve(
-    __dirname,
-    '../src/primitives',
-    `${name}.tsx`,
-  );
-  return readFileSync(absolute, 'utf-8');
-};
+const ROOTS = { primitive: 'primitives', template: 'templates', pattern: 'patterns' } as const;
 
-const readTemplate = (name: string): string => {
-  const absolute = resolve(
-    __dirname,
-    '../src/templates',
-    `${name}.tsx`,
-  );
-  return readFileSync(absolute, 'utf-8');
-};
+const readSource = (kind: keyof typeof ROOTS, name: string): string =>
+  readFileSync(resolve(__dirname, '../src', ROOTS[kind], `${name}.tsx`), 'utf-8');
 
 // Strip block comments + line comments before checking for the `'use client'`
 // pragma so a docs-only mention inside a JSDoc header can't fool the test.
@@ -210,15 +206,13 @@ const hasUseClientDirective = (source: string): boolean => {
   return /^["']use client["'];?/.test(stripped);
 };
 
-for (const { name, viewport, tier } of [
+for (const { name, viewport, tier, kind } of [
   ...PRIMITIVES.map((p) => ({ ...p, kind: 'primitive' as const })),
   ...TEMPLATES.map((t) => ({ ...t, kind: 'template' as const })),
+  ...PATTERNS.map((p) => ({ ...p, kind: 'pattern' as const })),
 ]) {
-  describe(`${(name as string).endsWith('-template') ? 'template' : 'primitive'}: ${name}`, () => {
-    const source =
-      (name as string).endsWith('-template')
-        ? readTemplate(name)
-        : readPrimitive(name);
+  describe(`${kind}: ${name}`, () => {
+    const source = readSource(kind, name);
 
     // -----------------------------------------------------------------------
     // 1. MIN_VIEWPORT export + allowed literal (DESIGN_PRINCIPLES #14)
@@ -230,9 +224,7 @@ for (const { name, viewport, tier } of [
     it(`pins MIN_VIEWPORT to the expected literal (${viewport})`, () => {
       // Look for `export const MIN_VIEWPORT = <number>` allowing optional
       // type annotation and trailing `as const`.
-      const match = source.match(
-        /export\s+const\s+MIN_VIEWPORT(?:\s*:\s*\w+)?\s*=\s*(\d+)\b/,
-      );
+      const match = source.match(/export\s+const\s+MIN_VIEWPORT(?:\s*:\s*\w+)?\s*=\s*(\d+)\b/);
       expect(match, 'MIN_VIEWPORT export not found').not.toBeNull();
       const literal = Number(match![1]);
       expect(ALLOWED_VIEWPORTS).toContain(literal as 320 | 480 | 768);
