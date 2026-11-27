@@ -269,7 +269,8 @@ describe('reading teams from a room', () => {
   it('keeps what it can use: clean names, known members only', () => {
     const t = decodeTeams({
       teams: [{ id: 't1', name: '  ' }, { id: 't2', name: 'x'.repeat(50) }],
-      members: { a: 't1', b: 't9', c: 5, __proto__: 't1' },
+      // `__proto__` as it arrives from the network: an own key, not a prototype assignment.
+      members: JSON.parse('{"a":"t1","b":"t9","c":5,"__proto__":"t1"}'),
     })!;
     expect(t.teams.map((x) => x.name)).toEqual(['Team 1', 'x'.repeat(24)]);
     expect(t.members).toEqual({ a: 't1' });

@@ -53,6 +53,7 @@
 
 import * as React from 'react';
 
+import { motionEase } from '../lib/motion-token.js';
 import { cn } from '../lib/cn.js';
 import { useReducedMotion } from '../lib/use-reduced-motion.js';
 import { Button } from '../primitives/button.js';
@@ -72,7 +73,6 @@ import {
 } from './pair-model.js';
 
 export const MIN_VIEWPORT = 320 as const;
-const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
 const SELECT =
   'border-input bg-background text-foreground h-control-sm max-w-full min-w-0 rounded-lg border ps-2 pe-1 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
@@ -343,7 +343,7 @@ function PairCard({ room, selfId, now = Date.now, labels, className, ...props }:
     seen.current = key;
     if (before === null || key === null || before === key || reduced) return;
     const el = boxRef.current;
-    if (el && typeof el.animate === 'function') el.animate([{ transform: 'scale(0.96)' }, { transform: 'scale(1)' }], { duration: 240, easing: EASE });
+    if (el && typeof el.animate === 'function') el.animate([{ transform: 'scale(0.96)' }, { transform: 'scale(1)' }], { duration: 240, easing: motionEase(el, 'enter') });
   }, [key, reduced]);
 
   if (!state) return null;
