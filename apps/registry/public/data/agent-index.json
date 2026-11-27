@@ -13,7 +13,7 @@
     "installTemplate": "npx shadcn@latest add https://ds.interlace.tools/r/{name}.json",
     "aliasInstallTemplate": "npx shadcn@latest add @interlace/{name}",
     "aliasNote": "The @interlace/{name} form only resolves for consumers who registered the namespace in components.json; the absolute URL always works.",
-    "itemCount": 235
+    "itemCount": 260
   },
   "fieldGuide": {
     "meta.tier": "Which DS layer the item belongs to: theme, lib, primitive, pattern, template, effects, charts, games. Composition runs upward only — a primitive never imports a pattern.",
@@ -29,10 +29,10 @@
   },
   "facets": {
     "tier": {
-      "primitive": 78,
-      "pattern": 65,
-      "effect": 27,
-      "game": 24,
+      "primitive": 79,
+      "pattern": 66,
+      "game": 46,
+      "effect": 28,
       "chart": 14,
       "template": 13,
       "util": 8,
@@ -40,16 +40,16 @@
       "theme": 3
     },
     "category": {
-      "primitive": 78,
-      "pattern": 65,
+      "primitive": 79,
+      "pattern": 66,
+      "games": 46,
+      "game": 46,
       "blog": 37,
-      "data": 30,
+      "data": 31,
       "foundation": 29,
-      "effect": 27,
-      "form": 26,
-      "games": 24,
-      "game": 24,
-      "decorative": 24,
+      "effect": 28,
+      "form": 27,
+      "decorative": 25,
       "navigation": 18,
       "feedback": 18,
       "chart": 14,
@@ -62,22 +62,22 @@
       "theme": 3
     },
     "rendering": {
-      "client": 120,
+      "client": 145,
       "server": 115
     },
     "keyboard": {
-      "none": 185,
-      "handled": 50
+      "none": 201,
+      "handled": 59
     },
     "loading": {
-      "none": 197,
+      "none": 222,
       "built-in": 38
     },
     "minViewport": {
-      "320": 152,
+      "320": 176,
       "480": 7,
       "768": 1,
-      "inherited": 75
+      "inherited": 76
     }
   },
   "items": [
@@ -113,7 +113,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "5.2.0",
+      "version": "5.7.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -164,7 +164,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -180,6 +180,82 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/accordion.json",
       "item": "https://ds.interlace.tools/r/accordion.json",
       "docs": "https://ds.interlace.tools/c/accordion"
+    },
+    {
+      "name": "agenda",
+      "title": "Agenda",
+      "type": "registry:ui",
+      "summary": "The running order of a session. `Agenda` is the presenter's console: the item that is on, a clock that counts down and then counts over, the presenter's notes, how far the session has drifted from the plan and when it will end at this pace, and the…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowLeft",
+          "ArrowRight",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "AgendaPhase",
+          "values": [
+            "before",
+            "running",
+            "paused",
+            "over",
+            "finished"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "timer"
+        ],
+        "aria": [
+          "aria-current",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/agenda.tsx",
+        "components/ui/games/agenda-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/agenda.json",
+      "item": "https://ds.interlace.tools/r/agenda.json",
+      "docs": "https://ds.interlace.tools/c/agenda"
     },
     {
       "name": "alert-dialog",
@@ -215,7 +291,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -343,8 +419,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -396,7 +472,7 @@
         "AppHeaderEdge"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "interlace-base"
@@ -442,8 +518,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "app-header-edge",
@@ -492,7 +568,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -548,7 +624,7 @@
         "ArticleCard",
         "FeaturedArticleCard"
       ],
-      "version": "3.1.0",
+      "version": "3.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -769,7 +845,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -1046,7 +1122,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "1.3.0",
+      "version": "1.6.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1114,8 +1190,8 @@
         "Banner",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -1327,7 +1403,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.2",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -1342,6 +1418,87 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/breadcrumb.json",
       "item": "https://ds.interlace.tools/r/breadcrumb.json",
       "docs": "https://ds.interlace.tools/c/breadcrumb"
+    },
+    {
+      "name": "breakout-room",
+      "title": "Breakout Room",
+      "type": "registry:ui",
+      "summary": "Breakouts for a live room: the host splits the room into groups with a timer, sends one message to every group, and calls everyone back; each phone shows its group, who is in it, the time left and the latest message. The rules are `games/breakout-model`…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "BREAKOUTS_KEY",
+        "JOIN_CODE_ALPHABET",
+        "MAX_GROUPS",
+        "MAX_MESSAGE",
+        "MAX_SHARED_SIZE",
+        "MIN_VIEWPORT",
+        "RESTORE_SEQ_JUMP"
+      ],
+      "version": "1.4.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "room-clock",
+        "textarea",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/breakout-room.tsx",
+        "components/ui/games/breakout-model.ts",
+        "components/ui/games/group-model.ts",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/breakout-room.json",
+      "item": "https://ds.interlace.tools/r/breakout-room.json",
+      "docs": "https://ds.interlace.tools/c/breakout-room"
     },
     {
       "name": "button-variants",
@@ -1377,7 +1534,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "3.3.0",
+      "version": "3.5.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -1426,7 +1583,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "3.4.0",
+      "version": "3.6.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1487,7 +1644,7 @@
       },
       "exports": [],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "interlace-base"
@@ -1564,8 +1721,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -1620,7 +1777,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.1",
+      "version": "2.1.3",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -1670,7 +1827,7 @@
         "focusRing": true
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "2.4.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -1685,6 +1842,70 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/card.json",
       "item": "https://ds.interlace.tools/r/card.json",
       "docs": "https://ds.interlace.tools/c/card"
+    },
+    {
+      "name": "carousel",
+      "title": "Carousel",
+      "type": "registry:ui",
+      "summary": "A row of cards the reader swipes through: today's updates, featured answers, the games to play next. On a phone it is the shape people already know from every feed; on a wide screen it shows several cards at once and two buttons page through the rest.",
+      "topics": [],
+      "categories": [
+        "data",
+        "pattern"
+      ],
+      "tier": "pattern",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-controls",
+          "aria-hidden",
+          "aria-label",
+          "aria-roledescription"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselNext",
+        "CarouselPrevious",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/patterns/carousel.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/carousel.json",
+      "item": "https://ds.interlace.tools/r/carousel.json",
+      "docs": "https://ds.interlace.tools/c/carousel"
     },
     {
       "name": "celebrate",
@@ -1734,8 +1955,8 @@
       "exports": [
         "HAPTICS"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -1789,7 +2010,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -1842,7 +2063,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.1",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -1858,6 +2079,72 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/checkbox.json",
       "item": "https://ds.interlace.tools/r/checkbox.json",
       "docs": "https://ds.interlace.tools/c/checkbox"
+    },
+    {
+      "name": "choice-card",
+      "title": "Choice Card",
+      "type": "registry:ui",
+      "summary": "Big, tappable tiles for picking: one answer to a question, the topics a reader cares about, the kind of session a group wants. A tile carries a title, an optional line of description and an optional picture or icon, and the whole tile is the control, so a…",
+      "topics": [],
+      "categories": [
+        "form",
+        "primitive"
+      ],
+      "tier": "primitive",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "checkbox",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "ChoiceCardLayout",
+          "values": [
+            "grid",
+            "list"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "checkbox",
+          "radio"
+        ],
+        "aria": [
+          "aria-hidden",
+          "aria-invalid",
+          "aria-readonly"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/choice-card.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/choice-card.json",
+      "item": "https://ds.interlace.tools/r/choice-card.json",
+      "docs": "https://ds.interlace.tools/c/choice-card"
     },
     {
       "name": "choropleth-map",
@@ -1914,8 +2201,8 @@
         "MAX_BINS",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -1975,8 +2262,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
-      "since": null,
+      "version": "1.3.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "badge",
@@ -2027,8 +2314,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
-      "since": null,
+      "version": "1.2.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -2091,8 +2378,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "button",
@@ -2196,7 +2483,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -2251,7 +2538,7 @@
         "LINE_HEIGHT_PX",
         "PAD_Y_PX"
       ],
-      "version": "2.0.0",
+      "version": "2.1.1",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -2297,7 +2584,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "3.0.0",
+      "version": "3.1.1",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -2345,7 +2632,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -2401,7 +2688,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.1.0",
+      "version": "3.3.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2458,7 +2745,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.0",
+      "version": "3.1.0",
       "since": "1.1.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2536,8 +2823,8 @@
         "DAY_MS",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -2645,7 +2932,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -2696,8 +2983,8 @@
       "exports": [
         "CountUp"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -2747,7 +3034,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -2803,8 +3090,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -2857,7 +3144,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.2",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3153,7 +3440,7 @@
         "DecodeText"
       ],
       "version": "3.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -3229,7 +3516,7 @@
         "Delta",
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "1.4.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3278,7 +3565,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -3352,8 +3639,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
-      "since": null,
+      "version": "2.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -3410,8 +3697,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
-      "since": null,
+      "version": "1.4.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -3459,7 +3746,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
@@ -3539,7 +3826,7 @@
         "Distribution",
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3596,7 +3883,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -3657,8 +3944,8 @@
         "DotPlot",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -3672,6 +3959,65 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-plot.json",
       "item": "https://ds.interlace.tools/r/dot-plot.json",
       "docs": "https://ds.interlace.tools/c/dot-plot"
+    },
+    {
+      "name": "dot-vote",
+      "title": "Dot Vote",
+      "type": "registry:ui",
+      "summary": "After a brainstorm, the room chooses: each person spreads a few dots across the ideas (two on one idea means \"this one, really\"), sends them, and watches the ideas rank themselves as everyone's dots come in. It pairs with `TextWall` or `QuestionBoard` for…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/dot-vote.tsx",
+        "components/ui/games/dot-vote-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/dot-vote.json",
+      "item": "https://ds.interlace.tools/r/dot-vote.json",
+      "docs": "https://ds.interlace.tools/c/dot-vote"
     },
     {
       "name": "draw-on",
@@ -3715,8 +4061,8 @@
       "exports": [
         "DrawOn"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -3775,8 +4121,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react",
         "lucide-react"
@@ -3828,7 +4174,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -3893,8 +4239,8 @@
         "DUEL_LIMITS",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -3949,7 +4295,7 @@
         "EdgeGlow"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -4215,7 +4561,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.1",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
@@ -4316,8 +4662,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -4364,8 +4710,8 @@
       "exports": [
         "FlipGroup"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
@@ -4416,8 +4762,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
-      "since": null,
+      "version": "1.3.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -4525,7 +4871,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.3.1",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -4641,7 +4987,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -4753,8 +5099,8 @@
       "exports": [
         "GradientMesh"
       ],
-      "version": "2.0.0",
-      "since": null,
+      "version": "2.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -4802,8 +5148,8 @@
       "exports": [
         "GridField"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -4849,7 +5195,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.0.1",
+      "version": "2.0.2",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -4864,6 +5210,61 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/grid.json",
       "item": "https://ds.interlace.tools/r/grid.json",
       "docs": "https://ds.interlace.tools/c/grid"
+    },
+    {
+      "name": "groups",
+      "title": "Groups",
+      "type": "registry:ui",
+      "summary": "Pairs, small groups and teams. `GroupCard` is what one person's phone shows: which group they are in, who they are with, what to talk about and for how long. `GroupGrid` is the shared screen: every group with its people, where a reshuffle glides each name…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-current",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "motion-token",
+        "timer-ring",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/groups.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/groups.json",
+      "item": "https://ds.interlace.tools/r/groups.json",
+      "docs": "https://ds.interlace.tools/c/groups"
     },
     {
       "name": "guess-reveal",
@@ -4906,8 +5307,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.2",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -4957,7 +5358,7 @@
         "HeroCosmic",
         "MIN_VIEWPORT"
       ],
-      "version": "5.1.0",
+      "version": "5.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5010,7 +5411,7 @@
         "HeroStrand"
       ],
       "version": "2.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -5111,7 +5512,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -5163,7 +5564,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5214,7 +5615,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "button",
@@ -5280,7 +5681,7 @@
         "VIEW_INTENT_THRESHOLD"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
       "installsTo": [
@@ -5330,8 +5731,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -5354,7 +5755,7 @@
       "name": "interlace-base",
       "title": "Interlace Base",
       "type": "registry:style",
-      "summary": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.",
+      "summary": "@interlace/ui — the additive CSS baseline every component needs: motion tokens, type scale, container widths, the xs breakpoint, radius derived from --radius, a named z-index layer scale, layered brand + semantic colour tokens in OKLCH, and a color-scheme that follows the dark class so native controls match. Changes nothing the host app already styles.",
       "topics": [],
       "categories": [
         "foundation",
@@ -5382,8 +5783,8 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "4.11.1",
-      "since": null,
+      "version": "4.15.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "tw-animate-css"
       ],
@@ -5396,6 +5797,7 @@
         "styles/interlace/structure/type.css",
         "styles/interlace/structure/layout.css",
         "styles/interlace/structure/radius.css",
+        "styles/interlace/structure/layer.css",
         "styles/interlace/structure/motion.css",
         "styles/interlace/structure/scheme.css",
         "styles/interlace/structure/focus.css",
@@ -5440,7 +5842,7 @@
       },
       "exports": [],
       "version": "3.3.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "interlace-base"
@@ -5491,7 +5893,7 @@
         "InterlaceWeave"
       ],
       "version": "3.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -5554,10 +5956,12 @@
       },
       "exports": [
         "JOIN_CODE_ALPHABET",
-        "MIN_VIEWPORT"
+        "MAX_SHARED_SIZE",
+        "MIN_VIEWPORT",
+        "RESTORE_SEQ_JUMP"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.4.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -5611,7 +6015,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
@@ -5765,7 +6169,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "5.2.0",
+      "version": "5.7.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -5819,7 +6223,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -5877,8 +6281,8 @@
         "DEFAULT_STREAK_MILESTONES",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -5937,7 +6341,7 @@
         "LightBeam"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -5997,7 +6401,7 @@
       "exports": [
         "LintPlayground"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6057,7 +6461,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -6122,10 +6526,12 @@
       },
       "exports": [
         "JOIN_CODE_ALPHABET",
-        "MIN_VIEWPORT"
+        "MAX_SHARED_SIZE",
+        "MIN_VIEWPORT",
+        "RESTORE_SEQ_JUMP"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.5.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -6179,8 +6585,8 @@
       "exports": [
         "Marker"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -6227,7 +6633,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "5.2.0",
+      "version": "5.7.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6478,7 +6884,7 @@
         "MIN_VIEWPORT",
         "MetricTable"
       ],
-      "version": "2.0.0",
+      "version": "2.3.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6545,8 +6951,8 @@
         "DEFAULT_STREAK_MILESTONES",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -6596,7 +7002,7 @@
       },
       "exports": [],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [],
       "installsTo": [
@@ -6650,8 +7056,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "2.1.2",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -6721,7 +7127,7 @@
         "MIN_VIEWPORT",
         "NetworkGraph"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6773,7 +7179,7 @@
         "MIN_VIEWPORT",
         "NewsletterForm"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -6792,6 +7198,79 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/newsletter-form.json",
       "item": "https://ds.interlace.tools/r/newsletter-form.json",
       "docs": "https://ds.interlace.tools/c/newsletter-form"
+    },
+    {
+      "name": "note-board",
+      "title": "Note Board",
+      "type": "registry:ui",
+      "summary": "A shared board of sticky notes in columns: a retrospective (\"Keep / Change / Try\"), an affinity sort, a \"before / during / after\" map. People post a note into a column, and the room sorts them by moving notes between columns. Every screen folds the same…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TextRefusal",
+          "values": [
+            "empty",
+            "too-long",
+            "too-many-words",
+            "link",
+            "contact",
+            "blocked"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-invalid",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "input",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/note-board.tsx",
+        "components/ui/games/note-board-model.ts",
+        "components/ui/games/text-safety-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/note-board.json",
+      "item": "https://ds.interlace.tools/r/note-board.json",
+      "docs": "https://ds.interlace.tools/c/note-board"
     },
     {
       "name": "number-field",
@@ -6827,7 +7306,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -6887,8 +7366,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -6945,8 +7424,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
@@ -7050,7 +7529,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.1.1",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority",
@@ -7067,6 +7546,206 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/pagination.json",
       "item": "https://ds.interlace.tools/r/pagination.json",
       "docs": "https://ds.interlace.tools/c/pagination"
+    },
+    {
+      "name": "pair-talk",
+      "title": "Pair Talk",
+      "type": "registry:ui",
+      "summary": "Pair talk for a live room: the host pairs everyone (a group of three when the room is odd), each pair gets a prompt card and a timer, and \"swap partners\" pairs everyone again with someone new. Each phone shows who its partner is, the card and the time…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "status"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "JOIN_CODE_ALPHABET",
+        "MAX_PROMPT",
+        "MAX_SHARED_SIZE",
+        "MIN_VIEWPORT",
+        "PAIRS_KEY",
+        "RESTORE_SEQ_JUMP"
+      ],
+      "version": "1.4.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "room-clock",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/pair-talk.tsx",
+        "components/ui/games/group-model.ts",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/pair-model.ts",
+        "components/ui/games/room-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/pair-talk.json",
+      "item": "https://ds.interlace.tools/r/pair-talk.json",
+      "docs": "https://ds.interlace.tools/c/pair-talk"
+    },
+    {
+      "name": "picture-reveal",
+      "title": "Picture Reveal",
+      "type": "registry:ui",
+      "summary": "A picture under tiles that come away a few at a time while the room guesses. The presenter moves `step`; every screen uncovers the same tiles in the same seeded order, spread across the picture. Phones guess with `TypeAnswer` (or `QuizQuestion`), and…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-hidden",
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/picture-reveal.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/picture-reveal-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/picture-reveal.json",
+      "item": "https://ds.interlace.tools/r/picture-reveal.json",
+      "docs": "https://ds.interlace.tools/c/picture-reveal"
+    },
+    {
+      "name": "pin-drop",
+      "title": "Pin Drop",
+      "type": "registry:ui",
+      "summary": "A pin on a picture (a map, a floor plan, a diagram). On a phone, `PinDrop` lets each person place one pin by tap, drag or arrow keys. With an `answer` it is \"Where is it?\": once the host reveals, the answer appears, a line joins it to the viewer's pin, and…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": true
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/pin-drop.tsx",
+        "components/ui/games/pin-drop-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/pin-drop.json",
+      "item": "https://ds.interlace.tools/r/pin-drop.json",
+      "docs": "https://ds.interlace.tools/c/pin-drop"
     },
     {
       "name": "podium",
@@ -7104,8 +7783,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "celebrate",
@@ -7167,8 +7846,8 @@
       "exports": [
         "PointerSurface"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -7181,6 +7860,73 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/pointer-surface.json",
       "item": "https://ds.interlace.tools/r/pointer-surface.json",
       "docs": "https://ds.interlace.tools/c/pointer-surface"
+    },
+    {
+      "name": "points-split",
+      "title": "Points Split",
+      "type": "registry:ui",
+      "summary": "Spend a budget of points across options. `PointsSplit` is a phone: each option has a minus and a plus, a bar shows how much of the budget sits on it, and a counter says what is left; Send unlocks when the budget is spent. `PointsTotals` is the screen: the…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "SplitRefusal",
+          "values": [
+            "unknown-option",
+            "not-a-step",
+            "negative",
+            "over-budget",
+            "under-budget"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/points-split.tsx",
+        "components/ui/games/points-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/points-split.json",
+      "item": "https://ds.interlace.tools/r/points-split.json",
+      "docs": "https://ds.interlace.tools/c/points-split"
     },
     {
       "name": "poll",
@@ -7222,7 +7968,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "button",
@@ -7272,7 +8018,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -7287,6 +8033,151 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/popover.json",
       "item": "https://ds.interlace.tools/r/popover.json",
       "docs": "https://ds.interlace.tools/c/popover"
+    },
+    {
+      "name": "prediction",
+      "title": "Prediction",
+      "type": "registry:ui",
+      "summary": "\"Who will win?\" on a phone: the room calls an outcome before it happens, locks it in, and waits. Nobody sees how the room called it until the host settles it, so a call is the person's own read. Then the room's spread appears with the outcome marked, and…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PredictionReward",
+          "values": [
+            "flat",
+            "bold"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "tally-bars",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/prediction.tsx",
+        "components/ui/games/prediction-model.ts",
+        "components/ui/games/tally-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/prediction.json",
+      "item": "https://ds.interlace.tools/r/prediction.json",
+      "docs": "https://ds.interlace.tools/c/prediction"
+    },
+    {
+      "name": "presence",
+      "title": "Presence",
+      "type": "registry:ui",
+      "summary": "Content that arrives and leaves instead of popping in and out. `Presence` keeps a block on the page for the moment it takes to leave, so a hint, a result or a \"you got it\" note fades away rather than vanishing. `Swap` trades one piece of content for the…",
+      "topics": [],
+      "categories": [
+        "decorative",
+        "effect"
+      ],
+      "tier": "effect",
+      "rendering": "client",
+      "minViewport": null,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "use-render",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "PresenceEffect",
+          "values": [
+            "fade",
+            "rise",
+            "scale",
+            "blur"
+          ]
+        },
+        {
+          "name": "SwapDirection",
+          "values": [
+            "forward",
+            "back"
+          ]
+        },
+        {
+          "name": "Phase",
+          "values": [
+            "enter",
+            "exit"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "Presence",
+        "Swap"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/effects/presence.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/presence.json",
+      "item": "https://ds.interlace.tools/r/presence.json",
+      "docs": "https://ds.interlace.tools/c/presence"
     },
     {
       "name": "prev-next-post",
@@ -7326,7 +8217,7 @@
         "MIN_VIEWPORT",
         "PrevNextPost"
       ],
-      "version": "2.0.0",
+      "version": "2.1.2",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -7377,7 +8268,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.2.1",
+      "version": "2.2.2",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -7434,7 +8325,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -7496,7 +8387,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.1.0",
+      "version": "3.6.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -7618,8 +8509,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -7673,7 +8564,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -7686,6 +8577,169 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/qr-code.json",
       "item": "https://ds.interlace.tools/r/qr-code.json",
       "docs": "https://ds.interlace.tools/c/qr-code"
+    },
+    {
+      "name": "quadrant",
+      "title": "Quadrant",
+      "type": "registry:ui",
+      "summary": "A 2 x 2 grid: two questions at once (\"how hard / how important\"). Each person places one dot on a square pad, by tapping, dragging or the arrow keys, then sees the room on the same grid: where the dots crowd, how many sit in each quarter, the room's…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "End",
+          "Home",
+          "PageDown",
+          "PageUp"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "Quarter",
+          "values": [
+            "top-start",
+            "top-end",
+            "bottom-start",
+            "bottom-end"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-describedby",
+          "aria-hidden",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT",
+        "QUARTERS"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/quadrant.tsx",
+        "components/ui/games/quadrant-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/quadrant.json",
+      "item": "https://ds.interlace.tools/r/quadrant.json",
+      "docs": "https://ds.interlace.tools/c/quadrant"
+    },
+    {
+      "name": "question-board",
+      "title": "Question Board",
+      "type": "registry:ui",
+      "summary": "Questions from the room, ranked by the room. People ask from their phone (`QuestionAsk`), vote up the questions they want answered (`QuestionBoard`), and a moderator approves, pins, answers or hides them (`QuestionQueue`) before anything typed reaches a…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "QuestionStatus",
+          "values": [
+            "review",
+            "live",
+            "answered",
+            "dismissed"
+          ]
+        },
+        {
+          "name": "TextRefusal",
+          "values": [
+            "empty",
+            "too-long",
+            "too-many-words",
+            "link",
+            "contact",
+            "blocked"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-invalid",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "textarea"
+      ],
+      "installsTo": [
+        "components/ui/games/question-board.tsx",
+        "components/ui/games/question-board-model.ts",
+        "components/ui/games/text-safety-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/question-board.json",
+      "item": "https://ds.interlace.tools/r/question-board.json",
+      "docs": "https://ds.interlace.tools/c/question-board"
     },
     {
       "name": "quiz-question",
@@ -7738,8 +8792,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -7818,7 +8872,7 @@
         "ANNOTATION_KINDS",
         "RadialWeave"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -7877,7 +8931,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "1.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -7893,6 +8947,190 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/radio-group.json",
       "item": "https://ds.interlace.tools/r/radio-group.json",
       "docs": "https://ds.interlace.tools/c/radio-group"
+    },
+    {
+      "name": "ranking",
+      "title": "Ranking",
+      "type": "registry:ui",
+      "summary": "A room ranks the same items by preference. `RankChoices` is a phone: the items in a seeded starting order (so nobody's first item is favoured by where it was printed), moved with up and down buttons or the arrow keys on each row's handle, then sent.…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "ArrowDown",
+          "ArrowUp",
+          "End",
+          "Home"
+        ],
+        "ownHandler": true
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "css",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.2.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "flip-group",
+        "interlace-base"
+      ],
+      "installsTo": [
+        "components/ui/games/ranking.tsx",
+        "components/ui/games/daily.ts",
+        "components/ui/games/order-model.ts",
+        "components/ui/games/ranking-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/ranking.json",
+      "item": "https://ds.interlace.tools/r/ranking.json",
+      "docs": "https://ds.interlace.tools/c/ranking"
+    },
+    {
+      "name": "rating",
+      "title": "Rating",
+      "type": "registry:ui",
+      "summary": "A scale question for a room: how familiar, how likely to recommend, how are you feeling. Each person picks one step and sends it; then they see the room's answers on the same scale, their own step marked, the room's average, and, when the question was…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": "radio",
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/rating.tsx",
+        "components/ui/games/rating-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/rating.json",
+      "item": "https://ds.interlace.tools/r/rating.json",
+      "docs": "https://ds.interlace.tools/c/rating"
+    },
+    {
+      "name": "reactions",
+      "title": "Reactions",
+      "type": "registry:ui",
+      "summary": "The room's pulse while someone talks. Phones tap a reaction (`ReactionBar`) and the shared screen lets it float up (`ReactionStream`); someone who wants to speak raises a hand (`RaiseHand`) and the host calls on people in the order they asked (`HandQueue`).",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "group"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-labelledby",
+          "aria-live",
+          "aria-pressed"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "DEFAULT_REACTIONS",
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/reactions.tsx",
+        "components/ui/games/reactions-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reactions.json",
+      "item": "https://ds.interlace.tools/r/reactions.json",
+      "docs": "https://ds.interlace.tools/c/reactions"
     },
     {
       "name": "reading-layout",
@@ -7928,8 +9166,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.3.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -7982,7 +9220,7 @@
       },
       "exports": [],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -8040,7 +9278,7 @@
       "exports": [
         "ReadingStrand"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -8150,8 +9388,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -8202,7 +9440,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -8216,6 +9454,74 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/recap.json",
       "item": "https://ds.interlace.tools/r/recap.json",
       "docs": "https://ds.interlace.tools/c/recap"
+    },
+    {
+      "name": "reflection-card",
+      "title": "Reflection Card",
+      "type": "registry:ui",
+      "summary": "A quiet minute in a loud room: one prompt (\"What surprised you today?\"), a field, and a promise that the answer is yours. It is private by default; when the session allows it, the writer can choose to share it with the room without their name, and only…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "TextRefusal",
+          "values": [
+            "empty",
+            "too-long",
+            "too-many-words",
+            "link",
+            "contact",
+            "blocked"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-invalid",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "cn",
+        "interlace-base",
+        "textarea"
+      ],
+      "installsTo": [
+        "components/ui/games/reflection-card.tsx",
+        "components/ui/games/text-safety-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/reflection-card.json",
+      "item": "https://ds.interlace.tools/r/reflection-card.json",
+      "docs": "https://ds.interlace.tools/c/reflection-card"
     },
     {
       "name": "registry-item-template",
@@ -8368,8 +9674,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -8421,8 +9727,8 @@
       "exports": [
         "Reveal"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -8436,6 +9742,134 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/reveal.json",
       "item": "https://ds.interlace.tools/r/reveal.json",
       "docs": "https://ds.interlace.tools/c/reveal"
+    },
+    {
+      "name": "room-clock",
+      "title": "Room Clock",
+      "type": "registry:ui",
+      "summary": "A countdown to a host timestamp, in minutes and seconds (\"7:42\"), for the timers that run for minutes: a breakout, a round of pair talk. (`TimerRing` counts the seconds of a quiz round; a ring that says 600 is a poor way to say ten minutes.) The deadline…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "AgendaPhase",
+          "values": [
+            "before",
+            "running",
+            "paused",
+            "over",
+            "finished"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "timer"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": false,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "live-room"
+      ],
+      "installsTo": [
+        "components/ui/games/room-clock.tsx",
+        "components/ui/games/agenda-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/room-clock.json",
+      "item": "https://ds.interlace.tools/r/room-clock.json",
+      "docs": "https://ds.interlace.tools/c/room-clock"
+    },
+    {
+      "name": "room-goal",
+      "title": "Room Goal",
+      "type": "registry:ui",
+      "summary": "One meter for the whole room: a shared target, named milestones on the way (\"Bonus round\", \"Group photo\"), and, when given, how many rounds in a row most of the room got right. Built for the shared screen; it reads the same on a phone.",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [
+          "meter"
+        ],
+        "aria": [
+          "aria-labelledby",
+          "aria-live",
+          "aria-valuemax",
+          "aria-valuemin",
+          "aria-valuenow",
+          "aria-valuetext"
+        ],
+        "motion": {
+          "driver": "both",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/room-goal.tsx",
+        "components/ui/games/room-goal-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/room-goal.json",
+      "item": "https://ds.interlace.tools/r/room-goal.json",
+      "docs": "https://ds.interlace.tools/c/room-goal"
     },
     {
       "name": "rotating-text",
@@ -8471,8 +9905,8 @@
       "exports": [
         "RotatingText"
       ],
-      "version": "2.0.0",
-      "since": null,
+      "version": "2.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -8526,7 +9960,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -8578,7 +10012,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.0.1",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -8691,7 +10125,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "1.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -8743,8 +10177,8 @@
         "ScrollStory",
         "ScrollStoryStep"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -8806,7 +10240,7 @@
         "ScrollText"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -8858,8 +10292,8 @@
       "exports": [
         "Scroller"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -8927,8 +10361,8 @@
         "SeatChart",
         "SeatChartCompare"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -9029,7 +10463,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.3.0",
+      "version": "1.6.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -9127,7 +10561,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "1.2.0",
+      "version": "1.6.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -9181,7 +10615,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.2.0",
+      "version": "2.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -9301,7 +10735,7 @@
         "MIN_VIEWPORT",
         "SeriesTable"
       ],
-      "version": "1.2.0",
+      "version": "1.5.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -9358,8 +10792,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -9419,7 +10853,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -9543,8 +10977,8 @@
         "DEFAULT_SYMBOLS",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -9609,8 +11043,8 @@
         "MIN_VIEWPORT",
         "ShareChart"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -9670,7 +11104,7 @@
         "ShareImage"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "interlace-base"
@@ -9718,7 +11152,7 @@
         "SheenText"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -9766,8 +11200,8 @@
       "exports": [
         "Sheen"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -9827,7 +11261,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -9893,7 +11327,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.1.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -9941,7 +11375,7 @@
         "MIN_VIEWPORT",
         "SignInForm"
       ],
-      "version": "1.2.0",
+      "version": "1.3.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -9998,7 +11432,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.1",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -10192,7 +11626,7 @@
         "SKELETON_VARIANTS",
         "SKELETON_VARIANT_CLASSES"
       ],
-      "version": "2.1.0",
+      "version": "2.1.2",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -10242,7 +11676,7 @@
         "MIN_VIEWPORT",
         "SkipLink"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -10299,8 +11733,8 @@
       "exports": [
         "SkyBackdrop"
       ],
-      "version": "2.0.0",
-      "since": null,
+      "version": "2.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -10351,7 +11785,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.2.0",
+      "version": "1.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -10409,8 +11843,8 @@
         "MIN_VIEWPORT",
         "SocialSignIn"
       ],
-      "version": "1.1.0",
-      "since": null,
+      "version": "2.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "badge",
@@ -10481,7 +11915,7 @@
         "MIN_VIEWPORT",
         "Sparkline"
       ],
-      "version": "1.2.0",
+      "version": "1.4.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -10498,6 +11932,62 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/sparkline.json",
       "item": "https://ds.interlace.tools/r/sparkline.json",
       "docs": "https://ds.interlace.tools/c/sparkline"
+    },
+    {
+      "name": "spectrum",
+      "title": "Spectrum",
+      "type": "registry:ui",
+      "summary": "Where do you stand? A statement, two poles, and a line between them. Each person places one dot, then sees the whole room spread along the same line, their own bin marked, the room's middle drawn, and, when the statement was asked before, where the middle…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "interlace-base",
+        "motion-token",
+        "slider",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/spectrum.tsx",
+        "components/ui/games/spectrum-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/spectrum.json",
+      "item": "https://ds.interlace.tools/r/spectrum.json",
+      "docs": "https://ds.interlace.tools/c/spectrum"
     },
     {
       "name": "spinner",
@@ -10536,7 +12026,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "class-variance-authority"
       ],
@@ -10587,8 +12077,8 @@
       "exports": [
         "SplitText"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -10686,8 +12176,8 @@
       "exports": [
         "StaggerList"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -10749,7 +12239,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "badge",
@@ -10799,8 +12289,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -10853,7 +12343,7 @@
         "Starfield"
       ],
       "version": "2.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -10902,7 +12392,7 @@
         "MIN_VIEWPORT",
         "StatCard"
       ],
-      "version": "3.1.0",
+      "version": "3.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -10954,7 +12444,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.3.0",
+      "version": "2.5.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -11045,7 +12535,7 @@
         "REPLACING_STATES",
         "StatStrip"
       ],
-      "version": "2.1.0",
+      "version": "2.1.1",
       "since": "1.1.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -11167,7 +12657,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.1",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -11240,8 +12730,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -11294,7 +12784,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.1.0",
+      "version": "1.3.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -11347,8 +12837,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -11395,7 +12885,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -11506,7 +12996,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.3.0",
+      "version": "1.4.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -11565,8 +13055,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -11583,6 +13073,88 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/tally-bars.json",
       "item": "https://ds.interlace.tools/r/tally-bars.json",
       "docs": "https://ds.interlace.tools/c/tally-bars"
+    },
+    {
+      "name": "team-board",
+      "title": "Team Board",
+      "type": "registry:ui",
+      "summary": "Team mode for a live room. The host sets up teams, balances them (or moves a player by hand), and everyone sees whose team they are on and how the teams score. The rules are `games/team-model`; the teams ride in the room (`RoomState.shared`), so a phone…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": true,
+        "baseUi": null,
+        "keys": [
+          "Enter",
+          "Escape"
+        ],
+        "ownHandler": true
+      },
+      "states": [
+        {
+          "name": "RoomPhase",
+          "values": [
+            "lobby",
+            "countdown",
+            "question",
+            "reveal",
+            "podium",
+            "closed"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [
+          "group",
+          "status"
+        ],
+        "aria": [
+          "aria-label",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "none",
+          "declaresPreference": true,
+          "stylesheetCannotReach": false
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "JOIN_CODE_ALPHABET",
+        "MAX_SHARED_SIZE",
+        "MAX_TEAMS",
+        "MIN_VIEWPORT",
+        "RESTORE_SEQ_JUMP",
+        "TEAMS_KEY",
+        "TEAM_COLORS"
+      ],
+      "version": "1.4.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/team-board.tsx",
+        "components/ui/games/group-model.ts",
+        "components/ui/games/leaderboard-model.ts",
+        "components/ui/games/room-model.ts",
+        "components/ui/games/team-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/team-board.json",
+      "item": "https://ds.interlace.tools/r/team-board.json",
+      "docs": "https://ds.interlace.tools/c/team-board"
     },
     {
       "name": "testimonial",
@@ -11639,6 +13211,57 @@
       "docs": "https://ds.interlace.tools/c/testimonial"
     },
     {
+      "name": "text-wall",
+      "title": "Text Wall",
+      "type": "registry:ui",
+      "summary": "The room's short answers on a shared screen: \"what would you ask someone your age who lives there?\". New posts rise in at the top; the presenter can put one in the spotlight, large, above the rest. Phones send with `QuestionAsk` (relabelled: \"Your answer\"…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [],
+      "a11y": {
+        "roles": [],
+        "aria": [],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": false
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.0.1",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "cn",
+        "flip-group",
+        "interlace-base",
+        "motion-token",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/text-wall.tsx"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/text-wall.json",
+      "item": "https://ds.interlace.tools/r/text-wall.json",
+      "docs": "https://ds.interlace.tools/c/text-wall"
+    },
+    {
       "name": "textarea",
       "title": "Textarea",
       "type": "registry:ui",
@@ -11674,7 +13297,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.0.1",
+      "version": "3.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -11738,7 +13361,7 @@
         "THEME_SCRIPT",
         "THEME_STORAGE_KEY"
       ],
-      "version": "1.0.1",
+      "version": "1.1.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -12015,7 +13638,7 @@
         "ThreadLines"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -12074,7 +13697,7 @@
         "ThreadMark"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -12132,8 +13755,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.0.1",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -12216,7 +13839,7 @@
         "TIME_SERIES_LABELS",
         "TimeSeries"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -12274,7 +13897,7 @@
         "TimeSlider"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react",
         "lucide-react"
@@ -12344,8 +13967,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.2.1",
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
@@ -12408,7 +14031,7 @@
       "exports": [
         "TimelineMap"
       ],
-      "version": "2.0.0",
+      "version": "2.1.0",
       "since": "1.2.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -12457,8 +14080,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.2",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -12510,8 +14133,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -12563,7 +14186,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.0.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react",
@@ -12631,7 +14254,7 @@
         "TocBar",
         "TocPopover"
       ],
-      "version": "2.0.1",
+      "version": "2.1.0",
       "since": "1.0.0",
       "npmDependencies": [
         "lucide-react"
@@ -12747,8 +14370,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "3.4.0",
-      "since": null,
+      "version": "3.6.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react",
         "class-variance-authority"
@@ -12803,7 +14426,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "@base-ui/react"
@@ -12855,8 +14478,8 @@
       "exports": [
         "TopbarMenu"
       ],
-      "version": "2.2.0",
-      "since": null,
+      "version": "2.3.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "lucide-react"
       ],
@@ -12911,8 +14534,8 @@
         "TOPBAR_ROW_ITEM",
         "TopbarNav"
       ],
-      "version": "1.1.0",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react",
         "lucide-react"
@@ -12963,7 +14586,7 @@
         "TopbarScrollEdge"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "interlace-base"
@@ -13013,7 +14636,7 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "2.6.0",
+      "version": "2.7.0",
       "since": "1.0.0",
       "npmDependencies": [],
       "registryDependencies": [
@@ -13029,6 +14652,86 @@
       "install": "npx shadcn@latest add https://ds.interlace.tools/r/topbar.json",
       "item": "https://ds.interlace.tools/r/topbar.json",
       "docs": "https://ds.interlace.tools/c/topbar"
+    },
+    {
+      "name": "type-answer",
+      "title": "Type Answer",
+      "type": "registry:ui",
+      "summary": "A quiz round where people type the answer. Harder than picking, and fairer than it looks: case, accents, punctuation and a slip of a letter in a long word are forgiven, while a different number never is (see `typed-answer-model`). The reveal marks the…",
+      "topics": [],
+      "categories": [
+        "games",
+        "game"
+      ],
+      "tier": "game",
+      "rendering": "client",
+      "minViewport": 320,
+      "loadingState": false,
+      "keyboard": {
+        "handled": false,
+        "baseUi": null,
+        "keys": [],
+        "ownHandler": false
+      },
+      "states": [
+        {
+          "name": "QuizOutcome",
+          "values": [
+            "correct",
+            "wrong",
+            "timeout"
+          ]
+        },
+        {
+          "name": "TypedOutcome",
+          "values": [
+            "exact",
+            "close",
+            "wrong",
+            "empty"
+          ]
+        }
+      ],
+      "a11y": {
+        "roles": [],
+        "aria": [
+          "aria-describedby",
+          "aria-label",
+          "aria-labelledby",
+          "aria-live"
+        ],
+        "motion": {
+          "driver": "js",
+          "declaresPreference": true,
+          "stylesheetCannotReach": true
+        },
+        "focusRing": true
+      },
+      "exports": [
+        "MIN_VIEWPORT"
+      ],
+      "version": "1.1.0",
+      "since": "2.0.0",
+      "npmDependencies": [],
+      "registryDependencies": [
+        "button",
+        "cn",
+        "input",
+        "interlace-base",
+        "motion-token",
+        "tally-bars",
+        "timer-ring",
+        "use-reduced-motion"
+      ],
+      "installsTo": [
+        "components/ui/games/type-answer.tsx",
+        "components/ui/games/quiz-model.ts",
+        "components/ui/games/tally-model.ts",
+        "components/ui/games/typed-answer-model.ts"
+      ],
+      "install": "npx shadcn@latest add https://ds.interlace.tools/r/type-answer.json",
+      "item": "https://ds.interlace.tools/r/type-answer.json",
+      "docs": "https://ds.interlace.tools/c/type-answer"
     },
     {
       "name": "typography",
@@ -13062,7 +14765,7 @@
         "focusRing": false
       },
       "exports": [],
-      "version": "2.1.0",
+      "version": "2.2.0",
       "since": "1.0.0",
       "npmDependencies": [
         "class-variance-authority"
@@ -13113,7 +14816,7 @@
         "UnderlineLink"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [
         "@base-ui/react"
       ],
@@ -13165,7 +14868,7 @@
         "MIN_VIEWPORT"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -13221,7 +14924,7 @@
       },
       "exports": [],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "theme-script"
@@ -13355,7 +15058,7 @@
       },
       "exports": [],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "interlace-base",
@@ -13452,7 +15155,7 @@
         "WeaveTexture"
       ],
       "version": "1.0.0",
-      "since": null,
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
@@ -13519,8 +15222,8 @@
         "CLOUD_BREAKS",
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.0",
-      "since": null,
+      "version": "1.1.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "button",
@@ -13594,8 +15297,8 @@
       "exports": [
         "MIN_VIEWPORT"
       ],
-      "version": "1.0.1",
-      "since": null,
+      "version": "1.2.0",
+      "since": "2.0.0",
       "npmDependencies": [],
       "registryDependencies": [
         "cn",
